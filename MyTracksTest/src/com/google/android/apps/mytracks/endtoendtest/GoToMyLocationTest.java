@@ -58,7 +58,7 @@ public class GoToMyLocationTest extends ActivityInstrumentationTestCase2<TrackLi
     EndToEndTestUtils.SOLO.clickOnView(myLocation);
     if (EndToEndTestUtils.isEmulator) {
       EndToEndTestUtils.SOLO.waitForText(
-          activityMyTracks.getString(R.string.my_location_no_location), 1, 1000);
+          activityMyTracks.getString(R.string.my_location_no_location), 1, EndToEndTestUtils.SHORT_WAIT_TIME);
     } else {
       // TODO How to verify the location is shown on the map.
     }

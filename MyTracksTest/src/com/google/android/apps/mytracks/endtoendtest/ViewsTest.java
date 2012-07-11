@@ -65,9 +65,9 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_chart_tab));
     EndToEndTestUtils.rotateAllActivities();
 
-    EndToEndTestUtils.showMoreMenuItem();
+    EndToEndTestUtils.showMoreMenuItem(0);
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.menu_settings), 1, 3000));
+        activityMyTracks.getString(R.string.menu_settings), 1, EndToEndTestUtils.NORMAL_WAIT_TIME));
     assertFalse(EndToEndTestUtils.SOLO.waitForText(
         activityMyTracks.getString(R.string.menu_satellite_mode), 1, 0));
     assertFalse(EndToEndTestUtils.SOLO.waitForText(
@@ -77,7 +77,7 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
     EndToEndTestUtils.SOLO.sendKey(KeyEvent.KEYCODE_MENU);
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.menu_settings), 1, 3000));
+        activityMyTracks.getString(R.string.menu_settings), 1, EndToEndTestUtils.NORMAL_WAIT_TIME));
     assertFalse(EndToEndTestUtils.SOLO.waitForText(
         activityMyTracks.getString(R.string.menu_satellite_mode), 1, 0));
     assertFalse(EndToEndTestUtils.SOLO.waitForText(
@@ -85,9 +85,9 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
     EndToEndTestUtils.SOLO.goBack();
 
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_map_tab));
-    EndToEndTestUtils.showMoreMenuItem();
+    EndToEndTestUtils.showMoreMenuItem(0);
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.menu_settings), 1, 3000));
+        activityMyTracks.getString(R.string.menu_settings), 1, EndToEndTestUtils.NORMAL_WAIT_TIME));
     assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.VIEW_MODE, 1, true, false));
   }
 
@@ -105,7 +105,7 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
         false)) {
       isMapMode = false;
     }
-    EndToEndTestUtils.showMoreMenuItem();
+    EndToEndTestUtils.showMoreMenuItem(0);
     // Switch to satellite mode if it's map mode now..
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
         .getString(isMapMode ? R.string.menu_satellite_mode : R.string.menu_map_mode));
@@ -125,7 +125,7 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
     EndToEndTestUtils.rotateAllActivities();
 
     // Switch back.
-    EndToEndTestUtils.showMoreMenuItem();
+    EndToEndTestUtils.showMoreMenuItem(0);
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
         .getString(isMapMode ? R.string.menu_satellite_mode : R.string.menu_map_mode));
     isMapMode = !isMapMode;
@@ -139,7 +139,7 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
     // Wait for the TrackDetailActivity, or the stop button will can not be
     // found in next step.
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.track_detail_chart_tab),
-        0, 1000);
+        0, EndToEndTestUtils.SHORT_WAIT_TIME);
   }
 
   @Override

@@ -76,13 +76,13 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     // Change a setting of sharing.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_sharing));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.settings_sharing_allow_access), 1, 5000));
+        activityMyTracks.getString(R.string.settings_sharing_allow_access), 1, EndToEndTestUtils.NORMAL_WAIT_TIME));
     ArrayList<CheckBox> sharingCheckBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
     boolean newMapsPublic = sharingCheckBoxs.get(0).isChecked();
     EndToEndTestUtils.SOLO.clickOnCheckBox(0);
     instrumentation.waitForIdleSync();
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.settings_sharing_allow_access), 1, 5000));
+        activityMyTracks.getString(R.string.settings_sharing_allow_access), 1, EndToEndTestUtils.NORMAL_WAIT_TIME));
     assertEquals(!newMapsPublic, sharingCheckBoxs.get(0).isChecked());
     EndToEndTestUtils.SOLO.goBack();
 
@@ -95,7 +95,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.SOLO.scrollUp();
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.settings_stats_units_title), 1, 20000));
+        .getString(R.string.settings_stats_units_title), 1, EndToEndTestUtils.LONG_WAIT_TIME));
     displayCheckBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
     assertEquals(useMetric, displayCheckBoxs.get(0).isChecked());
 
@@ -244,14 +244,13 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.SOLO
         .clickOnText(activityMyTracks.getString(R.string.settings_backup_now));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.sd_card_save_success), 0, 100000));
+        activityMyTracks.getString(R.string.sd_card_save_success), 0, EndToEndTestUtils.SUPER_LONG_WAIT_TIME));
     instrumentation.waitForIdleSync();
 
     // Delete all tracks.
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.SOLO.goBack();
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete_all), true);
-    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+    EndToEndTestUtils.deleteAllTracks();
     instrumentation.waitForIdleSync();
 
     // Read from SD card.
@@ -261,7 +260,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
         .getString(R.string.settings_backup_restore));
     EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.sd_card_import_success), 0, 10000));
+        activityMyTracks.getString(R.string.sd_card_import_success), 0, EndToEndTestUtils.NORMAL_WAIT_TIME));
     // Check restore track.
     assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.trackName));
   }

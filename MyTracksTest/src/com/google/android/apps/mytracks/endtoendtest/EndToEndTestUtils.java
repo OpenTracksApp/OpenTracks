@@ -80,6 +80,12 @@ public class EndToEndTestUtils {
   public static String VIEW_MODE = "";
   public static String ONE_KM = "";
   public static String ONE_MILE = "";
+  
+  public static int SHORT_WAIT_TIME = 2000;
+  public static int NORMAL_WAIT_TIME = 8000;
+  public static int LONG_WAIT_TIME = 15000;
+  public static int SUPER_LONG_WAIT_TIME = 100000;
+  
   static {
     RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("es", "mins ago");
     RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("de", "Minuten");
@@ -202,16 +208,18 @@ public class EndToEndTestUtils {
         EndToEndTestUtils.verifyFirstLaunch();
       } else if (EndToEndTestUtils.SOLO.waitForText(
       // After reset setting, welcome page will show again.
-          activityMytracks.getString(R.string.welcome_title), 0, 500)) {
+          activityMytracks.getString(R.string.welcome_title), 0, EndToEndTestUtils.SHORT_WAIT_TIME)) {
         resetPreferredUnits();
       }
       checkLanguage();
       EndToEndTestUtils.isCheckedFirstLaunch = true;
       EndToEndTestUtils.setHasActionBar();
+      // Make the test is totally new.
+      EndToEndTestUtils.deleteAllTracks();
       EndToEndTestUtils.resetAllSettings(activityMyTracks, false);
     } else if (EndToEndTestUtils.SOLO.waitForText(
         // After reset setting, welcome page will show again.
-        activityMytracks.getString(R.string.welcome_title), 0, 500)) {
+        activityMytracks.getString(R.string.welcome_title), 0, EndToEndTestUtils.SHORT_WAIT_TIME)) {
       resetPreferredUnits();
     }
     
@@ -323,7 +331,7 @@ public class EndToEndTestUtils {
       }
       SOLO.clickOnView(startButton);
     } else {
-      showMoreMenuItem();
+      showMoreMenuItem(0);
       if (!SOLO.searchText(activityMytracks.getString(R.string.menu_record_track))) {
         // Check if in TrackDetailActivity.
         if (SOLO.searchText(activityMytracks.getString(R.string.menu_play))) {
@@ -331,7 +339,7 @@ public class EndToEndTestUtils {
         } else {
           // In case a track is recording.
           stopRecording(true);
-          showMoreMenuItem();
+          showMoreMenuItem(0);
         }
       }
       instrumentation.waitForIdleSync();
@@ -350,7 +358,7 @@ public class EndToEndTestUtils {
       return getButtonOnScreen(activityMytracks
         .getString(R.string.menu_record_track), false, false) == null; 
     }
-    showMoreMenuItem();
+    showMoreMenuItem(0);
     if (SOLO.searchText(activityMytracks.getString(R.string.menu_record_track))
         || SOLO.searchText(activityMytracks.getString(R.string.menu_play))) {
       SOLO.goBack();
@@ -369,12 +377,12 @@ public class EndToEndTestUtils {
     if (hasActionBar) {
       getButtonOnScreen(activityMytracks.getString(R.string.menu_stop_recording), false, true);
     } else {
-      showMoreMenuItem();
+      showMoreMenuItem(0);
       instrumentation.waitForIdleSync();
       SOLO.clickOnText(activityMytracks.getString(R.string.menu_stop_recording));
     }
     if (isSave) {
-      EndToEndTestUtils.SOLO.waitForText(activityMytracks.getString(R.string.generic_save), 1, 5000);
+      EndToEndTestUtils.SOLO.waitForText(activityMytracks.getString(R.string.generic_save), 1, EndToEndTestUtils.NORMAL_WAIT_TIME);
       // Make every track name is unique to make sure every check can be
       // trusted.
       EndToEndTestUtils.trackName = EndToEndTestUtils.TRACK_NAME_PREFIX
@@ -404,6 +412,14 @@ public class EndToEndTestUtils {
         oneFile.delete();
       }
     }
+  }
+  
+  /**
+   * Deletes all tracks. This method should be call when the TracksListActivity is shown.
+   */
+  static void deleteAllTracks() {
+    EndToEndTestUtils.findMenuItem(activityMytracks.getString(R.string.menu_delete_all), true);
+    EndToEndTestUtils.getButtonOnScreen(activityMytracks.getString(R.string.generic_ok), true, true);
   }
 
   /**
@@ -478,7 +494,7 @@ public class EndToEndTestUtils {
     if (startButton != null || stopButton != null) {
       hasActionBar = true;
     } else {
-      showMoreMenuItem();
+      showMoreMenuItem(0);
       if (SOLO.searchText(activityMytracks.getString(R.string.menu_record_track))
           || SOLO.searchText(activityMytracks.getString(R.string.menu_stop_recording))) {
         hasActionBar = false;
@@ -531,7 +547,7 @@ public class EndToEndTestUtils {
       return findResult;
     }
 
-    showMoreMenuItem();
+    showMoreMenuItem(0);
     if (SOLO.searchText(menuName)) {
       findResult = true;
     } else if (SOLO.searchText(MENU_MORE)) {
@@ -550,14 +566,23 @@ public class EndToEndTestUtils {
 
   /**
    * Gets more menu items operation is different for different Android OS.
+   * 
+   * @param depth control the depth of recursion to prevent dead circulation
    */
-  public static void showMoreMenuItem() {
+  public static void showMoreMenuItem(int depth) {
     if (hasActionBar) {
+      instrumentation.waitForIdleSync();
       View moreButton = getMoreOptionView();
       if (moreButton != null) {
-        SOLO.clickOnView(moreButton);
+        try {
+          SOLO.clickOnView(moreButton);
+        } catch (Throwable e) {
+          if (depth < 5 && e.getMessage().indexOf("Click can not be completed") > -1) {
+            showMoreMenuItem(depth++);
+          }
+        }
         return;
-      } 
+      }
     }
     SOLO.sendKey(KeyEvent.KEYCODE_MENU);
   }
@@ -573,8 +598,8 @@ public class EndToEndTestUtils {
   private static View getMoreOptionView() {
     ArrayList<View> allViews = SOLO.getViews();
     for (View view : allViews) {
-      if (view instanceof ImageButton && view.getClass().getName().equals(MOREOPTION_CLASSNAME)) { 
-        return view; 
+      if (view instanceof ImageButton && view.getClass().getName().equals(MOREOPTION_CLASSNAME)) {
+        return view;
       }
     }
     return null;
