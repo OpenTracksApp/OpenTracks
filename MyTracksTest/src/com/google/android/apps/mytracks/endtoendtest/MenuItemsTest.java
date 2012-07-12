@@ -67,9 +67,12 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
     EndToEndTestUtils.createTrackIfEmpty(1, false);
     instrumentation.waitForIdleSync();
     // Menu in TrackDetailActivity.
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_sensor_state), true);
-    EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.sensor_state_last_sensor_time));
+    // When there is no sensor connected this menu will be hidden.
+    if (EndToEndTestUtils
+        .findMenuItem(activityMyTracks.getString(R.string.menu_sensor_state), true)) {
+      EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+          .getString(R.string.sensor_state_last_sensor_time));
+    }
 
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_help), true);

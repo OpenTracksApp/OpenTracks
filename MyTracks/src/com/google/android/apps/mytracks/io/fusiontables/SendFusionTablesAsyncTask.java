@@ -27,6 +27,7 @@ import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.InputStreamContent;
 import com.google.api.client.util.Strings;
+import com.google.common.annotations.VisibleForTesting;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -52,13 +53,17 @@ import java.util.Vector;
  */
 public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
 
-  private static final String APP_NAME_PREFIX = "Google-MyTracks-";
+  @VisibleForTesting
+  public static final String APP_NAME_PREFIX = "Google-MyTracks-";
   private static final String SQL_KEY = "sql=";
-  private static final String CONTENT_TYPE = "application/x-www-form-urlencoded";
-  private static final String FUSION_TABLES_BASE_URL =
+  @VisibleForTesting
+  public static final String CONTENT_TYPE = "application/x-www-form-urlencoded";
+  @VisibleForTesting
+  public static final String FUSION_TABLES_BASE_URL =
       "https://www.google.com/fusiontables/api/query";
   private static final int MAX_POINTS_PER_UPLOAD = 2048;
-  private static final String GDATA_VERSION = "2";
+  @VisibleForTesting
+  public static final String GDATA_VERSION = "2";
 
   private static final int PROGRESS_CREATE_TABLE = 0;
   private static final int PROGRESS_UNLIST_TABLE = 5;

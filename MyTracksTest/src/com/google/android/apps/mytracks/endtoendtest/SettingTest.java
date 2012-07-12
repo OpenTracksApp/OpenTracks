@@ -32,9 +32,7 @@ import java.util.ArrayList;
  * @author Youtao Liu
  */
 public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActivity> {
-
-  private final String DEFAULTACTIVITY = "TestActivity";
-
+  
   private Instrumentation instrumentation;
   private TrackListActivity activityMyTracks;
 
@@ -93,9 +91,11 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
 
     // Check settings.
+    // Add following scroll up for a bug of Robotium.
+    EndToEndTestUtils.SOLO.scrollUp();
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
-    EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.settings_stats_units_title), 1, 20000);
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+        .getString(R.string.settings_stats_units_title), 1, 20000));
     displayCheckBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
     assertEquals(useMetric, displayCheckBoxs.get(0).isChecked());
 
@@ -281,7 +281,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     // Changes the setting of default activity.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
         .getString(R.string.settings_recording_default_activity));
-    EndToEndTestUtils.SOLO.enterText(0, DEFAULTACTIVITY);
+    EndToEndTestUtils.SOLO.enterText(0, EndToEndTestUtils.DEFAULTACTIVITY);
     if(!EndToEndTestUtils.isEmulator) {
       // Close soft keyboard.
       EndToEndTestUtils.SOLO.goBack();
@@ -297,7 +297,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     instrumentation.waitForIdleSync();
     assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks.getString(
         R.string.track_name_format).split(" ")[0]));
-    assertTrue(EndToEndTestUtils.SOLO.searchText(DEFAULTACTIVITY));
+    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.DEFAULTACTIVITY));
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_save));
 
   }
