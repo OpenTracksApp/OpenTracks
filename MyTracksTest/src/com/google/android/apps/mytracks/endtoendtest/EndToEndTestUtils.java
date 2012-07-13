@@ -565,7 +565,10 @@ public class EndToEndTestUtils {
   }
 
   /**
-   * Gets more menu items operation is different for different Android OS.
+   * Gets more menu items operation is different for different Android OS. When
+   * get overflow button view on action, it usually be able to click. But in
+   * some situation, will meet an error when click it. So catch it and try
+   * again. In most situation, the second click will be pass.
    * 
    * @param depth control the depth of recursion to prevent dead circulation
    */
