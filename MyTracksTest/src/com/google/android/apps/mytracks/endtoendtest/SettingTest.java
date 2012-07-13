@@ -83,7 +83,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     instrumentation.waitForIdleSync();
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
         activityMyTracks.getString(R.string.settings_sharing_allow_access), 1, EndToEndTestUtils.NORMAL_WAIT_TIME));
-    assertEquals(!newMapsPublic, sharingCheckBoxs.get(0).isChecked());
+    assertEquals(!newMapsPublic, EndToEndTestUtils.SOLO.getCurrentCheckBoxes().get(0).isChecked());
     EndToEndTestUtils.SOLO.goBack();
 
     // Reset all settings.
