@@ -19,12 +19,12 @@ package com.google.android.apps.mytracks.fragments;
 import com.google.android.apps.mytracks.ChartView;
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.MyTracksApplication;
+import com.google.android.apps.mytracks.content.TrackDataType;
 import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackDataHub;
-import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
@@ -360,12 +360,12 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   private synchronized void resumeTrackDataHub() {
     trackDataHub = ((MyTracksApplication) getActivity().getApplication()).getTrackDataHub();
     trackDataHub.registerTrackDataListener(this, EnumSet.of(
-        ListenerDataType.SELECTED_TRACK_CHANGED,
-        ListenerDataType.TRACK_UPDATES,
-        ListenerDataType.WAYPOINT_UPDATES,
-        ListenerDataType.POINT_UPDATES,
-        ListenerDataType.SAMPLED_OUT_POINT_UPDATES,
-        ListenerDataType.DISPLAY_PREFERENCES));
+        TrackDataType.SELECTED_TRACK,
+        TrackDataType.TRACKS_TABLE,
+        TrackDataType.WAYPOINTS_TABLE,
+        TrackDataType.TRACK_POINTS_TABLE,
+        TrackDataType.SAMPLED_OUT_TRACK_POINTS,
+        TrackDataType.PREFERENCE));
   }
 
   /**
