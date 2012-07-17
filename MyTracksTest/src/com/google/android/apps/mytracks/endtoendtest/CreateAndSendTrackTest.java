@@ -117,8 +117,10 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     
     // If no account is binded with this device.
     if (EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.send_google_no_account_title), 1, EndToEndTestUtils.NORMAL_WAIT_TIME)) {
+        .getString(R.string.send_google_no_account_title), 1, EndToEndTestUtils.SHORT_WAIT_TIME)) {
       EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+    } else if (EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+        .getString(R.string.send_google_no_account_permission), 1, EndToEndTestUtils.SHORT_WAIT_TIME)) {
     } else {
       assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
           .getString(R.string.generic_progress_title)));

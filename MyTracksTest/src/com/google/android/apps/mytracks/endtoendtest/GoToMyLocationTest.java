@@ -22,6 +22,9 @@ import android.annotation.TargetApi;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
+import android.widget.ImageButton;
+
+import java.util.ArrayList;
 
 /**
  * Tests the function of go to my location.
@@ -55,10 +58,23 @@ public class GoToMyLocationTest extends ActivityInstrumentationTestCase2<TrackLi
     instrumentation.waitForIdleSync();
     View myLocation = EndToEndTestUtils.SOLO.getCurrentActivity()
         .findViewById(R.id.map_my_location);
+    // Find the My Location button in another if null.
+    if (myLocation == null) {
+      ArrayList<ImageButton> aa = EndToEndTestUtils.SOLO.getCurrentImageButtons();
+      for (ImageButton imageButton : aa) {
+        if (imageButton.getContentDescription() != null
+            && imageButton.getContentDescription().equals(
+                activityMyTracks.getString(R.string.icon_my_location))) {
+          myLocation = imageButton;
+          break;
+        }
+      }
+    }
     EndToEndTestUtils.SOLO.clickOnView(myLocation);
     if (EndToEndTestUtils.isEmulator) {
       EndToEndTestUtils.SOLO.waitForText(
-          activityMyTracks.getString(R.string.my_location_no_location), 1, EndToEndTestUtils.SHORT_WAIT_TIME);
+          activityMyTracks.getString(R.string.my_location_no_location), 1,
+          EndToEndTestUtils.SHORT_WAIT_TIME);
     } else {
       // TODO How to verify the location is shown on the map.
     }
