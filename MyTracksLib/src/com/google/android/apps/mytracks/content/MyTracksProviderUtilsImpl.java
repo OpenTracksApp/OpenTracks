@@ -172,9 +172,10 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
 
   @Override
   public void deleteAllTracks() {
-    contentResolver.delete(TracksColumns.CONTENT_URI, null, null);
     contentResolver.delete(TrackPointsColumns.CONTENT_URI, null, null);
     contentResolver.delete(WaypointsColumns.CONTENT_URI, null, null);
+    // Delete tracks last since it triggers a database vaccum call 
+    contentResolver.delete(TracksColumns.CONTENT_URI, null, null);
   }
 
   @Override
@@ -188,6 +189,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     }
     contentResolver.delete(WaypointsColumns.CONTENT_URI, WaypointsColumns.TRACKID + "=?",
         new String[] { Long.toString(trackId) });
+    // Delete tracks last since it triggers a database vaccum call
     contentResolver.delete(TracksColumns.CONTENT_URI, TracksColumns._ID + "=?", new String[] {
         Long.toString(trackId) });
   }
