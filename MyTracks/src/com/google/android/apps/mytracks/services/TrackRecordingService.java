@@ -27,11 +27,9 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest.WaypointType;
-import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.services.sensors.SensorManager;
 import com.google.android.apps.mytracks.services.sensors.SensorManagerFactory;
 import com.google.android.apps.mytracks.services.tasks.PeriodicTaskExecutor;
@@ -49,7 +47,6 @@ import com.google.common.annotations.VisibleForTesting;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -836,35 +833,17 @@ public class TrackRecordingService extends Service {
       int pointId = Integer.parseInt(pointUri.getLastPathSegment());
 
       // Update the current track:
-      if (lastRecordedLocation != null
-          && lastRecordedLocation.getLatitude() < 90) {
-        ContentValues values = new ContentValues();
-        TripStatistics stats = statsBuilder.getStatistics();
+      if (lastRecordedLocation != null && lastRecordedLocation.getLatitude() < 90) {
+        TripStatistics tripStatistics = statsBuilder.getStatistics();
+        tripStatistics.setStopTime(System.currentTimeMillis());
+        
         if (recordingTrack.getStartId() < 0) {
-          values.put(TracksColumns.STARTID, pointId);
           recordingTrack.setStartId(pointId);
         }
-        values.put(TracksColumns.STOPID, pointId);
-        values.put(TracksColumns.STOPTIME, System.currentTimeMillis());
-        values.put(TracksColumns.NUMPOINTS,
-            recordingTrack.getNumberOfPoints() + 1);
-        values.put(TracksColumns.MINLAT, stats.getBottom());
-        values.put(TracksColumns.MAXLAT, stats.getTop());
-        values.put(TracksColumns.MINLON, stats.getLeft());
-        values.put(TracksColumns.MAXLON, stats.getRight());
-        values.put(TracksColumns.TOTALDISTANCE, stats.getTotalDistance());
-        values.put(TracksColumns.TOTALTIME, stats.getTotalTime());
-        values.put(TracksColumns.MOVINGTIME, stats.getMovingTime());
-        values.put(TracksColumns.AVGSPEED, stats.getAverageSpeed());
-        values.put(TracksColumns.AVGMOVINGSPEED, stats.getAverageMovingSpeed());
-        values.put(TracksColumns.MAXSPEED, stats.getMaxSpeed());
-        values.put(TracksColumns.MINELEVATION, stats.getMinElevation());
-        values.put(TracksColumns.MAXELEVATION, stats.getMaxElevation());
-        values.put(TracksColumns.ELEVATIONGAIN, stats.getTotalElevationGain());
-        values.put(TracksColumns.MINGRADE, stats.getMinGrade());
-        values.put(TracksColumns.MAXGRADE, stats.getMaxGrade());
-        getContentResolver().update(TracksColumns.CONTENT_URI,
-            values, "_id=" + recordingTrack.getId(), null);
+        recordingTrack.setStopId(pointId);
+        recordingTrack.setNumberOfPoints(recordingTrack.getNumberOfPoints() + 1);
+        recordingTrack.setTripStatistics(tripStatistics);
+        providerUtils.updateTrack(recordingTrack);
         updateCurrentWaypoint();
       }
     } catch (SQLiteException e) {
@@ -882,30 +861,14 @@ public class TrackRecordingService extends Service {
 
   private void updateCurrentWaypoint() {
     if (currentWaypointId >= 0) {
-      ContentValues values = new ContentValues();
-      TripStatistics waypointStats = waypointStatsBuilder.getStatistics();
-      values.put(WaypointsColumns.STARTTIME, waypointStats.getStartTime());
-      values.put(WaypointsColumns.LENGTH, length);
-      values.put(WaypointsColumns.DURATION, System.currentTimeMillis()
-          - statsBuilder.getStatistics().getStartTime());
-      values.put(WaypointsColumns.TOTALDISTANCE,
-          waypointStats.getTotalDistance());
-      values.put(WaypointsColumns.TOTALTIME, waypointStats.getTotalTime());
-      values.put(WaypointsColumns.MOVINGTIME, waypointStats.getMovingTime());
-      values.put(WaypointsColumns.AVGSPEED, waypointStats.getAverageSpeed());
-      values.put(WaypointsColumns.AVGMOVINGSPEED,
-          waypointStats.getAverageMovingSpeed());
-      values.put(WaypointsColumns.MAXSPEED, waypointStats.getMaxSpeed());
-      values.put(WaypointsColumns.MINELEVATION,
-          waypointStats.getMinElevation());
-      values.put(WaypointsColumns.MAXELEVATION,
-          waypointStats.getMaxElevation());
-      values.put(WaypointsColumns.ELEVATIONGAIN,
-          waypointStats.getTotalElevationGain());
-      values.put(WaypointsColumns.MINGRADE, waypointStats.getMinGrade());
-      values.put(WaypointsColumns.MAXGRADE, waypointStats.getMaxGrade());
-      getContentResolver().update(WaypointsColumns.CONTENT_URI,
-          values, "_id=" + currentWaypointId, null);
+      Waypoint waypoint = providerUtils.getWaypoint(currentWaypointId);
+      if (waypoint != null) {
+        waypoint.setLength(length);
+        waypoint.setDuration(
+            System.currentTimeMillis() - statsBuilder.getStatistics().getStartTime());
+        waypoint.setTripStatistics(waypointStatsBuilder.getStatistics());
+        providerUtils.updateWaypoint(waypoint);
+      }
     }
   }
 
@@ -1031,19 +994,14 @@ public class TrackRecordingService extends Service {
     isRecording = false;
     Track recordedTrack = providerUtils.getTrack(recordingTrackId);
     if (recordedTrack != null) {
-      TripStatistics stats = recordedTrack.getTripStatistics();
-      stats.setStopTime(System.currentTimeMillis());
-      stats.setTotalTime(stats.getStopTime() - stats.getStartTime());
-      long lastRecordedLocationId =
-          providerUtils.getLastLocationId(recordingTrackId);
-      ContentValues values = new ContentValues();
+      long lastRecordedLocationId = providerUtils.getLastLocationId(recordingTrackId);
       if (lastRecordedLocationId >= 0 && recordedTrack.getStopId() >= 0) {
-        values.put(TracksColumns.STOPID, lastRecordedLocationId);
+        recordedTrack.setStopId(lastRecordedLocationId);
       }
-      values.put(TracksColumns.STOPTIME, stats.getStopTime());
-      values.put(TracksColumns.TOTALTIME, stats.getTotalTime());
-      getContentResolver().update(TracksColumns.CONTENT_URI, values,
-          "_id=" + recordedTrack.getId(), null);
+      TripStatistics tripStatistics = recordedTrack.getTripStatistics();
+      tripStatistics.setStopTime(System.currentTimeMillis());
+      tripStatistics.setTotalTime(tripStatistics.getStopTime() - tripStatistics.getStartTime());
+      providerUtils.updateTrack(recordedTrack);
     }
     showNotification();
     long recordedTrackId = recordingTrackId;

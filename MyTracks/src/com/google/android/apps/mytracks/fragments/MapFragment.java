@@ -19,11 +19,11 @@ package com.google.android.apps.mytracks.fragments;
 import com.google.android.apps.mytracks.MapOverlay;
 import com.google.android.apps.mytracks.MyTracksApplication;
 import com.google.android.apps.mytracks.TrackDetailActivity;
+import com.google.android.apps.mytracks.content.TrackDataType;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.Factory;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackDataHub;
-import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.stats.TripStatistics;
@@ -420,11 +420,11 @@ public class MapFragment extends Fragment
   private synchronized void resumeTrackDataHub() {
     trackDataHub = ((MyTracksApplication) getActivity().getApplication()).getTrackDataHub();
     trackDataHub.registerTrackDataListener(this, EnumSet.of(
-        ListenerDataType.SELECTED_TRACK_CHANGED,
-        ListenerDataType.WAYPOINT_UPDATES,
-        ListenerDataType.POINT_UPDATES,
-        ListenerDataType.LOCATION_UPDATES,
-        ListenerDataType.COMPASS_UPDATES));
+        TrackDataType.SELECTED_TRACK,
+        TrackDataType.WAYPOINTS_TABLE,
+        TrackDataType.TRACK_POINTS_TABLE,
+        TrackDataType.LOCATION,
+        TrackDataType.COMPASS));
   }
   
   /**
