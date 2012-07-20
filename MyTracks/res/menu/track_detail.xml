@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2011 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+  <item
+    android:icon="@drawable/menu_stop_recording"
+    android:id="@+id/track_detail_stop_recording"
+    android:orderInCategory="1"
+    android:showAsAction="ifRoom"
+    android:title="@string/menu_stop_recording"/>
+  <item
+    android:icon="@drawable/menu_insert_marker"
+    android:id="@+id/track_detail_insert_marker"
+    android:orderInCategory="2"
+    android:showAsAction="ifRoom"
+    android:title="@string/menu_insert_marker"/>
+  <item
+    android:icon="@drawable/menu_play"
+    android:id="@+id/track_detail_play"
+    android:orderInCategory="3"
+    android:showAsAction="ifRoom"
+    android:title="@string/menu_play"/>
+  <item
+    android:icon="@drawable/menu_share"
+    android:id="@+id/track_detail_share"
+    android:orderInCategory="4"
+    android:showAsAction="ifRoom"
+    android:title="@string/menu_share">
+  </item>
+  <item
+    android:icon="@drawable/menu_markers"
+    android:id="@+id/track_detail_markers"
+    android:orderInCategory="5"
+    android:showAsAction="ifRoom"
+    android:title="@string/menu_markers"/>
+  <!-- android:orderInCategory="6" is in map.xml -->
+  <item
+    android:icon="@drawable/menu_voice_frequency"
+    android:id="@+id/track_detail_voice_frequency"
+    android:orderInCategory="7"
+    android:title="@string/menu_voice_frequency"/>
+  <item
+    android:icon="@drawable/menu_split_frequency"
+    android:id="@+id/track_detail_split_frequency"
+    android:orderInCategory="8"
+    android:title="@string/menu_split_frequency"/>
+  <item
+    android:icon="@drawable/menu_send_google"
+    android:id="@+id/track_detail_send_google"
+    android:orderInCategory="9"
+    android:title="@string/menu_send_google"/>
+  <item
+    android:icon="@drawable/menu_save"
+    android:id="@+id/track_detail_save"
+    android:orderInCategory="10"
+    android:title="@string/menu_save">
+    <menu>
+      <item android:id="@+id/track_detail_save_gpx"/>
+      <item android:id="@+id/track_detail_save_kml"/>
+      <item android:id="@+id/track_detail_save_csv"/>
+      <item android:id="@+id/track_detail_save_tcx"/>
+    </menu>
+  </item>
+  <item
+    android:icon="@drawable/menu_edit"
+    android:id="@+id/track_detail_edit"
+    android:orderInCategory="11"
+    android:title="@string/menu_edit"/>
+  <item
+    android:icon="@drawable/menu_delete"
+    android:id="@+id/track_detail_delete"
+    android:orderInCategory="12"
+    android:title="@string/menu_delete"/>
+  <item
+    android:icon="@drawable/menu_sensor_state"
+    android:id="@+id/track_detail_sensor_state"
+    android:orderInCategory="13"
+    android:title="@string/menu_sensor_state"/>
+  <item
+    android:icon="@drawable/menu_settings"
+    android:id="@+id/track_detail_settings"
+    android:orderInCategory="14"
+    android:title="@string/menu_settings"/>
+  <item
+    android:icon="@drawable/menu_help"
+    android:id="@+id/track_detail_help"
+    android:orderInCategory="15"
+    android:title="@string/menu_help"/>
+</menu>
