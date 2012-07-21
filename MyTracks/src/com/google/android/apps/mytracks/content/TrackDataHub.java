@@ -316,7 +316,12 @@ public class TrackDataHub implements DataSourceListener {
             }
           }
         } else if (PreferencesUtils.getKey(context, R.string.selected_track_id_key).equals(key)) {
-          selectedTrackId = PreferencesUtils.getLong(context, R.string.selected_track_id_key);
+          long trackId = PreferencesUtils.getLong(context, R.string.selected_track_id_key);
+          if (trackId == selectedTrackId) {
+            Log.i(TAG, "Not reloading track " + trackId);
+            return;
+          }
+          selectedTrackId = trackId;
           loadDataForAll();
         }
       }

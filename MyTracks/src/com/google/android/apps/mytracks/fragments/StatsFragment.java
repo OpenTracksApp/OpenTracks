@@ -16,7 +16,7 @@
 
 package com.google.android.apps.mytracks.fragments;
 
-import com.google.android.apps.mytracks.MyTracksApplication;
+import com.google.android.apps.mytracks.TrackDetailActivity;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.TrackDataListener;
@@ -255,7 +255,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
    * be accessed by multiple threads.
    */
   private synchronized void resumeTrackDataHub() {
-    trackDataHub = ((MyTracksApplication) getActivity().getApplication()).getTrackDataHub();
+    trackDataHub = ((TrackDetailActivity) getActivity()).getTrackDataHub();
     trackDataHub.registerTrackDataListener(this, EnumSet.of(
         TrackDataType.SELECTED_TRACK,
         TrackDataType.TRACKS_TABLE,

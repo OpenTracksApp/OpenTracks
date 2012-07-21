@@ -137,8 +137,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE)
         .registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
-    trackDataHub = ((MyTracksApplication) getApplication()).getTrackDataHub();
-    trackDataHub.loadTrack(trackId);
+    trackDataHub = TrackDataHub.newInstance(this);
 
     mapViewContainer = getLayoutInflater().inflate(R.layout.map, null);
     ApiAdapterFactory.getApiAdapter().disableHardwareAccelerated(mapViewContainer);
@@ -167,19 +166,19 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   public void onNewIntent(Intent intent) {
     setIntent(intent);
     handleIntent(intent);
-    trackDataHub.loadTrack(trackId);
     showMarker();
   }
 
   @Override
   protected void onStart() {
     super.onStart();
-    //trackDataHub.start();
+    trackDataHub.start();
   }
 
   @Override
   protected void onResume() {
     super.onResume();
+    trackDataHub.loadTrack(trackId);
     TrackRecordingServiceConnectionUtils.resume(this, trackRecordingServiceConnection);
     setTitle(trackId == PreferencesUtils.getLong(this, R.string.recording_track_id_key));
   }
@@ -193,7 +192,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   @Override
   protected void onStop() {
     super.onStop();
-    //trackDataHub.stop();
+    trackDataHub.stop();
   }
 
   @Override
@@ -350,10 +349,17 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   }
 
   /**
-   * @return the mapViewContainer
+   * Gets the map view container.
    */
   public View getMapViewContainer() {
     return mapViewContainer;
+  }
+
+  /**
+   * Gets the {@link TrackDataHub}.
+   */
+  public TrackDataHub getTrackDataHub() {
+    return trackDataHub;
   }
 
   /**

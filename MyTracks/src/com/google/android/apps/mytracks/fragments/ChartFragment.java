@@ -18,7 +18,7 @@ package com.google.android.apps.mytracks.fragments;
 
 import com.google.android.apps.mytracks.ChartView;
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.MyTracksApplication;
+import com.google.android.apps.mytracks.TrackDetailActivity;
 import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
@@ -358,7 +358,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
    * accessed by multiple threads.
    */
   private synchronized void resumeTrackDataHub() {
-    trackDataHub = ((MyTracksApplication) getActivity().getApplication()).getTrackDataHub();
+    trackDataHub = ((TrackDetailActivity) getActivity()).getTrackDataHub();
     trackDataHub.registerTrackDataListener(this, EnumSet.of(
         TrackDataType.SELECTED_TRACK,
         TrackDataType.TRACKS_TABLE,
