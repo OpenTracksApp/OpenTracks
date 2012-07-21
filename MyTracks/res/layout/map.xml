@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_height="fill_parent"
+  android:layout_width="fill_parent" >
+  <!-- apiKey corresponds to certificate md5: 81:DF:A2:63:53:C7:6B:1E:6C:24:62:D4:91:1C:36:3A -->
+  <com.google.android.maps.MapView
+    android:apiKey="0TXoRmxTinrZKQ9JSazj-9A34XX6_lXsRvTpXWA"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:id="@+id/map_view"
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent" />
+  <TextView
+    android:background="@color/warning_background"
+    android:drawableLeft="@drawable/warning"
+    android:gravity="center"
+    android:id="@+id/map_message"
+    android:layout_alignParentTop="true"
+    android:layout_width="fill_parent"
+    android:padding="8dp"
+    android:textColor="@android:color/primary_text_dark"
+    android:visibility="gone"
+    style="@style/TextMedium.WithIcon" />
+  <ImageButton
+    android:background="@drawable/my_location"
+    android:contentDescription="@string/icon_my_location"
+    android:id="@+id/map_my_location"
+    android:layout_below="@id/map_message"
+    android:layout_alignParentRight="true"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_width="wrap_content" />
+</RelativeLayout>
