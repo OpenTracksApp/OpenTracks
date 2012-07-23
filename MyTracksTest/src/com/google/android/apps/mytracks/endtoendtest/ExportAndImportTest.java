@@ -91,7 +91,6 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     EndToEndTestUtils.SOLO
         .clickOnText(String.format(activityMyTracks.getString(R.string.menu_save_format),
             EndToEndTestUtils.GPX.toUpperCase()));
-    EndToEndTestUtils.rotateAllActivities();
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.sd_card_save_success));
     EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     // Check export file.
@@ -113,6 +112,7 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     // gpxFilesNumber;
     EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     instrumentation.waitForIdleSync();
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.trackName));
     assertEquals(trackNumber + gpxFilesNumber, EndToEndTestUtils.SOLO.getCurrentListViews().get(0)
         .getCount());
 

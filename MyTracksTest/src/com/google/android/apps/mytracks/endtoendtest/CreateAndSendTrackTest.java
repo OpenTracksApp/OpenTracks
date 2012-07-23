@@ -117,14 +117,16 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     
     // If no account is binded with this device.
     if (EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.send_google_no_account_title), 1, 10000)) {
+        .getString(R.string.send_google_no_account_title), 1, EndToEndTestUtils.SHORT_WAIT_TIME)) {
       EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+    } else if (EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+        .getString(R.string.send_google_no_account_permission), 1, EndToEndTestUtils.SHORT_WAIT_TIME)) {
     } else {
       assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
           .getString(R.string.generic_progress_title)));
       // Waiting the send is finish.
       while (EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-          .getString(R.string.generic_progress_title), 1, 2000)) {
+          .getString(R.string.generic_progress_title), 1, EndToEndTestUtils.SHORT_WAIT_TIME)) {
       }
       
       // Check whether the result dialog is display. 
@@ -240,9 +242,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
    */
   public void testTrackStartTime() {
     // Delete all track first.
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete_all), true);
-    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
-    
+    EndToEndTestUtils.deleteAllTracks(); 
     // Reset all settings.
     EndToEndTestUtils.resetAllSettings(activityMyTracks, false);
     
@@ -256,13 +256,13 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.SOLO.goBack();
     instrumentation.waitForIdleSync();
-    assertFalse(EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.RELATIVE_STARTTIME_POSTFIX, 1, 5000));
+    assertFalse(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.RELATIVE_STARTTIME_POSTFIX, 1, false, true));
 
     // Test should show relative time for createSimpleTrack would save a track
     // name that is different with the start time.
     EndToEndTestUtils.createSimpleTrack(2);
     EndToEndTestUtils.SOLO.goBack();
-    assertTrue(EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.RELATIVE_STARTTIME_POSTFIX, 1, 5000));
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.RELATIVE_STARTTIME_POSTFIX, 1, EndToEndTestUtils.NORMAL_WAIT_TIME));
   }
   
   /**
@@ -306,7 +306,10 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
       EndToEndTestUtils.SOLO.goBack();
     }
     EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_add));
-    assertTrue(EndToEndTestUtils.SOLO.searchText(WAYPOINT_NAME));
+    if (!EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.marker_add_error),
+        1, EndToEndTestUtils.SHORT_WAIT_TIME)) {
+      assertTrue(EndToEndTestUtils.SOLO.searchText(WAYPOINT_NAME));
+    }
 
     EndToEndTestUtils.SOLO.goBack();
   }

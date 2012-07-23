@@ -1,8 +1,22 @@
+/*
+ * Copyright 2011 Google Inc.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
+
 package com.google.android.apps.mytracks.content;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
-
-import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -10,7 +24,6 @@ import android.database.ContentObserver;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -23,243 +36,281 @@ import java.util.EnumSet;
 import java.util.Set;
 
 /**
- * External data source manager, which converts system-level events into My Tracks data events.
- *
+ * Data source manager. Creates observers/listeners and manages their
+ * registration with {@link DataSource}. The observers/listeners calls
+ * {@link DataSourceListener} when data changes.
+ * 
  * @author Rodrigo Damazio
  */
-class DataSourceManager {
+public class DataSourceManager {
 
-  /** Single interface for receiving system events that were registered for. */
-  interface DataSourceListener {
-    void notifyTrackUpdated();
-    void notifyWaypointUpdated();
-    void notifyPointsUpdated();
-    void notifyPreferenceChanged(String key);
-    void notifyLocationProviderEnabled(boolean enabled);
-    void notifyLocationProviderAvailable(boolean available);
-    void notifyLocationChanged(Location loc);
-    void notifyHeadingChanged(float heading);
-  }
+  /**
+   * Observer when the tracks table is updated.
+   * 
+   * @author Jimmy Shih
+   */
+  private class TracksTableObserver extends ContentObserver {
 
-  private final DataSourceListener listener;
-
-  /** Observer for when the tracks table is updated. */
-  private class TrackObserver extends ContentObserver {
-    public TrackObserver() {
-      super(contentHandler);
+    public TracksTableObserver() {
+      super(handler);
     }
 
     @Override
     public void onChange(boolean selfChange) {
-      listener.notifyTrackUpdated();
+      dataSourceListener.notifyTracksTableUpdated();
     }
   }
 
-  /** Observer for when the waypoints table is updated. */
-  private class WaypointObserver extends ContentObserver {
-    public WaypointObserver() {
-      super(contentHandler);
+  /**
+   * Observer when the waypoints table is updated.
+   * 
+   * @author Jimmy Shih
+   */
+  private class WaypointsTableObserver extends ContentObserver {
+
+    public WaypointsTableObserver() {
+      super(handler);
     }
 
     @Override
     public void onChange(boolean selfChange) {
-      listener.notifyWaypointUpdated();
+      dataSourceListener.notifyWaypointsTableUpdated();
     }
   }
 
-  /** Observer for when the points table is updated. */
-  private class PointObserver extends ContentObserver {
-    public PointObserver() {
-      super(contentHandler);
+  /**
+   * Observer when the track points table is updated.
+   * 
+   * @author Jimmy Shih
+   */
+  private class TrackPointsTableObserver extends ContentObserver {
+
+    public TrackPointsTableObserver() {
+      super(handler);
     }
 
     @Override
     public void onChange(boolean selfChange) {
-      listener.notifyPointsUpdated();
+      dataSourceListener.notifyTrackPointsTableUpdated();
     }
   }
 
-  /** Listener for when preferences change. */
-  private class HubSharedPreferenceListener implements OnSharedPreferenceChangeListener {
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-      listener.notifyPreferenceChanged(key);
-    }
-  }
-
-  /** Listener for the current location (independent from track data). */
-  private class CurrentLocationListener implements
-      LocationListener {
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-      if (!LocationManager.GPS_PROVIDER.equals(provider)) return;
-
-      listener.notifyLocationProviderAvailable(status == LocationProvider.AVAILABLE);
-    }
+  /**
+   * Listener for location changes.
+   * 
+   * @author Jimmy Shih
+   */
+  private class CurrentLocationListener implements LocationListener {
 
     @Override
-    public void onProviderEnabled(String provider) {
-      if (!LocationManager.GPS_PROVIDER.equals(provider)) return;
-
-      listener.notifyLocationProviderEnabled(true);
+    public void onLocationChanged(Location location) {
+      dataSourceListener.notifyLocationChanged(location);
     }
 
     @Override
     public void onProviderDisabled(String provider) {
-      if (!LocationManager.GPS_PROVIDER.equals(provider)) return;
-
-      listener.notifyLocationProviderEnabled(false);
+      if (!LocationManager.GPS_PROVIDER.equals(provider)) {
+        return;
+      }
+      dataSourceListener.notifyLocationProviderEnabled(false);
     }
 
     @Override
-    public void onLocationChanged(Location location) {
-      listener.notifyLocationChanged(location);
+    public void onProviderEnabled(String provider) {
+      if (!LocationManager.GPS_PROVIDER.equals(provider)) {
+        return;
+      }
+      dataSourceListener.notifyLocationProviderEnabled(true);
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+      if (!LocationManager.GPS_PROVIDER.equals(provider)) {
+        return;
+      }
+      dataSourceListener.notifyLocationProviderAvailable(status == LocationProvider.AVAILABLE);
     }
   }
 
-  /** Listener for compass readings. */
-  private class CompassListener implements
-      SensorEventListener {
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-      listener.notifyHeadingChanged(event.values[0]);
-    }
+  /**
+   * Listener for compass changes.
+   * 
+   * @author Jimmy Shih
+   */
+  private class CompassListener implements SensorEventListener {
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
       // Do nothing
     }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+      dataSourceListener.notifyHeadingChanged(event.values[0]);
+    }
   }
 
-  /** Wrapper for registering internal listeners. */
-  private final DataSourcesWrapper dataSources;
+  /**
+   * Listener for preference changes.
+   * 
+   * @author Jimmy Shih
+   */
+  private class PreferenceListener implements OnSharedPreferenceChangeListener {
 
-  // Internal listeners (to receive data from the system)
-  private final Set<ListenerDataType> registeredListeners =
-      EnumSet.noneOf(ListenerDataType.class);
-  private final Handler contentHandler;
-  private final ContentObserver pointObserver;
-  private final ContentObserver waypointObserver;
-  private final ContentObserver trackObserver;
-  private final LocationListener locationListener;
-  private final OnSharedPreferenceChangeListener preferenceListener;
-  private final SensorEventListener compassListener;
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+      dataSourceListener.notifyPreferenceChanged(key);
+    }
+  }
 
-  DataSourceManager(DataSourceListener listener, DataSourcesWrapper dataSources) {
-    this.listener = listener;
-    this.dataSources = dataSources;
+  private final DataSource dataSource;
+  private final DataSourceListener dataSourceListener;
 
-    contentHandler = new Handler();
-    pointObserver = new PointObserver();
-    waypointObserver = new WaypointObserver();
-    trackObserver = new TrackObserver();
+  // Registered listeners
+  private final Set<TrackDataType> registeredListeners = EnumSet.noneOf(TrackDataType.class);
+  
+  private final Handler handler;
+  private final TracksTableObserver tracksTableObserver;
+  private final WaypointsTableObserver waypointsTableObserver;
+  private final TrackPointsTableObserver trackPointsTableObserver;
+  private final CurrentLocationListener currentLocationListener;
+  private final CompassListener compassListener;
+  private final PreferenceListener preferenceListener;
 
+  public DataSourceManager(DataSource dataSource, DataSourceListener dataSourceListener) {
+    this.dataSource = dataSource;
+    this.dataSourceListener = dataSourceListener;
+
+    handler = new Handler();
+    tracksTableObserver = new TracksTableObserver();
+    waypointsTableObserver = new WaypointsTableObserver();
+    trackPointsTableObserver = new TrackPointsTableObserver();
+    currentLocationListener = new CurrentLocationListener();
     compassListener = new CompassListener();
-    locationListener = new CurrentLocationListener();
-    preferenceListener = new HubSharedPreferenceListener();
+    preferenceListener = new PreferenceListener();
   }
 
-  /** Updates the internal (sensor, position, etc) listeners. */
-  void updateAllListeners(EnumSet<ListenerDataType> externallyNeededListeners) {
-    EnumSet<ListenerDataType> neededListeners = EnumSet.copyOf(externallyNeededListeners);
+  /**
+   * Updates listeners with data source.
+   * 
+   * @param listeners the listeners
+   */
+  public void updateListeners(EnumSet<TrackDataType> listeners) {
+    EnumSet<TrackDataType> neededListeners = EnumSet.copyOf(listeners);
 
-    // Special case - map sampled-out points type to points type since they
-    // correspond to the same internal listener.
-    if (neededListeners.contains(ListenerDataType.SAMPLED_OUT_POINT_UPDATES)) {
-      neededListeners.remove(ListenerDataType.SAMPLED_OUT_POINT_UPDATES);
-      neededListeners.add(ListenerDataType.POINT_UPDATES);
+    /*
+     * Map SAMPLED_OUT_POINT_UPDATES to POINT_UPDATES since they correspond to
+     * the same internal listener
+     */
+    if (neededListeners.contains(TrackDataType.SAMPLED_OUT_TRACK_POINTS)) {
+      neededListeners.remove(TrackDataType.SAMPLED_OUT_TRACK_POINTS);
+      neededListeners.add(TrackDataType.TRACK_POINTS_TABLE);
     }
 
-    Log.d(TAG, "Updating internal listeners to types " + neededListeners);
+    Log.d(TAG, "Updating listeners " + neededListeners);
 
     // Unnecessary = registered - needed
-    Set<ListenerDataType> unnecessaryListeners = EnumSet.copyOf(registeredListeners);
+    Set<TrackDataType> unnecessaryListeners = EnumSet.copyOf(registeredListeners);
     unnecessaryListeners.removeAll(neededListeners);
 
     // Missing = needed - registered
-    Set<ListenerDataType> missingListeners = EnumSet.copyOf(neededListeners);
+    Set<TrackDataType> missingListeners = EnumSet.copyOf(neededListeners);
     missingListeners.removeAll(registeredListeners);
 
-    // Remove all unnecessary listeners.
-    for (ListenerDataType type : unnecessaryListeners) {
-      unregisterListener(type);
+    // Remove unnecessary listeners
+    for (TrackDataType trackDataType : unnecessaryListeners) {
+      unregisterListener(trackDataType);
     }
 
-    // Add all missing listeners.
-    for (ListenerDataType type : missingListeners) {
-      registerListener(type);
+    // Add missing listeners
+    for (TrackDataType trackDataType : missingListeners) {
+      registerListener(trackDataType);
     }
 
-    // Now all needed types are registered.
+    // Update registered listeners
     registeredListeners.clear();
     registeredListeners.addAll(neededListeners);
   }
 
-  private void registerListener(ListenerDataType type) {
-    switch (type) {
-      case COMPASS_UPDATES: {
-        // Listen to compass
-        Sensor compass = dataSources.getSensor(Sensor.TYPE_ORIENTATION);
-        if (compass != null) {
-          Log.d(TAG, "TrackDataHub: Now registering sensor listener.");
-          dataSources.registerSensorListener(compassListener, compass, SensorManager.SENSOR_DELAY_UI);
-        }
+  /**
+   * Registers a listener with data source.
+   * 
+   * @param trackDataType the listener data type
+   */
+  private void registerListener(TrackDataType trackDataType) {
+    switch (trackDataType) {
+      case SELECTED_TRACK:
+        // Do nothing
         break;
-      }
-      case LOCATION_UPDATES:
-        dataSources.requestLocationUpdates(locationListener);
+      case TRACKS_TABLE:
+        dataSource.registerContentObserver(TracksColumns.CONTENT_URI, tracksTableObserver);
         break;
-      case POINT_UPDATES:
-        dataSources.registerContentObserver(
-            TrackPointsColumns.CONTENT_URI, false, pointObserver);
+      case WAYPOINTS_TABLE:
+        dataSource.registerContentObserver(WaypointsColumns.CONTENT_URI, waypointsTableObserver);
         break;
-      case TRACK_UPDATES:
-        dataSources.registerContentObserver(TracksColumns.CONTENT_URI, false, trackObserver);
+      case TRACK_POINTS_TABLE:
+        dataSource.registerContentObserver(
+            TrackPointsColumns.CONTENT_URI, trackPointsTableObserver);
         break;
-      case WAYPOINT_UPDATES:
-        dataSources.registerContentObserver(
-            WaypointsColumns.CONTENT_URI, false, waypointObserver);
+      case SAMPLED_OUT_TRACK_POINTS:
+        // Do nothing. SAMPLED_OUT_POINT_UPDATES is mapped to POINT_UPDATES.
         break;
-      case DISPLAY_PREFERENCES:
-        dataSources.registerOnSharedPreferenceChangeListener(preferenceListener);
+      case LOCATION:
+        dataSource.registerLocationListener(currentLocationListener);
         break;
-      case SAMPLED_OUT_POINT_UPDATES:
-        throw new IllegalArgumentException("Should have been mapped to point updates");
+      case COMPASS:
+        dataSource.registerCompassListener(compassListener);
+        break;
+      case PREFERENCE:
+        dataSource.registerOnSharedPreferenceChangeListener(preferenceListener);
+        break;
+      default:
+        break;
     }
   }
 
-  private void unregisterListener(ListenerDataType type) {
-    switch (type) {
-      case COMPASS_UPDATES:
-        dataSources.unregisterSensorListener(compassListener);
+  /**
+   * Unregisters a listener with data source.
+   * 
+   * @param trackDataType listener data type
+   */
+  private void unregisterListener(TrackDataType trackDataType) {
+    switch (trackDataType) {
+      case SELECTED_TRACK:
+        // Do nothing
         break;
-      case LOCATION_UPDATES:
-        dataSources.removeLocationUpdates(locationListener);
+      case TRACKS_TABLE:
+        dataSource.unregisterContentObserver(tracksTableObserver);
         break;
-      case POINT_UPDATES:
-        dataSources.unregisterContentObserver(pointObserver);
+      case WAYPOINTS_TABLE:
+        dataSource.unregisterContentObserver(waypointsTableObserver);
         break;
-      case TRACK_UPDATES:
-        dataSources.unregisterContentObserver(trackObserver);
+      case TRACK_POINTS_TABLE:
+        dataSource.unregisterContentObserver(trackPointsTableObserver);
         break;
-      case WAYPOINT_UPDATES:
-        dataSources.unregisterContentObserver(waypointObserver);
+      case SAMPLED_OUT_TRACK_POINTS:
+        // Do nothing. SAMPLED_OUT_POINT_UPDATES is mapped to POINT_UPDATES.
         break;
-      case DISPLAY_PREFERENCES:
-        dataSources.unregisterOnSharedPreferenceChangeListener(preferenceListener);
+      case LOCATION:
+        dataSource.unregisterLocationListener(currentLocationListener);
         break;
-      case SAMPLED_OUT_POINT_UPDATES:
-        throw new IllegalArgumentException("Should have been mapped to point updates");
+      case COMPASS:
+        dataSource.unregisterCompassListener(compassListener);
+        break;
+      case PREFERENCE:
+        dataSource.unregisterOnSharedPreferenceChangeListener(preferenceListener);
+        break;
+      default:
+        break;
     }
   }
 
-  /** Unregisters all internal (sensor, position, etc.) listeners. */
-  void unregisterAllListeners() {
-    dataSources.removeLocationUpdates(locationListener);
-    dataSources.unregisterSensorListener(compassListener);
-    dataSources.unregisterContentObserver(trackObserver);
-    dataSources.unregisterContentObserver(waypointObserver);
-    dataSources.unregisterContentObserver(pointObserver);
-    dataSources.unregisterOnSharedPreferenceChangeListener(preferenceListener);
+  /**
+   * Unregisters all listeners with data source.
+   */
+  public void unregisterAllListeners() {
+    for (TrackDataType trackDataType : TrackDataType.values()) {
+      unregisterListener(trackDataType);
+    }
   }
 }
