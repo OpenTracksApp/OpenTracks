@@ -23,10 +23,13 @@ import com.jayway.android.robotium.solo.Solo;
 
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -80,6 +83,12 @@ public class EndToEndTestUtils {
   public static String VIEW_MODE = "";
   public static String ONE_KM = "";
   public static String ONE_MILE = "";
+  
+  public static int SHORT_WAIT_TIME = 2000;
+  public static int NORMAL_WAIT_TIME = 8000;
+  public static int LONG_WAIT_TIME = 15000;
+  public static int SUPER_LONG_WAIT_TIME = 100000;
+  
   static {
     RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("es", "mins ago");
     RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("de", "Minuten");
@@ -202,16 +211,17 @@ public class EndToEndTestUtils {
         verifyFirstLaunch();
       } else if (SOLO.waitForText(
       // After reset setting, welcome page will show again.
-          activityMytracks.getString(R.string.welcome_title), 0, 500)) {
+          activityMytracks.getString(R.string.welcome_title), 0, SHORT_WAIT_TIME)) {
         resetPreferredUnits();
       }
       checkLanguage();
       isCheckedFirstLaunch = true;
       setHasActionBar();
+      deleteAllTracks();
       resetAllSettings(activityMyTracks, false);
     } else if (SOLO.waitForText(
         // After reset setting, welcome page will show again.
-        activityMytracks.getString(R.string.welcome_title), 0, 500)) {
+        activityMytracks.getString(R.string.welcome_title), 0, SHORT_WAIT_TIME)) {
       resetPreferredUnits();
     }
     
@@ -304,6 +314,7 @@ public class EndToEndTestUtils {
     if (isTrackListEmpty(!showTrackList)) {
       // Create a simple track.
       createSimpleTrack(gpsNumber);
+      instrumentation.waitForIdleSync();
       if (showTrackList) {
         SOLO.goBack();
       }
@@ -323,7 +334,7 @@ public class EndToEndTestUtils {
       }
       SOLO.clickOnView(startButton);
     } else {
-      showMoreMenuItem();
+      showMenuItem();
       if (!SOLO.searchText(activityMytracks.getString(R.string.menu_record_track))) {
         // Check if in TrackDetailActivity.
         if (SOLO.searchText(activityMytracks.getString(R.string.menu_play))) {
@@ -331,7 +342,7 @@ public class EndToEndTestUtils {
         } else {
           // In case a track is recording.
           stopRecording(true);
-          showMoreMenuItem();
+          showMenuItem();
         }
       }
       instrumentation.waitForIdleSync();
@@ -350,7 +361,7 @@ public class EndToEndTestUtils {
       return getButtonOnScreen(activityMytracks
         .getString(R.string.menu_record_track), false, false) == null; 
     }
-    showMoreMenuItem();
+    showMenuItem();
     if (SOLO.searchText(activityMytracks.getString(R.string.menu_record_track))
         || SOLO.searchText(activityMytracks.getString(R.string.menu_play))) {
       SOLO.goBack();
@@ -369,7 +380,7 @@ public class EndToEndTestUtils {
     if (hasActionBar) {
       getButtonOnScreen(activityMytracks.getString(R.string.menu_stop_recording), false, true);
     } else {
-      showMoreMenuItem();
+      showMenuItem();
       instrumentation.waitForIdleSync();
       SOLO.clickOnText(activityMytracks.getString(R.string.menu_stop_recording));
     }
@@ -382,11 +393,7 @@ public class EndToEndTestUtils {
       SOLO.sendKey(KeyEvent.KEYCODE_DEL);
       SOLO.enterText(0, trackName);
       SOLO.enterText(1, DEFAULTACTIVITY);
-      if(!isEmulator) {
-        // Close soft keyboard.
-        SOLO.goBack();
-      }
-      SOLO.clickLongOnText(activityMytracks.getString(R.string.generic_save));
+      SOLO.clickOnText(activityMytracks.getString(R.string.generic_save));
       instrumentation.waitForIdleSync();
     }
   }
@@ -405,7 +412,17 @@ public class EndToEndTestUtils {
       }
     }
   }
-
+  
+  /**
+   * Deletes all tracks. This method should be call when the TracksListActivity
+   * is shown.
+   */
+  static void deleteAllTracks() {
+    EndToEndTestUtils.findMenuItem(activityMytracks.getString(R.string.menu_delete_all), true);
+    EndToEndTestUtils
+        .getButtonOnScreen(activityMytracks.getString(R.string.generic_ok), true, true);
+  }
+  
   /**
    * Gets a kind of exported files.
    * 
@@ -478,7 +495,7 @@ public class EndToEndTestUtils {
     if (startButton != null || stopButton != null) {
       hasActionBar = true;
     } else {
-      showMoreMenuItem();
+      showMenuItem();
       if (SOLO.searchText(activityMytracks.getString(R.string.menu_record_track))
           || SOLO.searchText(activityMytracks.getString(R.string.menu_stop_recording))) {
         hasActionBar = false;
@@ -502,11 +519,12 @@ public class EndToEndTestUtils {
    * Rotates all activities.
    */
   static void rotateAllActivities() {
-    ArrayList<Activity> allActivities = SOLO.getAllOpenedActivities();
-    for (Activity activity : allActivities) {
-      rotateActivity(activity);
+    if (hasActionBar) {
+      ArrayList<Activity> allActivities = SOLO.getAllOpenedActivities();
+      for (Activity activity : allActivities) {
+        rotateActivity(activity);
+      }
     }
-
     instrumentation.waitForIdleSync();
   }
 
@@ -517,9 +535,11 @@ public class EndToEndTestUtils {
    * @param click true means need click this menu
    * @return true if find this menu
    */
-  static boolean findMenuItem(String menuName, boolean click) {
-    boolean findResult = false;
-
+  static boolean findMenuItem(String menuName, boolean click) {boolean findResult = false;
+  boolean isMoreMenuOpened = false;
+  
+  // ICS phone.
+  if(hasActionBar) {
     // Firstly find in action bar.
     Button button = getButtonOnScreen(menuName, false, false);
     if (button != null) {
@@ -530,36 +550,72 @@ public class EndToEndTestUtils {
       }
       return findResult;
     }
-
-    showMoreMenuItem();
+    showMenuItem();
+    findResult = SOLO.searchText(menuName);
+  } else {
+    // Non-ICS phone.
+    SOLO.sendKey(KeyEvent.KEYCODE_MENU);
     if (SOLO.searchText(menuName)) {
       findResult = true;
     } else if (SOLO.searchText(MENU_MORE)) {
       SOLO.clickOnText(MENU_MORE);
       findResult = SOLO.searchText(menuName);
+      isMoreMenuOpened = true;
     }
-
-    if (findResult && click) {
-      SOLO.clickOnText(menuName);
-      instrumentation.waitForIdleSync();
-    } else {
+  }
+  
+  if (findResult && click) {
+    SOLO.clickOnText(menuName);
+    instrumentation.waitForIdleSync();
+  } else {
+    // Quit more menu list if opened.
+    if (isMoreMenuOpened) {
       SOLO.goBack();
     }
-    return findResult;
+    // Quit menu list.
+    SOLO.goBack();
   }
+  return findResult;
+}
 
   /**
-   * Gets more menu items operation is different for different Android OS.
+   * Show menu item list.
    */
-  public static void showMoreMenuItem() {
+  public static void showMenuItem() {
+    showMenuItem(0);
+  }
+  
+  /**
+   * Gets more menu items operation is different for different Android OS. When
+   * get overflow button view on action, it usually be able to click. But in
+   * some situation, will meet an error when click it. So catch it and try
+   * again. In most situation, the second click will be pass.
+   * 
+   * @param depth control the depth of recursion to prevent dead circulation
+   */
+  private static void showMenuItem(int depth) {
+    // ICS phone.
     if (hasActionBar) {
+      instrumentation.waitForIdleSync();
       View moreButton = getMoreOptionView();
+      // ICS phone without menu key.
       if (moreButton != null) {
-        SOLO.clickOnView(moreButton);
+        try {
+          SOLO.clickOnView(moreButton);
+        } catch (Throwable e) {
+          if (depth < 5 && e.getMessage().indexOf("Click can not be completed") > -1) {
+            showMenuItem(depth++);
+          }
+        }
         return;
-      } 
+      } else {
+        // ICS phone with menu key.
+        SOLO.sendKey(KeyEvent.KEYCODE_MENU);
+      }
+    } else {
+      // Non-ICS phone with menu key.
+      SOLO.sendKey(KeyEvent.KEYCODE_MENU);
     }
-    SOLO.sendKey(KeyEvent.KEYCODE_MENU);
   }
   
   /**
@@ -628,6 +684,16 @@ public class EndToEndTestUtils {
     if (!keepInSettingList) {
       SOLO.goBack();
     }
+  }
+  
+  /**
+   * Hides soft key board when input text in an exit text.
+   * @param myEditText
+   * @param context
+   */
+  public static void hideSoftKeyBoard(EditText myEditText, Context context) {
+    InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+    imm.hideSoftInputFromWindow(myEditText.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
   }
 
 }

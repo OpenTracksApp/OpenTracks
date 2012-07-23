@@ -280,13 +280,12 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     // Changes the setting of default activity.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
         .getString(R.string.settings_recording_default_activity));
+    EndToEndTestUtils.hideSoftKeyBoard(EndToEndTestUtils.SOLO.getEditText(0),
+        activityMyTracks.getApplicationContext());
     EndToEndTestUtils.SOLO.enterText(0, EndToEndTestUtils.DEFAULTACTIVITY);
-    if(!EndToEndTestUtils.isEmulator) {
-      // Close soft keyboard.
-      EndToEndTestUtils.SOLO.goBack();
-    }
-    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
-    
+    EndToEndTestUtils
+        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.SOLO.goBack();
 
@@ -298,7 +297,6 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
         R.string.track_name_format).split(" ")[0]));
     assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.DEFAULTACTIVITY));
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_save));
-
   }
 
   @Override
