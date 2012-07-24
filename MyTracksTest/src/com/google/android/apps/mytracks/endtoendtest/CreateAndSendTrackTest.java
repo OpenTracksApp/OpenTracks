@@ -113,33 +113,38 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
       }
     }
     instrumentation.waitForIdleSync();
-    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.send_google_send_now), true, true);
-    
+    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.send_google_send_now),
+        true, true);
+
     // If no account is binded with this device.
-    if (EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.send_google_no_account_title), 1, EndToEndTestUtils.SHORT_WAIT_TIME)) {
-      EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
-    } else if (EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.send_google_no_account_permission), 1, EndToEndTestUtils.SHORT_WAIT_TIME)) {
-    } else {
+    if (EndToEndTestUtils.SOLO.waitForText(
+        activityMyTracks.getString(R.string.send_google_no_account_title), 1,
+        EndToEndTestUtils.SHORT_WAIT_TIME)) {
+      EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true,
+          true);
+    } else if (EndToEndTestUtils.SOLO.waitForText(
+        activityMyTracks.getString(R.string.send_google_no_account_permission), 1,
+        EndToEndTestUtils.SHORT_WAIT_TIME)) {} else {
       assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
           .getString(R.string.generic_progress_title)));
       // Waiting the send is finish.
-      while (EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-          .getString(R.string.generic_progress_title), 1, EndToEndTestUtils.SHORT_WAIT_TIME)) {
-      }
-      
-      // Check whether the result dialog is display. 
+      while (EndToEndTestUtils.SOLO.waitForText(
+          activityMyTracks.getString(R.string.generic_progress_title), 1,
+          EndToEndTestUtils.SHORT_WAIT_TIME)) {}
+
+      // Check whether the result dialog is display.
       assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
           .getString(R.string.share_track_share_url)));
-      EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+      EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true,
+          true);
 
-      // Check whether all data is correct on Google Map, Documents, and Spreadsheet.
+      // Check whether all data is correct on Google Map, Documents, and
+      // Spreadsheet.
       assertTrue(GoogleUtils.deleteMap(EndToEndTestUtils.trackName, activityMyTracks));
       assertTrue(GoogleUtils.searchFusionTableByTitle(EndToEndTestUtils.TRACK_NAME_PREFIX,
           activityMyTracks));
-      assertTrue(GoogleUtils.searchTrackTitleInSpreadsheet(EndToEndTestUtils.trackName,
-          activityMyTracks, GoogleUtils.SPREADSHEET_NAME, true));
+      assertTrue(GoogleUtils
+          .deleteTrackInSpreadSheet(EndToEndTestUtils.trackName, activityMyTracks));
       assertTrue(GoogleUtils.dropFusionTables(EndToEndTestUtils.trackName, activityMyTracks));
     }
 
@@ -181,6 +186,23 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     assertTrue(EndToEndTestUtils.SOLO.searchText(newTrackName));
     assertTrue(EndToEndTestUtils.SOLO.searchText(newDesc));
   }
+  
+  /**
+   * Checks the voice frequency and split frequency menus.
+   */
+  public void testFrequencyMenu() {
+    EndToEndTestUtils.startRecording();
+    assertTrue(EndToEndTestUtils.findMenuItem(
+        activityMyTracks.getString(R.string.menu_voice_frequency), false));
+    assertTrue(EndToEndTestUtils.findMenuItem(
+        activityMyTracks.getString(R.string.menu_split_frequency), false));
+    EndToEndTestUtils.stopRecording(true);
+    
+    assertFalse(EndToEndTestUtils.findMenuItem(
+        activityMyTracks.getString(R.string.menu_voice_frequency), false));
+    assertFalse(EndToEndTestUtils.findMenuItem(
+        activityMyTracks.getString(R.string.menu_split_frequency), false));
+  }
 
   /**
    * Creates one track with a two locations, a way point and a statistics point.
@@ -195,6 +217,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
       assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks
           .getString(R.string.icon_recording)));
     }
+    
     createWaypoint();
     EndToEndTestUtils.sendGps(2);
     // Back to tracks list.
@@ -204,17 +227,15 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     EndToEndTestUtils.stopRecording(false);
     EndToEndTestUtils.trackName = EndToEndTestUtils.TRACK_NAME_PREFIX + System.currentTimeMillis();
     EndToEndTestUtils.SOLO.enterText(0, EndToEndTestUtils.trackName);
-    EndToEndTestUtils.SOLO.enterText(0, EndToEndTestUtils.DEFAULTACTIVITY);
-    if(!EndToEndTestUtils.isEmulator) {
-      // Close soft keyboard.
-      EndToEndTestUtils.SOLO.goBack();
-    }
+    EndToEndTestUtils.SOLO.enterText(1, EndToEndTestUtils.DEFAULTACTIVITY);
+
     EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_save));
 
     instrumentation.waitForIdleSync();
     // Check the new track
-    assertTrue(EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.trackName, 1, 5000, true,
-        false));
+    EndToEndTestUtils.SOLO.scrollUp();
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.trackName, 1,
+        EndToEndTestUtils.NORMAL_WAIT_TIME, true, false));
   }
 
   /**
@@ -283,10 +304,6 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     // Rotate when show insert page.
     EndToEndTestUtils.rotateAllActivities();
     EndToEndTestUtils.SOLO.enterText(0, WAYPOINT_NAME);
-    if(!EndToEndTestUtils.isEmulator) {
-      // Close soft keyboard.
-      EndToEndTestUtils.SOLO.goBack();
-    }
     EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_add));
     if (!EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.marker_add_error),
         1, EndToEndTestUtils.SHORT_WAIT_TIME)) {
