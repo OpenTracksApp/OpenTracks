@@ -62,16 +62,19 @@ import java.util.Locale;
  * @author Youtao Liu
  */
 public class GoogleUtils {
-  private static Account account;
   public static final String LOG_TAG = "MyTracksTest";
   public static final String DOCUMENT_NAME_PREFIX = "My Tracks";
   public static final String SPREADSHEET_NAME = DOCUMENT_NAME_PREFIX + "-" + EndToEndTestUtils.DEFAULTACTIVITY;
 
+  /**
+   * Gets the account to access Google Services.
+   * 
+   * @param context context used to get account
+   * @return the first account which is bound with current device
+   */
   private static Account getAccount(Context context) {
-    return account == null ? account = AccountManager.get(context).getAccountsByType(
-        Constants.ACCOUNT_TYPE)[0] : account;
+    return AccountManager.get(context).getAccountsByType(Constants.ACCOUNT_TYPE)[0];
   }
-  
   
   /**
    * Gets Google maps of a user.
@@ -81,7 +84,6 @@ public class GoogleUtils {
    * @return true means set successfully
    */
   private static ArrayList<MapsMapMetadata> getMaps(Context context, MapsClient mapsClient) {
-    // Reset the per request states
     String authToken = null;
     ArrayList<String> mapIds = new ArrayList<String>();
     ArrayList<MapsMapMetadata> mapData = new ArrayList<MapsMapMetadata>();
@@ -176,7 +178,7 @@ public class GoogleUtils {
    * @param activity to get context
    * @return the entry of the document, null means can not find the spreadsheet.
    */
-  private static Entry searchSepeadsheetByTitle(String title, Activity activity) {
+  private static Entry searchSpreadsheetByTitle(String title, Activity activity) {
     Context context = activity.getApplicationContext(); 
     DocumentsClient documentsClient = new DocumentsClient(
         GDataClientFactory.getGDataClient(context),
@@ -214,8 +216,8 @@ public class GoogleUtils {
    * @param isDelete whether delete the information of this track in the document
    * @return true means find the track name in the spreadsheet
    */
-  public static boolean searchTrackTitleInSpreadsheet(String title, Activity activity, String spreadsheetTitle, boolean isDelete) {
-    String spreadsheetId = searchSepeadsheetByTitle(spreadsheetTitle, activity).getId().replace(SendDocsUtils.SPREADSHEET_ID_PREFIX, "");
+  private static boolean searchTrackTitleInSpreadsheet(String title, Activity activity, String spreadsheetTitle, boolean isDelete) {
+    String spreadsheetId = searchSpreadsheetByTitle(spreadsheetTitle, activity).getId().replace(SendDocsUtils.SPREADSHEET_ID_PREFIX, "");
     if(spreadsheetId == null) {
       Log.d(LOG_TAG, "Unable to find the spreadsheet -- " + spreadsheetTitle);
       return false;
@@ -249,6 +251,28 @@ public class GoogleUtils {
     }
     return false;
   }
+  
+  /**
+   * Searches a track in spreadsheet.
+   * 
+   * @param title the track name to search
+   * @param activity to get context
+   * @return true means find the track name in the spreadsheet
+   */
+  public static boolean searchTrackInSpreadSheet(String title, Activity activity) {
+    return searchTrackTitleInSpreadsheet(title, activity, GoogleUtils.SPREADSHEET_NAME, false);
+  }
+  
+  /**
+   * Searches and deletes a track in spreadsheet.
+   * 
+   * @param title the track name to search
+   * @param activity to get context
+   * @return true means find and delete successfully
+   */
+  public static boolean deleteTrackInSpreadSheet(String title, Activity activity) {
+    return searchTrackTitleInSpreadsheet(title, activity, GoogleUtils.SPREADSHEET_NAME, true);
+  }
 
   /**
    * Searches a fusion table in user's Google tables.
@@ -276,6 +300,7 @@ public class GoogleUtils {
    * 
    * @param title the title of a track to drop 
    * @param activity to get context
+   * @return the result of drop
    */
   public static boolean dropFusionTables(String title, Activity activity) {
     Context context = activity.getApplicationContext();
