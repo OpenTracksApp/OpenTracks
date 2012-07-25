@@ -681,7 +681,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     return waypoint;
   }
 
-  private ContentValues createContentValues(Waypoint waypoint) {
+  ContentValues createContentValues(Waypoint waypoint) {
     ContentValues values = new ContentValues();
 
     // Value < 0 indicates no id is available
