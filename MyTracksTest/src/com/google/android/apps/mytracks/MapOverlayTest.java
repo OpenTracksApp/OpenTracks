@@ -71,21 +71,22 @@ public class MapOverlayTest extends AndroidTestCase {
     mockMyTracksOverlay.addLocation(location);
     assertEquals(2, mockMyTracksOverlay.getNumLocations());
     assertEquals(0, mockMyTracksOverlay.getNumWaypoints());
-    assertNull(mockMyTracksOverlay.getTrackPathPainter().getLastPath());
+    assertFalse(mockMyTracksOverlay.getTrackPathPainter().hasPath());
 
     // Draw and make sure that we don't lose any point.
     mockMyTracksOverlay.draw(canvas, mapView, false);
     assertEquals(2, mockMyTracksOverlay.getNumLocations());
     assertEquals(0, mockMyTracksOverlay.getNumWaypoints());
-    assertNotNull(mockMyTracksOverlay.getTrackPathPainter().getLastPath());
-    assertTrue(mockMyTracksOverlay.getTrackPathPainter().getLastPath() instanceof MockPath);
-    MockPath path = (MockPath) mockMyTracksOverlay.getTrackPathPainter().getLastPath();
+    assertTrue(mockMyTracksOverlay.getTrackPathPainter().hasPath());
+    SingleColorTrackPathPainter trackPathPainter = (SingleColorTrackPathPainter) mockMyTracksOverlay
+        .getTrackPathPainter();
+    MockPath path = (MockPath) trackPathPainter.getPath();
     assertEquals(2, path.getTotalPoints());
 
     mockMyTracksOverlay.draw(canvas, mapView, true);
     assertEquals(2, mockMyTracksOverlay.getNumLocations());
     assertEquals(0, mockMyTracksOverlay.getNumWaypoints());
-    assertNotNull(mockMyTracksOverlay.getTrackPathPainter().getLastPath());
+    assertTrue(mockMyTracksOverlay.getTrackPathPainter().hasPath());
   }
 
   /**
@@ -124,7 +125,7 @@ public class MapOverlayTest extends AndroidTestCase {
     mockMyTracksOverlay.addWaypoint(waypoint);
     assertEquals(1, mockMyTracksOverlay.getNumWaypoints());
     assertEquals(0, mockMyTracksOverlay.getNumLocations());
-    assertNull(mockMyTracksOverlay.getTrackPathPainter().getLastPath());
+    assertFalse(mockMyTracksOverlay.getTrackPathPainter().hasPath());
 
     final int waypoints = 10;
     for (int i = 0; i < waypoints; ++i) {
@@ -134,7 +135,7 @@ public class MapOverlayTest extends AndroidTestCase {
     }
     assertEquals(1 + waypoints, mockMyTracksOverlay.getNumWaypoints());
     assertEquals(0, mockMyTracksOverlay.getNumLocations());
-    assertNull(mockMyTracksOverlay.getTrackPathPainter().getLastPath());
+    assertFalse(mockMyTracksOverlay.getTrackPathPainter().hasPath());
   }
 
   /**
@@ -174,15 +175,16 @@ public class MapOverlayTest extends AndroidTestCase {
     // Shadow.
     mockMyTracksOverlay.draw(canvas, mapView, true);
     // We don't expect to do anything if
-    assertNull(mockMyTracksOverlay.getTrackPathPainter().getLastPath());
+    assertFalse(mockMyTracksOverlay.getTrackPathPainter().hasPath());
     assertEquals(40, mockMyTracksOverlay.getNumWaypoints());
     assertEquals(100, mockMyTracksOverlay.getNumLocations());
 
     // No shadow.
     mockMyTracksOverlay.draw(canvas, mapView, false);
-    assertNotNull(mockMyTracksOverlay.getTrackPathPainter().getLastPath());
-    assertTrue(mockMyTracksOverlay.getTrackPathPainter().getLastPath() instanceof MockPath);
-    MockPath path = (MockPath) mockMyTracksOverlay.getTrackPathPainter().getLastPath();
+    assertTrue(mockMyTracksOverlay.getTrackPathPainter().hasPath());
+    SingleColorTrackPathPainter trackPathPainter = (SingleColorTrackPathPainter) mockMyTracksOverlay
+        .getTrackPathPainter();
+    MockPath path = (MockPath) trackPathPainter.getPath();
     assertEquals(40, mockMyTracksOverlay.getNumWaypoints());
     assertEquals(100, mockMyTracksOverlay.getNumLocations());
     assertEquals(100, path.getTotalPoints());

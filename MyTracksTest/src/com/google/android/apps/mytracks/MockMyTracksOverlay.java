@@ -44,6 +44,6 @@ public class MockMyTracksOverlay extends MapOverlay {
   
   @Override
   public Rect getMapViewRect(MapView mapView) {
-    return new Rect(0, 0, 100, 100);
+    return new Rect(0, 0, (int) (100 * 1E6), (int) (100 * 1E6));
   }
 }

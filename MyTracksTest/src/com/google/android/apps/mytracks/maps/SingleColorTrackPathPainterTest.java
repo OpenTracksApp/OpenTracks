@@ -31,9 +31,10 @@ import java.util.List;
  */
 public class SingleColorTrackPathPainterTest extends TrackPathPainterTestCase {
 
+  private static final int NUMBER_OF_LOCATIONS = 10;
   private SingleColorTrackPathPainter singleColorTrackPathPainter;
   private Path pathMock;
-  private static final int NUMBER_OF_LOCATIONS = 100;
+
 
   /**
    * Initials a mocked TrackPathDescriptor object and
@@ -44,8 +45,8 @@ public class SingleColorTrackPathPainterTest extends TrackPathPainterTestCase {
   protected void setUp() throws Exception {
     super.setUp();
 
-    pathMock = AndroidMock.createStrictMock(Path.class);
     singleColorTrackPathPainter = new SingleColorTrackPathPainter(getContext());
+    pathMock = AndroidMock.createStrictMock(Path.class);
   }
 
   /**
@@ -54,11 +55,12 @@ public class SingleColorTrackPathPainterTest extends TrackPathPainterTestCase {
    * method when all locations are valid.
    */
   public void testUpdatePath_AllValidLocation() {
-    pathMock.incReserve(NUMBER_OF_LOCATIONS);
-    List<CachedLocation> points = createCachedLocations(NUMBER_OF_LOCATIONS,
-        TrackStubUtils.INITIAL_LATITUDE, -1);
     // Gets a number as the start index of points.
     int startLocationIdx = NUMBER_OF_LOCATIONS / 2;
+    
+    pathMock.incReserve(NUMBER_OF_LOCATIONS - startLocationIdx);
+    List<CachedLocation> points = createCachedLocations(NUMBER_OF_LOCATIONS,
+        TrackStubUtils.INITIAL_LATITUDE, -1);
 
     for (int i = startLocationIdx; i < NUMBER_OF_LOCATIONS; i++) {
       pathMock.lineTo(0, 0);
@@ -66,7 +68,7 @@ public class SingleColorTrackPathPainterTest extends TrackPathPainterTestCase {
 
     AndroidMock.replay(pathMock);
     singleColorTrackPathPainter.updatePath(myTracksOverlay.getMapProjection(mockView),
-        myTracksOverlay.getMapViewRect(mockView), startLocationIdx, true, points, pathMock);
+        myTracksOverlay.getMapViewRect(mockView), startLocationIdx, points, pathMock);
     AndroidMock.verify(pathMock);
   }
 
@@ -76,20 +78,20 @@ public class SingleColorTrackPathPainterTest extends TrackPathPainterTestCase {
    * method when all locations are invalid.
    */
   public void testUpdatePath_AllInvalidLocation() {
-    pathMock.incReserve(NUMBER_OF_LOCATIONS);
+    int startLocationIdx = NUMBER_OF_LOCATIONS / 2;
+    pathMock.incReserve(NUMBER_OF_LOCATIONS - startLocationIdx);
     List<CachedLocation> points = createCachedLocations(NUMBER_OF_LOCATIONS, INVALID_LATITUDE, -1);
     // Gets a random number from 1 to numberOfLocations.
-    int startLocationIdx = NUMBER_OF_LOCATIONS / 2;
     AndroidMock.replay(pathMock);
     singleColorTrackPathPainter.updatePath(myTracksOverlay.getMapProjection(mockView),
-        myTracksOverlay.getMapViewRect(mockView), startLocationIdx, true, points, pathMock);
+        myTracksOverlay.getMapViewRect(mockView), startLocationIdx, points, pathMock);
     AndroidMock.verify(pathMock);
   }
 
   /**
-   * Tests the
-   * {@link SingleColorTrackPathPainter#updatePath(com.google.android.maps.Projection, android.graphics.Rect, int, Boolean, List, Path)}
-   * method when there are three segments.
+   * Tests the {@link SingleColorTrackPathPainter#updatePath(com.google.android.maps.Projection,
+   * android.graphics.Rect, int, Boolean, List, Path)} method when there are
+   * three segments.
    */
   public void testUpdatePath_ThreeSegments() {
     // First segment.
@@ -103,7 +105,7 @@ public class SingleColorTrackPathPainterTest extends TrackPathPainterTestCase {
     points.addAll(createCachedLocations(NUMBER_OF_LOCATIONS, TrackStubUtils.INITIAL_LATITUDE, -1));
     // Gets a random number from 1 to numberOfLocations.
     int startLocationIdx = NUMBER_OF_LOCATIONS / 2;
-    pathMock.incReserve(NUMBER_OF_LOCATIONS *3 + 1 +1);
+    pathMock.incReserve(NUMBER_OF_LOCATIONS *3 + 1 +1 - startLocationIdx);
     for (int i = 0; i < NUMBER_OF_LOCATIONS - startLocationIdx; i++) {
       pathMock.lineTo(0, 0);
     }
@@ -118,7 +120,7 @@ public class SingleColorTrackPathPainterTest extends TrackPathPainterTestCase {
 
     AndroidMock.replay(pathMock);
     singleColorTrackPathPainter.updatePath(myTracksOverlay.getMapProjection(mockView),
-        myTracksOverlay.getMapViewRect(mockView), startLocationIdx, true, points, pathMock);
+        myTracksOverlay.getMapViewRect(mockView), startLocationIdx, points, pathMock);
     AndroidMock.verify(pathMock);
   }
 }

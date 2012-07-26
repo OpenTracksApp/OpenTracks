@@ -25,7 +25,6 @@ import com.google.common.annotations.VisibleForTesting;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
 
@@ -33,117 +32,105 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A path painter that varies the path colors based on fixed speeds or average speed margin
- * depending of the TrackPathDescriptor passed to its constructor.
+ * A path painter that varies the path colors based on fixed speeds or average
+ * speed margin depending of the TrackPathDescriptor passed to its constructor.
  * 
- *  @author Vangelis S.
+ * @author Vangelis S.
  */
-public class  DynamicSpeedTrackPathPainter implements TrackPathPainter {
-  private final Paint selectedTrackPaintSlow;
-  private final Paint selectedTrackPaintMedium;
-  private final Paint selectedTrackPaintFast;
-  private final List<ColoredPath> coloredPaths;
+public class DynamicSpeedTrackPathPainter implements TrackPathPainter {
   private final TrackPathDescriptor trackPathDescriptor;
-  private int slowSpeed;
-  private int normalSpeed;
-  
-  public DynamicSpeedTrackPathPainter (Context context, TrackPathDescriptor trackPathDescriptor) {
+  private final Paint slowPaint;
+  private final Paint mediumPaint;
+  private final Paint fastPaint;
+  private final List<ColoredPath> coloredPaths;
+
+  public DynamicSpeedTrackPathPainter(Context context, TrackPathDescriptor trackPathDescriptor) {
     this.trackPathDescriptor = trackPathDescriptor;
-    
-    selectedTrackPaintSlow = TrackPathUtilities.getPaint(R.color.slow_path, context);
-    selectedTrackPaintMedium = TrackPathUtilities.getPaint(R.color.normal_path, context);
-    selectedTrackPaintFast = TrackPathUtilities.getPaint(R.color.fast_path, context);
-    
-    this.coloredPaths = new ArrayList<ColoredPath>();
+    slowPaint = TrackPathUtils.getPaint(context, R.color.slow_path);
+    mediumPaint = TrackPathUtils.getPaint(context, R.color.normal_path);
+    fastPaint = TrackPathUtils.getPaint(context, R.color.fast_path);
+    coloredPaths = new ArrayList<ColoredPath>();
   }
-  
+
   @Override
-  public void drawTrack(Canvas canvas) {
-    for(int i = 0; i < coloredPaths.size(); ++i) {
-      ColoredPath coloredPath = coloredPaths.get(i);
-      canvas.drawPath(coloredPath.getPath(), coloredPath.getPathPaint());
+  public boolean hasPath() {
+    return !coloredPaths.isEmpty();
+  }
+
+  @Override
+  public boolean updateState() {
+    return trackPathDescriptor.updateState();
+  }
+
+  @Override
+  public void updatePath(
+      Projection projection, Rect viewRect, int startIndex, List<CachedLocation> points) {
+    boolean hasLastPoint = startIndex != 0 && points.get(startIndex -1).isValid();
+    Point point = new Point();
+    if (hasLastPoint) {
+      GeoPoint geoPoint = points.get(startIndex -1).getGeoPoint();
+      projection.toPixels(geoPoint, point);
     }
-  }
-  
-  @Override
-  public void updatePath(Projection projection, Rect viewRect, int startLocationIdx, 
-      Boolean alwaysVisible, List<CachedLocation> points) {
-    // Whether to start a new segment on new valid and visible point.
-    boolean newSegment = startLocationIdx <= 0 || !points.get(startLocationIdx - 1).isValid(); 
-    boolean lastVisible = !newSegment;
-    final Point pt = new Point();
-    
-    clear();
-    
-    slowSpeed = trackPathDescriptor.getSlowSpeed();
-    normalSpeed = trackPathDescriptor.getNormalSpeed();
-    
-    // Loop over track points.
-    for (int i = startLocationIdx; i < points.size(); ++i) {
-      CachedLocation loc = points.get(i);
-      
-      // Check if valid, if not then indicate a new segment.
-      if (!loc.isValid()) {
+    boolean newSegment = !hasLastPoint;
+    // Assume if last point exists, it is visible
+    boolean lastPointVisible = hasLastPoint;
+    int slowSpeed = trackPathDescriptor.getSlowSpeed();
+    int normalSpeed = trackPathDescriptor.getNormalSpeed();
+
+    for (int i = startIndex; i < points.size(); ++i) {
+      CachedLocation cachedLocation = points.get(i);
+
+      // If not valid, start a new segment
+      if (!cachedLocation.isValid()) {
         newSegment = true;
         continue;
       }
-      
-      final GeoPoint geoPoint = loc.getGeoPoint();
+
+      GeoPoint geoPoint = cachedLocation.getGeoPoint();
       // Check if this breaks the existing segment.
-      boolean visible = alwaysVisible || viewRect.contains(
-          geoPoint.getLongitudeE6(), geoPoint.getLatitudeE6());
-      if (!visible && !lastVisible) {
-        // This is a point outside view not connected to a visible one.
+      boolean pointVisible = viewRect.contains(geoPoint.getLongitudeE6(), geoPoint.getLatitudeE6());
+      if (!pointVisible && !lastPointVisible) {
+        // This point and the last point are both outside visible area.
         newSegment = true;
       }
-      lastVisible = visible;
-      
-      // Either move to beginning of a new segment or continue the old one.
+      lastPointVisible = pointVisible;
+
+      // Either update point or draw a line from the last point
       if (newSegment) {
-        projection.toPixels(geoPoint, pt);
+        projection.toPixels(geoPoint, point);
         newSegment = false;
       } else {
         ColoredPath coloredPath;
-        if(loc.getSpeed() <= slowSpeed) {
-          coloredPath = new ColoredPath(selectedTrackPaintSlow);
-        }
-        else if(loc.getSpeed() <= normalSpeed) {
-          coloredPath = new ColoredPath(selectedTrackPaintMedium);
+        if (cachedLocation.getSpeed() <= slowSpeed) {
+          coloredPath = new ColoredPath(slowPaint);
+        } else if (cachedLocation.getSpeed() <= normalSpeed) {
+          coloredPath = new ColoredPath(mediumPaint);
         } else {
-          coloredPath = new ColoredPath(selectedTrackPaintFast);
+          coloredPath = new ColoredPath(fastPaint);
         }
-        coloredPath.getPath().moveTo(pt.x, pt.y);
-        projection.toPixels(geoPoint, pt);
-        coloredPath.getPath().lineTo(pt.x, pt.y);
+        coloredPath.getPath().moveTo(point.x, point.y);
+        projection.toPixels(geoPoint, point);
+        coloredPath.getPath().lineTo(point.x, point.y);
         coloredPaths.add(coloredPath);
       }
     }
   }
-  
+
   @Override
-  public void clear()
-  {
+  public void clearPath() {
     coloredPaths.clear();
   }
 
   @Override
-  public boolean needsRedraw() {
-    return trackPathDescriptor.needsRedraw();
-  }
-  
-  @Override
-  public Path getLastPath() {
-    Path path = new Path();
-    for(int i = 0; i < coloredPaths.size(); ++i) {
-      path.addPath(coloredPaths.get(i).getPath());
+  public void drawPath(Canvas canvas) {
+    for (int i = 0; i < coloredPaths.size(); i++) {
+      ColoredPath coloredPath = coloredPaths.get(i);
+      canvas.drawPath(coloredPath.getPath(), coloredPath.getPathPaint());
     }
-    return path;
   }
-  
+
   /**
-   * Returns coloredPaths.
-   * 
-   * @return coloredPaths
+   * Gets the colored paths.
    */
   @VisibleForTesting
   List<ColoredPath> getColoredPaths() {

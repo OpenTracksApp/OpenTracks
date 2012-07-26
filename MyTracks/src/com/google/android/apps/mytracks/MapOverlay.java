@@ -21,7 +21,7 @@ import static com.google.android.apps.mytracks.Constants.TAG;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.maps.TrackPathPainter;
 import com.google.android.apps.mytracks.maps.TrackPathPainterFactory;
-import com.google.android.apps.mytracks.maps.TrackPathUtilities;
+import com.google.android.apps.mytracks.maps.TrackPathUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
@@ -175,7 +175,7 @@ public class MapOverlay extends Overlay implements OnSharedPreferenceChangeListe
     endMarker = resources.getDrawable(R.drawable.red_dot);
     endMarker.setBounds(0, 0, markerWidth, markerHeight);
 
-    errorCirclePaint = TrackPathUtilities.getPaint(R.color.blue, context);
+    errorCirclePaint = TrackPathUtils.getPaint(context, R.color.blue);
     errorCirclePaint.setAlpha(127);
 
     trackPathPainter = TrackPathPainterFactory.getTrackPathPainter(context);
@@ -216,7 +216,7 @@ public class MapOverlay extends Overlay implements OnSharedPreferenceChangeListe
     synchronized (points) {
       points.clear();
       pendingPoints.clear();
-      trackPathPainter.clear();
+      trackPathPainter.clearPath();
       lastReferencePoint = null;
       lastViewRect = null;
     }
@@ -456,35 +456,37 @@ public class MapOverlay extends Overlay implements OnSharedPreferenceChangeListe
 
     synchronized (points) {
       // Merge the pending points with the list of cached locations.
-      final GeoPoint referencePoint = projection.fromPixels(0, 0);
+      GeoPoint referencePoint = projection.fromPixels(0, 0);
       int newPoints = pendingPoints.drainTo(points);
       boolean newProjection = !viewRect.equals(lastViewRect)
           || !referencePoint.equals(lastReferencePoint);
-      if (newPoints == 0 && !newProjection && trackPathPainter.getLastPath() != null) {
-        // No need to update the path
+      // Call updateState first to trigger its side effects.
+      boolean currentPathValid = !trackPathPainter.updateState() && !newProjection
+          && trackPathPainter.hasPath();
+      if (newPoints == 0 && currentPathValid) {
+        // No need to update
         draw = true;
       } else {
         int numPoints = points.size();
         if (numPoints < 2) {
           // Not enough points to draw a path
           draw = false;
-        } else if (!newProjection && trackPathPainter.getLastPath() != null
-            && !trackPathPainter.needsRedraw() && false) {
-          // TODO fix incremental path update
-          // Incremental update of the path, without repositioning the view
+        } else if (currentPathValid) {
+          // Incremental update of the path
           draw = true;
-          trackPathPainter.updatePath(projection, viewRect, numPoints - newPoints, true, points);
+          trackPathPainter.updatePath(projection, viewRect, numPoints - newPoints, points);
         } else {
-          // The view has changed so we have to start from scratch.
+          // Reload the path
           draw = true;
-          trackPathPainter.updatePath(projection, viewRect, 0, true, points);
+          trackPathPainter.clearPath();
+          trackPathPainter.updatePath(projection, viewRect, 0, points);
         }
       }
       lastReferencePoint = referencePoint;
       lastViewRect = viewRect;
     }
     if (draw) {
-      trackPathPainter.drawTrack(canvas);
+      trackPathPainter.drawPath(canvas);
     }
   }
 

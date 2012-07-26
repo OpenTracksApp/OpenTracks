@@ -62,7 +62,7 @@ public class DynamicSpeedTrackPathPainterTest extends TrackPathPainterTestCase {
   public void testUpdatePath_AllInvalidLocation() {
     List<CachedLocation> points = createCachedLocations(NUMBER_OF_LOCATIONS, INVALID_LATITUDE, -1);
     dynamicSpeedTrackPathPainter.updatePath(myTracksOverlay.getMapProjection(mockView),
-        myTracksOverlay.getMapViewRect(mockView), 1, true, points);
+        myTracksOverlay.getMapViewRect(mockView), 1, points);
     AndroidMock.verify(trackPathDescriptor);
     // Should be zero for there is no valid locations.
     assertEquals(0, dynamicSpeedTrackPathPainter.getColoredPaths().size());
@@ -80,7 +80,7 @@ public class DynamicSpeedTrackPathPainterTest extends TrackPathPainterTestCase {
     // Gets a number as the start index of points.
     int startLocationIdx = NUMBER_OF_LOCATIONS / 2;
     dynamicSpeedTrackPathPainter.updatePath(myTracksOverlay.getMapProjection(mockView),
-        myTracksOverlay.getMapViewRect(mockView), startLocationIdx, true, points);
+        myTracksOverlay.getMapViewRect(mockView), startLocationIdx, points);
 
     AndroidMock.verify(trackPathDescriptor);
     assertEquals(NUMBER_OF_LOCATIONS - startLocationIdx, dynamicSpeedTrackPathPainter
@@ -123,7 +123,7 @@ public class DynamicSpeedTrackPathPainterTest extends TrackPathPainterTestCase {
         slowSpeed));
 
     dynamicSpeedTrackPathPainter.updatePath(myTracksOverlay.getMapProjection(mockView),
-        myTracksOverlay.getMapViewRect(mockView), startLocationIdx, true, points);
+        myTracksOverlay.getMapViewRect(mockView), startLocationIdx, points);
 
     AndroidMock.verify(trackPathDescriptor);
     List<ColoredPath> coloredPath = dynamicSpeedTrackPathPainter.getColoredPaths();

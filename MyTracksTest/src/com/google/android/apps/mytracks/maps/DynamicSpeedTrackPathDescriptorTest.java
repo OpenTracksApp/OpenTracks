@@ -59,35 +59,6 @@ public class DynamicSpeedTrackPathDescriptorTest extends AndroidTestCase {
 
   /**
    * Tests {@link DynamicSpeedTrackPathDescriptor#onSharedPreferenceChanged(SharedPreferences,
-   * String)} when the key is null.
-   */
-  public void testOnSharedPreferenceChanged_nullKey() {
-    DynamicSpeedTrackPathDescriptor dynamicSpeedTrackPathDescriptor = new DynamicSpeedTrackPathDescriptor(
-        context);
-    int speedMargin = dynamicSpeedTrackPathDescriptor.getSpeedMargin();
-    // Change value in shared preferences.
-    PreferencesUtils.setInt(context, R.string.track_color_mode_percentage_key, speedMargin + 2);
-
-    dynamicSpeedTrackPathDescriptor.onSharedPreferenceChanged(sharedPreferences, null);
-    assertEquals(speedMargin, dynamicSpeedTrackPathDescriptor.getSpeedMargin());
-  }
-
-  /**
-   * Tests {@link DynamicSpeedTrackPathDescriptor#onSharedPreferenceChanged(SharedPreferences,
-   * String)} when the key is not null, and not trackColorModeDynamicVariation.
-   */
-  public void testOnSharedPreferenceChanged_otherKey() {
-    DynamicSpeedTrackPathDescriptor dynamicSpeedTrackPathDescriptor = new DynamicSpeedTrackPathDescriptor(
-        context);
-    int speedMargin = dynamicSpeedTrackPathDescriptor.getSpeedMargin();
-    // Change value in shared preferences.
-    PreferencesUtils.setInt(context, R.string.track_color_mode_percentage_key, speedMargin + 2);
-    dynamicSpeedTrackPathDescriptor.onSharedPreferenceChanged(sharedPreferences, "anyKey");
-    assertEquals(speedMargin, dynamicSpeedTrackPathDescriptor.getSpeedMargin());
-  }
-
-  /**
-   * Tests {@link DynamicSpeedTrackPathDescriptor#onSharedPreferenceChanged(SharedPreferences,
    * String)} when the key is trackColorModeDynamicVariation.
    */
   public void testOnSharedPreferenceChanged_trackColorModeDynamicVariationKey() {
@@ -120,7 +91,7 @@ public class DynamicSpeedTrackPathDescriptorTest extends AndroidTestCase {
   }
 
   /**
-   * Tests {@link DynamicSpeedTrackPathDescriptor#needsRedraw()} by wrong track
+   * Tests {@link DynamicSpeedTrackPathDescriptor#updateState()} by wrong track
    * id.
    */
   public void testNeedsRedraw_WrongTrackId() {
@@ -128,11 +99,11 @@ public class DynamicSpeedTrackPathDescriptorTest extends AndroidTestCase {
         context, R.string.selected_track_id_key, PreferencesUtils.SELECTED_TRACK_ID_DEFAULT);
     DynamicSpeedTrackPathDescriptor dynamicSpeedTrackPathDescriptor = new DynamicSpeedTrackPathDescriptor(
         context);
-    assertEquals(false, dynamicSpeedTrackPathDescriptor.needsRedraw());
+    assertEquals(false, dynamicSpeedTrackPathDescriptor.updateState());
   }
 
   /**
-   * Tests {@link DynamicSpeedTrackPathDescriptor#needsRedraw()} by different
+   * Tests {@link DynamicSpeedTrackPathDescriptor#updateState()} by different
    * averageMovingSpeed.
    */
   public void testIsDiffereceSignificant() {
@@ -145,8 +116,7 @@ public class DynamicSpeedTrackPathDescriptorTest extends AndroidTestCase {
     // Difference is more than CRITICAL_DIFFERENCE_PERCENTAGE
         30 * (1 + (DynamicSpeedTrackPathDescriptor.CRITICAL_DIFFERENCE_PERCENTAGE / 100.00) * 2) };
     boolean[] expectedValues = { true, false, false, true };
-    double[] expectedAverageMovingSpeed = { 20, 30, 30,
-        30 * (1 + (DynamicSpeedTrackPathDescriptor.CRITICAL_DIFFERENCE_PERCENTAGE / 100.00) * 2) };
+    double[] expectedAverageMovingSpeed = { 0, 30, 30, 30 };
     // Test
     for (int i = 0; i < newAverageMovingSpeed.length; i++) {
       dynamicSpeedTrackPathDescriptor.setAverageMovingSpeed(averageMovingSpeeds[i]);
