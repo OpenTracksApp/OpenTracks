@@ -50,6 +50,9 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
   private static final String MOCK_DESC = "Mock Next Waypoint Desc!";
   private static final String TEST_DESC = "Test Desc!";
   private static final String TEST_DESC_NEW = "Test Desc new!";
+  private double INITIAL_LATITUDE = 37.0;
+  private double INITIAL_LONGITUDE = -57.0;
+  private double ALTITUDE_INTERVAL = 2.5;
 
   @Override
   protected void setUp() throws Exception {
@@ -272,13 +275,13 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     // Check whether all have been deleted. 
     tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null,
         TracksColumns._ID);
-    assertTrue(tracksCursor.getCount() == 0);
+    assertEquals(0, tracksCursor.getCount());
     tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI, null, null,
         null, TrackPointsColumns._ID);
-    assertTrue(tracksPointsCursor.getCount() == 0);
+    assertEquals(0, tracksPointsCursor.getCount());
     waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null,
         null, WaypointsColumns._ID);
-    assertTrue(waypointCursor.getCount() == 0);
+    assertEquals(0, waypointCursor.getCount());
   }
   
   /**
@@ -327,9 +330,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
   @UsesMocks(Cursor.class)
   public void testCreateTrack() {
     Cursor cursorMock = AndroidMock.createNiceMock(Cursor.class);
-    // The startColumnIndex can be any value, just make it to 2 in case it's
-    // hard coded to 0 or 1 in some where.
-    int startColumnIndex = 2;
+    int startColumnIndex = 1;
     int columnIndex = startColumnIndex;
     AndroidMock.expect(cursorMock.getColumnIndexOrThrow(TracksColumns._ID))
         .andReturn(columnIndex++);
@@ -358,7 +359,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
    * Tests the method {@link MyTracksProviderUtilsImpl#createContentValues(Track)}.
    */
   @UsesMocks(TripStatistics.class)
-  public void testCreateContentValues_Track() {
+  public void testCreateContentValues_track() {
     // ID
     long trackId = System.currentTimeMillis();
     // Name
@@ -644,9 +645,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
   @UsesMocks(Cursor.class)
   public void testCreateWaypoint() {
     Cursor cursorMock = AndroidMock.createNiceMock(Cursor.class);
-    // The startColumnIndex can be any value, just make it to 2 in case it's
-    // hard coded to 0 or 1 in some where.
-    int startColumnIndex = 2;
+    int startColumnIndex = 1;
     int columnIndex = startColumnIndex;
     AndroidMock.expect(cursorMock.getColumnIndexOrThrow(WaypointsColumns._ID))
         .andReturn(columnIndex++);
@@ -682,7 +681,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
   /**
    * Tests the method {@link MyTracksProviderUtilsImpl#createContentValues(Waypoint)}.
    */
-  public void testCreateContentValues_Waypoint() {
+  public void testCreateContentValues_waypoint() {
     long trackId = System.currentTimeMillis();
     Track track = getTrack(trackId, 10);
     providerUtils.insertTrack(track);
@@ -818,10 +817,10 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
 
     LocationIterator locationIterator = providerUtils.getLocationIterator(trackId,
         startTrackPointId, true, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
-    assertEquals(startTrackPointId, locationIterator.getLocationId());
     for (int i = 1; i >= 0; i--) {
       assertTrue(locationIterator.hasNext());
       Location location = locationIterator.next();
+      assertEquals(2 + (i - 1), locationIterator.getLocationId());
       checkLocation(i, location);
     }
     assertFalse(locationIterator.hasNext());
@@ -842,10 +841,11 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
 
     LocationIterator locationIterator = providerUtils.getLocationIterator(trackId,
         startTrackPointId, false, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
-    assertEquals(startTrackPointId, locationIterator.getLocationId());
+    
     for (int i = 1; i < 10; i++) {
       assertTrue(locationIterator.hasNext());
       Location location = locationIterator.next();
+      assertEquals(2 + (i - 1), locationIterator.getLocationId());
       checkLocation(i, location);
     }
     assertFalse(locationIterator.hasNext());
@@ -870,6 +870,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
    * test also covers the method
    * {@link MyTracksProviderUtilsImpl#createContentValues(Location, long)}.
    */
+  @SuppressWarnings("javadoc")
   public void testInsertTrackPoint() {
     // Insert track, point at first.
     long trackId = System.currentTimeMillis();
@@ -887,6 +888,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
    * {@link MyTracksProviderUtilsImpl#createContentValues(Location, long)} and
    * the inner class {@link MyTracksProviderUtilsImpl.CachedTrackPointsIndexes}.
    */
+  @SuppressWarnings("javadoc")
   public void testBulkInsertTrackPoints() {
     // Insert track, point at first.
     long trackId = System.currentTimeMillis();
@@ -907,6 +909,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
    * and the inner class
    * {@link MyTracksProviderUtilsImpl.CachedTrackPointsIndexes}.
    */
+  @SuppressWarnings("javadoc")
   @UsesMocks(Cursor.class)
   public void testCreateLocation() {
     Cursor cursorMock = AndroidMock.createNiceMock(Cursor.class);
@@ -983,7 +986,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     track.setId(id);
     track.setName("Test: " + id);
     track.setNumberOfPoints(numPoints);
-    for(int i=0; i < numPoints; i++) {
+    for(int i = 0; i < numPoints; i++) {
       track.addLocation(createLocation(i));
     }
     return track;
@@ -995,9 +998,10 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
    * @return created location
    */
   private Location createLocation(int i) {
+    
     Location loc = new Location("test");
-    loc.setLatitude(37.0 + (double) i / 10000.0);
-    loc.setLongitude(57.0 - (double) i / 10000.0);
+    loc.setLatitude(INITIAL_LATITUDE + (double) i / 10000.0);
+    loc.setLongitude(INITIAL_LONGITUDE - (double) i / 10000.0);
     loc.setAccuracy((float) i / 100.0f);
     loc.setAltitude(i * 2.5);
     return loc;
@@ -1006,15 +1010,15 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
   /**
    * Checks the value of a location.
    * 
-   * @param i the index of this location which created in the method {@link
-   *          this#getTrack(long, int)}
+   * @param i the index of this location which created in the method
+   *          {@link MyTracksProviderUtilsImplTest#getTrack(long, int)}
    * @param location the location to be checked
    */
   private void checkLocation(int i, Location location) {
-    assertEquals(37.0 + (double) i / 10000.0, location.getLatitude());
-    assertEquals(57.0 - (double) i / 10000.0, location.getLongitude());
+    assertEquals(INITIAL_LATITUDE + (double) i / 10000.0, location.getLatitude());
+    assertEquals(INITIAL_LONGITUDE - (double) i / 10000.0, location.getLongitude());
     assertEquals((float) i / 100.0f, location.getAccuracy());
-    assertEquals(i * 2.5, location.getAltitude());
+    assertEquals(i * ALTITUDE_INTERVAL, location.getAltitude());
   }
   
   /**
