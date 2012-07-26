@@ -35,9 +35,9 @@ import java.util.Set;
  */
 public class TrackDataManager {
 
-  // Map of listener to its state
-  private final Map<TrackDataListener, ListenerState>
-      listenerToStateMap = new HashMap<TrackDataListener, ListenerState>();
+  // Map of listener to its track data types
+  private final Map<TrackDataListener, EnumSet<TrackDataType>>
+      listenerToTypesMap = new HashMap<TrackDataListener, EnumSet<TrackDataType>>();
 
   // Map of track data type to listeners
   private final Map<TrackDataType, Set<TrackDataListener>>
@@ -55,20 +55,15 @@ public class TrackDataManager {
    * @param listener the listener
    * @param trackDataTypes the track data types the listener is interested
    */
-  public ListenerState registerListener(
+  public void registerListener(
       TrackDataListener listener, EnumSet<TrackDataType> trackDataTypes) {
-    if (listenerToStateMap.containsKey(listener)) {
+    if (listenerToTypesMap.containsKey(listener)) {
       throw new IllegalStateException("Listener is already registered");
     }
-
-    ListenerState listenerState = new ListenerState(listener, trackDataTypes);
-    listenerToStateMap.put(listener, listenerState);
-
+    listenerToTypesMap.put(listener, trackDataTypes);
     for (TrackDataType trackDataType : trackDataTypes) {
       typeToListenersMap.get(trackDataType).add(listener);
     }
-
-    return listenerState;
   }
 
   /**
@@ -77,14 +72,14 @@ public class TrackDataManager {
    * @param listener the listener
    */
   public void unregisterListener(TrackDataListener listener) {
-    ListenerState removed = listenerToStateMap.remove(listener);
-    if (removed == null) {
+    EnumSet<TrackDataType> removedTypes = listenerToTypesMap.remove(listener);
+    if (removedTypes == null) {
       Log.w(TAG, "Tried to unregister a listener that is not registered.");
       return;
     }
 
     // Remove the listener from the typeToListenersMap
-    for (TrackDataType trackDataType : removed.getTrackDataTypes()) {
+    for (TrackDataType trackDataType : removedTypes) {
       typeToListenersMap.get(trackDataType).remove(listener);
     }
   }
@@ -93,16 +88,16 @@ public class TrackDataManager {
    * Gets the number of {@link TrackDataListener}.
    */
   public int getNumberOfListeners() {
-    return listenerToStateMap.size();
+    return listenerToTypesMap.size();
   }
 
   /**
-   * Gets the track listener state.
+   * Gets the track data types for a listener.
    * 
    * @param listener the listener
    */
-  public ListenerState getListenerState(TrackDataListener listener) {
-    return listenerToStateMap.get(listener);
+  public EnumSet<TrackDataType> getTrackDataTypes(TrackDataListener listener) {
+    return listenerToTypesMap.get(listener);
   }
 
   /**
@@ -119,9 +114,11 @@ public class TrackDataManager {
    */
   public EnumSet<TrackDataType> getRegisteredTrackDataTypes() {
     EnumSet<TrackDataType> types = EnumSet.noneOf(TrackDataType.class);
-    for (ListenerState registration : this.listenerToStateMap.values()) {
-      types.addAll(registration.getTrackDataTypes());
+    for (EnumSet<TrackDataType> value : listenerToTypesMap.values()) {
+      types.addAll(value);
     }
+    // Always include preference
+    types.add(TrackDataType.PREFERENCE);
     return types;
   }
 }

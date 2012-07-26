@@ -149,25 +149,25 @@ public class DataSource {
   }
 
   /**
-   * Registers a compass listener.
+   * Registers a heading listener.
    * 
    * @param listener the listener
    */
-  public void registerCompassListener(SensorEventListener listener) {
-    Sensor compass = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
-    if (compass == null) {
-      Log.d(TAG, "No compass sensor.");
+  public void registerHeadingListener(SensorEventListener listener) {
+    Sensor heading = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
+    if (heading == null) {
+      Log.d(TAG, "No heading sensor.");
       return;
     }
-    sensorManager.registerListener(listener, compass, SensorManager.SENSOR_DELAY_UI);
+    sensorManager.registerListener(listener, heading, SensorManager.SENSOR_DELAY_UI);
   }
 
   /**
-   * Unregisters a compass listener.
+   * Unregisters a heading listener.
    * 
    * @param listener the listener
    */
-  public void unregisterCompassListener(SensorEventListener listener) {
+  public void unregisterHeadingListener(SensorEventListener listener) {
     sensorManager.unregisterListener(listener);
   }
 
