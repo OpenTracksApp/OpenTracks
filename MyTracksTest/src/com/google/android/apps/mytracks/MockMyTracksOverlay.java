@@ -22,30 +22,28 @@ import android.content.Context;
 import android.graphics.Rect;
 
 /**
- * Elements for Tests for the MyTracks map overlay.
+ * A mock {@link MapOverlay} for testing.
  * 
  * @author Bartlomiej Niechwiej
  * @author Vangelis S.
  * 
- * A mock version of {@code MapOverlay} that does not use
- * {@class MapView}. 
  */
 public class MockMyTracksOverlay extends MapOverlay {
    
-  private Projection mockProjection;
+  private Projection projection;
   
   public MockMyTracksOverlay(Context context) {
     super(context);
-    mockProjection = new MockProjection();
+    projection = new MockProjection();
   }
   
   @Override
   public Projection getMapProjection(MapView mapView) {
-    return mockProjection;
+    return projection;
   }
   
   @Override
   public Rect getMapViewRect(MapView mapView) {
-    return new Rect(0, 0, 100, 100);
+    return new Rect(0, 0, (int) (100 * 1E6), (int) (100 * 1E6));
   }
 }

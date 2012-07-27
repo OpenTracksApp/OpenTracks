@@ -22,13 +22,12 @@ package com.google.android.apps.mytracks.content;
  * @author Jimmy Shih
  */
 public enum TrackDataType {
-
   SELECTED_TRACK, // selected track changes
   TRACKS_TABLE, // tracks table changes
   WAYPOINTS_TABLE, // waypoints table changes
-  TRACK_POINTS_TABLE, // track points table changes
-  SAMPLED_OUT_TRACK_POINTS, // sampled-out track points changes
+  SAMPLED_IN_TRACK_POINTS_TABLE, // sampled-in track points table changes
+  SAMPLED_OUT_TRACK_POINTS_TABLE, // sampled-out track points table changes
   LOCATION, // location changes
-  COMPASS, // compass changes
-  PREFERENCE; // preference changes
+  HEADING, // heading changes
+  PREFERENCE // preference changes
 }

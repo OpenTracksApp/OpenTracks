@@ -40,13 +40,12 @@ public class TrackPathDescriptorDynamicSpeedTest extends TrackPathPainterTestCas
     myTracksOverlay.setTrackPathPainter(painter);
     
     int startLocationIdx = 0;
-    Boolean alwaysVisible = true;
-    
+
     assertNotNull(painter);
     painter.updatePath(myTracksOverlay.getMapProjection(mockView), 
-        myTracksOverlay.getMapViewRect(mockView), startLocationIdx, alwaysVisible,
+        myTracksOverlay.getMapViewRect(mockView), startLocationIdx,
         myTracksOverlay.getPoints());
-    assertNotNull(myTracksOverlay.getTrackPathPainter().getLastPath());
-    painter.drawTrack(canvas);    
+    assertNotNull(myTracksOverlay.getTrackPathPainter().hasPath());
+    painter.drawPath(canvas);    
   }
 }

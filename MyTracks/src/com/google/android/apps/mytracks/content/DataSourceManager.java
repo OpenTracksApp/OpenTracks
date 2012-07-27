@@ -133,11 +133,11 @@ public class DataSourceManager {
   }
 
   /**
-   * Listener for compass changes.
+   * Listener for heading changes.
    * 
    * @author Jimmy Shih
    */
-  private class CompassListener implements SensorEventListener {
+  private class HeadingListener implements SensorEventListener {
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
@@ -174,7 +174,7 @@ public class DataSourceManager {
   private final WaypointsTableObserver waypointsTableObserver;
   private final TrackPointsTableObserver trackPointsTableObserver;
   private final CurrentLocationListener currentLocationListener;
-  private final CompassListener compassListener;
+  private final HeadingListener headingListener;
   private final PreferenceListener preferenceListener;
 
   public DataSourceManager(DataSource dataSource, DataSourceListener dataSourceListener) {
@@ -186,7 +186,7 @@ public class DataSourceManager {
     waypointsTableObserver = new WaypointsTableObserver();
     trackPointsTableObserver = new TrackPointsTableObserver();
     currentLocationListener = new CurrentLocationListener();
-    compassListener = new CompassListener();
+    headingListener = new HeadingListener();
     preferenceListener = new PreferenceListener();
   }
 
@@ -202,9 +202,9 @@ public class DataSourceManager {
      * Map SAMPLED_OUT_POINT_UPDATES to POINT_UPDATES since they correspond to
      * the same internal listener
      */
-    if (neededListeners.contains(TrackDataType.SAMPLED_OUT_TRACK_POINTS)) {
-      neededListeners.remove(TrackDataType.SAMPLED_OUT_TRACK_POINTS);
-      neededListeners.add(TrackDataType.TRACK_POINTS_TABLE);
+    if (neededListeners.contains(TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE)) {
+      neededListeners.remove(TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE);
+      neededListeners.add(TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE);
     }
 
     Log.d(TAG, "Updating listeners " + neededListeners);
@@ -248,18 +248,18 @@ public class DataSourceManager {
       case WAYPOINTS_TABLE:
         dataSource.registerContentObserver(WaypointsColumns.CONTENT_URI, waypointsTableObserver);
         break;
-      case TRACK_POINTS_TABLE:
+      case SAMPLED_IN_TRACK_POINTS_TABLE:
         dataSource.registerContentObserver(
             TrackPointsColumns.CONTENT_URI, trackPointsTableObserver);
         break;
-      case SAMPLED_OUT_TRACK_POINTS:
+      case SAMPLED_OUT_TRACK_POINTS_TABLE:
         // Do nothing. SAMPLED_OUT_POINT_UPDATES is mapped to POINT_UPDATES.
         break;
       case LOCATION:
         dataSource.registerLocationListener(currentLocationListener);
         break;
-      case COMPASS:
-        dataSource.registerCompassListener(compassListener);
+      case HEADING:
+        dataSource.registerHeadingListener(headingListener);
         break;
       case PREFERENCE:
         dataSource.registerOnSharedPreferenceChangeListener(preferenceListener);
@@ -285,17 +285,17 @@ public class DataSourceManager {
       case WAYPOINTS_TABLE:
         dataSource.unregisterContentObserver(waypointsTableObserver);
         break;
-      case TRACK_POINTS_TABLE:
+      case SAMPLED_IN_TRACK_POINTS_TABLE:
         dataSource.unregisterContentObserver(trackPointsTableObserver);
         break;
-      case SAMPLED_OUT_TRACK_POINTS:
+      case SAMPLED_OUT_TRACK_POINTS_TABLE:
         // Do nothing. SAMPLED_OUT_POINT_UPDATES is mapped to POINT_UPDATES.
         break;
       case LOCATION:
         dataSource.unregisterLocationListener(currentLocationListener);
         break;
-      case COMPASS:
-        dataSource.unregisterCompassListener(compassListener);
+      case HEADING:
+        dataSource.unregisterHeadingListener(headingListener);
         break;
       case PREFERENCE:
         dataSource.unregisterOnSharedPreferenceChangeListener(preferenceListener);

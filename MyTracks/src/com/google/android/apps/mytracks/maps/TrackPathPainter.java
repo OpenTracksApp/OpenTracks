@@ -13,56 +13,54 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks.maps;
 
 import com.google.android.apps.mytracks.MapOverlay.CachedLocation;
 import com.google.android.maps.Projection;
 
 import android.graphics.Canvas;
-import android.graphics.Path;
 import android.graphics.Rect;
 
 import java.util.List;
 
 /**
- * An interface for classes which paint the track path. 
- *
+ * An interface for classes which paint the track path.
+ * 
  * @author Vangelis S.
  */
 public interface TrackPathPainter {
-	
+
   /**
-   * Clears the related data.
+   * Returns true if has path.
    */
-  void clear();
-  
+  public boolean hasPath();
+
   /**
-   * Draws the path to the canvas.
-   * @param canvas The Canvas to draw upon
+   * Updates state. Returns true if the state is updated.
    */
-  void drawTrack(Canvas canvas);
-  
+  public boolean updateState();
+
   /**
-   * Updates the path.
-   * @param projection The Canvas to draw upon.
-   * @param viewRect The Path to be drawn.   
-   * @param startLocationIdx The start point from where update the path.
-   * @param alwaysVisible Flag for alwaysvisible.
-   * @param points The list of points used to update the path.
+   * Updates the path. Creates a new path if necessary
+   * 
+   * @param projection the projection
+   * @param viewRect the view rectangle
+   * @param startIndex the start index
+   * @param points the points
    */
-  void updatePath(Projection projection, Rect viewRect, int startLocationIdx,
-      Boolean alwaysVisible, List<CachedLocation> points);
-  
+  public void updatePath(
+      Projection projection, Rect viewRect, int startIndex, List<CachedLocation> points);
+
   /**
-   * @return True if the path needs to be updated.
+   * Clears the path.
    */
-  boolean needsRedraw();
-  
+  public void clearPath();
+
   /**
-   * @return The path being used currently.
+   * Draws the path.
+   * 
+   * @param canvas the canvas
    */
-  Path getLastPath();
+  public void drawPath(Canvas canvas);
 }
-
-
-

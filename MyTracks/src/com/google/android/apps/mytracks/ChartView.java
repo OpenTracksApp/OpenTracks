@@ -81,9 +81,6 @@ public class ChartView extends View {
   private static final int SPACER = 4;
   private static final int Y_AXIS_OFFSET = 16;
 
-  // Marker pin x position / marker icon width
-  private static final double MARKER_PIN_X_POSITION_PERCENTAGE = 13 / 48.0;
-
   private final ChartValueSeries[] series = new ChartValueSeries[NUM_SERIES];
   private final ArrayList<double[]> chartData = new ArrayList<double[]>();
   private final ArrayList<Waypoint> waypoints = new ArrayList<Waypoint>();
@@ -559,8 +556,8 @@ public class ChartView extends View {
       float x = getX(getWaypointXValue(waypoint));
       canvas.drawLine(
           x, topBorder + spacer + markerHeight / 2, x, topBorder + effectiveHeight, markerPaint);
-      canvas.translate(
-          x - (float) (markerWidth * MARKER_PIN_X_POSITION_PERCENTAGE), topBorder + spacer);
+      canvas.translate(x - (float) (markerWidth * Constants.WAYPOINT_X_OFFSET_PERCENTAGE),
+          topBorder + spacer);
       if (waypoints.get(i).getType() == Waypoint.TYPE_STATISTICS) {
         statisticsMarker.draw(canvas);
       } else {

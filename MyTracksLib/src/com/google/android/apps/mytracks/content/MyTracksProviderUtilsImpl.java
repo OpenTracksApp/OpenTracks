@@ -681,7 +681,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     return waypoint;
   }
 
-  private ContentValues createContentValues(Waypoint waypoint) {
+  ContentValues createContentValues(Waypoint waypoint) {
     ContentValues values = new ContentValues();
 
     // Value < 0 indicates no id is available
@@ -824,7 +824,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
       throw new IllegalArgumentException("locationFactory is null");
     }
     return new LocationIterator() {
-      private long lastTrackPointId = startTrackPointId;
+      private long lastTrackPointId = -1L;
       private Cursor cursor = getCursor(startTrackPointId);
       private final CachedTrackPointsIndexes
           indexes = cursor != null ? new CachedTrackPointsIndexes(cursor)
@@ -843,7 +843,8 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
        * Advances the cursor to the next batch. Returns true if successful.
        */
       private boolean advanceCursorToNextBatch() {
-        long trackPointId = lastTrackPointId + (descending ? -1 : 1);
+        long trackPointId = lastTrackPointId == -1L ? -1L : lastTrackPointId + (descending ? -1
+            : 1);
         Log.d(TAG, "Advancing track point id: " + trackPointId);
         cursor.close();
         cursor = getCursor(trackPointId);

@@ -15,7 +15,6 @@
  */
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.services.RemoveTempFilesService;
 import com.google.android.apps.mytracks.util.AnalyticsUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
@@ -26,12 +25,10 @@ import android.content.Intent;
 
 /**
  * MyTracksApplication for keeping global state.
- *
+ * 
  * @author Jimmy Shih
  */
 public class MyTracksApplication extends Application {
-
-  private TrackDataHub trackDataHub;
 
   @Override
   public void onCreate() {
@@ -42,17 +39,5 @@ public class MyTracksApplication extends Application {
     AnalyticsUtils.sendPageViews(getApplicationContext(), "/appstart");
     Intent intent = new Intent(this, RemoveTempFilesService.class);
     startService(intent);
-  }
-
-  /**
-   * Gets the application's TrackDataHub.
-   * 
-   * Note: use synchronized to make sure only one instance is created per application.
-   */
-  public synchronized TrackDataHub getTrackDataHub() {
-    if (trackDataHub == null) {
-      trackDataHub = TrackDataHub.newInstance(getApplicationContext());
-    }
-    return trackDataHub;
   }
 }

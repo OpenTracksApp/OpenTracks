@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks.maps;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
@@ -24,32 +25,31 @@ import android.content.Context;
 import android.util.Log;
 
 /**
- * A factory for TrackPathPainters.
- *
+ * A factory for {@link TrackPathPainter}.
+ * 
  * @author Vangelis S.
  */
 public class TrackPathPainterFactory {
 
-  private TrackPathPainterFactory() {
-  }
+  private TrackPathPainterFactory() {}
 
   /**
-   * Get a new TrackPathPainter.
-   * @param context Context to fetch system preferences.
-   * @return The TrackPathPainter that corresponds to the track color mode setting.
+   * Get a new {@link TrackPathPainter}.
+   * 
+   * @param context the context
    */
   public static TrackPathPainter getTrackPathPainter(Context context) {
     String trackColorMode = PreferencesUtils.getString(context, R.string.track_color_mode_key,
         context.getString(R.string.settings_map_track_color_mode_single_value));
     Log.i(TAG, "Creating track path painter of type: " + trackColorMode);
 
-    if (context.getString(R.string.settings_map_track_color_mode_fixed_value)
-        .equals(trackColorMode)) {
-      return new DynamicSpeedTrackPathPainter(context, new FixedSpeedTrackPathDescriptor(context));
-    } else if (context.getString(R.string.settings_map_track_color_mode_dynamic_value)
+    if (context.getString(R.string.settings_map_track_color_mode_dynamic_value)
         .equals(trackColorMode)) {
       return new DynamicSpeedTrackPathPainter(context, new DynamicSpeedTrackPathDescriptor(
           context));
+    } else if (context.getString(R.string.settings_map_track_color_mode_fixed_value)
+        .equals(trackColorMode)) {
+      return new DynamicSpeedTrackPathPainter(context, new FixedSpeedTrackPathDescriptor(context));
     } else {
       return new SingleColorTrackPathPainter(context);
     }

@@ -13,21 +13,30 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks.maps;
 
 import android.content.Context;
 import android.graphics.Paint;
 
 /**
- * Various utility functions for TrackPath painting.
- *
+ * Various utility functions for track path painting.
+ * 
  * @author Vangelis S.
  */
-public class TrackPathUtilities {
-  
-  public static Paint getPaint(int id, Context context) {
+public class TrackPathUtils {
+
+  private TrackPathUtils() {}
+
+  /**
+   * Gets a paint.
+   * 
+   * @param context the context
+   * @param colorId the color id
+   */
+  public static Paint getPaint(Context context, int colorId) {
     Paint paint = new Paint();
-    paint.setColor(context.getResources().getColor(id));
+    paint.setColor(context.getResources().getColor(colorId));
     paint.setStrokeWidth(3);
     paint.setStyle(Paint.Style.STROKE);
     paint.setAntiAlias(true);
