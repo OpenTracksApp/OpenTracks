@@ -1003,7 +1003,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     loc.setLatitude(INITIAL_LATITUDE + (double) i / 10000.0);
     loc.setLongitude(INITIAL_LONGITUDE - (double) i / 10000.0);
     loc.setAccuracy((float) i / 100.0f);
-    loc.setAltitude(i * 2.5);
+    loc.setAltitude(i * ALTITUDE_INTERVAL);
     return loc;
   }
   
