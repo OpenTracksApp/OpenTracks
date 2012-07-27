@@ -273,24 +273,25 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
    */
   public void testSplitSetting() {
     EndToEndTestUtils.startRecording();
-    
+
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_split_frequency), true);
-    boolean isFoundKM = EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.ONE_KM);
-    if(isFoundKM) {
-      EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.ONE_KM);
+    boolean isFoundKM = EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.KM);
+    if (isFoundKM) {
+      EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.KM, 0);
     } else {
-      EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.ONE_MILE);
+      EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.MILE, 0);
     }
-    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+
+    EndToEndTestUtils
+        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     // Send Gps to give a distance more than one kilometer or one mile.
     EndToEndTestUtils.sendGps(20);
-    
-    
+
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_markers), true);
     instrumentation.waitForIdleSync();
     assertTrue(EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount() > 0);
     EndToEndTestUtils.SOLO.goBack();
-    
+
     EndToEndTestUtils.stopRecording(true);
   }
 
