@@ -23,7 +23,6 @@ import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.KeyEvent;
 import android.widget.CheckBox;
-import android.widget.EditText;
 
 import java.util.ArrayList;
 
@@ -166,18 +165,10 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     EndToEndTestUtils.rotateAllActivities();
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.generic_save));
     sendKeys(KeyEvent.KEYCODE_DEL);
-    ArrayList<EditText> editTexts = EndToEndTestUtils.SOLO.getCurrentEditTexts();
-    
-    EndToEndTestUtils.SOLO.enterText(editTexts.get(0), newTrackName);
-    EndToEndTestUtils.SOLO.enterText(editTexts.get(1), newType);
-    // In landscape, there are only two visible edit texts.
-    if (editTexts.size() > 2) {
-      EndToEndTestUtils.SOLO.enterText(editTexts.get(2), newDesc);
-    } else {
-      EndToEndTestUtils.SOLO.scrollDown();
-      editTexts = EndToEndTestUtils.SOLO.getCurrentEditTexts();
-      EndToEndTestUtils.SOLO.enterText(editTexts.get(editTexts.size() - 1), newDesc);
-    }
+
+    EndToEndTestUtils.enterTextAvoidSoftKeyBoard(0, newTrackName);
+    EndToEndTestUtils.enterTextAvoidSoftKeyBoard(1, newType);
+    EndToEndTestUtils.enterTextAvoidSoftKeyBoard(2, newDesc);
     EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_save));
     instrumentation.waitForIdleSync();
     // Go back to track list.
@@ -289,7 +280,11 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
 
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_markers), true);
     instrumentation.waitForIdleSync();
-    assertTrue(EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount() > 0);
+    if (EndToEndTestUtils.hasGPSSingal) {
+      assertTrue(EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount() > 0);
+    } else {
+      assertTrue(EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount() == 0);
+    }
     EndToEndTestUtils.SOLO.goBack();
 
     EndToEndTestUtils.stopRecording(true);
@@ -304,11 +299,12 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_insert_marker), true);
     // Rotate when show insert page.
     EndToEndTestUtils.rotateAllActivities();
-    EndToEndTestUtils.SOLO.enterText(0, WAYPOINT_NAME);
+    EndToEndTestUtils.enterTextAvoidSoftKeyBoard(0, WAYPOINT_NAME);
     EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_add));
-    if (!EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.marker_add_error),
-        1, EndToEndTestUtils.SHORT_WAIT_TIME)) {
+    if (EndToEndTestUtils.hasGPSSingal) {
       assertTrue(EndToEndTestUtils.SOLO.searchText(WAYPOINT_NAME));
+    } else {
+      assertFalse(EndToEndTestUtils.SOLO.searchText(WAYPOINT_NAME));
     }
 
     EndToEndTestUtils.SOLO.goBack();

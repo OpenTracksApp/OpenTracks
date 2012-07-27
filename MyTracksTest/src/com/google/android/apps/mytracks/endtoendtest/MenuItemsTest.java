@@ -22,9 +22,6 @@ import android.annotation.TargetApi;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.KeyEvent;
-import android.widget.EditText;
-
-import java.util.ArrayList;
 
 /**
  * Tests some menu items of MyTracks.
@@ -88,8 +85,7 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
     EndToEndTestUtils.createSimpleTrack(1);
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_search), true);
-    ArrayList<EditText> editTexts = EndToEndTestUtils.SOLO.getCurrentEditTexts();
-    EndToEndTestUtils.SOLO.enterText(editTexts.get(0), EndToEndTestUtils.trackName);
+    EndToEndTestUtils.enterTextAvoidSoftKeyBoard(0, EndToEndTestUtils.trackName);
     sendKeys(KeyEvent.KEYCODE_ENTER);
     instrumentation.waitForIdleSync();
     assertEquals(1, EndToEndTestUtils.SOLO.getCurrentListViews().size());

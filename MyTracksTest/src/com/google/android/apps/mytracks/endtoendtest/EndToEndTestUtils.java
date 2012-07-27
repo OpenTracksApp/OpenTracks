@@ -61,6 +61,7 @@ public class EndToEndTestUtils {
   private static final float START_LATITUDE = -1.3f;
   private static final float DELTA_LONGITUDE = 0.0005f;
   private static final float DELTA_LADITUDE = 0.0005f;
+  private static final String NO_GPS_MESSAGE_PREFIX = "GPS is not available";
   
   private static final String MOREOPTION_CLASSNAME = "com.android.internal.view.menu.ActionMenuPresenter$OverflowMenuButton";
 
@@ -124,6 +125,7 @@ public class EndToEndTestUtils {
   // Android OS.
   static boolean hasActionBar = false;
   static boolean isEmulator = true;
+  static boolean hasGPSSingal = true;
   static boolean isCheckedFirstLaunch = false;
 
   private EndToEndTestUtils() {}
@@ -201,10 +203,20 @@ public class EndToEndTestUtils {
    */
   static void setupForAllTest(Instrumentation instrumentation, TrackListActivity activityMyTracks) {
     setIsEmulator();
+    
     EndToEndTestUtils.instrumentation = instrumentation;
     EndToEndTestUtils.activityMytracks = activityMyTracks;
     SOLO = new Solo(EndToEndTestUtils.instrumentation,
         EndToEndTestUtils.activityMytracks);
+    
+    // For emulator, we would fix GPS signal.
+    if(!isEmulator) {
+      GoToMyLocationTest.findAndClickMyLocation(activityMyTracks);
+      hasGPSSingal = !SOLO.waitForText(NO_GPS_MESSAGE_PREFIX, 1,
+          EndToEndTestUtils.SHORT_WAIT_TIME);
+      SOLO.goBack();
+    }
+   
     // Check if open MyTracks first time after install. If so, there would be a
     // welcome view with accept buttons. And makes sure only check once.
     if (!isCheckedFirstLaunch) {
@@ -216,9 +228,9 @@ public class EndToEndTestUtils {
           activityMytracks.getString(R.string.welcome_title), 0, SHORT_WAIT_TIME)) {
         resetPreferredUnits();
       }
+      hasActionBar = setHasActionBar();
       checkLanguage();
       isCheckedFirstLaunch = true;
-      setHasActionBar();
       deleteAllTracks();
       resetAllSettings(activityMyTracks, false);
     } else if (SOLO.waitForText(
@@ -320,6 +332,7 @@ public class EndToEndTestUtils {
       if (showTrackList) {
         SOLO.goBack();
       }
+      instrumentation.waitForIdleSync();
     }
   }
 
@@ -328,7 +341,7 @@ public class EndToEndTestUtils {
    */
   static void startRecording() {
     if (hasActionBar) {
-      Button startButton = getButtonOnScreen(activityMytracks.getString(R.string.menu_record_track), false, false);
+      View startButton = getButtonOnScreen(activityMytracks.getString(R.string.menu_record_track), false, false);
       // In case a track is recording.
       if (startButton == null) {
         stopRecording(true);
@@ -420,9 +433,8 @@ public class EndToEndTestUtils {
    * is shown.
    */
   static void deleteAllTracks() {
-    EndToEndTestUtils.findMenuItem(activityMytracks.getString(R.string.menu_delete_all), true);
-    EndToEndTestUtils
-        .getButtonOnScreen(activityMytracks.getString(R.string.generic_ok), true, true);
+    findMenuItem(activityMytracks.getString(R.string.menu_delete_all), true);
+    getButtonOnScreen(activityMytracks.getString(R.string.generic_ok), true, true);
   }
   
   /**
@@ -465,22 +477,41 @@ public class EndToEndTestUtils {
    * @param isClick whether click the button if find it
    * @return the button to search, and null means can not find the button
    */
-  static Button getButtonOnScreen(String buttonName, boolean isWait,boolean isClick) {
+  static View getButtonOnScreen(String buttonName, boolean isWait,boolean isClick) {
+    View button = null;
+
     instrumentation.waitForIdleSync();
     if (isWait) {
       SOLO.waitForText(buttonName);
     }
-    ArrayList<Button> currentButtons = SOLO.getCurrentButtons();
-    for (Button button : currentButtons) {
-      String title = (String) button.getText();
-      if (title.equalsIgnoreCase(buttonName)) { 
-        if(isClick) {
-          SOLO.clickOnView(button);
+    
+    if (hasActionBar) {
+      ArrayList<View> allViews = SOLO.getViews();
+      for (View view : allViews) {
+        String className = view.getClass().getName();
+        if(className.indexOf("ActionMenuItemView") > 0) {
+          String menuItemNameString = view.getContentDescription().toString();
+          if(menuItemNameString.equalsIgnoreCase(buttonName)) {
+            button = view;
+            break;
+          }
         }
-        return button; 
       }
     }
-    return null;
+
+    ArrayList<Button> currentButtons = SOLO.getCurrentButtons();
+    for (Button oneButton : currentButtons) {
+      String title = (String) oneButton.getText();
+      if (title.equalsIgnoreCase(buttonName)) { 
+        button = oneButton;
+      }
+    }
+    
+    if(isClick) {
+      SOLO.clickOnView(button);
+    }
+    
+    return button;
   }
 
   /**
@@ -489,24 +520,12 @@ public class EndToEndTestUtils {
    * @return false means can not check failed.
    */
   static boolean setHasActionBar() {
-    instrumentation.waitForIdleSync();
-    // If can find record button without pressing Menu, it should be an action
-    // bar.
-    Button startButton = getButtonOnScreen(activityMytracks.getString(R.string.menu_record_track), false, false);
-    Button stopButton = getButtonOnScreen(activityMytracks.getString(R.string.menu_stop_recording), false, false);
-    if (startButton != null || stopButton != null) {
-      hasActionBar = true;
-    } else {
-      showMenuItem();
-      if (SOLO.searchText(activityMytracks.getString(R.string.menu_record_track))
-          || SOLO.searchText(activityMytracks.getString(R.string.menu_stop_recording))) {
-        hasActionBar = false;
-      } else {
-        return false;
-      }
-      SOLO.goBack();
+    try {
+      return activityMytracks.getActionBar() == null ? false : true;
+    }catch (Throwable e) {
+      // For in Android which does not has action bar, here will meet a error.
+      return false;
     }
-    return true;
   }
 
   /**
@@ -543,7 +562,7 @@ public class EndToEndTestUtils {
   // ICS phone.
   if(hasActionBar) {
     // Firstly find in action bar.
-    Button button = getButtonOnScreen(menuName, false, false);
+    View button = getButtonOnScreen(menuName, false, false);
     if (button != null) {
       findResult = true;
       if (click) {
@@ -689,13 +708,17 @@ public class EndToEndTestUtils {
   }
   
   /**
-   * Hides soft key board when input text in an exit text.
-   * @param myEditText
-   * @param context
+   * Finds a edit text and enter text in it. This method can hides soft key
+   * board when input text.
+   * 
+   * @param editTextIndex the index of edit text
+   * @param text to enter
    */
-  public static void hideSoftKeyBoard(EditText myEditText, Context context) {
-    InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-    imm.hideSoftInputFromWindow(myEditText.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
+  public static void enterTextAvoidSoftKeyBoard(int editTextIndex, String text) {
+    InputMethodManager imm = (InputMethodManager) activityMytracks.getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+    EditText editText = SOLO.getEditText(editTextIndex);
+    imm.hideSoftInputFromWindow(editText.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
+    SOLO.enterText(editText, text);
   }
 
 }

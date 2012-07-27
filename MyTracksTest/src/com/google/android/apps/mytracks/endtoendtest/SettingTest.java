@@ -280,9 +280,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     // Changes the setting of default activity.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
         .getString(R.string.settings_recording_default_activity));
-    EndToEndTestUtils.hideSoftKeyBoard(EndToEndTestUtils.SOLO.getEditText(0),
-        activityMyTracks.getApplicationContext());
-    EndToEndTestUtils.SOLO.enterText(0, EndToEndTestUtils.DEFAULTACTIVITY);
+    EndToEndTestUtils.enterTextAvoidSoftKeyBoard(0, EndToEndTestUtils.DEFAULTACTIVITY);
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
 
