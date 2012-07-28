@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2012 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+  <item
+    android:icon="@drawable/menu_record_track"
+    android:id="@+id/track_list_record_track"
+    android:showAsAction="ifRoom"
+    android:title="@string/menu_record_track"/>
+  <item
+    android:icon="@drawable/menu_stop_recording"
+    android:id="@+id/track_list_stop_recording"
+    android:showAsAction="ifRoom"
+    android:title="@string/menu_stop_recording"/>
+  <item
+    android:actionViewClass="android.widget.SearchView"
+    android:icon="@drawable/menu_search"
+    android:id="@+id/track_list_search"
+    android:showAsAction="always|collapseActionView"
+    android:title="@string/menu_search"/>
+  <item
+    android:icon="@drawable/menu_import"
+    android:id="@+id/track_list_import"
+    android:title="@string/menu_import"/>
+  <item
+    android:icon="@drawable/menu_save"
+    android:id="@+id/track_list_save_all"
+    android:title="@string/menu_save_all">
+    <menu>
+      <item android:id="@+id/track_list_save_all_gpx"/>
+      <item android:id="@+id/track_list_save_all_kml"/>
+      <item android:id="@+id/track_list_save_all_csv"/>
+      <item android:id="@+id/track_list_save_all_tcx"/>
+    </menu>
+  </item>
+  <item
+    android:icon="@drawable/menu_delete"
+    android:id="@+id/track_list_delete_all"
+    android:title="@string/menu_delete_all"/>
+  <item
+    android:icon="@drawable/menu_aggregated_statistics"
+    android:id="@+id/track_list_aggregated_statistics"
+    android:title="@string/menu_aggregated_statistics"/>
+  <item
+    android:icon="@drawable/menu_settings"
+    android:id="@+id/track_list_settings"
+    android:title="@string/menu_settings"/>
+  <item
+    android:icon="@drawable/menu_help"
+    android:id="@+id/track_list_help"
+    android:title="@string/menu_help"/>
+</menu>

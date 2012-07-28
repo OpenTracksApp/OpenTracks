@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2010 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+  <PreferenceCategory android:title="@string/settings_sampling">
+    <CheckBoxPreference android:key="@string/settings_auto_start_key"
+                        android:title="@string/settings_auto_start"
+                        android:summaryOn="@string/settings_auto_start_summary_on"
+                        android:summaryOff="@string/settings_auto_start_summary_off"
+                        android:defaultValue="false" />
+    <CheckBoxPreference android:key="@string/settings_auto_stop_key"
+                        android:title="@string/settings_auto_stop"
+                        android:summaryOn="@string/settings_auto_stop_summary_on"
+                        android:summaryOff="@string/settings_auto_stop_summary_off"
+                        android:defaultValue="true" />
+
+    <ListPreference
+        android:key="@string/settings_min_signal_sampling_period_key"
+        android:title="@string/settings_min_signal_sampling_period"
+        android:summary="@string/settings_min_signal_sampling_period_summary"
+        android:entries="@array/task_period_options"
+        android:entryValues="@array/task_period_values"
+        android:defaultValue="-1" />
+  </PreferenceCategory>
+
+  <PreferenceCategory android:title="@string/settings_control">
+    <Preference android:key="@string/settings_control_start_key"
+                android:title="@string/settings_control_start"
+                android:summary="@string/settings_control_start_summary"
+                android:persistent="false" />
+
+    <Preference android:key="@string/settings_control_stop_key"
+                android:title="@string/settings_control_stop"
+                android:summary="@string/settings_control_stop_summary"
+                android:persistent="false" />
+  </PreferenceCategory>
+
+</PreferenceScreen>
+
