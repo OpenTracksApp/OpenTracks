@@ -77,17 +77,19 @@ public class EndToEndTestUtils {
   // Following is some check strings in English and Chinese
   private static final HashMap<String, String> RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL = new HashMap<String, String>(); 
   private static final HashMap<String, String> VIEW_MODE_MULTILINGUAL = new HashMap<String, String>(); 
-  private static final HashMap<String, String> ONE_KM_MULTILINGUAL = new HashMap<String, String>(); 
-  private static final HashMap<String, String> ONE_MILE_MULTILINGUAL = new HashMap<String, String>(); 
+  private static final HashMap<String, String> KM_MULTILINGUAL = new HashMap<String, String>(); 
+  private static final HashMap<String, String> MILE_MULTILINGUAL = new HashMap<String, String>(); 
   public static String RELATIVE_STARTTIME_POSTFIX = "";
   public static String VIEW_MODE = "";
-  public static String ONE_KM = "";
-  public static String ONE_MILE = "";
+  public static String KM = "";
+  public static String MILE = "";
   
   public static int SHORT_WAIT_TIME = 2000;
   public static int NORMAL_WAIT_TIME = 8000;
   public static int LONG_WAIT_TIME = 15000;
   public static int SUPER_LONG_WAIT_TIME = 100000;
+  
+  public static String deviceLanguage = "";
   
   static {
     RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("es", "mins ago");
@@ -102,17 +104,17 @@ public class EndToEndTestUtils {
     VIEW_MODE_MULTILINGUAL.put("ar", "وضع");
     VIEW_MODE_MULTILINGUAL.put("zh", "模式");
     
-    ONE_KM_MULTILINGUAL.put("es", "1 km");
-    ONE_KM_MULTILINGUAL.put("de", "1 km");
-    ONE_KM_MULTILINGUAL.put("fr", "1 km");
-    ONE_KM_MULTILINGUAL.put("ar", "١ كم");
-    ONE_KM_MULTILINGUAL.put("zh", "1 公里");
+    KM_MULTILINGUAL.put("es", "km");
+    KM_MULTILINGUAL.put("de", "km");
+    KM_MULTILINGUAL.put("fr", "km");
+    KM_MULTILINGUAL.put("ar", "كم");
+    KM_MULTILINGUAL.put("zh", "公里");
     
-    ONE_MILE_MULTILINGUAL.put("es", "1 mi");
-    ONE_MILE_MULTILINGUAL.put("de", "1 mi");
-    ONE_MILE_MULTILINGUAL.put("fr", "1 mile");
-    ONE_MILE_MULTILINGUAL.put("ar", "١ ميل");
-    ONE_MILE_MULTILINGUAL.put("zh", "1 英里");
+    MILE_MULTILINGUAL.put("es", "mi");
+    MILE_MULTILINGUAL.put("de", "mi");
+    MILE_MULTILINGUAL.put("fr", "mile");
+    MILE_MULTILINGUAL.put("ar", "ميل");
+    MILE_MULTILINGUAL.put("zh", "英里");
   }
 
   static Solo SOLO;
@@ -130,17 +132,17 @@ public class EndToEndTestUtils {
    * Checks the language, then sets the fields with right string.
    */
   private static void checkLanguage() {
-    String deviceLanguage = instrumentation.getContext().getResources().getConfiguration().locale.getLanguage();
+    deviceLanguage = instrumentation.getContext().getResources().getConfiguration().locale.getLanguage();
     if (RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.get(deviceLanguage) != null) {
       RELATIVE_STARTTIME_POSTFIX = RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.get(deviceLanguage);
       VIEW_MODE = VIEW_MODE_MULTILINGUAL.get(deviceLanguage);
-      ONE_KM = ONE_KM_MULTILINGUAL.get(deviceLanguage);
-      ONE_MILE = ONE_MILE_MULTILINGUAL.get(deviceLanguage);
+      KM = KM_MULTILINGUAL.get(deviceLanguage);
+      MILE = MILE_MULTILINGUAL.get(deviceLanguage);
     } else {
       RELATIVE_STARTTIME_POSTFIX = RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.get("es");
       VIEW_MODE = VIEW_MODE_MULTILINGUAL.get("es");
-      ONE_KM = ONE_KM_MULTILINGUAL.get("es");
-      ONE_MILE = ONE_MILE_MULTILINGUAL.get("es");
+      KM = KM_MULTILINGUAL.get("es");
+      MILE = MILE_MULTILINGUAL.get("es");
     }
   }
 
