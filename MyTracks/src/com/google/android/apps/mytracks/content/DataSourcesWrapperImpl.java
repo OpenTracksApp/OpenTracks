@@ -165,7 +165,7 @@ class DataSourcesWrapperImpl implements DataSourcesWrapper {
         String setting = context.getString(
             GoogleLocationUtils.isAvailable(context) ? R.string.gps_google_location_settings
                 : R.string.gps_location_access);
-        toast = context.getString(R.string.my_location_no_location, setting);
+        toast = context.getString(R.string.my_location_no_gps, setting);
       }
 
       // Let the user know we have only an approximate location:

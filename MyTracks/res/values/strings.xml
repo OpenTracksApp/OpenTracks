@@ -672,7 +672,7 @@ limitations under the License.
       for all applications. See Settings -> Location access.">
     \'Location access\'
   </string>
-  <string name="gps_need_to_enable"
+  <string name="gps_disabled"
     translation_description="In the main view, the message on the top asking the user to enable
       GPS.
 
@@ -1176,7 +1176,7 @@ limitations under the License.
       indicating that GPS is not available and an approximate location is used instead.">
     GPS is not available. An approximate location based on cell towers and WiFi networks is shown.
   </string>
-  <string name="my_location_no_location"
+  <string name="my_location_no_gps"
     translation_description="When displaying the user's current location, a status message
       indicating that the current location cannot be determined.
 

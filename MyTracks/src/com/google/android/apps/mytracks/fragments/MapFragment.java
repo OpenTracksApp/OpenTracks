@@ -283,7 +283,7 @@ public class MapFragment extends Fragment
         String setting = getString(
             GoogleLocationUtils.isAvailable(getActivity()) ? R.string.gps_google_location_settings
                 : R.string.gps_location_access);
-        message = getString(R.string.gps_need_to_enable, setting);
+        message = getString(R.string.gps_disabled, setting);
         isGpsDisabled = true;
         break;
       case NO_FIX:
