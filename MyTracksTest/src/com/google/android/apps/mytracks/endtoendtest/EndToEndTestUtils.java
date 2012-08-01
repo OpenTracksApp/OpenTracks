@@ -125,7 +125,7 @@ public class EndToEndTestUtils {
   // Android OS.
   static boolean hasActionBar = false;
   static boolean isEmulator = true;
-  static boolean hasGPSSingal = true;
+  static boolean hasGpsSingal = true;
   static boolean isCheckedFirstLaunch = false;
 
   private EndToEndTestUtils() {}
@@ -212,7 +212,7 @@ public class EndToEndTestUtils {
     // For emulator, we would fix GPS signal.
     if(!isEmulator) {
       GoToMyLocationTest.findAndClickMyLocation(activityMyTracks);
-      hasGPSSingal = !SOLO.waitForText(NO_GPS_MESSAGE_PREFIX, 1,
+      hasGpsSingal = !SOLO.waitForText(NO_GPS_MESSAGE_PREFIX, 1,
           EndToEndTestUtils.SHORT_WAIT_TIME);
       SOLO.goBack();
     }

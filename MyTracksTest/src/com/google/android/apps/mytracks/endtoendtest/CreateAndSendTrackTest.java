@@ -280,7 +280,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
 
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_markers), true);
     instrumentation.waitForIdleSync();
-    if (EndToEndTestUtils.hasGPSSingal) {
+    if (EndToEndTestUtils.hasGpsSingal) {
       assertTrue(EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount() > 0);
     } else {
       assertTrue(EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount() == 0);
@@ -301,7 +301,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     EndToEndTestUtils.rotateAllActivities();
     EndToEndTestUtils.enterTextAvoidSoftKeyBoard(0, WAYPOINT_NAME);
     EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_add));
-    if (EndToEndTestUtils.hasGPSSingal) {
+    if (EndToEndTestUtils.hasGpsSingal) {
       assertTrue(EndToEndTestUtils.SOLO.searchText(WAYPOINT_NAME));
     } else {
       assertFalse(EndToEndTestUtils.SOLO.searchText(WAYPOINT_NAME));
