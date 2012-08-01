@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="com.google.android.apps.mytracks.samples.api"
+      android:versionCode="1"
+      android:versionName="1.0">
+    <uses-sdk android:minSdkVersion="7"/>
+
+    <application android:icon="@drawable/icon"
+                 android:label="@string/app_name">
+        <activity android:label="@string/app_name"
+                  android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <receiver android:exported="true"
+                  android:name=".MyTracksReceiver">
+            <intent-filter>
+                <action android:name="com.google.android.apps.mytracks.TRACK_STARTED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.google.android.apps.mytracks.TRACK_STOPPED" />
+            </intent-filter>        
+        </receiver>
+    </application>
+    
+    <uses-permission android:name="com.google.android.apps.mytracks.READ_TRACK_DATA" />
+    <uses-permission android:name="com.google.android.apps.mytracks.WRITE_TRACK_DATA" />
+    <uses-permission android:name="com.google.android.apps.mytracks.TRACK_NOTIFICATIONS" />
+</manifest>

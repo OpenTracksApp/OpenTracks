@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+  style="@style/ScrollView" >
+  <TableLayout
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:padding="8dp"
+    android:shrinkColumns="0,2"
+    android:stretchColumns="0,2" >
+    <!-- Speed on one line -->
+    <TableRow>
+      <TextView
+        android:id="@+id/stats_speed_label"
+        style="@style/StatsLabel" />
+    </TableRow>
+    <TableRow>
+      <TextView
+        android:id="@+id/stats_speed_value"
+        style="@style/StatsValue" />
+    </TableRow>
+    <include layout="@layout/stats_core" />
+    <TableRow android:id="@+id/stats_coordinate_label_table_row" >
+      <TextView
+        android:text="@string/stats_latitude"
+        style="@style/StatsLabel" />
+      <TextView
+        android:layout_column="2"
+        android:text="@string/stats_longitude"
+        style="@style/StatsLabel" />
+    </TableRow>
+    <TableRow android:id="@+id/stats_coordinate_value_table_row" >
+      <TextView
+        android:id="@+id/stats_latitude_value"
+        style="@style/StatsValue" />
+      <TextView style="@style/StatsSpacer" />
+      <TextView
+        android:id="@+id/stats_longitude_value"
+        style="@style/StatsValue" />
+    </TableRow>
+  </TableLayout>
+</ScrollView>
