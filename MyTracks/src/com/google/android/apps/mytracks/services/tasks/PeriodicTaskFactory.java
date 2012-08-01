@@ -13,21 +13,22 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks.services.tasks;
 
 import android.content.Context;
 
 /**
  * An interface for classes that can create periodic tasks.
- *
+ * 
  * @author Sandor Dornbush
  */
 public interface PeriodicTaskFactory {
 
   /**
-   * Creates a periodic task which does voice announcements.
-   *
+   * Creates a periodic task.
+   * 
    * @return the task, or null if task is not supported
    */
-  PeriodicTask create(Context context);
+  public PeriodicTask create(Context context);
 }

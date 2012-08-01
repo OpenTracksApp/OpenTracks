@@ -27,9 +27,6 @@ import android.content.Context;
  */
 public class StatusAnnouncerFactory implements PeriodicTaskFactory {
 
-  public StatusAnnouncerFactory() {
-  }
-
   @Override
   public PeriodicTask create(Context context) {
     return ApiAdapterFactory.getApiAdapter().getStatusAnnouncerTask(context);

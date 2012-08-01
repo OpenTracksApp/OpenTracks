@@ -322,32 +322,6 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
     OnInitListener ttsInitListener = initListenerCapture.getValue();
     assertNotNull(ttsInitListener);
 
-    expect(tts.isLanguageAvailable(DEFAULT_LOCALE))
-        .andStubReturn(TextToSpeech.LANG_AVAILABLE);
-    expect(tts.setLanguage(DEFAULT_LOCALE))
-        .andReturn(TextToSpeech.LANG_AVAILABLE);
-    expect(tts.setSpeechRate(StatusAnnouncerTask.TTS_SPEECH_RATE))
-        .andReturn(TextToSpeech.SUCCESS);
-
-    AndroidMock.replay(tts);
-
-    ttsInitListener.onInit(TextToSpeech.SUCCESS);
-
-    AndroidMock.verify(mockTask, tts);
-  }
-
-  public void testStart_languageNotSupported() {
-    doStart();
-    OnInitListener ttsInitListener = initListenerCapture.getValue();
-    assertNotNull(ttsInitListener);
-
-    expect(tts.isLanguageAvailable(DEFAULT_LOCALE))
-        .andStubReturn(TextToSpeech.LANG_NOT_SUPPORTED);
-    expect(tts.setLanguage(Locale.ENGLISH))
-        .andReturn(TextToSpeech.LANG_AVAILABLE);
-    expect(tts.setSpeechRate(StatusAnnouncerTask.TTS_SPEECH_RATE))
-        .andReturn(TextToSpeech.SUCCESS);
-
     AndroidMock.replay(tts);
 
     ttsInitListener.onInit(TextToSpeech.SUCCESS);
@@ -393,6 +367,10 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
     // Put task in "ready" state
     startTask(TextToSpeech.SUCCESS);
 
+    expect(tts.isLanguageAvailable(DEFAULT_LOCALE)).andStubReturn(TextToSpeech.LANG_AVAILABLE);
+    expect(tts.setLanguage(DEFAULT_LOCALE)).andReturn(TextToSpeech.LANG_AVAILABLE);
+    expect(tts.setSpeechRate(StatusAnnouncerTask.TTS_SPEECH_RATE)).andReturn(TextToSpeech.SUCCESS);
+    
     // Expect actual announcement call
     expect(tts.speak(
         eq(ANNOUNCEMENT), eq(TextToSpeech.QUEUE_FLUSH),
@@ -401,7 +379,7 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
 
     // Run the announcement
     AndroidMock.replay(tts);
-    task.runWithStatistics(stats);
+    task.announce(stats);
     AndroidMock.verify(mockTask, tts);
   }
 
@@ -411,7 +389,7 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
 
     // Run the announcement
     AndroidMock.replay(tts);
-    task.runWithStatistics(null);
+    task.run(null);
     AndroidMock.verify(mockTask, tts);
   }
 
@@ -424,7 +402,7 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
     AndroidMock.replay(tts);
     PhoneStateListener phoneListener = phoneListenerCapture.getValue();
     phoneListener.onCallStateChanged(TelephonyManager.CALL_STATE_OFFHOOK, null);
-    task.runWithStatistics(null);
+    task.run(null);
     AndroidMock.verify(mockTask, tts);
   }
 
@@ -441,7 +419,7 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
     phoneListener.onCallStateChanged(TelephonyManager.CALL_STATE_RINGING, null);
 
     // Run the announcement - this should do nothing.
-    task.runWithStatistics(null);
+    task.run(null);
 
     AndroidMock.verify(mockTask, tts);
   }
@@ -455,7 +433,7 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
     AndroidMock.replay(tts);
     PhoneStateListener phoneListener = phoneListenerCapture.getValue();
     phoneListener.onCallStateChanged(TelephonyManager.CALL_STATE_RINGING, null);
-    task.runWithStatistics(null);
+    task.run(null);
     AndroidMock.verify(mockTask, tts);
   }
 
@@ -475,7 +453,7 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
 
     // Run the announcement
     AndroidMock.replay(tts);
-    task.runWithStatistics(null);
+    task.run(null);
     AndroidMock.verify(mockTask, tts);
   }
   

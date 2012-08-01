@@ -16,9 +16,6 @@
 
 package com.google.android.apps.mytracks.services.tasks;
 
-import static com.google.android.apps.mytracks.Constants.TAG;
-
-import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
@@ -38,7 +35,7 @@ import java.util.Locale;
 
 /**
  * This class will periodically announce the user's trip statistics.
- *
+ * 
  * @author Sandor Dornbush
  */
 public class StatusAnnouncerTask implements PeriodicTask {
@@ -46,42 +43,31 @@ public class StatusAnnouncerTask implements PeriodicTask {
   /**
    * The rate at which announcements are spoken.
    */
-  // @VisibleForTesting
+  @VisibleForTesting
   static final float TTS_SPEECH_RATE = 0.9f;
 
-  /**
-   * A pointer to the service context.
-   */
-  private final Context context;
+  private static final String TAG = StatusAnnouncerTask.class.getSimpleName();
+  private static final long HOUR_TO_MILLISECOND = 60 * 60 * 1000;
 
-  /**
-   * The interface to the text to speech engine.
-   */
+  private final Context context;
   protected TextToSpeech tts;
 
-  /**
-   * The response received from the TTS engine after initialization.
-   */
+  // Response from TTS after its initialization
   private int initStatus = TextToSpeech.ERROR;
 
-  /**
-   * Whether the TTS engine is ready.
-   */
+  // True if TTS engine is ready
   private boolean ready = false;
 
-  /**
-   * Whether we're allowed to speak right now.
-   */
+  // True if speech is allowed
   private boolean speechAllowed;
 
   /**
    * Listener which updates {@link #speechAllowed} when the phone state changes.
    */
-  private final PhoneStateListener phoneListener = new PhoneStateListener() {
-    @Override
+  private final PhoneStateListener phoneStateListener = new PhoneStateListener() {
+      @Override
     public void onCallStateChanged(int state, String incomingNumber) {
       speechAllowed = state == TelephonyManager.CALL_STATE_IDLE;
-
       if (!speechAllowed && tts != null && tts.isSpeaking()) {
         // If we're already speaking, stop it.
         tts.stop();
@@ -93,107 +79,197 @@ public class StatusAnnouncerTask implements PeriodicTask {
     this.context = context;
   }
 
-  /**
-   * {@inheritDoc}
-   *
-   * Announces the trip status.
-   */
   @Override
-  public void run(TrackRecordingService service) {
-    if (service == null) {
-      Log.e(TAG, "StatusAnnouncer TrackRecordingService not initialized");
+  public void start() {
+    if (tts == null) {
+      tts = newTextToSpeech(context, new OnInitListener() {
+          @Override
+        public void onInit(int status) {
+          initStatus = status;
+        }
+      });
+    }
+    speechAllowed = true;
+    listenToPhoneState(phoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
+  }
+
+  @Override
+  public void run(TrackRecordingService trackRecordingService) {
+    if (trackRecordingService == null) {
+      Log.e(TAG, "TrackRecordingService is null.");
       return;
     }
-
-    runWithStatistics(service.getTripStatistics());
+    announce(trackRecordingService.getTripStatistics());
   }
 
   /**
-   * This method exists as a convenience for testing code, allowing said code
-   * to avoid needing to instantiate an entire {@link TrackRecordingService}
-   * just to test the announcer.
+   * Runs this task.
+   * 
+   * @param tripStatistics the trip statistics
    */
-  // @VisibleForTesting
-  void runWithStatistics(TripStatistics statistics) {
-    if (statistics == null) {
-      Log.e(TAG, "StatusAnnouncer stats not initialized.");
+  @VisibleForTesting
+  void announce(TripStatistics tripStatistics) {
+    if (tripStatistics == null) {
+      Log.e(TAG, "TripStatistics is null.");
       return;
     }
 
     synchronized (this) {
-      checkReady();
       if (!ready) {
-        Log.e(TAG, "StatusAnnouncer Tts not ready.");
+        ready = initStatus == TextToSpeech.SUCCESS;
+        if (ready) {
+          onTtsReady();
+        }
+      }
+      if (!ready) {
+        Log.i(TAG, "TTS not ready.");
         return;
       }
     }
 
     if (!speechAllowed) {
-      Log.i(Constants.TAG,
-          "Not making announcement - not allowed at this time");
+      Log.i(TAG, "Speech is not allowed at this time.");
       return;
     }
-
-    String announcement = getAnnouncement(statistics);
-    Log.d(Constants.TAG, "Announcement: " + announcement);
-    speakAnnouncement(announcement);
+    speakAnnouncement(getAnnouncement(tripStatistics));
   }
 
+  @Override
+  public void shutdown() {
+    listenToPhoneState(phoneStateListener, PhoneStateListener.LISTEN_NONE);
+    if (tts != null) {
+      tts.shutdown();
+      tts = null;
+    }
+  }
+
+  /**
+   * Called when TTS is ready.
+   */
+  protected void onTtsReady() {
+    Locale locale = Locale.getDefault();
+    int languageAvailability = tts.isLanguageAvailable(locale);
+    if (languageAvailability == TextToSpeech.LANG_MISSING_DATA
+        || languageAvailability == TextToSpeech.LANG_NOT_SUPPORTED) {
+      Log.w(TAG, "Default locale not available, use English.");
+      locale = Locale.ENGLISH;
+      /*
+       * TODO: instead of using english, load the language if missing and show a
+       * toast if not supported. Not able to change the resource strings to
+       * English.
+       */
+    }
+    tts.setLanguage(locale);
+
+    // Slow down the speed just a bit as it is hard to hear when exercising.
+    tts.setSpeechRate(TTS_SPEECH_RATE);
+  }
+
+  /**
+   * Speaks the announcement.
+   * 
+   * @param announcement the announcement
+   */
   protected void speakAnnouncement(String announcement) {
     tts.speak(announcement, TextToSpeech.QUEUE_FLUSH, null);
   }
 
   /**
-   * Builds the announcement string.
-   *
-   * @return The string that will be read to the user
+   * Create a new {@link TextToSpeech}.
+   * 
+   * @param aContext a context
+   * @param onInitListener an on init listener
    */
-  // @VisibleForTesting
-  protected String getAnnouncement(TripStatistics stats) {
+  @VisibleForTesting
+  protected TextToSpeech newTextToSpeech(Context aContext, OnInitListener onInitListener) {
+    return new TextToSpeech(aContext, onInitListener);
+  }
+
+  /**
+   * Gets the announcement.
+   * 
+   * @param tripStatistics the trip statistics
+   */
+  @VisibleForTesting
+  protected String getAnnouncement(TripStatistics tripStatistics) {
     boolean metricUnits = PreferencesUtils.getBoolean(
         context, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
     boolean reportSpeed = PreferencesUtils.getBoolean(
         context, R.string.report_speed_key, PreferencesUtils.REPORT_SPEED_DEFAULT);
-    double d = stats.getTotalDistance() * UnitConversions.M_TO_KM;
-    double s =  stats.getAverageMovingSpeed() * UnitConversions.MS_TO_KMH;
-    
-    if (d == 0) {
+    double distance = tripStatistics.getTotalDistance() * UnitConversions.M_TO_KM;
+    double speed = tripStatistics.getAverageMovingSpeed() * UnitConversions.MS_TO_KMH;
+
+    if (distance == 0) {
       return context.getString(R.string.voice_total_distance_zero);
     }
 
     if (!metricUnits) {
-      d *= UnitConversions.KM_TO_MI;
-      s *= UnitConversions.KM_TO_MI;
+      distance *= UnitConversions.KM_TO_MI;
+      speed *= UnitConversions.KM_TO_MI;
     }
 
-    if (!reportSpeed) {
-      s = 3600000.0 / s; // converts from speed to pace
-    }
-
-    // Makes sure s is not NaN.
-    if (Double.isNaN(s)) {
-      s = 0;
-    } 
-    
-    String speed;
+    String rate;
     if (reportSpeed) {
       int speedId = metricUnits ? R.plurals.voiceSpeedKilometersPerHour
           : R.plurals.voiceSpeedMilesPerHour;
-      speed = context.getResources().getQuantityString(speedId, getQuantityCount(s), s);
+      rate = context.getResources().getQuantityString(speedId, getQuantityCount(speed), speed);
     } else {
+      speed = speed == 0 ? 0.0 : 1 / speed;
       int paceId = metricUnits ? R.string.voice_pace_per_kilometer : R.string.voice_pace_per_mile;
-      speed = context.getString(paceId, getAnnounceTime((long) s));
+      rate = context.getString(paceId, getAnnounceTime((long) (speed * HOUR_TO_MILLISECOND)));
     }
 
     int totalDistanceId = metricUnits ? R.plurals.voiceTotalDistanceKilometers
         : R.plurals.voiceTotalDistanceMiles;
-    String totalDistance = context.getResources().getQuantityString(
-        totalDistanceId, getQuantityCount(d), d);
+    String totalDistance = context.getResources()
+        .getQuantityString(totalDistanceId, getQuantityCount(distance), distance);
 
-    return context.getString(
-        R.string.voice_template, totalDistance, getAnnounceTime(stats.getMovingTime()), speed);
+    return context.getString(R.string.voice_template, totalDistance, getAnnounceTime(
+        tripStatistics.getMovingTime()), rate);
   }
-  
+
+  /**
+   * Listens to phone state.
+   * 
+   * @param listener the listener
+   * @param events the interested events
+   */
+  @VisibleForTesting
+  protected void listenToPhoneState(PhoneStateListener listener, int events) {
+    TelephonyManager telephony = (TelephonyManager) context.getSystemService(
+        Context.TELEPHONY_SERVICE);
+    if (telephony != null) {
+      telephony.listen(listener, events);
+    }
+  }
+
+  /**
+   * Gets the announce time.
+   * 
+   * @param time the time
+   */
+  @VisibleForTesting
+  String getAnnounceTime(long time) {
+    int[] parts = StringUtils.getTimeParts(time);
+    String seconds = context.getResources()
+        .getQuantityString(R.plurals.voiceSeconds, parts[0], parts[0]);
+    String minutes = context.getResources()
+        .getQuantityString(R.plurals.voiceMinutes, parts[1], parts[1]);
+    String hours = context.getResources()
+        .getQuantityString(R.plurals.voiceHours, parts[2], parts[2]);
+    StringBuilder sb = new StringBuilder();
+    if (parts[2] != 0) {
+      sb.append(hours);
+      sb.append(" ");
+      sb.append(minutes);
+    } else {
+      sb.append(minutes);
+      sb.append(" ");
+      sb.append(seconds);
+    }
+    return sb.toString();
+  }
+
   /**
    * Gets the plural count to be used by getQuantityString. getQuantityString
    * only supports integer quantities, not a double quantity like "2.2".
@@ -204,7 +280,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
    * integer quantity. However, we need to make sure that if the casted value is
    * 0, 1, or 2, we don't return those, instead, return the next biggest integer
    * 3.
-   *
+   * 
    * @param d the double value
    */
   private int getQuantityCount(double d) {
@@ -218,139 +294,5 @@ public class StatusAnnouncerTask implements PeriodicTask {
       int count = (int) d;
       return count < 3 ? 3 : count;
     }
-  }
-  
-  @Override
-  public void start() {
-    Log.i(Constants.TAG, "Starting TTS");
-    if (tts == null) {
-      // We can't have this class also be the listener, otherwise it's unsafe to
-      // reference it in Cupcake (even if we don't instantiate it).
-      tts = newTextToSpeech(context, new OnInitListener() {
-        @Override
-        public void onInit(int status) {
-          onTtsInit(status);
-        }
-      });
-    }
-    speechAllowed = true;
-
-    // Register ourselves as a listener so we won't speak during a call.
-    listenToPhoneState(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
-  }
-
-  /**
-   * Called when the TTS engine is initialized.
-   */
-  private void onTtsInit(int status) {
-    Log.i(TAG, "TrackRecordingService.TTS init: " + status);
-    synchronized (this) {
-      // TTS should be valid here but NPE exceptions were reported to the market.
-      initStatus = status;
-      checkReady();
-    }
-  }
-
-  /**
-   * Ensures that the TTS is ready (finishing its initialization if needed).
-   */
-  private void checkReady() {
-    synchronized (this) {
-      if (ready) {
-        // Already done;
-        return;
-      }
-
-      ready = initStatus == TextToSpeech.SUCCESS && tts != null;
-      Log.d(TAG, "Status announcer ready: " + ready);
-
-      if (ready) {
-        onTtsReady();
-      }
-    }
-  }
-
-  /**
-   * Finishes the TTS engine initialization.
-   * Called once (and only once) when the TTS engine is ready.
-   */
-  protected void onTtsReady() {
-    // Force the language to be the same as the string we will be speaking,
-    // if that's available.
-    Locale speechLanguage = Locale.getDefault();
-    int languageAvailability = tts.isLanguageAvailable(speechLanguage);
-    if (languageAvailability == TextToSpeech.LANG_MISSING_DATA ||
-        languageAvailability == TextToSpeech.LANG_NOT_SUPPORTED) {
-      // English is probably supported.
-      // TODO: Somehow use announcement strings from English too.
-      Log.w(TAG, "Default language not available, using English.");
-      speechLanguage = Locale.ENGLISH;
-    }
-    tts.setLanguage(speechLanguage);
-
-    // Slow down the speed just a bit as it is hard to hear when exercising.
-    tts.setSpeechRate(TTS_SPEECH_RATE);
-  }
-
-  @Override
-  public void shutdown() {
-    // Stop listening to phone state.
-    listenToPhoneState(phoneListener, PhoneStateListener.LISTEN_NONE);
-
-    if (tts != null) {
-      tts.shutdown();
-      tts = null;
-    }
-
-    Log.i(Constants.TAG, "TTS shut down");
-  }
-
-  /**
-   * Wrapper for instantiating a {@link TextToSpeech} object, which causes
-   * several issues during testing.
-   */
-  // @VisibleForTesting
-  protected TextToSpeech newTextToSpeech(Context ctx, OnInitListener onInitListener) {
-    return new TextToSpeech(ctx, onInitListener);
-  }
-
-  /**
-   * Wrapper for calls to the 100%-unmockable {@link TelephonyManager#listen}.
-   */
-  // @VisibleForTesting
-  protected void listenToPhoneState(PhoneStateListener listener, int events) {
-    TelephonyManager telephony =
-        (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-    if (telephony != null) {
-      telephony.listen(listener, events);
-    }
-  }
-
-  /**
-   * Gets a string to announce the time.
-   * 
-   * @param time the time
-   */
-  @VisibleForTesting
-  String getAnnounceTime(long time) {
-    int[] parts = StringUtils.getTimeParts(time);
-    String seconds = context.getResources().getQuantityString(
-        R.plurals.voiceSeconds, parts[0], parts[0]);
-    String minutes = context.getResources().getQuantityString(
-        R.plurals.voiceMinutes, parts[1], parts[1]);
-    String hours = context.getResources().getQuantityString(
-        R.plurals.voiceHours, parts[2], parts[2]);
-
-    StringBuilder sb = new StringBuilder();
-    if (parts[2] != 0) {
-      sb.append(hours);
-      sb.append(" ");
-      sb.append(minutes);
-    } else {
-      sb.append(minutes);
-      sb.append(" ");
-      sb.append(seconds);
-    }
-    return sb.toString();
   }
 }

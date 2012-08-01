@@ -21,15 +21,17 @@ import com.google.android.apps.mytracks.services.TrackRecordingService;
 
 import android.content.Context;
 
-
 /**
  * A simple task to insert statistics markers periodically.
+ * 
  * @author Sandor Dornbush
  */
 public class SplitTask implements PeriodicTask {
 
-  private SplitTask() {
-  }
+  private SplitTask() {}
+
+  @Override
+  public void start() {}
 
   @Override
   public void run(TrackRecordingService service) {
@@ -37,15 +39,10 @@ public class SplitTask implements PeriodicTask {
   }
 
   @Override
-  public void shutdown() {
-  }
+  public void shutdown() {}
 
-  @Override
-  public void start() {
-  }
-  
   /**
-   * Create new SplitTasks.
+   * Create new {@link SplitTask}.
    */
   public static class Factory implements PeriodicTaskFactory {
 
