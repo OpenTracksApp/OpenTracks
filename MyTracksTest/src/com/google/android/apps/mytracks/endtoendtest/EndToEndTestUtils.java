@@ -517,7 +517,7 @@ public class EndToEndTestUtils {
       }
     }
     
-    if(isClick) {
+    if(button != null && isClick) {
       SOLO.clickOnView(button);
     }
     
@@ -566,48 +566,49 @@ public class EndToEndTestUtils {
    * @param click true means need click this menu
    * @return true if find this menu
    */
-  static boolean findMenuItem(String menuName, boolean click) {boolean findResult = false;
-  boolean isMoreMenuOpened = false;
-  
-  // ICS phone.
-  if(hasActionBar) {
-    // Firstly find in action bar.
-    View button = getButtonOnScreen(menuName, false, false);
-    if (button != null) {
-      findResult = true;
-      if (click) {
-        SOLO.clickOnView(button);
-        instrumentation.waitForIdleSync();
+  static boolean findMenuItem(String menuName, boolean click) {
+    boolean findResult = false;
+    boolean isMoreMenuOpened = false;
+
+    // ICS phone.
+    if (hasActionBar) {
+      // Firstly find in action bar.
+      View button = getButtonOnScreen(menuName, false, false);
+      if (button != null) {
+        findResult = true;
+        if (click) {
+          SOLO.clickOnView(button);
+          instrumentation.waitForIdleSync();
+        }
+        return findResult;
       }
-      return findResult;
-    }
-    showMenuItem();
-    findResult = SOLO.searchText(menuName);
-  } else {
-    // Non-ICS phone.
-    SOLO.sendKey(KeyEvent.KEYCODE_MENU);
-    if (SOLO.searchText(menuName)) {
-      findResult = true;
-    } else if (SOLO.searchText(MENU_MORE)) {
-      SOLO.clickOnText(MENU_MORE);
+      showMenuItem();
       findResult = SOLO.searchText(menuName);
-      isMoreMenuOpened = true;
+    } else {
+      // Non-ICS phone.
+      SOLO.sendKey(KeyEvent.KEYCODE_MENU);
+      if (SOLO.searchText(menuName)) {
+        findResult = true;
+      } else if (SOLO.searchText(MENU_MORE)) {
+        SOLO.clickOnText(MENU_MORE);
+        findResult = SOLO.searchText(menuName);
+        isMoreMenuOpened = true;
+      }
     }
-  }
-  
-  if (findResult && click) {
-    SOLO.clickOnText(menuName);
-    instrumentation.waitForIdleSync();
-  } else {
-    // Quit more menu list if opened.
-    if (isMoreMenuOpened) {
+
+    if (findResult && click) {
+      SOLO.clickOnText(menuName);
+      instrumentation.waitForIdleSync();
+    } else {
+      // Quit more menu list if opened.
+      if (isMoreMenuOpened) {
+        SOLO.goBack();
+      }
+      // Quit menu list.
       SOLO.goBack();
     }
-    // Quit menu list.
-    SOLO.goBack();
+    return findResult;
   }
-  return findResult;
-}
 
   /**
    * Show menu item list.
