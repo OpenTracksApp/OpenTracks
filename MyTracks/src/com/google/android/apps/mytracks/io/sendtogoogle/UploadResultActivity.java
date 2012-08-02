@@ -15,21 +15,22 @@
  */
 package com.google.android.apps.mytracks.io.sendtogoogle;
 
-import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.fragments.ChooseActivityDialogFragment;
 import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesUtils;
 import com.google.android.apps.mytracks.io.maps.SendMapsUtils;
+import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.maps.mytracks.R;
+import com.google.common.annotations.VisibleForTesting;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -37,44 +38,48 @@ import android.widget.TextView;
 
 /**
  * A dialog to show the result of uploading to Google services.
- *
+ * 
  * @author Jimmy Shih
  */
-public class UploadResultActivity extends Activity {
+public class UploadResultActivity extends FragmentActivity {
 
-  private static final String TEXT_PLAIN_TYPE = "text/plain";
-  private static final int DIALOG_RESULT_ID = 0;
+  private static final String TAG = UploadResultActivity.class.getSimpleName();
+  @VisibleForTesting
+  static final int DIALOG_RESULT_ID = 0;
+  @VisibleForTesting
+  protected View view;
 
   private SendRequest sendRequest;
-  private Track track;
   private String shareUrl;
-  
+  private Dialog resultDialog;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     sendRequest = getIntent().getParcelableExtra(SendRequest.SEND_REQUEST_KEY);
-    track = null;
     shareUrl = null;
+
+    Track track = MyTracksProviderUtils.Factory.get(this).getTrack(sendRequest.getTrackId());
+    if (track == null) {
+      Log.d(TAG, "No track for " + sendRequest.getTrackId());
+      finish();
+      return;
+    }
     
     if (sendRequest.isSendMaps() && sendRequest.isMapsSuccess()) {
-      shareUrl = SendMapsUtils.getMapUrl(getTrack());
+      shareUrl = SendMapsUtils.getMapUrl(track);
+      if (sendRequest.getSharingAppPackageName() != null) {
+        Intent intent = IntentUtils.newShareUrlIntent(this, sendRequest.getTrackId(), shareUrl,
+            sendRequest.getSharingAppPackageName(), sendRequest.getSharingAppClassName());
+        startActivity(intent);
+        finish();
+        return;
+      }
     }
     if (shareUrl == null && sendRequest.isSendFusionTables()
         && sendRequest.isFusionTablesSuccess()) {
-      shareUrl = SendFusionTablesUtils.getMapUrl(getTrack());
+      shareUrl = SendFusionTablesUtils.getMapUrl(track);
     }
-  }
-
-  private Track getTrack() {
-    if (track == null) {
-      track = MyTracksProviderUtils.Factory.get(this).getTrack(sendRequest.getTrackId());
-    }
-    return track;
-  }
-
-  @Override
-  protected void onResume() {
-    super.onResume();
     showDialog(DIALOG_RESULT_ID);
   }
 
@@ -82,8 +87,8 @@ public class UploadResultActivity extends Activity {
   protected Dialog onCreateDialog(int id) {
     if (id != DIALOG_RESULT_ID) {
       return null;
-    }    
-    View view = getLayoutInflater().inflate(R.layout.upload_result, null);
+    }
+    view = getLayoutInflater().inflate(R.layout.upload_result, null);
 
     LinearLayout mapsResult = (LinearLayout) view.findViewById(R.id.upload_result_maps_result);
     LinearLayout fusionTablesResult = (LinearLayout) view.findViewById(
@@ -139,51 +144,34 @@ public class UploadResultActivity extends Activity {
         .setCancelable(true)
         .setIcon(hasError ? android.R.drawable.ic_dialog_alert : android.R.drawable.ic_dialog_info)
         .setOnCancelListener(new DialogInterface.OnCancelListener() {
-          @Override
+            @Override
           public void onCancel(DialogInterface dialog) {
             finish();
           }
         })
         .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
-          @Override
+            @Override
           public void onClick(DialogInterface dialog, int which) {
-            if (!sendRequest.isShowAll() && shareUrl != null) {
-              startShareUrlActivity(shareUrl);
-            }
             finish();
           }
         })
         .setTitle(hasError ? R.string.generic_error_title : R.string.generic_success_title)
         .setView(view);
 
-    // Add a Share URL button if showing all the options and a shareUrl exists
-    if (sendRequest.isShowAll() && shareUrl != null) {
+    // Add a Share URL button if shareUrl exists
+    if (shareUrl != null) {
       builder.setNegativeButton(
-          R.string.send_google_result_share_url, new DialogInterface.OnClickListener() {
-            @Override
+          R.string.share_track_share_url, new DialogInterface.OnClickListener() {
+              @Override
             public void onClick(DialogInterface dialog, int which) {
-              startShareUrlActivity(shareUrl);
-              finish();
+              ChooseActivityDialogFragment.newInstance(sendRequest.getTrackId(), shareUrl).show(
+                  getSupportFragmentManager(),
+                  ChooseActivityDialogFragment.CHOOSE_ACTIVITY_DIALOG_TAG);
             }
           });
     }
-    return builder.create();
+    resultDialog = builder.create();
+    return resultDialog;
   }
 
-  /**
-   * Starts an activity to share the url.
-   *
-   * @param url the url
-   */
-  private void startShareUrlActivity(String url) {
-    SharedPreferences prefs = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    boolean shareUrlOnly = prefs.getBoolean(getString(R.string.share_url_only_key), false);
-
-    Intent intent = new Intent(Intent.ACTION_SEND);
-    intent.setType(TEXT_PLAIN_TYPE);
-    intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_track_subject));
-    intent.putExtra(Intent.EXTRA_TEXT,
-        shareUrlOnly ? url : getString(R.string.share_track_url_body_format, url));
-    startActivity(Intent.createChooser(intent, getString(R.string.share_track_picker_title)));
-  }
 }

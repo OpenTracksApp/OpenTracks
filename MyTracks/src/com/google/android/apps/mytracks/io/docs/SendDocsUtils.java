@@ -15,12 +15,14 @@
  */
 package com.google.android.apps.mytracks.io.docs;
 
-import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesUtils;
 import com.google.android.apps.mytracks.io.gdata.docs.DocumentsClient;
 import com.google.android.apps.mytracks.io.gdata.docs.SpreadsheetsClient;
 import com.google.android.apps.mytracks.io.gdata.docs.SpreadsheetsClient.WorksheetEntry;
+import com.google.android.apps.mytracks.io.maps.SendMapsUtils;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.ResourceUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
@@ -33,7 +35,6 @@ import com.google.wireless.gdata.parser.ParseException;
 import com.google.wireless.gdata2.client.AuthenticationException;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -106,7 +107,7 @@ public class SendDocsUtils {
       throws IOException, ParseException, HttpException {
     GDataParser gDataParser = null;
     try {
-      String uri = String.format(GET_SPREADSHEET_BY_TITLE_URI, URLEncoder.encode(title));
+      String uri = String.format(Locale.US, GET_SPREADSHEET_BY_TITLE_URI, URLEncoder.encode(title));
       gDataParser = documentsClient.getParserForFeed(Entry.class, uri, authToken);
       gDataParser.init();
 
@@ -222,7 +223,7 @@ public class SendDocsUtils {
       throws IOException, AuthenticationException, ParseException {
     GDataParser gDataParser = null;
     try {
-      String uri = String.format(GET_WORKSHEETS_URI, spreadsheetId);
+      String uri = String.format(Locale.US, GET_WORKSHEETS_URI, spreadsheetId);
       gDataParser = spreadsheetClient.getParserForWorksheetsFeed(uri, authToken);
       gDataParser.init();
       if (!gDataParser.hasMoreData()) {
@@ -269,11 +270,9 @@ public class SendDocsUtils {
   public static void addTrackInfo(
       Track track, String spreadsheetId, String worksheetId, String authToken, Context context)
       throws IOException {
-    String worksheetUri = String.format(GET_WORKSHEET_URI, spreadsheetId, worksheetId);
-    SharedPreferences prefs = context.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    boolean metricUnits = prefs.getBoolean(context.getString(R.string.metric_units_key), true);
-
+    String worksheetUri = String.format(Locale.US, GET_WORKSHEET_URI, spreadsheetId, worksheetId);
+    boolean metricUnits = PreferencesUtils.getBoolean(
+        context, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
     addRow(worksheetUri, getRowContent(track, metricUnits, context), authToken);
   }
 
@@ -286,7 +285,7 @@ public class SendDocsUtils {
    */
   @VisibleForTesting
   static String getRowContent(Track track, boolean metricUnits, Context context) {
-    TripStatistics stats = track.getStatistics();
+    TripStatistics stats = track.getTripStatistics();
 
     String distanceUnit = context.getString(
         metricUnits ? R.string.unit_kilometer : R.string.unit_mile);
@@ -313,10 +312,17 @@ public class SendDocsUtils {
     appendTag(builder, "maxelevation", getElevation(stats.getMaxElevation(), metricUnits));
     appendTag(builder, "elevationunit", elevationUnit);
 
-    if (track.getMapId().length() > 0) {
-      appendTag(builder, "map",
-          String.format("%s?msa=0&msid=%s", Constants.MAPSHOP_BASE_URL, track.getMapId()));
+    String map = SendMapsUtils.getMapUrl(track); 
+    if (map == null) {
+      map = context.getString(R.string.value_unknown);
     }
+    appendTag(builder, "map", map);
+
+    String fusionTable = SendFusionTablesUtils.getMapUrl(track);
+    if (fusionTable == null) {
+      fusionTable = context.getString(R.string.value_unknown);
+    }
+    appendTag(builder, "fusiontable", fusionTable);
 
     builder.append("</entry>");
     return builder.toString();

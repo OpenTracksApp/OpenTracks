@@ -18,45 +18,54 @@ limitations under the License.
   <item
     android:icon="@drawable/menu_stop_recording"
     android:id="@+id/track_detail_stop_recording"
-    android:showAsAction="always"
+    android:orderInCategory="1"
+    android:showAsAction="ifRoom"
     android:title="@string/menu_stop_recording"/>
   <item
     android:icon="@drawable/menu_insert_marker"
     android:id="@+id/track_detail_insert_marker"
-    android:showAsAction="always"
+    android:orderInCategory="2"
+    android:showAsAction="ifRoom"
     android:title="@string/menu_insert_marker"/>
   <item
     android:icon="@drawable/menu_play"
     android:id="@+id/track_detail_play"
-    android:showAsAction="always"
+    android:orderInCategory="3"
+    android:showAsAction="ifRoom"
     android:title="@string/menu_play"/>
   <item
     android:icon="@drawable/menu_share"
     android:id="@+id/track_detail_share"
-    android:showAsAction="always"
+    android:orderInCategory="4"
+    android:showAsAction="ifRoom"
     android:title="@string/menu_share">
-    <menu>
-      <item
-        android:id="@+id/track_detail_share_map"
-        android:title="@string/menu_share_map"/>
-      <item
-        android:id="@+id/track_detail_share_fusion_table"
-        android:title="@string/menu_share_fusion_table"/>
-      <item android:id="@+id/track_detail_share_gpx"/>
-      <item android:id="@+id/track_detail_share_kml"/>
-      <item android:id="@+id/track_detail_share_csv"/>
-      <item android:id="@+id/track_detail_share_tcx"/>
-    </menu>
   </item>
   <item
-    android:icon="@drawable/ic_menu_waypoints"
+    android:icon="@drawable/menu_markers"
     android:id="@+id/track_detail_markers"
+    android:orderInCategory="5"
+    android:showAsAction="ifRoom"
     android:title="@string/menu_markers"/>
+  <!-- android:orderInCategory="6" is in map.xml -->
   <item
+    android:icon="@drawable/menu_voice_frequency"
+    android:id="@+id/track_detail_voice_frequency"
+    android:orderInCategory="7"
+    android:title="@string/menu_voice_frequency"/>
+  <item
+    android:icon="@drawable/menu_split_frequency"
+    android:id="@+id/track_detail_split_frequency"
+    android:orderInCategory="8"
+    android:title="@string/menu_split_frequency"/>
+  <item
+    android:icon="@drawable/menu_send_google"
     android:id="@+id/track_detail_send_google"
+    android:orderInCategory="9"
     android:title="@string/menu_send_google"/>
   <item
+    android:icon="@drawable/menu_save"
     android:id="@+id/track_detail_save"
+    android:orderInCategory="10"
     android:title="@string/menu_save">
     <menu>
       <item android:id="@+id/track_detail_save_gpx"/>
@@ -66,33 +75,28 @@ limitations under the License.
     </menu>
   </item>
   <item
+    android:icon="@drawable/menu_edit"
     android:id="@+id/track_detail_edit"
+    android:orderInCategory="11"
     android:title="@string/menu_edit"/>
   <item
+    android:icon="@drawable/menu_delete"
     android:id="@+id/track_detail_delete"
+    android:orderInCategory="12"
     android:title="@string/menu_delete"/>
   <item
-    android:icon="@android:drawable/ic_menu_mylocation"
-    android:id="@+id/track_detail_my_location"
-    android:title="@string/menu_my_location"/>
-  <item
-    android:icon="@android:drawable/ic_menu_mapmode"
-    android:id="@+id/track_detail_satellite_mode"
-    android:title="@string/menu_satellite_mode"/>
-  <item
-    android:icon="@drawable/ic_menu_chartsettings"
-    android:id="@+id/track_detail_chart_settings"
-    android:title="@string/menu_chart_settings"/>
-  <item
-    android:icon="@drawable/ic_menu_sensorstatus"
+    android:icon="@drawable/menu_sensor_state"
     android:id="@+id/track_detail_sensor_state"
+    android:orderInCategory="13"
     android:title="@string/menu_sensor_state"/>
   <item
     android:icon="@drawable/menu_settings"
     android:id="@+id/track_detail_settings"
+    android:orderInCategory="14"
     android:title="@string/menu_settings"/>
   <item
     android:icon="@drawable/menu_help"
     android:id="@+id/track_detail_help"
+    android:orderInCategory="15"
     android:title="@string/menu_help"/>
 </menu>

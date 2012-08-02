@@ -23,6 +23,7 @@ import android.net.Uri;
 
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.util.Locale;
 
 /**
  * Database importer which reads values written by {@link DatabaseDumper}.
@@ -179,7 +180,7 @@ public class DatabaseImporter {
           byte[] blob = new byte[blobLength];
           int readBytes = reader.read(blob, 0, blobLength);
           if (readBytes != blobLength) {
-            throw new IOException(String.format(
+            throw new IOException(String.format(Locale.US,
                 "Short read on column %s; expected %d bytes, read %d",
                 name, blobLength, readBytes));
           }

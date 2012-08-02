@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks.util;
 
 import android.test.AndroidTestCase;
@@ -27,26 +28,6 @@ import java.util.TimeZone;
  */
 public class StringUtilsTest extends AndroidTestCase {
 
-  /**
-   * Tests {@link StringUtils#formatDateTime(android.content.Context, long)}.
-   */
-  public void testFormatTime() {
-    // Unix time 0 in UTC is "4:00 PM" in Pacific Standard time zone.
-    // This test can break if run on a different time zone or with a different
-    // time format preference.
-    assertEquals("4:00 PM", StringUtils.formatTime(getContext(), 0L));
-  }
-
-  /**
-   * Tests {@link StringUtils#formatDateTime(android.content.Context, long)}.
-   */
-  public void testFormatDateTime() {
-    // Unix time 0 in UTC is "12/31/1969 4:00 PM" in Pacific Standard time zone.
-    // This test can break if run on a different time zone or with a different
-    // date/time format preference.
-    assertEquals("12/31/1969 4:00 PM", StringUtils.formatDateTime(getContext(), 0L));
-  }
-  
   /**
    * Tests {@link StringUtils#formatDateTimeIso8601(long)}.
    */
@@ -131,13 +112,6 @@ public class StringUtilsTest extends AndroidTestCase {
     assertEquals("-", StringUtils.formatSpeed(getContext(), Double.NEGATIVE_INFINITY, true, true));
   }
 
-  /**
-   * Tests {@link StringUtils#formatTimeDistance(android.content.Context, long, double, boolean)}.
-   */
-  public void testFormatTimeDistance() {
-    assertEquals("00:10 5.00 km", StringUtils.formatTimeDistance(getContext(), 10000, 5000, true));
-  }
-  
   /**
    * Tests {@link StringUtils#formatCData(String)}.
    */

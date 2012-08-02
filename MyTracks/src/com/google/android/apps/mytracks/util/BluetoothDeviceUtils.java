@@ -24,17 +24,17 @@ import java.util.Set;
 
 /**
  * Utilities for dealing with bluetooth devices.
- *
+ * 
  * @author Rodrigo Damazio
  */
 public class BluetoothDeviceUtils {
 
   private BluetoothDeviceUtils() {}
-  
+
   /**
    * Populates the device names and the device addresses with all the suitable
    * bluetooth devices.
-   *
+   * 
    * @param bluetoothAdapter the bluetooth adapter
    * @param deviceNames list of device names
    * @param deviceAddresses list of device addresses

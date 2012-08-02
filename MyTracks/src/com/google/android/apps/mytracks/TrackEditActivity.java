@@ -13,32 +13,35 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.util.TrackIconUtils;
+import com.google.android.apps.mytracks.util.TrackNameUtils;
 import com.google.android.maps.mytracks.R;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 /**
  * An activity that let's the user see and edit the user editable track meta
  * data such as track name, activity type, and track description.
- *
+ * 
  * @author Leif Hendrik Wilden
  */
-public class TrackEditActivity extends Activity implements OnClickListener {
+public class TrackEditActivity extends AbstractMyTracksActivity {
 
   public static final String EXTRA_TRACK_ID = "track_id";
-  public static final String EXTRA_SHOW_CANCEL = "show_cancel";
+  public static final String EXTRA_NEW_TRACK = "new_track";
 
   private static final String TAG = TrackEditActivity.class.getSimpleName();
 
@@ -46,74 +49,107 @@ public class TrackEditActivity extends Activity implements OnClickListener {
   private MyTracksProviderUtils myTracksProviderUtils;
   private Track track;
 
-  private EditText trackName;
+  private EditText name;
+  private TextView activityTypeLabel;
   private AutoCompleteTextView activityType;
-  private EditText trackDescription;
+  private EditText description;
 
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
     setContentView(R.layout.track_edit);
 
-    trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1);
-    if (trackId < 0) {
-      Log.e(TAG, "invalid trackId.");
+    trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1L);
+    if (trackId == -1L) {
+      Log.e(TAG, "invalid trackId");
       finish();
       return;
     }
 
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
-
     track = myTracksProviderUtils.getTrack(trackId);
     if (track == null) {
-      Log.e(TAG, "no track.");
+      Log.e(TAG, "No track for " + trackId);
       finish();
       return;
     }
 
-    trackName = (EditText) findViewById(R.id.track_edit_track_name);
-    trackName.setText(track.getName());
+    name = (EditText) findViewById(R.id.track_edit_name);
+    name.setText(track.getName());
 
     activityType = (AutoCompleteTextView) findViewById(R.id.track_edit_activity_type);
     activityType.setText(track.getCategory());
 
+    activityTypeLabel = (TextView) findViewById(R.id.track_edit_activity_type_label);
+    setActivityTypeIcon(track.getIcon());
     ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
         this, R.array.activity_types, android.R.layout.simple_dropdown_item_1line);
     activityType.setAdapter(adapter);
-    trackDescription = (EditText) findViewById(R.id.track_edit_track_description);
-    trackDescription.setText(track.getDescription());
+    activityType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        @Override
+      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        String iconValue = TrackIconUtils.getIconValue(
+            TrackEditActivity.this, (String) activityType.getAdapter().getItem(position));
+        setActivityTypeIcon(iconValue);
+      }
+    });
+    activityType.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+        @Override
+      public void onFocusChange(View v, boolean hasFocus) {
+        if (!hasFocus) {
+          String iconValue = TrackIconUtils.getIconValue(
+              TrackEditActivity.this, activityType.getText().toString());
+          setActivityTypeIcon(iconValue);
+        }
+
+      }
+    });
+    description = (EditText) findViewById(R.id.track_edit_description);
+    description.setText(track.getDescription());
 
     Button save = (Button) findViewById(R.id.track_edit_save);
-    save.setOnClickListener(this);
+    save.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        track.setName(name.getText().toString());
+        String category = activityType.getText().toString();
+        track.setCategory(category);
+        track.setIcon(TrackIconUtils.getIconValue(TrackEditActivity.this, category));
+        track.setDescription(description.getText().toString());
+        myTracksProviderUtils.updateTrack(track);
+        finish();
+      }
+    });
 
     Button cancel = (Button) findViewById(R.id.track_edit_cancel);
-    if (getIntent().getBooleanExtra(EXTRA_SHOW_CANCEL, true)) {
-      cancel.setOnClickListener(this);
-      cancel.setVisibility(View.VISIBLE);
+    if (getIntent().getBooleanExtra(EXTRA_NEW_TRACK, false)) {
+      String trackName = TrackNameUtils.getTrackName(
+          this, -1L, -1L, myTracksProviderUtils.getLastLocation());
+      if (trackName != null) {
+        name.setText(trackName);
+      }
+      setTitle(R.string.track_edit_new_track_title);
+      cancel.setVisibility(View.GONE);
     } else {
-      cancel.setVisibility(View.INVISIBLE);
+      setTitle(R.string.menu_edit);
+      cancel.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          finish();
+        }
+      });
+      cancel.setVisibility(View.VISIBLE);
     }
   }
 
-  @Override
-  public void onClick(View view) {
-    switch (view.getId()) {
-      case R.id.track_edit_save:
-        save();
-        finish();
-        break;
-      case R.id.track_edit_cancel:
-        finish();
-        break;
-      default:   
-        finish();
-    }
-  }
-
-  private void save() {
-    track.setName(trackName.getText().toString());
-    track.setCategory(activityType.getText().toString());
-    track.setDescription(trackDescription.getText().toString());
-    myTracksProviderUtils.updateTrack(track);
+  /**
+   * Sets the activity type icon.
+   * 
+   * @param iconValue the icon value
+   */
+  private void setActivityTypeIcon(String iconValue) {
+    activityTypeLabel.setCompoundDrawablesWithIntrinsicBounds(
+        TrackIconUtils.getIconDrawable(iconValue), 0, 0, 0);
   }
 }

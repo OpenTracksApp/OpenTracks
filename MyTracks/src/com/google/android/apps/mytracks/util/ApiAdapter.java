@@ -15,6 +15,7 @@
  */
 package com.google.android.apps.mytracks.util;
 
+import com.google.android.apps.mytracks.ContextualActionModeCallback;
 import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
 import com.google.android.apps.mytracks.services.tasks.PeriodicTask;
 import com.google.api.client.http.HttpTransport;
@@ -25,8 +26,12 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * A set of methods that may be implemented differently depending on the Android
@@ -93,6 +98,13 @@ public interface ApiAdapter {
   public HttpTransport getHttpTransport();
 
   /**
+   * Returns true if GeoCoder is present.
+   * <p>
+   * Due to changes in API level 9.
+   */
+  public boolean isGeoCoderPresent();
+
+  /**
    * Gets a {@link BluetoothSocket}.
    * <p>
    * Due to changes in API level 10.
@@ -100,20 +112,45 @@ public interface ApiAdapter {
    * @param bluetoothDevice
    */
   public BluetoothSocket getBluetoothSocket(BluetoothDevice bluetoothDevice) throws IOException;
-  
+
+  /**
+   * Hides the title. If the platform supports the action bar, do nothing.
+   * Ideally, with the action bar, we would like to collapse the navigation tabs
+   * into the action bar. However, collapsing is not supported by the
+   * compatibility library.
+   * <p>
+   * Due to changes in API level 11.
+   * 
+   * @param activity the activity
+   */
+  public void hideTitle(Activity activity);
+
   /**
    * Configures the action bar with the Home button as an Up button. If the
-   * system doesn't support action bar, hide the title bar.
+   * platform doesn't support the action bar, do nothing.
    * <p>
    * Due to changes in API level 11.
    *
-   * @param activity the current activity
+   * @param activity the activity
    */
   public void configureActionBarHomeAsUp(Activity activity);
 
   /**
+   * Configures the list view context menu.
+   * <p>
+   * Due to changes in API level 11.
+   *
+   * @param activity the activity
+   * @param listView the list view
+   * @param contextualActionModeCallback the callback when an item is selected
+   *          in the contextual action mode
+   */
+  public void configureListViewContextualMenu(Activity activity, ListView listView,
+      ContextualActionModeCallback contextualActionModeCallback);
+
+  /**
    * Configures the search widget.
-   * 
+   * <p>
    * Due to changes in API level 11.
    * 
    * @param activity the activity
@@ -123,7 +160,7 @@ public interface ApiAdapter {
  
   /**
    * Handles the search menu selection. Returns true if handled.
-   * 
+   * <p>
    * Due to changes in API level 11.
    * 
    * @param activity the activity
@@ -131,8 +168,34 @@ public interface ApiAdapter {
   public boolean handleSearchMenuSelection(Activity activity);
   
   /**
-   * Handles the search key press. Returns true if handled.
+   * Adds all items to an array adapter.
+   * <p>
+   * Due to changes in API level 11.
+   *
+   * @param arrayAdapter the array adapter
+   * @param items list of items
+   */
+  public <T> void addAllToArrayAdapter(ArrayAdapter<T> arrayAdapter, List<T> items);
+
+  /**
+   * Invalidates the menu.
+   * <p>
+   * Due to changes in API level 11.
+   */
+  public void invalidMenu(Activity activity);
+
+  /**
+   * Diables hardware-accelerated rendering for a view.
+   * <p>
+   * Due to chagnes in API level 11.
    * 
+   * @param view the view
+   */
+  public void disableHardwareAccelerated(View view);
+
+  /**
+   * Handles the search key press. Returns true if handled.
+   * <p>
    * Due to changes in API level 14.
    * 
    * @param menu the search menu

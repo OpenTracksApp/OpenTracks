@@ -17,45 +17,49 @@ limitations under the License.
 <resources>
   <color name="black">#FF000000</color>
   <color name="blue">#FF0000FF</color>
-  <color name="green">#FF00FF00</color>
   <color name="gray">#FFAAAAAA</color>
   <color name="red">#FFFF0000</color>
-  <color name="stat_label_background">#FFF0F0F0</color>
-  <color name="stat_label_text">#FF0F0F0F</color>
-  <color name="white">#FFFFFFFF</color>
+  <color name="transparent">#00000000</color>
 
-  <!-- Chart colors by series. -->
-  <!-- Green and a transparent green -->
+  <!-- holo_orange_dark -->
+  <color name="warning_background">#FFFF8800</color>
+
+  <!-- elevation chart colors, green and transparent green -->
   <color name="elevation_border">#FF339933</color>
   <color name="elevation_fill">#40B3CFB3</color>
 
-  <!-- Blue and a transparent blue -->
+  <!-- speed chart colors, blue and transparent blue -->
   <color name="speed_border">#FF0066FF</color>
   <color name="speed_fill">#40C8E0FF</color>
 
-  <!-- Red and a transparent red -->
-  <color name="heartrate_border">#FFCC3300</color>
-  <color name="heartrate_fill">#40E88A70</color>
+  <!-- pace chart colors, blue and transparent blue -->
+  <color name="pace_border">#FF0066FF</color>
+  <color name="pace_fill">#40C8E0FF</color>
 
-  <!-- Pink and a transparent pink -->
+  <!-- heart rate chart colors, red and transparent red -->
+  <color name="heart_rate_border">#FFCC3300</color>
+  <color name="heart_rate_fill">#40E88A70</color>
+
+  <!-- cadence chart colors, pink and transparent pink -->
   <color name="cadence_border">#FFF128F3</color>
   <color name="cadence_fill">#40F128F3</color>
 
-  <!-- Purple and a transparent purple -->
+  <!-- power chart colors, purple and transparent purple -->
   <color name="power_border">#FF401465</color>
   <color name="power_fill">#40401465</color>
 
-  <!-- AppWidget colors -->
-  <color name="appwidget_text">#EDEDED</color>
-  <color name="appwidget_hr">#99999999</color>
-  
-  <!-- Colors for dynamic track drawing --> 
-  <!-- Green -->
+  <!-- track widget line -->
+  <color name="track_widget_line">#99999999</color>
+
+  <!-- track widget red -->
+  <color name="track_widget_red">#FFCA1F25</color>
+
+  <!-- dynamic track slow path, green -->
   <color name="slow_path">#F774DF00</color>
-  
-  <!-- Blue -->
+
+  <!-- dynamic track normal path, blue -->
   <color name="normal_path">#F75858FA</color>
-  
-  <!-- Red -->
+
+  <!-- dynamic track fast path, red -->
   <color name="fast_path">#F7DF0101</color>
 </resources>

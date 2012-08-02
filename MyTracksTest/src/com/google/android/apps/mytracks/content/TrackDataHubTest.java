@@ -29,6 +29,7 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIt
 import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.TrackDataListener.ProviderState;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceTest.MockContext;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.android.testing.mocking.AndroidMock;
 
@@ -70,7 +71,7 @@ public class TrackDataHubTest extends AndroidTestCase {
   private TrackDataHub hub;
   private TrackDataListeners listeners;
   private DataSourcesWrapper dataSources;
-  private SharedPreferences prefs;
+  private SharedPreferences sharedPreferences;
   private TrackDataListener listener1;
   private TrackDataListener listener2;
   private Capture<OnSharedPreferenceChangeListener> preferenceListenerCapture =
@@ -87,12 +88,12 @@ public class TrackDataHubTest extends AndroidTestCase {
         getContext(), getContext(), "test.");
     context = new MockContext(mockContentResolver, targetContext);
 
-    prefs = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     providerUtils = AndroidMock.createMock("providerUtils", MyTracksProviderUtils.class);
     dataSources = AndroidMock.createNiceMock("dataSources", DataSourcesWrapper.class);
 
     listeners = new TrackDataListeners();
-    hub = new TrackDataHub(context, listeners, prefs, providerUtils, TARGET_POINTS) {
+    hub = new TrackDataHub(context, listeners, sharedPreferences, providerUtils, TARGET_POINTS) {
       @Override
       protected DataSourcesWrapper newDataSources() {
         return dataSources;
@@ -112,6 +113,8 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     listener1 = AndroidMock.createStrictMock("listener1", TrackDataListener.class);
     listener2 = AndroidMock.createStrictMock("listener2", TrackDataListener.class);
+    PreferencesUtils.setLong(context, R.string.recording_track_id_key, TRACK_ID);
+    PreferencesUtils.setLong(context, R.string.selected_track_id_key, TRACK_ID);
   }
 
   @Override
@@ -138,8 +141,6 @@ public class TrackDataHubTest extends AndroidTestCase {
   public void testTrackListen() {
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
     Track track = new Track();
-    prefs.edit().putLong("recordingTrack", TRACK_ID)
-                .putLong("selectedTrack", TRACK_ID).apply();
     expect(providerUtils.getTrack(TRACK_ID)).andStubReturn(track);
     expectStart();
     dataSources.registerContentObserver(
@@ -297,8 +298,6 @@ public class TrackDataHubTest extends AndroidTestCase {
 
   public void testWaypointListen() {
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
-    prefs.edit().putLong("recordingTrack", TRACK_ID)
-                .putLong("selectedTrack", TRACK_ID).apply();
 
     Waypoint wpt1 = new Waypoint(),
              wpt2 = new Waypoint(),
@@ -411,8 +410,6 @@ public class TrackDataHubTest extends AndroidTestCase {
 
   public void testPointsListen() {
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
-    prefs.edit().putLong("recordingTrack", TRACK_ID)
-                .putLong("selectedTrack", TRACK_ID).apply();
 
     expectStart();
     dataSources.registerContentObserver(
@@ -498,8 +495,6 @@ public class TrackDataHubTest extends AndroidTestCase {
 
   public void testPointsListen_reRegister() {
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
-    prefs.edit().putLong("recordingTrack", TRACK_ID)
-                .putLong("selectedTrack", TRACK_ID).apply();
 
     expectStart();
     dataSources.registerContentObserver(
@@ -536,12 +531,13 @@ public class TrackDataHubTest extends AndroidTestCase {
     dataSources.registerContentObserver(
         eq(TrackPointsColumns.CONTENT_URI), eq(false), capture(observerCapture));
 
-    locationIterator = new FixedSizeLocationIterator(11, 10);
+    locationIterator = new FixedSizeLocationIterator(1, 10, 5);
     expect(providerUtils.getLocationIterator(
-        eq(TRACK_ID), eq(11L), eq(false), isA(LocationFactory.class)))
+        eq(TRACK_ID), eq(0L), eq(false), isA(LocationFactory.class)))
         .andReturn(locationIterator);
-    expect(providerUtils.getLastLocationId(TRACK_ID)).andReturn(20L);
+    expect(providerUtils.getLastLocationId(TRACK_ID)).andReturn(10L);
 
+    listener1.clearTrackPoints();
     locationIterator.expectLocationsDelivered(listener1);
     listener1.onNewTrackPointsDone();
 
@@ -550,28 +546,10 @@ public class TrackDataHubTest extends AndroidTestCase {
     hub.registerTrackDataListener(listener1, EnumSet.of(ListenerDataType.POINT_UPDATES));
 
     verifyAndReset();
-
-    // Deliver more points - should still be incremental.
-    locationIterator = new FixedSizeLocationIterator(21, 10, 1);
-    expect(providerUtils.getLocationIterator(
-        eq(TRACK_ID), eq(21L), eq(false), isA(LocationFactory.class)))
-        .andReturn(locationIterator);
-    expect(providerUtils.getLastLocationId(TRACK_ID)).andReturn(30L);
-
-    locationIterator.expectLocationsDelivered(listener1);
-    listener1.onNewTrackPointsDone();
-
-    replay();
-
-    observer.onChange(false);
-
-    verifyAndReset();
   }
 
   public void testPointsListen_reRegisterTrackChanged() {
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
-    prefs.edit().putLong("recordingTrack", TRACK_ID)
-                .putLong("selectedTrack", TRACK_ID).apply();
 
     expectStart();
     dataSources.registerContentObserver(
@@ -628,8 +606,6 @@ public class TrackDataHubTest extends AndroidTestCase {
 
   public void testPointsListen_largeTrackSampling() {
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
-    prefs.edit().putLong("recordingTrack", TRACK_ID)
-                .putLong("selectedTrack", TRACK_ID).apply();
 
     expectStart();
     dataSources.registerContentObserver(
@@ -661,8 +637,6 @@ public class TrackDataHubTest extends AndroidTestCase {
 
   public void testPointsListen_resampling() {
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
-    prefs.edit().putLong("recordingTrack", TRACK_ID)
-                .putLong("selectedTrack", TRACK_ID).apply();
 
     expectStart();
     dataSources.registerContentObserver(
@@ -809,13 +783,8 @@ public class TrackDataHubTest extends AndroidTestCase {
   }
 
   public void testDisplayPreferencesListen() throws Exception {
-    String metricUnitsKey = context.getString(R.string.metric_units_key);
-    String speedKey = context.getString(R.string.report_speed_key);
-
-    prefs.edit()
-        .putBoolean(metricUnitsKey, true)
-        .putBoolean(speedKey, true)
-        .apply();
+    PreferencesUtils.setBoolean(context, R.string.report_speed_key, true);
+    PreferencesUtils.setBoolean(context, R.string.metric_units_key, true);
 
     Capture<OnSharedPreferenceChangeListener> listenerCapture =
         new Capture<OnSharedPreferenceChangeListener>();
@@ -839,11 +808,10 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     replay();
 
-    prefs.edit()
-        .putBoolean(speedKey, false)
-        .apply();
+    PreferencesUtils.setBoolean(context, R.string.report_speed_key, false);
     OnSharedPreferenceChangeListener listener = listenerCapture.getValue();
-    listener.onSharedPreferenceChanged(prefs, speedKey);
+    listener.onSharedPreferenceChanged(
+        sharedPreferences, PreferencesUtils.getKey(context, R.string.report_speed_key));
 
     AndroidMock.verify(dataSources, providerUtils, listener1, listener2);
     AndroidMock.reset(dataSources, providerUtils, listener1, listener2);
@@ -853,10 +821,9 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     replay();
 
-    prefs.edit()
-        .putBoolean(metricUnitsKey, false)
-        .apply();
-    listener.onSharedPreferenceChanged(prefs, metricUnitsKey);
+    PreferencesUtils.setBoolean(context, R.string.metric_units_key, false);
+    listener.onSharedPreferenceChanged(
+        sharedPreferences, PreferencesUtils.getKey(context, R.string.metric_units_key));
 
     verifyAndReset();
   }

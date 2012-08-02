@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.io.backup;
 
 import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.util.DialogUtils;
+import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -57,6 +58,7 @@ public class RestoreActivity extends Activity {
       if (date == -1L) {
         Log.d(TAG, "Invalid date");
         finish();
+        return;
       }
       restoreAsyncTask = new RestoreAsyncTask(this, new Date(date));
       restoreAsyncTask.execute();
@@ -92,8 +94,8 @@ public class RestoreActivity extends Activity {
   public void onAsyncTaskCompleted(boolean success, int messageId) {
     removeDialog(DIALOG_PROGRESS_ID);
     Toast.makeText(this, messageId, success ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG).show();
-    startActivity(new Intent(this, TrackListActivity.class)
-        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+    Intent intent = IntentUtils.newIntent(this, TrackListActivity.class);
+    startActivity(intent);
   }
 
   /**

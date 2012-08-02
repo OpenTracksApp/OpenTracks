@@ -261,7 +261,7 @@ public class SearchEngine {
 
     score *= getTitleBoost(query, track.getName(), track.getDescription(), track.getCategory());
 
-    TripStatistics statistics = track.getStatistics();
+    TripStatistics statistics = track.getTripStatistics();
     // TODO: Also boost for proximity to the currently-centered position on the map.
     score *= getDistanceBoost(query, statistics.getMeanLatitude(), statistics.getMeanLongitude());
 

@@ -51,4 +51,6 @@ interface DataSourcesWrapper {
   void requestLocationUpdates(LocationListener listener);
   void removeLocationUpdates(LocationListener listener);
   Location getLastKnownLocation();
+  void close();
+  boolean isAllowed();
 } 

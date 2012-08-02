@@ -4,8 +4,11 @@ applications that wish to use these files should consult the appropriate
 licenses or the JAR's authors.
 
 Android Support Package:
-android-support-v4.jar
-- see http://developer.android.com/sdk/compatibility-library.html
+android-support-v4-r7-googlemaps.jar
+- see https://github.com/petedoyle/android-support-v4-googlemaps
+
+Ant+:
+antlib.jar - see http://www.thisisant.com/pages/developer-zone/android-api
 
 Google APIs Client Library for Java:
 commons-codec-1.3.jar

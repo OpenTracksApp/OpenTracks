@@ -37,10 +37,10 @@ public class Api10Adapter extends Api9Adapter {
   public BluetoothSocket getBluetoothSocket(BluetoothDevice bluetoothDevice) throws IOException {
     try {
       return bluetoothDevice.createInsecureRfcommSocketToServiceRecord(
-          BluetoothConnectionManager.SPP_UUID);
+          BluetoothConnectionManager.MY_TRACKS_UUID);
     } catch (IOException e) {
       Log.d(Constants.TAG, "Unable to create insecure connection", e);
     }
-    return bluetoothDevice.createRfcommSocketToServiceRecord(BluetoothConnectionManager.SPP_UUID);
+    return bluetoothDevice.createRfcommSocketToServiceRecord(BluetoothConnectionManager.MY_TRACKS_UUID);
   };
 }

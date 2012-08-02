@@ -21,7 +21,9 @@ import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.maps.TrackPathPainter;
 import com.google.android.apps.mytracks.maps.TrackPathPainterFactory;
 import com.google.android.apps.mytracks.maps.TrackPathUtilities;
+import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.LocationUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
@@ -145,7 +147,7 @@ public class MapOverlay extends Overlay implements OnSharedPreferenceChangeListe
       arrow.setBounds(0, 0, arrowWidth, arrowHeight);
     }
 
-    statsMarker = resources.getDrawable(R.drawable.ylw_pushpin);
+    statsMarker = resources.getDrawable(R.drawable.yellow_pushpin);
     markerWidth = statsMarker.getIntrinsicWidth();
     markerHeight = statsMarker.getIntrinsicHeight();
     statsMarker.setBounds(0, 0, markerWidth, markerHeight);
@@ -442,10 +444,9 @@ public class MapOverlay extends Overlay implements OnSharedPreferenceChangeListe
       }
     }
 
-    if (waypoint != null &&
-        dmin < 15000000 / Math.pow(2, mapView.getZoomLevel())) {
-      Intent intent = new Intent(context, WaypointDetails.class);
-      intent.putExtra(WaypointDetails.WAYPOINT_ID_EXTRA, waypoint.getId());
+    if (waypoint != null && dmin < 15000000 / Math.pow(2, mapView.getZoomLevel())) {
+      Intent intent = IntentUtils.newIntent(context, MarkerDetailActivity.class)
+          .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, waypoint.getId());
       context.startActivity(intent);
       return true;
     }
@@ -462,10 +463,8 @@ public class MapOverlay extends Overlay implements OnSharedPreferenceChangeListe
   @Override
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
     Log.d(TAG, "MapOverlay: onSharedPreferences changed " + key);
-    if (key != null) {
-      if (key.equals(context.getString(R.string.track_color_mode_key))) {
-        trackPathPainter = TrackPathPainterFactory.getTrackPathPainter(context);
-      }
+    if (PreferencesUtils.getKey(context, R.string.track_color_mode_key).equals(key)) {
+      trackPathPainter = TrackPathPainterFactory.getTrackPathPainter(context);
     }
   }
 }

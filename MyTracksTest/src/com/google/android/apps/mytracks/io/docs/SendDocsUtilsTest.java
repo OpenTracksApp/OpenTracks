@@ -127,8 +127,9 @@ public class SendDocsUtilsTest extends AndroidTestCase {
         + "<gsx:elevationgain><![CDATA[6,000]]></gsx:elevationgain>"
         + "<gsx:minelevation><![CDATA[-500]]></gsx:minelevation>"
         + "<gsx:maxelevation><![CDATA[550]]></gsx:maxelevation>"
-        + "<gsx:elevationunit><![CDATA[m]]></gsx:elevationunit>" + "<gsx:map>"
-        + "<![CDATA[https://maps.google.com/maps/ms?msa=0&msid=trackMapId]]>" + "</gsx:map>"
+        + "<gsx:elevationunit><![CDATA[m]]></gsx:elevationunit>" 
+        + "<gsx:map><![CDATA[https://maps.google.com/maps/ms?msa=0&msid=trackMapId]]></gsx:map>"
+        + "<gsx:fusiontable><![CDATA[-]]></gsx:fusiontable>"
         + "</entry>";
     assertEquals(expectedData, SendDocsUtils.getRowContent(track, true, getContext()));
   }
@@ -155,8 +156,9 @@ public class SendDocsUtilsTest extends AndroidTestCase {
         + "<gsx:elevationgain><![CDATA[19,685]]></gsx:elevationgain>"
         + "<gsx:minelevation><![CDATA[-1,640]]></gsx:minelevation>"
         + "<gsx:maxelevation><![CDATA[1,804]]></gsx:maxelevation>"
-        + "<gsx:elevationunit><![CDATA[ft]]></gsx:elevationunit>" + "<gsx:map>"
-        + "<![CDATA[https://maps.google.com/maps/ms?msa=0&msid=trackMapId]]>" + "</gsx:map>"
+        + "<gsx:elevationunit><![CDATA[ft]]></gsx:elevationunit>" 
+        + "<gsx:map><![CDATA[https://maps.google.com/maps/ms?msa=0&msid=trackMapId]]></gsx:map>"
+        + "<gsx:fusiontable><![CDATA[-]]></gsx:fusiontable>"
         + "</entry>";
     assertEquals(expectedData, SendDocsUtils.getRowContent(track, false, getContext()));
   }
@@ -180,7 +182,7 @@ public class SendDocsUtilsTest extends AndroidTestCase {
     track.setName("trackName");
     track.setDescription("trackDescription");
     track.setMapId("trackMapId");
-    track.setStatistics(stats);
+    track.setTripStatistics(stats);
     return track;
   }
 

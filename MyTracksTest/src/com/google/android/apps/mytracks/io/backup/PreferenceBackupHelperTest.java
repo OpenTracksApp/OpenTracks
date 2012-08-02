@@ -15,6 +15,7 @@
  */
 package com.google.android.apps.mytracks.io.backup;
 
+import android.annotation.TargetApi;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
@@ -175,6 +176,7 @@ public class PreferenceBackupHelperTest extends TestCase {
     preferenceBackupHelper = new PreferenceBackupHelper();
   }
 
+  @TargetApi(9)
   public void testExportImportPreferences() throws Exception {
     // Populate with some initial values
     Editor editor = preferences.edit();

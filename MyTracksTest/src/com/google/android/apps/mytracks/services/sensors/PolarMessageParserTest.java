@@ -1,8 +1,10 @@
 package com.google.android.apps.mytracks.services.sensors;
 
-import java.util.Arrays;
-
 import com.google.android.apps.mytracks.content.Sensor;
+
+import android.annotation.TargetApi;
+
+import java.util.Arrays;
 
 import junit.framework.TestCase;
 
@@ -16,6 +18,7 @@ public class PolarMessageParserTest extends TestCase {
      (byte) 0xF7, 0x02, (byte) 0xD1, 0x00, 0x11, 0x04};
   private byte[] buf;
   
+  @TargetApi(9)
   public void setUp() {
     buf = Arrays.copyOf(originalBuf, originalBuf.length);
   }

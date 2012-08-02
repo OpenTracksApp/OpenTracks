@@ -225,6 +225,8 @@ public class TrackWriterTest extends AndroidTestCase {
 
     // Set expected mock behavior
     formatWriter.writeHeader();
+    formatWriter.writeBeginTrack(null);
+    formatWriter.writeEndTrack(null);
     formatWriter.writeFooter();
     formatWriter.close();
 

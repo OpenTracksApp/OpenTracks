@@ -87,9 +87,9 @@ public class CsvTrackWriter implements TrackFormatWriter {
 
   @Override
   public void writeHeader() {
-    writeCommaSeparatedLine(context.getString(R.string.track_detail_track_name),
-        context.getString(R.string.track_detail_activity_type_hint),
-        context.getString(R.string.track_detail_track_description));
+    writeCommaSeparatedLine(context.getString(R.string.generic_name),
+        context.getString(R.string.track_edit_activity_type_hint),
+        context.getString(R.string.generic_description));
     writeCommaSeparatedLine(track.getName(), track.getCategory(), track.getDescription());
     writeCommaSeparatedLine();
   }
@@ -101,16 +101,16 @@ public class CsvTrackWriter implements TrackFormatWriter {
 
   @Override
   public void writeBeginWaypoints() {
-    writeCommaSeparatedLine(context.getString(R.string.marker_detail_marker_name),
-        context.getString(R.string.marker_detail_marker_type_hint),
-        context.getString(R.string.marker_detail_marker_description),
+    writeCommaSeparatedLine(context.getString(R.string.generic_name),
+        context.getString(R.string.marker_edit_marker_type_hint),
+        context.getString(R.string.generic_description),
         context.getString(R.string.description_location_latitude),
         context.getString(R.string.description_location_longitude),
         context.getString(R.string.description_location_altitude),
         context.getString(R.string.description_location_bearing),
         context.getString(R.string.description_location_accuracy),
         context.getString(R.string.description_location_speed),
-        context.getString(R.string.description_location_time));
+        context.getString(R.string.description_time));
   }
 
   @Override
@@ -143,7 +143,7 @@ public class CsvTrackWriter implements TrackFormatWriter {
         context.getString(R.string.description_location_bearing),
         context.getString(R.string.description_location_accuracy),
         context.getString(R.string.description_location_speed),
-        context.getString(R.string.description_location_time),
+        context.getString(R.string.description_time),
         context.getString(R.string.description_sensor_power),
         context.getString(R.string.description_sensor_cadence),
         context.getString(R.string.description_sensor_heart_rate),

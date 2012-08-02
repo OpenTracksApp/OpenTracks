@@ -17,7 +17,7 @@ package com.google.android.apps.mytracks.services;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
 
-import com.google.android.apps.mytracks.util.SystemUtils;
+import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
 import com.google.android.maps.mytracks.BuildConfig;
 
 import android.content.ComponentName;
@@ -144,7 +144,8 @@ public class TrackRecordingServiceConnection {
       return;
     }
 
-    if (!startIfNeeded && !ServiceUtils.isServiceRunning(context)) {
+    if (!startIfNeeded
+        && !TrackRecordingServiceConnectionUtils.isRecordingServiceRunning(context)) {
       // Not running, start not requested.
       Log.d(TAG, "Service not running, not binding to it.");
       return;

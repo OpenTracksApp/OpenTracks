@@ -21,6 +21,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 
 import android.annotation.TargetApi;
 import android.content.SharedPreferences.Editor;
+import android.location.Geocoder;
 import android.os.StrictMode;
 import android.util.Log;
 
@@ -53,14 +54,19 @@ public class Api9Adapter extends Api8Adapter {
         .penaltyLog()
         .build());
   }
-  
+
   @Override
   public byte[] copyByteArray(byte[] input, int start, int end) {
     return Arrays.copyOfRange(input, start, end);
   }
- 
+
   @Override
   public HttpTransport getHttpTransport() {
     return new NetHttpTransport();
+  }
+
+  @Override
+  public boolean isGeoCoderPresent() {
+    return Geocoder.isPresent();
   }
 }

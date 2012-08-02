@@ -86,7 +86,7 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
     prepareAndUploadPointsCounter = 0;
     sendMapsActivityMock = AndroidMock.createMock(SendMapsActivity.class);
     myTracksProviderUtilsMock = AndroidMock.createMock(MyTracksProviderUtils.class);
-    sendRequest = new SendRequest(TRACK_ID, false, true, false);
+    sendRequest = new SendRequest(TRACK_ID);
     AndroidMock.expect(sendMapsActivityMock.getApplicationContext()).andReturn(getContext());
   }
 

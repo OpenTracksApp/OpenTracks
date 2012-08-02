@@ -15,13 +15,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_height="fill_parent"
-  android:layout_margin="8dp"
-  android:layout_width="fill_parent" >
+  style="@style/ScrollView" >
   <LinearLayout
     android:layout_height="wrap_content"
     android:layout_width="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:padding="8dp" >
     <!-- Google Maps result -->
     <LinearLayout
       android:id="@+id/upload_result_maps_result"
@@ -34,22 +33,20 @@ limitations under the License.
         android:layout_gravity="center_vertical"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:padding="4dp"
         android:src="@drawable/success" />
       <LinearLayout
+        android:layout_gravity="center_vertical"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="8dp" >
         <TextView
-          android:layout_height="wrap_content"
-          android:layout_width="wrap_content"
           android:text="@string/send_google_maps"
-          style="@android:style/TextAppearance.DeviceDefault.Medium" />
+          style="@style/TextMedium" />
         <TextView
-          android:layout_height="wrap_content"
-          android:layout_width="wrap_content"
           android:text="@string/send_google_maps_url"
-          style="@android:style/TextAppearance.DeviceDefault.Small" />
+          style="@style/TextSmall" />
       </LinearLayout>
     </LinearLayout>
     <!-- Google Fusion Tables result -->
@@ -64,22 +61,20 @@ limitations under the License.
         android:layout_gravity="center_vertical"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:padding="4dp"
         android:src="@drawable/success" />
       <LinearLayout
+        android:layout_gravity="center_vertical"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="8dp" >
         <TextView
-          android:layout_height="wrap_content"
-          android:layout_width="wrap_content"
           android:text="@string/send_google_fusion_tables"
-          style="@android:style/TextAppearance.DeviceDefault.Medium" />
+          style="@style/TextMedium" />
         <TextView
-          android:layout_height="wrap_content"
-          android:layout_width="wrap_content"
           android:text="@string/send_google_fusion_tables_url"
-          style="@android:style/TextAppearance.DeviceDefault.Small" />
+          style="@style/TextSmall" />
       </LinearLayout>
     </LinearLayout>
     <!-- Google Docs result -->
@@ -94,38 +89,32 @@ limitations under the License.
         android:layout_gravity="center_vertical"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:padding="4dp"
         android:src="@drawable/success" />
       <LinearLayout
+        android:layout_gravity="center_vertical"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="8dp" >
         <TextView
-          android:layout_height="wrap_content"
-          android:layout_width="wrap_content"
           android:text="@string/send_google_docs"
-          style="@android:style/TextAppearance.DeviceDefault.Medium" />
+          style="@style/TextMedium" />
         <TextView
-          android:layout_height="wrap_content"
-          android:layout_width="wrap_content"
           android:text="@string/send_google_docs_url"
-          style="@android:style/TextAppearance.DeviceDefault.Small" />
+          style="@style/TextSmall" />
       </LinearLayout>
     </LinearLayout>
     <!-- Footer -->
     <TextView
       android:id="@+id/upload_result_success_footer"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
       android:padding="8dp"
       android:text="@string/send_google_success_footer"
-      style="@android:style/TextAppearance.DeviceDefault.Small" />
+      style="@style/TextSmall" />
     <TextView
       android:id="@+id/upload_result_error_footer"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
       android:padding="8dp"
       android:text="@string/send_google_error"
-      style="@android:style/TextAppearance.DeviceDefault.Medium" />
+      style="@style/TextMedium" />
   </LinearLayout>
 </ScrollView>

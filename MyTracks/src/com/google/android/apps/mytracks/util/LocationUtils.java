@@ -18,7 +18,6 @@ package com.google.android.apps.mytracks.util;
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatistics;
-
 import com.google.android.maps.GeoPoint;
 
 import android.location.Location;
@@ -181,7 +180,7 @@ public class LocationUtils {
     Track piece = null;
     do {
       piece = new Track();
-      TripStatistics pieceStats = piece.getStatistics();
+      TripStatistics pieceStats = piece.getTripStatistics();
       piece.setId(track.getId());
       piece.setName(track.getName());
       piece.setDescription(track.getDescription());

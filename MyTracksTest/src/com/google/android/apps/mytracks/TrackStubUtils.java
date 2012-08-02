@@ -31,9 +31,9 @@ import android.location.Location;
 public class TrackStubUtils {
 
   static final String LOCATION_PROVIDER = "gps";
-  static final double INITIAL_LATITUDE = 22;
-  static final double INITIAL_LONGITUDE = 22;
-  static final double INITIAL_ALTITUDE = 22;
+  public static final double INITIAL_LATITUDE = 22;
+  public static final double INITIAL_LONGITUDE = 22;
+  public static final double INITIAL_ALTITUDE = 22;
   static final float INITIAL_ACCURACY = 5;
   static final float INITIAL_SPEED = 10;
   static final float INITIAL_BEARING = 3.0f;

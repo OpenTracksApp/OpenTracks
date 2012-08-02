@@ -152,16 +152,16 @@ class ExternalFileBackup {
     // Create all the auxiliary classes that will do the writing
     PreferenceBackupHelper preferencesHelper = new PreferenceBackupHelper();
     DatabaseDumper trackDumper = new DatabaseDumper(
-        BackupColumns.TRACKS_BACKUP_COLUMNS,
-        BackupColumns.TRACKS_BACKUP_COLUMN_TYPES,
+        TracksColumns.COLUMNS,
+        TracksColumns.COLUMN_TYPES,
         false);
     DatabaseDumper waypointDumper = new DatabaseDumper(
-        BackupColumns.WAYPOINTS_BACKUP_COLUMNS,
-        BackupColumns.WAYPOINTS_BACKUP_COLUMN_TYPES,
+        WaypointsColumns.COLUMNS,
+        WaypointsColumns.COLUMN_TYPES,
         false);
     DatabaseDumper pointDumper = new DatabaseDumper(
-        BackupColumns.POINTS_BACKUP_COLUMNS,
-        BackupColumns.POINTS_BACKUP_COLUMN_TYPES,
+        TrackPointsColumns.COLUMNS,
+        TrackPointsColumns.COLUMN_TYPES,
         false);
 
     // Open the target for writing

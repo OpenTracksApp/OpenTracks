@@ -47,7 +47,7 @@ public class SendFusionTablesUtilsTest extends TestCase {
     Track track = new Track();
     TripStatistics stats = new TripStatistics();
     stats.setBounds((int) 100.E6, (int) 10.E6, (int) 50.E6, (int) 5.E6);
-    track.setStatistics(stats);
+    track.setTripStatistics(stats);
     track.setTableId(null);
     assertEquals(null, SendFusionTablesUtils.getMapUrl(track));
   }
@@ -57,7 +57,7 @@ public class SendFusionTablesUtilsTest extends TestCase {
    */
   public void testGetMapUrl_null_stats() {
     Track track = new Track();
-    track.setStatistics(null);
+    track.setTripStatistics(null);
     track.setTableId("123");
     assertEquals(null, SendFusionTablesUtils.getMapUrl(track));
   }
@@ -67,9 +67,10 @@ public class SendFusionTablesUtilsTest extends TestCase {
    */
   public void testGetMapUrl_valid_track() {
     Track track = new Track();
+    track.setNumberOfPoints(2);
     TripStatistics stats = new TripStatistics();
     stats.setBounds((int) 100.E6, (int) 10.E6, (int) 50.E6, (int) 5.E6);
-    track.setStatistics(stats);
+    track.setTripStatistics(stats);
     track.setTableId("123");
     assertEquals(
         "https://www.google.com/fusiontables/embedviz?"

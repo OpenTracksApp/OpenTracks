@@ -31,9 +31,8 @@ public class SendRequest implements Parcelable {
   public static final String SEND_REQUEST_KEY = "sendRequest";
 
   private long trackId = -1L;
-  private boolean showMaps = false;
-  private boolean showFusionTables = false;
-  private boolean showDocs = false;
+  private String sharingAppPackageName = null;
+  private String sharingAppClassName = null;
   private boolean sendMaps = false;
   private boolean sendFusionTables = false;
   private boolean sendDocs = false;
@@ -48,15 +47,9 @@ public class SendRequest implements Parcelable {
    * Creates a new send request.
    *
    * @param trackId the track id
-   * @param showMaps true to show the Google Maps option
-   * @param showFusionTables true to show the Google Fusion Tables option
-   * @param showDocs true to show the Google Docs option
    */
-  public SendRequest(long trackId, boolean showMaps, boolean showFusionTables, boolean showDocs) {
+  public SendRequest(long trackId) {
     this.trackId = trackId;
-    this.showMaps = showMaps;
-    this.showFusionTables = showFusionTables;
-    this.showDocs = showDocs;
   }
 
   /**
@@ -67,31 +60,35 @@ public class SendRequest implements Parcelable {
   }
 
   /**
-   * True if showing the send to Google Maps option.
+   * Gets the sharing app package name.
    */
-  public boolean isShowMaps() {
-    return showMaps;
+  public String getSharingAppPackageName() {
+    return sharingAppPackageName;
   }
 
   /**
-   * True if showing the send to Google Fusion Tables option.
+   * Sets the sharing app package name.
+   * 
+   * @param sharingAppPackageName the sharing app package name
    */
-  public boolean isShowFusionTables() {
-    return showFusionTables;
+  public void setSharingAppPackageName(String sharingAppPackageName) {
+    this.sharingAppPackageName = sharingAppPackageName;
   }
 
   /**
-   * True if showing the send to Google Docs option.
+   * Gets the sharing app class name.
    */
-  public boolean isShowDocs() {
-    return showDocs;
+  public String getSharingAppClassName() {
+    return sharingAppClassName;
   }
 
   /**
-   * True if showing all the send options.
+   * Sets the sharing app class name.
+   * 
+   * @param sharingAppClassName the sharing app class name
    */
-  public boolean isShowAll() {
-    return showMaps && showFusionTables && showDocs;
+  public void setSharingAppClassName(String sharingAppClassName) {
+    this.sharingAppClassName = sharingAppClassName;
   }
 
   /**
@@ -245,9 +242,8 @@ public class SendRequest implements Parcelable {
 
   private SendRequest(Parcel in) {
     trackId = in.readLong();
-    showMaps = in.readByte() == 1;
-    showFusionTables = in.readByte() == 1;
-    showDocs = in.readByte() == 1;
+    sharingAppPackageName = in.readString();
+    sharingAppClassName = in.readString();
     sendMaps = in.readByte() == 1;
     sendFusionTables = in.readByte() == 1;
     sendDocs = in.readByte() == 1;
@@ -267,9 +263,8 @@ public class SendRequest implements Parcelable {
   @Override
   public void writeToParcel(Parcel out, int flags) {
     out.writeLong(trackId);
-    out.writeByte((byte) (showMaps ? 1 : 0));
-    out.writeByte((byte) (showFusionTables ? 1 : 0));
-    out.writeByte((byte) (showDocs ? 1 : 0));
+    out.writeString(sharingAppPackageName);
+    out.writeString(sharingAppClassName);
     out.writeByte((byte) (sendMaps ? 1 : 0));
     out.writeByte((byte) (sendFusionTables ? 1 : 0));
     out.writeByte((byte) (sendDocs ? 1 : 0));

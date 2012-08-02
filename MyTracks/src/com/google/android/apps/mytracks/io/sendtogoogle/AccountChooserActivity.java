@@ -24,7 +24,8 @@ import com.google.android.apps.mytracks.io.gdata.docs.SpreadsheetsClient;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsConstants;
 import com.google.android.apps.mytracks.io.maps.ChooseMapActivity;
 import com.google.android.apps.mytracks.io.maps.SendMapsActivity;
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
+import com.google.android.apps.mytracks.util.IntentUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.accounts.Account;
@@ -36,13 +37,11 @@ import android.accounts.OperationCanceledException;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -78,7 +77,6 @@ public class AccountChooserActivity extends Activity {
 
   private SendRequest sendRequest;
   private Account[] accounts;
-  private int selectedAccountIndex;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -86,32 +84,28 @@ public class AccountChooserActivity extends Activity {
     sendRequest = getIntent().getParcelableExtra(SendRequest.SEND_REQUEST_KEY);
     accounts = AccountManager.get(this).getAccountsByType(Constants.ACCOUNT_TYPE);
 
+    if (accounts.length == 0) {
+      showDialog(DIALOG_NO_ACCOUNT_ID);
+      return;
+    }
+    
     if (accounts.length == 1) {
       sendRequest.setAccount(accounts[0]);
+      PreferencesUtils.setString(this, R.string.google_account_key, accounts[0].name);
       getPermission(MapsConstants.SERVICE_NAME, sendRequest.isSendMaps(), mapsCallback);
       return;
     }
 
-    SharedPreferences prefs = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    String preferredAccount = prefs.getString(getString(R.string.preferred_account_key), "");
-
-    selectedAccountIndex = 0;
+    String googleAccount = PreferencesUtils.getString(this, R.string.google_account_key,
+        PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
     for (int i = 0; i < accounts.length; i++) {
-      if (accounts[i].name.equals(preferredAccount)) {
-        selectedAccountIndex = i;
-        break;
+      if (accounts[i].name.equals(googleAccount)) {
+        sendRequest.setAccount(accounts[i]);
+        getPermission(MapsConstants.SERVICE_NAME, sendRequest.isSendMaps(), mapsCallback);
+        return;
       }
     }
-  }
-
-  @Override
-  protected void onResume() {
-    super.onResume();
-    if (accounts.length == 0) {
-      showDialog(DIALOG_NO_ACCOUNT_ID);
-    } else if (accounts.length > 1 ) {
-      showDialog(DIALOG_CHOOSER_ID);
-    }
+    showDialog(DIALOG_CHOOSER_ID);
   }
 
   @Override
@@ -164,24 +158,15 @@ public class AccountChooserActivity extends Activity {
         })
         .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int which) {
-            Account account = accounts[selectedAccountIndex];
-            SharedPreferences sharedPreferences = getSharedPreferences(
-                Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-            Editor editor = sharedPreferences.edit();
-            editor.putString(getString(R.string.preferred_account_key), account.name);
-            ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
-
+            int position = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+            Account account = accounts[position];
+            PreferencesUtils.setString(
+                AccountChooserActivity.this, R.string.google_account_key, account.name);
             sendRequest.setAccount(account);
             getPermission(MapsConstants.SERVICE_NAME, sendRequest.isSendMaps(), mapsCallback);
           }
         })
-        .setSingleChoiceItems(
-            choices, selectedAccountIndex, new DialogInterface.OnClickListener() {
-              @Override
-              public void onClick(DialogInterface dialog, int which) {
-                selectedAccountIndex = which;
-              }
-            })
+        .setSingleChoiceItems(choices, 0, null)
         .setTitle(R.string.send_google_choose_account_title)
         .create();
   }
@@ -193,7 +178,7 @@ public class AccountChooserActivity extends Activity {
     }  
     @Override
     public void onFailure() {
-      finish();
+      handleNoAccountPermission();
     }
   };
   
@@ -204,7 +189,7 @@ public class AccountChooserActivity extends Activity {
     }  
     @Override
     public void onFailure() {
-      finish();
+      handleNoAccountPermission();
     }
   };
   
@@ -215,7 +200,7 @@ public class AccountChooserActivity extends Activity {
     }  
     @Override
     public void onFailure() {
-      finish();
+      handleNoAccountPermission();
     }
   };
   
@@ -227,7 +212,7 @@ public class AccountChooserActivity extends Activity {
     }
     @Override
     public void onFailure() {
-      finish();
+      handleNoAccountPermission();
     }
   };
   
@@ -294,9 +279,17 @@ public class AccountChooserActivity extends Activity {
     } else {
       next = UploadResultActivity.class;
     }
-    Intent intent = new Intent(this, next)
+    Intent intent = IntentUtils.newIntent(this, next)
         .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
     startActivity(intent);
+    finish();
+  }
+  
+  /**
+   * Handles when not able to get account permission.
+   */
+  private void handleNoAccountPermission() {
+    Toast.makeText(this, R.string.send_google_no_account_permission, Toast.LENGTH_LONG).show();
     finish();
   }
 }

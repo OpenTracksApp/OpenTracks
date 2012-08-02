@@ -27,7 +27,6 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.WeakHashMap;
 
 /**
  * Manager for the external data listeners and their listening types.
@@ -77,13 +76,6 @@ class TrackDataListeners {
   private final Map<TrackDataListener, ListenerRegistration> registeredListeners =
       new HashMap<TrackDataListener, ListenerRegistration>();
 
-  /**
-   * Map of external paused listener to its registration details.
-   * This will automatically discard listeners which are GCed.
-   */
-  private final WeakHashMap<TrackDataListener, ListenerRegistration> oldListeners =
-      new WeakHashMap<TrackDataListener, ListenerRegistration>();
-
   /** Map of data type to external listeners interested in it. */
   private final Map<ListenerDataType, Set<TrackDataListener>> listenerSetsPerType =
       new EnumMap<ListenerDataType, Set<TrackDataListener>>(ListenerDataType.class);
@@ -109,10 +101,7 @@ class TrackDataListeners {
       throw new IllegalStateException("Listener already registered");
     }
 
-    ListenerRegistration registration = oldListeners.remove(listener);
-    if (registration == null) {
-      registration = new ListenerRegistration(listener, dataTypes);
-    }
+    ListenerRegistration registration = new ListenerRegistration(listener, dataTypes);
     registeredListeners.put(listener, registration);
 
     for (ListenerDataType type : dataTypes) {
@@ -142,17 +131,10 @@ class TrackDataListeners {
     for (ListenerDataType type : match.types) {
       listenerSetsPerType.get(type).remove(listener);
     }
-
-    // Keep it around in case it's re-registered soon
-    oldListeners.put(listener, match);
   }
 
   public ListenerRegistration getRegistration(TrackDataListener listener) {
-    ListenerRegistration registration = registeredListeners.get(listener);
-    if (registration == null) {
-      registration = oldListeners.get(listener);
-    }
-    return registration;
+    return registeredListeners.get(listener);
   }
 
   public Set<TrackDataListener> getListenersFor(ListenerDataType type) {

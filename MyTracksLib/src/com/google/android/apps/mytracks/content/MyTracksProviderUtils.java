@@ -77,6 +77,13 @@ public interface MyTracksProviderUtils {
   boolean updateWaypoint(Waypoint waypoint);
 
   /**
+   * Finds the first recorded location from the location provider.
+   * 
+   * @return the first location, or null if no locations available
+   */
+  Location getFirstLocation();
+
+  /**
    * Finds the last recorded location from the location provider.
    *
    * @return the last location, or null if no locations available
@@ -129,6 +136,15 @@ public interface MyTracksProviderUtils {
    */
   long getLastWaypointId(long trackId);
 
+  /**
+   * Gets the next marker number.
+   *
+   * @param trackId the track id
+   * @param statistics true for statistics marker, false for waypoint marker
+   * @return the next number or -1 if unable to get the value
+   */
+  int getNextMarkerNumber(long trackId, boolean statistics);
+  
   /**
    * Finds the last recorded track from the track provider.
    *

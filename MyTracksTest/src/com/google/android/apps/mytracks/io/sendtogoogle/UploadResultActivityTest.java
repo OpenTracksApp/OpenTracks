@@ -13,19 +13,18 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks.io.sendtogoogle;
 
 import com.google.android.maps.mytracks.R;
-import com.jayway.android.robotium.solo.Solo;
 
-import android.app.Instrumentation;
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.HashSet;
 
 /**
  * Tests the {@link UploadResultActivity}.
@@ -35,20 +34,23 @@ import java.util.HashSet;
 public class UploadResultActivityTest extends
     ActivityInstrumentationTestCase2<UploadResultActivity> {
 
-  private Instrumentation instrumentation;
   private UploadResultActivity uploadResultActivity;
-  private Solo solo;
+  private TextView errorFooter;
+  private TextView successFooter;
+  private LinearLayout mapsResult;
+  private LinearLayout fusionTablesResult;
+  private LinearLayout docsResult;
+  private ImageView mapsResultIcon;
+  private ImageView fusionTablesResultIcon;
+  private ImageView docsResultIcon;
 
-  @Override
-  protected void setUp() throws Exception {
-    super.setUp();
-    instrumentation = getInstrumentation();
-    solo = new Solo(instrumentation);
-  }
+  private String successTitle;
+  private String errorTitle;
 
   /**
    * This method is necessary for ActivityInstrumentationTestCase2.
    */
+  @TargetApi(8)
   public UploadResultActivityTest() {
     super(UploadResultActivity.class);
   }
@@ -58,27 +60,17 @@ public class UploadResultActivityTest extends
    */
   public void testAllSuccess() {
     initialActivity(true, true, true, true, true, true);
+    createDialogAndGetViews();
+    assertEquals(View.VISIBLE, successFooter.getVisibility());
+    assertEquals(View.GONE, errorFooter.getVisibility());
 
-    HashSet<String> stringHashSet = new HashSet<String>();
-    ArrayList<View> view = solo.getViews();
-    for (View oneView : view) {
-      if (oneView instanceof TextView && oneView.isShown()) {
-        stringHashSet.add((String) ((TextView) oneView).getText());
-      }
-    }
+    assertEquals(View.VISIBLE, mapsResult.getVisibility());
+    assertEquals(View.VISIBLE, fusionTablesResult.getVisibility());
+    assertEquals(View.VISIBLE, docsResult.getVisibility());
 
-    assertTrue(stringHashSet.contains(uploadResultActivity
-        .getString(R.string.generic_success_title)));
-    assertTrue(stringHashSet.contains(uploadResultActivity.getString(R.string.send_google_maps)));
-    assertTrue(stringHashSet.contains(uploadResultActivity
-        .getString(R.string.send_google_fusion_tables)));
-    assertTrue(stringHashSet.contains(uploadResultActivity.getString(R.string.send_google_docs)));
-    assertTrue(stringHashSet.contains(uploadResultActivity
-        .getString(R.string.send_google_success_footer)));
-
-    assertFalse(stringHashSet
-        .contains(uploadResultActivity.getString(R.string.generic_error_title)));
-    assertFalse(stringHashSet.contains(uploadResultActivity.getString(R.string.send_google_error)));
+    assertEquals(successTitle, mapsResultIcon.getContentDescription());
+    assertEquals(successTitle, fusionTablesResultIcon.getContentDescription());
+    assertEquals(successTitle, docsResultIcon.getContentDescription());
   }
 
   /**
@@ -87,26 +79,17 @@ public class UploadResultActivityTest extends
   public void testAllFailed() {
     // Send all kinds but all failed.
     initialActivity(true, true, true, false, false, false);
-    HashSet<String> stringHashSet = new HashSet<String>();
-    ArrayList<View> view = solo.getViews();
-    for (View oneView : view) {
-      if (oneView instanceof TextView && oneView.isShown()) {
-        stringHashSet.add((String) ((TextView) oneView).getText());
-      }
-    }
+    createDialogAndGetViews();
+    assertEquals(View.GONE, successFooter.getVisibility());
+    assertEquals(View.VISIBLE, errorFooter.getVisibility());
 
-    assertTrue(stringHashSet.contains((Object) uploadResultActivity
-        .getString(R.string.generic_error_title)));
-    assertTrue(stringHashSet.contains(uploadResultActivity.getString(R.string.send_google_maps)));
-    assertTrue(stringHashSet.contains(uploadResultActivity
-        .getString(R.string.send_google_fusion_tables)));
-    assertTrue(stringHashSet.contains(uploadResultActivity.getString(R.string.send_google_docs)));
-    assertTrue(stringHashSet.contains(uploadResultActivity.getString(R.string.send_google_error)));
+    assertEquals(View.VISIBLE, mapsResult.getVisibility());
+    assertEquals(View.VISIBLE, fusionTablesResult.getVisibility());
+    assertEquals(View.VISIBLE, docsResult.getVisibility());
 
-    assertFalse(stringHashSet.contains(uploadResultActivity
-        .getString(R.string.generic_success_title)));
-    assertFalse(stringHashSet.contains(uploadResultActivity
-        .getString(R.string.send_google_success_footer)));
+    assertEquals(errorTitle, mapsResultIcon.getContentDescription());
+    assertEquals(errorTitle, fusionTablesResultIcon.getContentDescription());
+    assertEquals(errorTitle, docsResultIcon.getContentDescription());
   }
 
   /**
@@ -119,30 +102,19 @@ public class UploadResultActivityTest extends
    */
   public void testPartialSuccess() {
     initialActivity(true, false, true, true, false, false);
+    createDialogAndGetViews();
+    assertEquals(View.VISIBLE, errorFooter.getVisibility());
 
-    HashSet<String> stringHashSet = new HashSet<String>();
-    ArrayList<View> view = solo.getViews();
-    for (View oneView : view) {
-      if (oneView instanceof TextView && oneView.isShown()) {
-        stringHashSet.add((String) ((TextView) oneView).getText());
-      }
-    }
+    assertEquals(View.VISIBLE, mapsResult.getVisibility());
+    assertEquals(View.GONE, fusionTablesResult.getVisibility());
+    assertEquals(View.VISIBLE, docsResult.getVisibility());
 
-    assertTrue(stringHashSet.contains(uploadResultActivity.getString(R.string.generic_error_title)));
-    assertTrue(stringHashSet.contains(uploadResultActivity.getString(R.string.send_google_maps)));
-    assertTrue(stringHashSet.contains(uploadResultActivity.getString(R.string.send_google_docs)));
-    assertTrue(stringHashSet.contains(uploadResultActivity.getString(R.string.send_google_error)));
-
-    assertFalse(stringHashSet.contains(uploadResultActivity
-        .getString(R.string.send_google_fusion_tables)));
-    assertFalse(stringHashSet.contains(uploadResultActivity
-        .getString(R.string.generic_success_title)));
-    assertFalse(stringHashSet.contains(uploadResultActivity
-        .getString(R.string.send_google_success_footer)));
+    assertEquals(successTitle, mapsResultIcon.getContentDescription());
+    assertEquals(errorTitle, docsResultIcon.getContentDescription());
   }
 
   /**
-   * Initial a {@link SendRequest} and then initials a activity to be tested.
+   * Initials a {@link SendRequest} and then initials a activity to be tested.
    * 
    * @param isSendMaps
    * @param isSendFusionTables
@@ -154,7 +126,7 @@ public class UploadResultActivityTest extends
   private void initialActivity(boolean isSendMaps, boolean isSendFusionTables, boolean isSendDocs,
       boolean isMapsSuccess, boolean isFusionTablesSuccess, boolean isDocsSuccess) {
     Intent intent = new Intent();
-    SendRequest sendRequest = new SendRequest(1L, true, true, true);
+    SendRequest sendRequest = new SendRequest(1L);
     sendRequest.setSendMaps(isSendMaps);
     sendRequest.setSendFusionTables(isSendFusionTables);
     sendRequest.setSendDocs(isSendDocs);
@@ -164,6 +136,26 @@ public class UploadResultActivityTest extends
     intent.putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
     setActivityIntent(intent);
     uploadResultActivity = this.getActivity();
+    successTitle = uploadResultActivity.getString(R.string.generic_success_title);
+    errorTitle = uploadResultActivity.getString(R.string.generic_error_title);
   }
 
+  /**
+   * Creates result dialog and gets views in the dialog.
+   */
+  private void createDialogAndGetViews() {
+    uploadResultActivity.onCreateDialog(UploadResultActivity.DIALOG_RESULT_ID);
+    View view = uploadResultActivity.view;
+    errorFooter = (TextView) view.findViewById(R.id.upload_result_error_footer);
+    successFooter = (TextView) view.findViewById(R.id.upload_result_success_footer);
+
+    mapsResult = (LinearLayout) view.findViewById(R.id.upload_result_maps_result);
+    fusionTablesResult = (LinearLayout) view.findViewById(R.id.upload_result_fusion_tables_result);
+    docsResult = (LinearLayout) view.findViewById(R.id.upload_result_docs_result);
+
+    mapsResultIcon = (ImageView) view.findViewById(R.id.upload_result_maps_result_icon);
+    fusionTablesResultIcon = (ImageView) view
+        .findViewById(R.id.upload_result_fusion_tables_result_icon);
+    docsResultIcon = (ImageView) view.findViewById(R.id.upload_result_docs_result_icon);
+  }
 }

@@ -13,11 +13,12 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.ChartValueSeries.ZoomSettings;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.stats.ExtremityMonitor;
+import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
@@ -32,6 +33,7 @@ import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -44,156 +46,169 @@ import java.util.ArrayList;
 
 /**
  * Visualization of the chart.
- *
+ * 
  * @author Sandor Dornbush
  * @author Leif Hendrik Wilden
  */
 public class ChartView extends View {
-  private static final int MIN_ZOOM_LEVEL = 1;
 
-  /*
-   * Scrolling logic:
-   */
+  public static final float MEDIUM_TEXT_SIZE = 18f;
+  public static final float SMALL_TEXT_SIZE = 12f;
+
+  public static final int Y_AXIS_INTERVALS = 5;
+
+  public static final int NUM_SERIES = 6;
+  public static final int ELEVATION_SERIES = 0;
+  public static final int SPEED_SERIES = 1;
+  public static final int PACE_SERIES = 2;
+  public static final int HEART_RATE_SERIES = 3;
+  public static final int CADENCE_SERIES = 4;
+  public static final int POWER_SERIES = 5;
+
+  private static final int TARGET_X_AXIS_INTERVALS = 4;
+
+  private static final int MIN_ZOOM_LEVEL = 1;
+  private static final int MAX_ZOOM_LEVEL = 10;
+
+  private static final NumberFormat X_NUMBER_FORMAT = NumberFormat.getIntegerInstance();
+  private static final NumberFormat X_FRACTION_FORMAT = NumberFormat.getNumberInstance();
+  static {
+    X_FRACTION_FORMAT.setMaximumFractionDigits(1);
+    X_FRACTION_FORMAT.setMinimumFractionDigits(1);
+  }
+
+  private static final int BORDER = 8;
+  private static final int SPACER = 4;
+  private static final int Y_AXIS_OFFSET = 16;
+
+  // Marker pin x position / marker icon width
+  private static final double MARKER_PIN_X_POSITION_PERCENTAGE = 13 / 48.0;
+
+  private final ChartValueSeries[] series = new ChartValueSeries[NUM_SERIES];
+  private final ArrayList<double[]> chartData = new ArrayList<double[]>();
+  private final ArrayList<Waypoint> waypoints = new ArrayList<Waypoint>();
+  private final ExtremityMonitor xExtremityMonitor = new ExtremityMonitor();
+  private double maxX = 1.0;
+
+  private final Paint axisPaint;
+  private final Paint xAxisMarkerPaint;
+  private final Paint gridPaint;
+  private final Paint markerPaint;
+
+  private final Drawable pointer;
+  private final Drawable statisticsMarker;
+  private final Drawable waypointMarker;
+  private final int markerWidth;
+  private final int markerHeight;
+
   private final Scroller scroller;
   private VelocityTracker velocityTracker = null;
-  /** Position of the last motion event */
-  private float lastMotionX;
-
-  /*
-   * Zoom logic:
-   */
+  private float lastMotionEventX = -1;
   private int zoomLevel = 1;
-  private int maxZoomLevel = 10;
 
-  private static final int MAX_INTERVALS = 5;
+  private int leftBorder = BORDER;
+  private int topBorder = BORDER;
+  private int bottomBorder = BORDER;
+  private int rightBorder = BORDER;
+  private int spacer = SPACER;
+  private int yAxisOffset = Y_AXIS_OFFSET;
 
-  /*
-   * Borders, margins, dimensions (in pixels):
-   */
-  private int leftBorder = -1;
-
-  /**
-   * Unscaled top border of the chart.
-   */
-  private static final int TOP_BORDER = 15;
-
-  /**
-   * Device scaled top border of the chart.
-   */
-  private int topBorder;
-
-  /**
-   * Unscaled bottom border of the chart.
-   */
-  private static final float BOTTOM_BORDER = 40;
-
-  /**
-   * Device scaled bottom border of the chart.
-   */
-  private int bottomBorder;
-
-  private static final int RIGHT_BORDER = 40;
-
-  /** Space to leave for drawing the unit labels */
-  private static final int UNIT_BORDER = 15;
-  private static final int FONT_HEIGHT = 10;
-
-  private int w = 0;
-  private int h = 0;
+  private int width = 0;
+  private int height = 0;
   private int effectiveWidth = 0;
   private int effectiveHeight = 0;
 
-  /*
-   * Ranges (in data units):
-   */
-  private double maxX = 1;
-
-  /**
-   * The various series.
-   */
-  public static final int ELEVATION_SERIES = 0;
-  public static final int SPEED_SERIES = 1;
-  public static final int POWER_SERIES = 2;
-  public static final int CADENCE_SERIES = 3;
-  public static final int HEART_RATE_SERIES = 4;
-  public static final int NUM_SERIES = 5;
-  private ChartValueSeries[] series;
-
-  private final ExtremityMonitor xMonitor = new ExtremityMonitor();
-  private static final NumberFormat X_FORMAT = NumberFormat.getIntegerInstance();
-  private static final NumberFormat X_SHORT_FORMAT = NumberFormat.getNumberInstance();
-  
-  static {
-    X_SHORT_FORMAT.setMaximumFractionDigits(1);
-    X_SHORT_FORMAT.setMinimumFractionDigits(1);
-  }
-
-  /*
-   * Paints etc. used when drawing the chart:
-   */
-  private final Paint borderPaint = new Paint();
-  private final Paint labelPaint = new Paint();
-  private final Paint gridPaint = new Paint();
-  private final Paint gridBarPaint = new Paint();
-  private final Paint clearPaint = new Paint();
-  private final Drawable pointer;
-  private final Drawable statsMarker;
-  private final Drawable waypointMarker;
-  private final int markerWidth, markerHeight;
-
-  /**
-   * The chart data stored as an array of double arrays. Each one dimensional
-   * array is composed of [x, y].
-   */
-  private final ArrayList<double[]> data = new ArrayList<double[]>();
-
-  /**
-   * List of way points to be displayed.
-   */
-  private final ArrayList<Waypoint> waypoints = new ArrayList<Waypoint>();
-
+  private boolean chartByDistance = true;
   private boolean metricUnits = true;
+  private boolean reportSpeed = true;
   private boolean showPointer = false;
 
-  /** Display chart versus distance or time */
-  public enum Mode {
-    BY_DISTANCE, BY_TIME
-  }
-
-  private Mode mode = Mode.BY_DISTANCE;
-
+  /**
+   * Constructor.
+   * 
+   * @param context the context
+   */
   public ChartView(Context context) {
     super(context);
 
-    setUpChartValueSeries(context);
+    series[ELEVATION_SERIES] = new ChartValueSeries(context,
+        Integer.MIN_VALUE,
+        Integer.MAX_VALUE,
+        new int[] { 5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000 },
+        R.string.description_elevation_metric,
+        R.string.description_elevation_imperial,
+        R.color.elevation_fill,
+        R.color.elevation_border);
+    series[SPEED_SERIES] = new ChartValueSeries(context,
+        0,
+        Integer.MAX_VALUE,
+        new int[] {1, 5, 10, 20, 50, 100 },
+        R.string.description_speed_metric,
+        R.string.description_speed_imperial,
+        R.color.speed_fill,
+        R.color.speed_border);
+    series[PACE_SERIES] = new ChartValueSeries(context,
+        0,
+        Integer.MAX_VALUE,
+        new int[] {1, 2, 5, 10, 15, 20, 30, 60, 120 },
+        R.string.description_pace_metric,
+        R.string.description_pace_imperial,
+        R.color.pace_fill,
+        R.color.pace_border);
+    series[HEART_RATE_SERIES] = new ChartValueSeries(context,
+        0,
+        Integer.MAX_VALUE,
+        new int[] {25, 50 },
+        R.string.description_sensor_heart_rate,
+        R.string.description_sensor_heart_rate,
+        R.color.heart_rate_fill,
+        R.color.heart_rate_border);
+    series[CADENCE_SERIES] = new ChartValueSeries(context,
+        0,
+        Integer.MAX_VALUE,
+        new int[] {5, 10, 25, 50 },
+        R.string.description_sensor_cadence,
+        R.string.description_sensor_cadence,
+        R.color.cadence_fill,
+        R.color.cadence_border);
+    series[POWER_SERIES] = new ChartValueSeries(context,
+        0,
+        1000,
+        new int[] { 5, 50, 100, 200 },
+        R.string.description_sensor_power,
+        R.string.description_sensor_power,
+        R.color.power_fill,
+        R.color.power_border);
 
-    labelPaint.setStyle(Style.STROKE);
-    labelPaint.setColor(context.getResources().getColor(R.color.black));
-    labelPaint.setAntiAlias(true);
+    float scale = context.getResources().getDisplayMetrics().density;
 
-    borderPaint.setStyle(Style.STROKE);
-    borderPaint.setColor(context.getResources().getColor(R.color.black));
-    borderPaint.setAntiAlias(true);
+    axisPaint = new Paint();
+    axisPaint.setStyle(Style.STROKE);
+    axisPaint.setColor(context.getResources().getColor(R.color.black));
+    axisPaint.setAntiAlias(true);
+    axisPaint.setTextSize(SMALL_TEXT_SIZE * scale);
 
+    xAxisMarkerPaint = new Paint(axisPaint);
+    xAxisMarkerPaint.setTextAlign(Align.CENTER);
+
+    gridPaint = new Paint();
     gridPaint.setStyle(Style.STROKE);
     gridPaint.setColor(context.getResources().getColor(R.color.gray));
     gridPaint.setAntiAlias(false);
+    gridPaint.setPathEffect(new DashPathEffect(new float[] { 3, 2 }, 0));
 
-    gridBarPaint.set(gridPaint);
-    gridBarPaint.setPathEffect(new DashPathEffect(new float[] {3, 2}, 0));
-
-    clearPaint.setStyle(Style.FILL);
-    clearPaint.setColor(context.getResources().getColor(R.color.white));
-    clearPaint.setAntiAlias(false);
+    markerPaint = new Paint();
+    markerPaint.setStyle(Style.STROKE);
+    markerPaint.setColor(context.getResources().getColor(R.color.gray));
+    markerPaint.setAntiAlias(false);
 
     pointer = context.getResources().getDrawable(R.drawable.arrow_180);
-    pointer.setBounds(0, 0,
-        pointer.getIntrinsicWidth(), pointer.getIntrinsicHeight());
+    pointer.setBounds(0, 0, pointer.getIntrinsicWidth(), pointer.getIntrinsicHeight());
 
-    statsMarker = getResources().getDrawable(R.drawable.ylw_pushpin);
-    markerWidth = statsMarker.getIntrinsicWidth();
-    markerHeight = statsMarker.getIntrinsicHeight();
-    statsMarker.setBounds(0, 0, markerWidth, markerHeight);
+    statisticsMarker = getResources().getDrawable(R.drawable.yellow_pushpin);
+    markerWidth = statisticsMarker.getIntrinsicWidth();
+    markerHeight = statisticsMarker.getIntrinsicHeight();
+    statisticsMarker.setBounds(0, 0, markerWidth, markerHeight);
 
     waypointMarker = getResources().getDrawable(R.drawable.blue_pushpin);
     waypointMarker.setBounds(0, 0, markerWidth, markerHeight);
@@ -204,105 +219,71 @@ public class ChartView extends View {
     updateDimensions();
   }
 
-  private void setUpChartValueSeries(Context context) {
-    series = new ChartValueSeries[NUM_SERIES];
-
-    // Create the value series.
-    series[ELEVATION_SERIES] =
-        new ChartValueSeries(context,
-                             R.color.elevation_fill,
-                             R.color.elevation_border,
-                             new ZoomSettings(MAX_INTERVALS,
-                                 new int[] {5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000}),
-                             R.string.stat_elevation);
-
-    series[SPEED_SERIES] =
-        new ChartValueSeries(context,
-                             R.color.speed_fill,
-                             R.color.speed_border,
-                             new ZoomSettings(MAX_INTERVALS, 0, Integer.MIN_VALUE,
-                                 new int[] {1, 5, 10, 20, 50}),
-                             R.string.stat_speed);
-    series[POWER_SERIES] =
-        new ChartValueSeries(context,
-                             R.color.power_fill,
-                             R.color.power_border,
-                             new ZoomSettings(MAX_INTERVALS, 0, 1000, new int[] {5, 50, 100, 200}),
-                             R.string.sensor_state_power);
-    series[CADENCE_SERIES] =
-        new ChartValueSeries(context,
-                             R.color.cadence_fill,
-                             R.color.cadence_border,
-                             new ZoomSettings(MAX_INTERVALS, 0, Integer.MIN_VALUE,
-                                 new int[] {5, 10, 25, 50}),
-                             R.string.sensor_state_cadence);
-    series[HEART_RATE_SERIES] =
-        new ChartValueSeries(context,
-                             R.color.heartrate_fill,
-                             R.color.heartrate_border,
-                             new ZoomSettings(MAX_INTERVALS, 0, Integer.MIN_VALUE,
-                                 new int[] {25, 50}),
-                             R.string.sensor_state_heart_rate);
-  }
-
-  public void clearWaypoints() {
-    waypoints.clear();
-  }
-
-  public void addWaypoint(Waypoint waypoint) {
-    waypoints.add(waypoint);
+  /**
+   * Sets the enabled value for a chart value series.
+   * 
+   * @param index the chart value series index
+   */
+  public void setChartValueSeriesEnabled(int index, boolean enabled) {
+    series[index].setEnabled(enabled);
   }
 
   /**
-   * Determines whether the pointer icon is shown on the last data point.
+   * Sets chart by distance. It is expected that after changing this value, data
+   * will be reloaded.
+   * 
+   * @param value true for by distance, false for by time
    */
-  public void setShowPointer(boolean showPointer) {
-    this.showPointer = showPointer;
+  public void setChartByDistance(boolean value) {
+    chartByDistance = value;
   }
 
   /**
-   * Sets whether metric units are used or not.
+   * Sets metric units.
+   * 
+   * @param value true to use metric units
    */
-  public void setMetricUnits(boolean metricUnits) {
-    this.metricUnits = metricUnits;
-  }
-
-  public void setReportSpeed(boolean reportSpeed, Context c) {
-    series[SPEED_SERIES].setTitle(c.getString(reportSpeed
-                                              ? R.string.stat_speed
-                                              : R.string.stat_pace));
-  }
-
-  private void addDataPointInternal(double[] theData) {
-    xMonitor.update(theData[0]);
-    int min = Math.min(series.length, theData.length - 1);
-    for (int i = 1; i <= min; i++) {
-      if (!Double.isNaN(theData[i])) {
-        series[i - 1].update(theData[i]);
-      }
-    }
-    // Fill in the extra's if needed.
-    for (int i = theData.length; i < series.length; i++) {
-      if (series[i].hasData()) {
-        series[i].update(0);
-      }
-    }
+  public void setMetricUnits(boolean value) {
+    metricUnits = value;
   }
 
   /**
-   * Adds multiple data points to the chart.
-   *
-   * @param theData an array list of data points to be added
+   * Sets report speed.
+   * 
+   * @param value true to report speed
    */
-  public void addDataPoints(ArrayList<double[]> theData) {
-    synchronized (data) {
-      data.addAll(theData);
-      for (int i = 0; i < theData.size(); i++) {
-        double d[] = theData.get(i);
-        addDataPointInternal(d);
+  public void setReportSpeed(boolean value) {
+    reportSpeed = value;
+  }
+
+  /**
+   * Sets show pointer.
+   * 
+   * @param value true to show pointer
+   */
+  public void setShowPointer(boolean value) {
+    showPointer = value;
+  }
+
+  /**
+   * Adds data points.
+   * 
+   * @param dataPoints an array of data points to be added
+   */
+  public void addDataPoints(ArrayList<double[]> dataPoints) {
+    synchronized (chartData) {
+      chartData.addAll(dataPoints);
+      for (int i = 0; i < dataPoints.size(); i++) {
+        double[] dataPoint = dataPoints.get(i);
+        xExtremityMonitor.update(dataPoint[0]);
+        for (int j = 0; j < series.length; j++) {
+          if (!Double.isNaN(dataPoint[j])) {
+            series[j].update(dataPoint[j + 1]);
+          }
+        }
       }
       updateDimensions();
-      setUpPath();
+      updatePaths();
     }
   }
 
@@ -310,110 +291,106 @@ public class ChartView extends View {
    * Clears all data.
    */
   public void reset() {
-    synchronized (data) {
-      data.clear();
-      xMonitor.reset();
+    synchronized (chartData) {
+      chartData.clear();
+      xExtremityMonitor.reset();
       zoomLevel = 1;
       updateDimensions();
     }
   }
 
+  /**
+   * Resets scroll. To be called on the UI thread.
+   */
   public void resetScroll() {
     scrollTo(0, 0);
   }
 
   /**
-   * @return true if the chart can be zoomed into.
+   * Adds a waypoint.
+   * 
+   * @param waypoint the waypoint
    */
-  public boolean canZoomIn() {
-    return zoomLevel < maxZoomLevel;
+  public void addWaypoint(Waypoint waypoint) {
+    waypoints.add(waypoint);
   }
 
   /**
-   * @return true if the chart can be zoomed out
+   * Clears the waypoints.
+   */
+  public void clearWaypoints() {
+    waypoints.clear();
+  }
+
+  /**
+   * Returns true if can zoom in.
+   */
+  public boolean canZoomIn() {
+    return zoomLevel < MAX_ZOOM_LEVEL;
+  }
+
+  /**
+   * Returns true if can zoom out.
    */
   public boolean canZoomOut() {
     return zoomLevel > MIN_ZOOM_LEVEL;
   }
 
   /**
-   * Zooms in one level (factor 2).
+   * Zooms in one level.
    */
   public void zoomIn() {
     if (canZoomIn()) {
       zoomLevel++;
-      setUpPath();
+      updatePaths();
       invalidate();
     }
   }
 
   /**
-   * Zooms out one level (factor 2).
+   * Zooms out one level.
    */
   public void zoomOut() {
     if (canZoomOut()) {
       zoomLevel--;
       scroller.abortAnimation();
       int scrollX = getScrollX();
-      if (scrollX > effectiveWidth * (zoomLevel - 1)) {
-        scrollX = effectiveWidth * (zoomLevel - 1);
+      int maxWidth = effectiveWidth * (zoomLevel - 1);
+      if (scrollX > maxWidth) {
+        scrollX = maxWidth;
         scrollTo(scrollX, 0);
       }
-      setUpPath();
+      updatePaths();
       invalidate();
     }
   }
 
   /**
    * Initiates flinging.
-   *
-   * @param velocityX start velocity (pixels per second)
+   * 
+   * @param velocityX velocity of fling in pixels per second
    */
   public void fling(int velocityX) {
-    scroller.fling(getScrollX(), 0, velocityX, 0, 0,
-        effectiveWidth * (zoomLevel - 1), 0, 0);
+    int maxWidth = effectiveWidth * (zoomLevel - 1);
+    scroller.fling(getScrollX(), 0, velocityX, 0, 0, maxWidth, 0, 0);
     invalidate();
   }
 
   /**
-   * Scrolls the view horizontally by the given amount.
-   *
-   * @param deltaX number of pixels to scroll
+   * Scrolls the view horizontally by a given amount.
+   * 
+   * @param deltaX the number of pixels to scroll
    */
   public void scrollBy(int deltaX) {
     int scrollX = getScrollX() + deltaX;
     if (scrollX < 0) {
       scrollX = 0;
     }
-    int available = effectiveWidth * (zoomLevel - 1);
-    if (scrollX > available) {
-      scrollX = available;
+    int maxWidth = effectiveWidth * (zoomLevel - 1);
+    if (scrollX > maxWidth) {
+      scrollX = maxWidth;
     }
     scrollTo(scrollX, 0);
-  }
-
-  /**
-   * @return the current display mode (by distance, by time)
-   */
-  public Mode getMode() {
-    return mode;
-  }
-
-  /**
-   * Sets the display mode (by distance, by time).
-   * It is expected that after the mode change, data will be reloaded.
-   */
-  public void setMode(Mode mode) {
-    this.mode = mode;
-  }
-
-  private int getWaypointX(Waypoint waypoint) {
-    if (mode == Mode.BY_DISTANCE) {
-      double lenghtInKm = waypoint.getLength() * UnitConversions.M_TO_KM;
-      return getX(metricUnits ? lenghtInKm : lenghtInKm * UnitConversions.KM_TO_MI);
-    } else {
-      return getX(waypoint.getDuration());
-    }
   }
 
   /**
@@ -439,55 +416,50 @@ public class ChartView extends View {
       velocityTracker = VelocityTracker.obtain();
     }
     velocityTracker.addMovement(event);
-    final int action = event.getAction();
-    final float x = event.getX();
-    switch (action) {
+    float x = event.getX();
+    switch (event.getAction()) {
       case MotionEvent.ACTION_DOWN:
-        /*
-         * If being flinged and user touches, stop the fling. isFinished will be
-         * false if being flinged.
-         */
+        // Stop the fling
         if (!scroller.isFinished()) {
           scroller.abortAnimation();
         }
-        // Remember where the motion event started
-        lastMotionX = x;
+        lastMotionEventX = x;
         break;
       case MotionEvent.ACTION_MOVE:
+        if (lastMotionEventX == -1) {
+          break;
+        }
         // Scroll to follow the motion event
-        final int deltaX = (int) (lastMotionX - x);
-        lastMotionX = x;
+        int deltaX = (int) (lastMotionEventX - x);
+        lastMotionEventX = x;
         if (deltaX < 0) {
           if (getScrollX() > 0) {
             scrollBy(deltaX);
           }
         } else if (deltaX > 0) {
-          final int availableToScroll =
-              effectiveWidth * (zoomLevel - 1) - getScrollX();
+          int availableToScroll = effectiveWidth * (zoomLevel - 1) - getScrollX();
           if (availableToScroll > 0) {
             scrollBy(Math.min(availableToScroll, deltaX));
           }
         }
         break;
       case MotionEvent.ACTION_UP:
-        // Check if top area with waypoint markers was touched and find the
-        // touched marker if any:
-        if (event.getY() < 100) {
-          int dmin = Integer.MAX_VALUE;
+        // Check if the y event is within markerHeight of the marker center
+        if (Math.abs(event.getY() - topBorder - spacer - markerHeight / 2) < markerHeight) {
+          int minDistance = Integer.MAX_VALUE;
           Waypoint nearestWaypoint = null;
           for (int i = 0; i < waypoints.size(); i++) {
-            final Waypoint waypoint = waypoints.get(i);
-            final int d = Math.abs(getWaypointX(waypoint) - (int) event.getX()
-                - getScrollX());
-            if (d < dmin) {
-              dmin = d;
+            Waypoint waypoint = waypoints.get(i);
+            int distance = Math.abs(
+                getX(getWaypointXValue(waypoint)) - (int) event.getX() - getScrollX());
+            if (distance < minDistance) {
+              minDistance = distance;
               nearestWaypoint = waypoint;
             }
           }
-          if (nearestWaypoint != null && dmin < 100) {
-            Intent intent =
-                new Intent(getContext(), WaypointDetails.class);
-            intent.putExtra(WaypointDetails.WAYPOINT_ID_EXTRA, nearestWaypoint.getId());
+          if (nearestWaypoint != null && minDistance < markerWidth) {
+            Intent intent = IntentUtils.newIntent(getContext(), MarkerDetailActivity.class)
+                .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, nearestWaypoint.getId());
             getContext().startActivity(intent);
             return true;
           }
@@ -496,8 +468,7 @@ public class ChartView extends View {
         VelocityTracker myVelocityTracker = velocityTracker;
         myVelocityTracker.computeCurrentVelocity(1000);
         int initialVelocity = (int) myVelocityTracker.getXVelocity();
-        if (Math.abs(initialVelocity) >
-            ViewConfiguration.getMinimumFlingVelocity()) {
+        if (Math.abs(initialVelocity) > ViewConfiguration.getMinimumFlingVelocity()) {
           fling(-initialVelocity);
         }
         if (velocityTracker != null) {
@@ -510,158 +481,356 @@ public class ChartView extends View {
   }
 
   @Override
-  protected void onDraw(Canvas c) {
-    synchronized (data) {
-      updateEffectiveDimensionsIfChanged(c);
+  protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    updateEffectiveDimensionsIfChanged(
+        View.MeasureSpec.getSize(widthMeasureSpec), View.MeasureSpec.getSize(heightMeasureSpec));
+    super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+  }
 
-      // Keep original state.
-      c.save();
+  @Override
+  protected void onDraw(Canvas canvas) {
+    synchronized (chartData) {
 
-      c.drawColor(Color.WHITE);
+      canvas.save();
+      
+      canvas.drawColor(Color.WHITE);
 
-      if (data.isEmpty()) {
-        // No data, draw only axes
-        drawXAxis(c);
-        drawYAxis(c);
-        c.restore();
-        return;
-      }
+      canvas.save();
+      
+      clipToGraphArea(canvas);
+      drawDataSeries(canvas);
+      drawWaypoints(canvas);
+      drawGrid(canvas);
+      
+      canvas.restore();
 
-      // Clip to graph drawing space
-      c.save();
-      clipToGraphSpace(c);
+      drawSeriesTitles(canvas);
+      drawXAxis(canvas);
+      drawYAxis(canvas);
+      
+      canvas.restore();
 
-      // Draw the grid and the data on it.
-      drawGrid(c);
-      drawDataSeries(c);
-      drawWaypoints(c);
-
-      // Go back to full canvas drawing.
-      c.restore();
-
-      // Draw the axes and their labels.
-      drawAxesAndLabels(c);
-
-      // Go back to original state.
-      c.restore();
-
-      // Draw the pointer
       if (showPointer) {
-        drawPointer(c);
-      }
-    }
-  }
-
-  /** Clips the given canvas to the area where the graph lines should be drawn. */
-  private void clipToGraphSpace(Canvas c) {
-    c.clipRect(leftBorder + 1 + getScrollX(), topBorder + 1,
-        w - RIGHT_BORDER + getScrollX() - 1, h - bottomBorder - 1);
-  }
-
-  /** Draws the axes and their labels into th e given canvas. */
-  private void drawAxesAndLabels(Canvas c) {
-    drawXLabels(c);
-    drawXAxis(c);
-    drawSeriesTitles(c);
-
-    c.translate(getScrollX(), 0);
-    drawYAxis(c);
-    float density = getContext().getResources().getDisplayMetrics().density;
-    final int spacer = (int) (5 * density);
-    int x = leftBorder - spacer;
-    for (ChartValueSeries cvs : series) {
-      if (cvs.isEnabled() && cvs.hasData()) {
-        x -= drawYLabels(cvs, c, x) + spacer;
-      }
-    }
-  }
-
-  /** Draws the current pointer into the given canvas. */
-  private void drawPointer(Canvas c) {
-    c.translate(getX(maxX) - pointer.getIntrinsicWidth() / 2,
-                getY(series[0], data.get(data.size() - 1)[1])
-                - pointer.getIntrinsicHeight() / 2 - 12);
-    pointer.draw(c);
-  }
-
-  /** Draws the waypoints into the given canvas. */
-  private void drawWaypoints(Canvas c) {
-    for (int i = 1; i < waypoints.size(); i++) {
-      final Waypoint waypoint = waypoints.get(i);
-      if (waypoint.getLocation() == null) {
-        continue;
-      }
-      c.save();
-
-      final float x = getWaypointX(waypoint);
-      c.drawLine(x, h - bottomBorder, x, topBorder, gridPaint);
-      c.translate(x - (float) markerWidth / 2.0f, (float) markerHeight);
-      if (waypoints.get(i).getType() == Waypoint.TYPE_STATISTICS) {
-        statsMarker.draw(c);
-      } else {
-        waypointMarker.draw(c);
-      }
-      c.restore();
-    }
-  }
-
-  /** Draws the data series into the given canvas. */
-  private void drawDataSeries(Canvas c) {
-    for (ChartValueSeries cvs : series) {
-      if (cvs.isEnabled() && cvs.hasData()) {
-        cvs.drawPath(c);
-      }
-    }
-  }
-
-  /** Draws the colored titles for the data series. */
-  private void drawSeriesTitles(Canvas c) {
-    int sections = 1;
-    for (ChartValueSeries cvs : series) {
-      if (cvs.isEnabled() && cvs.hasData()) {
-        sections++;
-      }
-    }
-    int j = 0;
-    for (ChartValueSeries cvs : series) {
-      if (cvs.isEnabled() && cvs.hasData()) {
-        int x = (int) (w * (double) ++j / sections) + getScrollX();
-        c.drawText(cvs.getTitle(), x, topBorder, cvs.getLabelPaint());
+        drawPointer(canvas);
       }
     }
   }
 
   /**
-   * Sets up the path that is used to draw the chart in onDraw(). The path
-   * needs to be updated any time after the data or histogram dimensions change.
+   * Clips a canvas to the graph area.
+   * 
+   * @param canvas the canvas
    */
-  private void setUpPath() {
-    synchronized (data) {
-      for (ChartValueSeries cvs : series) {
-        cvs.getPath().reset();
-      }
+  private void clipToGraphArea(Canvas canvas) {
+    int x = getScrollX() + leftBorder;
+    int y = topBorder;
+    canvas.clipRect(x, y, x + effectiveWidth, y + effectiveHeight);
+  }
 
-      if (!data.isEmpty()) {
-        drawPaths();
-        closePaths();
+  /**
+   * Draws the data series.
+   * 
+   * @param canvas the canvas
+   */
+  private void drawDataSeries(Canvas canvas) {
+    for (ChartValueSeries chartValueSeries : series) {
+      if (chartValueSeries.isEnabled() && chartValueSeries.hasData()) {
+        chartValueSeries.drawPath(canvas);
       }
     }
   }
 
-  /** Actually draws the data points as a path. */
+  /**
+   * Draws the waypoints.
+   * 
+   * @param canvas the canvas
+   */
+  private void drawWaypoints(Canvas canvas) {
+    for (int i = 0; i < waypoints.size(); i++) {
+      final Waypoint waypoint = waypoints.get(i);
+      if (waypoint.getLocation() == null) {
+        continue;
+      }
+      double xValue = getWaypointXValue(waypoint);
+      if (xValue > maxX) {
+        continue;
+      }
+      canvas.save();
+      float x = getX(getWaypointXValue(waypoint));
+      canvas.drawLine(
+          x, topBorder + spacer + markerHeight / 2, x, topBorder + effectiveHeight, markerPaint);
+      canvas.translate(
+          x - (float) (markerWidth * MARKER_PIN_X_POSITION_PERCENTAGE), topBorder + spacer);
+      if (waypoints.get(i).getType() == Waypoint.TYPE_STATISTICS) {
+        statisticsMarker.draw(canvas);
+      } else {
+        waypointMarker.draw(canvas);
+      }
+      canvas.restore();
+    }
+  }
+
+  /**
+   * Draws the grid.
+   * 
+   * @param canvas the canvas
+   */
+  private void drawGrid(Canvas canvas) {
+    // X axis grid
+    ArrayList<Double> xAxisMarkerPositions = getXAxisMarkerPositions(getXAxisInterval());
+    for (int i = 0; i < xAxisMarkerPositions.size(); i++) {
+      int x = getX(xAxisMarkerPositions.get(i));
+      canvas.drawLine(x, topBorder, x, topBorder + effectiveHeight, gridPaint);
+    }
+    // Y axis grid
+    float rightEdge = getX(maxX);
+    for (int i = 0; i <= Y_AXIS_INTERVALS; i++) {
+      double percentage = (double) i / Y_AXIS_INTERVALS;
+      int range = effectiveHeight - 2 * yAxisOffset;
+      int y = topBorder + yAxisOffset + (int) (percentage * range);
+      canvas.drawLine(leftBorder, y, rightEdge, y, gridPaint);
+    }
+  }
+
+  /**
+   * Draws series titles.
+   * 
+   * @param canvas the canvas
+   */
+  private void drawSeriesTitles(Canvas canvas) {
+    int[] titleDimensions = getTitleDimenions();
+    int lines = titleDimensions[0];
+    int lineHeight = titleDimensions[1];
+    int count = 0;
+    for (int i = 0; i < series.length; i++) {
+      ChartValueSeries chartValueSeries = series[i];
+      if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(i)) {
+        count++;
+        String title = getContext().getString(chartValueSeries.getTitleId(metricUnits));
+        Paint paint = chartValueSeries.getTitlePaint();
+        int x = (int) (0.5 * width) + getScrollX();
+        int y = topBorder - spacer - (lines - count) * (lineHeight + spacer);
+        canvas.drawText(title, x, y, paint);
+      }
+    }
+  }
+
+  /**
+   * Gets the title dimensions. Returns an array of 2 integers, first element is
+   * the number of lines and the second element is the line height.
+   */
+  private int[] getTitleDimenions() {
+    int lines = 0;
+    int lineHeight = 0;
+    for (int i = 0; i < series.length; i++) {
+      ChartValueSeries chartValueSeries = series[i];
+      if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(i)) {
+        lines++;
+        String title = getContext().getString(chartValueSeries.getTitleId(metricUnits));
+        Rect rect = getRect(chartValueSeries.getTitlePaint(), title);
+        if (rect.height() > lineHeight) {
+          lineHeight = rect.height();
+        }
+      }
+    }
+    return new int[] { lines, lineHeight };
+  }
+
+  /**
+   * Draws the x axis.
+   * 
+   * @param canvas the canvas
+   */
+  private void drawXAxis(Canvas canvas) {
+    int x = getScrollX() + leftBorder;
+    int y = topBorder + effectiveHeight;
+    canvas.drawLine(x, y, x + effectiveWidth, y, axisPaint);
+    String label = getXAxisLabel();
+    Rect rect = getRect(axisPaint, label);
+    canvas.drawText(label, x + effectiveWidth + spacer, y + ((int) rect.height() / 2), axisPaint);
+    
+    double interval = getXAxisInterval();
+    ArrayList<Double> markerPositions = getXAxisMarkerPositions(interval);
+    NumberFormat numberFormat = interval < 1 ? X_FRACTION_FORMAT : X_NUMBER_FORMAT;
+    for (int i = 0; i < markerPositions.size(); i++) {
+      drawXAxisMarker(canvas, markerPositions.get(i), numberFormat);
+    }
+  }
+
+  /**
+   * Gets the x axis label.
+   */
+  private String getXAxisLabel() {
+    Context context = getContext();
+    if (chartByDistance) {
+      return metricUnits ? context.getString(R.string.unit_kilometer)
+          : context.getString(R.string.unit_mile);
+    } else {
+      return context.getString(R.string.description_time);
+    }
+  }
+
+  /**
+   * Draws a x axis marker.
+   * 
+   * @param canvas
+   * @param value value
+   * @param numberFormat the number format
+   */
+  private void drawXAxisMarker(Canvas canvas, double value, NumberFormat numberFormat) {
+    String marker = chartByDistance ? numberFormat.format(value)
+        : StringUtils.formatElapsedTime((long) value);
+    Rect rect = getRect(xAxisMarkerPaint, marker);
+    canvas.drawText(marker, getX(value), topBorder + effectiveHeight + spacer + rect.height(),
+        xAxisMarkerPaint);
+  }
+
+  /**
+   * Gets the x axis interval.
+   */
+  private double getXAxisInterval() {
+    double interval = maxX / zoomLevel / TARGET_X_AXIS_INTERVALS;
+    if (interval < 1) {
+      interval = .5;
+    } else if (interval < 5) {
+      interval = 2;
+    } else if (interval < 10) {
+      interval = 5;
+    } else {
+      interval = (interval / 10) * 10;
+    }
+    return interval;
+  }
+
+  /**
+   * Gets the x axis marker positions.
+   */
+  private ArrayList<Double> getXAxisMarkerPositions(double interval) {
+    ArrayList<Double> markers = new ArrayList<Double>();
+    markers.add(0d);
+    for (int i = 1; i * interval < maxX; i++) {
+      markers.add(i * interval);
+    }
+    // At least 2 markers
+    if (markers.size() < 2) {
+      markers.add(maxX);
+    }
+    return markers;
+  }
+
+  /**
+   * Draws the y axis.
+   * 
+   * @param canvas the canvas
+   */
+  private void drawYAxis(Canvas canvas) {
+    int x = getScrollX() + leftBorder;
+    int y = topBorder;
+    canvas.drawLine(x, y, x, y + effectiveHeight, axisPaint);
+    
+    int markerXPosition = x - spacer;
+    for (int i = 0; i < series.length; i++) {
+      int index = series.length - 1 - i;
+      ChartValueSeries chartValueSeries = series[index];
+      if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(index)) {
+        markerXPosition -= drawYAxisMarkers(chartValueSeries, canvas, markerXPosition) + spacer;
+      }
+    }
+  }
+
+  /**
+   * Draws the y axis markers for a chart value series.
+   * 
+   * @param chartValueSeries the chart value series
+   * @param canvas the canvas
+   * @param xPosition the right most x position
+   * @return the maximum marker width.
+   */
+  private float drawYAxisMarkers(ChartValueSeries chartValueSeries, Canvas canvas, int xPosition) {
+    int interval = chartValueSeries.getInterval();
+    float maxMarkerWidth = 0;
+    for (int i = 0; i <= Y_AXIS_INTERVALS; i++) {
+      maxMarkerWidth = Math.max(maxMarkerWidth, drawYAxisMarker(chartValueSeries, canvas, xPosition,
+          i * interval + chartValueSeries.getMinMarkerValue()));
+    }
+    return maxMarkerWidth;
+  }
+
+  /**
+   * Draws a y axis marker.
+   * 
+   * @param chartValueSeries the chart value series
+   * @param canvas the canvas
+   * @param xPosition the right most x position
+   * @param yValue the y value
+   * @return the marker width.
+   */
+  private float drawYAxisMarker(
+      ChartValueSeries chartValueSeries, Canvas canvas, int xPosition, int yValue) {
+    String marker = chartValueSeries.formatMarker(yValue);
+    Paint paint = chartValueSeries.getMarkerPaint();
+    Rect rect = getRect(paint, marker);
+    int yPosition = getY(chartValueSeries, yValue) + (int) (rect.height() / 2);
+    canvas.drawText(marker, xPosition, yPosition, paint);
+    return paint.measureText(marker);
+  }
+
+  /**
+   * Draws the current pointer.
+   * 
+   * @param canvas the canvas
+   */
+  private void drawPointer(Canvas canvas) {
+    int index = -1;
+    for (int i = 0; i < series.length; i++) {
+      ChartValueSeries chartValueSeries = series[i];
+      if (chartValueSeries.isEnabled() && chartValueSeries.hasData()) {
+        index = i;
+        break;
+      }
+    }
+    if (index != -1 && chartData.size() > 0) {
+      int dx = getX(maxX) - pointer.getIntrinsicWidth() / 2;
+      int dy = getY(series[index], chartData.get(chartData.size() - 1)[index + 1])
+          - pointer.getIntrinsicHeight();
+      canvas.translate(dx, dy);
+      pointer.draw(canvas);
+    }
+  }
+
+  /**
+   * Updates paths. The path needs to be updated any time after the data or the
+   * dimensions change.
+   */
+  private void updatePaths() {
+    synchronized (chartData) {
+      for (ChartValueSeries chartValueSeries : series) {
+        chartValueSeries.getPath().reset();
+      }
+      drawPaths();
+      closePaths();
+    }
+  }
+
+  /**
+   * Draws all paths.
+   */
   private void drawPaths() {
-    // All of the data points to the respective series.
-    // TODO: Come up with a better sampling than Math.max(1, (maxZoomLevel - zoomLevel + 1) / 2);
-    int sampling = 1;
-    for (int i = 0; i < data.size(); i += sampling) {
-      double[] d = data.get(i);
-      int min = Math.min(series.length, d.length - 1);
-      for (int j = 0; j < min; ++j) {
-        ChartValueSeries cvs = series[j];
-        Path path = cvs.getPath();
-        int x = getX(d[0]);
-        int y = getY(cvs, d[j + 1]);
-        if (i == 0) {
+    boolean[] hasMoved = new boolean[series.length];
+    
+    for (int i = 0; i < chartData.size(); i++) {
+      double[] dataPoint = chartData.get(i);
+      for (int j = 0; j < series.length; j++) {
+        double value = dataPoint[j + 1];
+        if (Double.isNaN(value)) {
+          continue;
+        }
+        ChartValueSeries chartValueSeries = series[j];
+        Path path = chartValueSeries.getPath();
+        int x = getX(dataPoint[0]);
+        int y = getY(chartValueSeries, value);
+        if (!hasMoved[j]) {
+          hasMoved[j] = true;
           path.moveTo(x, y);
         } else {
           path.lineTo(x, y);
@@ -670,37 +839,37 @@ public class ChartView extends View {
     }
   }
 
-  /** Closes the drawn path so it looks like a solid graph. */
+  /**
+   * Closes all paths.
+   */
   private void closePaths() {
-    // Close the path.
-    int yCorner = topBorder + effectiveHeight;
-    int xCorner = getX(data.get(0)[0]);
-    int min = series.length;
-    for (int j = 0; j < min; j++) {
-      ChartValueSeries cvs = series[j];
-      Path path = cvs.getPath();
-      int first = getFirstPointPopulatedIndex(j + 1);
+    for (int i = 0; i < series.length; i++) {
+      int first = getFirstPopulatedChartDataIndex(i);
+
       if (first != -1) {
+        int xCorner = getX(chartData.get(first)[0]);
+        int yCorner = topBorder + effectiveHeight;
+        ChartValueSeries chartValueSeries = series[i];
+        Path path = chartValueSeries.getPath();
         // Bottom right corner
-        path.lineTo(getX(data.get(data.size() - 1)[0]), yCorner);
+        path.lineTo(getX(chartData.get(chartData.size() - 1)[0]), yCorner);
         // Bottom left corner
         path.lineTo(xCorner, yCorner);
         // Top right corner
-        path.lineTo(xCorner, getY(cvs, data.get(first)[j + 1]));
+        path.lineTo(xCorner, getY(chartValueSeries, chartData.get(first)[i + 1]));
       }
     }
   }
 
   /**
-   * Finds the index of the first point which has a series populated.
-   *
-   * @param seriesIndex The index of the value series to search for
-   * @return The index in the first data for the point in the series that has series
-   *         index value populated or -1 if none is found
+   * Finds the index of the first data point containing data for a series.
+   * Returns -1 if no data point contains data for the series.
+   * 
+   * @param seriesIndex the series's index
    */
-  private int getFirstPointPopulatedIndex(int seriesIndex) {
-    for (int i = 0; i < data.size(); i++) {
-      if (data.get(i).length > seriesIndex) {
+  private int getFirstPopulatedChartDataIndex(int seriesIndex) {
+    for (int i = 0; i < chartData.size(); i++) {
+      if (!Double.isNaN(chartData.get(i)[seriesIndex + 1])) {
         return i;
       }
     }
@@ -711,189 +880,134 @@ public class ChartView extends View {
    * Updates the chart dimensions.
    */
   private void updateDimensions() {
-    maxX = xMonitor.getMax();
-    if (data.size() <= 1) {
-      maxX = 1;
-    }
-    for (ChartValueSeries cvs : series) {
-      cvs.updateDimension();
-    }
-    // TODO: This is totally broken. Make sure that we calculate based on measureText for each
-    // grid line, as the labels may vary across intervals.
-    int maxLength = 0;
-    for (ChartValueSeries cvs : series) {
-      if (cvs.isEnabled() && cvs.hasData()) {
-        maxLength += cvs.getMaxLabelLength();
-      }
+    maxX = xExtremityMonitor.hasData() ? xExtremityMonitor.getMax() : 1.0;
+    for (ChartValueSeries chartValueSeries : series) {
+      chartValueSeries.updateDimension();
     }
     float density = getContext().getResources().getDisplayMetrics().density;
-    maxLength = Math.max(maxLength, 1);
-    leftBorder = (int) (density * (4 + 8 * maxLength));
-    bottomBorder = (int) (density * BOTTOM_BORDER);
-    topBorder = (int) (density * TOP_BORDER);
+    spacer = (int) (density * SPACER);
+    yAxisOffset = (int) (density * Y_AXIS_OFFSET);
+
+    int markerLength = 0;
+    for (int i = 0; i < series.length; i ++) {
+      ChartValueSeries chartValueSeries = series[i];
+      if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(i)) {
+        Rect rect = getRect(chartValueSeries.getMarkerPaint(), chartValueSeries.getLargestMarker());
+        markerLength += rect.width() + spacer;
+      }
+    }
+
+    leftBorder = (int) (density * BORDER + markerLength);
+    int[] titleDimensions = getTitleDimenions();
+    topBorder = (int) (density * BORDER + titleDimensions[0] * (titleDimensions[1] + spacer));
+    bottomBorder = (int) (density * BORDER + getRect(xAxisMarkerPaint, "1").height() + spacer);
+    rightBorder = (int) (density * BORDER + getRect(axisPaint, getXAxisLabel()).width() + spacer);
     updateEffectiveDimensions();
   }
 
-  /** Updates the effective dimensions where the graph will be drawn. */
+  /**
+   * Updates the effective dimensions.
+   */
   private void updateEffectiveDimensions() {
-    effectiveWidth = Math.max(0, w - leftBorder - RIGHT_BORDER);
-    effectiveHeight = Math.max(0, h - topBorder - bottomBorder);
+    effectiveWidth = Math.max(0, width - leftBorder - rightBorder);
+    effectiveHeight = Math.max(0, height - topBorder - bottomBorder);
   }
 
   /**
-   * Updates the effective dimensions where the graph will be drawn, only if the
-   * dimensions of the given canvas have changed since the last call.
+   * Updates the effective dimensions if changed.
+   * 
+   * @param newWidth the new width
+   * @param newHeight the new height
    */
-  private void updateEffectiveDimensionsIfChanged(Canvas c) {
-    if (w != c.getWidth() || h != c.getHeight()) {
-      // Dimensions have changed (for example due to orientation change).
-      w = c.getWidth();
-      h = c.getHeight();
+  private void updateEffectiveDimensionsIfChanged(int newWidth, int newHeight) {
+    if (width != newWidth || height != newHeight) {
+      width = newWidth;
+      height = newHeight;
       updateEffectiveDimensions();
-      setUpPath();
+      updatePaths();
     }
   }
 
-  private int getX(double distance) {
-    return leftBorder + (int) ((distance * effectiveWidth / maxX) * zoomLevel);
+  /**
+   * Gets the x position for a value.
+   * 
+   * @param value the value
+   */
+  private int getX(double value) {
+    if (value > maxX) {
+      value = maxX;
+    }
+    double percentage = value / maxX;
+    return leftBorder + (int) (percentage * effectiveWidth * zoomLevel);
   }
 
-  private int getY(ChartValueSeries cvs, double y) {
-    int effectiveSpread = cvs.getInterval() * MAX_INTERVALS;
-    return topBorder + effectiveHeight
-        - (int) ((y - cvs.getMin()) * effectiveHeight / effectiveSpread);
+  /**
+   * Gets the y position for a value in a chart value series
+   * 
+   * @param chartValueSeries the chart value series
+   * @param value the value
+   */
+  private int getY(ChartValueSeries chartValueSeries, double value) {
+    int effectiveSpread = chartValueSeries.getInterval() * Y_AXIS_INTERVALS;
+    double percentage = (value - chartValueSeries.getMinMarkerValue()) / effectiveSpread;
+    int rangeHeight = effectiveHeight - 2 * yAxisOffset;
+    return topBorder + yAxisOffset + (int) ((1 - percentage) * rangeHeight);
   }
 
-  /** Draws the labels on the X axis into the given canvas. */
-  private void drawXLabels(Canvas c) {
-    double interval = (int) (maxX / zoomLevel / 4);
-    boolean shortFormat = false;
-    if (interval < 1) {
-      interval = .5;
-      shortFormat = true;
-    } else if (interval < 5) {
-      interval = 2;
-    } else if (interval < 10) {
-      interval = 5;
+  /**
+   * Gets a waypoint's x value.
+   * 
+   * @param waypoint the waypoint
+   */
+  private double getWaypointXValue(Waypoint waypoint) {
+    if (chartByDistance) {
+      double lenghtInKm = waypoint.getLength() * UnitConversions.M_TO_KM;
+      return metricUnits ? lenghtInKm : lenghtInKm * UnitConversions.KM_TO_MI;
     } else {
-      interval = (interval / 10) * 10;
-    }
-    drawXLabel(c, 0, shortFormat);
-    int numLabels = 1;
-    for (int i = 1; i * interval < maxX; i++) {
-      drawXLabel(c, i * interval, shortFormat);
-      numLabels++;
-    }
-    if (numLabels < 2) {
-      drawXLabel(c, (int) maxX, shortFormat);
-    }
-  }
-
-  /** Draws the labels on the Y axis into the given canvas. */
-  private float drawYLabels(ChartValueSeries cvs, Canvas c, int x) {
-    int interval = cvs.getInterval();
-    float maxTextWidth = 0;
-    for (int i = 0; i < MAX_INTERVALS; ++i) {
-      maxTextWidth = Math.max(maxTextWidth, drawYLabel(cvs, c, x, i * interval + cvs.getMin()));
-    }
-    return maxTextWidth;
-  }
-
-  /** Draws a single label on the X axis. */
-  private void drawXLabel(Canvas c, double x, boolean shortFormat) {
-    if (x < 0) {
-      return;
-    }
-    String s =
-        (mode == Mode.BY_DISTANCE)
-            ? (shortFormat ? X_SHORT_FORMAT.format(x) : X_FORMAT.format(x))
-            : StringUtils.formatElapsedTime((long) x);
-    c.drawText(s,
-               getX(x),
-               effectiveHeight + UNIT_BORDER + topBorder,
-               labelPaint);
-  }
-
-  /** Draws a single label on the Y axis. */
-  private float drawYLabel(ChartValueSeries cvs, Canvas c, int x, int y) {
-    int desiredY = (int) ((y - cvs.getMin()) * effectiveHeight /
-        (cvs.getInterval() * MAX_INTERVALS));
-    desiredY = topBorder + effectiveHeight + FONT_HEIGHT / 2 - desiredY - 1;
-    Paint p = new Paint(cvs.getLabelPaint());
-    p.setTextAlign(Align.RIGHT);
-    String text = cvs.getFormat().format(y);
-    c.drawText(text, x, desiredY, p);
-    return p.measureText(text);
-  }
-
-  /** Draws the actual X axis line and its label. */
-  private void drawXAxis(Canvas canvas) {
-    float rightEdge = getX(maxX);
-    final int y = effectiveHeight + topBorder;
-    canvas.drawLine(leftBorder, y, rightEdge, y, borderPaint);
-    Context c = getContext();
-    String s = mode == Mode.BY_DISTANCE
-        ? (metricUnits ? c.getString(R.string.unit_kilometer) : c.getString(R.string.unit_mile))
-        : c.getString(R.string.unit_minute);
-    canvas.drawText(s, rightEdge, effectiveHeight + .2f * UNIT_BORDER + topBorder, labelPaint);
-  }
-
-  /** Draws the actual Y axis line and its label. */
-  private void drawYAxis(Canvas canvas) {
-    canvas.drawRect(0, 0,
-        leftBorder - 1, effectiveHeight + topBorder + UNIT_BORDER + 1,
-        clearPaint);
-    canvas.drawLine(leftBorder, UNIT_BORDER + topBorder,
-                    leftBorder, effectiveHeight + topBorder,
-                    borderPaint);
-    for (int i = 1; i < MAX_INTERVALS; ++i) {
-      int y = i * effectiveHeight / MAX_INTERVALS + topBorder;
-      canvas.drawLine(leftBorder - 5, y, leftBorder, y, gridPaint);
-    }
-
-    Context c = getContext();
-    // TODO: This should really show units for all series.
-    String s = metricUnits ? c.getString(R.string.unit_meter) : c.getString(R.string.unit_feet);
-    canvas.drawText(s, leftBorder - UNIT_BORDER * .2f, UNIT_BORDER * .8f + topBorder, labelPaint);
-  }
-
-  /** Draws the grid for the graph. */
-  private void drawGrid(Canvas c) {
-    float rightEdge = getX(maxX);
-    for (int i = 1; i < MAX_INTERVALS; ++i) {
-      int y = i * effectiveHeight / MAX_INTERVALS + topBorder;
-      c.drawLine(leftBorder, y, rightEdge, y, gridBarPaint);
+      return waypoint.getDuration();
     }
   }
 
   /**
-   * Returns whether a given time series is enabled for drawing.
-   *
-   * @param index the time series, one of {@link #ELEVATION_SERIES},
-   *        {@link #SPEED_SERIES}, {@link #POWER_SERIES}, etc.
-   * @return true if drawn, false otherwise
+   * Gets a paint's Rect for a string.
+   * 
+   * @param paint the paint
+   * @param string the string
    */
-  public boolean isChartValueSeriesEnabled(int index) {
-    return series[index].isEnabled();
+  private Rect getRect(Paint paint, String string) {
+    Rect rect = new Rect();
+    paint.getTextBounds(string, 0, string.length(), rect);
+    return rect;
   }
 
   /**
-   * Sets whether a given time series will be enabled for drawing.
-   *
-   * @param index the time series, one of {@link #ELEVATION_SERIES},
-   *        {@link #SPEED_SERIES}, {@link #POWER_SERIES}, etc.
+   * Returns true if the index is allowed when the chartData is empty.
+   * 
+   * @param index the index
    */
-  public void setChartValueSeriesEnabled(int index, boolean enabled) {
-    series[index].setEnabled(enabled);
+  private boolean allowIfEmpty(int index) {
+    if (!chartData.isEmpty()) {
+      return false;
+    }
+    switch (index) {
+      case ELEVATION_SERIES:
+        return true;
+      case SPEED_SERIES:
+        return reportSpeed;
+      case PACE_SERIES:
+        return !reportSpeed;
+      default:
+        return false;
+    }
   }
   
+  /**
+   * Returns the status of metricUnits.
+   * 
+   * @return the status of metricUnits
+   */
   @VisibleForTesting
-  int getZoomLevel() {
-    return zoomLevel;
-  }
-  
-  @VisibleForTesting
-  int getMaxZoomLevel() {
-    return maxZoomLevel;
+  public boolean isMetricUnits() {
+    return metricUnits;
   }
 }

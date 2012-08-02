@@ -16,6 +16,7 @@
 package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.ContextualActionModeCallback;
 import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
 import com.google.android.apps.mytracks.services.sensors.BluetoothConnectionManager;
 import com.google.android.apps.mytracks.services.tasks.PeriodicTask;
@@ -31,11 +32,15 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * API level 7 specific implementation of the {@link ApiAdapter}.
@@ -81,7 +86,12 @@ public class Api7Adapter implements ApiAdapter {
   public HttpTransport getHttpTransport() {
     return new ApacheHttpTransport();
   }
-  
+
+  @Override
+  public boolean isGeoCoderPresent() {
+    return true;
+  }
+
   @Override
   public BluetoothSocket getBluetoothSocket(BluetoothDevice bluetoothDevice) throws IOException {
     try {
@@ -100,27 +110,53 @@ public class Api7Adapter implements ApiAdapter {
     } catch (InvocationTargetException e) {
       Log.d(Constants.TAG, "Unable to create insecure connection", e);
     }
-    return bluetoothDevice.createRfcommSocketToServiceRecord(BluetoothConnectionManager.SPP_UUID);
+    return bluetoothDevice.createRfcommSocketToServiceRecord(BluetoothConnectionManager.MY_TRACKS_UUID);
+  }
+
+  @Override
+  public void hideTitle(Activity activity) {
+    activity.requestWindowFeature(Window.FEATURE_NO_TITLE);
   }
 
   @Override
   public void configureActionBarHomeAsUp(Activity activity) {
-    // Action bar not available, just hide the title and let actions be shown
-    // via the regular menu.
-    activity.requestWindowFeature(Window.FEATURE_NO_TITLE);
+    // Do nothing
   }
-  
+
+  @Override
+  public void configureListViewContextualMenu(Activity activity, ListView listView,
+      ContextualActionModeCallback contextualActionModeCallback) {
+    activity.registerForContextMenu(listView);
+  }
+
   @Override
   public void configureSearchWidget(Activity activity, MenuItem menuItem) {
-    // Do nothing   
+    // Do nothing
   }
-  
+
   @Override
   public boolean handleSearchMenuSelection(Activity activity) {
     activity.onSearchRequested();
     return true;
   }
-  
+
+  @Override
+  public <T> void addAllToArrayAdapter(ArrayAdapter<T> arrayAdapter, List<T> items) {
+    for (T item : items) {
+      arrayAdapter.add(item);
+    }
+  }
+
+  @Override
+  public void invalidMenu(Activity activity) {
+    // Do nothing
+  }
+
+  @Override
+  public void disableHardwareAccelerated(View view) {
+    // Do nothing
+  }
+
   @Override
   public boolean handleSearchKey(MenuItem menuItem) {
     // Return false and allow the framework to handle the search key.

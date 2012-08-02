@@ -24,8 +24,10 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
+import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -33,11 +35,16 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
+import android.database.Cursor;
 import android.location.Location;
+import android.net.Uri;
+import android.os.Bundle;
 import android.os.IBinder;
+import android.os.RemoteException;
+import android.provider.Settings;
 import android.test.RenamingDelegatingContext;
 import android.test.ServiceTestCase;
+import android.test.mock.MockContentProvider;
 import android.test.mock.MockContentResolver;
 import android.test.suitebuilder.annotation.MediumTest;
 import android.test.suitebuilder.annotation.SmallTest;
@@ -60,7 +67,6 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
 
   private Context context;
   private MyTracksProviderUtils providerUtils;
-  private SharedPreferences sharedPreferences;
 
   /*
    * In order to support starting and binding to the service in the same
@@ -119,31 +125,52 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     super.shutdownService();
   }
 
+  @TargetApi(9)
   @Override
   protected void setUp() throws Exception {
     super.setUp();
 
+    /*
+     * Create a mock context that uses a mock content resolver and a renaming
+     * delegating context.
+     */
     MockContentResolver mockContentResolver = new MockContentResolver();
-    RenamingDelegatingContext targetContext = new RenamingDelegatingContext(
+    RenamingDelegatingContext renamingDelegatingContext = new RenamingDelegatingContext(
         getContext(), getContext(), "test.");
-    context = new MockContext(mockContentResolver, targetContext);
-    MyTracksProvider provider = new MyTracksProvider();
-    provider.attachInfo(context, null);
-    mockContentResolver.addProvider(MyTracksProviderUtils.AUTHORITY, provider);
+    context = new MockContext(mockContentResolver, renamingDelegatingContext);
+
+    // Set up the mock content resolver
+    MyTracksProvider myTracksProvider = new MyTracksProvider();
+    myTracksProvider.attachInfo(context, null);
+    mockContentResolver.addProvider(MyTracksProviderUtils.AUTHORITY, myTracksProvider);
+    MockContentProvider settingsProvider = new MockContentProvider(context) {
+        @Override
+      public Bundle call(String method, String arg, Bundle extras) {
+        return null;
+      }
+        @Override
+      public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
+          String sortOrder) {
+        return null;
+      }
+    };
+    mockContentResolver.addProvider(Settings.AUTHORITY, settingsProvider);
+
+    // Set the context
     setContext(context);
 
     providerUtils = MyTracksProviderUtils.Factory.get(context);
 
-    sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    SharedPreferences sharedPreferences = context.getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     // Let's use default values.
     sharedPreferences.edit().clear().apply();
 
     // Disable auto resume by default.
-    updateAutoResumePrefs(0, -1);
+    updateAutoResumePrefs(PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT, 0);
     // No recording track.
-    Editor editor = sharedPreferences.edit();
-    editor.putLong(context.getString(R.string.recording_track_key), -1);
-    editor.apply();
+    PreferencesUtils.setLong(
+        context, R.string.recording_track_id_key, PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
   }
 
   @SmallTest
@@ -161,10 +188,11 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
   @MediumTest
   public void testResumeAfterReboot_shouldResume() throws Exception {
     // Insert a dummy track and mark it as recording track.
-    createDummyTrack(123, System.currentTimeMillis(), true);
+    createDummyTrack(123L, System.currentTimeMillis(), true);
 
     // Clear the number of attempts and set the timeout to 10 min.
-    updateAutoResumePrefs(0, 10);
+    updateAutoResumePrefs(PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT,
+        PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_DEFAULT);
 
     // Start the service in "resume" mode (simulates the on-reboot action).
     Intent startIntent = createStartIntent();
@@ -175,7 +203,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     // We expect to resume the previous track.
     assertTrue(getService().isRecording());
     ITrackRecordingService service = bindAndGetService(createStartIntent());
-    assertEquals(123, service.getRecordingTrackId());
+    assertEquals(123L, service.getRecordingTrackId());
   }
 
   // TODO: shutdownService() has a bug and doesn't set mServiceCreated
@@ -186,7 +214,8 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
   // TODO: If fixed, remove "disabled" prefix from the test name.
   @MediumTest
   public void disabledTestResumeAfterReboot_simulateReboot() throws Exception {
-    updateAutoResumePrefs(0, 10);
+    updateAutoResumePrefs(PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT,
+        PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_DEFAULT);
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertFalse(service.isRecording());
 
@@ -195,8 +224,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     assertTrue(service.isRecording());
     assertEquals(id, service.getRecordingTrackId());
     shutdownService();
-    assertEquals(id, sharedPreferences.getLong(
-        context.getString(R.string.recording_track_key), -1));
+    assertEquals(id, PreferencesUtils.getLong(context, R.string.recording_track_id_key));
 
     // Start the service in "resume" mode (simulates the on-reboot action).
     Intent startIntent = createStartIntent();
@@ -210,10 +238,11 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
   @MediumTest
   public void testResumeAfterReboot_noRecordingTrack() throws Exception {
     // Insert a dummy track and mark it as recording track.
-    createDummyTrack(123, System.currentTimeMillis(), false);
+    createDummyTrack(123L, System.currentTimeMillis(), false);
 
     // Clear the number of attempts and set the timeout to 10 min.
-    updateAutoResumePrefs(0, 10);
+    updateAutoResumePrefs(PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT,
+        PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_DEFAULT);
 
     // Start the service in "resume" mode (simulates the on-reboot action).
     Intent startIntent = createStartIntent();
@@ -224,16 +253,17 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     // We don't expect to resume the previous track, because it was stopped.
     assertFalse(getService().isRecording());
     ITrackRecordingService service = bindAndGetService(createStartIntent());
-    assertEquals(-1, service.getRecordingTrackId());
+    assertEquals(-1L, service.getRecordingTrackId());
   }
 
   @MediumTest
   public void testResumeAfterReboot_expiredTrack() throws Exception {
     // Insert a dummy track last updated 20 min ago.
-    createDummyTrack(123, System.currentTimeMillis() - 20 * 60 * 1000, true);
+    createDummyTrack(123L, System.currentTimeMillis() - 20 * 60 * 1000, true);
 
     // Clear the number of attempts and set the timeout to 10 min.
-    updateAutoResumePrefs(0, 10);
+    updateAutoResumePrefs(PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT,
+        PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_DEFAULT);
 
     // Start the service in "resume" mode (simulates the on-reboot action).
     Intent startIntent = createStartIntent();
@@ -244,17 +274,17 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     // We don't expect to resume the previous track, because it has expired.
     assertFalse(getService().isRecording());
     ITrackRecordingService service = bindAndGetService(createStartIntent());
-    assertEquals(-1, service.getRecordingTrackId());
+    assertEquals(-1L, service.getRecordingTrackId());
   }
 
   @MediumTest
   public void testResumeAfterReboot_tooManyAttempts() throws Exception {
     // Insert a dummy track.
-    createDummyTrack(123, System.currentTimeMillis(), true);
+    createDummyTrack(123L, System.currentTimeMillis(), true);
 
     // Set the number of attempts to max.
-    updateAutoResumePrefs(
-        TrackRecordingService.MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS, 10);
+    updateAutoResumePrefs(TrackRecordingService.MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS,
+        PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_DEFAULT);
 
     // Start the service in "resume" mode (simulates the on-reboot action).
     Intent startIntent = createStartIntent();
@@ -266,7 +296,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     // too many attempts.
     assertFalse(getService().isRecording());
     ITrackRecordingService service = bindAndGetService(createStartIntent());
-    assertEquals(-1, service.getRecordingTrackId());
+    assertEquals(-1L, service.getRecordingTrackId());
   }
 
   @MediumTest
@@ -277,28 +307,28 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     // Test if we start in no-recording mode by default.
     assertFalse(service.isRecording());
-    assertEquals(-1, service.getRecordingTrackId());
+    assertEquals(-1L, service.getRecordingTrackId());
   }
 
   @MediumTest
   public void testRecording_oldTracks() throws Exception {
-    createDummyTrack(123, -1, false);
+    createDummyTrack(123L, -1L, false);
 
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertFalse(service.isRecording());
-    assertEquals(-1, service.getRecordingTrackId());
+    assertEquals(-1L, service.getRecordingTrackId());
   }
 
   @MediumTest
   public void testRecording_orphanedRecordingTrack() throws Exception {
     // Just set recording track to a bogus value.
-    setRecordingTrack(256);
+    PreferencesUtils.setLong(context, R.string.recording_track_id_key, 256L);
 
     // Make sure that the service will not start recording and will clear
     // the bogus track.
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertFalse(service.isRecording());
-    assertEquals(-1, service.getRecordingTrackId());
+    assertEquals(-1L, service.getRecordingTrackId());
   }
 
   /**
@@ -364,10 +394,10 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     Track track = providerUtils.getTrack(id);
     assertNotNull(track);
     assertEquals(id, track.getId());
-    assertEquals(sharedPreferences.getString(context.getString(R.string.default_activity_key), ""),
+    assertEquals(PreferencesUtils.getString(
+        context, R.string.default_activity_key, PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT),
         track.getCategory());
-    assertEquals(id, sharedPreferences.getLong(
-        context.getString(R.string.recording_track_key), -1));
+    assertEquals(id, PreferencesUtils.getLong(context, R.string.recording_track_id_key));
     assertEquals(id, service.getRecordingTrackId());
 
     // Verify that the start broadcast was received.
@@ -377,14 +407,14 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     Intent broadcastIntent = receivedIntents.get(0);
     assertEquals(startAction, broadcastIntent.getAction());
     assertEquals(id, broadcastIntent.getLongExtra(
-        context.getString(R.string.track_id_broadcast_extra), -1));
+        context.getString(R.string.track_id_broadcast_extra), -1L));
 
     context.unregisterReceiver(startReceiver);
   }
 
   @MediumTest
   public void testStartNewTrack_alreadyRecording() throws Exception {
-    createDummyTrack(123, -1, true);
+    createDummyTrack(123L, -1L, true);
 
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertTrue(service.isRecording());
@@ -393,9 +423,8 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     long newTrack = service.startNewTrack();
     assertEquals(-1L, newTrack);
 
-    assertEquals(123, sharedPreferences.getLong(
-        context.getString(R.string.recording_track_key), 0));
-    assertEquals(123, service.getRecordingTrackId());
+    assertEquals(123L, PreferencesUtils.getLong(context, R.string.recording_track_id_key));
+    assertEquals(123L, service.getRecordingTrackId());
   }
 
   @MediumTest
@@ -405,7 +434,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     String stopAction = context.getString(R.string.track_stopped_broadcast_action);
     context.registerReceiver(stopReceiver, new IntentFilter(stopAction));
 
-    createDummyTrack(123, -1, true);
+    createDummyTrack(123L, -1L, true);
 
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertTrue(service.isRecording());
@@ -413,9 +442,9 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     // End the current track.
     service.endCurrentTrack();
     assertFalse(service.isRecording());
-    assertEquals(-1, sharedPreferences.getLong(
-        context.getString(R.string.recording_track_key), 0));
-    assertEquals(-1, service.getRecordingTrackId());
+    assertEquals(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT,
+        PreferencesUtils.getLong(context, R.string.recording_track_id_key));
+    assertEquals(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, service.getRecordingTrackId());
 
     // Verify that the stop broadcast was received.
     assertTrue(stopReceiver.waitUntilReceived(1));
@@ -423,8 +452,8 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     assertEquals(1, receivedIntents.size());
     Intent broadcastIntent = receivedIntents.get(0);
     assertEquals(stopAction, broadcastIntent.getAction());
-    assertEquals(123, broadcastIntent.getLongExtra(
-        context.getString(R.string.track_id_broadcast_extra), -1));
+    assertEquals(123L, broadcastIntent.getLongExtra(
+        context.getString(R.string.track_id_broadcast_extra), -1L));
 
     context.unregisterReceiver(stopReceiver);
   }
@@ -437,9 +466,9 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     // Ending the current track when there is no recording should not result in any error.
     service.endCurrentTrack();
 
-    assertEquals(-1, sharedPreferences.getLong(
-        context.getString(R.string.recording_track_key), 0));
-    assertEquals(-1, service.getRecordingTrackId());
+    assertEquals(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT,
+        PreferencesUtils.getLong(context, R.string.recording_track_id_key));
+    assertEquals(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, service.getRecordingTrackId());
   }
 
   @MediumTest
@@ -464,24 +493,23 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
 
   @MediumTest
   public void testInsertStatisticsMarker_validLocation() throws Exception {
-    createDummyTrack(123, -1, true);
+    createDummyTrack(123L, -1L, true);
 
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertTrue(service.isRecording());
+    insertLocation(service);
 
     assertEquals(1, service.insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS));
     assertEquals(2, service.insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS));
 
-    Waypoint wpt = providerUtils.getWaypoint(1);
-    assertEquals(getContext().getString(R.string.marker_statistics_icon_url),
-        wpt.getIcon());
-    assertEquals(getContext().getString(R.string.marker_type_statistics),
-        wpt.getName());
+    Waypoint wpt = providerUtils.getWaypoint(2);
+    assertEquals(getContext().getString(R.string.marker_statistics_icon_url), wpt.getIcon());
+    assertEquals(getContext().getString(R.string.marker_split_name_format, 1), wpt.getName());
     assertEquals(Waypoint.TYPE_STATISTICS, wpt.getType());
-    assertEquals(123, wpt.getTrackId());
+    assertEquals(123L, wpt.getTrackId());
     assertEquals(0.0, wpt.getLength());
     assertNotNull(wpt.getLocation());
-    assertNotNull(wpt.getStatistics());
+    assertNotNull(wpt.getTripStatistics());
     // TODO check the rest of the params.
 
     // TODO: Check waypoint 2.
@@ -493,7 +521,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     assertFalse(service.isRecording());
 
     try {
-      service.insertWaypoint(WaypointCreationRequest.DEFAULT_MARKER);
+      service.insertWaypoint(WaypointCreationRequest.DEFAULT_WAYPOINT);
       fail("Expecting IllegalStateException");
     } catch (IllegalStateException e) {
       // Expected.
@@ -502,114 +530,139 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
 
   @MediumTest
   public void testInsertWaypointMarker_validWaypoint() throws Exception {
-    createDummyTrack(123, -1, true);
+    createDummyTrack(123L, -1L, true);
 
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertTrue(service.isRecording());
+    insertLocation(service);
 
-    assertEquals(1, service.insertWaypoint(WaypointCreationRequest.DEFAULT_MARKER));
+    assertEquals(1, service.insertWaypoint(WaypointCreationRequest.DEFAULT_WAYPOINT));
     Waypoint wpt = providerUtils.getWaypoint(1);
     assertEquals(getContext().getString(R.string.marker_waypoint_icon_url),
         wpt.getIcon());
-    assertEquals(getContext().getString(R.string.marker_type_waypoint),
-        wpt.getName());
+    assertEquals(getContext().getString(R.string.marker_name_format, 1), wpt.getName());
     assertEquals(Waypoint.TYPE_WAYPOINT, wpt.getType());
-    assertEquals(123, wpt.getTrackId());
+    assertEquals(123L, wpt.getTrackId());
     assertEquals(0.0, wpt.getLength());
     assertNotNull(wpt.getLocation());
-    assertNull(wpt.getStatistics());
+    assertNull(wpt.getTripStatistics());
   }
 
   @MediumTest
-  public void testWithProperties_noAnnouncementFreq() throws Exception {
-    functionalTest(R.string.announcement_frequency_key, (Object) null);
+  public void testWithProperties_announcementFrequencyDefault() throws Exception {
+    PreferencesUtils.setInt(context, R.string.announcement_frequency_key,
+        PreferencesUtils.ANNOUNCEMENT_FREQUENCY_DEFAULT);
+    fullRecordingSession();
   }
 
   @MediumTest
-  public void testWithProperties_defaultAnnouncementFreq() throws Exception {
-    functionalTest(R.string.announcement_frequency_key, 1);
+  public void testWithProperties_announcementFrequencyByDistance() throws Exception {
+    PreferencesUtils.setInt(context, R.string.announcement_frequency_key, -1);
+    fullRecordingSession();
   }
 
   @MediumTest
-  public void testWithProperties_noMaxRecordingDist() throws Exception {
-    functionalTest(R.string.max_recording_distance_key, (Object) null);
+  public void testWithProperties_announcementFrequencyByTime() throws Exception {
+    PreferencesUtils.setInt(context, R.string.announcement_frequency_key, 1);
+    fullRecordingSession();
+  }
+  
+  @MediumTest
+  public void testWithProperties_maxRecordingDistanceDefault() throws Exception {
+    PreferencesUtils.setInt(context, R.string.max_recording_distance_key,
+        PreferencesUtils.MAX_RECORDING_DISTANCE_DEFAULT);
+    fullRecordingSession();
   }
 
   @MediumTest
-  public void testWithProperties_defaultMaxRecordingDist() throws Exception {
-    functionalTest(R.string.max_recording_distance_key, 5);
+  public void testWithProperties_maxRecordingDistance() throws Exception {
+    PreferencesUtils.setInt(context, R.string.max_recording_distance_key, 50);
+    fullRecordingSession();
   }
 
   @MediumTest
-  public void testWithProperties_noMinRecordingDist() throws Exception {
-    functionalTest(R.string.min_recording_distance_key, (Object) null);
+  public void testWithProperties_minRecordingDistanceDefault() throws Exception {
+    PreferencesUtils.setInt(context, R.string.min_recording_distance_key,
+        PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT);
+    fullRecordingSession();
   }
 
   @MediumTest
-  public void testWithProperties_defaultMinRecordingDist() throws Exception {
-    functionalTest(R.string.min_recording_distance_key, 2);
+  public void testWithProperties_minRecordingDistance() throws Exception {
+    PreferencesUtils.setInt(context, R.string.min_recording_distance_key, 2);
+    fullRecordingSession();
   }
 
   @MediumTest
-  public void testWithProperties_noSplitFreq() throws Exception {
-    functionalTest(R.string.split_frequency_key, (Object) null);
+  public void testWithProperties_splitFrequencyDefault() throws Exception {
+    PreferencesUtils.setInt(context, R.string.split_frequency_key,
+        PreferencesUtils.SPLIT_FREQUENCY_DEFAULT);
+    fullRecordingSession();
   }
 
   @MediumTest
-  public void testWithProperties_defaultSplitFreqByDist() throws Exception {
-    functionalTest(R.string.split_frequency_key, 5);
+  public void testWithProperties_splitFrequencyByDistance() throws Exception {
+    PreferencesUtils.setInt(context, R.string.split_frequency_key, -1);
+    fullRecordingSession();
   }
 
   @MediumTest
-  public void testWithProperties_defaultSplitFreqByTime() throws Exception {
-    functionalTest(R.string.split_frequency_key, -2);
+  public void testWithProperties_splitFrequencyByTime() throws Exception {
+    PreferencesUtils.setInt(context, R.string.split_frequency_key, 1);
+    fullRecordingSession();
   }
 
   @MediumTest
-  public void testWithProperties_noMetricUnits() throws Exception {
-    functionalTest(R.string.metric_units_key, (Object) null);
-  }
-
-  @MediumTest
-  public void testWithProperties_metricUnitsEnabled() throws Exception {
-    functionalTest(R.string.metric_units_key, true);
+  public void testWithProperties_metricUnitsDefault() throws Exception {
+    PreferencesUtils.setBoolean(
+        context, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
+    fullRecordingSession();
   }
 
   @MediumTest
   public void testWithProperties_metricUnitsDisabled() throws Exception {
-    functionalTest(R.string.metric_units_key, false);
+    PreferencesUtils.setBoolean(context, R.string.metric_units_key, false);
+    fullRecordingSession();
   }
 
   @MediumTest
-  public void testWithProperties_noMinRecordingInterval() throws Exception {
-    functionalTest(R.string.min_recording_interval_key, (Object) null);
+  public void testWithProperties_minRecordingIntervalDefault() throws Exception {
+    PreferencesUtils.setInt(context, R.string.min_recording_interval_key,
+        PreferencesUtils.MIN_RECORDING_INTERVAL_DEFAULT);
+    fullRecordingSession();
   }
 
   @MediumTest
-  public void testWithProperties_defaultMinRecordingInterval()
-      throws Exception {
-    functionalTest(R.string.min_recording_interval_key, 3);
+  public void testWithProperties_minRecordingInterval() throws Exception {
+    PreferencesUtils.setInt(context, R.string.min_recording_interval_key, 2);
+    fullRecordingSession();
   }
 
   @MediumTest
-  public void testWithProperties_noMinRequiredAccuracy() throws Exception {
-    functionalTest(R.string.min_required_accuracy_key, (Object) null);
+  public void testWithProperties_minRequiredAccuracyDefault() throws Exception {
+    PreferencesUtils.setInt(context, R.string.min_required_accuracy_key,
+        PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT);
+    fullRecordingSession();
   }
 
   @MediumTest
-  public void testWithProperties_defaultMinRequiredAccuracy() throws Exception {
-    functionalTest(R.string.min_required_accuracy_key, 500);
+  public void testWithProperties_minRequiredAccuracy() throws Exception {
+    PreferencesUtils.setInt(context, R.string.min_required_accuracy_key, 500);
+    fullRecordingSession();
   }
 
   @MediumTest
-  public void testWithProperties_noSensorType() throws Exception {
-    functionalTest(R.string.sensor_type_key, (Object) null);
+  public void testWithProperties_sensorTypeDefault() throws Exception {
+    PreferencesUtils.setString(
+        context, R.string.sensor_type_key, context.getString(R.string.sensor_type_value_none));
+    fullRecordingSession();
   }
 
   @MediumTest
-  public void testWithProperties_zephyrSensorType() throws Exception {
-    functionalTest(R.string.sensor_type_key,
-        context.getString(R.string.sensor_type_value_zephyr));
+  public void testWithProperties_sensorTypeZephyr() throws Exception {
+    PreferencesUtils.setString(
+        context, R.string.sensor_type_key, context.getString(R.string.sensor_type_value_zephyr));
+    fullRecordingSession();
   }
 
   private ITrackRecordingService bindAndGetService(Intent intent) {
@@ -625,18 +678,14 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     dummyTrack.setName("Dummy Track");
     TripStatistics tripStatistics = new TripStatistics();
     tripStatistics.setStopTime(stopTime);
-    dummyTrack.setStatistics(tripStatistics);
+    dummyTrack.setTripStatistics(tripStatistics);
     addTrack(dummyTrack, isRecording);
     return dummyTrack;
   }
 
   private void updateAutoResumePrefs(int attempts, int timeoutMins) {
-    Editor editor = sharedPreferences.edit();
-    editor.putInt(context.getString(
-    R.string.auto_resume_track_current_retry_key), attempts);
-    editor.putInt(context.getString(
-        R.string.auto_resume_track_timeout_key), timeoutMins);
-    editor.apply();
+    PreferencesUtils.setInt(context, R.string.auto_resume_track_current_retry_key, attempts);
+    PreferencesUtils.setInt(context, R.string.auto_resume_track_timeout_key, timeoutMins);
   }
 
   private Intent createStartIntent() {
@@ -649,40 +698,8 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     assertTrue(track.getId() >= 0);
     providerUtils.insertTrack(track);
     assertEquals(track.getId(), providerUtils.getTrack(track.getId()).getId());
-    setRecordingTrack(isRecording ? track.getId() : -1);
-  }
-
-  private void setRecordingTrack(long id) {
-    Editor editor = sharedPreferences.edit();
-    editor.putLong(context.getString(R.string.recording_track_key), id);
-    editor.apply();
-  }
-
-  // TODO: We support multiple values for readability, however this test's
-  // base class doesn't properly shutdown the service, so it's not possible
-  // to pass more than 1 value at a time.
-  private void functionalTest(int resourceId, Object ...values)
-      throws Exception {
-    final String key = context.getString(resourceId);
-    for (Object value : values) {
-      // Remove all properties and set the property for the given key.
-      Editor editor = sharedPreferences.edit();
-      editor.clear();
-      if (value instanceof String) {
-        editor.putString(key, (String) value);
-      } else if (value instanceof Long) {
-        editor.putLong(key, (Long) value);
-      } else if (value instanceof Integer) {
-        editor.putInt(key, (Integer) value);
-      } else if (value instanceof Boolean) {
-        editor.putBoolean(key, (Boolean) value);
-      } else if (value == null) {
-        // Do nothing, as clear above has already removed this property.
-      }
-      editor.apply();
-
-      fullRecordingSession();
-    }
+    PreferencesUtils.setLong(context, R.string.recording_track_id_key, isRecording ? track.getId()
+        : PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
   }
 
   private void fullRecordingSession() throws Exception {
@@ -696,8 +713,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     Track track = providerUtils.getTrack(id);
     assertNotNull(track);
     assertEquals(id, track.getId());
-    assertEquals(id, sharedPreferences.getLong(
-        context.getString(R.string.recording_track_key), -1));
+    assertEquals(id, PreferencesUtils.getLong(context, R.string.recording_track_id_key));
     assertEquals(id, service.getRecordingTrackId());
 
     // Insert a few points, markers and statistics.
@@ -715,20 +731,38 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
       if (i % 10 == 0) {
         service.insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS);
       } else if (i % 7 == 0) {
-        service.insertWaypoint(WaypointCreationRequest.DEFAULT_MARKER);
+        service.insertWaypoint(WaypointCreationRequest.DEFAULT_WAYPOINT);
       }
     }
 
     // Stop the track.  Validate if it has correct data.
     service.endCurrentTrack();
     assertFalse(service.isRecording());
-    assertEquals(-1, service.getRecordingTrackId());
+    assertEquals(-1L, service.getRecordingTrackId());
     track = providerUtils.getTrack(id);
     assertNotNull(track);
     assertEquals(id, track.getId());
-    TripStatistics tripStatistics = track.getStatistics();
+    TripStatistics tripStatistics = track.getTripStatistics();
     assertNotNull(tripStatistics);
     assertTrue(tripStatistics.getStartTime() > 0);
     assertTrue(tripStatistics.getStopTime() >= tripStatistics.getStartTime());
+  }
+  
+  /**
+   * Inserts a location and waits for 100ms.
+   * 
+   * @param trackRecordingService the track recording service
+   */
+  private void insertLocation(ITrackRecordingService trackRecordingService)
+      throws RemoteException, InterruptedException {
+    Location location = new Location("gps");
+    location.setLongitude(35.0f);
+    location.setLatitude(45.0f);
+    location.setAccuracy(5);
+    location.setSpeed(10);
+    location.setTime(System.currentTimeMillis());
+    location.setBearing(3.0f);
+    trackRecordingService.recordLocation(location);
+    Thread.sleep(100);
   }
 }

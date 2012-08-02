@@ -14,6 +14,7 @@ import com.google.android.apps.mytracks.stats.DoubleBuffer;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.LocationUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
@@ -32,7 +33,6 @@ import android.accounts.AccountManager;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.location.Location;
 import android.util.Log;
@@ -70,8 +70,9 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
   // See http://support.google.com/fusiontables/bin/answer.py?hl=en&answer=185991
   private static final String MARKER_TYPE_START = "large_green";
   private static final String MARKER_TYPE_END = "large_red";
-  private static final String MARKER_TYPE_WAYPOINT = "large_yellow";
-
+  private static final String MARKER_TYPE_WAYPOINT = "large_blue";
+  private static final String MARKER_TYPE_STATISTICS = "large_yellow";
+  
   private static final String TAG = SendFusionTablesAsyncTask.class.getSimpleName();
   
   private final Context context;
@@ -105,12 +106,12 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
   @Override
   protected void saveResult() {
     Track track = myTracksProviderUtils.getTrack(trackId);
-    if (track != null) {
-      track.setTableId(tableId);
-      myTracksProviderUtils.updateTrack(track);
-    } else {
-      Log.d(TAG, "No track");
+    if (track == null) {
+      Log.d(TAG, "No track for " + trackId);
+      return;
     }
+    track.setTableId(tableId);
+    myTracksProviderUtils.updateTrack(track);
   }
 
   @Override
@@ -136,7 +137,7 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
 
     Track track = myTracksProviderUtils.getTrack(trackId);
     if (track == null) {
-      Log.d(TAG, "Track is null");
+      Log.d(TAG, "No track for " + trackId);
       return false;
     }
 
@@ -205,9 +206,8 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
   private boolean uploadAllTrackPoints(Track track) {
     Cursor locationsCursor = null;
     try {
-      SharedPreferences prefs = context.getSharedPreferences(
-          Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-      boolean metricUnits = prefs.getBoolean(context.getString(R.string.metric_units_key), true);
+      boolean metricUnits = PreferencesUtils.getBoolean(
+          context, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
 
       locationsCursor = myTracksProviderUtils.getLocationsCursor(trackId, 0, -1, false);
       if (locationsCursor == null) {
@@ -221,7 +221,7 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
       // For chart server, limit the number of elevation readings to 250.
       int elevationSamplingFrequency = Math.max(1, (int) (locationsCount / 250.0));
       TripStatisticsBuilder tripStatisticsBuilder = new TripStatisticsBuilder(
-          track.getStatistics().getStartTime());
+          track.getTripStatistics().getStartTime());
       DoubleBuffer elevationBuffer = new DoubleBuffer(Constants.ELEVATION_SMOOTHING_FACTOR);
       Vector<Double> distances = new Vector<Double>();
       Vector<Double> elevations = new Vector<Double>();
@@ -277,8 +277,8 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
         distances.add(tripStatisticsBuilder.getStatistics().getTotalDistance());
         elevations.add(elevationBuffer.getAverage());
         DescriptionGenerator descriptionGenerator = new DescriptionGeneratorImpl(context);
-        track.setDescription("<p>" + track.getDescription() + "</p><p>"
-            + descriptionGenerator.generateTrackDescription(track, distances, elevations) + "</p>");
+        track.setDescription(
+            descriptionGenerator.generateTrackDescription(track, distances, elevations, true));
         String name = context.getString(R.string.marker_label_end, track.getName());
         if (!createNewPoint(name, track.getDescription(), lastLocation, MARKER_TYPE_END)) {
           Log.d(TAG, "Unable to create the end marker");
@@ -336,8 +336,9 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
         // track).
         while (cursor.moveToNext()) {
           Waypoint wpt = myTracksProviderUtils.createWaypoint(cursor);
-          if (!createNewPoint(
-              wpt.getName(), wpt.getDescription(), wpt.getLocation(), MARKER_TYPE_WAYPOINT)) {
+          String type = wpt.getType() == Waypoint.TYPE_STATISTICS ? MARKER_TYPE_STATISTICS
+              : MARKER_TYPE_WAYPOINT;
+          if (!createNewPoint(wpt.getName(), wpt.getDescription(), wpt.getLocation(), type)) {
             Log.d(TAG, "Upload waypoints failed");
             return false;
           }

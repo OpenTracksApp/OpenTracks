@@ -35,11 +35,13 @@ public class MyTracksApplication extends Application {
 
   @Override
   public void onCreate() {
+    super.onCreate();
     if (BuildConfig.DEBUG) {
       ApiAdapterFactory.getApiAdapter().enableStrictMode();
     }
-    AnalyticsUtils.sendPageViews(this, "/appstart");
-    startService(new Intent(this, RemoveTempFilesService.class));
+    AnalyticsUtils.sendPageViews(getApplicationContext(), "/appstart");
+    Intent intent = new Intent(this, RemoveTempFilesService.class);
+    startService(intent);
   }
 
   /**

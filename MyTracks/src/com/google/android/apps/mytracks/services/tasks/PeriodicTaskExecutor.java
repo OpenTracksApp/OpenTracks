@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.services.tasks;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.services.TrackRecordingService;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 
 import android.util.Log;
@@ -34,7 +35,7 @@ public class PeriodicTaskExecutor {
    * A value greater than zero is a frequency in time.
    * A value less than zero is considered a frequency in distance.
    */
-  private int taskFrequency = 0;
+  private int taskFrequency = PreferencesUtils.FREQUENCY_OFF;
 
   /**
    * The next distance when the task should execute.
@@ -74,7 +75,7 @@ public class PeriodicTaskExecutor {
         timerExecutor = null;
       }
     }
-    if (taskFrequency == 0) {
+    if (taskFrequency == PreferencesUtils.FREQUENCY_OFF) {
       return;
     }
 

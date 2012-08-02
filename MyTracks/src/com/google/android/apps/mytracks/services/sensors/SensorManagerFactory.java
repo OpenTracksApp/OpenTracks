@@ -13,106 +13,106 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks.services.sensors;
 
-import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.services.sensors.ant.AntDirectSensorManager;
-import com.google.android.apps.mytracks.services.sensors.ant.AntSrmBridgeSensorManager;
+import com.google.android.apps.mytracks.services.sensors.ant.AntSensorManager;
+import com.google.android.apps.mytracks.util.AnalyticsUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.util.Log;
 
 /**
- * A factory of SensorManagers.
+ * A factory of {@link SensorManager}.
  *
  * @author Sandor Dornbush
  */
 public class SensorManagerFactory {
 
-  private String activeSensorType;
-  private SensorManager activeSensorManager;
-  private int refCount;
+  private static SensorManager systemSensorManager = null;
+  private static SensorManager tempSensorManager = null;
 
-  private static SensorManagerFactory instance = new SensorManagerFactory();
+  private SensorManagerFactory() {}
 
-  private SensorManagerFactory() {
+  /**
+   * Gets the system sensor manager.
+   *
+   * @param context the context
+   */
+  public static SensorManager getSystemSensorManager(Context context) {
+    releaseTempSensorManager();
+    releaseSystemSensorManager();
+    systemSensorManager = getSensorManager(context, true);
+    if (systemSensorManager != null) {
+      systemSensorManager.startSensor();
+    }
+    return systemSensorManager;
   }
 
   /**
-   * Get the factory instance. 
+   * Releases the system sensor manager.
    */
-  public static SensorManagerFactory getInstance() {
-    return instance;
+  public static void releaseSystemSensorManager() {
+    if (systemSensorManager != null) {
+      systemSensorManager.stopSensor();
+    }
+    systemSensorManager = null;
   }
 
   /**
-   * Get and start a new sensor manager.
-   * @param context Context to fetch system preferences.
-   * @return The sensor manager that corresponds to the sensor type setting.
+   * Gets the temp sensor manager.
+   *
+   * @param context
    */
-  public SensorManager getSensorManager(Context context) {
-    SharedPreferences prefs = context.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    if (prefs == null) {
+  public static SensorManager getTempSensorManager(Context context) {
+    releaseTempSensorManager();
+    if (systemSensorManager != null) {
       return null;
     }
-
-    context = context.getApplicationContext();
-
-    String sensor = prefs.getString(context.getString(R.string.sensor_type_key), null);
-    Log.i(Constants.TAG, "Creating sensor of type: " + sensor);
-
-    if (sensor == null) {
-      reset();
-      return null;
+    tempSensorManager = getSensorManager(context, false);
+    if (tempSensorManager != null) {
+      tempSensorManager.startSensor();
     }
-    if (sensor.equals(activeSensorType)) {
-      Log.i(Constants.TAG, "Returning existing sensor manager.");
-      refCount++;
-      return activeSensorManager;
-    }
-    reset();
-
-    if (sensor.equals(context.getString(R.string.sensor_type_value_ant))) {
-      activeSensorManager = new AntDirectSensorManager(context);
-    } else if (sensor.equals(context.getString(R.string.sensor_type_value_srm_ant_bridge))) {
-      activeSensorManager = new AntSrmBridgeSensorManager(context);
-    } else if (sensor.equals(context.getString(R.string.sensor_type_value_zephyr))) {
-      activeSensorManager = new ZephyrSensorManager(context);
-    } else if (sensor.equals(context.getString(R.string.sensor_type_value_polar))) {
-      activeSensorManager = new PolarSensorManager(context);
-    } else  {
-      Log.w(Constants.TAG, "Unable to find sensor type: " + sensor);
-      return null;
-    }
-    activeSensorType = sensor;
-    refCount = 1;
-    activeSensorManager.onStartTrack();
-    return activeSensorManager;
+    return tempSensorManager;
   }
 
   /**
-   * Finish using a sensor manager.
+   * Releases the temp sensor manager.
    */
-  public void releaseSensorManager(SensorManager sensorManager) {
-    Log.i(Constants.TAG, "releaseSensorManager: " + activeSensorType + " " + refCount);
-    if (sensorManager != activeSensorManager) {
-      Log.e(Constants.TAG, "invalid parameter to releaseSensorManager");
+  public static void releaseTempSensorManager() {
+    if (tempSensorManager != null) {
+      tempSensorManager.stopSensor();
     }
-    if (--refCount > 0) {
-      return;
-    }
-    reset();
+    tempSensorManager = null;
   }
 
-  private void reset() {
-    activeSensorType = null;
-    if (activeSensorManager != null) {
-      activeSensorManager.shutdown();
+  /**
+   * Gets the sensor manager.
+   *
+   * @param context the context
+   */
+  private static SensorManager getSensorManager(Context context, boolean sendPageViews) {
+    String sensorTypeValueNone = context.getString(R.string.sensor_type_value_none);
+    String sensorType = PreferencesUtils.getString(
+        context, R.string.sensor_type_key, sensorTypeValueNone);
+
+    if (sensorType.equals(context.getString(R.string.sensor_type_value_ant))) {
+      if (sendPageViews) {
+        AnalyticsUtils.sendPageViews(context, "/sensor/ant");
+      }
+      return new AntSensorManager(context);
+    } else if (sensorType.equals(context.getString(R.string.sensor_type_value_zephyr))) {
+      if (sendPageViews) {
+        AnalyticsUtils.sendPageViews(context, "/sensor/zephyr");
+      }
+      return new ZephyrSensorManager(context);
+    } else if (sensorType.equals(context.getString(R.string.sensor_type_value_polar))) {
+      if (sendPageViews) {
+        AnalyticsUtils.sendPageViews(context, "/sensor/polar");
+      }
+      return new PolarSensorManager(context);
     }
-    activeSensorManager = null;
-    refCount = 0;
+    return null;
   }
 }

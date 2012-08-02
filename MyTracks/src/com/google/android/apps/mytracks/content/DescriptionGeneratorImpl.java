@@ -36,7 +36,9 @@ import java.util.Vector;
 public class DescriptionGeneratorImpl implements DescriptionGenerator {
 
   private static final String HTML_LINE_BREAK = "<br>";
+  private static final String HTML_PARAGRAPH_SEPARATOR = "<p>";
   private static final String TEXT_LINE_BREAK = "\n";
+  private static final String TEXT_PARAGRAPH_SEPARATOR = "\n\n";
 
   private Context context;
 
@@ -46,26 +48,26 @@ public class DescriptionGeneratorImpl implements DescriptionGenerator {
 
   @Override
   public String generateTrackDescription(
-      Track track, Vector<Double> distances, Vector<Double> elevations) {
+      Track track, Vector<Double> distances, Vector<Double> elevations, boolean html) {
+    String paragraphSeparator = html ? HTML_PARAGRAPH_SEPARATOR : TEXT_PARAGRAPH_SEPARATOR;
+    String lineBreak = html ? HTML_LINE_BREAK : TEXT_LINE_BREAK;
     StringBuilder builder = new StringBuilder();
 
     // Created by
-    String url = context.getString(R.string.my_tracks_web_url);
-    builder.append(context.getString(
-        R.string.send_google_by_my_tracks, "<a href='http://" + url + "'>", "</a>"));
-    builder.append("<p>");
+    String beginAnchor = html 
+        ? "<a href='http://" + context.getString(R.string.my_tracks_web_url) + "'>"
+        : "";
+    String endAnchor = html ? "</a>" : "";
+    builder.append(context.getString(R.string.send_google_by_my_tracks, beginAnchor, endAnchor));
+    builder.append(paragraphSeparator);
 
-    builder.append(generateTripStatisticsDescription(track.getStatistics(), true));
-
-    // Activity type
-    String trackCategory = track.getCategory();
-    String category = trackCategory != null && trackCategory.length() > 0 ? trackCategory
-        : context.getString(R.string.value_unknown);
-    builder.append(context.getString(R.string.description_activity_type, category));
-    builder.append(HTML_LINE_BREAK);
+    writeString(track.getName(), builder, R.string.generic_name_line, lineBreak);
+    writeString(track.getCategory(), builder, R.string.description_activity_type, lineBreak);
+    writeString(track.getDescription(), builder, R.string.generic_description_line, lineBreak);
+    builder.append(generateTripStatisticsDescription(track.getTripStatistics(), html));
 
     // Elevation chart
-    if (distances != null && elevations != null) {
+    if (html && distances != null && elevations != null) {
       builder.append("<img border=\"0\" src=\""
           + ChartURLGenerator.getChartUrl(distances, elevations, track, context) + "\"/>");
       builder.append(HTML_LINE_BREAK);
@@ -75,7 +77,23 @@ public class DescriptionGeneratorImpl implements DescriptionGenerator {
 
   @Override
   public String generateWaypointDescription(Waypoint waypoint) {
-    return generateTripStatisticsDescription(waypoint.getStatistics(), false);
+    return generateTripStatisticsDescription(waypoint.getTripStatistics(), false);
+  }
+
+  /**
+   * Writes a string to a string builder.
+   * 
+   * @param text the string
+   * @param builder the string builder
+   * @param resId the resource id containing one string placeholder
+   * @param lineBreak the line break
+   */
+  private void writeString(String text, StringBuilder builder, int resId, String lineBreak) {
+    if (text == null || text.length() == 0) {
+      text = context.getString(R.string.value_unknown);
+    }
+    builder.append(context.getString(resId, text));
+    builder.append(lineBreak);
   }
 
   /**
@@ -116,8 +134,8 @@ public class DescriptionGeneratorImpl implements DescriptionGenerator {
     // Average moving pace
     writePace(averageMovingSpeed, builder, R.string.description_average_moving_pace, lineBreak);
 
-    // Min pace
-    writePace(maxSpeed, builder, R.string.description_min_pace, lineBreak);
+    // Fastest pace
+    writePace(maxSpeed, builder, R.string.description_fastest_pace, lineBreak);
 
     // Max elevation
     writeElevation(stats.getMaxElevation(), builder, R.string.description_max_elevation, lineBreak);

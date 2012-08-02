@@ -92,27 +92,33 @@ class DataSourceManager {
       LocationListener {
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-      if (!LocationManager.GPS_PROVIDER.equals(provider)) return;
-
+      if (!dataSources.isAllowed() || !LocationManager.GPS_PROVIDER.equals(provider)) {
+        return;
+      }
       listener.notifyLocationProviderAvailable(status == LocationProvider.AVAILABLE);
     }
 
     @Override
     public void onProviderEnabled(String provider) {
-      if (!LocationManager.GPS_PROVIDER.equals(provider)) return;
-
+      if (!dataSources.isAllowed() || !LocationManager.GPS_PROVIDER.equals(provider)) {
+        return;
+      }
       listener.notifyLocationProviderEnabled(true);
     }
 
     @Override
     public void onProviderDisabled(String provider) {
-      if (!LocationManager.GPS_PROVIDER.equals(provider)) return;
-
+      if (!LocationManager.GPS_PROVIDER.equals(provider)) {
+        return;
+      }
       listener.notifyLocationProviderEnabled(false);
     }
 
     @Override
     public void onLocationChanged(Location location) {
+      if (!dataSources.isAllowed()) {
+        return;
+      }
       listener.notifyLocationChanged(location);
     }
   }

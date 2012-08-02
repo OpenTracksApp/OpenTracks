@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.FileUtils;
+import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.UriUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -29,6 +30,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -110,7 +112,7 @@ public class ImportActivity extends Activity {
     switch (id) {
       case DIALOG_PROGRESS_ID:
         progressDialog = DialogUtils.createHorizontalProgressDialog(
-            this, R.string.import_progress_message, new DialogInterface.OnCancelListener() {
+            this, R.string.sd_card_import_progress_message, new DialogInterface.OnCancelListener() {
               @Override
               public void onCancel(DialogInterface dialog) {
                 importAsyncTask.cancel(true);
@@ -121,11 +123,12 @@ public class ImportActivity extends Activity {
       case DIALOG_RESULT_ID:
         String message;
         if (successCount == 0) {
-          message = getString(R.string.import_no_file, path);
+          message = getString(R.string.sd_card_import_error_no_file, path);
         } else {
           String totalFiles = getResources()
               .getQuantityString(R.plurals.importGpxFiles, totalCount, totalCount);
-          message = getString(R.string.import_success, successCount, totalFiles, path);
+          message = getString(
+              R.string.sd_card_import_success_count, successCount, totalFiles, path);
         }
         return new AlertDialog.Builder(this)
             .setCancelable(true)
@@ -140,10 +143,12 @@ public class ImportActivity extends Activity {
               @Override
               public void onClick(DialogInterface dialog, int which) {
                 if (!importAll && trackId != -1L) {
-                  Intent intent = new Intent(ImportActivity.this, TrackDetailActivity.class)
-                      .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
+                  Intent intent = IntentUtils
+                      .newIntent(ImportActivity.this, TrackDetailActivity.class)
                       .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);
-                  startActivity(intent);
+                  TaskStackBuilder taskStackBuilder = TaskStackBuilder.from(ImportActivity.this);
+                  taskStackBuilder.addNextIntent(intent);
+                  taskStackBuilder.startActivities();
                 }
                 finish();
               }
@@ -170,7 +175,7 @@ public class ImportActivity extends Activity {
     if (success) {
       showDialog(DIALOG_RESULT_ID);
     } else {
-      Toast.makeText(this, getString(R.string.import_error, path), Toast.LENGTH_LONG).show();
+      Toast.makeText(this, R.string.sd_card_import_error, Toast.LENGTH_LONG).show();
       finish();
     }
   }

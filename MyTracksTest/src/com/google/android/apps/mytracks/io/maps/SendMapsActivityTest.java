@@ -35,7 +35,7 @@ public class SendMapsActivityTest extends AndroidTestCase {
   @Override
   protected void setUp() throws Exception {
     super.setUp();
-    sendRequest = new SendRequest(1L, true, false, true);
+    sendRequest = new SendRequest(1L);
     sendMapsActivity = new SendMapsActivity();
   }
 

@@ -31,6 +31,7 @@ import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
 import com.google.android.apps.mytracks.util.LocationUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.common.gdata.AndroidXmlParserFactory;
 import com.google.android.maps.mytracks.R;
@@ -44,7 +45,6 @@ import android.accounts.AccountManager;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.location.Location;
 import android.util.Log;
@@ -131,14 +131,14 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
   @Override
   protected void saveResult() {
     Track track = myTracksProviderUtils.getTrack(trackId);
-    if (track != null) {
-      track.setMapId(mapId);
-      myTracksProviderUtils.updateTrack(track);
-    } else {
-      Log.d(TAG, "No track");
+    if (track == null) {
+      Log.d(TAG, "No track for " + trackId);
+      return;
     }
+    track.setMapId(mapId);
+    myTracksProviderUtils.updateTrack(track);
   }
-  
+
   @Override
   protected boolean performTask() {
     // Reset the per upload states
@@ -173,7 +173,7 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
     // Get the track
     Track track = myTracksProviderUtils.getTrack(trackId);
     if (track == null) {
-      Log.d(TAG, "Track is null");
+      Log.d(TAG, "No track for " + trackId);
       return false;
     }
 
@@ -224,15 +224,13 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
       mapId = chooseMapId;
       return true;
     } else {
-      SharedPreferences sharedPreferences = context.getSharedPreferences(
-          Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-      boolean mapPublic = sharedPreferences.getBoolean(
-          context.getString(R.string.default_map_public_key), true);
+      boolean defaultMapPublic = PreferencesUtils.getBoolean(
+          context, R.string.default_map_public_key, PreferencesUtils.DEFAULT_MAP_PUBLIC_DEFAULT);
       try {
         String description = track.getCategory() + "\n" + track.getDescription() + "\n"
             + context.getString(R.string.send_google_by_my_tracks, "", "");
         mapId = SendMapsUtils.createNewMap(
-            track.getName(), description, mapPublic, mapsClient, authToken);
+            track.getName(), description, defaultMapPublic, mapsClient, authToken);
       } catch (ParseException e) {
         Log.d(TAG, "Unable to create a new map", e);
         return false;
@@ -257,9 +255,8 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
   boolean uploadAllTrackPoints(Track track) {
     Cursor locationsCursor = null;
     try {
-      SharedPreferences prefs = context.getSharedPreferences(
-          Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-      boolean metricUnits = prefs.getBoolean(context.getString(R.string.metric_units_key), true);
+      boolean metricUnits = PreferencesUtils.getBoolean(
+          context, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
 
       locationsCursor = myTracksProviderUtils.getLocationsCursor(trackId, 0, -1, false);
       if (locationsCursor == null) {
@@ -273,7 +270,7 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
       // For chart server, limit the number of elevation readings to 250.
       int elevationSamplingFrequency = Math.max(1, (int) (locationsCount / 250.0));
       TripStatisticsBuilder tripStatisticsBuilder = new TripStatisticsBuilder(
-          track.getStatistics().getStartTime());
+          track.getTripStatistics().getStartTime());
       DoubleBuffer elevationBuffer = new DoubleBuffer(Constants.ELEVATION_SMOOTHING_FACTOR);
       Vector<Double> distances = new Vector<Double>();
       Vector<Double> elevations = new Vector<Double>();
@@ -356,7 +353,8 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
   String getTrackDescription(Track track, Vector<Double> distances, Vector<Double> elevations) {
     DescriptionGenerator descriptionGenerator = new DescriptionGeneratorImpl(context);
     return "<p>" + track.getDescription() + "</p><p>"
-        + descriptionGenerator.generateTrackDescription(track, distances, elevations) + "</p>";
+        + descriptionGenerator.generateTrackDescription(track, distances, elevations, true)
+        + "</p>";
   }
   
   /**

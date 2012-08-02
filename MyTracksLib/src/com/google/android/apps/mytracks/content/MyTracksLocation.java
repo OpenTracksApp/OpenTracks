@@ -15,6 +15,8 @@
  */
 package com.google.android.apps.mytracks.content;
 
+import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
+
 import android.location.Location;
 
 /**
@@ -24,7 +26,7 @@ import android.location.Location;
  */
 public class MyTracksLocation extends Location {
 
-  private Sensor.SensorDataSet sensorDataSet = null;
+  private SensorDataSet sensorDataSet = null;
 
   /**
    * The id of this location from the provider.
@@ -40,12 +42,12 @@ public class MyTracksLocation extends Location {
     super(provider);
   }
 
-  public Sensor.SensorDataSet getSensorDataSet() {
+  public SensorDataSet getSensorDataSet() {
     return sensorDataSet;
   }
 
-  public void setSensorData(Sensor.SensorDataSet sensorData) {
-    this.sensorDataSet = sensorData;
+  public void setSensorDataSet(SensorDataSet sensorDataSet) {
+    this.sensorDataSet = sensorDataSet;
   }
 
   public int getId() {

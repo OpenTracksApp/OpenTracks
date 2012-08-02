@@ -18,12 +18,12 @@ limitations under the License.
   <item
     android:icon="@drawable/menu_record_track"
     android:id="@+id/track_list_record_track"
-    android:showAsAction="always"
+    android:showAsAction="ifRoom"
     android:title="@string/menu_record_track"/>
   <item
     android:icon="@drawable/menu_stop_recording"
     android:id="@+id/track_list_stop_recording"
-    android:showAsAction="always"
+    android:showAsAction="ifRoom"
     android:title="@string/menu_stop_recording"/>
   <item
     android:actionViewClass="android.widget.SearchView"
@@ -32,22 +32,26 @@ limitations under the License.
     android:showAsAction="always|collapseActionView"
     android:title="@string/menu_search"/>
   <item
-    android:id="@+id/track_list_import_all"
-    android:title="@string/menu_import_all"/>
+    android:icon="@drawable/menu_import"
+    android:id="@+id/track_list_import"
+    android:title="@string/menu_import"/>
   <item
-    android:id="@+id/track_list_export_all"
-    android:title="@string/menu_export_all">
+    android:icon="@drawable/menu_save"
+    android:id="@+id/track_list_save_all"
+    android:title="@string/menu_save_all">
     <menu>
-      <item android:id="@+id/track_list_export_gpx"/>
-      <item android:id="@+id/track_list_export_kml"/>
-      <item android:id="@+id/track_list_export_csv"/>
-      <item android:id="@+id/track_list_export_tcx"/>
+      <item android:id="@+id/track_list_save_all_gpx"/>
+      <item android:id="@+id/track_list_save_all_kml"/>
+      <item android:id="@+id/track_list_save_all_csv"/>
+      <item android:id="@+id/track_list_save_all_tcx"/>
     </menu>
   </item>
   <item
+    android:icon="@drawable/menu_delete"
     android:id="@+id/track_list_delete_all"
     android:title="@string/menu_delete_all"/>
   <item
+    android:icon="@drawable/menu_aggregated_statistics"
     android:id="@+id/track_list_aggregated_statistics"
     android:title="@string/menu_aggregated_statistics"/>
   <item

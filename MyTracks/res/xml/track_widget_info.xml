@@ -14,9 +14,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<appwidget-provider
-  xmlns:android="http://schemas.android.com/apk/res/android"
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
   android:initialLayout="@layout/track_widget"
-  android:minHeight="72dp"
-  android:minWidth="294dp"
+  android:minHeight="110dp"
+  android:minWidth="250dp"
   android:updatePeriodMillis="0" />

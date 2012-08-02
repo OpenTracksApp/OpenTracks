@@ -77,7 +77,7 @@ public class SearchEngineTest extends AndroidTestCase {
     track.setDescription(description);
     track.setCategory(category);
 
-    TripStatistics stats = track.getStatistics();
+    TripStatistics stats = track.getTripStatistics();
     if (hoursAgo > 0) {
       // Started twice hoursAgo, so the average time is hoursAgo.
       stats.setStartTime(NOW - hoursAgo * 1000L * 60L * 60L * 2);

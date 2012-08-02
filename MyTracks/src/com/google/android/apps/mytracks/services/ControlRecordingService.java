@@ -20,6 +20,7 @@ import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.widgets.TrackWidgetProvider;
 import com.google.android.maps.mytracks.R;
+import com.google.common.annotations.VisibleForTesting;
 
 import android.app.IntentService;
 import android.content.ComponentName;
@@ -94,6 +95,18 @@ public class ControlRecordingService extends IntentService implements ServiceCon
   @Override
   protected void onHandleIntent(Intent intent) {
     waitConnected();
+    onHandleIntent(intent, trackRecordingService);
+  }
+
+  
+  /**
+   * Handles the intent to start or stop a recording.
+   * 
+   * @param intent to be handled
+   * @param trackRecordingService the trackRecordingService
+   */
+  @VisibleForTesting
+  void onHandleIntent(Intent intent, @SuppressWarnings("hiding") ITrackRecordingService trackRecordingService) {
     String action = intent.getAction();
     if (action != null) {
       try {

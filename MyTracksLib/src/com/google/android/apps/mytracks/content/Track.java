@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks.content;
 
 import com.google.android.apps.mytracks.stats.TripStatistics;
@@ -24,98 +25,89 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 
 /**
- * A class representing a (GPS) Track.
- *
- * TODO: hashCode and equals
- *
+ * A track.
+ * 
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
 public class Track implements Parcelable {
 
-  /**
-   * Creator for a Track object.
-   */
-  public static class Creator implements Parcelable.Creator<Track> {
-
-    public Track createFromParcel(Parcel source) {
-      ClassLoader classLoader = getClass().getClassLoader();
-      Track track = new Track();
-      track.id = source.readLong();
-      track.name = source.readString();
-      track.description = source.readString();
-      track.mapId = source.readString();
-      track.category = source.readString();
-      track.startId = source.readLong();
-      track.stopId = source.readLong();
-      track.stats = source.readParcelable(classLoader);
-
-      track.numberOfPoints = source.readInt();
-      for (int i = 0; i < track.numberOfPoints; ++i) {
-        Location loc = source.readParcelable(classLoader);
-        track.locations.add(loc);
-      }
-
-      track.tableId = source.readString();
-      return track;
-    }
-
-    public Track[] newArray(int size) {
-      return new Track[size];
-    }
-  }
-
-  public static final Creator CREATOR = new Creator();
-
-  /**
-   * The track points (which may not have been loaded).
-   */
-  private ArrayList<Location> locations = new ArrayList<Location>();
-
-  /**
-   * The number of location points (present even if the points themselves were
-   * not loaded).
-   */
-  private int numberOfPoints = 0;
-
   private long id = -1;
   private String name = "";
   private String description = "";
-  private String mapId = "";
-  private String tableId = "";
+  private String category = "";
   private long startId = -1;
   private long stopId = -1;
-  private String category = "";
 
-  private TripStatistics stats = new TripStatistics();
+  // The number of location points (present even if the points themselves are
+  // not loaded)
+  private int numberOfPoints = 0;
+  private String mapId = "";
+  private String tableId = "";
+  private String icon = "";
 
-  public Track() {
+  private TripStatistics tripStatistics = new TripStatistics();
+
+  // Location points (which may not have been loaded)
+  private ArrayList<Location> locations = new ArrayList<Location>();
+
+  public Track() {}
+
+  private Track(Parcel in) {
+    id = in.readLong();
+    name = in.readString();
+    description = in.readString();
+    category = in.readString();
+    startId = in.readLong();
+    stopId = in.readLong();
+    numberOfPoints = in.readInt();
+    mapId = in.readString();
+    tableId = in.readString();
+    icon = in.readString();
+
+    ClassLoader classLoader = getClass().getClassLoader();
+    tripStatistics = in.readParcelable(classLoader);
+
+    for (int i = 0; i < numberOfPoints; ++i) {
+      Location loc = in.readParcelable(classLoader);
+      locations.add(loc);
+    }
   }
 
+  @Override
+  public int describeContents() {
+    return 0;
+  }
+
+  @Override
   public void writeToParcel(Parcel dest, int flags) {
     dest.writeLong(id);
     dest.writeString(name);
     dest.writeString(description);
-    dest.writeString(mapId);
     dest.writeString(category);
     dest.writeLong(startId);
     dest.writeLong(stopId);
-    dest.writeParcelable(stats, 0);
-
     dest.writeInt(numberOfPoints);
+    dest.writeString(mapId);
+    dest.writeString(tableId);
+    dest.writeString(icon);
+    dest.writeParcelable(tripStatistics, 0);
     for (int i = 0; i < numberOfPoints; ++i) {
       dest.writeParcelable(locations.get(i), 0);
     }
-
-    dest.writeString(tableId);
   }
 
-  // Getters and setters:
-  //---------------------
+  public static final Parcelable.Creator<Track> CREATOR = new Parcelable.Creator<Track>() {
+      @Override
+    public Track createFromParcel(Parcel in) {
+      return new Track(in);
+    }
 
-  public int describeContents() {
-    return 0;
-  }
+      @Override
+    public Track[] newArray(int size) {
+      return new Track[size];
+    }
+  };
 
   public long getId() {
     return id;
@@ -131,6 +123,22 @@ public class Track implements Parcelable {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public String getCategory() {
+    return category;
+  }
+
+  public void setCategory(String category) {
+    this.category = category;
   }
 
   public long getStartId() {
@@ -149,12 +157,12 @@ public class Track implements Parcelable {
     this.stopId = stopId;
   }
 
-  public String getDescription() {
-    return description;
+  public int getNumberOfPoints() {
+    return numberOfPoints;
   }
 
-  public void setDescription(String description) {
-    this.description = description;
+  public void setNumberOfPoints(int numberOfPoints) {
+    this.numberOfPoints = numberOfPoints;
   }
 
   public String getMapId() {
@@ -173,20 +181,20 @@ public class Track implements Parcelable {
     this.tableId = tableId;
   }
 
-  public String getCategory() {
-    return category;
+  public String getIcon() {
+    return icon;
   }
 
-  public void setCategory(String category) {
-    this.category = category;
+  public void setIcon(String icon) {
+    this.icon = icon;
   }
 
-  public int getNumberOfPoints() {
-    return numberOfPoints;
+  public TripStatistics getTripStatistics() {
+    return tripStatistics;
   }
 
-  public void setNumberOfPoints(int numberOfPoints) {
-    this.numberOfPoints = numberOfPoints;
+  public void setTripStatistics(TripStatistics tripStatistics) {
+    this.tripStatistics = tripStatistics;
   }
 
   public void addLocation(Location l) {
@@ -199,13 +207,5 @@ public class Track implements Parcelable {
 
   public void setLocations(ArrayList<Location> locations) {
     this.locations = locations;
-  }
-
-  public TripStatistics getStatistics() {
-    return stats;
-  }
-
-  public void setStatistics(TripStatistics stats) {
-    this.stats = stats;
   }
 }

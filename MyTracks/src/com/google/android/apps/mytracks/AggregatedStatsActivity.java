@@ -1,128 +1,59 @@
+/*
+ * Copyright 2012 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
+
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
+import com.google.android.apps.mytracks.util.StatsUtils;
 import com.google.android.maps.mytracks.R;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.MenuItem;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
 import java.util.List;
 
 /**
- * Activity for viewing the combined statistics for all the recorded tracks.
- *
- * Other features to add - menu items to change setings.
+ * An activity to view aggregated stats from all recorded tracks.
  *
  * @author Fergus Nelson
  */
-public class AggregatedStatsActivity extends Activity implements
-        OnSharedPreferenceChangeListener {
-
-  private final StatsUtilities utils;
-
-  private MyTracksProviderUtils tracksProvider;
-
-  private boolean metricUnits = true;
-
-  public AggregatedStatsActivity() {
-    this.utils = new StatsUtilities(this);
-  }
-
-  @Override
-  public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-          String key) {
-    Log.d(Constants.TAG, "StatsActivity: onSharedPreferences changed "
-            + key);
-    if (key != null) {
-      if (key.equals(getString(R.string.metric_units_key))) {
-        metricUnits = sharedPreferences.getBoolean(
-                getString(R.string.metric_units_key), true);
-        utils.setMetricUnits(metricUnits);
-        utils.updateUnits();
-        loadAggregatedStats();
-      }
-    }
-  }
+public class AggregatedStatsActivity extends AbstractMyTracksActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
-    this.tracksProvider = MyTracksProviderUtils.Factory.get(this);
-
-    ApiAdapterFactory.getApiAdapter().configureActionBarHomeAsUp(this);
-
-    setContentView(R.layout.stats);
-
-    ScrollView sv = ((ScrollView) findViewById(R.id.scrolly));
-    sv.setScrollBarStyle(ScrollView.SCROLLBARS_OUTSIDE_INSET);
-
-    SharedPreferences preferences = getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    if (preferences != null) {
-      metricUnits = preferences.getBoolean(getString(R.string.metric_units_key), true);
-      preferences.registerOnSharedPreferenceChangeListener(this);
-    }
-    utils.setMetricUnits(metricUnits);
-    utils.updateUnits();
-    utils.setSpeedLabel(R.id.speed_label, R.string.stat_speed, R.string.stat_pace);
-    utils.setSpeedLabels();
-
-    DisplayMetrics metrics = new DisplayMetrics();
-    getWindowManager().getDefaultDisplay().getMetrics(metrics);
-    if (metrics.heightPixels > 600) {
-      ((TextView) findViewById(R.id.speed_register)).setTextSize(80.0f);
-    }
-    loadAggregatedStats();
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    if (item.getItemId() != android.R.id.home) {
-      return false;
-    }
-    startActivity(new Intent(this, TrackListActivity.class)
-        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
-    return true;
+    setContentView(R.layout.aggregated_stats);
+    StatsUtils.setTripStatisticsValues(this, getTripStatistics());
+    StatsUtils.setLocationValues(this, null, false);
   }
 
   /**
-   * 1. Reads tracks from the db
-   * 2. Merges the trip stats from the tracks
-   * 3. Updates the view
+   * Gets the aggregated trip statistics for all the recorded tracks or null if
+   * there is no track.
    */
-  private void loadAggregatedStats() {
-    List<Track> tracks = retrieveTracks();
-    TripStatistics rollingStats = null;
+  private TripStatistics getTripStatistics() {
+    List<Track> tracks = MyTracksProviderUtils.Factory.get(this).getAllTracks();
+    TripStatistics tripStatistics = null;
     if (!tracks.isEmpty()) {
-      rollingStats = new TripStatistics(tracks.iterator().next()
-              .getStatistics());
+      tripStatistics = new TripStatistics(tracks.iterator().next().getTripStatistics());
       for (int i = 1; i < tracks.size(); i++) {
-        rollingStats.merge(tracks.get(i).getStatistics());
+        tripStatistics.merge(tracks.get(i).getTripStatistics());
       }
     }
-    updateView(rollingStats);
-  }
-
-  private List<Track> retrieveTracks() {
-    return tracksProvider.getAllTracks();
-  }
-
-  private void updateView(TripStatistics aggStats) {
-    if (aggStats != null) {
-      utils.setAllStats(aggStats);
-    }
+    return tripStatistics;
   }
 }

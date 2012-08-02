@@ -19,6 +19,7 @@ package com.google.android.apps.mytracks.io.sendtogoogle;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.LocationUtils;
+import com.google.common.annotations.VisibleForTesting;
 
 import android.location.Location;
 import android.util.Log;
@@ -55,8 +56,8 @@ public class SendToGoogleUtils {
     segment.setDescription("");
     segment.setCategory(track.getCategory());
 
-    TripStatistics segmentStats = segment.getStatistics();
-    TripStatistics trackStats = track.getStatistics();
+    TripStatistics segmentStats = segment.getTripStatistics();
+    TripStatistics trackStats = track.getTripStatistics();
     segmentStats.setStartTime(trackStats.getStartTime());
     segmentStats.setStopTime(trackStats.getStopTime());
     boolean startNewTrackSegment = false;
@@ -77,7 +78,7 @@ public class SendToGoogleUtils {
         segment.setName(track.getName());
         segment.setDescription("");
         segment.setCategory(track.getCategory());
-        segmentStats = segment.getStatistics();
+        segmentStats = segment.getTripStatistics();
       }
 
       if (loc.getLatitude() <= 90) {
@@ -109,15 +110,16 @@ public class SendToGoogleUtils {
    * @param segment the track segment
    * @param splitTracks an array of track segments
    */
-  private static void prepareTrackSegment(Track segment, ArrayList<Track> splitTracks) {
+  @VisibleForTesting
+  static boolean prepareTrackSegment(Track segment, ArrayList<Track> splitTracks) {
     // Make sure the segment has at least 2 points
     if (segment.getLocations().size() < 2) {
       Log.d(TAG, "segment has less than 2 points");
-      return;
+      return false;
     }
 
     // For a new segment, sets it stop time
-    TripStatistics segmentStats = segment.getStatistics();
+    TripStatistics segmentStats = segment.getTripStatistics();
     if (segmentStats.getStopTime() < 0) {
       Location lastLocation = segment.getLocations().get(segment.getLocations().size() - 1);
       segmentStats.setStopTime(lastLocation.getTime());
@@ -128,5 +130,6 @@ public class SendToGoogleUtils {
     LocationUtils.decimate(segment, 2.0);
 
     splitTracks.add(segment);
+    return true;
   }
 }

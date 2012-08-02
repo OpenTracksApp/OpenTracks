@@ -23,6 +23,7 @@ import android.text.format.DateUtils;
 
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
@@ -42,7 +43,6 @@ public class StringUtils {
       "yyyy-MM-dd'T'HH:mm:ss");
   private static final Pattern ISO_8601_EXTRAS = Pattern.compile(
       "^(\\.\\d+)?(?:Z|([+-])(\\d{2}):(\\d{2}))?$");
-
   static {
     ISO_8601_DATE_TIME_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
     ISO_8601_BASE.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -51,24 +51,30 @@ public class StringUtils {
   private StringUtils() {}
 
   /**
-   * Formats the time based on user's phone date/time preferences.
-   *
-   * @param context the context
-   * @param time the time in milliseconds
-   */
-  public static String formatTime(Context context, long time) {
-    return android.text.format.DateFormat.getTimeFormat(context).format(time);
-  }
-
-  /**
    * Formats the date and time based on user's phone date/time preferences.
-   *
+   * 
    * @param context the context
    * @param time the time in milliseconds
    */
   public static String formatDateTime(Context context, long time) {
     return android.text.format.DateFormat.getDateFormat(context).format(time) + " "
-        + formatTime(context, time);
+        + DateUtils.formatDateTime(context, time, DateUtils.FORMAT_SHOW_TIME).toString();
+  }
+
+  /**
+   * Formats the relative date and time based on user's phone date/time preferences.
+   * 
+   * @param context the context
+   * @param time the time in milliseconds
+   */
+  public static String formatRelativeDateTime(Context context, long time) {
+    long now = Calendar.getInstance().getTimeInMillis();
+    if (now - time > DateUtils.WEEK_IN_MILLIS) {
+      return formatDateTime(context, time);
+    } else {
+      return DateUtils.getRelativeTimeSpanString(time, now, DateUtils.MINUTE_IN_MILLIS,
+          DateUtils.FORMAT_ABBREV_RELATIVE).toString();
+    }
   }
 
   /**
@@ -102,23 +108,26 @@ public class StringUtils {
 
   /**
    * Formats the distance.
-   *
+   * 
    * @param context the context
    * @param distance the distance in meters
-   * @param metric true to use metric. False to use imperial
+   * @param metricUnits true to use metric units. False to use imperial units
    */
-  public static String formatDistance(Context context, double distance, boolean metric) {
-    if (metric) {
-      if (distance > 2000.0) {
+  public static String formatDistance(Context context, double distance, boolean metricUnits) {
+    if (Double.isNaN(distance) || Double.isInfinite(distance)) {
+      return context.getString(R.string.value_unknown);
+    }
+    if (metricUnits) {
+      if (distance > 500.0) {
         distance *= UnitConversions.M_TO_KM;
         return context.getString(R.string.value_float_kilometer, distance);
       } else {
-        return context.getString(R.string.value_float_meter, distance);        
+        return context.getString(R.string.value_float_meter, distance);
       }
     } else {
-      if (distance * UnitConversions.M_TO_MI > 2) {
+      if (distance * UnitConversions.M_TO_MI > 0.5) {
         distance *= UnitConversions.M_TO_MI;
-        return context.getString(R.string.value_float_mile, distance);        
+        return context.getString(R.string.value_float_mile, distance);
       } else {
         distance *= UnitConversions.M_TO_FT;
         return context.getString(R.string.value_float_feet, distance);
@@ -131,44 +140,33 @@ public class StringUtils {
    * 
    * @param context the context
    * @param speed the speed in meters per second
-   * @param metric true to use metric. False to use imperial
+   * @param metricUnits true to use metric units. False to use imperial units
    * @param reportSpeed true to report as speed. False to report as pace
    */
   public static String formatSpeed(
-      Context context, double speed, boolean metric, boolean reportSpeed) {
+      Context context, double speed, boolean metricUnits, boolean reportSpeed) {
     if (Double.isNaN(speed) || Double.isInfinite(speed)) {
       return context.getString(R.string.value_unknown);
     }
-    if (metric) {
-      speed = speed * UnitConversions.MS_TO_KMH;
+    speed *= UnitConversions.MS_TO_KMH;
+    if (metricUnits) {
       if (reportSpeed) {
         return context.getString(R.string.value_float_kilometer_hour, speed);
       } else {
-        double paceInMinute = speed == 0 ? 0.0 : 60 / speed;
-        return context.getString(R.string.value_float_minute_kilometer, paceInMinute);
+        // convert from hours to minutes
+        double pace = speed == 0 ? 0.0 : 60.0 / speed;
+        return context.getString(R.string.value_float_minute_kilometer, pace);
       }
     } else {
-      speed = speed * UnitConversions.MS_TO_KMH * UnitConversions.KM_TO_MI;
+      speed *= UnitConversions.KM_TO_MI;
       if (reportSpeed) {
         return context.getString(R.string.value_float_mile_hour, speed);
       } else {
-        double paceInMinute = speed == 0 ? 0.0 : 60 / speed;
-        return context.getString(R.string.value_float_minute_mile, paceInMinute);
+        // convert from hours to minutes
+        double pace = speed == 0 ? 0.0 : 60.0 / speed;
+        return context.getString(R.string.value_float_minute_mile, pace);
       }
     }
-  }
-  
-  /**
-   * Formats the elapsed time and distance.
-   *
-   * @param context the context
-   * @param elapsedTime the elapsed time in milliseconds
-   * @param distance the distance in meters
-   * @param metric true to use metric. False to use imperial
-   */
-  public static String formatTimeDistance(
-      Context context, long elapsedTime, double distance, boolean metric) {
-    return formatElapsedTime(elapsedTime) + " " + formatDistance(context, distance, metric);
   }
 
   /**

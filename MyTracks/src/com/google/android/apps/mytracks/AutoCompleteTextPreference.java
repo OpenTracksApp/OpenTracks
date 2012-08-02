@@ -1,5 +1,6 @@
 package com.google.android.apps.mytracks;
 
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
@@ -31,9 +32,9 @@ public class AutoCompleteTextPreference extends EditTextPreference {
     mEditText.setThreshold(0);
 
     // Gets autocomplete values for 'Default Activity' preference
-    if (getKey().equals(context.getString(R.string.default_activity_key))) {
-      ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
-          R.array.activity_types, android.R.layout.simple_dropdown_item_1line);
+    if (PreferencesUtils.getKey(context, R.string.default_activity_key).equals(getKey())) {
+      ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+          context, R.array.activity_types, android.R.layout.simple_dropdown_item_1line);
       mEditText.setAdapter(adapter);
     }
   }

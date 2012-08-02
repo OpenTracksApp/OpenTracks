@@ -17,6 +17,7 @@
 package com.google.android.apps.mytracks.content;
 
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.test.AndroidTestCase;
@@ -29,6 +30,7 @@ import android.util.Pair;
  */
 public class DescriptionGeneratorImplTest extends AndroidTestCase {
 
+  private static final long START_TIME = 1288721514000L;
   private DescriptionGeneratorImpl descriptionGenerator;
 
   @Override
@@ -38,7 +40,7 @@ public class DescriptionGeneratorImplTest extends AndroidTestCase {
 
   /**
    * Tests {@link DescriptionGeneratorImpl#generateTrackDescription(Track,
-   * java.util.Vector, java.util.Vector)}.
+   * java.util.Vector, java.util.Vector, boolean)}.
    */
   public void testGenerateTrackDescription() {
     Track track = new Track();
@@ -52,11 +54,14 @@ public class DescriptionGeneratorImplTest extends AndroidTestCase {
     stats.setTotalElevationGain(6000);
     stats.setMaxGrade(0.42);
     stats.setMinGrade(0.11);
-    stats.setStartTime(1288721514000L);
-    track.setStatistics(stats);
+    stats.setStartTime(START_TIME);
+    track.setTripStatistics(stats);
     track.setCategory("hiking");
     String expected = "Created by" 
       + " <a href='http://www.google.com/mobile/mytracks'>My Tracks</a> on Android.<p>" 
+      + "Name: -<br>"
+      + "Activity type: hiking<br>"
+      + "Description: -<br>"
       + "Total distance: 20.00 km (12.4 mi)<br>"
       + "Total time: 10:00<br>"
       + "Moving time: 05:00<br>"
@@ -65,15 +70,14 @@ public class DescriptionGeneratorImplTest extends AndroidTestCase {
       + "Max speed: 360.00 km/h (223.7 mi/h)<br>"
       + "Average pace: 0.50 min/km (0.8 min/mi)<br>"
       + "Average moving pace: 0.25 min/km (0.4 min/mi)<br>"
-      + "Min pace: 0.17 min/km (0.3 min/mi)<br>"
+      + "Fastest pace: 0.17 min/km (0.3 min/mi)<br>"
       + "Max elevation: 550 m (1804 ft)<br>"
       + "Min elevation: -500 m (-1640 ft)<br>"
       + "Elevation gain: 6000 m (19685 ft)<br>"
       + "Max grade: 42 %<br>"
       + "Min grade: 11 %<br>"
-      + "Recorded: 11/2/2010 11:11 AM<br>"
-      + "Activity type: hiking<br>";
-    assertEquals(expected, descriptionGenerator.generateTrackDescription(track, null, null));
+      + "Recorded: " + StringUtils.formatDateTime(getContext(), START_TIME) + "<br>";
+    assertEquals(expected, descriptionGenerator.generateTrackDescription(track, null, null, true));
   }
 
   /**
@@ -91,8 +95,8 @@ public class DescriptionGeneratorImplTest extends AndroidTestCase {
     stats.setTotalElevationGain(6000);
     stats.setMaxGrade(0.42);
     stats.setMinGrade(0.11);
-    stats.setStartTime(1288721514000L);
-    waypoint.setStatistics(stats);
+    stats.setStartTime(START_TIME);
+    waypoint.setTripStatistics(stats);
     String expected = "Total distance: 20.00 km (12.4 mi)\n"
       + "Total time: 10:00\n"
       + "Moving time: 05:00\n"
@@ -101,13 +105,13 @@ public class DescriptionGeneratorImplTest extends AndroidTestCase {
       + "Max speed: 360.00 km/h (223.7 mi/h)\n"
       + "Average pace: 0.50 min/km (0.8 min/mi)\n"
       + "Average moving pace: 0.25 min/km (0.4 min/mi)\n"
-      + "Min pace: 0.17 min/km (0.3 min/mi)\n"
+      + "Fastest pace: 0.17 min/km (0.3 min/mi)\n"
       + "Max elevation: 550 m (1804 ft)\n"
       + "Min elevation: -500 m (-1640 ft)\n"
       + "Elevation gain: 6000 m (19685 ft)\n"
       + "Max grade: 42 %\n"
       + "Min grade: 11 %\n"
-      + "Recorded: 11/2/2010 11:11 AM\n";
+      + "Recorded: " + StringUtils.formatDateTime(getContext(), START_TIME) + "\n";
     assertEquals(expected, descriptionGenerator.generateWaypointDescription(waypoint));
   }
 

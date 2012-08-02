@@ -7,6 +7,8 @@ import com.google.wireless.gdata.client.GDataServiceClient;
 
 import android.util.Log;
 
+import java.util.Locale;
+
 /**
  * Client to talk to Google Maps via GData.
  */
@@ -93,9 +95,8 @@ public class MapsClient extends GDataServiceClient {
 
   public static String getVersionFeed(String versionUserId,
       String versionClient, String currentVersion) {
-    return String.format(MAPS_VERSION_FEED_PATH_FORMAT,
-                         MAPS_BASE_FEED_URL, versionUserId,
-                         versionClient, currentVersion);
+    return String.format(Locale.US, MAPS_VERSION_FEED_PATH_FORMAT, MAPS_BASE_FEED_URL,
+        versionUserId, versionClient, currentVersion);
   }
 
 }

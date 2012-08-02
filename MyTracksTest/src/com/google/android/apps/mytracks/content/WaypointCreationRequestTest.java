@@ -29,26 +29,29 @@ import android.test.AndroidTestCase;
 public class WaypointCreationRequestTest extends AndroidTestCase {
 
   public void testTypeParceling() {
-    WaypointCreationRequest original = WaypointCreationRequest.DEFAULT_MARKER;
+    WaypointCreationRequest original = WaypointCreationRequest.DEFAULT_WAYPOINT;
     Parcel p = Parcel.obtain();
     original.writeToParcel(p, 0);
     p.setDataPosition(0);
     WaypointCreationRequest copy = WaypointCreationRequest.CREATOR.createFromParcel(p);
     assertEquals(original.getType(), copy.getType());
+    assertFalse(copy.isTrackStatistics());
     assertNull(copy.getName());
     assertNull(copy.getDescription());
     assertNull(copy.getIconUrl());
   }
 
   public void testAllAttributesParceling() {
-    WaypointCreationRequest original =
-      new WaypointCreationRequest(WaypointType.MARKER, "name", "description", "img.png");
+    WaypointCreationRequest original = new WaypointCreationRequest(
+        WaypointType.WAYPOINT, false, "name", "category", "description", "img.png");
     Parcel p = Parcel.obtain();
     original.writeToParcel(p, 0);
     p.setDataPosition(0);
     WaypointCreationRequest copy = WaypointCreationRequest.CREATOR.createFromParcel(p);
     assertEquals(original.getType(), copy.getType());
+    assertFalse(copy.isTrackStatistics());
     assertEquals("name", copy.getName());
+    assertEquals("category", copy.getCategory());
     assertEquals("description", copy.getDescription());
     assertEquals("img.png", copy.getIconUrl());
   }
