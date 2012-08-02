@@ -246,7 +246,8 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.stopRecording(false);
     instrumentation.waitForIdleSync();
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_save));
+    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_save), true,
+        true);
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.SOLO.goBack();
     instrumentation.waitForIdleSync();

@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -495,6 +496,7 @@ public class EndToEndTestUtils {
       SOLO.waitForText(buttonName);
     }
     
+    // Find on action bar.
     if (hasActionBar) {
       ArrayList<View> allViews = SOLO.getViews();
       for (View view : allViews) {
@@ -509,16 +511,23 @@ public class EndToEndTestUtils {
       }
     }
 
-    ArrayList<Button> currentButtons = SOLO.getCurrentButtons();
-    for (Button oneButton : currentButtons) {
-      String title = (String) oneButton.getText();
-      if (title.equalsIgnoreCase(buttonName)) { 
-        button = oneButton;
+    // Get all buttons and find.
+    if(button == null) {
+      ArrayList<Button> currentButtons = SOLO.getCurrentButtons();
+      for (Button oneButton : currentButtons) {
+        String title = (String) oneButton.getText();
+        if (title.equalsIgnoreCase(buttonName)) { 
+          button = oneButton;
+        }
       }
     }
     
     if(button != null && isClick) {
       SOLO.clickOnView(button);
+    }
+    
+    if (button == null && isClick) {
+      Log.d(LOG_TAG, "Don't find the button " + buttonName);
     }
     
     return button;

@@ -153,6 +153,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.createTrackIfEmpty(5, false);
     EndToEndTestUtils.resetAllSettings(activityMyTracks, true);
     ChangeStatsSettings(false, false, true, true, true);
+    instrumentation.waitForIdleSync();
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
         activityMyTracks.getString(R.string.stats_min_elevation), 1,
