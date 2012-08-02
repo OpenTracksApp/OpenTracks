@@ -260,7 +260,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
         .getString(R.string.settings_backup_restore));
     EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.sd_card_import_success), 0, EndToEndTestUtils.NORMAL_WAIT_TIME));
+        activityMyTracks.getString(R.string.sd_card_import_success), 0, EndToEndTestUtils.SUPER_LONG_WAIT_TIME));
     // Check restore track.
     assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.trackName));
   }

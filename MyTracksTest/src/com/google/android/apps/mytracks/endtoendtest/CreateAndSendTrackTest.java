@@ -300,7 +300,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     EndToEndTestUtils.enterTextAvoidSoftKeyBoard(0, WAYPOINT_NAME);
     EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_add));
     if (EndToEndTestUtils.hasGpsSingal) {
-      assertTrue(EndToEndTestUtils.SOLO.searchText(WAYPOINT_NAME));
+      assertTrue(EndToEndTestUtils.SOLO.waitForText(WAYPOINT_NAME, 1, EndToEndTestUtils.LONG_WAIT_TIME, true));
     } else {
       assertFalse(EndToEndTestUtils.SOLO.searchText(WAYPOINT_NAME));
     }

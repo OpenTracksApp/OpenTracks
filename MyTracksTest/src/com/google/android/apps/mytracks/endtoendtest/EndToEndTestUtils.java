@@ -52,7 +52,7 @@ public class EndToEndTestUtils {
   
   private static final String ANDROID_LOCAL_IP = "10.0.2.2";
   // usually 5554.
-  public static int emulatorPort = 5554;
+  public static int emulatorPort = 5558;
 
   private static final int ORIENTATION_PORTRAIT = 1;
   private static final int ORIENTATION_LANDSCAPE = 0;
@@ -416,8 +416,8 @@ public class EndToEndTestUtils {
       trackName = TRACK_NAME_PREFIX
           + System.currentTimeMillis();
       SOLO.sendKey(KeyEvent.KEYCODE_DEL);
-      SOLO.enterText(0, trackName);
-      SOLO.enterText(1, DEFAULTACTIVITY);
+      enterTextAvoidSoftKeyBoard(0, trackName);
+      enterTextAvoidSoftKeyBoard(1, DEFAULTACTIVITY);
       SOLO.clickOnText(activityMytracks.getString(R.string.generic_save));
       instrumentation.waitForIdleSync();
     }
