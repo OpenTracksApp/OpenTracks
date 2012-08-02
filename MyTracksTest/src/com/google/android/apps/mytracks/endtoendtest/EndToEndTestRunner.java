@@ -32,11 +32,11 @@ public class EndToEndTestRunner extends InstrumentationTestRunner {
   @Override
   public void onCreate(Bundle arguments) {
     try {
-      EndToEndTestUtils.ANDROID_LOCAL_PORT = Integer.parseInt(arguments.getString("port"));
+      EndToEndTestUtils.emulatorPort = Integer.parseInt(arguments.getString("port"));
     } catch (Exception e) {
-      Log.d(EndToEndTestUtils.LOG_TAG, "Unable to get port parameter, use default value." + EndToEndTestUtils.ANDROID_LOCAL_PORT);
+      Log.e(EndToEndTestUtils.LOG_TAG, "Unable to get port parameter, use default value." + EndToEndTestUtils.emulatorPort, e);
     }
-    Log.d(EndToEndTestUtils.LOG_TAG, "Use port number when run test on emulator:" + EndToEndTestUtils.ANDROID_LOCAL_PORT);
+    Log.d(EndToEndTestUtils.LOG_TAG, "Use port number when run test on emulator:" + EndToEndTestUtils.emulatorPort);
     
     super.onCreate(arguments);
   }

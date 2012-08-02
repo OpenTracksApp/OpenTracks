@@ -297,8 +297,6 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_markers), true);
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.marker_list_empty_message));
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_insert_marker), true);
-    // Rotate when show insert page.
-    EndToEndTestUtils.rotateAllActivities();
     EndToEndTestUtils.enterTextAvoidSoftKeyBoard(0, WAYPOINT_NAME);
     EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_add));
     if (EndToEndTestUtils.hasGpsSingal) {

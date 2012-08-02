@@ -41,6 +41,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * Provides utilities to smoke test.
@@ -51,7 +52,7 @@ public class EndToEndTestUtils {
   
   private static final String ANDROID_LOCAL_IP = "10.0.2.2";
   // usually 5554.
-  static int ANDROID_LOCAL_PORT = 5554;
+  public static int emulatorPort = 5554;
 
   private static final int ORIENTATION_PORTRAIT = 1;
   private static final int ORIENTATION_LANDSCAPE = 0;
@@ -135,6 +136,14 @@ public class EndToEndTestUtils {
    * Checks the language, then sets the fields with right string.
    */
   private static void checkLanguage() {
+    Locale locale = null;
+    Configuration config=null;
+     config = activityMytracks.getBaseContext().getResources().getConfiguration();
+    locale = new Locale("en");
+    Locale.setDefault(locale);
+    config.locale = locale;
+    
+    
     deviceLanguage = instrumentation.getContext().getResources().getConfiguration().locale.getLanguage();
     if (RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.get(deviceLanguage) != null) {
       RELATIVE_STARTTIME_POSTFIX = RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.get(deviceLanguage);
@@ -166,7 +175,7 @@ public class EndToEndTestUtils {
     PrintStream out = null;
     Socket socket = null;
     try {
-      socket = new Socket(ANDROID_LOCAL_IP, ANDROID_LOCAL_PORT);
+      socket = new Socket(ANDROID_LOCAL_IP, emulatorPort);
       out = new PrintStream(socket.getOutputStream());
       float longitude = START_LONGITUDE;
       float latitude = START_LATITUDE;
