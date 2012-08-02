@@ -169,6 +169,7 @@ public class TcxTrackWriter implements TrackFormatWriter {
   public void writeEndTrack(Location lastPoint) {
     if (printWriter != null) {
       printWriter.println("</Lap>");
+      printWriter.println("<Notes>" + StringUtils.formatCData(track.getDescription()) + "</Notes>");
       printWriter.println("<Creator xsi:type=\"Device_t\">");
       printWriter.println("<Name>" 
           + StringUtils.formatCData(context.getString(R.string.send_google_by_my_tracks, "", "")) 
