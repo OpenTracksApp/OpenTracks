@@ -186,6 +186,8 @@ public class EndToEndTestUtils {
         longitude += DELTA_LONGITUDE;
         latitude += DELTA_LADITUDE;
       }
+      // Wait the GPS signal can be obtained by MyTracks.  
+      Thread.sleep(SHORT_WAIT_TIME);
     } catch (UnknownHostException e) {
       System.exit(-1);
     } catch (IOException e) {
