@@ -781,7 +781,7 @@ public class TrackDataHub implements DataSourceListener {
    * @return the selectedTrackId
    */
   @VisibleForTesting
-  protected long getSelectedTrackId() {
+  long getSelectedTrackId() {
     return selectedTrackId;
   }
   
@@ -791,7 +791,7 @@ public class TrackDataHub implements DataSourceListener {
    * @return the minRequiredAccuracy
    */
   @VisibleForTesting
-  protected int getMinRequiredAccuracy() {
+  int getMinRequiredAccuracy() {
     return minRequiredAccuracy;
   }
   
@@ -801,7 +801,7 @@ public class TrackDataHub implements DataSourceListener {
    * @return the metricUnits
    */
   @VisibleForTesting
-  protected boolean getMetricUnits() {
+  boolean isMetricUnits() {
     return metricUnits;
   }
   
@@ -811,7 +811,7 @@ public class TrackDataHub implements DataSourceListener {
    * @return the reportSpeed
    */
   @VisibleForTesting
-  protected boolean getReportSpeed() {
+  boolean isReportSpeed() {
     return reportSpeed;
   }
   
@@ -821,17 +821,17 @@ public class TrackDataHub implements DataSourceListener {
    * @param startStatus status of started
    */
   @VisibleForTesting
-  protected void setStartStatus(boolean startStatus) {
+  void setStarted(boolean startStatus) {
     started = startStatus;
   }
   
   /**
    * Sets the value of lastSeenLocation.
    * 
-   * @param value of lastSeenLocation
+   * @param lastSeenLocation value of lastSeenLocation
    */
   @VisibleForTesting
-  protected  void setLastSeenLocation(Location lastSeenLocation) {
+  void setLastSeenLocation(Location lastSeenLocation) {
     this.lastSeenLocation = lastSeenLocation;
   }
 }

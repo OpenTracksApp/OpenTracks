@@ -785,21 +785,17 @@ public class TrackDataHubTest extends AndroidTestCase {
     }
   }
   
-  private void expectStart() {
-    dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceChangeListenerCapture));
-  }
-  
   /**
    * Tests the method {@link TrackDataHub#start()}. This method would also cover
    * some logic of {@link TrackDataHub#loadDataForAll()} and 
    * {@link TrackDataHub#notifySelectedTrackChanged(Set)}.
    */
-  public void testStart_notifySelectedTrackChanged() {    
-    expectStart();
+  public void testRegisterSelectedTrackListener() {    
+    dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceChangeListenerCapture));
     Track track = TrackStubUtils.createTrack(1);
     expect(myTracksProviderUtils.getTrack(capture(new Capture<Long>()))).andReturn(track);
-    // Make the recording track id is not euqal with selected track id.
-    PreferencesUtils.setLong(context, R.string.recording_track_id_key, 1L);
+    // Make the track id is unique.
+    PreferencesUtils.setLong(context, R.string.recording_track_id_key, System.currentTimeMillis());
     trackDataListener1.onSelectedTrackChanged(track, false);
     replay();
     trackDataHub.start();
@@ -809,23 +805,22 @@ public class TrackDataHubTest extends AndroidTestCase {
   
   /**
    * Tests the method {@link TrackDataHub#start()}. This method would also cover
-   * some logic of {@link TrackDataHub#loadDataForAll()} and 
+   * some logic of PreferencesUtils and 
    * {@link TrackDataHub#notifyTracksTableUpdate(Set)}.
    */
-  public void testStart_notifyTracksTableUpdate() {    
-    expectStart();
+  public void testRegisterTracksTableListener() {    
+    dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceChangeListenerCapture));
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
     dataSource.registerContentObserver(eq(TracksColumns.CONTENT_URI), capture(observerCapture));
     Track track = TrackStubUtils.createTrack(1);
     expect(myTracksProviderUtils.getTrack(capture(new Capture<Long>()))).andReturn(track);
     // Make the recording track id is not euqal with selected track id.
-    PreferencesUtils.setLong(context, R.string.recording_track_id_key, 1L);
+    PreferencesUtils.setLong(context, R.string.recording_track_id_key, System.currentTimeMillis());
     trackDataListener1.onTrackUpdated(track);
     replay();
     trackDataHub.start();
     trackDataHub.registerTrackDataListener(trackDataListener1, EnumSet.of(TrackDataType.TRACKS_TABLE));
     verifyAndReset();
-    trackDataHub.setStartStatus(false);
   }
   
   /**
@@ -833,8 +828,8 @@ public class TrackDataHubTest extends AndroidTestCase {
    * some logic of {@link TrackDataHub#loadDataForAll()} and 
    * {@link TrackDataHub#notifyWaypointsTableUpdate(Set)}.
    */
-  public void testStart_notifyWaypointsTableUpdate() {    
-    expectStart();
+  public void testRegisterWaypointsTableListener() {    
+    dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceChangeListenerCapture));
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
     dataSource.registerContentObserver(eq(WaypointsColumns.CONTENT_URI), capture(observerCapture));    
     expect(myTracksProviderUtils.getWaypointsCursor(capture(new Capture<Long>()), capture(new Capture<Long>()),
@@ -845,16 +840,16 @@ public class TrackDataHubTest extends AndroidTestCase {
     trackDataHub.start();
     trackDataHub.registerTrackDataListener(trackDataListener1, EnumSet.of(TrackDataType.WAYPOINTS_TABLE));
     verifyAndReset();
-    trackDataHub.setStartStatus(false);
   }
   
   /**
    * Tests the method {@link TrackDataHub#start()}. This method would also cover
-   * some logic of {@link TrackDataHub#loadDataForAll()} and 
-   * {@link TrackDataHub#notifyLocationStateChanged(Set)}.
+   * some logic of {@link TrackDataHub#loadDataForAll()} and
+   * {@link TrackDataHub#notifyLocationStateChanged(Set)} when no last seen
+   * location.
    */
-  public void testStart_notifyLocationStateChanged() {    
-    expectStart();
+  public void testRegisterLocationListener_noLastSeenLocation() {    
+    dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceChangeListenerCapture));
     Capture<CurrentLocationListener> currentLocationListener = new Capture<CurrentLocationListener>();
     dataSource.registerLocationListener(capture(currentLocationListener));    
     trackDataListener1.onLocationStateChanged(capture(new Capture<LocationState>()));
@@ -863,16 +858,16 @@ public class TrackDataHubTest extends AndroidTestCase {
     trackDataHub.start();
     trackDataHub.registerTrackDataListener(trackDataListener1, EnumSet.of(TrackDataType.LOCATION));
     verifyAndReset();
-    trackDataHub.setStartStatus(false);
   }
   
   /**
    * Tests the method {@link TrackDataHub#start()}. This method would also cover
-   * some logic of {@link TrackDataHub#loadDataForAll()} and 
-   * {@link TrackDataHub#notifyLocationChanged(Location, boolean, Set)}.
+   * some logic of {@link TrackDataHub#loadDataForAll()} and
+   * {@link TrackDataHub#notifyLocationChanged(Location, boolean, Set)} when has
+   * last seen location.
    */
-  public void testStart_notifyLocationChanged() {    
-    expectStart();
+  public void testRegisterLocationListener_hasLastSeenLocation() {    
+    dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceChangeListenerCapture));
     Capture<CurrentLocationListener> currentLocationListener = new Capture<CurrentLocationListener>();
     dataSource.registerLocationListener(capture(currentLocationListener));   
     trackDataListener1.onLocationStateChanged(capture(new Capture<LocationState>()));
@@ -882,7 +877,6 @@ public class TrackDataHubTest extends AndroidTestCase {
     trackDataHub.start();
     trackDataHub.registerTrackDataListener(trackDataListener1, EnumSet.of(TrackDataType.LOCATION));
     verifyAndReset();
-    trackDataHub.setStartStatus(false);
   }
   
   /**
@@ -890,8 +884,8 @@ public class TrackDataHubTest extends AndroidTestCase {
    * some logic of {@link TrackDataHub#loadDataForAllListeners()} and 
    * {@link TrackDataHub#notifyHeadingChanged(float)}.
    */
-  public void testStart_HeadingChanged() {    
-    expectStart();
+  public void testRegisterHeadingListener() {    
+    dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceChangeListenerCapture));
     Capture<HeadingListener> compassListener = new Capture<HeadingListener>();
     dataSource.registerHeadingListener(capture(compassListener));    
     trackDataListener1.onHeadingChanged(capture(new Capture<Float>()));
@@ -899,10 +893,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     trackDataHub.start();
     trackDataHub.registerTrackDataListener(trackDataListener1, EnumSet.of(TrackDataType.HEADING));
     verifyAndReset();
-    trackDataHub.setStartStatus(false);
   }
-  
-  
 
   /**
    * Tests the method {@link TrackDataHub#notifyPreferenceChanged(String)} when
@@ -924,17 +915,16 @@ public class TrackDataHubTest extends AndroidTestCase {
    * Tests the method {@link TrackDataHub#notifyPreferenceChanged(String)} when
    * the key is R.string.metric_units_key and started status is false.
    */
-  public void testNotifyPreferenceChanged_metricUnits_noNotify() {
+  public void testNotifyPreferenceChanged_metricUnitsNoNotify() {
     boolean value = false;
     PreferencesUtils.setBoolean(context, R.string.metric_units_key, value);
-    trackDataHub.setStartStatus(false);
     trackDataHub.notifyPreferenceChanged(PreferencesUtils
         .getKey(context, R.string.metric_units_key));
-    assertEquals(value, trackDataHub.getMetricUnits());
+    assertEquals(value, trackDataHub.isMetricUnits());
     PreferencesUtils.setBoolean(context, R.string.metric_units_key, !value);
     trackDataHub.notifyPreferenceChanged(PreferencesUtils
         .getKey(context, R.string.metric_units_key));
-    assertEquals(!value, trackDataHub.getMetricUnits());
+    assertEquals(!value, trackDataHub.isMetricUnits());
   }
   
   
@@ -942,26 +932,24 @@ public class TrackDataHubTest extends AndroidTestCase {
    * Tests the method {@link TrackDataHub#notifyPreferenceChanged(String)} when
    * the key is R.string.metric_units_key and started status is false.
    */
-  public void testNotifyPreferenceChanged_reportSpeed_noNotify() {
+  public void testNotifyPreferenceChanged_reportSpeedNoNotify() {
     boolean value = false;
     PreferencesUtils.setBoolean(context, R.string.report_speed_key, value);
-    trackDataHub.setStartStatus(false);
     trackDataHub.notifyPreferenceChanged(PreferencesUtils
         .getKey(context, R.string.report_speed_key));
-    assertEquals(value, trackDataHub.getReportSpeed());
+    assertEquals(value, trackDataHub.isReportSpeed());
     PreferencesUtils.setBoolean(context, R.string.report_speed_key, !value);
     trackDataHub.notifyPreferenceChanged(PreferencesUtils
         .getKey(context, R.string.report_speed_key));
-    assertEquals(!value, trackDataHub.getReportSpeed());
+    assertEquals(!value, trackDataHub.isReportSpeed());
   }
   
   /**
    * Tests the method {@link TrackDataHub#notifyPreferenceChanged(String)} when
    * the key is R.string.selected_track_id_key and no listener is registered.
    */
-  public void testNotifyPreferenceChanged_trackId_noListener() {
+  public void testNotifyPreferenceChanged_trackIdNoListener() {
     long value = 1;
-    trackDataHub.setStartStatus(true);
     PreferencesUtils.setLong(context, R.string.selected_track_id_key, value);
     trackDataHub.notifyPreferenceChanged(PreferencesUtils
         .getKey(context, R.string.selected_track_id_key));
@@ -970,6 +958,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     trackDataHub.notifyPreferenceChanged(PreferencesUtils
         .getKey(context, R.string.selected_track_id_key));
     assertEquals(value + 1, trackDataHub.getSelectedTrackId());
-    trackDataHub.setStartStatus(false);
+    // Avoid the stop() call in tearDown().
+    trackDataHub.setStarted(false);
   }
 }
