@@ -262,8 +262,9 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
   
   /**
    * Tests whether the split marker is created as setting.
+   * @throws InterruptedException 
    */
-  public void testSplitSetting() {
+  public void testSplitSetting() throws InterruptedException {
     EndToEndTestUtils.startRecording();
 
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_split_frequency), true);
@@ -278,8 +279,11 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     // Send Gps to give a distance more than one kilometer or one mile.
     EndToEndTestUtils.sendGps(20);
-
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_markers), true);
+    // Wait the GPS signal is obtained by MyTracks.  
+    EndToEndTestUtils.SOLO.wait(EndToEndTestUtils.SHORT_WAIT_TIME);
+    
+    assertTrue(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_markers),
+        true));
     instrumentation.waitForIdleSync();
     if (EndToEndTestUtils.hasGpsSingal) {
       assertTrue(EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount() > 0);
