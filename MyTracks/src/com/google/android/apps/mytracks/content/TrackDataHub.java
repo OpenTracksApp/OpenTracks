@@ -816,16 +816,6 @@ public class TrackDataHub implements DataSourceListener {
   }
   
   /**
-   * Sets the status of started.
-   * 
-   * @param startStatus status of started
-   */
-  @VisibleForTesting
-  void setStarted(boolean startStatus) {
-    started = startStatus;
-  }
-  
-  /**
    * Sets the value of lastSeenLocation.
    * 
    * @param lastSeenLocation value of lastSeenLocation

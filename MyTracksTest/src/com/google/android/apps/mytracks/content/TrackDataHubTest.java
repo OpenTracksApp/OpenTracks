@@ -814,7 +814,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     dataSource.registerContentObserver(eq(TracksColumns.CONTENT_URI), capture(observerCapture));
     Track track = TrackStubUtils.createTrack(1);
     expect(myTracksProviderUtils.getTrack(capture(new Capture<Long>()))).andReturn(track);
-    // Make the recording track id is not euqal with selected track id.
+    // Make the track id is unique.
     PreferencesUtils.setLong(context, R.string.recording_track_id_key, System.currentTimeMillis());
     trackDataListener1.onTrackUpdated(track);
     replay();
@@ -913,7 +913,7 @@ public class TrackDataHubTest extends AndroidTestCase {
   
   /**
    * Tests the method {@link TrackDataHub#notifyPreferenceChanged(String)} when
-   * the key is R.string.metric_units_key and started status is false.
+   * the key is R.string.metric_units_key.
    */
   public void testNotifyPreferenceChanged_metricUnitsNoNotify() {
     boolean value = false;
@@ -930,7 +930,7 @@ public class TrackDataHubTest extends AndroidTestCase {
   
   /**
    * Tests the method {@link TrackDataHub#notifyPreferenceChanged(String)} when
-   * the key is R.string.metric_units_key and started status is false.
+   * the key is R.string.metric_units_key.
    */
   public void testNotifyPreferenceChanged_reportSpeedNoNotify() {
     boolean value = false;
@@ -958,7 +958,5 @@ public class TrackDataHubTest extends AndroidTestCase {
     trackDataHub.notifyPreferenceChanged(PreferencesUtils
         .getKey(context, R.string.selected_track_id_key));
     assertEquals(value + 1, trackDataHub.getSelectedTrackId());
-    // Avoid the stop() call in tearDown().
-    trackDataHub.setStarted(false);
   }
 }
