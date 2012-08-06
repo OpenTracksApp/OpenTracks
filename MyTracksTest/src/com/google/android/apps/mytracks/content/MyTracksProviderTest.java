@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.content;
 import com.google.android.apps.mytracks.content.MyTracksProvider.DatabaseHelper;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.test.AndroidTestCase;
 
 /**
@@ -29,10 +30,13 @@ public class MyTracksProviderTest extends AndroidTestCase {
 
   private SQLiteDatabase db;
   private MyTracksProvider myTracksProvider;
+  private String DATABASE_NAME = "mytrackstest.db";
 
   @Override
   protected void setUp() throws Exception {
-    recreatedDatabase();
+    getContext().deleteDatabase(DATABASE_NAME);
+    db = (new DatabaseHelper(getContext(), DATABASE_NAME)).getWritableDatabase();
+
     myTracksProvider = new MyTracksProvider();
     super.setUp();
   }
@@ -61,7 +65,7 @@ public class MyTracksProviderTest extends AndroidTestCase {
     assertTrue(checkTable(TracksColumns.TABLE_NAME));
     assertTrue(checkTable(WaypointsColumns.TABLE_NAME));
   }
-  
+
   /**
    * Tests the method
    * {@link MyTracksProvider.DatabaseHelper#onUpgrade(SQLiteDatabase, int, int)}
@@ -69,18 +73,18 @@ public class MyTracksProviderTest extends AndroidTestCase {
    */
   public void testDatabaseHelper_onUpgrade_Version17() {
     DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
-    
+
     // Make two table is only contains one normal integer column.
     dropTable(TrackPointsColumns.TABLE_NAME);
     dropTable(TracksColumns.TABLE_NAME);
     createEmptyTable(TrackPointsColumns.TABLE_NAME);
     createEmptyTable(TracksColumns.TABLE_NAME);
     databaseHelper.onUpgrade(db, 17, 20);
-    assertTrue(checkColumn(TrackPointsColumns.TABLE_NAME, TrackPointsColumns.SENSOR));
-    assertTrue(checkColumn(TracksColumns.TABLE_NAME, TracksColumns.TABLEID));
-    assertTrue(checkColumn(TracksColumns.TABLE_NAME, TracksColumns.ICON));
+    assertTrue(isColumnExisted(TrackPointsColumns.TABLE_NAME, TrackPointsColumns.SENSOR));
+    assertTrue(isColumnExisted(TracksColumns.TABLE_NAME, TracksColumns.TABLEID));
+    assertTrue(isColumnExisted(TracksColumns.TABLE_NAME, TracksColumns.ICON));
   }
-  
+
   /**
    * Tests the method
    * {@link MyTracksProvider.DatabaseHelper#onUpgrade(SQLiteDatabase, int, int)}
@@ -88,18 +92,18 @@ public class MyTracksProviderTest extends AndroidTestCase {
    */
   public void testDatabaseHelper_onUpgrade_Version18() {
     DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
-    
+
     // Make two table is only contains one normal integer column.
     dropTable(TrackPointsColumns.TABLE_NAME);
     dropTable(TracksColumns.TABLE_NAME);
     createEmptyTable(TrackPointsColumns.TABLE_NAME);
     createEmptyTable(TracksColumns.TABLE_NAME);
     databaseHelper.onUpgrade(db, 18, 20);
-    assertFalse(checkColumn(TrackPointsColumns.TABLE_NAME, TrackPointsColumns.SENSOR));
-    assertTrue(checkColumn(TracksColumns.TABLE_NAME, TracksColumns.TABLEID));
-    assertTrue(checkColumn(TracksColumns.TABLE_NAME, TracksColumns.ICON));
+    assertFalse(isColumnExisted(TrackPointsColumns.TABLE_NAME, TrackPointsColumns.SENSOR));
+    assertTrue(isColumnExisted(TracksColumns.TABLE_NAME, TracksColumns.TABLEID));
+    assertTrue(isColumnExisted(TracksColumns.TABLE_NAME, TracksColumns.ICON));
   }
-  
+
   /**
    * Tests the method
    * {@link MyTracksProvider.DatabaseHelper#onUpgrade(SQLiteDatabase, int, int)}
@@ -107,16 +111,16 @@ public class MyTracksProviderTest extends AndroidTestCase {
    */
   public void testDatabaseHelper_onUpgrade_Version19() {
     DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
-    
+
     // Make two table is only contains one normal integer column.
     dropTable(TrackPointsColumns.TABLE_NAME);
     dropTable(TracksColumns.TABLE_NAME);
     createEmptyTable(TrackPointsColumns.TABLE_NAME);
     createEmptyTable(TracksColumns.TABLE_NAME);
     databaseHelper.onUpgrade(db, 19, 20);
-    assertFalse(checkColumn(TrackPointsColumns.TABLE_NAME, TrackPointsColumns.SENSOR));
-    assertFalse(checkColumn(TracksColumns.TABLE_NAME, TracksColumns.TABLEID));
-    assertTrue(checkColumn(TracksColumns.TABLE_NAME, TracksColumns.ICON));
+    assertFalse(isColumnExisted(TrackPointsColumns.TABLE_NAME, TrackPointsColumns.SENSOR));
+    assertFalse(isColumnExisted(TracksColumns.TABLE_NAME, TracksColumns.TABLEID));
+    assertTrue(isColumnExisted(TracksColumns.TABLE_NAME, TracksColumns.ICON));
   }
 
   /**
@@ -127,11 +131,14 @@ public class MyTracksProviderTest extends AndroidTestCase {
   }
 
   /**
-   * Recreates the database of MyTracks.
+   * Tests the method {@link MyTracksProvider#getType(Uri)}.
    */
-  private void recreatedDatabase() {
-    assertTrue(getContext().deleteDatabase(MyTracksProvider.DATABASE_NAME));
-    db = (new DatabaseHelper(getContext())).getWritableDatabase();
+  public void testGetType() {
+    assertEquals(TrackPointsColumns.CONTENT_TYPE,
+        myTracksProvider.getType(TrackPointsColumns.CONTENT_URI));
+    assertEquals(TracksColumns.CONTENT_TYPE, myTracksProvider.getType(TracksColumns.CONTENT_URI));
+    assertEquals(WaypointsColumns.CONTENT_TYPE,
+        myTracksProvider.getType(WaypointsColumns.CONTENT_URI));
   }
 
   /**
@@ -140,17 +147,18 @@ public class MyTracksProviderTest extends AndroidTestCase {
    * @param table the name of table
    */
   private void createEmptyTable(String table) {
-    db.execSQL( "CREATE TABLE " + table + " (test INTEGER)");
+    db.execSQL("CREATE TABLE " + table + " (test INTEGER)");
   }
-  
+
   /**
    * Drops a table in database.
+   * 
    * @param table
    */
   private void dropTable(String table) {
     db.execSQL("Drop TABLE " + table);
   }
-  
+
   /**
    * Checks whether a table is existed.
    * 
@@ -162,27 +170,27 @@ public class MyTracksProviderTest extends AndroidTestCase {
       db.rawQuery("select count(*) from " + table, null);
       return true;
     } catch (Exception e) {
-     return false;
+      return false;
     }
-    
   }
-  
+
   /**
-   * Checks whether a column in a table is existed.
+   * Checks whether a column in a table is existed by whether can order by the
+   * column.
    * 
    * @param table the name of table
    * @param column the name of column
    * @return true means the column has existed
    */
-  private boolean checkColumn(String table, String column) {
+  private boolean isColumnExisted(String table, String column) {
     try {
-      db.execSQL("ALTER TABLE " + table + " add  " + column);
+      db.execSQL("SElECT count(*) from  " + table + " order by  " + column);
     } catch (Exception e) {
-      if(e.getMessage().indexOf("duplicate column") > -1) {
-        return true;
+      if (e.getMessage().indexOf("no such column") > -1) {
+        return false;
       }
     }
-    return false;
+    return true;
   }
 
 }
