@@ -17,19 +17,18 @@
 package com.google.android.apps.mytracks.services;
 
 /**
- * This is an interface for classes that will manage the location listener policy.
- * Different policy options are:
- *   Absolute
- *   Addaptive
- *
+ * This is an interface for classes that will manage the location listener
+ * policy. Different policy options are: {@link AbsoluteLocationListenerPolicy}
+ * and {@link AdaptiveLocationListenerPolicy}.
+ * 
  * @author Sandor Dornbush
  */
 public interface LocationListenerPolicy {
 
   /**
-   * Returns the polling time this policy would like at this time.
-   *
-   * @return The polling that this policy dictates
+   * Returns the polling interval this policy would like at this moment.
+   * 
+   * @return the polling interval
    */
   public long getDesiredPollingInterval();
 
@@ -39,10 +38,10 @@ public interface LocationListenerPolicy {
   public int getMinDistance();
 
   /**
-   * Notifies the amount of time the user has been idle at their current
-   * location.
-   *
-   * @param idleTime The time that the user has been idle at this spot
+   * Notifies the amount of time the user has been idle at his current location.
+   * 
+   * @param idleTime the time that the user has been idle at his current
+   *          location
    */
   public void updateIdleTime(long idleTime);
 }
