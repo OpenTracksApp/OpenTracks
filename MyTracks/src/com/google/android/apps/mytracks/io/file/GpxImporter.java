@@ -306,7 +306,7 @@ public class GpxImporter extends DefaultHandler {
       tripStatisticsBuilder = new TripStatisticsBuilder(0);
       tripStatisticsBuilder.pauseAt(0);
     }
-    track.setTripStatistics(tripStatisticsBuilder.getStatistics());
+    track.setTripStatistics(tripStatisticsBuilder.getTripStatistics());
     track.setNumberOfPoints(numberOfLocations);
     myTracksProviderUtils.updateTrack(track);
     tracksIds.add(track.getId());

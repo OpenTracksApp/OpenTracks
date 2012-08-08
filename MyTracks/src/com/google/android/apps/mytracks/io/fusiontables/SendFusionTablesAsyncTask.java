@@ -253,7 +253,7 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
           elevationBuffer.setNext(metricUnits ? location.getAltitude()
               : location.getAltitude() * UnitConversions.M_TO_FT);
           if (i % elevationSamplingFrequency == 0) {
-            distances.add(tripStatisticsBuilder.getStatistics().getTotalDistance());
+            distances.add(tripStatisticsBuilder.getTripStatistics().getTotalDistance());
             elevations.add(elevationBuffer.getAverage());
           }
           lastLocation = location;
@@ -279,7 +279,7 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
 
       // Create an end marker
       if (lastLocation != null) {
-        distances.add(tripStatisticsBuilder.getStatistics().getTotalDistance());
+        distances.add(tripStatisticsBuilder.getTripStatistics().getTotalDistance());
         elevations.add(elevationBuffer.getAverage());
         DescriptionGenerator descriptionGenerator = new DescriptionGeneratorImpl(context);
         track.setDescription(

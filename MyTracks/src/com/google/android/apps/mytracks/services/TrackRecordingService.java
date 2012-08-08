@@ -654,7 +654,7 @@ public class TrackRecordingService extends Service {
             }
           } while (cursor.moveToPrevious());
         }
-        statsBuilder.getStatistics().setMovingTime(stats.getMovingTime());
+        statsBuilder.getTripStatistics().setMovingTime(stats.getMovingTime());
         statsBuilder.pauseAt(stats.getStopTime());
         statsBuilder.resumeAt(System.currentTimeMillis());
       } else {
@@ -834,7 +834,7 @@ public class TrackRecordingService extends Service {
 
       // Update the current track:
       if (lastRecordedLocation != null && lastRecordedLocation.getLatitude() < 90) {
-        TripStatistics tripStatistics = statsBuilder.getStatistics();
+        TripStatistics tripStatistics = statsBuilder.getTripStatistics();
         tripStatistics.setStopTime(System.currentTimeMillis());
         
         if (recordingTrack.getStartId() < 0) {
@@ -865,8 +865,8 @@ public class TrackRecordingService extends Service {
       if (waypoint != null) {
         waypoint.setLength(length);
         waypoint.setDuration(
-            System.currentTimeMillis() - statsBuilder.getStatistics().getStartTime());
-        waypoint.setTripStatistics(waypointStatsBuilder.getStatistics());
+            System.currentTimeMillis() - statsBuilder.getTripStatistics().getStartTime());
+        waypoint.setTripStatistics(waypointStatsBuilder.getTripStatistics());
         providerUtils.updateWaypoint(waypoint);
       }
     }
@@ -896,7 +896,7 @@ public class TrackRecordingService extends Service {
     }
     waypoint.setTrackId(recordingTrackId);
     waypoint.setLength(length);
-    if (lastLocation == null || statsBuilder == null || statsBuilder.getStatistics() == null) {
+    if (lastLocation == null || statsBuilder == null || statsBuilder.getTripStatistics() == null) {
       if (!request.isTrackStatistics()) {
         return -1L;
       }
@@ -910,7 +910,7 @@ public class TrackRecordingService extends Service {
       waypoint.setLocation(location);
     } else {
       waypoint.setLocation(lastLocation);
-      waypoint.setDuration(lastLocation.getTime() - statsBuilder.getStatistics().getStartTime());
+      waypoint.setDuration(lastLocation.getTime() - statsBuilder.getTripStatistics().getStartTime());
     }
     Uri uri = providerUtils.insertWaypoint(waypoint);
     return Long.parseLong(uri.getLastPathSegment());
@@ -958,7 +958,7 @@ public class TrackRecordingService extends Service {
 
     // Override the duration - it's not the duration from the last waypoint, but
     // the duration from the beginning of the whole track
-    waypoint.setDuration(time - statsBuilder.getStatistics().getStartTime());
+    waypoint.setDuration(time - statsBuilder.getTripStatistics().getStartTime());
 
     // Set the rest of the waypoint data
     waypoint.setType(Waypoint.TYPE_STATISTICS);
@@ -973,7 +973,7 @@ public class TrackRecordingService extends Service {
       name = getString(R.string.marker_split_name_format, nextMarkerNumber);
     }
     waypoint.setName(name);
-    waypoint.setTripStatistics(waypointStatsBuilder.getStatistics());
+    waypoint.setTripStatistics(waypointStatsBuilder.getTripStatistics());
     waypoint.setDescription(descriptionGenerator.generateWaypointDescription(waypoint));
     waypoint.setIcon(getString(R.string.marker_statistics_icon_url));
 
@@ -1050,7 +1050,7 @@ public class TrackRecordingService extends Service {
   }
 
   public TripStatistics getTripStatistics() {
-    return statsBuilder.getStatistics();
+    return statsBuilder.getTripStatistics();
   }
 
   Location getLastLocation() {
