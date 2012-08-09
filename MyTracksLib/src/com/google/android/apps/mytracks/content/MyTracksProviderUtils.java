@@ -175,6 +175,13 @@ public interface MyTracksProviderUtils {
   public long getLastWaypointId(long trackId);
 
   /**
+   * Gets the last statistics waypoint for a track. Returns null if it doesn't exist.
+   * 
+   * @param trackId the track id
+   */
+  public Waypoint getLastStatisticsWaypoint(long trackId);
+  
+  /**
    * Gets the next marker number. Returns -1 if not able to get the next marker
    * number.
    * 

@@ -430,7 +430,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
   /**
    * Tests the method {@link MyTracksProviderUtilsImpl#getLastWaypointId(long)}.
    */
-  public void testGetKLastWaypointId() {
+  public void testGetLastWaypointId() {
     long trackId = System.currentTimeMillis();
     Track track = getTrack(trackId, 10);
     providerUtils.insertTrack(track);
@@ -448,7 +448,35 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     assertEquals(-1L, providerUtils.getLastWaypointId(-1));
     assertEquals(3L, providerUtils.getLastWaypointId(trackId));
   }
-  
+
+  /**
+   * Tests the method
+   * {@link MyTracksProviderUtils#getLastStatisticsWaypoint(long)}.
+   */
+  public void testGetLastStatisticsWaypoint() {
+    long trackId = System.currentTimeMillis();
+    Track track = getTrack(trackId, 10);
+    providerUtils.insertTrack(track);
+
+    Waypoint waypoint1 = new Waypoint();
+    waypoint1.setTrackId(trackId);
+    waypoint1.setType(Waypoint.TYPE_STATISTICS);
+    waypoint1.setDescription("Desc1");
+    Waypoint waypoint2 = new Waypoint();
+    waypoint2.setTrackId(trackId);
+    waypoint2.setType(Waypoint.TYPE_STATISTICS);
+    waypoint2.setDescription("Desc2");
+    Waypoint waypoint3 = new Waypoint();
+    waypoint3.setTrackId(trackId);
+    waypoint3.setType(Waypoint.TYPE_WAYPOINT);
+    waypoint3.setDescription("Desc3");
+    providerUtils.insertWaypoint(waypoint1);
+    providerUtils.insertWaypoint(waypoint2);
+    providerUtils.insertWaypoint(waypoint3);
+
+    assertEquals("Desc2", providerUtils.getLastStatisticsWaypoint(trackId).getDescription());
+  }
+
   /**
    * Tests the method {@link MyTracksProviderUtilsImpl#getNextMarkerNumber(long, boolean)}.
    */

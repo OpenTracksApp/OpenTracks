@@ -16,6 +16,7 @@
 package com.google.android.apps.mytracks.services.tasks;
 
 import com.google.android.apps.mytracks.services.TrackRecordingService;
+import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 
@@ -118,7 +119,11 @@ public class PeriodicTaskExecutor {
     if (!isDistanceFrequency() || periodicTask == null) {
       return;
     }
-    double distance = trackRecordingService.getTripStatistics().getTotalDistance()
+    TripStatistics tripStatistics = trackRecordingService.getTripStatistics();
+    if (tripStatistics == null) {
+      return;
+    }
+    double distance = tripStatistics.getTotalDistance()
         * UnitConversions.M_TO_KM;
     if (!metricUnits) {
       distance *= UnitConversions.KM_TO_MI;
@@ -158,13 +163,18 @@ public class PeriodicTaskExecutor {
       return;
     }
 
+    TripStatistics tripStatistics = trackRecordingService.getTripStatistics();
+    if (tripStatistics == null) {
+      return;
+    }
+    
     if (!isDistanceFrequency()) {
       nextTaskDistance = Double.MAX_VALUE;
       Log.d(TAG, "SplitManager: Distance splits disabled.");
       return;
     }
 
-    double distance = trackRecordingService.getTripStatistics().getTotalDistance()
+    double distance = tripStatistics.getTotalDistance()
         * UnitConversions.M_TO_KM;
     if (!metricUnits) {
       distance *= UnitConversions.KM_TO_MI;
