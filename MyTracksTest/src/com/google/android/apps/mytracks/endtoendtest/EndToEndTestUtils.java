@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -41,6 +42,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * Provides utilities to smoke test.
@@ -51,7 +53,7 @@ public class EndToEndTestUtils {
   
   private static final String ANDROID_LOCAL_IP = "10.0.2.2";
   // usually 5554.
-  private static final int ANDROID_LOCAL_PORT = 5554;
+  public static int emulatorPort = 5558;
 
   private static final int ORIENTATION_PORTRAIT = 1;
   private static final int ORIENTATION_LANDSCAPE = 0;
@@ -127,6 +129,7 @@ public class EndToEndTestUtils {
   static boolean isEmulator = true;
   static boolean hasGpsSingal = true;
   static boolean isCheckedFirstLaunch = false;
+  public static final String LOG_TAG = "MyTracksTest";
 
   private EndToEndTestUtils() {}
   
@@ -134,6 +137,14 @@ public class EndToEndTestUtils {
    * Checks the language, then sets the fields with right string.
    */
   private static void checkLanguage() {
+    Locale locale = null;
+    Configuration config=null;
+     config = activityMytracks.getBaseContext().getResources().getConfiguration();
+    locale = new Locale("en");
+    Locale.setDefault(locale);
+    config.locale = locale;
+    
+    
     deviceLanguage = instrumentation.getContext().getResources().getConfiguration().locale.getLanguage();
     if (RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.get(deviceLanguage) != null) {
       RELATIVE_STARTTIME_POSTFIX = RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.get(deviceLanguage);
@@ -165,7 +176,7 @@ public class EndToEndTestUtils {
     PrintStream out = null;
     Socket socket = null;
     try {
-      socket = new Socket(ANDROID_LOCAL_IP, ANDROID_LOCAL_PORT);
+      socket = new Socket(ANDROID_LOCAL_IP, emulatorPort);
       out = new PrintStream(socket.getOutputStream());
       float longitude = START_LONGITUDE;
       float latitude = START_LATITUDE;
@@ -175,6 +186,8 @@ public class EndToEndTestUtils {
         longitude += DELTA_LONGITUDE;
         latitude += DELTA_LADITUDE;
       }
+      // Wait the GPS signal can be obtained by MyTracks.  
+      Thread.sleep(SHORT_WAIT_TIME);
     } catch (UnknownHostException e) {
       System.exit(-1);
     } catch (IOException e) {
@@ -406,8 +419,8 @@ public class EndToEndTestUtils {
       trackName = TRACK_NAME_PREFIX
           + System.currentTimeMillis();
       SOLO.sendKey(KeyEvent.KEYCODE_DEL);
-      SOLO.enterText(0, trackName);
-      SOLO.enterText(1, DEFAULTACTIVITY);
+      enterTextAvoidSoftKeyBoard(0, trackName);
+      enterTextAvoidSoftKeyBoard(1, DEFAULTACTIVITY);
       SOLO.clickOnText(activityMytracks.getString(R.string.generic_save));
       instrumentation.waitForIdleSync();
     }
@@ -485,6 +498,7 @@ public class EndToEndTestUtils {
       SOLO.waitForText(buttonName);
     }
     
+    // Find on action bar.
     if (hasActionBar) {
       ArrayList<View> allViews = SOLO.getViews();
       for (View view : allViews) {
@@ -499,16 +513,23 @@ public class EndToEndTestUtils {
       }
     }
 
-    ArrayList<Button> currentButtons = SOLO.getCurrentButtons();
-    for (Button oneButton : currentButtons) {
-      String title = (String) oneButton.getText();
-      if (title.equalsIgnoreCase(buttonName)) { 
-        button = oneButton;
+    // Get all buttons and find.
+    if(button == null) {
+      ArrayList<Button> currentButtons = SOLO.getCurrentButtons();
+      for (Button oneButton : currentButtons) {
+        String title = (String) oneButton.getText();
+        if (title.equalsIgnoreCase(buttonName)) { 
+          button = oneButton;
+        }
       }
     }
     
-    if(isClick) {
+    if(button != null && isClick) {
       SOLO.clickOnView(button);
+    }
+    
+    if (button == null && isClick) {
+      Log.d(LOG_TAG, "Don't find the button " + buttonName);
     }
     
     return button;
@@ -556,48 +577,49 @@ public class EndToEndTestUtils {
    * @param click true means need click this menu
    * @return true if find this menu
    */
-  static boolean findMenuItem(String menuName, boolean click) {boolean findResult = false;
-  boolean isMoreMenuOpened = false;
-  
-  // ICS phone.
-  if(hasActionBar) {
-    // Firstly find in action bar.
-    View button = getButtonOnScreen(menuName, false, false);
-    if (button != null) {
-      findResult = true;
-      if (click) {
-        SOLO.clickOnView(button);
-        instrumentation.waitForIdleSync();
+  static boolean findMenuItem(String menuName, boolean click) {
+    boolean findResult = false;
+    boolean isMoreMenuOpened = false;
+
+    // ICS phone.
+    if (hasActionBar) {
+      // Firstly find in action bar.
+      View button = getButtonOnScreen(menuName, false, false);
+      if (button != null) {
+        findResult = true;
+        if (click) {
+          SOLO.clickOnView(button);
+          instrumentation.waitForIdleSync();
+        }
+        return findResult;
       }
-      return findResult;
-    }
-    showMenuItem();
-    findResult = SOLO.searchText(menuName);
-  } else {
-    // Non-ICS phone.
-    SOLO.sendKey(KeyEvent.KEYCODE_MENU);
-    if (SOLO.searchText(menuName)) {
-      findResult = true;
-    } else if (SOLO.searchText(MENU_MORE)) {
-      SOLO.clickOnText(MENU_MORE);
+      showMenuItem();
       findResult = SOLO.searchText(menuName);
-      isMoreMenuOpened = true;
+    } else {
+      // Non-ICS phone.
+      SOLO.sendKey(KeyEvent.KEYCODE_MENU);
+      if (SOLO.searchText(menuName)) {
+        findResult = true;
+      } else if (SOLO.searchText(MENU_MORE)) {
+        SOLO.clickOnText(MENU_MORE);
+        findResult = SOLO.searchText(menuName);
+        isMoreMenuOpened = true;
+      }
     }
-  }
-  
-  if (findResult && click) {
-    SOLO.clickOnText(menuName);
-    instrumentation.waitForIdleSync();
-  } else {
-    // Quit more menu list if opened.
-    if (isMoreMenuOpened) {
+
+    if (findResult && click) {
+      SOLO.clickOnText(menuName);
+      instrumentation.waitForIdleSync();
+    } else {
+      // Quit more menu list if opened.
+      if (isMoreMenuOpened) {
+        SOLO.goBack();
+      }
+      // Quit menu list.
       SOLO.goBack();
     }
-    // Quit menu list.
-    SOLO.goBack();
+    return findResult;
   }
-  return findResult;
-}
 
   /**
    * Show menu item list.

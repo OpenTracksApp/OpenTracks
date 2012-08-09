@@ -62,7 +62,6 @@ import java.util.Locale;
  * @author Youtao Liu
  */
 public class GoogleUtils {
-  public static final String LOG_TAG = "MyTracksTest";
   public static final String DOCUMENT_NAME_PREFIX = "My Tracks";
   public static final String SPREADSHEET_NAME = DOCUMENT_NAME_PREFIX + "-" + EndToEndTestUtils.DEFAULTACTIVITY;
 
@@ -92,7 +91,7 @@ public class GoogleUtils {
       authToken = AccountManager.get(context).blockingGetAuthToken(getAccount(context),
           MapsConstants.SERVICE_NAME, false);
     } catch (Exception e) {
-      Log.d(LOG_TAG, "Unable to get auth token", e);
+      Log.d(EndToEndTestUtils.LOG_TAG, "Unable to get auth token", e);
       return mapData;
     }
 
@@ -107,7 +106,7 @@ public class GoogleUtils {
         mapData.add(MapsGDataConverter.getMapMetadataForEntry(entry));
       }
     } catch (Exception e) {
-      Log.d(LOG_TAG, "Unable to get maps", e);
+      Log.d(EndToEndTestUtils.LOG_TAG, "Unable to get maps", e);
     } finally {
       if (gDataParser != null) {
         gDataParser.close();
@@ -139,7 +138,7 @@ public class GoogleUtils {
                 MapsConstants.SERVICE_NAME, false));
             return true;
           } catch (Exception e) {
-            Log.d(LOG_TAG, "Unable to drop map", e);
+            Log.d(EndToEndTestUtils.LOG_TAG, "Unable to drop map", e);
             return false;
           }
         }
@@ -201,7 +200,7 @@ public class GoogleUtils {
         }
       }
     } catch (Exception e) {
-      Log.d(LOG_TAG, "Unable to fetch spreadsheet.", e);
+      Log.d(EndToEndTestUtils.LOG_TAG, "Unable to fetch spreadsheet.", e);
     }
     return null;
   }
@@ -219,7 +218,7 @@ public class GoogleUtils {
   private static boolean searchTrackTitleInSpreadsheet(String title, Activity activity, String spreadsheetTitle, boolean isDelete) {
     String spreadsheetId = searchSpreadsheetByTitle(spreadsheetTitle, activity).getId().replace(SendDocsUtils.SPREADSHEET_ID_PREFIX, "");
     if(spreadsheetId == null) {
-      Log.d(LOG_TAG, "Unable to find the spreadsheet -- " + spreadsheetTitle);
+      Log.d(EndToEndTestUtils.LOG_TAG, "Unable to find the spreadsheet -- " + spreadsheetTitle);
       return false;
     }
     Context context = activity.getApplicationContext();
@@ -247,7 +246,7 @@ public class GoogleUtils {
       }
     }
     } catch (Exception e) {
-      Log.d(LOG_TAG, "Unable to fetch content of spreadsheet.", e);
+      Log.d(EndToEndTestUtils.LOG_TAG, "Unable to fetch content of spreadsheet.", e);
     }
     return false;
   }
@@ -290,7 +289,7 @@ public class GoogleUtils {
         return true; 
       }
     } catch (Exception e) {
-      Log.d(LOG_TAG, "Unable to query fusion table.", e);
+      Log.d(EndToEndTestUtils.LOG_TAG, "Unable to query fusion table.", e);
     }
     return false;
   }
@@ -320,7 +319,7 @@ public class GoogleUtils {
         }
       }
     } catch (IOException e) {
-      Log.d(LOG_TAG, "Failed when delete all fusion tables.", e);
+      Log.d(EndToEndTestUtils.LOG_TAG, "Failed when delete all fusion tables.", e);
     }
     return false;
   }
@@ -358,7 +357,7 @@ public class GoogleUtils {
       response = request.execute();
       return response;
     } catch (Exception e) {
-      Log.d(LOG_TAG, "Failed when send fusion table query.", e);
+      Log.d(EndToEndTestUtils.LOG_TAG, "Failed when send fusion table query.", e);
       return null;
     }
   }

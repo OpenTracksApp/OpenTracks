@@ -444,6 +444,29 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   }
 
   @Override
+  public Waypoint getLastStatisticsWaypoint(long trackId) {
+    if (trackId < 0) {
+      return null;
+    }
+    Cursor cursor = null;
+    try {
+      String selection = WaypointsColumns.TRACKID + "=? AND " + WaypointsColumns.TYPE + "="
+          + Waypoint.TYPE_STATISTICS;
+      String[] selectionArgs = new String[] { Long.toString(trackId) };
+      cursor = getWaypointsCursor(
+          null, selection, selectionArgs, WaypointsColumns._ID + " DESC", 1);
+      if (cursor != null && cursor.moveToFirst()) {
+        return createWaypoint(cursor);
+      }
+    } finally {
+      if (cursor != null) {
+        cursor.close();
+      }
+    }
+    return null;
+  }
+
+  @Override
   public int getNextMarkerNumber(long trackId, boolean statistics) {
     if (trackId < 0) {
       return -1;

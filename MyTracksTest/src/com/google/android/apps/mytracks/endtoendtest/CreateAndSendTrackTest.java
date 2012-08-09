@@ -246,7 +246,8 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.stopRecording(false);
     instrumentation.waitForIdleSync();
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_save));
+    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_save), true,
+        true);
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.SOLO.goBack();
     instrumentation.waitForIdleSync();
@@ -261,8 +262,9 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
   
   /**
    * Tests whether the split marker is created as setting.
+   * @throws InterruptedException 
    */
-  public void testSplitSetting() {
+  public void testSplitSetting() throws InterruptedException {
     EndToEndTestUtils.startRecording();
 
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_split_frequency), true);
@@ -276,9 +278,9 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     // Send Gps to give a distance more than one kilometer or one mile.
-    EndToEndTestUtils.sendGps(20);
-
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_markers), true);
+    EndToEndTestUtils.sendGps(20);    
+    assertTrue(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_markers),
+        true));
     instrumentation.waitForIdleSync();
     if (EndToEndTestUtils.hasGpsSingal) {
       assertTrue(EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount() > 0);
@@ -297,12 +299,10 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_markers), true);
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.marker_list_empty_message));
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_insert_marker), true);
-    // Rotate when show insert page.
-    EndToEndTestUtils.rotateAllActivities();
     EndToEndTestUtils.enterTextAvoidSoftKeyBoard(0, WAYPOINT_NAME);
     EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_add));
     if (EndToEndTestUtils.hasGpsSingal) {
-      assertTrue(EndToEndTestUtils.SOLO.searchText(WAYPOINT_NAME));
+      assertTrue(EndToEndTestUtils.SOLO.waitForText(WAYPOINT_NAME, 1, EndToEndTestUtils.LONG_WAIT_TIME, true));
     } else {
       assertFalse(EndToEndTestUtils.SOLO.searchText(WAYPOINT_NAME));
     }

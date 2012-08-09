@@ -57,7 +57,12 @@ public class MyTracksProvider extends ContentProvider {
   static class DatabaseHelper extends SQLiteOpenHelper {
   
     public DatabaseHelper(Context context) {
-      super(context, DATABASE_NAME, null, DATABASE_VERSION);
+      this(context, DATABASE_NAME);
+    }
+    
+    @VisibleForTesting
+    public DatabaseHelper(Context context, String databaseName) {
+      super(context, databaseName, null, DATABASE_VERSION);
     }
   
     @Override
@@ -106,7 +111,8 @@ public class MyTracksProvider extends ContentProvider {
    * 
    * @author Jimmy Shih
    */
-  private enum UrlType {
+  @VisibleForTesting
+  enum UrlType {
     TRACKPOINTS, TRACKPOINTS_ID, TRACKS, TRACKS_ID, WAYPOINTS, WAYPOINTS_ID
   }
 
@@ -139,7 +145,8 @@ public class MyTracksProvider extends ContentProvider {
    * @param context context to creates database
    * @return true means run successfully
    */
-  public boolean onCreate(Context context) {
+  @VisibleForTesting
+  boolean onCreate(Context context) {
     if (!canAccess()) {
       return false;
     }
@@ -456,15 +463,5 @@ public class MyTracksProvider extends ContentProvider {
       return uri;
     }
     throw new SQLException("Failed to insert a waypoint " + url);
-  }
-  
-  /**
-   * Gets the db.
-   * 
-   * @return the SQLiteDatabase object
-   */
-  @VisibleForTesting
-  SQLiteDatabase getDb() {
-    return db;
   }
 }

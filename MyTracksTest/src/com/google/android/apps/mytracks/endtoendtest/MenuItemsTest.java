@@ -73,7 +73,7 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
 
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_help), true);
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.help_about));
+    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.help_about), true, true);
     EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
   }

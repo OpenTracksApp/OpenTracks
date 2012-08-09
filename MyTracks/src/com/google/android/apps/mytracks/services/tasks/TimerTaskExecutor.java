@@ -17,6 +17,7 @@
 package com.google.android.apps.mytracks.services.tasks;
 
 import com.google.android.apps.mytracks.services.TrackRecordingService;
+import com.google.android.apps.mytracks.stats.TripStatistics;
 
 import java.util.Date;
 import java.util.Timer;
@@ -53,6 +54,11 @@ public class TimerTaskExecutor {
       return;
     }
 
+    TripStatistics tripStatistics = trackRecordingService.getTripStatistics();
+    if (tripStatistics == null) {
+      return;
+    }
+
     if (timer != null) {
       timer.cancel();
       timer.purge();
@@ -67,7 +73,7 @@ public class TimerTaskExecutor {
     }
 
     long now = System.currentTimeMillis();
-    long next = trackRecordingService.getTripStatistics().getStartTime();
+    long next = tripStatistics.getStartTime();
     if (next < now) {
       next = now + interval - ((now - next) % interval);
     }

@@ -18,19 +18,15 @@ package com.google.android.apps.mytracks.stats;
 
 /**
  * A helper class that tracks a minimum and a maximum of a variable.
- *
+ * 
  * @author Sandor Dornbush
  */
 public class ExtremityMonitor {
 
-  /**
-   * The smallest value seen so far.
-   */
+  // The smallest value seen so far.
   private double min;
 
-  /**
-   * The largest value seen so far.
-   */
+  // The largest value seen so far.
   private double max;
 
   public ExtremityMonitor() {
@@ -38,9 +34,31 @@ public class ExtremityMonitor {
   }
 
   /**
-   * Updates the min and the max with the new value.
-   *
-   * @param value the new value for the monitor
+   * Resets this object to it's initial state where the min and max are unknown.
+   */
+  public void reset() {
+    min = Double.POSITIVE_INFINITY;
+    max = Double.NEGATIVE_INFINITY;
+  }
+
+  /**
+   * Gets the minimum value seen.
+   */
+  public double getMin() {
+    return min;
+  }
+
+  /**
+   * Gets the maximum value seen.
+   */
+  public double getMax() {
+    return max;
+  }
+
+  /**
+   * Updates the min and the max with a new value.
+   * 
+   * @param value the new value
    * @return true if an extremity was found
    */
   public boolean update(double value) {
@@ -57,33 +75,10 @@ public class ExtremityMonitor {
   }
 
   /**
-   * Gets the minimum value seen.
-   *
-   * @return The minimum value passed into the update() function
-   */
-  public double getMin() {
-    return min;
-  }
-
-  /**
-   * Gets the maximum value seen.
-   *
-   * @return The maximum value passed into the update() function
-   */
-  public double getMax() {
-    return max;
-  }
-
-  /**
-   * Resets this object to it's initial state where the min and max are unknown.
-   */
-  public void reset() {
-    min = Double.POSITIVE_INFINITY;
-    max = Double.NEGATIVE_INFINITY;
-  }
-
-  /**
    * Sets the minimum and maximum values.
+   * 
+   * @param min the minimum value
+   * @param max the maximum value
    */
   public void set(double min, double max) {
     this.min = min;
@@ -92,6 +87,8 @@ public class ExtremityMonitor {
 
   /**
    * Sets the minimum value.
+   * 
+   * @param min the minimum value
    */
   public void setMin(double min) {
     this.min = min;
@@ -99,16 +96,20 @@ public class ExtremityMonitor {
 
   /**
    * Sets the maximum value.
+   * 
+   * @param max the maximum value
    */
   public void setMax(double max) {
     this.max = max;
   }
 
+  /**
+   * Returns true if has data.
+   */
   public boolean hasData() {
-    return min != Double.POSITIVE_INFINITY
-        && max != Double.NEGATIVE_INFINITY;
+    return min != Double.POSITIVE_INFINITY && max != Double.NEGATIVE_INFINITY;
   }
-  
+
   @Override
   public String toString() {
     return "Min: " + min + " Max: " + max;
