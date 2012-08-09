@@ -42,13 +42,13 @@ import java.util.List;
 public interface ApiAdapter {
 
   /**
-   * Gets a status announcer task.
+   * Gets an announcement periodic task.
    * <p>
    * Due to changes in API level 8.
    * 
    * @param context the context
    */
-  public PeriodicTask getStatusAnnouncerTask(Context context);
+  public PeriodicTask getAnnouncementPeriodicTask(Context context);
 
   /**
    * Gets a {@link BackupPreferencesListener}.

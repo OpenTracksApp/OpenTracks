@@ -15,9 +15,9 @@
  */
 package com.google.android.apps.mytracks.util;
 
-import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
 import com.google.android.apps.mytracks.io.backup.Api8BackupPreferencesListener;
-import com.google.android.apps.mytracks.services.tasks.Api8StatusAnnouncerTask;
+import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
+import com.google.android.apps.mytracks.services.tasks.Api8AnnouncementPeriodicTask;
 import com.google.android.apps.mytracks.services.tasks.PeriodicTask;
 
 import android.content.Context;
@@ -30,8 +30,8 @@ import android.content.Context;
 public class Api8Adapter extends Api7Adapter {
   
   @Override
-  public PeriodicTask getStatusAnnouncerTask(Context context) {
-    return new Api8StatusAnnouncerTask(context);
+  public PeriodicTask getAnnouncementPeriodicTask(Context context) {
+    return new Api8AnnouncementPeriodicTask(context);
   }
   
   @Override

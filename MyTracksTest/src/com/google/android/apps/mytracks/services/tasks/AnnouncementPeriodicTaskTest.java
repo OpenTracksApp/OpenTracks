@@ -40,21 +40,21 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.easymock.Capture;
 
 /**
- * Tests for {@link StatusAnnouncerTask}.
+ * Tests for {@link AnnouncementPeriodicTask}.
  * WARNING: I'm not responsible if your eyes start bleeding while reading this
  *          code. You have been warned. It's still better than no test, though.
  *
  * @author Rodrigo Damazio
  */
-public class StatusAnnouncerTaskTest extends AndroidTestCase {
+public class AnnouncementPeriodicTaskTest extends AndroidTestCase {
 
   // Use something other than our hardcoded value
   private static final Locale DEFAULT_LOCALE = Locale.KOREAN;
   private static final String ANNOUNCEMENT = "I can haz cheeseburger?";
   private Locale oldDefaultLocale;
 
-  private StatusAnnouncerTask task;
-  private StatusAnnouncerTask mockTask;
+  private AnnouncementPeriodicTask task;
+  private AnnouncementPeriodicTask mockTask;
   private Capture<OnInitListener> initListenerCapture;
   private Capture<PhoneStateListener> phoneListenerCapture;
   private TextToSpeechDelegate ttsDelegate;
@@ -252,7 +252,7 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
   }
 
   @UsesMocks({
-    StatusAnnouncerTask.class,
+    AnnouncementPeriodicTask.class,
     StringUtils.class,
   })
   @Override
@@ -291,8 +291,8 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
     phoneListenerCapture = new Capture<PhoneStateListener>();
 
     // Create a partial forwarding mock
-    mockTask = AndroidMock.createMock(StatusAnnouncerTask.class, getContext());
-    task = new StatusAnnouncerTask(getContext()) {
+    mockTask = AndroidMock.createMock(AnnouncementPeriodicTask.class, getContext());
+    task = new AnnouncementPeriodicTask(getContext()) {
       @Override
       protected TextToSpeech newTextToSpeech(Context ctx,
           OnInitListener onInitListener) {
@@ -369,7 +369,7 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
 
     expect(tts.isLanguageAvailable(DEFAULT_LOCALE)).andStubReturn(TextToSpeech.LANG_AVAILABLE);
     expect(tts.setLanguage(DEFAULT_LOCALE)).andReturn(TextToSpeech.LANG_AVAILABLE);
-    expect(tts.setSpeechRate(StatusAnnouncerTask.TTS_SPEECH_RATE)).andReturn(TextToSpeech.SUCCESS);
+    expect(tts.setSpeechRate(AnnouncementPeriodicTask.TTS_SPEECH_RATE)).andReturn(TextToSpeech.SUCCESS);
     
     // Expect actual announcement call
     expect(tts.speak(
@@ -458,7 +458,7 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
   }
   
   /**
-   * Tests {@link StatusAnnouncerTask#getAnnounceTime(long)} with time zero.
+   * Tests {@link AnnouncementPeriodicTask#getAnnounceTime(long)} with time zero.
    */
   public void testGetAnnounceTime_time_zero() {
     long time = 0; // 0 seconds
@@ -466,7 +466,7 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
   }
 
   /**
-   * Tests {@link StatusAnnouncerTask#getAnnounceTime(long)} with time one.
+   * Tests {@link AnnouncementPeriodicTask#getAnnounceTime(long)} with time one.
    */
   public void testGetAnnounceTime_time_one() {
     long time = 1 * 1000; // 1 second
@@ -474,7 +474,7 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
   }
 
   /**
-   * Tests {@link StatusAnnouncerTask#getAnnounceTime(long)} with singular
+   * Tests {@link AnnouncementPeriodicTask#getAnnounceTime(long)} with singular
    * numbers with the hour unit.
    */
   public void testGetAnnounceTime_singular_has_hour() {
@@ -483,7 +483,7 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
   }
 
   /**
-   * Tests {@link StatusAnnouncerTask#getAnnounceTime(long)} with plural numbers
+   * Tests {@link AnnouncementPeriodicTask#getAnnounceTime(long)} with plural numbers
    * with the hour unit.
    */
   public void testGetAnnounceTime_plural_has_hour() {
@@ -492,7 +492,7 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
   }
   
   /**
-   * Tests {@link StatusAnnouncerTask#getAnnounceTime(long)} with singular
+   * Tests {@link AnnouncementPeriodicTask#getAnnounceTime(long)} with singular
    * numbers without the hour unit.
    */
   public void testGetAnnounceTime_singular_no_hour() {
@@ -501,7 +501,7 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
   }
 
   /**
-   * Tests {@link StatusAnnouncerTask#getAnnounceTime(long)} with plural numbers
+   * Tests {@link AnnouncementPeriodicTask#getAnnounceTime(long)} with plural numbers
    * without the hour unit.
    */
   public void testGetAnnounceTime_plural_no_hour() {

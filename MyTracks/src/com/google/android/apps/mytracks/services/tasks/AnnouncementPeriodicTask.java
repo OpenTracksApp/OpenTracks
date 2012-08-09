@@ -38,7 +38,7 @@ import java.util.Locale;
  * 
  * @author Sandor Dornbush
  */
-public class StatusAnnouncerTask implements PeriodicTask {
+public class AnnouncementPeriodicTask implements PeriodicTask {
 
   /**
    * The rate at which announcements are spoken.
@@ -46,7 +46,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
   @VisibleForTesting
   static final float TTS_SPEECH_RATE = 0.9f;
 
-  private static final String TAG = StatusAnnouncerTask.class.getSimpleName();
+  private static final String TAG = AnnouncementPeriodicTask.class.getSimpleName();
   private static final long HOUR_TO_MILLISECOND = 60 * 60 * 1000;
 
   private final Context context;
@@ -75,7 +75,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
     }
   };
 
-  public StatusAnnouncerTask(Context context) {
+  public AnnouncementPeriodicTask(Context context) {
     this.context = context;
   }
 
