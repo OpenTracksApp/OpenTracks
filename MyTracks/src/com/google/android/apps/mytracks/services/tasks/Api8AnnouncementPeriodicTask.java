@@ -32,9 +32,9 @@ import java.util.HashMap;
  * @author Sandor Dornbush
  */
 @TargetApi(8)
-public class Api8StatusAnnouncerTask extends StatusAnnouncerTask {
+public class Api8AnnouncementPeriodicTask extends AnnouncementPeriodicTask {
 
-  private static final String TAG = Api8StatusAnnouncerTask.class.getSimpleName();
+  private static final String TAG = Api8AnnouncementPeriodicTask.class.getSimpleName();
   private static final HashMap<String, String> SPEECH_PARAMS = new HashMap<String, String>();
   static {
     SPEECH_PARAMS.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "not_used");
@@ -53,7 +53,7 @@ public class Api8StatusAnnouncerTask extends StatusAnnouncerTask {
 
   private final AudioManager audioManager;
 
-  public Api8StatusAnnouncerTask(Context context) {
+  public Api8AnnouncementPeriodicTask(Context context) {
     super(context);
     audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
   }

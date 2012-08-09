@@ -19,8 +19,8 @@ import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.ContextualActionModeCallback;
 import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
 import com.google.android.apps.mytracks.services.sensors.BluetoothConnectionManager;
+import com.google.android.apps.mytracks.services.tasks.AnnouncementPeriodicTask;
 import com.google.android.apps.mytracks.services.tasks.PeriodicTask;
-import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerTask;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.apache.ApacheHttpTransport;
 
@@ -50,8 +50,8 @@ import java.util.List;
 public class Api7Adapter implements ApiAdapter {
 
   @Override
-  public PeriodicTask getStatusAnnouncerTask(Context context) {
-    return new StatusAnnouncerTask(context);
+  public PeriodicTask getAnnouncementPeriodicTask(Context context) {
+    return new AnnouncementPeriodicTask(context);
   }
 
   @Override
