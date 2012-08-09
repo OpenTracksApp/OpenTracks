@@ -594,7 +594,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     DescriptionGenerator descriptionGenerator = new DescriptionGenerator() {
 
       @Override
-      public String generateWaypointDescription(Waypoint waypoint) {
+      public String generateWaypointDescription(TripStatistics tripStatistics) {
         return MyTracksProviderUtilsImplTest.MOCK_DESC;
       }
 
@@ -650,7 +650,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     // Delete
     DescriptionGenerator descriptionGenerator = new DescriptionGenerator() {
       @Override
-      public String generateWaypointDescription(Waypoint waypoint) {
+      public String generateWaypointDescription(TripStatistics tripStatistics) {
         return MyTracksProviderUtilsImplTest.MOCK_DESC;
       }
 
@@ -879,20 +879,30 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     }
     assertFalse(locationIterator.hasNext());
   }
-  
+
   /**
-   * Tests the method
-   * {@link MyTracksProviderUtilsImpl#getLastLocationId(long)}.
+   * Tests the method {@link MyTracksProviderUtilsImpl#getLastTrackLocationId(long)}.
    */
-  public void testGetLastLocationId() {
+  public void testGetLastTrackLocationId() {
     // Insert track, point at first.
     long trackId = System.currentTimeMillis();
     Track track = getTrack(trackId, 10);
     insertTrackWithLocations(track);
 
-    assertEquals(10, providerUtils.getLastLocationId(trackId));
+    assertEquals(10, providerUtils.getLastTrackLocationId(trackId));
   }
-  
+
+  /**
+   * Tests the method {@link MyTracksProviderUtilsImpl#getLastTrackLocation(long)}.
+   */
+  public void testGetLastTrackLocation() {
+    // Insert track, point at first.
+    long trackId = System.currentTimeMillis();
+    Track track = getTrack(trackId, 10);
+    insertTrackWithLocations(track);
+    checkLocation(9, providerUtils.getLastTrackLocation(trackId));
+  }
+
   /**
    * Tests the method
    * {@link MyTracksProviderUtilsImpl#insertTrackPoint(Location, long)}. This

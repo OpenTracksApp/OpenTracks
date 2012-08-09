@@ -148,7 +148,7 @@ public class GpxImporterTest extends AndroidTestCase {
     expect(providerUtils.insertTrack(AndroidMock.capture(trackParam)))
         .andReturn(TRACK_ID_URI);
 
-    expect(providerUtils.getLastLocationId(TRACK_ID)).andReturn(TRACK_POINT_ID_1).andReturn(TRACK_POINT_ID_2);
+    expect(providerUtils.getLastTrackLocationId(TRACK_ID)).andReturn(TRACK_POINT_ID_1).andReturn(TRACK_POINT_ID_2);
 
     // A flush happens after the first insertion to get the starting point ID,
     // which is why we get two calls
@@ -225,7 +225,7 @@ public class GpxImporterTest extends AndroidTestCase {
 
     expect(providerUtils.bulkInsertTrackPoints((Location[]) AndroidMock.anyObject(),
         AndroidMock.anyInt(), AndroidMock.anyLong())).andStubReturn(1);
-    expect(providerUtils.getLastLocationId(TRACK_ID)).andStubReturn(TRACK_POINT_ID_1);
+    expect(providerUtils.getLastTrackLocationId(TRACK_ID)).andStubReturn(TRACK_POINT_ID_1);
 
     providerUtils.deleteTrack(TRACK_ID);
 

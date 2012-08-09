@@ -527,7 +527,7 @@ public class GpxImporter extends DefaultHandler {
    */
   private long getLastPointId() {
     flushPoints();
-    return myTracksProviderUtils.getLastLocationId(track.getId());
+    return myTracksProviderUtils.getLastTrackLocationId(track.getId());
   }
 
   /**

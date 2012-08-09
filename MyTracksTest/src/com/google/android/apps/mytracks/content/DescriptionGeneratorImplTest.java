@@ -112,7 +112,8 @@ public class DescriptionGeneratorImplTest extends AndroidTestCase {
       + "Max grade: 42 %\n"
       + "Min grade: 11 %\n"
       + "Recorded: " + StringUtils.formatDateTime(getContext(), START_TIME) + "\n";
-    assertEquals(expected, descriptionGenerator.generateWaypointDescription(waypoint));
+    assertEquals(
+        expected, descriptionGenerator.generateWaypointDescription(waypoint.getTripStatistics()));
   }
 
   /**

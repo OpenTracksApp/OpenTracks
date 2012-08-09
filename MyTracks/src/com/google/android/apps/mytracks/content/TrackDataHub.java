@@ -574,7 +574,7 @@ public class TrackDataHub implements DataSourceListener {
     long localLastSeenLocationId = updateSamplingState ? lastSeenLocationId : -1L;
     long maxPointId = updateSamplingState ? -1L : lastSeenLocationId;
 
-    long lastLocationId = myTracksProviderUtils.getLastLocationId(selectedTrackId);
+    long lastLocationId = myTracksProviderUtils.getLastTrackLocationId(selectedTrackId);
     int samplingFrequency = -1;
     LocationIterator iterator = myTracksProviderUtils.getLocationIterator(
         selectedTrackId, localLastSeenLocationId + 1, false, locationFactory);

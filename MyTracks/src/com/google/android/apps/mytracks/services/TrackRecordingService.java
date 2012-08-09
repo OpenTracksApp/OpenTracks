@@ -413,33 +413,61 @@ public class TrackRecordingService extends Service {
     if (!isRecording()) {
       throw new IllegalStateException("Cannot insert marker when not recording!");
     }
-    Waypoint waypoint = new Waypoint();
-    if (waypointCreationRequest.getType() == WaypointType.WAYPOINT) {
-      buildWaypointMarker(waypoint, waypointCreationRequest);
-    } else {
-      buildStatisticsMarker(waypoint, waypointCreationRequest);
-    }
-    waypoint.setTrackId(recordingTrackId);
-    waypoint.setLength(length);
+    boolean isStatistics = waypointCreationRequest.getType() == WaypointType.STATISTICS;
 
-    if (lastLocation != null && trackTripStatisticsBuilder != null
+    String name;
+    if (waypointCreationRequest.getName() != null) {
+      name = waypointCreationRequest.getName();
+    } else {
+      int nextMarkerNumber = myTracksProviderUtils.getNextMarkerNumber(
+          recordingTrackId, isStatistics);
+      if (nextMarkerNumber == -1) {
+        nextMarkerNumber = 0;
+      }
+      name = getString(
+          isStatistics ? R.string.marker_split_name_format : R.string.marker_name_format,
+          nextMarkerNumber);
+    }
+
+    TripStatistics tripStatistics;
+    String description;
+    if (isStatistics) {
+      long now = System.currentTimeMillis();
+      markerTripStatisticsBuilder.pauseAt(now);
+      tripStatistics = markerTripStatisticsBuilder.getTripStatistics();
+      markerTripStatisticsBuilder = new TripStatisticsBuilder(now);
+      description = new DescriptionGeneratorImpl(this).generateWaypointDescription(tripStatistics);
+    } else {
+      tripStatistics = null;
+      description = waypointCreationRequest.getDescription() != null ? waypointCreationRequest
+          .getDescription()
+          : "";
+    }
+
+    String category = waypointCreationRequest.getCategory() != null ? waypointCreationRequest
+        .getCategory()
+        : "";
+    String icon = getString(
+        isStatistics ? R.string.marker_statistics_icon_url : R.string.marker_waypoint_icon_url);
+    int type = isStatistics ? Waypoint.TYPE_STATISTICS : Waypoint.TYPE_WAYPOINT;
+
+    long duration;
+    Location location = myTracksProviderUtils.getLastTrackLocation(recordingTrackId);
+    if (location != null && trackTripStatisticsBuilder != null
         && trackTripStatisticsBuilder.getTripStatistics() != null) {
-      waypoint.setLocation(lastLocation);
-      waypoint.setDuration(
-          lastLocation.getTime() - trackTripStatisticsBuilder.getTripStatistics().getStartTime());
+      duration = location.getTime() - trackTripStatisticsBuilder.getTripStatistics().getStartTime();
     } else {
       if (!waypointCreationRequest.isTrackStatistics()) {
         return -1L;
       }
-      /*
-       * For track statistics, a null location is OK. Make it an impossible
-       * location.
-       */
-      Location location = new Location("");
+      // For track statistics, make it an impossible location
+      location = new Location("");
       location.setLatitude(100);
       location.setLongitude(180);
-      waypoint.setLocation(location);
+      duration = 0;
     }
+    Waypoint waypoint = new Waypoint(name, description, category, icon, recordingTrackId, type,
+        length, duration, -1L, -1L, location, tripStatistics);
     Uri uri = myTracksProviderUtils.insertWaypoint(waypoint);
     return Long.parseLong(uri.getLastPathSegment());
   }
@@ -642,7 +670,7 @@ public class TrackRecordingService extends Service {
     splitExecutor.shutdown();
     Track track = myTracksProviderUtils.getTrack(recordingTrackId);
     if (track != null) {
-      long lastLocationId = myTracksProviderUtils.getLastLocationId(recordingTrackId);
+      long lastLocationId = myTracksProviderUtils.getLastTrackLocationId(recordingTrackId);
       if (lastLocationId >= 0 && track.getStopId() >= 0) {
         track.setStopId(lastLocationId);
       }
@@ -850,79 +878,6 @@ public class TrackRecordingService extends Service {
     announcementExecutor.update();
     splitExecutor.update();
     return true;
-  }
-
-  /**
-   * Builds a waypoint marker.
-   * 
-   * @param waypoint the waypoint
-   * @param waypointCreationRequest the waypoint creation request
-   */
-  private void buildWaypointMarker(
-      Waypoint waypoint, WaypointCreationRequest waypointCreationRequest) {
-    waypoint.setType(Waypoint.TYPE_WAYPOINT);
-    String name;
-    if (waypointCreationRequest.getName() != null) {
-      name = waypointCreationRequest.getName();
-    } else {
-      int nextMarkerNumber = myTracksProviderUtils.getNextMarkerNumber(recordingTrackId, false);
-      if (nextMarkerNumber == -1) {
-        nextMarkerNumber = 0;
-      }
-      name = getString(R.string.marker_name_format, nextMarkerNumber);
-    }
-    waypoint.setName(name);
-    if (waypointCreationRequest.getDescription() != null) {
-      waypoint.setDescription(waypointCreationRequest.getDescription());
-    }
-    if (waypointCreationRequest.getCategory() != null) {
-      waypoint.setCategory(waypointCreationRequest.getCategory());
-    }
-
-    String icon = waypointCreationRequest.getIconUrl();
-    if (icon == null) {
-      icon = getString(R.string.marker_waypoint_icon_url);
-    }
-    waypoint.setIcon(icon);
-  }
-
-  /**
-   * Build a statistics marker. A statistics marker holds the stats for the last
-   * segment up to this statistics marker.
-   * 
-   * @param waypoint the waypoint
-   * @param waypointCreationRequest the waypoint creation request
-   */
-  private void buildStatisticsMarker(
-      Waypoint waypoint, WaypointCreationRequest waypointCreationRequest) {
-    waypoint.setType(Waypoint.TYPE_STATISTICS);
-
-    String name;
-    if (waypointCreationRequest.getName() != null) {
-      name = waypointCreationRequest.getName();
-    } else {
-      int nextMarkerNumber = myTracksProviderUtils.getNextMarkerNumber(recordingTrackId, true);
-      if (nextMarkerNumber == -1) {
-        nextMarkerNumber = 0;
-      }
-      name = getString(R.string.marker_split_name_format, nextMarkerNumber);
-    }
-    waypoint.setName(name);
-
-    long now = System.currentTimeMillis();
-    markerTripStatisticsBuilder.pauseAt(now);
-    waypoint.setTripStatistics(markerTripStatisticsBuilder.getTripStatistics());
-
-    // Update description after updating tripStatistics
-    waypoint.setDescription(
-        new DescriptionGeneratorImpl(this).generateWaypointDescription(waypoint));
-    waypoint.setIcon(getString(R.string.marker_statistics_icon_url));
-    waypoint.setStartId(myTracksProviderUtils.getLastLocationId(recordingTrackId));
-    // Update duration (from the the beginning of the track)
-    waypoint.setDuration(now - trackTripStatisticsBuilder.getTripStatistics().getStartTime());
-
-    // Create a new markerTripStatisticsBuilder for the next statistics marker
-    markerTripStatisticsBuilder = new TripStatisticsBuilder(now);
   }
 
   /**

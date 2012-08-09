@@ -556,7 +556,8 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
         Log.d(TAG, "Unable to find the next statistics marker after deleting one.");
       } else {
         nextWaypoint.getTripStatistics().merge(waypoint.getTripStatistics());
-        nextWaypoint.setDescription(descriptionGenerator.generateWaypointDescription(nextWaypoint));
+        nextWaypoint.setDescription(
+            descriptionGenerator.generateWaypointDescription(nextWaypoint.getTripStatistics()));
         if (!updateWaypoint(nextWaypoint)) {
           Log.e(TAG, "Unable to update the next statistics marker after deleting one.");
         }
@@ -928,7 +929,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   }
 
   @Override
-  public long getLastLocationId(long trackId) {
+  public long getLastTrackLocationId(long trackId) {
     if (trackId < 0) {
       return -1L;
     }
@@ -949,6 +950,18 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
       }
     }
     return -1L;
+  }
+  
+  @Override
+  public Location getLastTrackLocation(long trackId) {
+    if (trackId < 0) {
+      return null;
+    }
+    String selection = TrackPointsColumns._ID + "=(select max(" + TrackPointsColumns._ID
+        + ") from " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID
+        + "=?)";
+    String[] selectionArgs = new String[] { Long.toString(trackId) };
+    return findLocationBy(selection, selectionArgs);
   }
 
   @Override

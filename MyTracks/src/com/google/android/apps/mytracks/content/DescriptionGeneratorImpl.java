@@ -76,8 +76,8 @@ public class DescriptionGeneratorImpl implements DescriptionGenerator {
   }
 
   @Override
-  public String generateWaypointDescription(Waypoint waypoint) {
-    return generateTripStatisticsDescription(waypoint.getTripStatistics(), false);
+  public String generateWaypointDescription(TripStatistics tripStatistics) {
+    return generateTripStatisticsDescription(tripStatistics, false);
   }
 
   /**

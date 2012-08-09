@@ -289,7 +289,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     FixedSizeLocationIterator locationIterator = new FixedSizeLocationIterator(1, 10, 5);
     expect(myTracksProviderUtils.getLocationIterator(
         eq(TRACK_ID), eq(0L), eq(false), isA(LocationFactory.class))).andReturn(locationIterator);
-    expect(myTracksProviderUtils.getLastLocationId(TRACK_ID)).andReturn(10L);
+    expect(myTracksProviderUtils.getLastTrackLocationId(TRACK_ID)).andReturn(10L);
     trackDataListener1.clearTrackPoints();
     locationIterator.expectLocationsDelivered(trackDataListener1);
     trackDataListener1.onNewTrackPointsDone();
@@ -304,7 +304,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     locationIterator = new FixedSizeLocationIterator(1, 10, 5);
     expect(myTracksProviderUtils.getLocationIterator(
         eq(TRACK_ID), eq(0L), eq(false), isA(LocationFactory.class))).andReturn(locationIterator);
-    expect(myTracksProviderUtils.getLastLocationId(TRACK_ID)).andReturn(10L);
+    expect(myTracksProviderUtils.getLastTrackLocationId(TRACK_ID)).andReturn(10L);
     trackDataListener2.clearTrackPoints();
     locationIterator.expectLocationsDelivered(trackDataListener2);
     trackDataListener2.onNewTrackPointsDone();
@@ -319,7 +319,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     locationIterator = new FixedSizeLocationIterator(11, 10, 1);
     expect(myTracksProviderUtils.getLocationIterator(
         eq(TRACK_ID), eq(11L), eq(false), isA(LocationFactory.class))).andReturn(locationIterator);
-    expect(myTracksProviderUtils.getLastLocationId(TRACK_ID)).andReturn(20L);
+    expect(myTracksProviderUtils.getLastTrackLocationId(TRACK_ID)).andReturn(20L);
     locationIterator.expectLocationsDelivered(trackDataListener1);
     locationIterator.expectLocationsDelivered(trackDataListener2);
     trackDataListener1.onNewTrackPointsDone();
@@ -334,7 +334,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     expect(myTracksProviderUtils.getLocationIterator(
         eq(TRACK_ID + 1), eq(0L), eq(false), isA(LocationFactory.class)))
         .andReturn(locationIterator);
-    expect(myTracksProviderUtils.getLastLocationId(TRACK_ID + 1)).andReturn(110L);
+    expect(myTracksProviderUtils.getLastTrackLocationId(TRACK_ID + 1)).andReturn(110L);
     trackDataListener2.clearTrackPoints();
     locationIterator.expectLocationsDelivered(trackDataListener2);
     trackDataListener2.onNewTrackPointsDone();
@@ -359,7 +359,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     FixedSizeLocationIterator locationIterator = new FixedSizeLocationIterator(1, 10, 5);
     expect(myTracksProviderUtils.getLocationIterator(
         eq(TRACK_ID), eq(0L), eq(false), isA(LocationFactory.class))).andReturn(locationIterator);
-    expect(myTracksProviderUtils.getLastLocationId(TRACK_ID)).andReturn(10L);
+    expect(myTracksProviderUtils.getLastTrackLocationId(TRACK_ID)).andReturn(10L);
 
     trackDataListener1.clearTrackPoints();
     locationIterator.expectLocationsDelivered(trackDataListener1);
@@ -385,7 +385,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     locationIterator = new FixedSizeLocationIterator(1, 10, 5);
     expect(myTracksProviderUtils.getLocationIterator(
         eq(TRACK_ID), eq(0L), eq(false), isA(LocationFactory.class))).andReturn(locationIterator);
-    expect(myTracksProviderUtils.getLastLocationId(TRACK_ID)).andReturn(10L);
+    expect(myTracksProviderUtils.getLastTrackLocationId(TRACK_ID)).andReturn(10L);
     trackDataListener1.clearTrackPoints();
     locationIterator.expectLocationsDelivered(trackDataListener1);
     trackDataListener1.onNewTrackPointsDone();
@@ -410,7 +410,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     FixedSizeLocationIterator locationIterator = new FixedSizeLocationIterator(1, 10, 5);
     expect(myTracksProviderUtils.getLocationIterator(
         eq(TRACK_ID), eq(0L), eq(false), isA(LocationFactory.class))).andReturn(locationIterator);
-    expect(myTracksProviderUtils.getLastLocationId(TRACK_ID)).andReturn(10L);
+    expect(myTracksProviderUtils.getLastTrackLocationId(TRACK_ID)).andReturn(10L);
     trackDataListener1.clearTrackPoints();
     locationIterator.expectLocationsDelivered(trackDataListener1);
     trackDataListener1.onNewTrackPointsDone();
@@ -436,7 +436,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     expect(myTracksProviderUtils.getLocationIterator(
         eq(TRACK_ID + 1), eq(0L), eq(false), isA(LocationFactory.class)))
         .andReturn(locationIterator);
-    expect(myTracksProviderUtils.getLastLocationId(TRACK_ID + 1)).andReturn(10L);
+    expect(myTracksProviderUtils.getLastTrackLocationId(TRACK_ID + 1)).andReturn(10L);
     trackDataListener1.clearTrackPoints();
     locationIterator.expectLocationsDelivered(trackDataListener1);
     trackDataListener1.onNewTrackPointsDone();
@@ -457,7 +457,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     dataSource.registerContentObserver(
         eq(TrackPointsColumns.CONTENT_URI), capture(contentObserverCapture));
 
-    expect(myTracksProviderUtils.getLastLocationId(TRACK_ID)).andReturn(200L);
+    expect(myTracksProviderUtils.getLastTrackLocationId(TRACK_ID)).andReturn(200L);
     AndroidMock.expectLastCall().anyTimes();
     FixedSizeLocationIterator locationIterator1 = new FixedSizeLocationIterator(
         1, 200, 4, 25, 71, 120);
@@ -497,7 +497,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     FixedSizeLocationIterator locationIterator = new FixedSizeLocationIterator(1, 30, 5);
     expect(myTracksProviderUtils.getLocationIterator(
         eq(TRACK_ID), eq(0L), eq(false), isA(LocationFactory.class))).andReturn(locationIterator);
-    expect(myTracksProviderUtils.getLastLocationId(TRACK_ID)).andReturn(30L);
+    expect(myTracksProviderUtils.getLastTrackLocationId(TRACK_ID)).andReturn(30L);
 
     trackDataListener1.clearTrackPoints();
     locationIterator.expectLocationsDelivered(trackDataListener1);
@@ -514,7 +514,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     locationIterator = new FixedSizeLocationIterator(31, 30);
     expect(myTracksProviderUtils.getLocationIterator(
         eq(TRACK_ID), eq(31L), eq(false), isA(LocationFactory.class))).andReturn(locationIterator);
-    expect(myTracksProviderUtils.getLastLocationId(TRACK_ID)).andReturn(60L);
+    expect(myTracksProviderUtils.getLastTrackLocationId(TRACK_ID)).andReturn(60L);
     locationIterator.expectSampledLocationsDelivered(trackDataListener1, 2, false);
     trackDataListener1.onNewTrackPointsDone();
     replay();
@@ -526,7 +526,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     locationIterator = new FixedSizeLocationIterator(1, 90);
     expect(myTracksProviderUtils.getLocationIterator(
         eq(TRACK_ID), eq(0L), eq(false), isA(LocationFactory.class))).andReturn(locationIterator);
-    expect(myTracksProviderUtils.getLastLocationId(TRACK_ID)).andReturn(90L);
+    expect(myTracksProviderUtils.getLastTrackLocationId(TRACK_ID)).andReturn(90L);
     trackDataListener1.clearTrackPoints();
     locationIterator.expectSampledLocationsDelivered(trackDataListener1, 2, false);
     trackDataListener1.onNewTrackPointsDone();
