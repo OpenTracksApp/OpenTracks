@@ -26,8 +26,8 @@ import android.location.Location;
 import android.util.Log;
 
 /**
- * Builder for {@link TripStatistics}. For keeping statistics as a track is
- * paused/resumed and new locations are added.
+ * Builder for {@link TripStatistics}. For keeping track statistics as new
+ * locations are added.
  * 
  * @author Sandor Dornbush
  * @author Rodrigo Damazio
@@ -36,18 +36,6 @@ public class TripStatisticsBuilder {
 
   // The trip statistics.
   private final TripStatistics tripStatistics;
-
-  // The minimum recording distance.
-  private int minRecordingDistance = PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT;
-
-  // True if the trip is paused. All trips start as paused.
-  private boolean paused = true;
-
-  // The last location as reported by GPS.
-  private Location lastLocation;
-
-  // The last moving location that contributed to the moving statistics.
-  private Location lastMovingLocation;
 
   // A buffer of the recent speed readings (m/s) for calculating max speed.
   private final DoubleBuffer speedBuffer = new DoubleBuffer(Constants.SPEED_SMOOTHING_FACTOR);
@@ -63,97 +51,42 @@ public class TripStatisticsBuilder {
   private final DoubleBuffer gradeBuffer = new DoubleBuffer(Constants.GRADE_SMOOTHING_FACTOR);
 
   /**
-   * Creates a new trip starting at a start time.
+   * Creates a new {@link TripStatistics} starting at a start time.
    * 
    * @param startTime the start time
    */
   public TripStatisticsBuilder(long startTime) {
     tripStatistics = new TripStatistics();
-    resumeAt(startTime);
+    tripStatistics.setStartTime(startTime);
   }
 
   /**
-   * Creates a new trip, starting with an existing {@link TripStatistics}.
+   * Pauses the {@link TripStatistics} at a stop time.
    * 
-   * @param other the existing {@link TripStatistics}
+   * @param stopTime the stop time
    */
-  public TripStatisticsBuilder(TripStatistics other) {
-    tripStatistics = new TripStatistics(other);
-    if (tripStatistics.getStartTime() > 0) {
-      resumeAt(tripStatistics.getStartTime());
-    }
+  public void pauseAt(long stopTime) {
+    tripStatistics.setStopTime(stopTime);
+    tripStatistics.setTotalTime(stopTime - tripStatistics.getStartTime());
   }
 
   /**
-   * Sets the min recording distance.
-   * 
-   * @param minRecordingDistance the min recording distance
-   */
-  public void setMinRecordingDistance(int minRecordingDistance) {
-    this.minRecordingDistance = minRecordingDistance;
-  }
-
-  /**
-   * Resumes the current track at a given time.
-   * 
-   * @param time the time
-   */
-  public void resumeAt(long time) {
-    if (!paused) {
-      return;
-    }
-
-    tripStatistics.setStartTime(time);
-    tripStatistics.setStopTime(-1L);
-    paused = false;
-    lastLocation = null;
-    lastMovingLocation = null;
-    speedBuffer.reset();
-    elevationBuffer.reset();
-    distanceBuffer.reset();
-    gradeBuffer.reset();
-  }
-
-  /**
-   * Pauses the track at a given time.
-   * 
-   * @param time the time to pause at
-   */
-  public void pauseAt(long time) {
-    if (paused) {
-      return;
-    }
-    tripStatistics.setStopTime(time);
-    // TODO: total time needs to take into account pauses
-    tripStatistics.setTotalTime(time - tripStatistics.getStartTime());
-    paused = true;
-  }
-
-  /**
-   * Gets the trip statistics.
+   * Gets the {@link TripStatistics}.
    */
   public TripStatistics getTripStatistics() {
-    // Take a snapshot - we don't want anyone messing with our internals
+    // Take a snapshot - we don't want anyone messing with our tripStatistics
     return new TripStatistics(tripStatistics);
   }
 
   /**
-   * Returns the amount of time the user has been idle or 0 if he is moving.
+   * Adds a location.
+   * 
+   * @param location the location
+   * @param lastLocation the last location
    */
-  public long getIdleTime() {
-    if (lastLocation == null || lastMovingLocation == null) {
-      return 0;
-    }
-    return lastLocation.getTime() - lastMovingLocation.getTime();
-  }
-
-  /**
-   * Gets the smoothed elevation over several readings. The elevation readings
-   * is noisy so the smoothed elevation is better than the raw elevation for
-   * many tasks.
-   */
-  public double getSmoothedElevation() {
-    return elevationBuffer.getAverage();
+  public void addLocation(Location location, Location lastLocation) {
+    addLocation(location, lastLocation, location.getTime(), false,
+        PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT);
   }
 
   /**
@@ -161,51 +94,52 @@ public class TripStatisticsBuilder {
    * new location.
    * 
    * @param location the location
-   * @param systemTime the system time for calculating totalTime. This should be
-   *          the phone's system time (not GPS time)
-   * @return true if the person is moving
+   * @param lastLocation the last location
+   * @param time the time
+   * @param alwaysAdd true to always return true
+   * @param minRecordingDistance the min recording distance
+   * @return true if the location should be added
    */
-  public boolean addLocation(Location location, long systemTime) {
-    if (paused) {
-      Log.w(TAG, "Track is paused. Ignore addLocation.");
-      return false;
-    }
-
-    tripStatistics.setTotalTime(systemTime - tripStatistics.getStartTime());
+  public boolean addLocation(Location location, Location lastLocation, long time, boolean alwaysAdd,
+      int minRecordingDistance) {
+    pauseAt(time);
 
     double elevationDifference = updateElevation(location.getAltitude());
     tripStatistics.updateLatitudeExtremities(location.getLatitude());
     tripStatistics.updateLongitudeExtremities(location.getLongitude());
 
-    // If this is the first location, remember it and return.
-    if (lastLocation == null || lastMovingLocation == null) {
-      lastLocation = location;
-      lastMovingLocation = location;
-      return false;
+    // If lastLocation is null, returns true.
+    if (lastLocation == null) {
+      return true;
     }
 
-    // Don't do anything more if we didn't move since the last location.
     double distance = lastLocation.distanceTo(location);
     if (distance < minRecordingDistance && location.getSpeed() < Constants.MAX_NO_MOVEMENT_SPEED) {
-      lastLocation = location;
-      return false;
+      return alwaysAdd;
     }
 
-    long timeDifference = location.getTime() - lastLocation.getTime();
-    if (timeDifference < 0) {
-      Log.e(TAG, "Negative time difference: " + timeDifference);
-      lastLocation = location;
-      return false;
+    long movingTime = location.getTime() - lastLocation.getTime();
+    if (movingTime < 0) {
+      Log.e(TAG, "Negative moving time: " + movingTime);
+      return alwaysAdd;
     }
 
-    tripStatistics.addTotalDistance(lastMovingLocation.distanceTo(location));
-    tripStatistics.addMovingTime(timeDifference);
+    tripStatistics.addTotalDistance(distance);
+    tripStatistics.addMovingTime(movingTime);
     updateSpeed(
         location.getTime(), location.getSpeed(), lastLocation.getTime(), lastLocation.getSpeed());
     updateGrade(distance, elevationDifference);
-    lastLocation = location;
-    lastMovingLocation = location;
     return true;
+  }
+
+  /**
+   * Gets the smoothed elevation over several readings. The elevation readings
+   * is noisy so the smoothed elevation is better than the raw elevation for
+   * many tasks.
+   */
+  @VisibleForTesting
+  double getSmoothedElevation() {
+    return elevationBuffer.getAverage();
   }
 
   /**

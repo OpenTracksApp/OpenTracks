@@ -36,6 +36,7 @@ public class TripStatisticsBuilderTest extends TestCase {
     assertEquals(0.0, tripStatistics.getTotalElevationGain());
     assertEquals(0, tripStatistics.getMovingTime());
     assertEquals(0.0, tripStatistics.getTotalDistance());
+    Location lastLocation = null;
     for (int i = 0; i < 100; i++) {
       Location location = new Location("test");
       location.setAccuracy(1.0f);
@@ -48,8 +49,7 @@ public class TripStatisticsBuilderTest extends TestCase {
       // Each time slice is 10 seconds.
       long time = 1000 + 10000 * i;
       location.setTime(time);
-      boolean moving = builder.addLocation(location, time);
-      assertEquals((i != 0), moving);
+      builder.addLocation(location, lastLocation);
 
       tripStatistics = builder.getTripStatistics();
       assertEquals(10000 * i, tripStatistics.getTotalTime());
@@ -68,6 +68,7 @@ public class TripStatisticsBuilderTest extends TestCase {
         assertEquals(0.009, tripStatistics.getMaxGrade(), 0.0001);
       }
       assertEquals(111.0 * i, tripStatistics.getTotalDistance(), 100);
+      lastLocation = location;
     }
   }
 

@@ -292,7 +292,7 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
 
         // Add to the distances and elevations vectors
         if (LocationUtils.isValidLocation(location)) {
-          tripStatisticsBuilder.addLocation(location, location.getTime());
+          tripStatisticsBuilder.addLocation(location, lastLocation);
           // All points go into the smoothing buffer
           elevationBuffer.setNext(metricUnits ? location.getAltitude()
               : location.getAltitude() * UnitConversions.M_TO_FT);

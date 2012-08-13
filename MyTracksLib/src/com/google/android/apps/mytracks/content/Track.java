@@ -32,12 +32,12 @@ import java.util.ArrayList;
  */
 public class Track implements Parcelable {
 
-  private long id = -1;
+  private long id = -1L;
   private String name = "";
   private String description = "";
   private String category = "";
-  private long startId = -1;
-  private long stopId = -1;
+  private long startId = -1L;
+  private long stopId = -1L;
 
   // The number of location points (present even if the points themselves are
   // not loaded)
