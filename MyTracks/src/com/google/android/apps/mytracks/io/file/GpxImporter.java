@@ -380,7 +380,7 @@ public class GpxImporter extends DefaultHandler {
         // first point did not have a time, start stats builder without it
         tripStatisticsBuilder = new TripStatisticsBuilder(0);
       }
-      tripStatisticsBuilder.addLocation(location, lastSegmentLocation);
+      tripStatisticsBuilder.addLocation(location, location.getTime());
 
       // insert in db
       insertPoint(location);

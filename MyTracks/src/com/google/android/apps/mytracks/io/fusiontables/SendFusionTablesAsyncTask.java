@@ -248,7 +248,7 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
 
         // Add to the distances and elevations vectors
         if (LocationUtils.isValidLocation(location)) {
-          tripStatisticsBuilder.addLocation(location, lastLocation);
+          tripStatisticsBuilder.addLocation(location, location.getTime());
           // All points go into the smoothing buffer
           elevationBuffer.setNext(metricUnits ? location.getAltitude()
               : location.getAltitude() * UnitConversions.M_TO_FT);
