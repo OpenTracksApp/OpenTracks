@@ -30,12 +30,14 @@ public class GoogleLocationUtils {
 
   public static final String
       ACTION_GOOGLE_LOCATION_SETTINGS = "com.google.android.gsf.GOOGLE_LOCATION_SETTINGS";
-
+  private static final String
+      ACTION_GOOGLE_APPS_LOCATION_SETTINGS = "com.google.android.gsf.GOOGLE_APPS_LOCATION_SETTINGS";
+  
   /**
    * Returns true if the Google location settings is available.
    */
   public static boolean isAvailable(Context context) {
-    Intent intent = new Intent(ACTION_GOOGLE_LOCATION_SETTINGS);
+    Intent intent = new Intent(ACTION_GOOGLE_APPS_LOCATION_SETTINGS);
     ResolveInfo resolveInfo = context.getPackageManager()
         .resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
     return resolveInfo != null;
