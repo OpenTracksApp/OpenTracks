@@ -56,26 +56,31 @@ import java.util.Locale;
  * @author Matthew Simmons
  */
 public class SendDocsUtils {
-  private static final String GET_SPREADSHEET_BY_TITLE_URI =
+  @VisibleForTesting
+  public static final String GET_SPREADSHEET_BY_TITLE_URI =
       "https://docs.google.com/feeds/documents/private/full?"
       + "category=mine,spreadsheet&title=%s&title-exact=true";
   private static final String CREATE_SPREADSHEET_URI =
     "https://docs.google.com/feeds/documents/private/full";
   private static final String GET_WORKSHEETS_URI =
     "https://spreadsheets.google.com/feeds/worksheets/%s/private/full";
-  private static final String GET_WORKSHEET_URI =
+  @VisibleForTesting
+  public static final String GET_WORKSHEET_URI =
     "https://spreadsheets.google.com/feeds/list/%s/%s/private/full";
-
-  private static final String SPREADSHEET_ID_PREFIX =
+  @VisibleForTesting
+  public static final String SPREADSHEET_ID_PREFIX =
       "https://docs.google.com/feeds/documents/private/full/spreadsheet%3A";
-
-  private static final String CONTENT_TYPE = "Content-Type";
-  private static final String ATOM_FEED_MIME_TYPE = "application/atom+xml";
+  @VisibleForTesting
+  public static final String CONTENT_TYPE = "Content-Type";
+  @VisibleForTesting
+  public static final String ATOM_FEED_MIME_TYPE = "application/atom+xml";
   private static final String OPENDOCUMENT_SPREADSHEET_MIME_TYPE =
       "application/x-vnd.oasis.opendocument.spreadsheet";
 
-  private static final String AUTHORIZATION = "Authorization";
-  private static final String AUTHORIZATION_PREFIX = "GoogleLogin auth=";
+  @VisibleForTesting
+  public static final String AUTHORIZATION = "Authorization";
+  @VisibleForTesting
+  public static final String AUTHORIZATION_PREFIX = "GoogleLogin auth=";
 
   private static final String SLUG = "Slug";
 

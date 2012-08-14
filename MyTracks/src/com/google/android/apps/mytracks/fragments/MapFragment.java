@@ -17,14 +17,13 @@
 package com.google.android.apps.mytracks.fragments;
 
 import com.google.android.apps.mytracks.MapOverlay;
-import com.google.android.apps.mytracks.MyTracksApplication;
 import com.google.android.apps.mytracks.TrackDetailActivity;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.Factory;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackDataHub;
-import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.TrackDataListener;
+import com.google.android.apps.mytracks.content.TrackDataType;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
@@ -275,7 +274,7 @@ public class MapFragment extends Fragment
   }
 
   @Override
-  public void onProviderStateChange(ProviderState state) {
+  public void onLocationStateChanged(LocationState state) {
     final String message;
     final boolean isGpsDisabled;
     switch (state) {
@@ -322,13 +321,13 @@ public class MapFragment extends Fragment
   }
 
   @Override
-  public void onCurrentLocationChanged(Location location) {
+  public void onLocationChanged(Location location) {
     currentLocation = location;
     updateCurrentLocation();
   }
 
   @Override
-  public void onCurrentHeadingChanged(double heading) {
+  public void onHeadingChanged(double heading) {
     if (mapOverlay.setHeading((float) heading)) {
       mapView.postInvalidate();
     }
@@ -369,7 +368,7 @@ public class MapFragment extends Fragment
   }
 
   @Override
-  public void onNewTrackPoint(Location location) {
+  public void onSampledInTrackPoint(Location location) {
     if (LocationUtils.isValidLocation(location)) {
       mapOverlay.addLocation(location);
     }
@@ -409,7 +408,7 @@ public class MapFragment extends Fragment
   }
 
   @Override
-  public boolean onUnitsChanged(boolean metric) {
+  public boolean onMetricUnitsChanged(boolean metric) {
     // We don't care.
     return false;
   }
@@ -425,13 +424,13 @@ public class MapFragment extends Fragment
    * accessed by multiple threads.
    */
   private synchronized void resumeTrackDataHub() {
-    trackDataHub = ((MyTracksApplication) getActivity().getApplication()).getTrackDataHub();
+    trackDataHub = ((TrackDetailActivity) getActivity()).getTrackDataHub();
     trackDataHub.registerTrackDataListener(this, EnumSet.of(
-        ListenerDataType.SELECTED_TRACK_CHANGED,
-        ListenerDataType.WAYPOINT_UPDATES,
-        ListenerDataType.POINT_UPDATES,
-        ListenerDataType.LOCATION_UPDATES,
-        ListenerDataType.COMPASS_UPDATES));
+        TrackDataType.SELECTED_TRACK,
+        TrackDataType.WAYPOINTS_TABLE,
+        TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE,
+        TrackDataType.LOCATION,
+        TrackDataType.HEADING));
   }
   
   /**

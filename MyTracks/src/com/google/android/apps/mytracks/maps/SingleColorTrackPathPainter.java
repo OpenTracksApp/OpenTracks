@@ -40,88 +40,103 @@ public class SingleColorTrackPathPainter implements TrackPathPainter {
   private Path path;
 
   public SingleColorTrackPathPainter(Context context) {
-    selectedTrackPaint = TrackPathUtilities.getPaint(R.color.red, context);
+    selectedTrackPaint = TrackPathUtils.getPaint(context, R.color.red);
   }
 
   @Override
-  public void drawTrack(Canvas canvas) {
-    canvas.drawPath(path, selectedTrackPaint);
+  public boolean hasPath() {
+    return path != null;
   }
 
   @Override
-  public void updatePath(Projection projection, Rect viewRect, int startLocationIdx,
-      Boolean alwaysVisible, List<CachedLocation> points) {
-    path = newPath();
-    updatePath(projection, viewRect, startLocationIdx, alwaysVisible, points, path);
+  public boolean updateState() {
+    return false;
+  }
 
+  @Override
+  public void updatePath(
+      Projection projection, Rect viewRect, int startIndex, List<CachedLocation> points) {
+    if (!hasPath()) {
+      path = newPath();
+    }
+    updatePath(projection, viewRect, startIndex, points, path);
+  }
+
+  @Override
+  public void clearPath() {
+    path = null;
+  }
+
+  @Override
+  public void drawPath(Canvas canvas) {
+    if (path != null) {
+      canvas.drawPath(path, selectedTrackPaint);
+    }
   }
 
   /**
    * Updates the path.
    * 
-   * @param projection The Canvas to draw upon.
-   * @param viewRect The Path to be drawn.
-   * @param startLocationIdx The start point from where update the path.
-   * @param alwaysVisible Flag for always visible.
-   * @param points The list of points used to update the path.
-   * @param pathToUpdate The path to be created.
+   * @param projection the projection
+   * @param viewRect the view rectangle
+   * @param startIndex the start index
+   * @param points the points
+   * @param pathToUpdate the path to update
    */
   @VisibleForTesting
-  void updatePath(Projection projection, Rect viewRect, int startLocationIdx,
-      Boolean alwaysVisible, List<CachedLocation> points, Path pathToUpdate) {
-    pathToUpdate.incReserve(points.size());
-    // Whether to start a new segment on new valid and visible point.
-    boolean newSegment = startLocationIdx <= 0 || !points.get(startLocationIdx - 1).valid;
-    boolean lastVisible = !newSegment;
-    final Point pt = new Point();
-    // Loop over track points.
-    for (int i = startLocationIdx; i < points.size(); ++i) {
-      CachedLocation loc = points.get(i);
+  void updatePath(Projection projection, Rect viewRect, int startIndex, List<CachedLocation> points,
+      Path pathToUpdate) {
+    pathToUpdate.incReserve(points.size() - startIndex);
 
-      // Check if valid, if not then indicate a new segment.
-      if (!loc.valid) {
+    boolean hasLastPoint = startIndex != 0 && points.get(startIndex - 1).isValid();
+    boolean newSegment = !hasLastPoint;
+    // Assume if last point exists, it is visible
+    boolean lastPointVisible = hasLastPoint;
+    Point point = new Point();
+
+    for (int i = startIndex; i < points.size(); i++) {
+      CachedLocation cachedLocation = points.get(i);
+
+      // If not valid, start a new segment
+      if (!cachedLocation.isValid()) {
         newSegment = true;
         continue;
       }
 
-      final GeoPoint geoPoint = loc.geoPoint;
+      GeoPoint geoPoint = cachedLocation.getGeoPoint();
       // Check if this breaks the existing segment.
-      boolean visible = alwaysVisible
-          || viewRect.contains(geoPoint.getLongitudeE6(), geoPoint.getLatitudeE6());
-      if (!visible && !lastVisible) {
-        // This is a point outside view not connected to a visible one.
+      boolean pointVisible = viewRect.contains(geoPoint.getLongitudeE6(), geoPoint.getLatitudeE6());
+      if (!pointVisible && !lastPointVisible) {
+        // This point and the last point are both outside visible area.
         newSegment = true;
       }
-      lastVisible = visible;
+      lastPointVisible = pointVisible;
 
-      // Either move to beginning of a new segment or continue the old one.
-      projection.toPixels(geoPoint, pt);
+      // Either update point or draw a line from the last point
+      projection.toPixels(geoPoint, point);
       if (newSegment) {
-        pathToUpdate.moveTo(pt.x, pt.y);
+        pathToUpdate.moveTo(point.x, point.y);
         newSegment = false;
       } else {
-        pathToUpdate.lineTo(pt.x, pt.y);
+        pathToUpdate.lineTo(point.x, point.y);
       }
     }
   }
 
-  @Override
-  public void clear() {
-    path = null;
+  /**
+   * Creates a new path.
+   */
+  @VisibleForTesting
+  protected Path newPath() {
+    return new Path();
   }
 
-  @Override
-  public boolean needsRedraw() {
-    return false;
-  }
-
-  @Override
-  public Path getLastPath() {
+  /**
+   * Gets the path.
+   */
+  @VisibleForTesting
+  public Path getPath() {
     return path;
   }
 
-  // Visible for testing
-  public Path newPath() {
-    return new Path();
-  }
 }

@@ -23,7 +23,6 @@ import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.KeyEvent;
 import android.widget.CheckBox;
-import android.widget.EditText;
 
 import java.util.ArrayList;
 
@@ -104,6 +103,8 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     if (checkBoxs.size() < 3) {
       EndToEndTestUtils.SOLO.scrollDown();
       checkBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
+      
+      // Choose all Google service.
       for (int i = 0; i < checkBoxs.size(); i++) {
         if (!checkBoxs.get(i).isChecked()) {
           EndToEndTestUtils.SOLO.clickOnCheckBox(i);
@@ -111,26 +112,41 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
       }
     }
     instrumentation.waitForIdleSync();
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.send_google_send_now));
-    
+    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.send_google_send_now),
+        true, true);
+
     // If no account is binded with this device.
-    if (EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.send_google_no_account_title), 1, 10000)) {
-      EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
-    } else {
+    if (EndToEndTestUtils.SOLO.waitForText(
+        activityMyTracks.getString(R.string.send_google_no_account_title), 1,
+        EndToEndTestUtils.SHORT_WAIT_TIME)) {
+      EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true,
+          true);
+    } else if (EndToEndTestUtils.SOLO.waitForText(
+        activityMyTracks.getString(R.string.send_google_no_account_permission), 1,
+        EndToEndTestUtils.SHORT_WAIT_TIME)) {} else {
       assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
           .getString(R.string.generic_progress_title)));
       // Waiting the send is finish.
-      while (EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-          .getString(R.string.generic_progress_title), 1, 500)) {
-      }
-      
-      // For we not sure the send will be successful, just check whether the result dialog is display. 
+      while (EndToEndTestUtils.SOLO.waitForText(
+          activityMyTracks.getString(R.string.generic_progress_title), 1,
+          EndToEndTestUtils.SHORT_WAIT_TIME)) {}
+
+      // Check whether the result dialog is display.
       assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
           .getString(R.string.share_track_share_url)));
-      EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+      EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true,
+          true);
+
+      // Check whether all data is correct on Google Map, Documents, and
+      // Spreadsheet.
+      assertTrue(GoogleUtils.deleteMap(EndToEndTestUtils.trackName, activityMyTracks));
+      assertTrue(GoogleUtils.searchFusionTableByTitle(EndToEndTestUtils.TRACK_NAME_PREFIX,
+          activityMyTracks));
+      assertTrue(GoogleUtils
+          .deleteTrackInSpreadSheet(EndToEndTestUtils.trackName, activityMyTracks));
+      assertTrue(GoogleUtils.dropFusionTables(EndToEndTestUtils.trackName, activityMyTracks));
     }
-    
+
   }
 
   /**
@@ -142,25 +158,17 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_edit), true);
 
     String newTrackName = EndToEndTestUtils.TRACK_NAME_PREFIX + "_new" + System.currentTimeMillis();
-    String newType = "type" + newTrackName; 
+    String newType = EndToEndTestUtils.DEFAULTACTIVITY; 
     String newDesc = "desc" + newTrackName;
 
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.rotateAllActivities();
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.generic_save));
     sendKeys(KeyEvent.KEYCODE_DEL);
-    ArrayList<EditText> editTexts = EndToEndTestUtils.SOLO.getCurrentEditTexts();
-    
-    EndToEndTestUtils.SOLO.enterText(editTexts.get(0), newTrackName);
-    EndToEndTestUtils.SOLO.enterText(editTexts.get(1), newType);
-    // In landscape, there are only two visible edit texts.
-    if (editTexts.size() > 2) {
-      EndToEndTestUtils.SOLO.enterText(editTexts.get(2), newDesc);
-    } else {
-      EndToEndTestUtils.SOLO.scrollDown();
-      editTexts = EndToEndTestUtils.SOLO.getCurrentEditTexts();
-      EndToEndTestUtils.SOLO.enterText(editTexts.get(editTexts.size() - 1), newDesc);
-    }
+
+    EndToEndTestUtils.enterTextAvoidSoftKeyBoard(0, newTrackName);
+    EndToEndTestUtils.enterTextAvoidSoftKeyBoard(1, newType);
+    EndToEndTestUtils.enterTextAvoidSoftKeyBoard(2, newDesc);
     EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_save));
     instrumentation.waitForIdleSync();
     // Go back to track list.
@@ -168,6 +176,23 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     instrumentation.waitForIdleSync();
     assertTrue(EndToEndTestUtils.SOLO.searchText(newTrackName));
     assertTrue(EndToEndTestUtils.SOLO.searchText(newDesc));
+  }
+  
+  /**
+   * Checks the voice frequency and split frequency menus.
+   */
+  public void testFrequencyMenu() {
+    EndToEndTestUtils.startRecording();
+    assertTrue(EndToEndTestUtils.findMenuItem(
+        activityMyTracks.getString(R.string.menu_voice_frequency), false));
+    assertTrue(EndToEndTestUtils.findMenuItem(
+        activityMyTracks.getString(R.string.menu_split_frequency), false));
+    EndToEndTestUtils.stopRecording(true);
+    
+    assertFalse(EndToEndTestUtils.findMenuItem(
+        activityMyTracks.getString(R.string.menu_voice_frequency), false));
+    assertFalse(EndToEndTestUtils.findMenuItem(
+        activityMyTracks.getString(R.string.menu_split_frequency), false));
   }
 
   /**
@@ -183,6 +208,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
       assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks
           .getString(R.string.icon_recording)));
     }
+    
     createWaypoint();
     EndToEndTestUtils.sendGps(2);
     // Back to tracks list.
@@ -192,16 +218,15 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     EndToEndTestUtils.stopRecording(false);
     EndToEndTestUtils.trackName = EndToEndTestUtils.TRACK_NAME_PREFIX + System.currentTimeMillis();
     EndToEndTestUtils.SOLO.enterText(0, EndToEndTestUtils.trackName);
-    if(!EndToEndTestUtils.isEmulator) {
-      // Close soft keyboard.
-      EndToEndTestUtils.SOLO.goBack();
-    }
+    EndToEndTestUtils.SOLO.enterText(1, EndToEndTestUtils.DEFAULTACTIVITY);
+
     EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_save));
 
     instrumentation.waitForIdleSync();
     // Check the new track
-    assertTrue(EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.trackName, 1, 5000, true,
-        false));
+    EndToEndTestUtils.SOLO.scrollUp();
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.trackName, 1,
+        EndToEndTestUtils.NORMAL_WAIT_TIME, true, false));
   }
 
   /**
@@ -211,9 +236,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
    */
   public void testTrackStartTime() {
     // Delete all track first.
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete_all), true);
-    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
-    
+    EndToEndTestUtils.deleteAllTracks(); 
     // Reset all settings.
     EndToEndTestUtils.resetAllSettings(activityMyTracks, false);
     
@@ -223,17 +246,50 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.stopRecording(false);
     instrumentation.waitForIdleSync();
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_save));
+    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_save), true,
+        true);
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.SOLO.goBack();
     instrumentation.waitForIdleSync();
-    assertFalse(EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.RELATIVE_STARTTIME_POSTFIX, 1, 5000));
+    assertFalse(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.RELATIVE_STARTTIME_POSTFIX, 1, false, true));
 
     // Test should show relative time for createSimpleTrack would save a track
     // name that is different with the start time.
     EndToEndTestUtils.createSimpleTrack(2);
     EndToEndTestUtils.SOLO.goBack();
-    assertTrue(EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.RELATIVE_STARTTIME_POSTFIX, 1, 5000));
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.RELATIVE_STARTTIME_POSTFIX, 1, EndToEndTestUtils.NORMAL_WAIT_TIME));
+  }
+  
+  /**
+   * Tests whether the split marker is created as setting.
+   * @throws InterruptedException 
+   */
+  public void testSplitSetting() throws InterruptedException {
+    EndToEndTestUtils.startRecording();
+
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_split_frequency), true);
+    boolean isFoundKM = EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.KM);
+    if (isFoundKM) {
+      EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.KM, 0);
+    } else {
+      EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.MILE, 0);
+    }
+
+    EndToEndTestUtils
+        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+    // Send Gps to give a distance more than one kilometer or one mile.
+    EndToEndTestUtils.sendGps(20);    
+    assertTrue(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_markers),
+        true));
+    instrumentation.waitForIdleSync();
+    if (EndToEndTestUtils.hasGpsSingal) {
+      assertTrue(EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount() > 0);
+    } else {
+      assertTrue(EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount() == 0);
+    }
+    EndToEndTestUtils.SOLO.goBack();
+
+    EndToEndTestUtils.stopRecording(true);
   }
 
   /**
@@ -243,15 +299,13 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_markers), true);
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.marker_list_empty_message));
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_insert_marker), true);
-    // Rotate when show insert page.
-    EndToEndTestUtils.rotateAllActivities();
-    EndToEndTestUtils.SOLO.enterText(0, WAYPOINT_NAME);
-    if(!EndToEndTestUtils.isEmulator) {
-      // Close soft keyboard.
-      EndToEndTestUtils.SOLO.goBack();
-    }
+    EndToEndTestUtils.enterTextAvoidSoftKeyBoard(0, WAYPOINT_NAME);
     EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_add));
-    assertTrue(EndToEndTestUtils.SOLO.searchText(WAYPOINT_NAME));
+    if (EndToEndTestUtils.hasGpsSingal) {
+      assertTrue(EndToEndTestUtils.SOLO.waitForText(WAYPOINT_NAME, 1, EndToEndTestUtils.LONG_WAIT_TIME, true));
+    } else {
+      assertFalse(EndToEndTestUtils.SOLO.searchText(WAYPOINT_NAME));
+    }
 
     EndToEndTestUtils.SOLO.goBack();
   }

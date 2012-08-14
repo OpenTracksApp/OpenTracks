@@ -23,10 +23,14 @@ import com.jayway.android.robotium.solo.Solo;
 
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.content.Context;
 import android.content.res.Configuration;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -38,6 +42,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * Provides utilities to smoke test.
@@ -45,9 +50,10 @@ import java.util.HashMap;
  * @author Youtao Liu
  */
 public class EndToEndTestUtils {
+  
   private static final String ANDROID_LOCAL_IP = "10.0.2.2";
   // usually 5554.
-  private static final int ANDROID_LOCAL_PORT = 5554;
+  public static int emulatorPort = 5558;
 
   private static final int ORIENTATION_PORTRAIT = 1;
   private static final int ORIENTATION_LANDSCAPE = 0;
@@ -57,9 +63,11 @@ public class EndToEndTestUtils {
   private static final float START_LATITUDE = -1.3f;
   private static final float DELTA_LONGITUDE = 0.0005f;
   private static final float DELTA_LADITUDE = 0.0005f;
+  private static final String NO_GPS_MESSAGE_PREFIX = "GPS is not available";
   
   private static final String MOREOPTION_CLASSNAME = "com.android.internal.view.menu.ActionMenuPresenter$OverflowMenuButton";
 
+  static final String DEFAULTACTIVITY = "TestActivity";
   static final String TRACK_NAME_PREFIX = "testTrackName";
   static final String GPX = "gpx";
   static final String KML = "kml";
@@ -71,9 +79,46 @@ public class EndToEndTestUtils {
   
   // Following is some check strings in English and Chinese
   private static final HashMap<String, String> RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL = new HashMap<String, String>(); 
-  private static final HashMap<String, String> VIEW_MODE_ENGLISH_MULTILINGUAL = new HashMap<String, String>(); 
+  private static final HashMap<String, String> VIEW_MODE_MULTILINGUAL = new HashMap<String, String>(); 
+  private static final HashMap<String, String> KM_MULTILINGUAL = new HashMap<String, String>(); 
+  private static final HashMap<String, String> MILE_MULTILINGUAL = new HashMap<String, String>(); 
   public static String RELATIVE_STARTTIME_POSTFIX = "";
   public static String VIEW_MODE = "";
+  public static String KM = "";
+  public static String MILE = "";
+  
+  public static int SHORT_WAIT_TIME = 2000;
+  public static int NORMAL_WAIT_TIME = 8000;
+  public static int LONG_WAIT_TIME = 15000;
+  public static int SUPER_LONG_WAIT_TIME = 100000;
+  
+  public static String deviceLanguage = "";
+  
+  static {
+    RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("es", "mins ago");
+    RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("de", "Minuten");
+    RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("fr", "minute");
+    RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("ar", "دقيقة");
+    RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("zh", "分钟前");
+    
+    VIEW_MODE_MULTILINGUAL.put("es", "mode");
+    VIEW_MODE_MULTILINGUAL.put("de", "modus");
+    VIEW_MODE_MULTILINGUAL.put("fr", "Mode");
+    VIEW_MODE_MULTILINGUAL.put("ar", "وضع");
+    VIEW_MODE_MULTILINGUAL.put("zh", "模式");
+    
+    KM_MULTILINGUAL.put("es", "km");
+    KM_MULTILINGUAL.put("de", "km");
+    KM_MULTILINGUAL.put("fr", "km");
+    KM_MULTILINGUAL.put("ar", "كم");
+    KM_MULTILINGUAL.put("zh", "公里");
+    
+    MILE_MULTILINGUAL.put("es", "mi");
+    MILE_MULTILINGUAL.put("de", "mi");
+    MILE_MULTILINGUAL.put("fr", "mile");
+    MILE_MULTILINGUAL.put("ar", "ميل");
+    MILE_MULTILINGUAL.put("zh", "英里");
+  }
 
   static Solo SOLO;
   static Instrumentation instrumentation;
@@ -82,32 +127,35 @@ public class EndToEndTestUtils {
   // Android OS.
   static boolean hasActionBar = false;
   static boolean isEmulator = true;
+  static boolean hasGpsSingal = true;
   static boolean isCheckedFirstLaunch = false;
+  public static final String LOG_TAG = "MyTracksTest";
 
   private EndToEndTestUtils() {}
   
+  /**
+   * Checks the language, then sets the fields with right string.
+   */
   private static void checkLanguage() {
-    RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("es", "mins ago");
-    RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("de", "Minuten");
-    RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("fr", "minute");
-    RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("ar", "دقيقة");
-    RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("zh", "分钟前");
-    
-    VIEW_MODE_ENGLISH_MULTILINGUAL.put("es", "mode");
-    VIEW_MODE_ENGLISH_MULTILINGUAL.put("de", "modus");
-    VIEW_MODE_ENGLISH_MULTILINGUAL.put("fr", "Mode");
-    VIEW_MODE_ENGLISH_MULTILINGUAL.put("ar", "وضع");
-    VIEW_MODE_ENGLISH_MULTILINGUAL.put("zh", "模式");
+    Locale locale = null;
+    Configuration config=null;
+     config = activityMytracks.getBaseContext().getResources().getConfiguration();
+    locale = new Locale("en");
+    Locale.setDefault(locale);
+    config.locale = locale;
     
     
-    // Check the language, test in Chinese or English.
-    String deviceLanguage = instrumentation.getContext().getResources().getConfiguration().locale.getLanguage();
+    deviceLanguage = instrumentation.getContext().getResources().getConfiguration().locale.getLanguage();
     if (RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.get(deviceLanguage) != null) {
       RELATIVE_STARTTIME_POSTFIX = RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.get(deviceLanguage);
-      VIEW_MODE = VIEW_MODE_ENGLISH_MULTILINGUAL.get(deviceLanguage);
+      VIEW_MODE = VIEW_MODE_MULTILINGUAL.get(deviceLanguage);
+      KM = KM_MULTILINGUAL.get(deviceLanguage);
+      MILE = MILE_MULTILINGUAL.get(deviceLanguage);
     } else {
       RELATIVE_STARTTIME_POSTFIX = RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.get("es");
-      VIEW_MODE = VIEW_MODE_ENGLISH_MULTILINGUAL.get("es");
+      VIEW_MODE = VIEW_MODE_MULTILINGUAL.get("es");
+      KM = KM_MULTILINGUAL.get("es");
+      MILE = MILE_MULTILINGUAL.get("es");
     }
   }
 
@@ -128,7 +176,7 @@ public class EndToEndTestUtils {
     PrintStream out = null;
     Socket socket = null;
     try {
-      socket = new Socket(ANDROID_LOCAL_IP, ANDROID_LOCAL_PORT);
+      socket = new Socket(ANDROID_LOCAL_IP, emulatorPort);
       out = new PrintStream(socket.getOutputStream());
       float longitude = START_LONGITUDE;
       float latitude = START_LATITUDE;
@@ -138,6 +186,8 @@ public class EndToEndTestUtils {
         longitude += DELTA_LONGITUDE;
         latitude += DELTA_LADITUDE;
       }
+      // Wait the GPS signal can be obtained by MyTracks.  
+      Thread.sleep(SHORT_WAIT_TIME);
     } catch (UnknownHostException e) {
       System.exit(-1);
     } catch (IOException e) {
@@ -166,27 +216,39 @@ public class EndToEndTestUtils {
    */
   static void setupForAllTest(Instrumentation instrumentation, TrackListActivity activityMyTracks) {
     setIsEmulator();
+    
     EndToEndTestUtils.instrumentation = instrumentation;
     EndToEndTestUtils.activityMytracks = activityMyTracks;
-    EndToEndTestUtils.SOLO = new Solo(EndToEndTestUtils.instrumentation,
+    SOLO = new Solo(EndToEndTestUtils.instrumentation,
         EndToEndTestUtils.activityMytracks);
+    
+    // For emulator, we would fix GPS signal.
+    if(!isEmulator) {
+      GoToMyLocationTest.findAndClickMyLocation(activityMyTracks);
+      hasGpsSingal = !SOLO.waitForText(NO_GPS_MESSAGE_PREFIX, 1,
+          EndToEndTestUtils.SHORT_WAIT_TIME);
+      SOLO.goBack();
+    }
+   
     // Check if open MyTracks first time after install. If so, there would be a
     // welcome view with accept buttons. And makes sure only check once.
-    if (!EndToEndTestUtils.isCheckedFirstLaunch) {
-      if ((EndToEndTestUtils.getButtonOnScreen(EndToEndTestUtils.activityMytracks
+    if (!isCheckedFirstLaunch) {
+      if ((getButtonOnScreen(EndToEndTestUtils.activityMytracks
           .getString(R.string.eula_accept), false, false) != null)) {
-        EndToEndTestUtils.verifyFirstLaunch();
-      } else if (EndToEndTestUtils.SOLO.waitForText(
+        verifyFirstLaunch();
+      } else if (SOLO.waitForText(
       // After reset setting, welcome page will show again.
-          activityMytracks.getString(R.string.welcome_title), 0, 500)) {
+          activityMytracks.getString(R.string.welcome_title), 0, SHORT_WAIT_TIME)) {
         resetPreferredUnits();
       }
+      hasActionBar = setHasActionBar();
       checkLanguage();
-      EndToEndTestUtils.isCheckedFirstLaunch = true;
-      EndToEndTestUtils.setHasActionBar();
-    } else if (EndToEndTestUtils.SOLO.waitForText(
+      isCheckedFirstLaunch = true;
+      deleteAllTracks();
+      resetAllSettings(activityMyTracks, false);
+    } else if (SOLO.waitForText(
         // After reset setting, welcome page will show again.
-        activityMytracks.getString(R.string.welcome_title), 0, 500)) {
+        activityMytracks.getString(R.string.welcome_title), 0, SHORT_WAIT_TIME)) {
       resetPreferredUnits();
     }
     
@@ -241,7 +303,7 @@ public class EndToEndTestUtils {
    */
   static void createSimpleTrack(int numberOfGpsData) {
     startRecording();
-    EndToEndTestUtils.sendGps(numberOfGpsData);
+    sendGps(numberOfGpsData);
     instrumentation.waitForIdleSync();
     stopRecording(true);
   }
@@ -276,12 +338,14 @@ public class EndToEndTestUtils {
    *          activity
    */
   static void createTrackIfEmpty(int gpsNumber, boolean showTrackList) {
-    if (EndToEndTestUtils.isTrackListEmpty(!showTrackList)) {
+    if (isTrackListEmpty(!showTrackList)) {
       // Create a simple track.
-      EndToEndTestUtils.createSimpleTrack(gpsNumber);
+      createSimpleTrack(gpsNumber);
+      instrumentation.waitForIdleSync();
       if (showTrackList) {
-        EndToEndTestUtils.SOLO.goBack();
+        SOLO.goBack();
       }
+      instrumentation.waitForIdleSync();
     }
   }
 
@@ -290,7 +354,7 @@ public class EndToEndTestUtils {
    */
   static void startRecording() {
     if (hasActionBar) {
-      Button startButton = getButtonOnScreen(activityMytracks.getString(R.string.menu_record_track), false, false);
+      View startButton = getButtonOnScreen(activityMytracks.getString(R.string.menu_record_track), false, false);
       // In case a track is recording.
       if (startButton == null) {
         stopRecording(true);
@@ -298,7 +362,7 @@ public class EndToEndTestUtils {
       }
       SOLO.clickOnView(startButton);
     } else {
-      showMoreMenuItem();
+      showMenuItem();
       if (!SOLO.searchText(activityMytracks.getString(R.string.menu_record_track))) {
         // Check if in TrackDetailActivity.
         if (SOLO.searchText(activityMytracks.getString(R.string.menu_play))) {
@@ -306,12 +370,13 @@ public class EndToEndTestUtils {
         } else {
           // In case a track is recording.
           stopRecording(true);
-          showMoreMenuItem();
+          showMenuItem();
         }
       }
       instrumentation.waitForIdleSync();
       SOLO.clickOnText(activityMytracks.getString(R.string.menu_record_track));
     }
+    instrumentation.waitForIdleSync();
   }
   
   /**
@@ -324,7 +389,7 @@ public class EndToEndTestUtils {
       return getButtonOnScreen(activityMytracks
         .getString(R.string.menu_record_track), false, false) == null; 
     }
-    showMoreMenuItem();
+    showMenuItem();
     if (SOLO.searchText(activityMytracks.getString(R.string.menu_record_track))
         || SOLO.searchText(activityMytracks.getString(R.string.menu_play))) {
       SOLO.goBack();
@@ -343,22 +408,21 @@ public class EndToEndTestUtils {
     if (hasActionBar) {
       getButtonOnScreen(activityMytracks.getString(R.string.menu_stop_recording), false, true);
     } else {
-      showMoreMenuItem();
+      showMenuItem();
       instrumentation.waitForIdleSync();
       SOLO.clickOnText(activityMytracks.getString(R.string.menu_stop_recording));
     }
     if (isSave) {
-      EndToEndTestUtils.SOLO.waitForText(activityMytracks.getString(R.string.generic_save), 1, 5000);
+      SOLO.waitForText(activityMytracks.getString(R.string.generic_save), 1, 5000);
       // Make every track name is unique to make sure every check can be
       // trusted.
-      EndToEndTestUtils.trackName = EndToEndTestUtils.TRACK_NAME_PREFIX
+      trackName = TRACK_NAME_PREFIX
           + System.currentTimeMillis();
-      SOLO.enterText(0, trackName);
-      if(!EndToEndTestUtils.isEmulator) {
-        // Close soft keyboard.
-        EndToEndTestUtils.SOLO.goBack();
-      }
-      SOLO.clickLongOnText(activityMytracks.getString(R.string.generic_save));
+      SOLO.sendKey(KeyEvent.KEYCODE_DEL);
+      enterTextAvoidSoftKeyBoard(0, trackName);
+      enterTextAvoidSoftKeyBoard(1, DEFAULTACTIVITY);
+      SOLO.clickOnText(activityMytracks.getString(R.string.generic_save));
+      instrumentation.waitForIdleSync();
     }
   }
 
@@ -376,7 +440,16 @@ public class EndToEndTestUtils {
       }
     }
   }
-
+  
+  /**
+   * Deletes all tracks. This method should be call when the TracksListActivity
+   * is shown.
+   */
+  static void deleteAllTracks() {
+    findMenuItem(activityMytracks.getString(R.string.menu_delete_all), true);
+    getButtonOnScreen(activityMytracks.getString(R.string.generic_ok), true, true);
+  }
+  
   /**
    * Gets a kind of exported files.
    * 
@@ -417,22 +490,49 @@ public class EndToEndTestUtils {
    * @param isClick whether click the button if find it
    * @return the button to search, and null means can not find the button
    */
-  static Button getButtonOnScreen(String buttonName, boolean isWait,boolean isClick) {
+  static View getButtonOnScreen(String buttonName, boolean isWait,boolean isClick) {
+    View button = null;
+
     instrumentation.waitForIdleSync();
     if (isWait) {
       SOLO.waitForText(buttonName);
     }
-    ArrayList<Button> currentButtons = SOLO.getCurrentButtons();
-    for (Button button : currentButtons) {
-      String title = (String) button.getText();
-      if (title.equalsIgnoreCase(buttonName)) { 
-        if(isClick) {
-          SOLO.clickOnView(button);
+    
+    // Find on action bar.
+    if (hasActionBar) {
+      ArrayList<View> allViews = SOLO.getViews();
+      for (View view : allViews) {
+        String className = view.getClass().getName();
+        if(className.indexOf("ActionMenuItemView") > 0) {
+          String menuItemNameString = view.getContentDescription().toString();
+          if(menuItemNameString.equalsIgnoreCase(buttonName)) {
+            button = view;
+            break;
+          }
         }
-        return button; 
       }
     }
-    return null;
+
+    // Get all buttons and find.
+    if(button == null) {
+      ArrayList<Button> currentButtons = SOLO.getCurrentButtons();
+      for (Button oneButton : currentButtons) {
+        String title = (String) oneButton.getText();
+        if (title.equalsIgnoreCase(buttonName)) { 
+          button = oneButton;
+        }
+      }
+    }
+    
+    if(button != null && isClick) {
+      SOLO.clickOnView(button);
+    }
+    
+    if (button == null && isClick) {
+      Log.d(LOG_TAG, "Don't find the button " + buttonName);
+    }
+    
+    return button;
   }
 
   /**
@@ -441,31 +541,19 @@ public class EndToEndTestUtils {
    * @return false means can not check failed.
    */
   static boolean setHasActionBar() {
-    instrumentation.waitForIdleSync();
-    // If can find record button without pressing Menu, it should be an action
-    // bar.
-    Button startButton = getButtonOnScreen(activityMytracks.getString(R.string.menu_record_track), false, false);
-    Button stopButton = getButtonOnScreen(activityMytracks.getString(R.string.menu_stop_recording), false, false);
-    if (startButton != null || stopButton != null) {
-      hasActionBar = true;
-    } else {
-      showMoreMenuItem();
-      if (SOLO.searchText(activityMytracks.getString(R.string.menu_record_track))
-          || SOLO.searchText(activityMytracks.getString(R.string.menu_stop_recording))) {
-        hasActionBar = false;
-      } else {
-        return false;
-      }
-      SOLO.goBack();
+    try {
+      return activityMytracks.getActionBar() == null ? false : true;
+    }catch (Throwable e) {
+      // For in Android which does not has action bar, here will meet a error.
+      return false;
     }
-    return true;
   }
 
   /**
    * Rotates the current activity.
    */
   static void rotateCurrentActivity() {
-    EndToEndTestUtils.rotateActivity(SOLO.getCurrentActivity());
+    rotateActivity(SOLO.getCurrentActivity());
     instrumentation.waitForIdleSync();
   }
 
@@ -473,11 +561,12 @@ public class EndToEndTestUtils {
    * Rotates all activities.
    */
   static void rotateAllActivities() {
-    ArrayList<Activity> allActivities = SOLO.getAllOpenedActivities();
-    for (Activity activity : allActivities) {
-      EndToEndTestUtils.rotateActivity(activity);
+    if (hasActionBar) {
+      ArrayList<Activity> allActivities = SOLO.getAllOpenedActivities();
+      for (Activity activity : allActivities) {
+        rotateActivity(activity);
+      }
     }
-
     instrumentation.waitForIdleSync();
   }
 
@@ -490,47 +579,86 @@ public class EndToEndTestUtils {
    */
   static boolean findMenuItem(String menuName, boolean click) {
     boolean findResult = false;
+    boolean isMoreMenuOpened = false;
 
-    // Firstly find in action bar.
-    Button button = getButtonOnScreen(menuName, false, false);
-    if (button != null) {
-      findResult = true;
-      if (click) {
-        SOLO.clickOnView(button);
-        instrumentation.waitForIdleSync();
+    // ICS phone.
+    if (hasActionBar) {
+      // Firstly find in action bar.
+      View button = getButtonOnScreen(menuName, false, false);
+      if (button != null) {
+        findResult = true;
+        if (click) {
+          SOLO.clickOnView(button);
+          instrumentation.waitForIdleSync();
+        }
+        return findResult;
       }
-      return findResult;
-    }
-
-    showMoreMenuItem();
-    if (SOLO.searchText(menuName)) {
-      findResult = true;
-    } else if (SOLO.searchText(MENU_MORE)) {
-      SOLO.clickOnText(MENU_MORE);
+      showMenuItem();
       findResult = SOLO.searchText(menuName);
+    } else {
+      // Non-ICS phone.
+      SOLO.sendKey(KeyEvent.KEYCODE_MENU);
+      if (SOLO.searchText(menuName)) {
+        findResult = true;
+      } else if (SOLO.searchText(MENU_MORE)) {
+        SOLO.clickOnText(MENU_MORE);
+        findResult = SOLO.searchText(menuName);
+        isMoreMenuOpened = true;
+      }
     }
 
     if (findResult && click) {
       SOLO.clickOnText(menuName);
       instrumentation.waitForIdleSync();
     } else {
+      // Quit more menu list if opened.
+      if (isMoreMenuOpened) {
+        SOLO.goBack();
+      }
+      // Quit menu list.
       SOLO.goBack();
     }
     return findResult;
   }
 
   /**
-   * Get more menu items operation is different for different Android OS.
+   * Show menu item list.
    */
-  public static void showMoreMenuItem() {
+  public static void showMenuItem() {
+    showMenuItem(0);
+  }
+  
+  /**
+   * Gets more menu items operation is different for different Android OS. When
+   * get overflow button view on action, it usually be able to click. But in
+   * some situation, will meet an error when click it. So catch it and try
+   * again. In most situation, the second click will be pass.
+   * 
+   * @param depth control the depth of recursion to prevent dead circulation
+   */
+  private static void showMenuItem(int depth) {
+    // ICS phone.
     if (hasActionBar) {
+      instrumentation.waitForIdleSync();
       View moreButton = getMoreOptionView();
+      // ICS phone without menu key.
       if (moreButton != null) {
-        SOLO.clickOnView(moreButton);
+        try {
+          SOLO.clickOnView(moreButton);
+        } catch (Throwable e) {
+          if (depth < 5 && e.getMessage().indexOf("Click can not be completed") > -1) {
+            showMenuItem(depth++);
+          }
+        }
         return;
-      } 
+      } else {
+        // ICS phone with menu key.
+        SOLO.sendKey(KeyEvent.KEYCODE_MENU);
+      }
+    } else {
+      // Non-ICS phone with menu key.
+      SOLO.sendKey(KeyEvent.KEYCODE_MENU);
     }
-    SOLO.sendKey(KeyEvent.KEYCODE_MENU);
   }
   
   /**
@@ -559,7 +687,7 @@ public class EndToEndTestUtils {
    * @return the text view, null means can not find it
    */
   static TextView findTextView(String findText, View parent) {
-    ArrayList<TextView> textViews = EndToEndTestUtils.SOLO.getCurrentTextViews(parent);
+    ArrayList<TextView> textViews = SOLO.getCurrentTextViews(parent);
     for (TextView textView : textViews) {
       String text = (String) textView.getText();
       if (textView.isShown() && text.endsWith(findText)) { 
@@ -575,7 +703,7 @@ public class EndToEndTestUtils {
    * @return the ChartView or null if not find
    */
   static ChartView getChartView() {
-    ArrayList<View> views = EndToEndTestUtils.SOLO.getViews();
+    ArrayList<View> views = SOLO.getViews();
     for (View view : views) {
       if (view instanceof ChartView) { 
         return (ChartView) view; 
@@ -591,13 +719,28 @@ public class EndToEndTestUtils {
    * @param keepInSettingList whether keep in setting list or not
    */
   public static void resetAllSettings(Activity activityMyTracks, boolean keepInSettingList) {
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
+    findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
     SOLO.waitForText(activityMyTracks.getString(R.string.settings_reset));
     SOLO.clickOnText(activityMyTracks.getString(R.string.settings_reset));
     getButtonOnScreen(activityMytracks.getString(R.string.generic_ok), true, true);
     instrumentation.waitForIdleSync();
     if (!keepInSettingList) {
-      EndToEndTestUtils.SOLO.goBack();
+      SOLO.goBack();
     }
   }
+  
+  /**
+   * Finds a edit text and enter text in it. This method can hides soft key
+   * board when input text.
+   * 
+   * @param editTextIndex the index of edit text
+   * @param text to enter
+   */
+  public static void enterTextAvoidSoftKeyBoard(int editTextIndex, String text) {
+    InputMethodManager imm = (InputMethodManager) activityMytracks.getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+    EditText editText = SOLO.getEditText(editTextIndex);
+    imm.hideSoftInputFromWindow(editText.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
+    SOLO.enterText(editText, text);
+  }
+
 }

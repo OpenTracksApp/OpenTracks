@@ -13,26 +13,28 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks.maps;
 
 /**
- * An interface for classes which describe how to draw a track path. 
- *
+ * An interface for classes which describe how to draw a track path.
+ * 
  * @author Vangelis S.
  */
 public interface TrackPathDescriptor {
+
   /**
-   * @return The maximum speed which is considered slow.
+   * Gets the maximum speed which is considered slow.
    */
-  int getSlowSpeed();
-  
+  public int getSlowSpeed();
+
   /**
-   * @return The maximum speed which is considered normal.
+   * Gets the maximum speed which is considered normal.
    */
-  int getNormalSpeed();
-  
+  public int getNormalSpeed();
+
   /**
-   * @return True if the path needs to be updated.
+   * Updates state. Returns true if the state is updated.
    */
-  boolean needsRedraw();
+  public boolean updateState();
 }

@@ -13,24 +13,21 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks.maps;
 
-import android.content.Context;
-import android.graphics.Paint;
+package com.google.android.apps.mytracks.content;
 
 /**
- * Various utility functions for TrackPath painting.
- *
- * @author Vangelis S.
+ * Types of track data.
+ * 
+ * @author Jimmy Shih
  */
-public class TrackPathUtilities {
-  
-  public static Paint getPaint(int id, Context context) {
-    Paint paint = new Paint();
-    paint.setColor(context.getResources().getColor(id));
-    paint.setStrokeWidth(3);
-    paint.setStyle(Paint.Style.STROKE);
-    paint.setAntiAlias(true);
-    return paint;
-  }
+public enum TrackDataType {
+  SELECTED_TRACK, // selected track changes
+  TRACKS_TABLE, // tracks table changes
+  WAYPOINTS_TABLE, // waypoints table changes
+  SAMPLED_IN_TRACK_POINTS_TABLE, // sampled-in track points table changes
+  SAMPLED_OUT_TRACK_POINTS_TABLE, // sampled-out track points table changes
+  LOCATION, // location changes
+  HEADING, // heading changes
+  PREFERENCE // preference changes
 }

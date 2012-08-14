@@ -20,7 +20,7 @@ import com.google.android.apps.mytracks.services.TrackRecordingService;
 
 /**
  * This is interface for a task that will be executed on some schedule.
- *
+ * 
  * @author Sandor Dornbush
  */
 public interface PeriodicTask {
@@ -28,11 +28,13 @@ public interface PeriodicTask {
    * Sets up this task for subsequent calls to the run method.
    */
   public void start();
-  
+
   /**
    * This method will be called periodically.
+   * 
+   * @param trackRecordingService the track recording service
    */
-  public void run(TrackRecordingService service);
+  public void run(TrackRecordingService trackRecordingService);
 
   /**
    * Shuts down this task and clean up resources.

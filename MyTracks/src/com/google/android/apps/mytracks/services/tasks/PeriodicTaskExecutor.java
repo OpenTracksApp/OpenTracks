@@ -15,119 +15,167 @@
  */
 package com.google.android.apps.mytracks.services.tasks;
 
-import static com.google.android.apps.mytracks.Constants.TAG;
-
 import com.google.android.apps.mytracks.services.TrackRecordingService;
+import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 
 import android.util.Log;
 
 /**
- * Execute a task on a time or distance schedule.
- *
+ * Execute a periodic task on a time or distance schedule.
+ * 
  * @author Sandor Dornbush
  */
 public class PeriodicTaskExecutor {
 
+  private static final String TAG = PeriodicTaskExecutor.class.getSimpleName();
+  private static final long MINUTE_TO_MILLISECONDS = 60000L;
+
+  private final TrackRecordingService trackRecordingService;
+  private final PeriodicTaskFactory periodicTaskFactory;
+
   /**
-   * The frequency of the task.
-   * A value greater than zero is a frequency in time.
-   * A value less than zero is considered a frequency in distance.
+   * The task frequency. A positive value is a time frequency (minutes). A
+   * negative value is a distance frequency (km or mi). A zero value is to turn
+   * off periodic task.
    */
   private int taskFrequency = PreferencesUtils.FREQUENCY_OFF;
 
-  /**
-   * The next distance when the task should execute.
-   */
-  private double nextTaskDistance = 0;
+  private PeriodicTask periodicTask;
 
-  /**
-   * Time based executor.
-   */
-  private TimerTaskExecutor timerExecutor = null;
+  // Time periodic task executor
+  private TimerTaskExecutor timerTaskExecutor = null;
 
   private boolean metricUnits;
 
-  private final TrackRecordingService service;
+  // The next distance for the distance periodic task
+  private double nextTaskDistance = Double.MAX_VALUE;
 
-  private final PeriodicTaskFactory factory;
-
-  private PeriodicTask task;
-
-  public PeriodicTaskExecutor(TrackRecordingService service, PeriodicTaskFactory factory) {
-    this.service = service;
-    this.factory = factory;
+  public PeriodicTaskExecutor(
+      TrackRecordingService trackRecordingService, PeriodicTaskFactory periodicTaskFactory) {
+    this.trackRecordingService = trackRecordingService;
+    this.periodicTaskFactory = periodicTaskFactory;
   }
 
   /**
-   * Restores the manager.
+   * Restores the executor.
    */
   public void restore() {
-    // TODO: Decouple service from this class once and forever.
-    if (!service.isRecording()) {
+    if (!trackRecordingService.isRecording()) {
+      Log.d(TAG, "Not recording.");
       return;
     }
 
     if (!isTimeFrequency()) {
-      if (timerExecutor != null) {
-        timerExecutor.shutdown();
-        timerExecutor = null;
+      if (timerTaskExecutor != null) {
+        timerTaskExecutor.shutdown();
+        timerTaskExecutor = null;
       }
     }
     if (taskFrequency == PreferencesUtils.FREQUENCY_OFF) {
+      Log.d(TAG, "Task frequency is off.");
       return;
     }
 
-    // Try to make the task.
-    task = factory.create(service);
-    // Returning null is ok.
-    if (task == null) {
+    periodicTask = periodicTaskFactory.create(trackRecordingService);
+
+    // Returning null is ok
+    if (periodicTask == null) {
+      Log.d(TAG, "Peridoic task is null.");
       return;
     }
-    task.start();
+    periodicTask.start();
 
     if (isTimeFrequency()) {
-      if (timerExecutor == null) {
-        timerExecutor = new TimerTaskExecutor(task, service);
+      if (timerTaskExecutor == null) {
+        timerTaskExecutor = new TimerTaskExecutor(periodicTask, trackRecordingService);
       }
-      timerExecutor.scheduleTask(taskFrequency * 60000L);
+      timerTaskExecutor.scheduleTask(taskFrequency * MINUTE_TO_MILLISECONDS);
     } else {
-      // For distance based splits.
+      // For distance periodic task
       calculateNextTaskDistance();
     }
   }
 
   /**
-   * Shuts down the manager.
+   * Shuts down the executor.
    */
   public void shutdown() {
-    if (task != null) {
-      task.shutdown();
-      task = null;
+    if (periodicTask != null) {
+      periodicTask.shutdown();
+      periodicTask = null;
     }
-    if (timerExecutor != null) {
-      timerExecutor.shutdown();
-      timerExecutor = null;
+    if (timerTaskExecutor != null) {
+      timerTaskExecutor.shutdown();
+      timerTaskExecutor = null;
     }
   }
 
   /**
-   * Calculates the next distance when the task should execute.
+   * Updates the executor.
    */
-  void calculateNextTaskDistance() {
-    // TODO: Decouple service from this class once and forever.
-    if (!service.isRecording() || task == null) {
+  public void update() {
+    if (!isDistanceFrequency() || periodicTask == null) {
+      return;
+    }
+    TripStatistics tripStatistics = trackRecordingService.getTripStatistics();
+    if (tripStatistics == null) {
+      return;
+    }
+    double distance = tripStatistics.getTotalDistance()
+        * UnitConversions.M_TO_KM;
+    if (!metricUnits) {
+      distance *= UnitConversions.KM_TO_MI;
+    }
+
+    if (distance > nextTaskDistance) {
+      periodicTask.run(trackRecordingService);
+      calculateNextTaskDistance();
+    }
+  }
+
+  /**
+   * Sets task frequency.
+   * 
+   * @param taskFrequency the task frequency
+   */
+  public void setTaskFrequency(int taskFrequency) {
+    this.taskFrequency = taskFrequency;
+    restore();
+  }
+
+  /**
+   * Sets metricUnits.
+   * 
+   * @param metricUnits true to use metric units
+   */
+  public void setMetricUnits(boolean metricUnits) {
+    this.metricUnits = metricUnits;
+    calculateNextTaskDistance();
+  }
+
+  /**
+   * Calculates the next distance for the distance periodic task.
+   */
+  private void calculateNextTaskDistance() {
+    if (!trackRecordingService.isRecording() || periodicTask == null) {
       return;
     }
 
+    TripStatistics tripStatistics = trackRecordingService.getTripStatistics();
+    if (tripStatistics == null) {
+      return;
+    }
+    
     if (!isDistanceFrequency()) {
       nextTaskDistance = Double.MAX_VALUE;
       Log.d(TAG, "SplitManager: Distance splits disabled.");
       return;
     }
 
-    double distance = service.getTripStatistics().getTotalDistance() * UnitConversions.M_TO_KM;
+    double distance = tripStatistics.getTotalDistance()
+        * UnitConversions.M_TO_KM;
     if (!metricUnits) {
       distance *= UnitConversions.KM_TO_MI;
     }
@@ -135,56 +183,19 @@ public class PeriodicTaskExecutor {
     int index = (int) (distance / taskFrequency);
     index -= 1;
     nextTaskDistance = taskFrequency * index;
-    Log.d(TAG, "SplitManager: Next split distance: " + nextTaskDistance);
   }
 
   /**
-   * Updates executer with new trip statistics.
+   * True if time frequency.
    */
-  public void update() {
-    if (!isDistanceFrequency() || task == null) {
-      return;
-    }
-    // Convert the distance in meters to km or mi.
-    double distance = service.getTripStatistics().getTotalDistance() * UnitConversions.M_TO_KM;
-    if (!metricUnits) {
-      distance *= UnitConversions.KM_TO_MI;
-    }
-
-    if (distance > nextTaskDistance) {
-      task.run(service);
-      calculateNextTaskDistance();
-    }
-  }
-
   private boolean isTimeFrequency() {
     return taskFrequency > 0;
   }
 
+  /**
+   * True if distance frequency.
+   */
   private boolean isDistanceFrequency() {
     return taskFrequency < 0;
-  }
-
-  /**
-   * Sets the task frequency.
-   * &lt; 0 Use the absolute value as a distance in the current measurement km
-   *  or mi
-   *   0 Turn off the task
-   * &gt; 0 Use the value as a time in minutes
-   * @param taskFrequency The frequency in time or distance
-   */
-  public void setTaskFrequency(int taskFrequency) {
-    Log.d(TAG, "setTaskFrequency: taskFrequency = " + taskFrequency);
-    this.taskFrequency = taskFrequency;
-    restore();
-  }
-
-  public void setMetricUnits(boolean metricUnits) {
-    this.metricUnits = metricUnits;
-    calculateNextTaskDistance();
-  }
-
-  double getNextTaskDistance() {
-    return nextTaskDistance;
   }
 }

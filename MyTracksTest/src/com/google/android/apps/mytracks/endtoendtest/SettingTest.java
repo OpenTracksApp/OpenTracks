@@ -32,9 +32,7 @@ import java.util.ArrayList;
  * @author Youtao Liu
  */
 public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActivity> {
-
-  private final String DEFAULTACTIVITY = "TestActivity";
-
+  
   private Instrumentation instrumentation;
   private TrackListActivity activityMyTracks;
 
@@ -78,14 +76,14 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     // Change a setting of sharing.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_sharing));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.settings_sharing_allow_access), 1, 5000));
+        activityMyTracks.getString(R.string.settings_sharing_allow_access), 1, EndToEndTestUtils.NORMAL_WAIT_TIME));
     ArrayList<CheckBox> sharingCheckBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
     boolean newMapsPublic = sharingCheckBoxs.get(0).isChecked();
     EndToEndTestUtils.SOLO.clickOnCheckBox(0);
     instrumentation.waitForIdleSync();
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.settings_sharing_allow_access), 1, 5000));
-    assertEquals(!newMapsPublic, sharingCheckBoxs.get(0).isChecked());
+        activityMyTracks.getString(R.string.settings_sharing_allow_access), 1, EndToEndTestUtils.NORMAL_WAIT_TIME));
+    assertEquals(!newMapsPublic, EndToEndTestUtils.SOLO.getCurrentCheckBoxes().get(0).isChecked());
     EndToEndTestUtils.SOLO.goBack();
 
     // Reset all settings.
@@ -93,9 +91,11 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
 
     // Check settings.
+    // Add following scroll up for a bug of Robotium.
+    EndToEndTestUtils.SOLO.scrollUp();
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
-    EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.settings_stats_units_title), 1, 20000);
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+        .getString(R.string.settings_stats_units_title), 1, EndToEndTestUtils.LONG_WAIT_TIME));
     displayCheckBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
     assertEquals(useMetric, displayCheckBoxs.get(0).isChecked());
 
@@ -153,9 +153,11 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.createTrackIfEmpty(5, false);
     EndToEndTestUtils.resetAllSettings(activityMyTracks, true);
     ChangeStatsSettings(false, false, true, true, true);
+    instrumentation.waitForIdleSync();
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
-    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.stats_min_elevation)));
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(
+        activityMyTracks.getString(R.string.stats_min_elevation), 1,
+        EndToEndTestUtils.NORMAL_WAIT_TIME, true));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
         .getString(R.string.stats_min_grade)));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
@@ -241,27 +243,28 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     // Write to SD card.
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup));
-    EndToEndTestUtils.SOLO
-        .clickOnText(activityMyTracks.getString(R.string.settings_backup_now));
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup_now));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.sd_card_save_success), 0, 100000));
+        activityMyTracks.getString(R.string.sd_card_save_success), 0,
+        EndToEndTestUtils.SUPER_LONG_WAIT_TIME));
     instrumentation.waitForIdleSync();
 
     // Delete all tracks.
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.SOLO.goBack();
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete_all), true);
-    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+    EndToEndTestUtils.deleteAllTracks();
     instrumentation.waitForIdleSync();
 
     // Read from SD card.
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup));
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
-        .getString(R.string.settings_backup_restore));
-    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+    EndToEndTestUtils.SOLO
+        .clickOnText(activityMyTracks.getString(R.string.settings_backup_restore));
+    EndToEndTestUtils
+        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.sd_card_import_success), 0, 10000));
+        activityMyTracks.getString(R.string.sd_card_import_success), 0,
+        EndToEndTestUtils.SUPER_LONG_WAIT_TIME));
     // Check restore track.
     assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.trackName));
   }
@@ -281,13 +284,10 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     // Changes the setting of default activity.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
         .getString(R.string.settings_recording_default_activity));
-    EndToEndTestUtils.SOLO.enterText(0, DEFAULTACTIVITY);
-    if(!EndToEndTestUtils.isEmulator) {
-      // Close soft keyboard.
-      EndToEndTestUtils.SOLO.goBack();
-    }
-    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
-    
+    EndToEndTestUtils.enterTextAvoidSoftKeyBoard(0, EndToEndTestUtils.DEFAULTACTIVITY);
+    EndToEndTestUtils
+        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.SOLO.goBack();
 
@@ -297,9 +297,8 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     instrumentation.waitForIdleSync();
     assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks.getString(
         R.string.track_name_format).split(" ")[0]));
-    assertTrue(EndToEndTestUtils.SOLO.searchText(DEFAULTACTIVITY));
+    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.DEFAULTACTIVITY));
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_save));
-
   }
 
   @Override

@@ -18,14 +18,14 @@ package com.google.android.apps.mytracks.fragments;
 
 import com.google.android.apps.mytracks.ChartView;
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.MyTracksApplication;
+import com.google.android.apps.mytracks.TrackDetailActivity;
 import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackDataHub;
-import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.TrackDataListener;
+import com.google.android.apps.mytracks.content.TrackDataType;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
@@ -96,7 +96,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
 
       zoomControls.setIsZoomInEnabled(chartView.canZoomIn());
       zoomControls.setIsZoomOutEnabled(chartView.canZoomOut());
-      chartView.setShowPointer(isRecording());
+      chartView.setShowPointer(isSelectedTrackRecording());
       chartView.invalidate();
     }
   };
@@ -164,17 +164,17 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   }
 
   @Override
-  public void onProviderStateChange(ProviderState state) {
+  public void onLocationStateChanged(LocationState state) {
     // We don't care.
   }
 
   @Override
-  public void onCurrentLocationChanged(Location loc) {
+  public void onLocationChanged(Location loc) {
     // We don't care.
   }
 
   @Override
-  public void onCurrentHeadingChanged(double heading) {
+  public void onHeadingChanged(double heading) {
     // We don't care.
   }
 
@@ -213,7 +213,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   }
 
   @Override
-  public void onNewTrackPoint(Location location) {
+  public void onSampledInTrackPoint(Location location) {
     if (LocationUtils.isValidLocation(location)) {
       double[] data = new double[ChartView.NUM_SERIES + 1];
       fillDataPoint(location, data);
@@ -259,7 +259,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   }
 
   @Override
-  public boolean onUnitsChanged(boolean metric) {
+  public boolean onMetricUnitsChanged(boolean metric) {
     if (metricUnits == metric) {
       return false;
     }
@@ -358,14 +358,14 @@ public class ChartFragment extends Fragment implements TrackDataListener {
    * accessed by multiple threads.
    */
   private synchronized void resumeTrackDataHub() {
-    trackDataHub = ((MyTracksApplication) getActivity().getApplication()).getTrackDataHub();
+    trackDataHub = ((TrackDetailActivity) getActivity()).getTrackDataHub();
     trackDataHub.registerTrackDataListener(this, EnumSet.of(
-        ListenerDataType.SELECTED_TRACK_CHANGED,
-        ListenerDataType.TRACK_UPDATES,
-        ListenerDataType.WAYPOINT_UPDATES,
-        ListenerDataType.POINT_UPDATES,
-        ListenerDataType.SAMPLED_OUT_POINT_UPDATES,
-        ListenerDataType.DISPLAY_PREFERENCES));
+        TrackDataType.SELECTED_TRACK,
+        TrackDataType.TRACKS_TABLE,
+        TrackDataType.WAYPOINTS_TABLE,
+        TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE,
+        TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE,
+        TrackDataType.PREFERENCE));
   }
 
   /**
@@ -378,11 +378,11 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   }
 
   /**
-   * Returns true if recording. Needs to be synchronized because trackDataHub
-   * can be accessed by multiple threads.
+   * Returns true if the selected track is recording. Needs to be synchronized
+   * because trackDataHub can be accessed by multiple threads.
    */
-  private synchronized boolean isRecording() {
-    return trackDataHub != null && trackDataHub.isRecordingSelected();
+  private synchronized boolean isSelectedTrackRecording() {
+    return trackDataHub != null && trackDataHub.isSelectedTrackRecording();
   }
 
   /**

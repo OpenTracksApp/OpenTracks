@@ -20,18 +20,14 @@ import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import android.content.Context;
 
 /**
- * Factory which wraps construction and setup of text-to-speech announcements in
- * an API-level-safe way.
- *
+ * A {@link PeriodicTaskFactory} for text-to-speech announcement periodic task.
+ * 
  * @author Rodrigo Damazio
  */
-public class StatusAnnouncerFactory implements PeriodicTaskFactory {
-
-  public StatusAnnouncerFactory() {
-  }
+public class AnnouncementPeriodicTaskFactory implements PeriodicTaskFactory {
 
   @Override
   public PeriodicTask create(Context context) {
-    return ApiAdapterFactory.getApiAdapter().getStatusAnnouncerTask(context);
+    return ApiAdapterFactory.getApiAdapter().getAnnouncementPeriodicTask(context);
   }
 }

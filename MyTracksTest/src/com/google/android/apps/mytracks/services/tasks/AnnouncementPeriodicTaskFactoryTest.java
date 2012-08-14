@@ -13,20 +13,21 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks.services.tasks;
 
 import android.test.AndroidTestCase;
 
 /**
- * Tests for {@link StatusAnnouncerFactory}.
+ * Tests for {@link AnnouncementPeriodicTaskFactory}.
  * These tests require Donut+ to run.
  *
  * @author Rodrigo Damazio
  */
-public class StatusAnnouncerFactoryTest extends AndroidTestCase {
+public class AnnouncementPeriodicTaskFactoryTest extends AndroidTestCase {
   public void testCreate() {
-    PeriodicTaskFactory factory = new StatusAnnouncerFactory();
+    PeriodicTaskFactory factory = new AnnouncementPeriodicTaskFactory();
     PeriodicTask task = factory.create(getContext());
-    assertTrue(task instanceof StatusAnnouncerTask);
+    assertTrue(task instanceof AnnouncementPeriodicTask);
   }
 }

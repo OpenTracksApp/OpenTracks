@@ -33,22 +33,39 @@ public final class Waypoint implements Parcelable {
   public static final int TYPE_WAYPOINT = 0;
   public static final int TYPE_STATISTICS = 1;
 
-  private long id = -1;
+  private long id = -1L;
   private String name = "";
   private String description = "";
   private String category = "";
   private String icon = "";
-  private long trackId = -1;
+  private long trackId = -1L;
   private int type = 0;
   private double length = 0.0;
   private long duration = 0;
-  private long startId = -1;
-  private long stopId = -1;
+  private long startId = -1L;
+  private long stopId = -1L;
   private Location location = null;
   private TripStatistics tripStatistics = null;
 
   public Waypoint() {}
   
+  public Waypoint(String name, String description, String category, String icon, long trackId,
+      int type, double length, long duration, long startId, long stopId, Location location,
+      TripStatistics tripStatistics) {
+    this.name = name;
+    this.description = description;
+    this.category = category;
+    this.icon = icon;
+    this.trackId = trackId;
+    this.type = type;
+    this.length = length;
+    this.duration = duration;
+    this.startId = startId;
+    this.stopId = stopId;
+    this.location = location;
+    this.tripStatistics = tripStatistics;
+  }
+
   private Waypoint(Parcel source) {
     id = source.readLong();
     name = source.readString();

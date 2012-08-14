@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks;
 
 import com.google.android.maps.GeoPoint;
@@ -21,18 +22,17 @@ import com.google.android.maps.Projection;
 import android.graphics.Point;
 
 /**
- * Elements for Tests for the MyTracks map overlay.
+ * A mock {@link Projection}. Acts as an identity matrix.
  * 
  * @author Bartlomiej Niechwiej
  * @author Vangelis S.
  * 
- * A mock {@code Projection} that acts as the identity matrix.
  */
 public class MockProjection implements Projection {
 
   @Override
-  public Point toPixels(GeoPoint in, Point out) {
-    return out;
+  public Point toPixels(GeoPoint geoPoint, Point point) {
+    return point;
   }
 
   @Override

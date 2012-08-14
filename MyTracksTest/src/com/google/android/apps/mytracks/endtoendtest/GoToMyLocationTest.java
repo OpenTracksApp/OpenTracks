@@ -19,10 +19,13 @@ import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.util.GoogleLocationUtils;
 import com.google.android.maps.mytracks.R;
 
-import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
+import android.widget.ImageButton;
+
+import java.util.ArrayList;
 
 /**
  * Tests the function of go to my location.
@@ -34,7 +37,6 @@ public class GoToMyLocationTest extends ActivityInstrumentationTestCase2<TrackLi
   private Instrumentation instrumentation;
   private TrackListActivity activityMyTracks;
 
-  @TargetApi(8)
   public GoToMyLocationTest() {
     super(TrackListActivity.class);
   }
@@ -51,21 +53,43 @@ public class GoToMyLocationTest extends ActivityInstrumentationTestCase2<TrackLi
    * Tests the menu My Location.
    */
   public void testGotoMyLocation() {
-    EndToEndTestUtils.createTrackIfEmpty(1, false);
-    EndToEndTestUtils.sendGps(30);
-    instrumentation.waitForIdleSync();
-    View myLocation = EndToEndTestUtils.SOLO.getCurrentActivity()
-        .findViewById(R.id.map_my_location);
-    EndToEndTestUtils.SOLO.clickOnView(myLocation);
+    findAndClickMyLocation(activityMyTracks);
     if (EndToEndTestUtils.isEmulator) {
       String setting = activityMyTracks.getString(
           GoogleLocationUtils.isAvailable(activityMyTracks) ? R.string.gps_google_location_settings
               : R.string.gps_location_access);
       EndToEndTestUtils.SOLO.waitForText(
-          activityMyTracks.getString(R.string.my_location_no_gps, setting), 1, 1000);
+          activityMyTracks.getString(R.string.my_location_no_gps, setting), 1,
+          EndToEndTestUtils.SHORT_WAIT_TIME);
     } else {
       // TODO How to verify the location is shown on the map.
     }
+  }
+  
+  /**
+   * Finds the My Location view and click it.
+   * 
+   * @param activity
+   */
+  public static void findAndClickMyLocation(Activity activity) {
+    EndToEndTestUtils.createTrackIfEmpty(1, false);
+    EndToEndTestUtils.sendGps(30);
+    
+    View myLocation = EndToEndTestUtils.SOLO.getCurrentActivity()
+        .findViewById(R.id.map_my_location);
+    // Find the My Location button in another if null.
+    if (myLocation == null) {
+      ArrayList<ImageButton> aa = EndToEndTestUtils.SOLO.getCurrentImageButtons();
+      for (ImageButton imageButton : aa) {
+        if (imageButton.getContentDescription() != null
+            && imageButton.getContentDescription().equals(
+                activity.getString(R.string.icon_my_location))) {
+          myLocation = imageButton;
+          break;
+        }
+      }
+    }
+    EndToEndTestUtils.SOLO.clickOnView(myLocation);
   }
 
   @Override

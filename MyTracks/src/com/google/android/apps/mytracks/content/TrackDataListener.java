@@ -13,138 +13,131 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks.content;
 
-import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.content.Waypoint;
+package com.google.android.apps.mytracks.content;
 
 import android.location.Location;
 
 /**
- * Listener for track data, for both initial and incremental loading.
- *
+ * Listener for track data changes.
+ * 
  * @author Rodrigo Damazio
  */
 public interface TrackDataListener {
 
-  /** States for the GPS location provider. */
-  public enum ProviderState {
-    DISABLED,
-    NO_FIX,
-    BAD_FIX,
-    GOOD_FIX;
+  /**
+   * Location state.
+   * 
+   * @author Jimmy Shih
+   */
+  public enum LocationState {
+    DISABLED, NO_FIX, BAD_FIX, GOOD_FIX;
   }
 
   /**
-   * Called when the location provider changes state.
+   * Called when the location state changes.
    */
-  void onProviderStateChange(ProviderState state);
+  public void onLocationStateChanged(LocationState locationState);
 
   /**
-   * Called when the current location changes.
-   * This is meant for immediate location display only - track point data is
-   * delivered by other methods below, such as {@link #onNewTrackPoint}.
-   *
-   * @param loc the last known location
-   */
-  void onCurrentLocationChanged(Location loc);
-
-  /**
-   * Called when the current heading changes.
-   *
-   * @param heading the current heading, already accounting magnetic declination
-   */
-  void onCurrentHeadingChanged(double heading);
-
-  /**
-   * Called when the currently-selected track changes.
-   * This will be followed by calls to data methods such as
-   * {@link #onTrackUpdated}, {@link #clearTrackPoints},
-   * {@link #onNewTrackPoint(Location)}, etc., even if no track is currently
-   * selected (in which case you'll only get calls to clear the current data).
+   * Called when the location changes. This is meant for location display only,
+   * track point data is reported with other methods like
+   * {@link #onSampledInTrackPoint(Location)} and
+   * {@link #onSampledOutTrackPoint(Location)}.
    * 
-   * @param track the selected track, or null if no track is selected
-   * @param isRecording whether we're currently recording the selected track
+   * @param location the location
    */
-  void onSelectedTrackChanged(Track track, boolean isRecording);
+  public void onLocationChanged(Location location);
 
   /**
-   * Called when the track and/or its statistics have been updated.
-   *
-   * @param track the updated version of the track
+   * Called when the heading changes.
+   * 
+   * @param heading the heading
    */
-  void onTrackUpdated(Track track);
+  public void onHeadingChanged(double heading);
 
   /**
-   * Called to clear any previously-sent track points.
-   * This can be called at any time that we decide the data needs to be
-   * reloaded, such as when it needs to be resampled.
+   * Called when the selected track changes. This will be followed by calls to
+   * data methods such as {@link #onTrackUpdated(Track)},
+   * {@link #clearTrackPoints()}, {@link #onSampledInTrackPoint(Location)},
+   * etc., even if no track is currently selected (in which case you'll only get
+   * calls to clear the current data).
+   * 
+   * @param track the selected track or null if no track is selected
+   * @param isRecording true if the selected track is recording
    */
-  void clearTrackPoints();
+  public void onSelectedTrackChanged(Track track, boolean isRecording);
 
   /**
-   * Called when a new interesting track point is read.
-   * In this case, interesting means that the point has already undergone
-   * sampling and invalid point filtering.
-   *
-   * @param loc the new track point
+   * Called when the track or its statistics has been updated.
+   * 
+   * @param track the track
    */
-  void onNewTrackPoint(Location loc);
+  public void onTrackUpdated(Track track);
 
   /**
-   * Called when a uninteresting track point is read.
-   * Uninteresting points are all points that get sampled out of the track.
-   *
-   * @param loc the new track point
+   * Called to clear previously-sent track points.
    */
-  void onSampledOutTrackPoint(Location loc);
+  public void clearTrackPoints();
 
   /**
-   * Called when an invalid point (representing a segment split) is read.
+   * Called when a sampled in track point is read.
+   * 
+   * @param location the location
    */
-  void onSegmentSplit();
+  public void onSampledInTrackPoint(Location location);
 
   /**
-   * Called when we're done (for the time being) sending new points.
-   * This gets called after every batch of calls to {@link #onNewTrackPoint},
-   * {@link #onSampledOutTrackPoint} and {@link #onSegmentSplit}.
+   * Called when a sampled out track point is read.
+   * 
+   * @param location the location
    */
-  void onNewTrackPointsDone();
+  public void onSampledOutTrackPoint(Location location);
 
   /**
-   * Called to clear any previously-sent waypoints.
-   * This can be called at any time that we decide the data needs to be
-   * reloaded.
+   * Called when an invalid track point representing a segment split is read.
    */
-  void clearWaypoints();
+  public void onSegmentSplit();
+
+  /**
+   * Called when finish sending new track points. This gets called after every
+   * batch of calls to {@link #onSampledInTrackPoint(Location)},
+   * {@link #onSampledOutTrackPoint(Location)} and {@link #onSegmentSplit()}.
+   */
+  public void onNewTrackPointsDone();
+
+  /**
+   * Called to clear previously sent waypoints.
+   */
+  public void clearWaypoints();
 
   /**
    * Called when a new waypoint is read.
-   *
-   * @param wpt the new waypoint
+   * 
+   * @param waypoint the waypoint
    */
-  void onNewWaypoint(Waypoint wpt);
+  public void onNewWaypoint(Waypoint waypoint);
 
   /**
-   * Called when we're done (for the time being) sending new waypoints.
-   * This gets called after every batch of calls to {@link #clearWaypoints} and
-   * {@link #onNewWaypoint}.
+   * Called when finish sending new waypoints. This gets called after every
+   * batch of calls to {@link #clearWaypoints()} and
+   * {@link #onNewWaypoint(Waypoint)}.
    */
-  void onNewWaypointsDone();
+  public void onNewWaypointsDone();
 
   /**
-   * Called when the display units are changed by the user.
-   *
-   * @param metric true if the units are metric, false if imperial
-   * @return true to reload all the data, false otherwise
+   * Called when the metric units preference value is change.
+   * 
+   * @param metricUnits true to use metric units, false to use imperial units
+   * @return true to reload all the data, false otherwise.
    */
-  boolean onUnitsChanged(boolean metric);
+  public boolean onMetricUnitsChanged(boolean metricUnits);
 
   /**
-   * Called when the speed/pace display unit is changed by the user.
-   *
-   * @param reportSpeed true to report speed, false for pace
-   * @return true to reload all the data, false otherwise
+   * Called when the report speed preference value is changed.
+   * 
+   * @param reportSpeed true to report speed, false to report pace
+   * @return true to reload all the data, false otherwise.
    */
-  boolean onReportSpeedChanged(boolean reportSpeed);
+  public boolean onReportSpeedChanged(boolean reportSpeed);
 }

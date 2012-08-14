@@ -55,8 +55,7 @@ public class TrackPathPainterFactoryTest extends TrackPathPainterTestCase {
         context, R.string.track_color_mode_key, context.getString(track_color_mode));
 
     int startLocationIdx = 0;
-    Boolean alwaysVisible = true;
-    
+
     TrackPathPainter painter = TrackPathPainterFactory.getTrackPathPainter(context);
     myTracksOverlay.setTrackPathPainter(painter);
     
@@ -64,9 +63,9 @@ public class TrackPathPainterFactoryTest extends TrackPathPainterTestCase {
     assertTrue(c.isInstance(painter));
     
     painter.updatePath(myTracksOverlay.getMapProjection(mockView), 
-        myTracksOverlay.getMapViewRect(mockView), startLocationIdx, alwaysVisible,
+        myTracksOverlay.getMapViewRect(mockView), startLocationIdx,
         myTracksOverlay.getPoints());
-    assertNotNull(myTracksOverlay.getTrackPathPainter().getLastPath());      
-    painter.drawTrack(canvas);
+    assertNotNull(myTracksOverlay.getTrackPathPainter().hasPath());      
+    painter.drawPath(canvas);
   }
 }

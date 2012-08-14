@@ -17,7 +17,7 @@ package com.google.android.apps.mytracks.io.file;
 
 import com.google.android.apps.mytracks.content.DescriptionGenerator;
 import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.stats.TripStatistics;
 
 import android.annotation.TargetApi;
 import android.location.Location;
@@ -49,7 +49,7 @@ public class KmlTrackWriterTest extends TrackFormatWriterTest {
     }
 
     @Override
-    public String generateWaypointDescription(Waypoint waypoint) {
+    public String generateWaypointDescription(TripStatistics tripStatistics) {
       return null;
     }
   }

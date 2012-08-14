@@ -20,66 +20,35 @@ package com.google.android.apps.mytracks.stats;
  * This class maintains a buffer of doubles. This buffer is a convenient class
  * for storing a series of doubles and calculating information about them. This
  * is a FIFO buffer.
- *
+ * 
  * @author Sandor Dornbush
  */
 public class DoubleBuffer {
 
-  /**
-   * The location that the next write will occur at.
-   */
+  // The location that the next write will occur at.
   private int index;
 
-  /**
-   * The sliding buffer of doubles.
-   */
+  // The sliding buffer of doubles.
   private final double[] buffer;
 
-  /**
-   * Have all of the slots in the buffer been filled?
-   */
+  // True if the buffer is full
   private boolean isFull;
 
   /**
-   * Creates a buffer with size elements.
-   *
-   * @param size the number of elements in the buffer
-   * @throws IllegalArgumentException if the size is not a positive value
+   * Creates a buffer with a certain size.
+   * 
+   * @param size the size
    */
   public DoubleBuffer(int size) {
     if (size < 1) {
-      throw new IllegalArgumentException("The buffer size must be positive.");
+      throw new IllegalArgumentException("The buffer size must be greater than 1.");
     }
     buffer = new double[size];
     reset();
   }
 
   /**
-   * Adds a double to the buffer. If the buffer is full the oldest element is
-   * overwritten.
-   *
-   * @param d the double to add
-   */
-  public void setNext(double d) {
-    if (index == buffer.length) {
-      index = 0;
-    }
-    buffer[index] = d;
-    index++;
-    if (index == buffer.length) {
-      isFull = true;
-    }
-  }
-
-  /**
-   * Are all of the entries in the buffer used?
-   */
-  public boolean isFull() {
-    return isFull;
-  }
-
-  /**
-   * Resets the buffer to the initial state.
+   * Resets the buffer.
    */
   public void reset() {
     index = 0;
@@ -87,16 +56,20 @@ public class DoubleBuffer {
   }
 
   /**
-   * Gets the average of values from the buffer.
-   *
-   * @return The average of the buffer
+   * Returns true if the buffer is full.
+   */
+  public boolean isFull() {
+    return isFull;
+  }
+
+  /**
+   * Gets the average of the buffer.
    */
   public double getAverage() {
     int numberOfEntries = isFull ? buffer.length : index;
     if (numberOfEntries == 0) {
       return 0;
     }
-
     double sum = 0;
     for (int i = 0; i < numberOfEntries; i++) {
       sum += buffer[i];
@@ -105,15 +78,15 @@ public class DoubleBuffer {
   }
 
   /**
-   * Gets the average and standard deviation of the buffer.
-   *
-   * @return An array of two elements - the first is the average, and the second
-   *         is the variance
+   * Gets the average and the variance of the buffer.
+   * 
+   * @return an array of two elements - the first is the average, the second is
+   *         the variance
    */
   public double[] getAverageAndVariance() {
     int numberOfEntries = isFull ? buffer.length : index;
     if (numberOfEntries == 0) {
-      return new double[]{0, 0};
+      return new double[] { 0, 0 };
     }
 
     double sum = 0;
@@ -124,8 +97,25 @@ public class DoubleBuffer {
     }
 
     double average = sum / numberOfEntries;
-    return new double[]{average,
-      sumSquares / numberOfEntries  - Math.pow(average, 2)};
+    double variance = sumSquares / numberOfEntries - Math.pow(average, 2);
+    return new double[] { average, variance };
+  }
+
+  /**
+   * Adds a double to the buffer. If the buffer is full the oldest element is
+   * overwritten.
+   * 
+   * @param value the double to add
+   */
+  public void setNext(double value) {
+    if (index == buffer.length) {
+      index = 0;
+    }
+    buffer[index] = value;
+    index++;
+    if (index == buffer.length) {
+      isFull = true;
+    }
   }
 
   @Override

@@ -19,39 +19,21 @@ package com.google.android.apps.mytracks.services.tasks;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
 
-import android.content.Context;
-
-
 /**
  * A simple task to insert statistics markers periodically.
+ * 
  * @author Sandor Dornbush
  */
-public class SplitTask implements PeriodicTask {
+public class SplitPeriodicTask implements PeriodicTask {
 
-  private SplitTask() {
+  @Override
+  public void start() {}
+
+  @Override
+  public void run(TrackRecordingService trackRecordingService) {
+    trackRecordingService.insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS);
   }
 
   @Override
-  public void run(TrackRecordingService service) {
-    service.insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS);
-  }
-
-  @Override
-  public void shutdown() {
-  }
-
-  @Override
-  public void start() {
-  }
-  
-  /**
-   * Create new SplitTasks.
-   */
-  public static class Factory implements PeriodicTaskFactory {
-
-    @Override
-    public PeriodicTask create(Context context) {
-      return new SplitTask();
-    }
-  }
+  public void shutdown() {}
 }

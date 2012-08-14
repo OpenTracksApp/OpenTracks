@@ -323,9 +323,10 @@ public class SearchListActivity extends AbstractMyTracksActivity implements Dele
     String textQuery = intent.getStringExtra(SearchManager.QUERY);
     setTitle(textQuery);
 
-    Location currentLocation = myTracksLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-    final SearchQuery query = new SearchQuery(textQuery, currentLocation, -1L, System
-        .currentTimeMillis());
+    Location currentLocation = myTracksLocationManager.getLastKnownLocation(
+        LocationManager.GPS_PROVIDER);
+    final SearchQuery query = new SearchQuery(
+        textQuery, currentLocation, -1L, System.currentTimeMillis());
     new Thread() {
         @Override
       public void run() {

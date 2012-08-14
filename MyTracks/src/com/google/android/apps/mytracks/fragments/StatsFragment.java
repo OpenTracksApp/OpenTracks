@@ -16,11 +16,11 @@
 
 package com.google.android.apps.mytracks.fragments;
 
-import com.google.android.apps.mytracks.MyTracksApplication;
+import com.google.android.apps.mytracks.TrackDetailActivity;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackDataHub;
-import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.TrackDataListener;
+import com.google.android.apps.mytracks.content.TrackDataType;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
@@ -61,7 +61,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   // A runnable to update the total time field.
   private final Runnable updateTotalTime = new Runnable() {
     public void run() {
-      if (isRecording()) {
+      if (isSelectedTrackRecording()) {
         StatsUtils.setTotalTimeValue(getActivity(), System.currentTimeMillis() - startTime);
       }
     }
@@ -117,8 +117,8 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   }
 
   @Override
-  public void onProviderStateChange(ProviderState state) {
-    if (isResumed() && (state == ProviderState.DISABLED || state == ProviderState.NO_FIX)) {
+  public void onLocationStateChanged(LocationState state) {
+    if (isResumed() && (state == LocationState.DISABLED || state == LocationState.NO_FIX)) {
       getActivity().runOnUiThread(new Runnable() {
           @Override
         public void run() {
@@ -130,8 +130,8 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   }
 
   @Override
-  public void onCurrentLocationChanged(final Location location) {
-    if (isResumed() && isRecording()) {
+  public void onLocationChanged(final Location location) {
+    if (isResumed() && isSelectedTrackRecording()) {
       getActivity().runOnUiThread(new Runnable() {
         @Override
         public void run() {
@@ -143,7 +143,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   }
 
   @Override
-  public void onCurrentHeadingChanged(double heading) {
+  public void onHeadingChanged(double heading) {
     // We don't care.
   }
 
@@ -175,7 +175,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
           lastTripStatistics = track.getTripStatistics();
           
           startTime = track.getTripStatistics().getStartTime();
-          if (!isRecording()) {
+          if (!isSelectedTrackRecording()) {
             lastLocation = null;
           }
           updateUi();
@@ -190,7 +190,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   }
 
   @Override
-  public void onNewTrackPoint(Location loc) {
+  public void onSampledInTrackPoint(Location loc) {
     // We don't care.
   }
 
@@ -225,7 +225,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   }
 
   @Override
-  public boolean onUnitsChanged(final boolean metric) {
+  public boolean onMetricUnitsChanged(final boolean metric) {
     if (isResumed()) {
       getActivity().runOnUiThread(new Runnable() {
         @Override
@@ -255,12 +255,12 @@ public class StatsFragment extends Fragment implements TrackDataListener {
    * be accessed by multiple threads.
    */
   private synchronized void resumeTrackDataHub() {
-    trackDataHub = ((MyTracksApplication) getActivity().getApplication()).getTrackDataHub();
+    trackDataHub = ((TrackDetailActivity) getActivity()).getTrackDataHub();
     trackDataHub.registerTrackDataListener(this, EnumSet.of(
-        ListenerDataType.SELECTED_TRACK_CHANGED,
-        ListenerDataType.TRACK_UPDATES,
-        ListenerDataType.LOCATION_UPDATES,
-        ListenerDataType.DISPLAY_PREFERENCES));
+        TrackDataType.SELECTED_TRACK,
+        TrackDataType.TRACKS_TABLE,
+        TrackDataType.LOCATION,
+        TrackDataType.PREFERENCE));
   }
 
   /**
@@ -273,11 +273,11 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   }
 
   /**
-   * Returns true if recording. Needs to be synchronized because trackDataHub
-   * can be accessed by multiple threads.
+   * Returns true if the selected track is recording. Needs to be synchronized
+   * because trackDataHub can be accessed by multiple threads.
    */
-  private synchronized boolean isRecording() {
-    return trackDataHub != null && trackDataHub.isRecordingSelected();
+  private synchronized boolean isSelectedTrackRecording() {
+    return trackDataHub != null && trackDataHub.isSelectedTrackRecording();
   }
 
   /**

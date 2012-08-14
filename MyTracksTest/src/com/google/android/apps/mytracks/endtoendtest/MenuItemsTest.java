@@ -22,9 +22,6 @@ import android.annotation.TargetApi;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.KeyEvent;
-import android.widget.EditText;
-
-import java.util.ArrayList;
 
 /**
  * Tests some menu items of MyTracks.
@@ -67,13 +64,16 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
     EndToEndTestUtils.createTrackIfEmpty(1, false);
     instrumentation.waitForIdleSync();
     // Menu in TrackDetailActivity.
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_sensor_state), true);
-    EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.sensor_state_last_sensor_time));
+    // When there is no sensor connected this menu will be hidden.
+    if (EndToEndTestUtils
+        .findMenuItem(activityMyTracks.getString(R.string.menu_sensor_state), true)) {
+      EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+          .getString(R.string.sensor_state_last_sensor_time));
+    }
 
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_help), true);
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.help_about));
+    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.help_about), true, true);
     EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
   }
@@ -85,8 +85,7 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
     EndToEndTestUtils.createSimpleTrack(1);
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_search), true);
-    ArrayList<EditText> editTexts = EndToEndTestUtils.SOLO.getCurrentEditTexts();
-    EndToEndTestUtils.SOLO.enterText(editTexts.get(0), EndToEndTestUtils.trackName);
+    EndToEndTestUtils.enterTextAvoidSoftKeyBoard(0, EndToEndTestUtils.trackName);
     sendKeys(KeyEvent.KEYCODE_ENTER);
     instrumentation.waitForIdleSync();
     assertEquals(1, EndToEndTestUtils.SOLO.getCurrentListViews().size());

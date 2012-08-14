@@ -31,38 +31,34 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
  */
 public class FixedSpeedTrackPathDescriptor
     implements TrackPathDescriptor, OnSharedPreferenceChangeListener {
+  private final Context context;
   private int slowSpeed;
   private int normalSpeed;
-  private final Context context;
 
   public FixedSpeedTrackPathDescriptor(Context context) {
     this.context = context;
-
-    context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE)
-        .registerOnSharedPreferenceChangeListener(this);
 
     slowSpeed = PreferencesUtils.getInt(context, R.string.track_color_mode_slow_key,
         PreferencesUtils.TRACK_COLOR_MODE_SLOW_DEFAULT);
     normalSpeed = PreferencesUtils.getInt(context, R.string.track_color_mode_medium_key,
         PreferencesUtils.TRACK_COLOR_MODE_MEDIUM_DEFAULT);
+    context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE)
+        .registerOnSharedPreferenceChangeListener(this);
   }
 
-  /**
-   * Gets the slow speed for reference.
-   * 
-   * @return The speed limit considered as slow.
-   */
+  @Override
   public int getSlowSpeed() {
     return slowSpeed;
   }
 
-  /**
-   * Gets the normal speed for reference.
-   * 
-   * @return The speed limit considered as normal.
-   */
+  @Override
   public int getNormalSpeed() {
     return normalSpeed;
+  }
+
+  @Override
+  public boolean updateState() {
+    return false;
   }
 
   @Override
@@ -74,10 +70,5 @@ public class FixedSpeedTrackPathDescriptor
       normalSpeed = PreferencesUtils.getInt(context, R.string.track_color_mode_medium_key,
           PreferencesUtils.TRACK_COLOR_MODE_MEDIUM_DEFAULT);
     }
-  }
-
-  @Override
-  public boolean needsRedraw() {
-    return false;
   }
 }

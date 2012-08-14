@@ -26,20 +26,19 @@ import java.util.List;
 import junit.framework.Assert;
 
 /**
- * Elements for Tests for the MyTracks map overlay.
+ * A mock {@link Path}. Records calls to {@link Path#lineTo(float, float)} and
+ * {@link Path#moveTo(float, float)}.
  * 
  * @author Bartlomiej Niechwiej
  * @author Vangelis S.
- * 
- * A mock class that intercepts {@code Path}'s and records calls to
- * {@code #moveTo()} and {@code #lineTo()}.
  */
 public class MockPath extends Path {
+
+  // A list of disjointed path segments.
+  private final List<List<PointF>> segments = new LinkedList<List<PointF>>();
   
-  /** A list of disjoined path segments. */
-  public final List<List<PointF>> segments = new LinkedList<List<PointF>>();
-  /** The total number of points in this path. */
-  public int totalPoints;
+  // The total number of points in this path.
+  private int totalPoints;
   private List<PointF> currentSegment;
 
   @Override
@@ -49,12 +48,20 @@ public class MockPath extends Path {
     currentSegment.add(new PointF(x, y));
     totalPoints++;
   }
-  
+
   @Override
   public void moveTo(float x, float y) {
     super.moveTo(x, y);
-    segments.add(currentSegment =
-        new ArrayList<PointF>(Arrays.asList(new PointF(x, y))));
+    currentSegment = new ArrayList<PointF>(Arrays.asList(new PointF(x, y)));
+    segments.add(currentSegment);
     totalPoints++;
   }
+
+  /**
+   * Gets the total number of points in this path.
+   */
+  public int getTotalPoints() {
+    return totalPoints;
+  }
+  
 }

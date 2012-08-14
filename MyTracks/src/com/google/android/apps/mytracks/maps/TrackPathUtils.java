@@ -1,12 +1,12 @@
 /*
- * Copyright 2010 Google Inc.
- * 
+ * Copyright 2011 Google Inc.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -14,21 +14,32 @@
  * the License.
  */
 
-package com.google.android.apps.mytracks.services.tasks;
+package com.google.android.apps.mytracks.maps;
 
 import android.content.Context;
+import android.graphics.Paint;
 
 /**
- * An interface for classes that can create {@link PeriodicTask}.
+ * Various utility functions for track path painting.
  * 
- * @author Sandor Dornbush
+ * @author Vangelis S.
  */
-public interface PeriodicTaskFactory {
+public class TrackPathUtils {
+
+  private TrackPathUtils() {}
 
   /**
-   * Creates a {@link PeriodicTask}.
+   * Gets a paint.
    * 
-   * @return the task, or null if the task is not supported
+   * @param context the context
+   * @param colorId the color id
    */
-  public PeriodicTask create(Context context);
+  public static Paint getPaint(Context context, int colorId) {
+    Paint paint = new Paint();
+    paint.setColor(context.getResources().getColor(colorId));
+    paint.setStrokeWidth(3);
+    paint.setStyle(Paint.Style.STROKE);
+    paint.setAntiAlias(true);
+    return paint;
+  }
 }

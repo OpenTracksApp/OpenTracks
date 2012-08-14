@@ -15,6 +15,8 @@
  */
 package com.google.android.apps.mytracks.content;
 
+import com.google.android.apps.mytracks.stats.TripStatistics;
+
 import java.util.Vector;
 
 /**
@@ -37,9 +39,9 @@ public interface DescriptionGenerator {
       Track track, Vector<Double> distances, Vector<Double> elevations, boolean html);
 
   /**
-   * Generate a waypoint description.
+   * Generate a waypoint description from a trip statistics.
    *
-   * @param waypoint the waypoint
+   * @param tripStatistics the trip statistics
    */
-  public String generateWaypointDescription(Waypoint waypoint);
+  public String generateWaypointDescription(TripStatistics tripStatistics);
 }

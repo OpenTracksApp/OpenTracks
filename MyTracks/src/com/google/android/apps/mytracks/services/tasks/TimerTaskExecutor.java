@@ -16,46 +16,46 @@
 
 package com.google.android.apps.mytracks.services.tasks;
 
-import static com.google.android.apps.mytracks.Constants.TAG;
-
-import android.util.Log;
+import com.google.android.apps.mytracks.services.TrackRecordingService;
+import com.google.android.apps.mytracks.stats.TripStatistics;
 
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.google.android.apps.mytracks.services.TrackRecordingService;
-
 /**
  * This class will periodically perform a task.
- *
+ * 
  * @author Sandor Dornbush
  */
 public class TimerTaskExecutor {
 
-  private final PeriodicTask task;
-  private final TrackRecordingService service;
+  private final PeriodicTask periodicTask;
+  private final TrackRecordingService trackRecordingService;
 
   /**
-   * A timer to schedule the announcements.
-   * This is non-null if the task is in started (scheduled) state.
+   * A timer to schedule the announcements. This is non-null if the task is in
+   * started (scheduled) state.
    */
   private Timer timer;
 
-  public TimerTaskExecutor(PeriodicTask task,
-                           TrackRecordingService service) {
-    this.task = task;
-    this.service = service;
+  public TimerTaskExecutor(PeriodicTask periodicTask, TrackRecordingService trackRecordingService) {
+    this.periodicTask = periodicTask;
+    this.trackRecordingService = trackRecordingService;
   }
 
   /**
-   * Schedules the task at the given interval.
-   *
-   * @param interval The interval in milliseconds
+   * Schedules the periodic task at an interval.
+   * 
+   * @param interval the interval in milliseconds
    */
   public void scheduleTask(long interval) {
-    // TODO: Decouple service from this class once and forever.
-    if (!service.isRecording()) {
+    if (!trackRecordingService.isRecording()) {
+      return;
+    }
+
+    TripStatistics tripStatistics = trackRecordingService.getTripStatistics();
+    if (tripStatistics == null) {
       return;
     }
 
@@ -64,7 +64,7 @@ public class TimerTaskExecutor {
       timer.purge();
     } else {
       // First start, or we were previously shut down.
-      task.start();
+      periodicTask.start();
     }
 
     timer = new Timer();
@@ -73,27 +73,22 @@ public class TimerTaskExecutor {
     }
 
     long now = System.currentTimeMillis();
-    long next = service.getTripStatistics().getStartTime();
+    long next = tripStatistics.getStartTime();
     if (next < now) {
       next = now + interval - ((now - next) % interval);
     }
-
-    Date start = new Date(next);
-    Log.i(TAG, task.getClass().getSimpleName() + " scheduled to start at " + start
-        + " every " + interval + " milliseconds.");
-    timer.scheduleAtFixedRate(new PeriodicTimerTask(), start, interval);
+    timer.scheduleAtFixedRate(new PeriodicTimerTask(), new Date(next), interval);
   }
 
   /**
-   * Cleans up this object.
+   * Shuts down.
    */
   public void shutdown() {
-    Log.i(TAG, task.getClass().getSimpleName() + " shutting down.");
     if (timer != null) {
       timer.cancel();
       timer.purge();
       timer = null;
-      task.shutdown();
+      periodicTask.shutdown();
     }
   }
 
@@ -101,9 +96,10 @@ public class TimerTaskExecutor {
    * The timer task to announce the trip status.
    */
   private class PeriodicTimerTask extends TimerTask {
+
     @Override
     public void run() {
-      task.run(service);
+      periodicTask.run(trackRecordingService);
     }
   }
 }

@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks.maps;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
@@ -36,60 +37,43 @@ import android.util.Log;
  * 
  * @author Vangelis S.
  */
-public class DynamicSpeedTrackPathDescriptor implements TrackPathDescriptor,
-    OnSharedPreferenceChangeListener {
+public class DynamicSpeedTrackPathDescriptor
+    implements TrackPathDescriptor, OnSharedPreferenceChangeListener {
 
+  private final Context context;
+  private int speedMargin;
   private int slowSpeed;
   private int normalSpeed;
-  private int speedMargin;
   private double averageMovingSpeed;
-  private final Context context;
+
   @VisibleForTesting
   static final int CRITICAL_DIFFERENCE_PERCENTAGE = 20;
 
   public DynamicSpeedTrackPathDescriptor(Context context) {
     this.context = context;
-    context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE)
-        .registerOnSharedPreferenceChangeListener(this);
-
     speedMargin = PreferencesUtils.getInt(context, R.string.track_color_mode_percentage_key,
         PreferencesUtils.TRACK_COLOR_MODE_PERCENTAGE_DEFAULT);
+    context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE)
+        .registerOnSharedPreferenceChangeListener(this);
   }
 
-  /**
-   * Get the slow speed calculated based on the % below the average speed.
-   * 
-   * @return The speed limit considered as slow.
-   */
+  @Override
   public int getSlowSpeed() {
-    slowSpeed = (int) (averageMovingSpeed - (averageMovingSpeed * speedMargin / 100));
+    slowSpeed = (int) (averageMovingSpeed - (averageMovingSpeed * speedMargin / 100.0));
     return slowSpeed;
   }
 
-  /**
-   * Gets the medium speed calculated based on the % above the average speed.
-   * 
-   * @return The speed limit considered as normal.
-   */
+  @Override
   public int getNormalSpeed() {
-    normalSpeed = (int) (averageMovingSpeed + (averageMovingSpeed * speedMargin / 100));
+    normalSpeed = (int) (averageMovingSpeed + (averageMovingSpeed * speedMargin / 100.0));
     return normalSpeed;
   }
 
   @Override
-  public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-    Log.d(TAG, "DynamicSpeedTrackPathDescriptor: onSharedPreferences changed " + key);
-    if (PreferencesUtils.getKey(context, R.string.track_color_mode_percentage_key).equals(key)) {
-      speedMargin = PreferencesUtils.getInt(context, R.string.track_color_mode_percentage_key,
-          PreferencesUtils.TRACK_COLOR_MODE_PERCENTAGE_DEFAULT);
-    }
-  }
-
-  @Override
-  public boolean needsRedraw() {
+  public boolean updateState() {
     long selectedTrackId = PreferencesUtils.getLong(context, R.string.selected_track_id_key);
     if (selectedTrackId == PreferencesUtils.SELECTED_TRACK_ID_DEFAULT) {
-      // Could not find track.
+      Log.d(TAG, "No selected track id.");
       return false;
     }
     Track track = MyTracksProviderUtils.Factory.get(context).getTrack(selectedTrackId);
@@ -97,40 +81,48 @@ public class DynamicSpeedTrackPathDescriptor implements TrackPathDescriptor,
       Log.d(TAG, "No track for " + selectedTrackId);
       return false;
     }
-    TripStatistics stats = track.getTripStatistics();
+    TripStatistics tripStatistics = track.getTripStatistics();
     double newAverageMovingSpeed = (int) Math.floor(
-        stats.getAverageMovingSpeed() * UnitConversions.MS_TO_KMH);
+        tripStatistics.getAverageMovingSpeed() * UnitConversions.MS_TO_KMH);
 
-    return isDifferenceSignificant(averageMovingSpeed, newAverageMovingSpeed);
-  }
-
-  /**
-   * Checks whether the old speed and the new speed differ significantly or not.
-   */
-  public boolean isDifferenceSignificant(double oldAverageMovingSpeed, double newAverageMovingSpeed) {
-    if (oldAverageMovingSpeed == 0) {
-      if (newAverageMovingSpeed == 0) {
-        return false;
-      } else {
-        averageMovingSpeed = newAverageMovingSpeed;
-        return true;
-      }
-    }
-
-    // Here, both oldAverageMovingSpeed and newAverageMovingSpeed are not zero.
-    double maxValue = Math.max(oldAverageMovingSpeed, newAverageMovingSpeed);
-    double differencePercentage = Math.abs(oldAverageMovingSpeed - newAverageMovingSpeed)
-        / maxValue * 100;
-    if (differencePercentage >= CRITICAL_DIFFERENCE_PERCENTAGE) {
+    if (isDifferenceSignificant(averageMovingSpeed, newAverageMovingSpeed)) {
       averageMovingSpeed = newAverageMovingSpeed;
       return true;
+    } else {
+      return false;
     }
-    return false;
+  }
+
+  @Override
+  public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+    if (PreferencesUtils.getKey(context, R.string.track_color_mode_percentage_key).equals(key)) {
+      speedMargin = PreferencesUtils.getInt(context, R.string.track_color_mode_percentage_key,
+          PreferencesUtils.TRACK_COLOR_MODE_PERCENTAGE_DEFAULT);
+    }
   }
 
   /**
-   * Gets the value of variable speedMargin to check the result of test.  
-   * @return the value of speedMargin.
+   * Returns true if the average moving speed and the new average moving speed
+   * are significantly different.
+   * 
+   * @param oldAverageMovingSpeed
+   * @param newAverageMovingSpeed
+   */
+  @VisibleForTesting
+  boolean isDifferenceSignificant(double oldAverageMovingSpeed, double newAverageMovingSpeed) {
+    if (oldAverageMovingSpeed == 0) {
+      return newAverageMovingSpeed != 0;
+    }
+    
+    // Here, both oldAverageMovingSpeed and newAverageMovingSpeed are not zero.
+    double maxValue = Math.max(oldAverageMovingSpeed, newAverageMovingSpeed);
+    double differencePercentage = Math.abs(oldAverageMovingSpeed - newAverageMovingSpeed) / maxValue
+        * 100.0;
+    return differencePercentage >= CRITICAL_DIFFERENCE_PERCENTAGE;
+  }
+
+  /**
+   * Gets the speed margin.
    */
   @VisibleForTesting
   int getSpeedMargin() {
@@ -138,21 +130,20 @@ public class DynamicSpeedTrackPathDescriptor implements TrackPathDescriptor,
   }
 
   /**
-   * Sets the value of newAverageMovingSpeed to test the method isDifferenceSignificant.
-   * @param newAverageMovingSpeed the value to set.
-   */
-  @VisibleForTesting
-  void setAverageMovingSpeed(double newAverageMovingSpeed) {
-    averageMovingSpeed = newAverageMovingSpeed;
-  }
-
-  /**
-   * Gets the value of averageMovingSpeed to check the result of test.
-   * 
-   * @return the value of averageMovingSpeed
+   * Gets the average moving speed.
    */
   @VisibleForTesting
   double getAverageMovingSpeed() {
     return averageMovingSpeed;
+  }
+
+  /**
+   * Sets the average moving speed.
+   * 
+   * @param value the value
+   */
+  @VisibleForTesting
+  void setAverageMovingSpeed(double value) {
+    averageMovingSpeed = value;
   }
 }

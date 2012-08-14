@@ -19,41 +19,34 @@ package com.google.android.apps.mytracks.services;
 /**
  * This is a simple location listener policy that will always dictate the same
  * polling interval.
- *
+ * 
  * @author Sandor Dornbush
  */
 public class AbsoluteLocationListenerPolicy implements LocationListenerPolicy {
 
-  /**
-   * The interval to request for gps signal.
-   */
   private final long interval;
 
   /**
-   * @param interval The interval to request for gps signal
+   * Constructor.
+   * 
+   * @param interval the interval to request for gps signal
    */
-  public AbsoluteLocationListenerPolicy(final long interval) {
+  public AbsoluteLocationListenerPolicy(long interval) {
     this.interval = interval;
   }
 
-  /**
-   * @return The interval given in the constructor
-   */
+  @Override
   public long getDesiredPollingInterval() {
     return interval;
   }
 
-  /**
-   * Discards the idle time.
-   */
-  public void updateIdleTime(long idleTime) {
-  }
-
-  /**
-   * Returns the minimum distance between updates.
-   * Get all updates to properly measure moving time.
-   */
+  @Override
   public int getMinDistance() {
     return 0;
+  }
+
+  @Override
+  public void updateIdleTime(long idleTime) {
+    // Ignore
   }
 }
