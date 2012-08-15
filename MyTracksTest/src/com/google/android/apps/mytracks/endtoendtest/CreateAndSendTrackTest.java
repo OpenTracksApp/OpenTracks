@@ -262,9 +262,8 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
   
   /**
    * Tests whether the split marker is created as setting.
-   * @throws InterruptedException 
    */
-  public void testSplitSetting() throws InterruptedException {
+  public void testSplitSetting() {
     EndToEndTestUtils.startRecording();
 
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_split_frequency), true);
