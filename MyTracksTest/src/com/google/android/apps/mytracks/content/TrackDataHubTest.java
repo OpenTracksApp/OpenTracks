@@ -126,6 +126,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     dataSource.unregisterHeadingListener(isA(SensorEventListener.class));
     dataSource.unregisterOnSharedPreferenceChangeListener(
         isA(OnSharedPreferenceChangeListener.class));
+    dataSource.close();
     AndroidMock.replay(dataSource);
 
     trackDataHub.stop();
@@ -579,6 +580,7 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     // Expect a heading update with declination
     trackDataListener1.onHeadingChanged(52.0);
+    AndroidMock.expect(dataSource.isAllowed()).andReturn(true);
     replay();
 
     // Update location and sensor
