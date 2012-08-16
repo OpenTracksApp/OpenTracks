@@ -91,7 +91,7 @@ public class TrackRecordingServiceConnectionUtils {
     try {
       ITrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
       if (service != null) {
-        service.resumeCurrentTrack();
+        service.pauseCurrentTrack();
       }
     } catch (RemoteException e) {
       Log.e(TAG, "Unable to resume track.", e);

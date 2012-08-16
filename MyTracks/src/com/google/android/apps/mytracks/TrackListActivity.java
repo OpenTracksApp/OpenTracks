@@ -148,7 +148,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
             recordingTrackPaused = PreferencesUtils.getBoolean(TrackListActivity.this,
                 R.string.recording_track_paused_key,
                 PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
-            updateList = key != null;
+            updateList = updateList || key != null;
           }
           if (updateList) {
             resourceCursorAdapter.notifyDataSetChanged();
