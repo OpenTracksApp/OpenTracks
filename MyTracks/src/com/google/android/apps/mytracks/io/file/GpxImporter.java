@@ -20,6 +20,7 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
 import com.google.android.apps.mytracks.util.LocationUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 
 import android.location.Location;
@@ -300,11 +301,11 @@ public class GpxImporter extends DefaultHandler {
       flushPoints();
 
       // Calculate statistics for the imported track
-      tripStatisticsBuilder.pauseAt(lastLocation.getTime());
+      tripStatisticsBuilder.updateTime(lastLocation.getTime());
       track.setStopId(getLastPointId());
     } else {
-      tripStatisticsBuilder = new TripStatisticsBuilder(0);
-      tripStatisticsBuilder.pauseAt(0);
+      tripStatisticsBuilder = new TripStatisticsBuilder(0L);
+      tripStatisticsBuilder.updateTime(0L);
     }
     track.setTripStatistics(tripStatisticsBuilder.getTripStatistics());
     track.setNumberOfPoints(numberOfLocations);
@@ -380,7 +381,7 @@ public class GpxImporter extends DefaultHandler {
         // first point did not have a time, start stats builder without it
         tripStatisticsBuilder = new TripStatisticsBuilder(0);
       }
-      tripStatisticsBuilder.addLocation(location, location.getTime());
+      tripStatisticsBuilder.addLocation(location, PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT);
 
       // insert in db
       insertPoint(location);

@@ -46,6 +46,7 @@ import android.test.RenamingDelegatingContext;
 import android.test.ServiceTestCase;
 import android.test.mock.MockContentProvider;
 import android.test.mock.MockContentResolver;
+import android.test.mock.MockCursor;
 import android.test.suitebuilder.annotation.MediumTest;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.util.Log;
@@ -143,6 +144,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     MyTracksProvider myTracksProvider = new MyTracksProvider();
     myTracksProvider.attachInfo(context, null);
     mockContentResolver.addProvider(MyTracksProviderUtils.AUTHORITY, myTracksProvider);
+    
     MockContentProvider settingsProvider = new MockContentProvider(context) {
         @Override
       public Bundle call(String method, String arg, Bundle extras) {
@@ -155,7 +157,36 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
       }
     };
     mockContentResolver.addProvider(Settings.AUTHORITY, settingsProvider);
-
+    
+    MockContentProvider googleSettingsProvider = new MockContentProvider(context) {
+        @Override
+      public Bundle call(String method, String arg, Bundle extras) {
+        return null;
+      }
+        @Override
+      public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
+          String sortOrder) {
+        MockCursor mockCursor = new MockCursor() {
+            @Override
+          public int getCount() {
+            return 1;
+          }
+            @Override
+          public boolean moveToNext() {
+            return true;
+          }
+            @Override
+          public String getString(int columnIndex) {
+            return MyTracksLocationManager.USE_LOCATION_FOR_SERVICES_ON;
+          }
+            @Override
+          public void close() {}
+        };
+        return mockCursor;
+      }
+    };
+    mockContentResolver.addProvider("com.google.settings", googleSettingsProvider);
+    
     // Set the context
     setContext(context);
 
@@ -483,12 +514,8 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertFalse(service.isRecording());
 
-    try {
-      service.insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS);
-      fail("Expecting IllegalStateException");
-    } catch (IllegalStateException e) {
-      // Expected.
-    }
+    long waypointId = service.insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS);
+    assertEquals(-1L, waypointId);
   }
 
   @MediumTest
@@ -497,6 +524,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
 
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertTrue(service.isRecording());
+    assertFalse(service.isPaused());
     insertLocation(service);
 
     assertEquals(1, service.insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS));
@@ -520,12 +548,8 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertFalse(service.isRecording());
 
-    try {
-      service.insertWaypoint(WaypointCreationRequest.DEFAULT_WAYPOINT);
-      fail("Expecting IllegalStateException");
-    } catch (IllegalStateException e) {
-      // Expected.
-    }
+    long waypointId = service.insertWaypoint(WaypointCreationRequest.DEFAULT_WAYPOINT);
+    assertEquals(-1L, waypointId);
   }
 
   @MediumTest
@@ -700,6 +724,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     assertEquals(track.getId(), providerUtils.getTrack(track.getId()).getId());
     PreferencesUtils.setLong(context, R.string.recording_track_id_key, isRecording ? track.getId()
         : PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
+    PreferencesUtils.setBoolean(context, R.string.recording_track_paused_key, !isRecording);
   }
 
   private void fullRecordingSession() throws Exception {

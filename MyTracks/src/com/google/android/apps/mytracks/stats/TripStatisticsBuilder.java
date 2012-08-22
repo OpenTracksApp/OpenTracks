@@ -19,132 +19,125 @@ package com.google.android.apps.mytracks.stats;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.apps.mytracks.services.TrackRecordingService;
+import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.common.annotations.VisibleForTesting;
 
 import android.location.Location;
 import android.util.Log;
 
 /**
- * Builder for {@link TripStatistics}. For keeping statistics as a track is
- * paused/resumed and new locations are added.
+ * Builder for {@link TripStatistics}. For keeping track statistics as new
+ * locations are added. Note that some of the locations represent pause/resume
+ * separator.
  * 
  * @author Sandor Dornbush
  * @author Rodrigo Damazio
  */
 public class TripStatisticsBuilder {
 
-  // The trip statistics.
+  // The track's trip statistics
   private final TripStatistics tripStatistics;
 
-  // The minimum recording distance.
-  private int minRecordingDistance = PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT;
+  // The current segment's trip statistics
+  private TripStatistics currentSegment;
 
-  // True if the trip is paused. All trips start as paused.
-  private boolean paused = true;
-
-  // The last location as reported by GPS.
+  // Current segment's last location.
   private Location lastLocation;
 
-  // The last moving location that contributed to the moving statistics.
+  // Current segment's last moving location
   private Location lastMovingLocation;
 
-  // A buffer of the recent speed readings (m/s) for calculating max speed.
+  // A buffer of the recent speed readings (m/s) for calculating max speed
   private final DoubleBuffer speedBuffer = new DoubleBuffer(Constants.SPEED_SMOOTHING_FACTOR);
 
-  // A buffer of the recent elevation readings (m).
+  // A buffer of the recent elevation readings (m)
   private final DoubleBuffer elevationBuffer = new DoubleBuffer(
       Constants.ELEVATION_SMOOTHING_FACTOR);
 
-  // A buffer of the recent distance readings for calculating grade.
+  // A buffer of the recent distance readings (m) for calculating grade
   private final DoubleBuffer distanceBuffer = new DoubleBuffer(Constants.DISTANCE_SMOOTHING_FACTOR);
 
-  // A buffer of the recent grade calculations
+  // A buffer of the recent grade calculations (%)
   private final DoubleBuffer gradeBuffer = new DoubleBuffer(Constants.GRADE_SMOOTHING_FACTOR);
 
   /**
-   * Creates a new trip starting at a start time.
+   * Creates a new trip statistics builder.
    * 
    * @param startTime the start time
    */
   public TripStatisticsBuilder(long startTime) {
-    tripStatistics = new TripStatistics();
-    resumeAt(startTime);
+    tripStatistics = init(startTime);
+    currentSegment = init(startTime);
+  }
+
+  public void updateTime(long time) {
+    currentSegment.setStopTime(time);
+    currentSegment.setTotalTime(time - currentSegment.getStartTime());
   }
 
   /**
-   * Creates a new trip, starting with an existing {@link TripStatistics}.
-   * 
-   * @param other the existing {@link TripStatistics}
-   */
-  public TripStatisticsBuilder(TripStatistics other) {
-    tripStatistics = new TripStatistics(other);
-    if (tripStatistics.getStartTime() > 0) {
-      resumeAt(tripStatistics.getStartTime());
-    }
-  }
-
-  /**
-   * Sets the min recording distance.
-   * 
-   * @param minRecordingDistance the min recording distance
-   */
-  public void setMinRecordingDistance(int minRecordingDistance) {
-    this.minRecordingDistance = minRecordingDistance;
-  }
-
-  /**
-   * Resumes the current track at a given time.
-   * 
-   * @param time the time
-   */
-  public void resumeAt(long time) {
-    if (!paused) {
-      return;
-    }
-
-    tripStatistics.setStartTime(time);
-    tripStatistics.setStopTime(-1L);
-    paused = false;
-    lastLocation = null;
-    lastMovingLocation = null;
-    speedBuffer.reset();
-    elevationBuffer.reset();
-    distanceBuffer.reset();
-    gradeBuffer.reset();
-  }
-
-  /**
-   * Pauses the track at a given time.
-   * 
-   * @param time the time to pause at
-   */
-  public void pauseAt(long time) {
-    if (paused) {
-      return;
-    }
-    tripStatistics.setStopTime(time);
-    // TODO: total time needs to take into account pauses
-    tripStatistics.setTotalTime(time - tripStatistics.getStartTime());
-    paused = true;
-  }
-
-  /**
-   * Gets the trip statistics.
+   * Gets the track's trip statistics.
    */
   public TripStatistics getTripStatistics() {
-    // Take a snapshot - we don't want anyone messing with our internals
-    return new TripStatistics(tripStatistics);
+    // Take a snapshot - we don't want anyone messing with our tripStatistics
+    TripStatistics stats = new TripStatistics(tripStatistics);
+    stats.merge(currentSegment);
+    return stats;
   }
 
   /**
-   * Returns the amount of time the user has been idle or 0 if he is moving.
+   * Adds a location. TODO: This assume location has a valid time.
+   * 
+   * @param location the location
+   * @param minRecordingDistance the min recording distance
    */
-  public long getIdleTime() {
-    if (lastLocation == null || lastMovingLocation == null) {
-      return 0;
+  public void addLocation(Location location, int minRecordingDistance) {
+    if (!LocationUtils.isValidLocation(location)) {
+      updateTime(location.getTime());
+      if (location.getLatitude() == TrackRecordingService.PAUSE_LATITUDE) {
+        tripStatistics.merge(currentSegment);
+      }
+      currentSegment = init(location.getTime());
+      lastLocation = null;
+      lastMovingLocation = null;
+      speedBuffer.reset();
+      elevationBuffer.reset();
+      distanceBuffer.reset();
+      gradeBuffer.reset();
+      return;
     }
-    return lastLocation.getTime() - lastMovingLocation.getTime();
+    double elevationDifference = updateElevation(location.getAltitude());
+    currentSegment.updateLatitudeExtremities(location.getLatitude());
+    currentSegment.updateLongitudeExtremities(location.getLongitude());
+
+    if (lastLocation == null || lastMovingLocation == null) {
+      updateTime(location.getTime());
+      lastLocation = location;
+      lastMovingLocation = location;
+      return;
+    }
+    double movingDistance = lastMovingLocation.distanceTo(location);
+    if (movingDistance < minRecordingDistance
+        && location.getSpeed() < Constants.MAX_NO_MOVEMENT_SPEED) {
+      updateTime(location.getTime());
+      lastLocation = location;
+      return;
+    }
+    long movingTime = location.getTime() - lastLocation.getTime();
+    if (movingTime < 0) {
+      updateTime(location.getTime());
+      lastLocation = location;
+      return;
+    }
+    currentSegment.addTotalDistance(movingDistance);
+    currentSegment.addMovingTime(movingTime);
+    updateSpeed(
+        location.getTime(), location.getSpeed(), lastLocation.getTime(), lastLocation.getSpeed());
+    updateGrade(lastLocation.distanceTo(location), elevationDifference);
+    updateTime(location.getTime());
+    lastLocation = location;
+    lastMovingLocation = location;
   }
 
   /**
@@ -152,60 +145,9 @@ public class TripStatisticsBuilder {
    * is noisy so the smoothed elevation is better than the raw elevation for
    * many tasks.
    */
-  public double getSmoothedElevation() {
+  @VisibleForTesting
+  double getSmoothedElevation() {
     return elevationBuffer.getAverage();
-  }
-
-  /**
-   * Adds a location. This will update all of the internal variables with this
-   * new location.
-   * 
-   * @param location the location
-   * @param systemTime the system time for calculating totalTime. This should be
-   *          the phone's system time (not GPS time)
-   * @return true if the person is moving
-   */
-  public boolean addLocation(Location location, long systemTime) {
-    if (paused) {
-      Log.w(TAG, "Track is paused. Ignore addLocation.");
-      return false;
-    }
-
-    tripStatistics.setTotalTime(systemTime - tripStatistics.getStartTime());
-
-    double elevationDifference = updateElevation(location.getAltitude());
-    tripStatistics.updateLatitudeExtremities(location.getLatitude());
-    tripStatistics.updateLongitudeExtremities(location.getLongitude());
-
-    // If this is the first location, remember it and return.
-    if (lastLocation == null || lastMovingLocation == null) {
-      lastLocation = location;
-      lastMovingLocation = location;
-      return false;
-    }
-
-    // Don't do anything more if we didn't move since the last location.
-    double distance = lastLocation.distanceTo(location);
-    if (distance < minRecordingDistance && location.getSpeed() < Constants.MAX_NO_MOVEMENT_SPEED) {
-      lastLocation = location;
-      return false;
-    }
-
-    long timeDifference = location.getTime() - lastLocation.getTime();
-    if (timeDifference < 0) {
-      Log.e(TAG, "Negative time difference: " + timeDifference);
-      lastLocation = location;
-      return false;
-    }
-
-    tripStatistics.addTotalDistance(lastMovingLocation.distanceTo(location));
-    tripStatistics.addMovingTime(timeDifference);
-    updateSpeed(
-        location.getTime(), location.getSpeed(), lastLocation.getTime(), lastLocation.getSpeed());
-    updateGrade(distance, elevationDifference);
-    lastLocation = location;
-    lastMovingLocation = location;
-    return true;
   }
 
   /**
@@ -223,12 +165,12 @@ public class TripStatisticsBuilder {
       return;
     }
     speedBuffer.setNext(speed);
-    if (speed > tripStatistics.getMaxSpeed()) {
-      tripStatistics.setMaxSpeed(speed);
+    if (speed > currentSegment.getMaxSpeed()) {
+      currentSegment.setMaxSpeed(speed);
     }
-    double movingSpeed = tripStatistics.getAverageMovingSpeed();
-    if (speedBuffer.isFull() && movingSpeed > tripStatistics.getMaxSpeed()) {
-      tripStatistics.setMaxSpeed(movingSpeed);
+    double movingSpeed = currentSegment.getAverageMovingSpeed();
+    if (speedBuffer.isFull() && movingSpeed > currentSegment.getMaxSpeed()) {
+      currentSegment.setMaxSpeed(movingSpeed);
     }
   }
 
@@ -242,10 +184,10 @@ public class TripStatisticsBuilder {
     double oldAverage = elevationBuffer.getAverage();
     elevationBuffer.setNext(elevation);
     double newAverage = elevationBuffer.getAverage();
-    tripStatistics.updateElevationExtremities(newAverage);
+    currentSegment.updateElevationExtremities(newAverage);
     double elevationDifference = elevationBuffer.isFull() ? newAverage - oldAverage : 0.0;
     if (elevationDifference > 0) {
-      tripStatistics.addTotalElevationGain(elevationDifference);
+      currentSegment.addTotalElevationGain(elevationDifference);
     }
     return elevationDifference;
   }
@@ -270,7 +212,14 @@ public class TripStatisticsBuilder {
       return;
     }
     gradeBuffer.setNext(elevationDifference / smoothedDistance);
-    tripStatistics.updateGradeExtremities(gradeBuffer.getAverage());
+    currentSegment.updateGradeExtremities(gradeBuffer.getAverage());
+  }
+
+  private TripStatistics init(long time) {
+    TripStatistics stats = new TripStatistics();
+    stats.setStartTime(time);
+    stats.setStopTime(time);
+    return stats;
   }
 
   /**

@@ -101,16 +101,24 @@ public class TripStatistics implements Parcelable {
     totalDistance += other.totalDistance;
     totalTime += other.totalTime;
     movingTime += other.movingTime;
-    latitudeExtremities.update(other.latitudeExtremities.getMin());
-    latitudeExtremities.update(other.latitudeExtremities.getMax());
-    longitudeExtremities.update(other.longitudeExtremities.getMin());
-    longitudeExtremities.update(other.longitudeExtremities.getMax());
+    if (other.latitudeExtremities.hasData()) {
+      latitudeExtremities.update(other.latitudeExtremities.getMin());
+      latitudeExtremities.update(other.latitudeExtremities.getMax());
+    }
+    if (other.longitudeExtremities.hasData()) {
+      longitudeExtremities.update(other.longitudeExtremities.getMin());
+      longitudeExtremities.update(other.longitudeExtremities.getMax());
+    }
     maxSpeed = Math.max(maxSpeed, other.maxSpeed);
-    elevationExtremities.update(other.elevationExtremities.getMin());
-    elevationExtremities.update(other.elevationExtremities.getMax());
+    if (other.elevationExtremities.hasData()) {
+      elevationExtremities.update(other.elevationExtremities.getMin());
+      elevationExtremities.update(other.elevationExtremities.getMax());
+    }
     totalElevationGain += other.totalElevationGain;
-    gradeExtremities.update(other.gradeExtremities.getMin());
-    gradeExtremities.update(other.gradeExtremities.getMax());
+    if (other.gradeExtremities.hasData()) {
+      gradeExtremities.update(other.gradeExtremities.getMin());
+      gradeExtremities.update(other.gradeExtremities.getMax());
+    }
   }
 
   /**

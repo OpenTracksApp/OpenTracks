@@ -62,8 +62,8 @@ public class PeriodicTaskExecutor {
    * Restores the executor.
    */
   public void restore() {
-    if (!trackRecordingService.isRecording()) {
-      Log.d(TAG, "Not recording.");
+    if (!trackRecordingService.isRecording() || trackRecordingService.isPaused()) {
+      Log.d(TAG, "Not recording or paused.");
       return;
     }
 
@@ -159,7 +159,7 @@ public class PeriodicTaskExecutor {
    * Calculates the next distance for the distance periodic task.
    */
   private void calculateNextTaskDistance() {
-    if (!trackRecordingService.isRecording() || periodicTask == null) {
+    if (!trackRecordingService.isRecording() || trackRecordingService.isPaused() || periodicTask == null) {
       return;
     }
 

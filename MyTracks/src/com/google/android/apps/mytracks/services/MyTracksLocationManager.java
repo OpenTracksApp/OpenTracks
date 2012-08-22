@@ -17,6 +17,7 @@
 package com.google.android.apps.mytracks.services;
 
 import com.google.android.apps.mytracks.util.GoogleLocationUtils;
+import com.google.common.annotations.VisibleForTesting;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -44,7 +45,8 @@ public class MyTracksLocationManager {
   private static final String USE_LOCATION_FOR_SERVICES = "use_location_for_services";
   
   // User has agreed to use location for Google services.
-  private static final String USE_LOCATION_FOR_SERVICES_ON = "1";
+  @VisibleForTesting
+  static final String USE_LOCATION_FOR_SERVICES_ON = "1";
 
   private static final String NAME = "name";
   private static final String VALUE = "value";

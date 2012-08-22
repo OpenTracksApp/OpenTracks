@@ -241,7 +241,8 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     splitFrequencyMenuItem = menu.findItem(R.id.track_detail_split_frequency);
     sendGoogleMenuItem = menu.findItem(R.id.track_detail_send_google);
     saveMenuItem = menu.findItem(R.id.track_detail_save);
-
+    
+    updateMenuItems(trackId == recordingTrackId);
     return true;
   }
 

@@ -50,7 +50,7 @@ public class TimerTaskExecutor {
    * @param interval the interval in milliseconds
    */
   public void scheduleTask(long interval) {
-    if (!trackRecordingService.isRecording()) {
+    if (!trackRecordingService.isRecording() || trackRecordingService.isPaused()) {
       return;
     }
 
