@@ -334,7 +334,7 @@ public class MapFragment extends Fragment
   }
 
   @Override
-  public void onSelectedTrackChanged(final Track track, final boolean isRecording) {
+  public void onSelectedTrackChanged(final Track track) {
     getActivity().runOnUiThread(new Runnable() {
       @Override
       public void run() {
@@ -350,7 +350,7 @@ public class MapFragment extends Fragment
             currentSelectedTrackId = track.getId();
             updateMap(track);
           }
-          mapOverlay.setShowEndMarker(!isRecording);
+          mapOverlay.setShowEndMarker(!isSelectedTrackRecording());
         }
         mapView.invalidate();
       }
@@ -452,6 +452,14 @@ public class MapFragment extends Fragment
     }
   }
   
+  /**
+   * Returns true if the selected track is recording. Needs to be synchronized
+   * because trackDataHub can be accessed by multiple threads.
+   */
+  private synchronized boolean isSelectedTrackRecording() {
+    return trackDataHub != null && trackDataHub.isSelectedTrackRecording();
+  }
+
   /**
    * Updates the map by either zooming to the requested marker or showing the track.
    *

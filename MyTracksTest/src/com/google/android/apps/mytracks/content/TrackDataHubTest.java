@@ -798,7 +798,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     expect(myTracksProviderUtils.getTrack(capture(new Capture<Long>()))).andReturn(track);
     // Make the track id is unique.
     PreferencesUtils.setLong(context, R.string.recording_track_id_key, System.currentTimeMillis());
-    trackDataListener1.onSelectedTrackChanged(track, false);
+    trackDataListener1.onSelectedTrackChanged(track);
     replay();
     trackDataHub.start();
     trackDataHub.registerTrackDataListener(trackDataListener1, EnumSet.of(TrackDataType.SELECTED_TRACK));

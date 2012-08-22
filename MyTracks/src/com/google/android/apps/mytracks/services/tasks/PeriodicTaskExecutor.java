@@ -159,7 +159,8 @@ public class PeriodicTaskExecutor {
    * Calculates the next distance for the distance periodic task.
    */
   private void calculateNextTaskDistance() {
-    if (!trackRecordingService.isRecording() || trackRecordingService.isPaused() || periodicTask == null) {
+    if (!trackRecordingService.isRecording() || trackRecordingService.isPaused()
+        || periodicTask == null) {
       return;
     }
 

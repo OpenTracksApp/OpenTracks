@@ -64,9 +64,8 @@ public interface TrackDataListener {
    * calls to clear the current data).
    * 
    * @param track the selected track or null if no track is selected
-   * @param isRecording true if the selected track is recording
    */
-  public void onSelectedTrackChanged(Track track, boolean isRecording);
+  public void onSelectedTrackChanged(Track track);
 
   /**
    * Called when the track or its statistics has been updated.

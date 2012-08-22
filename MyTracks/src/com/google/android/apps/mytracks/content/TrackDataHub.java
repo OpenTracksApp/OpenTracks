@@ -70,6 +70,8 @@ public class TrackDataHub implements DataSourceListener {
 
   // Preference values
   private long selectedTrackId;
+  private long recordingTrackId;
+  private boolean recordingTrackPaused;
   private boolean metricUnits;
   private boolean reportSpeed;
   private int minRequiredAccuracy;
@@ -132,17 +134,11 @@ public class TrackDataHub implements DataSourceListener {
     dataSource = newDataSource();
     dataSourceManager = new DataSourceManager(dataSource, this);
 
+    notifyPreferenceChanged(null);
     runInHanderThread(new Runnable() {
         @Override
       public void run() {
         dataSourceManager.updateListeners(trackDataManager.getRegisteredTrackDataTypes());
-        selectedTrackId = PreferencesUtils.getLong(context, R.string.selected_track_id_key);
-        metricUnits = PreferencesUtils.getBoolean(
-            context, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
-        reportSpeed = PreferencesUtils.getBoolean(
-            context, R.string.report_speed_key, PreferencesUtils.REPORT_SPEED_DEFAULT);
-        minRequiredAccuracy = PreferencesUtils.getInt(context, R.string.min_required_accuracy_key,
-            PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT);
         loadDataForAll();
       }
     });
@@ -251,9 +247,15 @@ public class TrackDataHub implements DataSourceListener {
    * Returns true if the selected track is recording.
    */
   public boolean isSelectedTrackRecording() {
-    long recordingTrackId = PreferencesUtils.getLong(context, R.string.recording_track_id_key);
-    return recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT
-        && recordingTrackId == selectedTrackId;
+    return selectedTrackId == recordingTrackId
+        && recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+  }
+
+  /**
+   * Returns true if the selected track is paused.
+   */
+  public boolean isSelectedTrackPaused() {
+    return selectedTrackId == recordingTrackId && recordingTrackPaused;
   }
 
   @Override
@@ -293,37 +295,57 @@ public class TrackDataHub implements DataSourceListener {
     runInHanderThread(new Runnable() {
         @Override
       public void run() {
-        if (PreferencesUtils.getKey(context, R.string.min_required_accuracy_key).equals(key)) {
-          minRequiredAccuracy = PreferencesUtils.getInt(context, R.string.min_required_accuracy_key,
-              PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT);
-        } else if (PreferencesUtils.getKey(context, R.string.metric_units_key).equals(key)) {
+        if (key == null
+            || key.equals(PreferencesUtils.getKey(context, R.string.selected_track_id_key))) {
+          long trackId = PreferencesUtils.getLong(context, R.string.selected_track_id_key);
+          boolean hasChanged = trackId != selectedTrackId;
+          selectedTrackId = trackId;
+          if (key != null) {
+            if (hasChanged) {
+              loadDataForAll();
+            }
+          }
+        }
+        if (key == null
+            || key.equals(PreferencesUtils.getKey(context, R.string.recording_track_id_key))) {
+          recordingTrackId = PreferencesUtils.getLong(context, R.string.recording_track_id_key);
+        }
+        if (key == null
+            || key.equals(PreferencesUtils.getKey(context, R.string.recording_track_paused_key))) {
+          recordingTrackPaused = PreferencesUtils.getBoolean(
+              context, R.string.recording_track_paused_key,
+              PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+        }
+        if (key == null
+            || key.equals(PreferencesUtils.getKey(context, R.string.metric_units_key))) {
           metricUnits = PreferencesUtils.getBoolean(
               context, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
-          Set<TrackDataListener> trackDataListeners = trackDataManager.getListeners(
-              TrackDataType.PREFERENCE);
-          for (TrackDataListener trackDataListener : trackDataListeners) {
-            if (trackDataListener.onMetricUnitsChanged(metricUnits)) {
-              loadDataForListener(trackDataListener);
+          if (key != null) {
+            for (TrackDataListener trackDataListener :
+                trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
+              if (trackDataListener.onMetricUnitsChanged(metricUnits)) {
+                loadDataForListener(trackDataListener);
+              }
             }
           }
-        } else if (PreferencesUtils.getKey(context, R.string.report_speed_key).equals(key)) {
+        }
+        if (key == null
+            || key.equals(PreferencesUtils.getKey(context, R.string.report_speed_key))) {
           reportSpeed = PreferencesUtils.getBoolean(
               context, R.string.report_speed_key, PreferencesUtils.REPORT_SPEED_DEFAULT);
-          Set<TrackDataListener> trackDataListeners = trackDataManager.getListeners(
-              TrackDataType.PREFERENCE);
-          for (TrackDataListener trackDataListener : trackDataListeners) {
-            if (trackDataListener.onReportSpeedChanged(reportSpeed)) {
-              loadDataForListener(trackDataListener);
+          if (key != null) {
+            for (TrackDataListener trackDataListener :
+                trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
+              if (trackDataListener.onReportSpeedChanged(reportSpeed)) {
+                loadDataForListener(trackDataListener);
+              }
             }
           }
-        } else if (PreferencesUtils.getKey(context, R.string.selected_track_id_key).equals(key)) {
-          long trackId = PreferencesUtils.getLong(context, R.string.selected_track_id_key);
-          if (trackId == selectedTrackId) {
-            Log.i(TAG, "Not reloading track " + trackId);
-            return;
-          }
-          selectedTrackId = trackId;
-          loadDataForAll();
+        }
+        if (key == null
+            || key.equals(PreferencesUtils.getKey(context, R.string.min_required_accuracy_key))) {
+          minRequiredAccuracy = PreferencesUtils.getInt(context, R.string.min_required_accuracy_key,
+              PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT);
         }
       }
     });
@@ -487,7 +509,7 @@ public class TrackDataHub implements DataSourceListener {
     }
     Track track = myTracksProviderUtils.getTrack(selectedTrackId);
     for (TrackDataListener trackDataListener : trackDataListeners) {
-      trackDataListener.onSelectedTrackChanged(track, isSelectedTrackRecording());
+      trackDataListener.onSelectedTrackChanged(track);
     }
   }
 
