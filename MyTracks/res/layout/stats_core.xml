@@ -29,21 +29,32 @@ limitations under the License.
   <!-- Total time/moving time -->
   <TableRow>
     <TextView
-      android:id="@+id/stats_total_time_label"
+      android:text="@string/stats_total_time"
+      style="@style/StatsLabel" />
+    <TextView
+      android:id="@+id/stats_moving_time_label"
+      android:layout_column="2"
+      android:text="@string/stats_moving_time"
       style="@style/StatsLabel" />
   </TableRow>
   <TableRow>
     <TextView
       android:id="@+id/stats_total_time_value"
       style="@style/StatsValue" />
+    <TextView 
+      android:id="@+id/stats_moving_time_spacer"
+      style="@style/StatsSpacer" />
+    <TextView
+      android:id="@+id/stats_moving_time_value"
+      style="@style/StatsValue" />
   </TableRow>
-  <!-- Average speed/average moving speed and max speed (average pace/average moving pace and fastest pace) -->
+  <!-- Average speed/average moving speed (average pace/average moving pace) -->
   <TableRow>
     <TextView
       android:id="@+id/stats_average_speed_label"
       style="@style/StatsLabel" />
     <TextView
-      android:id="@+id/stats_max_speed_label"
+      android:id="@+id/stats_average_moving_speed_label"
       android:layout_column="2"
       style="@style/StatsLabel" />
   </TableRow>
@@ -51,7 +62,20 @@ limitations under the License.
     <TextView
       android:id="@+id/stats_average_speed_value"
       style="@style/StatsValue" />
-    <TextView style="@style/StatsSpacer" />
+    <TextView 
+      android:id="@+id/stats_average_moving_speed_spacer"
+      style="@style/StatsSpacer" />
+    <TextView
+      android:id="@+id/stats_average_moving_speed_value"
+      style="@style/StatsValue" />
+  </TableRow>
+  <!-- Max speed (fastest pace) -->
+  <TableRow>
+    <TextView
+      android:id="@+id/stats_max_speed_label"
+      style="@style/StatsLabel" />
+  </TableRow>
+  <TableRow>
     <TextView
       android:id="@+id/stats_max_speed_value"
       style="@style/StatsValue" />

@@ -104,46 +104,49 @@ public class StatsUtils {
         activity, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
     boolean reportSpeed = PreferencesUtils.getBoolean(
         activity, R.string.report_speed_key, PreferencesUtils.REPORT_SPEED_DEFAULT);
-    boolean useTotalTime = PreferencesUtils.getBoolean(
-        activity, R.string.stats_use_total_time_key, PreferencesUtils.STATS_USE_TOTAL_TIME_DEFAULT);
+    boolean showMovingTime = PreferencesUtils.getBoolean(activity,
+        R.string.stats_show_moving_time_key, PreferencesUtils.STATS_SHOW_MOVING_TIME_DEFAULT);
     
     // Set total distance
     double totalDistance = tripStatistics == null ? Double.NaN : tripStatistics.getTotalDistance();
     setDistanceValue(activity, R.id.stats_total_distance_value, totalDistance, metricUnits);
     
-    // Set total time/moving time
-    setTimeLabel(activity, R.id.stats_total_time_label, R.string.stats_total_time,
-        R.string.stats_moving_time, useTotalTime);
-    long totalTime;
-    if (tripStatistics == null) {
-      totalTime = -1L;
-    } else {
-      totalTime = useTotalTime ? tripStatistics.getTotalTime() : tripStatistics.getMovingTime(); 
+    // Set total time
+    setTimeValue(activity, R.id.stats_total_time_value,
+        tripStatistics != null ? tripStatistics.getTotalTime() : -1L);
+
+    // Set moving time
+    setItemVisibility(activity, R.id.stats_moving_time_label, R.id.stats_moving_time_spacer,
+        R.id.stats_moving_time_value, showMovingTime);
+    if (showMovingTime) {
+      setTimeValue(activity, R.id.stats_moving_time_value,
+          tripStatistics != null ? tripStatistics.getMovingTime() : -1L);
     }
-    setTimeValue(activity, R.id.stats_total_time_value, totalTime);
-    
-    // Set average speed/moving average speed
-    if (useTotalTime) {
-      setSpeedLabel(activity, R.id.stats_average_speed_label, R.string.stats_average_speed,
-          R.string.stats_average_pace, reportSpeed);
-    } else {
-      setSpeedLabel(activity, R.id.stats_average_speed_label, R.string.stats_average_moving_speed,
-          R.string.stats_average_moving_pace, reportSpeed);
-    }
-    double averageSpeed;
-    if (tripStatistics == null) {
-      averageSpeed = Double.NaN;
-    } else {
-      averageSpeed = useTotalTime ? tripStatistics.getAverageSpeed()
-          : tripStatistics.getAverageMovingSpeed();
-    }
+
+    // Set average speed
+    setSpeedLabel(activity, R.id.stats_average_speed_label, R.string.stats_average_speed,
+        R.string.stats_average_pace, reportSpeed);
+    double averageSpeed = tripStatistics != null ? tripStatistics.getAverageSpeed() : Double.NaN;
     setSpeedValue(activity, R.id.stats_average_speed_value, averageSpeed, metricUnits, reportSpeed);
     
+    // Set average moving speed
+    setItemVisibility(activity, R.id.stats_average_moving_speed_label,
+        R.id.stats_average_moving_speed_spacer, R.id.stats_average_moving_speed_value,
+        showMovingTime);
+    if (showMovingTime) {
+      setSpeedLabel(activity, R.id.stats_average_moving_speed_label,
+          R.string.stats_average_moving_speed, R.string.stats_average_moving_pace, reportSpeed);
+      double averageMovingSpeed = tripStatistics != null ? tripStatistics.getAverageMovingSpeed()
+          : Double.NaN;
+      setSpeedValue(activity, R.id.stats_average_moving_speed_value, averageMovingSpeed,
+          metricUnits, reportSpeed);
+    }
+
     // Set max speed
     setSpeedLabel(activity, R.id.stats_max_speed_label, R.string.stats_max_speed,
         R.string.stats_fastest_pace, reportSpeed);
     double maxSpeed = tripStatistics == null ? Double.NaN : tripStatistics.getMaxSpeed();
-    setSpeedValue(activity, R.id.stats_max_speed_value, maxSpeed, metricUnits, reportSpeed);    
+    setSpeedValue(activity, R.id.stats_max_speed_value, maxSpeed, metricUnits, reportSpeed);
     
     // Set elevation
     boolean showElevation = PreferencesUtils.getBoolean(
@@ -189,23 +192,21 @@ public class StatsUtils {
       setGradeValue(activity, R.id.stats_max_grade_value, maxGrade);
     }
   }
-  
-  /**
-   * Sets a time label.
-   * 
-   * @param activity the activity
-   * @param id the time label resource id
-   * @param totalTimeId the total time string id
-   * @param movingTimeId the moving time string id
-   * @param totalTime true to use total time
-   */
-  private static void setTimeLabel(Activity activity, int id, int totalTimeId, int movingTimeId,
-      boolean totalTime) {
-    TextView textView = (TextView) activity.findViewById(id);
-    if (textView == null) {
-      return;
+
+  private static void setItemVisibility(
+      Activity activity, int labelId, int spacerId, int valueId, boolean show) {
+    View label = activity.findViewById(labelId);
+    View spacer = activity.findViewById(spacerId);
+    View value = activity.findViewById(valueId);
+    if (label != null) {
+      label.setVisibility(show ? View.VISIBLE : View.GONE);
     }
-    textView.setText(totalTime ? totalTimeId : movingTimeId);
+    if (spacer != null) {
+      spacer.setVisibility(show ? View.VISIBLE : View.GONE);
+    }
+    if (value != null) {
+      value.setVisibility(show ? View.VISIBLE : View.GONE);
+    }
   }
 
   /**

@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
   <!-- The style for the about value -->
   <style name="AboutValue" parent="@style/TextMedium">
     <item name="android:paddingLeft">48dp</item>
@@ -180,10 +180,6 @@ limitations under the License.
   </style>
   <!-- Theme selector -->
   <style name="ThemeSelector" parent="android:Theme" />
-  <!-- The style for the track widget label -->
-  <style name="TrackWidgetLabel" parent="@style/TextSmall">
-    <item name="android:width">100dp</item>
-  </style>
   <!-- The style for the track widget button -->
   <style name="TrackWidgetButton">
     <item name="android:layout_gravity">center_horizontal</item>
@@ -191,6 +187,22 @@ limitations under the License.
     <item name="android:layout_marginTop">8dp</item>
     <item name="android:layout_width">fill_parent</item>
     <item name="android:padding">8dp</item>
+  </style>
+  <!-- The style for the track widget label -->
+  <style name="TrackWidgetLabel" parent="@style/TextSmall">
+    <item name="android:width">100dp</item>
+  </style>
+  <!-- The style for the track widget separator -->
+  <style name="TrackWidgetSeparator">
+    <item name="android:background">@color/track_widget_line</item>
+    <item name="android:layout_height">1dp</item>
+    <item name="android:layout_width">fill_parent</item>
+  </style>
+  <!-- The style for the track widget stat -->
+  <style name="TrackWidgetStat">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:orientation">horizontal</item>
   </style>
   <!-- The style for the track widget value -->
   <style name="TrackWidgetValue" parent="@style/TextSmall">

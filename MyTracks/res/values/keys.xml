@@ -53,7 +53,7 @@ limitations under the License.
   <string name="stats_show_coordinate_key">statsShowCoordinate</string>
   <string name="stats_show_elevation_key">statsShowElevation</string>
   <string name="stats_show_grade_key">statsShowGrade</string>
-  <string name="stats_use_total_time_key">statsUseTotalTime</string>
+  <string name="stats_show_moving_time_key">statsShowMovingTime</string>
   <string name="track_color_mode_medium_key">trackColorModeMedium</string>
   <string name="track_color_mode_percentage_key">trackColorModePercentage</string>
   <string name="track_color_mode_slow_key">trackColorModeSlow</string>

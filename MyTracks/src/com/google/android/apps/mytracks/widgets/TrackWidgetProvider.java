@@ -79,12 +79,12 @@ public class TrackWidgetProvider extends AppWidgetProvider
   private String unknown;
   private String trackStartedBroadcastAction;
   private String trackStoppedBroadcastAction;
-  
+
   private SharedPreferences sharedPreferences;
   private long selectedTrackId;
   private boolean metricUnits;
   private boolean reportSpeed;
-  private boolean useTotalTime;
+  private boolean showMovingTime;
 
   public TrackWidgetProvider() {
     super();
@@ -93,21 +93,21 @@ public class TrackWidgetProvider extends AppWidgetProvider
 
   @Override
   public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-    if (key == null || PreferencesUtils.getKey(context, R.string.metric_units_key).equals(key)) {
+    if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.metric_units_key))) {
       metricUnits = PreferencesUtils.getBoolean(
           context, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
     }
-    if (key == null || PreferencesUtils.getKey(context, R.string.report_speed_key).equals(key)) {
+    if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.report_speed_key))) {
       reportSpeed = PreferencesUtils.getBoolean(
           context, R.string.report_speed_key, PreferencesUtils.REPORT_SPEED_DEFAULT);
     }
     if (key == null
-        || PreferencesUtils.getKey(context, R.string.stats_use_total_time_key).equals(key)) {
-      useTotalTime = PreferencesUtils.getBoolean(context, R.string.stats_use_total_time_key,
-          PreferencesUtils.STATS_USE_TOTAL_TIME_DEFAULT);
+        || key.equals(PreferencesUtils.getKey(context, R.string.stats_show_moving_time_key))) {
+      showMovingTime = PreferencesUtils.getBoolean(context, R.string.stats_show_moving_time_key,
+          PreferencesUtils.STATS_SHOW_MOVING_TIME_DEFAULT);
     }
     if (key == null
-        || PreferencesUtils.getKey(context, R.string.selected_track_id_key).equals(key)) {
+        || key.equals(PreferencesUtils.getKey(context, R.string.selected_track_id_key))) {
       selectedTrackId = PreferencesUtils.getLong(context, R.string.selected_track_id_key);
     }
     if (key != null) {
@@ -155,15 +155,15 @@ public class TrackWidgetProvider extends AppWidgetProvider
     context = aContext;
     trackObserver = new TrackObserver();
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
-    
+
     unknown = context.getString(R.string.value_unknown);
     trackStartedBroadcastAction = context.getString(R.string.track_started_broadcast_action);
     trackStoppedBroadcastAction = context.getString(R.string.track_stopped_broadcast_action);
-  
+
     sharedPreferences = context.getSharedPreferences(SETTINGS_NAME, Context.MODE_PRIVATE);
     sharedPreferences.registerOnSharedPreferenceChangeListener(this);
     onSharedPreferenceChanged(sharedPreferences, null);
-  
+
     context.getContentResolver()
         .registerContentObserver(TracksColumns.CONTENT_URI, true, trackObserver);
   }
@@ -197,16 +197,17 @@ public class TrackWidgetProvider extends AppWidgetProvider
    */
   private void updateButton(RemoteViews remoteViews, String action) {
     boolean isRecording = trackStartedBroadcastAction.equals(action);
-    remoteViews.setViewVisibility(R.id.track_widget_record_button, isRecording ? View.GONE
-        : View.VISIBLE);
-    remoteViews.setViewVisibility(R.id.track_widget_stop_button, isRecording ? View.VISIBLE
-        : View.INVISIBLE);
+    remoteViews.setViewVisibility(
+        R.id.track_widget_record_button, isRecording ? View.GONE : View.VISIBLE);
+    remoteViews.setViewVisibility(
+        R.id.track_widget_stop_button, isRecording ? View.VISIBLE : View.INVISIBLE);
     Intent intent = new Intent(context, ControlRecordingService.class).setAction(
         context.getString(isRecording ? R.string.track_action_end : R.string.track_action_start));
     PendingIntent pendingIntent = PendingIntent.getService(
         context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-    remoteViews.setOnClickPendingIntent(isRecording ? R.id.track_widget_stop_button
-        : R.id.track_widget_record_button, pendingIntent);
+    remoteViews.setOnClickPendingIntent(
+        isRecording ? R.id.track_widget_stop_button : R.id.track_widget_record_button,
+        pendingIntent);
   }
 
   /**
@@ -215,31 +216,48 @@ public class TrackWidgetProvider extends AppWidgetProvider
    * @param remoteViews the remote views
    */
   private void updateView(RemoteViews remoteViews) {
-    Track track = selectedTrackId != PreferencesUtils.SELECTED_TRACK_ID_DEFAULT 
-        ? myTracksProviderUtils.getTrack(selectedTrackId) : myTracksProviderUtils.getLastTrack();
+    Track track = selectedTrackId != PreferencesUtils.SELECTED_TRACK_ID_DEFAULT ? myTracksProviderUtils
+        .getTrack(selectedTrackId)
+        : myTracksProviderUtils.getLastTrack();
     TripStatistics tripStatistics = track == null ? null : track.getTripStatistics();
-    String distance = tripStatistics == null ? unknown
+
+    String distanceValue = tripStatistics == null ? unknown
         : StringUtils.formatDistance(context, tripStatistics.getTotalDistance(), metricUnits);
-    int timeLabelId = useTotalTime ? R.string.stats_total_time : R.string.stats_moving_time;
-    String time = tripStatistics == null ? unknown : StringUtils.formatElapsedTime(
-        useTotalTime ? tripStatistics.getTotalTime()
-            : tripStatistics.getMovingTime());
-    int speedLabelId;
-    if (useTotalTime) {
-      speedLabelId = reportSpeed ? R.string.stats_average_speed : R.string.stats_average_pace;
-    } else {
-      speedLabelId = reportSpeed ? R.string.stats_average_moving_speed
-          : R.string.stats_average_moving_pace;
+    remoteViews.setTextViewText(R.id.track_widget_distance_value, distanceValue);
+
+    String totalTimeValue = tripStatistics == null ? unknown
+        : StringUtils.formatElapsedTime(tripStatistics.getTotalTime());
+    remoteViews.setTextViewText(R.id.track_widget_total_time_value, totalTimeValue);
+
+    String averageSpeedLabel = context.getString(
+        reportSpeed ? R.string.stats_average_speed : R.string.stats_average_pace);
+    remoteViews.setTextViewText(R.id.track_widget_average_speed_label, averageSpeedLabel);
+    String averageSpeedValue = tripStatistics == null ? unknown
+        : StringUtils.formatSpeed(
+            context, tripStatistics.getAverageSpeed(), metricUnits, reportSpeed);
+    remoteViews.setTextViewText(R.id.track_widget_average_speed_value, averageSpeedValue);
+
+    setStatVisibility(remoteViews, R.id.track_widget_moving_time_stat,
+        R.id.track_widget_moving_time_separator, showMovingTime);
+    if (showMovingTime) {
+      String movingTimeValue = tripStatistics == null ? unknown
+          : StringUtils.formatElapsedTime(tripStatistics.getMovingTime());
+      remoteViews.setTextViewText(R.id.track_widget_moving_time_value, movingTimeValue);
     }
 
-    String speed = tripStatistics == null ? unknown : StringUtils.formatSpeed(
-        context, useTotalTime ? tripStatistics.getAverageSpeed()
-            : tripStatistics.getAverageMovingSpeed(), metricUnits, reportSpeed);
-    remoteViews.setTextViewText(R.id.track_widget_distance_value, distance);
-    remoteViews.setTextViewText(R.id.track_widget_time_label, context.getString(timeLabelId));
-    remoteViews.setTextViewText(R.id.track_widget_time_value, time);
-    remoteViews.setTextViewText(R.id.track_widget_speed_label, context.getString(speedLabelId));
-    remoteViews.setTextViewText(R.id.track_widget_speed_value, speed);
+    setStatVisibility(remoteViews, R.id.track_widget_average_moving_speed_stat,
+        R.id.track_widget_average_moving_speed_separator, showMovingTime);
+    if (showMovingTime) {
+      String averageMovingSpeedLabel = context.getString(
+          reportSpeed ? R.string.stats_average_moving_speed : R.string.stats_average_moving_pace);
+      remoteViews.setTextViewText(
+          R.id.track_widget_average_moving_speed_label, averageMovingSpeedLabel);
+      String averageMovingSpeedValue = tripStatistics == null ? unknown
+          : StringUtils.formatSpeed(
+              context, tripStatistics.getAverageMovingSpeed(), metricUnits, reportSpeed);
+      remoteViews.setTextViewText(
+          R.id.track_widget_average_moving_speed_value, averageMovingSpeedValue);
+    }
 
     Intent intent;
     if (track != null) {
@@ -251,8 +269,13 @@ public class TrackWidgetProvider extends AppWidgetProvider
     TaskStackBuilder taskStackBuilder = TaskStackBuilder.from(context);
     taskStackBuilder.addNextIntent(intent);
     PendingIntent pendingIntent = taskStackBuilder.getPendingIntent(0, 0);
-    remoteViews.setOnClickPendingIntent(
-        R.id.track_widget_statistics, pendingIntent);
+    remoteViews.setOnClickPendingIntent(R.id.track_widget_statistics, pendingIntent);
     remoteViews.setOnClickPendingIntent(R.id.track_widget_icon, pendingIntent);
+  }
+
+  private void setStatVisibility(
+      RemoteViews remoteViews, int statId, int separatorId, boolean show) {
+    remoteViews.setViewVisibility(statId, show ? View.VISIBLE : View.GONE);
+    remoteViews.setViewVisibility(separatorId, show ? View.VISIBLE : View.GONE);
   }
 }

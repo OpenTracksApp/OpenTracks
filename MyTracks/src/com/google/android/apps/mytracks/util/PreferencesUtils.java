@@ -80,7 +80,7 @@ public class PreferencesUtils {
   public static final boolean STATS_SHOW_COORDINATE_DEFAULT = false;
   public static final boolean STATS_SHOW_ELEVATION_DEFAULT = false;
   public static final boolean STATS_SHOW_GRADE_DEFAULT = false;
-  public static final boolean STATS_USE_TOTAL_TIME_DEFAULT = true;
+  public static final boolean STATS_SHOW_MOVING_TIME_DEFAULT = false;
 
   public static final int TRACK_COLOR_MODE_MEDIUM_DEFAULT = 15;
   public static final int TRACK_COLOR_MODE_PERCENTAGE_DEFAULT = 25;

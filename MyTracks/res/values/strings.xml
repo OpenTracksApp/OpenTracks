@@ -2038,13 +2038,6 @@ limitations under the License.
       Character limit: ~23 (1 line)">
     Preferred rate
   </string>
-  <string name="settings_stats_time_title"
-    translation_description="In the 'Stats' settings, the option to change the time measurement,
-      either total time or moving time.
-
-      Character limit: ~23 (1 line)">
-    Time measurement
-  </string>
   <string name="settings_stats_units_imperial"
     translation_description="In the 'Stats' settings, the option to use imperial units, with
       examples.">
