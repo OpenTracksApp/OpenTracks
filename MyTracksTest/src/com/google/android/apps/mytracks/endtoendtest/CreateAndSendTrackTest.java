@@ -114,38 +114,58 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.send_google_send_now),
         true, true);
-
-    // If no account is binded with this device.
+    
+    // Check whether no account is binded with this device.
     if (EndToEndTestUtils.SOLO.waitForText(
         activityMyTracks.getString(R.string.send_google_no_account_title), 1,
         EndToEndTestUtils.SHORT_WAIT_TIME)) {
       EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true,
           true);
-    } else if (EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.send_google_no_account_permission), 1,
-        EndToEndTestUtils.SHORT_WAIT_TIME)) {} else {
-      assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-          .getString(R.string.generic_progress_title)));
-      // Waiting the send is finish.
-      while (EndToEndTestUtils.SOLO.waitForText(
-          activityMyTracks.getString(R.string.generic_progress_title), 1,
-          EndToEndTestUtils.SHORT_WAIT_TIME)) {}
-
-      // Check whether the result dialog is display.
-      assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-          .getString(R.string.share_track_share_url)));
-      EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true,
-          true);
-
-      // Check whether all data is correct on Google Map, Documents, and
-      // Spreadsheet.
-      assertTrue(GoogleUtils.deleteMap(EndToEndTestUtils.trackName, activityMyTracks));
-      assertTrue(GoogleUtils.searchFusionTableByTitle(EndToEndTestUtils.TRACK_NAME_PREFIX,
-          activityMyTracks));
-      assertTrue(GoogleUtils
-          .deleteTrackInSpreadSheet(EndToEndTestUtils.trackName, activityMyTracks));
-      assertTrue(GoogleUtils.dropFusionTables(EndToEndTestUtils.trackName, activityMyTracks));
+      return;
     }
+
+    // Check whether need to choose account.
+    if (EndToEndTestUtils.SOLO.waitForText(
+        activityMyTracks.getString(R.string.send_google_choose_account_title), 1,
+        EndToEndTestUtils.SHORT_WAIT_TIME)) {
+      // Use test account if has.
+      if (EndToEndTestUtils.SOLO.waitForText(GoogleUtils.DETAULT_ACCOUNT, 1,
+          EndToEndTestUtils.SHORT_WAIT_TIME)) {
+        EndToEndTestUtils.SOLO.clickOnText(GoogleUtils.DETAULT_ACCOUNT);
+      }
+      EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), false,
+          true);
+      return;
+    }
+
+    // Check whether no account permission.
+    if (EndToEndTestUtils.SOLO.waitForText(
+        activityMyTracks.getString(R.string.send_google_no_account_permission), 1,
+        EndToEndTestUtils.SHORT_WAIT_TIME)) {
+      return;
+    }
+
+    // Following check the process of "Send to Google".
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+        .getString(R.string.generic_progress_title)));
+    // Waiting the send is finish.
+    while (EndToEndTestUtils.SOLO.waitForText(
+        activityMyTracks.getString(R.string.generic_progress_title), 1,
+        EndToEndTestUtils.SHORT_WAIT_TIME)) {}
+
+    // Check whether the result dialog is display.
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+        .getString(R.string.share_track_share_url)));
+    EndToEndTestUtils
+        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+
+    // Check whether all data is correct on Google Map, Documents, and
+    // Spreadsheet.
+    assertTrue(GoogleUtils.deleteMap(EndToEndTestUtils.trackName, activityMyTracks));
+    assertTrue(GoogleUtils.searchFusionTableByTitle(EndToEndTestUtils.TRACK_NAME_PREFIX,
+        activityMyTracks));
+    assertTrue(GoogleUtils.deleteTrackInSpreadSheet(EndToEndTestUtils.trackName, activityMyTracks));
+    assertTrue(GoogleUtils.dropFusionTables(EndToEndTestUtils.trackName, activityMyTracks));
 
   }
 
