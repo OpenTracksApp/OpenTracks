@@ -128,11 +128,6 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     if (EndToEndTestUtils.SOLO.waitForText(
         activityMyTracks.getString(R.string.send_google_choose_account_title), 1,
         EndToEndTestUtils.SHORT_WAIT_TIME)) {
-      // Use test account if has.
-      if (EndToEndTestUtils.SOLO.waitForText(GoogleUtils.DETAULT_ACCOUNT, 1,
-          EndToEndTestUtils.SHORT_WAIT_TIME)) {
-        EndToEndTestUtils.SOLO.clickOnText(GoogleUtils.DETAULT_ACCOUNT);
-      }
       EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), false,
           true);
       return;
