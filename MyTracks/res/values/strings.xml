@@ -683,12 +683,17 @@ limitations under the License.
     translation_description="On application start, message when there is no GPS on the device.">
     No GPS is found on the device.
   </string>
-  <string name="gps_wait_for_signal"
+  <string name="gps_wait_for_better_signal"
     translation_description="In the main view, the message on the top indicating My Tracks is
       waiting for a better GPS signal.">
     Waiting for a better GPS signal. Make sure the sky is visible.
   </string>
-
+  <string name="gps_wait_for_signal"
+    translation_description="In the main view, the message on the top indicating My Tracks is
+      waiting for a better GPS signal.">
+    Waiting for GPS signal. Make sure the sky is visible.
+  </string>
+  
   <!-- Help page -->
   <string name="help_about"
     translation_description="In the 'Help' page, the button on the bottom to open the 'About My

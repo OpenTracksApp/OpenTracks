@@ -277,27 +277,34 @@ public class MapFragment extends Fragment
   public void onLocationStateChanged(LocationState state) {
     final String message;
     final boolean isGpsDisabled;
-    switch (state) {
-      case DISABLED:
-        String setting = getString(
-            GoogleLocationUtils.isAvailable(getActivity()) ? R.string.gps_google_location_settings
-                : R.string.gps_location_access);
-        message = getString(R.string.gps_disabled, setting);
-        isGpsDisabled = true;
-        break;
-      case NO_FIX:
-      case BAD_FIX:
-        message = getString(R.string.gps_wait_for_signal);
-        isGpsDisabled = false;
-        break;
-      case GOOD_FIX:
-        message = null;
-        isGpsDisabled = false;
-        break;
-      default:
-        throw new IllegalArgumentException("Unexpected state: " + state);
+    if (!isSelectedTrackRecording()) {
+      message = null;
+      isGpsDisabled = false;
+    } else {
+      switch (state) {
+        case DISABLED:
+          String setting = getString(
+              GoogleLocationUtils.isAvailable(getActivity()) ? R.string.gps_google_location_settings
+                  : R.string.gps_location_access);
+          message = getString(R.string.gps_disabled, setting);
+          isGpsDisabled = true;
+          break;
+        case NO_FIX:
+          message = getString(R.string.gps_wait_for_signal);
+          isGpsDisabled = false;
+          break;
+        case BAD_FIX:
+          message = getString(R.string.gps_wait_for_better_signal);
+          isGpsDisabled = false;
+          break;
+        case GOOD_FIX:
+          message = null;
+          isGpsDisabled = false;
+          break;
+        default:
+          throw new IllegalArgumentException("Unexpected state: " + state);
+      }
     }
-
     getActivity().runOnUiThread(new Runnable() {
         @Override
       public void run() {
