@@ -58,10 +58,9 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   // A runnable to update the total time field.
   private final Runnable updateTotalTime = new Runnable() {
     public void run() {
-      FragmentActivity activity = getActivity();
-      if (activity != null && lastTripStatistics != null && isSelectedTrackRecording()
-          && !isSelectedTrackPaused()) {
-        StatsUtils.setTotalTimeValue(activity, System.currentTimeMillis()
+      if (isResumed() && isSelectedTrackRecording() && !isSelectedTrackPaused()
+          && lastTripStatistics != null) {
+        StatsUtils.setTotalTimeValue(getActivity(), System.currentTimeMillis()
             - lastTripStatistics.getStopTime() + lastTripStatistics.getTotalTime());
       }
     }
@@ -74,11 +73,8 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     @Override
     public void run() {
       Log.d(TAG, "UI update thread started");
-      while (isSelectedTrackRecording()) {
-        FragmentActivity activity = getActivity();
-        if (activity != null) {
-          activity.runOnUiThread(updateTotalTime);
-        }
+      while (isResumed() && isSelectedTrackRecording()) {
+        getActivity().runOnUiThread(updateTotalTime);
         try {
           Thread.sleep(1000L);
         } catch (InterruptedException e) {
@@ -121,12 +117,13 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   @Override
   public void onLocationStateChanged(LocationState state) {
     if (isResumed() && state != LocationState.GOOD_FIX) {
-      final FragmentActivity activity = getActivity();
-      activity.runOnUiThread(new Runnable() {
+      getActivity().runOnUiThread(new Runnable() {
           @Override
         public void run() {
-          lastLocation = null;
-          StatsUtils.setLocationValues(activity, lastLocation, true);
+          if (isResumed()) {
+            lastLocation = null;
+            StatsUtils.setLocationValues(getActivity(), lastLocation, true);
+          }
         }
       });
     }
@@ -135,17 +132,18 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   @Override
   public void onLocationChanged(final Location location) {
     if (isResumed()) {
-      final FragmentActivity activity = getActivity();
-      activity.runOnUiThread(new Runnable() {
+      getActivity().runOnUiThread(new Runnable() {
           @Override
         public void run() {
-          if (isSelectedTrackRecording() && !isSelectedTrackPaused()) {
-            lastLocation = location;
-            StatsUtils.setLocationValues(activity, location, true);
-          } else {
-            if (lastLocation != null) {
-              lastLocation = null;
-              StatsUtils.setLocationValues(activity, lastLocation, true);
+          if (isResumed()) {
+            if (isSelectedTrackRecording() && !isSelectedTrackPaused()) {
+              lastLocation = location;
+              StatsUtils.setLocationValues(getActivity(), location, true);
+            } else {
+              if (lastLocation != null) {
+                lastLocation = null;
+                StatsUtils.setLocationValues(getActivity(), lastLocation, true);
+              }
             }
           }
         }
@@ -175,12 +173,13 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   @Override
   public void onTrackUpdated(final Track track) {
     if (isResumed()) {
-      final FragmentActivity activity = getActivity();
-      activity.runOnUiThread(new Runnable() {
+      getActivity().runOnUiThread(new Runnable() {
           @Override
         public void run() {
-          lastTripStatistics = track != null ? track.getTripStatistics() : null;
-          updateUi(activity);
+          if (isResumed()) {
+            lastTripStatistics = track != null ? track.getTripStatistics() : null;
+            updateUi(getActivity());
+          }
         }
       });
     }
@@ -229,11 +228,12 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   @Override
   public boolean onMetricUnitsChanged(final boolean metric) {
     if (isResumed()) {
-      final FragmentActivity activity = getActivity();
-      activity.runOnUiThread(new Runnable() {
+      getActivity().runOnUiThread(new Runnable() {
           @Override
         public void run() {
-          updateUi(activity);
+          if (isResumed()) {
+            updateUi(getActivity());
+          }
         }
       });
     }
@@ -243,11 +243,12 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   @Override
   public boolean onReportSpeedChanged(final boolean speed) {
     if (isResumed()) {
-      final FragmentActivity activity = getActivity();
-      activity.runOnUiThread(new Runnable() {
+      getActivity().runOnUiThread(new Runnable() {
           @Override
         public void run() {
-          updateUi(activity);
+          if (isResumed()) {
+            updateUi(getActivity());
+          }
         }
       });
     }

@@ -275,93 +275,104 @@ public class MapFragment extends Fragment
 
   @Override
   public void onLocationStateChanged(LocationState state) {
-    final String message;
-    final boolean isGpsDisabled;
-    if (!isSelectedTrackRecording()) {
-      message = null;
-      isGpsDisabled = false;
-    } else {
-      switch (state) {
-        case DISABLED:
-          String setting = getString(
-              GoogleLocationUtils.isAvailable(getActivity()) ? R.string.gps_google_location_settings
-                  : R.string.gps_location_access);
-          message = getString(R.string.gps_disabled, setting);
-          isGpsDisabled = true;
-          break;
-        case NO_FIX:
-          message = getString(R.string.gps_wait_for_signal);
-          isGpsDisabled = false;
-          break;
-        case BAD_FIX:
-          message = getString(R.string.gps_wait_for_better_signal);
-          isGpsDisabled = false;
-          break;
-        case GOOD_FIX:
-          message = null;
-          isGpsDisabled = false;
-          break;
-        default:
-          throw new IllegalArgumentException("Unexpected state: " + state);
-      }
-    }
-    getActivity().runOnUiThread(new Runnable() {
-        @Override
-      public void run() {
-        if (message != null) {
-          messageTextView.setText(message);
-          messageTextView.setVisibility(View.VISIBLE);
-
-          if (isGpsDisabled) {
-            Toast.makeText(getActivity(), R.string.gps_not_found, Toast.LENGTH_LONG).show();
-
-            // Click to show the location source settings
-            messageTextView.setOnClickListener(MapFragment.this);
-          } else {
-            messageTextView.setOnClickListener(null);
-          }
-        } else {
-          messageTextView.setVisibility(View.GONE);
+    if (isResumed()) {
+      final String message;
+      final boolean isGpsDisabled;
+      if (!isSelectedTrackRecording()) {
+        message = null;
+        isGpsDisabled = false;
+      } else {
+        switch (state) {
+          case DISABLED:
+            String setting = getString(
+                GoogleLocationUtils.isAvailable(getActivity()) ? R.string.gps_google_location_settings
+                    : R.string.gps_location_access);
+            message = getString(R.string.gps_disabled, setting);
+            isGpsDisabled = true;
+            break;
+          case NO_FIX:
+            message = getString(R.string.gps_wait_for_signal);
+            isGpsDisabled = false;
+            break;
+          case BAD_FIX:
+            message = getString(R.string.gps_wait_for_better_signal);
+            isGpsDisabled = false;
+            break;
+          case GOOD_FIX:
+            message = null;
+            isGpsDisabled = false;
+            break;
+          default:
+            throw new IllegalArgumentException("Unexpected state: " + state);
         }
       }
-    });
+      getActivity().runOnUiThread(new Runnable() {
+          @Override
+        public void run() {
+          if (isResumed()) {
+            if (message == null) {
+              messageTextView.setVisibility(View.GONE);
+              return;
+            }
+            messageTextView.setText(message);
+            messageTextView.setVisibility(View.VISIBLE);
+            if (isGpsDisabled) {
+              Toast.makeText(getActivity(), R.string.gps_not_found, Toast.LENGTH_LONG).show();
+
+              // Click to show the location source settings
+              messageTextView.setOnClickListener(MapFragment.this);
+            } else {
+              messageTextView.setOnClickListener(null);
+            }
+          }
+        }
+      });
+    }
   }
 
   @Override
   public void onLocationChanged(Location location) {
-    currentLocation = location;
-    updateCurrentLocation();
+    if (isResumed()) {
+      currentLocation = location;
+      updateCurrentLocation();
+    }
   }
 
   @Override
   public void onHeadingChanged(double heading) {
-    if (mapOverlay.setHeading((float) heading)) {
-      mapView.postInvalidate();
+    if (isResumed()) {
+      if (mapOverlay.setHeading((float) heading)) {
+        mapView.postInvalidate();
+      }
     }
   }
 
   @Override
   public void onSelectedTrackChanged(final Track track) {
-    getActivity().runOnUiThread(new Runnable() {
-        @Override
-      public void run() {
-        boolean hasTrack = track != null;
-        mapOverlay.setTrackDrawingEnabled(hasTrack);
+    if (isResumed()) {
+      getActivity().runOnUiThread(new Runnable() {
+          @Override
+        public void run() {
+          if (isResumed()) {
+            boolean hasTrack = track != null;
+            mapOverlay.setTrackDrawingEnabled(hasTrack);
 
-        if (hasTrack) {
-          synchronized (this) {
-            /*
-             * Synchronize to prevent race condition in changing markerTrackId
-             * and markerId variables.
-             */
-            currentSelectedTrackId = track.getId();
-            updateMap(track);
+            if (hasTrack) {
+              synchronized (this) {
+                /*
+                 * Synchronize to prevent race condition in changing
+                 * markerTrackId and markerId variables.
+                 */
+                currentSelectedTrackId = track.getId();
+                updateMap(track);
+              }
+              mapOverlay.setShowEndMarker(!isSelectedTrackRecording());
+            }
+            mapView.invalidate();
           }
-          mapOverlay.setShowEndMarker(!isSelectedTrackRecording());
         }
-        mapView.invalidate();
-      }
-    });
+      });
+    }
   }
 
   @Override
@@ -371,12 +382,16 @@ public class MapFragment extends Fragment
 
   @Override
   public void clearTrackPoints() {
-    mapOverlay.clearPoints();
+    if (isResumed()) {
+      mapOverlay.clearPoints();
+    }
   }
 
   @Override
   public void onSampledInTrackPoint(Location location) {
-    mapOverlay.addLocation(location);
+    if (isResumed()) {
+      mapOverlay.addLocation(location);
+    }
   }
 
   @Override
@@ -386,22 +401,28 @@ public class MapFragment extends Fragment
 
   @Override
   public void onSegmentSplit(Location location) {
-    mapOverlay.addSegmentSplit();
+    if (isResumed()) {
+      mapOverlay.addSegmentSplit();
+    }
   }
 
   @Override
   public void onNewTrackPointsDone() {
-    mapView.postInvalidate();
+    if (isResumed()) {
+      mapView.postInvalidate();
+    }
   }
 
   @Override
   public void clearWaypoints() {
-    mapOverlay.clearWaypoints();
+    if (isResumed()) {
+      mapOverlay.clearWaypoints();
+    }
   }
 
   @Override
   public void onNewWaypoint(Waypoint waypoint) {
-    if (waypoint != null && LocationUtils.isValidLocation(waypoint.getLocation())) {
+    if (isResumed() && waypoint != null && LocationUtils.isValidLocation(waypoint.getLocation())) {
       // TODO: Optimize locking inside addWaypoint
       mapOverlay.addWaypoint(waypoint);
     }
@@ -409,7 +430,9 @@ public class MapFragment extends Fragment
 
   @Override
   public void onNewWaypointsDone() {
-    mapView.postInvalidate();
+    if (isResumed()) {
+      mapView.postInvalidate();
+    }
   }
 
   @Override
