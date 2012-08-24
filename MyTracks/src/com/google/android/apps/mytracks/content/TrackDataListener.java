@@ -96,12 +96,13 @@ public interface TrackDataListener {
   /**
    * Called when an invalid track point representing a segment split is read.
    */
-  public void onSegmentSplit();
+  public void onSegmentSplit(Location location);
 
   /**
    * Called when finish sending new track points. This gets called after every
    * batch of calls to {@link #onSampledInTrackPoint(Location)},
-   * {@link #onSampledOutTrackPoint(Location)} and {@link #onSegmentSplit()}.
+   * {@link #onSampledOutTrackPoint(Location)} and
+   * {@link #onSegmentSplit(Location)}.
    */
   public void onNewTrackPointsDone();
 
@@ -139,4 +140,12 @@ public interface TrackDataListener {
    * @return true to reload all the data, false otherwise.
    */
   public boolean onReportSpeedChanged(boolean reportSpeed);
+
+  /**
+   * Called when the min recording distance preference value is changed.
+   * 
+   * @param minRecordingDistance the new value
+   * @return true to reload all the data, false otherwise.
+   */
+  public boolean onMinRecordingDistanceChanged(int minRecordingDistance);
 }

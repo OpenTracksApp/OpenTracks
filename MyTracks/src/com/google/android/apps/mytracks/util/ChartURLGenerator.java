@@ -19,6 +19,7 @@ package com.google.android.apps.mytracks.util;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.maps.mytracks.R;
+import com.google.common.annotations.VisibleForTesting;
 
 import android.content.Context;
 
@@ -31,11 +32,9 @@ import java.util.Vector;
  */
 public class ChartURLGenerator {
 
-  private static final String CHARTS_BASE_URL =
-      "http://chart.apis.google.com/chart?";
+  private static final String CHARTS_BASE_URL = "http://chart.apis.google.com/chart?";
 
-  private ChartURLGenerator() {
-  }
+  private ChartURLGenerator() {}
 
   /**
    * Gets a chart of a track.
@@ -54,8 +53,7 @@ public class ChartURLGenerator {
   }
 
   /**
-   * Gets a chart of a track.
-   * This form is for testing without contexts.
+   * Gets a chart of a track. This form is for testing without contexts.
    * 
    * @param distances An array of distance measurements
    * @param elevations A matching array of elevation measurements
@@ -63,9 +61,9 @@ public class ChartURLGenerator {
    * @param title The title for the chart
    * @param metricUnits Should the data be displayed in metric units
    */
-  public static String getChartUrl(
-      Vector<Double> distances, Vector<Double> elevations,
-      Track track, String title, boolean metricUnits) {
+  @VisibleForTesting
+  static String getChartUrl(Vector<Double> distances, Vector<Double> elevations, Track track,
+      String title, boolean metricUnits) {
     if (distances == null || elevations == null || track == null) {
       return null;
     }
@@ -75,21 +73,23 @@ public class ChartURLGenerator {
     }
 
     // Round it up.
-    TripStatistics stats = track.getTripStatistics();
-    double effectiveMaxY = metricUnits
-        ? stats.getMaxElevation()
-        : stats.getMaxElevation() * UnitConversions.M_TO_FT;
+    TripStatistics tripStatistics = track.getTripStatistics();
+    double effectiveMaxY = tripStatistics.getMaxElevation();
+    if (!metricUnits) {
+      effectiveMaxY *= UnitConversions.M_TO_FT;
+    }
     effectiveMaxY = ((int) (effectiveMaxY / 100)) * 100 + 100;
-    // Round it down.
-    double effectiveMinY = 0;
-    double minElevation = metricUnits
-        ? stats.getMinElevation()
-        : stats.getMinElevation() * UnitConversions.M_TO_FT;
 
-    effectiveMinY = ((int) (minElevation / 100)) * 100;
-    if (stats.getMinElevation() < 0) {
+    // Round it down.
+    double effectiveMinY = tripStatistics.getMinElevation();
+    if (!metricUnits) {
+      effectiveMinY *= UnitConversions.M_TO_FT;
+    }
+    effectiveMinY = ((int) (effectiveMinY / 100)) * 100;
+    if (tripStatistics.getMinElevation() < 0) {
       effectiveMinY -= 100;
     }
+
     double ySpread = effectiveMaxY - effectiveMinY;
 
     StringBuilder sb = new StringBuilder(CHARTS_BASE_URL);
@@ -102,17 +102,18 @@ public class ChartURLGenerator {
 
     // Labels
     sb.append("&chxt=x,y");
-    double distKM = stats.getTotalDistance() * UnitConversions.M_TO_KM;
-    double distDisplay =
-        metricUnits ? distKM : (distKM * UnitConversions.KM_TO_MI);
-    int xInterval = ((int) (distDisplay / 6));
+    double totalDistance = tripStatistics.getTotalDistance() * UnitConversions.M_TO_KM;
+    if (!metricUnits) {
+      totalDistance *= UnitConversions.KM_TO_MI;
+    }
+    int xInterval = ((int) (totalDistance / 6));
     int yInterval = ((int) (ySpread / 600)) * 100;
     if (yInterval < 100) {
       yInterval = 25;
     }
     // Range
     sb.append("&chxr=0,0,");
-    sb.append((int) distDisplay);
+    sb.append((int) totalDistance);
     sb.append(',');
     sb.append(xInterval);
 
@@ -138,28 +139,27 @@ public class ChartURLGenerator {
     // Data
     sb.append("&chd=e:");
     for (int i = 0; i < distances.size(); i++) {
-      int normalized = 
-          (int) (getNormalizedDistance(distances.elementAt(i), track) * 4095);
+      int normalized = (int) (getNormalizedDistance(distances.elementAt(i), track) * 4095);
       sb.append(ChartsExtendedEncoder.getEncodedValue(normalized));
     }
 
     sb.append(ChartsExtendedEncoder.getSeparator());
     for (int i = 0; i < elevations.size(); i++) {
-      int normalized =
-          (int) (getNormalizedElevation(
-              elevations.elementAt(i), effectiveMinY, ySpread) * 4095);
+      double value = elevations.elementAt(i);
+      if (!metricUnits) {
+        value *= UnitConversions.M_TO_FT;
+      }
+      int normalized = (int) (getNormalizedElevation(value, effectiveMinY, ySpread) * 4095);
       sb.append(ChartsExtendedEncoder.getEncodedValue(normalized));
     }
-
     return sb.toString();
   }
 
-  private static double getNormalizedDistance(double d, Track track) {
-    return d / track.getTripStatistics().getTotalDistance();
+  private static double getNormalizedDistance(double value, Track track) {
+    return value / track.getTripStatistics().getTotalDistance();
   }
 
-  private static double getNormalizedElevation(
-      double d, double effectiveMinY, double ySpread) {
-    return (d - effectiveMinY) / ySpread;
+  private static double getNormalizedElevation(double value, double effectiveMinY, double ySpread) {
+    return (value - effectiveMinY) / ySpread;
   }
 }

@@ -41,6 +41,7 @@ public class ChartFragmentTest extends AndroidTestCase {
   protected void setUp() throws Exception {
     chartFragment = new ChartFragment();
     chartFragment.setChartView(new ChartView(getContext()));
+    chartFragment.setTripStatisticsBuilder(TrackStubUtils.INITIAL_TIME);
   }
 
   /**
@@ -251,15 +252,12 @@ public class ChartFragmentTest extends AndroidTestCase {
    * one. The speed values of these points are 129, 130.
    */
   public void testFillDataPoint_speed() {
-    // Set max speed to make the speed of points are valid.
-    chartFragment.setTrackMaxSpeed(200.0);
-
     /*
      * At first, clear old points of speed, so give true to the second
      * parameter. It will not be filled in to the speed buffer.
      */
     MyTracksLocation myTracksLocation1 = TrackStubUtils.createMyTracksLocation();
-    myTracksLocation1.setSpeed(129);
+    myTracksLocation1.setSpeed(128.5f);
     double[] point = fillDataPointTestHelper(myTracksLocation1);
     assertEquals(0.0, point[ChartView.SPEED_SERIES + 1]);
 
@@ -285,10 +283,27 @@ public class ChartFragmentTest extends AndroidTestCase {
   public void testFillDataPoint_speedImperial() {
     // Setups to use imperial.
     chartFragment.setMetricUnits(false);
-    MyTracksLocation myTracksLocation = TrackStubUtils.createMyTracksLocation();
-    myTracksLocation.setSpeed(132);
-    double[] point = fillDataPointTestHelper(myTracksLocation);
-    assertEquals(132.0 * UnitConversions.MS_TO_KMH * UnitConversions.KM_TO_MI,
+    
+    // First data point is not added to the speed buffer
+    MyTracksLocation myTracksLocation1 = TrackStubUtils.createMyTracksLocation();
+    myTracksLocation1.setSpeed(100.0f);
+    double[] point = fillDataPointTestHelper(myTracksLocation1);
+    assertEquals(0.0, point[ChartView.SPEED_SERIES + 1]);
+    
+    MyTracksLocation myTracksLocation2 = TrackStubUtils.createMyTracksLocation();
+    
+    /*
+     * Add a time span here to make sure the second point is valid and the speed is valid.
+     * 
+     * Speed is valid if:
+     * speedDifference > Constants.MAX_ACCELERATION * timeDifference
+     * speedDifference = 102 -100
+     * timeDifference = 222
+     */
+    myTracksLocation2.setTime(myTracksLocation2.getTime() + 222);
+    myTracksLocation2.setSpeed(102);
+    point = fillDataPointTestHelper(myTracksLocation2);
+    assertEquals(102.0 * UnitConversions.MS_TO_KMH * UnitConversions.KM_TO_MI,
         point[ChartView.SPEED_SERIES + 1]);
   }
 
@@ -298,11 +313,28 @@ public class ChartFragmentTest extends AndroidTestCase {
   public void testFillDataPoint_pace_nonZeroSpeed() {
     // Setups reportSpeed to false.
     chartFragment.setReportSpeed(false);
-    MyTracksLocation myTracksLocation = TrackStubUtils.createMyTracksLocation();
-    myTracksLocation.setSpeed(134);
-    double[] point = fillDataPointTestHelper(myTracksLocation);
+    
+    // First data point is not added to the speed buffer
+    MyTracksLocation myTracksLocation1 = TrackStubUtils.createMyTracksLocation();
+    myTracksLocation1.setSpeed(100.0f);
+    double[] point = fillDataPointTestHelper(myTracksLocation1);
+    assertEquals(0.0, point[ChartView.SPEED_SERIES + 1]);
+    
+    MyTracksLocation myTracksLocation2 = TrackStubUtils.createMyTracksLocation();
+
+    /*
+     * Add a time span here to make sure the second point is valid and the speed is valid.
+     * 
+     * Speed is valid if:
+     * speedDifference > Constants.MAX_ACCELERATION * timeDifference
+     * speedDifference = 102 -100
+     * timeDifference = 222
+     */
+    myTracksLocation2.setTime(myTracksLocation2.getTime() + 222);
+    myTracksLocation2.setSpeed(102);
+    point = fillDataPointTestHelper(myTracksLocation2);
     assertEquals(
-        HOURS_PER_UNIT / (134.0 * UnitConversions.MS_TO_KMH), point[ChartView.PACE_SERIES + 1]);
+        HOURS_PER_UNIT / (102.0 * UnitConversions.MS_TO_KMH), point[ChartView.PACE_SERIES + 1]);
   }
 
   /**

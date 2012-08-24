@@ -613,12 +613,18 @@ public class TrackDataHubTest extends AndroidTestCase {
     // Register two listeners
     PreferencesUtils.setBoolean(context, R.string.report_speed_key, true);
     PreferencesUtils.setBoolean(context, R.string.metric_units_key, true);
+    PreferencesUtils.setInt(context, R.string.min_recording_distance_key,
+        PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT);
 
     dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceChangeListenerCapture));
     expect(trackDataListener1.onMetricUnitsChanged(true)).andReturn(false);
     expect(trackDataListener1.onReportSpeedChanged(true)).andReturn(false);
+    expect(trackDataListener1.onMinRecordingDistanceChanged(
+        PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT)).andReturn(false);
     expect(trackDataListener2.onMetricUnitsChanged(true)).andReturn(false);
     expect(trackDataListener2.onReportSpeedChanged(true)).andReturn(false);
+    expect(trackDataListener2.onMinRecordingDistanceChanged(
+        PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT)).andReturn(false);
     replay();
 
     trackDataHub.start();
@@ -737,7 +743,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     public void expectLocationsDelivered(TrackDataListener listener) {
       for (int i = 0; i < locations.length; i++) {
         if (splitIndexSet.contains(i)) {
-          listener.onSegmentSplit();
+          listener.onSegmentSplit(locations[i]);
         } else {
           listener.onSampledInTrackPoint(locations[i]);
         }
@@ -749,7 +755,7 @@ public class TrackDataHubTest extends AndroidTestCase {
       boolean includeNext = false;
       for (int i = 0; i < locations.length; i++) {
         if (splitIndexSet.contains(i)) {
-          listener.onSegmentSplit();
+          listener.onSegmentSplit(locations[i]);
           includeNext = true;
         } else if (includeNext || (i % sampleFrequency == 0)) {
           listener.onSampledInTrackPoint(locations[i]);

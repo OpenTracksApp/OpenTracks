@@ -75,6 +75,7 @@ public class TrackDataHub implements DataSourceListener {
   private boolean metricUnits;
   private boolean reportSpeed;
   private int minRequiredAccuracy;
+  private int minRecordingDistance;
 
   // Heading values
   private float lastHeading = 0;
@@ -347,6 +348,20 @@ public class TrackDataHub implements DataSourceListener {
           minRequiredAccuracy = PreferencesUtils.getInt(context, R.string.min_required_accuracy_key,
               PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT);
         }
+        if (key == null
+            || key.equals(PreferencesUtils.getKey(context, R.string.min_recording_distance_key))) {
+          minRecordingDistance = PreferencesUtils.getInt(
+              context, R.string.min_recording_distance_key,
+              PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT);
+          if (key != null) {
+            for (TrackDataListener trackDataListener :
+                trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
+              if (trackDataListener.onMinRecordingDistanceChanged(minRecordingDistance)) {
+                loadDataForListener(trackDataListener);
+              }
+            }
+          }
+        }
       }
     });
   }
@@ -422,6 +437,7 @@ public class TrackDataHub implements DataSourceListener {
         trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
       trackDataListener.onMetricUnitsChanged(metricUnits);
       trackDataListener.onReportSpeedChanged(reportSpeed);
+      trackDataListener.onMinRecordingDistanceChanged(minRecordingDistance);
     }
 
     notifySelectedTrackChanged(trackDataManager.getListeners(TrackDataType.SELECTED_TRACK));
@@ -457,6 +473,7 @@ public class TrackDataHub implements DataSourceListener {
     if (trackDataTypes.contains(TrackDataType.PREFERENCE)) {
       trackDataListener.onMetricUnitsChanged(metricUnits);
       trackDataListener.onReportSpeedChanged(reportSpeed);
+      trackDataListener.onMinRecordingDistanceChanged(minRecordingDistance);
     }
 
     if (trackDataTypes.contains(TrackDataType.SELECTED_TRACK)) {
@@ -623,7 +640,7 @@ public class TrackDataHub implements DataSourceListener {
       if (!LocationUtils.isValidLocation(location)) {
         // TODO: also include the last valid point before a split
         for (TrackDataListener trackDataListener : sampledInListeners) {
-          trackDataListener.onSegmentSplit();
+          trackDataListener.onSegmentSplit(location);
           includeNextPoint = true;
         }
       } else {

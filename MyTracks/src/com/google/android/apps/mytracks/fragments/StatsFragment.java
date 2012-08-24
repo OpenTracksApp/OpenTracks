@@ -186,17 +186,17 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   }
 
   @Override
-  public void onSampledInTrackPoint(Location loc) {
+  public void onSampledInTrackPoint(Location location) {
     // We don't care.
   }
 
   @Override
-  public void onSampledOutTrackPoint(Location loc) {
+  public void onSampledOutTrackPoint(Location location) {
     // We don't care.
   }
 
   @Override
-  public void onSegmentSplit() {
+  public void onSegmentSplit(Location location) {
     // We don't care.
   }
 
@@ -244,6 +244,12 @@ public class StatsFragment extends Fragment implements TrackDataListener {
       });
     }
     return true;
+  }
+
+  @Override
+  public boolean onMinRecordingDistanceChanged(int minRecordingDistance) {
+    // We don't care.
+    return false;
   }
 
   /**

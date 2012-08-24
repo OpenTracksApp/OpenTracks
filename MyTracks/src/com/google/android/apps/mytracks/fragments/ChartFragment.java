@@ -17,7 +17,6 @@
 package com.google.android.apps.mytracks.fragments;
 
 import com.google.android.apps.mytracks.ChartView;
-import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.TrackDetailActivity;
 import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.Sensor;
@@ -27,7 +26,7 @@ import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.TrackDataType;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.stats.DoubleBuffer;
+import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
@@ -56,28 +55,22 @@ import java.util.EnumSet;
 public class ChartFragment extends Fragment implements TrackDataListener {
 
   public static final String CHART_FRAGMENT_TAG = "chartFragment";
-  
-  // Android reports 128 when the speed is invalid
-  private static final int INVALID_SPEED = 128;
-  private final DoubleBuffer elevationBuffer = new DoubleBuffer(
-      Constants.ELEVATION_SMOOTHING_FACTOR);
-  private final DoubleBuffer speedBuffer = new DoubleBuffer(Constants.SPEED_SMOOTHING_FACTOR);
+
   private final ArrayList<double[]> pendingPoints = new ArrayList<double[]>();
-  
+
   private TrackDataHub trackDataHub;
 
   // Stats gathered from the received data
-  private double totalDistance = 0.0;
-  private long startTime = -1L;
-  private Location lastLocation = null;
-  private double trackMaxSpeed = 0.0;
+  private TripStatisticsBuilder tripStatisticsBuilder;
+  private long startTime;
+
+  private boolean metricUnits = PreferencesUtils.METRIC_UNITS_DEFAULT;
+  private boolean reportSpeed = PreferencesUtils.REPORT_SPEED_DEFAULT;
+  private int minRecordingDistance = PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT;
 
   // Modes of operation
-  private boolean metricUnits = true;
-  private boolean reportSpeed = true;
-
   private boolean chartByDistance = true;
-  private boolean[] chartShow = new boolean[] {true, true, true, true, true, true};
+  private boolean[] chartShow = new boolean[] { true, true, true, true, true, true };
 
   // UI elements
   private ChartView chartView;
@@ -88,7 +81,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
    * appropriate and redraw.
    */
   private final Runnable updateChart = new Runnable() {
-    @Override
+      @Override
     public void run() {
       if (trackDataHub == null) {
         return;
@@ -118,13 +111,13 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     View view = inflater.inflate(R.layout.chart, container, false);
     zoomControls = (ZoomControls) view.findViewById(R.id.chart_zoom_controls);
     zoomControls.setOnZoomInClickListener(new View.OnClickListener() {
-      @Override
+        @Override
       public void onClick(View v) {
         zoomIn();
       }
     });
     zoomControls.setOnZoomOutClickListener(new View.OnClickListener() {
-      @Override
+        @Override
       public void onClick(View v) {
         zoomOut();
       }
@@ -141,7 +134,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
         LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
     layout.addView(chartView, layoutParams);
   }
-  
+
   @Override
   public void onResume() {
     super.onResume();
@@ -186,26 +179,20 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   @Override
   public void onTrackUpdated(Track track) {
     if (track == null || track.getTripStatistics() == null) {
-      trackMaxSpeed = 0.0;
+      startTime = -1L;
       return;
     }
-    trackMaxSpeed = track.getTripStatistics().getMaxSpeed();
+    startTime = track.getTripStatistics().getStartTime();
   }
 
   @Override
   public void clearTrackPoints() {
-    totalDistance = 0.0;
-    startTime = -1L;
-    lastLocation = null;
-    
-    elevationBuffer.reset();
-    speedBuffer.reset();
+    tripStatisticsBuilder = startTime != -1L ? new TripStatisticsBuilder(startTime) : null;
     pendingPoints.clear();
-    
     chartView.reset();
 
     getActivity().runOnUiThread(new Runnable() {
-      @Override
+        @Override
       public void run() {
         chartView.resetScroll();
       }
@@ -214,24 +201,19 @@ public class ChartFragment extends Fragment implements TrackDataListener {
 
   @Override
   public void onSampledInTrackPoint(Location location) {
-    if (LocationUtils.isValidLocation(location)) {
-      double[] data = new double[ChartView.NUM_SERIES + 1];
-      fillDataPoint(location, data);
-      pendingPoints.add(data);
-    }
+    double[] data = new double[ChartView.NUM_SERIES + 1];
+    fillDataPoint(location, data);
+    pendingPoints.add(data);
   }
 
   @Override
   public void onSampledOutTrackPoint(Location location) {
-    if (LocationUtils.isValidLocation(location)) {
-      // Still account for the point in the smoothing buffers.
-      fillDataPoint(location, null);
-    }
+    fillDataPoint(location, null);
   }
 
   @Override
-  public void onSegmentSplit() {
-    // Do nothing.
+  public void onSegmentSplit(Location location) {
+    fillDataPoint(location, null);
   }
 
   @Override
@@ -266,7 +248,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     metricUnits = metric;
     chartView.setMetricUnits(metricUnits);
     getActivity().runOnUiThread(new Runnable() {
-      @Override
+        @Override
       public void run() {
         chartView.requestLayout();
       }
@@ -286,11 +268,20 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     setSeriesEnabled(ChartView.SPEED_SERIES, chartShowSpeed && reportSpeed);
     setSeriesEnabled(ChartView.PACE_SERIES, chartShowSpeed && !reportSpeed);
     getActivity().runOnUiThread(new Runnable() {
-      @Override
+        @Override
       public void run() {
         chartView.requestLayout();
       }
     });
+    return true;
+  }
+
+  @Override
+  public boolean onMinRecordingDistanceChanged(int value) {
+    if (minRecordingDistance == value) {
+      return false;
+    }
+    minRecordingDistance = value;
     return true;
   }
 
@@ -310,7 +301,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
         R.string.chart_show_elevation_key, PreferencesUtils.CHART_SHOW_ELEVATION_DEFAULT))) {
       needUpdate = true;
     }
-    
+
     boolean chartShowSpeed = PreferencesUtils.getBoolean(
         getActivity(), R.string.chart_show_speed_key, PreferencesUtils.CHART_SHOW_SPEED_DEFAULT);
     if (setSeriesEnabled(ChartView.SPEED_SERIES, chartShowSpeed && reportSpeed)) {
@@ -354,17 +345,14 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   }
 
   /**
-   * Resumes the trackDataHub. Needs to be synchronized because trackDataHub can be
-   * accessed by multiple threads.
+   * Resumes the trackDataHub. Needs to be synchronized because trackDataHub can
+   * be accessed by multiple threads.
    */
   private synchronized void resumeTrackDataHub() {
     trackDataHub = ((TrackDetailActivity) getActivity()).getTrackDataHub();
-    trackDataHub.registerTrackDataListener(this, EnumSet.of(
-        TrackDataType.SELECTED_TRACK,
-        TrackDataType.TRACKS_TABLE,
-        TrackDataType.WAYPOINTS_TABLE,
-        TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE,
-        TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE,
+    trackDataHub.registerTrackDataListener(this, EnumSet.of(TrackDataType.SELECTED_TRACK,
+        TrackDataType.TRACKS_TABLE, TrackDataType.WAYPOINTS_TABLE,
+        TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE, TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE,
         TrackDataType.PREFERENCE));
   }
 
@@ -386,15 +374,15 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   }
 
   /**
-   * Reloads the trackDataHub. Needs to be synchronized because trackDataHub can be
-   * accessed by multiple threads. 
+   * Reloads the trackDataHub. Needs to be synchronized because trackDataHub can
+   * be accessed by multiple threads.
    */
   private synchronized void reloadTrackDataHub() {
     if (trackDataHub != null) {
       trackDataHub.reloadDataForListener(this);
     }
   }
-  
+
   /**
    * To zoom in.
    */
@@ -412,7 +400,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     zoomControls.setIsZoomInEnabled(chartView.canZoomIn());
     zoomControls.setIsZoomOutEnabled(chartView.canZoomOut());
   }
-  
+
   /**
    * Given a location, fill in a data point, an array of double[]. <br>
    * data[0] = time/distance <br>
@@ -435,44 +423,31 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     double heartRate = Double.NaN;
     double cadence = Double.NaN;
     double power = Double.NaN;
-   
-    // TODO: Use TripStatisticsBuilder
-    if (chartByDistance) {
-      if (lastLocation != null) {
-        double distance = lastLocation.distanceTo(location) * UnitConversions.M_TO_KM;
-        if (metricUnits) {
-          totalDistance += distance;
-        } else {
-          totalDistance += distance * UnitConversions.KM_TO_MI;
-        }
-      }
-      timeOrDistance = totalDistance;
-    } else {
-      if (startTime == -1L) {
-        startTime = location.getTime();
-      }
-      timeOrDistance = location.getTime() - startTime;
-    }
-  
-    elevationBuffer.setNext(metricUnits ? location.getAltitude() : location.getAltitude()
-        * UnitConversions.M_TO_FT);
-    elevation = elevationBuffer.getAverage();
-  
-    if (lastLocation == null) {
-      if (Math.abs(location.getSpeed() - INVALID_SPEED) > 1) {
-        speedBuffer.setNext(location.getSpeed());
-      }
-    } else if (TripStatisticsBuilder.isValidSpeed(location.getTime(), location.getSpeed(),
-        lastLocation.getTime(), lastLocation.getSpeed(), speedBuffer)
-        && (location.getSpeed() <= trackMaxSpeed)) {
-      speedBuffer.setNext(location.getSpeed());
-    }
-    speed = speedBuffer.getAverage() * UnitConversions.MS_TO_KMH;
-    if (!metricUnits) {
-      speed *= UnitConversions.KM_TO_MI;
-    }
-    pace = speed == 0 ? 0.0 : 60.0 / speed;
 
+    if (tripStatisticsBuilder != null) {
+      tripStatisticsBuilder.addLocation(location, minRecordingDistance);
+      TripStatistics tripStatistics = tripStatisticsBuilder.getTripStatistics();
+      if (chartByDistance) {
+        double distance = tripStatistics.getTotalDistance() * UnitConversions.M_TO_KM;
+        if (!metricUnits) {
+          distance *= UnitConversions.KM_TO_MI;
+        }
+        timeOrDistance = distance;
+      } else {
+        timeOrDistance = tripStatistics.getTotalTime();
+      }
+  
+      elevation = tripStatisticsBuilder.getSmoothedElevation();
+      if (!metricUnits) {
+        elevation *= UnitConversions.M_TO_FT;
+      }
+  
+      speed = tripStatisticsBuilder.getSmoothedSpeed() * UnitConversions.MS_TO_KMH;
+      if (!metricUnits) {
+        speed *= UnitConversions.KM_TO_MI;
+      }
+      pace = speed == 0 ? 0.0 : 60.0 / speed;
+    }
     if (location instanceof MyTracksLocation
         && ((MyTracksLocation) location).getSensorDataSet() != null) {
       SensorDataSet sensorDataSet = ((MyTracksLocation) location).getSensorDataSet();
@@ -502,7 +477,6 @@ public class ChartFragment extends Fragment implements TrackDataListener {
       data[5] = cadence;
       data[6] = power;
     }
-    lastLocation = location;
   }
 
   @VisibleForTesting
@@ -511,24 +485,25 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   }
 
   @VisibleForTesting
+  void setTripStatisticsBuilder(long time) {
+    tripStatisticsBuilder = new TripStatisticsBuilder(time);
+  }
+
+  @VisibleForTesting
   void setChartView(ChartView view) {
     chartView = view;
   }
-  
-  @VisibleForTesting
-  void setTrackMaxSpeed(double value) {
-    trackMaxSpeed = value;
-  }
-  
+
   @VisibleForTesting
   void setMetricUnits(boolean value) {
     metricUnits = value;
   }
-  
+
   @VisibleForTesting
   void setReportSpeed(boolean value) {
     reportSpeed = value;
   }
+
   @VisibleForTesting
   void setChartByDistance(boolean value) {
     chartByDistance = value;

@@ -36,6 +36,7 @@ public class TrackStubUtils {
   public static final double INITIAL_ALTITUDE = 22;
   static final float INITIAL_ACCURACY = 5;
   static final float INITIAL_SPEED = 10;
+  public static final long INITIAL_TIME = 1000L;
   static final float INITIAL_BEARING = 3.0f;
   // Used to change the value of latitude, longitude, and altitude.
   static final double DIFFERENCE = 0.01;
@@ -79,7 +80,7 @@ public class TrackStubUtils {
     loc.setAltitude(altitude);
     loc.setAccuracy(INITIAL_ACCURACY);
     loc.setSpeed(INITIAL_SPEED);
-    loc.setTime(System.currentTimeMillis());
+    loc.setTime(INITIAL_TIME);
     loc.setBearing(INITIAL_BEARING);
     SensorDataSet sd = SensorDataSet.newBuilder().build();
     MyTracksLocation myTracksLocation = new MyTracksLocation(loc, sd);

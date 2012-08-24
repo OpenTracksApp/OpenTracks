@@ -145,9 +145,12 @@ public class TripStatisticsBuilder {
    * is noisy so the smoothed elevation is better than the raw elevation for
    * many tasks.
    */
-  @VisibleForTesting
-  double getSmoothedElevation() {
+  public double getSmoothedElevation() {
     return elevationBuffer.getAverage();
+  }
+
+  public double getSmoothedSpeed() {
+    return speedBuffer.getAverage();
   }
 
   /**
@@ -160,17 +163,13 @@ public class TripStatisticsBuilder {
    */
   @VisibleForTesting
   void updateSpeed(long time, double speed, long lastLocationTime, double lastLocationSpeed) {
-    if (!isValidSpeed(time, speed, lastLocationTime, lastLocationSpeed, speedBuffer)) {
+    if (!isValidSpeed(time, speed, lastLocationTime, lastLocationSpeed)) {
       Log.d(TAG, "Invalid speed. speed: " + speed + " lastLocationSpeed: " + lastLocationSpeed);
       return;
     }
     speedBuffer.setNext(speed);
     if (speed > currentSegment.getMaxSpeed()) {
       currentSegment.setMaxSpeed(speed);
-    }
-    double movingSpeed = currentSegment.getAverageMovingSpeed();
-    if (speedBuffer.isFull() && movingSpeed > currentSegment.getMaxSpeed()) {
-      currentSegment.setMaxSpeed(movingSpeed);
     }
   }
 
@@ -229,10 +228,9 @@ public class TripStatisticsBuilder {
    * @param speed the speed
    * @param lastLocationTime the last location time
    * @param lastLocationSpeed the last location speed
-   * @param speedBuffer a buffer of speed readings
    */
-  public static boolean isValidSpeed(long time, double speed, long lastLocationTime,
-      double lastLocationSpeed, DoubleBuffer speedBuffer) {
+  private boolean isValidSpeed(
+      long time, double speed, long lastLocationTime, double lastLocationSpeed) {
 
     /*
      * There are a lot of noisy speed readings. Do the cheapest checks first,

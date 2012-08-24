@@ -10,13 +10,11 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.sendtogoogle.AbstractSendAsyncTask;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
-import com.google.android.apps.mytracks.stats.DoubleBuffer;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.SystemUtils;
-import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 import com.google.api.client.googleapis.GoogleHeaders;
 import com.google.api.client.googleapis.MethodOverride;
@@ -48,7 +46,7 @@ import java.util.Vector;
 
 /**
  * AsyncTask to send a track to Google Fusion Tables.
- *
+ * 
  * @author Jimmy Shih
  */
 public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
@@ -59,8 +57,8 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
   @VisibleForTesting
   public static final String CONTENT_TYPE = "application/x-www-form-urlencoded";
   @VisibleForTesting
-  public static final String FUSION_TABLES_BASE_URL =
-      "https://www.google.com/fusiontables/api/query";
+  public static final String
+      FUSION_TABLES_BASE_URL = "https://www.google.com/fusiontables/api/query";
   private static final int MAX_POINTS_PER_UPLOAD = 2048;
   @VisibleForTesting
   public static final String GDATA_VERSION = "2";
@@ -72,14 +70,15 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
   private static final int PROGRESS_UPLOAD_WAYPOINTS = 95;
   private static final int PROGRESS_COMPLETE = 100;
 
-  // See http://support.google.com/fusiontables/bin/answer.py?hl=en&answer=185991
+  // See
+  // http://support.google.com/fusiontables/bin/answer.py?hl=en&answer=185991
   private static final String MARKER_TYPE_START = "large_green";
   private static final String MARKER_TYPE_END = "large_red";
   private static final String MARKER_TYPE_WAYPOINT = "large_blue";
   private static final String MARKER_TYPE_STATISTICS = "large_yellow";
-  
+
   private static final String TAG = SendFusionTablesAsyncTask.class.getSimpleName();
-  
+
   private final Context context;
   private final long trackId;
   private final Account account;
@@ -127,8 +126,8 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
     currentSegment = 1;
 
     try {
-      authToken = AccountManager.get(context).blockingGetAuthToken(
-          account, SendFusionTablesUtils.SERVICE, false);
+      authToken = AccountManager.get(context)
+          .blockingGetAuthToken(account, SendFusionTablesUtils.SERVICE, false);
     } catch (OperationCanceledException e) {
       Log.d(TAG, "Unable to get auth token", e);
       return retryTask();
@@ -182,7 +181,7 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
 
   /**
    * Creates a new table.
-   *
+   * 
    * @param track the track
    * @return true if success.
    */
@@ -194,7 +193,7 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
 
   /**
    * Unlists a table.
-   *
+   * 
    * @return true if success.
    */
   private boolean unlistTable() {
@@ -204,32 +203,31 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
 
   /**
    * Uploads all the points in a track.
-   *
+   * 
    * @param track the track
    * @return true if success.
    */
   private boolean uploadAllTrackPoints(Track track) {
     Cursor locationsCursor = null;
     try {
-      boolean metricUnits = PreferencesUtils.getBoolean(
-          context, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
-
       locationsCursor = myTracksProviderUtils.getLocationsCursor(trackId, 0, -1, false);
       if (locationsCursor == null) {
         Log.d(TAG, "Location cursor is null");
         return false;
       }
+
       int locationsCount = locationsCursor.getCount();
       List<Location> locations = new ArrayList<Location>(MAX_POINTS_PER_UPLOAD);
       Location lastLocation = null;
 
       // For chart server, limit the number of elevation readings to 250.
       int elevationSamplingFrequency = Math.max(1, (int) (locationsCount / 250.0));
-      TripStatisticsBuilder tripStatisticsBuilder = new TripStatisticsBuilder(
-          track.getTripStatistics().getStartTime());
-      DoubleBuffer elevationBuffer = new DoubleBuffer(Constants.ELEVATION_SMOOTHING_FACTOR);
       Vector<Double> distances = new Vector<Double>();
       Vector<Double> elevations = new Vector<Double>();
+      TripStatisticsBuilder tripStatisticsBuilder = new TripStatisticsBuilder(
+          track.getTripStatistics().getStartTime());
+      int minRecordingDistance = PreferencesUtils.getInt(context,
+          R.string.min_recording_distance_key, PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT);
 
       for (int i = 0; i < locationsCount; i++) {
         locationsCursor.moveToPosition(i);
@@ -246,16 +244,12 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
           }
         }
 
-        // Add to the distances and elevations vectors
+        tripStatisticsBuilder.addLocation(location, minRecordingDistance);
+        if (i % elevationSamplingFrequency == 0) {
+          distances.add(tripStatisticsBuilder.getTripStatistics().getTotalDistance());
+          elevations.add(tripStatisticsBuilder.getSmoothedElevation());
+        }
         if (LocationUtils.isValidLocation(location)) {
-          tripStatisticsBuilder.addLocation(location, PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT);
-          // All points go into the smoothing buffer
-          elevationBuffer.setNext(metricUnits ? location.getAltitude()
-              : location.getAltitude() * UnitConversions.M_TO_FT);
-          if (i % elevationSamplingFrequency == 0) {
-            distances.add(tripStatisticsBuilder.getTripStatistics().getTotalDistance());
-            elevations.add(elevationBuffer.getAverage());
-          }
           lastLocation = location;
         }
 
@@ -280,7 +274,7 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
       // Create an end marker
       if (lastLocation != null) {
         distances.add(tripStatisticsBuilder.getTripStatistics().getTotalDistance());
-        elevations.add(elevationBuffer.getAverage());
+        elevations.add(tripStatisticsBuilder.getSmoothedElevation());
         DescriptionGenerator descriptionGenerator = new DescriptionGeneratorImpl(context);
         track.setDescription(
             descriptionGenerator.generateTrackDescription(track, distances, elevations, true));
@@ -301,7 +295,7 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
 
   /**
    * Prepares and uploads a list of locations from a track.
-   *
+   * 
    * @param track the track
    * @param locations the locations from the track
    * @param lastBatch true if it is the last batch of locations
@@ -328,7 +322,7 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
 
   /**
    * Uploads all the waypoints.
-   *
+   * 
    * @return true if success.
    */
   private boolean uploadWaypoints() {
@@ -358,17 +352,15 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
   }
 
   /**
-   * Creates a new row in Google Fusion Tables representing a marker as a
-   * point.
-   *
+   * Creates a new row in Google Fusion Tables representing a marker as a point.
+   * 
    * @param name the marker name
    * @param description the marker description
    * @param location the marker location
    * @param type the marker type
    * @return true if success.
    */
-  private boolean createNewPoint(
-      String name, String description, Location location, String type) {
+  private boolean createNewPoint(String name, String description, Location location, String type) {
     String query = "INSERT INTO " + tableId + " (name,description,geometry,marker) VALUES "
         + SendFusionTablesUtils.formatSqlValues(
             name, description, SendFusionTablesUtils.getKmlPoint(location), type);
@@ -376,22 +368,23 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
   }
 
   /**
-   * Creates a new row in Google Fusion Tables representing the track as a
-   * line segment.
-   *
+   * Creates a new row in Google Fusion Tables representing the track as a line
+   * segment.
+   * 
    * @param track the track
    * @return true if success.
    */
   private boolean createNewLineString(Track track) {
-    String query = "INSERT INTO " + tableId + " (name,description,geometry) VALUES "
-        + SendFusionTablesUtils.formatSqlValues(track.getName(), track.getDescription(),
+    String query = "INSERT INTO " + tableId
+        + " (name,description,geometry) VALUES " + SendFusionTablesUtils.formatSqlValues(
+            track.getName(), track.getDescription(),
             SendFusionTablesUtils.getKmlLineString(track.getLocations()));
     return sendQuery(query, false);
   }
 
   /**
    * Sends a query to Google Fusion Tables.
-   *
+   * 
    * @param query the Fusion Tables SQL query
    * @param setTableId true to set the table id
    * @return true if success.
@@ -463,7 +456,7 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
 
   /**
    * Updates the progress based on the number of locations uploaded.
-   *
+   * 
    * @param uploaded the number of uploaded locations
    * @param total the number of total locations
    */
@@ -474,4 +467,3 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
     publishProgress((int) scaledPercentage);
   }
 }
-

@@ -285,7 +285,7 @@ public class TrackRecordingService extends Service {
     // Require announcementExecutor and splitExecutor to be created.
     sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
 
-    timer.schedule(checkLocationListener, 5 * ONE_MINUTE, ONE_MINUTE);
+    timer.schedule(checkLocationListener, 0, ONE_MINUTE);
 
     /*
      * Try to restart the previous recording track in case the service has been
@@ -843,7 +843,7 @@ public class TrackRecordingService extends Service {
 
       double distanceToLastTrackLocation = location.distanceTo(lastTrackLocation);
       if (distanceToLastTrackLocation < minRecordingDistance && sensorDataSet == null) {
-        // skip
+        Log.d(TAG, "Not recording location due to min recording distance.");
       } else if (distanceToLastTrackLocation > maxRecordingDistance) {
         insertLocation(track, lastLocation, lastTrackLocation);
         Location pause = new Location(LocationManager.GPS_PROVIDER);
@@ -873,9 +873,11 @@ public class TrackRecordingService extends Service {
 
   private void insertLocation(Track track, Location location, Location lastRecordedLocation) {
     if (location == null) {
+      Log.w(TAG, "Ignore insertLocation. loation is null.");
       return;
     }
     if (location.equals(lastRecordedLocation)) {
+      Log.w(TAG, "Ignore insertLocation. loation same as last recorded location.");
       return;
     }
 

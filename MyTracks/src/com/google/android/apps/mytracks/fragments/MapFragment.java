@@ -57,7 +57,7 @@ import java.util.List;
 
 /**
  * A fragment to display map to the user.
- *
+ * 
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
@@ -65,7 +65,7 @@ public class MapFragment extends Fragment
     implements View.OnTouchListener, View.OnClickListener, TrackDataListener {
 
   public static final String MAP_FRAGMENT_TAG = "mapFragment";
-  
+
   private static final String KEY_CURRENT_LOCATION = "currentLocation";
   private static final String KEY_KEEP_MY_LOCATION_VISIBLE = "keepMyLocationVisible";
 
@@ -108,19 +108,19 @@ public class MapFragment extends Fragment
     mapViewContainer = ((TrackDetailActivity) getActivity()).getMapViewContainer();
     mapView = (MapView) mapViewContainer.findViewById(R.id.map_view);
     mapOverlay = new MapOverlay(getActivity());
-    
+
     List<Overlay> overlays = mapView.getOverlays();
     overlays.clear();
     overlays.add(mapOverlay);
-    
+
     mapView.requestFocus();
     mapView.setOnTouchListener(this);
     mapView.setBuiltInZoomControls(true);
     myLocationImageButton = (ImageButton) mapViewContainer.findViewById(R.id.map_my_location);
     myLocationImageButton.setOnClickListener(new View.OnClickListener() {
-      @Override
+        @Override
       public void onClick(View v) {
-        showMyLocation();       
+        showMyLocation();
       }
     });
     messageTextView = (TextView) mapViewContainer.findViewById(R.id.map_message);
@@ -227,7 +227,7 @@ public class MapFragment extends Fragment
 
   /**
    * Shows the marker.
-   *
+   * 
    * @param trackId the track id
    * @param id the marker id
    */
@@ -277,29 +277,36 @@ public class MapFragment extends Fragment
   public void onLocationStateChanged(LocationState state) {
     final String message;
     final boolean isGpsDisabled;
-    switch (state) {
-      case DISABLED:
-        String setting = getString(
-            GoogleLocationUtils.isAvailable(getActivity()) ? R.string.gps_google_location_settings
-                : R.string.gps_location_access);
-        message = getString(R.string.gps_disabled, setting);
-        isGpsDisabled = true;
-        break;
-      case NO_FIX:
-      case BAD_FIX:
-        message = getString(R.string.gps_wait_for_signal);
-        isGpsDisabled = false;
-        break;
-      case GOOD_FIX:
-        message = null;
-        isGpsDisabled = false;
-        break;
-      default:
-        throw new IllegalArgumentException("Unexpected state: " + state);
+    if (!isSelectedTrackRecording()) {
+      message = null;
+      isGpsDisabled = false;
+    } else {
+      switch (state) {
+        case DISABLED:
+          String setting = getString(
+              GoogleLocationUtils.isAvailable(getActivity()) ? R.string.gps_google_location_settings
+                  : R.string.gps_location_access);
+          message = getString(R.string.gps_disabled, setting);
+          isGpsDisabled = true;
+          break;
+        case NO_FIX:
+          message = getString(R.string.gps_wait_for_signal);
+          isGpsDisabled = false;
+          break;
+        case BAD_FIX:
+          message = getString(R.string.gps_wait_for_better_signal);
+          isGpsDisabled = false;
+          break;
+        case GOOD_FIX:
+          message = null;
+          isGpsDisabled = false;
+          break;
+        default:
+          throw new IllegalArgumentException("Unexpected state: " + state);
+      }
     }
-
     getActivity().runOnUiThread(new Runnable() {
-      @Override
+        @Override
       public void run() {
         if (message != null) {
           messageTextView.setText(message);
@@ -336,12 +343,12 @@ public class MapFragment extends Fragment
   @Override
   public void onSelectedTrackChanged(final Track track) {
     getActivity().runOnUiThread(new Runnable() {
-      @Override
+        @Override
       public void run() {
         boolean hasTrack = track != null;
         mapOverlay.setTrackDrawingEnabled(hasTrack);
-  
-        if (hasTrack) { 
+
+        if (hasTrack) {
           synchronized (this) {
             /*
              * Synchronize to prevent race condition in changing markerTrackId
@@ -369,18 +376,16 @@ public class MapFragment extends Fragment
 
   @Override
   public void onSampledInTrackPoint(Location location) {
-    if (LocationUtils.isValidLocation(location)) {
-      mapOverlay.addLocation(location);
-    }
+    mapOverlay.addLocation(location);
   }
 
   @Override
-  public void onSampledOutTrackPoint(Location loc) {
+  public void onSampledOutTrackPoint(Location location) {
     // We don't care.
   }
 
   @Override
-  public void onSegmentSplit() {
+  public void onSegmentSplit(Location location) {
     mapOverlay.addSegmentSplit();
   }
 
@@ -418,24 +423,27 @@ public class MapFragment extends Fragment
     // We don't care.
     return false;
   }
-  
+
+  @Override
+  public boolean onMinRecordingDistanceChanged(int minRecordingDistance) {
+    // We don't care.
+    return false;
+  }
+
   /**
-   * Resumes the trackDataHub. Needs to be synchronized because trackDataHub can be
-   * accessed by multiple threads.
+   * Resumes the trackDataHub. Needs to be synchronized because trackDataHub can
+   * be accessed by multiple threads.
    */
   private synchronized void resumeTrackDataHub() {
     trackDataHub = ((TrackDetailActivity) getActivity()).getTrackDataHub();
-    trackDataHub.registerTrackDataListener(this, EnumSet.of(
-        TrackDataType.SELECTED_TRACK,
-        TrackDataType.WAYPOINTS_TABLE,
-        TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE,
-        TrackDataType.LOCATION,
-        TrackDataType.HEADING));
+    trackDataHub.registerTrackDataListener(this, EnumSet.of(TrackDataType.SELECTED_TRACK,
+        TrackDataType.WAYPOINTS_TABLE, TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE,
+        TrackDataType.LOCATION, TrackDataType.HEADING));
   }
-  
+
   /**
-   * Pauses the trackDataHub. Needs to be synchronized because trackDataHub can be
-   * accessed by multiple threads. 
+   * Pauses the trackDataHub. Needs to be synchronized because trackDataHub can
+   * be accessed by multiple threads.
    */
   private synchronized void pauseTrackDataHub() {
     trackDataHub.unregisterTrackDataListener(this);
@@ -443,15 +451,15 @@ public class MapFragment extends Fragment
   }
 
   /**
-   * Updates the trackDataHub. Needs to be synchronized because trackDataHub can be
-   * accessed by multiple threads. 
+   * Updates the trackDataHub. Needs to be synchronized because trackDataHub can
+   * be accessed by multiple threads.
    */
   private synchronized void updateTrackDataHub() {
     if (trackDataHub != null) {
       trackDataHub.forceUpdateLocation();
     }
   }
-  
+
   /**
    * Returns true if the selected track is recording. Needs to be synchronized
    * because trackDataHub can be accessed by multiple threads.
@@ -461,8 +469,9 @@ public class MapFragment extends Fragment
   }
 
   /**
-   * Updates the map by either zooming to the requested marker or showing the track.
-   *
+   * Updates the map by either zooming to the requested marker or showing the
+   * track.
+   * 
    * @param track the track
    */
   private void updateMap(Track track) {
@@ -480,7 +489,7 @@ public class MapFragment extends Fragment
 
   /**
    * Returns true if the location is visible.
-   *
+   * 
    * @param location the location
    */
   private boolean isVisible(Location location) {
@@ -490,7 +499,7 @@ public class MapFragment extends Fragment
     GeoPoint mapCenter = mapView.getMapCenter();
     int latitudeSpan = mapView.getLatitudeSpan();
     int longitudeSpan = mapView.getLongitudeSpan();
-  
+
     /*
      * The bottom of the mapView is obscured by the zoom controls, subtract its
      * height from the visible area.
@@ -498,11 +507,11 @@ public class MapFragment extends Fragment
     GeoPoint zoomControlBottom = mapView.getProjection().fromPixels(0, mapView.getHeight());
     GeoPoint zoomControlTop = mapView.getProjection().fromPixels(
         0, mapView.getHeight() - mapView.getZoomButtonsController().getZoomControls().getHeight());
-    int zoomControlMargin = Math.abs(zoomControlTop.getLatitudeE6()
-        - zoomControlBottom.getLatitudeE6());
+    int zoomControlMargin = Math.abs(
+        zoomControlTop.getLatitudeE6() - zoomControlBottom.getLatitudeE6());
     GeoRect geoRect = new GeoRect(mapCenter, latitudeSpan, longitudeSpan);
     geoRect.top += zoomControlMargin;
-  
+
     GeoPoint geoPoint = LocationUtils.getGeoPoint(location);
     return geoRect.contains(geoPoint);
   }
@@ -534,7 +543,7 @@ public class MapFragment extends Fragment
 
   /**
    * Shows the track.
-   *
+   * 
    * @param track the track
    */
   private void showTrack(Track track) {
