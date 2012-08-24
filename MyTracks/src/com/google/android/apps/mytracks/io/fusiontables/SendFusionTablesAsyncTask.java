@@ -10,7 +10,7 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.sendtogoogle.AbstractSendAsyncTask;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
-import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
+import com.google.android.apps.mytracks.stats.TripStatisticsUpdater;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
@@ -224,7 +224,7 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
       int elevationSamplingFrequency = Math.max(1, (int) (count / 250.0));
       Vector<Double> distances = new Vector<Double>();
       Vector<Double> elevations = new Vector<Double>();
-      TripStatisticsBuilder tripStatisticsBuilder = new TripStatisticsBuilder(
+      TripStatisticsUpdater tripStatisticsUpdater = new TripStatisticsUpdater(
           track.getTripStatistics().getStartTime());
       int minRecordingDistance = PreferencesUtils.getInt(context,
           R.string.min_recording_distance_key, PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT);
@@ -244,10 +244,10 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
           }
         }
 
-        tripStatisticsBuilder.addLocation(location, minRecordingDistance);
+        tripStatisticsUpdater.addLocation(location, minRecordingDistance);
         if (i % elevationSamplingFrequency == 0) {
-          distances.add(tripStatisticsBuilder.getTripStatistics().getTotalDistance());
-          elevations.add(tripStatisticsBuilder.getSmoothedElevation());
+          distances.add(tripStatisticsUpdater.getTripStatistics().getTotalDistance());
+          elevations.add(tripStatisticsUpdater.getSmoothedElevation());
         }
         if (LocationUtils.isValidLocation(location)) {
           lastLocation = location;
@@ -273,8 +273,8 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
 
       // Create an end marker
       if (lastLocation != null) {
-        distances.add(tripStatisticsBuilder.getTripStatistics().getTotalDistance());
-        elevations.add(tripStatisticsBuilder.getSmoothedElevation());
+        distances.add(tripStatisticsUpdater.getTripStatistics().getTotalDistance());
+        elevations.add(tripStatisticsUpdater.getSmoothedElevation());
         DescriptionGenerator descriptionGenerator = new DescriptionGeneratorImpl(context);
         track.setDescription(
             descriptionGenerator.generateTrackDescription(track, distances, elevations, true));

@@ -10,28 +10,28 @@ import android.location.Location;
 import junit.framework.TestCase;
 
 /**
- * Tests {@link TripStatisticsBuilder}.
+ * Tests {@link TripStatisticsUpdater}.
  * 
  * @author Sandor Dornbush
  */
-public class TripStatisticsBuilderTest extends TestCase {
+public class TripStatisticsUpdaterTest extends TestCase {
 
   private static final long ONE_SECOND = 1000;
   private static final long TEN_SECONDS = 10 * ONE_SECOND;
 
-  private TripStatisticsBuilder tripStatisticsBuilder = null;
+  private TripStatisticsUpdater tripStatisticsUpdater = null;
 
   @Override
   protected void setUp() throws Exception {
-    tripStatisticsBuilder = new TripStatisticsBuilder(System.currentTimeMillis());
+    tripStatisticsUpdater = new TripStatisticsUpdater(System.currentTimeMillis());
   }
 
   public void testAddLocationSimple() throws Exception {
     long startTime = 1000;
-    tripStatisticsBuilder = new TripStatisticsBuilder(startTime);
-    TripStatistics tripStatistics = tripStatisticsBuilder.getTripStatistics();
+    tripStatisticsUpdater = new TripStatisticsUpdater(startTime);
+    TripStatistics tripStatistics = tripStatisticsUpdater.getTripStatistics();
 
-    assertEquals(0.0, tripStatisticsBuilder.getSmoothedElevation());
+    assertEquals(0.0, tripStatisticsUpdater.getSmoothedElevation());
     assertEquals(Double.POSITIVE_INFINITY, tripStatistics.getMinElevation());
     assertEquals(Double.NEGATIVE_INFINITY, tripStatistics.getMaxElevation());
     assertEquals(0.0, tripStatistics.getMaxSpeed());
@@ -57,12 +57,12 @@ public class TripStatisticsBuilderTest extends TestCase {
 
       // Each time slice is 10 seconds.
       location.setTime(startTime + i * TEN_SECONDS);
-      tripStatisticsBuilder.addLocation(location, PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT);
+      tripStatisticsUpdater.addLocation(location, PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT);
 
-      tripStatistics = tripStatisticsBuilder.getTripStatistics();
+      tripStatistics = tripStatisticsUpdater.getTripStatistics();
       assertEquals(i * TEN_SECONDS, tripStatistics.getTotalTime());
       assertEquals(i * TEN_SECONDS, tripStatistics.getMovingTime());
-      assertEquals(i, tripStatisticsBuilder.getSmoothedElevation(),
+      assertEquals(i, tripStatisticsUpdater.getSmoothedElevation(),
           Constants.ELEVATION_SMOOTHING_FACTOR / 2);
       assertEquals(0.0, tripStatistics.getMinElevation());
       assertEquals(i, tripStatistics.getMaxElevation(), Constants.ELEVATION_SMOOTHING_FACTOR / 2);
@@ -81,17 +81,17 @@ public class TripStatisticsBuilderTest extends TestCase {
   }
 
   /**
-   * Tests {@link TripStatisticsBuilder#updateElevation(double)} with constant
+   * Tests {@link TripStatisticsUpdater#updateElevation(double)} with constant
    * elevations.
    */
   public void testElevationSimple() throws Exception {
     for (double elevation = 0; elevation < 1000; elevation += 10) {
-      tripStatisticsBuilder = new TripStatisticsBuilder(System.currentTimeMillis());
+      tripStatisticsUpdater = new TripStatisticsUpdater(System.currentTimeMillis());
       for (int i = 0; i < 100; i++) {
-        assertEquals(0.0, tripStatisticsBuilder.updateElevation(elevation));
-        assertEquals(elevation, tripStatisticsBuilder.getSmoothedElevation());
+        assertEquals(0.0, tripStatisticsUpdater.updateElevation(elevation));
+        assertEquals(elevation, tripStatisticsUpdater.getSmoothedElevation());
 
-        TripStatistics tripStatistics = tripStatisticsBuilder.getTripStatistics();
+        TripStatistics tripStatistics = tripStatisticsUpdater.getTripStatistics();
         assertEquals(elevation, tripStatistics.getMinElevation());
         assertEquals(elevation, tripStatistics.getMaxElevation());
         assertEquals(0.0, tripStatistics.getTotalElevationGain());
@@ -100,7 +100,7 @@ public class TripStatisticsBuilderTest extends TestCase {
   }
 
   /**
-   * Tests {@link TripStatisticsBuilder#updateGrade(double, double)} with
+   * Tests {@link TripStatisticsUpdater#updateGrade(double, double)} with
    * elevation gain.
    */
   public void testElevationGain() throws Exception {
@@ -113,11 +113,11 @@ public class TripStatisticsBuilderTest extends TestCase {
       } else {
         expectedGain = 1.0;
       }
-      assertEquals(expectedGain, tripStatisticsBuilder.updateElevation(i));
-      assertEquals(i, tripStatisticsBuilder.getSmoothedElevation(),
+      assertEquals(expectedGain, tripStatisticsUpdater.updateElevation(i));
+      assertEquals(i, tripStatisticsUpdater.getSmoothedElevation(),
           Constants.ELEVATION_SMOOTHING_FACTOR / 2);
 
-      TripStatistics data = tripStatisticsBuilder.getTripStatistics();
+      TripStatistics data = tripStatisticsUpdater.getTripStatistics();
       assertEquals(0.0, data.getMinElevation());
       assertEquals(i, data.getMaxElevation(), Constants.ELEVATION_SMOOTHING_FACTOR / 2);
       assertEquals(i, data.getTotalElevationGain(), Constants.ELEVATION_SMOOTHING_FACTOR);
@@ -125,7 +125,7 @@ public class TripStatisticsBuilderTest extends TestCase {
   }
 
   /**
-   * Tests {@link TripStatisticsBuilder#updateGrade(double, double)} with grade
+   * Tests {@link TripStatisticsUpdater#updateGrade(double, double)} with grade
    * of 1 and -1.
    */
   public void testGradeSimple() throws Exception {
@@ -134,11 +134,11 @@ public class TripStatisticsBuilderTest extends TestCase {
        * The value of the elevation does not matter. This is just to fill the
        * elevation buffer.
        */
-      tripStatisticsBuilder.updateElevation(i);
-      tripStatisticsBuilder.updateGrade(100, 100);
+      tripStatisticsUpdater.updateElevation(i);
+      tripStatisticsUpdater.updateGrade(100, 100);
       if (i >= Constants.GRADE_SMOOTHING_FACTOR && i >= Constants.ELEVATION_SMOOTHING_FACTOR) {
-        assertEquals(1.0, tripStatisticsBuilder.getTripStatistics().getMaxGrade());
-        assertEquals(1.0, tripStatisticsBuilder.getTripStatistics().getMinGrade());
+        assertEquals(1.0, tripStatisticsUpdater.getTripStatistics().getMaxGrade());
+        assertEquals(1.0, tripStatisticsUpdater.getTripStatistics().getMinGrade());
       }
     }
     for (double i = 0; i < 1000; i++) {
@@ -146,17 +146,17 @@ public class TripStatisticsBuilderTest extends TestCase {
        * The value of the elevation does not matter. This is just to fill the
        * elevation buffer.
        */
-      tripStatisticsBuilder.updateElevation(i);
-      tripStatisticsBuilder.updateGrade(100, -100);
+      tripStatisticsUpdater.updateElevation(i);
+      tripStatisticsUpdater.updateGrade(100, -100);
       if (i >= Constants.GRADE_SMOOTHING_FACTOR && i >= Constants.ELEVATION_SMOOTHING_FACTOR) {
-        assertEquals(1.0, tripStatisticsBuilder.getTripStatistics().getMaxGrade());
-        assertEquals(-1.0, tripStatisticsBuilder.getTripStatistics().getMinGrade());
+        assertEquals(1.0, tripStatisticsUpdater.getTripStatistics().getMaxGrade());
+        assertEquals(-1.0, tripStatisticsUpdater.getTripStatistics().getMinGrade());
       }
     }
   }
 
   /**
-   * Tests {@link TripStatisticsBuilder#updateGrade(double, double)} with
+   * Tests {@link TripStatisticsUpdater#updateGrade(double, double)} with
    * distance of 1. The grade should get ignored.
    */
   public void testGradeIgnoreShort() throws Exception {
@@ -165,56 +165,56 @@ public class TripStatisticsBuilderTest extends TestCase {
        * The value of the elevation does not matter. This is just to fill the
        * elevation buffer.
        */
-      tripStatisticsBuilder.updateElevation(i);
-      tripStatisticsBuilder.updateGrade(1, 100);
+      tripStatisticsUpdater.updateElevation(i);
+      tripStatisticsUpdater.updateGrade(1, 100);
       assertEquals(
-          Double.NEGATIVE_INFINITY, tripStatisticsBuilder.getTripStatistics().getMaxGrade());
+          Double.NEGATIVE_INFINITY, tripStatisticsUpdater.getTripStatistics().getMaxGrade());
       assertEquals(
-          Double.POSITIVE_INFINITY, tripStatisticsBuilder.getTripStatistics().getMinGrade());
+          Double.POSITIVE_INFINITY, tripStatisticsUpdater.getTripStatistics().getMinGrade());
     }
   }
 
   /**
-   * Tests {@link TripStatisticsBuilder#updateSpeed(long, double, long, double)}
+   * Tests {@link TripStatisticsUpdater#updateSpeed(long, double, long, double)}
    * with speed of zero.
    */
   public void testUpdateSpeedIncludeZero() {
     for (int i = 0; i < 1000; i++) {
-      tripStatisticsBuilder.updateSpeed(i + ONE_SECOND, 0.0, i, 4.0);
-      assertEquals(0.0, tripStatisticsBuilder.getTripStatistics().getMaxSpeed());
+      tripStatisticsUpdater.updateSpeed(i + ONE_SECOND, 0.0, i, 4.0);
+      assertEquals(0.0, tripStatisticsUpdater.getTripStatistics().getMaxSpeed());
     }
   }
 
   /**
-   * Tests {@link TripStatisticsBuilder#updateSpeed(long, double, long, double)}
+   * Tests {@link TripStatisticsUpdater#updateSpeed(long, double, long, double)}
    * with the error code 128. The speed should get ignored.
    */
   public void testUpdateSpeedIngoreErrorCode() {
     long time = 12344000;
-    tripStatisticsBuilder.updateSpeed(time + ONE_SECOND, 128.0, time, 0.0);
-    assertEquals(0.0, tripStatisticsBuilder.getTripStatistics().getMaxSpeed());
+    tripStatisticsUpdater.updateSpeed(time + ONE_SECOND, 128.0, time, 0.0);
+    assertEquals(0.0, tripStatisticsUpdater.getTripStatistics().getMaxSpeed());
   }
 
   /**
-   * Tests {@link TripStatisticsBuilder#updateSpeed(long, double, long, double)}
+   * Tests {@link TripStatisticsUpdater#updateSpeed(long, double, long, double)}
    * with a large speed change. The speed should get ignored.
    */
   public void testUpdateSpeedIngoreLargeAcceleration() {
     long time = 12344000;
-    tripStatisticsBuilder.updateSpeed(time + ONE_SECOND, 100.0, time, 1.0);
-    assertEquals(0.0, tripStatisticsBuilder.getTripStatistics().getMaxSpeed());
+    tripStatisticsUpdater.updateSpeed(time + ONE_SECOND, 100.0, time, 1.0);
+    assertEquals(0.0, tripStatisticsUpdater.getTripStatistics().getMaxSpeed());
   }
 
   /**
-   * Tests {@link TripStatisticsBuilder#updateSpeed(long, double, long, double)}
+   * Tests {@link TripStatisticsUpdater#updateSpeed(long, double, long, double)}
    * with constant speed.
    */
   public void testUpdateSpeed() {
     double speed = 4.0;
     for (int i = 0; i < 1000; i++) {
-      tripStatisticsBuilder.updateSpeed(i + ONE_SECOND, speed, i, speed);
+      tripStatisticsUpdater.updateSpeed(i + ONE_SECOND, speed, i, speed);
       if (i >= Constants.SPEED_SMOOTHING_FACTOR) {
-        assertEquals(speed, tripStatisticsBuilder.getTripStatistics().getMaxSpeed());
+        assertEquals(speed, tripStatisticsUpdater.getTripStatistics().getMaxSpeed());
       }
     }
   }

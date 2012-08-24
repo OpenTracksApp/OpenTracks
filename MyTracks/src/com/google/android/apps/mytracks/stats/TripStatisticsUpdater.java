@@ -27,14 +27,14 @@ import android.location.Location;
 import android.util.Log;
 
 /**
- * Builder for {@link TripStatistics}. For keeping track statistics as new
+ * Updater for {@link TripStatistics}. For updating track trip statistics as new
  * locations are added. Note that some of the locations represent pause/resume
  * separator.
  * 
  * @author Sandor Dornbush
  * @author Rodrigo Damazio
  */
-public class TripStatisticsBuilder {
+public class TripStatisticsUpdater {
 
   // The track's trip statistics
   private final TripStatistics tripStatistics;
@@ -62,11 +62,11 @@ public class TripStatisticsBuilder {
   private final DoubleBuffer gradeBuffer = new DoubleBuffer(Constants.GRADE_SMOOTHING_FACTOR);
 
   /**
-   * Creates a new trip statistics builder.
+   * Creates a new trip statistics updater.
    * 
    * @param startTime the start time
    */
-  public TripStatisticsBuilder(long startTime) {
+  public TripStatisticsUpdater(long startTime) {
     tripStatistics = init(startTime);
     currentSegment = init(startTime);
   }

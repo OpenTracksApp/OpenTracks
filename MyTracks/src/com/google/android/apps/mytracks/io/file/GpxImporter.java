@@ -18,7 +18,7 @@ package com.google.android.apps.mytracks.io.file;
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
+import com.google.android.apps.mytracks.stats.TripStatisticsUpdater;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
@@ -106,9 +106,9 @@ public class GpxImporter extends DefaultHandler {
   private Track track;
 
   /**
-   * Statistics builder for the current track.
+   * Trip statistics updater for the current track.
    */
-  private TripStatisticsBuilder tripStatisticsBuilder;
+  private TripStatisticsUpdater tripStatisticsUpdater;
 
   /**
    * Buffer of locations to be bulk-inserted into the database.
@@ -301,20 +301,20 @@ public class GpxImporter extends DefaultHandler {
       flushPoints();
 
       // Calculate statistics for the imported track
-      tripStatisticsBuilder.updateTime(lastLocation.getTime());
+      tripStatisticsUpdater.updateTime(lastLocation.getTime());
       track.setStopId(getLastPointId());
     } else {
-      tripStatisticsBuilder = new TripStatisticsBuilder(0L);
-      tripStatisticsBuilder.updateTime(0L);
+      tripStatisticsUpdater = new TripStatisticsUpdater(0L);
+      tripStatisticsUpdater.updateTime(0L);
     }
-    track.setTripStatistics(tripStatisticsBuilder.getTripStatistics());
+    track.setTripStatistics(tripStatisticsUpdater.getTripStatistics());
     track.setNumberOfPoints(numberOfLocations);
     myTracksProviderUtils.updateTrack(track);
     tracksIds.add(track.getId());
     isCurrentTrackRollbackable = false;
     lastSegmentLocation = null;
     lastLocation = null;
-    tripStatisticsBuilder = null;
+    tripStatisticsUpdater = null;
   }
 
   /**
@@ -377,11 +377,11 @@ public class GpxImporter extends DefaultHandler {
    */
   private void onTrackPointElementEnd() throws SAXException {
     if (LocationUtils.isValidLocation(location)) {
-      if (tripStatisticsBuilder == null) {
+      if (tripStatisticsUpdater == null) {
         // first point did not have a time, start stats builder without it
-        tripStatisticsBuilder = new TripStatisticsBuilder(0);
+        tripStatisticsUpdater = new TripStatisticsUpdater(0);
       }
-      tripStatisticsBuilder.addLocation(location, PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT);
+      tripStatisticsUpdater.addLocation(location, PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT);
 
       // insert in db
       insertPoint(location);
@@ -448,8 +448,8 @@ public class GpxImporter extends DefaultHandler {
     location.setTime(time);
 
     // initialize start time with time of first track point
-    if (tripStatisticsBuilder == null) {
-      tripStatisticsBuilder = new TripStatisticsBuilder(time);
+    if (tripStatisticsUpdater == null) {
+      tripStatisticsUpdater = new TripStatisticsUpdater(time);
     }
   }
 

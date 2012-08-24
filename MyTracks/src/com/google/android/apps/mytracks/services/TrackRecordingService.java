@@ -36,7 +36,7 @@ import com.google.android.apps.mytracks.services.tasks.AnnouncementPeriodicTaskF
 import com.google.android.apps.mytracks.services.tasks.PeriodicTaskExecutor;
 import com.google.android.apps.mytracks.services.tasks.SplitPeriodicTaskFactory;
 import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
+import com.google.android.apps.mytracks.stats.TripStatisticsUpdater;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
@@ -110,8 +110,8 @@ public class TrackRecordingService extends Service {
   private long currentRecordingInterval;
 
   // The following variables are set when recording:
-  private TripStatisticsBuilder trackTripStatisticsBuilder;
-  private TripStatisticsBuilder markerTripStatisticsBuilder;
+  private TripStatisticsUpdater trackTripStatisticsUpdater;
+  private TripStatisticsUpdater markerTripStatisticsUpdater;
   private WakeLock wakeLock;
   private SensorManager sensorManager;
   private Location lastLocation;
@@ -397,10 +397,10 @@ public class TrackRecordingService extends Service {
    * Gets the trip statistics.
    */
   public TripStatistics getTripStatistics() {
-    if (trackTripStatisticsBuilder == null) {
+    if (trackTripStatisticsUpdater == null) {
       return null;
     }
-    return trackTripStatisticsBuilder.getTripStatistics();
+    return trackTripStatisticsUpdater.getTripStatistics();
   }
 
   /**
@@ -433,9 +433,9 @@ public class TrackRecordingService extends Service {
     String description;
     if (isStatistics) {
       long now = System.currentTimeMillis();
-      markerTripStatisticsBuilder.updateTime(now);
-      tripStatistics = markerTripStatisticsBuilder.getTripStatistics();
-      markerTripStatisticsBuilder = new TripStatisticsBuilder(now);
+      markerTripStatisticsUpdater.updateTime(now);
+      tripStatistics = markerTripStatisticsUpdater.getTripStatistics();
+      markerTripStatisticsUpdater = new TripStatisticsUpdater(now);
       description = new DescriptionGeneratorImpl(this).generateWaypointDescription(tripStatistics);
     } else {
       tripStatistics = null;
@@ -454,8 +454,8 @@ public class TrackRecordingService extends Service {
     double length;
     Location lastTrackPoint = myTracksProviderUtils.getLastTrackPoint(recordingTrackId);
     if (currentSegmentHasLocation && LocationUtils.isValidLocation(lastTrackPoint)
-        && trackTripStatisticsBuilder != null) {
-      TripStatistics stats = trackTripStatisticsBuilder.getTripStatistics();
+        && trackTripStatisticsUpdater != null) {
+      TripStatistics stats = trackTripStatisticsUpdater.getTripStatistics();
       length = stats.getTotalDistance();
       duration = stats.getTotalTime();
     } else {
@@ -557,8 +557,8 @@ public class TrackRecordingService extends Service {
       return -1L;
     }
     long now = System.currentTimeMillis();
-    trackTripStatisticsBuilder = new TripStatisticsBuilder(now);
-    markerTripStatisticsBuilder = new TripStatisticsBuilder(now);
+    trackTripStatisticsUpdater = new TripStatisticsUpdater(now);
+    markerTripStatisticsUpdater = new TripStatisticsUpdater(now);
 
     // Insert a track
     Track track = new Track();
@@ -574,7 +574,7 @@ public class TrackRecordingService extends Service {
     track.setName(TrackNameUtils.getTrackName(this, trackId, now, null));
     track.setCategory(PreferencesUtils.getString(
         this, R.string.default_activity_key, PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT));
-    track.setTripStatistics(trackTripStatisticsBuilder.getTripStatistics());
+    track.setTripStatistics(trackTripStatisticsUpdater.getTripStatistics());
     myTracksProviderUtils.updateTrack(track);
     insertWaypoint(WaypointCreationRequest.DEFAULT_START_TRACK);
 
@@ -591,7 +591,7 @@ public class TrackRecordingService extends Service {
     Log.d(TAG, "Restarting track: " + track.getId());
 
     TripStatistics tripStatistics = track.getTripStatistics();
-    trackTripStatisticsBuilder = new TripStatisticsBuilder(tripStatistics.getStartTime());
+    trackTripStatisticsUpdater = new TripStatisticsUpdater(tripStatistics.getStartTime());
 
     long markerStartTime;
     Waypoint waypoint = myTracksProviderUtils.getLastStatisticsWaypoint(recordingTrackId);
@@ -600,7 +600,7 @@ public class TrackRecordingService extends Service {
     } else {
       markerStartTime = tripStatistics.getStartTime();
     }
-    markerTripStatisticsBuilder = new TripStatisticsBuilder(markerStartTime);
+    markerTripStatisticsUpdater = new TripStatisticsUpdater(markerStartTime);
 
     Cursor cursor = null;
     try {
@@ -613,9 +613,9 @@ public class TrackRecordingService extends Service {
         if (cursor.moveToLast()) {
           do {
             Location location = myTracksProviderUtils.createTrackPoint(cursor);
-            trackTripStatisticsBuilder.addLocation(location, minRecordingDistance);
+            trackTripStatisticsUpdater.addLocation(location, minRecordingDistance);
             if (location.getTime() > markerStartTime) {
-              markerTripStatisticsBuilder.addLocation(location, minRecordingDistance);
+              markerTripStatisticsUpdater.addLocation(location, minRecordingDistance);
             }
           } while (cursor.moveToPrevious());
         }
@@ -884,8 +884,8 @@ public class TrackRecordingService extends Service {
     try {
       Uri uri = myTracksProviderUtils.insertTrackPoint(location, track.getId());
       long trackPointId = Long.parseLong(uri.getLastPathSegment());
-      trackTripStatisticsBuilder.addLocation(location, minRecordingDistance);
-      markerTripStatisticsBuilder.addLocation(location, minRecordingDistance);
+      trackTripStatisticsUpdater.addLocation(location, minRecordingDistance);
+      markerTripStatisticsUpdater.addLocation(location, minRecordingDistance);
       updateRecordingTrack(track, trackPointId, LocationUtils.isValidLocation(location));
     } catch (SQLiteException e) {
       /*
@@ -911,8 +911,8 @@ public class TrackRecordingService extends Service {
       track.setNumberOfPoints(track.getNumberOfPoints() + 1);
     }
 
-    trackTripStatisticsBuilder.updateTime(System.currentTimeMillis());
-    track.setTripStatistics(trackTripStatisticsBuilder.getTripStatistics());
+    trackTripStatisticsUpdater.updateTime(System.currentTimeMillis());
+    track.setTripStatistics(trackTripStatisticsUpdater.getTripStatistics());
     myTracksProviderUtils.updateTrack(track);
   }
 

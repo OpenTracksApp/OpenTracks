@@ -27,7 +27,7 @@ import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.TrackDataType;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
+import com.google.android.apps.mytracks.stats.TripStatisticsUpdater;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
@@ -61,7 +61,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   private TrackDataHub trackDataHub;
 
   // Stats gathered from the received data
-  private TripStatisticsBuilder tripStatisticsBuilder;
+  private TripStatisticsUpdater tripStatisticsUpdater;
   private long startTime;
 
   private boolean metricUnits = PreferencesUtils.METRIC_UNITS_DEFAULT;
@@ -190,7 +190,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   @Override
   public void clearTrackPoints() {
     if (isResumed()) {
-      tripStatisticsBuilder = startTime != -1L ? new TripStatisticsBuilder(startTime) : null;
+      tripStatisticsUpdater = startTime != -1L ? new TripStatisticsUpdater(startTime) : null;
       pendingPoints.clear();
       chartView.reset();
       getActivity().runOnUiThread(new Runnable() {
@@ -454,9 +454,9 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     double cadence = Double.NaN;
     double power = Double.NaN;
 
-    if (tripStatisticsBuilder != null) {
-      tripStatisticsBuilder.addLocation(location, minRecordingDistance);
-      TripStatistics tripStatistics = tripStatisticsBuilder.getTripStatistics();
+    if (tripStatisticsUpdater != null) {
+      tripStatisticsUpdater.addLocation(location, minRecordingDistance);
+      TripStatistics tripStatistics = tripStatisticsUpdater.getTripStatistics();
       if (chartByDistance) {
         double distance = tripStatistics.getTotalDistance() * UnitConversions.M_TO_KM;
         if (!metricUnits) {
@@ -467,12 +467,12 @@ public class ChartFragment extends Fragment implements TrackDataListener {
         timeOrDistance = tripStatistics.getTotalTime();
       }
 
-      elevation = tripStatisticsBuilder.getSmoothedElevation();
+      elevation = tripStatisticsUpdater.getSmoothedElevation();
       if (!metricUnits) {
         elevation *= UnitConversions.M_TO_FT;
       }
 
-      speed = tripStatisticsBuilder.getSmoothedSpeed() * UnitConversions.MS_TO_KMH;
+      speed = tripStatisticsUpdater.getSmoothedSpeed() * UnitConversions.MS_TO_KMH;
       if (!metricUnits) {
         speed *= UnitConversions.KM_TO_MI;
       }
@@ -515,8 +515,8 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   }
 
   @VisibleForTesting
-  void setTripStatisticsBuilder(long time) {
-    tripStatisticsBuilder = new TripStatisticsBuilder(time);
+  void setTripStatisticsUpdater(long time) {
+    tripStatisticsUpdater = new TripStatisticsUpdater(time);
   }
 
   @VisibleForTesting
