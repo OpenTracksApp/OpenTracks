@@ -251,20 +251,20 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
    */
   @VisibleForTesting
   boolean uploadAllTrackPoints(Track track) {
-    Cursor locationsCursor = null;
+    Cursor cursor = null;
     try {
-      locationsCursor = myTracksProviderUtils.getLocationsCursor(trackId, 0, -1, false);
-      if (locationsCursor == null) {
+      cursor = myTracksProviderUtils.getTrackPointCursor(trackId, 0, -1, false);
+      if (cursor == null) {
         Log.d(TAG, "Location cursor is null");
         return false;
       }
 
-      int locationsCount = locationsCursor.getCount();
+      int count = cursor.getCount();
       List<Location> locations = new ArrayList<Location>(MAX_POINTS_PER_UPLOAD);
       Location lastLocation = null;
 
       // For chart server, limit the number of elevation readings to 250.
-      int elevationSamplingFrequency = Math.max(1, (int) (locationsCount / 250.0));
+      int elevationSamplingFrequency = Math.max(1, (int) (count / 250.0));
       Vector<Double> distances = new Vector<Double>();
       Vector<Double> elevations = new Vector<Double>();
       TripStatisticsBuilder tripStatisticsBuilder = new TripStatisticsBuilder(
@@ -272,10 +272,10 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
       int minRecordingDistance = PreferencesUtils.getInt(context,
           R.string.min_recording_distance_key, PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT);
 
-      for (int i = 0; i < locationsCount; i++) {
-        locationsCursor.moveToPosition(i);
+      for (int i = 0; i < count; i++) {
+        cursor.moveToPosition(i);
 
-        Location location = myTracksProviderUtils.createLocation(locationsCursor);
+        Location location = myTracksProviderUtils.createTrackPoint(cursor);
         locations.add(location);
 
         if (i == 0) {
@@ -303,7 +303,7 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
             Log.d(TAG, "Unable to upload points");
             return false;
           }
-          updateProgress(readCount, locationsCount);
+          updateProgress(readCount, count);
           locations.clear();
         }
       }
@@ -329,8 +329,8 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
       }
       return true;
     } finally {
-      if (locationsCursor != null) {
-        locationsCursor.close();
+      if (cursor != null) {
+        cursor.close();
       }
     }
   }
@@ -436,7 +436,7 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
   boolean uploadWaypoints() {
     Cursor cursor = null;
     try {
-      cursor = myTracksProviderUtils.getWaypointsCursor(
+      cursor = myTracksProviderUtils.getWaypointCursor(
           trackId, 0, Constants.MAX_LOADED_WAYPOINTS_POINTS);
       if (cursor != null && cursor.moveToFirst()) {
         // This will skip the first waypoint (it carries the stats for the

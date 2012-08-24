@@ -506,7 +506,7 @@ public class GpxImporter extends DefaultHandler {
     if (numBufferedPointInserts <= 0) {
       return;
     }
-    myTracksProviderUtils.bulkInsertTrackPoints(
+    myTracksProviderUtils.bulkInsertTrackPoint(
         bufferedPointInserts, numBufferedPointInserts, track.getId());
     numBufferedPointInserts = 0;
   }
@@ -528,7 +528,7 @@ public class GpxImporter extends DefaultHandler {
    */
   private long getLastPointId() {
     flushPoints();
-    return myTracksProviderUtils.getLastTrackLocationId(track.getId());
+    return myTracksProviderUtils.getLastTrackPointId(track.getId());
   }
 
   /**

@@ -245,7 +245,7 @@ class TrackWriterImpl implements TrackWriter {
     // problem because we don't try to load them into objects all at the
     // same time.
     Cursor cursor = null;
-    cursor = providerUtils.getWaypointsCursor(trackId, 0,
+    cursor = providerUtils.getWaypointCursor(trackId, 0,
         Constants.MAX_LOADED_WAYPOINTS_POINTS);
     boolean hasWaypoints = false;
     if (cursor != null) {
@@ -314,7 +314,7 @@ class TrackWriterImpl implements TrackWriter {
     };
 
     TrackWriterLocationFactory locationFactory = new TrackWriterLocationFactory();
-    LocationIterator it = providerUtils.getLocationIterator(track.getId(), 0, false,
+    LocationIterator it = providerUtils.getTrackPointLocationIterator(track.getId(), 0, false,
         locationFactory);
     try {
       if (!it.hasNext()) {

@@ -256,7 +256,7 @@ public class TrackWriterTest extends AndroidTestCase {
     // Make location 3 invalid
     locs[2].setLatitude(100);
 
-    assertEquals(locs.length, providerUtils.bulkInsertTrackPoints(locs, locs.length, TRACK_ID));
+    assertEquals(locs.length, providerUtils.bulkInsertTrackPoint(locs, locs.length, TRACK_ID));
     for (int i = 0;  i < wps.length; ++i) {
       Waypoint wpt = wps[i];
       wpt.setTrackId(TRACK_ID);

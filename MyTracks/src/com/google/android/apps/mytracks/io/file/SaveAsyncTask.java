@@ -168,7 +168,7 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   private Boolean saveAllTracks() {
     Cursor cursor = null;
     try {
-      cursor = myTracksProviderUtils.getTracksCursor(null, null, TracksColumns._ID);
+      cursor = myTracksProviderUtils.getTrackCursor(null, null, TracksColumns._ID);
       if (cursor == null) {
         messageId = R.string.sd_card_save_error_no_track;
         return false;
