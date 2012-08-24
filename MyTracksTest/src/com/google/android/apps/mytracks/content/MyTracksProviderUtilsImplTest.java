@@ -47,7 +47,6 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
   private MyTracksProviderUtils providerUtils;
   
   private static final String NAME_PREFIX = "test name";    
-  private static final String TRACK_CATEGORY = "test category"; 
   private static final String MOCK_DESC = "Mock Next Waypoint Desc!";
   private static final String TEST_DESC = "Test Desc!";
   private static final String TEST_DESC_NEW = "Test Desc new!";
@@ -216,24 +215,6 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     providerUtils.insertTrack(getTrack(trackId, 0));
     assertEquals(trackId, providerUtils.getLastTrack().getId());
   }
-  
-  /**
-   * Tests the method {@link MyTracksProviderUtilsImpl#getLastTrackId()}
-   */
-  public void testGetLastTrackId() {
-    long trackId = System.currentTimeMillis();
-    providerUtils.insertTrack(getTrack(trackId, 0));
-    assertEquals(trackId, providerUtils.getLastTrackId());
-  }
-  
-  /**
-   * Tests the method {@link MyTracksProviderUtilsImpl#trackExists(long)}
-   */
-  public void testTrackExists() {
-    long trackId = System.currentTimeMillis();
-    providerUtils.insertTrack(getTrack(trackId, 0));
-    assertTrue(providerUtils.trackExists(trackId));
-  }
 
   /**
    * Tests the method {@link MyTracksProviderUtilsImpl#updateTrack(Track)}
@@ -355,59 +336,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     assertEquals(name, track.getName());
     AndroidMock.verify(cursorMock);
   }
-  
-  /**
-   * Tests the method {@link MyTracksProviderUtilsImpl#createContentValues(Track)}.
-   */
-  @UsesMocks(TripStatistics.class)
-  public void testCreateContentValues_track() {
-    // ID
-    long trackId = System.currentTimeMillis();
-    // Name
-    String name = NAME_PREFIX + Long.toString(trackId);
-    Track track = getTrack(trackId, 10);
-    track.setName(name);
-    track.setCategory(TRACK_CATEGORY);
-    TripStatistics tripStatistics = AndroidMock.createNiceMock(TripStatistics.class);
-    // Bottom
-    int bottom = 22;
-    // AverageSpeed
-    double averageSpeed = 1.11;
-    AndroidMock.expect(tripStatistics.getBottom()).andReturn(bottom);
-    AndroidMock.expect(tripStatistics.getAverageSpeed()).andReturn(averageSpeed);
-    track.setTripStatistics(tripStatistics);
-    AndroidMock.replay(tripStatistics);
-    
-    ContentValues contentValues = providerUtils.createContentValues(track);
-    assertEquals(trackId, contentValues.get(TracksColumns._ID));
-    assertEquals(name, contentValues.get(TracksColumns.NAME)); 
-    assertEquals(bottom, contentValues.get(TracksColumns.MINLAT));
-    assertEquals(averageSpeed, contentValues.get(TracksColumns.AVGSPEED)); 
-    AndroidMock.verify(tripStatistics);
-  }
 
-  /**
-   * Tests the method {@link MyTracksProviderUtilsImpl#getFirstWaypoint(long)}.
-   */
-  public void testGetFirstWaypoint() {
-    long trackId = System.currentTimeMillis();
-    Track track = getTrack(trackId, 10);
-    providerUtils.insertTrack(track);
-    
-    Waypoint waypoint1 = new Waypoint();
-    waypoint1.setDescription("Desc1");
-    waypoint1.setTrackId(trackId);
-    Waypoint waypoint2 = new Waypoint();
-    waypoint2.setDescription("Desc2");
-    waypoint2.setTrackId(trackId);
-    providerUtils.insertWaypoint(waypoint1);
-    providerUtils.insertWaypoint(waypoint2);
-    
-    assertNull(providerUtils.getFirstWaypoint(-1));
-    Waypoint wayPoint = providerUtils.getFirstWaypoint(trackId);
-    assertEquals("Desc1", wayPoint.getDescription());
-  }
-  
   /**
    * Tests the method {@link MyTracksProviderUtilsImpl#getFirstWaypointId(long)}.
    */
@@ -425,28 +354,6 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     
     assertEquals(-1L, providerUtils.getFirstWaypointId(-1));
     assertEquals(1L, providerUtils.getFirstWaypointId(trackId));
-  }
-  
-  /**
-   * Tests the method {@link MyTracksProviderUtilsImpl#getLastWaypointId(long)}.
-   */
-  public void testGetLastWaypointId() {
-    long trackId = System.currentTimeMillis();
-    Track track = getTrack(trackId, 10);
-    providerUtils.insertTrack(track);
-    
-    Waypoint waypoint1 = new Waypoint();
-    waypoint1.setTrackId(trackId);
-    Waypoint waypoint2 = new Waypoint();
-    waypoint2.setTrackId(trackId);
-    Waypoint waypoint3 = new Waypoint();
-    waypoint3.setTrackId(trackId);
-    providerUtils.insertWaypoint(waypoint1);
-    providerUtils.insertWaypoint(waypoint2);
-    providerUtils.insertWaypoint(waypoint3);
-    
-    assertEquals(-1L, providerUtils.getLastWaypointId(-1));
-    assertEquals(3L, providerUtils.getLastWaypointId(trackId));
   }
 
   /**
@@ -505,37 +412,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     assertEquals(2, providerUtils.getNextMarkerNumber(trackId, true));
     assertEquals(3, providerUtils.getNextMarkerNumber(trackId, false));
   }
-  
-  /**
-   * Tests the method {@link MyTracksProviderUtilsImpl#getNextStatisticsWaypointAfter(Waypoint)}.
-   */
-  public void testGetNextStatisticsWaypointAfter() {
-    long trackId = System.currentTimeMillis();
-    Track track = getTrack(trackId, 10);
-    providerUtils.insertTrack(track);
-    
-    Waypoint waypoint1 = new Waypoint();
-    waypoint1.setType(Waypoint.TYPE_STATISTICS);
-    waypoint1.setTrackId(trackId);
-    Waypoint waypoint2 = new Waypoint();
-    waypoint2.setType(Waypoint.TYPE_WAYPOINT);
-    waypoint2.setTrackId(trackId);
-    Waypoint waypoint3 = new Waypoint();
-    waypoint3.setType(Waypoint.TYPE_STATISTICS);
-    waypoint3.setTrackId(trackId);
-    waypoint3.setDescription("Desc3");
-    Waypoint waypoint4 = new Waypoint();
-    waypoint4.setType(Waypoint.TYPE_STATISTICS);
-    waypoint4.setTrackId(trackId);
-    waypoint4.setDescription("Desc4");
-    providerUtils.insertWaypoint(waypoint1);
-    providerUtils.insertWaypoint(waypoint2);
-    providerUtils.insertWaypoint(waypoint3);
-    providerUtils.insertWaypoint(waypoint4);
-    
-    assertEquals("Desc3", providerUtils.getNextStatisticsWaypointAfter(providerUtils.getFirstWaypoint(trackId)).getDescription());
-  }
-  
+
   /**
    * Tests the method {@link MyTracksProviderUtilsImpl#insertWaypoint(Waypoint)} and
    * {@link MyTracksProviderUtilsImpl#getWaypoint(long)}.
@@ -757,50 +634,20 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     assertEquals(startTime, contentValues.get(WaypointsColumns.STARTTIME));
     assertEquals(minGrade, contentValues.get(WaypointsColumns.MINGRADE));
   }
-  
+
   /**
-   * Tests the method {@link MyTracksProviderUtilsImpl#getFirstLocation()}.
+   * Tests the method {@link MyTracksProviderUtilsImpl#getLastValidTrackLocation(long)}.
    */
-  public void testGetFirstLocation() {
+  public void testGetLastValidTrackLocation() {
     // Insert track, points at first.
     long trackId = System.currentTimeMillis();
     Track track = getTrack(trackId, 10);
     insertTrackWithLocations(track);
 
-    Location firstLocation = providerUtils.getFirstLocation();
-    checkLocation(0, firstLocation);
-  }
-  
-  /**
-   * Tests the method {@link MyTracksProviderUtilsImpl#getLastValidLocation()}.
-   */
-  public void testGetLastLocation() {
-    // Insert track, points at first.
-    long trackId = System.currentTimeMillis();
-    Track track = getTrack(trackId, 10);
-    insertTrackWithLocations(track);
-
-    Location lastLocation = providerUtils.getLastValidLocation();
+    Location lastLocation = providerUtils.getLastValidTrackLocation(trackId);
     checkLocation(9, lastLocation);
   }
-  
-  /**
-   * Tests the method {@link MyTracksProviderUtilsImpl#getLocation(long)}.
-   */
-  public void testGetLocation() {
-    // Insert track, points at first.
-    long trackId = System.currentTimeMillis();
-    Track track = getTrack(trackId, 10);
-    insertTrackWithLocations(track);
 
-    Location location1 = providerUtils.getLocation(1L);
-    checkLocation(0, location1);
-    Location location5 = providerUtils.getLocation(5L);
-    checkLocation(4, location5);
-    Location location10 = providerUtils.getLocation(10L);
-    checkLocation(9, location10);
-  }
-  
   /**
    * Tests the method
    * {@link MyTracksProviderUtilsImpl#getLocationsCursor(long, long, int, boolean)}
