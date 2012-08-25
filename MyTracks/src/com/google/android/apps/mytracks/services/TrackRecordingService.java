@@ -82,8 +82,8 @@ import java.util.concurrent.Executors;
 public class TrackRecordingService extends Service {
 
   private static final String TAG = TrackRecordingService.class.getSimpleName();
-  public static final int PAUSE_LATITUDE = 100;
-  private static final int RESUME_LATITUDE = 200;
+  public static final double PAUSE_LATITUDE = 100.0;
+  private static final double RESUME_LATITUDE = 200.0;
 
   // One second in milliseconds
   private static final long ONE_SECOND = 1000;
@@ -452,9 +452,8 @@ public class TrackRecordingService extends Service {
     int type = isStatistics ? Waypoint.TYPE_STATISTICS : Waypoint.TYPE_WAYPOINT;
     long duration;
     double length;
-    Location lastTrackPoint = myTracksProviderUtils.getLastTrackPoint(recordingTrackId);
-    if (currentSegmentHasLocation && LocationUtils.isValidLocation(lastTrackPoint)
-        && trackTripStatisticsUpdater != null) {
+    Location location = getLastValidTrackPointInCurrentSegment(recordingTrackId);
+    if (location != null && trackTripStatisticsUpdater != null) {
       TripStatistics stats = trackTripStatisticsUpdater.getTripStatistics();
       length = stats.getTotalDistance();
       duration = stats.getTotalTime();
@@ -463,14 +462,14 @@ public class TrackRecordingService extends Service {
         return -1L;
       }
       // For track statistics, make it an impossible location
-      lastTrackPoint = new Location("");
-      lastTrackPoint.setLatitude(100);
-      lastTrackPoint.setLongitude(180);
+      location = new Location("");
+      location.setLatitude(100);
+      location.setLongitude(180);
       length = 0;
       duration = 0;
     }
     Waypoint waypoint = new Waypoint(name, description, category, icon, recordingTrackId, type,
-        length, duration, -1L, -1L, lastTrackPoint, tripStatistics);
+        length, duration, -1L, -1L, location, tripStatistics);
     Uri uri = myTracksProviderUtils.insertWaypoint(waypoint);
     return Long.parseLong(uri.getLastPathSegment());
   }
@@ -701,12 +700,24 @@ public class TrackRecordingService extends Service {
     // Update database
     Track track = myTracksProviderUtils.getTrack(trackId);
     if (track != null) {
-      insertLocation(track, lastLocation, myTracksProviderUtils.getLastTrackPoint(trackId));
+      insertLocation(track, lastLocation, getLastValidTrackPointInCurrentSegment(trackId));
       updateRecordingTrack(track, myTracksProviderUtils.getLastTrackPointId(trackId), false);
     }
 
     endRecording(true, trackId);
     stopSelf();
+  }
+
+  /**
+   * Gets the last valid track point in the current segment. Returns null if not available.
+   * 
+   * @param trackId the track id
+   */
+  private Location getLastValidTrackPointInCurrentSegment(long trackId) {
+    if (!currentSegmentHasLocation) {
+      return null;
+    }
+    return myTracksProviderUtils.getLastValidTrackPoint(trackId);
   }
 
   /**
@@ -725,8 +736,7 @@ public class TrackRecordingService extends Service {
     // Update database
     Track track = myTracksProviderUtils.getTrack(recordingTrackId);
     if (track != null) {
-      insertLocation(
-          track, lastLocation, myTracksProviderUtils.getLastTrackPoint(track.getId()));
+      insertLocation(track, lastLocation, getLastValidTrackPointInCurrentSegment(track.getId()));
 
       Location pause = new Location(LocationManager.GPS_PROVIDER);
       pause.setLongitude(0);
@@ -809,9 +819,8 @@ public class TrackRecordingService extends Service {
         return;
       }
 
-      Location lastTrackPoint = myTracksProviderUtils.getLastTrackPoint(track.getId());
-      long idleTime = currentSegmentHasLocation && LocationUtils.isValidLocation(lastTrackPoint) ?
-          location.getTime() - lastTrackPoint.getTime()
+      Location lastValidTrackPoint = getLastValidTrackPointInCurrentSegment(track.getId());
+      long idleTime = lastValidTrackPoint != null ? location.getTime() - lastValidTrackPoint.getTime()
           : 0L;
       locationListenerPolicy.updateIdleTime(idleTime);
       if (currentRecordingInterval != locationListenerPolicy.getDesiredPollingInterval()) {
@@ -825,41 +834,41 @@ public class TrackRecordingService extends Service {
 
       // Always insert the first segment location
       if (!currentSegmentHasLocation) {
-        insertLocation(track, location, lastTrackPoint);
+        insertLocation(track, location, null);
         currentSegmentHasLocation = true;
         lastLocation = location;
         return;
       }
 
-      if (!LocationUtils.isValidLocation(lastTrackPoint)) {
+      if (!LocationUtils.isValidLocation(lastValidTrackPoint)) {
         /*
          * Should not happen. The current segment should have a location. Just
          * insert the current location.
          */
-        insertLocation(track, location, lastTrackPoint);
+        insertLocation(track, location, null);
         lastLocation = location;
         return;
       }
 
-      double distanceToLastTrackLocation = location.distanceTo(lastTrackPoint);
+      double distanceToLastTrackLocation = location.distanceTo(lastValidTrackPoint);
       if (distanceToLastTrackLocation < minRecordingDistance && sensorDataSet == null) {
         Log.d(TAG, "Not recording location due to min recording distance.");
       } else if (distanceToLastTrackLocation > maxRecordingDistance) {
-        insertLocation(track, lastLocation, lastTrackPoint);
+        insertLocation(track, lastLocation, lastValidTrackPoint);
         Location pause = new Location(LocationManager.GPS_PROVIDER);
         pause.setLongitude(0);
         pause.setLatitude(PAUSE_LATITUDE);
         pause.setTime(lastLocation.getTime());
         insertLocation(track, pause, null);
 
-        insertLocation(track, location, lastTrackPoint);
+        insertLocation(track, location, null);
       } else {
         /*
          * (distanceToLastTrackLocation >= minRecordingDistance ||
          * hasSensorData) && distanceToLastTrackLocation <= maxRecordingDistance
          */
-        insertLocation(track, lastLocation, lastTrackPoint);
-        insertLocation(track, location, lastTrackPoint);
+        insertLocation(track, lastLocation, lastValidTrackPoint);
+        insertLocation(track, location, null);
       }
       lastLocation = location;
     } catch (Error e) {
@@ -871,13 +880,21 @@ public class TrackRecordingService extends Service {
     }
   }
 
-  private void insertLocation(Track track, Location location, Location lastRecordedLocation) {
+  /**
+   * Inserts a location.
+   * 
+   * @param track the track
+   * @param location the location
+   * @param lastValidTrackPoint the last valid track point, can be null
+   */
+  private void insertLocation(Track track, Location location, Location lastValidTrackPoint) {
     if (location == null) {
       Log.w(TAG, "Ignore insertLocation. loation is null.");
       return;
     }
-    if (location.equals(lastRecordedLocation)) {
-      Log.w(TAG, "Ignore insertLocation. loation same as last recorded location.");
+    // Do not insert if inserted already
+    if (lastValidTrackPoint != null && lastValidTrackPoint.getTime()  == location.getTime()) {
+      Log.w(TAG, "Ignore insertLocation. location time same as last valid track point time.");
       return;
     }
 

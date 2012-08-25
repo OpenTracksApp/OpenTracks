@@ -698,17 +698,6 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   }
 
   @Override
-  public Location getLastTrackPoint(long trackId) {
-    if (trackId < 0) {
-      return null;
-    }
-    String selection = TrackPointsColumns._ID + "=(select max(" + TrackPointsColumns._ID + ") from "
-        + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID + "=?)";
-    String[] selectionArgs = new String[] { Long.toString(trackId) };
-    return findTrackPointBy(selection, selectionArgs);
-  }
-
-  @Override
   public long getLastTrackPointId(long trackId) {
     if (trackId < 0) {
       return -1L;

@@ -747,17 +747,6 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
   }
 
   /**
-   * Tests the method {@link MyTracksProviderUtilsImpl#getLastTrackPoint(long)}.
-   */
-  public void testGetLastTrackPoint() {
-    // Insert track, point at first.
-    long trackId = System.currentTimeMillis();
-    Track track = getTrack(trackId, 10);
-    insertTrackWithLocations(track);
-    checkLocation(9, providerUtils.getLastTrackPoint(trackId));
-  }
-
-  /**
    * Tests the method {@link MyTracksProviderUtilsImpl#getLastTrackPointId(long)}.
    */
   public void testGetLastTrackPointId() {

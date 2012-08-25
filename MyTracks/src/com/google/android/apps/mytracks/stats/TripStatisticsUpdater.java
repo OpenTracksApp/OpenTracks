@@ -96,6 +96,10 @@ public class TripStatisticsUpdater {
     if (!LocationUtils.isValidLocation(location)) {
       updateTime(location.getTime());
       if (location.getLatitude() == TrackRecordingService.PAUSE_LATITUDE) {
+        if (lastLocation != null && lastMovingLocation != null
+            && lastLocation != lastMovingLocation) {
+          currentSegment.addTotalDistance(lastMovingLocation.distanceTo(lastLocation));
+        }
         tripStatistics.merge(currentSegment);
       }
       currentSegment = init(location.getTime());
