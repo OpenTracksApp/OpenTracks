@@ -593,7 +593,7 @@ public class EndToEndTestUtils {
         return findResult;
       }
       showMenuItem();
-      findResult = SOLO.getText(menuName) != null;
+      findResult = SOLO.searchText(menuName);
     } else {
       // Non-ICS phone.
       SOLO.sendKey(KeyEvent.KEYCODE_MENU);
@@ -601,7 +601,7 @@ public class EndToEndTestUtils {
         findResult = true;
       } else if (SOLO.searchText(MENU_MORE)) {
         SOLO.clickOnText(MENU_MORE);
-        findResult = SOLO.getText(menuName) != null;
+        findResult = SOLO.searchText(menuName);
         isMoreMenuOpened = true;
       }
     }
