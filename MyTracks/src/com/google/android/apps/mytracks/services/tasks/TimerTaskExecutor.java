@@ -72,11 +72,7 @@ public class TimerTaskExecutor {
       return;
     }
 
-    long now = System.currentTimeMillis();
-    long next = tripStatistics.getStartTime();
-    if (next < now) {
-      next = now + interval - ((now - next) % interval);
-    }
+    long next = System.currentTimeMillis() + interval - (tripStatistics.getTotalTime() % interval);
     timer.scheduleAtFixedRate(new PeriodicTimerTask(), new Date(next), interval);
   }
 
