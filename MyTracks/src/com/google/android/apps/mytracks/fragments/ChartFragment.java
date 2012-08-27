@@ -27,7 +27,7 @@ import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.TrackDataType;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
+import com.google.android.apps.mytracks.stats.TripStatisticsUpdater;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
@@ -61,7 +61,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   private TrackDataHub trackDataHub;
 
   // Stats gathered from the received data
-  private TripStatisticsBuilder tripStatisticsBuilder;
+  private TripStatisticsUpdater tripStatisticsUpdater;
   private long startTime;
 
   private boolean metricUnits = PreferencesUtils.METRIC_UNITS_DEFAULT;
@@ -83,7 +83,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   private final Runnable updateChart = new Runnable() {
       @Override
     public void run() {
-      if (trackDataHub == null) {
+      if (!isResumed() || trackDataHub == null) {
         return;
       }
 
@@ -178,111 +178,141 @@ public class ChartFragment extends Fragment implements TrackDataListener {
 
   @Override
   public void onTrackUpdated(Track track) {
-    if (track == null || track.getTripStatistics() == null) {
-      startTime = -1L;
-      return;
+    if (isResumed()) {
+      if (track == null || track.getTripStatistics() == null) {
+        startTime = -1L;
+        return;
+      }
+      startTime = track.getTripStatistics().getStartTime();
     }
-    startTime = track.getTripStatistics().getStartTime();
   }
 
   @Override
   public void clearTrackPoints() {
-    tripStatisticsBuilder = startTime != -1L ? new TripStatisticsBuilder(startTime) : null;
-    pendingPoints.clear();
-    chartView.reset();
-
-    getActivity().runOnUiThread(new Runnable() {
-        @Override
-      public void run() {
-        chartView.resetScroll();
-      }
-    });
+    if (isResumed()) {
+      tripStatisticsUpdater = startTime != -1L ? new TripStatisticsUpdater(startTime) : null;
+      pendingPoints.clear();
+      chartView.reset();
+      getActivity().runOnUiThread(new Runnable() {
+          @Override
+        public void run() {
+          if (isResumed()) {
+            chartView.resetScroll();
+          }
+        }
+      });
+    }
   }
 
   @Override
   public void onSampledInTrackPoint(Location location) {
-    double[] data = new double[ChartView.NUM_SERIES + 1];
-    fillDataPoint(location, data);
-    pendingPoints.add(data);
+    if (isResumed()) {
+      double[] data = new double[ChartView.NUM_SERIES + 1];
+      fillDataPoint(location, data);
+      pendingPoints.add(data);
+    }
   }
 
   @Override
   public void onSampledOutTrackPoint(Location location) {
-    fillDataPoint(location, null);
+    if (isResumed()) {
+      fillDataPoint(location, null);
+    }
   }
 
   @Override
   public void onSegmentSplit(Location location) {
-    fillDataPoint(location, null);
+    if (isResumed()) {
+      fillDataPoint(location, null);
+    }
   }
 
   @Override
   public void onNewTrackPointsDone() {
-    chartView.addDataPoints(pendingPoints);
-    pendingPoints.clear();
-    getActivity().runOnUiThread(updateChart);
+    if (isResumed()) {
+      chartView.addDataPoints(pendingPoints);
+      pendingPoints.clear();
+      getActivity().runOnUiThread(updateChart);
+    }
   }
 
   @Override
   public void clearWaypoints() {
-    chartView.clearWaypoints();
+    if (isResumed()) {
+      chartView.clearWaypoints();
+    }
   }
 
   @Override
   public void onNewWaypoint(Waypoint waypoint) {
-    if (waypoint != null && LocationUtils.isValidLocation(waypoint.getLocation())) {
+    if (isResumed() && waypoint != null && LocationUtils.isValidLocation(waypoint.getLocation())) {
       chartView.addWaypoint(waypoint);
     }
   }
 
   @Override
   public void onNewWaypointsDone() {
-    getActivity().runOnUiThread(updateChart);
+    if (isResumed()) {
+      getActivity().runOnUiThread(updateChart);
+    }
   }
 
   @Override
   public boolean onMetricUnitsChanged(boolean metric) {
-    if (metricUnits == metric) {
-      return false;
-    }
-    metricUnits = metric;
-    chartView.setMetricUnits(metricUnits);
-    getActivity().runOnUiThread(new Runnable() {
-        @Override
-      public void run() {
-        chartView.requestLayout();
+    if (isResumed()) {
+      if (metricUnits == metric) {
+        return false;
       }
-    });
-    return true;
+      metricUnits = metric;
+      chartView.setMetricUnits(metricUnits);
+      getActivity().runOnUiThread(new Runnable() {
+          @Override
+        public void run() {
+          if (isResumed()) {
+            chartView.requestLayout();
+          }
+        }
+      });
+      return true;
+    }
+    return false;
   }
 
   @Override
   public boolean onReportSpeedChanged(boolean speed) {
-    if (reportSpeed == speed) {
-      return false;
-    }
-    reportSpeed = speed;
-    chartView.setReportSpeed(reportSpeed);
-    boolean chartShowSpeed = PreferencesUtils.getBoolean(
-        getActivity(), R.string.chart_show_speed_key, PreferencesUtils.CHART_SHOW_SPEED_DEFAULT);
-    setSeriesEnabled(ChartView.SPEED_SERIES, chartShowSpeed && reportSpeed);
-    setSeriesEnabled(ChartView.PACE_SERIES, chartShowSpeed && !reportSpeed);
-    getActivity().runOnUiThread(new Runnable() {
-        @Override
-      public void run() {
-        chartView.requestLayout();
+    if (isResumed()) {
+      if (reportSpeed == speed) {
+        return false;
       }
-    });
-    return true;
+      reportSpeed = speed;
+      chartView.setReportSpeed(reportSpeed);
+      boolean chartShowSpeed = PreferencesUtils.getBoolean(
+          getActivity(), R.string.chart_show_speed_key, PreferencesUtils.CHART_SHOW_SPEED_DEFAULT);
+      setSeriesEnabled(ChartView.SPEED_SERIES, chartShowSpeed && reportSpeed);
+      setSeriesEnabled(ChartView.PACE_SERIES, chartShowSpeed && !reportSpeed);
+      getActivity().runOnUiThread(new Runnable() {
+          @Override
+        public void run() {
+          if (isResumed()) {
+            chartView.requestLayout();
+          }
+        }
+      });
+      return true;
+    }
+    return false;
   }
 
   @Override
   public boolean onMinRecordingDistanceChanged(int value) {
-    if (minRecordingDistance == value) {
-      return false;
+    if (isResumed()) {
+      if (minRecordingDistance == value) {
+        return false;
+      }
+      minRecordingDistance = value;
+      return true;
     }
-    minRecordingDistance = value;
-    return true;
+    return false;
   }
 
   /**
@@ -424,9 +454,9 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     double cadence = Double.NaN;
     double power = Double.NaN;
 
-    if (tripStatisticsBuilder != null) {
-      tripStatisticsBuilder.addLocation(location, minRecordingDistance);
-      TripStatistics tripStatistics = tripStatisticsBuilder.getTripStatistics();
+    if (tripStatisticsUpdater != null) {
+      tripStatisticsUpdater.addLocation(location, minRecordingDistance);
+      TripStatistics tripStatistics = tripStatisticsUpdater.getTripStatistics();
       if (chartByDistance) {
         double distance = tripStatistics.getTotalDistance() * UnitConversions.M_TO_KM;
         if (!metricUnits) {
@@ -436,13 +466,13 @@ public class ChartFragment extends Fragment implements TrackDataListener {
       } else {
         timeOrDistance = tripStatistics.getTotalTime();
       }
-  
-      elevation = tripStatisticsBuilder.getSmoothedElevation();
+
+      elevation = tripStatisticsUpdater.getSmoothedElevation();
       if (!metricUnits) {
         elevation *= UnitConversions.M_TO_FT;
       }
-  
-      speed = tripStatisticsBuilder.getSmoothedSpeed() * UnitConversions.MS_TO_KMH;
+
+      speed = tripStatisticsUpdater.getSmoothedSpeed() * UnitConversions.MS_TO_KMH;
       if (!metricUnits) {
         speed *= UnitConversions.KM_TO_MI;
       }
@@ -485,8 +515,8 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   }
 
   @VisibleForTesting
-  void setTripStatisticsBuilder(long time) {
-    tripStatisticsBuilder = new TripStatisticsBuilder(time);
+  void setTripStatisticsUpdater(long time) {
+    tripStatisticsUpdater = new TripStatisticsUpdater(time);
   }
 
   @VisibleForTesting

@@ -41,7 +41,7 @@ public class ChartFragmentTest extends AndroidTestCase {
   protected void setUp() throws Exception {
     chartFragment = new ChartFragment();
     chartFragment.setChartView(new ChartView(getContext()));
-    chartFragment.setTripStatisticsBuilder(TrackStubUtils.INITIAL_TIME);
+    chartFragment.setTripStatisticsUpdater(TrackStubUtils.INITIAL_TIME);
   }
 
   /**

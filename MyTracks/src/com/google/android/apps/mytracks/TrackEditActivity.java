@@ -125,7 +125,7 @@ public class TrackEditActivity extends AbstractMyTracksActivity {
     Button cancel = (Button) findViewById(R.id.track_edit_cancel);
     if (getIntent().getBooleanExtra(EXTRA_NEW_TRACK, false)) {
       String trackName = TrackNameUtils.getTrackName(
-          this, -1L, -1L, myTracksProviderUtils.getLastLocation());
+          this, -1L, -1L, myTracksProviderUtils.getLastValidTrackPoint(trackId));
       if (trackName != null) {
         name.setText(trackName);
       }

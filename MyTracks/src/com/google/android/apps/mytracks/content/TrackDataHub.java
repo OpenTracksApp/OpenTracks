@@ -563,7 +563,7 @@ public class TrackDataHub implements DataSourceListener {
 
     Cursor cursor = null;
     try {
-      cursor = myTracksProviderUtils.getWaypointsCursor(
+      cursor = myTracksProviderUtils.getWaypointCursor(
           selectedTrackId, 0L, MAX_DISPLAYED_WAYPOINTS_POINTS);
       if (cursor != null && cursor.moveToFirst()) {
         do {
@@ -614,9 +614,9 @@ public class TrackDataHub implements DataSourceListener {
     long localLastSeenLocationId = updateSamplingState ? lastSeenLocationId : -1L;
     long maxPointId = updateSamplingState ? -1L : lastSeenLocationId;
 
-    long lastLocationId = myTracksProviderUtils.getLastTrackLocationId(selectedTrackId);
+    long lastTrackPointId = myTracksProviderUtils.getLastTrackPointId(selectedTrackId);
     int samplingFrequency = -1;
-    LocationIterator iterator = myTracksProviderUtils.getLocationIterator(
+    LocationIterator iterator = myTracksProviderUtils.getTrackPointLocationIterator(
         selectedTrackId, localLastSeenLocationId + 1, false, locationFactory);
     boolean includeNextPoint = false;
     while (iterator.hasNext()) {
@@ -633,7 +633,7 @@ public class TrackDataHub implements DataSourceListener {
       }
 
       if (samplingFrequency == -1) {
-        long numTotalPoints = Math.max(0L, lastLocationId - localFirstSeenLocationId);
+        long numTotalPoints = Math.max(0L, lastTrackPointId - localFirstSeenLocationId);
         samplingFrequency = 1 + (int) (numTotalPoints / targetNumPoints);
       }
 
@@ -646,7 +646,7 @@ public class TrackDataHub implements DataSourceListener {
       } else {
         // Also include the last point if the selected track is not recording.
         if (includeNextPoint || (localNumLoadedPoints % samplingFrequency == 0)
-            || (locationId == lastLocationId && !isSelectedTrackRecording())) {
+            || (locationId == lastTrackPointId && !isSelectedTrackRecording())) {
           includeNextPoint = false;
           for (TrackDataListener trackDataListener : sampledInListeners) {
             trackDataListener.onSampledInTrackPoint(location);

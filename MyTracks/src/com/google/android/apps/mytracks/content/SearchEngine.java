@@ -186,7 +186,7 @@ public class SearchEngine {
         queryLikeSelection,
         queryLikeSelection };
 
-    Cursor tracksCursor = providerUtils.getTracksCursor(
+    Cursor tracksCursor = providerUtils.getTrackCursor(
         TRACK_SELECTION_QUERY, trackSelectionArgs, TRACK_SELECTION_ORDER);
     if (tracksCursor != null) {
       try {
@@ -213,21 +213,21 @@ public class SearchEngine {
         queryLikeSelection2,
         queryLikeSelection2,
         queryLikeSelection2 };
-    Cursor waypointsCursor = providerUtils.getWaypointsCursor(
+    Cursor waypointCursor = providerUtils.getWaypointCursor(
         WAYPOINT_SELECTION_QUERY, waypointSelectionArgs, WAYPOINT_SELECTION_ORDER,
         MAX_SCORED_WAYPOINTS);
-    if (waypointsCursor != null) {
+    if (waypointCursor != null) {
       try {
-        waypoints.ensureCapacity(waypointsCursor.getCount());
+        waypoints.ensureCapacity(waypointCursor.getCount());
 
-        while (waypointsCursor.moveToNext()) {
-          Waypoint waypoint = providerUtils.createWaypoint(waypointsCursor);
+        while (waypointCursor.moveToNext()) {
+          Waypoint waypoint = providerUtils.createWaypoint(waypointCursor);
           if (LocationUtils.isValidLocation(waypoint.getLocation())) {
             waypoints.add(waypoint);
           }
         }
       } finally {
-        waypointsCursor.close();
+        waypointCursor.close();
       }
     }
   }

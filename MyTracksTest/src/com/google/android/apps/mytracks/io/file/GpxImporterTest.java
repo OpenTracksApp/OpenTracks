@@ -148,13 +148,13 @@ public class GpxImporterTest extends AndroidTestCase {
     expect(providerUtils.insertTrack(AndroidMock.capture(trackParam)))
         .andReturn(TRACK_ID_URI);
 
-    expect(providerUtils.getLastTrackLocationId(TRACK_ID)).andReturn(TRACK_POINT_ID_1).andReturn(TRACK_POINT_ID_2);
+    expect(providerUtils.getLastTrackPointId(TRACK_ID)).andReturn(TRACK_POINT_ID_1).andReturn(TRACK_POINT_ID_2);
 
     // A flush happens after the first insertion to get the starting point ID,
     // which is why we get two calls
-    expect(providerUtils.bulkInsertTrackPoints(LocationsMatcher.eqLoc(loc1),
+    expect(providerUtils.bulkInsertTrackPoint(LocationsMatcher.eqLoc(loc1),
         eq(1), eq(TRACK_ID))).andReturn(1);
-    expect(providerUtils.bulkInsertTrackPoints(LocationsMatcher.eqLoc(loc2),
+    expect(providerUtils.bulkInsertTrackPoint(LocationsMatcher.eqLoc(loc2),
         eq(1), eq(TRACK_ID))).andReturn(1);
 
     providerUtils.updateTrack(AndroidMock.capture(trackParam));
@@ -223,9 +223,9 @@ public class GpxImporterTest extends AndroidTestCase {
     expect(providerUtils.insertTrack((Track) AndroidMock.anyObject()))
         .andReturn(TRACK_ID_URI);
 
-    expect(providerUtils.bulkInsertTrackPoints((Location[]) AndroidMock.anyObject(),
+    expect(providerUtils.bulkInsertTrackPoint((Location[]) AndroidMock.anyObject(),
         AndroidMock.anyInt(), AndroidMock.anyLong())).andStubReturn(1);
-    expect(providerUtils.getLastTrackLocationId(TRACK_ID)).andStubReturn(TRACK_POINT_ID_1);
+    expect(providerUtils.getLastTrackPointId(TRACK_ID)).andStubReturn(TRACK_POINT_ID_1);
 
     providerUtils.deleteTrack(TRACK_ID);
 

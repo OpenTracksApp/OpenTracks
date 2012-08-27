@@ -144,7 +144,7 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
    */
   public void testUploadAllTrackPoints_nullCursor() {
     Track track = TrackStubUtils.createTrack(1);
-    AndroidMock.expect(myTracksProviderUtilsMock.getLocationsCursor(TRACK_ID, 0, -1, false))
+    AndroidMock.expect(myTracksProviderUtilsMock.getTrackPointCursor(TRACK_ID, 0, -1, false))
         .andReturn(null);
     AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock);
     SendMapsAsyncTask sendMapsAsyncTask = new SendMapsAsyncTask(sendMapsActivityMock,
@@ -164,9 +164,9 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
     AndroidMock.expect(cursorMock.getCount()).andReturn(2);
     AndroidMock.expect(cursorMock.moveToPosition(0)).andReturn(true);
     cursorMock.close();
-    AndroidMock.expect(myTracksProviderUtilsMock.createLocation(cursorMock)).andReturn(
+    AndroidMock.expect(myTracksProviderUtilsMock.createTrackPoint(cursorMock)).andReturn(
         new Location("1"));
-    AndroidMock.expect(myTracksProviderUtilsMock.getLocationsCursor(TRACK_ID, 0, -1, false))
+    AndroidMock.expect(myTracksProviderUtilsMock.getTrackPointCursor(TRACK_ID, 0, -1, false))
         .andReturn(cursorMock);
 
     AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock, cursorMock);
@@ -191,9 +191,9 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
     AndroidMock.expect(cursorMock.moveToPosition(0)).andReturn(true);
     AndroidMock.expect(cursorMock.moveToPosition(1)).andReturn(true);
     cursorMock.close();
-    AndroidMock.expect(myTracksProviderUtilsMock.createLocation(cursorMock))
+    AndroidMock.expect(myTracksProviderUtilsMock.createTrackPoint(cursorMock))
         .andReturn(new Location("1")).times(2);
-    AndroidMock.expect(myTracksProviderUtilsMock.getLocationsCursor(TRACK_ID, 0, -1, false))
+    AndroidMock.expect(myTracksProviderUtilsMock.getTrackPointCursor(TRACK_ID, 0, -1, false))
         .andReturn(cursorMock);
 
     AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock, cursorMock);
@@ -221,9 +221,9 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
     AndroidMock.expect(cursorMock.moveToPosition(0)).andReturn(true);
     AndroidMock.expect(cursorMock.moveToPosition(1)).andReturn(true);
     cursorMock.close();
-    AndroidMock.expect(myTracksProviderUtilsMock.createLocation(cursorMock))
+    AndroidMock.expect(myTracksProviderUtilsMock.createTrackPoint(cursorMock))
         .andReturn(new Location("1")).times(2);
-    AndroidMock.expect(myTracksProviderUtilsMock.getLocationsCursor(TRACK_ID, 0, -1, false))
+    AndroidMock.expect(myTracksProviderUtilsMock.getTrackPointCursor(TRACK_ID, 0, -1, false))
         .andReturn(cursorMock);
 
     AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock, cursorMock);
@@ -250,9 +250,9 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
     AndroidMock.expect(cursorMock.moveToPosition(0)).andReturn(true);
     AndroidMock.expect(cursorMock.moveToPosition(1)).andReturn(true);
     cursorMock.close();
-    AndroidMock.expect(myTracksProviderUtilsMock.createLocation(cursorMock))
+    AndroidMock.expect(myTracksProviderUtilsMock.createTrackPoint(cursorMock))
         .andReturn(new Location("1")).times(2);
-    AndroidMock.expect(myTracksProviderUtilsMock.getLocationsCursor(TRACK_ID, 0, -1, false))
+    AndroidMock.expect(myTracksProviderUtilsMock.getTrackPointCursor(TRACK_ID, 0, -1, false))
         .andReturn(cursorMock);
 
     AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock, cursorMock);
@@ -274,7 +274,7 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
   @UsesMocks(Cursor.class)
   public void testUploadWaypoints_nullCursor() {
     AndroidMock.expect(
-        myTracksProviderUtilsMock.getWaypointsCursor(TRACK_ID, 0,
+        myTracksProviderUtilsMock.getWaypointCursor(TRACK_ID, 0,
             Constants.MAX_LOADED_WAYPOINTS_POINTS)).andReturn(null);
     AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock);
     SendMapsAsyncTask sendMapsAsyncTask = new SendMapsAsyncTask(sendMapsActivityMock,
@@ -296,7 +296,7 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
     cursorMock.close();
 
     AndroidMock.expect(
-        myTracksProviderUtilsMock.getWaypointsCursor(TRACK_ID, 0,
+        myTracksProviderUtilsMock.getWaypointCursor(TRACK_ID, 0,
             Constants.MAX_LOADED_WAYPOINTS_POINTS)).andReturn(cursorMock);
 
     AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock, cursorMock);
@@ -323,7 +323,7 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
     cursorMock.close();
 
     AndroidMock.expect(
-        myTracksProviderUtilsMock.getWaypointsCursor(TRACK_ID, 0,
+        myTracksProviderUtilsMock.getWaypointCursor(TRACK_ID, 0,
             Constants.MAX_LOADED_WAYPOINTS_POINTS)).andReturn(cursorMock);
     Waypoint waypoint = new Waypoint();
     waypoint.setLocation(TrackStubUtils.createMyTracksLocation());
