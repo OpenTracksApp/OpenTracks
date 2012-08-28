@@ -41,47 +41,30 @@ public class SendToGoogleUtilsTest extends TestCase {
 
   /**
    * Tests the method
-   * {@link SendToGoogleUtils#prepareTrackSegment(Track, java.util.ArrayList)}
+   * {@link SendToGoogleUtils#endSegment(Track, long, ArrayList)}
    * when there is only one location in a segment.
    */
   public void testPrepareTrackSegment_onlyOneLocation() {
-    Track trackStub = TrackStubUtils.createTrack(1);
-    assertFalse(SendToGoogleUtils.prepareTrackSegment(trackStub, null));
+    Track segment = TrackStubUtils.createTrack(1);
+    assertFalse(SendToGoogleUtils.endSegment(segment, -1L, null));
   }
 
   /**
    * Tests the method
-   * {@link SendToGoogleUtils#prepareTrackSegment(Track, ArrayList)} when there
+   * {@link SendToGoogleUtils#endSegment(Track, long, ArrayList)} when there
    * is no stop time.
    */
   public void testPrepareTrackSegment_noStopTime() {
-    Track trackStub = TrackStubUtils.createTrack(2);
-    assertEquals(-1L, trackStub.getTripStatistics().getStopTime());
+    Track segment = TrackStubUtils.createTrack(2);
+    assertEquals(-1L, segment.getTripStatistics().getStopTime());
 
     ArrayList<Track> tracksArray = new ArrayList<Track>();
-    assertTrue(SendToGoogleUtils.prepareTrackSegment(trackStub, tracksArray));
-    assertEquals(trackStub, tracksArray.get(0));
+    assertTrue(SendToGoogleUtils.endSegment(
+        segment, segment.getLocations().get(1).getTime(), tracksArray));
+    assertEquals(segment, tracksArray.get(0));
     // The stop time should be the time of last location
     assertEquals(
-        trackStub.getLocations().get(1).getTime(), trackStub.getTripStatistics().getStopTime());
-  }
-
-  /**
-   * Tests the method
-   * {@link SendToGoogleUtils#prepareTrackSegment(Track, java.util.ArrayList)}
-   * when there is stop time.
-   */
-  public void testPrepareTrackSegment_hasStopTime() {
-    Track trackStub = TrackStubUtils.createTrack(2);
-    // Gives a margin to make sure the this time will be not same with the last
-    // location in the track.
-    long stopTime = System.currentTimeMillis() + 1000;
-    trackStub.getTripStatistics().setStopTime(stopTime);
-
-    ArrayList<Track> tracksArray = new ArrayList<Track>();
-    SendToGoogleUtils.prepareTrackSegment(trackStub, tracksArray);
-    assertEquals(trackStub, tracksArray.get(0));
-    assertEquals(stopTime, trackStub.getTripStatistics().getStopTime());
+        segment.getLocations().get(1).getTime(), segment.getTripStatistics().getStopTime());
   }
 
   /**

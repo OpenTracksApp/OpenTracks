@@ -41,7 +41,7 @@ public class SendToGoogleUtils {
   /**
    * Prepares a list of locations to send to Google Maps or Google Fusion
    * Tables. Splits the locations into segments if necessary.
-   *
+   * 
    * @param track the track
    * @param locations the list of locations
    * @return an array of split segments.
@@ -50,83 +50,66 @@ public class SendToGoogleUtils {
     ArrayList<Track> splitTracks = new ArrayList<Track>();
 
     // Create a new segment
+    Track segment = createNewSegment(
+        track, locations.size() > 0 ? locations.get(0).getTime() : -1L);
+
+    for (Location location : locations) {
+      /*
+       * Latitude is greater than 90 if the location is a pause/resume
+       * separator.
+       */
+      if (location.getLatitude() > 90) {
+        endSegment(segment, location.getTime(), splitTracks);
+        segment = createNewSegment(track, location.getTime());
+      } else {
+        segment.addLocation(location);
+      }
+    }
+    endSegment(segment, locations.size() > 0 ? locations.get(locations.size() - 1).getTime() : -1L,
+        splitTracks);
+    return splitTracks;
+  }
+
+  /**
+   * Creates a new segment for a track.
+   * 
+   * @param track the track
+   * @param startTime the segment start time
+   */
+  private static Track createNewSegment(Track track, long startTime) {
     Track segment = new Track();
     segment.setId(track.getId());
     segment.setName(track.getName());
     segment.setDescription("");
     segment.setCategory(track.getCategory());
-
-    TripStatistics segmentStats = segment.getTripStatistics();
-    TripStatistics trackStats = track.getTripStatistics();
-    segmentStats.setStartTime(trackStats.getStartTime());
-    segmentStats.setStopTime(trackStats.getStopTime());
-    boolean startNewTrackSegment = false;
-    for (Location loc : locations) {
-      // Latitude is greater than 90 if the location is invalid. Do not add to
-      // the segment.
-      if (loc.getLatitude() > 90) {
-        startNewTrackSegment = true;
-      }
-
-      if (startNewTrackSegment) {
-        // Close the last segment
-        prepareTrackSegment(segment, splitTracks);
-
-        startNewTrackSegment = false;
-        segment = new Track();
-        segment.setId(track.getId());
-        segment.setName(track.getName());
-        segment.setDescription("");
-        segment.setCategory(track.getCategory());
-        segmentStats = segment.getTripStatistics();
-      }
-
-      if (loc.getLatitude() <= 90) {
-        segment.addLocation(loc);
-
-        // For a new segment, sets its start time using the first available
-        // location time.
-        if (segmentStats.getStartTime() < 0) {
-          segmentStats.setStartTime(loc.getTime());
-        }
-      }
-    }
-
-    prepareTrackSegment(segment, splitTracks);
-
-    return splitTracks;
+    TripStatistics segmentTripStatistics = segment.getTripStatistics();
+    segmentTripStatistics.setStartTime(startTime);
+    return segment;
   }
 
   /**
-   * Prepares a track segment for sending to Google Maps or Google Fusion
-   * Tables. The main steps are:
-   * <ul>
-   * <li>make sure the segment has at least 2 points</li>
-   * <li>set the segment stop time if necessary</li>
-   * <li>decimate locations precision</li>
-   * </ul>
-   * The prepared track will be added to the splitTracks.
-   *
-   * @param segment the track segment
-   * @param splitTracks an array of track segments
+   * Ends a segment. Adds to the array of track segments if the segment is
+   * valid.
+   * 
+   * @param segment the segment
+   * @param stopTime the stop time
+   * @param splitTracks the array of track segments
    */
   @VisibleForTesting
-  static boolean prepareTrackSegment(Track segment, ArrayList<Track> splitTracks) {
+  static boolean endSegment(Track segment, long stopTime, ArrayList<Track> splitTracks) {
     // Make sure the segment has at least 2 points
     if (segment.getLocations().size() < 2) {
       Log.d(TAG, "segment has less than 2 points");
       return false;
     }
 
-    // For a new segment, sets it stop time
-    TripStatistics segmentStats = segment.getTripStatistics();
-    if (segmentStats.getStopTime() < 0) {
-      Location lastLocation = segment.getLocations().get(segment.getLocations().size() - 1);
-      segmentStats.setStopTime(lastLocation.getTime());
-    }
+    // Set its stop time
+    segment.getTripStatistics().setStopTime(stopTime);
 
-    // Decimate to 2 meter precision. Google Maps and Google Fusion Tables do
-    // not like the locations to be too precise.
+    /*
+     * Decimate to 2 meter precision. Google Maps and Google Fusion Tables do
+     * not like the locations to be too precise.
+     */
     LocationUtils.decimate(segment, 2.0);
 
     splitTracks.add(segment);
