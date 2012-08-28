@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<resources>
+  <color name="black">#FF000000</color>
+  <color name="blue">#FF0000FF</color>
+  <color name="gray">#FFAAAAAA</color>
+  <color name="red">#FFFF0000</color>
+  <color name="transparent">#00000000</color>
+
+  <!-- holo_orange_dark -->
+  <color name="warning_background">#FFFF8800</color>
+
+  <!-- elevation chart colors, green and transparent green -->
+  <color name="elevation_border">#FF339933</color>
+  <color name="elevation_fill">#40B3CFB3</color>
+
+  <!-- speed chart colors, blue and transparent blue -->
+  <color name="speed_border">#FF0066FF</color>
+  <color name="speed_fill">#40C8E0FF</color>
+
+  <!-- pace chart colors, blue and transparent blue -->
+  <color name="pace_border">#FF0066FF</color>
+  <color name="pace_fill">#40C8E0FF</color>
+
+  <!-- heart rate chart colors, red and transparent red -->
+  <color name="heart_rate_border">#FFCC3300</color>
+  <color name="heart_rate_fill">#40E88A70</color>
+
+  <!-- cadence chart colors, pink and transparent pink -->
+  <color name="cadence_border">#FFF128F3</color>
+  <color name="cadence_fill">#40F128F3</color>
+
+  <!-- power chart colors, purple and transparent purple -->
+  <color name="power_border">#FF401465</color>
+  <color name="power_fill">#40401465</color>
+
+  <!-- track widget line -->
+  <color name="track_widget_line">#99999999</color>
+
+  <!-- track widget red -->
+  <color name="track_widget_red">#FFCA1F25</color>
+
+  <!-- dynamic track slow path, green -->
+  <color name="slow_path">#F774DF00</color>
+
+  <!-- dynamic track normal path, blue -->
+  <color name="normal_path">#F75858FA</color>
+
+  <!-- dynamic track fast path, red -->
+  <color name="fast_path">#F7DF0101</color>
+</resources>
