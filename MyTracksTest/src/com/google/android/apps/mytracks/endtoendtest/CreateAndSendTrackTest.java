@@ -88,80 +88,20 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
   /**
    * Check all services and send to google.
    */
-  public void testCreateAndSendTrack_Send() {
+  public void testCreateAndSendTrack_send() {
     EndToEndTestUtils.createTrackIfEmpty(1, false);
     instrumentation.waitForIdleSync();
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_send_google), true);
-    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.send_google_title));
-    ArrayList<CheckBox> checkBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
-    for (int i = 0; i < checkBoxs.size(); i++) {
-      if (!checkBoxs.get(i).isChecked()) {
-        EndToEndTestUtils.SOLO.clickOnCheckBox(i);
-      }
-    }
-
-    if (checkBoxs.size() < 3) {
-      EndToEndTestUtils.SOLO.scrollDown();
-      checkBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
-      
-      // Choose all Google service.
-      for (int i = 0; i < checkBoxs.size(); i++) {
-        if (!checkBoxs.get(i).isChecked()) {
-          EndToEndTestUtils.SOLO.clickOnCheckBox(i);
-        }
-      }
-    }
+    checkSendTrackToGoogle();
+  }
+  
+  /**
+   * Check all services and send to google.
+   */
+  public void testCreateAndSendTrack_sendPausedTrack() {
+    EndToEndTestUtils.deleteAllTracks();
+    EndToEndTestUtils.createTrackWithPause(3);
     instrumentation.waitForIdleSync();
-    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.send_google_send_now),
-        true, true);
-    
-    // Check whether no account is binded with this device.
-    if (EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.send_google_no_account_title), 1,
-        EndToEndTestUtils.SHORT_WAIT_TIME)) {
-      EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true,
-          true);
-      return;
-    }
-
-    // Check whether need to choose account.
-    if (EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.send_google_choose_account_title), 1,
-        EndToEndTestUtils.SHORT_WAIT_TIME)) {
-      EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), false,
-          true);
-      return;
-    }
-
-    // Check whether no account permission.
-    if (EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.send_google_no_account_permission), 1,
-        EndToEndTestUtils.SHORT_WAIT_TIME)) {
-      return;
-    }
-
-    // Following check the process of "Send to Google".
-    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.generic_progress_title)));
-    // Waiting the send is finish.
-    while (EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.generic_progress_title), 1,
-        EndToEndTestUtils.SHORT_WAIT_TIME)) {}
-
-    // Check whether the result dialog is display.
-    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.share_track_share_url)));
-    EndToEndTestUtils
-        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
-
-    // Check whether all data is correct on Google Map, Documents, and
-    // Spreadsheet.
-    assertTrue(GoogleUtils.deleteMap(EndToEndTestUtils.trackName, activityMyTracks));
-    assertTrue(GoogleUtils.searchFusionTableByTitle(EndToEndTestUtils.TRACK_NAME_PREFIX,
-        activityMyTracks));
-    assertTrue(GoogleUtils.deleteTrackInSpreadSheet(EndToEndTestUtils.trackName, activityMyTracks));
-    assertTrue(GoogleUtils.dropFusionTables(EndToEndTestUtils.trackName, activityMyTracks));
-
+    checkSendTrackToGoogle();
   }
 
   /**
@@ -217,7 +157,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     EndToEndTestUtils.startRecording();
     instrumentation.waitForIdleSync();
     // Send Gps before send marker.
-    EndToEndTestUtils.sendGps(2);
+    EndToEndTestUtils.sendGps(2, 0);
     if (EndToEndTestUtils.hasActionBar) {
       // Check the title is Recording.
       assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks
@@ -225,7 +165,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     }
     
     createWaypoint();
-    EndToEndTestUtils.sendGps(2);
+    EndToEndTestUtils.sendGps(2, 2);
     // Back to tracks list.
     EndToEndTestUtils.SOLO.goBack();
     instrumentation.waitForIdleSync();
@@ -292,7 +232,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     // Send Gps to give a distance more than one kilometer or one mile.
-    EndToEndTestUtils.sendGps(20);    
+    EndToEndTestUtils.sendGps(20, 0);    
     assertTrue(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_markers),
         true));
     instrumentation.waitForIdleSync();
@@ -305,39 +245,80 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
 
     EndToEndTestUtils.stopRecording(true);
   }
-  
-  
+
   /**
-   * Tests the pause recording feature.
+   * Checks the process of sending track to google.
    */
-  public void testPauseRecording() {
-    EndToEndTestUtils.startRecording();
-    assertNotNull(EndToEndTestUtils.SOLO.getButton(activityMyTracks
-        .getString(R.string.menu_pause_track)));
-    assertNotNull(EndToEndTestUtils.SOLO.getButton(activityMyTracks
-        .getString(R.string.menu_stop_recording)));
-    EndToEndTestUtils.SOLO.goBack();
-    assertNotNull(EndToEndTestUtils.SOLO.getButton(activityMyTracks
-        .getString(R.string.menu_pause_track)));
-    assertNotNull(EndToEndTestUtils.SOLO.getButton(activityMyTracks
-        .getString(R.string.menu_stop_recording)));
+  private void checkSendTrackToGoogle() {
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_send_google), true);
+    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.send_google_title));
+    ArrayList<CheckBox> checkBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
+    for (int i = 0; i < checkBoxs.size(); i++) {
+      if (!checkBoxs.get(i).isChecked()) {
+        EndToEndTestUtils.SOLO.clickOnCheckBox(i);
+      }
+    }
+
+    if (checkBoxs.size() < 3) {
+      EndToEndTestUtils.SOLO.scrollDown();
+      checkBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
+      
+      // Choose all Google service.
+      for (int i = 0; i < checkBoxs.size(); i++) {
+        if (!checkBoxs.get(i).isChecked()) {
+          EndToEndTestUtils.SOLO.clickOnCheckBox(i);
+        }
+      }
+    }
+    instrumentation.waitForIdleSync();
+    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.send_google_send_now),
+        true, true);
     
-    // Pause
-    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.menu_pause_track),
-        false, true);
-    assertNotNull(EndToEndTestUtils.SOLO.getButton(activityMyTracks
-        .getString(R.string.menu_record_track)));
-    assertNotNull(EndToEndTestUtils.SOLO.getButton(activityMyTracks
-        .getString(R.string.menu_stop_recording)));
-    // Resume
-    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.menu_record_track),
-        false, true);
-    assertNotNull(EndToEndTestUtils.SOLO.getButton(activityMyTracks
-        .getString(R.string.menu_pause_track)));
-    assertNotNull(EndToEndTestUtils.SOLO.getButton(activityMyTracks
-        .getString(R.string.menu_stop_recording)));
-    // Stop 
-    EndToEndTestUtils.stopRecording(true);
+    // Check whether no account is binded with this device.
+    if (EndToEndTestUtils.SOLO.waitForText(
+        activityMyTracks.getString(R.string.send_google_no_account_title), 1,
+        EndToEndTestUtils.SHORT_WAIT_TIME)) {
+      EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true,
+          true);
+      return;
+    }
+
+    // Check whether need to choose account.
+    if (EndToEndTestUtils.SOLO.waitForText(
+        activityMyTracks.getString(R.string.send_google_choose_account_title), 1,
+        EndToEndTestUtils.SHORT_WAIT_TIME)) {
+      EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), false,
+          true);
+    }
+
+    // Check whether no account permission.
+    if (EndToEndTestUtils.SOLO.waitForText(
+        activityMyTracks.getString(R.string.send_google_no_account_permission), 1,
+        EndToEndTestUtils.SHORT_WAIT_TIME)) {
+      return;
+    }
+
+    // Following check the process of "Send to Google".
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+        .getString(R.string.generic_progress_title)));
+    // Waiting the send is finish.
+    while (EndToEndTestUtils.SOLO.waitForText(
+        activityMyTracks.getString(R.string.generic_progress_title), 1,
+        EndToEndTestUtils.SHORT_WAIT_TIME)) {}
+
+    // Check whether the result dialog is display.
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+        .getString(R.string.share_track_share_url)));
+    EndToEndTestUtils
+        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+
+    // Check whether all data is correct on Google Map, Documents, and
+    // Spreadsheet.
+    assertTrue(GoogleUtils.deleteMap(EndToEndTestUtils.trackName, activityMyTracks));
+    assertTrue(GoogleUtils.searchFusionTableByTitle(EndToEndTestUtils.TRACK_NAME_PREFIX,
+        activityMyTracks));
+    assertTrue(GoogleUtils.deleteTrackInSpreadSheet(EndToEndTestUtils.trackName, activityMyTracks));
+    assertTrue(GoogleUtils.dropFusionTables(EndToEndTestUtils.trackName, activityMyTracks));
   }
 
   /**
