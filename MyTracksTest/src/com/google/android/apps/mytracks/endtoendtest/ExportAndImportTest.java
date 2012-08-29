@@ -73,7 +73,7 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     // Create a new track with 3 gps data.
     EndToEndTestUtils.createTrackWithPause(3);
     instrumentation.waitForIdleSync();
-    EndToEndTestUtils.SOLO.goBack();    
+    EndToEndTestUtils.SOLO.goBack();   
     
     // Create a empty track.
     EndToEndTestUtils.createTrackWithPause(0);

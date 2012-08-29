@@ -157,7 +157,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     EndToEndTestUtils.startRecording();
     instrumentation.waitForIdleSync();
     // Send Gps before send marker.
-    EndToEndTestUtils.sendGps(2);
+    EndToEndTestUtils.sendGps(2, 0);
     if (EndToEndTestUtils.hasActionBar) {
       // Check the title is Recording.
       assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks
@@ -165,7 +165,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     }
     
     createWaypoint();
-    EndToEndTestUtils.sendGps(2);
+    EndToEndTestUtils.sendGps(2, 2);
     // Back to tracks list.
     EndToEndTestUtils.SOLO.goBack();
     instrumentation.waitForIdleSync();
@@ -232,7 +232,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     // Send Gps to give a distance more than one kilometer or one mile.
-    EndToEndTestUtils.sendGps(20);    
+    EndToEndTestUtils.sendGps(20, 0);    
     assertTrue(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_markers),
         true));
     instrumentation.waitForIdleSync();

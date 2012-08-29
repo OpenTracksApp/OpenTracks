@@ -59,10 +59,10 @@ public class EndToEndTestUtils {
   private static final int ORIENTATION_LANDSCAPE = 0;
   // Pause 200ms between each send.
   static int PAUSE = 200;
-  private static final float START_LONGITUDE = 51;
-  private static final float START_LATITUDE = -1.3f;
-  private static final float DELTA_LONGITUDE = 0.0005f;
-  private static final float DELTA_LADITUDE = 0.0005f;
+  static final double START_LONGITUDE = 51;
+  static final double START_LATITUDE = -1.3f;
+  static final double DELTA_LONGITUDE = 0.0005f;
+  static final double DELTA_LADITUDE = 0.0005f;
   private static final String NO_GPS_MESSAGE_PREFIX = "GPS is not available";
   
   private static final String MOREOPTION_CLASSNAME = "com.android.internal.view.menu.ActionMenuPresenter$OverflowMenuButton";
@@ -163,8 +163,9 @@ public class EndToEndTestUtils {
    * Sends Gps data to emulator.
    * 
    * @param number send times
+   * @param numberBofore is used to compute the start latitude and longitude 
    */
-  public static void sendGps(int number) {
+  public static void sendGps(int number, int numberBofore) {
     if (number < 1) { 
       return; 
     }
@@ -178,13 +179,13 @@ public class EndToEndTestUtils {
     try {
       socket = new Socket(ANDROID_LOCAL_IP, emulatorPort);
       out = new PrintStream(socket.getOutputStream());
-      float longitude = START_LONGITUDE;
-      float latitude = START_LATITUDE;
+      double longitude = START_LONGITUDE + numberBofore * DELTA_LONGITUDE;
+      double latitude = START_LATITUDE + numberBofore * DELTA_LADITUDE;
       for (int i = 0; i < number; i++) {
-        Thread.sleep(PAUSE);
-        out.println("geo fix " + latitude + " " + longitude);
+        out.println("geo fix " + longitude + " " + latitude);
         longitude += DELTA_LONGITUDE;
         latitude += DELTA_LADITUDE;
+        Thread.sleep(PAUSE);
       }
       // Wait the GPS signal can be obtained by MyTracks.  
       Thread.sleep(SHORT_WAIT_TIME);
@@ -302,7 +303,7 @@ public class EndToEndTestUtils {
    */
   static void createSimpleTrack(int numberOfGpsData) {
     startRecording();
-    sendGps(numberOfGpsData);
+    sendGps(numberOfGpsData, 0);
     instrumentation.waitForIdleSync();
     stopRecording(true);
   }
@@ -310,16 +311,17 @@ public class EndToEndTestUtils {
   /**
    * Creates a track which contains pause during recording.
    * 
-   * @param numberOfGpsData number of simulated Gps data
+   * @param numberOfGpsData number of simulated Gps data before pause and after resume
    */
   public static void createTrackWithPause(int numberOfGpsData) {
     EndToEndTestUtils.startRecording();
-    EndToEndTestUtils.sendGps(numberOfGpsData);
+    EndToEndTestUtils.sendGps(numberOfGpsData, 0);
     EndToEndTestUtils.findMenuItem(activityMytracks.getString(R.string.menu_pause_track), true);
-    EndToEndTestUtils.findMenuItem(activityMytracks.getString(R.string.menu_record_track), false);
-    EndToEndTestUtils.sendGps(numberOfGpsData);
+    EndToEndTestUtils.findMenuItem(activityMytracks.getString(R.string.menu_record_track), true);
+    EndToEndTestUtils.sendGps(numberOfGpsData, numberOfGpsData);
     EndToEndTestUtils.stopRecording(true);
   }
+  
   
   /**
    * Checks if there is no track in track list. For some tests need at least one
