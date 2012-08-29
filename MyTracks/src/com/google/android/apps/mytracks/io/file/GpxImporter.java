@@ -102,6 +102,9 @@ public class GpxImporter extends DefaultHandler {
   
   // True if the current track has a start time
   private boolean hasStartTime;
+  
+  // The import time
+  private long importTime;
 
   // The current location
   private Location location;
@@ -261,8 +264,9 @@ public class GpxImporter extends DefaultHandler {
   private void onTrackElementEnd() {
     flushPoints();
     if (tripStatisticsUpdater == null) {
-      tripStatisticsUpdater = new TripStatisticsUpdater(-1L);
-      tripStatisticsUpdater.updateTime(-1L);
+      long now = System.currentTimeMillis();
+      tripStatisticsUpdater = new TripStatisticsUpdater(now);
+      tripStatisticsUpdater.updateTime(now);
     }
     track.setStopId(getLastPointId());
     track.setTripStatistics(tripStatisticsUpdater.getTripStatistics());
@@ -450,11 +454,13 @@ public class GpxImporter extends DefaultHandler {
    */
   private void insertPoint(Location newLocation) {
     if (tripStatisticsUpdater == null) {
-      tripStatisticsUpdater = new TripStatisticsUpdater(newLocation.getTime());
       hasStartTime = newLocation.getTime() != -1L;
+      importTime = System.currentTimeMillis();
+      tripStatisticsUpdater = new TripStatisticsUpdater(
+          hasStartTime ? newLocation.getTime() : importTime);
     }
     if (!hasStartTime) {
-      newLocation.setTime(-1L);
+      newLocation.setTime(importTime);
     }
     tripStatisticsUpdater.addLocation(newLocation, minRecordingDistance);
     

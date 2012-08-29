@@ -247,13 +247,11 @@ public class GpxImporterTest extends AndroidTestCase {
   public void testOneTrackTwoSegmentsNoTime() throws Exception {
     Capture<Track> capturedTrack = new Capture<Track>();
 
-    Location location0 = createLocation(0, -1L);
-
     expect(myTracksProviderUtils.insertTrack((Track) AndroidMock.anyObject()))
         .andReturn(TRACK_ID_0_URI);
     // A flush happens before getting the start point ID
     expect(myTracksProviderUtils.bulkInsertTrackPoint(
-        LocationsMatcher.eqLoc(location0), eq(1), eq(TRACK_ID_0))).andReturn(1);
+      (Location[]) AndroidMock.anyObject(), eq(1), eq(TRACK_ID_0))).andReturn(1);
     expect(myTracksProviderUtils.getFirstTrackPointId(TRACK_ID_0)).andReturn(TRACK_POINT_ID_0);
 
     // A flush happens at the end
@@ -330,7 +328,9 @@ public class GpxImporterTest extends AndroidTestCase {
   private void verifyTrack(Track track, String name, String description, long time) {
     assertEquals(name, track.getName());
     assertEquals(description, track.getDescription());
-    assertEquals(time, track.getTripStatistics().getStartTime());
+    if (time != -1L) {
+      assertEquals(time, track.getTripStatistics().getStartTime());
+    }
     assertNotSame(-1, track.getStartId());
     assertNotSame(-1, track.getStopId());
   }
