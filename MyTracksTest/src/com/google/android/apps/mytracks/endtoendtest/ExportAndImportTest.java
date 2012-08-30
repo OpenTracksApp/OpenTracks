@@ -49,14 +49,8 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
   }
 
   /**
-   * Tests export and import tracks.
-   * <ul>
-   * <li>Create two tracks, one of them is empty(Have no Gps data).</li>
-   * <li>Tests import when there is no track file.</li>
-   * <li>Tests export tracks to Gpx files.</li>
-   * <li>Tests import files to tracks.</li>
-   * <li>Tests export tracks to Kml files.</li>
-   * </ul>
+   * Tests export and import tracks after creating a track with Gps signal and 
+   * an empty track.
    */
   public void testExportAndImportTracks() {
     // Create a new track with 3 gps data.
@@ -67,6 +61,39 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.SOLO.goBack();
     instrumentation.waitForIdleSync();
+    checkExportAndImport();
+  }
+  
+  /**
+   * Tests export and import tracks after creating a track with Gps signal and 
+   * an empty track. Both tracks are paused during recording.
+   */
+  public void testExportAndImportTracks_pause() {
+    EndToEndTestUtils.deleteAllTracks();
+    // Create a new track with 3 gps data.
+    EndToEndTestUtils.createTrackWithPause(3);
+    instrumentation.waitForIdleSync();
+    EndToEndTestUtils.SOLO.goBack();   
+    
+    // Create a empty track.
+    EndToEndTestUtils.createTrackWithPause(0);
+    instrumentation.waitForIdleSync();
+    EndToEndTestUtils.SOLO.goBack();
+    instrumentation.waitForIdleSync();
+    checkExportAndImport();
+  }
+  
+  /**
+   * Tests export and import tracks.
+   * <ul>
+   * <li>Create two tracks, one of them is empty(Have no Gps data).</li>
+   * <li>Tests import when there is no track file.</li>
+   * <li>Tests export tracks to Gpx files.</li>
+   * <li>Tests import files to tracks.</li>
+   * <li>Tests export tracks to Kml files.</li>
+   * </ul>
+   */
+  private void checkExportAndImport() {
     // Delete all exported gpx and kml tracks.
     EndToEndTestUtils.deleteExportedFiles(EndToEndTestUtils.GPX);
     EndToEndTestUtils.deleteExportedFiles(EndToEndTestUtils.KML);
