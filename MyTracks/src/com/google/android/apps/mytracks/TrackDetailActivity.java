@@ -89,8 +89,6 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   private MenuItem insertMarkerMenuItem;
   private MenuItem playMenuItem;
   private MenuItem shareMenuItem;
-  private MenuItem voiceFrequencyMenuItem;
-  private MenuItem splitFrequencyMenuItem;
   private MenuItem sendGoogleMenuItem;
   private MenuItem saveMenuItem;
 
@@ -110,7 +108,8 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
             recordingTrackId = PreferencesUtils.getLong(
                 TrackDetailActivity.this, R.string.recording_track_id_key);
             if (key != null) {
-              updateMenuItems(trackId == recordingTrackId);
+              updateMenuItems(trackId == recordingTrackId, recordingTrackPaused);
+              return;
             }
           }
           if (key == null || key.equals(PreferencesUtils.getKey(
@@ -197,7 +196,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     super.onResume();
     trackDataHub.loadTrack(trackId);
     TrackRecordingServiceConnectionUtils.resumeConnection(this, trackRecordingServiceConnection);
-    updateMenuItems(trackId == recordingTrackId);
+    updateMenuItems(trackId == recordingTrackId, recordingTrackPaused);
   }
 
   @Override
@@ -237,12 +236,10 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     insertMarkerMenuItem = menu.findItem(R.id.track_detail_insert_marker);
     playMenuItem = menu.findItem(R.id.track_detail_play);
     shareMenuItem = menu.findItem(R.id.track_detail_share);
-    voiceFrequencyMenuItem = menu.findItem(R.id.track_detail_voice_frequency);
-    splitFrequencyMenuItem = menu.findItem(R.id.track_detail_split_frequency);
     sendGoogleMenuItem = menu.findItem(R.id.track_detail_send_google);
     saveMenuItem = menu.findItem(R.id.track_detail_save);
     
-    updateMenuItems(trackId == recordingTrackId);
+    updateMenuItems(trackId == recordingTrackId, recordingTrackPaused);
     return true;
   }
 
@@ -267,18 +264,15 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     Intent intent;
     switch (item.getItemId()) {
       case R.id.track_detail_record_track:
-        recordingTrackPaused = false;
-        updateMenuItems(true);
+        updateMenuItems(true, false);
         TrackRecordingServiceConnectionUtils.resumeTrack(trackRecordingServiceConnection);
         return true;
       case R.id.track_detail_pause_track:
-        recordingTrackPaused = true;
-        updateMenuItems(true);
+        updateMenuItems(true, true);
         TrackRecordingServiceConnectionUtils.pauseTrack(trackRecordingServiceConnection);
         return true;
       case R.id.track_detail_stop_recording:
-        recordingTrackPaused = true;
-        updateMenuItems(false);
+        updateMenuItems(false, true);
         TrackRecordingServiceConnectionUtils.stopRecording(
             this, trackRecordingServiceConnection, true);
         return true;
@@ -369,7 +363,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   @Override
   public boolean onTrackballEvent(MotionEvent event) {
     if (event.getAction() == MotionEvent.ACTION_DOWN) {
-      if (trackId == recordingTrackId) {
+      if (trackId == recordingTrackId && !recordingTrackPaused) {
         TrackRecordingServiceConnectionUtils.addMarker(
             this, trackRecordingServiceConnection, WaypointCreationRequest.DEFAULT_WAYPOINT);
         return true;
@@ -442,30 +436,24 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
    *
    * @param isRecording true if recording
    */
-  private void updateMenuItems(boolean isRecording) {
+  private void updateMenuItems(boolean isRecording, boolean isPaused) {
     if (recordTrackMenuItem != null) {
-      recordTrackMenuItem.setVisible(isRecording && recordingTrackPaused);
+      recordTrackMenuItem.setVisible(isRecording && isPaused);
     }
     if (pauseTrackMenuItem != null) {
-      pauseTrackMenuItem.setVisible(isRecording && !recordingTrackPaused);
+      pauseTrackMenuItem.setVisible(isRecording && !isPaused);
     }
     if (stopRecordingMenuItem != null) {
       stopRecordingMenuItem.setVisible(isRecording);
     }
     if (insertMarkerMenuItem != null) {
-      insertMarkerMenuItem.setVisible(isRecording);
+      insertMarkerMenuItem.setVisible(isRecording && !isPaused);
     }
     if (playMenuItem != null) {
       playMenuItem.setVisible(!isRecording);
     }
     if (shareMenuItem != null) {
       shareMenuItem.setVisible(!isRecording);
-    }
-    if (voiceFrequencyMenuItem != null) {
-      voiceFrequencyMenuItem.setVisible(isRecording);
-    }
-    if (splitFrequencyMenuItem != null) {
-      splitFrequencyMenuItem.setVisible(isRecording);
     }
     if (sendGoogleMenuItem != null) {
       sendGoogleMenuItem.setVisible(!isRecording);
@@ -476,7 +464,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     String title;
     if (isRecording) {
       title = getString(
-          recordingTrackPaused ? R.string.generic_paused : R.string.generic_recording);
+          isPaused ? R.string.generic_paused : R.string.generic_recording);
     } else {
       Track track = MyTracksProviderUtils.Factory.get(this).getTrack(trackId);
       title = track != null ? track.getName() : getString(R.string.my_tracks_app_name);

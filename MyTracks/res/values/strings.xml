@@ -890,10 +890,6 @@ limitations under the License.
     translation_description="The accessibility description for the 'My Location' icon.">
     My Location
   </string>
-  <string name="icon_recording"
-    translation_description="The accessibility description for the 'Recording' icon.">
-    Recording
-  </string>
   <string name="icon_track"
     translation_description="The accessibility description for the 'Track' icon.">
     Track

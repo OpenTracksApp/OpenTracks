@@ -298,14 +298,17 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
         boolean isRecording = cursor.getLong(idIndex) == recordingTrackId;
         String name = cursor.getString(nameIndex);
         int iconId;
+        int iconContentDescriptionId;
         if (isRecording) {
           iconId = recordingTrackPaused ? R.drawable.menu_pause_track
               : R.drawable.menu_record_track;
+          iconContentDescriptionId = recordingTrackPaused ? R.string.menu_pause_track
+              : R.string.menu_record_track;
         } else {
           iconId = TrackIconUtils.getIconDrawable(cursor.getString(iconIndex));
+          iconContentDescriptionId = R.string.icon_track;
         }
-        String iconContentDescription = getString(
-            isRecording ? R.string.icon_recording : R.string.icon_track);
+        String iconContentDescription = getString(iconContentDescriptionId);
         String category = cursor.getString(categoryIndex);
         String totalTime = isRecording ? null
             : StringUtils.formatElapsedTime(cursor.getLong(totalTimeIndex));

@@ -161,7 +161,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     if (EndToEndTestUtils.hasActionBar) {
       // Check the title is Recording.
       assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks
-          .getString(R.string.icon_recording)));
+          .getString(R.string.generic_recording)));
     }
     
     createWaypoint();

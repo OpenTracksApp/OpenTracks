@@ -91,10 +91,18 @@ public class SearchListActivity extends AbstractMyTracksActivity implements Dele
       sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
           @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-          if (PreferencesUtils.getKey(SearchListActivity.this, R.string.recording_track_id_key)
-              .equals(key)) {
+          if (key == null || key.equals(
+              PreferencesUtils.getKey(SearchListActivity.this, R.string.recording_track_id_key))) {
             recordingTrackId = PreferencesUtils.getLong(
                 SearchListActivity.this, R.string.recording_track_id_key);
+          }
+          if (key == null || key.equals(PreferencesUtils.getKey(
+              SearchListActivity.this, R.string.recording_track_paused_key))) {
+            recordingTrackPaused = PreferencesUtils.getBoolean(SearchListActivity.this,
+                R.string.recording_track_paused_key,
+                PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+          }
+          if (key != null) {
             arrayAdapter.notifyDataSetChanged();
           }
         }
@@ -115,6 +123,7 @@ public class SearchListActivity extends AbstractMyTracksActivity implements Dele
   private SearchRecentSuggestions searchRecentSuggestions;
   private MyTracksLocationManager myTracksLocationManager;
   private long recordingTrackId;
+  private boolean recordingTrackPaused;
   private boolean metricUnits;
   private ArrayAdapter<Map<String, Object>> arrayAdapter;
 
@@ -133,9 +142,10 @@ public class SearchListActivity extends AbstractMyTracksActivity implements Dele
     searchEngine = new SearchEngine(myTracksProviderUtils);
     searchRecentSuggestions = SearchEngineProvider.newHelper(this);
     myTracksLocationManager = new MyTracksLocationManager(this);
-    getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE)
-        .registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-    recordingTrackId = PreferencesUtils.getLong(this, R.string.recording_track_id_key);
+    SharedPreferences sharedPreferences = getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+    sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
 
     listView = (ListView) findViewById(R.id.search_list);
     listView.setEmptyView(findViewById(R.id.search_list_empty));
@@ -425,10 +435,18 @@ public class SearchListActivity extends AbstractMyTracksActivity implements Dele
     boolean isRecording = track.getId() == recordingTrackId;
     TripStatistics tripStatitics = track.getTripStatistics();
     resultMap.put(NAME_FIELD, track.getName());
-    resultMap.put(ICON_FIELD, isRecording 
-        ? R.drawable.menu_record_track : TrackIconUtils.getIconDrawable(track.getIcon()));
-    resultMap.put(ICON_CONTENT_DESCRIPTION_FIELD, getString(isRecording ? R.string.icon_recording
-        : R.string.icon_track));
+    int iconId;
+    int iconContentDescriptionId;
+    if (isRecording) {
+      iconId = recordingTrackPaused ? R.drawable.menu_pause_track : R.drawable.menu_record_track;
+      iconContentDescriptionId = recordingTrackPaused ? R.string.menu_pause_track
+          : R.drawable.menu_record_track;
+    } else {
+      iconId = TrackIconUtils.getIconDrawable(track.getIcon());
+      iconContentDescriptionId = R.string.icon_track;
+    }
+    resultMap.put(ICON_FIELD, iconId);
+    resultMap.put(ICON_CONTENT_DESCRIPTION_FIELD, getString(iconContentDescriptionId));
     resultMap.put(CATEGORY_FIELD, track.getCategory());
     resultMap.put(TOTAL_TIME_FIELD, isRecording ? null : StringUtils.formatElapsedTime(
         tripStatitics.getTotalTime()));
