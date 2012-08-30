@@ -522,6 +522,8 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
         isRecording ? R.drawable.btn_stop_1 : R.drawable.btn_stop_0);
     stopRecordingImageButton.setEnabled(isRecording);
     if (isRecording) {
+      recordStateTextView.setTextColor(
+          getResources().getColor(isPaused ? android.R.color.white : R.color.red));
       recordStateTextView.setText(isPaused ? R.string.generic_paused : R.string.generic_recording);
       recordStateTextView.setVisibility(View.VISIBLE);
     } else {
