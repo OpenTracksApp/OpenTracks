@@ -237,6 +237,34 @@ public class TrackWriterTest extends AndroidTestCase {
     mocksControl.verify();
   }
 
+  /**
+   * Tests when a track only contains invalid locations. Make sure an empty
+   * track is written.
+   */
+  public void testWriteDocument_oneInvalidLocation() throws Exception {
+    writer = new TrackWriterImpl(getContext(), providerUtils, track, formatWriter);
+
+    Location[] locs = { new Location("fake0") };
+    fillLocations(locs);
+
+    // Make location invalid
+    locs[0].setLatitude(100);
+
+    assertEquals(locs.length, providerUtils.bulkInsertTrackPoint(locs, locs.length, TRACK_ID));
+
+    formatWriter.writeHeader();
+    formatWriter.writeBeginTrack(null);
+    formatWriter.writeEndTrack(null);
+    formatWriter.writeFooter();
+    formatWriter.close();
+
+    mocksControl.replay();
+    writer.writeDocument();
+
+    assertTrue(writer.wasSuccess());
+    mocksControl.verify();
+  }
+
   public void testWriteDocument() throws Exception {
     writer = new TrackWriterImpl(getContext(), providerUtils, track, formatWriter);
 
