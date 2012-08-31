@@ -16,6 +16,8 @@
 
 package com.google.android.apps.mytracks;
 
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.fragments.CheckUnitsDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteAllTrackDialogFragment;
@@ -45,6 +47,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.app.Fragment;
@@ -65,30 +68,28 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
  * An activity displaying a list of tracks.
- *
+ * 
  * @author Leif Hendrik Wilden
  */
 public class TrackListActivity extends FragmentActivity implements DeleteOneTrackCaller {
 
   private static final String TAG = TrackListActivity.class.getSimpleName();
 
-  private static final String[] PROJECTION = new String[] {
-      TracksColumns._ID,
-      TracksColumns.NAME,
-      TracksColumns.DESCRIPTION,
-      TracksColumns.CATEGORY,
-      TracksColumns.STARTTIME,
-      TracksColumns.TOTALDISTANCE,
-      TracksColumns.TOTALTIME,
-      TracksColumns.ICON};
+  // One second in milliseconds
+  private static final int ONE_SECOND = 1000;
+
+  private static final String[] PROJECTION = new String[] { TracksColumns._ID, TracksColumns.NAME,
+      TracksColumns.DESCRIPTION, TracksColumns.CATEGORY, TracksColumns.STARTTIME,
+      TracksColumns.TOTALDISTANCE, TracksColumns.TOTALTIME, TracksColumns.ICON };
 
   // Callback when the trackRecordingServiceConnection binding changes.
   private final Runnable bindChangedCallback = new Runnable() {
-    @Override
+      @Override
     public void run() {
       if (!startNewRecording) {
         return;
@@ -123,12 +124,14 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
       sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
           @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-          boolean updateList = false;
           if (key == null || key.equals(
               PreferencesUtils.getKey(TrackListActivity.this, R.string.metric_units_key))) {
             metricUnits = PreferencesUtils.getBoolean(TrackListActivity.this,
                 R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
-            updateList = key != null;
+            if (key != null) {
+              resourceCursorAdapter.notifyDataSetChanged();
+              return;
+            }
           }
           if (key == null || key.equals(
               PreferencesUtils.getKey(TrackListActivity.this, R.string.recording_track_id_key))) {
@@ -140,7 +143,9 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
                 trackRecordingServiceConnection.startAndBind();
               }
               updateMenuItems(isRecording);
-              updateList = true;
+              resourceCursorAdapter.notifyDataSetChanged();
+              startUpdateRecordTime(isRecording);
+              return;
             }
           }
           if (key == null || key.equals(PreferencesUtils.getKey(
@@ -148,40 +153,63 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
             recordingTrackPaused = PreferencesUtils.getBoolean(TrackListActivity.this,
                 R.string.recording_track_paused_key,
                 PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
-            updateList = updateList || key != null;
-          }
-          if (updateList) {
-            resourceCursorAdapter.notifyDataSetChanged();
+            if (key != null) {
+              updateButtons(recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT,
+                  recordingTrackPaused);
+              resourceCursorAdapter.notifyDataSetChanged();
+              return;
+            }
           }
         }
       };
 
   // Callback when an item is selected in the contextual action mode
-  private ContextualActionModeCallback contextualActionModeCallback =
-    new ContextualActionModeCallback() {
-    @Override
-    public boolean onClick(int itemId, int position, long id) {
-      return handleContextItem(itemId, id);
+  private ContextualActionModeCallback
+      contextualActionModeCallback = new ContextualActionModeCallback() {
+          @Override
+        public boolean onClick(int itemId, int position, long id) {
+          return handleContextItem(itemId, id);
+        }
+      };
+
+  // A runnable to update the record time.
+  private final Runnable updateRecordTimeRunnable = new Runnable() {
+    public void run() {
+      if (recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT
+          && !recordingTrackPaused) {
+        recordTimeTextView.setText(StringUtils.formatElapsedTimeWithHour(
+            System.currentTimeMillis() - lastResumeTime + recordTime));
+        handler.postDelayed(this, ONE_SECOND);
+      }
     }
   };
-  
+
+  // The following are set in the constructor
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
-  private boolean metricUnits;
-  private long recordingTrackId;
-  private boolean recordingTrackPaused;
+  private Handler handler;
+  private TextView recordStateTextView;
+  private TextView recordTimeTextView;
+  private ImageButton recordTrackImageButton;
+  private ImageButton stopRecordingImageButton;
   private ListView listView;
   private ResourceCursorAdapter resourceCursorAdapter;
 
-  // True to start a new recording.
-  private boolean startNewRecording = false;
+  // Preferences
+  private boolean metricUnits;
+  private long recordingTrackId;
+  private boolean recordingTrackPaused;
 
-  private MenuItem recordTrackMenuItem;
-  private MenuItem pauseTrackMenuItem;
-  private MenuItem stopRecordingMenuItem;
+  // Menu items
   private MenuItem searchMenuItem;
   private MenuItem importMenuItem;
   private MenuItem saveAllMenuItem;
   private MenuItem deleteAllMenuItem;
+  
+  private boolean startNewRecording = false; // true to start a new recording
+
+  // For recordTimeTextView
+  private long recordTime = 0;
+  private long lastResumeTime = 0;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -197,19 +225,58 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
-    ImageButton recordImageButton = (ImageButton) findViewById(R.id.track_list_record_button);
-    recordImageButton.setOnClickListener(new View.OnClickListener() {
-      @Override
+    
+    handler = new Handler();
+    recordStateTextView = (TextView) findViewById(R.id.track_list_record_state);
+    recordTimeTextView = (TextView) findViewById(R.id.track_list_record_time);
+    recordTrackImageButton = (ImageButton) findViewById(R.id.track_list_record_track_button);
+    recordTrackImageButton.setOnClickListener(new View.OnClickListener() {
+        @Override
       public void onClick(View v) {
-        updateMenuItems(true);
-        startRecording();
+        if (!(recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT)) {
+          // Not recording -> Recording
+          AnalyticsUtils.sendPageViews(TrackListActivity.this, "/action/record_track");
+          updateMenuItems(true);
+          updateButtons(true, false);
+          startRecording();
+        } else {
+          if (recordingTrackPaused) {
+            // Paused -> Resume
+            AnalyticsUtils.sendPageViews(TrackListActivity.this, "/action/resume_track");
+            updateMenuItems(true);
+            updateButtons(true, false);
+            TrackRecordingServiceConnectionUtils.resumeTrack(trackRecordingServiceConnection);
+            startUpdateRecordTime(true);
+          } else {
+            // Recording -> Paused
+            AnalyticsUtils.sendPageViews(TrackListActivity.this, "/action/pause_track");
+            updateMenuItems(true);
+            updateButtons(true, true);
+            TrackRecordingServiceConnectionUtils.pauseTrack(trackRecordingServiceConnection);
+            stopUpdateRecordTime(true);
+          }
+        }
       }
     });
+    stopRecordingImageButton = (ImageButton) findViewById(R.id.track_list_stop_recording_button);
+    stopRecordingImageButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+      public void onClick(View v) {
+        AnalyticsUtils.sendPageViews(TrackListActivity.this, "/action/stop_recording");
+        updateMenuItems(false);
+        updateButtons(false, true);
+        TrackRecordingServiceConnectionUtils.stopRecording(
+            TrackListActivity.this, trackRecordingServiceConnection, true);
+        stopUpdateRecordTime(false);
+      }
+    });
+    updateButtons(
+        recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, recordingTrackPaused);
 
     listView = (ListView) findViewById(R.id.track_list);
-    listView.setEmptyView(findViewById(R.id.track_list_empty));  
+    listView.setEmptyView(findViewById(R.id.track_list_empty_view));
     listView.setOnItemClickListener(new OnItemClickListener() {
-      @Override
+        @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = IntentUtils.newIntent(TrackListActivity.this, TrackDetailActivity.class)
             .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, id);
@@ -227,58 +294,50 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
         int totalDistanceIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALDISTANCE);
         int totalTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALTIME);
         int iconIndex = cursor.getColumnIndex(TracksColumns.ICON);
-        
+
         boolean isRecording = cursor.getLong(idIndex) == recordingTrackId;
         String name = cursor.getString(nameIndex);
         int iconId;
+        int iconContentDescriptionId;
         if (isRecording) {
           iconId = recordingTrackPaused ? R.drawable.menu_pause_track
               : R.drawable.menu_record_track;
+          iconContentDescriptionId = recordingTrackPaused ? R.string.menu_pause_track
+              : R.string.menu_record_track;
         } else {
           iconId = TrackIconUtils.getIconDrawable(cursor.getString(iconIndex));
+          iconContentDescriptionId = R.string.icon_track;
         }
-        String iconContentDescription = getString(isRecording ? R.string.icon_recording
-            : R.string.icon_track);
+        String iconContentDescription = getString(iconContentDescriptionId);
         String category = cursor.getString(categoryIndex);
-        String totalTime = isRecording 
-            ? null : StringUtils.formatElapsedTime(cursor.getLong(totalTimeIndex));
-        String totalDistance = isRecording ? null : StringUtils.formatDistance(
-            TrackListActivity.this, cursor.getDouble(totalDistanceIndex), metricUnits);
+        String totalTime = isRecording ? null
+            : StringUtils.formatElapsedTime(cursor.getLong(totalTimeIndex));
+        String totalDistance = isRecording ? null
+            : StringUtils.formatDistance(
+                TrackListActivity.this, cursor.getDouble(totalDistanceIndex), metricUnits);
         long startTime = cursor.getLong(startTimeIndex);
         String description = cursor.getString(descriptionIndex);
-        ListItemUtils.setListItem(TrackListActivity.this,
-            view,
-            name,
-            iconId,
-            iconContentDescription,
-            category,
-            totalTime,
-            totalDistance,
-            startTime,
-            description);
+        ListItemUtils.setListItem(TrackListActivity.this, view, name, iconId,
+            iconContentDescription, category, totalTime, totalDistance, startTime, description);
       }
     };
     listView.setAdapter(resourceCursorAdapter);
     ApiAdapterFactory.getApiAdapter()
         .configureListViewContextualMenu(this, listView, contextualActionModeCallback);
-   
+
     getSupportLoaderManager().initLoader(0, null, new LoaderCallbacks<Cursor>() {
-      @Override
+        @Override
       public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-        return new CursorLoader(TrackListActivity.this,
-            TracksColumns.CONTENT_URI,
-            PROJECTION,
-            null,
-            null,
-            TracksColumns._ID + " DESC");
+        return new CursorLoader(TrackListActivity.this, TracksColumns.CONTENT_URI, PROJECTION, null,
+            null, TracksColumns._ID + " DESC");
       }
 
-      @Override
+        @Override
       public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         resourceCursorAdapter.swapCursor(cursor);
       }
 
-      @Override
+        @Override
       public void onLoaderReset(Loader<Cursor> loader) {
         resourceCursorAdapter.swapCursor(null);
       }
@@ -287,50 +346,17 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
     showStartupDialogs();
   }
 
-  /**
-   * Shows start up dialogs.
-   */
-  public void showStartupDialogs() {
-    if (!EulaUtils.getAcceptEula(this)) {
-      Fragment fragment = getSupportFragmentManager()
-          .findFragmentByTag(EulaDialogFragment.EULA_DIALOG_TAG);
-      if (fragment == null) {
-        EulaDialogFragment.newInstance(false)
-            .show(getSupportFragmentManager(), EulaDialogFragment.EULA_DIALOG_TAG);
-      }
-    } else if (EulaUtils.getShowWelcome(this)) {
-      Fragment fragment = getSupportFragmentManager()
-          .findFragmentByTag(WelcomeDialogFragment.WELCOME_DIALOG_TAG);
-      if (fragment == null) {
-        new WelcomeDialogFragment().show(
-            getSupportFragmentManager(), WelcomeDialogFragment.WELCOME_DIALOG_TAG);
-      }
-    } else if (EulaUtils.getShowCheckUnits(this)) {
-      Fragment fragment = getSupportFragmentManager()
-          .findFragmentByTag(CheckUnitsDialogFragment.CHECK_UNITS_DIALOG_TAG);
-      if (fragment == null) {
-        new CheckUnitsDialogFragment().show(
-            getSupportFragmentManager(), CheckUnitsDialogFragment.CHECK_UNITS_DIALOG_TAG);
-      }
-    } else {
-      enableEmptyView();
-    }
-  }
-  
-  /**
-   * Enables the content of the empty view.
-   */
-  private void enableEmptyView() {
-    View emptyMessage = findViewById(R.id.track_list_empty_message);
-    emptyMessage.setVisibility(View.VISIBLE);
-    View recordButton = findViewById(R.id.track_list_record_button);
-    recordButton.setVisibility(View.VISIBLE);
+  @Override
+  protected void onPause() {
+    super.onPause();
+    stopUpdateRecordTime(recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
   }
 
   @Override
   protected void onResume() {
     super.onResume();
     TrackRecordingServiceConnectionUtils.resumeConnection(this, trackRecordingServiceConnection);
+    startUpdateRecordTime(recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
   }
 
   @Override
@@ -351,10 +377,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
         .setTitle(getString(R.string.menu_save_format, fileTypes[2]));
     menu.findItem(R.id.track_list_save_all_tcx)
         .setTitle(getString(R.string.menu_save_format, fileTypes[3]));
-    
-    recordTrackMenuItem = menu.findItem(R.id.track_list_record_track);
-    pauseTrackMenuItem = menu.findItem(R.id.track_list_pause_track);
-    stopRecordingMenuItem = menu.findItem(R.id.track_list_stop_recording);
+
     searchMenuItem = menu.findItem(R.id.track_list_search);
     importMenuItem = menu.findItem(R.id.track_list_import);
     saveAllMenuItem = menu.findItem(R.id.track_list_save_all);
@@ -365,62 +388,10 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
     return true;
   }
 
-  /**
-   * Updates the menu items.
-   * 
-   * @param isRecording true if recording
-   *
-   */
-  private void updateMenuItems(boolean isRecording) {
-    boolean showPause = isRecording && !recordingTrackPaused;
-    if (recordTrackMenuItem != null) {
-      recordTrackMenuItem.setVisible(!showPause);
-    }
-    if (pauseTrackMenuItem != null) {
-      pauseTrackMenuItem.setVisible(showPause);
-    }
-    if (stopRecordingMenuItem != null) {
-      stopRecordingMenuItem.setVisible(isRecording);
-    }
-    if (importMenuItem != null) {
-      importMenuItem.setVisible(!isRecording);
-    }
-    if (saveAllMenuItem != null) {
-      saveAllMenuItem.setVisible(!isRecording);
-    }
-    if (deleteAllMenuItem != null) {
-      deleteAllMenuItem.setVisible(!isRecording);
-    }
-  }
-
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     Intent intent;
     switch (item.getItemId()) {
-      case R.id.track_list_record_track:
-        boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
-        AnalyticsUtils.sendPageViews(
-            this, isRecording ? "/action/resume_track" : "/action/record_track");
-        recordingTrackPaused = false;
-        updateMenuItems(true);
-        if (isRecording) {
-          TrackRecordingServiceConnectionUtils.resumeTrack(trackRecordingServiceConnection);
-        } else {
-          startRecording();
-        }
-        return true;
-      case R.id.track_list_pause_track:
-        AnalyticsUtils.sendPageViews(this, "/action/pause_track");
-        recordingTrackPaused = true;
-        updateMenuItems(true);
-        TrackRecordingServiceConnectionUtils.pauseTrack(trackRecordingServiceConnection);
-        return true;
-      case R.id.track_list_stop_recording:
-        AnalyticsUtils.sendPageViews(this, "/action/stop_recording");
-        recordingTrackPaused = false;
-        updateMenuItems(false);
-        TrackRecordingServiceConnectionUtils.stopRecording(this, trackRecordingServiceConnection, true);
-        return true;
       case R.id.track_list_search:
         return ApiAdapterFactory.getApiAdapter().handleSearchMenuSelection(this);
       case R.id.track_list_import:
@@ -462,9 +433,156 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
     }
   }
 
+  @Override
+  public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+    super.onCreateContextMenu(menu, v, menuInfo);
+    getMenuInflater().inflate(R.menu.list_context_menu, menu);
+  }
+
+  @Override
+  public boolean onContextItemSelected(MenuItem item) {
+    if (handleContextItem(item.getItemId(), ((AdapterContextMenuInfo) item.getMenuInfo()).id)) {
+      return true;
+    }
+    return super.onContextItemSelected(item);
+  }
+
+  @Override
+  public boolean onKeyUp(int keyCode, KeyEvent event) {
+    if (keyCode == KeyEvent.KEYCODE_SEARCH) {
+      if (ApiAdapterFactory.getApiAdapter().handleSearchKey(searchMenuItem)) {
+        return true;
+      }
+    }
+    return super.onKeyUp(keyCode, event);
+  }
+
+  @Override
+  public TrackRecordingServiceConnection getTrackRecordingServiceConnection() {
+    return trackRecordingServiceConnection;
+  }
+
+  /**
+   * Shows start up dialogs.
+   */
+  public void showStartupDialogs() {
+    if (!EulaUtils.getAcceptEula(this)) {
+      Fragment fragment = getSupportFragmentManager()
+          .findFragmentByTag(EulaDialogFragment.EULA_DIALOG_TAG);
+      if (fragment == null) {
+        EulaDialogFragment.newInstance(false)
+            .show(getSupportFragmentManager(), EulaDialogFragment.EULA_DIALOG_TAG);
+      }
+    } else if (EulaUtils.getShowWelcome(this)) {
+      Fragment fragment = getSupportFragmentManager()
+          .findFragmentByTag(WelcomeDialogFragment.WELCOME_DIALOG_TAG);
+      if (fragment == null) {
+        new WelcomeDialogFragment().show(
+            getSupportFragmentManager(), WelcomeDialogFragment.WELCOME_DIALOG_TAG);
+      }
+    } else if (EulaUtils.getShowCheckUnits(this)) {
+      Fragment fragment = getSupportFragmentManager()
+          .findFragmentByTag(CheckUnitsDialogFragment.CHECK_UNITS_DIALOG_TAG);
+      if (fragment == null) {
+        new CheckUnitsDialogFragment().show(
+            getSupportFragmentManager(), CheckUnitsDialogFragment.CHECK_UNITS_DIALOG_TAG);
+      }
+    } else {
+      /*
+       * Before the welcome sequence, the empty view is not visible so that it
+       * doesn't show through.
+       */
+      findViewById(R.id.track_list_empty_view).setVisibility(View.VISIBLE);
+    }
+  }
+
+  /**
+   * Updates the menu items.
+   * 
+   * @param isRecording true if recording
+   */
+  private void updateMenuItems(boolean isRecording) {
+    if (importMenuItem != null) {
+      importMenuItem.setVisible(!isRecording);
+    }
+    if (saveAllMenuItem != null) {
+      saveAllMenuItem.setVisible(!isRecording);
+    }
+    if (deleteAllMenuItem != null) {
+      deleteAllMenuItem.setVisible(!isRecording);
+    }
+  }
+
+  private void updateButtons(boolean isRecording, boolean isPaused) {
+    recordTrackImageButton.setImageResource(
+        isRecording && !isPaused ? R.drawable.btn_pause : R.drawable.btn_record);
+    recordTrackImageButton.setContentDescription(getString(
+        isRecording && !isPaused ? R.string.menu_pause_track : R.string.menu_record_track));
+    stopRecordingImageButton.setImageResource(
+        isRecording ? R.drawable.btn_stop_1 : R.drawable.btn_stop_0);
+    stopRecordingImageButton.setEnabled(isRecording);
+    if (isRecording) {
+      recordStateTextView.setTextColor(
+          getResources().getColor(isPaused ? android.R.color.white : R.color.red));
+      recordStateTextView.setText(isPaused ? R.string.generic_paused : R.string.generic_recording);
+      recordStateTextView.setVisibility(View.VISIBLE);
+    } else {
+      recordStateTextView.setVisibility(View.INVISIBLE);
+    }
+  }
+
+  private void startUpdateRecordTime(boolean isRecording) {
+    stopUpdateRecordTime(false);
+
+    if (isRecording) {
+      recordTime = getRecordTime();
+      lastResumeTime = System.currentTimeMillis();
+      recordTimeTextView.setEnabled(true);
+      recordTimeTextView.setText(StringUtils.formatElapsedTimeWithHour(recordTime));
+      handler.postDelayed(updateRecordTimeRunnable, ONE_SECOND);
+    }
+  }
+
+  private void stopUpdateRecordTime(boolean isRecording) {
+    handler.removeCallbacks(updateRecordTimeRunnable);
+    if (isRecording) {
+      recordTime = getRecordTime();
+      recordTimeTextView.setEnabled(true);
+      recordTimeTextView.setText(StringUtils.formatElapsedTimeWithHour(recordTime));
+    } else {
+      recordTimeTextView.setEnabled(false);
+      recordTimeTextView.setText(StringUtils.formatElapsedTimeWithHour(0L));
+    }
+  }
+
+  /**
+   * Gets the current record time.
+   */
+  private long getRecordTime() {
+    MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
+    Track track = myTracksProviderUtils.getTrack(recordingTrackId);
+    return track.getTripStatistics().getTotalTime();
+  }
+
+  /**
+   * Starts a new recording.
+   */
+  private void startRecording() {
+    startNewRecording = true;
+    trackRecordingServiceConnection.startAndBind();
+
+    /*
+     * If the binding has happened, then invoke the callback to start a new
+     * recording. If the binding hasn't happened, then invoking the callback
+     * will have no effect. But when the binding occurs, the callback will get
+     * invoked.
+     */
+    bindChangedCallback.run();
+  }
+
   /**
    * Starts the {@link SaveActivity} to save all tracks.
-   *
+   * 
    * @param trackFileFormat the track file format
    */
   private void startSaveActivity(TrackFileFormat trackFileFormat) {
@@ -472,20 +590,6 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
     Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
         .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);
     startActivity(intent);
-  }
-  
-  @Override
-  public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-    super.onCreateContextMenu(menu, v, menuInfo);
-    getMenuInflater().inflate(R.menu.list_context_menu, menu);
-  }
-  
-  @Override
-  public boolean onContextItemSelected(MenuItem item) {
-    if (handleContextItem(item.getItemId(), ((AdapterContextMenuInfo) item.getMenuInfo()).id)) {
-      return true;
-    }
-    return super.onContextItemSelected(item);
   }
 
   /**
@@ -515,36 +619,5 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
       default:
         return false;
     }
-  }
-
-  /**
-   * Starts a new recording.
-   */
-  private void startRecording() {
-    startNewRecording = true;
-    trackRecordingServiceConnection.startAndBind();
-
-    /*
-     * If the binding has happened, then invoke the callback to start a new
-     * recording. If the binding hasn't happened, then invoking the callback
-     * will have no effect. But when the binding occurs, the callback will get
-     * invoked.
-     */
-    bindChangedCallback.run();
-  }
-
-  @Override
-  public boolean onKeyUp(int keyCode, KeyEvent event) {
-    if (keyCode == KeyEvent.KEYCODE_SEARCH) {
-      if (ApiAdapterFactory.getApiAdapter().handleSearchKey(searchMenuItem)) {
-        return true;
-      }
-    }
-    return super.onKeyUp(keyCode, event);
-  }
-
-  @Override
-  public TrackRecordingServiceConnection getTrackRecordingServiceConnection() {
-    return trackRecordingServiceConnection;
   }
 }

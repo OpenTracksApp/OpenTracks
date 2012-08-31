@@ -72,6 +72,6 @@ public class CheckUnitsDialogFragment extends DialogFragment {
   private void onDone() {
     EulaUtils.setShowCheckUnits(getActivity());
     TrackListActivity trackListActivity = (TrackListActivity) getActivity();
-    trackListActivity.showStartupDialogs();   
+    trackListActivity.showStartupDialogs();
   }
 }

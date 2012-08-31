@@ -317,22 +317,16 @@ class TrackWriterImpl implements TrackWriter {
     LocationIterator it = providerUtils.getTrackPointLocationIterator(track.getId(), 0, false,
         locationFactory);
     try {
-      if (!it.hasNext()) {
-        // Writes an empty track
-        writer.writeBeginTrack(null);
-        writer.writeEndTrack(null);
-        return;
-      }
       int pointNumber = 0;
       while (it.hasNext()) {
-        Location loc = it.next();
+        Location location = it.next();
         if (Thread.interrupted()) {
           throw new InterruptedException();
         }
 
         pointNumber++;
 
-        boolean isValid = LocationUtils.isValidLocation(loc);
+        boolean isValid = LocationUtils.isValidLocation(location);
         boolean validSegment = isValid && isLastValid;
         if (!wroteFirst && validSegment) {
           // Found the first two consecutive points which are valid
@@ -351,7 +345,7 @@ class TrackWriterImpl implements TrackWriter {
           }
 
           // Write the current point
-          writer.writeLocation(loc);
+          writer.writeLocation(location);
           if (onWriteListener != null) {
             onWriteListener.onWrite(pointNumber, track.getNumberOfPoints());
           }
@@ -371,6 +365,10 @@ class TrackWriterImpl implements TrackWriter {
       }
       if (wroteFirst) {
         writer.writeEndTrack(locationFactory.lastLocation);
+      } else {
+        // Writes an empty track
+        writer.writeBeginTrack(null);
+        writer.writeEndTrack(null);
       }
     } finally {
       it.close();

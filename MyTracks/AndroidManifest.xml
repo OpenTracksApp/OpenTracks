@@ -82,7 +82,7 @@ limitations under the License.
 
   <uses-sdk
     android:minSdkVersion="7"
-    android:targetSdkVersion="15" />
+    android:targetSdkVersion="16" />
   <!-- Required features -->
   <uses-feature
     android:name="android.hardware.location"

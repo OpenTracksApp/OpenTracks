@@ -648,9 +648,17 @@ limitations under the License.
     translation_description="The text on a button to say ok.">
     OK
   </string>
+  <string name="generic_paused"
+    translation_description="Text indicating a track is paused.">
+    Paused
+  </string>
   <string name="generic_progress_title"
     translation_description="The title on a progress dialog asking the user to wait.">
     Please wait...
+  </string>
+  <string name="generic_recording"
+    translation_description="Text indicating a track is recording.">
+    Recording...
   </string>
   <string name="generic_save"
     translation_description="The text on a button to say save.">
@@ -881,10 +889,6 @@ limitations under the License.
   <string name="icon_my_location"
     translation_description="The accessibility description for the 'My Location' icon.">
     My Location
-  </string>
-  <string name="icon_recording"
-    translation_description="The accessibility description for the 'Recording' icon.">
-    Recording
   </string>
   <string name="icon_track"
     translation_description="The accessibility description for the 'Track' icon.">
@@ -2230,14 +2234,6 @@ limitations under the License.
   <string name="track_detail_stats_tab"
     translation_description="In the track detail page, the title of the tab showing the stats.">
     Stats
-  </string>
-  <string name="track_detail_title_paused"
-    translation_description="In the track detail page, the title when paused.">
-    Paused
-  </string>
-  <string name="track_detail_title_recording"
-    translation_description="In the track detail page, the title when recording.">
-    Recording...
   </string>
   <string name="track_edit_activity_type"
     translation_description="In the page to edit a track, the label for the text field to edit the

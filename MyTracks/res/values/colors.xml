@@ -19,7 +19,6 @@ limitations under the License.
   <color name="blue">#FF0000FF</color>
   <color name="gray">#FFAAAAAA</color>
   <color name="red">#FFFF0000</color>
-  <color name="transparent">#00000000</color>
 
   <!-- holo_orange_dark -->
   <color name="warning_background">#FFFF8800</color>

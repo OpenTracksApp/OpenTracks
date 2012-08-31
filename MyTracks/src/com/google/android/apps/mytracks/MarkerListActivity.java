@@ -84,9 +84,10 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
       sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
           @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-          // Note that key can be null
+          // Note that the key can be null
           if (PreferencesUtils.getKey(MarkerListActivity.this, R.string.recording_track_id_key)
-              .equals(key)) {
+              .equals(key) || PreferencesUtils.getKey(
+              MarkerListActivity.this, R.string.recording_track_paused_key).equals(key)) {
             updateMenu();
           }
         }
@@ -187,8 +188,11 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
 
   private void updateMenu() {
     if (insertMarkerMenuItem != null) {
-      insertMarkerMenuItem.setVisible(
-          trackId == PreferencesUtils.getLong(this, R.string.recording_track_id_key));
+      boolean isRecording = trackId
+          == PreferencesUtils.getLong(this, R.string.recording_track_id_key);
+      boolean isPaused = PreferencesUtils.getBoolean(this, R.string.recording_track_paused_key,
+          PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+      insertMarkerMenuItem.setVisible(isRecording && !isPaused);
     }
   }
 
