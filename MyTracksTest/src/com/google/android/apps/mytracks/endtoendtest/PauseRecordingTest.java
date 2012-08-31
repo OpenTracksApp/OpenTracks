@@ -61,15 +61,10 @@ public class PauseRecordingTest extends ActivityInstrumentationTestCase2<TrackLi
         activityMyTracks.getString(R.string.menu_pause_track), false));
     assertNotNull(EndToEndTestUtils.findMenuItem(
         activityMyTracks.getString(R.string.menu_stop_recording), false));
-    EndToEndTestUtils.SOLO.goBack();
-    assertNotNull(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_pause_track), false));
-    assertNotNull(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_stop_recording), false));
     EndToEndTestUtils.sendGps(gpsSignalNumber);
 
     // Pause
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_pause_track), true);
+    EndToEndTestUtils.pauseRecording();
     assertNotNull(EndToEndTestUtils.findMenuItem(
         activityMyTracks.getString(R.string.menu_record_track), false));
     assertNotNull(EndToEndTestUtils.findMenuItem(
@@ -89,11 +84,6 @@ public class PauseRecordingTest extends ActivityInstrumentationTestCase2<TrackLi
 
     // Start recording
     EndToEndTestUtils.startRecording();
-    assertNotNull(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_pause_track), false));
-    assertNotNull(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_stop_recording), false));
-    EndToEndTestUtils.SOLO.goBack();
     assertNotNull(EndToEndTestUtils.findMenuItem(
         activityMyTracks.getString(R.string.menu_pause_track), false));
     assertNotNull(EndToEndTestUtils.findMenuItem(
@@ -167,6 +157,16 @@ public class PauseRecordingTest extends ActivityInstrumentationTestCase2<TrackLi
       assertEquals(expectPauseNumber, numberOfPausePoint);
       assertEquals(expectResumeNumber, numberOfResumePoint);
     }
+  }
+  
+  @Override
+  protected void tearDown() throws Exception {
+    // In normally, the activities of MyTracks should be closed after every test is
+    // completed. But this case is different, send two go back event to make it will
+    // not block following tests.
+    EndToEndTestUtils.SOLO.goBack();
+    EndToEndTestUtils.SOLO.goBack();
+    super.tearDown();
   }
 
 }

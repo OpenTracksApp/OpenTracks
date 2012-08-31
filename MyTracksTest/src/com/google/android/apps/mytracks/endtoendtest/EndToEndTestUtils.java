@@ -383,8 +383,11 @@ public class EndToEndTestUtils {
    * Starts recoding track.
    */
   static void startRecording() {
-    if (hasActionBar) {
-      View startButton = getButtonOnScreen(activityMytracks.getString(R.string.menu_record_track), false, false);
+    View startButton = SOLO.getCurrentActivity().findViewById(R.id.track_list_record_track_button);
+    if(startButton != null && startButton.isShown()) {
+      SOLO.clickOnView(startButton);
+    } else if (hasActionBar) {
+      startButton = getButtonOnScreen(activityMytracks.getString(R.string.menu_record_track), false, false);
       // In case a track is recording.
       if (startButton == null) {
         stopRecording(true);
@@ -410,11 +413,52 @@ public class EndToEndTestUtils {
   }
   
   /**
+   * Pauses recoding track.
+   */
+  static void pauseRecording() {
+    View pauseButton = SOLO.getCurrentActivity().findViewById(R.id.track_list_record_track_button);
+    if(pauseButton != null && pauseButton.isShown()) {
+      SOLO.clickOnView(pauseButton);
+    } else if (hasActionBar) {
+      pauseButton = getButtonOnScreen(activityMytracks.getString(R.string.menu_pause_track), false, false);
+      SOLO.clickOnView(pauseButton);
+    } else {
+      showMenuItem();
+      instrumentation.waitForIdleSync();
+      SOLO.clickOnText(activityMytracks.getString(R.string.menu_pause_track));
+    }
+    instrumentation.waitForIdleSync();
+  }
+  
+  /**
+   * Resume recoding track.
+   */
+  static void resumeRecording() {
+    View startButton = SOLO.getCurrentActivity().findViewById(R.id.track_list_record_track_button);
+    if(startButton != null && startButton.isShown()) {
+      SOLO.clickOnView(startButton);
+    } else if (hasActionBar) {
+      startButton = getButtonOnScreen(activityMytracks.getString(R.string.menu_record_track), false, false);
+      SOLO.clickOnView(startButton);
+    } else {
+      showMenuItem();
+      instrumentation.waitForIdleSync();
+      SOLO.clickOnText(activityMytracks.getString(R.string.menu_record_track));
+    }
+    instrumentation.waitForIdleSync();
+  }
+  
+  /**
    * Checks if the MyTracks is under recording.
    * 
    * @return true if it is under recording.
    */
   static boolean isUnderRecording() {
+    View startButton = SOLO.getCurrentActivity().findViewById(R.id.track_list_record_track_button);
+    if(startButton != null && startButton.isShown()) {
+      return false;
+    }
+    
     if (hasActionBar) { 
       return getButtonOnScreen(activityMytracks
         .getString(R.string.menu_record_track), false, false) == null; 
@@ -435,7 +479,10 @@ public class EndToEndTestUtils {
    * @param isSave true means should save this track
    */
   static void stopRecording(boolean isSave) {
-    if (hasActionBar) {
+    View stopButton = SOLO.getCurrentActivity().findViewById(R.id.track_list_stop_recording_button);
+    if(stopButton != null && stopButton.isShown() ) {
+      SOLO.clickOnView(stopButton);
+    } else if (hasActionBar) {
       getButtonOnScreen(activityMytracks.getString(R.string.menu_stop_recording), false, true);
     } else {
       showMenuItem();
@@ -624,15 +671,15 @@ public class EndToEndTestUtils {
         return findResult;
       }
       showMenuItem();
-      findResult = SOLO.searchText(menuName);
+      findResult = SOLO.searchText(menuName, 1, true);
     } else {
       // Non-ICS phone.
       SOLO.sendKey(KeyEvent.KEYCODE_MENU);
       if (SOLO.getText(menuName) != null) {
         findResult = true;
-      } else if (SOLO.searchText(MENU_MORE)) {
+      } else if (SOLO.searchText(MENU_MORE, 1, true)) {
         SOLO.clickOnText(MENU_MORE);
-        findResult = SOLO.searchText(menuName);
+        findResult = SOLO.searchText(menuName, 1, true);
         isMoreMenuOpened = true;
       }
     }

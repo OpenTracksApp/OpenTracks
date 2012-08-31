@@ -80,6 +80,7 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
         false));
 
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_map_tab));
+    EndToEndTestUtils.rotateAllActivities();
     assertTrue(EndToEndTestUtils.findMenuItem(
         activityMyTracks.getString(R.string.menu_settings), false));
     assertTrue(EndToEndTestUtils.findMenuItem(EndToEndTestUtils.VIEW_MODE, false));
