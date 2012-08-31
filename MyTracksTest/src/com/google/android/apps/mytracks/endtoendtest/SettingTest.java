@@ -125,9 +125,9 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.startRecording();
     // Test just change preferred units when display CHART tab.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_chart_tab));
-    EndToEndTestUtils.sendGps(3, 0);
+    EndToEndTestUtils.sendGps(3);
     ChangeStatsSettings(true, false, false, false, false);
-    EndToEndTestUtils.sendGps(3, 3);
+    EndToEndTestUtils.sendGps(3, 3, -1);
     EndToEndTestUtils.stopRecording(true);
 
   }
@@ -139,9 +139,9 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.startRecording();
     // Test change preferred units and preferred rate when display STATS tab.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
-    EndToEndTestUtils.sendGps(3, 0);
+    EndToEndTestUtils.sendGps(3);
     ChangeStatsSettings(true, true, false, false, false);
-    EndToEndTestUtils.sendGps(3, 3);
+    EndToEndTestUtils.sendGps(3, 3, -1);
     EndToEndTestUtils.stopRecording(true);
 
   }

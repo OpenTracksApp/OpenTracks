@@ -35,7 +35,7 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
   private Instrumentation instrumentation;
   private TrackListActivity activityMyTracks;
 
-  @TargetApi(8)
+  @TargetApi(16)
   public DeleteTest() {
     super(TrackListActivity.class);
   }
@@ -114,11 +114,7 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     instrumentation.waitForIdleSync();
-    assertTrue(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_record_track), false));
-    instrumentation.waitForIdleSync();
-    assertTrue(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_record_track), false));
+    assertFalse(EndToEndTestUtils.SOLO.getCurrentActivity().findViewById(R.id.track_list_stop_recording_button).isEnabled());
   }
 
   @Override

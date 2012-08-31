@@ -73,7 +73,7 @@ public class GoToMyLocationTest extends ActivityInstrumentationTestCase2<TrackLi
    */
   public static void findAndClickMyLocation(Activity activity) {
     EndToEndTestUtils.createTrackIfEmpty(1, false);
-    EndToEndTestUtils.sendGps(30, 0);
+    EndToEndTestUtils.sendGps(30);
     
     View myLocation = EndToEndTestUtils.SOLO.getCurrentActivity()
         .findViewById(R.id.map_my_location);

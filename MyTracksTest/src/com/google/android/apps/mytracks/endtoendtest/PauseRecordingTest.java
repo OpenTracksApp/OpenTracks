@@ -61,20 +61,15 @@ public class PauseRecordingTest extends ActivityInstrumentationTestCase2<TrackLi
         activityMyTracks.getString(R.string.menu_pause_track), false));
     assertNotNull(EndToEndTestUtils.findMenuItem(
         activityMyTracks.getString(R.string.menu_stop_recording), false));
-    EndToEndTestUtils.SOLO.goBack();
-    assertNotNull(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_pause_track), false));
-    assertNotNull(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_stop_recording), false));
-    EndToEndTestUtils.sendGps(gpsSignalNumber, 0);
+    EndToEndTestUtils.sendGps(gpsSignalNumber);
 
     // Pause
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_pause_track), true);
+    EndToEndTestUtils.pauseRecording();
     assertNotNull(EndToEndTestUtils.findMenuItem(
         activityMyTracks.getString(R.string.menu_record_track), false));
     assertNotNull(EndToEndTestUtils.findMenuItem(
         activityMyTracks.getString(R.string.menu_stop_recording), false));
-    EndToEndTestUtils.sendGps(gpsSignalNumber, gpsSignalNumber);
+    EndToEndTestUtils.sendGps(gpsSignalNumber, gpsSignalNumber, -1);
 
     // Stop
     EndToEndTestUtils.stopRecording(true);
@@ -93,12 +88,7 @@ public class PauseRecordingTest extends ActivityInstrumentationTestCase2<TrackLi
         activityMyTracks.getString(R.string.menu_pause_track), false));
     assertNotNull(EndToEndTestUtils.findMenuItem(
         activityMyTracks.getString(R.string.menu_stop_recording), false));
-    EndToEndTestUtils.SOLO.goBack();
-    assertNotNull(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_pause_track), false));
-    assertNotNull(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_stop_recording), false));
-    EndToEndTestUtils.sendGps(gpsSignalNumber, 0);
+    EndToEndTestUtils.sendGps(gpsSignalNumber);
 
     // Pause
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_pause_track), true);
@@ -108,11 +98,8 @@ public class PauseRecordingTest extends ActivityInstrumentationTestCase2<TrackLi
         activityMyTracks.getString(R.string.menu_stop_recording), false));
 
     // Send Gps signal after pause.
-    int defaultPause = EndToEndTestUtils.PAUSE;
-    EndToEndTestUtils.PAUSE = 10;
-    // Add 100 to make these signals are apparently different.
-    EndToEndTestUtils.sendGps(gpsSignalNumber, gpsSignalNumber + 100);
-    EndToEndTestUtils.PAUSE = defaultPause;
+    // Add 10 to make these signals are apparently different.
+    EndToEndTestUtils.sendGps(gpsSignalNumber, gpsSignalNumber + 10, 10);
 
     // Resume
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_record_track), true);
@@ -120,7 +107,7 @@ public class PauseRecordingTest extends ActivityInstrumentationTestCase2<TrackLi
         activityMyTracks.getString(R.string.menu_pause_track), false));
     assertNotNull(EndToEndTestUtils.findMenuItem(
         activityMyTracks.getString(R.string.menu_stop_recording), false));
-    EndToEndTestUtils.sendGps(gpsSignalNumber, gpsSignalNumber);
+    EndToEndTestUtils.sendGps(gpsSignalNumber, gpsSignalNumber, -1);
 
     // Stop
     EndToEndTestUtils.stopRecording(true);
@@ -170,6 +157,16 @@ public class PauseRecordingTest extends ActivityInstrumentationTestCase2<TrackLi
       assertEquals(expectPauseNumber, numberOfPausePoint);
       assertEquals(expectResumeNumber, numberOfResumePoint);
     }
+  }
+  
+  @Override
+  protected void tearDown() throws Exception {
+    // In normally, the activities of MyTracks should be closed after every test is
+    // completed. But this case is different, send two go back event to make it will
+    // not block following tests.
+    EndToEndTestUtils.SOLO.goBack();
+    EndToEndTestUtils.SOLO.goBack();
+    super.tearDown();
   }
 
 }

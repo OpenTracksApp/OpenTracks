@@ -58,7 +58,7 @@ public class EndToEndTestUtils {
   private static final int ORIENTATION_PORTRAIT = 1;
   private static final int ORIENTATION_LANDSCAPE = 0;
   // Pause 200ms between each send.
-  static int PAUSE = 200;
+  private static final int PAUSE_DEFAULT = 200;
   static final double START_LONGITUDE = 51;
   static final double START_LATITUDE = -1.3f;
   static final double DELTA_LONGITUDE = 0.0005f;
@@ -160,15 +160,21 @@ public class EndToEndTestUtils {
   }
 
   /**
-   * Sends Gps data to emulator.
+   * Sends Gps data to emulator, and the start value has an offset.
    * 
    * @param number send times
-   * @param numberBofore is used to compute the start latitude and longitude 
+   * @param offset is used to compute the start latitude and longitude 
    */
-  public static void sendGps(int number, int numberBofore) {
+  public static void sendGps(int number, int offset, int pause) {
     if (number < 1) { 
       return; 
     }
+    
+    int pauseInterval = PAUSE_DEFAULT;
+    if(pause > -1) {
+      pauseInterval = pause;
+    }
+    
     // If it's a real device, does not send simulated GPS signal.
     if (!isEmulator) {
       return;
@@ -179,13 +185,13 @@ public class EndToEndTestUtils {
     try {
       socket = new Socket(ANDROID_LOCAL_IP, emulatorPort);
       out = new PrintStream(socket.getOutputStream());
-      double longitude = START_LONGITUDE + numberBofore * DELTA_LONGITUDE;
-      double latitude = START_LATITUDE + numberBofore * DELTA_LADITUDE;
+      double longitude = START_LONGITUDE + offset * DELTA_LONGITUDE;
+      double latitude = START_LATITUDE + offset * DELTA_LADITUDE;
       for (int i = 0; i < number; i++) {
         out.println("geo fix " + longitude + " " + latitude);
         longitude += DELTA_LONGITUDE;
         latitude += DELTA_LADITUDE;
-        Thread.sleep(PAUSE);
+        Thread.sleep(pauseInterval);
       }
       // Wait the GPS signal can be obtained by MyTracks.  
       Thread.sleep(SHORT_WAIT_TIME);
@@ -200,6 +206,15 @@ public class EndToEndTestUtils {
         out.close();
       }
     }
+  }
+  
+  /**
+   * Send Gps data to emulator.
+   * 
+   * @param number number of signals
+   */
+  public static void sendGps(int number) {
+    sendGps(number, 0, -1);
   }
   
   /**
@@ -303,7 +318,7 @@ public class EndToEndTestUtils {
    */
   static void createSimpleTrack(int numberOfGpsData) {
     startRecording();
-    sendGps(numberOfGpsData, 0);
+    sendGps(numberOfGpsData, 0, -1);
     instrumentation.waitForIdleSync();
     stopRecording(true);
   }
@@ -315,10 +330,10 @@ public class EndToEndTestUtils {
    */
   public static void createTrackWithPause(int numberOfGpsData) {
     EndToEndTestUtils.startRecording();
-    EndToEndTestUtils.sendGps(numberOfGpsData, 0);
+    EndToEndTestUtils.sendGps(numberOfGpsData, 0, -1);
     EndToEndTestUtils.findMenuItem(activityMytracks.getString(R.string.menu_pause_track), true);
     EndToEndTestUtils.findMenuItem(activityMytracks.getString(R.string.menu_record_track), true);
-    EndToEndTestUtils.sendGps(numberOfGpsData, numberOfGpsData);
+    EndToEndTestUtils.sendGps(numberOfGpsData, numberOfGpsData, -1);
     EndToEndTestUtils.stopRecording(true);
   }
   
@@ -368,8 +383,11 @@ public class EndToEndTestUtils {
    * Starts recoding track.
    */
   static void startRecording() {
-    if (hasActionBar) {
-      View startButton = getButtonOnScreen(activityMytracks.getString(R.string.menu_record_track), false, false);
+    View startButton = SOLO.getCurrentActivity().findViewById(R.id.track_list_record_track_button);
+    if(startButton != null && startButton.isShown()) {
+      SOLO.clickOnView(startButton);
+    } else if (hasActionBar) {
+      startButton = getButtonOnScreen(activityMytracks.getString(R.string.menu_record_track), false, false);
       // In case a track is recording.
       if (startButton == null) {
         stopRecording(true);
@@ -395,11 +413,52 @@ public class EndToEndTestUtils {
   }
   
   /**
+   * Pauses recoding track.
+   */
+  static void pauseRecording() {
+    View pauseButton = SOLO.getCurrentActivity().findViewById(R.id.track_list_record_track_button);
+    if(pauseButton != null && pauseButton.isShown()) {
+      SOLO.clickOnView(pauseButton);
+    } else if (hasActionBar) {
+      pauseButton = getButtonOnScreen(activityMytracks.getString(R.string.menu_pause_track), false, false);
+      SOLO.clickOnView(pauseButton);
+    } else {
+      showMenuItem();
+      instrumentation.waitForIdleSync();
+      SOLO.clickOnText(activityMytracks.getString(R.string.menu_pause_track));
+    }
+    instrumentation.waitForIdleSync();
+  }
+  
+  /**
+   * Resume recoding track.
+   */
+  static void resumeRecording() {
+    View startButton = SOLO.getCurrentActivity().findViewById(R.id.track_list_record_track_button);
+    if(startButton != null && startButton.isShown()) {
+      SOLO.clickOnView(startButton);
+    } else if (hasActionBar) {
+      startButton = getButtonOnScreen(activityMytracks.getString(R.string.menu_record_track), false, false);
+      SOLO.clickOnView(startButton);
+    } else {
+      showMenuItem();
+      instrumentation.waitForIdleSync();
+      SOLO.clickOnText(activityMytracks.getString(R.string.menu_record_track));
+    }
+    instrumentation.waitForIdleSync();
+  }
+  
+  /**
    * Checks if the MyTracks is under recording.
    * 
    * @return true if it is under recording.
    */
   static boolean isUnderRecording() {
+    View startButton = SOLO.getCurrentActivity().findViewById(R.id.track_list_record_track_button);
+    if(startButton != null && startButton.isShown()) {
+      return false;
+    }
+    
     if (hasActionBar) { 
       return getButtonOnScreen(activityMytracks
         .getString(R.string.menu_record_track), false, false) == null; 
@@ -420,7 +479,10 @@ public class EndToEndTestUtils {
    * @param isSave true means should save this track
    */
   static void stopRecording(boolean isSave) {
-    if (hasActionBar) {
+    View stopButton = SOLO.getCurrentActivity().findViewById(R.id.track_list_stop_recording_button);
+    if(stopButton != null && stopButton.isShown() ) {
+      SOLO.clickOnView(stopButton);
+    } else if (hasActionBar) {
       getButtonOnScreen(activityMytracks.getString(R.string.menu_stop_recording), false, true);
     } else {
       showMenuItem();
@@ -609,15 +671,15 @@ public class EndToEndTestUtils {
         return findResult;
       }
       showMenuItem();
-      findResult = SOLO.searchText(menuName);
+      findResult = SOLO.searchText(menuName, 1, true);
     } else {
       // Non-ICS phone.
       SOLO.sendKey(KeyEvent.KEYCODE_MENU);
       if (SOLO.getText(menuName) != null) {
         findResult = true;
-      } else if (SOLO.searchText(MENU_MORE)) {
+      } else if (SOLO.searchText(MENU_MORE, 1, true)) {
         SOLO.clickOnText(MENU_MORE);
-        findResult = SOLO.searchText(menuName);
+        findResult = SOLO.searchText(menuName, 1, true);
         isMoreMenuOpened = true;
       }
     }
