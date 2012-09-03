@@ -57,18 +57,14 @@ public class PauseRecordingTest extends ActivityInstrumentationTestCase2<TrackLi
 
     // Start recording
     EndToEndTestUtils.startRecording();
-    assertNotNull(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_pause_track), false));
-    assertNotNull(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_stop_recording), false));
+    assertTrue(EndToEndTestUtils.SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop).isEnabled());
     EndToEndTestUtils.sendGps(gpsSignalNumber);
+
 
     // Pause
     EndToEndTestUtils.pauseRecording();
-    assertNotNull(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_record_track), false));
-    assertNotNull(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_stop_recording), false));
+    assertTrue(EndToEndTestUtils.SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop).isEnabled());
+
     EndToEndTestUtils.sendGps(gpsSignalNumber, gpsSignalNumber);
 
     // Stop
@@ -84,18 +80,14 @@ public class PauseRecordingTest extends ActivityInstrumentationTestCase2<TrackLi
 
     // Start recording
     EndToEndTestUtils.startRecording();
-    assertNotNull(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_pause_track), false));
-    assertNotNull(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_stop_recording), false));
+    assertTrue(EndToEndTestUtils.SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop).isEnabled());
     EndToEndTestUtils.sendGps(gpsSignalNumber);
+
 
     // Pause
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_pause_track), true);
-    assertNotNull(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_record_track), false));
-    assertNotNull(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_stop_recording), false));
+    assertTrue(EndToEndTestUtils.SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop).isEnabled());
+
 
     // Send Gps signal after pause.
     // Add 10 to make these signals are apparently different.
@@ -103,10 +95,7 @@ public class PauseRecordingTest extends ActivityInstrumentationTestCase2<TrackLi
 
     // Resume
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_record_track), true);
-    assertNotNull(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_pause_track), false));
-    assertNotNull(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_stop_recording), false));
+    assertTrue(EndToEndTestUtils.SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop).isEnabled());
     EndToEndTestUtils.sendGps(gpsSignalNumber, gpsSignalNumber);
 
     // Stop
@@ -142,7 +131,6 @@ public class PauseRecordingTest extends ActivityInstrumentationTestCase2<TrackLi
         } else if (latitude == TrackRecordingService.RESUME_LATITUDE) {
           numberOfResumePoint++;
         } else {
-          System.out.println(latitude + ":" + longitude);
           assertEquals(
               numberOfPoints,
               (int) ((latitude - EndToEndTestUtils.START_LATITUDE) / EndToEndTestUtils.DELTA_LADITUDE + 0.5));

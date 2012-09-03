@@ -335,10 +335,9 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     } else {
       assertFalse(EndToEndTestUtils.SOLO.searchText(WAYPOINT_NAME));
     }
-
     EndToEndTestUtils.SOLO.goBack();
   }
-
+  
   @Override
   protected void tearDown() throws Exception {
     EndToEndTestUtils.SOLO.finishOpenedActivities();

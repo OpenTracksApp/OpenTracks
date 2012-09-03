@@ -397,28 +397,6 @@ public class EndToEndTestUtils {
     View startButton = SOLO.getCurrentActivity().findViewById(R.id.track_controller_record);
     if(startButton != null && startButton.isShown()) {
       SOLO.clickOnView(startButton);
-    } else if (hasActionBar) {
-      startButton = getButtonOnScreen(activityMytracks.getString(R.string.menu_record_track), false, false);
-      // In case a track is recording.
-      if (startButton == null) {
-        stopRecording(true);
-        startButton = getButtonOnScreen(activityMytracks.getString(R.string.menu_record_track), false, false);
-      }
-      SOLO.clickOnView(startButton);
-    } else {
-      showMenuItem();
-      if (!SOLO.searchText(activityMytracks.getString(R.string.menu_record_track))) {
-        // Check if in TrackDetailActivity.
-        if (SOLO.searchText(activityMytracks.getString(R.string.menu_play))) {
-          SOLO.goBack();
-        } else {
-          // In case a track is recording.
-          stopRecording(true);
-          showMenuItem();
-        }
-      }
-      instrumentation.waitForIdleSync();
-      SOLO.clickOnText(activityMytracks.getString(R.string.menu_record_track));
     }
     instrumentation.waitForIdleSync();
   }
@@ -430,14 +408,7 @@ public class EndToEndTestUtils {
     View pauseButton = SOLO.getCurrentActivity().findViewById(R.id.track_controller_record);
     if(pauseButton != null && pauseButton.isShown()) {
       SOLO.clickOnView(pauseButton);
-    } else if (hasActionBar) {
-      pauseButton = getButtonOnScreen(activityMytracks.getString(R.string.menu_pause_track), false, false);
-      SOLO.clickOnView(pauseButton);
-    } else {
-      showMenuItem();
-      instrumentation.waitForIdleSync();
-      SOLO.clickOnText(activityMytracks.getString(R.string.menu_pause_track));
-    }
+    } 
     instrumentation.waitForIdleSync();
   }
   
@@ -448,13 +419,6 @@ public class EndToEndTestUtils {
     View startButton = SOLO.getCurrentActivity().findViewById(R.id.track_controller_record);
     if(startButton != null && startButton.isShown()) {
       SOLO.clickOnView(startButton);
-    } else if (hasActionBar) {
-      startButton = getButtonOnScreen(activityMytracks.getString(R.string.menu_record_track), false, false);
-      SOLO.clickOnView(startButton);
-    } else {
-      showMenuItem();
-      instrumentation.waitForIdleSync();
-      SOLO.clickOnText(activityMytracks.getString(R.string.menu_record_track));
     }
     instrumentation.waitForIdleSync();
   }
@@ -493,25 +457,19 @@ public class EndToEndTestUtils {
     View stopButton = SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop);
     if(stopButton != null && stopButton.isShown() ) {
       SOLO.clickOnView(stopButton);
-    } else if (hasActionBar) {
-      getButtonOnScreen(activityMytracks.getString(R.string.menu_stop_recording), false, true);
-    } else {
-      showMenuItem();
-      instrumentation.waitForIdleSync();
-      SOLO.clickOnText(activityMytracks.getString(R.string.menu_stop_recording));
-    }
-    if (isSave) {
-      SOLO.waitForText(activityMytracks.getString(R.string.generic_save), 1, 5000);
-      // Make every track name is unique to make sure every check can be
-      // trusted.
-      trackName = TRACK_NAME_PREFIX
-          + System.currentTimeMillis();
-      SOLO.sendKey(KeyEvent.KEYCODE_DEL);
-      enterTextAvoidSoftKeyBoard(0, trackName);
-      enterTextAvoidSoftKeyBoard(1, DEFAULTACTIVITY);
-      SOLO.clickOnText(activityMytracks.getString(R.string.generic_save));
-      instrumentation.waitForIdleSync();
-    }
+      if (isSave) {
+        SOLO.waitForText(activityMytracks.getString(R.string.generic_save), 1, 5000);
+        // Make every track name is unique to make sure every check can be
+        // trusted.
+        trackName = TRACK_NAME_PREFIX
+            + System.currentTimeMillis();
+        SOLO.sendKey(KeyEvent.KEYCODE_DEL);
+        enterTextAvoidSoftKeyBoard(0, trackName);
+        enterTextAvoidSoftKeyBoard(1, DEFAULTACTIVITY);
+        SOLO.clickOnText(activityMytracks.getString(R.string.generic_save));
+        instrumentation.waitForIdleSync();
+      }
+    } 
   }
 
   /**

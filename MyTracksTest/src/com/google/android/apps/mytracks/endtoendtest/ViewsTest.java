@@ -114,10 +114,7 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
       }
     }
     instrumentation.waitForIdleSync();
-
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_help), false);
-    instrumentation.waitForIdleSync();
-    EndToEndTestUtils.rotateAllActivities();
+    assertTrue(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_help), false));
 
     // Switch back.
     EndToEndTestUtils.showMenuItem();
