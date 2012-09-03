@@ -16,8 +16,6 @@
 
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.fragments.CheckUnitsDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteAllTrackDialogFragment;
@@ -47,7 +45,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Parcelable;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.app.Fragment;
@@ -63,12 +60,11 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -80,9 +76,6 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
 
   private static final String TAG = TrackListActivity.class.getSimpleName();
 
-  // One second in milliseconds
-  private static final int ONE_SECOND = 1000;
-
   private static final String[] PROJECTION = new String[] { TracksColumns._ID, TracksColumns.NAME,
       TracksColumns.DESCRIPTION, TracksColumns.CATEGORY, TracksColumns.STARTTIME,
       TracksColumns.TOTALDISTANCE, TracksColumns.TOTALTIME, TracksColumns.ICON };
@@ -91,6 +84,16 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
   private final Runnable bindChangedCallback = new Runnable() {
       @Override
     public void run() {
+      // After binding changes (is available), update the total time in
+      // trackController.
+      runOnUiThread(new Runnable() {
+          @Override
+        public void run() {
+          trackController.update(recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT,
+              recordingTrackPaused);
+        }
+      });
+
       if (!startNewRecording) {
         return;
       }
@@ -144,7 +147,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
               }
               updateMenuItems(isRecording);
               resourceCursorAdapter.notifyDataSetChanged();
-              startUpdateRecordTime(isRecording);
+              trackController.update(isRecording, recordingTrackPaused);
               return;
             }
           }
@@ -154,9 +157,10 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
                 R.string.recording_track_paused_key,
                 PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
             if (key != null) {
-              updateButtons(recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT,
-                  recordingTrackPaused);
               resourceCursorAdapter.notifyDataSetChanged();
+              trackController.update(
+                  recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT,
+                  recordingTrackPaused);
               return;
             }
           }
@@ -164,7 +168,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
       };
 
   // Callback when an item is selected in the contextual action mode
-  private ContextualActionModeCallback
+  private final ContextualActionModeCallback
       contextualActionModeCallback = new ContextualActionModeCallback() {
           @Override
         public boolean onClick(int itemId, int position, long id) {
@@ -172,25 +176,44 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
         }
       };
 
-  // A runnable to update the record time.
-  private final Runnable updateRecordTimeRunnable = new Runnable() {
-    public void run() {
-      if (recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT
-          && !recordingTrackPaused) {
-        recordTimeTextView.setText(StringUtils.formatElapsedTimeWithHour(
-            System.currentTimeMillis() - lastResumeTime + recordTime));
-        handler.postDelayed(this, ONE_SECOND);
+  private final OnClickListener recordListener = new OnClickListener() {
+    public void onClick(View v) {
+      if (recordingTrackId == PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
+        // Not recording -> Recording
+        AnalyticsUtils.sendPageViews(TrackListActivity.this, "/action/record_track");
+        updateMenuItems(true);
+        startRecording();
+      } else {
+        if (recordingTrackPaused) {
+          // Paused -> Resume
+          AnalyticsUtils.sendPageViews(TrackListActivity.this, "/action/resume_track");
+          updateMenuItems(true);
+          TrackRecordingServiceConnectionUtils.resumeTrack(trackRecordingServiceConnection);
+          trackController.update(true, false);
+        } else {
+          // Recording -> Paused
+          AnalyticsUtils.sendPageViews(TrackListActivity.this, "/action/pause_track");
+          updateMenuItems(true);
+          TrackRecordingServiceConnectionUtils.pauseTrack(trackRecordingServiceConnection);
+          trackController.update(true, true);
+        }
       }
     }
   };
 
-  // The following are set in the constructor
+  private final OnClickListener stopListener = new OnClickListener() {
+      @Override
+    public void onClick(View v) {
+      AnalyticsUtils.sendPageViews(TrackListActivity.this, "/action/stop_recording");
+      updateMenuItems(false);
+      TrackRecordingServiceConnectionUtils.stopRecording(
+          TrackListActivity.this, trackRecordingServiceConnection, true);
+    }
+  };
+
+  // The following are set in onCreate
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
-  private Handler handler;
-  private TextView recordStateTextView;
-  private TextView recordTimeTextView;
-  private ImageButton recordTrackImageButton;
-  private ImageButton stopRecordingImageButton;
+  private TrackController trackController;
   private ListView listView;
   private ResourceCursorAdapter resourceCursorAdapter;
 
@@ -204,12 +227,8 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
   private MenuItem importMenuItem;
   private MenuItem saveAllMenuItem;
   private MenuItem deleteAllMenuItem;
-  
-  private boolean startNewRecording = false; // true to start a new recording
 
-  // For recordTimeTextView
-  private long recordTime = 0;
-  private long lastResumeTime = 0;
+  private boolean startNewRecording = false; // true to start a new recording
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -225,53 +244,9 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
-    
-    handler = new Handler();
-    recordStateTextView = (TextView) findViewById(R.id.track_list_record_state);
-    recordTimeTextView = (TextView) findViewById(R.id.track_list_record_time);
-    recordTrackImageButton = (ImageButton) findViewById(R.id.track_list_record_track_button);
-    recordTrackImageButton.setOnClickListener(new View.OnClickListener() {
-        @Override
-      public void onClick(View v) {
-        if (!(recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT)) {
-          // Not recording -> Recording
-          AnalyticsUtils.sendPageViews(TrackListActivity.this, "/action/record_track");
-          updateMenuItems(true);
-          updateButtons(true, false);
-          startRecording();
-        } else {
-          if (recordingTrackPaused) {
-            // Paused -> Resume
-            AnalyticsUtils.sendPageViews(TrackListActivity.this, "/action/resume_track");
-            updateMenuItems(true);
-            updateButtons(true, false);
-            TrackRecordingServiceConnectionUtils.resumeTrack(trackRecordingServiceConnection);
-            startUpdateRecordTime(true);
-          } else {
-            // Recording -> Paused
-            AnalyticsUtils.sendPageViews(TrackListActivity.this, "/action/pause_track");
-            updateMenuItems(true);
-            updateButtons(true, true);
-            TrackRecordingServiceConnectionUtils.pauseTrack(trackRecordingServiceConnection);
-            stopUpdateRecordTime(true);
-          }
-        }
-      }
-    });
-    stopRecordingImageButton = (ImageButton) findViewById(R.id.track_list_stop_recording_button);
-    stopRecordingImageButton.setOnClickListener(new View.OnClickListener() {
-        @Override
-      public void onClick(View v) {
-        AnalyticsUtils.sendPageViews(TrackListActivity.this, "/action/stop_recording");
-        updateMenuItems(false);
-        updateButtons(false, true);
-        TrackRecordingServiceConnectionUtils.stopRecording(
-            TrackListActivity.this, trackRecordingServiceConnection, true);
-        stopUpdateRecordTime(false);
-      }
-    });
-    updateButtons(
-        recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, recordingTrackPaused);
+
+    trackController = new TrackController(
+        this, trackRecordingServiceConnection, true, recordListener, stopListener);
 
     listView = (ListView) findViewById(R.id.track_list);
     listView.setEmptyView(findViewById(R.id.track_list_empty_view));
@@ -349,14 +324,15 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
   @Override
   protected void onPause() {
     super.onPause();
-    stopUpdateRecordTime(recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
+    trackController.stop();
   }
 
   @Override
   protected void onResume() {
     super.onResume();
     TrackRecordingServiceConnectionUtils.resumeConnection(this, trackRecordingServiceConnection);
-    startUpdateRecordTime(recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
+    trackController.update(
+        recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, recordingTrackPaused);
   }
 
   @Override
@@ -511,57 +487,6 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
     if (deleteAllMenuItem != null) {
       deleteAllMenuItem.setVisible(!isRecording);
     }
-  }
-
-  private void updateButtons(boolean isRecording, boolean isPaused) {
-    recordTrackImageButton.setImageResource(
-        isRecording && !isPaused ? R.drawable.btn_pause : R.drawable.btn_record);
-    recordTrackImageButton.setContentDescription(getString(
-        isRecording && !isPaused ? R.string.menu_pause_track : R.string.menu_record_track));
-    stopRecordingImageButton.setImageResource(
-        isRecording ? R.drawable.btn_stop_1 : R.drawable.btn_stop_0);
-    stopRecordingImageButton.setEnabled(isRecording);
-    if (isRecording) {
-      recordStateTextView.setTextColor(
-          getResources().getColor(isPaused ? android.R.color.white : R.color.red));
-      recordStateTextView.setText(isPaused ? R.string.generic_paused : R.string.generic_recording);
-      recordStateTextView.setVisibility(View.VISIBLE);
-    } else {
-      recordStateTextView.setVisibility(View.INVISIBLE);
-    }
-  }
-
-  private void startUpdateRecordTime(boolean isRecording) {
-    stopUpdateRecordTime(false);
-
-    if (isRecording) {
-      recordTime = getRecordTime();
-      lastResumeTime = System.currentTimeMillis();
-      recordTimeTextView.setEnabled(true);
-      recordTimeTextView.setText(StringUtils.formatElapsedTimeWithHour(recordTime));
-      handler.postDelayed(updateRecordTimeRunnable, ONE_SECOND);
-    }
-  }
-
-  private void stopUpdateRecordTime(boolean isRecording) {
-    handler.removeCallbacks(updateRecordTimeRunnable);
-    if (isRecording) {
-      recordTime = getRecordTime();
-      recordTimeTextView.setEnabled(true);
-      recordTimeTextView.setText(StringUtils.formatElapsedTimeWithHour(recordTime));
-    } else {
-      recordTimeTextView.setEnabled(false);
-      recordTimeTextView.setText(StringUtils.formatElapsedTimeWithHour(0L));
-    }
-  }
-
-  /**
-   * Gets the current record time.
-   */
-  private long getRecordTime() {
-    MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
-    Track track = myTracksProviderUtils.getTrack(recordingTrackId);
-    return track.getTripStatistics().getTotalTime();
   }
 
   /**

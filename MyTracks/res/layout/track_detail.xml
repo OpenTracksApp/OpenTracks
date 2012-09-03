@@ -14,29 +14,40 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
-  android:id="@android:id/tabhost"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_height="fill_parent"
-  android:layout_width="fill_parent" >
-  <LinearLayout
-    android:layout_height="fill_parent"
-    android:layout_width="fill_parent"
-    android:orientation="vertical" >
-    <TabWidget
-      android:id="@android:id/tabs"
-      android:layout_height="wrap_content"
-      android:layout_weight="0"
+  android:layout_width="fill_parent"
+  android:orientation="vertical" >
+  <TabHost
+    android:id="@android:id/tabhost"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:layout_width="fill_parent" >
+    <LinearLayout
+      android:layout_height="fill_parent"
       android:layout_width="fill_parent"
-      android:orientation="horizontal" />
-    <FrameLayout
-      android:id="@android:id/tabcontent"
-      android:layout_height="0dp"
-      android:layout_weight="0"
-      android:layout_width="0dp" />
-    <FrameLayout
-      android:id="@+id/realtabcontent"
-      android:layout_height="0dp"
-      android:layout_weight="1"
-      android:layout_width="fill_parent" />
+      android:orientation="vertical" >
+      <TabWidget
+        android:id="@android:id/tabs"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:layout_width="fill_parent"
+        android:orientation="horizontal" />
+      <FrameLayout
+        android:id="@android:id/tabcontent"
+        android:layout_height="0dp"
+        android:layout_weight="0"
+        android:layout_width="0dp" />
+      <FrameLayout
+        android:id="@+id/realtabcontent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_width="fill_parent" />
+    </LinearLayout>
+  </TabHost>
+  <LinearLayout
+    android:id="@+id/track_controler_container"
+    style="@style/TrackControllerContainer" >
+    <include layout="@layout/track_controller" />
   </LinearLayout>
-</TabHost>
+</LinearLayout>

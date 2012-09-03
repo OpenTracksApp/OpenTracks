@@ -1089,43 +1089,11 @@ public class TrackRecordingService extends Service {
     }
 
     @Override
-    public boolean isRecording() {
-      if (!canAccess()) {
-        return false;
-      }
-      return trackRecordingService.isRecording();
-    }
-
-    @Override
-    public boolean isPaused() {
-      if (!canAccess()) {
-        return false;
-      }
-      return trackRecordingService.isPaused();
-    }
-
-    @Override
-    public long getRecordingTrackId() {
-      if (!canAccess()) {
-        return -1L;
-      }
-      return trackRecordingService.recordingTrackId;
-    }
-
-    @Override
     public long startNewTrack() {
       if (!canAccess()) {
         return -1L;
       }
       return trackRecordingService.startNewTrack();
-    }
-
-    @Override
-    public long insertWaypoint(WaypointCreationRequest waypointCreationRequest) {
-      if (!canAccess()) {
-        return -1L;
-      }
-      return trackRecordingService.insertWaypoint(waypointCreationRequest);
     }
 
     @Override
@@ -1153,7 +1121,54 @@ public class TrackRecordingService extends Service {
     }
 
     @Override
-    public void recordLocation(Location location) {
+    public boolean isRecording() {
+      if (!canAccess()) {
+        return false;
+      }
+      return trackRecordingService.isRecording();
+    }
+
+    @Override
+    public boolean isPaused() {
+      if (!canAccess()) {
+        return false;
+      }
+      return trackRecordingService.isPaused();
+    }
+
+    @Override
+    public long getRecordingTrackId() {
+      if (!canAccess()) {
+        return -1L;
+      }
+      return trackRecordingService.recordingTrackId;
+    }
+
+    @Override
+    public long getTotalTime() {
+      if (!canAccess()) {
+        return 0;
+      }
+      TripStatisticsUpdater updater = trackRecordingService.trackTripStatisticsUpdater;
+      if (updater == null) {
+        return 0;
+      }
+      if (!trackRecordingService.isPaused()) {
+        updater.updateTime(System.currentTimeMillis());
+      }
+      return updater.getTripStatistics().getTotalTime();
+    }
+
+    @Override
+    public long insertWaypoint(WaypointCreationRequest waypointCreationRequest) {
+      if (!canAccess()) {
+        return -1L;
+      }
+      return trackRecordingService.insertWaypoint(waypointCreationRequest);
+    }
+
+    @Override
+    public void insertTrackPoint(Location location) {
       if (!canAccess()) {
         return;
       }

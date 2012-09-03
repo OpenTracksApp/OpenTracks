@@ -114,7 +114,7 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     instrumentation.waitForIdleSync();
-    assertFalse(EndToEndTestUtils.SOLO.getCurrentActivity().findViewById(R.id.track_list_stop_recording_button).isEnabled());
+    assertFalse(EndToEndTestUtils.SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop).isEnabled());
   }
 
   @Override

@@ -180,6 +180,13 @@ limitations under the License.
   </style>
   <!-- Theme selector -->
   <style name="ThemeSelector" parent="android:Theme" />
+  <!-- The style for the track controller container -->
+  <style name="TrackControllerContainer">
+    <item name="android:layout_gravity">center</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:orientation">horizontal</item>
+  </style>
   <!-- The style for the track widget button -->
   <style name="TrackWidgetButton">
     <item name="android:layout_gravity">center_horizontal</item>

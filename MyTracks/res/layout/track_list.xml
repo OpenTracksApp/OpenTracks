@@ -33,43 +33,8 @@ limitations under the License.
     style="@style/ListEmptyTextView" >
   </TextView>
   <LinearLayout
-    android:layout_gravity="center"
-    android:layout_height="wrap_content"
-    android:layout_width="wrap_content"
-    android:orientation="horizontal" >
-    <ImageButton
-      android:background="@android:color/transparent"
-      android:id="@+id/track_list_record_track_button"
-      android:layout_height="100dp"
-      android:layout_width="wrap_content"
-      android:scaleType="centerInside" />
-    <RelativeLayout
-      android:layout_height="100dp"
-      android:layout_marginLeft="-32dp"
-      android:layout_width="wrap_content" >
-      <TextView
-        android:id="@+id/track_list_record_time"
-        android:layout_centerInParent="true"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:paddingLeft="24dp"
-        android:paddingRight="8dp"
-        android:textColor="@android:color/white"
-        style="@style/TextSmall" />
-      <TextView
-        android:id="@+id/track_list_record_state"
-        android:layout_above="@id/track_list_record_time"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:paddingBottom="12dp"
-        style="@style/TextSmall" />
-    </RelativeLayout>
-    <ImageButton
-      android:background="@android:color/transparent"
-      android:contentDescription="@string/menu_stop_recording"
-      android:id="@+id/track_list_stop_recording_button"
-      android:layout_height="100dp"
-      android:layout_width="wrap_content"
-      android:scaleType="centerInside" />
+    android:id="@+id/track_controler_container"
+    style="@style/TrackControllerContainer" >
+    <include layout="@layout/track_controller" />
   </LinearLayout>
 </LinearLayout>

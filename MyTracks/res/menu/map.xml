@@ -18,5 +18,6 @@ limitations under the License.
   <item
     android:icon="@drawable/menu_satellite_mode"
     android:id="@+id/map_satellite_mode"
-    android:orderInCategory="6"/>
+    android:orderInCategory="5"
+    android:showAsAction="ifRoom"/>
 </menu>

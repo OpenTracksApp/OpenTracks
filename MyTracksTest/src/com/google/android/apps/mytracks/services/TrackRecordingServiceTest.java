@@ -751,7 +751,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
       loc.setSpeed(10);
       loc.setTime(startTime + i * 10000);
       loc.setBearing(3.0f);
-      service.recordLocation(loc);
+      service.insertTrackPoint(loc);
 
       if (i % 10 == 0) {
         service.insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS);
@@ -787,7 +787,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     location.setSpeed(10);
     location.setTime(System.currentTimeMillis());
     location.setBearing(3.0f);
-    trackRecordingService.recordLocation(location);
+    trackRecordingService.insertTrackPoint(location);
     Thread.sleep(100);
   }
 }

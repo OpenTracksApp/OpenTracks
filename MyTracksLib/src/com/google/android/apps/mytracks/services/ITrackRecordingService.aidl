@@ -26,72 +26,74 @@ interface ITrackRecordingService {
   /**
    * Starts recording a new track.
    *
-   * @return the track ID of the new track
+   * @return the track ID of the new track.
    */
   long startNewTrack();
 
   /**
-   * Checks and returns whether we're currently recording a track.
-   */
-  boolean isRecording();
-
-  /**
-   * Checks and returns whether the current recording is paused.
-   */
-  boolean isPaused();
-
-  /**
-   * Returns the track ID of the track currently being recorded, or -1 if none
-   * is being recorded. This ID can then be used to read track data from the
-   * content source.
-   */
-  long getRecordingTrackId();
-
-  /**
-   * Inserts a waypoint marker in the track being recorded.
-   *
-   * @param request Details for the waypoint to be inserted.
-   * @return the unique ID of the inserted marker
-   */
-  long insertWaypoint(in WaypointCreationRequest request);
-
-  /**
-   * Inserts a location in the track being recorded.
-   *
-   * When recording, locations detected by the GPS are already automatically
-   * added to the track, so this should be used only for adding special points
-   * or for testing.
-   *
-   * @param loc the location to insert
-   */
-  void recordLocation(in Location loc);
-
-  /**
-    * Pauses the current track recording.
+    * Pauses the current recording track.
     */
   void pauseCurrentTrack();
 
   /**
-    * Resumes the current track recording.
+    * Resumes the current recording track.
     */
   void resumeCurrentTrack();
 
   /**
-   * Stops recording the current track.
+   * Ends the current recording track.
    */
   void endCurrentTrack();
 
   /**
-   * The current sensor data.
-   * The data is returned as a byte array which is a binary version of a
-   * Sensor.SensorDataSet object.
-   * @return the current sensor data or null if there is none.
+   * Returns true if currently recording a track.
+   */
+  boolean isRecording();
+
+  /**
+   * Returns true if the current recording track is paused. Returns true if not recording.
+   */
+  boolean isPaused();
+
+  /**
+   * Gets the current recording track ID. Returns -1 if not recording.
+   */
+  long getRecordingTrackId();
+
+  /**
+    * Gets the total time for the current recording track. Returns 0 if not recording.
+    */
+  long getTotalTime();
+
+  /**
+   * Inserts a waypoint in the current recording track.
+   *
+   * @param request the details of the waypoint to be inserted
+   * @return the ID of the inserted waypoint
+   */
+  long insertWaypoint(in WaypointCreationRequest request);
+
+  /**
+   * Inserts a track point in the current recording track.
+   *
+   * When recording a track, GPS locations are automatically inserted. This is used for
+   * inserting special track points or for testing.
+   *
+   * @param location the track point to be inserted
+   */
+  void insertTrackPoint(in Location location);
+
+  /**
+   * Gets the current sensor data. Returns null if there is no data.
+   
+   * @return a byte array of the binary version of the Sensor.SensorDataSet object.
    */
   byte[] getSensorData();
 
   /**
-   * The current state of the sensor manager.
-   * The value is the value of a Sensor.SensorState enum.
+   * Gets the current sensor manager state.
+   * 
+   * return a Sensor.SensorState enum value.
    */
   int getSensorState();
 }

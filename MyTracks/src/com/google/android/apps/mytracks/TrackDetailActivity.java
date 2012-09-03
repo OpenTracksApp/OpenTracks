@@ -55,6 +55,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
@@ -74,25 +75,41 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   private static final String TAG = TrackDetailActivity.class.getSimpleName();
   private static final String CURRENT_TAG_KEY = "tab";
  
-  private TrackDataHub trackDataHub;
+  // The following are set in onCreate
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
+  private TrackDataHub trackDataHub;
+  private View mapViewContainer;
   private TabHost tabHost;
   private TabManager tabManager;
+  private TrackController trackController;
+  
+  // From intent
   private long trackId;
   private long markerId;
+  
+  // Preferences
   private long recordingTrackId;
   private boolean recordingTrackPaused;
-  
-  private MenuItem recordTrackMenuItem;
-  private MenuItem pauseTrackMenuItem;
-  private MenuItem stopRecordingMenuItem;
+
   private MenuItem insertMarkerMenuItem;
   private MenuItem playMenuItem;
   private MenuItem shareMenuItem;
   private MenuItem sendGoogleMenuItem;
   private MenuItem saveMenuItem;
 
-  private View mapViewContainer;
+  private final Runnable bindChangedCallback = new Runnable() {
+      @Override
+    public void run() {
+      // After binding changes (is available), update the total time in
+      // trackController.
+      runOnUiThread(new Runnable() {
+          @Override
+        public void run() {
+          trackController.update(trackId == recordingTrackId, recordingTrackPaused);
+        }
+      });
+    }
+  };
 
   /*
    * Note that sharedPreferenceChangeListener cannot be an anonymous inner
@@ -107,10 +124,6 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
               PreferencesUtils.getKey(TrackDetailActivity.this, R.string.recording_track_id_key))) {
             recordingTrackId = PreferencesUtils.getLong(
                 TrackDetailActivity.this, R.string.recording_track_id_key);
-            if (key != null) {
-              updateMenuItems(trackId == recordingTrackId, recordingTrackPaused);
-              return;
-            }
           }
           if (key == null || key.equals(PreferencesUtils.getKey(
               TrackDetailActivity.this, R.string.recording_track_paused_key))) {
@@ -118,8 +131,42 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
                 R.string.recording_track_paused_key,
                 PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
           }
+          if (key != null) {
+            boolean isRecording = trackId == recordingTrackId;
+            updateMenuItems(isRecording, recordingTrackPaused);
+            trackController.update(isRecording, recordingTrackPaused);            
+          }
         }
       };
+
+  private final OnClickListener recordListener = new OnClickListener() {
+      @Override
+    public void onClick(View v) {
+      if (recordingTrackPaused) {
+        // Paused -> Resume
+        AnalyticsUtils.sendPageViews(TrackDetailActivity.this, "/action/resume_track");
+        updateMenuItems(true, false);
+        TrackRecordingServiceConnectionUtils.resumeTrack(trackRecordingServiceConnection);
+        trackController.update(true, false);
+      } else {
+        // Recording -> Paused
+        AnalyticsUtils.sendPageViews(TrackDetailActivity.this, "/action/pause_track");
+        updateMenuItems(true, true);
+        TrackRecordingServiceConnectionUtils.pauseTrack(trackRecordingServiceConnection);
+        trackController.update(true, true);
+      }
+    }
+  };
+
+  private final OnClickListener stopListener = new OnClickListener() {
+      @Override
+    public void onClick(View v) {
+      AnalyticsUtils.sendPageViews(TrackDetailActivity.this, "/action/stop_recording");
+      updateMenuItems(false, true);
+      TrackRecordingServiceConnectionUtils.stopRecording(
+          TrackDetailActivity.this, trackRecordingServiceConnection, true);
+    }
+  };
 
   /**
    * We are not displaying driving directions. Just an arbitrary track that is
@@ -152,7 +199,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
 
-    trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
+    trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, bindChangedCallback);
     trackDataHub = TrackDataHub.newInstance(this);
 
     mapViewContainer = getLayoutInflater().inflate(R.layout.map, null);
@@ -175,13 +222,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     if (savedInstanceState != null) {
       tabHost.setCurrentTabByTag(savedInstanceState.getString(CURRENT_TAG_KEY));
     }
-    showMarker();
-  }
-
-  @Override
-  public void onNewIntent(Intent intent) {
-    setIntent(intent);
-    handleIntent(intent);
+    trackController = new TrackController(this, trackRecordingServiceConnection, false, recordListener, stopListener);
     showMarker();
   }
 
@@ -192,11 +233,17 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   }
 
   @Override
+  protected void onPause() {
+    super.onPause();
+    trackController.stop();
+  }
+
+  @Override
   protected void onResume() {
     super.onResume();
     trackDataHub.loadTrack(trackId);
     TrackRecordingServiceConnectionUtils.resumeConnection(this, trackRecordingServiceConnection);
-    updateMenuItems(trackId == recordingTrackId, recordingTrackPaused);
+    trackController.update(trackId == recordingTrackId, recordingTrackPaused);
   }
 
   @Override
@@ -218,6 +265,20 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   }
  
   @Override
+  protected void onHomeSelected() {
+    Intent intent = IntentUtils.newIntent(this, TrackListActivity.class);
+    startActivity(intent);
+    finish();
+  }
+
+  @Override
+  public void onNewIntent(Intent intent) {
+    setIntent(intent);
+    handleIntent(intent);
+    showMarker();
+  }
+
+  @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.track_detail, menu);
     String fileTypes[] = getResources().getStringArray(R.array.file_types);
@@ -230,9 +291,6 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     menu.findItem(R.id.track_detail_save_tcx)
         .setTitle(getString(R.string.menu_save_format, fileTypes[3]));
 
-    recordTrackMenuItem = menu.findItem(R.id.track_detail_record_track);
-    pauseTrackMenuItem = menu.findItem(R.id.track_detail_pause_track);
-    stopRecordingMenuItem = menu.findItem(R.id.track_detail_stop_recording);
     insertMarkerMenuItem = menu.findItem(R.id.track_detail_insert_marker);
     playMenuItem = menu.findItem(R.id.track_detail_play);
     shareMenuItem = menu.findItem(R.id.track_detail_share);
@@ -241,13 +299,6 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     
     updateMenuItems(trackId == recordingTrackId, recordingTrackPaused);
     return true;
-  }
-
-  @Override
-  protected void onHomeSelected() {
-    Intent intent = IntentUtils.newIntent(this, TrackListActivity.class);
-    startActivity(intent);
-    finish();
   }
 
   @Override
@@ -263,19 +314,6 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   public boolean onOptionsItemSelected(MenuItem item) {
     Intent intent;
     switch (item.getItemId()) {
-      case R.id.track_detail_record_track:
-        updateMenuItems(true, false);
-        TrackRecordingServiceConnectionUtils.resumeTrack(trackRecordingServiceConnection);
-        return true;
-      case R.id.track_detail_pause_track:
-        updateMenuItems(true, true);
-        TrackRecordingServiceConnectionUtils.pauseTrack(trackRecordingServiceConnection);
-        return true;
-      case R.id.track_detail_stop_recording:
-        updateMenuItems(false, true);
-        TrackRecordingServiceConnectionUtils.stopRecording(
-            this, trackRecordingServiceConnection, true);
-        return true;
       case R.id.track_detail_insert_marker:
         AnalyticsUtils.sendPageViews(this, "/action/insert_marker");
         intent = IntentUtils.newIntent(this, MarkerEditActivity.class)
@@ -372,6 +410,11 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     return super.onTrackballEvent(event);
   }
 
+  @Override
+  public TrackRecordingServiceConnection getTrackRecordingServiceConnection() {
+    return trackRecordingServiceConnection;
+  }
+
   /**
    * Gets the map view container.
    */
@@ -437,15 +480,6 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
    * @param isRecording true if recording
    */
   private void updateMenuItems(boolean isRecording, boolean isPaused) {
-    if (recordTrackMenuItem != null) {
-      recordTrackMenuItem.setVisible(isRecording && isPaused);
-    }
-    if (pauseTrackMenuItem != null) {
-      pauseTrackMenuItem.setVisible(isRecording && !isPaused);
-    }
-    if (stopRecordingMenuItem != null) {
-      stopRecordingMenuItem.setVisible(isRecording);
-    }
     if (insertMarkerMenuItem != null) {
       insertMarkerMenuItem.setVisible(isRecording && !isPaused);
     }
@@ -499,10 +533,5 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
       }
     }
     return false;
-  }
-
-  @Override
-  public TrackRecordingServiceConnection getTrackRecordingServiceConnection() {
-    return trackRecordingServiceConnection;
   }
 }

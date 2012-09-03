@@ -394,7 +394,7 @@ public class EndToEndTestUtils {
    * Starts recoding track.
    */
   static void startRecording() {
-    View startButton = SOLO.getCurrentActivity().findViewById(R.id.track_list_record_track_button);
+    View startButton = SOLO.getCurrentActivity().findViewById(R.id.track_controller_record);
     if(startButton != null && startButton.isShown()) {
       SOLO.clickOnView(startButton);
     } else if (hasActionBar) {
@@ -427,7 +427,7 @@ public class EndToEndTestUtils {
    * Pauses recoding track.
    */
   static void pauseRecording() {
-    View pauseButton = SOLO.getCurrentActivity().findViewById(R.id.track_list_record_track_button);
+    View pauseButton = SOLO.getCurrentActivity().findViewById(R.id.track_controller_record);
     if(pauseButton != null && pauseButton.isShown()) {
       SOLO.clickOnView(pauseButton);
     } else if (hasActionBar) {
@@ -445,7 +445,7 @@ public class EndToEndTestUtils {
    * Resume recoding track.
    */
   static void resumeRecording() {
-    View startButton = SOLO.getCurrentActivity().findViewById(R.id.track_list_record_track_button);
+    View startButton = SOLO.getCurrentActivity().findViewById(R.id.track_controller_record);
     if(startButton != null && startButton.isShown()) {
       SOLO.clickOnView(startButton);
     } else if (hasActionBar) {
@@ -465,7 +465,7 @@ public class EndToEndTestUtils {
    * @return true if it is under recording.
    */
   static boolean isUnderRecording() {
-    View startButton = SOLO.getCurrentActivity().findViewById(R.id.track_list_record_track_button);
+    View startButton = SOLO.getCurrentActivity().findViewById(R.id.track_controller_record);
     if(startButton != null && startButton.isShown()) {
       return false;
     }
@@ -490,7 +490,7 @@ public class EndToEndTestUtils {
    * @param isSave true means should save this track
    */
   static void stopRecording(boolean isSave) {
-    View stopButton = SOLO.getCurrentActivity().findViewById(R.id.track_list_stop_recording_button);
+    View stopButton = SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop);
     if(stopButton != null && stopButton.isShown() ) {
       SOLO.clickOnView(stopButton);
     } else if (hasActionBar) {
