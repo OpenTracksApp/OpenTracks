@@ -105,16 +105,15 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
    * Deletes a track which is under recording.
    */
   public void testDeleteOneTrackUnderRecording() {
-    assertFalse(EndToEndTestUtils.SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop).isEnabled());
     EndToEndTestUtils.startRecording();
     instrumentation.waitForIdleSync();
-    assertTrue(EndToEndTestUtils.SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop).isEnabled());
+    PauseRecordingTest.checkUnderRecording();
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete), true);
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     instrumentation.waitForIdleSync();
-    assertFalse(EndToEndTestUtils.SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop).isEnabled());
+    PauseRecordingTest.checkNotRecording();
   }
 
   @Override

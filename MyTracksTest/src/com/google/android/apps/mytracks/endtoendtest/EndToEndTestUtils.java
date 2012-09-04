@@ -726,18 +726,38 @@ public class EndToEndTestUtils {
   }
   
   /**
-   * Finds a text view with specified test in a view.
+   * Finds a displayed text view with specified text in a view.
    * 
    * @param findText text to find
    * @param parent which text view in in
    * @return the text view, null means can not find it
    */
-  static TextView findTextView(String findText, View parent) {
+  static TextView findTextViewInView(String findText, View parent) {
     ArrayList<TextView> textViews = SOLO.getCurrentTextViews(parent);
     for (TextView textView : textViews) {
       String text = (String) textView.getText();
       if (textView.isShown() && text.endsWith(findText)) { 
         return textView; 
+      }
+    }
+    return null;
+  }
+  
+  /**
+   * Finds a displayed text view with specified text.
+   * 
+   * @param findText text to find
+   * @return the text view, null means can not find it
+   */
+  static TextView findTextView(String findText) {
+    ArrayList<View> allViews = SOLO.getViews();
+    for (View view : allViews) {
+      if (view instanceof TextView) {
+        TextView textView = (TextView) view;
+        String text = (String) textView.getText();
+        if (textView.isShown() && text.endsWith(findText)) {
+          return textView;
+        }
       }
     }
     return null;
@@ -787,6 +807,19 @@ public class EndToEndTestUtils {
     EditText editText = SOLO.getEditText(editTextIndex);
     imm.hideSoftInputFromWindow(editText.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
     SOLO.enterText(editText, text);
+  }
+  
+  /**
+   * Waits n milliseconds.
+   * 
+   * @param milliseconds time to sleep
+   */
+  public static void sleep(long milliseconds) {
+    try {
+      Thread.sleep(milliseconds);
+    } catch (InterruptedException e) {
+      Log.e(EndToEndTestUtils.LOG_TAG, "Unable to sleep " + milliseconds, e);
+    }
   }
 
 }

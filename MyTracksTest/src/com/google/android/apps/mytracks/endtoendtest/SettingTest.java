@@ -214,7 +214,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
         .getString(R.string.settings_stats_units_title)));
 
-    boolean isImperial = EndToEndTestUtils.findTextView(activityMyTracks
+    boolean isImperial = EndToEndTestUtils.findTextViewInView(activityMyTracks
         .getString(R.string.settings_stats_units_imperial), EndToEndTestUtils.SOLO
         .getCurrentListViews().get(0)) != null;
 

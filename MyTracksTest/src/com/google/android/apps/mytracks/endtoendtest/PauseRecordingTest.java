@@ -19,12 +19,14 @@ import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
+import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.annotation.TargetApi;
 import android.app.Instrumentation;
 import android.location.Location;
 import android.test.ActivityInstrumentationTestCase2;
+import android.widget.TextView;
 
 /**
  * Tests the pause and resume of recording.
@@ -55,21 +57,22 @@ public class PauseRecordingTest extends ActivityInstrumentationTestCase2<TrackLi
   public void testPauseRecording_stopAfterPause() {
     int gpsSignalNumber = 3;
 
+    checkNotRecording();
     // Start recording
     EndToEndTestUtils.startRecording();
-    assertTrue(EndToEndTestUtils.SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop).isEnabled());
+    checkUnderRecording();
     EndToEndTestUtils.sendGps(gpsSignalNumber);
-
 
     // Pause
     EndToEndTestUtils.pauseRecording();
-    assertTrue(EndToEndTestUtils.SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop).isEnabled());
-
+    checkUnderPaused();
     EndToEndTestUtils.sendGps(gpsSignalNumber, gpsSignalNumber);
 
     // Stop
     EndToEndTestUtils.stopRecording(true);
     checkPointsInPausedTrack(gpsSignalNumber, 1, 0);
+    EndToEndTestUtils.SOLO.goBack();
+    checkNotRecording();
   }
 
   /**
@@ -78,29 +81,30 @@ public class PauseRecordingTest extends ActivityInstrumentationTestCase2<TrackLi
   public void testPauseRecording_stopAfterResume() {
     int gpsSignalNumber = 3;
 
+    checkNotRecording();
     // Start recording
     EndToEndTestUtils.startRecording();
-    assertTrue(EndToEndTestUtils.SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop).isEnabled());
+    checkUnderRecording();
     EndToEndTestUtils.sendGps(gpsSignalNumber);
 
-
     // Pause
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_pause_track), true);
-    assertTrue(EndToEndTestUtils.SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop).isEnabled());
-
+    EndToEndTestUtils.pauseRecording();
+    checkUnderPaused();
 
     // Send Gps signal after pause.
     // Add 10 to make these signals are apparently different.
     EndToEndTestUtils.sendGps(gpsSignalNumber, gpsSignalNumber + 10, 10);
 
     // Resume
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_record_track), true);
-    assertTrue(EndToEndTestUtils.SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop).isEnabled());
+    EndToEndTestUtils.resumeRecording();
+    checkUnderRecording();
     EndToEndTestUtils.sendGps(gpsSignalNumber, gpsSignalNumber);
 
     // Stop
     EndToEndTestUtils.stopRecording(true);
     checkPointsInPausedTrack(gpsSignalNumber * 2, 1, 1);
+    EndToEndTestUtils.SOLO.goBack();
+    checkNotRecording();
   }
 
   /**
@@ -131,12 +135,10 @@ public class PauseRecordingTest extends ActivityInstrumentationTestCase2<TrackLi
         } else if (latitude == TrackRecordingService.RESUME_LATITUDE) {
           numberOfResumePoint++;
         } else {
-          assertEquals(
-              numberOfPoints,
-              (int) ((latitude - EndToEndTestUtils.START_LATITUDE) / EndToEndTestUtils.DELTA_LADITUDE + 0.5));
-          assertEquals(
-              numberOfPoints,
-              (int) ((longitude - EndToEndTestUtils.START_LONGITUDE) / EndToEndTestUtils.DELTA_LONGITUDE + 0.5));
+          assertEquals(numberOfPoints, (int) ((latitude - EndToEndTestUtils.START_LATITUDE)
+              / EndToEndTestUtils.DELTA_LADITUDE + 0.5));
+          assertEquals(numberOfPoints, (int) ((longitude - EndToEndTestUtils.START_LONGITUDE)
+              / EndToEndTestUtils.DELTA_LONGITUDE + 0.5));
           numberOfPoints++;
         }
       }
@@ -146,12 +148,68 @@ public class PauseRecordingTest extends ActivityInstrumentationTestCase2<TrackLi
       assertEquals(expectResumeNumber, numberOfResumePoint);
     }
   }
-  
+
+  /**
+   * Checks whether the recording is not started.
+   */
+  static void checkNotRecording() {
+    EndToEndTestUtils.instrumentation.waitForIdleSync();
+    assertFalse(EndToEndTestUtils.SOLO.getCurrentActivity()
+        .findViewById(R.id.track_controller_stop).isEnabled());
+    assertNull(EndToEndTestUtils.findTextView(EndToEndTestUtils.activityMytracks
+        .getString(R.string.generic_recording)));
+    assertNull(EndToEndTestUtils.findTextView(EndToEndTestUtils.activityMytracks
+        .getString(R.string.generic_paused)));
+    TextView totalTime = (TextView) EndToEndTestUtils.activityMytracks
+        .findViewById(R.id.track_controller_total_time);
+    assertEquals(StringUtils.formatElapsedTimeWithHour(0), totalTime.getText().toString());
+  }
+
+  /**
+   * Checks whether the MyTracks is under recording.
+   */
+  static void checkUnderRecording() {
+    EndToEndTestUtils.instrumentation.waitForIdleSync();
+    assertTrue(EndToEndTestUtils.SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop)
+        .isEnabled());
+    assertNotNull(EndToEndTestUtils.findTextView(EndToEndTestUtils.activityMytracks
+        .getString(R.string.generic_recording)));
+    assertNull(EndToEndTestUtils.findTextView(EndToEndTestUtils.activityMytracks
+        .getString(R.string.generic_paused)));
+
+    String totalTimeOld = ((TextView) EndToEndTestUtils.SOLO.getCurrentActivity().findViewById(
+        R.id.track_controller_total_time)).getText().toString();
+    EndToEndTestUtils.sleep(2000);
+    String totalTimeNew = ((TextView) EndToEndTestUtils.SOLO.getCurrentActivity().findViewById(
+        R.id.track_controller_total_time)).getText().toString();
+    assertFalse(totalTimeOld.equalsIgnoreCase(totalTimeNew));
+  }
+
+  /**
+   * Checks whether the recording is paused.
+   */
+  static void checkUnderPaused() {
+    EndToEndTestUtils.instrumentation.waitForIdleSync();
+    assertTrue(EndToEndTestUtils.SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop)
+        .isEnabled());
+    assertNull(EndToEndTestUtils.findTextView(EndToEndTestUtils.activityMytracks
+        .getString(R.string.generic_recording)));
+    assertNotNull(EndToEndTestUtils.findTextView(EndToEndTestUtils.activityMytracks
+        .getString(R.string.generic_paused)));
+
+    String totalTimeOld = ((TextView) EndToEndTestUtils.activityMytracks
+        .findViewById(R.id.track_controller_total_time)).getText().toString();
+    EndToEndTestUtils.sleep(2000);
+    String totalTimeNew = ((TextView) EndToEndTestUtils.activityMytracks
+        .findViewById(R.id.track_controller_total_time)).getText().toString();
+    assertTrue(totalTimeOld.equalsIgnoreCase(totalTimeNew));
+  }
+
   @Override
   protected void tearDown() throws Exception {
-    // In normally, the activities of MyTracks should be closed after every test is
-    // completed. But this case is different, send two go back event to make it will
-    // not block following tests.
+    // In normally, the activities of MyTracks should be closed after every test
+    // is completed. But this case is different, send two go back event to make
+    // it will not block following tests.
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.SOLO.goBack();
     super.tearDown();
