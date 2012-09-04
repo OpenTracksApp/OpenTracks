@@ -890,6 +890,18 @@ limitations under the License.
     translation_description="The accessibility description for the 'My Location' icon.">
     My Location
   </string>
+  <string name="icon_pause_recording"
+    translation_description="The accessibility description for the pause recording icon.">
+    Pause recording
+  </string>
+  <string name="icon_record_track"
+    translation_description="The accessibility description for the record track icon.">
+    Record track
+  </string>
+  <string name="icon_stop_recording"
+    translation_description="The accessibility description for the stop recording icon.">
+    Stop recording
+  </string>
   <string name="icon_track"
     translation_description="The accessibility description for the 'Track' icon.">
     Track
@@ -1082,23 +1094,11 @@ limitations under the License.
       Character limit: ~21 (1 line)">
     Markers
   </string>
-  <string name="menu_pause_track"
-    translation_description="In the menu, to pause a track.
-
-      Character limit: ~21 (1 line)">
-    Pause track
-  </string>
   <string name="menu_play"
     translation_description="In the menu, to play a track.
 
       Character limit: ~21 (1 line)">
     Play
-  </string>
-  <string name="menu_record_track"
-    translation_description="In the menu, to start recording a track.
-
-      Character limit: ~21 (1 line)">
-    Record track
   </string>
   <string name="menu_satellite_mode"
     translation_description="In the menu, to switch the display to the satellite mode.
@@ -1170,12 +1170,6 @@ limitations under the License.
 
       Character limit: ~21 (1 line)">
     Split frequency
-  </string>
-  <string name="menu_stop_recording"
-    translation_description="In the menu, to stop recording a track.
-
-      Character limit: ~21 (1 line)">
-    Stop recording
   </string>
   <string name="menu_voice_frequency"
     translation_description="In the menu, to configure the voice frequency, how frequent to announce

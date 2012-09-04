@@ -342,8 +342,8 @@ public class EndToEndTestUtils {
   public static void createTrackWithPause(int numberOfGpsData) {
     EndToEndTestUtils.startRecording();
     EndToEndTestUtils.sendGps(numberOfGpsData);
-    EndToEndTestUtils.findMenuItem(activityMytracks.getString(R.string.menu_pause_track), true);
-    EndToEndTestUtils.findMenuItem(activityMytracks.getString(R.string.menu_record_track), true);
+    //EndToEndTestUtils.findMenuItem(activityMytracks.getString(R.string.menu_pause_track), true);
+    //EndToEndTestUtils.findMenuItem(activityMytracks.getString(R.string.menu_record_track), true);
     EndToEndTestUtils.sendGps(numberOfGpsData, numberOfGpsData);
     EndToEndTestUtils.stopRecording(true);
   }
@@ -430,21 +430,20 @@ public class EndToEndTestUtils {
    */
   static boolean isUnderRecording() {
     View startButton = SOLO.getCurrentActivity().findViewById(R.id.track_controller_record);
-    if(startButton != null && startButton.isShown()) {
+    if (startButton != null && startButton.isShown()) {
       return false;
     }
-    
-    if (hasActionBar) { 
-      return getButtonOnScreen(activityMytracks
-        .getString(R.string.menu_record_track), false, false) == null; 
-    }
-    showMenuItem();
-    if (SOLO.searchText(activityMytracks.getString(R.string.menu_record_track))
-        || SOLO.searchText(activityMytracks.getString(R.string.menu_play))) {
-      SOLO.goBack();
-      return false;
-    }
-    SOLO.goBack();
+//    if (hasActionBar) { 
+//      return getButtonOnScreen(activityMytracks
+//        .getString(R.string.menu_record_track), false, false) == null; 
+//    }
+//    showMenuItem();
+//    if (SOLO.searchText(activityMytracks.getString(R.string.menu_record_track))
+//        || SOLO.searchText(activityMytracks.getString(R.string.menu_play))) {
+//      SOLO.goBack();
+//      return false;
+//    }
+//    SOLO.goBack();
     return true;
   }
 

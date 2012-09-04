@@ -275,10 +275,9 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
         int iconId;
         int iconContentDescriptionId;
         if (isRecording) {
-          iconId = recordingTrackPaused ? R.drawable.menu_pause_track
-              : R.drawable.menu_record_track;
-          iconContentDescriptionId = recordingTrackPaused ? R.string.menu_pause_track
-              : R.string.menu_record_track;
+          iconId = recordingTrackPaused ? R.drawable.status_paused : R.drawable.status_recording;
+          iconContentDescriptionId = recordingTrackPaused ? R.string.icon_pause_recording
+              : R.string.icon_record_track;
         } else {
           iconId = TrackIconUtils.getIconDrawable(cursor.getString(iconIndex));
           iconContentDescriptionId = R.string.icon_track;
