@@ -53,7 +53,7 @@ public class ListItemUtils {
       String totalDistance, String startTime, String description) {
 
     if (isRecording) {
-      iconId = isPaused ? R.drawable.status_paused : R.drawable.status_recording;
+      iconId = isPaused ? R.drawable.track_paused : R.drawable.track_recording;
       iconContentDescriptionId = isPaused ? R.string.icon_pause_recording
           : R.string.icon_record_track;
     }
