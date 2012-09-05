@@ -889,8 +889,7 @@ public class TrackDataHubTest extends AndroidTestCase {
   
   /**
    * Tests the method {@link TrackDataHub#start()}. This method would also cover
-   * some logic of {@link TrackDataHub#loadDataForAllListeners()} and 
-   * {@link TrackDataHub#notifyHeadingChanged(float)}.
+   * some logic of {@link TrackDataHub#notifyHeadingChanged(float)}.
    */
   public void testRegisterHeadingListener() {    
     dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceChangeListenerCapture));

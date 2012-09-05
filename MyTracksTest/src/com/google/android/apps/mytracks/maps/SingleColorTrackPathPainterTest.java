@@ -17,10 +17,12 @@ package com.google.android.apps.mytracks.maps;
 
 import com.google.android.apps.mytracks.MapOverlay.CachedLocation;
 import com.google.android.apps.mytracks.TrackStubUtils;
+import com.google.android.maps.Projection;
 import com.google.android.testing.mocking.AndroidMock;
 import com.google.android.testing.mocking.UsesMocks;
 
 import android.graphics.Path;
+import android.graphics.Rect;
 
 import java.util.List;
 
@@ -51,7 +53,7 @@ public class SingleColorTrackPathPainterTest extends TrackPathPainterTestCase {
 
   /**
    * Tests the
-   * {@link SingleColorTrackPathPainter#updatePath(com.google.android.maps.Projection, android.graphics.Rect, int, Boolean, List, Path)}
+   * {@link SingleColorTrackPathPainter#updatePath(Projection, Rect, int, List)}
    * method when all locations are valid.
    */
   public void testUpdatePath_AllValidLocation() {
@@ -74,7 +76,7 @@ public class SingleColorTrackPathPainterTest extends TrackPathPainterTestCase {
 
   /**
    * Tests the
-   * {@link SingleColorTrackPathPainter#updatePath(com.google.android.maps.Projection, android.graphics.Rect, int, Boolean, List, Path)}
+   * {@link SingleColorTrackPathPainter#updatePath(Projection, Rect, int, List)}
    * method when all locations are invalid.
    */
   public void testUpdatePath_AllInvalidLocation() {
@@ -89,9 +91,9 @@ public class SingleColorTrackPathPainterTest extends TrackPathPainterTestCase {
   }
 
   /**
-   * Tests the {@link SingleColorTrackPathPainter#updatePath(com.google.android.maps.Projection,
-   * android.graphics.Rect, int, Boolean, List, Path)} method when there are
-   * three segments.
+   * Tests the
+   * {@link SingleColorTrackPathPainter#updatePath(Projection, Rect, int, List)}
+   * method when there are three segments.
    */
   public void testUpdatePath_ThreeSegments() {
     // First segment.

@@ -18,9 +18,12 @@ package com.google.android.apps.mytracks.maps;
 import com.google.android.apps.mytracks.ColoredPath;
 import com.google.android.apps.mytracks.MapOverlay.CachedLocation;
 import com.google.android.apps.mytracks.TrackStubUtils;
+import com.google.android.maps.Projection;
 import com.google.android.maps.mytracks.R;
 import com.google.android.testing.mocking.AndroidMock;
 import com.google.android.testing.mocking.UsesMocks;
+
+import android.graphics.Rect;
 
 import java.util.List;
 
@@ -56,7 +59,7 @@ public class DynamicSpeedTrackPathPainterTest extends TrackPathPainterTestCase {
 
   /**
    * Tests the method
-   * {@link DynamicSpeedTrackPathPainter#updatePath(com.google.android.maps.Projection, android.graphics.Rect, int, Boolean, java.util.List)}
+   * {@link DynamicSpeedTrackPathPainter#updatePath(Projection, Rect, int, List)}
    * when all locations are invalid.
    */
   public void testUpdatePath_AllInvalidLocation() {
@@ -70,7 +73,7 @@ public class DynamicSpeedTrackPathPainterTest extends TrackPathPainterTestCase {
 
   /**
    * Tests the
-   * {@link DynamicSpeedTrackPathPainter#updatePath(com.google.android.maps.Projection, android.graphics.Rect, int, Boolean, java.util.List)}
+   * {@link DynamicSpeedTrackPathPainter#updatePath(Projection, Rect, int, List)}
    * when all locations are valid.
    */
   public void testUpdatePath_AllValidLocation() {
@@ -89,7 +92,7 @@ public class DynamicSpeedTrackPathPainterTest extends TrackPathPainterTestCase {
 
   /**
    * Tests the
-   * {@link DynamicSpeedTrackPathPainter#updatePath(com.google.android.maps.Projection, android.graphics.Rect, int, Boolean, java.util.List)}
+   * {@link DynamicSpeedTrackPathPainter#updatePath(Projection, Rect, int, List)}
    * when all locations are valid. This test setups 4 segments with 25 points
    * each. The first segment has slow speed, the second segment has normal
    * speed, the third segment has fast speed, and the fourth segment has slow

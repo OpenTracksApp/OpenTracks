@@ -643,7 +643,6 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
    * {@link MyTracksProviderUtilsImpl#createContentValues(Location, long)} and
    * the inner class {@link MyTracksProviderUtilsImpl.CachedTrackPointsIndexes}.
    */
-  @SuppressWarnings("javadoc")
   public void testBulkInsertTrackPoint() {
     // Insert track, point at first.
     long trackId = System.currentTimeMillis();
@@ -735,7 +734,6 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
    * test also covers the method
    * {@link MyTracksProviderUtilsImpl#createContentValues(Location, long)}.
    */
-  @SuppressWarnings("javadoc")
   public void testInsertTrackPoint() {
     // Insert track, point at first.
     long trackId = System.currentTimeMillis();

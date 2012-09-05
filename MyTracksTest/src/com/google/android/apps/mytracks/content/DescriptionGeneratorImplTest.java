@@ -81,7 +81,7 @@ public class DescriptionGeneratorImplTest extends AndroidTestCase {
   }
 
   /**
-   * Tests {@link DescriptionGeneratorImpl#generateWaypointDescription(Waypoint)}.
+   * Tests {@link DescriptionGeneratorImpl#generateWaypointDescription(TripStatistics)}.
    */
   public void testGenerateWaypointDescription() {
     Waypoint waypoint = new Waypoint();
