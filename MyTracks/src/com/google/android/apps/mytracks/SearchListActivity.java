@@ -76,9 +76,11 @@ public class SearchListActivity extends AbstractMyTracksActivity implements Dele
 
   private static final String TAG = SearchListActivity.class.getSimpleName();
 
+  private static final String IS_RECORDING_FIELD = "isRecording";
+  private static final String IS_PAUSED_FIELD = "isPaused";
+  private static final String ICON_ID_FIELD = "icon";
+  private static final String ICON_CONTENT_DESCRIPTION_ID_FIELD = "iconContentDescription";
   private static final String NAME_FIELD = "name";
-  private static final String ICON_FIELD = "icon";
-  private static final String ICON_CONTENT_DESCRIPTION_FIELD = "iconContentDescription";
   private static final String CATEGORY_FIELD = "category";
   private static final String TOTAL_TIME_FIELD = "totalTime";
   private static final String TOTAL_DISTANCE_FIELD = "totalDistance";
@@ -177,23 +179,19 @@ public class SearchListActivity extends AbstractMyTracksActivity implements Dele
           view = convertView;
         }
         Map<String, Object> resultMap = getItem(position);
+        boolean isRecording = (Boolean) resultMap.get(IS_RECORDING_FIELD);
+        boolean isPaused = (Boolean) resultMap.get(IS_PAUSED_FIELD);
+        int iconId = (Integer) resultMap.get(ICON_ID_FIELD);
+        int iconContentDescriptionId = (Integer) resultMap.get(ICON_CONTENT_DESCRIPTION_ID_FIELD);
         String name = (String) resultMap.get(NAME_FIELD);
-        int iconId = (Integer) resultMap.get(ICON_FIELD);
-        String iconContentDescription = (String) resultMap.get(ICON_CONTENT_DESCRIPTION_FIELD);
         String category = (String) resultMap.get(CATEGORY_FIELD);
         String totalTime = (String) resultMap.get(TOTAL_TIME_FIELD);
         String totalDistance = (String) resultMap.get(TOTAL_DISTANCE_FIELD);
-        long startTime = (Long) resultMap.get(START_TIME_FIELD);
+        String startTime = (String) resultMap.get(START_TIME_FIELD);
         String description = (String) resultMap.get(DESCRIPTION_FIELD);
-        ListItemUtils.setListItem(SearchListActivity.this,
-            view,
-            name,
-            iconId,
-            iconContentDescription,
-            category,
-            totalTime,
-            totalDistance,
-            startTime,
+
+        ListItemUtils.setListItem(SearchListActivity.this, view, isRecording, isPaused, iconId,
+            iconContentDescriptionId, name, category, totalTime, totalDistance, startTime,
             description);
         return view;
       }
@@ -410,16 +408,20 @@ public class SearchListActivity extends AbstractMyTracksActivity implements Dele
     }
 
     boolean statistics = waypoint.getType() == Waypoint.TYPE_STATISTICS;
+    long time = waypoint.getLocation().getTime();
+    
+    resultMap.put(IS_RECORDING_FIELD, false);
+    resultMap.put(IS_PAUSED_FIELD, true);
+    resultMap.put(ICON_ID_FIELD, statistics ? R.drawable.yellow_pushpin : R.drawable.blue_pushpin);
+    resultMap.put(ICON_CONTENT_DESCRIPTION_ID_FIELD, R.string.icon_marker);
     resultMap.put(NAME_FIELD, waypoint.getName());
-    resultMap.put(ICON_FIELD, statistics ? R.drawable.yellow_pushpin : R.drawable.blue_pushpin);
-    resultMap.put(ICON_CONTENT_DESCRIPTION_FIELD, getString(R.string.icon_marker));
     resultMap.put(CATEGORY_FIELD, statistics ? null : waypoint.getCategory());
-    resultMap.put(START_TIME_FIELD, waypoint.getLocation().getTime());
-
     // Display the marker's track name in the total time field
     resultMap.put(TOTAL_TIME_FIELD, trackName == null ? null
         : getString(R.string.search_list_marker_track_location, trackName));
     resultMap.put(TOTAL_DISTANCE_FIELD, null);
+    resultMap.put(
+        START_TIME_FIELD, time == 0L ? null : StringUtils.formatRelativeDateTime(this, time));
     resultMap.put(DESCRIPTION_FIELD, statistics ? null : waypoint.getDescription());
     resultMap.put(TRACK_ID_FIELD, waypoint.getTrackId());
     resultMap.put(MARKER_ID_FIELD, waypoint.getId());
@@ -433,26 +435,22 @@ public class SearchListActivity extends AbstractMyTracksActivity implements Dele
    */
   private void prepareTrackForDisplay(Track track, Map<String, Object> resultMap) {
     boolean isRecording = track.getId() == recordingTrackId;
+    String name = track.getName();
     TripStatistics tripStatitics = track.getTripStatistics();
-    resultMap.put(NAME_FIELD, track.getName());
-    int iconId;
-    int iconContentDescriptionId;
-    if (isRecording) {
-      iconId = recordingTrackPaused ? R.drawable.status_paused : R.drawable.status_recording;
-      iconContentDescriptionId = recordingTrackPaused ? R.string.icon_pause_recording
-          : R.string.icon_record_track;
-    } else {
-      iconId = TrackIconUtils.getIconDrawable(track.getIcon());
-      iconContentDescriptionId = R.string.icon_track;
-    }
-    resultMap.put(ICON_FIELD, iconId);
-    resultMap.put(ICON_CONTENT_DESCRIPTION_FIELD, getString(iconContentDescriptionId));
+    long startTime = tripStatitics.getStartTime();
+    String startTimeDisplay = StringUtils.formatDateTime(this, startTime).equals(name) ? null
+        : StringUtils.formatRelativeDateTime(this, startTime);
+
+    resultMap.put(IS_RECORDING_FIELD, isRecording);
+    resultMap.put(IS_PAUSED_FIELD, recordingTrackPaused);
+    resultMap.put(ICON_ID_FIELD, TrackIconUtils.getIconDrawable(track.getIcon()));
+    resultMap.put(ICON_CONTENT_DESCRIPTION_ID_FIELD, R.string.icon_track);
+    resultMap.put(NAME_FIELD, name);
     resultMap.put(CATEGORY_FIELD, track.getCategory());
-    resultMap.put(TOTAL_TIME_FIELD, isRecording ? null : StringUtils.formatElapsedTime(
-        tripStatitics.getTotalTime()));
-    resultMap.put(TOTAL_DISTANCE_FIELD, isRecording ? null : StringUtils.formatDistance(
-        this, tripStatitics.getTotalDistance(), metricUnits));
-    resultMap.put(START_TIME_FIELD, tripStatitics.getStartTime());
+    resultMap.put(TOTAL_TIME_FIELD, StringUtils.formatElapsedTime(tripStatitics.getTotalTime()));
+    resultMap.put(TOTAL_DISTANCE_FIELD,
+        StringUtils.formatDistance(this, tripStatitics.getTotalDistance(), metricUnits));
+    resultMap.put(START_TIME_FIELD, startTimeDisplay);
     resultMap.put(DESCRIPTION_FIELD, track.getDescription());
     resultMap.put(TRACK_ID_FIELD, track.getId());
     resultMap.put(MARKER_ID_FIELD, null);
