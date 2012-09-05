@@ -64,7 +64,6 @@ limitations under the License.
     <TextView
         android:id="@+id/list_item_recording"
         android:singleLine="true"
-        android:textColor="@color/red"
         style="@style/TextSmall" />
     <TextView
       android:id="@+id/list_item_description"

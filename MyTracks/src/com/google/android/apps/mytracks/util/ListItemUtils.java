@@ -66,24 +66,28 @@ public class ListItemUtils {
     nameTextView.setText(name);
 
     TextView categoryTextView = (TextView) view.findViewById(R.id.list_item_category);
-    setTextView(categoryTextView, category);
+    setTextView(categoryTextView, category, 0);
 
     TextView totalTimeTextView = (TextView) view.findViewById(R.id.list_item_total_time);
-    setTextView(totalTimeTextView, isRecording ? null : totalTime);
+    setTextView(totalTimeTextView, isRecording ? null : totalTime, 0);
 
     TextView totalDistanceTextView = (TextView) view.findViewById(R.id.list_item_total_distance);
-    setTextView(totalDistanceTextView, isRecording ? null : totalDistance);
+    setTextView(totalDistanceTextView, isRecording ? null : totalDistance, 0);
 
     TextView startTimeTextView = (TextView) view.findViewById(R.id.list_item_start_time);
-    setTextView(startTimeTextView, isRecording ? null : startTime);
+    setTextView(startTimeTextView, isRecording ? null : startTime, 0);
 
     TextView recordingTextView = (TextView) view.findViewById(R.id.list_item_recording);
-    setTextView(recordingTextView, isRecording ? context.getString(
+    String value = isRecording ? context.getString(
         isPaused ? R.string.generic_paused : R.string.generic_recording)
-        : null);
+        : null;
+    int color = isRecording ? context.getResources()
+        .getColor(isPaused ? android.R.color.white : R.color.red)
+        : 0;
+    setTextView(recordingTextView, value, color);
 
     TextView descriptionTextView = (TextView) view.findViewById(R.id.list_item_description);
-    setTextView(descriptionTextView, isRecording ? null : description);
+    setTextView(descriptionTextView, isRecording ? null : description, 0);
   }
 
   /**
@@ -92,12 +96,15 @@ public class ListItemUtils {
    * @param textView the text view
    * @param value the value for the text view
    */
-  private static void setTextView(TextView textView, String value) {
+  private static void setTextView(TextView textView, String value, int color) {
     if (value == null || value.length() == 0) {
       textView.setVisibility(View.GONE);
     } else {
       textView.setVisibility(View.VISIBLE);
       textView.setText(value);
+      if (color != 0) {
+        textView.setTextColor(color);
+      }
     }
   }
 }
