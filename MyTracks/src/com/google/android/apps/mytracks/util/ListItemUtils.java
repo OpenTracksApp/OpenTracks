@@ -37,28 +37,31 @@ public class ListItemUtils {
    * 
    * @param context the context
    * @param view the list item view
+   * @param isRecording true if recording
+   * @param isPaused true if paused
    * @param name the name value
    * @param iconId the icon id
-   * @param iconContentDescription the icon content description
+   * @param iconContentDescriptionId the icon content description id
    * @param category the category value
    * @param totalTime the total time value
    * @param totalDistance the total distance value
    * @param startTime the start time value
    * @param description the description value
    */
-  public static void setListItem(Context context, View view,
-      String name,
-      int iconId,
-      String iconContentDescription,
-      String category,
-      String totalTime,
-      String totalDistance,
-      long startTime,
-      String description) {
+  public static void setListItem(Context context, View view, boolean isRecording, boolean isPaused,
+      int iconId, int iconContentDescriptionId, String name, String category, String totalTime,
+      String totalDistance, String startTime, String description) {
+
+    if (isRecording) {
+      iconId = isPaused ? R.drawable.status_paused : R.drawable.status_recording;
+      iconContentDescriptionId = isPaused ? R.string.icon_pause_recording
+          : R.string.icon_record_track;
+    }
+
     ImageView iconImageView = (ImageView) view.findViewById(R.id.list_item_icon);
     iconImageView.setImageResource(iconId);
-    iconImageView.setContentDescription(iconContentDescription);
-    
+    iconImageView.setContentDescription(context.getString(iconContentDescriptionId));
+
     TextView nameTextView = (TextView) view.findViewById(R.id.list_item_name);
     nameTextView.setText(name);
 
@@ -66,19 +69,21 @@ public class ListItemUtils {
     setTextView(categoryTextView, category);
 
     TextView totalTimeTextView = (TextView) view.findViewById(R.id.list_item_total_time);
-    setTextView(totalTimeTextView, totalTime);
+    setTextView(totalTimeTextView, isRecording ? null : totalTime);
 
     TextView totalDistanceTextView = (TextView) view.findViewById(R.id.list_item_total_distance);
-    setTextView(totalDistanceTextView, totalDistance);
+    setTextView(totalDistanceTextView, isRecording ? null : totalDistance);
 
-    String startTimeDisplay = startTime == 0L
-        || StringUtils.formatDateTime(context, startTime).equals(name) ? null
-        : StringUtils.formatRelativeDateTime(context, startTime);
     TextView startTimeTextView = (TextView) view.findViewById(R.id.list_item_start_time);
-    setTextView(startTimeTextView, startTimeDisplay);
+    setTextView(startTimeTextView, isRecording ? null : startTime);
+
+    TextView recordingTextView = (TextView) view.findViewById(R.id.list_item_recording);
+    setTextView(recordingTextView, isRecording ? context.getString(
+        isPaused ? R.string.generic_paused : R.string.generic_recording)
+        : null);
 
     TextView descriptionTextView = (TextView) view.findViewById(R.id.list_item_description);
-    setTextView(descriptionTextView, description);
+    setTextView(descriptionTextView, isRecording ? null : description);
   }
 
   /**

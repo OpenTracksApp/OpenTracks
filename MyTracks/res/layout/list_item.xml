@@ -62,6 +62,11 @@ limitations under the License.
         style="@style/ListItemStats" />
     </LinearLayout>
     <TextView
+        android:id="@+id/list_item_recording"
+        android:singleLine="true"
+        android:textColor="@color/red"
+        style="@style/TextSmall" />
+    <TextView
       android:id="@+id/list_item_description"
       android:singleLine="false"
       android:textColor="@android:color/secondary_text_dark"

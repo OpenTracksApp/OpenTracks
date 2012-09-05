@@ -14,6 +14,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<resources>
-  <style name="ThemeSelector" parent="android:Theme.Holo" />
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+  <style name="ThemeSelector" parent="android:Theme.Holo">>
+    <item name="android:actionBarStyle">@style/MyTracksActionBar</item>
+  </style> 
+  <style name="MyTracksActionBar" parent="@android:style/Widget.Holo.ActionBar">
+    <!-- Same image as the source except using a grey line instead of a blue line -->
+    <item name="android:background">@drawable/ab_transparent_dark_holo</item>
+  </style>
 </resources>

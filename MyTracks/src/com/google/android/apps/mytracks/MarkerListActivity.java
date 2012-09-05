@@ -24,6 +24,7 @@ import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.ListItemUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
@@ -130,21 +131,23 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
     resourceCursorAdapter = new ResourceCursorAdapter(this, R.layout.list_item, null, 0) {
       @Override
       public void bindView(View view, Context context, Cursor cursor) {
-        int nameIndex = cursor.getColumnIndex(WaypointsColumns.NAME);
-        int descriptionIndex = cursor.getColumnIndex(WaypointsColumns.DESCRIPTION);
-        int categoryIndex = cursor.getColumnIndex(WaypointsColumns.CATEGORY);
         int typeIndex = cursor.getColumnIndex(WaypointsColumns.TYPE);
+        int nameIndex = cursor.getColumnIndex(WaypointsColumns.NAME);
+        int categoryIndex = cursor.getColumnIndex(WaypointsColumns.CATEGORY);
         int timeIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.TIME);
+        int descriptionIndex = cursor.getColumnIndex(WaypointsColumns.DESCRIPTION);
 
         boolean statistics = cursor.getInt(typeIndex) == Waypoint.TYPE_STATISTICS;
-        String name = cursor.getString(nameIndex);
         int iconId = statistics ? R.drawable.yellow_pushpin : R.drawable.blue_pushpin;
-        String contentDescription = getString(R.string.icon_marker);
         String category = statistics ? null : cursor.getString(categoryIndex);
-        long time = cursor.getLong(timeIndex);
         String description = statistics ? null : cursor.getString(descriptionIndex);
-        ListItemUtils.setListItem(MarkerListActivity.this,
-            view, name, iconId, contentDescription, category, null, null, time, description);
+        long time = cursor.getLong(timeIndex);
+        String startTime = time == 0L ? null
+            : StringUtils.formatRelativeDateTime(MarkerListActivity.this, time);
+
+        ListItemUtils.setListItem(MarkerListActivity.this, view, false, true, iconId,
+            R.string.icon_marker, cursor.getString(nameIndex), category, null, null, startTime,
+            description);
       }
     };
     listView.setAdapter(resourceCursorAdapter);

@@ -15,40 +15,60 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <merge xmlns:android="http://schemas.android.com/apk/res/android" >
-  <ImageButton
-    android:background="@android:color/transparent"
-    android:contentDescription="@string/icon_record_track"
-    android:id="@+id/track_controller_record"
-    android:layout_height="100dp"
-    android:layout_width="wrap_content"
-    android:scaleType="centerInside" />
-  <RelativeLayout
-    android:layout_height="100dp"
-    android:layout_marginLeft="-32dp"
-    android:layout_width="wrap_content" >
-    <TextView
-      android:id="@+id/track_controller_total_time"
-      android:layout_centerInParent="true"
+  <LinearLayout
+    android:background="@color/black"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:orientation="horizontal"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp" >
+    <View
+      android:layout_height="fill_parent"
+      android:layout_weight="1"
+      android:layout_width="0dp" />
+    <ImageButton
+      android:background="@android:color/transparent"
+      android:contentDescription="@string/icon_record_track"
+      android:id="@+id/track_controller_record"
       android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
-      android:paddingLeft="24dp"
-      android:paddingRight="8dp"
-      android:textColor="@android:color/white"
-      style="@style/TextSmall" />
-    <TextView
-      android:id="@+id/track_controller_status"
-      android:layout_above="@id/track_controller_total_time"
+      android:layout_weight="10"
+      android:layout_width="0dp" />
+    <RelativeLayout
+      android:layout_height="fill_parent"
+      android:layout_weight="6"
+      android:layout_width="0dp" >
+      <TextView
+        android:id="@+id/track_controller_total_time"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textColor="@android:color/white"
+        style="@style/TextSmall" />
+      <TextView
+        android:id="@+id/track_controller_status"
+        android:layout_above="@id/track_controller_total_time"
+        android:layout_alignParentLeft="true"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:singleLine="true"
+        style="@style/TextTiny" />
+    </RelativeLayout>
+    <ImageButton
+      android:background="@android:color/transparent"
+      android:contentDescription="@string/icon_stop_recording"
+      android:id="@+id/track_controller_stop"
       android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
-      android:paddingBottom="12dp"
-      style="@style/TextSmall" />
-  </RelativeLayout>
-  <ImageButton
-    android:background="@android:color/transparent"
-    android:contentDescription="@string/icon_stop_recording"
-    android:id="@+id/track_controller_stop"
-    android:layout_height="100dp"
-    android:layout_width="wrap_content"
-    android:scaleType="centerInside"
-    android:src="@drawable/btn_stop_1" />
+      android:layout_weight="10"
+      android:layout_width="0dp"
+      android:src="@drawable/btn_stop_1" />
+    <View
+      android:layout_height="fill_parent"
+      android:layout_weight="1"
+      android:layout_width="0dp" />
+  </LinearLayout>
+  <View
+    android:background="@color/gray"
+    android:layout_height="1dp"
+    android:layout_width="fill_parent" />
 </merge>

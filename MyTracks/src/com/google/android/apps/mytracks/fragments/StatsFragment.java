@@ -28,9 +28,9 @@ import com.google.android.maps.mytracks.R;
 
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,10 +47,10 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
   public static final String STATS_FRAGMENT_TAG = "statsFragment";
 
-  private static final String TAG = StatsFragment.class.getSimpleName();
-
+  private static final int ONE_SECOND = 1000;
+  
   private TrackDataHub trackDataHub;
-  private UiUpdateThread uiUpdateThread;
+  private Handler handler;
 
   private Location lastLocation = null;
   private TripStatistics lastTripStatistics = null;
@@ -58,33 +58,15 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   // A runnable to update the total time field.
   private final Runnable updateTotalTime = new Runnable() {
     public void run() {
-      if (isResumed() && isSelectedTrackRecording() && !isSelectedTrackPaused()
-          && lastTripStatistics != null) {
-        StatsUtils.setTotalTimeValue(getActivity(), System.currentTimeMillis()
-            - lastTripStatistics.getStopTime() + lastTripStatistics.getTotalTime());
+      if (isResumed() && isSelectedTrackRecording()) {
+        if (!isSelectedTrackPaused() && lastTripStatistics != null) {
+          StatsUtils.setTotalTimeValue(getActivity(), System.currentTimeMillis()
+              - lastTripStatistics.getStopTime() + lastTripStatistics.getTotalTime());
+        }
+        handler.postDelayed(this, ONE_SECOND);
       }
     }
   };
-
-  /**
-   * A thread that updates the total time field every second.
-   */
-  private class UiUpdateThread extends Thread {
-    @Override
-    public void run() {
-      Log.d(TAG, "UI update thread started");
-      while (isResumed() && isSelectedTrackRecording()) {
-        getActivity().runOnUiThread(updateTotalTime);
-        try {
-          Thread.sleep(1000L);
-        } catch (InterruptedException e) {
-          Log.d(TAG, "UI update thread caught exception", e);
-          break;
-        }
-      }
-      Log.d(TAG, "UI update thread finished");
-    }
-  }
 
   @Override
   public View onCreateView(
@@ -95,6 +77,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   @Override
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
+    handler = new Handler();
     updateUi(getActivity());
   }
 
@@ -108,10 +91,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   public void onPause() {
     super.onPause();
     pauseTrackDataHub();
-    if (uiUpdateThread != null) {
-      uiUpdateThread.interrupt();
-      uiUpdateThread = null;
-    }
+    handler.removeCallbacks(updateTotalTime);
   }
 
   @Override
@@ -159,13 +139,9 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   @Override
   public void onSelectedTrackChanged(Track track) {
     if (isResumed()) {
-      if (uiUpdateThread != null) {
-        uiUpdateThread.interrupt();
-        uiUpdateThread = null;
-      }
+      handler.removeCallbacks(updateTotalTime);
       if (isSelectedTrackRecording()) {
-        uiUpdateThread = new UiUpdateThread();
-        uiUpdateThread.start();
+        handler.post(updateTotalTime);
       }
     }
   }

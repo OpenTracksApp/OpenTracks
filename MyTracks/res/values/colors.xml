@@ -17,8 +17,8 @@ limitations under the License.
 <resources>
   <color name="black">#FF000000</color>
   <color name="blue">#FF0000FF</color>
-  <color name="gray">#FFAAAAAA</color>
-  <color name="red">#FFFF0000</color>
+  <color name="gray">#FF444444</color>
+  <color name="red">#FFBE161B</color>
 
   <!-- holo_orange_dark -->
   <color name="warning_background">#FFFF8800</color>

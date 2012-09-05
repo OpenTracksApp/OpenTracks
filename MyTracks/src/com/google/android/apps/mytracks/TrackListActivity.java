@@ -262,37 +262,27 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
         @Override
       public void bindView(View view, Context context, Cursor cursor) {
         int idIndex = cursor.getColumnIndex(TracksColumns._ID);
-        int nameIndex = cursor.getColumnIndex(TracksColumns.NAME);
-        int descriptionIndex = cursor.getColumnIndex(TracksColumns.DESCRIPTION);
-        int categoryIndex = cursor.getColumnIndex(TracksColumns.CATEGORY);
-        int startTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME);
-        int totalDistanceIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALDISTANCE);
-        int totalTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALTIME);
         int iconIndex = cursor.getColumnIndex(TracksColumns.ICON);
+        int nameIndex = cursor.getColumnIndex(TracksColumns.NAME);
+        int categoryIndex = cursor.getColumnIndex(TracksColumns.CATEGORY);
+        int totalTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALTIME);
+        int totalDistanceIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALDISTANCE);
+        int startTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME);
+        int descriptionIndex = cursor.getColumnIndex(TracksColumns.DESCRIPTION);
 
         boolean isRecording = cursor.getLong(idIndex) == recordingTrackId;
+        int iconId = TrackIconUtils.getIconDrawable(cursor.getString(iconIndex));
         String name = cursor.getString(nameIndex);
-        int iconId;
-        int iconContentDescriptionId;
-        if (isRecording) {
-          iconId = recordingTrackPaused ? R.drawable.status_paused : R.drawable.status_recording;
-          iconContentDescriptionId = recordingTrackPaused ? R.string.icon_pause_recording
-              : R.string.icon_record_track;
-        } else {
-          iconId = TrackIconUtils.getIconDrawable(cursor.getString(iconIndex));
-          iconContentDescriptionId = R.string.icon_track;
-        }
-        String iconContentDescription = getString(iconContentDescriptionId);
-        String category = cursor.getString(categoryIndex);
-        String totalTime = isRecording ? null
-            : StringUtils.formatElapsedTime(cursor.getLong(totalTimeIndex));
-        String totalDistance = isRecording ? null
-            : StringUtils.formatDistance(
-                TrackListActivity.this, cursor.getDouble(totalDistanceIndex), metricUnits);
+        String totalTime = StringUtils.formatElapsedTime(cursor.getLong(totalTimeIndex));
+        String totalDistance = StringUtils.formatDistance(
+            TrackListActivity.this, cursor.getDouble(totalDistanceIndex), metricUnits);
         long startTime = cursor.getLong(startTimeIndex);
-        String description = cursor.getString(descriptionIndex);
-        ListItemUtils.setListItem(TrackListActivity.this, view, name, iconId,
-            iconContentDescription, category, totalTime, totalDistance, startTime, description);
+        String startTimeDisplay = StringUtils.formatDateTime(context, startTime).equals(name) ? null
+            : StringUtils.formatRelativeDateTime(context, startTime);
+
+        ListItemUtils.setListItem(TrackListActivity.this, view, isRecording, recordingTrackPaused,
+            iconId, R.string.icon_track, name, cursor.getString(categoryIndex), totalTime,
+            totalDistance, startTimeDisplay, cursor.getString(descriptionIndex));
       }
     };
     listView.setAdapter(resourceCursorAdapter);

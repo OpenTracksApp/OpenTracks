@@ -178,14 +178,19 @@ limitations under the License.
     <item name="android:layout_width">wrap_content</item>
     <item name="android:textSize">14sp</item>
   </style>
+  <!-- The style for tiny size text -->
+  <style name="TextTiny">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:textSize">10sp</item>
+  </style>
   <!-- Theme selector -->
   <style name="ThemeSelector" parent="android:Theme" />
   <!-- The style for the track controller container -->
   <style name="TrackControllerContainer">
-    <item name="android:layout_gravity">center</item>
     <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">wrap_content</item>
-    <item name="android:orientation">horizontal</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:orientation">vertical</item>
   </style>
   <!-- The style for the track widget button -->
   <style name="TrackWidgetButton">
