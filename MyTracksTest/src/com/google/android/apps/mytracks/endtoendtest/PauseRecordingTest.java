@@ -154,6 +154,10 @@ public class PauseRecordingTest extends ActivityInstrumentationTestCase2<TrackLi
    */
   static void checkNotRecording() {
     EndToEndTestUtils.instrumentation.waitForIdleSync();
+    assertEquals(
+        EndToEndTestUtils.activityMytracks.getString(R.string.icon_record_track),
+        (String) EndToEndTestUtils.SOLO.getCurrentActivity()
+            .findViewById(R.id.track_controller_record).getContentDescription());
     assertFalse(EndToEndTestUtils.SOLO.getCurrentActivity()
         .findViewById(R.id.track_controller_stop).isEnabled());
     assertNull(EndToEndTestUtils.findTextView(EndToEndTestUtils.activityMytracks
@@ -170,6 +174,10 @@ public class PauseRecordingTest extends ActivityInstrumentationTestCase2<TrackLi
    */
   static void checkUnderRecording() {
     EndToEndTestUtils.instrumentation.waitForIdleSync();
+    assertEquals(
+        EndToEndTestUtils.activityMytracks.getString(R.string.icon_pause_recording),
+        (String) EndToEndTestUtils.SOLO.getCurrentActivity()
+            .findViewById(R.id.track_controller_record).getContentDescription());
     assertTrue(EndToEndTestUtils.SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop)
         .isEnabled());
     assertNotNull(EndToEndTestUtils.findTextView(EndToEndTestUtils.activityMytracks
@@ -190,6 +198,10 @@ public class PauseRecordingTest extends ActivityInstrumentationTestCase2<TrackLi
    */
   static void checkUnderPaused() {
     EndToEndTestUtils.instrumentation.waitForIdleSync();
+    assertEquals(
+        EndToEndTestUtils.activityMytracks.getString(R.string.icon_record_track),
+        (String) EndToEndTestUtils.SOLO.getCurrentActivity()
+            .findViewById(R.id.track_controller_record).getContentDescription());
     assertTrue(EndToEndTestUtils.SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop)
         .isEnabled());
     assertNull(EndToEndTestUtils.findTextView(EndToEndTestUtils.activityMytracks
