@@ -17,10 +17,12 @@ limitations under the License.
 <merge xmlns:android="http://schemas.android.com/apk/res/android" >
   <Button
     android:id="@+id/help_about"
+    android:layout_gravity="left"
     android:text="@string/help_about"
     style="@style/BottomButton" />
   <Button
     android:id="@+id/help_ok"
+    android:layout_gravity="right"
     android:text="@string/generic_ok"
     style="@style/BottomButton" />
 </merge>

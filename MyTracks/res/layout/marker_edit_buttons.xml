@@ -17,9 +17,11 @@ limitations under the License.
 <merge xmlns:android="http://schemas.android.com/apk/res/android" >
   <Button
     android:id="@+id/marker_edit_done"
+    android:layout_gravity="left"
     style="@style/BottomButton" />
   <Button
     android:id="@+id/marker_edit_cancel"
+    android:layout_gravity="right"
     android:text="@string/generic_cancel"
     style="@style/BottomButton" />
 </merge>

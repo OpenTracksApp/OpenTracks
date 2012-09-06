@@ -24,12 +24,14 @@ limitations under the License.
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_weight">1</item>
     <item name="android:layout_width">0dp</item>
+    <item name="android:maxLines">2</item>
   </style>
   <!-- The style for the bottom button bar -->
   <style name="BottomButtonBar" parent="@android:style/DeviceDefault.ButtonBar">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">fill_parent</item>
     <item name="android:orientation">horizontal</item>
+    <item name="android:measureWithLargestChild">true</item>
   </style>
   <!-- The style for choose upload service check box -->
   <style name="ChooseUploadServiceCheckBox" parent="@style/TextMedium">
