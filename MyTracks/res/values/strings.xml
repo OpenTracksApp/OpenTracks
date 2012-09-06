@@ -1360,7 +1360,8 @@ limitations under the License.
   </string>
   <string name="send_google_fusion_tables_new_public_table"
     translation_description="When sending a track to Google, under the 'Send to...' dialog, the
-      checkbox option to send to Google Fusion Tables as a new public table.">
+      checkbox option to send to Google Fusion Tables as a new public table. Note that \n is the new
+      line character.">
     Google Fusion Tables\n(new public table)
   </string>
   <string name="send_google_maps"
@@ -2093,7 +2094,8 @@ limitations under the License.
     Share track file
   </string>
   <string name="share_track_share_file_body"
-    translation_description="When sharing a track file with friends, the body of the message.
+    translation_description="When sharing a track file with friends, the body of the message. Note
+      that \n is the new line character.
 
       %1$s: track description.">
     I think you might be interested in this track.\n\nTo view this track, use Google Earth or other
@@ -2105,7 +2107,8 @@ limitations under the License.
     Share track URL
   </string>
   <string name="share_track_share_url_body"
-    translation_description="When sharing a track URL with friends, the body of the message.
+    translation_description="When sharing a track URL with friends, the body of the message. Note
+      that \n is the newline character.
 
       %1$s: url. E.g, 'https://maps.google.com/maps'.
       %2$s: track description.">
@@ -2993,7 +2996,8 @@ limitations under the License.
 
   <!-- Welcome -->
   <string name="welcome_message"
-    translation_description="The message of the welcome dialog.">
+    translation_description="The message of the welcome dialog. Note that \n is the newline
+      character.">
     Welcome to My Tracks. Use this app to record your GPS tracks, aggregate your stats over time,
     and share your paths with friends.\n\nHappy Exploring,\nThe My Tracks Team
   </string>
