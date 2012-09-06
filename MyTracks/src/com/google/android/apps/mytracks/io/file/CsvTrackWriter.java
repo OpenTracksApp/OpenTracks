@@ -232,11 +232,11 @@ public class CsvTrackWriter implements TrackFormatWriter {
       }
       isFirst = false;
 
+      builder.append('"');
       if (value != null) {
-        builder.append('"');
         builder.append(value.replaceAll("\"", "\"\""));
-        builder.append('"');
       }
+      builder.append('"');
     }
     printWriter.println(builder.toString());
   }
