@@ -192,17 +192,11 @@ limitations under the License.
     <item name="android:layout_width">fill_parent</item>
     <item name="android:orientation">vertical</item>
   </style>
-  <!-- The style for the track widget button -->
-  <style name="TrackWidgetButton">
-    <item name="android:layout_gravity">center_horizontal</item>
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_marginTop">8dp</item>
-    <item name="android:layout_width">fill_parent</item>
-    <item name="android:padding">8dp</item>
-  </style>
   <!-- The style for the track widget label -->
   <style name="TrackWidgetLabel" parent="@style/TextSmall">
-    <item name="android:width">100dp</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_weight">1</item>
+    <item name="android:layout_width">0dp</item>
   </style>
   <!-- The style for the track widget separator -->
   <style name="TrackWidgetSeparator">
@@ -210,15 +204,15 @@ limitations under the License.
     <item name="android:layout_height">1dp</item>
     <item name="android:layout_width">fill_parent</item>
   </style>
+  <!-- The style for the track widget spacer -->
+  <style name="TrackWidgetSpacer">
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:layout_width">4dp</item>
+  </style>
   <!-- The style for the track widget stat -->
   <style name="TrackWidgetStat">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">fill_parent</item>
     <item name="android:orientation">horizontal</item>
-  </style>
-  <!-- The style for the track widget value -->
-  <style name="TrackWidgetValue" parent="@style/TextSmall">
-    <item name="android:layout_weight">1</item>
-    <item name="android:layout_width">0dp</item>
   </style>
 </resources>

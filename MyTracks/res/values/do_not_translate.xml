@@ -94,7 +94,8 @@ Google은 이용자에 대한 위치정보의 이용∙제공사실을 위치정
   <string name="settings_recording_track_name_location_value">LOCATION</string>
   <string name="settings_recording_track_name_number_value">NUMBER</string>
   <string name="track_action_end">com.google.android.apps.mytracks.END_CURRENT_TRACK</string>
-  <string name="track_action_save">android.intent.action.SAVE</string>
+  <string name="track_action_pause">com.google.android.apps.mytracks.PAUSE_CURRENT_TRACK</string>
+  <string name="track_action_resume">com.google.android.apps.mytracks.RESUME_CURRENT_TRACK</string>
   <string name="track_action_start">com.google.android.apps.mytracks.START_NEW_TRACK</string>
   <string name="value_unknown">-</string>
 </resources>
