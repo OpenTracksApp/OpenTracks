@@ -44,7 +44,7 @@ public class GpxTrackWriter implements TrackFormatWriter {
     ELEVATION_FORMAT.setMaximumFractionDigits(1);
     ELEVATION_FORMAT.setGroupingUsed(false);
 
-    COORDINATE_FORMAT.setMaximumFractionDigits(5);
+    COORDINATE_FORMAT.setMaximumFractionDigits(6);
     COORDINATE_FORMAT.setMaximumIntegerDigits(3);
     COORDINATE_FORMAT.setGroupingUsed(false);
   }
