@@ -17,6 +17,7 @@
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.fragments.AboutDialogFragment;
+import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.os.Bundle;
@@ -37,14 +38,13 @@ public class HelpActivity extends AbstractMyTracksActivity {
     setContentView(R.layout.help);
 
     TextView mapsPublicUnlisted = (TextView) findViewById(R.id.help_maps_public_unlisted_answer);
-    mapsPublicUnlisted.setText(getString(
-        R.string.help_maps_public_unlisted_answer, getString(R.string.maps_public_unlisted_url)));
+    mapsPublicUnlisted.setText(StringUtils.getHtml(
+        this, R.string.help_maps_public_unlisted_answer, R.string.maps_public_unlisted_url));
 
     TextView sendTrack = (TextView) findViewById(R.id.help_send_track_answer);
-    sendTrack.setText(getString(R.string.help_send_track_answer,
-        getString(R.string.send_google_maps_url),
-        getString(R.string.send_google_fusion_tables_url),
-        getString(R.string.send_google_docs_url)));
+    sendTrack.setText(StringUtils.getHtml(
+        this, R.string.help_send_track_answer, R.string.send_google_maps_url,
+        R.string.send_google_fusion_tables_url, R.string.send_google_docs_url));
 
     findViewById(R.id.help_ok).setOnClickListener(new OnClickListener() {
       public void onClick(View v) {

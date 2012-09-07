@@ -18,6 +18,8 @@ package com.google.android.apps.mytracks.util;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
+import android.text.Html;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 
@@ -264,5 +266,21 @@ public class StringUtils {
     parts[1] = minutes % 60;
     parts[2] = minutes / 60;
     return parts;
+  }
+
+  /**
+   * Gets the html.
+   * 
+   * @param context the context
+   * @param resId the string resource id
+   * @param formatArgs the string resource ids of the format arguments
+   */
+  public static Spanned getHtml(Context context, int resId, Object... formatArgs) {
+    Object[] args = new Object[formatArgs.length];
+    for (int i = 0; i < formatArgs.length; i++) {
+      String url = context.getString((Integer) formatArgs[i]);
+      args[i] = " <a href='" + url + "'>" + url + "</a> ";
+    }
+    return Html.fromHtml(context.getString(resId, args));
   }
 }

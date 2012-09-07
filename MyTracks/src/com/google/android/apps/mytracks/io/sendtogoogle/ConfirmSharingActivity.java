@@ -19,6 +19,7 @@ package com.google.android.apps.mytracks.io.sendtogoogle;
 import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -62,9 +63,9 @@ public class ConfirmSharingActivity extends Activity {
     View view = getLayoutInflater().inflate(R.layout.confirm_sharing, null);
     
     TextView textView = (TextView) view.findViewById(R.id.confirm_sharing_text_view);
-    textView.setText(getString(
-        R.string.share_track_confirm_message, getString(R.string.maps_public_unlisted_url)));
-    
+    textView.setText(StringUtils.getHtml(
+        this, R.string.share_track_confirm_message, R.string.maps_public_unlisted_url));
+
     checkBox = (CheckBox) view.findViewById(R.id.confirm_sharing_check_box);
     DialogInterface.OnClickListener okListener = new DialogInterface.OnClickListener() {
         @Override
