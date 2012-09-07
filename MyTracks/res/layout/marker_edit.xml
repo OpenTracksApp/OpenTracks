@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2012 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_height="fill_parent"
+  android:layout_width="fill_parent"
+  android:orientation="vertical" >
+  <ScrollView style="@style/ScrollView.WithBottomButtons" >
+    <LinearLayout
+      android:layout_height="wrap_content"
+      android:layout_width="fill_parent"
+      android:orientation="vertical"
+      android:padding="8dp" >
+      <TextView
+        android:text="@string/generic_name"
+        style="@style/EditLabel" />
+      <LinearLayout
+        android:id="@+id/marker_edit_statistics_section"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:orientation="vertical" >
+        <EditText
+          android:drawableLeft="@drawable/yellow_pushpin"
+          android:hint="@string/generic_name"
+          android:id="@+id/marker_edit_statistics_name"
+          android:imeOptions="actionDone"
+          style="@style/EditNameMarker" />
+      </LinearLayout>
+      <LinearLayout
+        android:id="@+id/marker_edit_waypoint_section"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:orientation="vertical" >
+        <EditText
+          android:drawableLeft="@drawable/blue_pushpin"
+          android:hint="@string/generic_name"
+          android:id="@+id/marker_edit_waypoint_name"
+          android:imeOptions="actionNext"
+          style="@style/EditNameMarker" />
+        <TextView
+          android:text="@string/marker_edit_marker_type"
+          style="@style/EditLabel.WithPaddingTop" />
+        <AutoCompleteTextView
+          android:hint="@string/marker_edit_marker_type_hint"
+          android:id="@+id/marker_edit_waypoint_marker_type"
+          android:imeOptions="actionNext"
+          style="@style/EditCategory" />
+        <TextView
+          android:text="@string/generic_description"
+          style="@style/EditLabel.WithPaddingTop" />
+        <EditText
+          android:hint="@string/generic_description"
+          android:id="@+id/marker_edit_waypoint_description"
+          android:imeOptions="actionDone"
+          style="@style/EditDescription" />
+      </LinearLayout>
+    </LinearLayout>
+  </ScrollView>
+  <LinearLayout style="@style/BottomButtonBar" >
+    <include layout="@layout/marker_edit_buttons" />
+  </LinearLayout>
+</LinearLayout>
