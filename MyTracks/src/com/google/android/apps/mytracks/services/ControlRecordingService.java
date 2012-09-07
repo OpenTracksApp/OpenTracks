@@ -114,6 +114,10 @@ public class ControlRecordingService extends IntentService implements ServiceCon
           trackRecordingService.startNewTrack();
         } else if (action.equals(getString(R.string.track_action_end))) {
           trackRecordingService.endCurrentTrack();
+        } else if (action.equals(getString(R.string.track_action_pause))) {
+          trackRecordingService.pauseCurrentTrack();
+        } else if (action.equals(getString(R.string.track_action_resume))) {
+          trackRecordingService.resumeCurrentTrack();
         }
       } catch (RemoteException e) {
         Log.d(TAG, "ControlRecordingService onHandleIntent RemoteException", e);
