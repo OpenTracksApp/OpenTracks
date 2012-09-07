@@ -107,13 +107,13 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
   public void testDeleteOneTrackUnderRecording() {
     EndToEndTestUtils.startRecording();
     instrumentation.waitForIdleSync();
-    PauseRecordingTest.checkUnderRecording();
+    EndToEndTestUtils.checkUnderRecording();
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete), true);
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     instrumentation.waitForIdleSync();
-    PauseRecordingTest.checkNotRecording();
+    EndToEndTestUtils.checkNotRecording();
   }
 
   @Override

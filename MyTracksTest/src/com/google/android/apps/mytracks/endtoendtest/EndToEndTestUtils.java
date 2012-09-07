@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.endtoendtest;
 import com.google.android.apps.mytracks.ChartView;
 import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.util.FileUtils;
+import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 import com.jayway.android.robotium.solo.Solo;
 
@@ -43,6 +44,8 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
+
+import junit.framework.Assert;
 
 /**
  * Provides utilities to smoke test.
@@ -804,6 +807,61 @@ public class EndToEndTestUtils {
     } catch (InterruptedException e) {
       Log.e(LOG_TAG, "Unable to sleep " + milliseconds, e);
     }
+  }  
+
+  /**
+   * Checks whether the recording is not started.
+   */
+  static void checkNotRecording() {
+    instrumentation.waitForIdleSync();
+    Assert.assertEquals(activityMytracks.getString(R.string.icon_record_track), (String) SOLO
+        .getCurrentActivity().findViewById(R.id.track_controller_record).getContentDescription());
+    Assert.assertFalse(SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop)
+        .isEnabled());
+    Assert.assertNull(findTextView(activityMytracks.getString(R.string.generic_recording)));
+    Assert.assertNull(findTextView(activityMytracks.getString(R.string.generic_paused)));
+    TextView totalTime = (TextView) activityMytracks.findViewById(R.id.track_controller_total_time);
+    Assert.assertEquals(StringUtils.formatElapsedTimeWithHour(0), totalTime.getText().toString());
+  }
+
+  /**
+   * Checks whether the MyTracks is under recording.
+   */
+  static void checkUnderRecording() {
+    instrumentation.waitForIdleSync();
+    Assert.assertEquals(activityMytracks.getString(R.string.icon_pause_recording), (String) SOLO
+        .getCurrentActivity().findViewById(R.id.track_controller_record).getContentDescription());
+    Assert.assertTrue(SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop)
+        .isEnabled());
+    Assert.assertNotNull(findTextView(activityMytracks.getString(R.string.generic_recording)));
+    Assert.assertNull(findTextView(activityMytracks.getString(R.string.generic_paused)));
+
+    String totalTimeOld = ((TextView) SOLO.getCurrentActivity().findViewById(
+        R.id.track_controller_total_time)).getText().toString();
+    sleep(2000);
+    String totalTimeNew = ((TextView) SOLO.getCurrentActivity().findViewById(
+        R.id.track_controller_total_time)).getText().toString();
+    Assert.assertFalse(totalTimeOld.equalsIgnoreCase(totalTimeNew));
+  }
+
+  /**
+   * Checks whether the recording is paused.
+   */
+  static void checkUnderPaused() {
+    instrumentation.waitForIdleSync();
+    Assert.assertEquals(activityMytracks.getString(R.string.icon_record_track), (String) SOLO
+        .getCurrentActivity().findViewById(R.id.track_controller_record).getContentDescription());
+    Assert.assertTrue(SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop)
+        .isEnabled());
+    Assert.assertNull(findTextView(activityMytracks.getString(R.string.generic_recording)));
+    Assert.assertNotNull(findTextView(activityMytracks.getString(R.string.generic_paused)));
+
+    String totalTimeOld = ((TextView) activityMytracks
+        .findViewById(R.id.track_controller_total_time)).getText().toString();
+    sleep(2000);
+    String totalTimeNew = ((TextView) activityMytracks
+        .findViewById(R.id.track_controller_total_time)).getText().toString();
+    Assert.assertTrue(totalTimeOld.equalsIgnoreCase(totalTimeNew));
   }
 
 }
