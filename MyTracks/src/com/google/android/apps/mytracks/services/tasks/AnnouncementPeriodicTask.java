@@ -262,6 +262,8 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
       sb.append(hours);
       sb.append(" ");
       sb.append(minutes);
+      sb.append(" ");
+      sb.append(seconds);
     } else {
       sb.append(minutes);
       sb.append(" ");

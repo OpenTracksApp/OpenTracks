@@ -479,7 +479,7 @@ public class AnnouncementPeriodicTaskTest extends AndroidTestCase {
    */
   public void testGetAnnounceTime_singular_has_hour() {
     long time = (1 * 60 * 60 * 1000) + (1 * 60 * 1000) + (1 * 1000); // 1 hour 1 minute 1 second
-    assertEquals("1 hour 1 minute", task.getAnnounceTime(time));
+    assertEquals("1 hour 1 minute 1 second", task.getAnnounceTime(time));
   }
 
   /**
@@ -488,7 +488,7 @@ public class AnnouncementPeriodicTaskTest extends AndroidTestCase {
    */
   public void testGetAnnounceTime_plural_has_hour() {
     long time = (2 * 60 * 60 * 1000) + (2 * 60 * 1000) + (2 * 1000); // 2 hours 2 minutes 2 seconds
-    assertEquals("2 hours 2 minutes", task.getAnnounceTime(time));
+    assertEquals("2 hours 2 minutes 2 seconds", task.getAnnounceTime(time));
   }
   
   /**
