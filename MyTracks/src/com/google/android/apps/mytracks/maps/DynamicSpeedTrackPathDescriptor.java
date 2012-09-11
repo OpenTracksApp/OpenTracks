@@ -37,8 +37,19 @@ import android.util.Log;
  * 
  * @author Vangelis S.
  */
-public class DynamicSpeedTrackPathDescriptor
-    implements TrackPathDescriptor, OnSharedPreferenceChangeListener {
+public class DynamicSpeedTrackPathDescriptor implements TrackPathDescriptor {
+
+  private final OnSharedPreferenceChangeListener
+      sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
+          @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+          if (PreferencesUtils.getKey(context, R.string.track_color_mode_percentage_key)
+              .equals(key)) {
+            speedMargin = PreferencesUtils.getInt(context, R.string.track_color_mode_percentage_key,
+                PreferencesUtils.TRACK_COLOR_MODE_PERCENTAGE_DEFAULT);
+          }
+        }
+      };
 
   private final Context context;
   private int speedMargin;
@@ -54,7 +65,7 @@ public class DynamicSpeedTrackPathDescriptor
     speedMargin = PreferencesUtils.getInt(context, R.string.track_color_mode_percentage_key,
         PreferencesUtils.TRACK_COLOR_MODE_PERCENTAGE_DEFAULT);
     context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE)
-        .registerOnSharedPreferenceChangeListener(this);
+        .registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
   }
 
   @Override
@@ -90,14 +101,6 @@ public class DynamicSpeedTrackPathDescriptor
       return true;
     } else {
       return false;
-    }
-  }
-
-  @Override
-  public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-    if (PreferencesUtils.getKey(context, R.string.track_color_mode_percentage_key).equals(key)) {
-      speedMargin = PreferencesUtils.getInt(context, R.string.track_color_mode_percentage_key,
-          PreferencesUtils.TRACK_COLOR_MODE_PERCENTAGE_DEFAULT);
     }
   }
 

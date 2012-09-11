@@ -52,8 +52,7 @@ import android.widget.RemoteViews;
  * @author Sandor Dornbush
  * @author Paul R. Saxman
  */
-public class TrackWidgetProvider extends AppWidgetProvider
-    implements OnSharedPreferenceChangeListener {
+public class TrackWidgetProvider extends AppWidgetProvider {
 
   /**
    * Observer for track content.
@@ -99,43 +98,50 @@ public class TrackWidgetProvider extends AppWidgetProvider
     handler = new Handler();
   }
 
-  @Override
-  public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-    if (key == null
-        || key.equals(PreferencesUtils.getKey(context, R.string.selected_track_id_key))) {
-      selectedTrackId = PreferencesUtils.getLong(context, R.string.selected_track_id_key);
-    }
-    if (key == null
-        || key.equals(PreferencesUtils.getKey(context, R.string.recording_track_id_key))) {
-      long oldValue = recordingTrackId;
-      recordingTrackId = PreferencesUtils.getLong(context, R.string.recording_track_id_key);
-      if (oldValue == PreferencesUtils.RECORDING_TRACK_ID_DEFAULT
-          && recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
-        recordingtrackPaused = false;
-      }
-    }
-    if (key == null
-        || key.equals(PreferencesUtils.getKey(context, R.string.recording_track_paused_key))) {
-      recordingtrackPaused = PreferencesUtils.getBoolean(context,
-          R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
-    }
-    if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.metric_units_key))) {
-      metricUnits = PreferencesUtils.getBoolean(
-          context, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
-    }
-    if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.report_speed_key))) {
-      reportSpeed = PreferencesUtils.getBoolean(
-          context, R.string.report_speed_key, PreferencesUtils.REPORT_SPEED_DEFAULT);
-    }
-    if (key == null
-        || key.equals(PreferencesUtils.getKey(context, R.string.stats_show_moving_time_key))) {
-      showMovingTime = PreferencesUtils.getBoolean(context, R.string.stats_show_moving_time_key,
-          PreferencesUtils.STATS_SHOW_MOVING_TIME_DEFAULT);
-    }
-    if (key != null) {
-      update();
-    }
-  }
+  private final OnSharedPreferenceChangeListener
+      sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
+          @Override
+        public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
+          if (key == null
+              || key.equals(PreferencesUtils.getKey(context, R.string.selected_track_id_key))) {
+            selectedTrackId = PreferencesUtils.getLong(context, R.string.selected_track_id_key);
+          }
+          if (key == null
+              || key.equals(PreferencesUtils.getKey(context, R.string.recording_track_id_key))) {
+            long oldValue = recordingTrackId;
+            recordingTrackId = PreferencesUtils.getLong(context, R.string.recording_track_id_key);
+            if (oldValue == PreferencesUtils.RECORDING_TRACK_ID_DEFAULT
+                && recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
+              recordingtrackPaused = false;
+            }
+          }
+          if (key == null || key.equals(
+              PreferencesUtils.getKey(context, R.string.recording_track_paused_key))) {
+            recordingtrackPaused = PreferencesUtils.getBoolean(context,
+                R.string.recording_track_paused_key,
+                PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+          }
+          if (key == null
+              || key.equals(PreferencesUtils.getKey(context, R.string.metric_units_key))) {
+            metricUnits = PreferencesUtils.getBoolean(
+                context, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
+          }
+          if (key == null
+              || key.equals(PreferencesUtils.getKey(context, R.string.report_speed_key))) {
+            reportSpeed = PreferencesUtils.getBoolean(
+                context, R.string.report_speed_key, PreferencesUtils.REPORT_SPEED_DEFAULT);
+          }
+          if (key == null || key.equals(
+              PreferencesUtils.getKey(context, R.string.stats_show_moving_time_key))) {
+            showMovingTime = PreferencesUtils.getBoolean(context,
+                R.string.stats_show_moving_time_key,
+                PreferencesUtils.STATS_SHOW_MOVING_TIME_DEFAULT);
+          }
+          if (key != null) {
+            update();
+          }
+        }
+      };
 
   @Override
   public void onReceive(Context aContext, Intent intent) {
@@ -150,8 +156,8 @@ public class TrackWidgetProvider extends AppWidgetProvider
       unknown = context.getString(R.string.value_unknown);
 
       sharedPreferences = context.getSharedPreferences(SETTINGS_NAME, Context.MODE_PRIVATE);
-      sharedPreferences.registerOnSharedPreferenceChangeListener(this);
-      onSharedPreferenceChanged(sharedPreferences, null);
+      sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+      sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
       context.getContentResolver()
           .registerContentObserver(TracksColumns.CONTENT_URI, true, trackObserver);
     }
@@ -165,7 +171,7 @@ public class TrackWidgetProvider extends AppWidgetProvider
   @Override
   public void onDisabled(Context aContext) {
     if (sharedPreferences != null) {
-      sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
+      sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     }
     if (trackObserver != null) {
       aContext.getContentResolver().unregisterContentObserver(trackObserver);

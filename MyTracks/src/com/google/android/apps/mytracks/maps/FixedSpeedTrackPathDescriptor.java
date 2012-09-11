@@ -29,8 +29,23 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
  * 
  * @author Vangelis S.
  */
-public class FixedSpeedTrackPathDescriptor
-    implements TrackPathDescriptor, OnSharedPreferenceChangeListener {
+public class FixedSpeedTrackPathDescriptor implements TrackPathDescriptor {
+
+  private final OnSharedPreferenceChangeListener
+      sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
+          @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+          if (PreferencesUtils.getKey(context, R.string.track_color_mode_slow_key).equals(key)) {
+            slowSpeed = PreferencesUtils.getInt(context, R.string.track_color_mode_slow_key,
+                PreferencesUtils.TRACK_COLOR_MODE_SLOW_DEFAULT);
+          } else if (PreferencesUtils.getKey(context, R.string.track_color_mode_medium_key)
+              .equals(key)) {
+            normalSpeed = PreferencesUtils.getInt(context, R.string.track_color_mode_medium_key,
+                PreferencesUtils.TRACK_COLOR_MODE_MEDIUM_DEFAULT);
+          }
+        }
+      };
+
   private final Context context;
   private int slowSpeed;
   private int normalSpeed;
@@ -43,7 +58,7 @@ public class FixedSpeedTrackPathDescriptor
     normalSpeed = PreferencesUtils.getInt(context, R.string.track_color_mode_medium_key,
         PreferencesUtils.TRACK_COLOR_MODE_MEDIUM_DEFAULT);
     context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE)
-        .registerOnSharedPreferenceChangeListener(this);
+        .registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
   }
 
   @Override
@@ -59,16 +74,5 @@ public class FixedSpeedTrackPathDescriptor
   @Override
   public boolean updateState() {
     return false;
-  }
-
-  @Override
-  public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-    if (PreferencesUtils.getKey(context, R.string.track_color_mode_slow_key).equals(key)) {
-      slowSpeed = PreferencesUtils.getInt(context, R.string.track_color_mode_slow_key,
-          PreferencesUtils.TRACK_COLOR_MODE_SLOW_DEFAULT);
-    } else if (PreferencesUtils.getKey(context, R.string.track_color_mode_medium_key).equals(key)) {
-      normalSpeed = PreferencesUtils.getInt(context, R.string.track_color_mode_medium_key,
-          PreferencesUtils.TRACK_COLOR_MODE_MEDIUM_DEFAULT);
-    }
   }
 }

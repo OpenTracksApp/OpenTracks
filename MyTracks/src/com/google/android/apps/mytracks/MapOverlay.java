@@ -56,7 +56,17 @@ import java.util.concurrent.BlockingQueue;
  * 
  * @author Leif Hendrik Wilden
  */
-public class MapOverlay extends Overlay implements OnSharedPreferenceChangeListener {
+public class MapOverlay extends Overlay {
+
+  private final OnSharedPreferenceChangeListener
+      sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
+          @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+          if (PreferencesUtils.getKey(context, R.string.track_color_mode_key).equals(key)) {
+            trackPathPainter = TrackPathPainterFactory.getTrackPathPainter(context);
+          }
+        }
+      };
 
   private final Context context;
   private final List<Waypoint> waypoints;
@@ -181,7 +191,7 @@ public class MapOverlay extends Overlay implements OnSharedPreferenceChangeListe
     trackPathPainter = TrackPathPainterFactory.getTrackPathPainter(context);
 
     context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE)
-        .registerOnSharedPreferenceChangeListener(this);
+        .registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
   }
 
   /**
@@ -364,13 +374,6 @@ public class MapOverlay extends Overlay implements OnSharedPreferenceChangeListe
       return true;
     }
     return super.onTap(geoPoint, mapView);
-  }
-
-  @Override
-  public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-    if (PreferencesUtils.getKey(context, R.string.track_color_mode_key).equals(key)) {
-      trackPathPainter = TrackPathPainterFactory.getTrackPathPainter(context);
-    }
   }
 
   /**
