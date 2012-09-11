@@ -289,6 +289,8 @@ public class MapFragment extends Fragment
                     : R.string.gps_location_access);
             message = getString(R.string.gps_disabled, setting);
             isGpsDisabled = true;
+            currentLocation = null;
+            updateCurrentLocation();
             break;
           case NO_FIX:
             message = getString(R.string.gps_wait_for_signal);
