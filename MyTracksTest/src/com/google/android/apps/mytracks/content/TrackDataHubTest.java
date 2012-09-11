@@ -792,13 +792,11 @@ public class TrackDataHubTest extends AndroidTestCase {
       // Do nothing
     }
   }
-  
+
   /**
-   * Tests the method {@link TrackDataHub#start()}. This method would also cover
-   * some logic of {@link TrackDataHub#loadDataForAll()} and 
-   * {@link TrackDataHub#notifySelectedTrackChanged(Set)}.
+   * Tests the method {@link TrackDataHub#start()}.
    */
-  public void testRegisterSelectedTrackListener() {    
+  public void testRegisterSelectedTrackListener() {
     dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceChangeListenerCapture));
     Track track = TrackStubUtils.createTrack(1);
     expect(myTracksProviderUtils.getTrack(capture(new Capture<Long>()))).andReturn(track);
@@ -807,16 +805,15 @@ public class TrackDataHubTest extends AndroidTestCase {
     trackDataListener1.onSelectedTrackChanged(track);
     replay();
     trackDataHub.start();
-    trackDataHub.registerTrackDataListener(trackDataListener1, EnumSet.of(TrackDataType.SELECTED_TRACK));
+    trackDataHub.registerTrackDataListener(
+        trackDataListener1, EnumSet.of(TrackDataType.SELECTED_TRACK));
     verifyAndReset();
   }
-  
+
   /**
-   * Tests the method {@link TrackDataHub#start()}. This method would also cover
-   * some logic of PreferencesUtils and 
-   * {@link TrackDataHub#notifyTracksTableUpdate(Set)}.
+   * Tests the method {@link TrackDataHub#start()}.
    */
-  public void testRegisterTracksTableListener() {    
+  public void testRegisterTracksTableListener() {
     dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceChangeListenerCapture));
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
     dataSource.registerContentObserver(eq(TracksColumns.CONTENT_URI), capture(observerCapture));
@@ -827,39 +824,38 @@ public class TrackDataHubTest extends AndroidTestCase {
     trackDataListener1.onTrackUpdated(track);
     replay();
     trackDataHub.start();
-    trackDataHub.registerTrackDataListener(trackDataListener1, EnumSet.of(TrackDataType.TRACKS_TABLE));
+    trackDataHub.registerTrackDataListener(
+        trackDataListener1, EnumSet.of(TrackDataType.TRACKS_TABLE));
     verifyAndReset();
   }
-  
+
   /**
-   * Tests the method {@link TrackDataHub#start()}. This method would also cover
-   * some logic of {@link TrackDataHub#loadDataForAll()} and 
-   * {@link TrackDataHub#notifyWaypointsTableUpdate(Set)}.
+   * Tests the method {@link TrackDataHub#start()}.
    */
-  public void testRegisterWaypointsTableListener() {    
+  public void testRegisterWaypointsTableListener() {
     dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceChangeListenerCapture));
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
-    dataSource.registerContentObserver(eq(WaypointsColumns.CONTENT_URI), capture(observerCapture));    
-    expect(myTracksProviderUtils.getWaypointCursor(capture(new Capture<Long>()), capture(new Capture<Long>()),
+    dataSource.registerContentObserver(eq(WaypointsColumns.CONTENT_URI), capture(observerCapture));
+    expect(myTracksProviderUtils.getWaypointCursor(
+        capture(new Capture<Long>()), capture(new Capture<Long>()),
         capture(new Capture<Integer>()))).andReturn(null);
     trackDataListener1.clearWaypoints();
     trackDataListener1.onNewWaypointsDone();
     replay();
     trackDataHub.start();
-    trackDataHub.registerTrackDataListener(trackDataListener1, EnumSet.of(TrackDataType.WAYPOINTS_TABLE));
+    trackDataHub.registerTrackDataListener(
+        trackDataListener1, EnumSet.of(TrackDataType.WAYPOINTS_TABLE));
     verifyAndReset();
   }
-  
+
   /**
-   * Tests the method {@link TrackDataHub#start()}. This method would also cover
-   * some logic of {@link TrackDataHub#loadDataForAll()} and
-   * {@link TrackDataHub#notifyLocationStateChanged(Set)} when no last seen
-   * location.
+   * Tests the method {@link TrackDataHub#start()} when no last seen location.
    */
-  public void testRegisterLocationListener_noLastSeenLocation() {    
+  public void testRegisterLocationListener_noLastSeenLocation() {
     dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceChangeListenerCapture));
-    Capture<CurrentLocationListener> currentLocationListener = new Capture<CurrentLocationListener>();
-    dataSource.registerLocationListener(capture(currentLocationListener));    
+    Capture<CurrentLocationListener> currentLocationListener = new Capture<
+        CurrentLocationListener>();
+    dataSource.registerLocationListener(capture(currentLocationListener));
     trackDataListener1.onLocationStateChanged(capture(new Capture<LocationState>()));
     replay();
     trackDataHub.setLastSeenLocation(null);
@@ -867,17 +863,15 @@ public class TrackDataHubTest extends AndroidTestCase {
     trackDataHub.registerTrackDataListener(trackDataListener1, EnumSet.of(TrackDataType.LOCATION));
     verifyAndReset();
   }
-  
+
   /**
-   * Tests the method {@link TrackDataHub#start()}. This method would also cover
-   * some logic of {@link TrackDataHub#loadDataForAll()} and
-   * {@link TrackDataHub#notifyLocationChanged(Location, boolean, Set)} when has
-   * last seen location.
+   * Tests the method {@link TrackDataHub#start()} when has last seen location.
    */
-  public void testRegisterLocationListener_hasLastSeenLocation() {    
+  public void testRegisterLocationListener_hasLastSeenLocation() {
     dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceChangeListenerCapture));
-    Capture<CurrentLocationListener> currentLocationListener = new Capture<CurrentLocationListener>();
-    dataSource.registerLocationListener(capture(currentLocationListener));   
+    Capture<CurrentLocationListener> currentLocationListener = new Capture<
+        CurrentLocationListener>();
+    dataSource.registerLocationListener(capture(currentLocationListener));
     trackDataListener1.onLocationStateChanged(capture(new Capture<LocationState>()));
     trackDataListener1.onLocationChanged(capture(new Capture<Location>()));
     replay();
@@ -886,7 +880,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     trackDataHub.registerTrackDataListener(trackDataListener1, EnumSet.of(TrackDataType.LOCATION));
     verifyAndReset();
   }
-  
+
   /**
    * Tests the method {@link TrackDataHub#start()}. This method would also cover
    * some logic of {@link TrackDataHub#notifyHeadingChanged(float)}.

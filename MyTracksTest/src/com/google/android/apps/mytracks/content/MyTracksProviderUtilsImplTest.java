@@ -635,13 +635,10 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
   
     assertEquals(TEST_DESC_NEW, providerUtils.getWaypoint(1).getDescription());
   }
-  
+
   /**
-   * Tests the method
-   * {@link MyTracksProviderUtilsImpl#bulkInsertTrackPoint(Location[], int, long)}
-   * . This test also covers the method
-   * {@link MyTracksProviderUtilsImpl#createContentValues(Location, long)} and
-   * the inner class {@link MyTracksProviderUtilsImpl.CachedTrackPointsIndexes}.
+   * Tests the method {@link MyTracksProviderUtilsImpl#bulkInsertTrackPoint(Location[],
+   * int, long)}.
    */
   public void testBulkInsertTrackPoint() {
     // Insert track, point at first.
@@ -730,16 +727,14 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
 
   /**
    * Tests the method
-   * {@link MyTracksProviderUtilsImpl#insertTrackPoint(Location, long)}. This
-   * test also covers the method
-   * {@link MyTracksProviderUtilsImpl#createContentValues(Location, long)}.
+   * {@link MyTracksProviderUtilsImpl#insertTrackPoint(Location, long)}.
    */
   public void testInsertTrackPoint() {
     // Insert track, point at first.
     long trackId = System.currentTimeMillis();
     Track track = getTrack(trackId, 10);
     insertTrackWithLocations(track);
-  
+
     providerUtils.insertTrackPoint(createLocation(22), trackId);
     assertEquals(11, providerUtils.getTrackPointCursor(trackId, 0, 1000, false).getCount());
   }
