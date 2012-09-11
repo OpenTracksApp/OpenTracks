@@ -16,12 +16,10 @@
 
 package com.google.android.apps.mytracks.maps;
 
-import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.test.AndroidTestCase;
 
 /**
@@ -32,13 +30,11 @@ import android.test.AndroidTestCase;
 public class DynamicSpeedTrackPathDescriptorTest extends AndroidTestCase {
 
   private Context context;
-  private SharedPreferences sharedPreferences;
 
   @Override
   protected void setUp() throws Exception {
     super.setUp();
     context = getContext();
-    sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
   }
 
   /**
@@ -55,39 +51,6 @@ public class DynamicSpeedTrackPathDescriptorTest extends AndroidTestCase {
           context);
       assertEquals(expectations[i], dynamicSpeedTrackPathDescriptor.getSpeedMargin());
     }
-  }
-
-  /**
-   * Tests {@link DynamicSpeedTrackPathDescriptor#onSharedPreferenceChanged(SharedPreferences,
-   * String)} when the key is trackColorModeDynamicVariation.
-   */
-  public void testOnSharedPreferenceChanged_trackColorModeDynamicVariationKey() {
-    DynamicSpeedTrackPathDescriptor dynamicSpeedTrackPathDescriptor = new DynamicSpeedTrackPathDescriptor(
-        context);
-    int speedMargin = dynamicSpeedTrackPathDescriptor.getSpeedMargin();
-    // Change value in shared preferences.
-    PreferencesUtils.setInt(context, R.string.track_color_mode_percentage_key, speedMargin + 2);
-
-    dynamicSpeedTrackPathDescriptor.onSharedPreferenceChanged(sharedPreferences,
-        PreferencesUtils.getKey(context, R.string.track_color_mode_percentage_key));
-    assertEquals(speedMargin + 2, dynamicSpeedTrackPathDescriptor.getSpeedMargin());
-  }
-
-  /**
-   * Tests {@link DynamicSpeedTrackPathDescriptor#onSharedPreferenceChanged(SharedPreferences,
-   * String)} when the values of speedMargin is the default value.
-   */
-  public void testOnSharedPreferenceChanged_defaultValue() {
-    DynamicSpeedTrackPathDescriptor dynamicSpeedTrackPathDescriptor = new DynamicSpeedTrackPathDescriptor(
-        context);
-    // Change value in shared preferences
-    PreferencesUtils.setInt(context, R.string.track_color_mode_percentage_key,
-        PreferencesUtils.TRACK_COLOR_MODE_PERCENTAGE_DEFAULT);
-    dynamicSpeedTrackPathDescriptor.onSharedPreferenceChanged(sharedPreferences,
-        PreferencesUtils.getKey(context, R.string.track_color_mode_percentage_key));
-    // The default value of speedMargin is 25.
-    assertEquals(PreferencesUtils.TRACK_COLOR_MODE_PERCENTAGE_DEFAULT,
-        dynamicSpeedTrackPathDescriptor.getSpeedMargin());
   }
 
   /**

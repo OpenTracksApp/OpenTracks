@@ -569,11 +569,11 @@ limitations under the License.
     translation_description="The body in the 'Terms of Service. See http://m.google.com/toscountry.
 
       %1$s: host name, 'm.google.com'">
-    By using Google\'s mobile products and services ("Services"), you agree to be bound by a) the
-    YouTube Terms of Use (%1$s/tos_youtube) for YouTube-related Services, b) the Google Maps Terms
-    and Conditions (%1$s/tos_maps) for mapping, local and location-based Services, c) the Google
-    Books Terms of Service (%1$s/tos_books) for Books-related Services, and e) the Google Terms of
-    Service (%1$s/utos) for all other Services, as updated from time to time.
+    By using Google\'s mobile products and services (&#8220;Services&#8221;), you agree to be bound
+    by a) the YouTube Terms of Use (%1$s/tos_youtube) for YouTube-related Services, b) the Google
+    Maps Terms and Conditions (%1$s/tos_maps) for mapping, local and location-based Services, c) the
+    Google Books Terms of Service (%1$s/tos_books) for Books-related Services, and e) the Google
+    Terms of Service (%1$s/utos) for all other Services, as updated from time to time.
   </string>
   <string name="eula_copyright_year"
     translation_description="The copyright year in the 'Terms of Service'. See
@@ -654,11 +654,11 @@ limitations under the License.
   </string>
   <string name="generic_progress_title"
     translation_description="The title on a progress dialog asking the user to wait.">
-    Please wait...
+    Please wait&#8230;
   </string>
   <string name="generic_recording"
     translation_description="Text indicating a track is recording.">
-    Recording...
+    Recording&#8230;
   </string>
   <string name="generic_save"
     translation_description="The text on a button to say save.">
@@ -673,12 +673,12 @@ limitations under the License.
   <string name="gps_google_location_settings"
      translation_description="In Android, the Google location settings to modify location settings
       for all Google applications. See Settings -> Google -> Location settings.">
-    \'Google location settings\'
+    &#8216;Google location settings&#8217;
   </string>
   <string name="gps_location_access"
     translation_description="In Android, the location access settings to modify location settings
       for all applications. See Settings -> Location access.">
-    \'Location access\'
+    &#8216;Location access&#8217;
   </string>
   <string name="gps_disabled"
     translation_description="In the main view, the message on the top asking the user to enable
@@ -733,11 +733,11 @@ limitations under the License.
   </string>
   <string name="help_delete_tracks_answer"
     translation_description="In the 'Help' page, the answer on delete tracks.">
-    From the track list, select \"Delete all\" when not recording. This permanently deletes the
-    recorded tracks from memory. If you have saved tracks or backups on the SD card, you must delete
-    them separately. You can access the SD card using any file manager app from the Play Store or
-    using a USB cable to connect your phone to your computer. Tracks uploaded to Google Maps,
-    Google Fusion Tables, and Google Docs must also be deleted separately.
+    From the track list, select &#8220;Delete all&#8221; when not recording. This permanently
+    deletes the recorded tracks from memory. If you have saved tracks or backups on the SD card, you
+    must delete them separately. You can access the SD card using any file manager app from the Play
+    Store or using a USB cable to connect your phone to your computer. Tracks uploaded to Google
+    Maps, Google Fusion Tables, and Google Docs must also be deleted separately.
   </string>
   <string name="help_delete_tracks_question"
     translation_description="In the 'Help' page, the question on delete tracks.">
@@ -772,7 +772,7 @@ limitations under the License.
   </string>
   <string name="help_gps_signal_question"
     translation_description="In the 'Help' page, the question on the GPS signal message.">
-    Why does the application sometimes display \"Waiting for a better GPS signal.\"?
+    Why does the application sometimes display &#8220;Waiting for a better GPS signal.&#8221;?
   </string>
   <string name="help_location_precision_answer"
     translation_description="In the 'Help' page, the answer on location precision.">
@@ -829,8 +829,8 @@ limitations under the License.
       %2$s url. E.g., 'google.com/fusiontables'.
       %3$s url. E.g., 'docs.google.com'.">
     You can send a track to Google Maps, Google Fusion Tables, and Google Docs. Tracks sent to
-    Google Maps are at %1$s, \"My Places\". Tracks sent to Google Fusion Tables are at %2$s. Tracks
-    sent to Google Docs are at %3$s.
+    Google Maps are at %1$s, &#8220;My Places&#8221;. Tracks sent to Google Fusion Tables are at
+    %2$s. Tracks sent to Google Docs are at %3$s.
   </string>
   <string name="help_send_track_question"
     translation_description="In the 'Help' page, the question on sending a track.">
@@ -954,7 +954,7 @@ limitations under the License.
   <string name="maps_list_progress_message"
     translation_description="When sending a track to an existing Google Map, the progress message
       informing the user that his maps are being loaded.">
-    Loading your Google Maps...
+    Loading your Google Maps&#8230;
   </string>
   <string name="maps_list_public_label"
     translation_description="When sending a track to an existing Google Map, in the 'Maps' list
@@ -1264,7 +1264,7 @@ limitations under the License.
   </string>
   <string name="sd_card_import_progress_message"
     translation_description="When importing from the SD card, the progress message.">
-    Importing from SD card...
+    Importing from SD card&#8230;
   </string>
   <string name="sd_card_import_success"
     translation_description="When importing from the SD card, the success message.">
@@ -1296,7 +1296,7 @@ limitations under the License.
   </string>
   <string name="sd_card_save_progress_message"
     translation_description="When saving to the SD card, the progress message.">
-    Saving to SD card...
+    Saving to SD card&#8230;
   </string>
     <string name="sd_card_save_success"
     translation_description="When saving to the SD card, the success message">
@@ -1403,7 +1403,7 @@ limitations under the License.
     translation_description="When sending a track to a Google service, the progress message.
 
       %1$s: service name. 'Google Maps', 'Google Fusion Tables', or 'Google Docs'.">
-    Sending to %1$s...
+    Sending to %1$s&#8230;
   </string>
   <string name="send_google_send_now"
     translation_description="When sending a track to Google, under the 'Send to...' dialog, the
@@ -1419,7 +1419,7 @@ limitations under the License.
     translation_description="When sending a track to Google, the dialog title to choose the Google
       services to send the track to. The user can choose Google Maps, Google Fusion Tables, and
       Google Docs.">
-    Send to...
+    Send to&#8230;
   </string>
   <string name="send_google_track_part_label"
     translation_description="When sending a track to Google, the label to name segments of a large
@@ -1522,7 +1522,7 @@ limitations under the License.
   <string name="settings_backup_now_progress_message"
     translation_description="In the 'Backup' settings, after pressing the 'Backup now' option, the
       progress message telling the user that it is writing all tracks and settings to the SD card.">
-    Writing all tracks and settings...
+    Writing all tracks and settings&#8230;
   </string>
   <string name="settings_backup_now_summary"
     translation_description="In the 'Backup' settings, under the 'SD card' section, the summary for
@@ -1552,7 +1552,7 @@ limitations under the License.
     translation_description="In the 'Backup' settings, after pressing the 'Restore now' option, the
       progress message informing that My Tracks is reading all tracks and settings from the backup
       on the SD card.">
-    Reading all tracks and settings...
+    Reading all tracks and settings&#8230;
   </string>
   <string name="settings_backup_restore_select_title"
     translation_description="In the 'Backup' settings, after pressing the 'Restore now' option, the
@@ -2275,7 +2275,7 @@ limitations under the License.
   <string name="track_record_notification"
     translation_description="When recording a track, the message on the My Tracks notification
       informing the user that My Tracks is actively recording his track.">
-    Recording your track...
+    Recording your track&#8230;
   </string>
 
   <!-- Unit -->

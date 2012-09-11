@@ -50,9 +50,6 @@ limitations under the License.
   <!-- track widget line -->
   <color name="track_widget_line">#99999999</color>
 
-  <!-- track widget red -->
-  <color name="track_widget_red">#FFCA1F25</color>
-
   <!-- dynamic track slow path, green -->
   <color name="slow_path">#F774DF00</color>
 

@@ -15,12 +15,10 @@
  */
 package com.google.android.apps.mytracks.maps;
 
-import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.test.AndroidTestCase;
 
 /**
@@ -31,13 +29,11 @@ import android.test.AndroidTestCase;
 public class FixedSpeedTrackPathDescriptorTest extends AndroidTestCase {
 
   private Context context;
-  private SharedPreferences sharedPreferences;
 
   @Override
   protected void setUp() throws Exception {
     super.setUp();
     context = getContext();
-    sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
   }
 
   /**
@@ -60,10 +56,10 @@ public class FixedSpeedTrackPathDescriptorTest extends AndroidTestCase {
   }
 
   /**
-   * Tests {@link DynamicSpeedTrackPathDescriptor#onSharedPreferenceChanged(SharedPreferences,
-   * String)} when the key is null.
+   * Tests {@link FixedSpeedTrackPathDescriptor#getSlowSpeed()} and
+   * {@link FixedSpeedTrackPathDescriptor#getNormalSpeed()}.
    */
-  public void testOnSharedPreferenceChanged_null_key() {
+  public void testGetSpeed() {
     FixedSpeedTrackPathDescriptor fixedSpeedTrackPathDescriptor = new FixedSpeedTrackPathDescriptor(
         context);
     int slowSpeed = fixedSpeedTrackPathDescriptor.getSlowSpeed();
@@ -71,74 +67,7 @@ public class FixedSpeedTrackPathDescriptorTest extends AndroidTestCase {
     // Change value in shared preferences
     PreferencesUtils.setInt(context, R.string.track_color_mode_slow_key, slowSpeed + 2);
     PreferencesUtils.setInt(context, R.string.track_color_mode_medium_key, normalSpeed + 2);
-    fixedSpeedTrackPathDescriptor.onSharedPreferenceChanged(sharedPreferences, null);
     assertEquals(slowSpeed, fixedSpeedTrackPathDescriptor.getSlowSpeed());
     assertEquals(normalSpeed, fixedSpeedTrackPathDescriptor.getNormalSpeed());
-  }
-
-  /**
-   * Tests {@link DynamicSpeedTrackPathDescriptor#onSharedPreferenceChanged(SharedPreferences,
-   * String)} when the key is not null, and not slowSpeed and not normalSpeed.
-   */
-  public void testOnSharedPreferenceChanged_other_key() {
-    FixedSpeedTrackPathDescriptor fixedSpeedTrackPathDescriptor = new FixedSpeedTrackPathDescriptor(
-        context);
-    int slowSpeed = fixedSpeedTrackPathDescriptor.getSlowSpeed();
-    int normalSpeed = fixedSpeedTrackPathDescriptor.getNormalSpeed();
-    // Change value in shared preferences
-    PreferencesUtils.setInt(context, R.string.track_color_mode_slow_key, slowSpeed + 2);
-    PreferencesUtils.setInt(context, R.string.track_color_mode_medium_key, normalSpeed + 2);
-    fixedSpeedTrackPathDescriptor.onSharedPreferenceChanged(sharedPreferences, "anyKey");
-    assertEquals(slowSpeed, fixedSpeedTrackPathDescriptor.getSlowSpeed());
-    assertEquals(normalSpeed, fixedSpeedTrackPathDescriptor.getNormalSpeed());
-  }
-
-  /**
-   * Tests {@link DynamicSpeedTrackPathDescriptor#onSharedPreferenceChanged(SharedPreferences,
-   * String)} when the key is slowSpeed.
-   */
-  public void testOnSharedPreferenceChanged_slowSpeedKey() {
-    FixedSpeedTrackPathDescriptor fixedSpeedTrackPathDescriptor = new FixedSpeedTrackPathDescriptor(
-        context);
-    int slowSpeed = fixedSpeedTrackPathDescriptor.getSlowSpeed();
-    // Change value in shared preferences
-    PreferencesUtils.setInt(context, R.string.track_color_mode_slow_key, slowSpeed + 2);
-    fixedSpeedTrackPathDescriptor.onSharedPreferenceChanged(
-        sharedPreferences, context.getString(R.string.track_color_mode_slow_key));
-    assertEquals(slowSpeed + 2, fixedSpeedTrackPathDescriptor.getSlowSpeed());
-  }
-
-  /**
-   * Tests {@link DynamicSpeedTrackPathDescriptor#onSharedPreferenceChanged(SharedPreferences,
-   * String)} when the key is normalSpeed.
-   */
-  public void testOnSharedPreferenceChanged_normalSpeedKey() {
-    FixedSpeedTrackPathDescriptor fixedSpeedTrackPathDescriptor = new FixedSpeedTrackPathDescriptor(
-        context);
-    int normalSpeed = fixedSpeedTrackPathDescriptor.getNormalSpeed();
-    PreferencesUtils.setInt(context, R.string.track_color_mode_medium_key, normalSpeed + 4);
-    fixedSpeedTrackPathDescriptor.onSharedPreferenceChanged(
-        sharedPreferences, context.getString(R.string.track_color_mode_medium_key));
-    assertEquals(normalSpeed + 4, fixedSpeedTrackPathDescriptor.getNormalSpeed());
-  }
-
-  /**
-   * Tests {@link DynamicSpeedTrackPathDescriptor#onSharedPreferenceChanged(SharedPreferences,
-   * String)} when the values of slowSpeed and normalSpeed in SharedPreference
-   * are the default values.
-   */
-  public void testOnSharedPreferenceChanged_defaultValue() {
-    FixedSpeedTrackPathDescriptor fixedSpeedTrackPathDescriptor = new FixedSpeedTrackPathDescriptor(
-        context);
-    PreferencesUtils.setInt(context, R.string.track_color_mode_slow_key,
-        PreferencesUtils.TRACK_COLOR_MODE_SLOW_DEFAULT);
-    PreferencesUtils.setInt(context, R.string.track_color_mode_medium_key,
-        PreferencesUtils.TRACK_COLOR_MODE_MEDIUM_DEFAULT);
-    fixedSpeedTrackPathDescriptor.onSharedPreferenceChanged(
-        sharedPreferences, context.getString(R.string.track_color_mode_medium_key));
-    assertEquals(PreferencesUtils.TRACK_COLOR_MODE_SLOW_DEFAULT,
-        fixedSpeedTrackPathDescriptor.getSlowSpeed());
-    assertEquals(PreferencesUtils.TRACK_COLOR_MODE_MEDIUM_DEFAULT,
-        fixedSpeedTrackPathDescriptor.getNormalSpeed());
   }
 }
