@@ -686,6 +686,7 @@ public class TrackDataHub implements DataSourceListener {
     TrackDataListener.LocationState locationState;
     if (!hasProviderEnabled) {
       locationState = LocationState.DISABLED;
+      lastSeenLocation = null;
     } else if (!hasFix) {
       locationState = LocationState.NO_FIX;
     } else if (!hasGoodFix) {
