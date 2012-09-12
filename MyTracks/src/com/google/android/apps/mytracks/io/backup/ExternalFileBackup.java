@@ -150,7 +150,7 @@ class ExternalFileBackup {
         "Writing backup to file " + outputFile.getAbsolutePath());
 
     // Create all the auxiliary classes that will do the writing
-    PreferenceBackupHelper preferencesHelper = new PreferenceBackupHelper();
+    PreferenceBackupHelper preferencesHelper = new PreferenceBackupHelper(context);
     DatabaseDumper trackDumper = new DatabaseDumper(
         TracksColumns.COLUMNS,
         TracksColumns.COLUMN_TYPES,
@@ -223,7 +223,7 @@ class ExternalFileBackup {
     Log.d(Constants.TAG,
         "Restoring from file " + inputFile.getAbsolutePath());
 
-    PreferenceBackupHelper preferencesHelper = new PreferenceBackupHelper();
+    PreferenceBackupHelper preferencesHelper = new PreferenceBackupHelper(context);
     ContentResolver resolver = context.getContentResolver();
     DatabaseImporter trackImporter =
         new DatabaseImporter(TracksColumns.CONTENT_URI, resolver, false);

@@ -22,7 +22,6 @@ limitations under the License.
   <string name="ant_combined_bike_sensor_id_key">antCombinedBikeSensorId</string>
   <string name="ant_heart_rate_monitor_id_key">antHeartRateMonitorId</string>
   <string name="ant_speed_distance_monitor_id_key">antSpeedDistanceMonitorId</string>
-  <string name="auto_resume_track_current_retry_key">autoResumeTrackCurrentRetry</string>
   <string name="auto_resume_track_timeout_key">autoResumeTrackTimeout</string>
   <string name="bluetooth_sensor_key">bluetoothSensor</string>
   <string name="chart_by_distance_key">chartByDistance</string>
@@ -40,10 +39,7 @@ limitations under the License.
   <string name="min_recording_interval_key">minRecordingInterval</string>
   <string name="min_required_accuracy_key">minRequiredAccuracy</string>
   <string name="pick_existing_map_key">pickExistingMap</string>
-  <string name="recording_track_id_key">recordingTrackId</string>
-  <string name="recording_track_paused_key">recordingTrackPaused</string>
   <string name="report_speed_key">reportSpeed</string>
-  <string name="selected_track_id_key">selectedTrackId</string>
   <string name="send_to_docs_key">sendToDocs</string>
   <string name="send_to_fusion_tables_key">sendToFusionTables</string>
   <string name="send_to_maps_key">sendToMaps</string>
@@ -59,6 +55,13 @@ limitations under the License.
   <string name="track_color_mode_slow_key">trackColorModeSlow</string>
   <string name="track_color_mode_key">trackColorMode</string>
   <string name="track_name_key">trackName</string>
+  
+  <!-- Keys for persistend preferences. But they should not get backed up or restored. -->
+  <string name="auto_resume_track_current_retry_key">autoResumeTrackCurrentRetry</string>
+  <string name="recording_track_id_key">recordingTrackId</string>
+  <string name="recording_track_paused_key">recordingTrackPaused</string>
+  <string name="selected_track_id_key">selectedTrackId</string>
+
   <!-- Keys for non-persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
   <string name="settings_backup_key">settingsBackup</string>
   <string name="settings_backup_now_key">settingsBackupNow</string>
