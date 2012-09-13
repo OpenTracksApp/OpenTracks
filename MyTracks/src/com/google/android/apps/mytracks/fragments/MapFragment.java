@@ -66,8 +66,8 @@ public class MapFragment extends Fragment
 
   public static final String MAP_FRAGMENT_TAG = "mapFragment";
 
-  private static final String KEY_CURRENT_LOCATION = "currentLocation";
-  private static final String KEY_KEEP_MY_LOCATION_VISIBLE = "keepMyLocationVisible";
+  private static final String CURRENT_LOCATION_KEY = "current_location_key";
+  private static final String KEEP_MY_LOCATION_VISIBLE_KEY = "keep_my_location_visible_key";
 
   private TrackDataHub trackDataHub;
 
@@ -133,8 +133,8 @@ public class MapFragment extends Fragment
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
     if (savedInstanceState != null) {
-      keepMyLocationVisible = savedInstanceState.getBoolean(KEY_KEEP_MY_LOCATION_VISIBLE, false);
-      currentLocation = (Location) savedInstanceState.getParcelable(KEY_CURRENT_LOCATION);
+      keepMyLocationVisible = savedInstanceState.getBoolean(KEEP_MY_LOCATION_VISIBLE_KEY, false);
+      currentLocation = (Location) savedInstanceState.getParcelable(CURRENT_LOCATION_KEY);
       if (currentLocation != null) {
         updateCurrentLocation();
       }
@@ -150,9 +150,9 @@ public class MapFragment extends Fragment
   @Override
   public void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
-    outState.putBoolean(KEY_KEEP_MY_LOCATION_VISIBLE, keepMyLocationVisible);
+    outState.putBoolean(KEEP_MY_LOCATION_VISIBLE_KEY, keepMyLocationVisible);
     if (currentLocation != null) {
-      outState.putParcelable(KEY_CURRENT_LOCATION, currentLocation);
+      outState.putParcelable(CURRENT_LOCATION_KEY, currentLocation);
     }
   }
 
