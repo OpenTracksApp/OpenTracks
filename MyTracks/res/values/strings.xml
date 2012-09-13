@@ -1171,6 +1171,18 @@ limitations under the License.
       Character limit: ~20 (1 line)">
     Split frequency
   </string>
+  <string name="menu_start_gps"
+    translation_description="In the menu, to start the GPS receiver on the phone.
+
+      Character limit: ~20 (1 line)">
+    Start GPS
+  </string>
+  <string name="menu_stop_gps"
+    translation_description="In the menu, to stop the GPS receiver on the phone.
+
+      Character limit: ~20 (1 line)">
+    Stop GPS
+  </string>
   <string name="menu_voice_frequency"
     translation_description="In the menu, to configure the voice frequency, how frequent to announce
       status.
