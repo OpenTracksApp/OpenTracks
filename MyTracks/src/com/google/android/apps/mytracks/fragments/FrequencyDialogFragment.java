@@ -24,6 +24,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 
 /**
  * A DialogFragment to configure frequency.
@@ -50,19 +51,23 @@ public class FrequencyDialogFragment extends DialogFragment {
     return frequencyDialogFragment;
   }
 
+  private FragmentActivity activity; 
+  
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
+    activity = getActivity();
+    
     final int preferenceId = getArguments().getInt(KEY_PREFERENCE_ID);
     int defaultValue = getArguments().getInt(KEY_DEFAULT_VALUE);
     int titleId = getArguments().getInt(KEY_TITLE_ID);
-    int frequencyValue = PreferencesUtils.getInt(getActivity(), preferenceId, defaultValue);
+    int frequencyValue = PreferencesUtils.getInt(activity, preferenceId, defaultValue);
 
-    return new AlertDialog.Builder(getActivity())
+    return new AlertDialog.Builder(activity)
         .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int which) {
             int listIndex = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-            PreferencesUtils.setInt(getActivity(), preferenceId, getFrequencyValue(listIndex));
+            PreferencesUtils.setInt(activity, preferenceId, getFrequencyValue(listIndex));
           }
         })
         .setSingleChoiceItems(getFrequencyDisplayOptions(), getListIndex(frequencyValue), null)
@@ -75,7 +80,7 @@ public class FrequencyDialogFragment extends DialogFragment {
    */
   private String[] getFrequencyDisplayOptions() {
     boolean metricUnits = PreferencesUtils.getBoolean(
-        getActivity(), R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
+        activity, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
     String[] values = getResources().getStringArray(R.array.frequency_values);
     String[] options = new String[values.length];
     for (int i = 0; i < values.length; i++) {

@@ -28,6 +28,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -57,6 +58,7 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
     return chooseUploadServiceDialogFragment;
   }
 
+  private FragmentActivity activity;
   private SendRequest sendRequest;
 
   private CheckBox mapsCheckBox;
@@ -68,20 +70,22 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
 
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
+    activity = getActivity();
     sendRequest = getArguments().getParcelable(KEY_SEND_REQUEST);
-    View view = getActivity().getLayoutInflater().inflate(R.layout.choose_upload_service, null);
+
+    View view = activity.getLayoutInflater().inflate(R.layout.choose_upload_service, null);
 
     mapsCheckBox = (CheckBox) view.findViewById(R.id.choose_upload_service_maps);
     fusionTablesCheckBox = (CheckBox) view.findViewById(R.id.choose_upload_service_fusion_tables);
     docsCheckBox = (CheckBox) view.findViewById(R.id.choose_upload_service_docs);
 
     mapsCheckBox.setChecked(PreferencesUtils.getBoolean(
-        getActivity(), R.string.send_to_maps_key, PreferencesUtils.SEND_TO_MAPS_DEFAULT));
+        activity, R.string.send_to_maps_key, PreferencesUtils.SEND_TO_MAPS_DEFAULT));
     fusionTablesCheckBox.setChecked(PreferencesUtils.getBoolean(
-        getActivity(), R.string.send_to_fusion_tables_key,
+        activity, R.string.send_to_fusion_tables_key,
         PreferencesUtils.SEND_TO_FUSION_TABLES_DEFAULT));
     docsCheckBox.setChecked(PreferencesUtils.getBoolean(
-        getActivity(), R.string.send_to_docs_key, PreferencesUtils.SEND_TO_DOCS_DEFAULT));
+        activity, R.string.send_to_docs_key, PreferencesUtils.SEND_TO_DOCS_DEFAULT));
 
     mapsCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
       public void onCheckedChanged(CompoundButton button, boolean checked) {
@@ -93,7 +97,7 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
 
     RadioButton newMapRadioButton = (RadioButton) view.findViewById(
         R.id.choose_upload_service_new_map);
-    boolean defaultMapPublic = PreferencesUtils.getBoolean(getActivity(),
+    boolean defaultMapPublic = PreferencesUtils.getBoolean(activity,
         R.string.default_map_public_key, PreferencesUtils.DEFAULT_MAP_PUBLIC_DEFAULT);
     newMapRadioButton.setText(defaultMapPublic ? R.string.send_google_new_public_map
         : R.string.send_google_new_unlisted_map);
@@ -102,31 +106,31 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
         R.id.choose_upload_service_existing_map);
 
     updateMapsOption();
-    if (PreferencesUtils.getBoolean(getActivity(), R.string.pick_existing_map_key,
+    if (PreferencesUtils.getBoolean(activity, R.string.pick_existing_map_key,
         PreferencesUtils.PICK_EXISTING_MAP_DEFAULT)) {
       existingMapRadioButton.setChecked(true);
     } else {
       newMapRadioButton.setChecked(true);
     }
 
-    return new AlertDialog.Builder(getActivity()).setNegativeButton(R.string.generic_cancel, null)
+    return new AlertDialog.Builder(activity).setNegativeButton(R.string.generic_cancel, null)
         .setPositiveButton(R.string.send_google_send_now, new DialogInterface.OnClickListener() {
             @Override
           public void onClick(DialogInterface dialog, int which) {
             PreferencesUtils.setBoolean(
-                getActivity(), R.string.pick_existing_map_key, existingMapRadioButton.isChecked());
+                activity, R.string.pick_existing_map_key, existingMapRadioButton.isChecked());
             PreferencesUtils.setBoolean(
-                getActivity(), R.string.send_to_maps_key, mapsCheckBox.isChecked());
-            PreferencesUtils.setBoolean(getActivity(), R.string.send_to_fusion_tables_key,
+                activity, R.string.send_to_maps_key, mapsCheckBox.isChecked());
+            PreferencesUtils.setBoolean(activity, R.string.send_to_fusion_tables_key,
                 fusionTablesCheckBox.isChecked());
             PreferencesUtils.setBoolean(
-                getActivity(), R.string.send_to_docs_key, docsCheckBox.isChecked());
+                activity, R.string.send_to_docs_key, docsCheckBox.isChecked());
             if (mapsCheckBox.isChecked() || fusionTablesCheckBox.isChecked()
                 || docsCheckBox.isChecked()) {
               startNextActivity();
             } else {
               Toast.makeText(
-                  getActivity(), R.string.send_google_no_service_selected, Toast.LENGTH_LONG)
+                  activity, R.string.send_google_no_service_selected, Toast.LENGTH_LONG)
                   .show();
             }
           }
@@ -152,7 +156,7 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
     sendRequest.setSendDocs(docsCheckBox.isChecked());
     sendRequest.setNewMap(!existingMapRadioButton.isChecked());
     sendStats();
-    Intent intent = IntentUtils.newIntent(getActivity(), AccountChooserActivity.class)
+    Intent intent = IntentUtils.newIntent(activity, AccountChooserActivity.class)
         .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
     startActivity(intent);
   }
@@ -162,13 +166,13 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
    */
   private void sendStats() {
     if (sendRequest.isSendMaps()) {
-      AnalyticsUtils.sendPageViews(getActivity(), "/send/maps");
+      AnalyticsUtils.sendPageViews(activity, "/send/maps");
     }
     if (sendRequest.isSendFusionTables()) {
-      AnalyticsUtils.sendPageViews(getActivity(), "/send/fusion_tables");
+      AnalyticsUtils.sendPageViews(activity, "/send/fusion_tables");
     }
     if (sendRequest.isSendDocs()) {
-      AnalyticsUtils.sendPageViews(getActivity(), "/send/docs");
+      AnalyticsUtils.sendPageViews(activity, "/send/docs");
     }
   }
 }
