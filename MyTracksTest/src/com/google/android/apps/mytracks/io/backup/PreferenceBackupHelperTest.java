@@ -18,19 +18,18 @@ package com.google.android.apps.mytracks.io.backup;
 import android.annotation.TargetApi;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.test.AndroidTestCase;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
-import junit.framework.TestCase;
 
 /**
  * Tests for {@link PreferenceBackupHelper}.
  *
  * @author Rodrigo Damazio
  */
-public class PreferenceBackupHelperTest extends TestCase {
+public class PreferenceBackupHelperTest extends AndroidTestCase {
   private Map<String, ?> preferenceValues;
   private SharedPreferences preferences;
   private PreferenceBackupHelper preferenceBackupHelper;
@@ -173,7 +172,7 @@ public class PreferenceBackupHelperTest extends TestCase {
 
     preferenceValues = new HashMap<String, Object>();
     preferences = new MockPreferences();
-    preferenceBackupHelper = new PreferenceBackupHelper();
+    preferenceBackupHelper = new PreferenceBackupHelper(getContext());
   }
 
   @TargetApi(9)

@@ -59,7 +59,7 @@ public class MyTracksBackupAgent extends BackupAgent {
   }
 
   protected PreferenceBackupHelper createPreferenceBackupHelper() {
-    return new PreferenceBackupHelper();
+    return new PreferenceBackupHelper(this);
   }
 
   @Override
