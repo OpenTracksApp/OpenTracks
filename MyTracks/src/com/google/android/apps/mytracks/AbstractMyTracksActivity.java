@@ -28,14 +28,20 @@ import android.view.MenuItem;
  * 
  * @author Jimmy Shih
  */
-public class AbstractMyTracksActivity extends FragmentActivity {
+public abstract class AbstractMyTracksActivity extends FragmentActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
+    setContentView(getLayoutResId());
     ApiAdapterFactory.getApiAdapter().configureActionBarHomeAsUp(this);
   }
+  
+  /**
+   * Gets the layout resource id.
+   */
+  protected abstract int getLayoutResId();
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {

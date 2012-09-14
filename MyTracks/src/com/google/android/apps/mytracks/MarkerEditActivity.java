@@ -62,7 +62,6 @@ public class MarkerEditActivity extends AbstractMyTracksActivity {
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
-    setContentView(R.layout.marker_edit);
 
     trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1L);
     markerId = getIntent().getLongExtra(EXTRA_MARKER_ID, -1L);
@@ -89,6 +88,11 @@ public class MarkerEditActivity extends AbstractMyTracksActivity {
     });
     done = (Button) findViewById(R.id.marker_edit_done);
     updateUiByMarkerId();
+  }
+
+  @Override
+  protected int getLayoutResId() {
+    return R.layout.marker_edit;
   }
 
   /**

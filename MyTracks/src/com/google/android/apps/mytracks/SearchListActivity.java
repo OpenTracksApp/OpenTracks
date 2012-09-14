@@ -137,7 +137,6 @@ public class SearchListActivity extends AbstractMyTracksActivity implements Dele
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
-    setContentView(R.layout.search_list);
 
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
@@ -200,6 +199,11 @@ public class SearchListActivity extends AbstractMyTracksActivity implements Dele
     ApiAdapterFactory.getApiAdapter()
         .configureListViewContextualMenu(this, listView, contextualActionModeCallback);
     handleIntent(getIntent());
+  }
+
+  @Override
+  protected int getLayoutResId() {
+    return R.layout.search_list;
   }
 
   @Override

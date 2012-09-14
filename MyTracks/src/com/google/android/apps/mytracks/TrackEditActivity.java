@@ -57,7 +57,6 @@ public class TrackEditActivity extends AbstractMyTracksActivity {
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
-    setContentView(R.layout.track_edit);
 
     trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1L);
     if (trackId == -1L) {
@@ -141,6 +140,11 @@ public class TrackEditActivity extends AbstractMyTracksActivity {
       });
       cancel.setVisibility(View.VISIBLE);
     }
+  }
+
+  @Override
+  protected int getLayoutResId() {
+    return R.layout.track_edit;
   }
 
   /**

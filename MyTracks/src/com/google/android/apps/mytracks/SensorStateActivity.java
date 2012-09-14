@@ -92,8 +92,12 @@ public class SensorStateActivity extends AbstractMyTracksActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.sensor_state);
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
+  }
+
+  @Override
+  protected int getLayoutResId() {
+    return R.layout.sensor_state;
   }
 
   @Override

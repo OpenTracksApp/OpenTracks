@@ -113,7 +113,6 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
     }
     
     setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
-    setContentView(R.layout.marker_list);
 
     getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE)
         .registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
@@ -177,6 +176,11 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
         resourceCursorAdapter.swapCursor(null);
       }
     });
+  }
+
+  @Override
+  protected int getLayoutResId() {
+    return R.layout.marker_list;
   }
 
   @Override

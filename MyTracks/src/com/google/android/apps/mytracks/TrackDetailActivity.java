@@ -192,7 +192,6 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     super.onCreate(savedInstanceState);
     handleIntent(getIntent());
     ApiAdapterFactory.getApiAdapter().hideTitle(this);
-    setContentView(R.layout.track_detail);
 
     SharedPreferences sharedPreferences = getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
@@ -224,6 +223,11 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     }
     trackController = new TrackController(this, trackRecordingServiceConnection, false, recordListener, stopListener);
     showMarker();
+  }
+
+  @Override
+  protected int getLayoutResId() {
+    return R.layout.track_detail;
   }
 
   @Override
