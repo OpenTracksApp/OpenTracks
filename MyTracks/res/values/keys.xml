@@ -17,7 +17,6 @@ limitations under the License.
 <resources>
   <!-- Keys for persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
   <string name="allow_access_key">allowAccess</string>
-  <string name="announcement_frequency_key">announcementFrequency</string>
   <string name="ant_bike_cadence_sensor_id_key">antBikeCadenceSensorId</string>
   <string name="ant_combined_bike_sensor_id_key">antCombinedBikeSensorId</string>
   <string name="ant_heart_rate_monitor_id_key">antHeartRateMonitorId</string>
@@ -55,7 +54,8 @@ limitations under the License.
   <string name="track_color_mode_slow_key">trackColorModeSlow</string>
   <string name="track_color_mode_key">trackColorMode</string>
   <string name="track_name_key">trackName</string>
-  
+  <string name="voice_frequency_key">voiceFrequency</string>
+
   <!-- Keys for persistend preferences. But they should not get backed up or restored. -->
   <string name="auto_resume_track_current_retry_key">autoResumeTrackCurrentRetry</string>
   <string name="recording_track_id_key">recordingTrackId</string>

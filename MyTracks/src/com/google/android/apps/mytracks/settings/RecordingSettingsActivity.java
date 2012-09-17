@@ -17,6 +17,7 @@
 package com.google.android.apps.mytracks.settings;
 
 import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
@@ -38,6 +39,16 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity {
 
     boolean metricUnits = PreferencesUtils.getBoolean(
         this, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
+
+    ListPreference voiceFrequencyListPreference = (ListPreference) findPreference(
+        getString(R.string.voice_frequency_key));
+    voiceFrequencyListPreference.setEntries(
+        StringUtils.getFrequencyDisplayOptions(this, metricUnits));
+
+    ListPreference splitFrequencyListPreference = (ListPreference) findPreference(
+        getString(R.string.split_frequency_key));
+    splitFrequencyListPreference.setEntries(
+        StringUtils.getFrequencyDisplayOptions(this, metricUnits));
 
     ListPreference minRecordingIntervalListPreference = (ListPreference) findPreference(
         getString(R.string.min_recording_interval_key));

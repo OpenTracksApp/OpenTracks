@@ -96,6 +96,8 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   private MenuItem shareMenuItem;
   private MenuItem sendGoogleMenuItem;
   private MenuItem saveMenuItem;
+  private MenuItem voiceFrequencyMenuItem;
+  private MenuItem splitFrequencyMenuItem;
 
   private final Runnable bindChangedCallback = new Runnable() {
       @Override
@@ -300,7 +302,9 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     shareMenuItem = menu.findItem(R.id.track_detail_share);
     sendGoogleMenuItem = menu.findItem(R.id.track_detail_send_google);
     saveMenuItem = menu.findItem(R.id.track_detail_save);
-    
+    voiceFrequencyMenuItem = menu.findItem(R.id.track_detail_voice_frequency);
+    splitFrequencyMenuItem = menu.findItem(R.id.track_detail_split_frequency);
+
     updateMenuItems(trackId == recordingTrackId, recordingTrackPaused);
     return true;
   }
@@ -348,8 +352,8 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
         startActivity(intent);
         return true;
       case R.id.track_detail_voice_frequency:
-        FrequencyDialogFragment.newInstance(R.string.announcement_frequency_key,
-            PreferencesUtils.ANNOUNCEMENT_FREQUENCY_DEFAULT,
+        FrequencyDialogFragment.newInstance(R.string.voice_frequency_key,
+            PreferencesUtils.VOICE_FREQUENCY_DEFAULT,
             R.string.settings_voice_frequency_title)
             .show(getSupportFragmentManager(), FrequencyDialogFragment.FREQUENCY_DIALOG_TAG);
         return true;
@@ -499,6 +503,13 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     if (saveMenuItem != null) {
       saveMenuItem.setVisible(!isRecording);
     }
+    if (voiceFrequencyMenuItem != null) {
+      voiceFrequencyMenuItem.setVisible(isRecording);
+    }
+    if (splitFrequencyMenuItem != null) {
+      splitFrequencyMenuItem.setVisible(isRecording);
+    }
+
     String title;
     if (isRecording) {
       title = getString(

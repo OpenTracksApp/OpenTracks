@@ -17,6 +17,7 @@
 package com.google.android.apps.mytracks.fragments;
 
 import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.AlertDialog;
@@ -81,20 +82,7 @@ public class FrequencyDialogFragment extends DialogFragment {
   private String[] getFrequencyDisplayOptions() {
     boolean metricUnits = PreferencesUtils.getBoolean(
         activity, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
-    String[] values = getResources().getStringArray(R.array.frequency_values);
-    String[] options = new String[values.length];
-    for (int i = 0; i < values.length; i++) {
-      int value = Integer.parseInt(values[i]);
-      if (value == PreferencesUtils.FREQUENCY_OFF) {
-        options[i] = getString(R.string.value_off);
-      } else if (value < 0) {
-        options[i] = getString(metricUnits ? R.string.value_integer_kilometer
-            : R.string.value_integer_mile, Math.abs(value));
-      } else {
-        options[i] = getString(R.string.value_integer_minute, value);
-      }
-    }
-    return options;
+    return StringUtils.getFrequencyDisplayOptions(activity, metricUnits);
   }
 
   /**

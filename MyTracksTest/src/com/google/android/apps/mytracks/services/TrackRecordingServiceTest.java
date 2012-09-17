@@ -573,21 +573,21 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
   }
 
   @MediumTest
-  public void testWithProperties_announcementFrequencyDefault() throws Exception {
-    PreferencesUtils.setInt(context, R.string.announcement_frequency_key,
-        PreferencesUtils.ANNOUNCEMENT_FREQUENCY_DEFAULT);
+  public void testWithProperties_voiceFrequencyDefault() throws Exception {
+    PreferencesUtils.setInt(context, R.string.voice_frequency_key,
+        PreferencesUtils.VOICE_FREQUENCY_DEFAULT);
     fullRecordingSession();
   }
 
   @MediumTest
-  public void testWithProperties_announcementFrequencyByDistance() throws Exception {
-    PreferencesUtils.setInt(context, R.string.announcement_frequency_key, -1);
+  public void testWithProperties_voiceFrequencyByDistance() throws Exception {
+    PreferencesUtils.setInt(context, R.string.voice_frequency_key, -1);
     fullRecordingSession();
   }
 
   @MediumTest
-  public void testWithProperties_announcementFrequencyByTime() throws Exception {
-    PreferencesUtils.setInt(context, R.string.announcement_frequency_key, 1);
+  public void testWithProperties_voiceFrequencyByTime() throws Exception {
+    PreferencesUtils.setInt(context, R.string.voice_frequency_key, 1);
     fullRecordingSession();
   }
   

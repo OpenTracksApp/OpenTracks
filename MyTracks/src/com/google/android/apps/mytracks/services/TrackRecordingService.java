@@ -96,7 +96,7 @@ public class TrackRecordingService extends Service {
   private Context context;
   private MyTracksProviderUtils myTracksProviderUtils;
   private MyTracksLocationManager myTracksLocationManager;
-  private PeriodicTaskExecutor announcementExecutor;
+  private PeriodicTaskExecutor voiceExecutor;
   private PeriodicTaskExecutor splitExecutor;
   private ExecutorService executorService;
   private SharedPreferences sharedPreferences;
@@ -154,14 +154,13 @@ public class TrackRecordingService extends Service {
               || key.equals(PreferencesUtils.getKey(context, R.string.metric_units_key))) {
             boolean metricUnits = PreferencesUtils.getBoolean(
                 context, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
-            announcementExecutor.setMetricUnits(metricUnits);
+            voiceExecutor.setMetricUnits(metricUnits);
             splitExecutor.setMetricUnits(metricUnits);
           }
-          if (key == null || key.equals(
-              PreferencesUtils.getKey(context, R.string.announcement_frequency_key))) {
-            announcementExecutor.setTaskFrequency(PreferencesUtils.getInt(
-                context, R.string.announcement_frequency_key,
-                PreferencesUtils.ANNOUNCEMENT_FREQUENCY_DEFAULT));
+          if (key == null
+              || key.equals(PreferencesUtils.getKey(context, R.string.voice_frequency_key))) {
+            voiceExecutor.setTaskFrequency(PreferencesUtils.getInt(
+                context, R.string.voice_frequency_key, PreferencesUtils.VOICE_FREQUENCY_DEFAULT));
           }
           if (key == null
               || key.equals(PreferencesUtils.getKey(context, R.string.split_frequency_key))) {
@@ -273,7 +272,7 @@ public class TrackRecordingService extends Service {
     context = this;
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
     myTracksLocationManager = new MyTracksLocationManager(this);
-    announcementExecutor = new PeriodicTaskExecutor(this, new AnnouncementPeriodicTaskFactory());
+    voiceExecutor = new PeriodicTaskExecutor(this, new AnnouncementPeriodicTaskFactory());
     splitExecutor = new PeriodicTaskExecutor(this, new SplitPeriodicTaskFactory());
     executorService = Executors.newSingleThreadExecutor();
     sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
@@ -345,9 +344,9 @@ public class TrackRecordingService extends Service {
     unregisterLocationListener();
 
     try {
-      announcementExecutor.shutdown();
+      voiceExecutor.shutdown();
     } finally {
-      announcementExecutor = null;
+      voiceExecutor = null;
     }
 
     try {
@@ -678,7 +677,7 @@ public class TrackRecordingService extends Service {
         : R.string.track_resumed_broadcast_action, recordingTrackId);
 
     // Restore periodic tasks
-    announcementExecutor.restore();
+    voiceExecutor.restore();
     splitExecutor.restore();
   }
 
@@ -757,7 +756,7 @@ public class TrackRecordingService extends Service {
   private void endRecording(boolean trackStopped, long trackId) {
 
     // Shutdown periodic tasks
-    announcementExecutor.shutdown();
+    voiceExecutor.shutdown();
     splitExecutor.shutdown();
 
     // Update instance variables
@@ -912,7 +911,7 @@ public class TrackRecordingService extends Service {
        */
       Log.w(TAG, "SQLiteException", e);
     }
-    announcementExecutor.update();
+    voiceExecutor.update();
     splitExecutor.update();
     sendTrackBroadcast(R.string.track_update_broadcast_action, track.getId());
   }

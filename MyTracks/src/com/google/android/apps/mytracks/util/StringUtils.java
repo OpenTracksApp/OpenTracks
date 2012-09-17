@@ -283,4 +283,28 @@ public class StringUtils {
     }
     return Html.fromHtml(context.getString(resId, args));
   }
+
+  
+  /**
+   * Gets the frequency display options.
+   * 
+   * @param context the context
+   * @param metricUnits true to display in metric units
+   */
+  public static String[] getFrequencyDisplayOptions(Context context, boolean metricUnits) {
+    String[] values = context.getResources().getStringArray(R.array.frequency_values);
+    String[] options = new String[values.length];
+    for (int i = 0; i < values.length; i++) {
+      int value = Integer.parseInt(values[i]);
+      if (value == PreferencesUtils.FREQUENCY_OFF) {
+        options[i] = context.getString(R.string.value_off);
+      } else if (value < 0) {
+        options[i] = context.getString(metricUnits ? R.string.value_integer_kilometer
+            : R.string.value_integer_mile, Math.abs(value));
+      } else {
+        options[i] = context.getString(R.string.value_integer_minute, value);
+      }
+    }
+    return options;
+  }
 }

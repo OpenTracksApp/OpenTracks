@@ -34,7 +34,6 @@ public class PreferencesUtils {
    * files.
    */
   public static final boolean ALLOW_ACCESS_DEFAULT = false;
-  public static final int ANNOUNCEMENT_FREQUENCY_DEFAULT = 0;
   public static final int AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT = 0;
 
   public static final int AUTO_RESUME_TRACK_TIMEOUT_ALWAYS = -1;
@@ -85,6 +84,7 @@ public class PreferencesUtils {
   public static final int TRACK_COLOR_MODE_MEDIUM_DEFAULT = 15;
   public static final int TRACK_COLOR_MODE_PERCENTAGE_DEFAULT = 25;
   public static final int TRACK_COLOR_MODE_SLOW_DEFAULT = 9;
+  public static final int VOICE_FREQUENCY_DEFAULT = 0;
 
   private PreferencesUtils() {}
 
