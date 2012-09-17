@@ -692,13 +692,14 @@ public class TrackRecordingService extends Service {
 
     // Need to remember the recordingTrackId before setting it to -1L
     long trackId = recordingTrackId;
+    boolean paused = recordingTrackPaused;
 
     // Update shared preferences
     updateRecordingState(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, true);
 
     // Update database
     Track track = myTracksProviderUtils.getTrack(trackId);
-    if (track != null) {
+    if (track != null && !paused) {
       insertLocation(track, lastLocation, getLastValidTrackPointInCurrentSegment(trackId));
       updateRecordingTrack(track, myTracksProviderUtils.getLastTrackPointId(trackId), false);
     }
