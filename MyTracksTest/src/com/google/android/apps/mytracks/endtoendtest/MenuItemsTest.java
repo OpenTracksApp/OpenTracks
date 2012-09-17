@@ -116,7 +116,7 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
           activityMyTracks.getString(R.string.generic_progress_title), 1,
           EndToEndTestUtils.SHORT_WAIT_TIME)) {}
       
-      // Check whether data is correct on Google Map and the delete it.
+      // Check whether data is correct on Google Map and then delete it.
       assertTrue(GoogleUtils.deleteMap(EndToEndTestUtils.trackName, activityMyTracks));
 
       // Display the MyTracks activity for the share item may startup other
