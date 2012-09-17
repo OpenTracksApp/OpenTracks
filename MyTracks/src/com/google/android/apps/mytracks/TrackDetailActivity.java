@@ -73,7 +73,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   public static final String EXTRA_MARKER_ID = "marker_id";
 
   private static final String TAG = TrackDetailActivity.class.getSimpleName();
-  private static final String CURRENT_TAG_KEY = "tab";
+  private static final String CURRENT_TAB_TAG_KEY = "current_tab_tag_key";
  
   // The following are set in onCreate
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
@@ -192,7 +192,6 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     super.onCreate(savedInstanceState);
     handleIntent(getIntent());
     ApiAdapterFactory.getApiAdapter().hideTitle(this);
-    setContentView(R.layout.track_detail);
 
     SharedPreferences sharedPreferences = getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
@@ -220,10 +219,15 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
         getResources().getDrawable(R.drawable.tab_stats));
     tabManager.addTab(statsTabSpec, StatsFragment.class, null);
     if (savedInstanceState != null) {
-      tabHost.setCurrentTabByTag(savedInstanceState.getString(CURRENT_TAG_KEY));
+      tabHost.setCurrentTabByTag(savedInstanceState.getString(CURRENT_TAB_TAG_KEY));
     }
     trackController = new TrackController(this, trackRecordingServiceConnection, false, recordListener, stopListener);
     showMarker();
+  }
+
+  @Override
+  protected int getLayoutResId() {
+    return R.layout.track_detail;
   }
 
   @Override
@@ -249,7 +253,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   @Override
   protected void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
-    outState.putString(CURRENT_TAG_KEY, tabHost.getCurrentTabTag());
+    outState.putString(CURRENT_TAB_TAG_KEY, tabHost.getCurrentTabTag());
   }
 
   @Override

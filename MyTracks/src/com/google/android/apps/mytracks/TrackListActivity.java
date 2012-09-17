@@ -16,7 +16,12 @@
 
 package com.google.android.apps.mytracks;
 
+import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.content.TrackDataHub;
+import com.google.android.apps.mytracks.content.TrackDataListener;
+import com.google.android.apps.mytracks.content.TrackDataType;
 import com.google.android.apps.mytracks.content.TracksColumns;
+import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.fragments.CheckUnitsDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteAllTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
@@ -44,6 +49,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.speech.tts.TextToSpeech;
@@ -67,6 +73,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.EnumSet;
+
 /**
  * An activity displaying a list of tracks.
  * 
@@ -75,7 +83,8 @@ import android.widget.Toast;
 public class TrackListActivity extends FragmentActivity implements DeleteOneTrackCaller {
 
   private static final String TAG = TrackListActivity.class.getSimpleName();
-
+  private static final String START_GPS_KEY = "start_gps_key";
+  
   private static final String[] PROJECTION = new String[] { TracksColumns._ID, TracksColumns.NAME,
       TracksColumns.DESCRIPTION, TracksColumns.CATEGORY, TracksColumns.STARTTIME,
       TracksColumns.TOTALDISTANCE, TracksColumns.TOTALTIME, TracksColumns.ICON };
@@ -181,6 +190,8 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
       if (recordingTrackId == PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
         // Not recording -> Recording
         AnalyticsUtils.sendPageViews(TrackListActivity.this, "/action/record_track");
+        startGps = false;
+        handleStartGps();
         updateMenuItems(true);
         startRecording();
       } else {
@@ -211,11 +222,94 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
     }
   };
 
+  private final TrackDataListener trackDataListener = new TrackDataListener() {
+      @Override
+    public void onTrackUpdated(Track track) {
+      // Ignore
+    }
+
+      @Override
+    public void onSelectedTrackChanged(Track track) {
+      // Ignore
+    }
+
+      @Override
+    public void onSegmentSplit(Location location) {
+      // Ignore
+    }
+
+      @Override
+    public void onSampledOutTrackPoint(Location location) {
+      // Ignore
+    }
+
+      @Override
+    public void onSampledInTrackPoint(Location location) {
+      // Ignore
+    }
+
+      @Override
+    public boolean onReportSpeedChanged(boolean reportSpeed) {
+      return false;
+    }
+
+      @Override
+    public void onNewWaypointsDone() {
+      // Ignore
+    }
+
+      @Override
+    public void onNewWaypoint(Waypoint waypoint) {
+      // Ignore
+    }
+
+      @Override
+    public void onNewTrackPointsDone() {
+      // Ignore
+    }
+
+      @Override
+    public boolean onMinRecordingDistanceChanged(int minRecordingDistance) {
+      return false;
+    }
+
+      @Override
+    public boolean onMetricUnitsChanged(boolean isMetricUnits) {
+      return false;
+    }
+
+      @Override
+    public void onLocationStateChanged(LocationState locationState) {
+      // Ignore
+    }
+
+      @Override
+    public void onLocationChanged(Location location) {
+      // Ignore
+    }
+
+      @Override
+    public void onHeadingChanged(double heading) {
+      // Ignore
+    }
+
+      @Override
+    public void clearWaypoints() {
+      // Ignore
+    }
+
+      @Override
+    public void clearTrackPoints() {
+      // Ignore
+    }
+  };
+
   // The following are set in onCreate
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
   private TrackController trackController;
   private ListView listView;
   private ResourceCursorAdapter resourceCursorAdapter;
+  private TrackDataHub trackDataHub;
 
   // Preferences
   private boolean metricUnits;
@@ -224,11 +318,13 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
 
   // Menu items
   private MenuItem searchMenuItem;
+  private MenuItem startGpsMenuItem;
   private MenuItem importMenuItem;
   private MenuItem saveAllMenuItem;
   private MenuItem deleteAllMenuItem;
 
   private boolean startNewRecording = false; // true to start a new recording
+  private boolean startGps = false;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -306,8 +402,17 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
         resourceCursorAdapter.swapCursor(null);
       }
     });
-
+    trackDataHub = TrackDataHub.newInstance(this);
+    if (savedInstanceState != null) {
+      startGps = savedInstanceState.getBoolean(START_GPS_KEY);
+    }
     showStartupDialogs();
+  }
+
+  @Override
+  protected void onStart() {
+    super.onStart();
+    trackDataHub.start();
   }
 
   @Override
@@ -322,6 +427,19 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
     TrackRecordingServiceConnectionUtils.resumeConnection(this, trackRecordingServiceConnection);
     trackController.update(
         recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, recordingTrackPaused);
+    handleStartGps();
+  }
+  
+  @Override
+  public void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    outState.putBoolean(START_GPS_KEY, startGps);
+  }
+
+  @Override
+  protected void onStop() {
+    super.onStop();
+    trackDataHub.stop();
   }
 
   @Override
@@ -344,6 +462,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
         .setTitle(getString(R.string.menu_save_format, fileTypes[3]));
 
     searchMenuItem = menu.findItem(R.id.track_list_search);
+    startGpsMenuItem = menu.findItem(R.id.track_list_start_gps);
     importMenuItem = menu.findItem(R.id.track_list_import);
     saveAllMenuItem = menu.findItem(R.id.track_list_save_all);
     deleteAllMenuItem = menu.findItem(R.id.track_list_delete_all);
@@ -359,6 +478,11 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
     switch (item.getItemId()) {
       case R.id.track_list_search:
         return ApiAdapterFactory.getApiAdapter().handleSearchMenuSelection(this);
+      case R.id.track_list_start_gps:
+        startGps = !startGps;
+        handleStartGps();
+        updateMenuItems(recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
+        return true;
       case R.id.track_list_import:
         AnalyticsUtils.sendPageViews(this, "/action/import");
         intent = IntentUtils.newIntent(this, ImportActivity.class)
@@ -467,6 +591,10 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
    * @param isRecording true if recording
    */
   private void updateMenuItems(boolean isRecording) {
+    if (startGpsMenuItem != null) {
+      startGpsMenuItem.setIcon(startGps ? R.drawable.menu_stop_gps : R.drawable.menu_start_gps);
+      startGpsMenuItem.setTitle(startGps ? R.string.menu_stop_gps : R.string.menu_start_gps);
+    }
     if (importMenuItem != null) {
       importMenuItem.setVisible(!isRecording);
     }
@@ -532,6 +660,17 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
         return true;
       default:
         return false;
+    }
+  }
+
+  /**
+   * Handles starting gps.
+   */
+  private void handleStartGps() {
+    if (startGps) {
+      trackDataHub.registerTrackDataListener(trackDataListener, EnumSet.of(TrackDataType.LOCATION));
+    } else {
+      trackDataHub.unregisterTrackDataListener(trackDataListener);
     }
   }
 }

@@ -28,6 +28,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 
 /**
  * A DialogFragment to delete one marker.
@@ -50,25 +51,28 @@ public class DeleteOneMarkerDialogFragment extends DialogFragment {
     return deleteOneMarkerDialogFragment;
   }
 
+  private FragmentActivity activity;
+  
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
-    return DialogUtils.createConfirmationDialog(getActivity(),
+    activity = getActivity();
+    return DialogUtils.createConfirmationDialog(activity,
         R.string.marker_delete_one_marker_confirm_message, new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int which) {
             new Thread(new Runnable() {
               @Override
               public void run() {
-                MyTracksProviderUtils.Factory.get(getActivity()).deleteWaypoint(
+                MyTracksProviderUtils.Factory.get(activity).deleteWaypoint(
                     getArguments().getLong(KEY_MARKER_ID),
-                    new DescriptionGeneratorImpl(getActivity()));
+                    new DescriptionGeneratorImpl(activity));
               }
             }).start();
-            Intent intent = IntentUtils.newIntent(getActivity(), MarkerListActivity.class)
+            Intent intent = IntentUtils.newIntent(activity, MarkerListActivity.class)
                 .putExtra(MarkerListActivity.EXTRA_TRACK_ID, getArguments().getLong(KEY_TRACK_ID));
             startActivity(intent);
             // Close the activity since its content can change after delete.
-            getActivity().finish();
+            activity.finish();
           }
         });
   }

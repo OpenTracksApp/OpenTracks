@@ -36,9 +36,13 @@ public class AggregatedStatsActivity extends AbstractMyTracksActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.aggregated_stats);
     StatsUtils.setTripStatisticsValues(this, getTripStatistics());
     StatsUtils.setLocationValues(this, null, false);
+  }
+
+  @Override
+  protected int getLayoutResId() {
+    return R.layout.aggregated_stats;
   }
 
   /**

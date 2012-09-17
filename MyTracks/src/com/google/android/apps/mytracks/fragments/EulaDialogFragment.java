@@ -25,6 +25,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 
 /**
  * A DialogFragment to show EULA.
@@ -52,6 +53,8 @@ public class EulaDialogFragment extends DialogFragment {
     return eulaDialogFragment;
   }
 
+  private FragmentActivity activity;
+  
   @Override
   public void onCancel(DialogInterface arg0) {
     if (!getArguments().getBoolean(KEY_HAS_ACCEPTED)) {
@@ -61,8 +64,10 @@ public class EulaDialogFragment extends DialogFragment {
   
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
+    activity = getActivity();
+    
     boolean hasAccepted = getArguments().getBoolean(KEY_HAS_ACCEPTED);
-    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+    AlertDialog.Builder builder = new AlertDialog.Builder(activity)
         .setMessage(getEulaText())
         .setTitle(R.string.eula_title);
 
@@ -78,8 +83,8 @@ public class EulaDialogFragment extends DialogFragment {
       .setPositiveButton(R.string.eula_accept, new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
-          EulaUtils.setAcceptEula(getActivity());
-          TrackListActivity trackListActivity = (TrackListActivity) getActivity();
+          EulaUtils.setAcceptEula(activity);
+          TrackListActivity trackListActivity = (TrackListActivity) activity;
           trackListActivity.showStartupDialogs();
         }
       });
@@ -91,7 +96,7 @@ public class EulaDialogFragment extends DialogFragment {
    * Exits the application.
    */
   private void exitApp() {
-    getActivity().finish();
+    activity.finish();
   }
 
   /**

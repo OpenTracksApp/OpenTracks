@@ -25,6 +25,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 
 /**
  * A DialogFrament to show the welcome info.
@@ -35,6 +36,8 @@ public class WelcomeDialogFragment extends DialogFragment {
 
   public static final String WELCOME_DIALOG_TAG = "welcomeDialog";
 
+  private FragmentActivity activity;
+  
   @Override
   public void onCancel(DialogInterface arg0) {
     onDone();
@@ -42,7 +45,8 @@ public class WelcomeDialogFragment extends DialogFragment {
   
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
-    return new AlertDialog.Builder(getActivity())
+    activity = getActivity();
+    return new AlertDialog.Builder(activity)
         .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int which) {
@@ -55,8 +59,8 @@ public class WelcomeDialogFragment extends DialogFragment {
   }
 
   private void onDone() {
-    EulaUtils.setShowWelcome(getActivity());
-    TrackListActivity trackListActivity = (TrackListActivity) getActivity();
+    EulaUtils.setShowWelcome(activity);
+    TrackListActivity trackListActivity = (TrackListActivity) activity;
     trackListActivity.showStartupDialogs();
   }
 }

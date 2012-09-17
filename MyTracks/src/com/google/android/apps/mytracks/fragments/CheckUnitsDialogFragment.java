@@ -26,52 +26,56 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 
 import java.util.Locale;
 
 /**
  * A DialogFragment to check preferred units.
- *
+ * 
  * @author Jimmy Shih
  */
 public class CheckUnitsDialogFragment extends DialogFragment {
 
   public static final String CHECK_UNITS_DIALOG_TAG = "checkUnitsDialog";
-  
+
+  private FragmentActivity activity;
+
   @Override
   public void onCancel(DialogInterface arg0) {
     onDone();
   }
-  
+
   @Override
-  public Dialog onCreateDialog(Bundle savedInstanceState) {    
-    Locale defaultLocale = Locale.getDefault();        
+  public Dialog onCreateDialog(Bundle savedInstanceState) {
+    activity = getActivity();
+
+    Locale defaultLocale = Locale.getDefault();
     boolean defaultMetric = !defaultLocale.equals(Locale.US) && !defaultLocale.equals(Locale.UK);
-    PreferencesUtils.setBoolean(getActivity(), R.string.metric_units_key, defaultMetric);
+    PreferencesUtils.setBoolean(activity, R.string.metric_units_key, defaultMetric);
     final String metric = getString(R.string.settings_stats_units_metric);
     final String imperial = getString(R.string.settings_stats_units_imperial);
     final CharSequence[] items = defaultMetric ? new CharSequence[] { metric, imperial }
         : new CharSequence[] { imperial, metric };
-    return new AlertDialog.Builder(getActivity())
-        .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
-          @Override
+    return new AlertDialog.Builder(activity).setPositiveButton(
+        R.string.generic_ok, new DialogInterface.OnClickListener() {
+            @Override
           public void onClick(DialogInterface dialog, int which) {
             int position = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
             PreferencesUtils.setBoolean(
-                getActivity(), R.string.metric_units_key, items[position].equals(metric));
+                activity, R.string.metric_units_key, items[position].equals(metric));
             onDone();
           }
-        })
-        .setSingleChoiceItems(items, 0, null)
-        .setTitle(R.string.settings_stats_units_title).create();
+        }).setSingleChoiceItems(items, 0, null).setTitle(R.string.settings_stats_units_title)
+        .create();
   }
-  
+
   /**
    * Tasks to perform when done.
    */
   private void onDone() {
-    EulaUtils.setShowCheckUnits(getActivity());
-    TrackListActivity trackListActivity = (TrackListActivity) getActivity();
+    EulaUtils.setShowCheckUnits(activity);
+    TrackListActivity trackListActivity = (TrackListActivity) activity;
     trackListActivity.showStartupDialogs();
   }
 }

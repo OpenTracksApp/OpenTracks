@@ -24,6 +24,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 
 /**
  * A DialogFragment to delete all tracks.
@@ -34,16 +35,19 @@ public class DeleteAllTrackDialogFragment extends DialogFragment {
 
   public static final String DELETE_ALL_TRACK_DIALOG_TAG = "deleteAllTrackDialog";
 
+  private FragmentActivity activity;
+  
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
-    return DialogUtils.createConfirmationDialog(getActivity(),
+    activity = getActivity();
+    return DialogUtils.createConfirmationDialog(activity,
         R.string.track_list_delete_all_confirm_message, new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int which) {
             new Thread(new Runnable() {
               @Override
               public void run() {
-                MyTracksProviderUtils.Factory.get(getActivity()).deleteAllTracks();
+                MyTracksProviderUtils.Factory.get(activity).deleteAllTracks();
               }
             }).start();
           }

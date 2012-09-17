@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
 
 /**
@@ -38,9 +39,12 @@ public class InstallEarthDialogFragment extends DialogFragment {
 
   public static final String INSTALL_EARTH_DIALOG_TAG = "installEarthDialog";
 
+  private FragmentActivity activity;
+  
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
-    return new AlertDialog.Builder(getActivity())
+    activity = getActivity();
+    return new AlertDialog.Builder(activity)
         .setMessage(R.string.track_detail_install_earth_message)
         .setNegativeButton(android.R.string.cancel, null)
         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -51,7 +55,7 @@ public class InstallEarthDialogFragment extends DialogFragment {
               startActivity(intent);
             } catch (ActivityNotFoundException e) {
               Toast.makeText(
-                  getActivity(), R.string.track_detail_install_earth_error, Toast.LENGTH_LONG)
+                  activity, R.string.track_detail_install_earth_error, Toast.LENGTH_LONG)
                   .show();
             }
           }

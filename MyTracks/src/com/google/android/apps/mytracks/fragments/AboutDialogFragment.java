@@ -24,6 +24,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -36,17 +37,20 @@ public class AboutDialogFragment extends DialogFragment {
 
   public static final String ABOUT_DIALOG_TAG = "aboutDialog";
 
+  private FragmentActivity activity;
+  
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
-    View view = getActivity().getLayoutInflater().inflate(R.layout.about, null);
+    activity = getActivity();
+    View view = activity.getLayoutInflater().inflate(R.layout.about, null);
     TextView aboutVersion = (TextView) view.findViewById(R.id.about_version);
-    aboutVersion.setText(SystemUtils.getMyTracksVersion(getActivity()));
-    return new AlertDialog.Builder(getActivity())
+    aboutVersion.setText(SystemUtils.getMyTracksVersion(activity));
+    return new AlertDialog.Builder(activity)
         .setNegativeButton(R.string.about_license, new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int which) {
             EulaDialogFragment.newInstance(true).show(
-                getActivity().getSupportFragmentManager(), EulaDialogFragment.EULA_DIALOG_TAG);
+                activity.getSupportFragmentManager(), EulaDialogFragment.EULA_DIALOG_TAG);
           }
         })
         .setPositiveButton(R.string.generic_ok, null)

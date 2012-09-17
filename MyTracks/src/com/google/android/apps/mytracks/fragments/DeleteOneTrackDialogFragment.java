@@ -32,6 +32,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 
 /**
  * A DialogFragment to delete one track.
@@ -52,8 +53,6 @@ public class DeleteOneTrackDialogFragment extends DialogFragment {
     public TrackRecordingServiceConnection getTrackRecordingServiceConnection();
   }
 
-  private DeleteOneTrackCaller caller;
-
   public static DeleteOneTrackDialogFragment newInstance(long trackId) {
     Bundle bundle = new Bundle();
     bundle.putLong(KEY_TRACK_ID, trackId);
@@ -62,6 +61,9 @@ public class DeleteOneTrackDialogFragment extends DialogFragment {
     deleteOneTrackDialogFragment.setArguments(bundle);
     return deleteOneTrackDialogFragment;
   }
+
+  private FragmentActivity activity;
+  private DeleteOneTrackCaller caller;
 
   @Override
   public void onAttach(Activity activity) {
@@ -75,12 +77,13 @@ public class DeleteOneTrackDialogFragment extends DialogFragment {
 
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
-    return DialogUtils.createConfirmationDialog(getActivity(),
+    activity = getActivity();
+    return DialogUtils.createConfirmationDialog(activity,
         R.string.track_detail_delete_confirm_message, new DialogInterface.OnClickListener() {
             @Override
           public void onClick(DialogInterface dialog, int which) {
             final long trackId = getArguments().getLong(KEY_TRACK_ID);
-            final Context context = getActivity();
+            final Context context = activity;
             if (trackId == PreferencesUtils.getLong(context, R.string.recording_track_id_key)) {
               TrackRecordingServiceConnectionUtils.stopRecording(
                   context, caller.getTrackRecordingServiceConnection(), false);
@@ -94,7 +97,7 @@ public class DeleteOneTrackDialogFragment extends DialogFragment {
             Intent intent = IntentUtils.newIntent(context, TrackListActivity.class);
             startActivity(intent);
             // Close the activity since its content can change after delete
-            getActivity().finish();
+            activity.finish();
           }
         });
   }

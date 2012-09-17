@@ -143,7 +143,7 @@ public class TabManager implements TabHost.OnTabChangeListener {
       }
 
       lastTabInfo = newTabInfo;
-      fragmentTransaction.commit();
+      fragmentTransaction.commitAllowingStateLoss();
       fragmentActivity.getSupportFragmentManager().executePendingTransactions();
     }
   }

@@ -22,6 +22,11 @@ limitations under the License.
     android:showAsAction="ifRoom|collapseActionView"
     android:title="@string/menu_search"/>
   <item
+    android:icon="@drawable/menu_start_gps"
+    android:id="@+id/track_list_start_gps"
+    android:showAsAction="ifRoom"
+    android:title="@string/menu_start_gps"/>
+  <item
     android:icon="@drawable/menu_import"
     android:id="@+id/track_list_import"
     android:title="@string/menu_import"/>

@@ -35,7 +35,6 @@ public class HelpActivity extends AbstractMyTracksActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.help);
 
     TextView mapsPublicUnlisted = (TextView) findViewById(R.id.help_maps_public_unlisted_answer);
     mapsPublicUnlisted.setText(StringUtils.getHtml(
@@ -57,5 +56,10 @@ public class HelpActivity extends AbstractMyTracksActivity {
             getSupportFragmentManager(), AboutDialogFragment.ABOUT_DIALOG_TAG);
       }
     });
+  }
+
+  @Override
+  protected int getLayoutResId() {
+    return R.layout.help;
   }
 }

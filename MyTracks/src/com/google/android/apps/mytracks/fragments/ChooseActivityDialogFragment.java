@@ -16,8 +16,8 @@
 
 package com.google.android.apps.mytracks.fragments;
 
-import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.io.sendtogoogle.ConfirmSharingActivity;
+import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -31,6 +31,7 @@ import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ShareCompat;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +56,7 @@ public class ChooseActivityDialogFragment extends DialogFragment {
   private static final String KEY_TRACK_ID = "trackId";
   private static final String KEY_TRACK_URL = "trackUrl";
 
+  private FragmentActivity activity;
   private PackageManager packageManager;
 
   public static ChooseActivityDialogFragment newInstance(long trackId, String trackUrl) {
@@ -69,17 +71,18 @@ public class ChooseActivityDialogFragment extends DialogFragment {
 
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
-    packageManager = getActivity().getPackageManager();
+    activity = getActivity();
+    packageManager = activity.getPackageManager();
     List<DisplayInfo> displayInfos = getDisplayInfos();
 
-    ArrayAdapter<DisplayInfo> arrayAdapter = new ArrayAdapter<DisplayInfo>(getActivity(),
+    ArrayAdapter<DisplayInfo> arrayAdapter = new ArrayAdapter<DisplayInfo>(activity,
         R.layout.choose_activity_list_item, R.id.choose_activity_list_item_text1, displayInfos) {
         @Override
       public View getView(int position, View convertView, ViewGroup parent) {
         View view;
         if (convertView == null) {
-          view = getActivity()
-              .getLayoutInflater().inflate(R.layout.choose_activity_list_item, parent, false);
+          view = activity.getLayoutInflater()
+              .inflate(R.layout.choose_activity_list_item, parent, false);
         } else {
           view = convertView;
         }
@@ -98,7 +101,7 @@ public class ChooseActivityDialogFragment extends DialogFragment {
         return view;
       }
     };
-    return new AlertDialog.Builder(getActivity())
+    return new AlertDialog.Builder(activity)
         .setSingleChoiceItems(arrayAdapter, 0, new DialogInterface.OnClickListener() {
             @Override
           public void onClick(DialogInterface dialog, int which) {
@@ -108,7 +111,7 @@ public class ChooseActivityDialogFragment extends DialogFragment {
             ActivityInfo activityInfo = displayInfo.resolveInfo.activityInfo;
             String packageName = activityInfo.applicationInfo.packageName;
             String className = activityInfo.name;
-            
+
             long trackId = getArguments().getLong(KEY_TRACK_ID);
             String trackUrl = getArguments().getString(KEY_TRACK_URL);
             if (trackUrl == null) {
@@ -117,15 +120,15 @@ public class ChooseActivityDialogFragment extends DialogFragment {
               sendRequest.setNewMap(true);
               sendRequest.setSharingAppPackageName(packageName);
               sendRequest.setSharingAppClassName(className);
-              Intent intent = IntentUtils.newIntent(getActivity(), ConfirmSharingActivity.class)
+              Intent intent = IntentUtils.newIntent(activity, ConfirmSharingActivity.class)
                   .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
               startActivity(intent);
               dismiss();
             } else {
               Intent intent = IntentUtils.newShareUrlIntent(
-                  getActivity(), trackId, trackUrl, packageName, className);
+                  activity, trackId, trackUrl, packageName, className);
               startActivity(intent);
-              getActivity().finish();
+              activity.finish();
             }
           }
         })
@@ -138,7 +141,7 @@ public class ChooseActivityDialogFragment extends DialogFragment {
    */
   private List<DisplayInfo> getDisplayInfos() {
     List<DisplayInfo> displayInfos = new ArrayList<DisplayInfo>();
-    Intent intent = ShareCompat.IntentBuilder.from(getActivity())
+    Intent intent = ShareCompat.IntentBuilder.from(activity)
         .setType(IntentUtils.TEXT_PLAIN_TYPE).getIntent();
     List<ResolveInfo> resolveInfos = packageManager.queryIntentActivities(
         intent, PackageManager.MATCH_DEFAULT_ONLY);

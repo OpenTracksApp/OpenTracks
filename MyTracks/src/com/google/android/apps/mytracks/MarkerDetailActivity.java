@@ -51,7 +51,6 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity {
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
-    setContentView(R.layout.marker_detail);
 
     markerId = getIntent().getLongExtra(EXTRA_MARKER_ID, -1L);
     if (markerId == -1L) {
@@ -62,6 +61,11 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity {
     name = (TextView) findViewById(R.id.marker_detail_name);
     waypointSection = findViewById(R.id.marker_detail_waypoint_section);
     statisticsSection = findViewById(R.id.marker_detail_statistics_section);
+  }
+
+  @Override
+  protected int getLayoutResId() {
+    return R.layout.marker_detail;
   }
 
   @Override
