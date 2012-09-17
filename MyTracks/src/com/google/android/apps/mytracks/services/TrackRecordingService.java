@@ -914,6 +914,7 @@ public class TrackRecordingService extends Service {
     }
     announcementExecutor.update();
     splitExecutor.update();
+    sendTrackBroadcast(R.string.track_update_broadcast_action, track.getId());
   }
 
   private void updateRecordingTrack(

@@ -16,13 +16,10 @@
 
 package com.google.android.apps.mytracks.widgets;
 
-import static com.google.android.apps.mytracks.Constants.SETTINGS_NAME;
-
 import com.google.android.apps.mytracks.TrackDetailActivity;
 import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.services.ControlRecordingService;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.IntentUtils;
@@ -36,10 +33,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.database.ContentObserver;
-import android.os.Handler;
+import android.os.SystemClock;
 import android.support.v4.app.TaskStackBuilder;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -54,148 +48,58 @@ import android.widget.RemoteViews;
  */
 public class TrackWidgetProvider extends AppWidgetProvider {
 
-  /**
-   * Observer for track content.
-   * 
-   * @author Jimmy Shih
-   */
-  private class TrackObserver extends ContentObserver {
-
-    public TrackObserver() {
-      super(handler);
-    }
-
-    @Override
-    public void onChange(boolean selfChange) {
-      update();
-    }
-  }
-
-  // Set in constructor
-  private final Handler handler;
-
-  // Set when initializing
-  private Context context;
-  private TrackObserver trackObserver;
-  private MyTracksProviderUtils myTracksProviderUtils;
-  private RemoteViews remoteViews;
-  private String unknown;
-  private SharedPreferences sharedPreferences;
-
-  // Set if there is a track
-  private TripStatistics tripStatistics;
-
-  // Preferences
-  private long selectedTrackId;
-  private long recordingTrackId;
-  private boolean recordingtrackPaused;
-  private boolean metricUnits;
-  private boolean reportSpeed;
-  private boolean showMovingTime;
-
-  public TrackWidgetProvider() {
-    super();
-    handler = new Handler();
-  }
-
-  private final OnSharedPreferenceChangeListener
-      sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
-          @Override
-        public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-          if (key == null
-              || key.equals(PreferencesUtils.getKey(context, R.string.selected_track_id_key))) {
-            selectedTrackId = PreferencesUtils.getLong(context, R.string.selected_track_id_key);
-          }
-          if (key == null
-              || key.equals(PreferencesUtils.getKey(context, R.string.recording_track_id_key))) {
-            long oldValue = recordingTrackId;
-            recordingTrackId = PreferencesUtils.getLong(context, R.string.recording_track_id_key);
-            if (oldValue == PreferencesUtils.RECORDING_TRACK_ID_DEFAULT
-                && recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
-              recordingtrackPaused = false;
-            }
-          }
-          if (key == null || key.equals(
-              PreferencesUtils.getKey(context, R.string.recording_track_paused_key))) {
-            recordingtrackPaused = PreferencesUtils.getBoolean(context,
-                R.string.recording_track_paused_key,
-                PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
-          }
-          if (key == null
-              || key.equals(PreferencesUtils.getKey(context, R.string.metric_units_key))) {
-            metricUnits = PreferencesUtils.getBoolean(
-                context, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
-          }
-          if (key == null
-              || key.equals(PreferencesUtils.getKey(context, R.string.report_speed_key))) {
-            reportSpeed = PreferencesUtils.getBoolean(
-                context, R.string.report_speed_key, PreferencesUtils.REPORT_SPEED_DEFAULT);
-          }
-          if (key == null || key.equals(
-              PreferencesUtils.getKey(context, R.string.stats_show_moving_time_key))) {
-            showMovingTime = PreferencesUtils.getBoolean(context,
-                R.string.stats_show_moving_time_key,
-                PreferencesUtils.STATS_SHOW_MOVING_TIME_DEFAULT);
-          }
-          if (key != null) {
-            update();
-          }
-        }
-      };
-
   @Override
-  public void onReceive(Context aContext, Intent intent) {
-    super.onReceive(aContext, intent);
-    if (context == null) {
-      // Not initialized
-      context = aContext;
-      trackObserver = new TrackObserver();
-      myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
-      remoteViews = new RemoteViews(context.getPackageName(), R.layout.track_widget);
-
-      unknown = context.getString(R.string.value_unknown);
-
-      sharedPreferences = context.getSharedPreferences(SETTINGS_NAME, Context.MODE_PRIVATE);
-      sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-      sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
-      context.getContentResolver()
-          .registerContentObserver(TracksColumns.CONTENT_URI, true, trackObserver);
-    }
+  public void onReceive(Context context, Intent intent) {
+    super.onReceive(context, intent);
     String action = intent.getAction();
     if (AppWidgetManager.ACTION_APPWIDGET_ENABLED.equals(action)
-        || AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals(action)) {
-      update();
-    }
-  }
-
-  @Override
-  public void onDisabled(Context aContext) {
-    if (sharedPreferences != null) {
-      sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-    }
-    if (trackObserver != null) {
-      aContext.getContentResolver().unregisterContentObserver(trackObserver);
+        || AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals(action)
+        || context.getString(R.string.track_paused_broadcast_action).equals(action)
+        || context.getString(R.string.track_resumed_broadcast_action).equals(action)
+        || context.getString(R.string.track_started_broadcast_action).equals(action)
+        || context.getString(R.string.track_stopped_broadcast_action).equals(action)
+        || context.getString(R.string.track_update_broadcast_action).equals(action)) {
+      long trackId = intent.getLongExtra(context.getString(R.string.track_id_broadcast_extra), -1L);
+      update(context, trackId);
     }
   }
 
   /**
    * Updates the widget.
+   * 
+   * @param context the context
+   * @param trackId the track id
    */
-  private void update() {
-    boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
-    long trackId = isRecording ? recordingTrackId : selectedTrackId;
+  private void update(Context context, long trackId) {
+    // Get the preferences
+    long recordingTrackId = PreferencesUtils.getLong(context, R.string.recording_track_id_key);
+    boolean recordingTrackPaused = PreferencesUtils.getBoolean(context,
+        R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+    boolean metricUnits = PreferencesUtils.getBoolean(
+        context, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
+
+    // Get track and trip statistics
+    MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
+    if (trackId == -1L) {
+      trackId = recordingTrackId;
+    }
+    if (trackId == -1L) {
+      trackId = PreferencesUtils.getLong(context, R.string.selected_track_id_key);
+    }
     Track track = trackId != -1L ? myTracksProviderUtils.getTrack(trackId)
         : myTracksProviderUtils.getLastTrack();
-    tripStatistics = track == null ? null : track.getTripStatistics();
+    TripStatistics tripStatistics = track == null ? null : track.getTripStatistics();
+    RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.track_widget);
+    boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
 
-    updateStatisticsContainer(track);
-    updateTotalDistance();
-    updateTotalTime(isRecording);
-    updateAverageSpeed();
-    updateMovingTime();
-    updateRecordButton(isRecording);
-    updateRecordStatus(isRecording);
-    updateStopButton(isRecording);
+    updateStatisticsContainer(context, remoteViews, track);
+    updateTotalDistance(context, remoteViews, tripStatistics, metricUnits);
+    updateTotalTime(remoteViews, tripStatistics, isRecording, recordingTrackPaused);
+    updateAverageSpeed(context, remoteViews, tripStatistics, metricUnits);
+    updateMovingTime(context, remoteViews, tripStatistics);
+    updateRecordButton(context, remoteViews, isRecording, recordingTrackPaused);
+    updateRecordStatus(context, remoteViews, isRecording, recordingTrackPaused);
+    updateStopButton(context, remoteViews, isRecording);
 
     AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
     int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
@@ -208,9 +112,11 @@ public class TrackWidgetProvider extends AppWidgetProvider {
   /**
    * Updates the statistics container.
    * 
-   * @param track the track.
+   * @param context the context
+   * @param remoteViews the remote views
+   * @param track the track
    */
-  private void updateStatisticsContainer(Track track) {
+  private void updateStatisticsContainer(Context context, RemoteViews remoteViews, Track track) {
     Intent intent;
     if (track != null) {
       intent = IntentUtils.newIntent(context, TrackDetailActivity.class)
@@ -226,9 +132,15 @@ public class TrackWidgetProvider extends AppWidgetProvider {
 
   /**
    * Updates total distance.
+   * 
+   * @param context the context
+   * @param remoteViews the remote views
+   * @param tripStatistics the trip statistics
+   * @param metricUnits true to use metric units
    */
-  private void updateTotalDistance() {
-    String totalDistanceValue = tripStatistics == null ? unknown
+  private void updateTotalDistance(Context context, RemoteViews remoteViews,
+      TripStatistics tripStatistics, boolean metricUnits) {
+    String totalDistanceValue = tripStatistics == null ? context.getString(R.string.value_unknown)
         : StringUtils.formatDistance(context, tripStatistics.getTotalDistance(), metricUnits);
     remoteViews.setTextViewText(R.id.track_widget_total_distance_value, totalDistanceValue);
   }
@@ -236,30 +148,42 @@ public class TrackWidgetProvider extends AppWidgetProvider {
   /**
    * Updates total time.
    * 
+   * @param remoteViews the remote views
+   * @param tripStatistics the trip statistics
    * @param isRecording true if recording
+   * @param recordingTrackPaused true if recording track is paused
    */
-  private void updateTotalTime(boolean isRecording) {
-    String totalTimeValue;
+  private void updateTotalTime(RemoteViews remoteViews, TripStatistics tripStatistics,
+      boolean isRecording, boolean recordingTrackPaused) {
+    long totalTime;
     if (tripStatistics == null) {
-      totalTimeValue = unknown;
+      totalTime = 0L;
     } else {
-      long totalTime = tripStatistics.getTotalTime();
-      if (isRecording && !recordingtrackPaused) {
+      totalTime = tripStatistics.getTotalTime();
+      if (isRecording && !recordingTrackPaused) {
         totalTime += System.currentTimeMillis() - tripStatistics.getStopTime();
       }
-      totalTimeValue = StringUtils.formatElapsedTime(totalTime);
     }
-    remoteViews.setTextViewText(R.id.track_widget_total_time_value, totalTimeValue);
+    remoteViews.setChronometer(R.id.track_widget_total_time_value,
+        SystemClock.elapsedRealtime() - totalTime, null, isRecording && !recordingTrackPaused);
   }
 
   /**
    * Updates average speed.
+   * 
+   * @param context the context
+   * @param remoteViews the remote views
+   * @param tripStatistics the trip statistics
+   * @param metricUnits true to use metric units
    */
-  private void updateAverageSpeed() {
+  private void updateAverageSpeed(Context context, RemoteViews remoteViews,
+      TripStatistics tripStatistics, boolean metricUnits) {
+    boolean reportSpeed = PreferencesUtils.getBoolean(
+        context, R.string.report_speed_key, PreferencesUtils.REPORT_SPEED_DEFAULT);
     String averageSpeedLabel = context.getString(
         reportSpeed ? R.string.stats_average_speed : R.string.stats_average_pace);
     remoteViews.setTextViewText(R.id.track_widget_average_speed_label, averageSpeedLabel);
-    String averageSpeedValue = tripStatistics == null ? unknown
+    String averageSpeedValue = tripStatistics == null ? context.getString(R.string.value_unknown)
         : StringUtils.formatSpeed(
             context, tripStatistics.getAverageSpeed(), metricUnits, reportSpeed);
     remoteViews.setTextViewText(R.id.track_widget_average_speed_value, averageSpeedValue);
@@ -267,12 +191,19 @@ public class TrackWidgetProvider extends AppWidgetProvider {
 
   /**
    * Updates moving time.
+   * 
+   * @param context the context
+   * @param remoteViews the remote views
+   * @param tripStatistics the trip statistics
    */
-  private void updateMovingTime() {
+  private void updateMovingTime(
+      Context context, RemoteViews remoteViews, TripStatistics tripStatistics) {
+    boolean showMovingTime = PreferencesUtils.getBoolean(context,
+        R.string.stats_show_moving_time_key, PreferencesUtils.STATS_SHOW_MOVING_TIME_DEFAULT);
     remoteViews.setViewVisibility(
         R.id.track_widget_moving_time_container, showMovingTime ? View.VISIBLE : View.GONE);
     if (showMovingTime) {
-      String movingTimeValue = tripStatistics == null ? unknown
+      String movingTimeValue = tripStatistics == null ? context.getString(R.string.value_unknown)
           : StringUtils.formatElapsedTime(tripStatistics.getMovingTime());
       remoteViews.setTextViewText(R.id.track_widget_moving_time_value, movingTimeValue);
     }
@@ -281,14 +212,18 @@ public class TrackWidgetProvider extends AppWidgetProvider {
   /**
    * Updates the record button.
    * 
+   * @param context the context
+   * @param remoteViews the remote views
    * @param isRecording true if recording
+   * @param recordingTrackPaused true if recording track is paused
    */
-  private void updateRecordButton(boolean isRecording) {
+  private void updateRecordButton(
+      Context context, RemoteViews remoteViews, boolean isRecording, boolean recordingTrackPaused) {
     remoteViews.setImageViewResource(R.id.track_widget_record_button,
-        isRecording && !recordingtrackPaused ? R.drawable.btn_pause : R.drawable.btn_record);
+        isRecording && !recordingTrackPaused ? R.drawable.btn_pause : R.drawable.btn_record);
     int recordActionId;
     if (isRecording) {
-      recordActionId = recordingtrackPaused ? R.string.track_action_resume
+      recordActionId = recordingTrackPaused ? R.string.track_action_resume
           : R.string.track_action_pause;
     } else {
       recordActionId = R.string.track_action_start;
@@ -303,15 +238,19 @@ public class TrackWidgetProvider extends AppWidgetProvider {
   /**
    * Updates recording status.
    * 
+   * @param context the context
+   * @param remoteViews the remote views
    * @param isRecording true if recording
+   * @param recordingTrackPaused true if recording track is paused
    */
-  private void updateRecordStatus(boolean isRecording) {
+  private void updateRecordStatus(
+      Context context, RemoteViews remoteViews, boolean isRecording, boolean recordingTrackPaused) {
     String status;
     int colorId;
     if (isRecording) {
       status = context.getString(
-          recordingtrackPaused ? R.string.generic_paused : R.string.generic_recording);
-      colorId = recordingtrackPaused ? android.R.color.white : R.color.red;
+          recordingTrackPaused ? R.string.generic_paused : R.string.generic_recording);
+      colorId = recordingTrackPaused ? android.R.color.white : R.color.red;
     } else {
       status = "";
       colorId = android.R.color.white;
@@ -324,9 +263,11 @@ public class TrackWidgetProvider extends AppWidgetProvider {
   /**
    * Updates the stop button.
    * 
+   * @param context the context
+   * @param remoteViews the remote views
    * @param isRecording true if recording
    */
-  private void updateStopButton(boolean isRecording) {
+  private void updateStopButton(Context context, RemoteViews remoteViews, boolean isRecording) {
     remoteViews.setImageViewResource(
         R.id.track_widget_stop_button, isRecording ? R.drawable.btn_stop_1 : R.drawable.btn_stop_0);
     remoteViews.setBoolean(R.id.track_widget_stop_button, "setEnabled", isRecording);

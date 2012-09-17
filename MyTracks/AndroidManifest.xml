@@ -236,6 +236,11 @@ limitations under the License.
     <receiver android:name="com.google.android.apps.mytracks.widgets.TrackWidgetProvider" >
       <intent-filter>
         <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+        <action android:name="com.google.android.apps.mytracks.TRACK_PAUSED" />
+        <action android:name="com.google.android.apps.mytracks.TRACK_RESUMED" />
+        <action android:name="com.google.android.apps.mytracks.TRACK_STARTED" />
+        <action android:name="com.google.android.apps.mytracks.TRACK_STOPPED" />
+        <action android:name="com.google.android.apps.mytracks.TRACK_UPDATE" />
       </intent-filter>
       <meta-data
         android:name="android.appwidget.provider"

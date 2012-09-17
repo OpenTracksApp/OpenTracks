@@ -48,7 +48,7 @@ limitations under the License.
           android:text="@string/stats_total_time"
           style="@style/TrackWidgetLabel" />
         <TextView style="@style/TrackWidgetSpacer" />
-        <TextView
+        <Chronometer
           android:id="@+id/track_widget_total_time_value"
           style="@style/TrackWidgetLabel" />
       </LinearLayout>
