@@ -54,7 +54,7 @@ limitations under the License.
   </style>
   <!-- The style for the edit description -->
   <style name="EditDescription" parent="@style/TextMedium">
-    <item name="android:inputType">textAutoCorrect|textCapSentences</item>
+    <item name="android:inputType">textAutoCorrect|textCapSentences|textMultiLine</item>
     <item name="android:layout_width">fill_parent</item>
     <item name="android:maxLines">50</item>
     <item name="android:selectAllOnFocus">true</item>
