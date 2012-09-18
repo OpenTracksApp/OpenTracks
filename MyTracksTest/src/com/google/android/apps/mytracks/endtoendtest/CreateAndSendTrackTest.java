@@ -132,23 +132,6 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     assertTrue(EndToEndTestUtils.SOLO.searchText(newTrackName));
     assertTrue(EndToEndTestUtils.SOLO.searchText(newDesc));
   }
-  
-  /**
-   * Checks the voice frequency and split frequency menus.
-   */
-  public void testFrequencyMenu() {
-    EndToEndTestUtils.startRecording();
-    assertTrue(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_voice_frequency), false));
-    assertTrue(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_split_frequency), false));
-    EndToEndTestUtils.stopRecording(true);
-    
-    assertTrue(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_voice_frequency), false));
-    assertTrue(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_split_frequency), false));
-  }
 
   /**
    * Creates one track with a two locations, a way point and a statistics point.
