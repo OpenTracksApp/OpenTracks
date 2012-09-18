@@ -82,11 +82,9 @@ public class EndToEndTestUtils {
   
   // Following is some check strings in English and Chinese
   private static final HashMap<String, String> RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL = new HashMap<String, String>(); 
-  private static final HashMap<String, String> VIEW_MODE_MULTILINGUAL = new HashMap<String, String>(); 
   private static final HashMap<String, String> KM_MULTILINGUAL = new HashMap<String, String>(); 
   private static final HashMap<String, String> MILE_MULTILINGUAL = new HashMap<String, String>(); 
   public static String RELATIVE_STARTTIME_POSTFIX = "";
-  public static String VIEW_MODE = "";
   public static String KM = "";
   public static String MILE = "";
   
@@ -103,12 +101,6 @@ public class EndToEndTestUtils {
     RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("fr", "minute");
     RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("ar", "دقيقة");
     RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("zh", "分钟前");
-    
-    VIEW_MODE_MULTILINGUAL.put("es", "mode");
-    VIEW_MODE_MULTILINGUAL.put("de", "modus");
-    VIEW_MODE_MULTILINGUAL.put("fr", "Mode");
-    VIEW_MODE_MULTILINGUAL.put("ar", "وضع");
-    VIEW_MODE_MULTILINGUAL.put("zh", "模式");
     
     KM_MULTILINGUAL.put("es", "km");
     KM_MULTILINGUAL.put("de", "km");
@@ -151,12 +143,10 @@ public class EndToEndTestUtils {
     deviceLanguage = instrumentation.getContext().getResources().getConfiguration().locale.getLanguage();
     if (RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.get(deviceLanguage) != null) {
       RELATIVE_STARTTIME_POSTFIX = RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.get(deviceLanguage);
-      VIEW_MODE = VIEW_MODE_MULTILINGUAL.get(deviceLanguage);
       KM = KM_MULTILINGUAL.get(deviceLanguage);
       MILE = MILE_MULTILINGUAL.get(deviceLanguage);
     } else {
       RELATIVE_STARTTIME_POSTFIX = RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.get("es");
-      VIEW_MODE = VIEW_MODE_MULTILINGUAL.get("es");
       KM = KM_MULTILINGUAL.get("es");
       MILE = MILE_MULTILINGUAL.get("es");
     }

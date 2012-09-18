@@ -20,8 +20,12 @@ import com.google.android.maps.mytracks.R;
 
 import android.annotation.TargetApi;
 import android.app.Instrumentation;
+import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.KeyEvent;
+import android.view.View;
+
+import java.util.ArrayList;
 
 /**
  * Tests some menu items of MyTracks.
@@ -89,6 +93,98 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
     sendKeys(KeyEvent.KEYCODE_ENTER);
     instrumentation.waitForIdleSync();
     assertEquals(1, EndToEndTestUtils.SOLO.getCurrentListViews().size());
+  }
+  
+  /**
+   * Tests the share menu item. This test to check whether crash will happen during the share.
+   */
+  public void testShareActivity() {
+    // Try all share item.
+    for (int i = 0;; i++) {
+      View oneItemView = findShareItem(i);
+      if (oneItemView == null) {
+        break;
+      }
+      EndToEndTestUtils.SOLO.clickOnView(oneItemView);
+      EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true,
+          true);
+      if(!GoogleUtils.checkAccountStatusDialog()) {
+        break;
+      }
+      // Waiting the send is finish.
+      while (EndToEndTestUtils.SOLO.waitForText(
+          activityMyTracks.getString(R.string.generic_progress_title), 1,
+          EndToEndTestUtils.SHORT_WAIT_TIME)) {}
+      
+      // Check whether data is correct on Google Map and then delete it.
+      assertTrue(GoogleUtils.deleteMap(EndToEndTestUtils.trackName, activityMyTracks));
+
+      // Display the MyTracks activity for the share item may startup other
+      // applications.
+      Intent intent = new Intent();
+      intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      intent.setClass(activityMyTracks.getApplicationContext(), TrackListActivity.class);
+      activityMyTracks.getApplicationContext().startActivity(intent);
+      EndToEndTestUtils.sleep(EndToEndTestUtils.NORMAL_WAIT_TIME);
+    }
+  }
+
+  /**
+   * Gets the view to click the share item by item index.
+   * @param index of a share item
+   * @return null when no such item
+   */
+  private View findShareItem(int index) {
+    EndToEndTestUtils.createTrackIfEmpty(0, false);
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_share), true);
+    ArrayList<View> cc = EndToEndTestUtils.SOLO.getViews();
+    int i = 0;
+    for (View view : cc) {
+      String name = view.getParent().getClass().getName();
+      // Each share item is in one Linear layout which is the child view of
+      if (name.indexOf("RecycleListView") > 0) {
+        if (index == i) {
+          return view;
+        }
+        i++;
+      }
+    }
+    return null;
+  }
+  
+  /**
+   * Checks the voice frequency and split frequency menus when no track is
+   * recording.
+   */
+  public void testFrequencyMenu_noRecording() {
+    EndToEndTestUtils.createTrackIfEmpty(0, false);
+    assertFalse(EndToEndTestUtils.findMenuItem(
+        activityMyTracks.getString(R.string.menu_voice_frequency), false));
+    assertFalse(EndToEndTestUtils.findMenuItem(
+        activityMyTracks.getString(R.string.menu_split_frequency), false));
+
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_recording));
+
+    assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks.getString(R.string.menu_voice_frequency), 1, true, true));
+    assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks.getString(R.string.menu_split_frequency), 1, true, true));
+  }
+
+  /**
+   * Checks the voice frequency and split frequency menus during recording.
+   */
+  public void testFrequencyMenu_underRecording() {
+    EndToEndTestUtils.startRecording();
+    assertTrue(EndToEndTestUtils.findMenuItem(
+        activityMyTracks.getString(R.string.menu_voice_frequency), false));
+    assertTrue(EndToEndTestUtils.findMenuItem(
+        activityMyTracks.getString(R.string.menu_split_frequency), false));
+    EndToEndTestUtils.stopRecording(true);
+    
+    assertFalse(EndToEndTestUtils.findMenuItem(
+        activityMyTracks.getString(R.string.menu_voice_frequency), false));
+    assertFalse(EndToEndTestUtils.findMenuItem(
+        activityMyTracks.getString(R.string.menu_split_frequency), false));
   }
 
   @Override
