@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<resources>
+  <!-- Keys for persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
+  <string name="allow_access_key">allowAccess</string>
+  <string name="ant_bike_cadence_sensor_id_key">antBikeCadenceSensorId</string>
+  <string name="ant_combined_bike_sensor_id_key">antCombinedBikeSensorId</string>
+  <string name="ant_heart_rate_monitor_id_key">antHeartRateMonitorId</string>
+  <string name="ant_speed_distance_monitor_id_key">antSpeedDistanceMonitorId</string>
+  <string name="auto_resume_track_timeout_key">autoResumeTrackTimeout</string>
+  <string name="bluetooth_sensor_key">bluetoothSensor</string>
+  <string name="chart_by_distance_key">chartByDistance</string>
+  <string name="chart_show_cadence_key">chartShowCadence</string>
+  <string name="chart_show_elevation_key">chartShowElevation</string>
+  <string name="chart_show_heart_rate_key">chartShowHeartRate</string>
+  <string name="chart_show_power_key">chartShowPower</string>
+  <string name="chart_show_speed_key">chartShowSpeed</string>
+  <string name="default_activity_key">defaultActivity</string>
+  <string name="default_map_public_key">defaultMapPublic</string>
+  <string name="google_account_key">googleAccount</string>
+  <string name="max_recording_distance_key">maxRecordingDistance</string>
+  <string name="metric_units_key">metricUnits</string>
+  <string name="min_recording_distance_key">minRecordingDistance</string>
+  <string name="min_recording_interval_key">minRecordingInterval</string>
+  <string name="min_required_accuracy_key">minRequiredAccuracy</string>
+  <string name="pick_existing_map_key">pickExistingMap</string>
+  <string name="report_speed_key">reportSpeed</string>
+  <string name="send_to_docs_key">sendToDocs</string>
+  <string name="send_to_fusion_tables_key">sendToFusionTables</string>
+  <string name="send_to_maps_key">sendToMaps</string>
+  <string name="sensor_type_key">sensorType</string>
+  <string name="show_confirm_sharing_dialog_key">showConfrimSharingDialog</string>
+  <string name="split_frequency_key">splitFrequency</string>
+  <string name="stats_show_coordinate_key">statsShowCoordinate</string>
+  <string name="stats_show_elevation_key">statsShowElevation</string>
+  <string name="stats_show_grade_key">statsShowGrade</string>
+  <string name="stats_show_moving_time_key">statsShowMovingTime</string>
+  <string name="track_color_mode_medium_key">trackColorModeMedium</string>
+  <string name="track_color_mode_percentage_key">trackColorModePercentage</string>
+  <string name="track_color_mode_slow_key">trackColorModeSlow</string>
+  <string name="track_color_mode_key">trackColorMode</string>
+  <string name="track_name_key">trackName</string>
+  <string name="voice_frequency_key">voiceFrequency</string>
+
+  <!-- Keys for persistend preferences. But they should not get backed up or restored. -->
+  <string name="auto_resume_track_current_retry_key">autoResumeTrackCurrentRetry</string>
+  <string name="recording_track_id_key">recordingTrackId</string>
+  <string name="recording_track_paused_key">recordingTrackPaused</string>
+  <string name="selected_track_id_key">selectedTrackId</string>
+
+  <!-- Keys for non-persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
+  <string name="settings_backup_key">settingsBackup</string>
+  <string name="settings_backup_now_key">settingsBackupNow</string>
+  <string name="settings_backup_restore_key">settingsBackupRestore</string>
+  <string name="settings_chart_key">settingsChart</string>
+  <string name="settings_map_key">settingsMap</string>
+  <string name="settings_map_medium_display_key">settingsMapMediumDisplay</string>
+  <string name="settings_map_percentage_display_key">settingsMapPercentageDisplay</string>
+  <string name="settings_map_slow_display_key">settingsMapSlowDisplay</string>
+  <string name="settings_recording_key">settingsRecording</string>
+  <string name="settings_reset_key">settingsReset</string>
+  <string name="settings_sensor_key">settingsSensor</string>
+  <string name="settings_sensor_ant_key">settingsSensorAnt</string>
+  <string name="settings_sensor_ant_reset_bike_cadence_sensor_key">settingsSensorAntResetBikeCadenceSensor</string>
+  <string name="settings_sensor_ant_reset_combined_bike_sensor_key">settingsSensorAntResetCombinedBikeSensor</string>
+  <string name="settings_sensor_ant_reset_heart_rate_monitor_key">settingsSensorAntResetHeartRateMonitor</string>
+  <string name="settings_sensor_ant_reset_speed_distance_monitor_key">settingsSensorAntResetSpeedDistanceMonitor</string>
+  <string name="settings_sensor_bluetooth_key">settingsSensorBluetooth</string>
+  <string name="settings_sensor_bluetooth_pairing_key">settingsSensorBluetoothPairing</string>
+  <string name="settings_sensor_root_key">settingsSensorRoot</string>
+  <string name="settings_sharing_key">settingsSharing</string>
+  <string name="settings_stats_key">settingsStats</string>
+</resources>

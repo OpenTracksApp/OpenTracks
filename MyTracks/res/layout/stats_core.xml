@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2012 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+  <!-- Total distance -->
+  <TableRow>
+    <TextView
+      android:text="@string/stats_total_distance"
+      style="@style/StatsLabel" />
+  </TableRow>
+  <TableRow>
+    <TextView
+      android:id="@+id/stats_total_distance_value"
+      style="@style/StatsValue" />
+  </TableRow>
+  <!-- Total time/moving time -->
+  <TableRow>
+    <TextView
+      android:text="@string/stats_total_time"
+      style="@style/StatsLabel" />
+    <TextView
+      android:id="@+id/stats_moving_time_label"
+      android:layout_column="2"
+      android:text="@string/stats_moving_time"
+      style="@style/StatsLabel" />
+  </TableRow>
+  <TableRow>
+    <TextView
+      android:id="@+id/stats_total_time_value"
+      style="@style/StatsValue" />
+    <TextView 
+      android:id="@+id/stats_moving_time_spacer"
+      style="@style/StatsSpacer" />
+    <TextView
+      android:id="@+id/stats_moving_time_value"
+      style="@style/StatsValue" />
+  </TableRow>
+  <!-- Average speed/average moving speed (average pace/average moving pace) -->
+  <TableRow>
+    <TextView
+      android:id="@+id/stats_average_speed_label"
+      style="@style/StatsLabel" />
+    <TextView
+      android:id="@+id/stats_average_moving_speed_label"
+      android:layout_column="2"
+      style="@style/StatsLabel" />
+  </TableRow>
+  <TableRow>
+    <TextView
+      android:id="@+id/stats_average_speed_value"
+      style="@style/StatsValue" />
+    <TextView 
+      android:id="@+id/stats_average_moving_speed_spacer"
+      style="@style/StatsSpacer" />
+    <TextView
+      android:id="@+id/stats_average_moving_speed_value"
+      style="@style/StatsValue" />
+  </TableRow>
+  <!-- Max speed (fastest pace) -->
+  <TableRow>
+    <TextView
+      android:id="@+id/stats_max_speed_label"
+      style="@style/StatsLabel" />
+  </TableRow>
+  <TableRow>
+    <TextView
+      android:id="@+id/stats_max_speed_value"
+      style="@style/StatsValue" />
+  </TableRow>
+  <!-- Elevation and elevation gain -->
+  <TableRow android:id="@+id/stats_elevation_label_table_row1" >
+    <TextView
+      android:text="@string/stats_elevation"
+      style="@style/StatsLabel" />
+    <TextView
+      android:layout_column="2"
+      android:text="@string/stats_elevation_gain"
+      style="@style/StatsLabel" />
+  </TableRow>
+  <TableRow android:id="@+id/stats_elevation_value_table_row1" >
+    <TextView
+      android:id="@+id/stats_elevation_value"
+      style="@style/StatsValue" />
+    <TextView style="@style/StatsSpacer" />
+    <TextView
+      android:id="@+id/stats_elevation_gain_value"
+      style="@style/StatsValue" />
+  </TableRow>
+  <!-- Min and max elevation -->
+  <TableRow android:id="@+id/stats_elevation_label_table_row2" >
+    <TextView
+      android:text="@string/stats_min_elevation"
+      style="@style/StatsLabel" />
+    <TextView
+      android:layout_column="2"
+      android:text="@string/stats_max_elevation"
+      style="@style/StatsLabel" />
+  </TableRow>
+  <TableRow android:id="@+id/stats_elevation_value_table_row2" >
+    <TextView
+      android:id="@+id/stats_min_elevation_value"
+      style="@style/StatsValue" />
+    <TextView style="@style/StatsSpacer" />
+    <TextView
+      android:id="@+id/stats_max_elevation_value"
+      style="@style/StatsValue" />
+  </TableRow>
+  <!-- Min and max grade -->
+  <TableRow android:id="@+id/stats_grade_label_table_row" >
+    <TextView
+      android:text="@string/stats_min_grade"
+      style="@style/StatsLabel" />
+    <TextView
+      android:layout_column="2"
+      android:text="@string/stats_max_grade"
+      style="@style/StatsLabel" />
+  </TableRow>
+  <TableRow android:id="@+id/stats_grade_value_table_row" >
+    <TextView
+      android:id="@+id/stats_min_grade_value"
+      style="@style/StatsValue" />
+    <TextView style="@style/StatsSpacer" />
+    <TextView
+      android:id="@+id/stats_max_grade_value"
+      style="@style/StatsValue" />
+  </TableRow>
+</merge>
