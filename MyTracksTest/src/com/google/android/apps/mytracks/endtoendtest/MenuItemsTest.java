@@ -106,7 +106,7 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
         break;
       }
       EndToEndTestUtils.SOLO.clickOnView(oneItemView);
-      EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), false,
+      EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true,
           true);
       if(!GoogleUtils.checkAccountStatusDialog()) {
         break;
