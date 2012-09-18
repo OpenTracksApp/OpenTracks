@@ -151,6 +151,41 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
     }
     return null;
   }
+  
+  /**
+   * Checks the voice frequency and split frequency menus when no track is
+   * recording.
+   */
+  public void testFrequencyMenu_noRecording() {
+    EndToEndTestUtils.createTrackIfEmpty(0, false);
+    assertFalse(EndToEndTestUtils.findMenuItem(
+        activityMyTracks.getString(R.string.menu_voice_frequency), false));
+    assertFalse(EndToEndTestUtils.findMenuItem(
+        activityMyTracks.getString(R.string.menu_split_frequency), false));
+
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_recording));
+
+    assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks.getString(R.string.menu_voice_frequency), 1, true, true));
+    assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks.getString(R.string.menu_split_frequency), 1, true, true));
+  }
+
+  /**
+   * Checks the voice frequency and split frequency menus during recording.
+   */
+  public void testFrequencyMenu_underRecording() {
+    EndToEndTestUtils.startRecording();
+    assertTrue(EndToEndTestUtils.findMenuItem(
+        activityMyTracks.getString(R.string.menu_voice_frequency), false));
+    assertTrue(EndToEndTestUtils.findMenuItem(
+        activityMyTracks.getString(R.string.menu_split_frequency), false));
+    EndToEndTestUtils.stopRecording(true);
+    
+    assertFalse(EndToEndTestUtils.findMenuItem(
+        activityMyTracks.getString(R.string.menu_voice_frequency), false));
+    assertFalse(EndToEndTestUtils.findMenuItem(
+        activityMyTracks.getString(R.string.menu_split_frequency), false));
+  }
 
   @Override
   protected void tearDown() throws Exception {
