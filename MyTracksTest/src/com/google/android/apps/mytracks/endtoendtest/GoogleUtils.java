@@ -32,6 +32,7 @@ import com.google.android.apps.mytracks.io.gdata.maps.XmlMapsGDataParserFactory;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.common.gdata.AndroidXmlParserFactory;
+import com.google.android.maps.mytracks.R;
 import com.google.api.client.googleapis.GoogleHeaders;
 import com.google.api.client.googleapis.MethodOverride;
 import com.google.api.client.http.GenericUrl;
@@ -360,6 +361,39 @@ public class GoogleUtils {
       Log.d(EndToEndTestUtils.LOG_TAG, "Failed when send fusion table query.", e);
       return null;
     }
+  }
+  
+  /**
+   * Checks whether the status of account is right to use.
+   * 
+   * @return true means the status of account is good for sending
+   */
+  public static boolean checkAccountStatusDialog() {
+ // Check whether no account is binded with this device.
+    if (EndToEndTestUtils.SOLO.waitForText(
+        EndToEndTestUtils.activityMytracks.getString(R.string.send_google_no_account_title), 1,
+        EndToEndTestUtils.SHORT_WAIT_TIME)) {
+      EndToEndTestUtils.getButtonOnScreen(EndToEndTestUtils.activityMytracks.getString(R.string.generic_ok), true,
+          true);
+      return false;
+    }
+
+    // Check whether need to choose account.
+    if (EndToEndTestUtils.SOLO.waitForText(
+        EndToEndTestUtils.activityMytracks.getString(R.string.send_google_choose_account_title), 1,
+        EndToEndTestUtils.SHORT_WAIT_TIME)) {
+      EndToEndTestUtils.getButtonOnScreen(EndToEndTestUtils.activityMytracks.getString(R.string.generic_ok), false,
+          true);
+    }
+
+    // Check whether no account permission.
+    if (EndToEndTestUtils.SOLO.waitForText(
+        EndToEndTestUtils.activityMytracks.getString(R.string.send_google_no_account_permission), 1,
+        EndToEndTestUtils.SHORT_WAIT_TIME)) {
+      return false;
+    }
+    
+    return true;
   }
 
 }

@@ -274,27 +274,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.send_google_send_now),
         true, true);
     
-    // Check whether no account is binded with this device.
-    if (EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.send_google_no_account_title), 1,
-        EndToEndTestUtils.SHORT_WAIT_TIME)) {
-      EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true,
-          true);
-      return;
-    }
-
-    // Check whether need to choose account.
-    if (EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.send_google_choose_account_title), 1,
-        EndToEndTestUtils.SHORT_WAIT_TIME)) {
-      EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), false,
-          true);
-    }
-
-    // Check whether no account permission.
-    if (EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.send_google_no_account_permission), 1,
-        EndToEndTestUtils.SHORT_WAIT_TIME)) {
+    if(!GoogleUtils.checkAccountStatusDialog()) {
       return;
     }
 
