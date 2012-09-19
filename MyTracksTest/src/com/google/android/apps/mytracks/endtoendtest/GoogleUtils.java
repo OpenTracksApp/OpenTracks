@@ -368,7 +368,7 @@ public class GoogleUtils {
    * 
    * @return true means the status of account is good for sending
    */
-  public static boolean checkAccountStatusDialog() {
+  public static boolean isAccountAvailable() {
  // Check whether no account is binded with this device.
     if (EndToEndTestUtils.SOLO.waitForText(
         EndToEndTestUtils.activityMytracks.getString(R.string.send_google_no_account_title), 1,

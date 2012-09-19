@@ -257,7 +257,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.send_google_send_now),
         true, true);
     
-    if(!GoogleUtils.checkAccountStatusDialog()) {
+    if(!GoogleUtils.isAccountAvailable()) {
       return;
     }
 

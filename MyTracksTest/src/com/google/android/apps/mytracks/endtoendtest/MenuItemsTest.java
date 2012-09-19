@@ -36,6 +36,7 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
 
   private Instrumentation instrumentation;
   private TrackListActivity activityMyTracks;
+  private final static String SHARE_ITEM_PARENT_VIEW_NAME = "RecycleListView";
 
   @TargetApi(8)
   public MenuItemsTest() {
@@ -99,8 +100,9 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
    * Tests the share menu item. This test to check whether crash will happen during the share.
    */
   public void testShareActivity() {
-    // Try all share item.
+    // Try all share items.
     for (int i = 0;; i++) {
+      EndToEndTestUtils.createTrackIfEmpty(0, false);
       View oneItemView = findShareItem(i);
       if (oneItemView == null) {
         break;
@@ -108,7 +110,7 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
       EndToEndTestUtils.SOLO.clickOnView(oneItemView);
       EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true,
           true);
-      if(!GoogleUtils.checkAccountStatusDialog()) {
+      if(!GoogleUtils.isAccountAvailable()) {
         break;
       }
       // Waiting the send is finish.
@@ -131,18 +133,18 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
 
   /**
    * Gets the view to click the share item by item index.
+   * 
    * @param index of a share item
    * @return null when no such item
    */
   private View findShareItem(int index) {
-    EndToEndTestUtils.createTrackIfEmpty(0, false);
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_share), true);
-    ArrayList<View> cc = EndToEndTestUtils.SOLO.getViews();
+    ArrayList<View> views = EndToEndTestUtils.SOLO.getViews();
     int i = 0;
-    for (View view : cc) {
+    for (View view : views) {
       String name = view.getParent().getClass().getName();
-      // Each share item is in one Linear layout which is the child view of
-      if (name.indexOf("RecycleListView") > 0) {
+      // Each share item is a child of a "RecycleListView"
+      if (name.indexOf(SHARE_ITEM_PARENT_VIEW_NAME) > 0) {
         if (index == i) {
           return view;
         }
@@ -151,40 +153,38 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
     }
     return null;
   }
-  
-  /**
-   * Checks the voice frequency and split frequency menus when no track is
-   * recording.
-   */
-  public void testFrequencyMenu_noRecording() {
-    EndToEndTestUtils.createTrackIfEmpty(0, false);
-    assertFalse(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_voice_frequency), false));
-    assertFalse(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_split_frequency), false));
 
+  /**
+   * Checks the voice frequency and split frequency menus during recording. When
+   * recording, they should be in both the menu and the recording settings. When
+   * not recording, they should only be in the recording settings.
+   */
+  public void testFrequencyMenu() {
+    EndToEndTestUtils.startRecording();
+    
+    assertTrue(EndToEndTestUtils.findMenuItem(
+        activityMyTracks.getString(R.string.menu_voice_frequency), false));
+    assertTrue(EndToEndTestUtils.findMenuItem(
+        activityMyTracks.getString(R.string.menu_split_frequency), false));
+    
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_recording));
-
     assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks.getString(R.string.menu_voice_frequency), 1, true, true));
     assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks.getString(R.string.menu_split_frequency), 1, true, true));
-  }
+    EndToEndTestUtils.SOLO.goBack();
+    EndToEndTestUtils.SOLO.goBack();
 
-  /**
-   * Checks the voice frequency and split frequency menus during recording.
-   */
-  public void testFrequencyMenu_underRecording() {
-    EndToEndTestUtils.startRecording();
-    assertTrue(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_voice_frequency), false));
-    assertTrue(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_split_frequency), false));
     EndToEndTestUtils.stopRecording(true);
     
     assertFalse(EndToEndTestUtils.findMenuItem(
         activityMyTracks.getString(R.string.menu_voice_frequency), false));
     assertFalse(EndToEndTestUtils.findMenuItem(
         activityMyTracks.getString(R.string.menu_split_frequency), false));
+    
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_recording));
+    assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks.getString(R.string.menu_voice_frequency), 1, true, true));
+    assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks.getString(R.string.menu_split_frequency), 1, true, true));
   }
 
   @Override
