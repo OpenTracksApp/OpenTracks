@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2012 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_height="fill_parent"
+  android:layout_width="fill_parent"
+  android:orientation="vertical" >
+  <ScrollView style="@style/ScrollView.WithBottomButtons" >
+    <LinearLayout
+      android:layout_height="wrap_content"
+      android:layout_width="fill_parent"
+      android:orientation="vertical"
+      android:padding="8dp" >
+      <ImageView
+        android:contentDescription="@string/my_tracks_app_name"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:scaleType="fitStart"
+        android:src="@drawable/my_tracks_icon" />
+      <TextView
+        android:text="@string/help_my_tracks_question"
+        style="@style/HelpQuestion" />
+      <TextView
+        android:text="@string/help_my_tracks_answer"
+        style="@style/HelpAnswer" />
+      <TextView
+        android:text="@string/help_location_precision_question"
+        style="@style/HelpQuestion" />
+      <TextView
+        android:text="@string/help_location_precision_answer"
+        style="@style/HelpAnswer" />
+      <TextView
+        android:text="@string/help_gps_signal_question"
+        style="@style/HelpQuestion" />
+      <TextView
+        android:text="@string/help_gps_signal_answer"
+        style="@style/HelpAnswer" />
+      <TextView
+        android:text="@string/help_data_connection_question"
+        style="@style/HelpQuestion" />
+      <TextView
+        android:text="@string/help_data_connection_answer"
+        style="@style/HelpAnswer" />
+      <TextView
+        android:text="@string/help_elevation_precision_question"
+        style="@style/HelpQuestion" />
+      <TextView
+        android:text="@string/help_elevation_precision_answer"
+        style="@style/HelpAnswer" />
+      <TextView
+        android:text="@string/help_battery_life_question"
+        style="@style/HelpQuestion" />
+      <TextView
+        android:text="@string/help_battery_life_answer"
+        style="@style/HelpAnswer" />
+      <TextView
+        android:text="@string/help_share_friends_question"
+        style="@style/HelpQuestion" />
+      <TextView
+        android:text="@string/help_share_friends_answer"
+        style="@style/HelpAnswer" />
+      <TextView
+        android:text="@string/help_send_track_question"
+        style="@style/HelpQuestion" />
+      <TextView
+        android:id="@+id/help_send_track_answer"
+        style="@style/HelpAnswer" />
+      <TextView
+        android:text="@string/help_maps_public_unlisted_question"
+        style="@style/HelpQuestion" />
+      <TextView
+        android:id="@+id/help_maps_public_unlisted_answer"
+        style="@style/HelpAnswer" />
+      <TextView
+        android:text="@string/help_share_visibility_question"
+        style="@style/HelpQuestion" />
+      <TextView
+        android:text="@string/help_share_visibility_answer"
+        style="@style/HelpAnswer" />
+      <TextView
+        android:text="@string/help_split_track_question"
+        style="@style/HelpQuestion" />
+      <TextView
+        android:text="@string/help_split_track_answer"
+        style="@style/HelpAnswer" />
+      <TextView
+        android:text="@string/help_saved_files_question"
+        style="@style/HelpQuestion" />
+      <TextView
+        android:text="@string/help_saved_files_answer"
+        style="@style/HelpAnswer" />
+      <TextView
+        android:text="@string/help_marker_question"
+        style="@style/HelpQuestion" />
+      <TextView
+        android:text="@string/help_marker_answer"
+        style="@style/HelpAnswer" />
+      <TextView
+        android:text="@string/help_split_marker_question"
+        style="@style/HelpQuestion" />
+      <TextView
+        android:text="@string/help_split_marker_answer"
+        style="@style/HelpAnswer" />
+      <TextView
+        android:text="@string/help_delete_tracks_question"
+        style="@style/HelpQuestion" />
+      <TextView
+        android:text="@string/help_delete_tracks_answer"
+        style="@style/HelpAnswer" />
+      <TextView
+        android:text="@string/help_edit_tracks_question"
+        style="@style/HelpQuestion" />
+      <TextView
+        android:text="@string/help_edit_tracks_answer"
+        style="@style/HelpAnswer" />
+    </LinearLayout>
+  </ScrollView>
+  <LinearLayout style="@style/BottomButtonBar" >
+    <include layout="@layout/help_buttons" />
+  </LinearLayout>
+</LinearLayout>
