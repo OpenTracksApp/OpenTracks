@@ -193,7 +193,6 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     handleIntent(getIntent());
-    ApiAdapterFactory.getApiAdapter().hideTitle(this);
 
     SharedPreferences sharedPreferences = getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
@@ -230,6 +229,11 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   @Override
   protected int getLayoutResId() {
     return R.layout.track_detail;
+  }
+
+  @Override
+  protected boolean hideTitle() {
+    return true;
   }
 
   @Override

@@ -34,10 +34,18 @@ public abstract class AbstractMyTracksActivity extends FragmentActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
+
+    // Hide title must be before setContentView
+    if (hideTitle()) {
+      ApiAdapterFactory.getApiAdapter().hideTitle(this);
+    }
+
     setContentView(getLayoutResId());
+
+    // Configure action bar must be after setContentView
     ApiAdapterFactory.getApiAdapter().configureActionBarHomeAsUp(this);
   }
-  
+
   /**
    * Gets the layout resource id.
    */
@@ -50,6 +58,13 @@ public abstract class AbstractMyTracksActivity extends FragmentActivity {
     }
     onHomeSelected();
     return true;
+  }
+
+  /**
+   * Returns true to hide the title. Be default, do not hide the title.
+   */
+  protected boolean hideTitle() {
+    return false;
   }
 
   /**
