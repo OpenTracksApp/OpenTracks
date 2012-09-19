@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2012 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+  android:title="@string/settings_recording" >
+  <com.google.android.apps.mytracks.IntegerListPreference
+    android:defaultValue="0"
+    android:entryValues="@array/frequency_values"
+    android:key="@string/voice_frequency_key"
+    android:summary="@string/settings_voice_frequency_title"
+    android:title="@string/menu_voice_frequency" />
+  <com.google.android.apps.mytracks.IntegerListPreference
+    android:defaultValue="0"
+    android:entryValues="@array/frequency_values"
+    android:key="@string/split_frequency_key"
+    android:summary="@string/settings_split_frequency_title"
+    android:title="@string/menu_split_frequency" />
+  <ListPreference
+    android:defaultValue="@string/settings_recording_track_name_location_value"
+    android:entries="@array/track_name_options"
+    android:entryValues="@array/track_name_values"
+    android:key="@string/track_name_key"
+    android:summary="@string/settings_recording_track_name_summary"
+    android:title="@string/settings_recording_track_name" />
+  <com.google.android.apps.mytracks.AutoCompleteTextPreference
+    android:defaultValue=""
+    android:hint="@string/track_edit_activity_type_hint"
+    android:key="@string/default_activity_key"
+    android:summary="@string/settings_recording_default_activity_summary"
+    android:title="@string/settings_recording_default_activity" />
+  <com.google.android.apps.mytracks.IntegerListPreference
+    android:defaultValue="0"
+    android:entryValues="@array/min_recording_interval_values"
+    android:key="@string/min_recording_interval_key"
+    android:summary="@string/settings_recording_interval_summary"
+    android:title="@string/settings_recording_interval" />
+  <com.google.android.apps.mytracks.IntegerListPreference
+    android:defaultValue="5"
+    android:entryValues="@array/min_recording_distance_values"
+    android:key="@string/min_recording_distance_key"
+    android:summary="@string/settings_recording_distance_summary"
+    android:title="@string/settings_recording_distance" />
+  <com.google.android.apps.mytracks.IntegerListPreference
+    android:defaultValue="200"
+    android:entryValues="@array/max_recording_distance_values"
+    android:key="@string/max_recording_distance_key"
+    android:summary="@string/settings_recording_track_distance_summary"
+    android:title="@string/settings_recording_track_distance" />
+  <com.google.android.apps.mytracks.IntegerListPreference
+    android:defaultValue="200"
+    android:entryValues="@array/min_required_accuracy_values"
+    android:key="@string/min_required_accuracy_key"
+    android:summary="@string/settings_recording_gps_accuracy_summary"
+    android:title="@string/settings_recording_gps_accuracy" />
+  <com.google.android.apps.mytracks.IntegerListPreference
+    android:defaultValue="10"
+    android:entryValues="@array/auto_resume_track_timeout_values"
+    android:key="@string/auto_resume_track_timeout_key"
+    android:summary="@string/settings_recording_auto_resume_summary"
+    android:title="@string/settings_recording_auto_resume" />
+</PreferenceScreen>

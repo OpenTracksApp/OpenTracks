@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2011 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:background="@drawable/track_widget_background"
+  android:layout_height="fill_parent"
+  android:layout_width="fill_parent"
+  android:padding="@dimen/widget_margin" >
+  <LinearLayout
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent"
+    android:orientation="vertical"
+    android:paddingBottom="8dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="8dp" >
+    <LinearLayout
+      android:clickable="true"
+      android:id="@+id/track_widget_statistics"
+      android:layout_height="wrap_content"
+      android:layout_width="fill_parent"
+      android:orientation="vertical" >
+      <LinearLayout style="@style/TrackWidgetStat" >
+        <TextView
+          android:text="@string/stats_total_distance"
+          style="@style/TrackWidgetLabel" />
+        <TextView style="@style/TrackWidgetSpacer" />
+        <TextView
+          android:id="@+id/track_widget_total_distance_value"
+          style="@style/TrackWidgetLabel" />
+      </LinearLayout>
+      <LinearLayout style="@style/TrackWidgetSeparator" />
+      <LinearLayout style="@style/TrackWidgetStat" >
+        <TextView
+          android:text="@string/stats_total_time"
+          style="@style/TrackWidgetLabel" />
+        <TextView style="@style/TrackWidgetSpacer" />
+        <Chronometer
+          android:id="@+id/track_widget_total_time_value"
+          style="@style/TrackWidgetLabel" />
+      </LinearLayout>
+      <LinearLayout style="@style/TrackWidgetSeparator" />
+      <LinearLayout style="@style/TrackWidgetStat" >
+        <TextView
+          android:id="@+id/track_widget_average_speed_label"
+          style="@style/TrackWidgetLabel" />
+        <TextView style="@style/TrackWidgetSpacer" />
+        <TextView
+          android:id="@+id/track_widget_average_speed_value"
+          style="@style/TrackWidgetLabel" />
+      </LinearLayout>
+      <LinearLayout
+        android:id="@+id/track_widget_moving_time_container"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:orientation="vertical" >
+        <LinearLayout style="@style/TrackWidgetSeparator" />
+        <LinearLayout style="@style/TrackWidgetStat" >
+          <TextView
+            android:text="@string/stats_moving_time"
+            style="@style/TrackWidgetLabel" />
+          <TextView style="@style/TrackWidgetSpacer" />
+          <TextView
+            android:id="@+id/track_widget_moving_time_value"
+            style="@style/TrackWidgetLabel" />
+        </LinearLayout>
+      </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+      android:clipChildren="false"
+      android:layout_height="wrap_content"
+      android:layout_width="fill_parent"
+      android:orientation="horizontal"
+      android:paddingLeft="4dp"
+      android:paddingRight="4dp"
+      android:paddingTop="4dp" >
+      <ImageButton
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/icon_record_track"
+        android:id="@+id/track_widget_record_button"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:src="@drawable/btn_record" />
+      <TextView
+        android:id="@+id/track_widget_record_status"
+        android:layout_gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:singleLine="true"
+        style="@style/TextSmall" />
+      <ImageButton
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/icon_stop_recording"
+        android:id="@+id/track_widget_stop_button"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:src="@drawable/btn_stop_0" />
+    </LinearLayout>
+  </LinearLayout>
+</FrameLayout>
