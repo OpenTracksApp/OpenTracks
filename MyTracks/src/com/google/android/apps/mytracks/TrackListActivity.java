@@ -441,6 +441,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
   protected void onStop() {
     super.onStop();
     trackDataHub.stop();
+    AnalyticsUtils.dispatch();
   }
 
   @Override

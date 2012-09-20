@@ -22,16 +22,17 @@ import android.content.Context;
 
 /**
  * Utitlites for sending pageviews to Google Analytics.
- *
+ * 
  * @author Jimmy Shih
  */
 public class AnalyticsUtils {
 
   private static final String UA = "UA-7222692-2";
   private static final String PRODUCT_NAME = "android-mytracks";
-  
+  private static GoogleAnalyticsTracker tracker;
+
   private AnalyticsUtils() {}
-  
+
   /**
    * Sends a page view.
    * 
@@ -39,11 +40,17 @@ public class AnalyticsUtils {
    * @param page the page
    */
   public static void sendPageViews(Context context, String page) {
-    GoogleAnalyticsTracker tracker = GoogleAnalyticsTracker.getInstance();
-    tracker.startNewSession(UA, context);
-    tracker.setProductVersion(PRODUCT_NAME, SystemUtils.getMyTracksVersion(context));
+    if (tracker == null) {
+      tracker = GoogleAnalyticsTracker.getInstance();
+      tracker.startNewSession(UA, context);
+      tracker.setProductVersion(PRODUCT_NAME, SystemUtils.getMyTracksVersion(context));
+    }
     tracker.trackPageView(page);
-    tracker.dispatch();
-    tracker.stopSession();
+  }
+
+  public static void dispatch() {
+    if (tracker != null) {
+      tracker.dispatch();
+    }
   }
 }

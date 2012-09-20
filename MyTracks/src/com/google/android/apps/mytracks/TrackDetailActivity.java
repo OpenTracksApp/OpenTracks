@@ -266,6 +266,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   protected void onStop() {
     super.onStop();
     trackDataHub.stop();
+    AnalyticsUtils.dispatch();
   }
 
   @Override
