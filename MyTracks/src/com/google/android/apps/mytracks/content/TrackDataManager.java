@@ -58,7 +58,8 @@ public class TrackDataManager {
   public void registerListener(
       TrackDataListener listener, EnumSet<TrackDataType> trackDataTypes) {
     if (listenerToTypesMap.containsKey(listener)) {
-      throw new IllegalStateException("Listener is already registered");
+      Log.w(TAG, "Tried to register a listener that is already registered. Ignore.");
+      return;
     }
     listenerToTypesMap.put(listener, trackDataTypes);
     for (TrackDataType trackDataType : trackDataTypes) {
@@ -74,7 +75,7 @@ public class TrackDataManager {
   public void unregisterListener(TrackDataListener listener) {
     EnumSet<TrackDataType> removedTypes = listenerToTypesMap.remove(listener);
     if (removedTypes == null) {
-      Log.w(TAG, "Tried to unregister a listener that is not registered.");
+      Log.w(TAG, "Tried to unregister a listener that is not registered. Ignore.");
       return;
     }
 

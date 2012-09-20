@@ -419,6 +419,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
   protected void onPause() {
     super.onPause();
     trackController.stop();
+    trackDataHub.unregisterTrackDataListener(trackDataListener);
   }
 
   @Override
