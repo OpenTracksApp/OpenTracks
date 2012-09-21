@@ -100,9 +100,10 @@ public class SaveActivity extends Activity {
   protected Dialog onCreateDialog(int id) {
     switch (id) {
       case DIALOG_PROGRESS_ID:
-        progressDialog = DialogUtils.createHorizontalProgressDialog(
-            this, R.string.sd_card_save_progress_message, new DialogInterface.OnCancelListener() {
-              @Override
+        progressDialog = DialogUtils.createHorizontalProgressDialog(this,
+            R.string.external_storage_save_progress_message,
+            new DialogInterface.OnCancelListener() {
+                @Override
               public void onCancel(DialogInterface dialog) {
                 saveAsyncTask.cancel(true);
                 finish();

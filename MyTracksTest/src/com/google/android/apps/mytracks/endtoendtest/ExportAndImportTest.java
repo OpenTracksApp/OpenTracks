@@ -109,7 +109,8 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
 
     // No file to imported.
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_import), true);
-    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.sd_card_import_error_no_file,
+    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(
+        R.string.external_storage_import_error_no_file,
         FileUtils.buildExternalDirectoryPath(EndToEndTestUtils.GPX)));
     EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
 
@@ -118,8 +119,10 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     EndToEndTestUtils.SOLO
         .clickOnText(String.format(activityMyTracks.getString(R.string.menu_save_format),
             EndToEndTestUtils.GPX.toUpperCase()));
-    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.sd_card_save_success));
-    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+    EndToEndTestUtils.SOLO.waitForText(
+        activityMyTracks.getString(R.string.external_storage_save_success));
+    EndToEndTestUtils.getButtonOnScreen(
+        activityMyTracks.getString(R.string.generic_ok), true, true);
     // Check export file.
     assertEquals(gpxFilesNumber + trackNumber,
         EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX).length);
@@ -133,8 +136,8 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     EndToEndTestUtils.rotateAllActivities();
     // Wait for the prefix of import success string is much faster than wait
     // the whole string.
-    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.sd_card_import_success_count).split(
-        "%")[0]);
+    EndToEndTestUtils.SOLO.waitForText(
+        activityMyTracks.getString(R.string.external_storage_import_success_count).split("%")[0]);
     // Check import tracks should be equal with the sum of trackNumber and
     // gpxFilesNumber;
     EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
@@ -150,8 +153,10 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     EndToEndTestUtils.SOLO
         .clickOnText(String.format(activityMyTracks.getString(R.string.menu_save_format),
             EndToEndTestUtils.KML.toUpperCase()));
-    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.sd_card_save_success));
-    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+    EndToEndTestUtils.SOLO.waitForText(
+        activityMyTracks.getString(R.string.external_storage_save_success));
+    EndToEndTestUtils.getButtonOnScreen(
+        activityMyTracks.getString(R.string.generic_ok), true, true);
     // Check export files.
     assertEquals(gpxFilesNumber, EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX).length);
     assertEquals(trackNumber, EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.KML).length);

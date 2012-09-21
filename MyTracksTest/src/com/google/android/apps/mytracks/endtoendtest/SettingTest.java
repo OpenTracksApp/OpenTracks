@@ -243,7 +243,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup));
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup_now));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.sd_card_save_success), 0,
+        activityMyTracks.getString(R.string.external_storage_save_success), 0,
         EndToEndTestUtils.SUPER_LONG_WAIT_TIME));
     instrumentation.waitForIdleSync();
 
@@ -261,7 +261,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.sd_card_import_success), 0,
+        activityMyTracks.getString(R.string.external_storage_import_success), 0,
         EndToEndTestUtils.SUPER_LONG_WAIT_TIME));
     // Check restore track.
     assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.trackName));

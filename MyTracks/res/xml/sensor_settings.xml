@@ -50,7 +50,7 @@ limitations under the License.
     <Preference
       android:key="@string/settings_sensor_ant_reset_bike_cadence_sensor_key"
       android:persistent="false"
-      android:title="@string/settings_sensor_ant_reset_bike_candence_sensor" />
+      android:title="@string/settings_sensor_ant_reset_bike_cadence_sensor" />
     <Preference
       android:key="@string/settings_sensor_ant_reset_combined_bike_sensor_key"
       android:persistent="false"

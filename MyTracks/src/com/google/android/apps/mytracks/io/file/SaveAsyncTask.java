@@ -91,7 +91,7 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     trackWriter = null;
     success = false;
     completed = false;
-    messageId = R.string.sd_card_save_error;
+    messageId = R.string.external_storage_save_error;
     savedPath = null;
   }
 
@@ -170,12 +170,12 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     try {
       cursor = myTracksProviderUtils.getTrackCursor(null, null, TracksColumns._ID);
       if (cursor == null) {
-        messageId = R.string.sd_card_save_error_no_track;
+        messageId = R.string.external_storage_save_error_no_track;
         return false;
       }
       int count = cursor.getCount();
       if (count == 0) {
-        messageId = R.string.sd_card_save_error_no_track;
+        messageId = R.string.external_storage_save_error_no_track;
         return false;
       }
       int idIndex = cursor.getColumnIndexOrThrow(TracksColumns._ID);
@@ -190,7 +190,7 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         }        
         publishProgress(i + 1, count);
       }
-      messageId = R.string.sd_card_save_success;
+      messageId = R.string.external_storage_save_success;
       return true;
     } finally {
       if (cursor != null) {

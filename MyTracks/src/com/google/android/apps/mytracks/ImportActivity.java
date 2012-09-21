@@ -111,9 +111,10 @@ public class ImportActivity extends Activity {
   protected Dialog onCreateDialog(int id) {
     switch (id) {
       case DIALOG_PROGRESS_ID:
-        progressDialog = DialogUtils.createHorizontalProgressDialog(
-            this, R.string.sd_card_import_progress_message, new DialogInterface.OnCancelListener() {
-              @Override
+        progressDialog = DialogUtils.createHorizontalProgressDialog(this,
+            R.string.external_storage_import_progress_message,
+            new DialogInterface.OnCancelListener() {
+                @Override
               public void onCancel(DialogInterface dialog) {
                 importAsyncTask.cancel(true);
                 finish();
@@ -123,12 +124,12 @@ public class ImportActivity extends Activity {
       case DIALOG_RESULT_ID:
         String message;
         if (successCount == 0) {
-          message = getString(R.string.sd_card_import_error_no_file, path);
+          message = getString(R.string.external_storage_import_error_no_file, path);
         } else {
           String totalFiles = getResources()
               .getQuantityString(R.plurals.importGpxFiles, totalCount, totalCount);
           message = getString(
-              R.string.sd_card_import_success_count, successCount, totalFiles, path);
+              R.string.external_storage_import_success_count, successCount, totalFiles, path);
         }
         return new AlertDialog.Builder(this)
             .setCancelable(true)
@@ -175,7 +176,7 @@ public class ImportActivity extends Activity {
     if (success) {
       showDialog(DIALOG_RESULT_ID);
     } else {
-      Toast.makeText(this, R.string.sd_card_import_error, Toast.LENGTH_LONG).show();
+      Toast.makeText(this, R.string.external_storage_import_error, Toast.LENGTH_LONG).show();
       finish();
     }
   }

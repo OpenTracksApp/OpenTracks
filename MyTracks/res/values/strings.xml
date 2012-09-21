@@ -602,6 +602,70 @@ limitations under the License.
     Terms of Service
   </string>
 
+  <!-- External Storage -->
+  <string name="external_storage_canceled"
+    translation_description="When importing/saving to the external storage, the message indicating
+      that the operation was canceled.">
+    The operation was canceled.
+  </string>
+  <string name="external_storage_error_no_storage"
+    translation_description="When importing/saving to the external storage, the error message
+      indicating that no external storage is found.">
+    No external storage is found.
+  </string>
+  <string name="external_storage_import_error"
+    translation_description="When importing from the external storage, the error message indicating
+      not able to import.">
+    Unable to import from external storage.
+  </string>
+  <string name="external_storage_import_error_no_file"
+    translation_description="When importing from the external storage, the error message indicating
+      that no file is found on an external storage directory.
+
+      %1$s: the external storage directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
+    No file found in %1$s.
+  </string>
+  <string name="external_storage_import_progress_message"
+    translation_description="When importing from the external storage, the progress message.">
+    Importing from external storage&#8230;
+  </string>
+  <string name="external_storage_import_success"
+    translation_description="When importing from the external storage, the success message.">
+    Finished importing from external storage.
+  </string>
+  <string name="external_storage_import_success_count"
+    translation_description="When importing from the external storage, the success message with a
+      count of the imported files.
+
+      %1$d the number of successfully imported tracks. E.g., '1'.
+      %2$s the number of files in the external storage directory. E.g., '2 GPX files'.
+      %3$s the external storage directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
+    Imported %1$d of %2$s from %3$s.
+  </string>
+  <string name="external_storage_save_error"
+    translation_description="When saving to the external storage, the error message indicating not
+      able to save.">
+    Unable to save to external storage.
+  </string>
+  <string name="external_storage_save_error_create_dir"
+    translation_description="When saving to the external storage, the error message indicating not
+      able to create a directory.">
+    Unable to create a directory on the external storage.
+  </string>
+  <string name="external_storage_save_error_no_track"
+    translation_description="When saving to the external storage, the error message indicating that
+      no track is saved.">
+    No track is saved to the external storage.
+  </string>
+  <string name="external_storage_save_progress_message"
+    translation_description="When saving to the external storage, the progress message.">
+    Saving to external storage&#8230;
+  </string>
+    <string name="external_storage_save_success"
+    translation_description="When saving to the external storage, the success message">
+    Finished saving to external storage.
+  </string>
+
   <!-- Generic Strings -->
   <string name="generic_add"
     translation_description="The text on a button to say add.">
@@ -712,8 +776,8 @@ limitations under the License.
     translation_description="In the 'Help' page, the answer on battery life.">
     The GPS receiver draws a relatively high amount of power, so a fully charged battery typically
     survives less than 5 hours. Battery life depends on many factors, including signal strength,
-    battery freshness, and tasks running in parallel. Switching off some or all of the phone\'s
-    radios will lengthen battery life. Putting the phone into Airplane mode will yield the best
+    battery freshness, and tasks running in parallel. Switching off some or all of the device\'s
+    radios will lengthen battery life. Putting the device into Airplane mode will yield the best
     results.
   </string>
   <string name="help_battery_life_question"
@@ -734,19 +798,20 @@ limitations under the License.
   <string name="help_delete_tracks_answer"
     translation_description="In the 'Help' page, the answer on delete tracks.">
     From the track list, select &#8220;Delete all&#8221; when not recording. This permanently
-    deletes the recorded tracks from memory. If you have saved tracks or backups on the SD card, you
-    must delete them separately. You can access the SD card using any file manager app from the Play
-    Store or using a USB cable to connect your phone to your computer. Tracks uploaded to Google
-    Maps, Google Fusion Tables, and Google Docs must also be deleted separately.
+    deletes the recorded tracks from the device memory. If you have saved tracks or backups on the
+    external storage, you  must delete them separately. You can access the external storage using
+    any file manager app from the Play Store or using a USB cable to connect your device to your
+    computer. Tracks uploaded to Google Maps, Google Fusion Tables, and Google Docs must also be
+    deleted separately.
   </string>
   <string name="help_delete_tracks_question"
     translation_description="In the 'Help' page, the question on delete tracks.">
-    How do I delete all the tracks from the phone?
+    How do I delete all the tracks from the device?
   </string>
   <string name="help_edit_tracks_answer"
     translation_description="In the 'Help' page, the answer on edit tracks.">
     Currently, you can\'t with My Tracks. But you can upload your tracks to Google or save them to
-    the SD card to modify them there.
+    the external storage to modify them there.
   </string>
   <string name="help_edit_tracks_question"
     translation_description="In the 'Help' page, the question on edit tracks.">
@@ -763,9 +828,18 @@ limitations under the License.
     translation_description="In the 'Help' page, the question on elevation precision.">
     How precise is the elevation measurement?
   </string>
+  <string name="help_external_storage_access_answer"
+    translation_description="In the 'Help' page, the answer on external storage access.">
+    Tracks saved on the external storage are not encrypted. Any application on the device can access
+    them.
+  </string>
+  <string name="help_external_storage_access_question"
+    translation_description="In the 'Help' page, the question on external storage access.">
+    Who can access the tracks saved on the external storage?
+  </string>
   <string name="help_gps_signal_answer"
     translation_description="In the 'Help' page, the answer on the GPS signal message.">
-    For My Tracks to work, your phone needs to be in line-of-sight contact with the GPS satellites.
+    For My Tracks to work, your device needs to be in line-of-sight contact with the GPS satellites.
     If the line-of-sight is obstructed by trees, buildings or canyon walls, you may not get an
     accurate signal. If you see the message, wait a minute or two. If your device still does not
     find a signal, move to an area clear of obstructions and try again.
@@ -792,7 +866,7 @@ limitations under the License.
     See %1$s.
   </string>
   <string name="help_maps_public_unlisted_question"
-    translation_description="In the 'Help' page, the question on public versus unlsited maps.">
+    translation_description="In the 'Help' page, the question on public versus unlisted maps.">
     What is the difference between public and unlisted when sending a track to Google Maps?
   </string>
   <string name="help_marker_answer"
@@ -820,15 +894,8 @@ limitations under the License.
   </string>
   <string name="help_saved_files_question"
     translation_description="In the 'Help' page, the question on saved files.">
-    What can I do with tracks after saving them to the SD card or sharing such files with friends?
-  </string>
-  <string name="help_sd_card_access_answer"
-    translation_description="In the 'Help' page, the answer on sd card access.">
-    Tracks saved on the SD card are not encrypted. Any application on the phone can access them.
-  </string>
-  <string name="help_sd_card_access_question"
-    translation_description="In the 'Help' page, the question on sd card access.">
-    Who can access the tracks saved on the SD card?
+    What can I do with tracks after saving them to the external storage or sharing such files with
+    friends?
   </string>
   <string name="help_send_track_answer"
     translation_description="In the 'Help' page, the answer on sending a track.
@@ -886,8 +953,8 @@ limitations under the License.
   <!-- Icon -->
   <string name="icon_application"
     translation_description="When sharing a track, we display a list of Android applications on the
-      phone that can be used. In the list, we display an application icon for each application. This
-      is the accessibility description for the icon.">
+      device that can be used. This is the generic accessibility description for any application
+      icon.">
     Application
   </string>
   <string name="icon_marker"
@@ -992,8 +1059,8 @@ limitations under the License.
   </string>
   <string name="marker_delete_one_marker_confirm_message"
     translation_description="When deleting a marker, the confirmation dialog message informing the
-      user that the marker will be permanently deleted from the phone.">
-    The marker will be permanently deleted from the phone.
+      user that the marker will be permanently deleted from the device.">
+    The marker will be permanently deleted from the device.
   </string>
   <string name="marker_detail_statistics_title"
     translation_description="In the marker detail page, the title for the statistics section
@@ -1079,10 +1146,10 @@ limitations under the License.
     Help
   </string>
   <string name="menu_import"
-    translation_description="In the menu, to import tracks from the SD card.
+    translation_description="In the menu, to import tracks from the external storage.
 
       Character limit: ~20 (1 line)">
-    Import from SD card
+    Import from external storage
   </string>
   <string name="menu_insert_marker"
     translation_description="In the menu, to insert a marker.
@@ -1115,22 +1182,20 @@ limitations under the License.
     Satellite
   </string>
   <string name="menu_save"
-    translation_description="In the menu, to save a track to the SD card. This menu item has a
-      submenu.
+    translation_description="In the menu, to save a track to the external storage.
 
       Character limit: ~20 (1 line)">
-    Save to SD card
+    Save to external storage
   </string>
   <string name="menu_save_all"
-    translation_description="In the menu, to save all the tracks to the SD card. This menu item has
-      a submenu.
+    translation_description="In the menu, to save all the tracks to the external storage.
 
       Character limit: ~20 (1 line)">
-    Save all to SD card
+    Save all to external storage
   </string>
   <string name="menu_save_format"
-    translation_description="Under the save to SD card menu option, the option to save a track as a
-      certain file format.
+    translation_description="Under the save to external storage menu option, the option to save a
+      track as a certain file format.
 
       %1$s: file format. 'GPX', 'KML', 'CSV', or 'TCX'.
       Character limit: ~20 (1 line)">
@@ -1180,13 +1245,13 @@ limitations under the License.
     Split frequency
   </string>
   <string name="menu_start_gps"
-    translation_description="In the menu, to start the GPS receiver on the phone.
+    translation_description="In the menu, to start the GPS receiver on the device.
 
       Character limit: ~20 (1 line)">
     Start GPS
   </string>
   <string name="menu_stop_gps"
-    translation_description="In the menu, to stop the GPS receiver on the phone.
+    translation_description="In the menu, to stop the GPS receiver on the device.
 
       Character limit: ~20 (1 line)">
     Stop GPS
@@ -1230,7 +1295,7 @@ limitations under the License.
   <!-- Permission -->
   <string name="permission_notification_description"
     translation_description="The permission description the Google Play Store shows during app
-      installtion when the app wants to receive Google My Tracks notifications.">
+      installation when the app wants to receive Google My Tracks notifications.">
     Allows the application to receive notifications when Google My Tracks starts or stops a
     recording.
   </string>
@@ -1241,7 +1306,7 @@ limitations under the License.
   </string>
   <string name="permission_read_description"
     translation_description="The permission description the Google Play Store shows during app
-      installtion when the app wants to read Google My Tracks data.">
+      installation when the app wants to read Google My Tracks data.">
     Allows the application to read Google My Tracks data.
   </string>
   <string name="permission_read_label"
@@ -1251,7 +1316,7 @@ limitations under the License.
   </string>
   <string name="permission_write_description"
     translation_description="The permission description the Google Play Store shows during app
-      installtion when the app wants to write data to My Tracks.">
+      installation when the app wants to write data to My Tracks.">
     Allows the application to write data to Google My Tracks and start/stop Google My Tracks
     recording.
   </string>
@@ -1259,70 +1324,6 @@ limitations under the License.
     translation_description="The permission label the Google Play Store shows during app
       installation when the app wants to write data to My Tracks.">
     write data to Google My Tracks and start/stop Google My Tracks recording
-  </string>
-
-  <!-- SD Card -->
-  <string name="sd_card_canceled"
-    translation_description="When importing/saving to the SD card, the message indicating that the
-      operation was canceled.">
-    The operation was canceled.
-  </string>
-  <string name="sd_card_error_no_storage"
-    translation_description="When importing/saving to the SD card, the error message indicating that
-      no SD card is found.">
-    No SD card is found.
-  </string>
-  <string name="sd_card_import_error"
-    translation_description="When importing from the SD card, the error message indicating not able
-      to import.">
-    Unable to import from SD card.
-  </string>
-  <string name="sd_card_import_error_no_file"
-    translation_description="When importing from the SD card, the error message indicating that no
-      file is found on a SD card directory.
-
-      %1$s: the SD card directory. E.g., '/mnt/sdcard/MyTracks/gpx/'.">
-    No file found in %1$s.
-  </string>
-  <string name="sd_card_import_progress_message"
-    translation_description="When importing from the SD card, the progress message.">
-    Importing from SD card&#8230;
-  </string>
-  <string name="sd_card_import_success"
-    translation_description="When importing from the SD card, the success message.">
-    Finished importing from SD card.
-  </string>
-  <string name="sd_card_import_success_count"
-    translation_description="When importing from the SD card, the success message with a count of
-      the imported files.
-
-      %1$d the number of successfully imported tracks. E.g., '1'.
-      %2$s the number of files in the SD card. E.g., '1 GPX file' or '2 GPX files'.
-      %3$s the SD card directory. E.g., '/mnt/sdcard/MyTracks/gpx/'.">
-    Imported %1$d of %2$s from %3$s.
-  </string>
-  <string name="sd_card_save_error"
-    translation_description="When saving to the SD card, the error message indicating not able to
-      save.">
-    Unable to save to SD card.
-  </string>
-  <string name="sd_card_save_error_create_dir"
-    translation_description="When saving to the SD card, the error message indicating not able to
-      create a directory on the SD card.">
-    Unable to create a directory on SD card.
-  </string>
-  <string name="sd_card_save_error_no_track"
-    translation_description="When saving to the SD card, the error message indicating that no track
-      is available.">
-    You have no track to save to SD card.
-  </string>
-  <string name="sd_card_save_progress_message"
-    translation_description="When saving to the SD card, the progress message.">
-    Saving to SD card&#8230;
-  </string>
-    <string name="sd_card_save_success"
-    translation_description="When saving to the SD card, the success message">
-    Finished saving to SD card.
   </string>
 
   <!-- Search -->
@@ -1537,26 +1538,26 @@ limitations under the License.
     Backup
   </string>
   <string name="settings_backup_now"
-    translation_description="In the 'Backup' settings, under the 'SD card' section, the option to
-      backup to the SD card now.
+    translation_description="In the 'Backup' settings, the option to backup to the external storage
+      now.
 
       Character limit: ~26 (1 line)">
     Backup now
   </string>
   <string name="settings_backup_now_progress_message"
     translation_description="In the 'Backup' settings, after pressing the 'Backup now' option, the
-      progress message telling the user that it is writing all tracks and settings to the SD card.">
+      progress message telling the user that it is writing all tracks and settings to the external
+      storage.">
     Writing all tracks and settings&#8230;
   </string>
   <string name="settings_backup_now_summary"
-    translation_description="In the 'Backup' settings, under the 'SD card' section, the summary for
-      the 'Backup now' option explaining that all tracks and settings will be written to the SD
-      card.">
-    Write a full copy of all your tracks and settings to the SD card.
+    translation_description="In the 'Backup' settings, the summary for the 'Backup now' option
+      explaining that all tracks and settings will be written to the external storage.">
+    Write a full copy of all your tracks and settings to the external storage.
   </string>
   <string name="settings_backup_restore"
-    translation_description="In the 'Backup' settings, under the 'SD card' section, the option to
-      restore everything from the SD card.
+    translation_description="In the 'Backup' settings, the option to restore from the external
+      storage.
 
       Character limit: ~26 (1 line)">
     Restore now
@@ -1565,7 +1566,8 @@ limitations under the License.
     translation_description="In the 'Backup' settings, after pressing the 'Restore now' option, the
       message in the alert dialog asking the user to confirm that he wants to restore from a backup
       and it will overwrite all the current tracks and settings.">
-    Restoring a backup from the SD card will overwrite all your current tracks and settings.
+    Restoring a backup from the external storage will overwrite all your current tracks and
+    settings.
   </string>
   <string name="settings_backup_restore_no_backup"
     translation_description="In the 'Backup' settings, after pressing the 'Restore now' option, the
@@ -1575,7 +1577,7 @@ limitations under the License.
   <string name="settings_backup_restore_progress_message"
     translation_description="In the 'Backup' settings, after pressing the 'Restore now' option, the
       progress message informing that My Tracks is reading all tracks and settings from the backup
-      on the SD card.">
+      on the external storage.">
     Reading all tracks and settings&#8230;
   </string>
   <string name="settings_backup_restore_select_title"
@@ -1584,10 +1586,9 @@ limitations under the License.
     Select a backup to restore
   </string>
   <string name="settings_backup_restore_summary"
-    translation_description="In the 'Backup' settings, under the 'SD card' section, the summary for
-      the 'Restore now' option explaining that it restores all tracks and settings from the SD
-      card.">
-    Restore all tracks and settings from the SD card.
+    translation_description="In the 'Backup' settings, the summary for the 'Restore now' option
+      explaining that it restores all tracks and settings from the external storage.">
+    Restore all tracks and settings from the external storage.
   </string>
 
   <!-- Settings Chart -->
@@ -1690,7 +1691,7 @@ limitations under the License.
   </string>
   <string name="settings_recording_auto_resume"
     translation_description="In the 'Recording' settings, the dropdown option to configure the
-      timeout after which a recorded track will not be continued after phone reboot.
+      timeout after which a recorded track will not be continued after device reboot.
 
       Character limit: ~23 (1 line)">
     Auto-resume
@@ -1698,8 +1699,8 @@ limitations under the License.
   <string name="settings_recording_auto_resume_summary"
     translation_description="In the 'Recording' settings, the summary for the 'Auto-resume' dropdown
       option explaining that it configures the maximum time after which a previous recording will
-      not be resumed after phone reboot.">
-    Maximum time after which a previously recording track will not be resumed after phone reboot.
+      not be resumed after device reboot.">
+    Maximum time after which a previously recording track will not be resumed after device reboot.
   </string>
   <string name="settings_recording_default_activity"
     translation_description="In the 'Recording' settings, the option to specify a new track's
@@ -1855,7 +1856,7 @@ limitations under the License.
       %1$d: device id number. E.g., '1'.">
     Paired with: %1$d
   </string>
-  <string name="settings_sensor_ant_reset_bike_candence_sensor"
+  <string name="settings_sensor_ant_reset_bike_cadence_sensor"
     translation_description="In the 'Sensor' settings, under the 'ANT+ options', the option to reset
       an ANT+ bike cadence sensor. Note that ANT+ is a radio standard.
 
@@ -2113,8 +2114,8 @@ limitations under the License.
     Select an application
   </string>
   <string name="share_track_share_file"
-    translation_description="After saving a track to the SD card, the button on the result dialog to
-      share the saved track file with friends.">
+    translation_description="After saving a track to the external storage, the button on the result
+      dialog to share the saved track file with friends.">
     Share track file
   </string>
   <string name="share_track_share_file_body"
@@ -2234,8 +2235,8 @@ limitations under the License.
   </string>
   <string name="track_detail_delete_confirm_message"
     translation_description="When deleting a track, the confirmation message informing the user that
-      the track and its markers will be permanently deleted from the phone.">
-    The track and its markers will be permanently deleted from the phone.
+      the track and its markers will be permanently deleted from the device.">
+    The track and its markers will be permanently deleted from the device.
   </string>
   <string name="track_detail_install_earth_message"
     translation_description="When playing a track, the message informing the user that he needs
@@ -2246,7 +2247,7 @@ limitations under the License.
   <string name="track_detail_install_earth_error"
     translation_description="Message informing the user not able to install Google Earth from the
       Play Store.">
-    Unalbe to install Google Earth from the Play Store.
+    Unable to install Google Earth from the Play Store.
   </string>
   <string name="track_detail_map_tab"
     translation_description="In the track detail page, the title of the tab showing the map.">
@@ -2272,8 +2273,8 @@ limitations under the License.
   </string>
   <string name="track_list_delete_all_confirm_message"
     translation_description="When deleting all the tracks, the confirmation dialog message informing
-      the user that all tracks and markers will be permanently deleted from the phone.">
-    All tracks and markers will be permanently deleted from the phone.
+      the user that all tracks and markers will be permanently deleted from the device.">
+    All tracks and markers will be permanently deleted from the device.
   </string>
   <string name="track_list_empty_message"
     translation_description="When the track list is empty, the message informing the user to click

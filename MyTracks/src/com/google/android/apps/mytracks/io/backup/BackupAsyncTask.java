@@ -56,7 +56,7 @@ public class BackupAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     this.externalFileBackup = new ExternalFileBackup(backupActivity);
     success = false;
     completed = false;
-    messageId = R.string.sd_card_save_error;
+    messageId = R.string.external_storage_save_error;
   }
 
   /**
@@ -81,18 +81,18 @@ public class BackupAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   @Override
   protected Boolean doInBackground(Void... params) {
     if (!FileUtils.isSdCardAvailable()) {
-      messageId = R.string.sd_card_error_no_storage;
+      messageId = R.string.external_storage_error_no_storage;
       return false;
     }
 
     if (!externalFileBackup.isBackupsDirectoryAvailable(true)) {
-      messageId = R.string.sd_card_save_error_create_dir;
+      messageId = R.string.external_storage_save_error_create_dir;
       return false;
     }
 
     try {
       externalFileBackup.writeToDefaultFile();
-      messageId = R.string.sd_card_save_success;
+      messageId = R.string.external_storage_save_success;
       return true;
     } catch (IOException e) {
       Log.d(TAG, "IO exception", e);

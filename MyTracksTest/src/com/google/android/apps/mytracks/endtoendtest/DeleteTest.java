@@ -76,7 +76,7 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
         .clickOnText(String.format(activityMyTracks.getString(R.string.menu_save_format),
             EndToEndTestUtils.GPX.toUpperCase()));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.sd_card_save_error_no_track)));
+        .getString(R.string.external_storage_save_error_no_track)));
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
   }

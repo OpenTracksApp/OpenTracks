@@ -58,7 +58,7 @@ public class RestoreChooserActivity extends Activity {
 
     // Get the list of existing backups
     if (!FileUtils.isSdCardAvailable()) {
-      Toast.makeText(this, R.string.sd_card_error_no_storage, Toast.LENGTH_LONG).show();
+      Toast.makeText(this, R.string.external_storage_error_no_storage, Toast.LENGTH_LONG).show();
       finish();
       return;
     }

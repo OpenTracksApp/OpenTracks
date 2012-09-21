@@ -103,10 +103,10 @@ limitations under the License.
         android:text="@string/help_saved_files_answer"
         style="@style/HelpAnswer" />
       <TextView
-        android:text="@string/help_sd_card_access_question"
+        android:text="@string/help_external_storage_access_question"
         style="@style/HelpQuestion" />
       <TextView
-        android:text="@string/help_sd_card_access_answer"
+        android:text="@string/help_external_storage_access_answer"
         style="@style/HelpAnswer" />
       <TextView
         android:text="@string/help_marker_question"
