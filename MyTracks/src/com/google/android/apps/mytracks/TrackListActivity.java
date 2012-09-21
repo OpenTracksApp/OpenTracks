@@ -540,7 +540,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
 
   @Override
   public boolean onKeyUp(int keyCode, KeyEvent event) {
-    if (keyCode == KeyEvent.KEYCODE_SEARCH) {
+    if (keyCode == KeyEvent.KEYCODE_SEARCH && searchMenuItem != null) {
       if (ApiAdapterFactory.getApiAdapter().handleSearchKey(searchMenuItem)) {
         return true;
       }
