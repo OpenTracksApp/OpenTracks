@@ -291,7 +291,7 @@ public class StringUtils {
    * @param context the context
    * @param metricUnits true to display in metric units
    */
-  public static String[] getFrequencyDisplayOptions(Context context, boolean metricUnits) {
+  public static String[] getFrequencyOptions(Context context, boolean metricUnits) {
     String[] values = context.getResources().getStringArray(R.array.frequency_values);
     String[] options = new String[values.length];
     for (int i = 0; i < values.length; i++) {

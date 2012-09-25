@@ -82,7 +82,7 @@ public class FrequencyDialogFragment extends DialogFragment {
   private String[] getFrequencyDisplayOptions() {
     boolean metricUnits = PreferencesUtils.getBoolean(
         activity, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
-    return StringUtils.getFrequencyDisplayOptions(activity, metricUnits);
+    return StringUtils.getFrequencyOptions(activity, metricUnits);
   }
 
   /**

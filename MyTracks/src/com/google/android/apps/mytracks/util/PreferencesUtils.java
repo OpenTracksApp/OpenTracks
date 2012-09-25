@@ -84,6 +84,9 @@ public class PreferencesUtils {
   public static final int TRACK_COLOR_MODE_MEDIUM_DEFAULT = 15;
   public static final int TRACK_COLOR_MODE_PERCENTAGE_DEFAULT = 25;
   public static final int TRACK_COLOR_MODE_SLOW_DEFAULT = 9;
+  
+  public static final String TRACK_NAME_DEFAULT = "LOCATION";
+
   public static final int VOICE_FREQUENCY_DEFAULT = 0;
 
   private PreferencesUtils() {}

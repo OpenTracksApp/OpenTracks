@@ -358,13 +358,12 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
         return true;
       case R.id.track_detail_voice_frequency:
         FrequencyDialogFragment.newInstance(R.string.voice_frequency_key,
-            PreferencesUtils.VOICE_FREQUENCY_DEFAULT,
-            R.string.settings_voice_frequency_title)
+            PreferencesUtils.VOICE_FREQUENCY_DEFAULT, R.string.menu_voice_frequency)
             .show(getSupportFragmentManager(), FrequencyDialogFragment.FREQUENCY_DIALOG_TAG);
         return true;
       case R.id.track_detail_split_frequency:
         FrequencyDialogFragment.newInstance(R.string.split_frequency_key,
-            PreferencesUtils.SPLIT_FREQUENCY_DEFAULT, R.string.settings_split_frequency_title)
+            PreferencesUtils.SPLIT_FREQUENCY_DEFAULT, R.string.menu_split_frequency)
             .show(getSupportFragmentManager(), FrequencyDialogFragment.FREQUENCY_DIALOG_TAG);
         return true;
       case R.id.track_detail_send_google:

@@ -52,7 +52,7 @@ public class TrackNameUtils {
   public static String getTrackName(
       Context context, long trackId, long startTime, Location location) {
     String trackName = PreferencesUtils.getString(context, R.string.track_name_key,
-        context.getString(R.string.settings_recording_track_name_location_value));
+        PreferencesUtils.TRACK_NAME_DEFAULT);
 
     if (trackName.equals(
         context.getString(R.string.settings_recording_track_name_date_local_value))) {
