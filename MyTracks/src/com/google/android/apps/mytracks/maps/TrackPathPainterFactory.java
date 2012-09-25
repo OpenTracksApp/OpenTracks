@@ -39,8 +39,8 @@ public class TrackPathPainterFactory {
    * @param context the context
    */
   public static TrackPathPainter getTrackPathPainter(Context context) {
-    String trackColorMode = PreferencesUtils.getString(context, R.string.track_color_mode_key,
-        context.getString(R.string.settings_map_track_color_mode_single_value));
+    String trackColorMode = PreferencesUtils.getString(
+        context, R.string.track_color_mode_key, PreferencesUtils.TRACK_COLOR_MODE_DEFAULT);
     Log.i(TAG, "Creating track path painter of type: " + trackColorMode);
 
     if (context.getString(R.string.settings_map_track_color_mode_dynamic_value)

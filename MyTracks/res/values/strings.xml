@@ -1690,8 +1690,8 @@ limitations under the License.
     Recording
   </string>
   <string name="settings_recording_auto_resume_track_timeout_title"
-    translation_description="In the 'Recording' settings, the title to configure the maximum time
-      after which a previously recording track will not be resumed after reboot.
+    translation_description="In the 'Recording' settings, the title to configure resuming a
+      recording track after reboot.
 
       Character limit: ~23 (1 line)">
     Auto-resume
@@ -1699,7 +1699,7 @@ limitations under the License.
   <string name="settings_recording_auto_resume_track_timeout_summary"
     translation_description="In the 'Recording' settings, the summary for the 'Auto-resume'
       setting.">
-    Maximum time after which a previously recording track will not be resumed after reboot.
+    Track is resumed after reboot if the last recording time is within this.
   </string>
   <string name="settings_recording_default_activity_title"
     translation_description="In the 'Recording' settings, the title to configure the default
@@ -1723,7 +1723,7 @@ limitations under the License.
   <string name="settings_recording_max_recording_distance_summary"
     translation_description="In the 'Recording' settings, the summary for the 'Max distance'
       setting.">
-    New segment is created if the distance since the last recorded location is greater than this.
+    Maximum distance between locations in the same segment.
   </string>
   <string name="settings_recording_min_recording_distance_title"
     translation_description="In the 'Recording' settings, the title to configure the minimum
@@ -1735,7 +1735,7 @@ limitations under the License.
   <string name="settings_recording_min_recording_distance_summary"
     translation_description="In the 'Recording' settings, the summary for the 'Min distance'
       setting.">
-    GPS location is ignored if the distance since the last recorded location is less than this.
+    Minimum distance between recorded locations.
   </string>
   <string name="settings_recording_min_recording_interval_title"
     translation_description="In the 'Recording' settings, the title to configure the time between
