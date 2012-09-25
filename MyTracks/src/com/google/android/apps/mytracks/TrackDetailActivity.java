@@ -316,9 +316,9 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
 
   @Override
   public boolean onPrepareOptionsMenu(Menu menu) {
-    String sensorTypeValueNone = getString(R.string.sensor_type_value_none);
-    boolean showSensorState = !sensorTypeValueNone.equals(
-        PreferencesUtils.getString(this, R.string.sensor_type_key, sensorTypeValueNone));
+    boolean showSensorState = !PreferencesUtils.SENSOR_TYPE_DEFAULT.equals(
+        PreferencesUtils.getString(
+            this, R.string.sensor_type_key, PreferencesUtils.SENSOR_TYPE_DEFAULT));
     menu.findItem(R.id.track_detail_sensor_state).setVisible(showSensorState);
     return super.onPrepareOptionsMenu(menu);
   }

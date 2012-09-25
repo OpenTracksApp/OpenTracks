@@ -678,7 +678,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
   @MediumTest
   public void testWithProperties_sensorTypeDefault() throws Exception {
     PreferencesUtils.setString(
-        context, R.string.sensor_type_key, context.getString(R.string.sensor_type_value_none));
+        context, R.string.sensor_type_key, PreferencesUtils.SENSOR_TYPE_DEFAULT);
     fullRecordingSession();
   }
 

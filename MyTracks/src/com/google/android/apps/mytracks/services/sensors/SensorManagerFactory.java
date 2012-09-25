@@ -93,9 +93,8 @@ public class SensorManagerFactory {
    * @param context the context
    */
   private static SensorManager getSensorManager(Context context, boolean sendPageViews) {
-    String sensorTypeValueNone = context.getString(R.string.sensor_type_value_none);
     String sensorType = PreferencesUtils.getString(
-        context, R.string.sensor_type_key, sensorTypeValueNone);
+        context, R.string.sensor_type_key, PreferencesUtils.SENSOR_TYPE_DEFAULT);
 
     if (sensorType.equals(context.getString(R.string.sensor_type_value_ant))) {
       if (sendPageViews) {

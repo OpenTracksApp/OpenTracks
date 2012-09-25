@@ -33,7 +33,6 @@ import android.preference.PreferenceScreen;
 import android.provider.Settings;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -52,25 +51,21 @@ public class SensorSettingsActivity extends AbstractSettingsActivity {
     boolean hasAntSupport = AntInterface.hasAntSupport(this);
     ListPreference sensorTypeListPreference = (ListPreference) findPreference(
         getString(R.string.sensor_type_key));
-    List<String> sensorTypeEntries = Arrays.asList(getResources().getStringArray(
-        hasAntSupport ? R.array.sensor_type_all_options
-            : R.array.sensor_type_bluetooth_options));
-    List<String> sensorTypeEntryValues = Arrays.asList(getResources().getStringArray(
-        hasAntSupport ? R.array.sensor_type_all_values
-            : R.array.sensor_type_bluetooth_values));
-    sensorTypeListPreference.setEntries(sensorTypeEntries.toArray(
-        new CharSequence[sensorTypeEntries.size()]));
-    sensorTypeListPreference.setEntryValues(
-        sensorTypeEntryValues.toArray(new CharSequence[sensorTypeEntryValues.size()]));
-    sensorTypeListPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+    String[] sensorTypeOptions = getResources().getStringArray(
+        hasAntSupport ? R.array.sensor_type_all_options : R.array.sensor_type_bluetooth_options);
+    String[] sensorTypeValues = getResources().getStringArray(
+        hasAntSupport ? R.array.sensor_type_all_values : R.array.sensor_type_bluetooth_values);
+    String sensorTypeValue = PreferencesUtils.getString(
+        this, R.string.sensor_type_key, PreferencesUtils.SENSOR_TYPE_DEFAULT);
+    OnPreferenceChangeListener listener = new OnPreferenceChangeListener() {
         @Override
       public boolean onPreferenceChange(Preference preference, Object newValue) {
         updateUiBySensorType((String) newValue);
         return true;
       }
-    });
-
-    updateUiBySensorType(sensorTypeListPreference.getValue());
+    };
+    configurePreference(sensorTypeListPreference, sensorTypeOptions, sensorTypeValues,
+        R.string.settings_sensor_type_summary, sensorTypeValue, listener);
 
     findPreference(getString(R.string.settings_sensor_bluetooth_pairing_key))
         .setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -110,7 +105,7 @@ public class SensorSettingsActivity extends AbstractSettingsActivity {
     updateAntSensor(R.string.settings_sensor_ant_reset_combined_bike_sensor_key,
         R.string.ant_combined_bike_sensor_id_key, isAnt);
   }
-  
+
   /**
    * Updates an ant sensor.
    * 
@@ -151,20 +146,31 @@ public class SensorSettingsActivity extends AbstractSettingsActivity {
    */
   @SuppressWarnings("deprecation")
   private void updateBluetoothSensorListPreference() {
+    List<String> optionsList = new ArrayList<String>();
+    List<String> valuesList = new ArrayList<String>();
+    BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    if (bluetoothAdapter != null) {
+      BluetoothDeviceUtils.populateDeviceLists(bluetoothAdapter, optionsList, valuesList);
+    }
+    String[] options = optionsList.toArray(new String[optionsList.size()]);
+    String[] values = valuesList.toArray(new String[valuesList.size()]);
+
+    String bluetoothSensorValue = PreferencesUtils.getString(
+        this, R.string.bluetooth_sensor_key, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT);
     ListPreference bluetoothSensorListPreference = (ListPreference) findPreference(
         getString(R.string.bluetooth_sensor_key));
-    List<String> entries = new ArrayList<String>();
-    List<String> entryValues = new ArrayList<String>();
-    BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-    if (bluetoothAdapter != null) {
-      BluetoothDeviceUtils.populateDeviceLists(bluetoothAdapter, entries, entryValues);
+    if (valuesList.size() == 1) {
+      if (!valuesList.get(0).equals(bluetoothSensorValue)) {
+        bluetoothSensorValue = valuesList.get(0);
+        PreferencesUtils.setString(this, R.string.bluetooth_sensor_key, bluetoothSensorValue);
+      }
+    } else {
+      if (!valuesList.contains(bluetoothSensorValue)) {
+        bluetoothSensorValue = PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT;
+        PreferencesUtils.setString(this, R.string.bluetooth_sensor_key, bluetoothSensorValue);
+      }
     }
-    bluetoothSensorListPreference.setEntries(entries.toArray(new CharSequence[entries.size()]));
-    bluetoothSensorListPreference.setEntryValues(entryValues.toArray(
-        new CharSequence[entryValues.size()]));
-    if (entries.size() == 1) {
-      bluetoothSensorListPreference.setValueIndex(0);
-    }
+    configurePreference(bluetoothSensorListPreference, options, values,
+        R.string.settings_sensor_bluetooth_sensor_summary, bluetoothSensorValue);
   }
 }

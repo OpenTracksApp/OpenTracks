@@ -20,7 +20,6 @@ limitations under the License.
   <ListPreference
     android:defaultValue="@string/sensor_type_value_none"
     android:key="@string/sensor_type_key"
-    android:summary="@string/settings_sensor_type_summary"
     android:title="@string/settings_sensor_type" />
   <PreferenceCategory
     android:key="@string/settings_sensor_bluetooth_key"
@@ -33,7 +32,6 @@ limitations under the License.
     <ListPreference
       android:defaultValue=""
       android:key="@string/bluetooth_sensor_key"
-      android:summary="@string/settings_sensor_bluetooth_sensor_summary"
       android:title="@string/settings_sensor_bluetooth_sensor" />
   </PreferenceCategory>
   <PreferenceCategory

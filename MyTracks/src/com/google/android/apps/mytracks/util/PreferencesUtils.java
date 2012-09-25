@@ -73,6 +73,9 @@ public class PreferencesUtils {
   public static final boolean SEND_TO_DOCS_DEFAULT = true;
   public static final boolean SEND_TO_FUSION_TABLES_DEFAULT = true;
   public static final boolean SEND_TO_MAPS_DEFAULT = true;
+  
+  public static final String SENSOR_TYPE_DEFAULT = "NONE";
+  
   public static final boolean SHOW_CONFIRM_SHARING_DIALOG_DEFAULT = true;
   public static final int SPLIT_FREQUENCY_DEFAULT = 0;
 
@@ -84,7 +87,7 @@ public class PreferencesUtils {
   public static final int TRACK_COLOR_MODE_MEDIUM_DEFAULT = 15;
   public static final int TRACK_COLOR_MODE_PERCENTAGE_DEFAULT = 25;
   public static final int TRACK_COLOR_MODE_SLOW_DEFAULT = 9;
-  
+
   public static final String TRACK_NAME_DEFAULT = "LOCATION";
 
   public static final int VOICE_FREQUENCY_DEFAULT = 0;
@@ -183,7 +186,7 @@ public class PreferencesUtils {
     editor.putLong(getKey(context, keyId), value);
     ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
   }
-  
+
   /**
    * Gets a string preference value.
    * 
@@ -196,7 +199,7 @@ public class PreferencesUtils {
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     return sharedPreferences.getString(getKey(context, keyId), defaultValue);
   }
-  
+
   /**
    * Sets a string preference value.
    * 

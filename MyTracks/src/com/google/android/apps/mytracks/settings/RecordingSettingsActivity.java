@@ -123,52 +123,6 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity {
         String.valueOf(autoResumeTrackTimeoutValue));
   }
 
-  private void configurePreference(final Preference preference, final String[] options,
-      final String[] values, final int summaryId, String value) {
-    if (options != null) {
-      ((ListPreference) preference).setEntries(options);
-    }
-    preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-        @Override
-      public boolean onPreferenceChange(Preference pref, Object newValue) {
-        updatePreferenceSummary(pref, options, values, summaryId, (String) newValue);
-        return true;
-      }
-    });
-    updatePreferenceSummary(preference, options, values, summaryId, value);
-  }
-
-  private void updatePreferenceSummary(
-      Preference listPreference, String[] options, String[] values, int summaryId, String value) {
-    String summary = getString(summaryId);
-    String option;
-    if (options != null && values != null) {
-      option = getOption(options, values, value);
-    } else {
-      option = value != null && value.length() != 0 ? value : getString(R.string.value_unknown);
-    }
-    if (option != null) {
-      summary += "\n" + option;
-    }
-    listPreference.setSummary(summary);
-  }
-
-  /**
-   * Gets the display option for a stored value.
-   * 
-   * @param options list of the display options
-   * @param values list of the stored values
-   * @param value the store value
-   */
-  private String getOption(String[] options, String[] values, String value) {
-    for (int i = 0; i < values.length; i++) {
-      if (value.equals(values[i])) {
-        return options[i];
-      }
-    }
-    return null;
-  }
-
   /**
    * Gets the min recording interval display options.
    */
