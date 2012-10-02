@@ -111,6 +111,18 @@ limitations under the License.
     <item name="android:singleLine">true</item>
     <item name="android:textColor">@android:color/secondary_text_dark</item>
   </style>
+  <!-- The style for a horizontal linear layout -->
+  <style name="LinearLayoutHorizontal">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:orientation">horizontal</item>
+  </style>
+  <!-- The style for a vertical linear layout -->
+  <style name="LinearLayoutVertifcal">
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:orientation">vertical</item>
+  </style>
   <!-- The style for the scroll view -->
   <style name="ScrollView">
     <item name="android:layout_height">fill_parent</item>
@@ -194,27 +206,96 @@ limitations under the License.
     <item name="android:layout_width">fill_parent</item>
     <item name="android:orientation">vertical</item>
   </style>
-  <!-- The style for the track widget label -->
-  <style name="TrackWidgetLabel" parent="@style/TextSmall">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_weight">1</item>
-    <item name="android:layout_width">0dp</item>
+  <!-- The style for the track widget button -->
+  <style name="TrackWidgetButton">
+    <item name="android:background">@android:color/transparent</item>
+    <item name="android:layout_gravity">center_vertical</item>
+    <item name="android:scaleType">fitXY</item>
   </style>
-  <!-- The style for the track widget separator -->
-  <style name="TrackWidgetSeparator">
+  <!-- The style for the track widget horizontal separator -->
+  <style name="TrackWidgetHorizontalSeparator">
     <item name="android:background">@color/track_widget_line</item>
     <item name="android:layout_height">1dp</item>
     <item name="android:layout_width">fill_parent</item>
   </style>
-  <!-- The style for the track widget spacer -->
-  <style name="TrackWidgetSpacer">
-    <item name="android:layout_height">fill_parent</item>
-    <item name="android:layout_width">4dp</item>
-  </style>
-  <!-- The style for the track widget stat -->
-  <style name="TrackWidgetStat">
+  <!-- The style for the track widget item container -->
+  <style name="TrackWidgetItemContainer">
+    <item name="android:layout_gravity">center_horizontal</item>
     <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">fill_parent</item>
+    <item name="android:layout_weight">1</item>
+    <item name="android:layout_width">0dp</item>
+    <item name="android:orientation">vertical</item>
+    <item name="android:paddingBottom">2dp</item>
+    <item name="android:paddingTop">2dp</item>
+  </style>
+  <!-- The style for the track widget label -->
+  <style name="TrackWidgetLabel" parent="@style/TextSmall">
+    <item name="android:layout_gravity">center_horizontal</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:singleLine">true</item>
+    <item name="android:textAllCaps">true</item>
+    <item name="android:textColor">@color/orange</item>
+  </style>
+  <style name="TrackWidgetLogo">
+    <item name="android:contentDescription">@string/my_tracks_app_name</item>
+    <item name="android:layout_alignParentRight">true</item>
+    <item name="android:layout_alignParentTop">true</item>
+    <item name="android:layout_height">24dp</item>
+    <item name="android:layout_width">20dp</item>
+    <item name="android:padding">4dp</item>
+    <item name="android:scaleType">fitXY</item>
+    <item name="android:src">@drawable/my_tracks_icon</item>
+  </style>
+  <!-- The style for the track widget record button -->
+  <style name="TrackWidgetRecordButton" parent="@style/TrackWidgetButton">
+    <item name="android:contentDescription">@string/icon_record_track</item>
+    <item name="android:layout_height">63dp</item>
+    <item name="android:layout_width">75dp</item>
+    <item name="android:src">@drawable/btn_record</item>
+  </style>
+  <!-- The style for the track widget stop button -->
+  <style name="TrackWidgetStopButton" parent="@style/TrackWidgetButton">
+    <item name="android:contentDescription">@string/icon_stop_recording</item>
+    <item name="android:layout_height">63dp</item>
+    <item name="android:layout_width">63dp</item>
+    <item name="android:src">@drawable/btn_stop_0</item>
+  </style>
+  <!-- The style for the track widget unit -->
+  <style name="TrackWidgetUnit" parent="@style/TextSmall">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_weight">1</item>
+    <item name="android:layout_width">0dp</item>
+    <item name="android:paddingLeft">4dp</item>
+    <item name="android:singleLine">true</item>
+  </style>
+  <!-- The style for the track widget value -->
+  <style name="TrackWidgetValue" parent="@style/TextSmall">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_weight">2</item>
+    <item name="android:layout_width">0dp</item>
+    <item name="android:singleLine">true</item>
+    <item name="android:textColor">@android:color/white</item>
+    <item name="android:textStyle">bold</item>
+  </style>
+  <!-- The style for the track widget value container -->
+  <style name="TrackWidgetValueContainer">
+    <item name="android:layout_gravity">center_horizontal</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
     <item name="android:orientation">horizontal</item>
+  </style>
+  <!-- The style for the track widget vertical separator -->
+  <style name="TrackWidgetVerticalSeparator">
+    <item name="android:background">@color/track_widget_line</item>
+    <item name="android:layout_height">0dp</item>
+    <item name="android:layout_weight">1</item>
+    <item name="android:layout_width">1dp</item>
+  </style>
+  <!-- The style for the track widget vertical spacer -->
+  <style name="TrackWidgetVerticalSpacer">
+    <item name="android:layout_height">0dp</item>
+    <item name="android:layout_weight">2</item>
+    <item name="android:layout_width">1dp</item>
   </style>
 </resources>

@@ -2137,19 +2137,19 @@ limitations under the License.
   <!-- Stats Page -->
   <string name="stats_average_moving_pace"
     translation_description="In the 'Stats' page, the average moving pace.">
-    Average moving pace
+    Avg moving pace
   </string>
   <string name="stats_average_moving_speed"
     translation_description="In the 'Stats' page, the average moving speed.">
-    Average moving speed
+    Avg moving speed
   </string>
   <string name="stats_average_pace"
     translation_description="In the 'Stats' page, the average pace.">
-    Average pace
+    Avg pace
   </string>
   <string name="stats_average_speed"
     translation_description="In the 'Stats' page, the average speed.">
-    Average speed
+    Avg speed
   </string>
   <string name="stats_elevation"
     translation_description="In the 'Stats' page, the elevation.
@@ -2211,7 +2211,7 @@ limitations under the License.
   </string>
   <string name="stats_total_distance"
     translation_description="In the 'Stats' page, the total distance.">
-    Total distance
+    Distance
   </string>
   <string name="stats_total_time"
     translation_description="In the 'Stats' page, the total time.">
@@ -2318,7 +2318,14 @@ limitations under the License.
     translation_description="Abbreviation for miles per hour. E.g, '5 mi/h'.">
     mi/h
   </string>
-
+  <string name="unit_minute_per_kilometer"
+    translation_description="Abbreviation for minutes per kilometer. E.g, '5 min/km'.">
+    min/km
+  </string>
+  <string name="unit_minute_per_mile"
+    translation_description="Abbreviation for minutes per mile. E.g, '5 min/mi'.">
+    min/mi
+  </string>
   <!-- Value -->
   <string name="value_adapt_accuracy"
     translation_description="In a setting picker, the value to adapt for accuracy.">
