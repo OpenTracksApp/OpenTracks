@@ -91,6 +91,11 @@ public class PreferencesUtils {
 
   public static final String TRACK_NAME_DEFAULT = "LOCATION";
 
+  public static final int TRACK_WIDGET_ITEM1_DEFAULT = 3; // moving time
+  public static final int TRACK_WIDGET_ITEM2_DEFAULT = 0; // distance
+  public static final int TRACK_WIDGET_ITEM3_DEFAULT = 1; // total time
+  public static final int TRACK_WIDGET_ITEM4_DEFAULT = 2; // average speed
+  
   public static final int VOICE_FREQUENCY_DEFAULT = 0;
 
   private PreferencesUtils() {}

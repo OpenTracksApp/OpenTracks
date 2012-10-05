@@ -2293,6 +2293,12 @@ limitations under the License.
     Recording your track&#8230;
   </string>
 
+  <!-- Track Widget -->
+  <string name="track_widget_config_title"
+    translation_description="Title of the page to configure the My Tracks widget items.">
+    Configure Widget Items
+  </string>
+  
   <!-- Unit -->
   <string name="unit_feet"
     translation_description="Abbreviation for feet. E.g., '2 ft'.">

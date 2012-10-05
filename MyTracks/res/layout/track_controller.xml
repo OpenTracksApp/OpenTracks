@@ -52,7 +52,7 @@ limitations under the License.
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:singleLine="true"
-        style="@style/TextTiny" />
+        style="@style/TextMicro" />
     </RelativeLayout>
     <ImageButton
       android:background="@android:color/transparent"

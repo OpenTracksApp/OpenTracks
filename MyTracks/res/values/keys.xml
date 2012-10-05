@@ -54,8 +54,12 @@ limitations under the License.
   <string name="track_color_mode_slow_key">trackColorModeSlow</string>
   <string name="track_color_mode_key">trackColorMode</string>
   <string name="track_name_key">trackName</string>
+  <string name="track_widget_item1">trackWidgetItem1</string>
+  <string name="track_widget_item2">trackWidgetItem2</string>
+  <string name="track_widget_item3">trackWidgetItem3</string>
+  <string name="track_widget_item4">trackWidgetItem4</string>
   <string name="voice_frequency_key">voiceFrequency</string>
-
+        
   <!-- Keys for persistend preferences. But they should not get backed up or restored. -->
   <string name="auto_resume_track_current_retry_key">autoResumeTrackCurrentRetry</string>
   <string name="recording_track_id_key">recordingTrackId</string>

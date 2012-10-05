@@ -20,106 +20,117 @@ limitations under the License.
   android:layout_width="fill_parent"
   android:padding="@dimen/widget_margin" >
   <LinearLayout
-    android:clickable="true"
-    android:id="@+id/track_widget_statistics"
     android:layout_alignParentTop="true"
-    android:layout_height="wrap_content"
+    android:layout_height="fill_parent"
     android:layout_width="fill_parent"
-    android:orientation="vertical"
-    android:padding="4dp" >
-    <LinearLayout style="@style/LinearLayoutHorizontal" >
-      <!-- average moving speed -->
-      <LinearLayout style="@style/TrackWidgetItemContainer" >
-        <TextView
-          android:id="@+id/track_widget_average_moving_speed_label"
-          style="@style/TrackWidgetLabel" />
-        <LinearLayout style="@style/TrackWidgetValueContainer" >
+    android:orientation="vertical" >
+    <LinearLayout
+      android:clickable="true"
+      android:gravity="center_vertical"
+      android:id="@+id/track_widget_statistics"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:layout_width="fill_parent"
+      android:orientation="vertical"
+      android:padding="4dp" >
+      <LinearLayout style="@style/LinearLayoutHorizontal" >
+        <!-- item1 -->
+        <LinearLayout style="@style/TrackWidgetItemContainer" >
           <TextView
-            android:id="@+id/track_widget_average_moving_speed_value"
-            style="@style/TrackWidgetValue" />
+            android:id="@+id/track_widget_item1_label"
+            style="@style/TrackWidgetLabel" />
+          <LinearLayout style="@style/TrackWidgetValueContainer" >
+            <TextView
+              android:id="@+id/track_widget_item1_value"
+              style="@style/TrackWidgetValue" />
+            <TextView
+              android:id="@+id/track_widget_item1_unit"
+              style="@style/TrackWidgetUnit" />
+          </LinearLayout>
+        </LinearLayout>
+        <!-- vertical separator -->
+        <LinearLayout style="@style/LinearLayoutVertifcal" >
+          <LinearLayout style="@style/TrackWidgetVerticalSpacer" />
+          <LinearLayout style="@style/TrackWidgetVerticalSeparator" />
+        </LinearLayout>
+        <!-- item3 -->
+        <LinearLayout style="@style/TrackWidgetItemContainer" >
           <TextView
-            android:id="@+id/track_widget_average_moving_speed_unit"
-            style="@style/TrackWidgetUnit" />
+            android:id="@+id/track_widget_item3_label"
+            style="@style/TrackWidgetLabel" />
+          <LinearLayout style="@style/TrackWidgetValueContainer" >
+            <TextView
+              android:id="@+id/track_widget_item3_value"
+              style="@style/TrackWidgetValue" />
+            <TextView
+              android:id="@+id/track_widget_item3_unit"
+              style="@style/TrackWidgetUnit" />
+          </LinearLayout>
         </LinearLayout>
       </LinearLayout>
-      <!-- vertical separator -->
-      <LinearLayout style="@style/LinearLayoutVertifcal" >
-        <LinearLayout style="@style/TrackWidgetVerticalSpacer" />
-        <LinearLayout style="@style/TrackWidgetVerticalSeparator" />
-      </LinearLayout>
-      <!-- moving time -->
-      <LinearLayout style="@style/TrackWidgetItemContainer" >
-        <TextView
-          android:text="@string/stats_moving_time"
-          style="@style/TrackWidgetLabel" />
-        <LinearLayout style="@style/TrackWidgetValueContainer" >
+      <!-- horizontal separator -->
+      <LinearLayout style="@style/TrackWidgetHorizontalSeparator" />
+      <LinearLayout style="@style/LinearLayoutHorizontal" >
+        <!-- item2 -->
+        <LinearLayout style="@style/TrackWidgetItemContainer" >
           <TextView
-            android:id="@+id/track_widget_moving_time_value"
-            style="@style/TrackWidgetValue" />
+            android:id="@+id/track_widget_item2_label"
+            style="@style/TrackWidgetLabel" />
+          <LinearLayout style="@style/TrackWidgetValueContainer" >
+            <TextView
+              android:id="@+id/track_widget_item2_value"
+              style="@style/TrackWidgetValue" />
+            <TextView
+              android:id="@+id/track_widget_item2_unit"
+              style="@style/TrackWidgetUnit" />
+          </LinearLayout>
+        </LinearLayout>
+        <!-- vertical separator -->
+        <LinearLayout style="@style/LinearLayoutVertifcal" >
+          <LinearLayout style="@style/TrackWidgetVerticalSeparator" />
+          <LinearLayout style="@style/TrackWidgetVerticalSpacer" />
+        </LinearLayout>
+        <!-- item4 -->
+        <LinearLayout style="@style/TrackWidgetItemContainer" >
+          <TextView
+            android:id="@+id/track_widget_item4_label"
+            style="@style/TrackWidgetLabel" />
+          <LinearLayout style="@style/TrackWidgetValueContainer" >
+            <TextView
+              android:id="@+id/track_widget_item4_value"
+              style="@style/TrackWidgetValue" />
+            <TextView
+              android:id="@+id/track_widget_item4_unit"
+              style="@style/TrackWidgetUnit" />
+          </LinearLayout>
         </LinearLayout>
       </LinearLayout>
     </LinearLayout>
-    <!-- horizontal separator -->
-    <LinearLayout style="@style/TrackWidgetHorizontalSeparator" />
-    <LinearLayout style="@style/LinearLayoutHorizontal" >
-      <!-- average speed -->
-      <LinearLayout style="@style/TrackWidgetItemContainer" >
-        <TextView
-          android:id="@+id/track_widget_average_speed_label"
-          style="@style/TrackWidgetLabel" />
-        <LinearLayout style="@style/TrackWidgetValueContainer" >
-          <TextView
-            android:id="@+id/track_widget_average_speed_value"
-            style="@style/TrackWidgetValue" />
-          <TextView
-            android:id="@+id/track_widget_average_speed_unit"
-            style="@style/TrackWidgetUnit" />
-        </LinearLayout>
-      </LinearLayout>
-      <!-- vertical separator -->
-      <LinearLayout style="@style/LinearLayoutVertifcal" >
-        <LinearLayout style="@style/TrackWidgetVerticalSeparator" />
-        <LinearLayout style="@style/TrackWidgetVerticalSpacer" />
-      </LinearLayout>
-      <!-- total distance -->
-      <LinearLayout style="@style/TrackWidgetItemContainer" >
-        <TextView
-          android:text="@string/stats_total_distance"
-          style="@style/TrackWidgetLabel" />
-        <LinearLayout style="@style/TrackWidgetValueContainer" >
-          <TextView
-            android:id="@+id/track_widget_total_distance_value"
-            style="@style/TrackWidgetValue" />
-          <TextView
-            android:id="@+id/track_widget_total_distance_unit"
-            style="@style/TrackWidgetUnit" />
-        </LinearLayout>
-      </LinearLayout>
+    <LinearLayout
+      android:gravity="center_vertical"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:layout_width="fill_parent"
+      android:orientation="horizontal"
+      android:paddingBottom="4dp"
+      android:paddingTop="4dp" >
+      <LinearLayout style="@style/TrackWidgetVerticalSpacer" />
+      <ImageButton
+        android:id="@+id/track_widget_record_button"
+        style="@style/TrackWidgetRecordButton" />
+      <TextView
+        android:id="@+id/track_widget_record_status"
+        android:layout_gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_weight="4"
+        android:layout_width="0dp"
+        android:singleLine="true"
+        style="@style/TextSmall" />
+      <ImageButton
+        android:id="@+id/track_widget_stop_button"
+        style="@style/TrackWidgetStopButton" />
+      <LinearLayout style="@style/TrackWidgetVerticalSpacer" />
     </LinearLayout>
-  </LinearLayout>
-  <LinearLayout
-    android:layout_below="@id/track_widget_statistics"
-    android:layout_height="wrap_content"
-    android:layout_width="fill_parent"
-    android:orientation="horizontal"
-    android:paddingBottom="4dp"
-    android:paddingTop="4dp" >
-    <LinearLayout style="@style/TrackWidgetVerticalSpacer" />
-    <ImageButton
-      android:id="@+id/track_widget_record_button"
-      style="@style/TrackWidgetRecordButton" />
-    <TextView
-      android:id="@+id/track_widget_record_status"
-      android:layout_gravity="center_vertical"
-      android:layout_height="wrap_content"
-      android:layout_weight="4"
-      android:layout_width="0dp"
-      android:singleLine="true"
-      style="@style/TextSmall" />
-    <ImageButton
-      android:id="@+id/track_widget_stop_button"
-      style="@style/TrackWidgetStopButton" />
-    <LinearLayout style="@style/TrackWidgetVerticalSpacer" />
   </LinearLayout>
   <ImageView style="@style/TrackWidgetLogo" />
 </RelativeLayout>
