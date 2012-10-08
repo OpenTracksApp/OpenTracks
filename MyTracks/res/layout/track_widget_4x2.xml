@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Copyright 2011 Google Inc.
+Copyright 2012 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,27 +15,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:background="@drawable/track_widget_background"
-  android:layout_height="fill_parent"
-  android:layout_width="fill_parent"
-  android:padding="@dimen/widget_margin" >
+  style="@style/TrackWidgetBoundingBox" >
   <LinearLayout
-    android:layout_alignParentTop="true"
-    android:layout_height="fill_parent"
-    android:layout_width="fill_parent"
-    android:orientation="vertical" >
+    android:baselineAligned="false"
+    style="@style/TrackWidgetFrame" >
     <LinearLayout
-      android:clickable="true"
-      android:gravity="center_vertical"
-      android:id="@+id/track_widget_statistics"
-      android:layout_height="0dp"
+      android:baselineAligned="false"
+      android:id="@+id/track_widget_stats_container"
       android:layout_weight="1"
-      android:layout_width="fill_parent"
-      android:orientation="vertical"
-      android:padding="4dp" >
-      <LinearLayout style="@style/LinearLayoutHorizontal" >
+      style="@style/TrackWidgetStatsContainer" >
+      <LinearLayout style="@style/TrackWidgetStatsSection" >
         <!-- item1 -->
-        <LinearLayout style="@style/TrackWidgetItemContainer" >
+        <LinearLayout style="@style/TrackWidgetItemContainer4x2" >
           <TextView
             android:id="@+id/track_widget_item1_label"
             style="@style/TrackWidgetLabel" />
@@ -49,12 +40,18 @@ limitations under the License.
           </LinearLayout>
         </LinearLayout>
         <!-- vertical separator -->
-        <LinearLayout style="@style/LinearLayoutVertifcal" >
-          <LinearLayout style="@style/TrackWidgetVerticalSpacer" />
-          <LinearLayout style="@style/TrackWidgetVerticalSeparator" />
+        <LinearLayout
+          android:baselineAligned="false"
+          style="@style/TrackWidgetVerticalSeparator" >
+          <LinearLayout
+            android:layout_weight="2"
+            style="@style/TrackWidgetVerticalSpacer" />
+          <LinearLayout
+            android:layout_weight="1"
+            style="@style/TrackWidgetVerticalLine" />
         </LinearLayout>
         <!-- item3 -->
-        <LinearLayout style="@style/TrackWidgetItemContainer" >
+        <LinearLayout style="@style/TrackWidgetItemContainer4x2" >
           <TextView
             android:id="@+id/track_widget_item3_label"
             style="@style/TrackWidgetLabel" />
@@ -69,10 +66,22 @@ limitations under the License.
         </LinearLayout>
       </LinearLayout>
       <!-- horizontal separator -->
-      <LinearLayout style="@style/TrackWidgetHorizontalSeparator" />
-      <LinearLayout style="@style/LinearLayoutHorizontal" >
+      <LinearLayout
+        android:baselineAligned="false"
+        style="@style/TrackWidgetHorizontalSeparator" >
+        <LinearLayout
+          android:layout_weight="1"
+          style="@style/TrackWidgetHorizontalSpacer" />
+        <LinearLayout
+          android:layout_weight="38"
+          style="@style/TrackWidgetHorizontalLine" />
+        <LinearLayout
+          android:layout_weight="1"
+          style="@style/TrackWidgetHorizontalSpacer" />
+      </LinearLayout>
+      <LinearLayout style="@style/TrackWidgetStatsSection" >
         <!-- item2 -->
-        <LinearLayout style="@style/TrackWidgetItemContainer" >
+        <LinearLayout style="@style/TrackWidgetItemContainer4x2" >
           <TextView
             android:id="@+id/track_widget_item2_label"
             style="@style/TrackWidgetLabel" />
@@ -86,12 +95,18 @@ limitations under the License.
           </LinearLayout>
         </LinearLayout>
         <!-- vertical separator -->
-        <LinearLayout style="@style/LinearLayoutVertifcal" >
-          <LinearLayout style="@style/TrackWidgetVerticalSeparator" />
-          <LinearLayout style="@style/TrackWidgetVerticalSpacer" />
+        <LinearLayout
+          android:baselineAligned="false"
+          style="@style/TrackWidgetVerticalSeparator" >
+          <LinearLayout
+            android:layout_weight="1"
+            style="@style/TrackWidgetVerticalLine" />
+          <LinearLayout
+            android:layout_weight="2"
+            style="@style/TrackWidgetVerticalSpacer" />
         </LinearLayout>
         <!-- item4 -->
-        <LinearLayout style="@style/TrackWidgetItemContainer" >
+        <LinearLayout style="@style/TrackWidgetItemContainer4x2" >
           <TextView
             android:id="@+id/track_widget_item4_label"
             style="@style/TrackWidgetLabel" />
@@ -106,31 +121,32 @@ limitations under the License.
         </LinearLayout>
       </LinearLayout>
     </LinearLayout>
-    <LinearLayout
-      android:gravity="center_vertical"
-      android:layout_height="0dp"
-      android:layout_weight="1"
-      android:layout_width="fill_parent"
-      android:orientation="horizontal"
-      android:paddingBottom="4dp"
-      android:paddingTop="4dp" >
-      <LinearLayout style="@style/TrackWidgetVerticalSpacer" />
+    <LinearLayout style="@style/TrackWidgetButtonContainer" >
+      <LinearLayout
+        android:layout_weight="1"
+        style="@style/TrackWidgetVerticalSpacer" />
       <ImageButton
+        android:contentDescription="@string/icon_record_track"
         android:id="@+id/track_widget_record_button"
-        style="@style/TrackWidgetRecordButton" />
+        style="@style/TrackWidgetButtonRecord" />
       <TextView
         android:id="@+id/track_widget_record_status"
         android:layout_gravity="center_vertical"
         android:layout_height="wrap_content"
-        android:layout_weight="4"
+        android:layout_weight="2"
         android:layout_width="0dp"
         android:singleLine="true"
         style="@style/TextSmall" />
       <ImageButton
+        android:contentDescription="@string/icon_stop_recording"
         android:id="@+id/track_widget_stop_button"
-        style="@style/TrackWidgetStopButton" />
-      <LinearLayout style="@style/TrackWidgetVerticalSpacer" />
+        style="@style/TrackWidgetButtonStop" />
+      <LinearLayout
+        android:layout_weight="1"
+        style="@style/TrackWidgetVerticalSpacer" />
     </LinearLayout>
   </LinearLayout>
-  <ImageView style="@style/TrackWidgetLogo" />
+  <ImageView
+    android:contentDescription="@string/my_tracks_app_name"
+    style="@style/TrackWidgetLogo" />
 </RelativeLayout>

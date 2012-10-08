@@ -36,7 +36,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.TaskStackBuilder;
-import android.util.SparseBooleanArray;
+import android.util.SparseIntArray;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -50,9 +50,13 @@ import android.widget.RemoteViews;
  */
 public class TrackWidgetProvider extends AppWidgetProvider {
 
-  private static final int LARGE_HEIGHT = 110;
-  // Array of appwidget id to use large size
-  private static final SparseBooleanArray useLargeSize = new SparseBooleanArray();
+  private static final int TWO_CELLS = 110;
+  private static final int THREE_CELLS = 180;
+  private static final int FOUR_CELLS = 250;
+
+  // Array of appwidget id to height size in cells
+  private static final SparseIntArray HEIGHT_SIZE = new SparseIntArray();
+  private static final int DEFAULT_HEIGHT = 2;
 
   @Override
   public void onReceive(Context context, Intent intent) {
@@ -70,7 +74,7 @@ public class TrackWidgetProvider extends AppWidgetProvider {
           new ComponentName(context, TrackWidgetProvider.class));
       for (int appWidgetId : appWidgetIds) {
         RemoteViews remoteViews = getRemoteViews(
-            context, trackId, useLargeSize.get(appWidgetId, true));
+            context, trackId, HEIGHT_SIZE.get(appWidgetId, DEFAULT_HEIGHT));
         appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
       }
     }
@@ -80,10 +84,23 @@ public class TrackWidgetProvider extends AppWidgetProvider {
   @Override
   public void onAppWidgetOptionsChanged(
       Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
-    boolean large = newOptions == null
-        || newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT) >= LARGE_HEIGHT;
-    useLargeSize.put(appWidgetId, large);
-    RemoteViews remoteViews = getRemoteViews(context, -1L, large);
+    int heightSize;
+    if (newOptions == null) {
+      heightSize = 2;
+    } else {
+      int height = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT);
+      if (height >= FOUR_CELLS) {
+        heightSize = 4;
+      } else if (height >= THREE_CELLS) {
+        heightSize = 3;
+      } else if (height >= TWO_CELLS) {
+        heightSize = 2;
+      } else {
+        heightSize = 1;
+      }
+    }
+    HEIGHT_SIZE.put(appWidgetId, heightSize);
+    RemoteViews remoteViews = getRemoteViews(context, -1L, heightSize);
     appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
   }
 
@@ -96,7 +113,8 @@ public class TrackWidgetProvider extends AppWidgetProvider {
    */
   public static void updateAppWidget(
       Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
-    RemoteViews remoteViews = getRemoteViews(context, -1L, useLargeSize.get(appWidgetId, true));
+    RemoteViews remoteViews = getRemoteViews(
+        context, -1L, HEIGHT_SIZE.get(appWidgetId, DEFAULT_HEIGHT));
     appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
   }
 
@@ -105,11 +123,28 @@ public class TrackWidgetProvider extends AppWidgetProvider {
    * 
    * @param context the context
    * @param trackId the track id
-   * @param large true to use the large layout
+   * @param heightSize the layout height size
    */
-  private static RemoteViews getRemoteViews(Context context, long trackId, boolean large) {
-    RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
-        large ? R.layout.track_widget_large : R.layout.track_widget_small);
+  private static RemoteViews getRemoteViews(Context context, long trackId, int heightSize) {
+    int layout;
+    switch (heightSize) {
+      case 4:
+        layout = R.layout.track_widget_4x4;
+        break;
+      case 3:
+        layout = R.layout.track_widget_4x3;
+        break;
+      case 2:
+        layout = R.layout.track_widget_4x2;
+        break;
+      case 1:
+        layout = R.layout.track_widget_4x1;
+        break;
+      default:
+        layout = R.layout.track_widget_4x2;
+        break;
+    }
+    RemoteViews remoteViews = new RemoteViews(context.getPackageName(), layout);
 
     // Get the preferences
     long recordingTrackId = PreferencesUtils.getLong(context, R.string.recording_track_id_key);
@@ -142,7 +177,7 @@ public class TrackWidgetProvider extends AppWidgetProvider {
 
     updateRecordButton(context, remoteViews, isRecording, recordingTrackPaused);
     updateStopButton(context, remoteViews, isRecording);
-    if (large) {
+    if (heightSize > 1) {
       int item3 = PreferencesUtils.getInt(
           context, R.string.track_widget_item3, PreferencesUtils.TRACK_WIDGET_ITEM3_DEFAULT);
       int item4 = PreferencesUtils.getInt(
@@ -214,7 +249,7 @@ public class TrackWidgetProvider extends AppWidgetProvider {
     TaskStackBuilder taskStackBuilder = TaskStackBuilder.from(context);
     taskStackBuilder.addNextIntent(intent);
     PendingIntent pendingIntent = taskStackBuilder.getPendingIntent(0, 0);
-    remoteViews.setOnClickPendingIntent(R.id.track_widget_statistics, pendingIntent);
+    remoteViews.setOnClickPendingIntent(R.id.track_widget_stats_container, pendingIntent);
   }
 
   /**
