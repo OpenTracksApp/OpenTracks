@@ -56,7 +56,7 @@ public class TrackWidgetProvider extends AppWidgetProvider {
 
   // Array of appwidget id to height size in cells
   private static final SparseIntArray HEIGHT_SIZE = new SparseIntArray();
-  private static final int DEFAULT_HEIGHT = 2;
+  private static final int DEFAULT_SIZE = 2;
 
   @Override
   public void onReceive(Context context, Intent intent) {
@@ -74,7 +74,7 @@ public class TrackWidgetProvider extends AppWidgetProvider {
           new ComponentName(context, TrackWidgetProvider.class));
       for (int appWidgetId : appWidgetIds) {
         RemoteViews remoteViews = getRemoteViews(
-            context, trackId, HEIGHT_SIZE.get(appWidgetId, DEFAULT_HEIGHT));
+            context, trackId, HEIGHT_SIZE.get(appWidgetId, DEFAULT_SIZE));
         appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
       }
     }
@@ -84,24 +84,24 @@ public class TrackWidgetProvider extends AppWidgetProvider {
   @Override
   public void onAppWidgetOptionsChanged(
       Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
-    int heightSize;
-    if (newOptions == null) {
-      heightSize = 2;
-    } else {
+    if (newOptions != null) {
+      int size;
       int height = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT);
-      if (height >= FOUR_CELLS) {
-        heightSize = 4;
+      if (height == 0) {
+        size = 2;
+      } else if (height >= FOUR_CELLS) {
+        size = 4;
       } else if (height >= THREE_CELLS) {
-        heightSize = 3;
+        size = 3;
       } else if (height >= TWO_CELLS) {
-        heightSize = 2;
+        size = 2;
       } else {
-        heightSize = 1;
+        size = 1;
       }
+      HEIGHT_SIZE.put(appWidgetId, size);
+      RemoteViews remoteViews = getRemoteViews(context, -1L, size);
+      appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
     }
-    HEIGHT_SIZE.put(appWidgetId, heightSize);
-    RemoteViews remoteViews = getRemoteViews(context, -1L, heightSize);
-    appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
   }
 
   /**
@@ -114,7 +114,7 @@ public class TrackWidgetProvider extends AppWidgetProvider {
   public static void updateAppWidget(
       Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
     RemoteViews remoteViews = getRemoteViews(
-        context, -1L, HEIGHT_SIZE.get(appWidgetId, DEFAULT_HEIGHT));
+        context, -1L, HEIGHT_SIZE.get(appWidgetId, DEFAULT_SIZE));
     appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
   }
 

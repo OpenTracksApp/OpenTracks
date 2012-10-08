@@ -313,10 +313,6 @@ limitations under the License.
   <style name="TrackWidgetLabel4x3" parent="@style/TrackWidgetLabel">
     <item name="android:textSize">14dp</item>
   </style>
-  <!-- track widget label 4x4 -->
-  <style name="TrackWidgetLabel4x4" parent="@style/TrackWidgetLabel">
-    <item name="android:textSize">18dp</item>
-  </style>
   <!-- track widget logo -->
   <style name="TrackWidgetLogo">
     <item name="android:layout_alignParentRight">true</item>
@@ -392,7 +388,7 @@ limitations under the License.
   </style>
   <!-- track widget value container 4x3 -->
   <style name="TrackWidgetValueContainer4x3" parent="@style/TrackWidgetValueContainer">
-    <item name="android:layout_marginTop">0dp</item>
+    <item name="android:layout_marginTop">-2dp</item>
   </style>
   <!-- track widget vertical line -->
   <style name="TrackWidgetVerticalLine">
