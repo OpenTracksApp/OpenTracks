@@ -19,32 +19,24 @@ limitations under the License.
   android:layout_width="fill_parent"
   android:orientation="vertical" >
   <ScrollView style="@style/ScrollView.WithBottomButtons" >
-    <TableLayout
+    <LinearLayout
       android:layout_height="wrap_content"
       android:layout_width="fill_parent"
-      android:padding="8dp"
-      android:stretchColumns="0" >
-      <TableRow style="@style/TrackWidgetConfigRow" >
-        <Spinner
-          android:id="@+id/track_widget_config_item1"
-          style="@style/TrackWidgetConfigSpinner" />
-      </TableRow>
-      <TableRow style="@style/TrackWidgetConfigRow" >
-        <Spinner
-          android:id="@+id/track_widget_config_item2"
-          style="@style/TrackWidgetConfigSpinner" />
-      </TableRow>
-      <TableRow style="@style/TrackWidgetConfigRow" >
-        <Spinner
-          android:id="@+id/track_widget_config_item3"
-          style="@style/TrackWidgetConfigSpinner" />
-      </TableRow>
-      <TableRow style="@style/TrackWidgetConfigRow" >
-        <Spinner
-          android:id="@+id/track_widget_config_item4"
-          style="@style/TrackWidgetConfigSpinner" />
-      </TableRow>
-    </TableLayout>
+      android:orientation="vertical"
+      android:padding="8dp" >
+      <Spinner
+        android:id="@+id/track_widget_config_item1"
+        style="@style/TrackWidgetConfigSpinner" />
+      <Spinner
+        android:id="@+id/track_widget_config_item2"
+        style="@style/TrackWidgetConfigSpinner" />
+      <Spinner
+        android:id="@+id/track_widget_config_item3"
+        style="@style/TrackWidgetConfigSpinner" />
+      <Spinner
+        android:id="@+id/track_widget_config_item4"
+        style="@style/TrackWidgetConfigSpinner" />
+    </LinearLayout>
   </ScrollView>
   <LinearLayout style="@style/BottomButtonBar" >
     <include layout="@layout/bottom_buttons" />

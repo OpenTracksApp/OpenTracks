@@ -229,15 +229,11 @@ limitations under the License.
     <item name="android:layout_width">63dp</item>
     <item name="android:src">@drawable/btn_stop_0</item>
   </style>
-  <!-- track widget config row -->
-  <style name="TrackWidgetConfigRow">
-    <item name="android:paddingBottom">20dp</item>
-    <item name="android:paddingTop">20dp</item>
-  </style>
   <!-- track widget config spiner -->
   <style name="TrackWidgetConfigSpinner">
     <item name="android:layout_gravity">center_horizontal</item>
     <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_margin">8dp</item>
     <item name="android:layout_width">fill_parent</item>
   </style>
   <!-- Track widget frame -->
