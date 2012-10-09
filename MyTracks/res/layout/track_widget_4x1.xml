@@ -48,6 +48,9 @@ limitations under the License.
             <TextView
               android:id="@+id/track_widget_item1_unit"
               style="@style/TrackWidgetUnit" />
+            <Chronometer
+              android:id="@+id/track_widget_item1_chronometer"
+              style="@style/TrackWidgetValue" />
           </LinearLayout>
         </LinearLayout>
       </LinearLayout>
@@ -78,6 +81,9 @@ limitations under the License.
             <TextView
               android:id="@+id/track_widget_item2_unit"
               style="@style/TrackWidgetUnit" />
+            <Chronometer
+              android:id="@+id/track_widget_item2_chronometer"
+              style="@style/TrackWidgetValue" />
           </LinearLayout>
         </LinearLayout>
       </LinearLayout>

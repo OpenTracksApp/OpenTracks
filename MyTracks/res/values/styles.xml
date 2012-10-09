@@ -231,23 +231,14 @@ limitations under the License.
   </style>
   <!-- track widget config row -->
   <style name="TrackWidgetConfigRow">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">wrap_content</item>
-    <item name="android:paddingBottom">16dp</item>
-    <item name="android:paddingTop">16dp</item>
-  </style>
-  <!-- track widget config spacer -->
-  <style name="TrackWidgetConfigSpacer">
-    <item name="android:layout_height">fill_parent</item>
-    <item name="android:layout_weight">2</item>
-    <item name="android:layout_width">0dp</item>
+    <item name="android:paddingBottom">20dp</item>
+    <item name="android:paddingTop">20dp</item>
   </style>
   <!-- track widget config spiner -->
   <style name="TrackWidgetConfigSpinner">
-    <item name="android:gravity">left</item>
+    <item name="android:layout_gravity">center_horizontal</item>
     <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_weight">9</item>
-    <item name="android:layout_width">0dp</item>
+    <item name="android:layout_width">fill_parent</item>
   </style>
   <!-- Track widget frame -->
   <style name="TrackWidgetFrame">

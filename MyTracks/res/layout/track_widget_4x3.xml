@@ -37,6 +37,9 @@ limitations under the License.
             <TextView
               android:id="@+id/track_widget_item1_unit"
               style="@style/TrackWidgetUnit4x3" />
+            <Chronometer
+              android:id="@+id/track_widget_item1_chronometer"
+              style="@style/TrackWidgetValue4x3" />
           </LinearLayout>
         </LinearLayout>
         <!-- vertical separator -->
@@ -60,6 +63,9 @@ limitations under the License.
             <TextView
               android:id="@+id/track_widget_item3_unit"
               style="@style/TrackWidgetUnit4x3" />
+            <Chronometer
+              android:id="@+id/track_widget_item3_chronometer"
+              style="@style/TrackWidgetValue4x3" />
           </LinearLayout>
         </LinearLayout>
       </LinearLayout>
@@ -90,6 +96,9 @@ limitations under the License.
             <TextView
               android:id="@+id/track_widget_item2_unit"
               style="@style/TrackWidgetUnit4x3" />
+            <Chronometer
+              android:id="@+id/track_widget_item2_chronometer"
+              style="@style/TrackWidgetValue4x3" />
           </LinearLayout>
         </LinearLayout>
         <!-- vertical separator -->
@@ -113,6 +122,9 @@ limitations under the License.
             <TextView
               android:id="@+id/track_widget_item4_unit"
               style="@style/TrackWidgetUnit4x3" />
+            <Chronometer
+              android:id="@+id/track_widget_item4_chronometer"
+              style="@style/TrackWidgetValue4x3" />
           </LinearLayout>
         </LinearLayout>
       </LinearLayout>
