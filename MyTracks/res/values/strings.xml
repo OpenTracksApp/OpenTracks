@@ -1157,11 +1157,18 @@ limitations under the License.
       Character limit: ~20 (1 line)">
     Insert marker
   </string>
-  <string name="menu_map_mode"
-    translation_description="In the menu, to switch the display to the map mode.
+  <string name="menu_map"
+    translation_description="In the menu, under the map layer option, the submenu to display normal
+      map.
 
       Character limit: ~20 (1 line)">
-    Map mode
+    Map
+  </string>
+  <string name="menu_map_layer"
+    translation_description="In the menu, to change the map layer.
+
+      Character limit: ~20 (1 line)">
+    Map layer
   </string>
   <string name="menu_markers"
     translation_description="In the menu, to show a list of markers for the current track.
@@ -1175,8 +1182,9 @@ limitations under the License.
       Character limit: ~20 (1 line)">
     Play
   </string>
-  <string name="menu_satellite_mode"
-    translation_description="In the menu, to switch the display to the satellite mode.
+  <string name="menu_satellite"
+    translation_description="In the menu, under the map layer option, the submenu to display
+      satellite.
 
       Character limit: ~20 (1 line)">
     Satellite
@@ -1255,6 +1263,13 @@ limitations under the License.
 
       Character limit: ~20 (1 line)">
     Stop GPS
+  </string>
+  <string name="menu_terrain"
+    translation_description="In the menu, under the map layer option, the submenu to display
+      terrain.
+
+      Character limit: ~20 (1 line)">
+    Terrain
   </string>
   <string name="menu_voice_frequency"
     translation_description="In the menu, to configure the voice frequency, how frequent to announce
@@ -2298,7 +2313,7 @@ limitations under the License.
     translation_description="Title of the page to configure the My Tracks widget items.">
     Configure Widget Items
   </string>
-  
+
   <!-- Unit -->
   <string name="unit_feet"
     translation_description="Abbreviation for feet. E.g., '2 ft'.">

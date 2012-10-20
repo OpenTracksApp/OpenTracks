@@ -16,7 +16,7 @@
 package com.google.android.apps.mytracks.endtoendtest;
 
 import com.google.android.apps.mytracks.TrackListActivity;
-import com.google.android.apps.mytracks.fragments.MapFragment;
+import com.google.android.apps.mytracks.fragments.MyTracksMapFragment;
 import com.google.android.maps.MapView;
 import com.google.android.maps.mytracks.R;
 
@@ -51,8 +51,8 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
   }
 
   /**
-   * Switches view from {@link MapFragment} to @ ChartFragment} , then changes
-   * to @ StatsFragment} . Finally back to {@link MapFragment}. And check some
+   * Switches view from {@link MyTracksMapFragment} to @ ChartFragment} , then changes
+   * to @ StatsFragment} . Finally back to {@link MyTracksMapFragment}. And check some
    * menus in these views. In MapFragment, the menu should contain satellite/map
    * mode. In ChartFragment and StatsFragment, the menu should not contain
    * satellite/map mode.

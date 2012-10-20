@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Google Inc.
+ * Copyright 2012 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -17,50 +17,27 @@
 package com.google.android.apps.mytracks.maps;
 
 import com.google.android.apps.mytracks.MapOverlay.CachedLocation;
-import com.google.android.maps.Projection;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.Polyline;
 
-import android.graphics.Canvas;
-import android.graphics.Rect;
-
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * An interface for classes which paint the track path.
+ * A track path.
  * 
- * @author Vangelis S.
+ * @author Jimmy Shih
  */
-public interface TrackPathPainter {
+public interface TrackPath {
 
-  /**
-   * Returns true if has path.
-   */
-  public boolean hasPath();
-
-  /**
-   * Updates state. Returns true if the state is updated.
-   */
   public boolean updateState();
 
   /**
-   * Updates the path. Creates a new path if necessary
+   * Updates the path.
    * 
-   * @param projection the projection
-   * @param viewRect the view rectangle
    * @param startIndex the start index
    * @param points the points
    */
-  public void updatePath(
-      Projection projection, Rect viewRect, int startIndex, List<CachedLocation> points);
-
-  /**
-   * Clears the path.
-   */
-  public void clearPath();
-
-  /**
-   * Draws the path.
-   * 
-   * @param canvas the canvas
-   */
-  public void drawPath(Canvas canvas);
+  public void updatePath(GoogleMap googleMap, ArrayList<Polyline> paths, int startIndex,
+      List<CachedLocation> points);
 }

@@ -556,7 +556,7 @@ public class ChartView extends View {
       float x = getX(getWaypointXValue(waypoint));
       canvas.drawLine(
           x, topBorder + spacer + markerHeight / 2, x, topBorder + effectiveHeight, markerPaint);
-      canvas.translate(x - (float) (markerWidth * Constants.WAYPOINT_X_OFFSET_PERCENTAGE),
+      canvas.translate(x - (float) (markerWidth * MapOverlay.WAYPOINT_X_ANCHOR),
           topBorder + spacer);
       if (waypoints.get(i).getType() == Waypoint.TYPE_STATISTICS) {
         statisticsMarker.draw(canvas);

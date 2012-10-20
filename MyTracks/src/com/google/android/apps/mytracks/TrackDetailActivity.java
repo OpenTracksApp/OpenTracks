@@ -28,7 +28,7 @@ import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment.DeleteOneTrackCaller;
 import com.google.android.apps.mytracks.fragments.FrequencyDialogFragment;
 import com.google.android.apps.mytracks.fragments.InstallEarthDialogFragment;
-import com.google.android.apps.mytracks.fragments.MapFragment;
+import com.google.android.apps.mytracks.fragments.MyTracksMapFragment;
 import com.google.android.apps.mytracks.fragments.StatsFragment;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
@@ -36,7 +36,6 @@ import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.settings.SettingsActivity;
 import com.google.android.apps.mytracks.util.AnalyticsUtils;
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
@@ -63,7 +62,7 @@ import java.util.List;
 
 /**
  * An activity to show the track detail.
- *
+ * 
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
@@ -74,19 +73,18 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
 
   private static final String TAG = TrackDetailActivity.class.getSimpleName();
   private static final String CURRENT_TAB_TAG_KEY = "current_tab_tag_key";
- 
+
   // The following are set in onCreate
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
   private TrackDataHub trackDataHub;
-  private View mapViewContainer;
   private TabHost tabHost;
   private TabManager tabManager;
   private TrackController trackController;
-  
+
   // From intent
   private long trackId;
   private long markerId;
-  
+
   // Preferences
   private long recordingTrackId;
   private boolean recordingTrackPaused;
@@ -136,7 +134,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
           if (key != null) {
             boolean isRecording = trackId == recordingTrackId;
             updateMenuItems(isRecording, recordingTrackPaused);
-            trackController.update(isRecording, recordingTrackPaused);            
+            trackController.update(isRecording, recordingTrackPaused);
           }
         }
       };
@@ -170,25 +168,6 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     }
   };
 
-  /**
-   * We are not displaying driving directions. Just an arbitrary track that is
-   * not associated to any licensed mapping data. Therefore it should be okay to
-   * return false here and still comply with the terms of service.
-   */
-  @Override
-  protected boolean isRouteDisplayed() {
-    return false;
-  }
-
-  /**
-   * We are displaying a location. This needs to return true in order to comply
-   * with the terms of service.
-   */
-  @Override
-  protected boolean isLocationDisplayed() {
-    return true;
-  }
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -199,18 +178,16 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
 
-    trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, bindChangedCallback);
+    trackRecordingServiceConnection = new TrackRecordingServiceConnection(
+        this, bindChangedCallback);
     trackDataHub = TrackDataHub.newInstance(this);
-
-    mapViewContainer = getLayoutInflater().inflate(R.layout.map, null);
-    ApiAdapterFactory.getApiAdapter().disableHardwareAccelerated(mapViewContainer);
 
     tabHost = (TabHost) findViewById(android.R.id.tabhost);
     tabHost.setup();
     tabManager = new TabManager(this, tabHost, R.id.realtabcontent);
-    TabSpec mapTabSpec = tabHost.newTabSpec(MapFragment.MAP_FRAGMENT_TAG).setIndicator(
+    TabSpec mapTabSpec = tabHost.newTabSpec(MyTracksMapFragment.MAP_FRAGMENT_TAG).setIndicator(
         getString(R.string.track_detail_map_tab), getResources().getDrawable(R.drawable.tab_map));
-    tabManager.addTab(mapTabSpec, MapFragment.class, null);
+    tabManager.addTab(mapTabSpec, MyTracksMapFragment.class, null);
     TabSpec chartTabSpec = tabHost.newTabSpec(ChartFragment.CHART_FRAGMENT_TAG).setIndicator(
         getString(R.string.track_detail_chart_tab),
         getResources().getDrawable(R.drawable.tab_chart));
@@ -222,7 +199,8 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     if (savedInstanceState != null) {
       tabHost.setCurrentTabByTag(savedInstanceState.getString(CURRENT_TAB_TAG_KEY));
     }
-    trackController = new TrackController(this, trackRecordingServiceConnection, false, recordListener, stopListener);
+    trackController = new TrackController(
+        this, trackRecordingServiceConnection, false, recordListener, stopListener);
     showMarker();
   }
 
@@ -274,7 +252,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     super.onDestroy();
     trackRecordingServiceConnection.unbind();
   }
- 
+
   @Override
   protected void onHomeSelected() {
     Intent intent = IntentUtils.newIntent(this, TrackListActivity.class);
@@ -428,13 +406,6 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   }
 
   /**
-   * Gets the map view container.
-   */
-  public View getMapViewContainer() {
-    return mapViewContainer;
-  }
-
-  /**
    * Gets the {@link TrackDataHub}.
    */
   public TrackDataHub getTrackDataHub() {
@@ -475,10 +446,10 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
    */
   private void showMarker() {
     if (markerId != -1L) {
-      MapFragment mapFragmet = (MapFragment) getSupportFragmentManager()
-          .findFragmentByTag(MapFragment.MAP_FRAGMENT_TAG);
+      MyTracksMapFragment mapFragmet = (MyTracksMapFragment) getSupportFragmentManager()
+          .findFragmentByTag(MyTracksMapFragment.MAP_FRAGMENT_TAG);
       if (mapFragmet != null) {
-        tabHost.setCurrentTabByTag(MapFragment.MAP_FRAGMENT_TAG);
+        tabHost.setCurrentTabByTag(MyTracksMapFragment.MAP_FRAGMENT_TAG);
         mapFragmet.showMarker(trackId, markerId);
       } else {
         Log.e(TAG, "MapFragment is null");
@@ -488,7 +459,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
 
   /**
    * Updates the menu items.
-   *
+   * 
    * @param isRecording true if recording
    */
   private void updateMenuItems(boolean isRecording, boolean isPaused) {
@@ -516,8 +487,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
 
     String title;
     if (isRecording) {
-      title = getString(
-          isPaused ? R.string.generic_paused : R.string.generic_recording);
+      title = getString(isPaused ? R.string.generic_paused : R.string.generic_recording);
     } else {
       Track track = MyTracksProviderUtils.Factory.get(this).getTrack(trackId);
       title = track != null ? track.getName() : getString(R.string.my_tracks_app_name);
@@ -527,7 +497,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
 
   /**
    * Starts the {@link SaveActivity} to save a track.
-   *
+   * 
    * @param trackFileFormat the track file format
    */
   private void startSaveActivity(TrackFileFormat trackFileFormat) {

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>MyTracks</name>
+	<name>Google Maps Library Dynamic</name>
 	<comment></comment>
 	<projects>
-		<project>MyTracks</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

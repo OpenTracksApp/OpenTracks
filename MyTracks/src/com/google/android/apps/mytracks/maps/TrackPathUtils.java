@@ -16,8 +16,12 @@
 
 package com.google.android.apps.mytracks.maps;
 
-import android.content.Context;
-import android.graphics.Paint;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Model;
+import com.google.android.gms.maps.model.Polyline;
+
+import java.util.ArrayList;
 
 /**
  * Various utility functions for track path painting.
@@ -29,17 +33,32 @@ public class TrackPathUtils {
   private TrackPathUtils() {}
 
   /**
-   * Gets a paint.
+   * Add a path.
    * 
-   * @param context the context
-   * @param colorId the color id
+   * @param googleMap the google map
+   * @param paths the existing paths
+   * @param points the path points
+   * @param color the path color
+   * @param append true to append to the last path
    */
-  public static Paint getPaint(Context context, int colorId) {
-    Paint paint = new Paint();
-    paint.setColor(context.getResources().getColor(colorId));
-    paint.setStrokeWidth(3);
-    paint.setStyle(Paint.Style.STROKE);
-    paint.setAntiAlias(true);
-    return paint;
+  @SuppressWarnings("unchecked")
+  public static void addPath(GoogleMap googleMap, ArrayList<Polyline> paths,
+      ArrayList<LatLng> points, int color, boolean append) {
+    if (points.size() == 0) {
+      return;
+    }
+    if (append && paths.size() != 0) {
+      Polyline lastPolyline = paths.get(paths.size() - 1);
+      ArrayList<LatLng> pathPoints = new ArrayList<LatLng>();
+      pathPoints.addAll(lastPolyline.getPoints());
+      pathPoints.addAll(points);
+      lastPolyline.setPoints(pathPoints);
+    } else {
+      Polyline.Options options = Model.newPolylineOptions()
+          .addAll(points).width(5).color(color);
+      Polyline polyline = googleMap.addPolyline(options);
+      paths.add(polyline);
+    }
+    points.clear();
   }
 }

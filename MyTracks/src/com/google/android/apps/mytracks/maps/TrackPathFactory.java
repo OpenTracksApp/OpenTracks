@@ -16,42 +16,37 @@
 
 package com.google.android.apps.mytracks.maps;
 
-import static com.google.android.apps.mytracks.Constants.TAG;
-
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
-import android.util.Log;
 
 /**
- * A factory for {@link TrackPathPainter}.
+ * A factory for {@link TrackPath}.
  * 
  * @author Vangelis S.
  */
-public class TrackPathPainterFactory {
+public class TrackPathFactory {
 
-  private TrackPathPainterFactory() {}
+  private TrackPathFactory() {}
 
   /**
-   * Get a new {@link TrackPathPainter}.
+   * Get a new {@link TrackPath}.
    * 
    * @param context the context
    */
-  public static TrackPathPainter getTrackPathPainter(Context context) {
+  public static TrackPath getTrackPath(Context context) {
     String trackColorMode = PreferencesUtils.getString(
         context, R.string.track_color_mode_key, PreferencesUtils.TRACK_COLOR_MODE_DEFAULT);
-    Log.i(TAG, "Creating track path painter of type: " + trackColorMode);
 
     if (context.getString(R.string.settings_map_track_color_mode_dynamic_value)
         .equals(trackColorMode)) {
-      return new DynamicSpeedTrackPathPainter(context, new DynamicSpeedTrackPathDescriptor(
-          context));
+      return new MultiColorTrackPath(context, new DynamicSpeedTrackPathDescriptor(context));
     } else if (context.getString(R.string.settings_map_track_color_mode_fixed_value)
         .equals(trackColorMode)) {
-      return new DynamicSpeedTrackPathPainter(context, new FixedSpeedTrackPathDescriptor(context));
+      return new MultiColorTrackPath(context, new FixedSpeedTrackPathDescriptor(context));
     } else {
-      return new SingleColorTrackPathPainter(context);
+      return new SingleColorTrackPath(context);
     }
   }
 }

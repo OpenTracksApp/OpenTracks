@@ -126,10 +126,6 @@ public abstract class Constants {
 
   public static final String SETTINGS_NAME = "SettingsActivity";
 
-  public static final double WAYPOINT_X_OFFSET_PERCENTAGE = 13 / 48.0;
-
-  public static final double MARKER_Y_OFFSET_PERCENTAGE = 91 / 96.0;
-
   /**
    * This is an abstract utility class.
    */
