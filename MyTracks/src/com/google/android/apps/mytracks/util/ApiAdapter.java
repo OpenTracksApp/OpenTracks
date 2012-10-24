@@ -16,17 +16,13 @@
 package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.ContextualActionModeCallback;
-import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
-import com.google.android.apps.mytracks.services.tasks.PeriodicTask;
 import com.google.api.client.http.HttpTransport;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -40,24 +36,6 @@ import java.util.List;
  * @author Bartlomiej Niechwiej
  */
 public interface ApiAdapter {
-
-  /**
-   * Gets an announcement periodic task.
-   * <p>
-   * Due to changes in API level 8.
-   * 
-   * @param context the context
-   */
-  public PeriodicTask getAnnouncementPeriodicTask(Context context);
-
-  /**
-   * Gets a {@link BackupPreferencesListener}.
-   * <p>
-   * Due to changes in API level 8.
-   * 
-   * @param context the context
-   */
-  public BackupPreferencesListener getBackupPreferencesListener(Context context);
 
   /**
    * Applies all the changes done to a given preferences editor. Changes may or
@@ -183,15 +161,6 @@ public interface ApiAdapter {
    * Due to changes in API level 11.
    */
   public void invalidMenu(Activity activity);
-
-  /**
-   * Diables hardware-accelerated rendering for a view.
-   * <p>
-   * Due to chagnes in API level 11.
-   * 
-   * @param view the view
-   */
-  public void disableHardwareAccelerated(View view);
 
   /**
    * Handles the search key press. Returns true if handled.

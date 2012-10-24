@@ -52,8 +52,8 @@ public class AbstractSettingsActivity extends PreferenceActivity {
     preferenceManager.setSharedPreferencesMode(Context.MODE_PRIVATE);
 
     // Set up automatic preferences backup
-    backupPreferencesListener = ApiAdapterFactory.getApiAdapter()
-        .getBackupPreferencesListener(this);
+    backupPreferencesListener =  new BackupPreferencesListener(this);
+
     preferenceManager.getSharedPreferences()
         .registerOnSharedPreferenceChangeListener(backupPreferencesListener);
   }

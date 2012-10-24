@@ -119,9 +119,4 @@ public class Api11Adapter extends Api10Adapter {
   public void invalidMenu(Activity activity) {
     activity.invalidateOptionsMenu();
   }
-  
-  @Override
-  public void disableHardwareAccelerated(View view) {
-    view.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-  }
 }
