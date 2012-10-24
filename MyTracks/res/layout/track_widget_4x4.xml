@@ -29,7 +29,7 @@ limitations under the License.
         <LinearLayout style="@style/TrackWidgetItemContainer4x4" >
           <TextView
             android:id="@+id/track_widget_item1_label"
-            style="@style/TrackWidgetLabel4x3" />
+            style="@style/TrackWidgetLabel4x4" />
           <LinearLayout style="@style/TrackWidgetValueContainer4x3" >
             <TextView
               android:id="@+id/track_widget_item1_value"
@@ -62,7 +62,7 @@ limitations under the License.
         <LinearLayout style="@style/TrackWidgetItemContainer4x4" >
           <TextView
             android:id="@+id/track_widget_item3_label"
-            style="@style/TrackWidgetLabel4x3" />
+            style="@style/TrackWidgetLabel4x4" />
           <LinearLayout style="@style/TrackWidgetValueContainer4x3" >
             <TextView
               android:id="@+id/track_widget_item3_value"
@@ -94,7 +94,7 @@ limitations under the License.
         <LinearLayout style="@style/TrackWidgetItemContainer4x3" >
           <TextView
             android:id="@+id/track_widget_item2_label"
-            style="@style/TrackWidgetLabel4x3" />
+            style="@style/TrackWidgetLabel4x4" />
           <LinearLayout style="@style/TrackWidgetValueContainer4x3" >
             <TextView
               android:id="@+id/track_widget_item2_value"
@@ -122,7 +122,7 @@ limitations under the License.
         <LinearLayout style="@style/TrackWidgetItemContainer4x3" >
           <TextView
             android:id="@+id/track_widget_item4_label"
-            style="@style/TrackWidgetLabel4x3" />
+            style="@style/TrackWidgetLabel4x4" />
           <LinearLayout style="@style/TrackWidgetValueContainer4x3" >
             <TextView
               android:id="@+id/track_widget_item4_value"

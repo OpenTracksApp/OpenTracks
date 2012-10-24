@@ -296,8 +296,8 @@ limitations under the License.
     <item name="android:textSize">10dp</item>
     <item name="android:textStyle">bold</item>
   </style>
-  <!-- track widget label 4x3 -->
-  <style name="TrackWidgetLabel4x3" parent="@style/TrackWidgetLabel">
+  <!-- track widget label 4x4 -->
+  <style name="TrackWidgetLabel4x4" parent="@style/TrackWidgetLabel">
     <item name="android:textSize">14dp</item>
   </style>
   <!-- track widget logo -->
