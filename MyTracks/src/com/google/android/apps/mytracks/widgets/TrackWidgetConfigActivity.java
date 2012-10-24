@@ -63,7 +63,7 @@ public class TrackWidgetConfigActivity extends Activity {
         this, R.string.report_speed_key, PreferencesUtils.REPORT_SPEED_DEFAULT);
 
     List<CharSequence> list = new ArrayList<CharSequence>();
-    addItem(list, R.string.stats_total_distance);
+    addItem(list, R.string.stats_distance);
     addItem(list, R.string.stats_total_time);
     addItem(list, reportSpeed ? R.string.stats_average_speed : R.string.stats_average_pace);
     addItem(list, R.string.stats_moving_time);

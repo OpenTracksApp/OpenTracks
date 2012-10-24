@@ -220,7 +220,7 @@ public class TrackWidgetProvider extends AppWidgetProvider {
       boolean reportSpeed) {
     switch (value) {
       case 0:
-        updateTotalDistance(context, remoteViews, ids, tripStatistics, metricUnits);
+        updateDistance(context, remoteViews, ids, tripStatistics, metricUnits);
         break;
       case 1:
         updateTotalTime(context, remoteViews, ids, tripStatistics, isRecording, isPaused);
@@ -236,7 +236,7 @@ public class TrackWidgetProvider extends AppWidgetProvider {
             context, remoteViews, ids, tripStatistics, metricUnits, reportSpeed);
         break;
       default:
-        updateTotalDistance(context, remoteViews, ids, tripStatistics, metricUnits);
+        updateDistance(context, remoteViews, ids, tripStatistics, metricUnits);
         break;
 
     }
@@ -271,7 +271,7 @@ public class TrackWidgetProvider extends AppWidgetProvider {
   }
 
   /**
-   * Updates total distance.
+   * Updates distance.
    * 
    * @param context the context
    * @param remoteViews the remote views
@@ -279,11 +279,11 @@ public class TrackWidgetProvider extends AppWidgetProvider {
    * @param tripStatistics the trip statistics
    * @param metricUnits true to use metric units
    */
-  private static void updateTotalDistance(Context context, RemoteViews remoteViews, int[] ids,
+  private static void updateDistance(Context context, RemoteViews remoteViews, int[] ids,
       TripStatistics tripStatistics, boolean metricUnits) {
     double totalDistance = tripStatistics == null ? Double.NaN : tripStatistics.getTotalDistance();
     String[] totalDistanceParts = StringUtils.getDistanceParts(context, totalDistance, metricUnits);
-    remoteViews.setTextViewText(ids[0], context.getString(R.string.stats_total_distance));
+    remoteViews.setTextViewText(ids[0], context.getString(R.string.stats_distance));
     remoteViews.setTextViewText(ids[1], totalDistanceParts[0]);
     remoteViews.setTextViewText(ids[2], totalDistanceParts[1]);
   }

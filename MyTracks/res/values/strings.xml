@@ -2226,8 +2226,8 @@ limitations under the License.
       Character limit: ~23 (1 line)">
     Speed
   </string>
-  <string name="stats_total_distance"
-    translation_description="In the 'Stats' page, the total distance.">
+  <string name="stats_distance"
+    translation_description="In the 'Stats' page, the distance.">
     Distance
   </string>
   <string name="stats_total_time"
