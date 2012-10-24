@@ -84,12 +84,11 @@ public class MyTracksMapFragment extends SupportMapFragment
 
   private static final float DEFAULT_ZOOM_LEVEL = 18f;
 
-  // If current zoom level is above this, no need to zoom to DEFAULT_ZOOM_LEVEL
-  private static final float MIN_ALLOWED_ZOOM_LEVEL = 10f;
-
   // Google's latitude and longitude
   private static final double DEFAULT_LATITUDE = 37.423;
   private static final double DEFAULT_LONGITUDE = -122.084;
+
+  private static final int MAP_VIEW_PADDING = 32;
 
   private TrackDataHub trackDataHub;
 
@@ -118,6 +117,7 @@ public class MyTracksMapFragment extends SupportMapFragment
   // UI elements
   private GoogleMap googleMap;
   private MapOverlay mapOverlay;
+  private View mapView;
   private ImageButton myLocationImageButton;
   private TextView messageTextView;
 
@@ -133,10 +133,10 @@ public class MyTracksMapFragment extends SupportMapFragment
   @Override
   public View onCreateView(
       LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View view = super.onCreateView(inflater, container, savedInstanceState);
+    mapView = super.onCreateView(inflater, container, savedInstanceState);
     View layout = inflater.inflate(R.layout.map, container, false);
     RelativeLayout mapContainer = (RelativeLayout) layout.findViewById(R.id.map_container);
-    mapContainer.addView(view, 0);
+    mapContainer.addView(mapView, 0);
 
     myLocationImageButton = (ImageButton) layout.findViewById(R.id.map_my_location);
     myLocationImageButton.setOnClickListener(new View.OnClickListener() {
@@ -191,7 +191,7 @@ public class MyTracksMapFragment extends SupportMapFragment
 
         @Override
       public void onCameraChange(CameraPosition cameraPosition) {
-        if (keepCurrentLocationVisible && currentLocation != null
+        if (isResumed() && keepCurrentLocationVisible && currentLocation != null
             && !isLocationVisible(currentLocation)) {
           keepCurrentLocationVisible = false;
           zoomToCurrentLocation = false;
@@ -306,7 +306,7 @@ public class MyTracksMapFragment extends SupportMapFragment
             myLocationEnabled = false;
           }
           googleMap.setMyLocationEnabled(myLocationEnabled);
-          
+
           String message;
           boolean isGpsDisabled;
           if (!isSelectedTrackRecording()) {
@@ -563,7 +563,7 @@ public class MyTracksMapFragment extends SupportMapFragment
         if (zoomToCurrentLocation
             || (keepCurrentLocationVisible && !isLocationVisible(currentLocation))) {
           LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-          googleMap.animateCamera(CameraUpdates.newLatLngZoom(latLng, getDefaultZoomLevel()));
+          googleMap.animateCamera(CameraUpdates.newLatLngZoom(latLng, DEFAULT_ZOOM_LEVEL));
           zoomToCurrentLocation = false;
         }
       };
@@ -582,6 +582,10 @@ public class MyTracksMapFragment extends SupportMapFragment
           return;
         }
 
+        if (mapView == null || mapView.getWidth() == 0 || mapView.getHeight() == 0) {
+          return;
+        }
+
         TripStatistics tripStatistics = currentTrack.getTripStatistics();
         int latitudeSpanE6 = tripStatistics.getTop() - tripStatistics.getBottom();
         int longitudeSpanE6 = tripStatistics.getRight() - tripStatistics.getLeft();
@@ -592,7 +596,8 @@ public class MyTracksMapFragment extends SupportMapFragment
           LatLng northEast = new LatLng(
               tripStatistics.getTopDegrees(), tripStatistics.getRightDegrees());
           LatLngBounds bounds = Model.newLatLngBounds(southWest, northEast);
-          CameraUpdate cameraUpdate = CameraUpdates.newLatLngBounds(bounds, 32);
+          CameraUpdate cameraUpdate = CameraUpdates.newLatLngBounds(
+              bounds, mapView.getWidth(), mapView.getHeight(), MAP_VIEW_PADDING);
           googleMap.moveCamera(cameraUpdate);
         }
       }
@@ -618,7 +623,7 @@ public class MyTracksMapFragment extends SupportMapFragment
           LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
           keepCurrentLocationVisible = false;
           zoomToCurrentLocation = false;
-          CameraUpdate cameraUpdate = CameraUpdates.newLatLngZoom(latLng, getDefaultZoomLevel());
+          CameraUpdate cameraUpdate = CameraUpdates.newLatLngZoom(latLng, DEFAULT_ZOOM_LEVEL);
           googleMap.moveCamera(cameraUpdate);
         }
       }
@@ -636,20 +641,6 @@ public class MyTracksMapFragment extends SupportMapFragment
     } else {
       return new LatLng(DEFAULT_LATITUDE, DEFAULT_LONGITUDE);
     }
-  }
-
-  /**
-   * Gets the default zoom level. Needs to run on the UI thread.
-   */
-  private float getDefaultZoomLevel() {
-    if (googleMap == null) {
-      return DEFAULT_ZOOM_LEVEL;
-    }
-    float zoom = googleMap.getCameraPosition().getZoom();
-    if (zoom <= MIN_ALLOWED_ZOOM_LEVEL) {
-      return DEFAULT_ZOOM_LEVEL;
-    }
-    return zoom;
   }
 
   /**

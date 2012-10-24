@@ -1712,9 +1712,11 @@ limitations under the License.
     Auto-resume
   </string>
   <string name="settings_recording_auto_resume_track_timeout_summary"
-    translation_description="In the 'Recording' settings, the summary for the 'Auto-resume'
-      setting.">
-    Track is resumed after reboot if the last recording time is within this.
+    translation_description="In the 'Recording' settings, the summary for the 'Auto-resume' setting.
+      Occasionaly, phones will reboot due to crashes or users would need to change battery during a
+      long recording. My Tracks will resume a recording after reboot if it was recording beforehand
+      and that the last recorded time is recent, within certain minutes.">
+    Recording is resumed after reboot if the last recorded time is within this.
   </string>
   <string name="settings_recording_default_activity_title"
     translation_description="In the 'Recording' settings, the title to configure the default
