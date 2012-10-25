@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 Google Inc.
+ * Copyright 2011 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -15,13 +15,26 @@
  */
 package com.google.android.apps.mytracks.io.backup;
 
+import android.app.backup.BackupManager;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 
 /**
- * Shared preferences listener which notifies the backup system about new data
- * being available for backup.
+ * Backup preference listener.
  *
- * @author Rodrigo Damazio
+ * @author Jimmy Shih
  */
-public interface BackupPreferencesListener extends OnSharedPreferenceChangeListener {
+public class BackupPreferencesListener implements OnSharedPreferenceChangeListener {
+
+  private final BackupManager backupManager;
+
+  public BackupPreferencesListener(Context context) {
+    this.backupManager = new BackupManager(context);
+  }
+
+  @Override
+  public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+    backupManager.dataChanged();
+  }
 }

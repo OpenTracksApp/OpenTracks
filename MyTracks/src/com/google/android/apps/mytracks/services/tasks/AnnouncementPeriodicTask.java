@@ -25,12 +25,15 @@ import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
 
 import android.content.Context;
+import android.media.AudioManager;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
+import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
+import java.util.HashMap;
 import java.util.Locale;
 
 /**
@@ -49,8 +52,24 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
   private static final String TAG = AnnouncementPeriodicTask.class.getSimpleName();
   private static final long HOUR_TO_MILLISECOND = 60 * 60 * 1000;
 
+  private static final HashMap<String, String> SPEECH_PARAMS = new HashMap<String, String>();
+  static {
+    SPEECH_PARAMS.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "not_used");
+  }
+
+  private final OnUtteranceCompletedListener
+      utteranceListener = new OnUtteranceCompletedListener() {
+          @Override
+        public void onUtteranceCompleted(String utteranceId) {
+          int result = audioManager.abandonAudioFocus(null);
+          if (result == AudioManager.AUDIOFOCUS_REQUEST_FAILED) {
+            Log.w(TAG, "Failed to relinquish audio focus.");
+          }
+        }
+      };
+
   private final Context context;
-  protected TextToSpeech tts;
+  private TextToSpeech tts;
 
   // Response from TTS after its initialization
   private int initStatus = TextToSpeech.ERROR;
@@ -60,6 +79,8 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
 
   // True if speech is allowed
   private boolean speechAllowed;
+
+  private final AudioManager audioManager;
 
   /**
    * Listener which updates {@link #speechAllowed} when the phone state changes.
@@ -77,6 +98,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
 
   public AnnouncementPeriodicTask(Context context) {
     this.context = context;
+    audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
   }
 
   @Override
@@ -146,7 +168,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
   /**
    * Called when TTS is ready.
    */
-  protected void onTtsReady() {
+  private void onTtsReady() {
     Locale locale = Locale.getDefault();
     int languageAvailability = tts.isLanguageAvailable(locale);
     if (languageAvailability == TextToSpeech.LANG_MISSING_DATA
@@ -163,6 +185,8 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
 
     // Slow down the speed just a bit as it is hard to hear when exercising.
     tts.setSpeechRate(TTS_SPEECH_RATE);
+
+    tts.setOnUtteranceCompletedListener(utteranceListener);
   }
 
   /**
@@ -170,8 +194,18 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
    * 
    * @param announcement the announcement
    */
-  protected void speakAnnouncement(String announcement) {
-    tts.speak(announcement, TextToSpeech.QUEUE_FLUSH, null);
+  private void speakAnnouncement(String announcement) {
+    int result = audioManager.requestAudioFocus(
+        null, TextToSpeech.Engine.DEFAULT_STREAM, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
+    if (result == AudioManager.AUDIOFOCUS_REQUEST_FAILED) {
+      Log.w(TAG, "Failed to request audio focus.");
+    }
+
+    /*
+     * We don't care about the utterance id. It is supplied here to force
+     * onUtteranceCompleted to be called.
+     */
+    tts.speak(announcement, TextToSpeech.QUEUE_FLUSH, SPEECH_PARAMS);
   }
 
   /**
@@ -224,8 +258,8 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
     String totalDistance = context.getResources()
         .getQuantityString(totalDistanceId, getQuantityCount(distance), distance);
 
-    return context.getString(R.string.voice_template, totalDistance, getAnnounceTime(
-        tripStatistics.getMovingTime()), rate);
+    return context.getString(R.string.voice_template, totalDistance,
+        getAnnounceTime(tripStatistics.getMovingTime()), rate);
   }
 
   /**

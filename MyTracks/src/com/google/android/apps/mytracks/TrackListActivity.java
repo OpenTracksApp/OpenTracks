@@ -416,6 +416,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
   protected void onStart() {
     super.onStart();
     trackDataHub.start();
+    AnalyticsUtils.sendPageViews(this, "/page/track_list");
   }
 
   @Override

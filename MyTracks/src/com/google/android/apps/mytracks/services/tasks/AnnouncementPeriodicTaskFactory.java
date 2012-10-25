@@ -15,8 +15,6 @@
  */
 package com.google.android.apps.mytracks.services.tasks;
 
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
-
 import android.content.Context;
 
 /**
@@ -28,6 +26,6 @@ public class AnnouncementPeriodicTaskFactory implements PeriodicTaskFactory {
 
   @Override
   public PeriodicTask create(Context context) {
-    return ApiAdapterFactory.getApiAdapter().getAnnouncementPeriodicTask(context);
+    return new AnnouncementPeriodicTask(context);
   }
 }

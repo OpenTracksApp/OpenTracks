@@ -43,11 +43,8 @@ public class ApiAdapterFactory {
       } else if (Build.VERSION.SDK_INT >= 9) {
         apiAdapter = new Api9Adapter();
         return apiAdapter;
-      } else if (Build.VERSION.SDK_INT >= 8) {
-        apiAdapter = new Api8Adapter();
-        return apiAdapter;
       } else {
-        apiAdapter = new Api7Adapter();
+        apiAdapter = new Api8Adapter();
         return apiAdapter;
       }
     }

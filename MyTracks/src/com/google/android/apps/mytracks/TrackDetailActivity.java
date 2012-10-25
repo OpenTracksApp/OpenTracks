@@ -218,6 +218,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   protected void onStart() {
     super.onStart();
     trackDataHub.start();
+    AnalyticsUtils.sendPageViews(this, "/page/track_detail");
   }
 
   @Override

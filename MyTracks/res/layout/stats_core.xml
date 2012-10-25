@@ -18,12 +18,12 @@ limitations under the License.
   <!-- Total distance -->
   <TableRow>
     <TextView
-      android:text="@string/stats_total_distance"
+      android:text="@string/stats_distance"
       style="@style/StatsLabel" />
   </TableRow>
   <TableRow>
     <TextView
-      android:id="@+id/stats_total_distance_value"
+      android:id="@+id/stats_distance_value"
       style="@style/StatsValue" />
   </TableRow>
   <!-- Total time/moving time -->

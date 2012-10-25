@@ -109,7 +109,7 @@ public class StatsUtils {
     
     // Set total distance
     double totalDistance = tripStatistics == null ? Double.NaN : tripStatistics.getTotalDistance();
-    setDistanceValue(activity, R.id.stats_total_distance_value, totalDistance, metricUnits);
+    setDistanceValue(activity, R.id.stats_distance_value, totalDistance, metricUnits);
     
     // Set total time
     setTimeValue(activity, R.id.stats_total_time_value,

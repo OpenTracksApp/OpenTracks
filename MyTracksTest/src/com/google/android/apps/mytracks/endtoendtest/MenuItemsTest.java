@@ -63,7 +63,7 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
     // Menu in TrackListActivity.
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_aggregated_statistics),
         true);
-    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.stats_total_distance));
+    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.stats_distance));
     EndToEndTestUtils.SOLO.goBack();
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.createTrackIfEmpty(1, false);
