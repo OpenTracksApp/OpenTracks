@@ -87,7 +87,6 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
 
   private static final String TAG = TrackListActivity.class.getSimpleName();
   private static final String START_GPS_KEY = "start_gps_key";
-  
   private static final String[] PROJECTION = new String[] { TracksColumns._ID, TracksColumns.NAME,
       TracksColumns.DESCRIPTION, TracksColumns.CATEGORY, TracksColumns.STARTTIME,
       TracksColumns.TOTALDISTANCE, TracksColumns.TOTALTIME, TracksColumns.ICON };
@@ -96,8 +95,10 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
   private final Runnable bindChangedCallback = new Runnable() {
       @Override
     public void run() {
-      // After binding changes (is available), update the total time in
-      // trackController.
+      /*
+       * After binding changes (e.g., becomes available), update the total time
+       * in trackController.
+       */
       runOnUiThread(new Runnable() {
           @Override
         public void run() {
@@ -116,10 +117,10 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
         return;
       }
       try {
-        recordingTrackId = service.startNewTrack();
+        long trackId = service.startNewTrack();
         startNewRecording = false;
         Intent intent = IntentUtils.newIntent(TrackListActivity.this, TrackDetailActivity.class)
-            .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, recordingTrackId);
+            .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);
         startActivity(intent);
         Toast.makeText(
             TrackListActivity.this, R.string.track_list_record_success, Toast.LENGTH_SHORT).show();
@@ -308,6 +309,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
   };
 
   // The following are set in onCreate
+  private SharedPreferences sharedPreferences;
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
   private TrackController trackController;
   private ListView listView;
@@ -315,9 +317,9 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
   private TrackDataHub trackDataHub;
 
   // Preferences
-  private boolean metricUnits;
-  private long recordingTrackId;
-  private boolean recordingTrackPaused;
+  private boolean metricUnits = PreferencesUtils.METRIC_UNITS_DEFAULT;
+  private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+  private boolean recordingTrackPaused = PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT;
 
   // Menu items
   private MenuItem searchMenuItem;
@@ -336,13 +338,10 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
     setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
     setContentView(R.layout.track_list);
 
+    sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(
         this, bindChangedCallback);
-
-    SharedPreferences sharedPreferences = getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-    sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
 
     trackController = new TrackController(
         this, trackRecordingServiceConnection, true, recordListener, stopListener);
@@ -415,49 +414,71 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
   @Override
   protected void onStart() {
     super.onStart();
-    trackDataHub.start();
-    AnalyticsUtils.sendPageViews(this, "/page/track_list");
-  }
 
-  @Override
-  protected void onPause() {
-    super.onPause();
-    trackController.stop();
-    trackDataHub.unregisterTrackDataListener(trackDataListener);
+    // Register shared preferences listener
+    sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+
+    // Update shared preferences
+    sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
+
+    // Update track recording service connection
+    TrackRecordingServiceConnectionUtils.resumeConnection(this, trackRecordingServiceConnection);
+
+    trackDataHub.start();
+
+    // Update track data hub
+    handleStartGps();
+
+    AnalyticsUtils.sendPageViews(this, "/page/track_list");
   }
 
   @Override
   protected void onResume() {
     super.onResume();
-    TrackRecordingServiceConnectionUtils.resumeConnection(this, trackRecordingServiceConnection);
-    trackController.update(
-        recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, recordingTrackPaused);
-    handleStartGps();
-    
+
+    // Update UI
+    boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+    updateMenuItems(isRecording);
+    resourceCursorAdapter.notifyDataSetChanged();
+    trackController.update(isRecording, recordingTrackPaused);
+
+    // Check Google Play Services
     int code = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
     if (code != ConnectionResult.SUCCESS) {
       Dialog dialog = GooglePlayServicesUtil.getErrorDialog(code, this, 0);
       dialog.show();
     }
   }
-  
+
   @Override
-  public void onSaveInstanceState(Bundle outState) {
-    super.onSaveInstanceState(outState);
-    outState.putBoolean(START_GPS_KEY, startGps);
+  protected void onPause() {
+    super.onPause();
+
+    // Update UI
+    trackController.stop();
   }
 
   @Override
   protected void onStop() {
     super.onStop();
+
+    // Unregister shared preferences listener
+    sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+
+    trackRecordingServiceConnection.unbind();
+
+    // Update track data hub
+    trackDataHub.unregisterTrackDataListener(trackDataListener);
+
     trackDataHub.stop();
+
     AnalyticsUtils.dispatch();
   }
 
   @Override
-  protected void onDestroy() {
-    super.onDestroy();
-    trackRecordingServiceConnection.unbind();
+  protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    outState.putBoolean(START_GPS_KEY, startGps);
   }
 
   @Override
@@ -606,6 +627,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
     if (startGpsMenuItem != null) {
       startGpsMenuItem.setIcon(startGps ? R.drawable.menu_stop_gps : R.drawable.menu_start_gps);
       startGpsMenuItem.setTitle(startGps ? R.string.menu_stop_gps : R.string.menu_start_gps);
+      startGpsMenuItem.setVisible(!isRecording);
     }
     if (importMenuItem != null) {
       importMenuItem.setVisible(!isRecording);
