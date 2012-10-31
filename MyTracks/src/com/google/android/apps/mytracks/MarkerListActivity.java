@@ -51,31 +51,27 @@ import android.widget.ListView;
 
 /**
  * Activity to show a list of markers in a track.
- *
+ * 
  * @author Leif Hendrik Wilden
  */
 public class MarkerListActivity extends AbstractMyTracksActivity {
- 
+
   public static final String EXTRA_TRACK_ID = "track_id";
 
   private static final String TAG = MarkerListActivity.class.getSimpleName();
-  
-  private static final String[] PROJECTION = new String[] {
-      WaypointsColumns._ID,
-      WaypointsColumns.NAME,
-      WaypointsColumns.DESCRIPTION,
-      WaypointsColumns.CATEGORY,
-      WaypointsColumns.TYPE,
-      WaypointsColumns.TIME};
+
+  private static final String[] PROJECTION = new String[] { WaypointsColumns._ID,
+      WaypointsColumns.NAME, WaypointsColumns.DESCRIPTION, WaypointsColumns.CATEGORY,
+      WaypointsColumns.TYPE, WaypointsColumns.TIME };
 
   // Callback when an item is selected in the contextual action mode
-  private ContextualActionModeCallback contextualActionModeCallback =
-    new ContextualActionModeCallback() {
-    @Override
-    public boolean onClick(int itemId, int position, long id) {
-      return handleContextItem(itemId, id);
-    }
-  };
+  private ContextualActionModeCallback
+      contextualActionModeCallback = new ContextualActionModeCallback() {
+          @Override
+        public boolean onClick(int itemId, int position, long id) {
+          return handleContextItem(itemId, id);
+        }
+      };
 
   /*
    * Note that sharedPreferenceChangeListener cannot be an anonymous inner
@@ -86,13 +82,27 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
           @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
           // Note that the key can be null
-          if (PreferencesUtils.getKey(MarkerListActivity.this, R.string.recording_track_id_key)
-              .equals(key) || PreferencesUtils.getKey(
-              MarkerListActivity.this, R.string.recording_track_paused_key).equals(key)) {
+          if (key == null || key.equals(
+              PreferencesUtils.getKey(MarkerListActivity.this, R.string.recording_track_id_key))) {
+            recordingTrackId = PreferencesUtils.getLong(
+                MarkerListActivity.this, R.string.recording_track_id_key);
+          }
+          if (key == null || key.equals(PreferencesUtils.getKey(
+              MarkerListActivity.this, R.string.recording_track_paused_key))) {
+            recordingTrackPaused = PreferencesUtils.getBoolean(MarkerListActivity.this,
+                R.string.recording_track_paused_key,
+                PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+          }
+          if (key != null) {
             updateMenu();
           }
         }
       };
+
+  private SharedPreferences sharedPreferences;
+
+  private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+  private boolean recordingTrackPaused = PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT;
 
   private long trackId = -1;
   private ResourceCursorAdapter resourceCursorAdapter;
@@ -104,23 +114,21 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    
+
+    sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1L);
     if (trackId == -1L) {
       Log.d(TAG, "invalid track id");
       finish();
       return;
     }
-    
-    setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
-    getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE)
-        .registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+    setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
     ListView listView = (ListView) findViewById(R.id.marker_list);
     listView.setEmptyView(findViewById(R.id.marker_list_empty));
     listView.setOnItemClickListener(new OnItemClickListener() {
-      @Override
+        @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = IntentUtils.newIntent(MarkerListActivity.this, MarkerDetailActivity.class)
             .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, id);
@@ -128,7 +136,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
       }
     });
     resourceCursorAdapter = new ResourceCursorAdapter(this, R.layout.list_item, null, 0) {
-      @Override
+        @Override
       public void bindView(View view, Context context, Cursor cursor) {
         int typeIndex = cursor.getColumnIndex(WaypointsColumns.TYPE);
         int nameIndex = cursor.getColumnIndex(WaypointsColumns.NAME);
@@ -156,26 +164,42 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
     final long firstWaypointId = MyTracksProviderUtils.Factory.get(this)
         .getFirstWaypointId(trackId);
     getSupportLoaderManager().initLoader(0, null, new LoaderCallbacks<Cursor>() {
-      @Override
+        @Override
       public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-        return new CursorLoader(MarkerListActivity.this,
-            WaypointsColumns.CONTENT_URI,
-            PROJECTION,
+        return new CursorLoader(MarkerListActivity.this, WaypointsColumns.CONTENT_URI, PROJECTION,
             WaypointsColumns.TRACKID + "=? AND " + WaypointsColumns._ID + "!=?",
-            new String[] { String.valueOf(trackId), String.valueOf(firstWaypointId) },
-            null);
+            new String[] { String.valueOf(trackId), String.valueOf(firstWaypointId) }, null);
       }
 
-      @Override
+        @Override
       public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         resourceCursorAdapter.swapCursor(cursor);
       }
 
-      @Override
+        @Override
       public void onLoaderReset(Loader<Cursor> loader) {
         resourceCursorAdapter.swapCursor(null);
       }
     });
+  }
+
+  @Override
+  protected void onStart() {
+    super.onStart();
+    sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+    sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
+  }
+
+  @Override
+  protected void onResume() {
+    super.onResume();
+    updateMenu();
+  }
+
+  @Override
+  protected void onStop() {
+    super.onStop();
+    sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
   }
 
   @Override
@@ -195,11 +219,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
 
   private void updateMenu() {
     if (insertMarkerMenuItem != null) {
-      boolean isRecording = trackId
-          == PreferencesUtils.getLong(this, R.string.recording_track_id_key);
-      boolean isPaused = PreferencesUtils.getBoolean(this, R.string.recording_track_paused_key,
-          PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
-      insertMarkerMenuItem.setVisible(isRecording && !isPaused);
+      insertMarkerMenuItem.setVisible(trackId == recordingTrackId && !recordingTrackPaused);
     }
   }
 
@@ -226,8 +246,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
 
   @Override
   public boolean onContextItemSelected(MenuItem item) {
-    if (handleContextItem(
-        item.getItemId(), ((AdapterContextMenuInfo) item.getMenuInfo()).id)) {
+    if (handleContextItem(item.getItemId(), ((AdapterContextMenuInfo) item.getMenuInfo()).id)) {
       return true;
     }
     return super.onContextItemSelected(item);
@@ -235,7 +254,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
 
   /**
    * Handles a context item selection.
-   *
+   * 
    * @param itemId the menu item id
    * @param markerId the marker id
    * @return true if handled.
@@ -266,7 +285,9 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
   @Override
   public boolean onKeyUp(int keyCode, KeyEvent event) {
     if (keyCode == KeyEvent.KEYCODE_SEARCH) {
-      if (ApiAdapterFactory.getApiAdapter().handleSearchKey(searchMenuItem)) { return true; }
+      if (ApiAdapterFactory.getApiAdapter().handleSearchKey(searchMenuItem)) {
+        return true;
+      }
     }
     return super.onKeyUp(keyCode, event);
   }

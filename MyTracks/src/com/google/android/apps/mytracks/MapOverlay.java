@@ -62,8 +62,10 @@ public class MapOverlay {
           @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
           if (key == null
-              || PreferencesUtils.getKey(context, R.string.track_color_mode_key).equals(key)) {
-            trackPath = TrackPathFactory.getTrackPath(context);
+              || key.equals(PreferencesUtils.getKey(context, R.string.track_color_mode_key))) {
+            trackColorMode = PreferencesUtils.getString(
+                context, R.string.track_color_mode_key, PreferencesUtils.TRACK_COLOR_MODE_DEFAULT);
+            trackPath = TrackPathFactory.getTrackPath(context, trackColorMode);
           }
         }
       };
@@ -72,6 +74,8 @@ public class MapOverlay {
   private final List<CachedLocation> locations;
   private final BlockingQueue<CachedLocation> pendingLocations;
   private final List<Waypoint> waypoints;
+
+  private String trackColorMode = PreferencesUtils.TRACK_COLOR_MODE_DEFAULT;
 
   private boolean showEndMarker = true;
   private TrackPath trackPath;

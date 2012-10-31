@@ -43,8 +43,7 @@ public class DynamicSpeedTrackPathDescriptor implements TrackPathDescriptor {
       sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
           @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-          if (PreferencesUtils.getKey(context, R.string.track_color_mode_percentage_key)
-              .equals(key)) {
+          if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.track_color_mode_percentage_key))) {
             speedMargin = PreferencesUtils.getInt(context, R.string.track_color_mode_percentage_key,
                 PreferencesUtils.TRACK_COLOR_MODE_PERCENTAGE_DEFAULT);
           }
@@ -62,10 +61,9 @@ public class DynamicSpeedTrackPathDescriptor implements TrackPathDescriptor {
 
   public DynamicSpeedTrackPathDescriptor(Context context) {
     this.context = context;
-    speedMargin = PreferencesUtils.getInt(context, R.string.track_color_mode_percentage_key,
-        PreferencesUtils.TRACK_COLOR_MODE_PERCENTAGE_DEFAULT);
     context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE)
         .registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+    sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
   }
 
   @Override

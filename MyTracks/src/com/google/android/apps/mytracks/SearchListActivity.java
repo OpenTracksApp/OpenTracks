@@ -94,6 +94,11 @@ public class SearchListActivity extends AbstractMyTracksActivity implements Dele
           @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
           if (key == null || key.equals(
+              PreferencesUtils.getKey(SearchListActivity.this, R.string.metric_units_key))) {
+            metricUnits = PreferencesUtils.getBoolean(SearchListActivity.this,
+                R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
+          }
+          if (key == null || key.equals(
               PreferencesUtils.getKey(SearchListActivity.this, R.string.recording_track_id_key))) {
             recordingTrackId = PreferencesUtils.getLong(
                 SearchListActivity.this, R.string.recording_track_id_key);
@@ -113,45 +118,44 @@ public class SearchListActivity extends AbstractMyTracksActivity implements Dele
   // Callback when an item is selected in the contextual action mode
   private ContextualActionModeCallback
       contextualActionModeCallback = new ContextualActionModeCallback() {
-        @Override
+          @Override
         public boolean onClick(int itemId, int position, long id) {
           return handleContextItem(itemId, position);
         }
       };
 
+  private SharedPreferences sharedPreferences;
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
   private MyTracksProviderUtils myTracksProviderUtils;
   private SearchEngine searchEngine;
   private SearchRecentSuggestions searchRecentSuggestions;
   private MyTracksLocationManager myTracksLocationManager;
-  private long recordingTrackId;
-  private boolean recordingTrackPaused;
-  private boolean metricUnits;
   private ArrayAdapter<Map<String, Object>> arrayAdapter;
+
+  private boolean metricUnits = PreferencesUtils.METRIC_UNITS_DEFAULT;
+  private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+  private boolean recordingTrackPaused = PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT;
 
   // UI elements
   private ListView listView;
   private MenuItem searchMenuItem;
-  
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
+    sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
     searchEngine = new SearchEngine(myTracksProviderUtils);
     searchRecentSuggestions = SearchEngineProvider.newHelper(this);
     myTracksLocationManager = new MyTracksLocationManager(this);
-    SharedPreferences sharedPreferences = getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-    sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
 
     listView = (ListView) findViewById(R.id.search_list);
     listView.setEmptyView(findViewById(R.id.search_list_empty));
     listView.setOnItemClickListener(new OnItemClickListener() {
-      @Override
+        @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Map<String, Object> item = arrayAdapter.getItem(position);
         Long trackId = (Long) item.get(TRACK_ID_FIELD);
@@ -169,7 +173,7 @@ public class SearchListActivity extends AbstractMyTracksActivity implements Dele
     });
     arrayAdapter = new ArrayAdapter<Map<String, Object>>(
         this, R.layout.list_item, R.id.list_item_name) {
-      @Override
+        @Override
       public View getView(int position, View convertView, android.view.ViewGroup parent) {
         View view;
         if (convertView == null) {
@@ -204,22 +208,24 @@ public class SearchListActivity extends AbstractMyTracksActivity implements Dele
   @Override
   protected void onStart() {
     super.onStart();
+    sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+    sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
     TrackRecordingServiceConnectionUtils.startConnection(this, trackRecordingServiceConnection);
-  }
-  
-  @Override
-  protected void onResume() {
-    super.onResume();
-    metricUnits = PreferencesUtils.getBoolean(
-        this, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
   }
 
   @Override
-  protected void onStop() {
-    super.onStop();
-    trackRecordingServiceConnection.unbind();
+  protected void onResume() {
+    super.onResume();
+    arrayAdapter.notifyDataSetChanged();
   }
   
+  @Override
+  protected void onStop() {
+    super.onStop();
+    sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+    trackRecordingServiceConnection.unbind();
+  }
+
   @Override
   protected void onDestroy() {
     super.onDestroy();
@@ -266,7 +272,7 @@ public class SearchListActivity extends AbstractMyTracksActivity implements Dele
     AdapterContextMenuInfo adapterContextMenuInfo = (AdapterContextMenuInfo) item.getMenuInfo();
     if (handleContextItem(item.getItemId(), adapterContextMenuInfo.position)) {
       return true;
-     }
+    }
     return super.onContextItemSelected(item);
   }
 
@@ -387,8 +393,8 @@ public class SearchListActivity extends AbstractMyTracksActivity implements Dele
    */
   private List<Map<String, Object>> prepareResultsforDisplay(
       Collection<ScoredResult> scoredResults) {
-    ArrayList<Map<String, Object>> output = new ArrayList<Map<String, Object>>(scoredResults
-        .size());
+    ArrayList<Map<String, Object>> output = new ArrayList<Map<String, Object>>(
+        scoredResults.size());
     for (ScoredResult result : scoredResults) {
       Map<String, Object> resultMap = new HashMap<String, Object>();
       if (result.track != null) {
@@ -423,7 +429,7 @@ public class SearchListActivity extends AbstractMyTracksActivity implements Dele
 
     boolean statistics = waypoint.getType() == Waypoint.TYPE_STATISTICS;
     long time = waypoint.getLocation().getTime();
-    
+
     resultMap.put(IS_RECORDING_FIELD, false);
     resultMap.put(IS_PAUSED_FIELD, true);
     resultMap.put(ICON_ID_FIELD, statistics ? R.drawable.yellow_pushpin : R.drawable.blue_pushpin);

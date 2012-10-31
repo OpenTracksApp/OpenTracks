@@ -16,7 +16,6 @@
 
 package com.google.android.apps.mytracks.maps;
 
-import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
@@ -35,10 +34,7 @@ public class TrackPathFactory {
    * 
    * @param context the context
    */
-  public static TrackPath getTrackPath(Context context) {
-    String trackColorMode = PreferencesUtils.getString(
-        context, R.string.track_color_mode_key, PreferencesUtils.TRACK_COLOR_MODE_DEFAULT);
-
+  public static TrackPath getTrackPath(Context context, String trackColorMode) {
     if (context.getString(R.string.settings_map_track_color_mode_dynamic_value)
         .equals(trackColorMode)) {
       return new MultiColorTrackPath(context, new DynamicSpeedTrackPathDescriptor(context));

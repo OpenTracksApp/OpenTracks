@@ -75,6 +75,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   private static final String CURRENT_TAB_TAG_KEY = "current_tab_tag_key";
 
   // The following are set in onCreate
+  private SharedPreferences sharedPreferences;
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
   private TrackDataHub trackDataHub;
   private TabHost tabHost;
@@ -86,8 +87,8 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   private long markerId;
 
   // Preferences
-  private long recordingTrackId;
-  private boolean recordingTrackPaused;
+  private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+  private boolean recordingTrackPaused = PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT;
 
   private MenuItem insertMarkerMenuItem;
   private MenuItem playMenuItem;
@@ -173,10 +174,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     super.onCreate(savedInstanceState);
     handleIntent(getIntent());
 
-    SharedPreferences sharedPreferences = getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-    sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
+    sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
 
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(
         this, bindChangedCallback);
@@ -207,6 +205,10 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   @Override
   protected void onStart() {
     super.onStart();
+
+    sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+    sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
+
     TrackRecordingServiceConnectionUtils.startConnection(this, trackRecordingServiceConnection);
     trackDataHub.start();
     AnalyticsUtils.sendPageViews(this, "/page/track_detail");
@@ -216,9 +218,13 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   protected void onResume() {
     super.onResume();
     trackDataHub.loadTrack(trackId);
-    trackController.update(trackId == recordingTrackId, recordingTrackPaused);
+    
+    // Update UI
+    boolean isRecording = trackId == recordingTrackId;
+    updateMenuItems(isRecording, recordingTrackPaused);
+    trackController.update(isRecording, recordingTrackPaused);
   }
-  
+
   @Override
   protected void onPause() {
     super.onPause();
@@ -228,6 +234,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   @Override
   protected void onStop() {
     super.onStop();
+    sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     trackRecordingServiceConnection.unbind();
     trackDataHub.stop();
     AnalyticsUtils.dispatch();

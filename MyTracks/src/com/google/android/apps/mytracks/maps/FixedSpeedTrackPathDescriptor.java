@@ -35,11 +35,13 @@ public class FixedSpeedTrackPathDescriptor implements TrackPathDescriptor {
       sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
           @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-          if (PreferencesUtils.getKey(context, R.string.track_color_mode_slow_key).equals(key)) {
+          if (key == null
+              || key.equals(PreferencesUtils.getKey(context, R.string.track_color_mode_slow_key))) {
             slowSpeed = PreferencesUtils.getInt(context, R.string.track_color_mode_slow_key,
                 PreferencesUtils.TRACK_COLOR_MODE_SLOW_DEFAULT);
-          } else if (PreferencesUtils.getKey(context, R.string.track_color_mode_medium_key)
-              .equals(key)) {
+          }
+          if (key == null || key.equals(
+              PreferencesUtils.getKey(context, R.string.track_color_mode_medium_key))) {
             normalSpeed = PreferencesUtils.getInt(context, R.string.track_color_mode_medium_key,
                 PreferencesUtils.TRACK_COLOR_MODE_MEDIUM_DEFAULT);
           }
@@ -53,12 +55,9 @@ public class FixedSpeedTrackPathDescriptor implements TrackPathDescriptor {
   public FixedSpeedTrackPathDescriptor(Context context) {
     this.context = context;
 
-    slowSpeed = PreferencesUtils.getInt(context, R.string.track_color_mode_slow_key,
-        PreferencesUtils.TRACK_COLOR_MODE_SLOW_DEFAULT);
-    normalSpeed = PreferencesUtils.getInt(context, R.string.track_color_mode_medium_key,
-        PreferencesUtils.TRACK_COLOR_MODE_MEDIUM_DEFAULT);
     context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE)
         .registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+    sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
   }
 
   @Override

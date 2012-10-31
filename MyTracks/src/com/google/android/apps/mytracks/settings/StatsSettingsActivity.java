@@ -41,22 +41,33 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
       sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
           @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-          // Note that key can be null
-          if (PreferencesUtils.getKey(StatsSettingsActivity.this, R.string.metric_units_key)
-              .equals(key)) {
+          if (key == null || key.equals(
+              PreferencesUtils.getKey(StatsSettingsActivity.this, R.string.metric_units_key))) {
+            metricUnits = PreferencesUtils.getBoolean(StatsSettingsActivity.this,
+                R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
+          }
+          if (key != null) {
             updateUi();
           }
         }
       };
+
+  private SharedPreferences sharedPreferences;
+  private boolean metricUnits = PreferencesUtils.METRIC_UNITS_DEFAULT;
 
   @SuppressWarnings("deprecation")
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
     addPreferencesFromResource(R.xml.stats_settings);
+    sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+  }
 
-    getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE)
-        .registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+  @Override
+  protected void onStart() {
+    super.onStart();
+    sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+    sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
   }
 
   @Override
@@ -65,15 +76,21 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
     updateUi();
   }
 
+  @Override
+  protected void onStop() {
+    super.onStop();
+    sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+  }
+
   @SuppressWarnings("deprecation")
   private void updateUi() {
     CheckBoxPreference reportSpeedCheckBoxPreference = (CheckBoxPreference) findPreference(
         getString(R.string.report_speed_key));
-    boolean metric = PreferencesUtils.getBoolean(
-        this, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
-    reportSpeedCheckBoxPreference.setSummaryOn(metric ? getString(R.string.description_speed_metric)
-        : getString(R.string.description_speed_imperial));
-    reportSpeedCheckBoxPreference.setSummaryOff(metric ? getString(R.string.description_pace_metric)
-        : getString(R.string.description_pace_imperial));
+    reportSpeedCheckBoxPreference.setSummaryOn(
+        metricUnits ? getString(R.string.description_speed_metric)
+            : getString(R.string.description_speed_imperial));
+    reportSpeedCheckBoxPreference.setSummaryOff(
+        metricUnits ? getString(R.string.description_pace_metric)
+            : getString(R.string.description_pace_imperial));
   }
 }

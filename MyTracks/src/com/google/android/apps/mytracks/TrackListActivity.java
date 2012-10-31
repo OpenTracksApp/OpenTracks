@@ -426,9 +426,6 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
 
     trackDataHub.start();
 
-    // Update track data hub
-    handleStartGps();
-
     AnalyticsUtils.sendPageViews(this, "/page/track_list");
   }
 
@@ -436,6 +433,9 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
   protected void onResume() {
     super.onResume();
 
+    // Update track data hub
+    handleStartGps();
+    
     // Update UI
     boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
     updateMenuItems(isRecording);
@@ -454,6 +454,9 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
   protected void onPause() {
     super.onPause();
 
+    // Update track data hub
+    trackDataHub.unregisterTrackDataListener(trackDataListener);
+    
     // Update UI
     trackController.stop();
   }
@@ -466,9 +469,6 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
     sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
     trackRecordingServiceConnection.unbind();
-
-    // Update track data hub
-    trackDataHub.unregisterTrackDataListener(trackDataListener);
 
     trackDataHub.stop();
 

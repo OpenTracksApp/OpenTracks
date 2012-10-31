@@ -43,8 +43,11 @@ public class BackupSettingsActivity extends AbstractSettingsActivity {
 
   private static final int DIALOG_CONFIRM_RESTORE_ID = 0;
 
-  Preference backupPreference;
-  Preference restorePreference;
+  private SharedPreferences sharedPreferences;
+  private Preference backupPreference;
+  private Preference restorePreference;
+
+  private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
 
   /*
    * Note that sharedPreferenceChangeListenr cannot be an anonymous inner class.
@@ -52,11 +55,14 @@ public class BackupSettingsActivity extends AbstractSettingsActivity {
    */
   private final OnSharedPreferenceChangeListener
       sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
-        @Override
+          @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-          // Note that key can be null
-          if (PreferencesUtils.getKey(BackupSettingsActivity.this, R.string.recording_track_id_key)
-              .equals(key)) {
+          if (key == null || key.equals(PreferencesUtils.getKey(
+              BackupSettingsActivity.this, R.string.recording_track_id_key))) {
+            recordingTrackId = PreferencesUtils.getLong(
+                BackupSettingsActivity.this, R.string.recording_track_id_key);
+          }
+          if (key != null) {
             updateUi();
           }
         }
@@ -66,8 +72,7 @@ public class BackupSettingsActivity extends AbstractSettingsActivity {
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
-    getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE)
-        .registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+    sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
 
     addPreferencesFromResource(R.xml.backup_settings);
     backupPreference = findPreference(getString(R.string.settings_backup_now_key));
@@ -96,7 +101,7 @@ public class BackupSettingsActivity extends AbstractSettingsActivity {
     }
     return DialogUtils.createConfirmationDialog(this,
         R.string.settings_backup_restore_confirm_message, new DialogInterface.OnClickListener() {
-          @Override
+            @Override
           public void onClick(DialogInterface dialog, int which) {
             Intent intent = IntentUtils.newIntent(
                 BackupSettingsActivity.this, RestoreChooserActivity.class);
@@ -106,21 +111,33 @@ public class BackupSettingsActivity extends AbstractSettingsActivity {
   }
 
   @Override
+  protected void onStart() {
+    super.onStart();
+    sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+    sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
+  }
+
+  @Override
   protected void onResume() {
     super.onResume();
     updateUi();
+  }
+
+  @Override
+  protected void onStop() {
+    super.onStop();
+    sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
   }
 
   /**
    * Updates the UI based on the recording state.
    */
   private void updateUi() {
-    boolean isRecording = PreferencesUtils.getLong(this, R.string.recording_track_id_key)
-        != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+    boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
     backupPreference.setEnabled(!isRecording);
     restorePreference.setEnabled(!isRecording);
-    backupPreference.setSummary(isRecording ? R.string.settings_not_while_recording
-        : R.string.settings_backup_now_summary);
+    backupPreference.setSummary(
+        isRecording ? R.string.settings_not_while_recording : R.string.settings_backup_now_summary);
     restorePreference.setSummary(isRecording ? R.string.settings_not_while_recording
         : R.string.settings_backup_restore_summary);
   }
