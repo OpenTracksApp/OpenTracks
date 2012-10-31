@@ -51,15 +51,6 @@ public abstract class AbstractMyTracksActivity extends FragmentActivity {
    */
   protected abstract int getLayoutResId();
 
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    if (item.getItemId() != android.R.id.home) {
-      return super.onOptionsItemSelected(item);
-    }
-    onHomeSelected();
-    return true;
-  }
-
   /**
    * Returns true to hide the title. Be default, do not hide the title.
    */
@@ -72,5 +63,14 @@ public abstract class AbstractMyTracksActivity extends FragmentActivity {
    */
   protected void onHomeSelected() {
     finish();
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    if (item.getItemId() != android.R.id.home) {
+      return super.onOptionsItemSelected(item);
+    }
+    onHomeSelected();
+    return true;
   }
 }

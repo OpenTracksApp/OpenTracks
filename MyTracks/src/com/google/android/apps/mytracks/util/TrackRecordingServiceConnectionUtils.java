@@ -145,7 +145,7 @@ public class TrackRecordingServiceConnectionUtils {
    * @param trackRecordingServiceConnection the track recording service
    *          connection
    */
-  public static void resumeConnection(
+  public static void startConnection(
       Context context, TrackRecordingServiceConnection trackRecordingServiceConnection) {
     trackRecordingServiceConnection.bindIfStarted();
     if (!isRecordingServiceRunning(context)) {

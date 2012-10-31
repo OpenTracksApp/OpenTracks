@@ -96,14 +96,14 @@ public class SensorStateActivity extends AbstractMyTracksActivity {
   }
 
   @Override
-  protected int getLayoutResId() {
-    return R.layout.sensor_state;
+  protected void onStart() {
+    super.onStart();
+    TrackRecordingServiceConnectionUtils.startConnection(this, trackRecordingServiceConnection);
   }
 
   @Override
   protected void onResume() {
     super.onResume();
-    TrackRecordingServiceConnectionUtils.resumeConnection(this, trackRecordingServiceConnection);
     isVisible = true;
     timer = new Timer();
     timer.schedule(new UpdateTimerTask(), 0, REFRESH_PERIOD_MS);
@@ -120,9 +120,14 @@ public class SensorStateActivity extends AbstractMyTracksActivity {
   }
 
   @Override
-  protected void onDestroy() {
-    super.onDestroy();
+  protected void onStop() {
+    super.onStop();
     trackRecordingServiceConnection.unbind();
+  }
+
+  @Override
+  protected int getLayoutResId() {
+    return R.layout.sensor_state;
   }
 
   /**

@@ -205,22 +205,20 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   }
 
   @Override
-  protected int getLayoutResId() {
-    return R.layout.track_detail;
-  }
-
-  @Override
-  protected boolean hideTitle() {
-    return true;
-  }
-
-  @Override
   protected void onStart() {
     super.onStart();
+    TrackRecordingServiceConnectionUtils.startConnection(this, trackRecordingServiceConnection);
     trackDataHub.start();
     AnalyticsUtils.sendPageViews(this, "/page/track_detail");
   }
 
+  @Override
+  protected void onResume() {
+    super.onResume();
+    trackDataHub.loadTrack(trackId);
+    trackController.update(trackId == recordingTrackId, recordingTrackPaused);
+  }
+  
   @Override
   protected void onPause() {
     super.onPause();
@@ -228,11 +226,11 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   }
 
   @Override
-  protected void onResume() {
-    super.onResume();
-    trackDataHub.loadTrack(trackId);
-    TrackRecordingServiceConnectionUtils.resumeConnection(this, trackRecordingServiceConnection);
-    trackController.update(trackId == recordingTrackId, recordingTrackPaused);
+  protected void onStop() {
+    super.onStop();
+    trackRecordingServiceConnection.unbind();
+    trackDataHub.stop();
+    AnalyticsUtils.dispatch();
   }
 
   @Override
@@ -242,16 +240,13 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   }
 
   @Override
-  protected void onStop() {
-    super.onStop();
-    trackDataHub.stop();
-    AnalyticsUtils.dispatch();
+  protected int getLayoutResId() {
+    return R.layout.track_detail;
   }
 
   @Override
-  protected void onDestroy() {
-    super.onDestroy();
-    trackRecordingServiceConnection.unbind();
+  protected boolean hideTitle() {
+    return true;
   }
 
   @Override

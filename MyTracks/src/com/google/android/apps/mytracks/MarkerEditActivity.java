@@ -91,6 +91,18 @@ public class MarkerEditActivity extends AbstractMyTracksActivity {
   }
 
   @Override
+  protected void onStart() {
+    super.onStart();
+    TrackRecordingServiceConnectionUtils.startConnection(this, trackRecordingServiceConnection);
+  }
+  
+  @Override
+  protected void onStop() {
+    super.onStop();
+    trackRecordingServiceConnection.unbind();
+  }
+
+  @Override
   protected int getLayoutResId() {
     return R.layout.marker_edit;
   }
@@ -100,7 +112,7 @@ public class MarkerEditActivity extends AbstractMyTracksActivity {
    */
   private void updateUiByMarkerId() {
     final boolean newMarker = markerId == -1L;
-
+  
     setTitle(newMarker ? R.string.menu_insert_marker : R.string.menu_edit);
     done.setText(newMarker ? R.string.generic_add : R.string.generic_save);
     done.setOnClickListener(new View.OnClickListener() {
@@ -114,7 +126,7 @@ public class MarkerEditActivity extends AbstractMyTracksActivity {
         finish();
       }
     });
-
+  
     if (newMarker) {
       statisticsSection.setVisibility(View.GONE);
       waypointSection.setVisibility(View.VISIBLE);
@@ -145,18 +157,6 @@ public class MarkerEditActivity extends AbstractMyTracksActivity {
         waypointDescription.setText(waypoint.getDescription());
       }  
     }
-  }
-
-  @Override
-  protected void onResume() {
-    super.onResume();
-    TrackRecordingServiceConnectionUtils.resumeConnection(this, trackRecordingServiceConnection);
-  }
-
-  @Override
-  protected void onDestroy() {
-    super.onDestroy();
-    trackRecordingServiceConnection.unbind();
   }
 
   /**

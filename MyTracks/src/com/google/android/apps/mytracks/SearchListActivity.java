@@ -202,23 +202,33 @@ public class SearchListActivity extends AbstractMyTracksActivity implements Dele
   }
 
   @Override
-  protected int getLayoutResId() {
-    return R.layout.search_list;
+  protected void onStart() {
+    super.onStart();
+    TrackRecordingServiceConnectionUtils.startConnection(this, trackRecordingServiceConnection);
   }
-
+  
   @Override
   protected void onResume() {
     super.onResume();
-    TrackRecordingServiceConnectionUtils.resumeConnection(this, trackRecordingServiceConnection);
     metricUnits = PreferencesUtils.getBoolean(
         this, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
   }
 
   @Override
+  protected void onStop() {
+    super.onStop();
+    trackRecordingServiceConnection.unbind();
+  }
+  
+  @Override
   protected void onDestroy() {
     super.onDestroy();
     myTracksLocationManager.close();
-    trackRecordingServiceConnection.unbind();
+  }
+
+  @Override
+  protected int getLayoutResId() {
+    return R.layout.search_list;
   }
 
   @Override

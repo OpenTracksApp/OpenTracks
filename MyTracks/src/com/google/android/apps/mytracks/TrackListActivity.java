@@ -422,7 +422,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
     sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
 
     // Update track recording service connection
-    TrackRecordingServiceConnectionUtils.resumeConnection(this, trackRecordingServiceConnection);
+    TrackRecordingServiceConnectionUtils.startConnection(this, trackRecordingServiceConnection);
 
     trackDataHub.start();
 
