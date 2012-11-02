@@ -47,7 +47,12 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
                 R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
           }
           if (key != null) {
-            updateUi();
+            runOnUiThread(new Runnable() {
+                @Override
+              public void run() {
+                updateUi();
+              }
+            });
           }
         }
       };

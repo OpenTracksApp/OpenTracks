@@ -110,7 +110,12 @@ public class SearchListActivity extends AbstractMyTracksActivity implements Dele
                 PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
           }
           if (key != null) {
-            arrayAdapter.notifyDataSetChanged();
+            runOnUiThread(new Runnable() {
+                @Override
+              public void run() {
+                arrayAdapter.notifyDataSetChanged();
+              }
+            });
           }
         }
       };

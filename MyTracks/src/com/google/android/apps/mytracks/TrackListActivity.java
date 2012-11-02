@@ -144,24 +144,13 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
               PreferencesUtils.getKey(TrackListActivity.this, R.string.metric_units_key))) {
             metricUnits = PreferencesUtils.getBoolean(TrackListActivity.this,
                 R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
-            if (key != null) {
-              resourceCursorAdapter.notifyDataSetChanged();
-              return;
-            }
           }
           if (key == null || key.equals(
               PreferencesUtils.getKey(TrackListActivity.this, R.string.recording_track_id_key))) {
             recordingTrackId = PreferencesUtils.getLong(
                 TrackListActivity.this, R.string.recording_track_id_key);
-            if (key != null) {
-              boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
-              if (isRecording) {
-                trackRecordingServiceConnection.startAndBind();
-              }
-              updateMenuItems(isRecording);
-              resourceCursorAdapter.notifyDataSetChanged();
-              trackController.update(isRecording, recordingTrackPaused);
-              return;
+            if (key != null && recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
+              trackRecordingServiceConnection.startAndBind();
             }
           }
           if (key == null || key.equals(PreferencesUtils.getKey(
@@ -169,13 +158,17 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
             recordingTrackPaused = PreferencesUtils.getBoolean(TrackListActivity.this,
                 R.string.recording_track_paused_key,
                 PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
-            if (key != null) {
-              resourceCursorAdapter.notifyDataSetChanged();
-              trackController.update(
-                  recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT,
-                  recordingTrackPaused);
-              return;
-            }
+          }
+          if (key != null) {
+            runOnUiThread(new Runnable() {
+                @Override
+              public void run() {
+                boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+                updateMenuItems(isRecording);
+                resourceCursorAdapter.notifyDataSetChanged();
+                trackController.update(isRecording, recordingTrackPaused);
+              }
+            });
           }
         }
       };

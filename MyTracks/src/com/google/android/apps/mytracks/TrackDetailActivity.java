@@ -133,9 +133,14 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
                 PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
           }
           if (key != null) {
-            boolean isRecording = trackId == recordingTrackId;
-            updateMenuItems(isRecording, recordingTrackPaused);
-            trackController.update(isRecording, recordingTrackPaused);
+            runOnUiThread(new Runnable() {
+                @Override
+              public void run() {
+                boolean isRecording = trackId == recordingTrackId;
+                updateMenuItems(isRecording, recordingTrackPaused);
+                trackController.update(isRecording, recordingTrackPaused);
+              }
+            });
           }
         }
       };

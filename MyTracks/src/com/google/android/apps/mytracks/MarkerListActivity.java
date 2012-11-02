@@ -94,7 +94,12 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
                 PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
           }
           if (key != null) {
-            updateMenu();
+            runOnUiThread(new Runnable() {
+                @Override
+              public void run() {
+                updateMenu();
+              }
+            });
           }
         }
       };

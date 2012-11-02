@@ -63,7 +63,12 @@ public class BackupSettingsActivity extends AbstractSettingsActivity {
                 BackupSettingsActivity.this, R.string.recording_track_id_key);
           }
           if (key != null) {
-            updateUi();
+            runOnUiThread(new Runnable() {
+                @Override
+              public void run() {
+                updateUi();
+              }
+            });
           }
         }
       };
