@@ -32,17 +32,17 @@ import com.google.android.apps.mytracks.util.GoogleLocationUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdates;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.LocationSource.OnLocationChangedListener;
-import com.google.android.gms.maps.OnMapInitializeListener;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.Model;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.maps.mytracks.R;
 
@@ -72,8 +72,7 @@ import java.util.EnumSet;
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
-public class MyTracksMapFragment extends SupportMapFragment
-    implements OnMapInitializeListener, TrackDataListener {
+public class MyTracksMapFragment extends SupportMapFragment implements TrackDataListener {
 
   public static final String MAP_FRAGMENT_TAG = "mapFragment";
 
@@ -127,7 +126,6 @@ public class MyTracksMapFragment extends SupportMapFragment
     setHasOptionsMenu(true);
     ApiAdapterFactory.getApiAdapter().invalidMenu(getActivity());
     mapOverlay = new MapOverlay(getActivity());
-    setOnMapInitializeListener(this);
   }
 
   @Override
@@ -149,11 +147,12 @@ public class MyTracksMapFragment extends SupportMapFragment
       }
     });
     messageTextView = (TextView) layout.findViewById(R.id.map_message);
+
+    onMapInitialize(getMap());
     return layout;
   }
 
-  @Override
-  public void onMapInitialize(GoogleMap map) {
+  private void onMapInitialize(GoogleMap map) {
     googleMap = map;
     googleMap.setMyLocationEnabled(true);
     googleMap.getUiSettings().setMyLocationButtonEnabled(false);
@@ -198,13 +197,8 @@ public class MyTracksMapFragment extends SupportMapFragment
         }
       }
     });
-    LatLng latLng = getDefaultLatLng();
-    if (latLng != null) {
-      googleMap.moveCamera(CameraUpdates.newLatLngZoom(latLng, googleMap.getMinZoomLevel()));
-    }
-    if (isResumed()) {
-      resetTrackDataHub();
-    }
+    googleMap.moveCamera(
+        CameraUpdateFactory.newLatLngZoom(getDefaultLatLng(), googleMap.getMinZoomLevel()));
   }
 
   @Override
@@ -271,16 +265,16 @@ public class MyTracksMapFragment extends SupportMapFragment
 
   @Override
   public boolean onOptionsItemSelected(MenuItem menuItem) {
-    int type = MAP_TYPE_NORMAL;
+    int type = GoogleMap.MAP_TYPE_NORMAL;
     switch (menuItem.getItemId()) {
       case R.id.menu_map:
-        type = MAP_TYPE_NORMAL;
+        type = GoogleMap.MAP_TYPE_NORMAL;
         break;
       case R.id.menu_satellite:
-        type = MAP_TYPE_SATELLITE;
+        type = GoogleMap.MAP_TYPE_SATELLITE;
         break;
       case R.id.menu_terrain:
-        type = MAP_TYPE_TERRAIN;
+        type = GoogleMap.MAP_TYPE_TERRAIN;
         break;
       default:
         return super.onOptionsItemSelected(menuItem);
@@ -523,15 +517,6 @@ public class MyTracksMapFragment extends SupportMapFragment
   }
 
   /**
-   * Resets the trackDataHub. Needs to be synchronized because the trackDataHub
-   * can be accessed by multiple threads.
-   */
-  private synchronized void resetTrackDataHub() {
-    pauseTrackDataHub();
-    resumeTrackDataHub();
-  }
-
-  /**
    * Returns true if the selected track is recording. Needs to be synchronized
    * because the trackDataHub can be accessed by multiple threads.
    */
@@ -563,7 +548,7 @@ public class MyTracksMapFragment extends SupportMapFragment
         if (zoomToCurrentLocation
             || (keepCurrentLocationVisible && !isLocationVisible(currentLocation))) {
           LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-          googleMap.animateCamera(CameraUpdates.newLatLngZoom(latLng, DEFAULT_ZOOM_LEVEL));
+          googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, DEFAULT_ZOOM_LEVEL));
           zoomToCurrentLocation = false;
         }
       };
@@ -595,8 +580,9 @@ public class MyTracksMapFragment extends SupportMapFragment
               tripStatistics.getBottomDegrees(), tripStatistics.getLeftDegrees());
           LatLng northEast = new LatLng(
               tripStatistics.getTopDegrees(), tripStatistics.getRightDegrees());
-          LatLngBounds bounds = Model.newLatLngBounds(southWest, northEast);
-          CameraUpdate cameraUpdate = CameraUpdates.newLatLngBounds(
+          LatLngBounds bounds = LatLngBounds.builder()
+              .include(southWest).include(northEast).build();
+          CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(
               bounds, mapView.getWidth(), mapView.getHeight(), MAP_VIEW_PADDING);
           googleMap.moveCamera(cameraUpdate);
         }
@@ -623,7 +609,7 @@ public class MyTracksMapFragment extends SupportMapFragment
           LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
           keepCurrentLocationVisible = false;
           zoomToCurrentLocation = false;
-          CameraUpdate cameraUpdate = CameraUpdates.newLatLngZoom(latLng, DEFAULT_ZOOM_LEVEL);
+          CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, DEFAULT_ZOOM_LEVEL);
           googleMap.moveCamera(cameraUpdate);
         }
       }
@@ -653,6 +639,6 @@ public class MyTracksMapFragment extends SupportMapFragment
       return false;
     }
     LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-    return googleMap.getProjection().getVisibleRegion().getLatLngBounds().contains(latLng);
+    return googleMap.getProjection().getVisibleRegion().latLngBounds.contains(latLng);
   }
 }

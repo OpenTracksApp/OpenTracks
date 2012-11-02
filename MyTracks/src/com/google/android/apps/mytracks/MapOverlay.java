@@ -25,10 +25,9 @@ import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.BitmapDescriptors;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.Model;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.maps.mytracks.R;
 
@@ -242,10 +241,10 @@ public class MapOverlay {
       for (int i = locations.size() - 1; i >= 0; i--) {
         CachedLocation cachedLocation = locations.get(i);
         if (cachedLocation.valid) {
-          Marker.Options options = Model.newMarkerOptions().position(cachedLocation.getLatLng())
+          MarkerOptions markerOptions = new MarkerOptions().position(cachedLocation.getLatLng())
               .anchor(MARKER_X_ANCHOR, MARKER_Y_ANCHOR).draggable(false).visible(true)
-              .icon(BitmapDescriptors.fromResource(R.drawable.red_dot));
-          googleMap.addMarker(options);
+              .icon(BitmapDescriptorFactory.fromResource(R.drawable.red_dot));
+          googleMap.addMarker(markerOptions);
           break;
         }
       }
@@ -255,10 +254,10 @@ public class MapOverlay {
     for (int i = 0; i < locations.size(); i++) {
       CachedLocation cachedLocation = locations.get(i);
       if (cachedLocation.valid) {
-        Marker.Options options = Model.newMarkerOptions().position(cachedLocation.getLatLng())
+        MarkerOptions markerOptions = new MarkerOptions().position(cachedLocation.getLatLng())
             .anchor(MARKER_X_ANCHOR, MARKER_Y_ANCHOR).draggable(false).visible(true)
-            .icon(BitmapDescriptors.fromResource(R.drawable.green_dot));
-        googleMap.addMarker(options);
+            .icon(BitmapDescriptorFactory.fromResource(R.drawable.green_dot));
+        googleMap.addMarker(markerOptions);
         break;
       }
     }
@@ -276,11 +275,11 @@ public class MapOverlay {
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         int drawableId = waypoint.getType() == Waypoint.TYPE_STATISTICS ? R.drawable.yellow_pushpin
             : R.drawable.blue_pushpin;
-        Marker.Options options = Model.newMarkerOptions().position(latLng)
+        MarkerOptions markerOptions = new MarkerOptions().position(latLng)
             .anchor(WAYPOINT_X_ANCHOR, WAYPOINT_Y_ANCHOR).draggable(false).visible(true)
-            .icon(BitmapDescriptors.fromResource(drawableId))
+            .icon(BitmapDescriptorFactory.fromResource(drawableId))
             .title(String.valueOf(waypoint.getId()));
-        googleMap.addMarker(options);
+        googleMap.addMarker(markerOptions);
       }
     }
   }

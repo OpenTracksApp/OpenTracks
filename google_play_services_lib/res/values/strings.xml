@@ -41,6 +41,11 @@
     <string name="common_google_play_services_update_text">This app won\'t run unless you
         update Google Play services.</string>
 
+    <!-- Message in confirmation dialog informing user there is an unknow issue in Google Player
+        services [CHAR LIMIT=NONE] -->
+    <string name="common_google_play_services_unknown_issue">Unknown issue with Google Play
+        services.</string>
+
     <!-- Button in confirmation dialog for updating Google Play services [CHAR LIMIT=20] -->
     <string name="common_google_play_services_update_button">Update</string>
 

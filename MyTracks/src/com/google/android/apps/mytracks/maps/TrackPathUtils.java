@@ -18,8 +18,8 @@ package com.google.android.apps.mytracks.maps;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Model;
 import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
 
@@ -54,9 +54,8 @@ public class TrackPathUtils {
       pathPoints.addAll(points);
       lastPolyline.setPoints(pathPoints);
     } else {
-      Polyline.Options options = Model.newPolylineOptions()
-          .addAll(points).width(5).color(color);
-      Polyline polyline = googleMap.addPolyline(options);
+      PolylineOptions polylineOptions = new PolylineOptions().addAll(points).width(5).color(color);
+      Polyline polyline = googleMap.addPolyline(polylineOptions);
       paths.add(polyline);
     }
     points.clear();
