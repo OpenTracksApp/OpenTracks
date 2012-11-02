@@ -132,7 +132,7 @@ public class SaveActivity extends Activity {
             })
             .setTitle(success ? R.string.generic_success_title : R.string.generic_error_title);
 
-        if (success && trackId != -1L && !playTrack) {
+        if (success && trackId != -1L && !playTrack && savedPath != null) {
           builder.setNegativeButton(
               R.string.share_track_share_file, new DialogInterface.OnClickListener() {
                   @Override
@@ -191,7 +191,7 @@ public class SaveActivity extends Activity {
    * To be invoked after showing the result dialog.
    */
   private void onPostResultDialog() {
-    if (success && playTrack) {
+    if (success && playTrack && savedPath != null) {
       Intent intent = new Intent()
           .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
           .putExtra(GOOGLE_EARTH_TOUR_FEATURE_ID, KmlTrackWriter.TOUR_FEATURE_ID)

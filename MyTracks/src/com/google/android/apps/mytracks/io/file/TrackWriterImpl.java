@@ -79,7 +79,7 @@ class TrackWriterImpl implements TrackWriter {
 
   @Override
   public String getAbsolutePath() {
-    return file.getAbsolutePath();
+    return file == null ? null : file.getAbsolutePath();
   }
 
   private void writeTrackAsync() {
@@ -112,10 +112,8 @@ class TrackWriterImpl implements TrackWriter {
           writeDocument();
         } catch (InterruptedException e) {
           Log.i(Constants.TAG, "The track write was interrupted");
-          if (file != null) {
-            if (!file.delete()) {
-              Log.w(TAG, "Failed to delete file " + file.getAbsolutePath());
-            }
+          if (file != null && !file.delete()) {
+            Log.w(TAG, "Failed to delete file " + file.getAbsolutePath());
           }
           success = false;
           errorMessage = R.string.external_storage_canceled;
