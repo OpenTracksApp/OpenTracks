@@ -41,7 +41,6 @@ public class TrackPathUtils {
    * @param color the path color
    * @param append true to append to the last path
    */
-  @SuppressWarnings("unchecked")
   public static void addPath(GoogleMap googleMap, ArrayList<Polyline> paths,
       ArrayList<LatLng> points, int color, boolean append) {
     if (points.size() == 0) {

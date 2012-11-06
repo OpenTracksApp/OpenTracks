@@ -147,7 +147,7 @@ public class ImportActivity extends Activity {
                   Intent intent = IntentUtils
                       .newIntent(ImportActivity.this, TrackDetailActivity.class)
                       .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);
-                  TaskStackBuilder taskStackBuilder = TaskStackBuilder.from(ImportActivity.this);
+                  TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(ImportActivity.this);
                   taskStackBuilder.addNextIntent(intent);
                   taskStackBuilder.startActivities();
                 }

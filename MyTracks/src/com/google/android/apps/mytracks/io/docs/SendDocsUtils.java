@@ -112,7 +112,8 @@ public class SendDocsUtils {
       throws IOException, ParseException, HttpException {
     GDataParser gDataParser = null;
     try {
-      String uri = String.format(Locale.US, GET_SPREADSHEET_BY_TITLE_URI, URLEncoder.encode(title));
+      String uri = String.format(
+          Locale.US, GET_SPREADSHEET_BY_TITLE_URI, URLEncoder.encode(title, "UTF-8"));
       gDataParser = documentsClient.getParserForFeed(Entry.class, uri, authToken);
       gDataParser.init();
 

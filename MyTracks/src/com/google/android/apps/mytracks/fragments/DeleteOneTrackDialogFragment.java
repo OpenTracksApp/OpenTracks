@@ -66,12 +66,12 @@ public class DeleteOneTrackDialogFragment extends DialogFragment {
   private DeleteOneTrackCaller caller;
 
   @Override
-  public void onAttach(Activity activity) {
-    super.onAttach(activity);
+  public void onAttach(Activity anActivity) {
+    super.onAttach(anActivity);
     try {
-      caller = (DeleteOneTrackCaller) activity;
+      caller = (DeleteOneTrackCaller) anActivity;
     } catch (ClassCastException e) {
-      throw new ClassCastException(activity.toString() + " must implement DeleteOneTrackCaller");
+      throw new ClassCastException(anActivity.toString() + " must implement DeleteOneTrackCaller");
     }
   }
 

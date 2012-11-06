@@ -28,7 +28,7 @@ limitations under the License.
     android:targetPackage="com.google.android.maps.mytracks" />
 
   <uses-sdk
-    android:minSdkVersion="7"
+    android:minSdkVersion="8"
     android:targetSdkVersion="16" />
 
   <application

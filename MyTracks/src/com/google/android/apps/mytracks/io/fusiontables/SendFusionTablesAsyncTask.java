@@ -39,6 +39,7 @@ import android.util.Log;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -397,7 +398,13 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
     }
 
     GenericUrl url = new GenericUrl(FUSION_TABLES_BASE_URL);
-    String sql = SQL_KEY + URLEncoder.encode(query);
+    String sql;
+    try {
+      sql = SQL_KEY + URLEncoder.encode(query, "UTF-8");
+    } catch (UnsupportedEncodingException e1) {
+      Log.d(TAG, "Unable to encode query", e1);
+      return false;
+    }
     ByteArrayInputStream inputStream = new ByteArrayInputStream(Strings.toBytesUtf8(sql));
     InputStreamContent inputStreamContent = new InputStreamContent(null, inputStream);
     HttpRequest request;

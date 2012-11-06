@@ -18,7 +18,6 @@ package com.google.android.apps.mytracks.io.gdata;
 import com.google.wireless.gdata.client.QueryParams;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -81,10 +80,8 @@ public class QueryParamsImpl extends QueryParams {
       try {
         encodedValue = URLEncoder.encode(value, "UTF-8");
       } catch (UnsupportedEncodingException uee) {
-        // should not happen.
-        Log.w("QueryParamsImpl", "UTF-8 not supported -- should not happen.  "
-            + "Using default encoding.", uee);
-        encodedValue = URLEncoder.encode(value);
+        // Should not happen
+        throw new IllegalStateException("Cannot encode " + value, uee);
       }
       sb.append(encodedValue);
     }

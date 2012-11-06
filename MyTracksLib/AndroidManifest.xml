@@ -25,7 +25,7 @@ limitations under the License.
      for details on what should go here vs in the application project.
   -->
   <uses-sdk
-    android:minSdkVersion="7"
+    android:minSdkVersion="8"
     android:targetSdkVersion="16" />
 
   <application

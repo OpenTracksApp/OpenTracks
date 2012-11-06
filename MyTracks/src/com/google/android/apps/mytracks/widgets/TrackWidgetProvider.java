@@ -264,7 +264,7 @@ public class TrackWidgetProvider extends AppWidgetProvider {
     } else {
       intent = IntentUtils.newIntent(context, TrackListActivity.class);
     }
-    TaskStackBuilder taskStackBuilder = TaskStackBuilder.from(context);
+    TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(context);
     taskStackBuilder.addNextIntent(intent);
     PendingIntent pendingIntent = taskStackBuilder.getPendingIntent(0, 0);
     remoteViews.setOnClickPendingIntent(R.id.track_widget_stats_container, pendingIntent);

@@ -139,14 +139,12 @@ public class AndroidGDataClient implements GDataClient {
    * @see GDataClient#encodeUri(java.lang.String)
    */
   public String encodeUri(String uri) {
-    String encodedUri;
+    String encodedUri = null;
     try {
       encodedUri = URLEncoder.encode(uri, "UTF-8");
     } catch (UnsupportedEncodingException uee) {
-      // should not happen.
-      Log.e("JakartaGDataClient", "UTF-8 not supported -- should not happen.  "
-          + "Using default encoding.", uee);
-      encodedUri = URLEncoder.encode(uri);
+      // Should not happen
+      throw new IllegalStateException("Cannot encode " + uri, uee);
     }
     return encodedUri;
   }

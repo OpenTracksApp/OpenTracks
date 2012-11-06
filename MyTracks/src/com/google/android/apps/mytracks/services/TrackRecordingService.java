@@ -1018,7 +1018,7 @@ public class TrackRecordingService extends Service {
     if (isRecording() && !isPaused()) {
       Intent intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
           .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, recordingTrackId);
-      TaskStackBuilder taskStackBuilder = TaskStackBuilder.from(this);
+      TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(this);
       taskStackBuilder.addNextIntent(intent);
 
       NotificationCompat.Builder builder = new NotificationCompat.Builder(this).setContentIntent(
@@ -1026,7 +1026,7 @@ public class TrackRecordingService extends Service {
           .setContentText(getString(R.string.track_record_notification))
           .setContentTitle(getString(R.string.my_tracks_app_name)).setOngoing(true)
           .setSmallIcon(R.drawable.my_tracks_notification_icon).setWhen(System.currentTimeMillis());
-      startForegroundService(builder.getNotification());
+      startForegroundService(builder.build());
     } else {
       stopForegroundService();
     }
