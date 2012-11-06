@@ -45,8 +45,7 @@ public class Api9Adapter extends Api8Adapter {
   public void enableStrictMode() {
     Log.d(Constants.TAG, "Enabling strict mode");
     StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-        .detectDiskWrites()
-        .detectNetwork()
+        .detectAll()
         .penaltyLog()
         .build());
     StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()

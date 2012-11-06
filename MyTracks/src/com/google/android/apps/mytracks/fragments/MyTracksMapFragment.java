@@ -80,7 +80,8 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
   private static final String
       KEEP_CURRENT_LOCATION_VISIBLE_KEY = "keep_current_location_visible_key";
   private static final String ZOOM_TO_CURRENT_LOCATION_KEY = "zoom_to_current_location_key";
-
+  private static final String MAP_TYPE = "map_type";
+  
   private static final float DEFAULT_ZOOM_LEVEL = 18f;
 
   // Google's latitude and longitude
@@ -148,12 +149,7 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
     });
     messageTextView = (TextView) layout.findViewById(R.id.map_message);
 
-    onMapInitialize(getMap());
-    return layout;
-  }
-
-  private void onMapInitialize(GoogleMap map) {
-    googleMap = map;
+    googleMap = getMap();
     googleMap.setMyLocationEnabled(true);
     googleMap.getUiSettings().setMyLocationButtonEnabled(false);
     googleMap.setIndoorEnabled(true);
@@ -199,6 +195,7 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
     });
     googleMap.moveCamera(
         CameraUpdateFactory.newLatLngZoom(getDefaultLatLng(), googleMap.getMinZoomLevel()));
+    return layout;
   }
 
   @Override
@@ -210,6 +207,9 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
       zoomToCurrentLocation = savedInstanceState.getBoolean(ZOOM_TO_CURRENT_LOCATION_KEY, false);
       currentLocation = (Location) savedInstanceState.getParcelable(CURRENT_LOCATION_KEY);
       updateCurrentLocation();
+      if (googleMap != null) {
+        googleMap.setMapType(savedInstanceState.getInt(MAP_TYPE, GoogleMap.MAP_TYPE_NORMAL));
+      }
     }
   }
 
@@ -227,6 +227,9 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
     }
     outState.putBoolean(KEEP_CURRENT_LOCATION_VISIBLE_KEY, keepCurrentLocationVisible);
     outState.putBoolean(ZOOM_TO_CURRENT_LOCATION_KEY, zoomToCurrentLocation);
+    if (googleMap != null) {
+      outState.putInt(MAP_TYPE, googleMap.getMapType());
+    }
   }
 
   @Override
@@ -264,6 +267,34 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
   }
 
   @Override
+  public void onPrepareOptionsMenu(Menu menu) {
+    if (googleMap != null) {
+      int id;
+      switch (googleMap.getMapType()) {
+        case GoogleMap.MAP_TYPE_NORMAL:
+          id = R.id.menu_map;
+          break;
+        case GoogleMap.MAP_TYPE_SATELLITE:
+          id = R.id.menu_satellite;
+          break;
+        case GoogleMap.MAP_TYPE_HYBRID:
+          id = R.id.menu_satellite_with_streets;
+          break;
+        case GoogleMap.MAP_TYPE_TERRAIN:
+          id = R.id.menu_terrain;
+          break;
+        default:
+          id = R.id.menu_map;
+      }
+      MenuItem menuItem = menu.findItem(id);
+      if (menuItem != null) {
+        menuItem.setChecked(true);
+      }
+    }
+    super.onPrepareOptionsMenu(menu);
+  }
+
+  @Override
   public boolean onOptionsItemSelected(MenuItem menuItem) {
     int type = GoogleMap.MAP_TYPE_NORMAL;
     switch (menuItem.getItemId()) {
@@ -273,6 +304,9 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
       case R.id.menu_satellite:
         type = GoogleMap.MAP_TYPE_SATELLITE;
         break;
+      case R.id.menu_satellite_with_streets:
+        type = GoogleMap.MAP_TYPE_HYBRID;
+        break;
       case R.id.menu_terrain:
         type = GoogleMap.MAP_TYPE_TERRAIN;
         break;
@@ -281,6 +315,7 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
     }
     if (googleMap != null) {
       googleMap.setMapType(type);
+      menuItem.setChecked(true);
     }
     return true;
   }

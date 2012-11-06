@@ -1189,6 +1189,13 @@ limitations under the License.
       Character limit: ~20 (1 line)">
     Satellite
   </string>
+  <string name="menu_satellite_with_streets"
+    translation_description="In the menu, under the map layer option, the submenu to display
+      satellite with major streets.
+
+      Character limit: ~20 (1 line)">
+    Satellite with streets
+  </string>
   <string name="menu_save"
     translation_description="In the menu, to save a track to the external storage.
 

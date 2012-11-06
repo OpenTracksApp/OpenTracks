@@ -21,15 +21,20 @@ limitations under the License.
     android:showAsAction="ifRoom"
     android:title="@string/menu_map_layer">
     <menu>
-      <item
-        android:id="@+id/menu_map"
-        android:title="@string/menu_map"/>
-      <item
-        android:id="@+id/menu_satellite"
-        android:title="@string/menu_satellite"/>
-      <item
-        android:id="@+id/menu_terrain"
-        android:title="@string/menu_terrain"/>
+      <group android:checkableBehavior="single" >
+        <item
+          android:id="@+id/menu_map"
+          android:title="@string/menu_map"/>
+        <item
+          android:id="@+id/menu_satellite"
+          android:title="@string/menu_satellite"/>
+        <item
+          android:id="@+id/menu_satellite_with_streets"
+          android:title="@string/menu_satellite_with_streets"/>
+        <item
+          android:id="@+id/menu_terrain"
+          android:title="@string/menu_terrain"/>
+      </group>
     </menu>
   </item>
 </menu>
