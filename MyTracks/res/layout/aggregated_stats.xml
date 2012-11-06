@@ -18,7 +18,7 @@ limitations under the License.
   style="@style/ScrollView">
   <TableLayout
     android:layout_height="wrap_content"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:padding="8dp"
     android:shrinkColumns="0,2"
     android:stretchColumns="0,2" >

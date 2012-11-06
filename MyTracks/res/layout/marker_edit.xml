@@ -15,13 +15,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_height="fill_parent"
-  android:layout_width="fill_parent"
+  android:layout_height="match_parent"
+  android:layout_width="match_parent"
   android:orientation="vertical" >
   <ScrollView style="@style/ScrollView.WithBottomButtons" >
     <LinearLayout
       android:layout_height="wrap_content"
-      android:layout_width="fill_parent"
+      android:layout_width="match_parent"
       android:orientation="vertical"
       android:padding="8dp" >
       <TextView
@@ -30,7 +30,7 @@ limitations under the License.
       <LinearLayout
         android:id="@+id/marker_edit_statistics_section"
         android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:orientation="vertical" >
         <EditText
           android:drawableLeft="@drawable/yellow_pushpin"
@@ -42,7 +42,7 @@ limitations under the License.
       <LinearLayout
         android:id="@+id/marker_edit_waypoint_section"
         android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:orientation="vertical" >
         <EditText
           android:drawableLeft="@drawable/blue_pushpin"

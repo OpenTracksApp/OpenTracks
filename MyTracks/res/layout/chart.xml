@@ -15,14 +15,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_height="fill_parent"
-  android:layout_width="fill_parent"
+  android:layout_height="match_parent"
+  android:layout_width="match_parent"
   android:orientation="vertical" >
   <LinearLayout
     android:id="@+id/chart_view_layout"
     android:layout_height="0dp"
     android:layout_weight="1"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:orientation="vertical" >
   </LinearLayout>
   <ZoomControls
@@ -30,6 +30,6 @@ limitations under the License.
     android:gravity="right"
     android:id="@+id/chart_zoom_controls"
     android:layout_height="wrap_content"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:paddingRight="8dp" />
 </LinearLayout>

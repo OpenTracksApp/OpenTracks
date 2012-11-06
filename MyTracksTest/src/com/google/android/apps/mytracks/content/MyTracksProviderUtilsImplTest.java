@@ -453,9 +453,8 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
         return MyTracksProviderUtilsImplTest.MOCK_DESC;
       }
   
-      @SuppressWarnings("hiding")
       @Override
-      public String generateTrackDescription(Track track, Vector<Double> distances,
+      public String generateTrackDescription(Track aTrack, Vector<Double> distances,
           Vector<Double> elevations, boolean html) {
         return null;
       }
@@ -509,9 +508,8 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
         return MyTracksProviderUtilsImplTest.MOCK_DESC;
       }
   
-      @SuppressWarnings("hiding")
       @Override
-      public String generateTrackDescription(Track track, Vector<Double> distances,
+      public String generateTrackDescription(Track aTrack, Vector<Double> distances,
           Vector<Double> elevations, boolean html) {
         return null;
       }
@@ -653,14 +651,8 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
   }
 
   /**
-   * Tests the method {@link MyTracksProviderUtilsImpl#createLocation(Cursor)}.
-   * This test also covers the method
-   * {@link MyTracksProviderUtilsImpl#fillLocation(Cursor, Location)} and
-   * {@link MyTracksProviderUtilsImpl#fillLocation(Cursor, MyTracksProviderUtilsImpl.CachedTrackPointsIndexes, Location)}
-   * and the inner class
-   * {@link MyTracksProviderUtilsImpl.CachedTrackPointsIndexes}.
+   * Tests the method {@link MyTracksProviderUtilsImpl#createTrackPoint(Cursor)}.
    */
-  @SuppressWarnings("javadoc")
   @UsesMocks(Cursor.class)
   public void testCreateTrackPoint() {
     Cursor cursorMock = AndroidMock.createNiceMock(Cursor.class);

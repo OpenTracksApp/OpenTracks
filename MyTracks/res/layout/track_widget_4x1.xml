@@ -30,7 +30,7 @@ limitations under the License.
       style="@style/TrackWidgetButtonRecord" />
     <LinearLayout
       android:id="@+id/track_widget_stats_container"
-      android:layout_height="fill_parent"
+      android:layout_height="match_parent"
       android:layout_weight="18"
       android:layout_width="0dp"
       android:padding="0dp"

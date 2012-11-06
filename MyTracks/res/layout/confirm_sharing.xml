@@ -18,7 +18,7 @@ limitations under the License.
   style="@style/ScrollView" >
   <LinearLayout
     android:layout_height="wrap_content"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:orientation="vertical"
     android:paddingBottom="12dp"
     android:paddingLeft="14dp"
@@ -32,7 +32,7 @@ limitations under the License.
       android:id="@+id/confirm_sharing_check_box"
       android:layout_height="wrap_content"
       android:layout_marginTop="8dp"
-      android:layout_width="fill_parent"
+      android:layout_width="match_parent"
       android:text="@string/generic_do_not_show_again"
       style="@style/TextMedium" />
   </LinearLayout>

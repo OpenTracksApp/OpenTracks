@@ -16,15 +16,15 @@ limitations under the License.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:id="@+id/map_container"
-  android:layout_height="fill_parent"
-  android:layout_width="fill_parent" >
+  android:layout_height="match_parent"
+  android:layout_width="match_parent" >
   <TextView
     android:background="@color/warning_background"
     android:drawableLeft="@drawable/warning"
     android:gravity="center"
     android:id="@+id/map_message"
     android:layout_alignParentTop="true"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:padding="8dp"
     android:textColor="@android:color/primary_text_dark"
     android:visibility="gone"

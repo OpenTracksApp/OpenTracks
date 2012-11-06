@@ -17,7 +17,7 @@ limitations under the License.
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:gravity="center_vertical"
   android:layout_height="wrap_content"
-  android:layout_width="fill_parent"
+  android:layout_width="match_parent"
   android:minHeight="?android:attr/listPreferredItemHeight"
   android:orientation="horizontal"
   android:padding="8dp" >
@@ -29,11 +29,11 @@ limitations under the License.
   <LinearLayout
     android:layout_height="wrap_content"
     android:layout_marginLeft="8dp"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:orientation="vertical" >
     <LinearLayout
       android:layout_height="wrap_content"
-      android:layout_width="fill_parent"
+      android:layout_width="match_parent"
       android:orientation="horizontal" >
       <TextView
         android:id="@+id/list_item_name"
@@ -47,7 +47,7 @@ limitations under the License.
     </LinearLayout>
     <LinearLayout
       android:layout_height="wrap_content"
-      android:layout_width="fill_parent"
+      android:layout_width="match_parent"
       android:orientation="horizontal" >
       <TextView
         android:id="@+id/list_item_total_time"

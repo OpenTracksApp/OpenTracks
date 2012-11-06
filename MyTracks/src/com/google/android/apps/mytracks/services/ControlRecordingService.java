@@ -103,21 +103,21 @@ public class ControlRecordingService extends IntentService implements ServiceCon
    * Handles the intent to start or stop a recording.
    * 
    * @param intent to be handled
-   * @param trackRecordingService the trackRecordingService
+   * @param service the trackRecordingService
    */
   @VisibleForTesting
-  void onHandleIntent(Intent intent, @SuppressWarnings("hiding") ITrackRecordingService trackRecordingService) {
+  void onHandleIntent(Intent intent, ITrackRecordingService service) {
     String action = intent.getAction();
     if (action != null) {
       try {
         if (action.equals(getString(R.string.track_action_start))) {
-          trackRecordingService.startNewTrack();
+          service.startNewTrack();
         } else if (action.equals(getString(R.string.track_action_end))) {
-          trackRecordingService.endCurrentTrack();
+          service.endCurrentTrack();
         } else if (action.equals(getString(R.string.track_action_pause))) {
-          trackRecordingService.pauseCurrentTrack();
+          service.pauseCurrentTrack();
         } else if (action.equals(getString(R.string.track_action_resume))) {
-          trackRecordingService.resumeCurrentTrack();
+          service.resumeCurrentTrack();
         }
       } catch (RemoteException e) {
         Log.d(TAG, "ControlRecordingService onHandleIntent RemoteException", e);

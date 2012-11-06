@@ -15,12 +15,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_height="fill_parent"
-  android:layout_width="fill_parent" >
+  android:layout_height="match_parent"
+  android:layout_width="match_parent" >
   <ListView
     android:id="@+id/search_list"
-    android:layout_height="fill_parent"
-    android:layout_width="fill_parent" />
+    android:layout_height="match_parent"
+    android:layout_width="match_parent" />
   <TextView
     android:id="@+id/search_list_empty"
     android:text="@string/search_list_empty_message"

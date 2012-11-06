@@ -18,7 +18,7 @@ limitations under the License.
   style="@style/ScrollView" >
   <LinearLayout
     android:layout_height="wrap_content"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:orientation="vertical"
     android:padding="8dp" >
     <TextView
@@ -27,7 +27,7 @@ limitations under the License.
     <LinearLayout
       android:id="@+id/marker_detail_waypoint_section"
       android:layout_height="wrap_content"
-      android:layout_width="fill_parent"
+      android:layout_width="match_parent"
       android:orientation="vertical" >
       <TextView
         android:id="@+id/marker_detail_waypoint_marker_type"
@@ -39,14 +39,14 @@ limitations under the License.
     <LinearLayout
       android:id="@+id/marker_detail_statistics_section"
       android:layout_height="wrap_content"
-      android:layout_width="fill_parent"
+      android:layout_width="match_parent"
       android:orientation="vertical" >
       <TextView
         android:text="@string/marker_detail_statistics_title"
         style="@style/TextLarge.WithTopMargin" />
       <TableLayout
         android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:paddingTop="8dp"
         android:shrinkColumns="0,2"
         android:stretchColumns="0,2" >
