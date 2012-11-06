@@ -1,10 +1,10 @@
 package com.google.android.apps.mytracks.services.sensors;
 
 import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.test.AndroidTestCase;
@@ -12,7 +12,6 @@ import android.test.suitebuilder.annotation.SmallTest;
 
 public class SensorManagerFactoryTest extends AndroidTestCase {
 
-  @TargetApi(9)
   @Override
   protected void setUp() throws Exception {
     super.setUp();
@@ -20,7 +19,7 @@ public class SensorManagerFactoryTest extends AndroidTestCase {
     SharedPreferences sharedPreferences = getContext().getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     // Let's use default values.
-    sharedPreferences.edit().clear().apply();
+    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(sharedPreferences.edit().clear());
   }
 
   @SmallTest

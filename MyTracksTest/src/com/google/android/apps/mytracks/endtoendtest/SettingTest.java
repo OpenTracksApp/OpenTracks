@@ -19,7 +19,6 @@ import com.google.android.apps.mytracks.ChartView;
 import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.maps.mytracks.R;
 
-import android.annotation.TargetApi;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.CheckBox;
@@ -36,7 +35,6 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
   private Instrumentation instrumentation;
   private TrackListActivity activityMyTracks;
 
-  @TargetApi(8)
   public SettingTest() {
     super(TrackListActivity.class);
   }

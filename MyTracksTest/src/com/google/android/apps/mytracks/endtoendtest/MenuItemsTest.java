@@ -18,7 +18,6 @@ package com.google.android.apps.mytracks.endtoendtest;
 import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.maps.mytracks.R;
 
-import android.annotation.TargetApi;
 import android.app.Instrumentation;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
@@ -38,7 +37,6 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
   private TrackListActivity activityMyTracks;
   private final static String SHARE_ITEM_PARENT_VIEW_NAME = "RecycleListView";
 
-  @TargetApi(8)
   public MenuItemsTest() {
     super(TrackListActivity.class);
   }

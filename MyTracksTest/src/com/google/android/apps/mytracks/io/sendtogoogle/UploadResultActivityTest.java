@@ -18,7 +18,6 @@ package com.google.android.apps.mytracks.io.sendtogoogle;
 
 import com.google.android.maps.mytracks.R;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
@@ -50,7 +49,6 @@ public class UploadResultActivityTest extends
   /**
    * This method is necessary for ActivityInstrumentationTestCase2.
    */
-  @TargetApi(8)
   public UploadResultActivityTest() {
     super(UploadResultActivity.class);
   }

@@ -43,7 +43,9 @@ limitations under the License.
           </LinearLayout>
         </LinearLayout>
         <!-- vertical separator -->
-        <LinearLayout style="@style/TrackWidgetVerticalSeparator" >
+        <LinearLayout
+          android:baselineAligned="false"
+          style="@style/TrackWidgetVerticalSeparator" >
           <LinearLayout
             android:layout_weight="2"
             style="@style/TrackWidgetVerticalSpacer" />
@@ -102,7 +104,9 @@ limitations under the License.
           </LinearLayout>
         </LinearLayout>
         <!-- vertical separator -->
-        <LinearLayout style="@style/TrackWidgetVerticalSeparator" >
+        <LinearLayout
+          android:baselineAligned="false"
+          style="@style/TrackWidgetVerticalSeparator" >
           <LinearLayout
             android:layout_weight="1"
             style="@style/TrackWidgetVerticalLine" />

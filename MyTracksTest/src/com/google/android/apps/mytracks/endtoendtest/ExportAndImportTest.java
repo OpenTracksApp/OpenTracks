@@ -19,7 +19,6 @@ import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.maps.mytracks.R;
 
-import android.annotation.TargetApi;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 
@@ -35,7 +34,6 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
   private Instrumentation instrumentation;
   private TrackListActivity activityMyTracks;
 
-  @TargetApi(8)
   public ExportAndImportTest() {
     super(TrackListActivity.class);
   }

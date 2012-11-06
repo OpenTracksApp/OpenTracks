@@ -19,7 +19,6 @@ import com.google.android.apps.mytracks.content.DescriptionGenerator;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 
-import android.annotation.TargetApi;
 import android.location.Location;
 
 import java.util.List;
@@ -113,7 +112,6 @@ public class KmlTrackWriterTest extends TrackFormatWriterTest {
    * @param tag the parent tag
    * @param locations list of expected locations
    */
-  @TargetApi(8)
   private void assertTagHasPoints(Element tag, Location... locations) {
     List<Element> coordTags = getChildElements(tag, "gx:coord", locations.length);
     for (int i = 0; i < locations.length; i++) {

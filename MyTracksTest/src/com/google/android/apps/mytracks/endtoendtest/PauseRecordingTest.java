@@ -20,7 +20,6 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
 
-import android.annotation.TargetApi;
 import android.app.Instrumentation;
 import android.location.Location;
 import android.test.ActivityInstrumentationTestCase2;
@@ -36,7 +35,6 @@ public class PauseRecordingTest extends ActivityInstrumentationTestCase2<TrackLi
   private Instrumentation instrumentation;
   private TrackListActivity activityMyTracks;
 
-  @TargetApi(15)
   public PauseRecordingTest() {
     super(TrackListActivity.class);
   }

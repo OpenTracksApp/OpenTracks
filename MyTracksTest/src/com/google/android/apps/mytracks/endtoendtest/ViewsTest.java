@@ -20,7 +20,6 @@ import com.google.android.apps.mytracks.fragments.MyTracksMapFragment;
 import com.google.android.maps.MapView;
 import com.google.android.maps.mytracks.R;
 
-import android.annotation.TargetApi;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
@@ -37,7 +36,6 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
   private Instrumentation instrumentation;
   private TrackListActivity activityMyTracks;
 
-  @TargetApi(8)
   public ViewsTest() {
     super(TrackListActivity.class);
   }

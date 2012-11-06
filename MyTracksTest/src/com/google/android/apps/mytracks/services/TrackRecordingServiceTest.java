@@ -24,10 +24,10 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
-import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -126,7 +126,6 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     super.shutdownService();
   }
 
-  @TargetApi(9)
   @Override
   protected void setUp() throws Exception {
     super.setUp();
@@ -195,7 +194,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     SharedPreferences sharedPreferences = context.getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     // Let's use default values.
-    sharedPreferences.edit().clear().apply();
+    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(sharedPreferences.edit().clear());
 
     // Disable auto resume by default.
     updateAutoResumePrefs(PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT, 0);

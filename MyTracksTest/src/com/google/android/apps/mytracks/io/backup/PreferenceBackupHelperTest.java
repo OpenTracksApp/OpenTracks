@@ -15,7 +15,8 @@
  */
 package com.google.android.apps.mytracks.io.backup;
 
-import android.annotation.TargetApi;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
+
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.test.AndroidTestCase;
@@ -175,7 +176,6 @@ public class PreferenceBackupHelperTest extends AndroidTestCase {
     preferenceBackupHelper = new PreferenceBackupHelper(getContext());
   }
 
-  @TargetApi(9)
   public void testExportImportPreferences() throws Exception {
     // Populate with some initial values
     Editor editor = preferences.edit();
@@ -186,7 +186,7 @@ public class PreferenceBackupHelperTest extends AndroidTestCase {
     editor.putInt("int1", 42);
     editor.putLong("long1", 123456789L);
     editor.putString("str1", "lolcat");
-    editor.apply();
+    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
 
     // Export it
     byte[] exported = preferenceBackupHelper.exportPreferences(preferences);
@@ -196,7 +196,7 @@ public class PreferenceBackupHelperTest extends AndroidTestCase {
     editor.clear();
     editor.putString("str2", "Shouldn't be there after restore");
     editor.putBoolean("bool2", true);
-    editor.apply();
+    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
 
     // Import it back
     preferenceBackupHelper.importPreferences(exported, preferences);

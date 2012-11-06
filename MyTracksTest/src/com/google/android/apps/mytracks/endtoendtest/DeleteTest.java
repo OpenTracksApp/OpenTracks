@@ -18,7 +18,6 @@ package com.google.android.apps.mytracks.endtoendtest;
 import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.maps.mytracks.R;
 
-import android.annotation.TargetApi;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.ListView;
@@ -35,7 +34,6 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
   private Instrumentation instrumentation;
   private TrackListActivity activityMyTracks;
 
-  @TargetApi(16)
   public DeleteTest() {
     super(TrackListActivity.class);
   }

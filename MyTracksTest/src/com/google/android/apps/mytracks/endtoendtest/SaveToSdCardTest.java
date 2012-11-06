@@ -17,7 +17,6 @@ package com.google.android.apps.mytracks.endtoendtest;
 
 import com.google.android.apps.mytracks.TrackListActivity;
 
-import android.annotation.TargetApi;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 
@@ -31,7 +30,6 @@ public class SaveToSdCardTest extends ActivityInstrumentationTestCase2<TrackList
   private Instrumentation instrumentation;
   private TrackListActivity activityMyTracks;
 
-  @TargetApi(8)
   public SaveToSdCardTest() {
     super(TrackListActivity.class);
   }
