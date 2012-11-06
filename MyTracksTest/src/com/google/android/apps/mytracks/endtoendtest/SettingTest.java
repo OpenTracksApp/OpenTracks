@@ -276,12 +276,12 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_recording));
     // Changes the setting of recording name.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
-        .getString(R.string.settings_recording_track_name));
+        .getString(R.string.settings_recording_track_name_title));
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
         .getString(R.string.settings_recording_track_name_number_option));
     // Changes the setting of default activity.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
-        .getString(R.string.settings_recording_default_activity));
+        .getString(R.string.settings_recording_default_activity_title));
     EndToEndTestUtils.enterTextAvoidSoftKeyBoard(0, EndToEndTestUtils.DEFAULTACTIVITY);
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);

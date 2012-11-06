@@ -69,16 +69,16 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
     assertTrue(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings),
         false));
     assertFalse(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_satellite_mode), false));
-    assertFalse(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_map_mode),
+        activityMyTracks.getString(R.string.menu_satellite), false));
+    assertFalse(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_map),
         false));
 
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
     assertTrue(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings),
         false));
     assertFalse(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_satellite_mode), false));
-    assertFalse(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_map_mode),
+        activityMyTracks.getString(R.string.menu_satellite), false));
+    assertFalse(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_map),
         false));
 
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_map_tab));
@@ -86,9 +86,9 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
     assertTrue(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings),
         false));
     assertTrue(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_satellite_mode), false)
+        activityMyTracks.getString(R.string.menu_satellite), false)
         || EndToEndTestUtils
-            .findMenuItem(activityMyTracks.getString(R.string.menu_map_mode), false));
+            .findMenuItem(activityMyTracks.getString(R.string.menu_map), false));
   }
 
   /**
@@ -101,14 +101,14 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
     // Check current mode.
     boolean isMapMode = true;
     // If can not find switch menu in top menu, click More menu.
-    if (!EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_satellite_mode),
+    if (!EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_satellite),
         false)) {
       isMapMode = false;
     }
     EndToEndTestUtils.showMenuItem();
     // Switch to satellite mode if it's map mode now..
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
-        .getString(isMapMode ? R.string.menu_satellite_mode : R.string.menu_map_mode));
+        .getString(isMapMode ? R.string.menu_satellite : R.string.menu_map));
 
     isMapMode = !isMapMode;
 
@@ -124,7 +124,7 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
     // Switch back.
     EndToEndTestUtils.showMenuItem();
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
-        .getString(isMapMode ? R.string.menu_satellite_mode : R.string.menu_map_mode));
+        .getString(isMapMode ? R.string.menu_satellite : R.string.menu_map));
     isMapMode = !isMapMode;
     allViews = EndToEndTestUtils.SOLO.getViews();
     for (View view : allViews) {
