@@ -22,7 +22,6 @@ import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.TrackDataType;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.fragments.CheckUnitsDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteAllTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment.DeleteOneTrackCaller;
@@ -163,7 +162,8 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
             runOnUiThread(new Runnable() {
                 @Override
               public void run() {
-                boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+                boolean isRecording = recordingTrackId
+                    != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
                 updateMenuItems(isRecording);
                 resourceCursorAdapter.notifyDataSetChanged();
                 trackController.update(isRecording, recordingTrackPaused);
@@ -428,7 +428,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
 
     // Update track data hub
     handleStartGps();
-    
+
     // Update UI
     boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
     updateMenuItems(isRecording);
@@ -449,7 +449,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
 
     // Update track data hub
     trackDataHub.unregisterTrackDataListener(trackDataListener);
-    
+
     // Update UI
     trackController.stop();
   }
@@ -594,13 +594,6 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
       if (fragment == null) {
         new WelcomeDialogFragment().show(
             getSupportFragmentManager(), WelcomeDialogFragment.WELCOME_DIALOG_TAG);
-      }
-    } else if (EulaUtils.getShowCheckUnits(this)) {
-      Fragment fragment = getSupportFragmentManager()
-          .findFragmentByTag(CheckUnitsDialogFragment.CHECK_UNITS_DIALOG_TAG);
-      if (fragment == null) {
-        new CheckUnitsDialogFragment().show(
-            getSupportFragmentManager(), CheckUnitsDialogFragment.CHECK_UNITS_DIALOG_TAG);
       }
     } else {
       /*

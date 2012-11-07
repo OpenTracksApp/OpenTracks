@@ -31,7 +31,6 @@ public class EulaUtils {
   // Accepting Google mobile terms of service
   private static final String ACCEPT_EULA_PREFERENCE_KEY = "eula.google_mobile_tos_accepted";
   private static final String SHOW_WELCOME_PREFERENCE_KEY = "showWelcome";
-  private static final String SHOW_CHECK_UNITS_PREFERENCE_KEY = "showCheckUnits";
   
   private EulaUtils() {}
 
@@ -50,15 +49,7 @@ public class EulaUtils {
   public static void setShowWelcome(Context context) {
     setValue(context, SHOW_WELCOME_PREFERENCE_KEY, false);
   }
-
-  public static boolean getShowCheckUnits(Context context) {
-    return getValue(context, SHOW_CHECK_UNITS_PREFERENCE_KEY, true);
-  }
-
-  public static void setShowCheckUnits(Context context) {
-    setValue(context, SHOW_CHECK_UNITS_PREFERENCE_KEY, false);
-  }
-  
+ 
   private static boolean getValue(Context context, String key, boolean defaultValue) {
     SharedPreferences sharedPreferences = context.getSharedPreferences(
         EULA_PREFERENCE_FILE, Context.MODE_PRIVATE);
