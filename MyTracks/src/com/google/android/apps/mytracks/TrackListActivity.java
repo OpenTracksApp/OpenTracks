@@ -47,6 +47,7 @@ import com.google.android.maps.mytracks.R;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -86,6 +87,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
 
   private static final String TAG = TrackListActivity.class.getSimpleName();
   private static final String START_GPS_KEY = "start_gps_key";
+  private static final int GOOGLE_PLAY_SERVICES_REQUEST_CODE = 0;
   private static final String[] PROJECTION = new String[] { TracksColumns._ID, TracksColumns.NAME,
       TracksColumns.DESCRIPTION, TracksColumns.CATEGORY, TracksColumns.STARTTIME,
       TracksColumns.TOTALDISTANCE, TracksColumns.TOTALTIME, TracksColumns.ICON };
@@ -434,15 +436,8 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
     updateMenuItems(isRecording);
     resourceCursorAdapter.notifyDataSetChanged();
     trackController.update(isRecording, recordingTrackPaused);
-
-    // Check Google Play Services
-    int code = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-    if (code != ConnectionResult.SUCCESS) {
-      Dialog dialog = GooglePlayServicesUtil.getErrorDialog(code, this, 0);
-      dialog.show();
-    }
   }
-
+  
   @Override
   protected void onPause() {
     super.onPause();
@@ -472,6 +467,15 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
   protected void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
     outState.putBoolean(START_GPS_KEY, startGps);
+  }
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    if (requestCode == GOOGLE_PLAY_SERVICES_REQUEST_CODE) {
+      checkGooglePlayServices();
+    } else {
+      super.onActivityResult(requestCode, resultCode, data);
+    }
   }
 
   @Override
@@ -601,6 +605,25 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
        * doesn't show through.
        */
       findViewById(R.id.track_list_empty_view).setVisibility(View.VISIBLE);
+      
+      checkGooglePlayServices();
+    }
+  }
+
+  private void checkGooglePlayServices() {
+    int code = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+    if (code != ConnectionResult.SUCCESS) {
+      Dialog dialog = GooglePlayServicesUtil.getErrorDialog(
+          code, this, GOOGLE_PLAY_SERVICES_REQUEST_CODE, new DialogInterface.OnCancelListener() {
+  
+              @Override
+            public void onCancel(DialogInterface dialogInterface) {
+              finish();
+            }
+          });
+      if (dialog != null) {
+        dialog.show();
+      }
     }
   }
 
