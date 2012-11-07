@@ -125,6 +125,7 @@ public class EndToEndTestUtils {
   static boolean isEmulator = true;
   static boolean hasGpsSingal = true;
   static boolean isCheckedFirstLaunch = false;
+  static boolean isGooglePlayServicesLatest = true;
   public static final String LOG_TAG = "MyTracksTest";
 
   private EndToEndTestUtils() {}
@@ -228,6 +229,13 @@ public class EndToEndTestUtils {
   private static void setIsEmulator() {
     isEmulator = android.os.Build.MODEL.equals("google_sdk");
   }
+  
+  /**
+  * Checks whether the Google Play Services need update.
+  */
+  private static boolean isGooglePlayServicesLatest() {
+    return !SOLO.searchText(activityMytracks.getString(R.string.common_google_play_services_update_text));
+  }
 
   /**
    * A setup for debugging end-to-end tests.
@@ -254,9 +262,21 @@ public class EndToEndTestUtils {
     EndToEndTestUtils.activityMytracks = activityMyTracks;
     SOLO = new Solo(EndToEndTestUtils.instrumentation, EndToEndTestUtils.activityMytracks);
 
+    if (!isGooglePlayServicesLatest) {
+      SOLO.finishOpenedActivities();
+      Assert.fail();
+      Log.e(LOG_TAG, "Need update Google Play Services");
+    }
+
     // Check if open MyTracks first time after install. If so, there would be a
     // welcome view with accept buttons. And makes sure only check once.
     if (!isCheckedFirstLaunch) {
+      isGooglePlayServicesLatest = isGooglePlayServicesLatest();
+      if (!isGooglePlayServicesLatest) {
+        SOLO.finishOpenedActivities();
+        Assert.fail();
+        Log.e(LOG_TAG, "Need update Google Play Services");
+      }
       setIsEmulator();
       if ((getButtonOnScreen(EndToEndTestUtils.activityMytracks.getString(R.string.eula_accept),
           false, false) != null)) {
@@ -281,11 +301,11 @@ public class EndToEndTestUtils {
         SOLO.goBack();
       }
     } else if (SOLO.waitForText(
-      // After reset setting, welcome page will show again.
-          activityMytracks.getString(R.string.welcome_title), 0, SHORT_WAIT_TIME)) {
-        resetPreferredUnits();
+    // After reset setting, welcome page will show again.
+        activityMytracks.getString(R.string.welcome_title), 0, SHORT_WAIT_TIME)) {
+      resetPreferredUnits();
     }
-    
+
     // Check whether is under recording. If previous test failed, the recording
     // may not be recording.
     if (isUnderRecording()) {
