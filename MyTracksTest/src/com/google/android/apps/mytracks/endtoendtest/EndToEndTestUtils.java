@@ -626,7 +626,7 @@ public class EndToEndTestUtils {
     } else {
       // Non-ICS phone.
       SOLO.sendKey(KeyEvent.KEYCODE_MENU);
-      if (SOLO.getText(menuName) != null) {
+      if (SOLO.searchText(menuName, 1, true)) {
         findResult = true;
       } else if (SOLO.searchText(MENU_MORE, 1, true)) {
         SOLO.clickOnText(MENU_MORE);

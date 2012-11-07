@@ -184,6 +184,27 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
     assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks.getString(R.string.menu_voice_frequency), 1, true, true));
     assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks.getString(R.string.menu_split_frequency), 1, true, true));
   }
+  
+  /**
+   * Tests starting and stopping GPS.
+   */
+  public void testGPSMenu() {
+    boolean GPSStatus = EndToEndTestUtils.findMenuItem(
+        activityMyTracks.getString(R.string.menu_stop_gps), false);
+    
+    // Following starting/stopping or stopping/starting GPS.
+    EndToEndTestUtils.findMenuItem(GPSStatus ? activityMyTracks.getString(R.string.menu_stop_gps)
+        : activityMyTracks.getString(R.string.menu_start_gps), true);
+    GPSStatus = !GPSStatus;
+    assertEquals(GPSStatus, EndToEndTestUtils.findMenuItem(
+        activityMyTracks.getString(R.string.menu_stop_gps), false));
+    
+    EndToEndTestUtils.findMenuItem(GPSStatus ? activityMyTracks.getString(R.string.menu_stop_gps)
+        : activityMyTracks.getString(R.string.menu_start_gps), true);
+    GPSStatus = !GPSStatus;
+    assertEquals(GPSStatus, EndToEndTestUtils.findMenuItem(
+        activityMyTracks.getString(R.string.menu_stop_gps), false));
+  }
 
   @Override
   protected void tearDown() throws Exception {
