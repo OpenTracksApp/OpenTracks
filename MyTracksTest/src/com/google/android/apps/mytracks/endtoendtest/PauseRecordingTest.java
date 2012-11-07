@@ -144,5 +144,11 @@ public class PauseRecordingTest extends ActivityInstrumentationTestCase2<TrackLi
       assertEquals(expectResumeNumber, numberOfResumePoint);
     }
   }
+  
+  @Override
+  protected void tearDown() throws Exception {
+    EndToEndTestUtils.SOLO.finishOpenedActivities();
+    super.tearDown();
+  }
 
 }
