@@ -30,13 +30,13 @@ import java.util.ArrayList;
  * 
  * @author Youtao Liu
  */
-public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<TrackListActivity> {
+public class CreateTrackTest extends ActivityInstrumentationTestCase2<TrackListActivity> {
 
   private static final String WAYPOINT_NAME = "testWaypoint";
   private Instrumentation instrumentation;
   private TrackListActivity activityMyTracks;
 
-  public CreateAndSendTrackTest() {
+  public CreateTrackTest() {
     super(TrackListActivity.class);
   }
 
@@ -84,25 +84,6 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
   }
   
   /**
-   * Check all services and send to google.
-   */
-  public void testCreateAndSendTrack_send() {
-    EndToEndTestUtils.createTrackIfEmpty(1, false);
-    instrumentation.waitForIdleSync();
-    checkSendTrackToGoogle();
-  }
-  
-  /**
-   * Check all services and send to google.
-   */
-  public void testCreateAndSendTrack_sendPausedTrack() {
-    EndToEndTestUtils.deleteAllTracks();
-    EndToEndTestUtils.createTrackWithPause(3);
-    instrumentation.waitForIdleSync();
-    checkSendTrackToGoogle();
-  }
-
-  /**
    * Tests editing a track.
    */
   public void testEditTrack() {
@@ -111,7 +92,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_edit), true);
 
     String newTrackName = EndToEndTestUtils.TRACK_NAME_PREFIX + "_new" + System.currentTimeMillis();
-    String newType = EndToEndTestUtils.DEFAULTACTIVITY; 
+    String newType = EndToEndTestUtils.activityType; 
     String newDesc = "desc" + newTrackName;
 
     instrumentation.waitForIdleSync();
@@ -154,7 +135,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     EndToEndTestUtils.stopRecording(false);
     EndToEndTestUtils.trackName = EndToEndTestUtils.TRACK_NAME_PREFIX + System.currentTimeMillis();
     EndToEndTestUtils.SOLO.enterText(0, EndToEndTestUtils.trackName);
-    EndToEndTestUtils.SOLO.enterText(1, EndToEndTestUtils.DEFAULTACTIVITY);
+    EndToEndTestUtils.SOLO.enterText(1, EndToEndTestUtils.activityType);
 
     EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_save));
 
@@ -191,8 +172,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
 
     // Test should show relative time for createSimpleTrack would save a track
     // name that is different with the start time.
-    EndToEndTestUtils.createSimpleTrack(2);
-    EndToEndTestUtils.SOLO.goBack();
+    EndToEndTestUtils.createSimpleTrack(2, true);
     assertTrue(EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.RELATIVE_STARTTIME_POSTFIX, 1, EndToEndTestUtils.NORMAL_WAIT_TIME));
   }
   
@@ -225,61 +205,6 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     EndToEndTestUtils.SOLO.goBack();
 
     EndToEndTestUtils.stopRecording(true);
-  }
-
-  /**
-   * Checks the process of sending track to google.
-   */
-  private void checkSendTrackToGoogle() {
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_send_google), true);
-    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.send_google_title));
-    ArrayList<CheckBox> checkBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
-    for (int i = 0; i < checkBoxs.size(); i++) {
-      if (!checkBoxs.get(i).isChecked()) {
-        EndToEndTestUtils.SOLO.clickOnCheckBox(i);
-      }
-    }
-
-    if (checkBoxs.size() < 3) {
-      EndToEndTestUtils.SOLO.scrollDown();
-      checkBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
-      
-      // Choose all Google service.
-      for (int i = 0; i < checkBoxs.size(); i++) {
-        if (!checkBoxs.get(i).isChecked()) {
-          EndToEndTestUtils.SOLO.clickOnCheckBox(i);
-        }
-      }
-    }
-    instrumentation.waitForIdleSync();
-    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.send_google_send_now),
-        true, true);
-    
-    if(!GoogleUtils.isAccountAvailable()) {
-      return;
-    }
-
-    // Following check the process of "Send to Google".
-    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.generic_progress_title)));
-    // Waiting the send is finish.
-    while (EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.generic_progress_title), 1,
-        EndToEndTestUtils.SHORT_WAIT_TIME)) {}
-
-    // Check whether the result dialog is display.
-    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.share_track_share_url)));
-    EndToEndTestUtils
-        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
-
-    // Check whether all data is correct on Google Map, Documents, and
-    // Spreadsheet.
-    assertTrue(GoogleUtils.deleteMap(EndToEndTestUtils.trackName, activityMyTracks));
-    assertTrue(GoogleUtils.searchFusionTableByTitle(EndToEndTestUtils.TRACK_NAME_PREFIX,
-        activityMyTracks));
-    assertTrue(GoogleUtils.deleteTrackInSpreadSheet(EndToEndTestUtils.trackName, activityMyTracks));
-    assertTrue(GoogleUtils.dropFusionTables(EndToEndTestUtils.trackName, activityMyTracks));
   }
 
   /**

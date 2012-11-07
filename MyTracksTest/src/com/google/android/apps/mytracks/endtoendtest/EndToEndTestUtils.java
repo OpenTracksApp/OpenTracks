@@ -70,7 +70,8 @@ public class EndToEndTestUtils {
   
   private static final String MOREOPTION_CLASSNAME = "com.android.internal.view.menu.ActionMenuPresenter$OverflowMenuButton";
 
-  static final String DEFAULTACTIVITY = "TestActivity";
+  static final String DEFAULTACTIVITYTYPE = "TestActivity";
+  public static String activityType = DEFAULTACTIVITYTYPE;
   static final String TRACK_NAME_PREFIX = "testTrackName";
   static final String GPX = "gpx";
   static final String KML = "kml";
@@ -319,12 +320,20 @@ public class EndToEndTestUtils {
    * will save a customized track name.
    * 
    * @param numberOfGpsData number of simulated Gps data
+   * @param showTrackList whether stay on track list activity or track detail
+   *          activity
    */
-  public static void createSimpleTrack(int numberOfGpsData) {
+  public static void createSimpleTrack(int numberOfGpsData, boolean showTrackList) {
     startRecording();
     sendGps(numberOfGpsData);
     instrumentation.waitForIdleSync();
     stopRecording(true);
+    
+    instrumentation.waitForIdleSync();
+    if (showTrackList) {
+      SOLO.goBack();
+    }
+    instrumentation.waitForIdleSync();
   }
   
   /**
@@ -374,12 +383,7 @@ public class EndToEndTestUtils {
   public static void createTrackIfEmpty(int gpsNumber, boolean showTrackList) {
     if (isTrackListEmpty(!showTrackList)) {
       // Create a simple track.
-      createSimpleTrack(gpsNumber);
-      instrumentation.waitForIdleSync();
-      if (showTrackList) {
-        SOLO.goBack();
-      }
-      instrumentation.waitForIdleSync();
+      createSimpleTrack(gpsNumber, showTrackList);
     }
   }
 
@@ -442,7 +446,7 @@ public class EndToEndTestUtils {
             + System.currentTimeMillis();
         SOLO.sendKey(KeyEvent.KEYCODE_DEL);
         enterTextAvoidSoftKeyBoard(0, trackName);
-        enterTextAvoidSoftKeyBoard(1, DEFAULTACTIVITY);
+        enterTextAvoidSoftKeyBoard(1, activityType);
         SOLO.clickOnText(activityMytracks.getString(R.string.generic_save));
         instrumentation.waitForIdleSync();
       }

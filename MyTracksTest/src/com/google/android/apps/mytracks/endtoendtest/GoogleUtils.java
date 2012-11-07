@@ -54,6 +54,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -64,7 +65,7 @@ import java.util.Locale;
  */
 public class GoogleUtils {
   public static final String DOCUMENT_NAME_PREFIX = "My Tracks";
-  public static final String SPREADSHEET_NAME = DOCUMENT_NAME_PREFIX + "-" + EndToEndTestUtils.DEFAULTACTIVITY;
+  public static final String SPREADSHEET_NAME = DOCUMENT_NAME_PREFIX + "-" + EndToEndTestUtils.activityType;
 
   /**
    * Gets the account to access Google Services.
@@ -178,7 +179,7 @@ public class GoogleUtils {
    * @param activity to get context
    * @return the entry of the document, null means can not find the spreadsheet.
    */
-  private static Entry searchSpreadsheetByTitle(String title, Activity activity) {
+  public static Entry searchSpreadsheetByTitle(String title, Activity activity) {
     Context context = activity.getApplicationContext(); 
     DocumentsClient documentsClient = new DocumentsClient(
         GDataClientFactory.getGDataClient(context),
@@ -204,6 +205,42 @@ public class GoogleUtils {
       Log.d(EndToEndTestUtils.LOG_TAG, "Unable to fetch spreadsheet.", e);
     }
     return null;
+  }
+  
+  /**
+   * Searches docs in user's Google Documents.
+   * 
+   * @param title the title of doc
+   * @param activity to get context
+   * @return the entry of the document, null means can not find the spreadsheet.
+   */
+  public static List<Entry> searchAllSpreadsheetByTitle(String title, Activity activity) {
+    List<Entry> docs = new ArrayList<Entry>();
+    Context context = activity.getApplicationContext(); 
+    DocumentsClient documentsClient = new DocumentsClient(
+        GDataClientFactory.getGDataClient(context),
+        new XmlDocsGDataParserFactory(new AndroidXmlParserFactory()));
+    
+    try {
+      String documentsAuthToken = AccountManager.get(context)
+          .blockingGetAuthToken(getAccount(context), documentsClient.getServiceName(), false);
+      String uri = String.format(Locale.US, SendDocsUtils.GET_SPREADSHEET_BY_TITLE_URI,
+          URLEncoder.encode(title, "utf-8"));
+      GDataParser gDataParser = documentsClient.getParserForFeed(Entry.class, uri,
+          documentsAuthToken);
+      gDataParser.init();
+
+      while (gDataParser.hasMoreData()) {
+        Entry entry = gDataParser.readNextEntry(null);
+        String entryTitle = entry.getTitle();
+        if (entryTitle.equals(title)) { 
+          docs.add(entry);
+        }
+      }
+    } catch (Exception e) {
+      Log.d(EndToEndTestUtils.LOG_TAG, "Unable to fetch spreadsheet.", e);
+    }
+    return docs;
   }
   
   

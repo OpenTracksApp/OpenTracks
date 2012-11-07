@@ -55,7 +55,7 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     EndToEndTestUtils.createTrackIfEmpty(3, true);
     instrumentation.waitForIdleSync();
     // Create a empty track.
-    EndToEndTestUtils.createSimpleTrack(0);
+    EndToEndTestUtils.createSimpleTrack(0, true);
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.SOLO.goBack();
     instrumentation.waitForIdleSync();

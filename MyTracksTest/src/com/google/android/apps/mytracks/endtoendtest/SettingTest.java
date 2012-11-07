@@ -280,7 +280,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     // Changes the setting of default activity.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
         .getString(R.string.settings_recording_default_activity_title));
-    EndToEndTestUtils.enterTextAvoidSoftKeyBoard(0, EndToEndTestUtils.DEFAULTACTIVITY);
+    EndToEndTestUtils.enterTextAvoidSoftKeyBoard(0, EndToEndTestUtils.activityType);
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
 
@@ -293,7 +293,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     instrumentation.waitForIdleSync();
     assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks.getString(
         R.string.track_name_format).split(" ")[0]));
-    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.DEFAULTACTIVITY));
+    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.activityType));
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_save));
   }
 
