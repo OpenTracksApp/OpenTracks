@@ -20,6 +20,7 @@ import com.google.android.maps.mytracks.R;
 
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
+import android.util.Log;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
 
   private Instrumentation instrumentation;
   private TrackListActivity activityMyTracks;
+  private final String disableMessage= "Sensor test is disabled"; 
 
   @Override
   protected void setUp() throws Exception {
@@ -57,6 +59,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
    */
   public void testConnectZephyrBluetoothSensor() {
     if (!testSensor) {
+      Log.i(EndToEndTestUtils.LOG_TAG, disableMessage);
       return;
     }
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
@@ -79,6 +82,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
    */
   public void testConnectPolarBluetoothSensor() {
     if (!testSensor) {
+      Log.i(EndToEndTestUtils.LOG_TAG, disableMessage);
       return;
     }
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
@@ -112,11 +116,18 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
    * @return true means the sensor is connected with MyTracks
    */
   private boolean checkSensorsStatus() {
+    EndToEndTestUtils.instrumentation.waitForIdleSync();
     EndToEndTestUtils.createTrackIfEmpty(0, false);
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_sensor_state), true);
     return EndToEndTestUtils.SOLO.waitForText(
         activityMyTracks.getString(R.string.sensor_state_connected), 1,
         EndToEndTestUtils.NORMAL_WAIT_TIME);
+  }
+  
+  @Override
+  protected void tearDown() throws Exception {
+    EndToEndTestUtils.SOLO.finishOpenedActivities();
+    super.tearDown();
   }
 
 }

@@ -17,14 +17,10 @@ package com.google.android.apps.mytracks.endtoendtest;
 
 import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.fragments.MyTracksMapFragment;
-import com.google.android.maps.MapView;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
-import android.view.View;
-
-import java.util.ArrayList;
 
 /**
  * Tests switching views and the menu list of each view.
@@ -49,15 +45,15 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
   }
 
   /**
-   * Switches view from {@link MyTracksMapFragment} to @ ChartFragment} , then changes
-   * to @ StatsFragment} . Finally back to {@link MyTracksMapFragment}. And check some
-   * menus in these views. In MapFragment, the menu should contain satellite/map
-   * mode. In ChartFragment and StatsFragment, the menu should not contain
-   * satellite/map mode.
+   * Switches view from {@link MyTracksMapFragment} to @ ChartFragment} , then
+   * changes to @ StatsFragment} . Finally back to {@link MyTracksMapFragment}.
+   * And check some menus in these views. In MapFragment, the menu should
+   * contain satellite/map mode. In ChartFragment and StatsFragment, the menu
+   * should not contain satellite/map mode.
    */
   public void testSwitchViewsAndMenusOfView() {
     EndToEndTestUtils.createTrackIfEmpty(3, true);
-    
+
     EndToEndTestUtils.SOLO.scrollUp();
     EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.trackName, 1, true);
 
@@ -66,27 +62,21 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
 
     assertTrue(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings),
         false));
-    assertFalse(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_satellite), false));
-    assertFalse(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_map),
+    assertFalse(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_map_layer),
         false));
 
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
     assertTrue(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings),
         false));
-    assertFalse(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_satellite), false));
-    assertFalse(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_map),
+    assertFalse(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_map_layer),
         false));
 
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_map_tab));
     EndToEndTestUtils.rotateAllActivities();
     assertTrue(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings),
         false));
-    assertTrue(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_satellite), false)
-        || EndToEndTestUtils
-            .findMenuItem(activityMyTracks.getString(R.string.menu_map), false));
+    assertTrue(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_map_layer),
+        false));
   }
 
   /**
@@ -96,45 +86,15 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.createTrackIfEmpty(1, false);
     instrumentation.waitForIdleSync();
-    // Check current mode.
-    boolean isMapMode = true;
-    // If can not find switch menu in top menu, click More menu.
-    if (!EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_satellite),
-        false)) {
-      isMapMode = false;
-    }
-    EndToEndTestUtils.showMenuItem();
-    // Switch to satellite mode if it's map mode now..
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
-        .getString(isMapMode ? R.string.menu_satellite : R.string.menu_map));
-
-    isMapMode = !isMapMode;
-
-    ArrayList<View> allViews = EndToEndTestUtils.SOLO.getViews();
-    for (View view : allViews) {
-      if (view instanceof MapView) {
-        assertEquals(isMapMode, !((MapView) view).isSatellite());
-      }
-    }
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_map_layer), true);
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.menu_terrain));
     instrumentation.waitForIdleSync();
-    assertTrue(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_help), false));
-
-    // Switch back.
-    EndToEndTestUtils.showMenuItem();
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
-        .getString(isMapMode ? R.string.menu_satellite : R.string.menu_map));
-    isMapMode = !isMapMode;
-    allViews = EndToEndTestUtils.SOLO.getViews();
-    for (View view : allViews) {
-      if (view instanceof MapView) {
-        assertEquals(isMapMode, !((MapView) view).isSatellite());
-      }
-    }
-
-    // Wait for the TrackDetailActivity, or the stop button will can not be
-    // found in next step.
-    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.track_detail_chart_tab),
-        0, EndToEndTestUtils.SHORT_WAIT_TIME);
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_map_layer), true);
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.menu_satellite));
+    instrumentation.waitForIdleSync();
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_map_layer), true);
+    // 2 for there are two matches. And the first match is a noise.
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.menu_map), 2);
   }
 
   @Override
