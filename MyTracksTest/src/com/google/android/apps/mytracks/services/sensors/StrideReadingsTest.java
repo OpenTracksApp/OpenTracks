@@ -18,7 +18,7 @@ package com.google.android.apps.mytracks.services.sensors;
 import junit.framework.TestCase;
 
 /**
- * @author Dominik Ršttsches
+ * @author Dominik Rottsches
  */
 public class StrideReadingsTest extends TestCase {
   

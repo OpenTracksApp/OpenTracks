@@ -23,7 +23,7 @@ import java.util.List;
  * These can be used as an alternate method to calculate the correct cadence.
  * This is a work around for an issue with some HxM firmware.
  *
- * @author Dominik Ršttsches
+ * @author Dominik Rottsches
  */
 public class StrideReadings {
 
