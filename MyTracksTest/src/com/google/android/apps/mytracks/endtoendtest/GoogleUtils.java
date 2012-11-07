@@ -349,10 +349,9 @@ public class GoogleUtils {
       for (String row : rowsTable) {
         String firstColumn = row.split(",")[0];
         String secondColumn = row.split(",")[1];
-        // If the first column is all figure, it is the table id.
-        String regularExpression = "^[0-9]*$";
-        if (firstColumn.matches(regularExpression) && secondColumn.equals(title)) {
-          sendFusionTableQuery("DROP TABLE " + row.split(",")[0], context);
+        // The first column is the table id.
+        if (secondColumn.equals(title)) {
+          sendFusionTableQuery("DROP TABLE " + firstColumn, context);
           return true; 
         }
       }

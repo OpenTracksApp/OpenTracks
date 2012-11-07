@@ -259,6 +259,7 @@ public class EndToEndTestUtils {
       deleteAllTracks();
       resetAllSettings(activityMyTracks, false);
       
+      instrumentation.waitForIdleSync();
       // Check the status of real phone. For emulator, we would fix GPS signal.
       if(!isEmulator) {
         GoToMyLocationTest.findAndClickMyLocation(activityMyTracks);

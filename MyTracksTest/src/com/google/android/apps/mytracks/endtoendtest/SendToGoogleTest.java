@@ -77,12 +77,17 @@ public class SendToGoogleTest extends ActivityInstrumentationTestCase2<TrackList
     String testActivity = "(TestActivity)";
     EndToEndTestUtils.activityType = testActivity;
     EndToEndTestUtils.createSimpleTrack(1, false);
-    sendToGoogle();
-    sendToGoogle();
+    boolean result = sendToGoogle();
+    result = result && sendToGoogle();
 
-    List<Entry> spreadsheetEntry = GoogleUtils.searchAllSpreadsheetByTitle(GoogleUtils.DOCUMENT_NAME_PREFIX + "-"
-        + EndToEndTestUtils.activityType, activityMyTracks);
-    assertEquals(1, spreadsheetEntry.size());
+    // Result is true mean has account bound with this device and send
+    // successful.
+    if (result) {
+      List<Entry> spreadsheetEntry = GoogleUtils
+          .searchAllSpreadsheetByTitle(GoogleUtils.DOCUMENT_NAME_PREFIX + "-"
+              + EndToEndTestUtils.activityType, activityMyTracks);
+      assertEquals(1, spreadsheetEntry.size());
+    }
   }
 
   /**
@@ -154,6 +159,7 @@ public class SendToGoogleTest extends ActivityInstrumentationTestCase2<TrackList
   @Override
   protected void tearDown() throws Exception {
     EndToEndTestUtils.activityType = EndToEndTestUtils.DEFAULTACTIVITYTYPE;
+    EndToEndTestUtils.SOLO.finishOpenedActivities();
     super.tearDown();
   }
 
