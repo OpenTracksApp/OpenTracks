@@ -21,7 +21,6 @@ import com.google.android.apps.mytracks.io.gdata.maps.MapsClient;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsFeature;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsGDataConverter;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsMapMetadata;
-import com.google.android.maps.GeoPoint;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.wireless.gdata.client.HttpException;
 import com.google.wireless.gdata.data.Entry;
@@ -108,7 +107,7 @@ public class SendMapsUtils {
       MapsGDataConverter mapsGDataConverter) throws ParseException, HttpException, IOException {
     String featuresFeed = MapsClient.getFeaturesFeed(mapId);
     MapsFeature mapsFeature = buildMapsMarkerFeature(
-        title, description, iconUrl, getGeoPoint(location));
+        title, description, iconUrl, location);
     Entry entry = mapsGDataConverter.getEntryForFeature(mapsFeature);
     try {
       mapsClient.createEntry(featuresFeed, authToken, entry);
@@ -135,7 +134,7 @@ public class SendMapsUtils {
       throws ParseException, HttpException, IOException {
     String featuresFeed = MapsClient.getFeaturesFeed(mapId);
     MapsFeature feature = buildMapsMarkerFeature(waypoint.getName(), waypoint.getDescription(),
-        waypoint.getIcon(), getGeoPoint(waypoint.getLocation()));
+        waypoint.getIcon(), waypoint.getLocation());
     Entry entry = mapsGDataConverter.getEntryForFeature(feature);
     try {
       mapsClient.createEntry(featuresFeed, authToken, entry);
@@ -179,11 +178,11 @@ public class SendMapsUtils {
    * @param title feature title
    * @param description the feature description
    * @param iconUrl the feature icon URL
-   * @param geoPoint the marker
+   * @param location the marker
    */
   @VisibleForTesting
   static MapsFeature buildMapsMarkerFeature(
-      String title, String description, String iconUrl, GeoPoint geoPoint) {
+      String title, String description, String iconUrl, Location location) {
     MapsFeature mapsFeature = new MapsFeature();
     mapsFeature.setType(MapsFeature.MARKER);
     mapsFeature.generateAndroidId();
@@ -191,7 +190,7 @@ public class SendMapsUtils {
     mapsFeature.setTitle(TextUtils.isEmpty(title) ? EMPTY_TITLE : title);
     mapsFeature.setDescription(description.replaceAll("\n", "<br>"));
     mapsFeature.setIconUrl(iconUrl);
-    mapsFeature.addPoint(geoPoint);
+    mapsFeature.addPoint(location);
     return mapsFeature;
   }
 
@@ -210,19 +209,8 @@ public class SendMapsUtils {
     mapsFeature.setTitle(TextUtils.isEmpty(title) ? EMPTY_TITLE : title);
     mapsFeature.setColor(LINE_COLOR);
     for (Location location : locations) {
-      mapsFeature.addPoint(getGeoPoint(location));
+      mapsFeature.addPoint(location);
     }
     return mapsFeature;
-  }
-
-  /**
-   * Gets a {@link GeoPoint} from a {@link Location}.
-   *
-   * @param location the location
-   */
-  @VisibleForTesting
-  static GeoPoint getGeoPoint(Location location) {
-    return new GeoPoint(
-        (int) (location.getLatitude() * 1E6), (int) (location.getLongitude() * 1E6));
   }
 }

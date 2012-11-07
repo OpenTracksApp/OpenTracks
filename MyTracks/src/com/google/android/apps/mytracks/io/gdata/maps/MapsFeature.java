@@ -1,7 +1,7 @@
 // Copyright 2009 Google Inc. All Rights Reserved.
 package com.google.android.apps.mytracks.io.gdata.maps;
 
-import com.google.android.maps.GeoPoint;
+import android.location.Location;
 
 import java.util.Random;
 import java.util.Vector;
@@ -32,18 +32,9 @@ public class MapsFeature {
   /** The local feature id for this feature, if needed. */
   private String androidId;
 
-  /**
-   * The latitudes of the points of this feature in order, specified in
-   * millionths of a degree north.
-   */
-  private final Vector<Integer> latitudeE6 = new Vector<Integer>();
-
-  /**
-   * The longitudes of the points of this feature in order, specified in
-   * millionths of a degree east.
-   */
-  private final Vector<Integer> longitudeE6 = new Vector<Integer>();
-
+  // Points of this feature in order.
+  private final Vector<Location> points = new Vector<Location>();
+  
   /** The metadata of this feature in a format efficient for transmission. */
   private MapsFeatureMetadata featureInfo = new MapsFeatureMetadata();
 
@@ -60,11 +51,10 @@ public class MapsFeature {
   /**
    * Adds a new point to the end of this feature.
    *
-   * @param point The new point to add
+   * @param location the new point to add
    */
-  public void addPoint(GeoPoint point) {
-    latitudeE6.add(point.getLatitudeE6());
-    longitudeE6.add(point.getLongitudeE6());
+  public void addPoint(Location location) {
+    points.add(location);
   }
 
   /**
@@ -107,26 +97,22 @@ public class MapsFeature {
   }
 
   /**
-   * Retrieves the point at the given index for this feature.
+   * Gets the point at a given index.
    *
-   * @param index The index of the point desired
-   * @return A {@link GeoPoint} representing the point or null if that point
-   *         doesn't exist
+   * @param index the index
    */
-  public GeoPoint getPoint(int index) {
-    if (latitudeE6.size() <= index) {
+  public Location getPoint(int index) {
+    if (index >= points.size()) {
       return null;
     }
-    return new GeoPoint(latitudeE6.get(index), longitudeE6.get(index));
+    return points.get(index);
   }
-
+ 
   /**
-   * Counts the number of points in this feature and return that count.
-   *
-   * @return The number of points in this feature
+   * Gets the number of points.
    */
   public int getPointCount() {
-    return latitudeE6.size();
+    return points.size();
   }
 
   /**

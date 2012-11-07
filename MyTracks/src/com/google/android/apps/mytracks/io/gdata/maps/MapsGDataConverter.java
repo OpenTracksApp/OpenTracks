@@ -127,9 +127,9 @@ public class MapsGDataConverter {
         if (i > 0) {
           pointBuilder.append('\n');
         }
-        pointBuilder.append(feature.getPoint(i).getLongitudeE6() / 1e6);
+        pointBuilder.append(feature.getPoint(i).getLongitude());
         pointBuilder.append(',');
-        pointBuilder.append(feature.getPoint(i).getLatitudeE6() / 1e6);
+        pointBuilder.append(feature.getPoint(i).getLatitude());
         pointBuilder.append(",0.000000");
       }
       String pointString = pointBuilder.toString();
@@ -157,9 +157,9 @@ public class MapsGDataConverter {
         xmlSerializer.endTag(null, "tessellate");
         xmlSerializer.startTag(null, "coordinates");
         xmlSerializer.text(pointString + "\n"
-            + Double.toString(feature.getPoint(0).getLongitudeE6() / 1e6)
+            + Double.toString(feature.getPoint(0).getLongitude())
             + ","
-            + Double.toString(feature.getPoint(0).getLatitudeE6() / 1e6)
+            + Double.toString(feature.getPoint(0).getLatitude())
             + ",0.000000");
         xmlSerializer.endTag(null, "coordinates");
         xmlSerializer.endTag(null, "LinearRing");
