@@ -48,7 +48,6 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
     super.setUp();
     instrumentation = getInstrumentation();
     activityMyTracks = getActivity();
-    EndToEndTestUtils.clearEnvironment = false;
     EndToEndTestUtils.setupForAllTest(instrumentation, activityMyTracks);
   }
 
