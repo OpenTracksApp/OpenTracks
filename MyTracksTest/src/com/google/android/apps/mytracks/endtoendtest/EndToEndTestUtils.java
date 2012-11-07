@@ -94,6 +94,11 @@ public class EndToEndTestUtils {
   public static int LONG_WAIT_TIME = 15000;
   public static int SUPER_LONG_WAIT_TIME = 100000;
   
+  /**
+   * During debug, sets it to false to make debug is more efficient.
+   */
+  public static boolean clearEnvironment = true;
+  
   public static String deviceLanguage = "";
   
   static {
@@ -256,21 +261,23 @@ public class EndToEndTestUtils {
       hasActionBar = setHasActionBar();
       checkLanguage();
       isCheckedFirstLaunch = true;
-      deleteAllTracks();
-      resetAllSettings(activityMyTracks, false);
+      if (clearEnvironment) {
+        deleteAllTracks();
+        resetAllSettings(activityMyTracks, false);
       
-      instrumentation.waitForIdleSync();
-      // Check the status of real phone. For emulator, we would fix GPS signal.
-      if(!isEmulator) {
-        GoToMyLocationTest.findAndClickMyLocation(activityMyTracks);
-        hasGpsSingal = !SOLO.waitForText(NO_GPS_MESSAGE_PREFIX, 1,
-            EndToEndTestUtils.SHORT_WAIT_TIME);
-        SOLO.goBack();
+        instrumentation.waitForIdleSync();
+        // Check the status of real phone. For emulator, we would fix GPS signal.
+        if(!isEmulator) {
+          GoToMyLocationTest.findAndClickMyLocation(activityMyTracks);
+          hasGpsSingal = !SOLO.waitForText(NO_GPS_MESSAGE_PREFIX, 1,
+              EndToEndTestUtils.SHORT_WAIT_TIME);
+          SOLO.goBack();
+        }
+      } else if (SOLO.waitForText(
+          // After reset setting, welcome page will show again.
+          activityMytracks.getString(R.string.welcome_title), 0, SHORT_WAIT_TIME)) {
+        resetPreferredUnits();
       }
-    } else if (SOLO.waitForText(
-        // After reset setting, welcome page will show again.
-        activityMytracks.getString(R.string.welcome_title), 0, SHORT_WAIT_TIME)) {
-      resetPreferredUnits();
     }
     
     // Check whether is under recording. If previous test failed, the recording
