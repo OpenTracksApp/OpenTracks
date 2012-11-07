@@ -87,7 +87,6 @@ public class EulaDialogFragment extends DialogFragment {
         @Override
         public void onClick(DialogInterface dialog, int which) {
           EulaUtils.setAcceptEula(activity);
-          Locale locale = Locale.getDefault();
           PreferencesUtils.setBoolean(
               activity, R.string.metric_units_key, !Locale.US.equals(Locale.getDefault()));
           TrackListActivity trackListActivity = (TrackListActivity) activity;

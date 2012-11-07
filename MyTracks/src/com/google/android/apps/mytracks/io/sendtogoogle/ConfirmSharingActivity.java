@@ -60,13 +60,13 @@ public class ConfirmSharingActivity extends Activity {
     if (id != DIALOG_ID) {
       return null;
     }
-    View view = getLayoutInflater().inflate(R.layout.confirm_sharing, null);
+    View view = getLayoutInflater().inflate(R.layout.confirm_dialog, null);
     
-    TextView textView = (TextView) view.findViewById(R.id.confirm_sharing_text_view);
+    TextView textView = (TextView) view.findViewById(R.id.confirm_dialog_message);
     textView.setText(StringUtils.getHtml(
         this, R.string.share_track_confirm_message, R.string.maps_public_unlisted_url));
 
-    checkBox = (CheckBox) view.findViewById(R.id.confirm_sharing_check_box);
+    checkBox = (CheckBox) view.findViewById(R.id.confirm_dialog_check_box);
     DialogInterface.OnClickListener okListener = new DialogInterface.OnClickListener() {
         @Override
       public void onClick(DialogInterface dialog, int button) {

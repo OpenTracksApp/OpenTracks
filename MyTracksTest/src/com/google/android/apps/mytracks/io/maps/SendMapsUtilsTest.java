@@ -58,7 +58,7 @@ public class SendMapsUtilsTest extends TestCase {
 
   /**
    * Test {@link SendMapsUtils#buildMapsMarkerFeature(String, String, String,
-   * GeoPoint)} with a title.
+   * Location)} with a title.
    */
   public void testBuildMapsMarkerFeature_with_title() {
     Location location = new Location("test");
@@ -77,7 +77,7 @@ public class SendMapsUtilsTest extends TestCase {
 
   /**
    * Test {@link SendMapsUtils#buildMapsMarkerFeature(String, String, String,
-   * GeoPoint)} with an empty title.
+   * Location)} with an empty title.
    */
   public void testBuildMapsMarkerFeature_empty_title() {
     Location location = new Location("test");
@@ -96,7 +96,7 @@ public class SendMapsUtilsTest extends TestCase {
 
   /**
    * Test {@link SendMapsUtils#buildMapsMarkerFeature(String, String, String,
-   * GeoPoint)} with a null title.
+   * Location)} with a null title.
    */
   public void testBuildMapsMarkerFeature_null_title() {
     Location location = new Location("test");

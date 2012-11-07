@@ -2267,6 +2267,10 @@ limitations under the License.
     translation_description="In the track detail page, the title of the tab showing the map.">
     Map
   </string>
+  <string name="track_detail_play_confirm_message"
+    translation_description="The confirmation message when playing a track in Google Earth.">
+    Play in Google Earth will save your track to external storage.
+  </string>
   <string name="track_detail_stats_tab"
     translation_description="In the track detail page, the title of the tab showing the stats.">
     Stats
