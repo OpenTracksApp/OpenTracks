@@ -234,7 +234,7 @@ public class EndToEndTestUtils {
   * Checks whether the Google Play Services need update.
   */
   private static boolean isGooglePlayServicesLatest() {
-    return !SOLO.searchText(activityMytracks.getString(R.string.common_google_play_services_update_text));
+    return !SOLO.searchText("Google Play services");
   }
 
   /**

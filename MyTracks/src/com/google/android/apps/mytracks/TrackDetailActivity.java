@@ -24,6 +24,7 @@ import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.fragments.ChartFragment;
 import com.google.android.apps.mytracks.fragments.ChooseActivityDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChooseUploadServiceDialogFragment;
+import com.google.android.apps.mytracks.fragments.ConfirmPlayDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment.DeleteOneTrackCaller;
 import com.google.android.apps.mytracks.fragments.FrequencyDialogFragment;
@@ -321,12 +322,8 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
         return true;
       case R.id.track_detail_play:
         if (isEarthInstalled()) {
-          AnalyticsUtils.sendPageViews(this, "/action/play");
-          intent = IntentUtils.newIntent(this, SaveActivity.class)
-              .putExtra(SaveActivity.EXTRA_TRACK_ID, trackId)
-              .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.KML)
-              .putExtra(SaveActivity.EXTRA_PLAY_TRACK, true);
-          startActivity(intent);
+          ConfirmPlayDialogFragment.newInstance(trackId)
+              .show(getSupportFragmentManager(), ConfirmPlayDialogFragment.CONFIRM_PLAY_DIALOG_TAG);
         } else {
           new InstallEarthDialogFragment().show(
               getSupportFragmentManager(), InstallEarthDialogFragment.INSTALL_EARTH_DIALOG_TAG);

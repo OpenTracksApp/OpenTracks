@@ -120,14 +120,14 @@ public class SaveActivity extends Activity {
               @Override
               public void onCancel(DialogInterface dialog) {
                 dialog.dismiss();
-                onPostResultDialog();
+                finish();
               }
             })
             .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
               @Override
               public void onClick(DialogInterface dialog, int arg1) {
                 dialog.dismiss();
-                onPostResultDialog();
+                finish();
               }
             })
             .setTitle(success ? R.string.generic_success_title : R.string.generic_error_title);
@@ -163,7 +163,17 @@ public class SaveActivity extends Activity {
     this.messageId = aMessageId;
     this.savedPath = aSavedPath;
     removeDialog(DIALOG_PROGRESS_ID);
-    showDialog(DIALOG_RESULT_ID);
+    if (success && playTrack && savedPath != null) {
+      Intent intent = new Intent()
+          .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
+          .putExtra(GOOGLE_EARTH_TOUR_FEATURE_ID, KmlTrackWriter.TOUR_FEATURE_ID)
+          .setClassName(GOOGLE_EARTH_PACKAGE, GOOGLE_EARTH_CLASS)
+          .setDataAndType(Uri.fromFile(new File(savedPath)), GOOGLE_EARTH_KML_MIME_TYPE);
+      startActivity(intent);
+      finish();
+    } else {
+      showDialog(DIALOG_RESULT_ID);
+    }
   }
 
   /**
@@ -185,20 +195,5 @@ public class SaveActivity extends Activity {
       progressDialog.setMax(max);
       progressDialog.setProgress(Math.min(number, max));
     }
-  }
-
-  /**
-   * To be invoked after showing the result dialog.
-   */
-  private void onPostResultDialog() {
-    if (success && playTrack && savedPath != null) {
-      Intent intent = new Intent()
-          .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
-          .putExtra(GOOGLE_EARTH_TOUR_FEATURE_ID, KmlTrackWriter.TOUR_FEATURE_ID)
-          .setClassName(GOOGLE_EARTH_PACKAGE, GOOGLE_EARTH_CLASS)
-          .setDataAndType(Uri.fromFile(new File(savedPath)), GOOGLE_EARTH_KML_MIME_TYPE);
-      startActivity(intent);
-    }
-    finish();
   }
 }

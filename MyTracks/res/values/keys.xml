@@ -43,6 +43,7 @@ limitations under the License.
   <string name="send_to_fusion_tables_key">sendToFusionTables</string>
   <string name="send_to_maps_key">sendToMaps</string>
   <string name="sensor_type_key">sensorType</string>
+  <string name="show_confirm_play_earth_dialog_key">showConfirmPlayDialog</string>
   <string name="show_confirm_sharing_dialog_key">showConfrimSharingDialog</string>
   <string name="split_frequency_key">splitFrequency</string>
   <string name="stats_show_coordinate_key">statsShowCoordinate</string>

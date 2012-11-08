@@ -76,6 +76,7 @@ public class PreferencesUtils {
   
   public static final String SENSOR_TYPE_DEFAULT = "NONE";
   
+  public static final boolean SHOW_CONFIRM_PLAY_DIALOG_DEFAULT = true;
   public static final boolean SHOW_CONFIRM_SHARING_DIALOG_DEFAULT = true;
   public static final int SPLIT_FREQUENCY_DEFAULT = 0;
 

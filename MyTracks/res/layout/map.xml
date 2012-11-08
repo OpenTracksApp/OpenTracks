@@ -25,7 +25,8 @@ limitations under the License.
     android:id="@+id/map_message"
     android:layout_alignParentTop="true"
     android:layout_width="match_parent"
-    android:padding="8dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
     android:textColor="@android:color/primary_text_dark"
     android:visibility="gone"
     style="@style/TextMedium.WithIcon" />
@@ -34,7 +35,7 @@ limitations under the License.
     android:contentDescription="@string/icon_my_location"
     android:id="@+id/map_my_location"
     android:layout_alignParentRight="true"
-    android:layout_below="@id/map_message"
+    android:layout_alignParentTop="true"
     android:layout_height="wrap_content"
     android:layout_marginRight="8dp"
     android:layout_marginTop="8dp"

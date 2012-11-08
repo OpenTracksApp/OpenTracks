@@ -758,12 +758,12 @@ limitations under the License.
   <string name="gps_wait_for_better_signal"
     translation_description="In the main view, the message on the top indicating My Tracks is
       waiting for a better GPS signal.">
-    Waiting for a better GPS signal. Make sure the sky is visible.
+    Waiting for a better GPS signal.
   </string>
   <string name="gps_wait_for_signal"
     translation_description="In the main view, the message on the top indicating My Tracks is
-      waiting for a better GPS signal.">
-    Waiting for GPS signal. Make sure the sky is visible.
+      waiting for GPS signal.">
+    Waiting for GPS signal.
   </string>
 
   <!-- Help page -->
@@ -846,7 +846,7 @@ limitations under the License.
   </string>
   <string name="help_gps_signal_question"
     translation_description="In the 'Help' page, the question on the GPS signal message.">
-    Why does the application sometimes display &#8220;Waiting for a better GPS signal.&#8221;?
+    Why does the application sometimes display &#8220;Waiting for GPS signal.&#8221;?
   </string>
   <string name="help_location_precision_answer"
     translation_description="In the 'Help' page, the answer on location precision.">
@@ -2266,6 +2266,10 @@ limitations under the License.
   <string name="track_detail_map_tab"
     translation_description="In the track detail page, the title of the tab showing the map.">
     Map
+  </string>
+  <string name="track_detail_play_confirm_message"
+    translation_description="The confirmation message when playing a track in Google Earth.">
+    Play in Google Earth will save your track to external storage.
   </string>
   <string name="track_detail_stats_tab"
     translation_description="In the track detail page, the title of the tab showing the stats.">

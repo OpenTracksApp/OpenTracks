@@ -17,7 +17,6 @@ package com.google.android.apps.mytracks.io.maps;
 
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsFeature;
-import com.google.android.maps.GeoPoint;
 
 import android.location.Location;
 
@@ -59,50 +58,59 @@ public class SendMapsUtilsTest extends TestCase {
 
   /**
    * Test {@link SendMapsUtils#buildMapsMarkerFeature(String, String, String,
-   * GeoPoint)} with a title.
+   * Location)} with a title.
    */
   public void testBuildMapsMarkerFeature_with_title() {
+    Location location = new Location("test");
+    location.setLatitude(123.0);
+    location.setLongitude(456.0);
     MapsFeature mapFeature = SendMapsUtils.buildMapsMarkerFeature(
-        "name", "this\nmap\ndescription", "url", new GeoPoint(123, 456));
+        "name", "this\nmap\ndescription", "url", location);
     assertEquals(MapsFeature.MARKER, mapFeature.getType());
     assertNotNull(mapFeature.getAndroidId());
     assertEquals("name", mapFeature.getTitle());
     assertEquals("this<br>map<br>description", mapFeature.getDescription());
     assertEquals("url", mapFeature.getIconUrl());
-    assertEquals(123, mapFeature.getPoint(0).getLatitudeE6());
-    assertEquals(456, mapFeature.getPoint(0).getLongitudeE6());
+    assertEquals(123.0, mapFeature.getPoint(0).getLatitude());
+    assertEquals(456.0, mapFeature.getPoint(0).getLongitude());
   }
 
   /**
    * Test {@link SendMapsUtils#buildMapsMarkerFeature(String, String, String,
-   * GeoPoint)} with an empty title.
+   * Location)} with an empty title.
    */
   public void testBuildMapsMarkerFeature_empty_title() {
+    Location location = new Location("test");
+    location.setLatitude(123.0);
+    location.setLongitude(456.0);
     MapsFeature mapFeature = SendMapsUtils.buildMapsMarkerFeature(
-        "", "description", "url", new GeoPoint(123, 456));
+        "", "description", "url", location);
     assertEquals(MapsFeature.MARKER, mapFeature.getType());
     assertNotNull(mapFeature.getAndroidId());
     assertEquals("-", mapFeature.getTitle());
     assertEquals("description", mapFeature.getDescription());
     assertEquals("url", mapFeature.getIconUrl());
-    assertEquals(123, mapFeature.getPoint(0).getLatitudeE6());
-    assertEquals(456, mapFeature.getPoint(0).getLongitudeE6());
+    assertEquals(123.0, mapFeature.getPoint(0).getLatitude());
+    assertEquals(456.0, mapFeature.getPoint(0).getLongitude());
   }
 
   /**
    * Test {@link SendMapsUtils#buildMapsMarkerFeature(String, String, String,
-   * GeoPoint)} with a null title.
+   * Location)} with a null title.
    */
   public void testBuildMapsMarkerFeature_null_title() {
+    Location location = new Location("test");
+    location.setLatitude(123.0);
+    location.setLongitude(456.0);
     MapsFeature mapFeature = SendMapsUtils.buildMapsMarkerFeature(
-        null, "description", "url", new GeoPoint(123, 456));
+        null, "description", "url", location);
     assertEquals(MapsFeature.MARKER, mapFeature.getType());
     assertNotNull(mapFeature.getAndroidId());
     assertEquals("-", mapFeature.getTitle());
     assertEquals("description", mapFeature.getDescription());
     assertEquals("url", mapFeature.getIconUrl());
-    assertEquals(123, mapFeature.getPoint(0).getLatitudeE6());
-    assertEquals(456, mapFeature.getPoint(0).getLongitudeE6());
+    assertEquals(123.0, mapFeature.getPoint(0).getLatitude());
+    assertEquals(456.0, mapFeature.getPoint(0).getLongitude());
   }
 
   /**
@@ -112,8 +120,8 @@ public class SendMapsUtilsTest extends TestCase {
   public void testBuildMapsLineFeature_with_title() {
     ArrayList<Location> locations = new ArrayList<Location>();
     Location location = new Location("test");
-    location.setLatitude(50);
-    location.setLongitude(100);
+    location.setLatitude(50.0);
+    location.setLongitude(100.0);
     locations.add(location);
     MapsFeature mapFeature = SendMapsUtils.buildMapsLineFeature("name", locations);
 
@@ -121,8 +129,8 @@ public class SendMapsUtilsTest extends TestCase {
     assertNotNull(mapFeature.getAndroidId());
     assertEquals("name", mapFeature.getTitle());
     assertEquals(0x80FF0000, mapFeature.getColor());
-    assertEquals(50000000, mapFeature.getPoint(0).getLatitudeE6());
-    assertEquals(100000000, mapFeature.getPoint(0).getLongitudeE6());
+    assertEquals(50.0, mapFeature.getPoint(0).getLatitude());
+    assertEquals(100.0, mapFeature.getPoint(0).getLongitude());
   }
 
   /**
@@ -132,8 +140,8 @@ public class SendMapsUtilsTest extends TestCase {
   public void testBuildMapsLineFeature_empty_title() {
     ArrayList<Location> locations = new ArrayList<Location>();
     Location location = new Location("test");
-    location.setLatitude(50);
-    location.setLongitude(100);
+    location.setLatitude(50.0);
+    location.setLongitude(100.0);
     locations.add(location);
     MapsFeature mapFeature = SendMapsUtils.buildMapsLineFeature("", locations);
 
@@ -141,8 +149,8 @@ public class SendMapsUtilsTest extends TestCase {
     assertNotNull(mapFeature.getAndroidId());
     assertEquals("-", mapFeature.getTitle());
     assertEquals(0x80FF0000, mapFeature.getColor());
-    assertEquals(50000000, mapFeature.getPoint(0).getLatitudeE6());
-    assertEquals(100000000, mapFeature.getPoint(0).getLongitudeE6());
+    assertEquals(50.0, mapFeature.getPoint(0).getLatitude());
+    assertEquals(100.0, mapFeature.getPoint(0).getLongitude());
   }
 
   /**
@@ -152,8 +160,8 @@ public class SendMapsUtilsTest extends TestCase {
   public void testBuildMapsLineFeature_null_title() {
     ArrayList<Location> locations = new ArrayList<Location>();
     Location location = new Location("test");
-    location.setLatitude(50);
-    location.setLongitude(100);
+    location.setLatitude(50.0);
+    location.setLongitude(100.0);
     locations.add(location);
     MapsFeature mapFeature = SendMapsUtils.buildMapsLineFeature(null, locations);
 
@@ -161,19 +169,7 @@ public class SendMapsUtilsTest extends TestCase {
     assertNotNull(mapFeature.getAndroidId());
     assertEquals("-", mapFeature.getTitle());
     assertEquals(0x80FF0000, mapFeature.getColor());
-    assertEquals(50000000, mapFeature.getPoint(0).getLatitudeE6());
-    assertEquals(100000000, mapFeature.getPoint(0).getLongitudeE6());
-  }
-
-  /**
-   * Test {@link SendMapsUtils#getGeoPoint(Location)}.
-   */
-  public void testGeoPoint() {
-    Location location = new Location("test");
-    location.setLatitude(50);
-    location.setLongitude(100);
-    GeoPoint geoPoint = SendMapsUtils.getGeoPoint(location);
-    assertEquals(50000000, geoPoint.getLatitudeE6());
-    assertEquals(100000000, geoPoint.getLongitudeE6());
+    assertEquals(50.0, mapFeature.getPoint(0).getLatitude());
+    assertEquals(100.0, mapFeature.getPoint(0).getLongitude());
   }
 }
