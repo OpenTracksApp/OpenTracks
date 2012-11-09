@@ -116,8 +116,8 @@ public class EndToEndTestUtils {
     MILE_MULTILINGUAL.put("zh", "英里");
   }
 
-  static Solo SOLO;
-  static Instrumentation instrumentation;
+  public static Solo SOLO;
+  public static Instrumentation instrumentation;
   static TrackListActivity activityMytracks;
   // Check whether the UI has an action bar which is related with the version of
   // Android OS.
