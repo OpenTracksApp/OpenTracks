@@ -208,6 +208,40 @@ public class GoogleUtils {
   }
   
   /**
+   * Delete spreadsheet which name is title.
+   * 
+   * @param title the name of spreadsheet
+   * @param activity to get context
+   */
+  public static void deleteSpreadsheetByTitle(String title, Activity activity) {
+    Context context = activity.getApplicationContext();
+    DocumentsClient documentsClient = new DocumentsClient(
+        GDataClientFactory.getGDataClient(context), new XmlDocsGDataParserFactory(
+            new AndroidXmlParserFactory()));
+
+    try {
+      String documentsAuthToken = AccountManager.get(context).blockingGetAuthToken(
+          getAccount(context), documentsClient.getServiceName(), false);
+      String uri = String.format(Locale.US, SendDocsUtils.GET_SPREADSHEET_BY_TITLE_URI,
+          URLEncoder.encode(title, "utf-8"));
+      GDataParser gDataParser = documentsClient.getParserForFeed(Entry.class, uri,
+          documentsAuthToken);
+      gDataParser.init();
+
+      while (gDataParser.hasMoreData()) {
+        Entry entry = gDataParser.readNextEntry(null);
+        String entryTitle = entry.getTitle();
+        if (entryTitle.equals(title)) {
+          documentsClient.deleteEntry(entry.getEditUri(), documentsAuthToken);
+          Log.d(EndToEndTestUtils.LOG_TAG, "Delete one spreadsheet.");
+        }
+      }
+    } catch (Exception e) {
+      Log.e(EndToEndTestUtils.LOG_TAG, "Unable to fetch spreadsheet.", e);
+    }
+  }
+  
+  /**
    * Searches docs in user's Google Documents.
    * 
    * @param title the title of doc
