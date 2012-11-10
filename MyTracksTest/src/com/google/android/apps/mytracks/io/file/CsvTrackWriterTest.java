@@ -49,15 +49,15 @@ public class CsvTrackWriterTest extends TrackFormatWriterTest {
         "1970-01-01T00:03:20.000Z");
     String expectedPointHeader = getExpectedLine("Segment", "Point", "Latitude (deg)",
         "Longitude (deg)", "Altitude (m)", "Bearing (deg)", "Accuracy (m)", "Speed (m/s)", "Time",
-        "Power (W)", "Cadence (rpm)", "Heart rate (bpm)", "Battery level (%)");
+        "Power (W)", "Cadence (rpm)", "Heart rate (bpm)");
     String expectedPoint1 = getExpectedLine("1", "1", "0.0", "0.0", "0.0", "0.0", "0", "0",
-        "1970-01-01T00:00:00.000Z", "100.0", "200.0", "300.0", "400.0");
+        "1970-01-01T00:00:00.000Z", "100.0", "200.0", "300.0");
     String expectedPoint2 = getExpectedLine("1", "2", "1.0", "-1.0", "10.0", "100.0", "1,000",
-        "10,000", "1970-01-01T00:01:40.000Z", "101.0", "201.0", "301.0", "401.0");
+        "10,000", "1970-01-01T00:01:40.000Z", "101.0", "201.0", "301.0");
     String expectedPoint3 = getExpectedLine("2", "1", "2.0", "-2.0", "20.0", "200.0", "2,000",
-        "20,000", "1970-01-01T00:03:20.000Z", "102.0", "202.0", "302.0", "402.0");
+        "20,000", "1970-01-01T00:03:20.000Z", "102.0", "202.0", "302.0");
     String expectedPoint4 = getExpectedLine("2", "2", "3.0", "-3.0", "30.0", "300.0", "3,000",
-        "30,000", "1970-01-01T00:05:00.000Z", "103.0", "203.0", "303.0", "403.0");
+        "30,000", "1970-01-01T00:05:00.000Z", "103.0", "203.0", "303.0");
     String expected = expectedTrackHeader + expectedTrack + "\n" 
         + expectedMarkerHeader + expectedMarker1 + expectedMarker2 + "\n"
         + expectedPointHeader + expectedPoint1 + expectedPoint2 + expectedPoint3 + expectedPoint4;

@@ -56,7 +56,6 @@ public class KmlTrackWriter implements TrackFormatWriter {
   private static final String CADENCE = "cadence";
   private static final String HEART_RATE = "heart_rate";
   private static final String POWER = "power";
-  private static final String BATTER_LEVEL = "battery_level";
 
   private static final String WAYPOINT_ICON =
       "http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png";
@@ -76,11 +75,9 @@ public class KmlTrackWriter implements TrackFormatWriter {
   private ArrayList<Integer> powerList = new ArrayList<Integer>();
   private ArrayList<Integer> cadenceList = new ArrayList<Integer>();
   private ArrayList<Integer> heartRateList = new ArrayList<Integer>();
-  private ArrayList<Integer> batteryLevelList = new ArrayList<Integer>();
   private boolean hasPower;
   private boolean hasCadence;
   private boolean hasHeartRate;
-  private boolean hasBatteryLevel;
 
   public KmlTrackWriter(Context context) {
     this(context, new DescriptionGeneratorImpl(context));
@@ -136,7 +133,6 @@ public class KmlTrackWriter implements TrackFormatWriter {
       writeSensorStyle(POWER, context.getString(R.string.description_sensor_power));
       writeSensorStyle(CADENCE, context.getString(R.string.description_sensor_cadence));
       writeSensorStyle(HEART_RATE, context.getString(R.string.description_sensor_heart_rate));
-      writeSensorStyle(BATTER_LEVEL, context.getString(R.string.description_sensor_battery_level));
       printWriter.println("</Schema>");
     }
   }
@@ -209,11 +205,9 @@ public class KmlTrackWriter implements TrackFormatWriter {
       hasPower = false;
       hasCadence = false;
       hasHeartRate = false;
-      hasBatteryLevel = false;
       powerList.clear();
       cadenceList.clear();
       heartRateList.clear();
-      batteryLevelList.clear();
     }
   }
 
@@ -230,9 +224,6 @@ public class KmlTrackWriter implements TrackFormatWriter {
       }
       if (hasHeartRate) {
         writeSensorData(heartRateList, HEART_RATE);
-      }
-      if (hasBatteryLevel) {
-        writeSensorData(batteryLevelList, BATTER_LEVEL);
       }
       printWriter.println("</SchemaData>");
       printWriter.println("</ExtendedData>");
@@ -252,7 +243,6 @@ public class KmlTrackWriter implements TrackFormatWriter {
         int power = -1;
         int cadence = -1;
         int heartRate = -1;
-        int batteryLevel = -1;
 
         if (sensorDataSet != null) {
           if (sensorDataSet.hasPower()) {
@@ -275,19 +265,11 @@ public class KmlTrackWriter implements TrackFormatWriter {
               hasHeartRate = true;
               heartRate = sensorData.getValue();
             }
-          }
-          if (sensorDataSet.hasBatteryLevel()) {
-            SensorData sensorData = sensorDataSet.getBatteryLevel();
-            if (sensorData.hasValue() && sensorData.getState() == Sensor.SensorState.SENDING) {
-              hasBatteryLevel = true;
-              batteryLevel = sensorData.getValue();
-            }
-          }
+          }          
         }
         powerList.add(power);
         cadenceList.add(cadence);
         heartRateList.add(heartRate);
-        batteryLevelList.add(batteryLevel);
       }
     }
   }

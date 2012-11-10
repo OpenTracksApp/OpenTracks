@@ -146,8 +146,7 @@ public class CsvTrackWriter implements TrackFormatWriter {
         context.getString(R.string.description_time),
         context.getString(R.string.description_sensor_power),
         context.getString(R.string.description_sensor_cadence),
-        context.getString(R.string.description_sensor_heart_rate),
-        context.getString(R.string.description_sensor_battery_level));
+        context.getString(R.string.description_sensor_heart_rate));
   }
 
   @Override
@@ -171,7 +170,6 @@ public class CsvTrackWriter implements TrackFormatWriter {
     String power = null;
     String cadence = null;
     String heartRate = null;
-    String batteryLevel = null;
     if (location instanceof MyTracksLocation) {
       SensorDataSet sensorDataSet = ((MyTracksLocation) location).getSensorDataSet();
 
@@ -194,12 +192,6 @@ public class CsvTrackWriter implements TrackFormatWriter {
             heartRate = Double.toString(sensorData.getValue());
           }
         }
-        if (sensorDataSet.hasBatteryLevel()) {
-          SensorData sensorData = sensorDataSet.getBatteryLevel();
-          if (sensorData.hasValue() && sensorData.getState() == Sensor.SensorState.SENDING) {
-            batteryLevel = Double.toString(sensorData.getValue());
-          }
-        }
       }
     }
     pointIndex++;
@@ -214,8 +206,7 @@ public class CsvTrackWriter implements TrackFormatWriter {
         StringUtils.formatDateTimeIso8601(location.getTime()),
         power,
         cadence,
-        heartRate,
-        batteryLevel);
+        heartRate);
   }
 
   /**

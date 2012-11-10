@@ -510,10 +510,6 @@ limitations under the License.
       %1$s time. E.g, '2/15/2012 1:40 PM'">
     Recorded: %1$s
   </string>
-  <string name="description_sensor_battery_level"
-    translation_description="Label for battery level with its unit percentage (%).">
-    Battery level (%)
-  </string>
   <string name="description_sensor_cadence"
     translation_description="Label for cadence with its unit revolutions per minute (rpm).">
     Cadence (rpm)
