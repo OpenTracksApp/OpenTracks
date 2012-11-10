@@ -13,9 +13,10 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks.endtoendtest;
+package com.google.android.apps.mytracks.endtoendtest.others;
 
 import com.google.android.apps.mytracks.TrackListActivity;
+import com.google.android.apps.mytracks.endtoendtest.EndToEndTestUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Instrumentation;
@@ -43,7 +44,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
 
   private Instrumentation instrumentation;
   private TrackListActivity activityMyTracks;
-  private final String disableMessage= "Sensor test is disabled"; 
+  public static final String DISABLE_MESSAGE = "This test is disabled"; 
 
   @Override
   protected void setUp() throws Exception {
@@ -59,7 +60,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
    */
   public void testConnectZephyrBluetoothSensor() {
     if (!testSensor) {
-      Log.i(EndToEndTestUtils.LOG_TAG, disableMessage);
+      Log.i(EndToEndTestUtils.LOG_TAG, DISABLE_MESSAGE);
       return;
     }
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
@@ -82,7 +83,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
    */
   public void testConnectPolarBluetoothSensor() {
     if (!testSensor) {
-      Log.i(EndToEndTestUtils.LOG_TAG, disableMessage);
+      Log.i(EndToEndTestUtils.LOG_TAG, DISABLE_MESSAGE);
       return;
     }
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);

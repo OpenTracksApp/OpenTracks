@@ -76,6 +76,8 @@ public class SendToGoogleTest extends ActivityInstrumentationTestCase2<TrackList
   public void testSendTwoTracksWithSameActivity() {
     String testActivity = "(TestActivity)";
     EndToEndTestUtils.activityType = testActivity;
+    GoogleUtils.deleteSpreadsheetByTitle("My Tracks-" + EndToEndTestUtils.activityType,
+        EndToEndTestUtils.activityMytracks);
     EndToEndTestUtils.createSimpleTrack(1, false);
     boolean result = sendToGoogle();
     result = result && sendToGoogle();
