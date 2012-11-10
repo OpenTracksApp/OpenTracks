@@ -194,23 +194,22 @@ class TrackWriterImpl implements TrackWriter {
    * Checks and returns whether we're ready to create the output file.
    */
   protected boolean canWriteFile() {
-    if (directory == null) {
-      String dirName =
-          FileUtils.buildExternalDirectoryPath(writer.getExtension());
-      directory = newFile(dirName);
-    }
-
     if (!FileUtils.isSdCardAvailable()) {
       Log.i(Constants.TAG, "Could not find SD card.");
       errorMessage = R.string.external_storage_error_no_storage;
       return false;
+    }
+    
+    if (directory == null) {
+      String dirName =
+          FileUtils.buildExternalDirectoryPath(writer.getExtension());
+      directory = newFile(dirName);
     }
     if (!FileUtils.ensureDirectoryExists(directory)) {
       Log.i(Constants.TAG, "Could not create export directory.");
       errorMessage = R.string.external_storage_save_error_create_dir;
       return false;
     }
-
     return true;
   }
 
