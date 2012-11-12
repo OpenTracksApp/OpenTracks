@@ -93,8 +93,9 @@ public class MyTracksLocationManager {
   }
 
   /**
-   * Returns true if the Google location settings allows access to location
-   * data.
+   * Returns true if allowed to access the location manager. Returns true if
+   * there is no Google location settings or the Google location settings allows
+   * access to location data.
    */
   public boolean isAllowed() {
     return isAllowed;

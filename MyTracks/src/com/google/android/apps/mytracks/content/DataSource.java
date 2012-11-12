@@ -70,6 +70,10 @@ public class DataSource {
     return myTracksLocationManager.isAllowed();
   }
 
+  public boolean isGpsProviderEnabled() {
+    return myTracksLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+  }
+
   /**
    * Registers a content observer.
    * 

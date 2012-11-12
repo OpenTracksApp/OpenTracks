@@ -35,6 +35,7 @@ import com.google.android.apps.mytracks.settings.SettingsActivity;
 import com.google.android.apps.mytracks.util.AnalyticsUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.EulaUtils;
+import com.google.android.apps.mytracks.util.GoogleLocationUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.ListItemUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
@@ -55,6 +56,7 @@ import android.database.Cursor;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.provider.Settings;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -65,6 +67,7 @@ import android.support.v4.widget.ResourceCursorAdapter;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -509,7 +512,19 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
       case R.id.track_list_search:
         return ApiAdapterFactory.getApiAdapter().handleSearchMenuSelection(this);
       case R.id.track_list_start_gps:
+        if (!trackDataHub.isGpsProviderEnabled()) {
+          intent = GoogleLocationUtils.isAvailable(TrackListActivity.this) ? new Intent(
+              GoogleLocationUtils.ACTION_GOOGLE_LOCATION_SETTINGS)
+              : new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+          intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+          startActivity(intent);
+          return true;
+        }
         startGps = !startGps;
+        Toast toast = Toast.makeText(
+            this, startGps ? R.string.gps_starting : R.string.gps_stopping, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
         handleStartGps();
         updateMenuItems(recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
         return true;
@@ -634,7 +649,6 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
    */
   private void updateMenuItems(boolean isRecording) {
     if (startGpsMenuItem != null) {
-      startGpsMenuItem.setIcon(startGps ? R.drawable.menu_stop_gps : R.drawable.menu_start_gps);
       startGpsMenuItem.setTitle(startGps ? R.string.menu_stop_gps : R.string.menu_start_gps);
       startGpsMenuItem.setVisible(!isRecording);
     }

@@ -244,6 +244,10 @@ public class TrackDataHub implements DataSourceListener {
     });
   }
 
+  public boolean isGpsProviderEnabled() {
+    return dataSource.isGpsProviderEnabled();
+  }
+
   /**
    * Returns true if the selected track is recording.
    */
