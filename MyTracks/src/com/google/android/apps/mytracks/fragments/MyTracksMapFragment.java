@@ -546,7 +546,7 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
     trackDataHub = ((TrackDetailActivity) getActivity()).getTrackDataHub();
     trackDataHub.registerTrackDataListener(this, EnumSet.of(TrackDataType.SELECTED_TRACK,
         TrackDataType.WAYPOINTS_TABLE, TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE,
-        TrackDataType.LOCATION, TrackDataType.HEADING));
+        TrackDataType.LOCATION));
   }
 
   /**

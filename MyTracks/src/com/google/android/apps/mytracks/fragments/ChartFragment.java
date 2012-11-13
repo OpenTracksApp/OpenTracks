@@ -379,10 +379,9 @@ public class ChartFragment extends Fragment implements TrackDataListener {
    */
   private synchronized void resumeTrackDataHub() {
     trackDataHub = ((TrackDetailActivity) getActivity()).getTrackDataHub();
-    trackDataHub.registerTrackDataListener(this, EnumSet.of(TrackDataType.SELECTED_TRACK,
-        TrackDataType.TRACKS_TABLE, TrackDataType.WAYPOINTS_TABLE,
-        TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE, TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE,
-        TrackDataType.PREFERENCE));
+    trackDataHub.registerTrackDataListener(this, EnumSet.of(TrackDataType.TRACKS_TABLE,
+        TrackDataType.WAYPOINTS_TABLE, TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE,
+        TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE, TrackDataType.PREFERENCE));
   }
 
   /**
