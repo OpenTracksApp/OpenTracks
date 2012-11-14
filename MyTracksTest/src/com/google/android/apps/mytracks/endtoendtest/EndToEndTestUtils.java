@@ -777,6 +777,32 @@ public class EndToEndTestUtils {
     }
     return null;
   }
+  
+  /**
+   * Finds a displayed text view with specified text and index number.
+   * 
+   * @param text text to find
+   * @param index the index to search
+   * @return the text view, null means can not find it
+   */
+  public static TextView findTextViewByIndex(String text, int index) {
+    int number = 1;
+    ArrayList<View> allViews = SOLO.getViews();
+    for (View view : allViews) {
+      if (view instanceof TextView) {
+        TextView textView = (TextView) view;
+        String textString = (String) textView.getText();
+        if (textView.isShown() && textString.endsWith(text)) {
+          if (number == index) {
+            return textView;
+          } else {
+            number++;
+          }
+        }
+      }
+    }
+    return null;
+  }
 
   /**
    * Gets the ChartView.

@@ -38,6 +38,7 @@ import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.easymock.Capture;
+import org.easymock.EasyMock;
 
 /**
  * Tests for {@link AnnouncementPeriodicTask}.
@@ -369,13 +370,15 @@ public class AnnouncementPeriodicTaskTest extends AndroidTestCase {
 
     expect(tts.isLanguageAvailable(DEFAULT_LOCALE)).andStubReturn(TextToSpeech.LANG_AVAILABLE);
     expect(tts.setLanguage(DEFAULT_LOCALE)).andReturn(TextToSpeech.LANG_AVAILABLE);
-    expect(tts.setSpeechRate(AnnouncementPeriodicTask.TTS_SPEECH_RATE)).andReturn(TextToSpeech.SUCCESS);
-    
+    expect(tts.setSpeechRate(AnnouncementPeriodicTask.TTS_SPEECH_RATE)).andReturn(
+        TextToSpeech.SUCCESS);
+    expect(tts.setOnUtteranceCompletedListener((OnUtteranceCompletedListener) EasyMock.anyObject()))
+        .andReturn(0);
+
     // Expect actual announcement call
-    expect(tts.speak(
-        eq(ANNOUNCEMENT), eq(TextToSpeech.QUEUE_FLUSH),
-        AndroidMock.<HashMap<String, String>>isNull()))
-            .andReturn(TextToSpeech.SUCCESS);
+    expect(
+        tts.speak(eq(ANNOUNCEMENT), eq(TextToSpeech.QUEUE_FLUSH),
+            eq(AnnouncementPeriodicTask.SPEECH_PARAMS))).andReturn(0);
 
     // Run the announcement
     AndroidMock.replay(tts);

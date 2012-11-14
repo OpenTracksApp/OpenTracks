@@ -21,6 +21,7 @@ import com.google.android.maps.mytracks.R;
 
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
+import android.widget.TextView;
 
 /**
  * Tests switching views and the menu list of each view.
@@ -93,8 +94,15 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.menu_satellite));
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_map_layer), true);
-    // 2 for there are two matches. And the first match is a noise.
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.menu_map), 2);
+    // But in some languages only has one match(Such as French).
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.menu_map));
+    // The first match maybe a noise(The title of the radio dialog) for some
+    // language(Such as English), we should click the second one.
+    TextView text = EndToEndTestUtils.findTextViewByIndex(
+        activityMyTracks.getString(R.string.menu_map), 2);
+    if (text != null) {
+      EndToEndTestUtils.SOLO.clickOnView(text);
+    }
   }
 
   @Override
