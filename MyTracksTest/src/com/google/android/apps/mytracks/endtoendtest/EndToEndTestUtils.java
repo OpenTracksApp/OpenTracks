@@ -394,13 +394,12 @@ public class EndToEndTestUtils {
    */
   public static boolean isTrackListEmpty(boolean isClick) {
     int trackNumber = SOLO.getCurrentListViews().get(0).getCount();
-    if(trackNumber <= 0) {
+    if (trackNumber <= 0) {
       return true;
-    } 
-
-    View oneTrack = SOLO.getCurrentListViews().get(0).getChildAt(0);
-    trackName = (String) ((TextView) oneTrack.findViewById(R.id.list_item_name)).getText();
+    }
     if (isClick) {
+      View oneTrack = SOLO.getCurrentListViews().get(0).getChildAt(0);
+      trackName = (String) ((TextView) oneTrack.findViewById(R.id.list_item_name)).getText();
       SOLO.scrollUp();
       SOLO.clickOnView(oneTrack);
     }
