@@ -234,7 +234,7 @@ public class EndToEndTestUtils {
   * Checks whether the Google Play Services need update.
   */
   private static boolean isGooglePlayServicesLatest() {
-    return !SOLO.searchText("Google Play services");
+    return findTextView("Google Play services") == null;
   }
 
   /**
@@ -460,6 +460,7 @@ public class EndToEndTestUtils {
    * @return true if it is under recording.
    */
   public static boolean isUnderRecording() {
+    instrumentation.waitForIdleSync();
     return SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop).isEnabled();
   }
 
