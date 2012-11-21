@@ -130,6 +130,9 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
   
   @Override
   protected void tearDown() throws Exception {
+    if (!testSensor) {
+      return;
+    }
     EndToEndTestUtils.SOLO.finishOpenedActivities();
     super.tearDown();
   }
