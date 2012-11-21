@@ -49,6 +49,9 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
   @Override
   protected void setUp() throws Exception {
     super.setUp();
+    if (!testSensor) {
+      return;
+    }
     instrumentation = getInstrumentation();
     activityMyTracks = getActivity();
     EndToEndTestUtils.setupForAllTest(instrumentation, activityMyTracks);

@@ -508,8 +508,10 @@ public class EndToEndTestUtils {
    * is shown.
    */
   public static void deleteAllTracks() {
-    findMenuItem(activityMytracks.getString(R.string.menu_delete_all), true);
-    getButtonOnScreen(activityMytracks.getString(R.string.generic_ok), true, true);
+    if (!isTrackListEmpty(false)) {
+      findMenuItem(activityMytracks.getString(R.string.menu_delete_all), true);
+      getButtonOnScreen(activityMytracks.getString(R.string.generic_ok), true, true);
+    }
   }
   
   /**
@@ -831,6 +833,8 @@ public class EndToEndTestUtils {
     SOLO.waitForText(activityMyTracks.getString(R.string.settings_reset));
     SOLO.clickOnText(activityMyTracks.getString(R.string.settings_reset));
     getButtonOnScreen(activityMytracks.getString(R.string.generic_ok), true, true);
+    Assert.assertTrue(SOLO.waitForText(activityMyTracks.getString(R.string.settings_reset_done)));
+
     instrumentation.waitForIdleSync();
     if (!keepInSettingList) {
       SOLO.goBack();

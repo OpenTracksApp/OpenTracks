@@ -49,6 +49,9 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
   @Override
   protected void setUp() throws Exception {
     super.setUp();
+    if (!testStress) {
+      return;
+    }
     instrumentation = getInstrumentation();
     activityMyTracks = getActivity();
     EndToEndTestUtils.setupForDebug(instrumentation, activityMyTracks);
