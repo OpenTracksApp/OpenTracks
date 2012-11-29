@@ -19,7 +19,9 @@ import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.endtoendtest.EndToEndTestUtils;
 import com.google.android.maps.mytracks.R;
 
+import android.app.AlertDialog;
 import android.app.Instrumentation;
+import android.content.DialogInterface;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 import android.widget.ListView;
@@ -49,6 +51,11 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
   public static final String DISABLE_MESSAGE = "This test is disabled";
   public static final String ZEPHYR_NAME = "HXM";
   public static final String POLAR_NAME = "Polar";
+
+  /**
+   * This flag is true means the operation of UI thread has done.
+   */
+  private boolean UIThreadDone = false;
 
   @Override
   protected void setUp() throws Exception {
@@ -117,7 +124,48 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
     if (number > 0 && EndToEndTestUtils.SOLO.waitForText(nameString, 1, EndToEndTestUtils.SHORT_WAIT_TIME)) {
       return;
     }
-    fail();
+    
+    Log.i(EndToEndTestUtils.LOG_TAG, "No sensor is paried");
+    try {
+      runTestOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+          UIThreadDone = false;
+          new AlertDialog.Builder(EndToEndTestUtils.SOLO.getCurrentActivity())
+              .setTitle("No paried sensor.")
+              .setMessage("No paried sensor, do you want to pair sensor now?")
+              .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                  UIThreadDone = true;
+                }
+              }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                  fail();
+                }
+              }).show();
+        }
+      });
+      // Waiting user click the dialog.
+      while (!UIThreadDone) {
+        EndToEndTestUtils.sleep(1000);
+        Log.i(EndToEndTestUtils.LOG_TAG, "Waiting UI thread done.");
+      }
+
+      // Open OS setting page of Bluetooth.
+      EndToEndTestUtils.SOLO.goBack();
+      EndToEndTestUtils.SOLO.clickOnText(trackListActivity
+          .getString(R.string.settings_sensor_bluetooth_pairing));
+
+      // Now the setting page is on the front.
+      while (!EndToEndTestUtils.SOLO.waitForText(
+          trackListActivity.getString(R.string.settings_sensor_bluetooth_pairing), 1, 500)) {
+        Log.i(EndToEndTestUtils.LOG_TAG, "Waiting back to MyTracks activity.");
+        EndToEndTestUtils.sleep(200);
+      }
+      checkPairedSensorsNumber(nameString);
+    } catch (Throwable e) {
+      e.printStackTrace();
+    }
   }
 
   /**
