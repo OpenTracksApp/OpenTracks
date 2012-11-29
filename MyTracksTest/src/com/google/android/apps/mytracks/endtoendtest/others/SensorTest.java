@@ -23,95 +23,155 @@ import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
 /**
- * Tests Connect to Sensors.
+ * Tests connecting to sensors.
  * 
  * @author Youtao Liu
  */
 public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivity> {
 
   /**
-   * Set to false as default.
+   * Set to false as default. True to run the test. Default to false since this
+   * test can take a long time.
    */
-  public static boolean testSensor = false;
+  public static boolean runTest = false;
 
   public SensorTest() {
     super(TrackListActivity.class);
   }
 
   private Instrumentation instrumentation;
-  private TrackListActivity activityMyTracks;
-  public static final String DISABLE_MESSAGE = "This test is disabled"; 
+  private TrackListActivity trackListActivity;
+  public static final String DISABLE_MESSAGE = "This test is disabled";
+  public static final String ZEPHYR_NAME = "HXM";
+  public static final String POLAR_NAME = "Polar";
 
   @Override
   protected void setUp() throws Exception {
     super.setUp();
-    if (!testSensor) {
+    if (!runTest) {
       return;
     }
     instrumentation = getInstrumentation();
-    activityMyTracks = getActivity();
-    EndToEndTestUtils.setupForAllTest(instrumentation, activityMyTracks);
+    trackListActivity = getActivity();
+    EndToEndTestUtils.setupForAllTest(instrumentation, trackListActivity);
   }
 
   /**
    * Tests connecting to a Zephyr Bluetooth sensor. Before this test, a Zephyr
-   * sensor must has been paired with the device.
+   * sensor must be paired with the device.
    */
   public void testConnectZephyrBluetoothSensor() {
-    if (!testSensor) {
+    if (!runTest) {
       Log.i(EndToEndTestUtils.LOG_TAG, DISABLE_MESSAGE);
       return;
     }
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_sensor));
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_sensor_type));
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
-        .getString(R.string.settings_sensor_type_zephyr));
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
-        .getString(R.string.settings_sensor_bluetooth_sensor));
-    assertTrue(getPairedSensorsNumber() > 0);
-    EndToEndTestUtils.SOLO.goBack();
-    EndToEndTestUtils.SOLO.goBack();
-    EndToEndTestUtils.SOLO.goBack();
-    assertTrue(checkSensorsStatus());
+    bluetoothSensorTest(trackListActivity.getString(R.string.settings_sensor_type_zephyr), ZEPHYR_NAME);
   }
 
   /**
    * Tests connecting to a Polar Bluetooth sensor. Before this test, a Polar
-   * sensor must has been paired with the device.
+   * sensor must be paired with the device.
    */
   public void testConnectPolarBluetoothSensor() {
-    if (!testSensor) {
+    if (!runTest) {
       Log.i(EndToEndTestUtils.LOG_TAG, DISABLE_MESSAGE);
       return;
     }
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_sensor));
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_sensor_type));
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
-        .getString(R.string.settings_sensor_type_polar));
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
-        .getString(R.string.settings_sensor_bluetooth_sensor));
-    assertTrue(getPairedSensorsNumber() > 0);
-    EndToEndTestUtils.SOLO.goBack();
+    bluetoothSensorTest(trackListActivity.getString(R.string.settings_sensor_type_polar), POLAR_NAME);
+  }
+
+  /**
+   * Set the paired sensor.
+   * 
+   * @param sensorTypeString the type of paired sensors
+   * @param nameString part of the sensor name string which can distinguish
+   *          different Bluetooth sensors.
+   */
+  private void bluetoothSensorTest(String sensorTypeString, String nameString) {
+    EndToEndTestUtils.findMenuItem(trackListActivity.getString(R.string.menu_settings), true);
+    EndToEndTestUtils.SOLO.clickOnText(trackListActivity.getString(R.string.settings_sensor));
+    EndToEndTestUtils.SOLO.clickOnText(trackListActivity.getString(R.string.settings_sensor_type));
+    EndToEndTestUtils.SOLO.clickOnText(sensorTypeString);
+    checkPairedSensorsNumber(nameString);
+    // Set the paired sensor.
+    EndToEndTestUtils.SOLO.clickOnText(nameString);
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.SOLO.goBack();
     assertTrue(checkSensorsStatus());
   }
 
   /**
-   * Get the number of paired sensors.
-   * 
-   * @return the number of paired sensors
+   * Checks the number of paired sensors.
    */
-  private int getPairedSensorsNumber() {
+  private void checkPairedSensorsNumber(String nameString) {
+    EndToEndTestUtils.SOLO.clickOnText(trackListActivity
+        .getString(R.string.settings_sensor_bluetooth_sensor));
+    instrumentation.waitForIdleSync();
     ArrayList<ListView> allListViews = EndToEndTestUtils.SOLO.getCurrentListViews();
     int number = allListViews.get(0).getCount();
-    return number;
+    if (number > 0 && EndToEndTestUtils.SOLO.waitForText(nameString, 1, EndToEndTestUtils.SHORT_WAIT_TIME)) {
+      return;
+    }
+    fail();
+  }
+
+  /**
+   * Tests connecting to a cadence ANT+ sensor.
+   */
+  public void testConnectANTSensor_Cadence() {
+    if (!runTest) {
+      Log.i(EndToEndTestUtils.LOG_TAG, DISABLE_MESSAGE);
+      return;
+    }
+    useANTSeonsor();
+    assertTrue(checkSensorsStatus());
+    checkANTSensorsStatus(R.id.sensor_state_cadence);
+  }
+
+  /**
+   * Tests connecting to cadence and heart rate ANT+ sensors at the same time.
+   */
+  public void testConnectTwoANTSensors() {
+    if (!runTest) {
+      Log.i(EndToEndTestUtils.LOG_TAG, DISABLE_MESSAGE);
+      return;
+    }
+    useANTSeonsor();
+    assertTrue(checkSensorsStatus());
+    checkANTSensorsStatus(R.id.sensor_state_cadence);
+    checkANTSensorsStatus(R.id.sensor_state_heart_rate);
+  }
+
+  /**
+   * Sets the setting to use ANT+ sensor
+   */
+  private void useANTSeonsor() {
+    EndToEndTestUtils.findMenuItem(trackListActivity.getString(R.string.menu_settings), true);
+    EndToEndTestUtils.SOLO.clickOnText(trackListActivity.getString(R.string.settings_sensor));
+    EndToEndTestUtils.SOLO.clickOnText(trackListActivity.getString(R.string.settings_sensor_type));
+    EndToEndTestUtils.SOLO.clickOnText(trackListActivity
+        .getString(R.string.settings_sensor_type_ant));
+    EndToEndTestUtils.SOLO.goBack();
+    EndToEndTestUtils.SOLO.goBack();
+  }
+
+  /**
+   * Checks whether the ANT+ sensor is connected with MyTracks.
+   * 
+   * @param the string to check which is not equal None
+   */
+  private void checkANTSensorsStatus(int viewID) {
+    TextView sensorValue = ((TextView) EndToEndTestUtils.SOLO.getCurrentActivity().findViewById(
+        viewID));
+    assertNotNull(sensorValue);
+    String realValue = sensorValue.getText().toString();
+    String noneValue = trackListActivity.getString(R.string.settings_sensor_type_none);
+    assertEquals(-1, realValue.indexOf(noneValue));
   }
 
   /**
@@ -122,15 +182,15 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
   private boolean checkSensorsStatus() {
     EndToEndTestUtils.instrumentation.waitForIdleSync();
     EndToEndTestUtils.createTrackIfEmpty(0, false);
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_sensor_state), true);
+    EndToEndTestUtils.findMenuItem(trackListActivity.getString(R.string.menu_sensor_state), true);
     return EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.sensor_state_connected), 1,
-        EndToEndTestUtils.NORMAL_WAIT_TIME);
+        trackListActivity.getString(R.string.sensor_state_connected), 1,
+        EndToEndTestUtils.LONG_WAIT_TIME);
   }
-  
+
   @Override
   protected void tearDown() throws Exception {
-    if (!testSensor) {
+    if (!runTest) {
       return;
     }
     EndToEndTestUtils.SOLO.finishOpenedActivities();
