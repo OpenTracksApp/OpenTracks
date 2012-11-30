@@ -55,27 +55,51 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
   }
 
   /**
-   * Tests connecting to a Zephyr Bluetooth sensor. Before this test, a Zephyr
+   * Tests connecting to a Zephyr Bluetooth sensor while not recording. Before this test, a Zephyr
    * sensor must be paired with the device.
    */
-  public void testConnectZephyrBluetoothSensor() {
+  public void testConnectZephyrBluetoothSensor_notRecording() {
     if (!SecondaryTestUtils.runTest) {
       Log.i(EndToEndTestUtils.LOG_TAG, SecondaryTestUtils.DISABLE_MESSAGE);
       return;
     }
-    bluetoothSensorTest(R.string.settings_sensor_type_zephyr, ZEPHYR_NAME);
+    bluetoothSensorTest(R.string.settings_sensor_type_zephyr, ZEPHYR_NAME, false);
+  }
+  
+  /**
+   * Tests connecting to a Zephyr Bluetooth sensor while under recording. Before this test, a Zephyr
+   * sensor must be paired with the device.
+   */
+  public void testConnectZephyrBluetoothSensor_underRecording() {
+    if (!SecondaryTestUtils.runTest) {
+      Log.i(EndToEndTestUtils.LOG_TAG, SecondaryTestUtils.DISABLE_MESSAGE);
+      return;
+    }
+    bluetoothSensorTest(R.string.settings_sensor_type_zephyr, ZEPHYR_NAME, true);
   }
 
   /**
-   * Tests connecting to a Polar Bluetooth sensor. Before this test, a Polar
+   * Tests connecting to a Polar Bluetooth sensor while not recording. Before this test, a Polar
    * sensor must be paired with the device.
    */
-  public void testConnectPolarBluetoothSensor() {
+  public void testConnectPolarBluetoothSensor_notRecording() {
     if (!SecondaryTestUtils.runTest) {
       Log.i(EndToEndTestUtils.LOG_TAG, SecondaryTestUtils.DISABLE_MESSAGE);
       return;
     }
-    bluetoothSensorTest(R.string.settings_sensor_type_polar, POLAR_NAME);
+    bluetoothSensorTest(R.string.settings_sensor_type_polar, POLAR_NAME, false);
+  }
+  
+  /**
+   * Tests connecting to a Polar Bluetooth sensor while under recording. Before this test, a Polar
+   * sensor must be paired with the device.
+   */
+  public void testConnectPolarBluetoothSensor_underRecording() {
+    if (!SecondaryTestUtils.runTest) {
+      Log.i(EndToEndTestUtils.LOG_TAG, SecondaryTestUtils.DISABLE_MESSAGE);
+      return;
+    }
+    bluetoothSensorTest(R.string.settings_sensor_type_polar, POLAR_NAME, true);
   }
 
   /**
@@ -84,8 +108,10 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
    * @param sensorTypeStringId the string id of paired sensors type
    * @param nameString part of the sensor name string which can distinguish
    *          different Bluetooth sensors
+   * @param isUnderRecording true means test under recording
    */
-  private void bluetoothSensorTest(int sensorTypeStringId, String nameString) {
+  private void bluetoothSensorTest(int sensorTypeStringId, String nameString,
+      boolean isUnderRecording) {
     EndToEndTestUtils.findMenuItem(trackListActivity.getString(R.string.menu_settings), true);
     EndToEndTestUtils.SOLO.clickOnText(trackListActivity.getString(R.string.settings_sensor));
     EndToEndTestUtils.SOLO.clickOnText(trackListActivity.getString(R.string.settings_sensor_type));
@@ -95,7 +121,11 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
     EndToEndTestUtils.SOLO.clickOnText(nameString);
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.SOLO.goBack();
-    assertTrue(checkSensorsStatus());
+    if (isUnderRecording) {
+      assertTrue(checkSensorsStatus_underRecording());
+    } else {
+      assertTrue(checkSensorsStatus_notRecording());
+    }
   }
 
   /**
@@ -125,7 +155,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
       return;
     }
     useANTSeonsor();
-    assertTrue(checkSensorsStatus());
+    assertTrue(checkSensorsStatus_notRecording());
     checkANTSensorsStatus(R.id.sensor_state_cadence);
   }
 
@@ -138,7 +168,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
       return;
     }
     useANTSeonsor();
-    assertTrue(checkSensorsStatus());
+    assertTrue(checkSensorsStatus_notRecording());
     checkANTSensorsStatus(R.id.sensor_state_cadence);
     checkANTSensorsStatus(R.id.sensor_state_heart_rate);
   }
@@ -169,13 +199,29 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
     String noneValue = trackListActivity.getString(R.string.settings_sensor_type_none);
     assertNotSame(realValue, noneValue);
   }
-
+  
   /**
-   * Checks whether the sensor is connected with MyTracks.
+   * Checks whether the sensor is connected with MyTracks during recording.
    * 
    * @return true means the sensor is connected with MyTracks
    */
-  private boolean checkSensorsStatus() {
+  private boolean checkSensorsStatus_underRecording() {
+    EndToEndTestUtils.instrumentation.waitForIdleSync();
+    EndToEndTestUtils.startRecording();
+    EndToEndTestUtils.findMenuItem(trackListActivity.getString(R.string.menu_sensor_state), true);
+    boolean result = EndToEndTestUtils.SOLO.waitForText(
+        trackListActivity.getString(R.string.sensor_state_connected), 1,
+        EndToEndTestUtils.LONG_WAIT_TIME);
+    EndToEndTestUtils.stopRecording(true);
+    return result;
+  }
+
+  /**
+   * Checks whether the sensor is connected with MyTracks while not under recording.
+   * 
+   * @return true means the sensor is connected with MyTracks
+   */
+  private boolean checkSensorsStatus_notRecording() {
     EndToEndTestUtils.instrumentation.waitForIdleSync();
     EndToEndTestUtils.createTrackIfEmpty(0, false);
     EndToEndTestUtils.findMenuItem(trackListActivity.getString(R.string.menu_sensor_state), true);
