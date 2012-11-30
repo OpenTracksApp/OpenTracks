@@ -30,12 +30,7 @@ import android.util.Log;
  */
 public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivity> {
 
-  /**
-   * Set to false as default. True to run the test. Default to false since this
-   * test can take a long time.
-   */
-  public static boolean runTest = true;
-  public static final int TEST_DURATION_IN_MILLISECONDS = 30 * 60 * 1000;
+  private static final int TEST_DURATION_IN_MILLISECONDS = 30 * 60 * 1000;
   private static final int MAX_TRACK_NUMBER = 30;
   private long startTime = 0;
   private int numberOfTracks;
@@ -50,7 +45,7 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
   @Override
   protected void setUp() throws Exception {
     super.setUp();
-    if (!runTest) {
+    if (!SecondaryTestUtils.runTest) {
       return;
     }
     instrumentation = getInstrumentation();
@@ -66,8 +61,8 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
    * each track, making it closer to the real stress.
    */
   public void testRecordAndDeleteTracks() {
-    if (!runTest) {
-      Log.i(EndToEndTestUtils.LOG_TAG, SensorTest.DISABLE_MESSAGE);
+    if (!SecondaryTestUtils.runTest) {
+      Log.i(EndToEndTestUtils.LOG_TAG, SecondaryTestUtils.DISABLE_MESSAGE);
       return;
     }
     for (int i = 0; (System.currentTimeMillis() - startTime) < TEST_DURATION_IN_MILLISECONDS; i++) {
@@ -90,8 +85,8 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
    * in each track, making it closer to the real stress.
    */
   public void testRotateMapViewInTrackDetailActivity() {
-    if (!runTest) {
-      Log.i(EndToEndTestUtils.LOG_TAG, SensorTest.DISABLE_MESSAGE);
+    if (!SecondaryTestUtils.runTest) {
+      Log.i(EndToEndTestUtils.LOG_TAG, SecondaryTestUtils.DISABLE_MESSAGE);
       return;
     }
     EndToEndTestUtils.startRecording();
@@ -105,8 +100,8 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
    * Switches view between MAP, CHART and STAT.
    */
   public void testSwitchTabs() {
-    if (!runTest) {
-      Log.i(EndToEndTestUtils.LOG_TAG, SensorTest.DISABLE_MESSAGE);
+    if (!SecondaryTestUtils.runTest) {
+      Log.i(EndToEndTestUtils.LOG_TAG, SecondaryTestUtils.DISABLE_MESSAGE);
       return;
     }
     EndToEndTestUtils.startRecording();
