@@ -5,7 +5,7 @@ by Google Play services.
 
 There is technically no source, but the src folder is necessary
 to ensure that the build system works. The content is actually
-located in libs/google-play-services.jar
+located in the libs/ directory.
 
 
 USAGE:
