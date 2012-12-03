@@ -52,7 +52,6 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
     trackListActivity = getActivity();
     EndToEndTestUtils.setupForAllTest(instrumentation, trackListActivity);
     startTime = System.currentTimeMillis();
-    EndToEndTestUtils.emulatorPort = 5568;
   }
 
   /**
@@ -121,14 +120,45 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
   }
 
   /**
+   * Switches view between MAP, CHART and STAT.
+   */
+  public void testSwitchTabs_wayPoints() {
+    if (!SecondaryTestUtils.runTest) {
+      Log.i(EndToEndTestUtils.LOG_TAG, SecondaryTestUtils.DISABLE_MESSAGE);
+      return;
+    }
+    EndToEndTestUtils.startRecording();
+
+    int i = 0;
+    while ((System.currentTimeMillis() - startTime) < TEST_DURATION_IN_MILLISECONDS) {
+      // Create one way points.
+      EndToEndTestUtils.sendGps(10, 10 * i);
+      EndToEndTestUtils.createWaypoint(i);
+      EndToEndTestUtils.pauseRecording();
+      
+      EndToEndTestUtils.SOLO
+          .clickOnText(trackListActivity.getString(R.string.track_detail_map_tab));
+      instrumentation.waitForIdleSync();
+      EndToEndTestUtils.SOLO.clickOnText(trackListActivity
+          .getString(R.string.track_detail_chart_tab));
+      instrumentation.waitForIdleSync();
+      EndToEndTestUtils.SOLO.clickOnText(trackListActivity
+          .getString(R.string.track_detail_stats_tab));
+      instrumentation.waitForIdleSync();
+      EndToEndTestUtils.resumeRecording();
+      logStatus(++i);
+    }
+  }
+
+  /**
    * Logs status.
    * 
    * @param times the number of times this test has been run
    */
   private void logStatus(int times) {
+    int minutes = (int)(TEST_DURATION_IN_MILLISECONDS - (System.currentTimeMillis() - startTime)) / 60 / 1000;
     Log.i(EndToEndTestUtils.LOG_TAG, String.format(
-        "This test has run d% times and will be finished in d% millis seconds!", times,
-        TEST_DURATION_IN_MILLISECONDS - (System.currentTimeMillis() - startTime)));
+        "This test has run %d times and will be finished in %d minutes!", times, minutes));
     Log.i(EndToEndTestUtils.LOG_TAG, String.format("There are %d tracks!", numberOfTracks));
   }
 }

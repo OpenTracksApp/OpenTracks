@@ -32,7 +32,6 @@ import java.util.ArrayList;
  */
 public class CreateTrackTest extends ActivityInstrumentationTestCase2<TrackListActivity> {
 
-  private static final String WAYPOINT_NAME = "testWaypoint";
   private Instrumentation instrumentation;
   private TrackListActivity activityMyTracks;
 
@@ -126,7 +125,7 @@ public class CreateTrackTest extends ActivityInstrumentationTestCase2<TrackListA
           .getString(R.string.generic_recording)));
     }
     
-    createWaypoint();
+    EndToEndTestUtils.createWaypoint(0);
     EndToEndTestUtils.sendGps(2, 2);
     // Back to tracks list.
     EndToEndTestUtils.SOLO.goBack();
@@ -205,23 +204,6 @@ public class CreateTrackTest extends ActivityInstrumentationTestCase2<TrackListA
     EndToEndTestUtils.SOLO.goBack();
 
     EndToEndTestUtils.stopRecording(true);
-  }
-
-  /**
-   * Creates a way point and a split maker during track recording.
-   */
-  private void createWaypoint() {
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_markers), true);
-    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.marker_list_empty_message)));
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_insert_marker), true);
-    EndToEndTestUtils.enterTextAvoidSoftKeyBoard(0, WAYPOINT_NAME);
-    EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_add));
-    if (EndToEndTestUtils.hasGpsSingal) {
-      assertTrue(EndToEndTestUtils.SOLO.waitForText(WAYPOINT_NAME, 1, EndToEndTestUtils.LONG_WAIT_TIME, true));
-    } else {
-      assertFalse(EndToEndTestUtils.SOLO.searchText(WAYPOINT_NAME));
-    }
-    EndToEndTestUtils.SOLO.goBack();
   }
   
   @Override

@@ -66,6 +66,7 @@ public class EndToEndTestUtils {
   static final double START_LATITUDE = -1.3f;
   static final double DELTA_LONGITUDE = 0.0005f;
   static final double DELTA_LADITUDE = 0.0005f;
+  private static final String WAYPOINT_NAME = "testWaypoint";
   private static final String NO_GPS_MESSAGE_PREFIX = "GPS is not available";
   
   private static final String MOREOPTION_CLASSNAME = "com.android.internal.view.menu.ActionMenuPresenter$OverflowMenuButton";
@@ -250,6 +251,9 @@ public class EndToEndTestUtils {
     EndToEndTestUtils.instrumentation = instrumentation;
     EndToEndTestUtils.activityMytracks = activityMyTracks;
     SOLO = new Solo(EndToEndTestUtils.instrumentation, EndToEndTestUtils.activityMytracks);
+    setIsEmulator();
+    hasActionBar = setHasActionBar();
+    checkLanguage();
   }
 
   /**
@@ -280,7 +284,7 @@ public class EndToEndTestUtils {
         Log.e(LOG_TAG, "Need update Google Play Services");
       }
       setIsEmulator();
-      if ((getButtonOnScreen(EndToEndTestUtils.activityMytracks.getString(R.string.eula_accept),
+      if ((getButtonOnScreen(activityMytracks.getString(R.string.eula_accept),
           false, false) != null)) {
         verifyFirstLaunch();
       } else if (SOLO.waitForText(
@@ -299,7 +303,7 @@ public class EndToEndTestUtils {
       if (!isEmulator) {
         GoToMyLocationTest.findAndClickMyLocation(activityMyTracks);
         hasGpsSingal = !SOLO.waitForText(NO_GPS_MESSAGE_PREFIX, 1,
-            EndToEndTestUtils.SHORT_WAIT_TIME);
+            SHORT_WAIT_TIME);
         SOLO.goBack();
       }
     } else if (SOLO.waitForText(
@@ -730,7 +734,7 @@ public class EndToEndTestUtils {
    * Finds the more option menu. It should match following conditions:
    * <ul>
    * <li>The view extends ImageButton.</li>
-   * <li>The view name equals {@link EndToEndTestUtils#MOREOPTION_CLASSNAME}.</li>
+   * <li>The view name equals {@link #MOREOPTION_CLASSNAME}.</li>
    * </ul>
    * @return the more option view. Null means can not find it.
    */
@@ -934,6 +938,32 @@ public class EndToEndTestUtils {
     String totalTimeNew = ((TextView) SOLO.getCurrentActivity()
         .findViewById(R.id.track_controller_total_time)).getText().toString();
     Assert.assertTrue(totalTimeOld.equalsIgnoreCase(totalTimeNew));
+  }
+  
+
+  /**
+   * Creates a way point and a split maker during track recording.
+   * 
+   * @param markerNumber of number of previous markers
+   */
+  public static void createWaypoint(int markerNumber) {
+    findMenuItem(activityMytracks.getString(R.string.menu_markers), true);
+    if (markerNumber > 0) {
+      int actualMarkerNumber = SOLO.getCurrentListViews().get(0).getCount();
+      Assert.assertEquals(markerNumber, actualMarkerNumber);
+    } else {
+      Assert.assertTrue(SOLO.waitForText(activityMytracks
+          .getString(R.string.marker_list_empty_message)));
+    }
+    findMenuItem(activityMytracks.getString(R.string.menu_insert_marker), true);
+    enterTextAvoidSoftKeyBoard(0, WAYPOINT_NAME);
+    SOLO.clickOnButton(activityMytracks.getString(R.string.generic_add));
+    if (hasGpsSingal) {
+      Assert.assertTrue(SOLO.waitForText(WAYPOINT_NAME, 1, LONG_WAIT_TIME, true));
+    } else {
+      Assert.assertFalse(SOLO.searchText(WAYPOINT_NAME));
+    }
+    SOLO.goBack();
   }
 
 }
