@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks.endtoendtest;
 
-import com.google.android.apps.mytracks.endtoendtest.others.SecondaryTestUtils;
+import com.google.android.apps.mytracks.endtoendtest.others.BigTestUtils;
 
 import android.os.Bundle;
 import android.test.InstrumentationTestRunner;
@@ -45,22 +45,22 @@ public class EndToEndTestRunner extends InstrumentationTestRunner {
 
     String isStressTest = arguments.getString("stress");
     if (isStressTest != null && isStressTest.equalsIgnoreCase("true")) {
-      SecondaryTestUtils.runStressTest = true;
+      BigTestUtils.runStressTest = true;
     } else {
-      SecondaryTestUtils.runStressTest = false;
+      BigTestUtils.runStressTest = false;
     }
 
     String isSensorTest = arguments.getString("sensor");
     if (isSensorTest != null && isSensorTest.equalsIgnoreCase("true")) {
-      SecondaryTestUtils.runSensorTest = true;
+      BigTestUtils.runSensorTest = true;
     } else {
-      SecondaryTestUtils.runSensorTest = false;
+      BigTestUtils.runSensorTest = false;
     }
 
     Log.d(EndToEndTestUtils.LOG_TAG, "Use port number when run test on emulator:"
         + EndToEndTestUtils.emulatorPort);
-    Log.i(EndToEndTestUtils.LOG_TAG, "Run stress test:" + SecondaryTestUtils.runStressTest);
-    Log.i(EndToEndTestUtils.LOG_TAG, "Run sensor test:" + SecondaryTestUtils.runSensorTest);
+    Log.i(EndToEndTestUtils.LOG_TAG, "Run stress test:" + BigTestUtils.runStressTest);
+    Log.i(EndToEndTestUtils.LOG_TAG, "Run sensor test:" + BigTestUtils.runSensorTest);
 
     super.onCreate(arguments);
   }

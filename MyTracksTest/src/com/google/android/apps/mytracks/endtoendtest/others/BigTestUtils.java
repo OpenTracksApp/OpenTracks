@@ -1,6 +1,6 @@
 package com.google.android.apps.mytracks.endtoendtest.others;
 
-public class SecondaryTestUtils {
+public class BigTestUtils {
   
   /**
    * Set to false as default. True to run the test. Default to false since this

@@ -942,7 +942,7 @@ public class EndToEndTestUtils {
   
 
   /**
-   * Creates a way point and a split maker during track recording.
+   * Creates a way point during track recording.
    * 
    * @param markerNumber of number of previous markers
    */

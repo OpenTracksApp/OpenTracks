@@ -46,7 +46,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
 
   @Override
   protected void setUp() throws Exception {
-    runTest = SecondaryTestUtils.runSensorTest;
+    runTest = BigTestUtils.runSensorTest;
     super.setUp();
     if (!runTest) {
       return;
@@ -62,7 +62,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
    */
   public void testConnectZephyrBluetoothSensor_notRecording() {
     if (!runTest) {
-      Log.i(EndToEndTestUtils.LOG_TAG, SecondaryTestUtils.DISABLE_MESSAGE);
+      Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
       return;
     }
     bluetoothSensorTest(R.string.settings_sensor_type_zephyr, ZEPHYR_NAME, false);
@@ -74,7 +74,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
    */
   public void testConnectZephyrBluetoothSensor_underRecording() {
     if (!runTest) {
-      Log.i(EndToEndTestUtils.LOG_TAG, SecondaryTestUtils.DISABLE_MESSAGE);
+      Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
       return;
     }
     bluetoothSensorTest(R.string.settings_sensor_type_zephyr, ZEPHYR_NAME, true);
@@ -86,7 +86,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
    */
   public void testConnectPolarBluetoothSensor_notRecording() {
     if (!runTest) {
-      Log.i(EndToEndTestUtils.LOG_TAG, SecondaryTestUtils.DISABLE_MESSAGE);
+      Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
       return;
     }
     bluetoothSensorTest(R.string.settings_sensor_type_polar, POLAR_NAME, false);
@@ -98,7 +98,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
    */
   public void testConnectPolarBluetoothSensor_underRecording() {
     if (!runTest) {
-      Log.i(EndToEndTestUtils.LOG_TAG, SecondaryTestUtils.DISABLE_MESSAGE);
+      Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
       return;
     }
     bluetoothSensorTest(R.string.settings_sensor_type_polar, POLAR_NAME, true);
@@ -153,7 +153,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
    */
   public void testConnectANTSensor_Cadence() {
     if (!runTest) {
-      Log.i(EndToEndTestUtils.LOG_TAG, SecondaryTestUtils.DISABLE_MESSAGE);
+      Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
       return;
     }
     useANTSeonsor();
@@ -166,7 +166,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
    */
   public void testConnectTwoANTSensors() {
     if (!runTest) {
-      Log.i(EndToEndTestUtils.LOG_TAG, SecondaryTestUtils.DISABLE_MESSAGE);
+      Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
       return;
     }
     useANTSeonsor();

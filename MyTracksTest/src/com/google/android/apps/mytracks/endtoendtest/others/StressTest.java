@@ -46,7 +46,7 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
 
   @Override
   protected void setUp() throws Exception {
-    runTest = SecondaryTestUtils.runStressTest;
+    runTest = BigTestUtils.runStressTest;
     super.setUp();
     if (!runTest) {
       return;
@@ -64,7 +64,7 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
    */
   public void testRecordAndDeleteTracks() {
     if (!runTest) {
-      Log.i(EndToEndTestUtils.LOG_TAG, SecondaryTestUtils.DISABLE_MESSAGE);
+      Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
       return;
     }
     for (int i = 0; (System.currentTimeMillis() - startTime) < TEST_DURATION_IN_MILLISECONDS; i++) {
@@ -88,7 +88,7 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
    */
   public void testRotateMapViewInTrackDetailActivity() {
     if (!runTest) {
-      Log.i(EndToEndTestUtils.LOG_TAG, SecondaryTestUtils.DISABLE_MESSAGE);
+      Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
       return;
     }
     EndToEndTestUtils.startRecording();
@@ -103,7 +103,7 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
    */
   public void testSwitchTabs() {
     if (!runTest) {
-      Log.i(EndToEndTestUtils.LOG_TAG, SecondaryTestUtils.DISABLE_MESSAGE);
+      Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
       return;
     }
     EndToEndTestUtils.startRecording();
@@ -120,14 +120,16 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
       instrumentation.waitForIdleSync();
       logStatus(++i);
     }
+    EndToEndTestUtils.stopRecording(true);
   }
 
   /**
-   * Switches view between MAP, CHART and STAT.
+   * Switches view between MAP, CHART and STAT. And create way points, pause and
+   * resume the track during recording.
    */
   public void testSwitchTabs_wayPoints() {
     if (!runTest) {
-      Log.i(EndToEndTestUtils.LOG_TAG, SecondaryTestUtils.DISABLE_MESSAGE);
+      Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
       return;
     }
     EndToEndTestUtils.startRecording();
@@ -138,7 +140,7 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
       EndToEndTestUtils.sendGps(10, 10 * i);
       EndToEndTestUtils.createWaypoint(i);
       EndToEndTestUtils.pauseRecording();
-      
+
       EndToEndTestUtils.SOLO
           .clickOnText(trackListActivity.getString(R.string.track_detail_map_tab));
       instrumentation.waitForIdleSync();
@@ -151,6 +153,7 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
       EndToEndTestUtils.resumeRecording();
       logStatus(++i);
     }
+    EndToEndTestUtils.stopRecording(true);
   }
 
   /**
@@ -159,7 +162,7 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
    * @param times the number of times this test has been run
    */
   private void logStatus(int times) {
-    int minutes = (int)(TEST_DURATION_IN_MILLISECONDS - (System.currentTimeMillis() - startTime)) / 60 / 1000;
+    int minutes = (int) (TEST_DURATION_IN_MILLISECONDS - (System.currentTimeMillis() - startTime)) / 60 / 1000;
     Log.i(EndToEndTestUtils.LOG_TAG, String.format(
         "This test has run %d times and will be finished in %d minutes!", times, minutes));
     Log.i(EndToEndTestUtils.LOG_TAG, String.format("There are %d tracks!", numberOfTracks));
