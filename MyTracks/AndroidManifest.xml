@@ -16,7 +16,7 @@ limitations under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   android:installLocation="auto"
-  android:versionCode="62"
+  android:versionCode="63"
   android:versionName="2.0.3"
   package="com.google.android.maps.mytracks" >
   <!-- Permission to initialize services -->
@@ -79,6 +79,11 @@ limitations under the License.
     android:name="com.google.android.apps.mytracks.WRITE_TRACK_DATA"
     android:permissionGroup="android.permission-group.LOCATION"
     android:protectionLevel="dangerous" />
+  <!-- Permission for map view v2. Note the prefix must be the application package name -->
+  <permission
+    android:name="com.google.android.maps.mytracks.permission.MAPS_RECEIVE"
+    android:protectionLevel="signature" />
+  <uses-permission android:name="com.google.android.maps.mytracks.permission.MAPS_RECEIVE" />
   <uses-sdk
     android:minSdkVersion="8"
     android:targetSdkVersion="16" />
