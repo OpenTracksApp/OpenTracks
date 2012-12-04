@@ -40,13 +40,15 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
 
   private Instrumentation instrumentation;
   private TrackListActivity trackListActivity;
+  private boolean runTest = false;
   private static final String ZEPHYR_NAME = "HXM";
   private static final String POLAR_NAME = "Polar";
 
   @Override
   protected void setUp() throws Exception {
+    runTest = SecondaryTestUtils.runSensorTest;
     super.setUp();
-    if (!SecondaryTestUtils.runTest) {
+    if (!runTest) {
       return;
     }
     instrumentation = getInstrumentation();
@@ -59,7 +61,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
    * sensor must be paired with the device.
    */
   public void testConnectZephyrBluetoothSensor_notRecording() {
-    if (!SecondaryTestUtils.runTest) {
+    if (!runTest) {
       Log.i(EndToEndTestUtils.LOG_TAG, SecondaryTestUtils.DISABLE_MESSAGE);
       return;
     }
@@ -71,7 +73,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
    * sensor must be paired with the device.
    */
   public void testConnectZephyrBluetoothSensor_underRecording() {
-    if (!SecondaryTestUtils.runTest) {
+    if (!runTest) {
       Log.i(EndToEndTestUtils.LOG_TAG, SecondaryTestUtils.DISABLE_MESSAGE);
       return;
     }
@@ -83,7 +85,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
    * sensor must be paired with the device.
    */
   public void testConnectPolarBluetoothSensor_notRecording() {
-    if (!SecondaryTestUtils.runTest) {
+    if (!runTest) {
       Log.i(EndToEndTestUtils.LOG_TAG, SecondaryTestUtils.DISABLE_MESSAGE);
       return;
     }
@@ -95,7 +97,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
    * sensor must be paired with the device.
    */
   public void testConnectPolarBluetoothSensor_underRecording() {
-    if (!SecondaryTestUtils.runTest) {
+    if (!runTest) {
       Log.i(EndToEndTestUtils.LOG_TAG, SecondaryTestUtils.DISABLE_MESSAGE);
       return;
     }
@@ -150,7 +152,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
    * Tests connecting to a cadence ANT+ sensor.
    */
   public void testConnectANTSensor_Cadence() {
-    if (!SecondaryTestUtils.runTest) {
+    if (!runTest) {
       Log.i(EndToEndTestUtils.LOG_TAG, SecondaryTestUtils.DISABLE_MESSAGE);
       return;
     }
@@ -163,7 +165,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
    * Tests connecting to cadence and heart rate ANT+ sensors at the same time.
    */
   public void testConnectTwoANTSensors() {
-    if (!SecondaryTestUtils.runTest) {
+    if (!runTest) {
       Log.i(EndToEndTestUtils.LOG_TAG, SecondaryTestUtils.DISABLE_MESSAGE);
       return;
     }
@@ -232,7 +234,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
 
   @Override
   protected void tearDown() throws Exception {
-    if (!SecondaryTestUtils.runTest) {
+    if (!runTest) {
       return;
     }
     EndToEndTestUtils.SOLO.finishOpenedActivities();

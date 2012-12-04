@@ -32,6 +32,8 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
 
   private static final int TEST_DURATION_IN_MILLISECONDS = 30 * 60 * 1000;
   private static final int MAX_TRACK_NUMBER = 30;
+  private boolean runTest = false;
+
   private long startTime = 0;
   private int numberOfTracks;
 
@@ -44,8 +46,9 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
 
   @Override
   protected void setUp() throws Exception {
+    runTest = SecondaryTestUtils.runStressTest;
     super.setUp();
-    if (!SecondaryTestUtils.runTest) {
+    if (!runTest) {
       return;
     }
     instrumentation = getInstrumentation();
@@ -60,7 +63,7 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
    * each track, making it closer to the real stress.
    */
   public void testRecordAndDeleteTracks() {
-    if (!SecondaryTestUtils.runTest) {
+    if (!runTest) {
       Log.i(EndToEndTestUtils.LOG_TAG, SecondaryTestUtils.DISABLE_MESSAGE);
       return;
     }
@@ -84,7 +87,7 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
    * in each track, making it closer to the real stress.
    */
   public void testRotateMapViewInTrackDetailActivity() {
-    if (!SecondaryTestUtils.runTest) {
+    if (!runTest) {
       Log.i(EndToEndTestUtils.LOG_TAG, SecondaryTestUtils.DISABLE_MESSAGE);
       return;
     }
@@ -99,7 +102,7 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
    * Switches view between MAP, CHART and STAT.
    */
   public void testSwitchTabs() {
-    if (!SecondaryTestUtils.runTest) {
+    if (!runTest) {
       Log.i(EndToEndTestUtils.LOG_TAG, SecondaryTestUtils.DISABLE_MESSAGE);
       return;
     }
@@ -123,7 +126,7 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
    * Switches view between MAP, CHART and STAT.
    */
   public void testSwitchTabs_wayPoints() {
-    if (!SecondaryTestUtils.runTest) {
+    if (!runTest) {
       Log.i(EndToEndTestUtils.LOG_TAG, SecondaryTestUtils.DISABLE_MESSAGE);
       return;
     }
