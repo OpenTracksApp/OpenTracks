@@ -56,7 +56,7 @@ public class EndToEndTestUtils {
   
   private static final String ANDROID_LOCAL_IP = "10.0.2.2";
   // usually 5554.
-  public static int emulatorPort = 5554;
+  public static int emulatorPort = 5558;
 
   private static final int ORIENTATION_PORTRAIT = 1;
   private static final int ORIENTATION_LANDSCAPE = 0;
@@ -964,6 +964,16 @@ public class EndToEndTestUtils {
       Assert.assertFalse(SOLO.searchText(WAYPOINT_NAME));
     }
     SOLO.goBack();
+  }
+  
+  /**
+   * Waits a text to disappear.
+   */
+  public static void waitTextToDisappear(String text) {
+    // The first wait should longer than following waits.
+    SOLO.waitForText(text, 1, SHORT_WAIT_TIME);
+    while (SOLO.waitForText(text, 1, 200)) {}
+    return;
   }
 
 }
