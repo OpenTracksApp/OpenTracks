@@ -24,58 +24,58 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 
 /**
- * Tests Rotation of MyTracks.
+ * Stress test of MyTracks.
  * 
  * @author Youtao Liu
  */
 public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivity> {
 
-  /**
-   * Set to false as default.
-   */
-  public static boolean testStress = false;
-  public static final int MINUTES_FOR_EACH_TEST = 30;
-  public static final int MILLI_SECOND_IN_ONE_MINUTE = 60 * 1000;
-  long startTime = 0;
-  int trackNumber;
+  private static final int TEST_DURATION_IN_MILLISECONDS = 30 * 60 * 1000;
+  private static final int MAX_TRACK_NUMBER = 30;
+  private boolean runTest = false;
+
+  private long startTime = 0;
+  private int numberOfTracks;
 
   public StressTest() {
     super(TrackListActivity.class);
   }
 
   private Instrumentation instrumentation;
-  private TrackListActivity activityMyTracks;
+  private TrackListActivity trackListActivity;
 
   @Override
   protected void setUp() throws Exception {
+    runTest = BigTestUtils.runStressTest;
     super.setUp();
-    if (!testStress) {
+    if (!runTest) {
       return;
     }
     instrumentation = getInstrumentation();
-    activityMyTracks = getActivity();
-    EndToEndTestUtils.setupForDebug(instrumentation, activityMyTracks);
+    trackListActivity = getActivity();
+    EndToEndTestUtils.setupForAllTest(instrumentation, trackListActivity);
     startTime = System.currentTimeMillis();
-    EndToEndTestUtils.emulatorPort = 5568;
   }
 
   /**
-   * Records tracks and delete them when there are more than 30 tracks..
+   * Records tracks and deletes them when there are more than
+   * {@link #MAX_TRACK_NUMBER} tracks. Keeps sending different GPS locations in
+   * each track, making it closer to the real stress.
    */
   public void testRecordAndDeleteTracks() {
-    if (!testStress) {
-      Log.i(EndToEndTestUtils.LOG_TAG, SensorTest.DISABLE_MESSAGE);
+    if (!runTest) {
+      Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
       return;
     }
-    for (int i = 0; (System.currentTimeMillis() - startTime) / MILLI_SECOND_IN_ONE_MINUTE < MINUTES_FOR_EACH_TEST; i++) {
+    for (int i = 0; (System.currentTimeMillis() - startTime) < TEST_DURATION_IN_MILLISECONDS; i++) {
       EndToEndTestUtils.startRecording();
       // Points in a tracks keep increasing.
       EndToEndTestUtils.sendGps(i * 10, 0, 10);
       EndToEndTestUtils.stopRecording(true);
       EndToEndTestUtils.SOLO.goBack();
       EndToEndTestUtils.instrumentation.waitForIdleSync();
-      trackNumber = EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount();
-      if (trackNumber > 30) {
+      numberOfTracks = EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount();
+      if (numberOfTracks > MAX_TRACK_NUMBER) {
         EndToEndTestUtils.deleteAllTracks();
       }
       logStatus(i);
@@ -83,55 +83,88 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
   }
 
   /**
-   * Rotates screen when display map view.
+   * Rotates screen when display map view. Keeps sending different GPS locations
+   * in each track, making it closer to the real stress.
    */
   public void testRotateMapViewInTrackDetailActivity() {
-    if (!testStress) {
-      Log.i(EndToEndTestUtils.LOG_TAG, SensorTest.DISABLE_MESSAGE);
+    if (!runTest) {
+      Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
       return;
     }
     EndToEndTestUtils.startRecording();
-    for (int i = 0; (System.currentTimeMillis() - startTime) / MILLI_SECOND_IN_ONE_MINUTE < MINUTES_FOR_EACH_TEST; i++) {
+    for (int i = 0; (System.currentTimeMillis() - startTime) < TEST_DURATION_IN_MILLISECONDS; i++) {
       EndToEndTestUtils.sendGps(10, i * 10);
       EndToEndTestUtils.rotateCurrentActivity();
     }
   }
 
   /**
-   * Switches view between CHART, MAP and STAT.
+   * Switches view between MAP, CHART and STAT.
    */
   public void testSwitchTabs() {
-    if (!testStress) {
-      Log.i(EndToEndTestUtils.LOG_TAG, SensorTest.DISABLE_MESSAGE);
+    if (!runTest) {
+      Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
       return;
     }
     EndToEndTestUtils.startRecording();
     int i = 0;
-    while ((System.currentTimeMillis() - startTime) / MILLI_SECOND_IN_ONE_MINUTE < MINUTES_FOR_EACH_TEST) {
-      EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_map_tab));
+    while ((System.currentTimeMillis() - startTime) < TEST_DURATION_IN_MILLISECONDS) {
+      EndToEndTestUtils.SOLO
+          .clickOnText(trackListActivity.getString(R.string.track_detail_map_tab));
       instrumentation.waitForIdleSync();
-      EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
+      EndToEndTestUtils.SOLO.clickOnText(trackListActivity
           .getString(R.string.track_detail_chart_tab));
       instrumentation.waitForIdleSync();
-      EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
+      EndToEndTestUtils.SOLO.clickOnText(trackListActivity
           .getString(R.string.track_detail_stats_tab));
       instrumentation.waitForIdleSync();
       logStatus(++i);
     }
+    EndToEndTestUtils.stopRecording(true);
   }
 
   /**
-   * Displays log message.
-   * 
-   * @param times this test has been run
+   * Switches view between MAP, CHART and STAT. And create way points, pause and
+   * resume the track during recording.
    */
-  private void logStatus(int times) {
-    Log.i(EndToEndTestUtils.LOG_TAG, "This test has run "
-        + times
-        + " times and will be finished in "
-        + (MINUTES_FOR_EACH_TEST - (System.currentTimeMillis() - startTime)
-            / MILLI_SECOND_IN_ONE_MINUTE) + " minutes!");
-    Log.i(EndToEndTestUtils.LOG_TAG, "There are " + trackNumber + " tracks!");
+  public void testSwitchTabs_wayPoints() {
+    if (!runTest) {
+      Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
+      return;
+    }
+    EndToEndTestUtils.startRecording();
+
+    int i = 0;
+    while ((System.currentTimeMillis() - startTime) < TEST_DURATION_IN_MILLISECONDS) {
+      // Create one way points.
+      EndToEndTestUtils.sendGps(10, 10 * i);
+      EndToEndTestUtils.createWaypoint(i);
+      EndToEndTestUtils.pauseRecording();
+
+      EndToEndTestUtils.SOLO
+          .clickOnText(trackListActivity.getString(R.string.track_detail_map_tab));
+      instrumentation.waitForIdleSync();
+      EndToEndTestUtils.SOLO.clickOnText(trackListActivity
+          .getString(R.string.track_detail_chart_tab));
+      instrumentation.waitForIdleSync();
+      EndToEndTestUtils.SOLO.clickOnText(trackListActivity
+          .getString(R.string.track_detail_stats_tab));
+      instrumentation.waitForIdleSync();
+      EndToEndTestUtils.resumeRecording();
+      logStatus(++i);
+    }
+    EndToEndTestUtils.stopRecording(true);
   }
 
+  /**
+   * Logs status.
+   * 
+   * @param times the number of times this test has been run
+   */
+  private void logStatus(int times) {
+    int minutes = (int) (TEST_DURATION_IN_MILLISECONDS - (System.currentTimeMillis() - startTime)) / 60 / 1000;
+    Log.i(EndToEndTestUtils.LOG_TAG, String.format(
+        "This test has run %d times and will be finished in %d minutes!", times, minutes));
+    Log.i(EndToEndTestUtils.LOG_TAG, String.format("There are %d tracks!", numberOfTracks));
+  }
 }

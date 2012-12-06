@@ -15,6 +15,8 @@
  */
 package com.google.android.apps.mytracks.endtoendtest;
 
+import com.google.android.apps.mytracks.endtoendtest.others.BigTestUtils;
+
 import android.os.Bundle;
 import android.test.InstrumentationTestRunner;
 import android.util.Log;
@@ -31,13 +33,35 @@ public class EndToEndTestRunner extends InstrumentationTestRunner {
    */
   @Override
   public void onCreate(Bundle arguments) {
-    try {
-      EndToEndTestUtils.emulatorPort = Integer.parseInt(arguments.getString("port"));
-    } catch (Exception e) {
-      Log.e(EndToEndTestUtils.LOG_TAG, "Unable to get port parameter, use default value." + EndToEndTestUtils.emulatorPort, e);
+    String portNumber = arguments.getString("port");
+    if (portNumber != null) {
+      try {
+        EndToEndTestUtils.emulatorPort = Integer.parseInt(portNumber);
+      } catch (Exception e) {
+        Log.e(EndToEndTestUtils.LOG_TAG, "Unable to get port parameter, use default value."
+            + EndToEndTestUtils.emulatorPort, e);
+      }
     }
-    Log.d(EndToEndTestUtils.LOG_TAG, "Use port number when run test on emulator:" + EndToEndTestUtils.emulatorPort);
-    
+
+    String isStressTest = arguments.getString("stress");
+    if (isStressTest != null && isStressTest.equalsIgnoreCase("true")) {
+      BigTestUtils.runStressTest = true;
+    } else {
+      BigTestUtils.runStressTest = false;
+    }
+
+    String isSensorTest = arguments.getString("sensor");
+    if (isSensorTest != null && isSensorTest.equalsIgnoreCase("true")) {
+      BigTestUtils.runSensorTest = true;
+    } else {
+      BigTestUtils.runSensorTest = false;
+    }
+
+    Log.d(EndToEndTestUtils.LOG_TAG, "Use port number when run test on emulator:"
+        + EndToEndTestUtils.emulatorPort);
+    Log.i(EndToEndTestUtils.LOG_TAG, "Run stress test:" + BigTestUtils.runStressTest);
+    Log.i(EndToEndTestUtils.LOG_TAG, "Run sensor test:" + BigTestUtils.runSensorTest);
+
     super.onCreate(arguments);
   }
 
