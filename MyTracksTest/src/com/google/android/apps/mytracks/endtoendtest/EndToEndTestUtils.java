@@ -56,7 +56,7 @@ public class EndToEndTestUtils {
   
   private static final String ANDROID_LOCAL_IP = "10.0.2.2";
   // usually 5554.
-  public static int emulatorPort = 5558;
+  public static int emulatorPort = 5554;
 
   private static final int ORIENTATION_PORTRAIT = 1;
   private static final int ORIENTATION_LANDSCAPE = 0;
@@ -949,6 +949,7 @@ public class EndToEndTestUtils {
   public static void createWaypoint(int markerNumber) {
     findMenuItem(activityMytracks.getString(R.string.menu_markers), true);
     if (markerNumber > 0) {
+      SOLO.waitForText(WAYPOINT_NAME);
       int actualMarkerNumber = SOLO.getCurrentListViews().get(0).getCount();
       Assert.assertEquals(markerNumber, actualMarkerNumber);
     } else {
