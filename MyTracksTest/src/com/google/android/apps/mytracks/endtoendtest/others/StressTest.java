@@ -95,6 +95,8 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
     for (int i = 0; (System.currentTimeMillis() - startTime) < TEST_DURATION_IN_MILLISECONDS; i++) {
       EndToEndTestUtils.sendGps(10, i * 10);
       EndToEndTestUtils.rotateCurrentActivity();
+      Log.i(EndToEndTestUtils.LOG_TAG, String.format("Totate %d times in %d minutes!", i, 
+          (System.currentTimeMillis() - startTime) / 1000 / 60));
     }
   }
 
