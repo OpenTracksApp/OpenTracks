@@ -17,9 +17,11 @@ package com.google.android.apps.mytracks.endtoendtest;
 
 import com.google.android.apps.mytracks.ChartView;
 import com.google.android.apps.mytracks.TrackListActivity;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Instrumentation;
+import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.CheckBox;
 
@@ -31,7 +33,7 @@ import java.util.ArrayList;
  * @author Youtao Liu
  */
 public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActivity> {
-  
+
   private Instrumentation instrumentation;
   private TrackListActivity activityMyTracks;
 
@@ -44,7 +46,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     super.setUp();
     instrumentation = getInstrumentation();
     activityMyTracks = getActivity();
-    EndToEndTestUtils.setupForAllTest(instrumentation, activityMyTracks);
+    EndToEndTestUtils.setupForDebug(instrumentation, activityMyTracks);
   }
 
   /**
@@ -74,26 +76,30 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     // Change a setting of sharing.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_sharing));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.settings_sharing_allow_access), 1, EndToEndTestUtils.NORMAL_WAIT_TIME));
+        activityMyTracks.getString(R.string.settings_sharing_allow_access), 1,
+        EndToEndTestUtils.NORMAL_WAIT_TIME));
     ArrayList<CheckBox> sharingCheckBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
     boolean newMapsPublic = sharingCheckBoxs.get(0).isChecked();
     EndToEndTestUtils.SOLO.clickOnCheckBox(0);
     instrumentation.waitForIdleSync();
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.settings_sharing_allow_access), 1, EndToEndTestUtils.NORMAL_WAIT_TIME));
+        activityMyTracks.getString(R.string.settings_sharing_allow_access), 1,
+        EndToEndTestUtils.NORMAL_WAIT_TIME));
     assertEquals(!newMapsPublic, EndToEndTestUtils.SOLO.getCurrentCheckBoxes().get(0).isChecked());
     EndToEndTestUtils.SOLO.goBack();
 
     // Reset all settings.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_reset));
-    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+    EndToEndTestUtils
+        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
 
     // Check settings.
     // Add following scroll up for a bug of Robotium.
     EndToEndTestUtils.SOLO.scrollUp();
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
-    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.settings_stats_units_title), 1, EndToEndTestUtils.LONG_WAIT_TIME));
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(
+        activityMyTracks.getString(R.string.settings_stats_units_title), 1,
+        EndToEndTestUtils.LONG_WAIT_TIME));
     displayCheckBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
     assertEquals(useMetric, displayCheckBoxs.get(0).isChecked());
 
@@ -115,7 +121,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     // Change it back and verify it.
     ChangePreferredUnits();
   }
-  
+
   /**
    * Tests the change of stats settings during recording on chart view.
    */
@@ -129,7 +135,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.stopRecording(true);
 
   }
-  
+
   /**
    * Tests the change of stats settings during recording on stats tab.
    */
@@ -143,9 +149,10 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.stopRecording(true);
 
   }
-  
+
   /**
-   * Tests displaying elevation, grade and latitude and longitude information in Stats tab.
+   * Tests displaying elevation, grade and latitude and longitude information in
+   * Stats tab.
    */
   public void testChangeStatsSettings_showExtraInfos() {
     EndToEndTestUtils.createTrackIfEmpty(5, false);
@@ -161,7 +168,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
         .getString(R.string.stats_latitude)));
   }
-  
+
   /**
    * Changes settings of preferred units and preferred rate.
    * 
@@ -188,12 +195,10 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
           .getString(R.string.settings_stats_rate_title));
     }
     if (changeElevation) {
-      EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
-          .getString(R.string.stats_elevation));
+      EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.stats_elevation));
     }
     if (changeGrade) {
-      EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
-          .getString(R.string.settings_stats_grade));
+      EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_stats_grade));
     }
     if (changeLatLong) {
       EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
@@ -295,6 +300,45 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
         R.string.track_name_format).split(" ")[0]));
     assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.activityType));
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_save));
+  }
+
+  /**
+   * Tests the setting of track color settings.
+   */
+  public void testTrackColorSettings() {
+    Context context = activityMyTracks.getApplicationContext();
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.menu_map));
+
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
+        .getString(R.string.settings_map_track_color_mode));
+    instrumentation.waitForIdleSync();
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
+        .getString(R.string.settings_map_track_color_mode_fixed));
+    EndToEndTestUtils.waitTextToDisappear(activityMyTracks
+        .getString(R.string.settings_map_track_color_mode_dynamic_value));
+    assertEquals(activityMyTracks.getString(R.string.settings_map_track_color_mode_fixed_value),
+        PreferencesUtils.getString(context, R.string.track_color_mode_key, "error"));
+
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
+        .getString(R.string.settings_map_track_color_mode));
+    instrumentation.waitForIdleSync();
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
+        .getString(R.string.settings_map_track_color_mode_dynamic));
+    EndToEndTestUtils.waitTextToDisappear(activityMyTracks
+        .getString(R.string.settings_map_track_color_mode_dynamic_value));
+    assertEquals(activityMyTracks.getString(R.string.settings_map_track_color_mode_dynamic_value),
+        PreferencesUtils.getString(context, R.string.track_color_mode_key, "error"));
+
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
+        .getString(R.string.settings_map_track_color_mode));
+    instrumentation.waitForIdleSync();
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
+        .getString(R.string.settings_map_track_color_mode_single));
+    EndToEndTestUtils.waitTextToDisappear(activityMyTracks
+        .getString(R.string.settings_map_track_color_mode_dynamic_value));
+    assertEquals(activityMyTracks.getString(R.string.settings_map_track_color_mode_single_value),
+        PreferencesUtils.getString(context, R.string.track_color_mode_key, "error"));
   }
 
   @Override
