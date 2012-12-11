@@ -54,12 +54,36 @@ public class DynamicSpeedTrackPathDescriptorTest extends AndroidTestCase {
   }
 
   /**
+   * Tests {@link DynamicSpeedTrackPathDescriptor#getSlowSpeed()}.
+   */
+  public void testGetSlowSpeed() {
+    DynamicSpeedTrackPathDescriptor dynamicSpeedTrackPathDescriptor = new DynamicSpeedTrackPathDescriptor(
+        context);
+    dynamicSpeedTrackPathDescriptor.setAverageMovingSpeed(50);
+    dynamicSpeedTrackPathDescriptor.setSpeedMargin(10);
+    assertEquals(50.0, dynamicSpeedTrackPathDescriptor.getAverageMovingSpeed());
+    assertEquals(45, dynamicSpeedTrackPathDescriptor.getSlowSpeed());
+  }
+
+  /**
+   * Tests {@link DynamicSpeedTrackPathDescriptor#getNormalSpeed()}.
+   */
+  public void testGetNormalSpeed() {
+    DynamicSpeedTrackPathDescriptor dynamicSpeedTrackPathDescriptor = new DynamicSpeedTrackPathDescriptor(
+        context);
+    dynamicSpeedTrackPathDescriptor.setAverageMovingSpeed(50);
+    dynamicSpeedTrackPathDescriptor.setSpeedMargin(10);
+    assertEquals(50.0, dynamicSpeedTrackPathDescriptor.getAverageMovingSpeed());
+    assertEquals(55, dynamicSpeedTrackPathDescriptor.getNormalSpeed());
+  }
+
+  /**
    * Tests {@link DynamicSpeedTrackPathDescriptor#updateState()} by wrong track
    * id.
    */
   public void testNeedsRedraw_WrongTrackId() {
-    PreferencesUtils.setLong(
-        context, R.string.selected_track_id_key, PreferencesUtils.SELECTED_TRACK_ID_DEFAULT);
+    PreferencesUtils.setLong(context, R.string.selected_track_id_key,
+        PreferencesUtils.SELECTED_TRACK_ID_DEFAULT);
     DynamicSpeedTrackPathDescriptor dynamicSpeedTrackPathDescriptor = new DynamicSpeedTrackPathDescriptor(
         context);
     assertEquals(false, dynamicSpeedTrackPathDescriptor.updateState());
@@ -74,9 +98,9 @@ public class DynamicSpeedTrackPathDescriptorTest extends AndroidTestCase {
         context);
     double[] averageMovingSpeeds = { 0, 30, 30, 30 };
     double[] newAverageMovingSpeed = { 20, 30,
-    // Difference is less than CRITICAL_DIFFERENCE_PERCENTAGE
+        // Difference is less than CRITICAL_DIFFERENCE_PERCENTAGE
         30 * (1 + (DynamicSpeedTrackPathDescriptor.CRITICAL_DIFFERENCE_PERCENTAGE / 100) / 2),
-    // Difference is more than CRITICAL_DIFFERENCE_PERCENTAGE
+        // Difference is more than CRITICAL_DIFFERENCE_PERCENTAGE
         30 * (1 + (DynamicSpeedTrackPathDescriptor.CRITICAL_DIFFERENCE_PERCENTAGE / 100.00) * 2) };
     boolean[] expectedValues = { true, false, false, true };
     double[] expectedAverageMovingSpeed = { 0, 30, 30, 30 };
@@ -85,8 +109,8 @@ public class DynamicSpeedTrackPathDescriptorTest extends AndroidTestCase {
       dynamicSpeedTrackPathDescriptor.setAverageMovingSpeed(averageMovingSpeeds[i]);
       assertEquals(expectedValues[i], dynamicSpeedTrackPathDescriptor.isDifferenceSignificant(
           averageMovingSpeeds[i], newAverageMovingSpeed[i]));
-      assertEquals(
-          expectedAverageMovingSpeed[i], dynamicSpeedTrackPathDescriptor.getAverageMovingSpeed());
+      assertEquals(expectedAverageMovingSpeed[i],
+          dynamicSpeedTrackPathDescriptor.getAverageMovingSpeed());
     }
   }
 }

@@ -971,8 +971,9 @@ public class EndToEndTestUtils {
    * Waits a text to disappear.
    */
   public static void waitTextToDisappear(String text) {
+    instrumentation.waitForIdleSync();
     // The first wait should longer than following waits.
-    SOLO.waitForText(text, 1, SHORT_WAIT_TIME);
+    SOLO.waitForText(text, 1, 500);
     while (SOLO.waitForText(text, 1, 200)) {}
     return;
   }

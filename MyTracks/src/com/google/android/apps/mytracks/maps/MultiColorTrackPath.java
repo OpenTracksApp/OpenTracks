@@ -20,6 +20,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.maps.mytracks.R;
+import com.google.common.annotations.VisibleForTesting;
 
 import android.content.Context;
 
@@ -102,7 +103,8 @@ public class MultiColorTrackPath implements TrackPath {
     TrackPathUtils.addPath(googleMap, paths, lastSegmentPoints, lastSegmentColor, useLastPolyline);
   }
 
-  private int getColor(int speed) {
+  @VisibleForTesting
+  protected int getColor(int speed) {
     if (speed <= trackPathDescriptor.getSlowSpeed()) {
       return slowColor;
     } else if (speed <= trackPathDescriptor.getNormalSpeed()) {
@@ -110,5 +112,17 @@ public class MultiColorTrackPath implements TrackPath {
     } else {
       return fastColor;
     }
+  }
+  
+  public int getSlowColor() {
+    return slowColor;
+  }
+
+  public int getNormalColor() {
+    return normalColor;
+  }
+
+  public int getFastColor() {
+    return fastColor;
   }
 }

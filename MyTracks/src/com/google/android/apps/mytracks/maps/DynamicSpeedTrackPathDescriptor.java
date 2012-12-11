@@ -129,6 +129,14 @@ public class DynamicSpeedTrackPathDescriptor implements TrackPathDescriptor {
   int getSpeedMargin() {
     return speedMargin;
   }
+  
+  /**
+   * Sets the speed margin.
+   */
+  @VisibleForTesting
+  void setSpeedMargin(int value) {
+    speedMargin = value;
+  }
 
   /**
    * Gets the average moving speed.
