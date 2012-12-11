@@ -24,7 +24,6 @@ import com.google.api.client.http.HttpRequestFactory;
 import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.InputStreamContent;
-import com.google.api.client.util.Strings;
 import com.google.common.annotations.VisibleForTesting;
 
 import android.accounts.Account;
@@ -405,7 +404,7 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
       Log.d(TAG, "Unable to encode query", e1);
       return false;
     }
-    ByteArrayInputStream inputStream = new ByteArrayInputStream(Strings.toBytesUtf8(sql));
+    ByteArrayInputStream inputStream = new ByteArrayInputStream(sql.getBytes());
     InputStreamContent inputStreamContent = new InputStreamContent(null, inputStream);
     HttpRequest request;
     try {
@@ -417,7 +416,7 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
 
     GoogleHeaders headers = new GoogleHeaders();
     headers.setApplicationName(APP_NAME_PREFIX + SystemUtils.getMyTracksVersion(context));
-    headers.gdataVersion = GDATA_VERSION;
+    headers.setGDataVersion(GDATA_VERSION);
     headers.setGoogleLogin(authToken);
     headers.setContentType(CONTENT_TYPE);
     request.setHeaders(headers);

@@ -10,26 +10,24 @@ Ant+:
 antlib.jar - see http://www.thisisant.com/pages/developer-zone/android-api
 
 Google APIs Client Library for Java:
-commons-codec-1.3.jar
-commons-logging-1.1.1.jar
-google-api-client-1.5.0-beta.jar
-google-http-client-1.5.0-beta.jar
-google-oauth-client-1.5.0-beta.jar
-gson-1.6.jar
-guava-r09.jar
-jackson-core-asl-1.6.7.jar
+google-api-client-1.12.0-beta.jar
+google-api-client-android-1.12.0-beta.jar
+google-api-services-drive-v2-rev30-1.12.0-beta.jar
+google-http-client-1.12.0-beta.jar
+google-http-client-android-1.12.0-beta.jar
+google-http-client-gson-1.12.0-beta.jar
+google-http-client-jackson-1.12.0-beta.jar
+google-http-client-jackson2-1.12.0-beta.jar
+google-oauth-client-1.12.0-beta.jar
+gson-2.1.jar
+guava-jdk5-13.0.jar
+jackson-core-2.0.5.jar
+jackson-core-asl-1.9.9.jar
 jsr305-1.3.9.jar
-- see http://code.google.com/p/google-api-java-client/
-- google-api-client-1.5.0-beta.jar depends on protobuf-java-2.2.0.jar, however,
-  MyTracksLib already includes protobuf-java.2.3.0-lite.jar. Thus using the
-  newer version, protobuf-java.2.3.0-lite.jar.
-- google-api-client-1.5.0-beta.jar also depends on xpp3-1.1.4c.jar, however,
-  some of its classes are already included in the android framework, thus not
-  including xpp3-1.1.4c.jar.
 
 Google Analytics:
 libGoogleAnalytics.jar
 - see http://code.google.com/apis/analytics/docs/mobile/android.html
 
-Others:
+Google Common:
 google-common.jar

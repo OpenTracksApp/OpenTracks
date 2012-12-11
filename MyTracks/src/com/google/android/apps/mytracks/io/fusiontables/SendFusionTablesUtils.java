@@ -17,7 +17,6 @@ package com.google.android.apps.mytracks.io.fusiontables;
 
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.api.client.util.Strings;
 import com.google.common.annotations.VisibleForTesting;
 
 import android.location.Location;
@@ -193,7 +192,7 @@ public class SendFusionTablesUtils {
       return null;
     }
 
-    String[] lines = s.split(Strings.LINE_SEPARATOR);
+    String[] lines = s.split("\n");
     if (lines.length > 1 && lines[0].equals(TABLE_ID)) {
       // returns the next line
       return lines[1];

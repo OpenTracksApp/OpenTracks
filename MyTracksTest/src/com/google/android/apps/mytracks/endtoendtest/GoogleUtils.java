@@ -39,7 +39,6 @@ import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.InputStreamContent;
-import com.google.api.client.util.Strings;
 import com.google.wireless.gdata.data.Entry;
 import com.google.wireless.gdata.data.Feed;
 import com.google.wireless.gdata.parser.GDataParser;
@@ -409,7 +408,7 @@ public class GoogleUtils {
 
       GenericUrl url = new GenericUrl(SendFusionTablesAsyncTask.FUSION_TABLES_BASE_URL);
       String sql = "sql=" + query;
-      ByteArrayInputStream inputStream = new ByteArrayInputStream(Strings.toBytesUtf8(sql));
+      ByteArrayInputStream inputStream = new ByteArrayInputStream(sql.getBytes());
       InputStreamContent inputStreamContent = new InputStreamContent(null, inputStream);
       HttpRequest request;
 
@@ -419,7 +418,7 @@ public class GoogleUtils {
       GoogleHeaders headers = new GoogleHeaders();
       headers.setApplicationName(SendFusionTablesAsyncTask.APP_NAME_PREFIX
           + SystemUtils.getMyTracksVersion(context));
-      headers.gdataVersion = SendFusionTablesAsyncTask.GDATA_VERSION;
+      headers.setGDataVersion(SendFusionTablesAsyncTask.GDATA_VERSION);
       headers.setGoogleLogin(fusionTableAuthToken);
       headers.setContentType(SendFusionTablesAsyncTask.CONTENT_TYPE);
       request.setHeaders(headers);
