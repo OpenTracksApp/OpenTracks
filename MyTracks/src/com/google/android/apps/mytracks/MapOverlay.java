@@ -214,8 +214,8 @@ public class MapOverlay {
     synchronized (locations) {
       // Merge pendingLocations with locations
       int newLocations = pendingLocations.drainTo(locations);
-      boolean needReload = reload || trackPath.updateState();
-      if (needReload) {
+      boolean isPathUpdate = trackPath.updateState();
+      if (reload || isPathUpdate) {
         googleMap.clear();
         paths.clear();
         trackPath.updatePath(googleMap, paths, 0, locations);
