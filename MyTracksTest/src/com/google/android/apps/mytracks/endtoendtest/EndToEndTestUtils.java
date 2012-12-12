@@ -92,6 +92,7 @@ public class EndToEndTestUtils {
   public static String KM = "";
   public static String MILE = "";
   
+  public static int VERY_SHORT_WAIT_TIME = 500;
   public static int SHORT_WAIT_TIME = 2000;
   public static int NORMAL_WAIT_TIME = 8000;
   public static int LONG_WAIT_TIME = 15000;
@@ -972,10 +973,8 @@ public class EndToEndTestUtils {
    */
   public static void waitTextToDisappear(String text) {
     instrumentation.waitForIdleSync();
-    // The first wait should longer than following waits.
-    SOLO.waitForText(text, 1, 500);
-    while (SOLO.waitForText(text, 1, 200)) {}
+    SOLO.waitForText(text, 1, VERY_SHORT_WAIT_TIME);
+    while (SOLO.waitForText(text, 1, VERY_SHORT_WAIT_TIME)) {}
     return;
   }
-
 }
