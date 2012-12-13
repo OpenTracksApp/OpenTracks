@@ -46,7 +46,7 @@ public class ResourceUsageTest extends ActivityInstrumentationTestCase2<TrackLis
   private static boolean isUserConfirmed = false;
   private Context context;
   /**
-   * Default duration for each test is half hour.
+   * Default duration for each test is one hour.
    */
   private int TEST_DURATION_IN_MILLISECONDS = 30 * 60 * 1000;
   private int INTERVALE_TO_CHECK = 5 * 60 * 1000;
@@ -61,9 +61,11 @@ public class ResourceUsageTest extends ActivityInstrumentationTestCase2<TrackLis
     instrumentation = getInstrumentation();
     trackListActivity = getActivity();
     context = trackListActivity.getApplicationContext();
+    instrumentation.waitForIdleSync();
     EndToEndTestUtils.setupForDebug(instrumentation, trackListActivity);
+    BigTestUtils.unlockDevice();
     if (!isUserConfirmed) {
-      userConfirmTest();
+      confirmTest();
     }
     BigTestUtils.writeToFile("Test case start:" + getName() + "\r\n", true);
   }
@@ -71,7 +73,7 @@ public class ResourceUsageTest extends ActivityInstrumentationTestCase2<TrackLis
   /**
    * Prompts a dialog to make user confirm whether start the test.
    */
-  private void userConfirmTest() {
+  private void confirmTest() {
     try {
       trackListActivity.runOnUiThread(new Runnable() {
         @Override
@@ -110,54 +112,51 @@ public class ResourceUsageTest extends ActivityInstrumentationTestCase2<TrackLis
    * Tests the resource usage when display track list activity during recording.
    */
   public void testBatteryUsage_showTrackList() {
-    if (!runTest) {
-      Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
-    }
-    EndToEndTestUtils.startRecording();
-    // Go back to track list.
-    EndToEndTestUtils.SOLO.goBack();
-    BigTestUtils.moniterTest(context, INTERVALE_TO_CHECK, TEST_DURATION_IN_MILLISECONDS);
-    EndToEndTestUtils.stopRecording(true);
+    recordingLongTrack(true, "");
   }
 
   /**
    * Tests the resource usage when display map view during recording.
    */
   public void testBatteryUsage_showMapView() {
-    if (!runTest) {
-      Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
-    }
-    EndToEndTestUtils.startRecording();
-    EndToEndTestUtils.SOLO.clickOnText(trackListActivity.getString(R.string.track_detail_map_tab));
-    BigTestUtils.moniterTest(context, INTERVALE_TO_CHECK, TEST_DURATION_IN_MILLISECONDS);
-    EndToEndTestUtils.stopRecording(true);
+    recordingLongTrack(false, trackListActivity.getString(R.string.track_detail_map_tab));
   }
 
   /**
    * Tests the resource usage when display chart view during recording.
    */
   public void testBatteryUsage_showChartView() {
-    if (!runTest) {
-      Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
-    }
-    EndToEndTestUtils.startRecording();
-    EndToEndTestUtils.SOLO
-        .clickOnText(trackListActivity.getString(R.string.track_detail_chart_tab));
-    BigTestUtils.moniterTest(context, INTERVALE_TO_CHECK, TEST_DURATION_IN_MILLISECONDS);
-    EndToEndTestUtils.stopRecording(true);
+    recordingLongTrack(false, trackListActivity.getString(R.string.track_detail_chart_tab));
   }
 
   /**
    * Tests the resource usage when display stats view during recording.
    */
   public void testBatteryUsage_showStatsView() {
+    recordingLongTrack(false, trackListActivity.getString(R.string.track_detail_stats_tab));
+  }
+
+  /**
+   * Records a long time track and keeps in the specified tab or in tracks list
+   * during recording.
+   * 
+   * @param isShowTracksList true means show tracks list
+   * @param tabName the name of tab, only available when the first parameter is
+   *          false.
+   */
+  public void recordingLongTrack(boolean isShowTracksList, String tabName) {
     if (!runTest) {
       Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
     }
+
     EndToEndTestUtils.startRecording();
-    EndToEndTestUtils.SOLO
-        .clickOnText(trackListActivity.getString(R.string.track_detail_stats_tab));
+    if (isShowTracksList) {
+      EndToEndTestUtils.SOLO.goBack();
+    } else {
+      EndToEndTestUtils.SOLO.clickOnText(tabName);
+    }
     BigTestUtils.moniterTest(context, INTERVALE_TO_CHECK, TEST_DURATION_IN_MILLISECONDS);
+    BigTestUtils.unlockDevice();
     EndToEndTestUtils.stopRecording(true);
   }
 

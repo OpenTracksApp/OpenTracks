@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Environment;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager.LayoutParams;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -122,7 +124,24 @@ public class BigTestUtils {
       String oneInfo = (new java.util.Date()).toString() + ":" + memoryUsageString + ", "
           + batteryUsageString + ".\r\n";
       writeToFile(oneInfo, true);
+      Log.i(EndToEndTestUtils.LOG_TAG, oneInfo);
       EndToEndTestUtils.sleep(interval);
+    }
+  }
+
+  /**
+   * Unlocks the device screen.
+   */
+  public static void unlockDevice() {
+    // The menu item of setting should be found if the screen is not locked.
+    try {
+      Window wind = EndToEndTestUtils.SOLO.getCurrentActivity().getWindow();
+      wind.addFlags(LayoutParams.FLAG_DISMISS_KEYGUARD);
+      wind.addFlags(LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+      wind.addFlags(LayoutParams.FLAG_TURN_SCREEN_ON);
+    } catch (Exception e) {
+      Log.i(EndToEndTestUtils.LOG_TAG,
+          "Meet error when unlock device screen, may the device is not locked.");
     }
   }
 
