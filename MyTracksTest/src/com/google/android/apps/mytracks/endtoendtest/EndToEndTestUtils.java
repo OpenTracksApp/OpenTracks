@@ -92,7 +92,6 @@ public class EndToEndTestUtils {
   public static String KM = "";
   public static String MILE = "";
   
-  public static int TINY_WAIT_TIME = 2000;
   public static int SHORT_WAIT_TIME = 2000;
   public static int NORMAL_WAIT_TIME = 8000;
   public static int LONG_WAIT_TIME = 15000;
