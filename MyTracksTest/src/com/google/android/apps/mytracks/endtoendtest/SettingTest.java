@@ -303,12 +303,13 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
   }
 
   /**
-   * Tests the setting of track color settings.
+   * Tests the setting of fixed track color settings.
    */
-  public void testTrackColorSettings() {
+  public void testTrackColorSettings_fixed() {
     Context context = activityMyTracks.getApplicationContext();
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.menu_map));
+    String errorString = "error";
 
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
         .getString(R.string.settings_map_track_color_mode));
@@ -318,7 +319,17 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.waitTextToDisappear(activityMyTracks
         .getString(R.string.settings_map_track_color_mode_dynamic_value));
     assertEquals(activityMyTracks.getString(R.string.settings_map_track_color_mode_fixed_value),
-        PreferencesUtils.getString(context, R.string.track_color_mode_key, "error"));
+        PreferencesUtils.getString(context, R.string.track_color_mode_key, errorString));
+  }
+  
+  /**
+   * Tests the setting of dynamic track color settings.
+   */
+  public void testTrackColorSettings_dynamic() {
+    Context context = activityMyTracks.getApplicationContext();
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.menu_map));
+    String errorString = "error";
 
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
         .getString(R.string.settings_map_track_color_mode));
@@ -328,8 +339,17 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.waitTextToDisappear(activityMyTracks
         .getString(R.string.settings_map_track_color_mode_dynamic_value));
     assertEquals(activityMyTracks.getString(R.string.settings_map_track_color_mode_dynamic_value),
-        PreferencesUtils.getString(context, R.string.track_color_mode_key, "error"));
-
+        PreferencesUtils.getString(context, R.string.track_color_mode_key, errorString));
+  }
+  
+  /**
+   * Tests the setting of single track color settings.
+   */
+  public void testTrackColorSettings_single() {
+    Context context = activityMyTracks.getApplicationContext();
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.menu_map));
+    String errorString = "error";
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
         .getString(R.string.settings_map_track_color_mode));
     instrumentation.waitForIdleSync();
@@ -338,7 +358,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.waitTextToDisappear(activityMyTracks
         .getString(R.string.settings_map_track_color_mode_dynamic_value));
     assertEquals(activityMyTracks.getString(R.string.settings_map_track_color_mode_single_value),
-        PreferencesUtils.getString(context, R.string.track_color_mode_key, "error"));
+        PreferencesUtils.getString(context, R.string.track_color_mode_key, errorString));
   }
 
   @Override

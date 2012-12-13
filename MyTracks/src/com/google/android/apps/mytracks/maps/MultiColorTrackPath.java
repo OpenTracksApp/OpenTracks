@@ -114,15 +114,18 @@ public class MultiColorTrackPath implements TrackPath {
     }
   }
   
-  public int getSlowColor() {
+  @VisibleForTesting
+  protected int getSlowColor() {
     return slowColor;
   }
 
-  public int getNormalColor() {
+  @VisibleForTesting
+  protected int getNormalColor() {
     return normalColor;
   }
 
-  public int getFastColor() {
+  @VisibleForTesting
+  protected int getFastColor() {
     return fastColor;
   }
 }

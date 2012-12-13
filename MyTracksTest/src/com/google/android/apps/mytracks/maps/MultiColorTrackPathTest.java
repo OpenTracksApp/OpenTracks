@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Google Inc.
+ * Copyright 2012 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -25,17 +25,18 @@ import android.test.AndroidTestCase;
  */
 public class MultiColorTrackPathTest extends AndroidTestCase {
 
-  MultiColorTrackPath multiColorTrackPath;
-  Context context;
+  private MultiColorTrackPath multiColorTrackPath;
+  private Context context;
 
   @Override
   protected void setUp() throws Exception {
-    context = getContext();
     super.setUp();
+    context = getContext();
   }
 
   /**
-   * Tests the {@link MultiColorTrackPath#getColor(int)} when use dynamic speed track path descriptor.
+   * Tests the {@link MultiColorTrackPath#getColor(int)} when use dynamic speed
+   * track path descriptor.
    */
   public void testGetColor_DynamicSpeedTrackPathDescriptor() {
     DynamicSpeedTrackPathDescriptor dynamicSpeedTrackPathDescriptor = new DynamicSpeedTrackPathDescriptor(
@@ -43,7 +44,9 @@ public class MultiColorTrackPathTest extends AndroidTestCase {
     dynamicSpeedTrackPathDescriptor.setAverageMovingSpeed(50);
     dynamicSpeedTrackPathDescriptor.setSpeedMargin(10);
     multiColorTrackPath = new MultiColorTrackPath(context, dynamicSpeedTrackPathDescriptor);
-    
+
+    // Slow speed should be below 45 (10% of 50), and fast speed should be above
+    // 55 (10% of 50).
     assertEquals(multiColorTrackPath.getSlowColor(), multiColorTrackPath.getColor(5));
     assertEquals(multiColorTrackPath.getSlowColor(), multiColorTrackPath.getColor(44));
     assertEquals(multiColorTrackPath.getNormalColor(), multiColorTrackPath.getColor(50));
@@ -54,5 +57,4 @@ public class MultiColorTrackPathTest extends AndroidTestCase {
     assertNotSame(multiColorTrackPath.getSlowColor(), multiColorTrackPath.getNormalColor());
     assertNotSame(multiColorTrackPath.getSlowColor(), multiColorTrackPath.getFastColor());
   }
-  
 }
