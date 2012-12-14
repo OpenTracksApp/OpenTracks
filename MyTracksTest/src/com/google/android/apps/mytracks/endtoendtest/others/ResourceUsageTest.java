@@ -46,7 +46,7 @@ public class ResourceUsageTest extends ActivityInstrumentationTestCase2<TrackLis
   private static boolean isUserConfirmed = false;
   private Context context;
   /**
-   * Default duration for each test is one hour.
+   * Default duration for each test is half one hour.
    */
   private int TEST_DURATION_IN_MILLISECONDS = 30 * 60 * 1000;
   private int INTERVALE_TO_CHECK = 5 * 60 * 1000;
@@ -81,7 +81,8 @@ public class ResourceUsageTest extends ActivityInstrumentationTestCase2<TrackLis
           new AlertDialog.Builder(EndToEndTestUtils.SOLO.getCurrentActivity())
               .setTitle("Confirm long time test.")
               .setMessage(
-                  "Each case need run " + TEST_DURATION_IN_MILLISECONDS / 1000 / 60
+                  "Please disconnect the power cord of your device and click 'Start' button. Each case need run "
+                      + TEST_DURATION_IN_MILLISECONDS / 1000 / 60
                       + " minutes, and the battery/memory usage will be recorded in every "
                       + INTERVALE_TO_CHECK / 60 / 1000 + "minutes.")
               .setPositiveButton("Start Test", new DialogInterface.OnClickListener() {

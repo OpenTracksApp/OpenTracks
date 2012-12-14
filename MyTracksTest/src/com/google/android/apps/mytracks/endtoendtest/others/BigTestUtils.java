@@ -77,7 +77,7 @@ public class BigTestUtils {
         new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
     int rawlevel = batteryIntent.getIntExtra("level", -1);
     double scale = batteryIntent.getIntExtra("scale", -1);
-    return "Phone use " + rawlevel + " of " + scale + " battery";
+    return "Device has " + rawlevel + " of " + scale + " battery left";
   }
 
   /**
