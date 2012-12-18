@@ -163,6 +163,9 @@ public class ResourceUsageTest extends ActivityInstrumentationTestCase2<TrackLis
 
   @Override
   protected void tearDown() throws Exception {
+    if (!runTest) {
+      return;
+    }
     EndToEndTestUtils.SOLO.finishOpenedActivities();
     BigTestUtils.writeToFile("Test case done:" + getName() + "\r\n\r\n", true);
     super.tearDown();
