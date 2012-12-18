@@ -128,7 +128,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     ((MyTracksProviderUtilsImpl) providerUtils).setDefaultCursorBatchSize(batchSize);
     List<Location> locations = new ArrayList<Location>(numPoints);
     LocationIterator it = providerUtils.getTrackPointLocationIterator(
-        trackId, -1, descending, locationFactory);
+        trackId, -1L, descending, locationFactory);
     try {
       while (it.hasNext()) {
         Location loc = it.next();
@@ -168,7 +168,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     // Load all inserted locations. 
     long lastPointId = -1;
     int counter = 0;
-    LocationIterator it = providerUtils.getTrackPointLocationIterator(id, -1, false,
+    LocationIterator it = providerUtils.getTrackPointLocationIterator(id, -1L, false,
         MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
     try {
       while (it.hasNext()) {
@@ -645,9 +645,9 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     insertTrackWithLocations(track);
   
     providerUtils.bulkInsertTrackPoint(track.getLocations().toArray(new Location[0]), -1, trackId);
-    assertEquals(20, providerUtils.getTrackPointCursor(trackId, 0, 1000, false).getCount());
+    assertEquals(20, providerUtils.getTrackPointCursor(trackId, -1L, 1000, false).getCount());
     providerUtils.bulkInsertTrackPoint(track.getLocations().toArray(new Location[0]), 8, trackId);
-    assertEquals(28, providerUtils.getTrackPointCursor(trackId, 0, 1000, false).getCount());
+    assertEquals(28, providerUtils.getTrackPointCursor(trackId, -1L, 1000, false).getCount());
   }
 
   /**
@@ -728,7 +728,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     insertTrackWithLocations(track);
 
     providerUtils.insertTrackPoint(createLocation(22), trackId);
-    assertEquals(11, providerUtils.getTrackPointCursor(trackId, 0, 1000, false).getCount());
+    assertEquals(11, providerUtils.getTrackPointCursor(trackId, -1L, 1000, false).getCount());
   }
 
   /**

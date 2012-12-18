@@ -787,6 +787,6 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     location.setTime(System.currentTimeMillis());
     location.setBearing(3.0f);
     trackRecordingService.insertTrackPoint(location);
-    Thread.sleep(100);
+    Thread.sleep(200);
   }
 }

@@ -204,7 +204,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     // Register two listeners
     Capture<ContentObserver> contentObserverCapture = new Capture<ContentObserver>();
     expect(myTracksProviderUtils.getWaypointCursor(
-        eq(TRACK_ID), AndroidMock.leq(0L), eq(Constants.MAX_DISPLAYED_WAYPOINTS_POINTS)))
+        eq(TRACK_ID), AndroidMock.leq(-1L), eq(Constants.MAX_DISPLAYED_WAYPOINTS_POINTS)))
         .andStubAnswer(new FixedSizeCursorAnswer(2));
     expect(myTracksProviderUtils.createWaypoint(isA(Cursor.class)))
         .andReturn(waypoint1).andReturn(waypoint2).andReturn(waypoint1).andReturn(waypoint2);
@@ -231,7 +231,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     // Cause waypoints table update
     ContentObserver contentObserver = contentObserverCapture.getValue();
     expect(myTracksProviderUtils.getWaypointCursor(
-        eq(TRACK_ID), AndroidMock.leq(0L), eq(Constants.MAX_DISPLAYED_WAYPOINTS_POINTS)))
+        eq(TRACK_ID), AndroidMock.leq(-1L), eq(Constants.MAX_DISPLAYED_WAYPOINTS_POINTS)))
         .andStubAnswer(new FixedSizeCursorAnswer(3));
     expect(myTracksProviderUtils.createWaypoint(isA(Cursor.class)))
         .andReturn(waypoint1).andReturn(waypoint2).andReturn(waypoint3);
@@ -252,7 +252,7 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     // Unregister one listener
     expect(myTracksProviderUtils.getWaypointCursor(
-        eq(TRACK_ID), AndroidMock.leq(0L), eq(Constants.MAX_DISPLAYED_WAYPOINTS_POINTS)))
+        eq(TRACK_ID), AndroidMock.leq(-1L), eq(Constants.MAX_DISPLAYED_WAYPOINTS_POINTS)))
         .andStubAnswer(new FixedSizeCursorAnswer(4));
     expect(myTracksProviderUtils.createWaypoint(isA(Cursor.class)))
         .andReturn(waypoint1).andReturn(waypoint2).andReturn(waypoint3).andReturn(waypoint4);

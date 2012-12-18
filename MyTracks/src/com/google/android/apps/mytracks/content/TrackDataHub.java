@@ -565,7 +565,7 @@ public class TrackDataHub implements DataSourceListener {
     Cursor cursor = null;
     try {
       cursor = myTracksProviderUtils.getWaypointCursor(
-          selectedTrackId, 0L, MAX_DISPLAYED_WAYPOINTS_POINTS);
+          selectedTrackId, -1L, MAX_DISPLAYED_WAYPOINTS_POINTS);
       if (cursor != null && cursor.moveToFirst()) {
         do {
           Waypoint waypoint = myTracksProviderUtils.createWaypoint(cursor);
