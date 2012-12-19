@@ -400,9 +400,9 @@ public class EndToEndTestUtils {
     if (trackNumber <= 0) {
       return true;
     }
+    View oneTrack = SOLO.getCurrentListViews().get(0).getChildAt(0);
+    trackName = (String) ((TextView) oneTrack.findViewById(R.id.list_item_name)).getText();
     if (isClick) {
-      View oneTrack = SOLO.getCurrentListViews().get(0).getChildAt(0);
-      trackName = (String) ((TextView) oneTrack.findViewById(R.id.list_item_name)).getText();
       SOLO.scrollUp();
       SOLO.clickOnView(oneTrack);
     }
@@ -983,9 +983,8 @@ public class EndToEndTestUtils {
   public static void findAndClickMyLocation(Activity activity) {
     createTrackIfEmpty(1, false);
     sendGps(30);
-    
-    View myLocation = SOLO.getCurrentActivity()
-        .findViewById(R.id.map_my_location);
+
+    View myLocation = SOLO.getCurrentActivity().findViewById(R.id.map_my_location);
     // Find the My Location button in another if null.
     if (myLocation == null) {
       ArrayList<ImageButton> aa = SOLO.getCurrentImageButtons();
