@@ -253,7 +253,7 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
   boolean uploadAllTrackPoints(Track track) {
     Cursor cursor = null;
     try {
-      cursor = myTracksProviderUtils.getTrackPointCursor(trackId, 0, -1, false);
+      cursor = myTracksProviderUtils.getTrackPointCursor(trackId, -1L, -1, false);
       if (cursor == null) {
         Log.d(TAG, "Location cursor is null");
         return false;
@@ -437,7 +437,7 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
     Cursor cursor = null;
     try {
       cursor = myTracksProviderUtils.getWaypointCursor(
-          trackId, 0, Constants.MAX_LOADED_WAYPOINTS_POINTS);
+          trackId, -1L, Constants.MAX_LOADED_WAYPOINTS_POINTS);
       if (cursor != null && cursor.moveToFirst()) {
         // This will skip the first waypoint (it carries the stats for the
         // track).

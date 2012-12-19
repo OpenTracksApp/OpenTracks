@@ -439,7 +439,8 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   @Override
   public void deleteWaypoint(long waypointId, DescriptionGenerator descriptionGenerator) {
     final Waypoint waypoint = getWaypoint(waypointId);
-    if (waypoint != null && waypoint.getType() == Waypoint.TYPE_STATISTICS) {
+    if (waypoint != null && waypoint.getType() == Waypoint.TYPE_STATISTICS
+        && descriptionGenerator != null) {
       final Waypoint nextWaypoint = getNextStatisticsWaypointAfter(waypoint);
       if (nextWaypoint == null) {
         Log.d(TAG, "Unable to find the next statistics marker after deleting one.");
@@ -510,7 +511,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
       String selection = WaypointsColumns.TRACKID + "=?  AND " + WaypointsColumns.TYPE + "=?";
       int type = statistics ? Waypoint.TYPE_STATISTICS : Waypoint.TYPE_WAYPOINT;
       String[] selectionArgs = new String[] { Long.toString(trackId), Integer.toString(type) };
-      cursor = getWaypointCursor(projection, selection, selectionArgs, WaypointsColumns._ID, 0);
+      cursor = getWaypointCursor(projection, selection, selectionArgs, WaypointsColumns._ID, -1);
       if (cursor != null) {
         int count = cursor.getCount();
         /*
@@ -535,7 +536,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     Cursor cursor = null;
     try {
       cursor = getWaypointCursor(null, WaypointsColumns._ID + "=?",
-          new String[] { Long.toString(waypointId) }, WaypointsColumns._ID, 0);
+          new String[] { Long.toString(waypointId) }, WaypointsColumns._ID, 1);
       if (cursor != null && cursor.moveToFirst()) {
         return createWaypoint(cursor);
       }
@@ -672,7 +673,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     if (sortOrder == null) {
       sortOrder = WaypointsColumns._ID;
     }
-    if (maxWaypoints > 0) {
+    if (maxWaypoints >= 0) {
       sortOrder += " LIMIT " + maxWaypoints;
     }
     return contentResolver.query(
@@ -789,7 +790,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     if (descending) {
       sortOrder += " DESC";
     }
-    if (maxLocations > 0) {
+    if (maxLocations >= 0) {
       sortOrder += " LIMIT " + maxLocations;
     }
     return getTrackPointCursor(null, selection, selectionArgs, sortOrder);

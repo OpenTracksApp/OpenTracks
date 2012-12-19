@@ -82,9 +82,9 @@ public interface MyTracksProviderUtils {
    * Gets a track cursor. The caller owns the returned cursor and is responsible
    * for closing it.
    * 
-   * @param selection the selection
-   * @param selectionArgs the selection arguments
-   * @param sortOrder the sort order
+   * @param selection the selection. Can be null
+   * @param selectionArgs the selection arguments. Can be null
+   * @param sortOrder the sort order. Can be null
    */
   public Cursor getTrackCursor(String selection, String[] selectionArgs, String sortOrder);
 
@@ -120,7 +120,7 @@ public interface MyTracksProviderUtils {
    * deletion. The generator is used to update the next statistics waypoint.
    * 
    * @param waypointId the waypoint id
-   * @param descriptionGenerator the description generator
+   * @param descriptionGenerator the description generator. Can be null for waypoint marker
    */
   public void deleteWaypoint(long waypointId, DescriptionGenerator descriptionGenerator);
 
@@ -160,10 +160,10 @@ public interface MyTracksProviderUtils {
    * Gets a waypoint cursor. The caller owns the returned cursor and is
    * responsible for closing it.
    * 
-   * @param selection the selection
-   * @param selectionArgs the selection arguments
-   * @param sortOrder the sort order
-   * @param maxWaypoints the maximum number of waypoints to return
+   * @param selection the selection. Can be null
+   * @param selectionArgs the selection arguments. Can be null
+   * @param sortOrder the sort order. Can be null
+   * @param maxWaypoints the maximum number of waypoints to return. -1 for no limit
    */
   public Cursor getWaypointCursor(
       String selection, String[] selectionArgs, String sortOrder, int maxWaypoints);
@@ -173,8 +173,8 @@ public interface MyTracksProviderUtils {
    * is responsible for closing it.
    * 
    * @param trackId the track id
-   * @param minWaypointId the minimum waypoint id
-   * @param maxWaypoints the maximum number of waypoints to return
+   * @param minWaypointId the minimum waypoint id. -1L to ignore
+   * @param maxWaypoints the maximum number of waypoints to return. -1 for no limit
    */
   public Cursor getWaypointCursor(long trackId, long minWaypointId, int maxWaypoints);
 
@@ -242,8 +242,8 @@ public interface MyTracksProviderUtils {
    * responsible for closing it.
    * 
    * @param trackId the track id
-   * @param startTrackPointId the starting track point id
-   * @param maxLocations maximum number of locations to return
+   * @param startTrackPointId the starting track point id. -1L to ignore
+   * @param maxLocations maximum number of locations to return. -1 for no limit
    * @param descending true to sort the result in descending order (latest
    *          location first)
    */
@@ -262,8 +262,7 @@ public interface MyTracksProviderUtils {
    * iteration, {@link LocationIterator#close()} must be called.
    * 
    * @param trackId the track id
-   * @param startTrackPointId the start track point id or -1L to start from the
-   *          first point
+   * @param startTrackPointId the starting track point id. -1L to ignore
    * @param descending true to sort the result in descending order (latest
    *          location first)
    * @param locationFactory the location factory

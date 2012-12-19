@@ -27,6 +27,7 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -96,7 +97,31 @@ public class StringUtils {
    * @param time the time in milliseconds
    */
   public static String formatElapsedTime(long time) {
-    return DateUtils.formatElapsedTime(time / 1000);
+    /*
+     * Temporary workaround for DateUtils.formatElapsedTime(time / 1000). In API
+     * level 17, it returns strings like "1:0:00" instead of "1:00:00", which
+     * breaks several unit tests.
+     */
+    long elapsedSeconds = time / 1000;
+    long hours = 0;
+    long minutes = 0;
+    long seconds = 0;
+
+    if (elapsedSeconds >= 3600) {
+      hours = elapsedSeconds / 3600;
+      elapsedSeconds -= hours * 3600;
+    }
+    if (elapsedSeconds >= 60) {
+      minutes = elapsedSeconds / 60;
+      elapsedSeconds -= minutes * 60;
+    }
+    seconds = elapsedSeconds;
+
+    if (hours > 0) {
+      return String.format(Locale.US, "%d:%02d:%02d", hours, minutes, seconds);
+    } else {
+      return String.format(Locale.US, "%02d:%02d", minutes, seconds);
+    }
   }
 
   /**

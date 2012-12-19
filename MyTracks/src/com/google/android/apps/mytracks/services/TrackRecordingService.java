@@ -604,7 +604,7 @@ public class TrackRecordingService extends Service {
     try {
       // TODO: how to handle very long track.
       cursor = myTracksProviderUtils.getTrackPointCursor(
-          recordingTrackId, -1, Constants.MAX_LOADED_TRACK_POINTS, true);
+          recordingTrackId, -1L, Constants.MAX_LOADED_TRACK_POINTS, true);
       if (cursor == null) {
         Log.e(TAG, "Cursor is null.");
       } else {

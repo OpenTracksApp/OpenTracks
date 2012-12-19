@@ -144,7 +144,7 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
    */
   public void testUploadAllTrackPoints_nullCursor() {
     Track track = TrackStubUtils.createTrack(1);
-    AndroidMock.expect(myTracksProviderUtilsMock.getTrackPointCursor(TRACK_ID, 0, -1, false))
+    AndroidMock.expect(myTracksProviderUtilsMock.getTrackPointCursor(TRACK_ID, -1L, -1, false))
         .andReturn(null);
     AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock);
     SendMapsAsyncTask sendMapsAsyncTask = new SendMapsAsyncTask(sendMapsActivityMock,
@@ -166,7 +166,7 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
     cursorMock.close();
     AndroidMock.expect(myTracksProviderUtilsMock.createTrackPoint(cursorMock)).andReturn(
         new Location("1"));
-    AndroidMock.expect(myTracksProviderUtilsMock.getTrackPointCursor(TRACK_ID, 0, -1, false))
+    AndroidMock.expect(myTracksProviderUtilsMock.getTrackPointCursor(TRACK_ID, -1L, -1, false))
         .andReturn(cursorMock);
 
     AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock, cursorMock);
@@ -193,7 +193,7 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
     cursorMock.close();
     AndroidMock.expect(myTracksProviderUtilsMock.createTrackPoint(cursorMock))
         .andReturn(new Location("1")).times(2);
-    AndroidMock.expect(myTracksProviderUtilsMock.getTrackPointCursor(TRACK_ID, 0, -1, false))
+    AndroidMock.expect(myTracksProviderUtilsMock.getTrackPointCursor(TRACK_ID, -1L, -1, false))
         .andReturn(cursorMock);
 
     AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock, cursorMock);
@@ -223,7 +223,7 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
     cursorMock.close();
     AndroidMock.expect(myTracksProviderUtilsMock.createTrackPoint(cursorMock))
         .andReturn(new Location("1")).times(2);
-    AndroidMock.expect(myTracksProviderUtilsMock.getTrackPointCursor(TRACK_ID, 0, -1, false))
+    AndroidMock.expect(myTracksProviderUtilsMock.getTrackPointCursor(TRACK_ID, -1L, -1, false))
         .andReturn(cursorMock);
 
     AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock, cursorMock);
@@ -252,7 +252,7 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
     cursorMock.close();
     AndroidMock.expect(myTracksProviderUtilsMock.createTrackPoint(cursorMock))
         .andReturn(new Location("1")).times(2);
-    AndroidMock.expect(myTracksProviderUtilsMock.getTrackPointCursor(TRACK_ID, 0, -1, false))
+    AndroidMock.expect(myTracksProviderUtilsMock.getTrackPointCursor(TRACK_ID, -1L, -1, false))
         .andReturn(cursorMock);
 
     AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock, cursorMock);
@@ -274,7 +274,7 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
   @UsesMocks(Cursor.class)
   public void testUploadWaypoints_nullCursor() {
     AndroidMock.expect(
-        myTracksProviderUtilsMock.getWaypointCursor(TRACK_ID, 0,
+        myTracksProviderUtilsMock.getWaypointCursor(TRACK_ID, -1L,
             Constants.MAX_LOADED_WAYPOINTS_POINTS)).andReturn(null);
     AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock);
     SendMapsAsyncTask sendMapsAsyncTask = new SendMapsAsyncTask(sendMapsActivityMock,
@@ -296,7 +296,7 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
     cursorMock.close();
 
     AndroidMock.expect(
-        myTracksProviderUtilsMock.getWaypointCursor(TRACK_ID, 0,
+        myTracksProviderUtilsMock.getWaypointCursor(TRACK_ID, -1L,
             Constants.MAX_LOADED_WAYPOINTS_POINTS)).andReturn(cursorMock);
 
     AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock, cursorMock);
@@ -323,7 +323,7 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
     cursorMock.close();
 
     AndroidMock.expect(
-        myTracksProviderUtilsMock.getWaypointCursor(TRACK_ID, 0,
+        myTracksProviderUtilsMock.getWaypointCursor(TRACK_ID, -1L,
             Constants.MAX_LOADED_WAYPOINTS_POINTS)).andReturn(cursorMock);
     Waypoint waypoint = new Waypoint();
     waypoint.setLocation(TrackStubUtils.createMyTracksLocation());
