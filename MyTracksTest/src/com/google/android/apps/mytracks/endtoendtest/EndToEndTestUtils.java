@@ -300,7 +300,7 @@ public class EndToEndTestUtils {
       instrumentation.waitForIdleSync();
       // Check the status of real phone. For emulator, we would fix GPS signal.
       if (!isEmulator) {
-        GoToMyLocationTest.findAndClickMyLocation(activityMyTracks);
+        EndToEndTestUtils.findAndClickMyLocation(activityMyTracks);
         hasGpsSingal = !SOLO.waitForText(NO_GPS_MESSAGE_PREFIX, 1, SHORT_WAIT_TIME);
         SOLO.goBack();
       }
@@ -973,5 +973,31 @@ public class EndToEndTestUtils {
     SOLO.waitForText(text, 1, VERY_SHORT_WAIT_TIME);
     while (SOLO.waitForText(text, 1, VERY_SHORT_WAIT_TIME)) {}
     return;
+  }
+
+  /**
+   * Finds the My Location view and click it.
+   * 
+   * @param activity
+   */
+  public static void findAndClickMyLocation(Activity activity) {
+    createTrackIfEmpty(1, false);
+    sendGps(30);
+    
+    View myLocation = SOLO.getCurrentActivity()
+        .findViewById(R.id.map_my_location);
+    // Find the My Location button in another if null.
+    if (myLocation == null) {
+      ArrayList<ImageButton> aa = SOLO.getCurrentImageButtons();
+      for (ImageButton imageButton : aa) {
+        if (imageButton.getContentDescription() != null
+            && imageButton.getContentDescription().equals(
+                activity.getString(R.string.icon_my_location))) {
+          myLocation = imageButton;
+          break;
+        }
+      }
+    }
+    SOLO.clickOnView(myLocation);
   }
 }
