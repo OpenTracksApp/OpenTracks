@@ -113,28 +113,28 @@ public class ResourceUsageTest extends ActivityInstrumentationTestCase2<TrackLis
    * Tests the resource usage when display track list activity during recording.
    */
   public void testBatteryUsage_showTrackList() {
-    recordingLongTrack(true, "");
+    recordingLongTrack(true, R.string.track_detail_map_tab);
   }
 
   /**
    * Tests the resource usage when display map view during recording.
    */
   public void testBatteryUsage_showMapView() {
-    recordingLongTrack(false, trackListActivity.getString(R.string.track_detail_map_tab));
+    recordingLongTrack(false, R.string.track_detail_map_tab);
   }
 
   /**
    * Tests the resource usage when display chart view during recording.
    */
   public void testBatteryUsage_showChartView() {
-    recordingLongTrack(false, trackListActivity.getString(R.string.track_detail_chart_tab));
+    recordingLongTrack(false, R.string.track_detail_chart_tab);
   }
 
   /**
    * Tests the resource usage when display stats view during recording.
    */
   public void testBatteryUsage_showStatsView() {
-    recordingLongTrack(false, trackListActivity.getString(R.string.track_detail_stats_tab));
+    recordingLongTrack(false, R.string.track_detail_stats_tab);
   }
 
   /**
@@ -142,10 +142,10 @@ public class ResourceUsageTest extends ActivityInstrumentationTestCase2<TrackLis
    * during recording.
    * 
    * @param isShowTracksList true means show tracks list
-   * @param tabName the name of tab, only available when the first parameter is
-   *          false.
+   * @param tabNameId the name string id of tab, it's useless when the first parameter is
+   *          true.
    */
-  public void recordingLongTrack(boolean isShowTracksList, String tabName) {
+  public void recordingLongTrack(boolean isShowTracksList, int tabNameId) {
     if (!runTest) {
       Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
     }
@@ -154,7 +154,7 @@ public class ResourceUsageTest extends ActivityInstrumentationTestCase2<TrackLis
     if (isShowTracksList) {
       EndToEndTestUtils.SOLO.goBack();
     } else {
-      EndToEndTestUtils.SOLO.clickOnText(tabName);
+      EndToEndTestUtils.SOLO.clickOnText(trackListActivity.getString(tabNameId));
     }
     BigTestUtils.moniterTest(context, INTERVALE_TO_CHECK, TEST_DURATION_IN_MILLISECONDS);
     BigTestUtils.unlockDevice();
