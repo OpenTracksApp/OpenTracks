@@ -148,6 +148,7 @@ public class ResourceUsageTest extends ActivityInstrumentationTestCase2<TrackLis
   public void recordingLongTrack(boolean isShowTracksList, int tabNameId) {
     if (!runTest) {
       Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
+      return;
     }
 
     EndToEndTestUtils.startRecording();
