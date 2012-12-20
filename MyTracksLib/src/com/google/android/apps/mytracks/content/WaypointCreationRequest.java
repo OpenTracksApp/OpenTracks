@@ -15,6 +15,8 @@
  */
 package com.google.android.apps.mytracks.content;
 
+import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -24,10 +26,6 @@ import android.os.Parcelable;
  * @author Sandor Dornbush
  */
 public class WaypointCreationRequest implements Parcelable {
-
-  public static enum WaypointType {
-    WAYPOINT, STATISTICS;
-  }
 
   private WaypointType type;
   // true if this marker contains the track statistics

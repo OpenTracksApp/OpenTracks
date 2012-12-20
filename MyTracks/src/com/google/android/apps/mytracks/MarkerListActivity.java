@@ -17,7 +17,7 @@
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
@@ -149,7 +149,8 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
         int timeIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.TIME);
         int descriptionIndex = cursor.getColumnIndex(WaypointsColumns.DESCRIPTION);
 
-        boolean statistics = cursor.getInt(typeIndex) == Waypoint.TYPE_STATISTICS;
+        boolean statistics = WaypointType.values()[cursor.getInt(typeIndex)]
+            == WaypointType.STATISTICS;
         int iconId = statistics ? R.drawable.yellow_pushpin : R.drawable.blue_pushpin;
         String category = statistics ? null : cursor.getString(categoryIndex);
         String description = statistics ? null : cursor.getString(descriptionIndex);

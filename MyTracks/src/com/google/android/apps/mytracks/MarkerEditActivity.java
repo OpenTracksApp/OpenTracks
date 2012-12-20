@@ -18,8 +18,8 @@ package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
-import com.google.android.apps.mytracks.content.WaypointCreationRequest.WaypointType;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
 import com.google.android.maps.mytracks.R;
@@ -131,7 +131,7 @@ public class MarkerEditActivity extends AbstractMyTracksActivity {
       statisticsSection.setVisibility(View.GONE);
       waypointSection.setVisibility(View.VISIBLE);
       int nextWaypointNumber = trackId == -1L ? -1
-          : MyTracksProviderUtils.Factory.get(this).getNextWaypointNumber(trackId, false);
+          : MyTracksProviderUtils.Factory.get(this).getNextWaypointNumber(trackId, WaypointType.WAYPOINT);
       if (nextWaypointNumber == -1) {
         nextWaypointNumber = 0;
       }
@@ -146,7 +146,7 @@ public class MarkerEditActivity extends AbstractMyTracksActivity {
         finish();
         return;
       }
-      boolean statistics = waypoint.getType() == Waypoint.TYPE_STATISTICS;
+      boolean statistics = waypoint.getType() == WaypointType.STATISTICS;
       statisticsSection.setVisibility(statistics ? View.VISIBLE : View.GONE);
       waypointSection.setVisibility(statistics ? View.GONE : View.VISIBLE);
       if (statistics) {
@@ -178,7 +178,7 @@ public class MarkerEditActivity extends AbstractMyTracksActivity {
    * Saves a marker.
    */
   private void saveMarker() {
-    boolean statistics = waypoint.getType() == Waypoint.TYPE_STATISTICS;
+    boolean statistics = waypoint.getType() == WaypointType.STATISTICS;
     if (statistics) {
       waypoint.setName(statisticsName.getText().toString());
     } else {

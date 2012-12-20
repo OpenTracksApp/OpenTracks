@@ -23,6 +23,7 @@ import com.google.android.apps.mytracks.content.SearchEngine.SearchQuery;
 import com.google.android.apps.mytracks.content.SearchEngineProvider;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment.DeleteOneTrackCaller;
@@ -432,7 +433,7 @@ public class SearchListActivity extends AbstractMyTracksActivity implements Dele
       }
     }
 
-    boolean statistics = waypoint.getType() == Waypoint.TYPE_STATISTICS;
+    boolean statistics = waypoint.getType() == WaypointType.STATISTICS;
     long time = waypoint.getLocation().getTime();
 
     resultMap.put(IS_RECORDING_FIELD, false);

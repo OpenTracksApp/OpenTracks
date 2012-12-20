@@ -20,6 +20,7 @@ import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
 import com.google.android.apps.mytracks.stats.TripStatisticsUpdater;
 import com.google.android.apps.mytracks.util.LocationUtils;
@@ -608,7 +609,7 @@ public class GpxImporter extends DefaultHandler {
     Location waypointLocation = new Location("");
     waypointLocation.setLatitude(100);
     waypointLocation.setLongitude(180);
-    Waypoint waypoint = new Waypoint("", "", "", icon, track.getId(), Waypoint.TYPE_STATISTICS, 0,
+    Waypoint waypoint = new Waypoint("", "", "", icon, track.getId(), WaypointType.STATISTICS, 0,
         0, -1L, -1L, waypointLocation, null);
     myTracksProviderUtils.insertWaypoint(waypoint);
   }
@@ -665,7 +666,7 @@ public class GpxImporter extends DefaultHandler {
             waypoint.setLength(updater.getTripStatistics().getTotalDistance());
             waypoint.setLocation(trackPoint);
             waypoint.setTrackId(track.getId());
-            waypoint.setType(Waypoint.TYPE_WAYPOINT);
+            waypoint.setType(WaypointType.WAYPOINT);
             myTracksProviderUtils.insertWaypoint(waypoint);
           }
           waypoint = null;

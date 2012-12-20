@@ -28,8 +28,8 @@ import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
-import com.google.android.apps.mytracks.content.WaypointCreationRequest.WaypointType;
 import com.google.android.apps.mytracks.services.sensors.SensorManager;
 import com.google.android.apps.mytracks.services.sensors.SensorManagerFactory;
 import com.google.android.apps.mytracks.services.tasks.AnnouncementPeriodicTaskFactory;
@@ -413,13 +413,14 @@ public class TrackRecordingService extends Service {
       return -1L;
     }
 
-    boolean isStatistics = waypointCreationRequest.getType() == WaypointType.STATISTICS;
+    WaypointType waypointType = waypointCreationRequest.getType();
+    boolean isStatistics = waypointType == WaypointType.STATISTICS;
     String name;
     if (waypointCreationRequest.getName() != null) {
       name = waypointCreationRequest.getName();
     } else {
       int nextWaypointNumber = myTracksProviderUtils.getNextWaypointNumber(
-          recordingTrackId, isStatistics);
+          recordingTrackId, waypointType);
       if (nextWaypointNumber == -1) {
         nextWaypointNumber = 0;
       }
@@ -448,7 +449,6 @@ public class TrackRecordingService extends Service {
         : "";
     String icon = getString(
         isStatistics ? R.string.marker_statistics_icon_url : R.string.marker_waypoint_icon_url);
-    int type = isStatistics ? Waypoint.TYPE_STATISTICS : Waypoint.TYPE_WAYPOINT;
     long duration;
     double length;
     Location location = getLastValidTrackPointInCurrentSegment(recordingTrackId);
@@ -467,7 +467,7 @@ public class TrackRecordingService extends Service {
       length = 0;
       duration = 0;
     }
-    Waypoint waypoint = new Waypoint(name, description, category, icon, recordingTrackId, type,
+    Waypoint waypoint = new Waypoint(name, description, category, icon, recordingTrackId, waypointType,
         length, duration, -1L, -1L, location, tripStatistics);
     Uri uri = myTracksProviderUtils.insertWaypoint(waypoint);
     return Long.parseLong(uri.getLastPathSegment());
@@ -592,7 +592,7 @@ public class TrackRecordingService extends Service {
     trackTripStatisticsUpdater = new TripStatisticsUpdater(tripStatistics.getStartTime());
 
     long markerStartTime;
-    Waypoint waypoint = myTracksProviderUtils.getLastStatisticsWaypoint(recordingTrackId);
+    Waypoint waypoint = myTracksProviderUtils.getLastWaypoint(recordingTrackId, WaypointType.STATISTICS);
     if (waypoint != null && waypoint.getTripStatistics() != null) {
       markerStartTime = waypoint.getTripStatistics().getStopTime();
     } else {

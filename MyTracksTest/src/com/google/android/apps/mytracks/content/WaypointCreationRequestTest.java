@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks.content;
 
-import com.google.android.apps.mytracks.content.WaypointCreationRequest.WaypointType;
+import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 
 import android.os.Parcel;
 import android.test.AndroidTestCase;
