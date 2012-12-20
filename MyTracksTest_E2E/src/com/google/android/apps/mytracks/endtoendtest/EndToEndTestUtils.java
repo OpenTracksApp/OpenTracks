@@ -396,12 +396,17 @@ public class EndToEndTestUtils {
    * @return return true if the track list is empty
    */
   public static boolean isTrackListEmpty(boolean isClick) {
+    instrumentation.waitForIdleSync();
     int trackNumber = SOLO.getCurrentListViews().get(0).getCount();
     if (trackNumber <= 0) {
       return true;
     }
     View oneTrack = SOLO.getCurrentListViews().get(0).getChildAt(0);
-    trackName = (String) ((TextView) oneTrack.findViewById(R.id.list_item_name)).getText();
+    View aa = oneTrack.findViewById(R.id.list_item_name);
+    if (aa != null) {
+      trackName = (String) ((TextView) oneTrack.findViewById(R.id.list_item_name)).getText();
+    }
+
     if (isClick) {
       SOLO.scrollUp();
       SOLO.clickOnView(oneTrack);
