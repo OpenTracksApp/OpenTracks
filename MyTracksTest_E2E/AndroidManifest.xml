@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.google.android.maps.mytracks.test"
+  package="com.google.android.maps.mytracks.e2etest"
   android:versionCode="1"
   android:versionName="1.0" >
 
