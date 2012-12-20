@@ -17,14 +17,17 @@
 package com.google.android.apps.mytracks.io.file;
 
 import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
+import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.stats.TripStatisticsUpdater;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
+import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
@@ -99,12 +102,14 @@ public class GpxImporter extends DefaultHandler {
   // GPX tags
   private static final String TAG_ALTITUDE = "ele";
   private static final String TAG_DESCRIPTION = "desc";
+  private static final String TAG_COMMENT = "cmt";
   private static final String TAG_GPX = "gpx";
   private static final String TAG_NAME = "name";
   private static final String TAG_TIME = "time";
   private static final String TAG_TRACK = "trk";
   private static final String TAG_TRACK_POINT = "trkpt";
   private static final String TAG_TRACK_SEGMENT = "trkseg";
+  private static final String TAG_TYPE = "type";
   private static final String TAG_WAYPOINT = "wpt";
 
   // GPX attributes
@@ -227,6 +232,8 @@ public class GpxImporter extends DefaultHandler {
       onNameElementEnd();
     } else if (localName.equals(TAG_DESCRIPTION)) {
       onDescriptionElementEnd();
+    } else if (localName.equals(TAG_TYPE)) {
+      onTypeElementEnd();
     } else if (localName.equals(TAG_ALTITUDE)) {
       onAltitudeElementEnd();
     } else if (localName.equals(TAG_TIME)) {
@@ -247,6 +254,8 @@ public class GpxImporter extends DefaultHandler {
     } else {
       if (localName.equals(TAG_WAYPOINT)) {
         onWaypointElementEnd();
+      } else if (localName.equals(TAG_COMMENT)) {
+        onCommentElementEnd();
       }
     }
 
@@ -426,6 +435,21 @@ public class GpxImporter extends DefaultHandler {
   }
 
   /**
+   * On type element end.
+   */
+  private void onTypeElementEnd() {
+    if (content != null) {
+      String type = content.toString().trim();
+      if (trackData != null && trackData.parsedDepth == 1) {
+        trackData.track.setCategory(type);
+        trackData.track.setIcon(TrackIconUtils.getIconValue(context, type));
+      } else if (currentWaypoint != null) {
+        currentWaypoint.setCategory(type);
+      }
+    }
+  }
+
+  /**
    * On altitude element end.
    */
   private void onAltitudeElementEnd() throws SAXException {
@@ -481,6 +505,21 @@ public class GpxImporter extends DefaultHandler {
         location.setSpeed(speed);
       }
       location.setBearing(trackData.lastLocationInCurrentSegment.bearingTo(location));
+    }
+  }
+
+  /**
+   * On comment element end.
+   */
+  private void onCommentElementEnd() {
+    if (content != null) {
+      String comment = content.toString().trim();
+      if (currentWaypoint != null) {
+        WaypointType waypointType = WaypointType.STATISTICS.name().equals(comment) ? WaypointType.STATISTICS
+            : WaypointType.WAYPOINT;
+        currentWaypoint.setType(waypointType);
+  
+      }
     }
   }
 
@@ -603,14 +642,21 @@ public class GpxImporter extends DefaultHandler {
    * @param track the track
    */
   private void insertFirstWaypoint(Track track) {
+    String name = context.getString(R.string.marker_split_name_format, 0);
+    String category = "";
+    TripStatisticsUpdater updater = new TripStatisticsUpdater(
+        track.getTripStatistics().getStartTime());
+    TripStatistics tripStatistics = updater.getTripStatistics();
+    String description = new DescriptionGeneratorImpl(context).generateWaypointDescription(
+        tripStatistics);
     String icon = context.getString(R.string.marker_statistics_icon_url);
-
-    // For track statistics, make it an impossible location
+    double length = 0.0;
+    long duration = 0L;
     Location waypointLocation = new Location("");
     waypointLocation.setLatitude(100);
     waypointLocation.setLongitude(180);
-    Waypoint waypoint = new Waypoint("", "", "", icon, track.getId(), WaypointType.STATISTICS, 0,
-        0, -1L, -1L, waypointLocation, null);
+    Waypoint waypoint = new Waypoint(name, description, category, icon, track.getId(),
+        WaypointType.STATISTICS, length, duration, -1L, -1L, waypointLocation, tripStatistics);
     myTracksProviderUtils.insertWaypoint(waypoint);
   }
 
@@ -630,7 +676,9 @@ public class GpxImporter extends DefaultHandler {
       Waypoint waypoint = null;
       int trackPointPosition = -1;
       Location trackPoint = null;
-      TripStatisticsUpdater updater = new TripStatisticsUpdater(
+      TripStatisticsUpdater trackTripStatisticstrackUpdater = new TripStatisticsUpdater(
+          track.getTripStatistics().getStartTime());
+      TripStatisticsUpdater markerTripStatisticsUpdater = new TripStatisticsUpdater(
           track.getTripStatistics().getStartTime());
 
       while (true) {
@@ -651,7 +699,8 @@ public class GpxImporter extends DefaultHandler {
             // No more track points. Ignore the rest of the waypoints.
             return;
           }
-          updater.addLocation(trackPoint, minRecordingDistance);
+          trackTripStatisticstrackUpdater.addLocation(trackPoint, minRecordingDistance);
+          markerTripStatisticsUpdater.addLocation(trackPoint, minRecordingDistance);
         }
         if (waypoint.getLocation().getTime() > trackPoint.getTime()) {
           trackPoint = null;
@@ -661,13 +710,32 @@ public class GpxImporter extends DefaultHandler {
           // The waypoint location time matches the track point time
           if (trackPoint.getLatitude() == waypoint.getLocation().getLatitude()
               && trackPoint.getLongitude() == waypoint.getLocation().getLongitude()) {
-            waypoint.setDuration(updater.getTripStatistics().getTotalTime());
-            waypoint.setIcon(context.getString(R.string.marker_waypoint_icon_url));
-            waypoint.setLength(updater.getTripStatistics().getTotalDistance());
-            waypoint.setLocation(trackPoint);
-            waypoint.setTrackId(track.getId());
-            waypoint.setType(WaypointType.WAYPOINT);
-            myTracksProviderUtils.insertWaypoint(waypoint);
+
+            // Get tripStatistics, description, and icon
+            TripStatistics tripStatistics;
+            String description;
+            String icon;
+            if (waypoint.getType() == WaypointType.STATISTICS) {
+              tripStatistics = markerTripStatisticsUpdater.getTripStatistics();
+              markerTripStatisticsUpdater = new TripStatisticsUpdater(trackPoint.getTime());
+              description = new DescriptionGeneratorImpl(context).generateWaypointDescription(
+                  tripStatistics);
+              icon = context.getString(R.string.marker_statistics_icon_url);
+            } else {
+              tripStatistics = null;
+              description = waypoint.getDescription();
+              icon = context.getString(R.string.marker_waypoint_icon_url);
+            }
+
+            // Get length and duration
+            double length = trackTripStatisticstrackUpdater.getTripStatistics().getTotalDistance();
+            long duration = trackTripStatisticstrackUpdater.getTripStatistics().getTotalTime();
+
+            // Insert waypoint
+            Waypoint newWaypoint = new Waypoint(waypoint.getName(), description,
+                waypoint.getCategory(), icon, track.getId(), waypoint.getType(), length, duration,
+                -1L, -1L, trackPoint, tripStatistics);
+            myTracksProviderUtils.insertWaypoint(newWaypoint);
           }
           waypoint = null;
         }

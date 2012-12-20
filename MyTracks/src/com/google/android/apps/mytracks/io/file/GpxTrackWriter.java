@@ -115,6 +115,7 @@ public class GpxTrackWriter implements TrackFormatWriter {
       printWriter.println("<trk>");
       printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
       printWriter.println("<desc>" + StringUtils.formatCData(track.getDescription()) + "</desc>");
+      printWriter.println("<type>" + StringUtils.formatCData(track.getCategory()) + "</type>");
       printWriter.println("<extensions><topografix:color>c0c0c0</topografix:color></extensions>");
     }
   }
@@ -167,8 +168,10 @@ public class GpxTrackWriter implements TrackFormatWriter {
         printWriter.println(
             "<time>" + StringUtils.formatDateTimeIso8601(location.getTime()) + "</time>");
         printWriter.println("<name>" + StringUtils.formatCData(waypoint.getName()) + "</name>");
+        printWriter.println("<cmt>" + StringUtils.formatCData(waypoint.getType().name()) + "</cmt>");
         printWriter.println(
             "<desc>" + StringUtils.formatCData(waypoint.getDescription()) + "</desc>");
+        printWriter.println("<type>" + StringUtils.formatCData(waypoint.getCategory()) + "</type>");
         printWriter.println("</wpt>");
       }
     }

@@ -415,6 +415,8 @@ public class TrackRecordingService extends Service {
 
     WaypointType waypointType = waypointCreationRequest.getType();
     boolean isStatistics = waypointType == WaypointType.STATISTICS;
+    
+    // Get name
     String name;
     if (waypointCreationRequest.getName() != null) {
       name = waypointCreationRequest.getName();
@@ -429,28 +431,33 @@ public class TrackRecordingService extends Service {
           nextWaypointNumber);
     }
 
+    // Get category
+    String category = waypointCreationRequest.getCategory() != null ? waypointCreationRequest
+        .getCategory()
+        : "";
+        
+    // Get tripStatistics, description, and icon
     TripStatistics tripStatistics;
     String description;
+    String icon;
     if (isStatistics) {
       long now = System.currentTimeMillis();
       markerTripStatisticsUpdater.updateTime(now);
       tripStatistics = markerTripStatisticsUpdater.getTripStatistics();
       markerTripStatisticsUpdater = new TripStatisticsUpdater(now);
       description = new DescriptionGeneratorImpl(this).generateWaypointDescription(tripStatistics);
+      icon = getString(R.string.marker_statistics_icon_url);
     } else {
       tripStatistics = null;
       description = waypointCreationRequest.getDescription() != null ? waypointCreationRequest
           .getDescription()
           : "";
+      icon = getString(R.string.marker_waypoint_icon_url);
     }
 
-    String category = waypointCreationRequest.getCategory() != null ? waypointCreationRequest
-        .getCategory()
-        : "";
-    String icon = getString(
-        isStatistics ? R.string.marker_statistics_icon_url : R.string.marker_waypoint_icon_url);
-    long duration;
+    // Get length and duration
     double length;
+    long duration;
     Location location = getLastValidTrackPointInCurrentSegment(recordingTrackId);
     if (location != null && trackTripStatisticsUpdater != null) {
       TripStatistics stats = trackTripStatisticsUpdater.getTripStatistics();
@@ -464,9 +471,11 @@ public class TrackRecordingService extends Service {
       location = new Location("");
       location.setLatitude(100);
       location.setLongitude(180);
-      length = 0;
-      duration = 0;
+      length = 0.0;
+      duration = 0L;
     }
+    
+    // Insert waypoint
     Waypoint waypoint = new Waypoint(name, description, category, icon, recordingTrackId, waypointType,
         length, duration, -1L, -1L, location, tripStatistics);
     Uri uri = myTracksProviderUtils.insertWaypoint(waypoint);
