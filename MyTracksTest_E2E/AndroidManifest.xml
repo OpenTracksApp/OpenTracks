@@ -32,7 +32,7 @@ limitations under the License.
     android:targetSdkVersion="17" />
 
   <application
-    android:label="My Tracks Tests" >
+    android:label="My Tracks Endtoend Tests" >
     <uses-library android:name="android.test.runner" />
   </application>
 
