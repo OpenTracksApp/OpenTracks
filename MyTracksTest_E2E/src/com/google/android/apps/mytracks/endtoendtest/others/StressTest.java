@@ -124,6 +124,22 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
     }
     EndToEndTestUtils.stopRecording(true);
   }
+  
+  /**
+   * Records a long track.
+   */
+  public void testRecordLongTrack() {
+    if (!runTest) {
+      Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
+      return;
+    }
+    EndToEndTestUtils.startRecording();
+    int gpsNumber = 5000;
+    for (int i = 0; i < gpsNumber / 10; i++) {
+      EndToEndTestUtils.sendGps(10, i * 10);
+    }
+    EndToEndTestUtils.stopRecording(true);
+  }
 
   /**
    * Switches view between MAP, CHART and STAT. And create way points, pause and

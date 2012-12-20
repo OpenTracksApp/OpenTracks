@@ -56,6 +56,13 @@ public class EndToEndTestRunner extends InstrumentationTestRunner {
     } else {
       BigTestUtils.runSensorTest = false;
     }
+    
+    String isResourceUsageTest = arguments.getString("resource");
+    if (isResourceUsageTest != null && isResourceUsageTest.equalsIgnoreCase("true")) {
+      BigTestUtils.runResourceUsageTest = true;
+    } else {
+      BigTestUtils.runResourceUsageTest = false;
+    }
 
     Log.d(EndToEndTestUtils.LOG_TAG, "Use port number when run test on emulator:"
         + EndToEndTestUtils.emulatorPort);

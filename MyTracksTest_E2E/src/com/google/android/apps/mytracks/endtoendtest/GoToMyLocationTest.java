@@ -19,13 +19,9 @@ import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.util.GoogleLocationUtils;
 import com.google.android.maps.mytracks.R;
 
-import android.app.Activity;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
-import android.view.View;
-import android.widget.ImageButton;
 
-import java.util.ArrayList;
 
 /**
  * Tests the function of go to my location.
@@ -53,7 +49,7 @@ public class GoToMyLocationTest extends ActivityInstrumentationTestCase2<TrackLi
    * Tests the menu My Location.
    */
   public void testGotoMyLocation() {
-    findAndClickMyLocation(activityMyTracks);
+    EndToEndTestUtils.findAndClickMyLocation(activityMyTracks);
     if (EndToEndTestUtils.isEmulator) {
       String setting = activityMyTracks.getString(
           GoogleLocationUtils.isAvailable(activityMyTracks) ? R.string.gps_google_location_settings
@@ -66,32 +62,6 @@ public class GoToMyLocationTest extends ActivityInstrumentationTestCase2<TrackLi
     }
   }
   
-  /**
-   * Finds the My Location view and click it.
-   * 
-   * @param activity
-   */
-  public static void findAndClickMyLocation(Activity activity) {
-    EndToEndTestUtils.createTrackIfEmpty(1, false);
-    EndToEndTestUtils.sendGps(30);
-    
-    View myLocation = EndToEndTestUtils.SOLO.getCurrentActivity()
-        .findViewById(R.id.map_my_location);
-    // Find the My Location button in another if null.
-    if (myLocation == null) {
-      ArrayList<ImageButton> aa = EndToEndTestUtils.SOLO.getCurrentImageButtons();
-      for (ImageButton imageButton : aa) {
-        if (imageButton.getContentDescription() != null
-            && imageButton.getContentDescription().equals(
-                activity.getString(R.string.icon_my_location))) {
-          myLocation = imageButton;
-          break;
-        }
-      }
-    }
-    EndToEndTestUtils.SOLO.clickOnView(myLocation);
-  }
-
   @Override
   protected void tearDown() throws Exception {
     EndToEndTestUtils.SOLO.finishOpenedActivities();
