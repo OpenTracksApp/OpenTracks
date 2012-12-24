@@ -53,8 +53,8 @@ public class ResourceUsageTest extends ActivityInstrumentationTestCase2<TrackLis
 
   @Override
   protected void setUp() throws Exception {
-    runTest = BigTestUtils.runResourceUsageTest;
     super.setUp();
+    runTest = BigTestUtils.runResourceUsageTest;
     if (!runTest) {
       return;
     }
@@ -81,10 +81,10 @@ public class ResourceUsageTest extends ActivityInstrumentationTestCase2<TrackLis
           new AlertDialog.Builder(EndToEndTestUtils.SOLO.getCurrentActivity())
               .setTitle("Confirm long time test.")
               .setMessage(
-                  "Please disconnect the power cord of your device and click 'Start' button. Each case need run "
-                      + TEST_DURATION_IN_MILLISECONDS / 1000 / 60
-                      + " minutes, and the battery/memory usage will be recorded in every "
-                      + INTERVALE_TO_CHECK / 60 / 1000 + "minutes.")
+                  String
+                      .format(
+                          "Please disconnect the power cord of your device and click 'Start' button. Each case need run %d minutes, and the battery/memory usage will be recorded in every %d minutes.",
+                          TEST_DURATION_IN_MILLISECONDS / 1000 / 60, INTERVALE_TO_CHECK / 60 / 1000))
               .setPositiveButton("Start Test", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                   isUserConfirmed = true;
@@ -142,8 +142,8 @@ public class ResourceUsageTest extends ActivityInstrumentationTestCase2<TrackLis
    * during recording.
    * 
    * @param isShowTracksList true means show tracks list
-   * @param tabNameId the name string id of tab, it's useless when the first parameter is
-   *          true.
+   * @param tabNameId the name string id of tab, it's useless when the first
+   *          parameter is true.
    */
   public void recordingLongTrack(boolean isShowTracksList, int tabNameId) {
     if (!runTest) {

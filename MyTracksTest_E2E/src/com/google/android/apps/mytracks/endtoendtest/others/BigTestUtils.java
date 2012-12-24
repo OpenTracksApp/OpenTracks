@@ -37,12 +37,17 @@ public class BigTestUtils {
   public static boolean runStressTest = true;
   public static boolean runSensorTest = true;
   public static boolean runResourceUsageTest = true;
-  protected static final String DISABLE_MESSAGE = "This test is disabled";
-  protected final static String MYTRACKS_PROCESS_NAME = "com.google.android.maps.mytracks";
-  protected final static String MYTRACKS_TEST_INFO_FILE = "MyTracksTestInfo.txt";
+  public static final String DISABLE_MESSAGE = "This test is disabled";
+  public static final String MYTRACKS_PROCESS_NAME = "com.google.android.maps.mytracks";
+  public static final String MYTRACKS_TEST_INFO_FILE = "MyTracksTestInfo.txt";
 
   /**
-   * Gets the memory usage of MyTracks process.
+   * Gets the memory usage of MyTracks process. This method would get the Pss
+   * memory. Pss is the amount of memory shared with other processes, accounted
+   * in a way that the amount is divided evenly between the processes that share
+   * it. This is memory that would not be released if the process was
+   * terminated, but is indicative of the amount that this process is
+   * "contributing" to the overall memory load.
    * 
    * @param context
    */
@@ -77,7 +82,7 @@ public class BigTestUtils {
         new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
     int rawlevel = batteryIntent.getIntExtra("level", -1);
     double scale = batteryIntent.getIntExtra("scale", -1);
-    return "Device has " + rawlevel + " of " + scale + " battery left";
+    return String.format("Device has %s of %s battery left", rawlevel, scale);
   }
 
   /**
@@ -116,13 +121,14 @@ public class BigTestUtils {
    * @param testTime the total test milliseconds
    */
   public static void moniterTest(Context context, int interval, int testTime) {
-    long startTime = (new Date()).getTime();
+    long startTime = System.currentTimeMillis();
 
-    while (((new Date()).getTime() - startTime) < testTime) {
+    while ((System.currentTimeMillis() - startTime) < testTime) {
       String memoryUsageString = getMyTracksPssMemoryInfo(context);
       String batteryUsageString = getBatteryUsageInfo(context);
-      String oneInfo = (new java.util.Date()).toString() + ":" + memoryUsageString + ", "
-          + batteryUsageString + ".\r\n";
+      String oneInfo = String.format("{%s: memory use %s, battery left %s. \r\n",
+          String.format("{%1$tm/%1$td/%1$tY %1$tH:%1$tM:%1$tS", new Date()), memoryUsageString,
+          batteryUsageString);
       writeToFile(oneInfo, true);
       Log.i(EndToEndTestUtils.LOG_TAG, oneInfo);
       EndToEndTestUtils.sleep(interval);

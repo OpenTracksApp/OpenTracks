@@ -27,7 +27,7 @@ import android.util.Log;
  * @author Youtao Liu
  */
 public class EndToEndTestRunner extends InstrumentationTestRunner {
-  
+
   /**
    * Gets the parameter port which is used to fix GPS signal to emulators.
    */
@@ -43,26 +43,9 @@ public class EndToEndTestRunner extends InstrumentationTestRunner {
       }
     }
 
-    String isStressTest = arguments.getString("stress");
-    if (isStressTest != null && isStressTest.equalsIgnoreCase("true")) {
-      BigTestUtils.runStressTest = true;
-    } else {
-      BigTestUtils.runStressTest = false;
-    }
-
-    String isSensorTest = arguments.getString("sensor");
-    if (isSensorTest != null && isSensorTest.equalsIgnoreCase("true")) {
-      BigTestUtils.runSensorTest = true;
-    } else {
-      BigTestUtils.runSensorTest = false;
-    }
-    
-    String isResourceUsageTest = arguments.getString("resource");
-    if (isResourceUsageTest != null && isResourceUsageTest.equalsIgnoreCase("true")) {
-      BigTestUtils.runResourceUsageTest = true;
-    } else {
-      BigTestUtils.runResourceUsageTest = false;
-    }
+    BigTestUtils.runStressTest = "true".equalsIgnoreCase(arguments.getString("stress"));
+    BigTestUtils.runSensorTest = "true".equalsIgnoreCase(arguments.getString("sensor"));
+    BigTestUtils.runResourceUsageTest = "true".equalsIgnoreCase(arguments.getString("resource"));
 
     Log.d(EndToEndTestUtils.LOG_TAG, "Use port number when run test on emulator:"
         + EndToEndTestUtils.emulatorPort);
