@@ -63,7 +63,7 @@ public class ResourceUsageTest extends ActivityInstrumentationTestCase2<TrackLis
     context = trackListActivity.getApplicationContext();
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.setupForDebug(instrumentation, trackListActivity);
-    BigTestUtils.unlockDevice();
+    BigTestUtils.unlockAndWakeupDevice();
     if (!isUserConfirmed) {
       confirmTest();
     }
@@ -158,7 +158,7 @@ public class ResourceUsageTest extends ActivityInstrumentationTestCase2<TrackLis
       EndToEndTestUtils.SOLO.clickOnText(trackListActivity.getString(tabNameId));
     }
     BigTestUtils.moniterTest(context, INTERVALE_TO_CHECK, TEST_DURATION_IN_MILLISECONDS);
-    BigTestUtils.unlockDevice();
+    BigTestUtils.unlockAndWakeupDevice();
     EndToEndTestUtils.stopRecording(true);
   }
 

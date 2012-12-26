@@ -136,15 +136,21 @@ public class BigTestUtils {
   }
 
   /**
-   * Unlocks the device screen.
+   * Unlocks and wake up the device.
    */
-  public static void unlockDevice() {
+  public static void unlockAndWakeupDevice() {
     // The menu item of setting should be found if the screen is not locked.
     try {
-      Window wind = EndToEndTestUtils.SOLO.getCurrentActivity().getWindow();
-      wind.addFlags(LayoutParams.FLAG_DISMISS_KEYGUARD);
-      wind.addFlags(LayoutParams.FLAG_SHOW_WHEN_LOCKED);
-      wind.addFlags(LayoutParams.FLAG_TURN_SCREEN_ON);
+      EndToEndTestUtils.SOLO.getCurrentActivity().runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+          Window wind = EndToEndTestUtils.SOLO.getCurrentActivity().getWindow();
+          wind.addFlags(LayoutParams.FLAG_DISMISS_KEYGUARD);
+          wind.addFlags(LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+          wind.addFlags(LayoutParams.FLAG_TURN_SCREEN_ON);
+        }
+      });
+
     } catch (Exception e) {
       Log.i(EndToEndTestUtils.LOG_TAG,
           "Meet error when unlock device screen, may the device is not locked.");
