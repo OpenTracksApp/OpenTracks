@@ -16,7 +16,7 @@
 
 package com.google.android.apps.mytracks.services;
 
-import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
+import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.common.annotations.VisibleForTesting;
 

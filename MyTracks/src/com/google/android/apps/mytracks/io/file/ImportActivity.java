@@ -14,8 +14,9 @@
  * the License.
  */
 
-package com.google.android.apps.mytracks;
+package com.google.android.apps.mytracks.io.file;
 
+import com.google.android.apps.mytracks.TrackDetailActivity;
 import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;

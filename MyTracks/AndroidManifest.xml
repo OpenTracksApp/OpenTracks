@@ -150,7 +150,7 @@ limitations under the License.
     <activity
       android:label="@string/menu_help"
       android:name="com.google.android.apps.mytracks.HelpActivity" />
-    <activity android:name="com.google.android.apps.mytracks.ImportActivity" >
+    <activity android:name="com.google.android.apps.mytracks.io.file.ImportActivity" >
       <intent-filter>
         <action android:name="android.intent.action.ATTACH_DATA" />
         <action android:name="android.intent.action.VIEW" />
