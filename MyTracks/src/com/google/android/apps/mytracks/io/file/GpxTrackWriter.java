@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks.io.file;
 
 import com.google.android.apps.mytracks.content.Track;
@@ -31,7 +32,7 @@ import java.util.Locale;
 
 /**
  * Write track as GPX to a file.
- *
+ * 
  * @author Sandor Dornbush
  */
 public class GpxTrackWriter implements TrackFormatWriter {
@@ -39,8 +40,10 @@ public class GpxTrackWriter implements TrackFormatWriter {
   private static final NumberFormat ELEVATION_FORMAT = NumberFormat.getInstance(Locale.US);
   private static final NumberFormat COORDINATE_FORMAT = NumberFormat.getInstance(Locale.US);
   static {
-    // GPX readers expect to see fractional numbers with US-style punctuation.
-    // That is, they want periods for decimal points, rather than commas.
+    /*
+     * GPX readers expect to see fractional numbers with US-style punctuation.
+     * That is, they want periods for decimal points, rather than commas.
+     */
     ELEVATION_FORMAT.setMaximumFractionDigits(1);
     ELEVATION_FORMAT.setGroupingUsed(false);
 
@@ -112,6 +115,7 @@ public class GpxTrackWriter implements TrackFormatWriter {
       printWriter.println("<trk>");
       printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
       printWriter.println("<desc>" + StringUtils.formatCData(track.getDescription()) + "</desc>");
+      printWriter.println("<type>" + StringUtils.formatCData(track.getCategory()) + "</type>");
       printWriter.println("<extensions><topografix:color>c0c0c0</topografix:color></extensions>");
     }
   }
@@ -138,7 +142,8 @@ public class GpxTrackWriter implements TrackFormatWriter {
     if (printWriter != null) {
       printWriter.println("<trkpt " + formatLocation(location) + ">");
       printWriter.println("<ele>" + ELEVATION_FORMAT.format(location.getAltitude()) + "</ele>");
-      printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(location.getTime()) + "</time>");
+      printWriter.println(
+          "<time>" + StringUtils.formatDateTimeIso8601(location.getTime()) + "</time>");
       printWriter.println("</trkpt>");
     }
   }
@@ -160,10 +165,13 @@ public class GpxTrackWriter implements TrackFormatWriter {
       if (location != null) {
         printWriter.println("<wpt " + formatLocation(location) + ">");
         printWriter.println("<ele>" + ELEVATION_FORMAT.format(location.getAltitude()) + "</ele>");
-        printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(location.getTime()) + "</time>");
+        printWriter.println(
+            "<time>" + StringUtils.formatDateTimeIso8601(location.getTime()) + "</time>");
         printWriter.println("<name>" + StringUtils.formatCData(waypoint.getName()) + "</name>");
+        printWriter.println("<cmt>" + StringUtils.formatCData(waypoint.getType().name()) + "</cmt>");
         printWriter.println(
             "<desc>" + StringUtils.formatCData(waypoint.getDescription()) + "</desc>");
+        printWriter.println("<type>" + StringUtils.formatCData(waypoint.getCategory()) + "</type>");
         printWriter.println("</wpt>");
       }
     }
@@ -171,7 +179,7 @@ public class GpxTrackWriter implements TrackFormatWriter {
 
   /**
    * Formats a location with latitude and longitude coordinates.
-   *
+   * 
    * @param location the location
    */
   private String formatLocation(Location location) {

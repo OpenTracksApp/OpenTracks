@@ -22,6 +22,7 @@ import com.google.android.apps.mytracks.content.MyTracksProvider;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
@@ -532,7 +533,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     Waypoint wpt = providerUtils.getWaypoint(2);
     assertEquals(getContext().getString(R.string.marker_statistics_icon_url), wpt.getIcon());
     assertEquals(getContext().getString(R.string.marker_split_name_format, 1), wpt.getName());
-    assertEquals(Waypoint.TYPE_STATISTICS, wpt.getType());
+    assertEquals(WaypointType.STATISTICS, wpt.getType());
     assertEquals(123L, wpt.getTrackId());
     assertEquals(0.0, wpt.getLength());
     assertNotNull(wpt.getLocation());
@@ -564,7 +565,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     assertEquals(getContext().getString(R.string.marker_waypoint_icon_url),
         wpt.getIcon());
     assertEquals(getContext().getString(R.string.marker_name_format, 1), wpt.getName());
-    assertEquals(Waypoint.TYPE_WAYPOINT, wpt.getType());
+    assertEquals(WaypointType.WAYPOINT, wpt.getType());
     assertEquals(123L, wpt.getTrackId());
     assertEquals(0.0, wpt.getLength());
     assertNotNull(wpt.getLocation());

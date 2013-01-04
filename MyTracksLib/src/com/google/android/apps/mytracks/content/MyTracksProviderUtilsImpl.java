@@ -17,6 +17,7 @@
 package com.google.android.apps.mytracks.content;
 
 import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
+import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.protobuf.InvalidProtocolBufferException;
 
@@ -350,7 +351,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
       waypoint.setTrackId(cursor.getLong(trackIdIndex));
     }
     if (!cursor.isNull(typeIndex)) {
-      waypoint.setType(cursor.getInt(typeIndex));
+      waypoint.setType(WaypointType.values()[cursor.getInt(typeIndex)]);
     }
     if (!cursor.isNull(lengthIndex)) {
       waypoint.setLength(cursor.getFloat(lengthIndex));
@@ -439,7 +440,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   @Override
   public void deleteWaypoint(long waypointId, DescriptionGenerator descriptionGenerator) {
     final Waypoint waypoint = getWaypoint(waypointId);
-    if (waypoint != null && waypoint.getType() == Waypoint.TYPE_STATISTICS
+    if (waypoint != null && waypoint.getType() == WaypointType.STATISTICS
         && descriptionGenerator != null) {
       final Waypoint nextWaypoint = getNextStatisticsWaypointAfter(waypoint);
       if (nextWaypoint == null) {
@@ -479,15 +480,15 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   }
 
   @Override
-  public Waypoint getLastStatisticsWaypoint(long trackId) {
+  public Waypoint getLastWaypoint(long trackId, WaypointType waypointType) {
     if (trackId < 0) {
       return null;
     }
     Cursor cursor = null;
     try {
-      String selection = WaypointsColumns.TRACKID + "=? AND " + WaypointsColumns.TYPE + "="
-          + Waypoint.TYPE_STATISTICS;
-      String[] selectionArgs = new String[] { Long.toString(trackId) };
+      String selection = WaypointsColumns.TRACKID + "=? AND " + WaypointsColumns.TYPE + "=?";
+      String[] selectionArgs = new String[] {
+          Long.toString(trackId), Integer.toString(waypointType.ordinal()) };
       cursor = getWaypointCursor(null, selection, selectionArgs, WaypointsColumns._ID + " DESC", 1);
       if (cursor != null && cursor.moveToFirst()) {
         return createWaypoint(cursor);
@@ -501,7 +502,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   }
 
   @Override
-  public int getNextWaypointNumber(long trackId, boolean statistics) {
+  public int getNextWaypointNumber(long trackId, WaypointType waypointType) {
     if (trackId < 0) {
       return -1;
     }
@@ -509,8 +510,8 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     try {
       String[] projection = { WaypointsColumns._ID };
       String selection = WaypointsColumns.TRACKID + "=?  AND " + WaypointsColumns.TYPE + "=?";
-      int type = statistics ? Waypoint.TYPE_STATISTICS : Waypoint.TYPE_WAYPOINT;
-      String[] selectionArgs = new String[] { Long.toString(trackId), Integer.toString(type) };
+      String[] selectionArgs = new String[] {
+          Long.toString(trackId), Integer.toString(waypointType.ordinal()) };
       cursor = getWaypointCursor(projection, selection, selectionArgs, WaypointsColumns._ID, -1);
       if (cursor != null) {
         int count = cursor.getCount();
@@ -518,7 +519,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
          * For statistics markers, the first marker is for the track statistics,
          * so return the count as the next user visible number.
          */
-        return statistics ? count : count + 1;
+        return waypointType == WaypointType.STATISTICS ? count : count + 1;
       }
     } finally {
       if (cursor != null) {
@@ -597,7 +598,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     values.put(WaypointsColumns.CATEGORY, waypoint.getCategory());
     values.put(WaypointsColumns.ICON, waypoint.getIcon());
     values.put(WaypointsColumns.TRACKID, waypoint.getTrackId());
-    values.put(WaypointsColumns.TYPE, waypoint.getType());
+    values.put(WaypointsColumns.TYPE, waypoint.getType().ordinal());
     values.put(WaypointsColumns.LENGTH, waypoint.getLength());
     values.put(WaypointsColumns.DURATION, waypoint.getDuration());
     values.put(WaypointsColumns.STARTID, waypoint.getStartId());
@@ -644,7 +645,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     Cursor cursor = null;
     try {
       String selection = WaypointsColumns._ID + ">?  AND " + WaypointsColumns.TRACKID + "=? AND "
-          + WaypointsColumns.TYPE + "=" + Waypoint.TYPE_STATISTICS;
+          + WaypointsColumns.TYPE + "=" + WaypointType.STATISTICS.ordinal();
       String[] selectionArgs = new String[] {
           Long.toString(waypoint.getId()), Long.toString(waypoint.getTrackId()) };
       cursor = getWaypointCursor(null, selection, selectionArgs, WaypointsColumns._ID, 1);

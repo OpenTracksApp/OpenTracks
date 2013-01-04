@@ -17,6 +17,7 @@
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.stats.ExtremityMonitor;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
@@ -565,7 +566,7 @@ public class ChartView extends View {
             x, topBorder + spacer + markerHeight / 2, x, topBorder + effectiveHeight, markerPaint);
         canvas.translate(
             x - (float) (markerWidth * MapOverlay.WAYPOINT_X_ANCHOR), topBorder + spacer);
-        if (waypoints.get(i).getType() == Waypoint.TYPE_STATISTICS) {
+        if (waypoints.get(i).getType() == WaypointType.STATISTICS) {
           statisticsMarker.draw(canvas);
         } else {
           waypointMarker.draw(canvas);

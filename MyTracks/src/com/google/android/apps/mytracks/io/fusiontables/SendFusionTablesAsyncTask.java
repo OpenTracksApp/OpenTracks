@@ -8,6 +8,7 @@ import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.io.sendtogoogle.AbstractSendAsyncTask;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
 import com.google.android.apps.mytracks.stats.TripStatisticsUpdater;
@@ -335,7 +336,7 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
         // track).
         while (cursor.moveToNext()) {
           Waypoint wpt = myTracksProviderUtils.createWaypoint(cursor);
-          String type = wpt.getType() == Waypoint.TYPE_STATISTICS ? MARKER_TYPE_STATISTICS
+          String type = wpt.getType() == WaypointType.STATISTICS ? MARKER_TYPE_STATISTICS
               : MARKER_TYPE_WAYPOINT;
           if (!createNewPoint(wpt.getName(), wpt.getDescription(), wpt.getLocation(), type)) {
             Log.d(TAG, "Upload waypoints failed");

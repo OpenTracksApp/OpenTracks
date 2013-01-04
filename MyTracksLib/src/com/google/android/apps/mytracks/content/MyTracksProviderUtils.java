@@ -16,6 +16,8 @@
 
 package com.google.android.apps.mytracks.content;
 
+import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.location.Location;
@@ -126,28 +128,28 @@ public interface MyTracksProviderUtils {
 
   /**
    * Gets the first waypoint id for a track. The first waypoint is special as it
-   * contains the stats for the current segment. Returns -1L if it doesn't
-   * exist.
+   * contains the stats for the track. Returns -1L if it doesn't exist.
    * 
    * @param trackId the track id
    */
   public long getFirstWaypointId(long trackId);
 
   /**
-   * Gets the last statistics waypoint for a track. Returns null if it doesn't exist.
+   * Gets the last waypoint for a type. Returns null if it doesn't exist.
    * 
    * @param trackId the track id
+   * @param waypointType the waypoint type
    */
-  public Waypoint getLastStatisticsWaypoint(long trackId);
+  public Waypoint getLastWaypoint(long trackId, WaypointType waypointType);
 
   /**
-   * Gets the next waypoint number. Returns -1 if not able to get the next
+   * Gets the next waypoint number for a type. Returns -1 if not able to get the next
    * waypoint number.
    * 
    * @param trackId the track id
-   * @param statistics true for statistics marker, false for waypoint marker
+   * @param waypointType the waypoint type
    */
-  public int getNextWaypointNumber(long trackId, boolean statistics);
+  public int getNextWaypointNumber(long trackId, WaypointType waypointType);
 
   /**
    * Gets a waypoint from a waypoint id. Returns null if not found.

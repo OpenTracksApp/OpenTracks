@@ -17,6 +17,7 @@ package com.google.android.apps.mytracks.content;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationFactory;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
+import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceTest.MockContext;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.testing.mocking.AndroidMock;
@@ -365,7 +366,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     // Insert at first.
     Waypoint waypoint = new Waypoint();
     waypoint.setDescription(TEST_DESC);
-    waypoint.setType(Waypoint.TYPE_STATISTICS);
+    waypoint.setType(WaypointType.STATISTICS);
     waypoint.setTripStatistics(statistics);
     
     Location loc = new Location("test");
@@ -442,7 +443,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     Waypoint waypoint1 = new Waypoint();
     waypoint1.setDescription(TEST_DESC);
     waypoint1.setTrackId(trackId);
-    waypoint1.setType(Waypoint.TYPE_STATISTICS);
+    waypoint1.setType(WaypointType.STATISTICS);
     providerUtils.insertWaypoint(waypoint1);
   
     // Delete
@@ -491,13 +492,13 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     Waypoint waypoint1 = new Waypoint();
     waypoint1.setDescription(Long.toString(trackId));
     waypoint1.setTrackId(trackId);
-    waypoint1.setType(Waypoint.TYPE_STATISTICS);
+    waypoint1.setType(WaypointType.STATISTICS);
     waypoint1.setTripStatistics(statistics);
     providerUtils.insertWaypoint(waypoint1);
     Waypoint waypoint2 = new Waypoint();
     waypoint2.setDescription(Long.toString(trackId));
     waypoint2.setTrackId(trackId);
-    waypoint2.setType(Waypoint.TYPE_STATISTICS);
+    waypoint2.setType(WaypointType.STATISTICS);
     waypoint2.setTripStatistics(statistics);
     providerUtils.insertWaypoint(waypoint2);
   
@@ -541,7 +542,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
   }
 
   /**
-   * Tests the method {@link MyTracksProviderUtilsImpl#getNextWaypointNumber(long, boolean)}.
+   * Tests the method {@link MyTracksProviderUtilsImpl#getNextWaypointNumber(long, WaypointType)}.
    */
   public void testGetNextWaypointNumber() {
     long trackId = System.currentTimeMillis();
@@ -549,29 +550,29 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     providerUtils.insertTrack(track);
     
     Waypoint waypoint1 = new Waypoint();
-    waypoint1.setType(Waypoint.TYPE_STATISTICS);
+    waypoint1.setType(WaypointType.STATISTICS);
     waypoint1.setTrackId(trackId);
     Waypoint waypoint2 = new Waypoint();
-    waypoint2.setType(Waypoint.TYPE_WAYPOINT);
+    waypoint2.setType(WaypointType.WAYPOINT);
     waypoint2.setTrackId(trackId);
     Waypoint waypoint3 = new Waypoint();
-    waypoint3.setType(Waypoint.TYPE_STATISTICS);
+    waypoint3.setType(WaypointType.STATISTICS);
     waypoint3.setTrackId(trackId);
     Waypoint waypoint4 = new Waypoint();
-    waypoint4.setType(Waypoint.TYPE_WAYPOINT);
+    waypoint4.setType(WaypointType.WAYPOINT);
     waypoint4.setTrackId(trackId);
     providerUtils.insertWaypoint(waypoint1);
     providerUtils.insertWaypoint(waypoint2);
     providerUtils.insertWaypoint(waypoint3);
     providerUtils.insertWaypoint(waypoint4);
     
-    assertEquals(2, providerUtils.getNextWaypointNumber(trackId, true));
-    assertEquals(3, providerUtils.getNextWaypointNumber(trackId, false));
+    assertEquals(2, providerUtils.getNextWaypointNumber(trackId, WaypointType.STATISTICS));
+    assertEquals(3, providerUtils.getNextWaypointNumber(trackId, WaypointType.WAYPOINT));
   }
 
   /**
    * Tests the method
-   * {@link MyTracksProviderUtils#getLastStatisticsWaypoint(long)}.
+   * {@link MyTracksProviderUtils#getLastWaypoint(long, WaypointType)}.
    */
   public void testGetLastStatisticsWaypoint() {
     long trackId = System.currentTimeMillis();
@@ -580,21 +581,21 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
 
     Waypoint waypoint1 = new Waypoint();
     waypoint1.setTrackId(trackId);
-    waypoint1.setType(Waypoint.TYPE_STATISTICS);
+    waypoint1.setType(WaypointType.STATISTICS);
     waypoint1.setDescription("Desc1");
     Waypoint waypoint2 = new Waypoint();
     waypoint2.setTrackId(trackId);
-    waypoint2.setType(Waypoint.TYPE_STATISTICS);
+    waypoint2.setType(WaypointType.STATISTICS);
     waypoint2.setDescription("Desc2");
     Waypoint waypoint3 = new Waypoint();
     waypoint3.setTrackId(trackId);
-    waypoint3.setType(Waypoint.TYPE_WAYPOINT);
+    waypoint3.setType(WaypointType.WAYPOINT);
     waypoint3.setDescription("Desc3");
     providerUtils.insertWaypoint(waypoint1);
     providerUtils.insertWaypoint(waypoint2);
     providerUtils.insertWaypoint(waypoint3);
 
-    assertEquals("Desc2", providerUtils.getLastStatisticsWaypoint(trackId).getDescription());
+    assertEquals("Desc2", providerUtils.getLastWaypoint(trackId, WaypointType.STATISTICS).getDescription());
   }
 
   /**

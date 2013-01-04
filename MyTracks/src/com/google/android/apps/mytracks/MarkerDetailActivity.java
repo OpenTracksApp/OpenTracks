@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.StatsUtils;
@@ -78,7 +79,7 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity {
       return;
     }
     name.setText(getString(R.string.generic_name_line, waypoint.getName()));
-    if (waypoint.getType() == Waypoint.TYPE_WAYPOINT) {
+    if (waypoint.getType() == WaypointType.WAYPOINT) {
       waypointSection.setVisibility(View.VISIBLE);
       statisticsSection.setVisibility(View.GONE);
 

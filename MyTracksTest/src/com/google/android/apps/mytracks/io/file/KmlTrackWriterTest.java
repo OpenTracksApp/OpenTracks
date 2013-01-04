@@ -61,12 +61,11 @@ public class KmlTrackWriterTest extends TrackFormatWriterTest {
     Element kmlTag = getChildElement(doc, "kml");
     Element docTag = getChildElement(kmlTag, "Document");
     assertEquals(TRACK_NAME, getChildTextValue(docTag, "name"));
-    assertEquals(TRACK_DESCRIPTION, getChildTextValue(docTag, "description"));
 
     // There are 3 placemarks - start, track, and end
     List<Element> placemarkTags = getChildElements(docTag, "Placemark", 3);
     assertTagIsPlacemark(
-        placemarkTags.get(0), TRACK_NAME + " (Start)", TRACK_DESCRIPTION, location1);
+        placemarkTags.get(0), TRACK_NAME + " (Start)", "", location1);
     assertTagIsPlacemark(
         placemarkTags.get(2), TRACK_NAME + " (End)", FULL_TRACK_DESCRIPTION, location4);
 
@@ -97,7 +96,9 @@ public class KmlTrackWriterTest extends TrackFormatWriterTest {
   private void assertTagIsPlacemark(
       Element tag, String name, String description, Location location) {
     assertEquals(name, getChildTextValue(tag, "name"));
-    assertEquals(description, getChildTextValue(tag, "description"));
+    if (description != null && !description.equals("")) {
+      assertEquals(description, getChildTextValue(tag, "description"));
+    }
     Element pointTag = getChildElement(tag, "Point");
     String expected = location.getLongitude() + "," + location.getLatitude() + ","
         + location.getAltitude();

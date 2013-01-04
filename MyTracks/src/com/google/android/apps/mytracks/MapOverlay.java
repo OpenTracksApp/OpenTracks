@@ -19,6 +19,7 @@ package com.google.android.apps.mytracks;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.maps.TrackPath;
 import com.google.android.apps.mytracks.maps.TrackPathFactory;
 import com.google.android.apps.mytracks.util.LocationUtils;
@@ -274,7 +275,7 @@ public class MapOverlay {
       for (Waypoint waypoint : waypoints) {
         Location location = waypoint.getLocation();
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        int drawableId = waypoint.getType() == Waypoint.TYPE_STATISTICS ? R.drawable.yellow_pushpin
+        int drawableId = waypoint.getType() == WaypointType.STATISTICS ? R.drawable.yellow_pushpin
             : R.drawable.blue_pushpin;
         MarkerOptions markerOptions = new MarkerOptions().position(latLng)
             .anchor(WAYPOINT_X_ANCHOR, WAYPOINT_Y_ANCHOR).draggable(false).visible(true)
