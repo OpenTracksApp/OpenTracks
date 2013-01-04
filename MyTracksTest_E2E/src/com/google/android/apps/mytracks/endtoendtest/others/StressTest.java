@@ -54,6 +54,7 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
     instrumentation = getInstrumentation();
     trackListActivity = getActivity();
     EndToEndTestUtils.setupForAllTest(instrumentation, trackListActivity);
+    BigTestUtils.unlockAndWakeupDevice();
     startTime = System.currentTimeMillis();
   }
 
