@@ -56,7 +56,7 @@ public class EndToEndTestUtils {
 
   private static final String ANDROID_LOCAL_IP = "10.0.2.2";
   // usually 5554.
-  public static int emulatorPort = 5568;
+  public static int emulatorPort = 5556;
 
   private static final int ORIENTATION_PORTRAIT = 1;
   private static final int ORIENTATION_LANDSCAPE = 0;
@@ -65,7 +65,9 @@ public class EndToEndTestUtils {
   static final double START_LATITUDE = -1.3f;
   static final double DELTA_LONGITUDE = 0.0005f;
   static final double DELTA_LADITUDE = 0.0005f;
-  private static final String WAYPOINT_NAME = "testWaypoint";
+  static final String WAYPOINT_NAME = "testWaypoint";
+  static final String WAYPOINT_TYPE = "testWaypoinType";
+  static final String WAYPOINT_DESC = "testWaypointDesc";
   private static final String NO_GPS_MESSAGE_PREFIX = "GPS is not available";
 
   private static final String MOREOPTION_CLASSNAME = "com.android.internal.view.menu.ActionMenuPresenter$OverflowMenuButton";
@@ -73,14 +75,16 @@ public class EndToEndTestUtils {
 
   static final String DEFAULTACTIVITYTYPE = "TestActivity";
   public static String activityType = DEFAULTACTIVITYTYPE;
+  static String trackName;
   static final String TRACK_NAME_PREFIX = "testTrackName";
+  static String trackDesc;
+  static final String TRACK_DESC_PREFIX = "testTrackDesc";
   static final String GPX = "gpx";
   static final String KML = "kml";
   static final String CSV = "csv";
   static final String TCX = "tcx";
   static final String BACKUPS = "backups";
   static final String MENU_MORE = "More";
-  static String trackName;
 
   // Following is some check strings in English and Chinese
   private static final HashMap<String, String> RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL = new HashMap<String, String>();
@@ -484,10 +488,13 @@ public class EndToEndTestUtils {
         SOLO.waitForText(activityMytracks.getString(R.string.generic_save), 1, 5000);
         // Make every track name is unique to make sure every check can be
         // trusted.
-        trackName = TRACK_NAME_PREFIX + System.currentTimeMillis();
+        long currentMillis = System.currentTimeMillis();
+        trackName = TRACK_NAME_PREFIX + currentMillis;
+        trackDesc = TRACK_DESC_PREFIX + currentMillis;
         SOLO.sendKey(KeyEvent.KEYCODE_DEL);
         enterTextAvoidSoftKeyBoard(0, trackName);
         enterTextAvoidSoftKeyBoard(1, activityType);
+        enterTextAvoidSoftKeyBoard(2, trackDesc);
         SOLO.clickOnText(activityMytracks.getString(R.string.generic_save));
         instrumentation.waitForIdleSync();
       }
@@ -647,6 +654,7 @@ public class EndToEndTestUtils {
    * @return true if find this menu
    */
   public static boolean findMenuItem(String menuName, boolean click) {
+    instrumentation.waitForIdleSync();
     boolean findResult = false;
     boolean isMoreMenuOpened = false;
 
@@ -663,7 +671,7 @@ public class EndToEndTestUtils {
         return findResult;
       }
       showMenuItem();
-      findResult = SOLO.searchText(menuName, 1, true);
+      findResult = SOLO.waitForText(menuName, 1, NORMAL_WAIT_TIME, true);
     } else {
       // Non-ICS phone.
       SOLO.sendKey(KeyEvent.KEYCODE_MENU);
@@ -961,7 +969,9 @@ public class EndToEndTestUtils {
           .getString(R.string.marker_list_empty_message)));
     }
     findMenuItem(activityMytracks.getString(R.string.menu_insert_marker), true);
-    enterTextAvoidSoftKeyBoard(0, WAYPOINT_NAME);
+    enterTextAvoidSoftKeyBoard(0, WAYPOINT_NAME + (markerNumber + 1));
+    enterTextAvoidSoftKeyBoard(1, WAYPOINT_TYPE + (markerNumber + 1));
+    enterTextAvoidSoftKeyBoard(2, WAYPOINT_DESC + (markerNumber + 1));
     SOLO.clickOnButton(activityMytracks.getString(R.string.generic_add));
     instrumentation.waitForIdleSync();
     if (hasGpsSingal) {

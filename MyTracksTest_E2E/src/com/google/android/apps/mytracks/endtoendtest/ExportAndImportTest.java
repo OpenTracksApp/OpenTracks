@@ -47,7 +47,7 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
   }
 
   /**
-   * Tests export and import tracks after creating a track with Gps signal and 
+   * Tests export and import tracks after creating a track with Gps signal and
    * an empty track.
    */
   public void testExportAndImportTracks() {
@@ -59,18 +59,84 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     instrumentation.waitForIdleSync();
     checkExportAndImport();
   }
-  
+
   /**
-   * Tests export and import tracks after creating a track with Gps signal and 
+   * Tests export and import track. Then check the properties of this track.
+   */
+  public void testExportAndImportTrack_properties() {
+    EndToEndTestUtils.deleteAllTracks();
+
+    // Create a new track with two markers.
+    EndToEndTestUtils.startRecording();
+    instrumentation.waitForIdleSync();
+    // Send Gps before creating marker.
+    EndToEndTestUtils.sendGps(2);
+    EndToEndTestUtils.createWaypoint(0);
+    EndToEndTestUtils.sendGps(2, 2);
+    EndToEndTestUtils.createWaypoint(1);
+    EndToEndTestUtils.sendGps(2, 4);
+    // Back to tracks list.
+    EndToEndTestUtils.SOLO.goBack();
+    instrumentation.waitForIdleSync();
+    EndToEndTestUtils.stopRecording(true);
+
+    // Export this track and then delete it.
+    EndToEndTestUtils.deleteExportedFiles(EndToEndTestUtils.GPX);
+    // Click to export tracks(At least one track) to Gpx files.
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_save_all), true);
+    EndToEndTestUtils.SOLO
+        .clickOnText(String.format(activityMyTracks.getString(R.string.menu_save_format),
+            EndToEndTestUtils.GPX.toUpperCase()));
+    EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+        .getString(R.string.external_storage_save_success));
+    EndToEndTestUtils
+        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+    EndToEndTestUtils.deleteAllTracks();
+
+    // Import this tracks.
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_import), true);
+    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(
+        R.string.external_storage_import_success_count).split("%")[0]);
+    // Check import tracks should be equal with the sum of trackNumber and
+    // gpxFilesNumber;
+    EndToEndTestUtils
+        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+    instrumentation.waitForIdleSync();
+
+    // Check the track name, activity and description.
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.trackName));
+    EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.trackName);
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_edit), true);
+    instrumentation.waitForIdleSync();
+    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.trackName));
+    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.activityType));
+    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.trackDesc));
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_cancel));
+
+    // Check the markers.
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_markers), true);
+    // The first marker.
+    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.WAYPOINT_NAME + 1));
+    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.WAYPOINT_TYPE + 1));
+    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.WAYPOINT_DESC + 1));
+    // The second marker.
+    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.WAYPOINT_NAME + 2));
+    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.WAYPOINT_TYPE + 2));
+    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.WAYPOINT_DESC + 2));
+
+  }
+
+  /**
+   * Tests export and import tracks after creating a track with Gps signal and
    * an empty track. Both tracks are paused during recording.
    */
-  public void testExportAndImportTracks_pause() {
+  public void testExportAndImportTracks_pausedTrack() {
     EndToEndTestUtils.deleteAllTracks();
     // Create a new track with 3 gps data.
     EndToEndTestUtils.createTrackWithPause(3);
     instrumentation.waitForIdleSync();
-    EndToEndTestUtils.SOLO.goBack();   
-    
+    EndToEndTestUtils.SOLO.goBack();
+
     // Create a empty track.
     EndToEndTestUtils.createTrackWithPause(0);
     instrumentation.waitForIdleSync();
@@ -78,7 +144,7 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     instrumentation.waitForIdleSync();
     checkExportAndImport();
   }
-  
+
   /**
    * Tests export and import tracks.
    * <ul>
@@ -108,17 +174,18 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(
         R.string.external_storage_import_error_no_file,
         FileUtils.buildExternalDirectoryPath(EndToEndTestUtils.GPX)));
-    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+    EndToEndTestUtils
+        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
 
     // Click to export tracks(At least one track) to Gpx files.
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_save_all), true);
     EndToEndTestUtils.SOLO
         .clickOnText(String.format(activityMyTracks.getString(R.string.menu_save_format),
             EndToEndTestUtils.GPX.toUpperCase()));
-    EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.external_storage_save_success));
-    EndToEndTestUtils.getButtonOnScreen(
-        activityMyTracks.getString(R.string.generic_ok), true, true);
+    EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+        .getString(R.string.external_storage_save_success));
+    EndToEndTestUtils
+        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     // Check export file.
     assertEquals(gpxFilesNumber + trackNumber,
         EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX).length);
@@ -132,11 +199,12 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     EndToEndTestUtils.rotateAllActivities();
     // Wait for the prefix of import success string is much faster than wait
     // the whole string.
-    EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.external_storage_import_success_count).split("%")[0]);
+    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(
+        R.string.external_storage_import_success_count).split("%")[0]);
     // Check import tracks should be equal with the sum of trackNumber and
     // gpxFilesNumber;
-    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+    EndToEndTestUtils
+        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     instrumentation.waitForIdleSync();
     assertTrue(EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.trackName));
     assertEquals(trackNumber + gpxFilesNumber, EndToEndTestUtils.SOLO.getCurrentListViews().get(0)
@@ -149,10 +217,10 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     EndToEndTestUtils.SOLO
         .clickOnText(String.format(activityMyTracks.getString(R.string.menu_save_format),
             EndToEndTestUtils.KML.toUpperCase()));
-    EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.external_storage_save_success));
-    EndToEndTestUtils.getButtonOnScreen(
-        activityMyTracks.getString(R.string.generic_ok), true, true);
+    EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+        .getString(R.string.external_storage_save_success));
+    EndToEndTestUtils
+        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     // Check export files.
     assertEquals(gpxFilesNumber, EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX).length);
     assertEquals(trackNumber, EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.KML).length);

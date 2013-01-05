@@ -117,7 +117,7 @@ public class CreateTrackTest extends ActivityInstrumentationTestCase2<TrackListA
   public void testCreateTrackWithMarkers() {
     EndToEndTestUtils.startRecording();
     instrumentation.waitForIdleSync();
-    // Send Gps before send marker.
+    // Send Gps before creating marker.
     EndToEndTestUtils.sendGps(2);
     if (EndToEndTestUtils.hasActionBar) {
       // Check the title is Recording.
