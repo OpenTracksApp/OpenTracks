@@ -93,7 +93,7 @@ class ExternalFileBackup {
       return FileUtils.ensureDirectoryExists(dir) ? dir : null;
     } else {
       // Return it if it already exists, otherwise return null
-      return dir.isDirectory() ? dir : null;
+      return FileUtils.isDirectory(dir) ? dir : null;
     }
   }
 

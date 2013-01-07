@@ -106,7 +106,7 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     // No file to imported.
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_import), true);
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(
-        R.string.external_storage_import_error_no_file,
+        R.string.import_no_file,
         FileUtils.buildExternalDirectoryPath(EndToEndTestUtils.GPX)));
     EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
 
@@ -133,7 +133,7 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     // Wait for the prefix of import success string is much faster than wait
     // the whole string.
     EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.external_storage_import_success_count).split("%")[0]);
+        activityMyTracks.getString(R.string.import_success).split("%")[0]);
     // Check import tracks should be equal with the sum of trackNumber and
     // gpxFilesNumber;
     EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);

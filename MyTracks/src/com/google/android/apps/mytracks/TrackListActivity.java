@@ -81,6 +81,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.EnumSet;
+import java.util.Locale;
 
 /**
  * An activity displaying a list of tracks.
@@ -323,7 +324,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
   // Menu items
   private MenuItem searchMenuItem;
   private MenuItem startGpsMenuItem;
-  private MenuItem importMenuItem;
+  private MenuItem importAllMenuItem;
   private MenuItem saveAllMenuItem;
   private MenuItem deleteAllMenuItem;
 
@@ -486,6 +487,12 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.track_list, menu);
     String fileTypes[] = getResources().getStringArray(R.array.file_types);
+    // Import all submenu titles
+    menu.findItem(R.id.track_list_import_all_gpx)
+        .setTitle(getString(R.string.menu_import_all_format, fileTypes[0]));
+    menu.findItem(R.id.track_list_import_all_kml)
+        .setTitle(getString(R.string.menu_import_all_format, fileTypes[1]));
+    // Save all submenu titles
     menu.findItem(R.id.track_list_save_all_gpx)
         .setTitle(getString(R.string.menu_save_format, fileTypes[0]));
     menu.findItem(R.id.track_list_save_all_kml)
@@ -497,7 +504,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
 
     searchMenuItem = menu.findItem(R.id.track_list_search);
     startGpsMenuItem = menu.findItem(R.id.track_list_start_gps);
-    importMenuItem = menu.findItem(R.id.track_list_import);
+    importAllMenuItem = menu.findItem(R.id.track_list_import_all);
     saveAllMenuItem = menu.findItem(R.id.track_list_save_all);
     deleteAllMenuItem = menu.findItem(R.id.track_list_delete_all);
 
@@ -529,11 +536,11 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
         handleStartGps();
         updateMenuItems(recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
         return true;
-      case R.id.track_list_import:
-        AnalyticsUtils.sendPageViews(this, "/action/import");
-        intent = IntentUtils.newIntent(this, ImportActivity.class)
-            .putExtra(ImportActivity.EXTRA_IMPORT_ALL, true);
-        startActivity(intent);
+      case R.id.track_list_import_all_gpx:
+        startImportActivity(TrackFileFormat.GPX);
+        return true;
+      case R.id.track_list_import_all_kml:
+        startImportActivity(TrackFileFormat.KML);
         return true;
       case R.id.track_list_save_all_gpx:
         startSaveActivity(TrackFileFormat.GPX);
@@ -653,8 +660,8 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
       startGpsMenuItem.setTitle(startGps ? R.string.menu_stop_gps : R.string.menu_start_gps);
       startGpsMenuItem.setVisible(!isRecording);
     }
-    if (importMenuItem != null) {
-      importMenuItem.setVisible(!isRecording);
+    if (importAllMenuItem != null) {
+      importAllMenuItem.setVisible(!isRecording);
     }
     if (saveAllMenuItem != null) {
       saveAllMenuItem.setVisible(!isRecording);
@@ -681,12 +688,27 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
   }
 
   /**
+   * Starts the {@link ImportActivity} to import all tracks.
+   * 
+   * @param trackFileFormat the track file format
+   */
+  private void startImportActivity(TrackFileFormat trackFileFormat) {
+    AnalyticsUtils.sendPageViews(
+        this, "/action/import_all_" + trackFileFormat.name().toLowerCase(Locale.US));
+    Intent intent = IntentUtils.newIntent(this, ImportActivity.class)
+        .putExtra(ImportActivity.EXTRA_IMPORT_ALL, true)
+        .putExtra(ImportActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);
+    startActivity(intent);
+  }
+
+  /**
    * Starts the {@link SaveActivity} to save all tracks.
    * 
    * @param trackFileFormat the track file format
    */
   private void startSaveActivity(TrackFileFormat trackFileFormat) {
-    AnalyticsUtils.sendPageViews(this, "/action/save_all");
+    AnalyticsUtils.sendPageViews(
+        this, "/action/save_all_" + trackFileFormat.name().toLowerCase(Locale.US));
     Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
         .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);
     startActivity(intent);

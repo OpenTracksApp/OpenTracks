@@ -28,17 +28,34 @@ limitations under the License.
     android:title="@string/menu_start_gps"/>
   <item
     android:icon="@drawable/menu_import"
-    android:id="@+id/track_list_import"
-    android:title="@string/menu_import"/>
+    android:id="@+id/track_list_import_all"
+    android:title="@string/menu_import_all">
+    <menu>
+      <item
+        android:id="@+id/track_list_import_all_gpx"
+        android:title=""/>
+      <item
+        android:id="@+id/track_list_import_all_kml"
+        android:title=""/>
+    </menu>
+  </item>
   <item
     android:icon="@drawable/menu_save"
     android:id="@+id/track_list_save_all"
     android:title="@string/menu_save_all">
     <menu>
-      <item android:id="@+id/track_list_save_all_gpx"/>
-      <item android:id="@+id/track_list_save_all_kml"/>
-      <item android:id="@+id/track_list_save_all_csv"/>
-      <item android:id="@+id/track_list_save_all_tcx"/>
+      <item
+        android:id="@+id/track_list_save_all_gpx"
+        android:title=""/>
+      <item
+        android:id="@+id/track_list_save_all_kml"
+        android:title=""/>
+      <item
+        android:id="@+id/track_list_save_all_csv"
+        android:title=""/>
+      <item
+        android:id="@+id/track_list_save_all_tcx"
+        android:title=""/>
     </menu>
   </item>
   <item

@@ -303,6 +303,8 @@ public class KmlTrackWriter implements TrackFormatWriter {
       printWriter.println("<name>" + StringUtils.formatCData(name) + "</name>");
       printWriter.println(
           "<description>" + StringUtils.formatCData(description) + "</description>");
+      printWriter.println("<TimeStamp><when>"
+          + StringUtils.formatDateTimeIso8601(location.getTime()) + "</when></TimeStamp>");
       printWriter.println("<styleUrl>#" + styleName + "</styleUrl>");
       writeCategory(category);
       printWriter.println("<Point>");

@@ -60,6 +60,7 @@ import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * An activity to show the track detail.
@@ -506,7 +507,8 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
    * @param trackFileFormat the track file format
    */
   private void startSaveActivity(TrackFileFormat trackFileFormat) {
-    AnalyticsUtils.sendPageViews(this, "/action/save");
+    AnalyticsUtils.sendPageViews(
+        this, "/action/save_" + trackFileFormat.name().toLowerCase(Locale.US));
     Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
         .putExtra(SaveActivity.EXTRA_TRACK_ID, trackId)
         .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);

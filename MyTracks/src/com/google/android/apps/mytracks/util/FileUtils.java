@@ -37,29 +37,45 @@ public class FileUtils {
    */
   @VisibleForTesting
   static final int MAX_FAT32_PATH_LENGTH = 260;
-
+  
   /**
-   * Returns whether the SD card is available.
+   * Returns true if the external storage is available.
    */
-  public static boolean isSdCardAvailable() {
-    return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
+  public static boolean isExternalStorageAvailable() {
+    String state = Environment.getExternalStorageState();
+    return Environment.MEDIA_MOUNTED.equals(state)
+        || Environment.MEDIA_MOUNTED_READ_ONLY.equals(state);
+  }
+  
+  /**
+   * Returns true if the external storage is writable.
+   */
+  public static boolean isExternalStorageWriteable() {
+    String state = Environment.getExternalStorageState();
+    return Environment.MEDIA_MOUNTED.equals(state);
+  }
+  
+  /**
+   * Returns true if the directory exists.
+   * 
+   * @param dir the directory
+   */
+  public static boolean isDirectory(File dir) {
+    return dir.exists() && dir.isDirectory();
   }
 
   /**
-   * Ensures the given directory exists by creating it and its parents if
+   * Ensures the directory exists by creating it and its parents if
    * necessary.
    *
    * @return whether the directory exists (either already existed or was
    *         successfully created)
    */
   public static boolean ensureDirectoryExists(File dir) {
-    if (dir.exists() && dir.isDirectory()) {
+    if (isDirectory(dir)) {
       return true;
     }
-    if (dir.mkdirs()) {
-      return true;
-    }
-    return false;
+    return dir.mkdirs();    
   }
 
   /**
