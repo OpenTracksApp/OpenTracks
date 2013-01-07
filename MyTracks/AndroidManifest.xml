@@ -45,7 +45,8 @@ limitations under the License.
   <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
   <!-- Permission to read phone state so voice announcement will not interrupt ongoing calls -->
   <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-  <!-- Permission to write to SD card -->
+  <!-- Permission to read/write external storage -->
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
   <!-- Permissions to access My Tracks data -->
   <uses-permission android:name="com.google.android.apps.mytracks.MYTRACKS_NOTIFICATIONS" />
@@ -150,7 +151,7 @@ limitations under the License.
     <activity
       android:label="@string/menu_help"
       android:name="com.google.android.apps.mytracks.HelpActivity" />
-    <activity android:name="com.google.android.apps.mytracks.ImportActivity" >
+    <activity android:name="com.google.android.apps.mytracks.io.file.ImportActivity" >
       <intent-filter>
         <action android:name="android.intent.action.ATTACH_DATA" />
         <action android:name="android.intent.action.VIEW" />

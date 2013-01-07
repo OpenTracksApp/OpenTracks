@@ -80,8 +80,8 @@ public class BackupAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
   @Override
   protected Boolean doInBackground(Void... params) {
-    if (!FileUtils.isSdCardAvailable()) {
-      messageId = R.string.external_storage_error_no_storage;
+    if (!FileUtils.isExternalStorageWriteable()) {
+      messageId = R.string.external_storage_not_writeable;
       return false;
     }
 

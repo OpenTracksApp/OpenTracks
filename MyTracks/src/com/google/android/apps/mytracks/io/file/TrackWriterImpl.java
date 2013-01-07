@@ -194,9 +194,8 @@ class TrackWriterImpl implements TrackWriter {
    * Checks and returns whether we're ready to create the output file.
    */
   protected boolean canWriteFile() {
-    if (!FileUtils.isSdCardAvailable()) {
-      Log.i(Constants.TAG, "Could not find SD card.");
-      errorMessage = R.string.external_storage_error_no_storage;
+    if (!FileUtils.isExternalStorageWriteable()) {
+      errorMessage = R.string.external_storage_not_writeable;
       return false;
     }
     

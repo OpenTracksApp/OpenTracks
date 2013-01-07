@@ -604,39 +604,13 @@ limitations under the License.
       that the operation was canceled.">
     The operation was canceled.
   </string>
-  <string name="external_storage_error_no_storage"
-    translation_description="When importing/saving to the external storage, the error message
-      indicating that no external storage is found.">
-    No external storage is found.
+  <string name="external_storage_not_available"
+    translation_description="Error message when the external storage is not available.">
+    External storage not available.
   </string>
-  <string name="external_storage_import_error"
-    translation_description="When importing from the external storage, the error message indicating
-      not able to import.">
-    Unable to import from external storage.
-  </string>
-  <string name="external_storage_import_error_no_file"
-    translation_description="When importing from the external storage, the error message indicating
-      that no file is found on an external storage directory.
-
-      %1$s: the external storage directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
-    No file found in %1$s.
-  </string>
-  <string name="external_storage_import_progress_message"
-    translation_description="When importing from the external storage, the progress message.">
-    Importing from external storage&#8230;
-  </string>
-  <string name="external_storage_import_success"
-    translation_description="When importing from the external storage, the success message.">
-    Finished importing from external storage.
-  </string>
-  <string name="external_storage_import_success_count"
-    translation_description="When importing from the external storage, the success message with a
-      count of the imported files.
-
-      %1$d the number of successfully imported tracks. E.g., '1'.
-      %2$s the number of files in the external storage directory. E.g., '2 GPX files'.
-      %3$s the external storage directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
-    Imported %1$d of %2$s from %3$s.
+  <string name="external_storage_not_writeable"
+    translation_description="Error messazge when the external storage is not writeable.">
+    External storage not writeable.
   </string>
   <string name="external_storage_save_error"
     translation_description="When saving to the external storage, the error message indicating not
@@ -986,37 +960,76 @@ limitations under the License.
     Track
   </string>
 
-  <!-- Import GPX Files -->
-  <string name="import_gpx_files_few"
-    translation_description="When importing all the tracks, phrase for 'few' GPX files.
+  <!-- Import -->
+  <string name="import_files_few"
+    translation_description="When importing files, the phrase for 'few' files. This is used when the
+      language requires special treatment of 'small' numbers. See
+      http://developer.android.com/guide/topics/resources/string-resource.html#Plurals
 
       %1$d an integer number. The number is a small number.">
-    %1$d GPX files
+    %1$d files
   </string>
-  <string name="import_gpx_files_many"
-    translation_description="When importing all the tracks, phrase for 'many' GPX files.
+  <string name="import_files_many"
+    translation_description="When importing files, the phrase for 'many' files. This is used when
+      the language requires special treatment of 'large' numbers. See
+      http://developer.android.com/guide/topics/resources/string-resource.html#Plurals
 
       %1$d an integer number. The number is a large number.">
-    %1$d GPX files
+    %1$d files
   </string>
-  <string name="import_gpx_files_one"
-    translation_description="When importing all the tracks, phrase for 1 GPX file.">
-    1 GPX file
+  <string name="import_files_one"
+    translation_description="When importing files, the phrase for 1 file. This is used when the
+      language requires special treatment of numbers like one. See
+      http://developer.android.com/guide/topics/resources/string-resource.html#Plurals">
+    1 file
   </string>
-  <string name="import_gpx_files_other"
-    translation_description="When importing all the tracks, phrase for 'other' GPX files, 'other'
-      means for cases that the language does not require special treatment of the given quantity.
+  <string name="import_files_other"
+    translation_description="When importing files, the phrase for 'other' files. This is used when
+      the language does not require special treatment of the given quantity (as with all numbers in
+      Chinese). See http://developer.android.com/guide/topics/resources/string-resource.html#Plurals
 
       %1$d an integer number.">
-    %1$d GPX files
+    %1$d files
   </string>
-  <string name="import_gpx_files_two"
-    translation_description="When importing all the tracks, phrase for 2 GPX files.">
-    2 GPX files
+  <string name="import_files_two"
+    translation_description="When importing files, the phrase for 2 files. This is used when the
+      language requires special treatment of numbers like two. See
+      http://developer.android.com/guide/topics/resources/string-resource.html#Plurals">
+    2 files
   </string>
-  <string name="import_gpx_files_zero"
-    translation_description="When importing all the tracks, phrase for 0 GPX files.">
-    0 GPX files
+  <string name="import_files_zero"
+    translation_description="When importing files, the phrase for 0 files. This is used when the
+      language requires special treatment of the number 0. See
+      http://developer.android.com/guide/topics/resources/string-resource.html#Plurals">
+    0 files
+  </string>
+  <string name="import_no_directory"
+    translation_description="When importing from the external storage, the error message when the
+      directory doesn't exist.
+
+      %1$s: the directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
+    %1$s does not exist.
+  </string>
+  <string name="import_no_file"
+    translation_description="When importing from the external storage, the message indicating
+      that no file is found.
+
+      %1$s: the directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
+    No file found in %1$s.
+  </string>
+  <string name="import_progress_message"
+    translation_description="When importing from the external storage, the progress message.
+
+      %1$s: the directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
+    Importing from %1$s&#8230;
+  </string>
+  <string name="import_success"
+    translation_description="When importing from the external storage, the success message.
+
+      %1$d the number of files successfully imported. E.g., '2'.
+      %2$s the number of files in the directory. E.g., '2 files'.
+      %3$s the directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
+    Imported %1$d of %2$s from %3$s.
   </string>
 
   <!-- Maps List -->
@@ -1149,11 +1162,19 @@ limitations under the License.
       Character limit: ~20 (1 line)">
     Help
   </string>
-  <string name="menu_import"
-    translation_description="In the menu, to import tracks from the external storage.
+  <string name="menu_import_all"
+    translation_description="In the menu, to import all tracks from the external storage.
 
       Character limit: ~20 (1 line)">
-    Import from external storage
+    Import all from external storage
+  </string>
+  <string name="menu_import_all_format"
+    translation_description="Under the import all menu option, the submenu option to import all
+      files of a certain file format.
+
+      %1$s: file format. e.g., 'GPX', 'KML'
+      Character limit: ~20 (1 line)">
+    Import %1$s
   </string>
   <string name="menu_insert_marker"
     translation_description="In the menu, to insert a marker.
@@ -1350,6 +1371,16 @@ limitations under the License.
     translation_description="The permission label the Google Play Store shows during app
       installation when the app wants to write data to My Tracks.">
     write data to Google My Tracks and start/stop Google My Tracks recording
+  </string>
+
+  <!-- Restore -->
+  <string name="restore_error"
+    translation_description="When restoring from backup, the error message.">
+    Unable to restore from backup.
+  </string>
+  <string name="restore_success"
+    translation_description="When restoring from backup, the success message.">
+    Finished restoring from backup.
   </string>
 
   <!-- Search -->

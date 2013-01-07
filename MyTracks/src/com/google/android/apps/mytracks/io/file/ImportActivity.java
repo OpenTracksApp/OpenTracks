@@ -14,8 +14,9 @@
  * the License.
  */
 
-package com.google.android.apps.mytracks;
+package com.google.android.apps.mytracks.io.file;
 
+import com.google.android.apps.mytracks.TrackDetailActivity;
 import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
@@ -34,36 +35,39 @@ import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.io.File;
+
 /**
- * An activity to import GPX files from the SD card. Optionally to import one
- * GPX file and display it in My Tracks.
- *
+ * An activity to import files from the external storage. Optionally to import
+ * one specific file.
+ * 
  * @author Rodrigo Damazio
  */
 public class ImportActivity extends Activity {
 
   public static final String EXTRA_IMPORT_ALL = "import_all";
+  public static final String EXTRA_TRACK_FILE_FORMAT = "track_file_format";
 
   private static final String TAG = ImportActivity.class.getSimpleName();
-
   private static final int DIALOG_PROGRESS_ID = 0;
   private static final int DIALOG_RESULT_ID = 1;
 
   private ImportAsyncTask importAsyncTask;
   private ProgressDialog progressDialog;
-  
+
   private boolean importAll;
-  
-  // path on the SD card to import
+  private TrackFileFormat trackFileFormat;
+
+  // the path on the external storage to import
   private String path;
 
-  // number of succesfully imported files
+  // the number of successfully imported files
   private int successCount;
-  
-  // number of files to import
+
+  // the number of files to import
   private int totalCount;
-  
-  // last successfully imported track id
+
+  // the last successfully imported track id
   private long trackId;
 
   @Override
@@ -72,8 +76,25 @@ public class ImportActivity extends Activity {
 
     Intent intent = getIntent();
     importAll = intent.getBooleanExtra(EXTRA_IMPORT_ALL, false);
+    trackFileFormat = intent.getParcelableExtra(EXTRA_TRACK_FILE_FORMAT);
+    if (trackFileFormat == null) {
+      trackFileFormat = TrackFileFormat.GPX;
+    }
+
+    if (!FileUtils.isExternalStorageAvailable()) {
+      Toast.makeText(this, R.string.external_storage_not_available, Toast.LENGTH_LONG).show();
+      finish();
+      return;
+    }
     if (importAll) {
-      path = FileUtils.buildExternalDirectoryPath("gpx");
+      path = FileUtils.buildExternalDirectoryPath(
+          trackFileFormat == TrackFileFormat.KML ? "kml" : "gpx");
+      if (!FileUtils.isDirectory(new File(path))) {
+        Toast.makeText(this, getString(R.string.import_no_directory, path), Toast.LENGTH_LONG)
+            .show();
+        finish();
+        return;
+      }
     } else {
       String action = intent.getAction();
       if (!(Intent.ACTION_ATTACH_DATA.equals(action) || Intent.ACTION_VIEW.equals(action))) {
@@ -96,7 +117,7 @@ public class ImportActivity extends Activity {
       importAsyncTask = (ImportAsyncTask) retained;
       importAsyncTask.setActivity(this);
     } else {
-      importAsyncTask = new ImportAsyncTask(this, importAll, path);
+      importAsyncTask = new ImportAsyncTask(this, importAll, trackFileFormat, path);
       importAsyncTask.execute();
     }
   }
@@ -111,41 +132,36 @@ public class ImportActivity extends Activity {
   protected Dialog onCreateDialog(int id) {
     switch (id) {
       case DIALOG_PROGRESS_ID:
-        progressDialog = DialogUtils.createHorizontalProgressDialog(this,
-            R.string.external_storage_import_progress_message,
-            new DialogInterface.OnCancelListener() {
+        progressDialog = DialogUtils.createHorizontalProgressDialog(
+            this, R.string.import_progress_message, new DialogInterface.OnCancelListener() {
                 @Override
               public void onCancel(DialogInterface dialog) {
                 importAsyncTask.cancel(true);
                 finish();
               }
-            });
+            }, path);
         return progressDialog;
       case DIALOG_RESULT_ID:
         String message;
-        if (successCount == 0) {
-          message = getString(R.string.external_storage_import_error_no_file, path);
+        if (totalCount == 0) {
+          message = getString(R.string.import_no_file, path);
         } else {
           String totalFiles = getResources()
-              .getQuantityString(R.plurals.importGpxFiles, totalCount, totalCount);
-          message = getString(
-              R.string.external_storage_import_success_count, successCount, totalFiles, path);
+              .getQuantityString(R.plurals.importFiles, totalCount, totalCount);
+          message = getString(R.string.import_success, successCount, totalFiles, path);
         }
-        return new AlertDialog.Builder(this)
-            .setCancelable(true)
-            .setMessage(message)
-            .setOnCancelListener(new DialogInterface.OnCancelListener() {
-              @Override
+        return new AlertDialog.Builder(this).setCancelable(true)
+            .setMessage(message).setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
               public void onCancel(DialogInterface dialog) {
                 finish();
               }
-            })
-            .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
-              @Override
+            }).setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
+                @Override
               public void onClick(DialogInterface dialog, int which) {
                 if (!importAll && trackId != -1L) {
-                  Intent intent = IntentUtils
-                      .newIntent(ImportActivity.this, TrackDetailActivity.class)
+                  Intent intent = IntentUtils.newIntent(
+                      ImportActivity.this, TrackDetailActivity.class)
                       .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);
                   TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(ImportActivity.this);
                   taskStackBuilder.addNextIntent(intent);
@@ -153,8 +169,7 @@ public class ImportActivity extends Activity {
                 }
                 finish();
               }
-            })
-            .create();
+            }).create();
       default:
         return null;
     }
@@ -162,23 +177,17 @@ public class ImportActivity extends Activity {
 
   /**
    * Invokes when the associated AsyncTask completes.
-   *
-   * @param success true if the AsyncTask is successful
-   * @param imported the number of files successfully imported
-   * @param total the total number of files to import
-   * @param id the last successfully imported track id
+   * 
+   * @param aSuccessCount the number of files successfully imported
+   * @param aTotalCount the total number of files to import
+   * @param aTrackId the last successfully imported track id
    */
-  public void onAsyncTaskCompleted(boolean success, int imported, int total, long id) {
-    successCount = imported;
-    totalCount = total;
-    trackId = id;
+  public void onAsyncTaskCompleted(int aSuccessCount, int aTotalCount, long aTrackId) {
+    successCount = aSuccessCount;
+    totalCount = aTotalCount;
+    trackId = aTrackId;
     removeDialog(DIALOG_PROGRESS_ID);
-    if (success) {
-      showDialog(DIALOG_RESULT_ID);
-    } else {
-      Toast.makeText(this, R.string.external_storage_import_error, Toast.LENGTH_LONG).show();
-      finish();
-    }
+    showDialog(DIALOG_RESULT_ID);
   }
 
   /**
@@ -190,7 +199,7 @@ public class ImportActivity extends Activity {
 
   /**
    * Sets the progress dialog value.
-   *
+   * 
    * @param number the number of files imported
    * @param max the maximum number of files
    */

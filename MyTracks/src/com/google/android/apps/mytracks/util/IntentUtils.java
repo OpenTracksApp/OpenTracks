@@ -19,7 +19,7 @@ package com.google.android.apps.mytracks.util;
 import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
+import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.maps.mytracks.R;
 
 import android.content.ComponentName;

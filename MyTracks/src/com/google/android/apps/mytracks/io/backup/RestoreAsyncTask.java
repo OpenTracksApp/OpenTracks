@@ -59,7 +59,7 @@ public class RestoreAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     this.externalFileBackup = new ExternalFileBackup(restoreActivity);
     success = false;
     completed = false;
-    messageId = R.string.external_storage_import_error;
+    messageId = R.string.restore_error;
   }
 
   /**
@@ -85,7 +85,7 @@ public class RestoreAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   protected Boolean doInBackground(Void... params) {
     try {
       externalFileBackup.restoreFromDate(date);
-      messageId = R.string.external_storage_import_success;
+      messageId = R.string.restore_success;
       return true;
     } catch (IOException e) {
       Log.d(TAG, "IO exception", e);

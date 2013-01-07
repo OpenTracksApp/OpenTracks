@@ -18,7 +18,6 @@ package com.google.android.apps.mytracks.io.file;
 
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 

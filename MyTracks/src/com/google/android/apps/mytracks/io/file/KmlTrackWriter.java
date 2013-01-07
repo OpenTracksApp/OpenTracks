@@ -24,7 +24,6 @@ import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
-import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
@@ -304,6 +303,8 @@ public class KmlTrackWriter implements TrackFormatWriter {
       printWriter.println("<name>" + StringUtils.formatCData(name) + "</name>");
       printWriter.println(
           "<description>" + StringUtils.formatCData(description) + "</description>");
+      printWriter.println("<TimeStamp><when>"
+          + StringUtils.formatDateTimeIso8601(location.getTime()) + "</when></TimeStamp>");
       printWriter.println("<styleUrl>#" + styleName + "</styleUrl>");
       writeCategory(category);
       printWriter.println("<Point>");
