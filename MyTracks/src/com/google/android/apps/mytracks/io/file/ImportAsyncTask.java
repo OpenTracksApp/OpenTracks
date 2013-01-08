@@ -20,6 +20,7 @@ import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.maps.mytracks.R;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
@@ -42,6 +43,7 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   private final boolean importAll;
   private final TrackFileFormat trackFileFormat;
   private final String path;
+  private final Context context;
   private WakeLock wakeLock;
 
   // true if the AsyncTask has completed
@@ -70,7 +72,8 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     this.importAll = importAll;
     this.trackFileFormat = trackFileFormat;
     this.path = path;
-
+    context = importActivity.getApplicationContext();
+    
     // Get the wake lock if not recording or paused
     if (PreferencesUtils.getLong(importActivity, R.string.recording_track_id_key)
         == PreferencesUtils.RECORDING_TRACK_ID_DEFAULT || PreferencesUtils.getBoolean(
@@ -154,9 +157,8 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
    */
   private boolean importFile(final File file) {
     try {
-      AbstractImporter importer = trackFileFormat == TrackFileFormat.KML ? new KmlImporter(
-          importActivity)
-          : new GpxImporter(importActivity);
+      AbstractImporter importer = trackFileFormat == TrackFileFormat.KML ? new KmlImporter(context)
+          : new GpxImporter(context);
       long trackIds[] = importer.importFile(new FileInputStream(file));
       int length = trackIds.length;
       if (length > 0) {

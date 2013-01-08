@@ -16,6 +16,7 @@
 package com.google.android.apps.mytracks.endtoendtest;
 
 import com.google.android.apps.mytracks.TrackListActivity;
+import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Instrumentation;
@@ -73,8 +74,10 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
     EndToEndTestUtils.SOLO
         .clickOnText(String.format(activityMyTracks.getString(R.string.menu_save_format),
             EndToEndTestUtils.GPX.toUpperCase()));
-    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.external_storage_save_error_no_track)));
+    String totalTracks = activityMyTracks.getResources().getQuantityString(R.plurals.tracks, 0, 0);
+    String directoryName = FileUtils.buildExternalDirectoryPath(EndToEndTestUtils.GPX);
+    String message = activityMyTracks.getString(R.string.save_error, 0, totalTracks, directoryName);
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(message));
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
   }

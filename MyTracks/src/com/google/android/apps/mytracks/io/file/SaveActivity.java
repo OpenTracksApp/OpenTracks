@@ -17,6 +17,7 @@
 package com.google.android.apps.mytracks.io.file;
 
 import com.google.android.apps.mytracks.util.DialogUtils;
+import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -28,12 +29,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import java.io.File;
 
 /**
- * An activity for saving tracks to the SD card. If saving a specific track,
- * option to save it to a temp directory and play the track afterward.
+ * An activity for saving tracks to the external storage. If saving a specific
+ * track, option to save it to a temp directory and play the track afterward.
  * 
  * @author Rodrigo Damazio
  */
@@ -57,17 +59,18 @@ public class SaveActivity extends Activity {
   private TrackFileFormat trackFileFormat;
   private long trackId;
   private boolean playTrack;
+  private String directoryName;
 
   private SaveAsyncTask saveAsyncTask;
   private ProgressDialog progressDialog;
 
-  // result from the AsyncTask
-  private boolean success;
-  
-  // message id from the AsyncTask
-  private int messageId;
-  
-  // saved file path from the AsyncTask
+  // the number of tracks successfully saved
+  private int successCount;
+
+  // the number of tracks to save
+  private int totalCount;
+
+  // the last successfully saved path
   private String savedPath;
 
   @Override
@@ -79,12 +82,29 @@ public class SaveActivity extends Activity {
     trackId = intent.getLongExtra(EXTRA_TRACK_ID, -1L);
     playTrack = intent.getBooleanExtra(EXTRA_PLAY_TRACK, false);
 
+    if (!FileUtils.isExternalStorageWriteable()) {
+      Toast.makeText(this, R.string.external_storage_not_writeable, Toast.LENGTH_LONG).show();
+      finish();
+      return;
+    }
+
+    directoryName = playTrack ? FileUtils.buildExternalDirectoryPath(
+        trackFileFormat.getExtension(), "tmp")
+        : FileUtils.buildExternalDirectoryPath(trackFileFormat.getExtension());
+
+    File directory = new File(directoryName);
+    if (!FileUtils.ensureDirectoryExists(directory)) {
+      Toast.makeText(this, R.string.external_storage_not_writeable, Toast.LENGTH_LONG).show();
+      finish();
+      return;
+    }
+
     Object retained = getLastNonConfigurationInstance();
     if (retained instanceof SaveAsyncTask) {
       saveAsyncTask = (SaveAsyncTask) retained;
       saveAsyncTask.setActivity(this);
     } else {
-      saveAsyncTask = new SaveAsyncTask(this, trackFileFormat, trackId, playTrack);
+      saveAsyncTask = new SaveAsyncTask(this, trackFileFormat, trackId, directory);
       saveAsyncTask.execute();
     }
   }
@@ -99,37 +119,43 @@ public class SaveActivity extends Activity {
   protected Dialog onCreateDialog(int id) {
     switch (id) {
       case DIALOG_PROGRESS_ID:
-        progressDialog = DialogUtils.createHorizontalProgressDialog(this,
-            R.string.external_storage_save_progress_message,
-            new DialogInterface.OnCancelListener() {
+        progressDialog = DialogUtils.createHorizontalProgressDialog(
+            this, R.string.save_progress_message, new DialogInterface.OnCancelListener() {
                 @Override
               public void onCancel(DialogInterface dialog) {
                 saveAsyncTask.cancel(true);
+                dialog.dismiss();
                 finish();
               }
-            });
+            }, directoryName);
         return progressDialog;
       case DIALOG_RESULT_ID:
-        AlertDialog.Builder builder = new AlertDialog.Builder(this)
-            .setCancelable(true)
-            .setIcon(success 
-                ? android.R.drawable.ic_dialog_info : android.R.drawable.ic_dialog_alert)
-            .setMessage(messageId)
-            .setOnCancelListener(new DialogInterface.OnCancelListener() {
-              @Override
+        boolean success;
+        String message;
+        String totalTracks = getResources()
+            .getQuantityString(R.plurals.tracks, totalCount, totalCount);
+        if (successCount == totalCount && totalCount > 0) {
+          success = true;
+          message = getString(R.string.save_success, totalTracks, directoryName);
+        } else {
+          success = false;
+          message = getString(R.string.save_error, successCount, totalTracks, directoryName);
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(this).setCancelable(true).setIcon(
+            success ? android.R.drawable.ic_dialog_info : android.R.drawable.ic_dialog_alert)
+            .setMessage(message).setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
               public void onCancel(DialogInterface dialog) {
                 dialog.dismiss();
                 finish();
               }
-            })
-            .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
-              @Override
+            }).setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
+                @Override
               public void onClick(DialogInterface dialog, int arg1) {
                 dialog.dismiss();
                 finish();
               }
-            })
-            .setTitle(success ? R.string.generic_success_title : R.string.generic_error_title);
+            }).setTitle(success ? R.string.generic_success_title : R.string.generic_error_title);
 
         if (success && trackId != -1L && !playTrack && savedPath != null) {
           builder.setNegativeButton(
@@ -152,19 +178,19 @@ public class SaveActivity extends Activity {
 
   /**
    * Invokes when the associated AsyncTask completes.
-   *
-   * @param isSuccess true if the AsyncTask is successful
-   * @param aMessageId the id of the AsyncTask message
-   * @param aSavedPath the path of the saved file
+   * 
+   * @param aSuccessCount the number of tracks successfully saved
+   * @param aTotalCount the number of tracks to save
+   * @param aSavedPath the last successfully saved path
    */
-  public void onAsyncTaskCompleted(boolean isSuccess, int aMessageId, String aSavedPath) {
-    this.success = isSuccess;
-    this.messageId = aMessageId;
-    this.savedPath = aSavedPath;
+  public void onAsyncTaskCompleted(int aSuccessCount, int aTotalCount, String aSavedPath) {
+    successCount = aSuccessCount;
+    totalCount = aTotalCount;
+    savedPath = aSavedPath;
     removeDialog(DIALOG_PROGRESS_ID);
-    if (success && playTrack && savedPath != null) {
-      Intent intent = new Intent()
-          .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
+    if (successCount == 1 && totalCount == 1 && playTrack && savedPath != null) {
+      Intent intent = new Intent().addFlags(
+          Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
           .putExtra(GOOGLE_EARTH_TOUR_FEATURE_ID, KmlTrackWriter.TOUR_FEATURE_ID)
           .setClassName(GOOGLE_EARTH_PACKAGE, GOOGLE_EARTH_CLASS)
           .setDataAndType(Uri.fromFile(new File(savedPath)), GOOGLE_EARTH_KML_MIME_TYPE);
@@ -184,7 +210,7 @@ public class SaveActivity extends Activity {
 
   /**
    * Sets the progress dialog value.
-   *
+   * 
    * @param number the number of points saved
    * @param max the maximum number of points
    */

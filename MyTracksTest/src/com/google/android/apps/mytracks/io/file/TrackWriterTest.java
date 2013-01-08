@@ -2,13 +2,12 @@
 
 package com.google.android.apps.mytracks.io.file;
 
-import static org.easymock.EasyMock.expect;
-
 import com.google.android.apps.mytracks.content.MyTracksProvider;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.Factory;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.io.file.TrackWriter.OnWriteListener;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceTest.MockContext;
 import com.google.android.apps.mytracks.testing.TestingProviderUtilsFactory;
 
@@ -19,8 +18,6 @@ import android.test.RenamingDelegatingContext;
 import android.test.mock.MockContentResolver;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.OutputStream;
 
 import org.easymock.EasyMock;
@@ -28,112 +25,24 @@ import org.easymock.IArgumentMatcher;
 import org.easymock.IMocksControl;
 
 /**
- * Tests for the track writer.
- *
+ * Tests for {@link TrackWriter}.
+ * 
  * @author Rodrigo Damazio
  */
 public class TrackWriterTest extends AndroidTestCase {
-  /**
-   * {@link TrackWriterImpl} subclass which mocks out methods called from
-   * {@link TrackWriterImpl#openFile}.
-   */
-  private static final class OpenFileTrackWriter extends TrackWriterImpl {
-    private final ByteArrayOutputStream stream;
-    private final boolean canWrite;
-
-    /**
-     * Constructor.
-     *
-     * @param stream the stream to return from
-     *        {@link TrackWriterImpl#newOutputStream}, or null to throw a
-     *        {@link FileNotFoundException}
-     * @param canWrite the value that {@link TrackWriterImpl#canWriteFile} will
-     *        return
-     */
-    private OpenFileTrackWriter(Context context,
-        MyTracksProviderUtils providerUtils, Track track,
-        TrackFormatWriter writer, ByteArrayOutputStream stream,
-        boolean canWrite) {
-      super(context, providerUtils, track, writer);
-
-      this.stream = stream;
-      this.canWrite = canWrite;
-      
-      // The directory is set in the canWriteFile. However, this class
-      // overwrites canWriteFile, thus needs to set it.
-      setDirectory(new File("/"));
-    }
-
-    @Override
-    protected boolean canWriteFile() {
-      return canWrite;
-    }
-
-    @Override
-    protected OutputStream newOutputStream(String fileName)
-        throws FileNotFoundException {
-      assertEquals(FULL_TRACK_NAME, fileName);
-
-      if (stream == null) {
-        throw new FileNotFoundException();
-      }
-
-      return stream;
-    }
-  }
-
-  /**
-   * {@link TrackWriterImpl} subclass which mocks out methods called from
-   * {@link TrackWriterImpl#writeTrack}.
-   */
-  private final class WriteTracksTrackWriter extends TrackWriterImpl {
-    private final boolean openResult;
-
-    /**
-     * Constructor.
-     *
-     * @param openResult the return value for {@link TrackWriterImpl#openFile}
-     */
-    private WriteTracksTrackWriter(Context context,
-        MyTracksProviderUtils providerUtils, Track track,
-        TrackFormatWriter writer, boolean openResult) {
-      super(context, providerUtils, track, writer);
-      this.openResult = openResult;
-    }
-
-    @Override
-    protected boolean openFile() {
-      openFileCalls++;
-      return openResult;
-    }
-
-    @Override
-    void writeDocument() {
-      writeDocumentCalls++;
-    }
-
-    @Override
-    protected void runOnUiThread(Runnable runnable) {
-      runnable.run();
-    }
-  }
 
   private static final long TRACK_ID = 1234567L;
-  private static final String EXTENSION = "ext";
   private static final String TRACK_NAME = "Swimming across the pacific";
-  private static final String FULL_TRACK_NAME =
-      "Swimming across the pacific.ext";
 
-  private Track track;
-  private TrackFormatWriter formatWriter;
-  private TrackWriterImpl writer;
-  private IMocksControl mocksControl;
-  private MyTracksProviderUtils providerUtils;
+  private MyTracksProviderUtils myTracksProviderUtils;
   private Factory oldProviderUtilsFactory;
 
-  // State used in specific tests
-  private int writeDocumentCalls;
-  private int openFileCalls;
+  private IMocksControl mocksControl;
+
+  private TrackFormatWriter trackFormatWriter;
+  private Track track;
+  private OutputStream outputStream;
+  private TrackWriter trackWriter;
 
   @Override
   protected void setUp() throws Exception {
@@ -143,20 +52,31 @@ public class TrackWriterTest extends AndroidTestCase {
     RenamingDelegatingContext targetContext = new RenamingDelegatingContext(
         getContext(), getContext(), "test.");
     Context context = new MockContext(mockContentResolver, targetContext);
-    MyTracksProvider provider = new MyTracksProvider();
-    provider.attachInfo(context, null);
-    mockContentResolver.addProvider(MyTracksProviderUtils.AUTHORITY, provider);
+    MyTracksProvider myTracksProvider = new MyTracksProvider();
+    myTracksProvider.attachInfo(context, null);
+    mockContentResolver.addProvider(MyTracksProviderUtils.AUTHORITY, myTracksProvider);
     setContext(context);
-    providerUtils = MyTracksProviderUtils.Factory.get(context);
-    oldProviderUtilsFactory = TestingProviderUtilsFactory.installWithInstance(providerUtils);
+    myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
+    oldProviderUtilsFactory = TestingProviderUtilsFactory.installWithInstance(
+        myTracksProviderUtils);
 
     mocksControl = EasyMock.createStrictControl();
-    formatWriter = mocksControl.createMock(TrackFormatWriter.class);
-    expect(formatWriter.getExtension()).andStubReturn(EXTENSION);
+    trackFormatWriter = mocksControl.createMock(TrackFormatWriter.class);
 
     track = new Track();
     track.setName(TRACK_NAME);
     track.setId(TRACK_ID);
+
+    outputStream = new ByteArrayOutputStream();
+    OnWriteListener onWriteListener = new OnWriteListener() {
+
+        @Override
+      public void onWrite(int number, int max) {
+        // Safe to ignore
+
+      }
+    };
+    trackWriter = new TrackWriter(myTracksProviderUtils, track, trackFormatWriter, onWriteListener);
   }
 
   @Override
@@ -165,226 +85,196 @@ public class TrackWriterTest extends AndroidTestCase {
     super.tearDown();
   }
 
-  public void testWriteTrack() {
-    writer = new WriteTracksTrackWriter(getContext(), providerUtils, track,
-        formatWriter, true);
-
-    mocksControl.replay();
-    writer.writeTrack();
-
-    assertEquals(1, writeDocumentCalls);
-    assertEquals(1, openFileCalls);
-    mocksControl.verify();
-  }
-
-  public void testWriteTrack_openFails() {
-    writer = new WriteTracksTrackWriter(getContext(), providerUtils, track,
-        formatWriter, false);
-
-    mocksControl.replay();
-    writer.writeTrack();
-
-    assertEquals(0, writeDocumentCalls);
-    assertEquals(1, openFileCalls);
-    mocksControl.verify();
-  }
-
-  public void testOpenFile() {
-    final ByteArrayOutputStream stream = new ByteArrayOutputStream();
-    writer = new OpenFileTrackWriter(
-        getContext(), providerUtils, track, formatWriter, stream, true);
-
-    formatWriter.prepare(track, stream);
-
-    mocksControl.replay();
-    assertTrue(writer.openFile());
-    mocksControl.verify();
-  }
-
-  public void testOpenFile_cantWrite() {
-    final ByteArrayOutputStream stream = new ByteArrayOutputStream();
-    writer = new OpenFileTrackWriter(
-        getContext(), providerUtils, track, formatWriter, stream, false);
-
-    mocksControl.replay();
-    assertFalse(writer.openFile());
-    mocksControl.verify();
-  }
-
-  public void testOpenFile_streamError() {
-    writer = new OpenFileTrackWriter(
-        getContext(), providerUtils, track, formatWriter, null, true);
-
-    mocksControl.replay();
-    assertFalse(writer.openFile());
-    mocksControl.verify();
-  }
-
-  public void testWriteDocument_emptyTrack() throws Exception {
-    writer = new TrackWriterImpl(getContext(), providerUtils, track, formatWriter);
+  /**
+   * Tests write track with an empty track.
+   */
+  public void testWriteTrack_emptyTrack() throws Exception {
 
     // Set expected mock behavior
-    formatWriter.writeHeader();
-    formatWriter.writeBeginTrack(null);
-    formatWriter.writeEndTrack(null);
-    formatWriter.writeFooter();
-    formatWriter.close();
+    trackFormatWriter.prepare(track, outputStream);
+    trackFormatWriter.writeHeader();
+    trackFormatWriter.writeBeginTrack(null);
+    trackFormatWriter.writeEndTrack(null);
+    trackFormatWriter.writeFooter();
+    trackFormatWriter.close();
 
     mocksControl.replay();
-    writer.writeDocument();
+    trackWriter.writeTrack(outputStream);
 
-    assertTrue(writer.wasSuccess());
+    assertTrue(trackWriter.wasSuccess());
     mocksControl.verify();
   }
 
   /**
-   * Tests when a track only contains invalid locations. Make sure an empty
-   * track is written.
+   * Tests write track with invalid locations. Make sure an empty track is
+   * written.
    */
-  public void testWriteDocument_oneInvalidLocation() throws Exception {
-    writer = new TrackWriterImpl(getContext(), providerUtils, track, formatWriter);
+  public void testWriteTrack_oneInvalidLocation() throws Exception {
 
-    Location[] locs = { new Location("fake0") };
-    fillLocations(locs);
+    // Add two locations
+    Location[] locations = { new Location("fake0"), new Location("fake1") };
+    fillLocations(locations);
 
-    // Make location invalid
-    locs[0].setLatitude(100);
+    // Make locations invalid
+    locations[0].setLatitude(100.0);
+    locations[1].setLatitude(100.0);
 
-    assertEquals(locs.length, providerUtils.bulkInsertTrackPoint(locs, locs.length, TRACK_ID));
+    assertEquals(locations.length,
+        myTracksProviderUtils.bulkInsertTrackPoint(locations, locations.length, TRACK_ID));
 
-    formatWriter.writeHeader();
-    formatWriter.writeBeginTrack(null);
-    formatWriter.writeEndTrack(null);
-    formatWriter.writeFooter();
-    formatWriter.close();
+    // Set expected mock behavior
+    trackFormatWriter.prepare(track, outputStream);
+    trackFormatWriter.writeHeader();
+    trackFormatWriter.writeBeginTrack(null);
+    trackFormatWriter.writeEndTrack(null);
+    trackFormatWriter.writeFooter();
+    trackFormatWriter.close();
 
     mocksControl.replay();
-    writer.writeDocument();
+    trackWriter.writeTrack(outputStream);
 
-    assertTrue(writer.wasSuccess());
+    assertTrue(trackWriter.wasSuccess());
     mocksControl.verify();
   }
 
-  public void testWriteDocument() throws Exception {
-    writer = new TrackWriterImpl(getContext(), providerUtils, track, formatWriter);
+  /**
+   * Tests write track.
+   */
+  public void testWriteTrack() throws Exception {
 
-    final Location[] locs = {
-        new Location("fake0"),
-        new Location("fake1"),
-        new Location("fake2"),
-        new Location("fake3"),
-        new Location("fake4"),
-        new Location("fake5")
-    };
-    Waypoint[] wps = { new Waypoint(), new Waypoint(), new Waypoint() };
-
-    // Fill locations with valid values
-    fillLocations(locs);
+    // Add six locations
+    Location[] locations = { new Location("fake0"), new Location("fake1"), new Location("fake2"),
+        new Location("fake3"), new Location("fake4"), new Location("fake5") };
+    fillLocations(locations);
 
     // Make location 3 invalid
-    locs[2].setLatitude(100);
+    locations[2].setLatitude(100.0);
 
-    assertEquals(locs.length, providerUtils.bulkInsertTrackPoint(locs, locs.length, TRACK_ID));
-    for (int i = 0;  i < wps.length; ++i) {
-      Waypoint wpt = wps[i];
-      wpt.setTrackId(TRACK_ID);
-      assertNotNull(providerUtils.insertWaypoint(wpt));
-      wpt.setId(i + 1);
+    assertEquals(locations.length,
+        myTracksProviderUtils.bulkInsertTrackPoint(locations, locations.length, TRACK_ID));
+
+    Waypoint[] waypoints = { new Waypoint(), new Waypoint(), new Waypoint() };
+
+    for (int i = 0; i < waypoints.length; i++) {
+      Waypoint waypoint = waypoints[i];
+      waypoint.setTrackId(TRACK_ID);
+      assertNotNull(myTracksProviderUtils.insertWaypoint(waypoint));
+      waypoint.setId(i + 1);
     }
 
-    formatWriter.writeHeader();
+    trackFormatWriter.prepare(track, outputStream);
+    trackFormatWriter.writeHeader();
 
     // Expect reading/writing of the waypoints (except the first)
-    formatWriter.writeBeginWaypoints();
-    formatWriter.writeWaypoint(wptEq(wps[1]));
-    formatWriter.writeWaypoint(wptEq(wps[2]));
-    formatWriter.writeEndWaypoints();
+    trackFormatWriter.writeBeginWaypoints();
+    trackFormatWriter.writeWaypoint(waypointEq(waypoints[1]));
+    trackFormatWriter.writeWaypoint(waypointEq(waypoints[2]));
+    trackFormatWriter.writeEndWaypoints();
 
     // Begin the track
-    formatWriter.writeBeginTrack(locEq(locs[0]));
+    trackFormatWriter.writeBeginTrack(locationEq(locations[0]));
 
     // Write locations 1-2
-    formatWriter.writeOpenSegment();
-    formatWriter.writeLocation(locEq(locs[0]));
-    formatWriter.writeLocation(locEq(locs[1]));
-    formatWriter.writeCloseSegment();
+    trackFormatWriter.writeOpenSegment();
+    trackFormatWriter.writeLocation(locationEq(locations[0]));
+    trackFormatWriter.writeLocation(locationEq(locations[1]));
+    trackFormatWriter.writeCloseSegment();
 
     // Location 3 is not written - it's invalid
 
     // Write locations 4-6
-    formatWriter.writeOpenSegment();
-    formatWriter.writeLocation(locEq(locs[3]));
-    formatWriter.writeLocation(locEq(locs[4]));
-    formatWriter.writeLocation(locEq(locs[5]));
-    formatWriter.writeCloseSegment();
+    trackFormatWriter.writeOpenSegment();
+    trackFormatWriter.writeLocation(locationEq(locations[3]));
+    trackFormatWriter.writeLocation(locationEq(locations[4]));
+    trackFormatWriter.writeLocation(locationEq(locations[5]));
+    trackFormatWriter.writeCloseSegment();
 
     // End the track
-    formatWriter.writeEndTrack(locEq(locs[5]));
+    trackFormatWriter.writeEndTrack(locationEq(locations[5]));
 
-    formatWriter.writeFooter();
-    formatWriter.close();
+    trackFormatWriter.writeFooter();
+    trackFormatWriter.close();
 
     mocksControl.replay();
-    writer.writeDocument();
+    trackWriter.writeTrack(outputStream);
 
-    assertTrue(writer.wasSuccess());
+    assertTrue(trackWriter.wasSuccess());
     mocksControl.verify();
   }
 
-  private static Waypoint wptEq(final Waypoint wpt) {
+  /**
+   * Waypoint equals.
+   * 
+   * @param waypoint the waypoint
+   */
+  private Waypoint waypointEq(final Waypoint waypoint) {
     EasyMock.reportMatcher(new IArgumentMatcher() {
-      @Override
-      public boolean matches(Object wptObj2) {
-        if (wptObj2 == null || wpt == null) return wpt == wptObj2;
-        Waypoint wpt2 = (Waypoint) wptObj2;
+        @Override
+      public boolean matches(Object object) {
+        if (object == null || waypoint == null) {
+          return waypoint == object;
+        }
+        Waypoint waypoint2 = (Waypoint) object;
 
-        return wpt.getId() == wpt2.getId();
+        return waypoint.getId() == waypoint2.getId();
       }
 
-      @Override
+        @Override
       public void appendTo(StringBuffer buffer) {
-        buffer.append("wptEq(");
-        buffer.append(wpt);
+        buffer.append("waypointEq(");
+        buffer.append(waypoint);
         buffer.append(")");
       }
     });
     return null;
   }
 
-  private static Location locEq(final Location loc) {
+  /**
+   * Location equals.
+   *  
+   * @param location the location
+   */
+  private Location locationEq(final Location location) {
     EasyMock.reportMatcher(new IArgumentMatcher() {
-      @Override
-      public boolean matches(Object locObj2) {
-        if (locObj2 == null || loc == null) return loc == locObj2;
-        Location loc2 = (Location) locObj2;
+        @Override
+      public boolean matches(Object object) {
+        if (object == null || location == null) {
+          return location == object;
+        }
+        Location location2 = (Location) object;
 
-        return loc.hasAccuracy() == loc2.hasAccuracy()
-            && (!loc.hasAccuracy() || loc.getAccuracy() == loc2.getAccuracy())
-            && loc.hasAltitude() == loc2.hasAltitude()
-            && (!loc.hasAltitude() || loc.getAltitude() == loc2.getAltitude())
-            && loc.hasBearing() == loc2.hasBearing()
-            && (!loc.hasBearing() || loc.getBearing() == loc2.getBearing())
-            && loc.hasSpeed() == loc2.hasSpeed()
-            && (!loc.hasSpeed() || loc.getSpeed() == loc2.getSpeed())
-            && loc.getLatitude() == loc2.getLatitude()
-            && loc.getLongitude() == loc2.getLongitude()
-            && loc.getTime() == loc2.getTime();
+        return location.hasAccuracy() == location2.hasAccuracy()
+            && (!location.hasAccuracy() || location.getAccuracy() == location2.getAccuracy())
+            && location.hasAltitude() == location2.hasAltitude()
+            && (!location.hasAltitude() || location.getAltitude() == location2.getAltitude())
+            && location.hasBearing() == location2.hasBearing()
+            && (!location.hasBearing() || location.getBearing() == location2.getBearing())
+            && location.hasSpeed() == location2.hasSpeed()
+            && (!location.hasSpeed() || location.getSpeed() == location2.getSpeed())
+            && location.getLatitude() == location2.getLatitude()
+            && location.getLongitude() == location2.getLongitude()
+            && location.getTime() == location2.getTime();
       }
 
-      @Override
+        @Override
       public void appendTo(StringBuffer buffer) {
-        buffer.append("locEq(");
-        buffer.append(loc);
+        buffer.append("locationEq(");
+        buffer.append(location);
         buffer.append(")");
       }
     });
     return null;
   }
 
-  private void fillLocations(Location... locs) {
-    assertTrue(locs.length < 90);
-    for (int i = 0; i < locs.length; i++) {
-      Location location = locs[i];
+  /**
+   * Fills the locations.
+   * 
+   * @param locations the locations
+   */
+  private void fillLocations(Location... locations) {
+    assertTrue(locations.length < 90);
+    for (int i = 0; i < locations.length; i++) {
+      Location location = locations[i];
       location.setLatitude(i + 1);
       location.setLongitude(i + 1);
       location.setTime(i + 1000);

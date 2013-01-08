@@ -87,16 +87,14 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     EndToEndTestUtils.SOLO
         .clickOnText(String.format(activityMyTracks.getString(R.string.menu_save_format),
             EndToEndTestUtils.GPX.toUpperCase()));
-    EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.external_storage_save_success));
+    EndToEndTestUtils.SOLO.waitForText(getSaveSuccessMessage(1, EndToEndTestUtils.GPX));
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     EndToEndTestUtils.deleteAllTracks();
 
     // Import this tracks.
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_import), true);
-    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(
-        R.string.external_storage_import_success_count).split("%")[0]);
+    EndToEndTestUtils.SOLO.waitForText(getImportSuccessMessage(1, EndToEndTestUtils.GPX));
     // Check import tracks should be equal with the sum of trackNumber and
     // gpxFilesNumber;
     EndToEndTestUtils
@@ -171,9 +169,7 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
 
     // No file to imported.
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_import), true);
-    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(
-        R.string.import_no_file,
-        FileUtils.buildExternalDirectoryPath(EndToEndTestUtils.GPX)));
+    EndToEndTestUtils.SOLO.waitForText(getImportErrorMessage(0, 0, EndToEndTestUtils.GPX));
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
 
@@ -182,8 +178,7 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     EndToEndTestUtils.SOLO
         .clickOnText(String.format(activityMyTracks.getString(R.string.menu_save_format),
             EndToEndTestUtils.GPX.toUpperCase()));
-    EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.external_storage_save_success));
+    EndToEndTestUtils.SOLO.waitForText(getSaveSuccessMessage(1, EndToEndTestUtils.GPX));
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     // Check export file.
@@ -217,8 +212,7 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     EndToEndTestUtils.SOLO
         .clickOnText(String.format(activityMyTracks.getString(R.string.menu_save_format),
             EndToEndTestUtils.KML.toUpperCase()));
-    EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.external_storage_save_success));
+    EndToEndTestUtils.SOLO.waitForText(getSaveSuccessMessage(2, EndToEndTestUtils.KM));
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     // Check export files.
@@ -231,5 +225,22 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     EndToEndTestUtils.SOLO.finishOpenedActivities();
     super.tearDown();
   }
-
+  
+  private String getSaveSuccessMessage(int count, String type) {
+    String tracks = activityMyTracks.getResources().getQuantityString(R.plurals.tracks, count, count);
+    String directoryName = FileUtils.buildExternalDirectoryPath(type);
+    return activityMyTracks.getString(R.string.save_success, tracks, directoryName);
+  }
+  
+  private String getImportSuccessMessage(int count, String type) {
+    String files = activityMyTracks.getResources().getQuantityString(R.plurals.files, count, count);
+    String directoryName = FileUtils.buildExternalDirectoryPath(type);
+    return activityMyTracks.getString(R.string.import_success, files, directoryName);
+  }
+  
+  private String getImportErrorMessage(int count, int total, String type) {
+    String files = activityMyTracks.getResources().getQuantityString(R.plurals.files, total, total);
+    String directoryName = FileUtils.buildExternalDirectoryPath(type);
+    return activityMyTracks.getString(R.string.import_error, count, files, directoryName);
+  }
 }

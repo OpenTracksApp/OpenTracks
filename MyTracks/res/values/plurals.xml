@@ -15,13 +15,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
-  <plurals name="importFiles">
-    <item quantity="zero">@string/import_files_zero</item>
-    <item quantity="one">@string/import_files_one</item>
-    <item quantity="two">@string/import_files_two</item>
-    <item quantity="few">@string/import_files_few</item>
-    <item quantity="many">@string/import_files_many</item>
-    <item quantity="other">@string/import_files_other</item>
+  <plurals name="files">
+    <item quantity="zero">@string/files_zero</item>
+    <item quantity="one">@string/files_one</item>
+    <item quantity="two">@string/files_two</item>
+    <item quantity="few">@string/files_few</item>
+    <item quantity="many">@string/files_many</item>
+    <item quantity="other">@string/files_other</item>
+  </plurals>
+  <plurals name="tracks">
+    <item quantity="zero">@string/tracks_zero</item>
+    <item quantity="one">@string/tracks_one</item>
+    <item quantity="two">@string/tracks_two</item>
+    <item quantity="few">@string/tracks_few</item>
+    <item quantity="many">@string/tracks_many</item>
+    <item quantity="other">@string/tracks_other</item>
   </plurals>
   <plurals name="voiceHours">
     <item quantity="zero">@string/voice_hours_zero</item>

@@ -17,6 +17,7 @@
 package com.google.android.apps.mytracks.io.file;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
@@ -30,9 +31,12 @@ import android.os.PowerManager.WakeLock;
 import android.util.Log;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 
 /**
- * Async Task to save tracks to the SD card.
+ * Async Task to save tracks to the external storage.
  * 
  * @author Jimmy Shih
  */
@@ -43,42 +47,41 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   private SaveActivity saveActivity;
   private final TrackFileFormat trackFileFormat;
   private final long trackId;
-  private final boolean useTempDir;
-
+  private final File directory;
   private final Context context;
   private final MyTracksProviderUtils myTracksProviderUtils;
+
   private WakeLock wakeLock;
   private TrackWriter trackWriter;
-
-  // true if the AsyncTask result is success
-  private boolean success;
 
   // true if the AsyncTask has completed
   private boolean completed;
 
-  // message id to return to the activity
-  private int messageId;
+  // the number of tracks successfully saved
+  private int successCount;
 
-  // saved file path to return to the activity
+  // the number of tracks to save
+  private int totalCount;
+
+  // the last successfully saved path
   private String savedPath;
 
   /**
    * Creates an AsyncTask.
    * 
-   * @param saveActivity the activity currently associated with this task.
-   * @param trackFileFormat the track format
-   * @param trackId the track id
-   * @param useTempDir true to use the temp directory
+   * @param saveActivity the activity currently associated with this task
+   * @track id the track id to save, -1L to save all tracks
+   * @param trackFileFormat the track file format
+   * @param directory the directory to save to
    */
-  public SaveAsyncTask(SaveActivity saveActivity, TrackFileFormat trackFileFormat, long trackId,
-      boolean useTempDir) {
+  public SaveAsyncTask(
+      SaveActivity saveActivity, TrackFileFormat trackFileFormat, long trackId, File directory) {
     this.saveActivity = saveActivity;
     this.trackFileFormat = trackFileFormat;
     this.trackId = trackId;
-    this.useTempDir = useTempDir;
+    this.directory = directory;
     context = saveActivity.getApplicationContext();
-    
-    myTracksProviderUtils = MyTracksProviderUtils.Factory.get(saveActivity);
+    myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
 
     // Get the wake lock if not recording or paused
     if (PreferencesUtils.getLong(saveActivity, R.string.recording_track_id_key)
@@ -86,11 +89,10 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT)) {
       wakeLock = SystemUtils.acquireWakeLock(saveActivity, wakeLock);
     }
-    
-    trackWriter = null;
-    success = false;
+
     completed = false;
-    messageId = R.string.external_storage_save_error;
+    successCount = 0;
+    totalCount = 0;
     savedPath = null;
   }
 
@@ -102,7 +104,7 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   public void setActivity(SaveActivity saveActivity) {
     this.saveActivity = saveActivity;
     if (completed && saveActivity != null) {
-      saveActivity.onAsyncTaskCompleted(success, messageId, savedPath);
+      saveActivity.onAsyncTaskCompleted(successCount, totalCount, savedPath);
     }
   }
 
@@ -117,7 +119,13 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   protected Boolean doInBackground(Void... params) {
     try {
       if (trackId != -1L) {
-        return saveOneTrack(trackId, true);
+        totalCount = 1;
+        if (saveOneTrack(trackId)) {
+          successCount = 1;
+          return true;
+        } else {
+          return false;
+        }
       } else {
         return saveAllTracks();
       }
@@ -129,35 +137,79 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     }
   }
 
+  @Override
+  protected void onProgressUpdate(Integer... values) {
+    if (saveActivity != null) {
+      saveActivity.setProgressDialogValue(values[0], values[1]);
+    }
+  }
+
+  @Override
+  protected void onPostExecute(Boolean result) {
+    completed = true;
+    if (saveActivity != null) {
+      saveActivity.onAsyncTaskCompleted(successCount, totalCount, savedPath);
+    }
+  }
+
+  @Override
+  protected void onCancelled() {
+    if (trackWriter != null) {
+      trackWriter.stopWriteTrack();
+    }
+  }
+
   /**
    * Saves one track.
    * 
    * @param id the track id
-   * @param updateSavingProgress true to update the saving progress
    */
-  private Boolean saveOneTrack(long id, final boolean updateSavingProgress) {
-    trackWriter = TrackWriterFactory.newWriter(
-        context, myTracksProviderUtils, id, trackFileFormat);
-    if (trackWriter == null) {
-      Log.e(TAG, "Track writer is null");
+  private Boolean saveOneTrack(long id) {   
+    Track track = myTracksProviderUtils.getTrack(id);
+    if (track == null) {
+      Log.d(TAG, "No track for " + id);
       return false;
     }
-    if (useTempDir) {
-      String dirName = FileUtils.buildExternalDirectoryPath(trackFileFormat.getExtension(), "tmp");
-      trackWriter.setDirectory(new File(dirName));
+  
+    // Make sure the file doesn't exist yet (possibly by changing the filename)
+    String fileName = FileUtils.buildUniqueFileName(
+        directory, track.getName(), trackFileFormat.getExtension());
+    if (fileName == null) {
+      Log.d(TAG, "Unable to get a unique filename for " + track.getName());
+      return false;
     }
-    trackWriter.setOnWriteListener(new TrackWriter.OnWriteListener() {
-        @Override
-      public void onWrite(int number, int max) {
-        // Update the progress dialog once every 500 points
-        if (updateSavingProgress && number % 500 == 0) {
-          publishProgress(number, max);
-        }
+    
+    trackWriter = new TrackWriter(
+        context, myTracksProviderUtils, track, trackFileFormat, new TrackWriter.OnWriteListener() {
+            @Override
+          public void onWrite(int number, int max) {
+            /*
+             * If only saving one track, update the progress dialog once every
+             * 500 points
+             */
+            if (trackId != -1L && number % 500 == 0) {
+              publishProgress(number, max);
+            }
+          }
+        });
+  
+    File file = null;
+    try {
+      file = new File(directory, fileName);
+      OutputStream outputStream = new FileOutputStream(file);
+      trackWriter.writeTrack(outputStream);
+    } catch (FileNotFoundException e) {
+      Log.d(TAG, "File not found " + fileName, e);
+      return false;
+    }   
+  
+    if (trackWriter.wasSuccess()) {
+      savedPath = file.getAbsolutePath();
+    } else {
+      if (!file.delete()) {
+        Log.w(TAG, "Failed to delete file " + file.getAbsolutePath());
       }
-    });
-    trackWriter.writeTrack();
-    messageId = trackWriter.getErrorMessage();
-    savedPath = trackWriter.getAbsolutePath();
+    }
     return trackWriter.wasSuccess();
   }
 
@@ -169,54 +221,26 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     try {
       cursor = myTracksProviderUtils.getTrackCursor(null, null, TracksColumns._ID);
       if (cursor == null) {
-        messageId = R.string.external_storage_save_error_no_track;
         return false;
       }
-      int count = cursor.getCount();
-      if (count == 0) {
-        messageId = R.string.external_storage_save_error_no_track;
-        return false;
-      }
+      totalCount = cursor.getCount();
       int idIndex = cursor.getColumnIndexOrThrow(TracksColumns._ID);
-      for (int i = 0; i < count; i++) {
+      for (int i = 0; i < totalCount; i++) {
         if (isCancelled()) {
           return false;
         }
         cursor.moveToPosition(i);
         long id = cursor.getLong(idIndex);
-        if (!saveOneTrack(id, false)) {
-          return false;
-        }        
-        publishProgress(i + 1, count);
+        if (saveOneTrack(id)) {
+          successCount++;
+        }
+        publishProgress(i + 1, totalCount);
       }
-      messageId = R.string.external_storage_save_success;
       return true;
     } finally {
       if (cursor != null) {
         cursor.close();
       }
-    }
-  }
-  @Override
-  protected void onProgressUpdate(Integer... values) {
-    if (saveActivity != null) {
-      saveActivity.setProgressDialogValue(values[0], values[1]);
-    }
-  }
-
-  @Override
-  protected void onPostExecute(Boolean result) {
-    success = result;
-    completed = true;
-    if (saveActivity != null) {
-      saveActivity.onAsyncTaskCompleted(success, messageId, savedPath);
-    }
-  }
-
-  @Override
-  protected void onCancelled() {
-    if (trackWriter != null) {
-      trackWriter.stopWriteTrack();
     }
   }
 }

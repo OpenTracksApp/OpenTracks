@@ -61,7 +61,7 @@ public class ImportActivity extends Activity {
   // the path on the external storage to import
   private String path;
 
-  // the number of successfully imported files
+  // the number of files successfully imported
   private int successCount;
 
   // the number of files to import
@@ -137,29 +137,35 @@ public class ImportActivity extends Activity {
                 @Override
               public void onCancel(DialogInterface dialog) {
                 importAsyncTask.cancel(true);
+                dialog.dismiss();
                 finish();
               }
             }, path);
         return progressDialog;
       case DIALOG_RESULT_ID:
+        final boolean success;
         String message;
-        if (totalCount == 0) {
-          message = getString(R.string.import_no_file, path);
+        String totalFiles = getResources()
+            .getQuantityString(R.plurals.files, totalCount, totalCount);
+        if (successCount == totalCount && totalCount > 0) {
+          success = true;
+          message = getString(R.string.import_success, totalFiles, path);
         } else {
-          String totalFiles = getResources()
-              .getQuantityString(R.plurals.importFiles, totalCount, totalCount);
-          message = getString(R.string.import_success, successCount, totalFiles, path);
+          success = false;
+          message = getString(R.string.import_error, successCount, totalFiles, path);
         }
-        return new AlertDialog.Builder(this).setCancelable(true)
+        return new AlertDialog.Builder(this).setCancelable(true).setIcon(
+            success ? android.R.drawable.ic_dialog_info : android.R.drawable.ic_dialog_alert)
             .setMessage(message).setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
               public void onCancel(DialogInterface dialog) {
+                dialog.dismiss();
                 finish();
               }
             }).setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
                 @Override
               public void onClick(DialogInterface dialog, int which) {
-                if (!importAll && trackId != -1L) {
+                if (success && !importAll && trackId != -1L) {
                   Intent intent = IntentUtils.newIntent(
                       ImportActivity.this, TrackDetailActivity.class)
                       .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);
@@ -167,9 +173,11 @@ public class ImportActivity extends Activity {
                   taskStackBuilder.addNextIntent(intent);
                   taskStackBuilder.startActivities();
                 }
+                dialog.dismiss();
                 finish();
               }
-            }).create();
+            }).setTitle(success ? R.string.generic_success_title : R.string.generic_error_title)
+            .create();
       default:
         return null;
     }
@@ -179,7 +187,7 @@ public class ImportActivity extends Activity {
    * Invokes when the associated AsyncTask completes.
    * 
    * @param aSuccessCount the number of files successfully imported
-   * @param aTotalCount the total number of files to import
+   * @param aTotalCount the number of files to import
    * @param aTrackId the last successfully imported track id
    */
   public void onAsyncTaskCompleted(int aSuccessCount, int aTotalCount, long aTrackId) {

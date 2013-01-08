@@ -16,7 +16,7 @@ limitations under the License.
 -->
 <resources>
 
-  <!-- About Page -->
+  <!-- About -->
   <string name="about_copyright_notice"
     translation_description="In the 'About My Tracks' page, the copyright notice.">
     Copyright 2009 Google Inc.
@@ -556,7 +556,7 @@ limitations under the License.
     Segment
   </string>
 
-  <!-- EULA -->
+  <!-- Eula -->
   <string name="eula_accept"
     translation_description="In the 'Terms of Service' dialog, the button to accept.">
     Accept
@@ -599,44 +599,60 @@ limitations under the License.
   </string>
 
   <!-- External Storage -->
-  <string name="external_storage_canceled"
-    translation_description="When importing/saving to the external storage, the message indicating
-      that the operation was canceled.">
-    The operation was canceled.
-  </string>
   <string name="external_storage_not_available"
     translation_description="Error message when the external storage is not available.">
     External storage not available.
   </string>
   <string name="external_storage_not_writeable"
-    translation_description="Error messazge when the external storage is not writeable.">
+    translation_description="Error message when the external storage is not writeable.">
     External storage not writeable.
   </string>
-  <string name="external_storage_save_error"
-    translation_description="When saving to the external storage, the error message indicating not
-      able to save.">
-    Unable to save to external storage.
+
+  <!-- Files -->
+  <string name="files_few"
+    translation_description="The phrase for 'few' files. This is used when the language requires
+      special treatment of 'small' numbers. See
+      http://developer.android.com/guide/topics/resources/string-resource.html#Plurals
+
+      %1$d an integer number. The number is a small number.">
+    %1$d files
   </string>
-  <string name="external_storage_save_error_create_dir"
-    translation_description="When saving to the external storage, the error message indicating not
-      able to create a directory.">
-    Unable to create a directory on the external storage.
+  <string name="files_many"
+    translation_description="The phrase for 'many' files. This is used when the language requires
+      special treatment of 'large' numbers. See
+      http://developer.android.com/guide/topics/resources/string-resource.html#Plurals
+
+      %1$d an integer number. The number is a large number.">
+    %1$d files
   </string>
-  <string name="external_storage_save_error_no_track"
-    translation_description="When saving to the external storage, the error message indicating that
-      no track is saved.">
-    No track is saved to the external storage.
+  <string name="files_one"
+    translation_description="The phrase for 1 file. This is used when the language requires special
+      treatment of numbers like one. See
+      http://developer.android.com/guide/topics/resources/string-resource.html#Plurals">
+    1 file
   </string>
-  <string name="external_storage_save_progress_message"
-    translation_description="When saving to the external storage, the progress message.">
-    Saving to external storage&#8230;
+  <string name="files_other"
+    translation_description="The phrase for 'other' files. This is used when the language does not
+      require special treatment of the given quantity (as with all numbers in Chinese). See
+      http://developer.android.com/guide/topics/resources/string-resource.html#Plurals
+
+      %1$d an integer number.">
+    %1$d files
   </string>
-    <string name="external_storage_save_success"
-    translation_description="When saving to the external storage, the success message">
-    Finished saving to external storage.
+  <string name="files_two"
+    translation_description="The phrase for 2 files. This is used when the language requires special
+      treatment of numbers like two. See
+      http://developer.android.com/guide/topics/resources/string-resource.html#Plurals">
+    2 files
+  </string>
+  <string name="files_zero"
+    translation_description="The phrase for 0 files. This is used when the language requires special
+      treatment of the number 0. See
+      http://developer.android.com/guide/topics/resources/string-resource.html#Plurals">
+    0 files
   </string>
 
-  <!-- Generic Strings -->
+  <!-- Generic -->
   <string name="generic_add"
     translation_description="The text on a button to say add.">
     Add
@@ -703,7 +719,7 @@ limitations under the License.
     Success
   </string>
 
-  <!-- GPS -->
+  <!-- Gps -->
   <string name="gps_google_location_settings"
      translation_description="In Android, the Google location settings to modify location settings
       for all Google applications. See Settings -> Google -> Location settings.">
@@ -744,7 +760,7 @@ limitations under the License.
     Waiting for GPS signal.
   </string>
 
-  <!-- Help page -->
+  <!-- Help -->
   <string name="help_about"
     translation_description="In the 'Help' page, the button on the bottom to open the 'About My
       Tracks' dialog.">
@@ -961,47 +977,14 @@ limitations under the License.
   </string>
 
   <!-- Import -->
-  <string name="import_files_few"
-    translation_description="When importing files, the phrase for 'few' files. This is used when the
-      language requires special treatment of 'small' numbers. See
-      http://developer.android.com/guide/topics/resources/string-resource.html#Plurals
+  <string name="import_error"
+    translation_description="When importing from the external storage, the error message indicating
+      that only some of the files are imported.
 
-      %1$d an integer number. The number is a small number.">
-    %1$d files
-  </string>
-  <string name="import_files_many"
-    translation_description="When importing files, the phrase for 'many' files. This is used when
-      the language requires special treatment of 'large' numbers. See
-      http://developer.android.com/guide/topics/resources/string-resource.html#Plurals
-
-      %1$d an integer number. The number is a large number.">
-    %1$d files
-  </string>
-  <string name="import_files_one"
-    translation_description="When importing files, the phrase for 1 file. This is used when the
-      language requires special treatment of numbers like one. See
-      http://developer.android.com/guide/topics/resources/string-resource.html#Plurals">
-    1 file
-  </string>
-  <string name="import_files_other"
-    translation_description="When importing files, the phrase for 'other' files. This is used when
-      the language does not require special treatment of the given quantity (as with all numbers in
-      Chinese). See http://developer.android.com/guide/topics/resources/string-resource.html#Plurals
-
-      %1$d an integer number.">
-    %1$d files
-  </string>
-  <string name="import_files_two"
-    translation_description="When importing files, the phrase for 2 files. This is used when the
-      language requires special treatment of numbers like two. See
-      http://developer.android.com/guide/topics/resources/string-resource.html#Plurals">
-    2 files
-  </string>
-  <string name="import_files_zero"
-    translation_description="When importing files, the phrase for 0 files. This is used when the
-      language requires special treatment of the number 0. See
-      http://developer.android.com/guide/topics/resources/string-resource.html#Plurals">
-    0 files
+      %1$d the number of files successfully imported. E.g., '2'.
+      %2$s the number of files in the directory. E.g., '2 files'.
+      %3$s the directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
+    Imported %1$d of %2$s from %3$s.
   </string>
   <string name="import_no_directory"
     translation_description="When importing from the external storage, the error message when the
@@ -1009,13 +992,6 @@ limitations under the License.
 
       %1$s: the directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
     %1$s does not exist.
-  </string>
-  <string name="import_no_file"
-    translation_description="When importing from the external storage, the message indicating
-      that no file is found.
-
-      %1$s: the directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
-    No file found in %1$s.
   </string>
   <string name="import_progress_message"
     translation_description="When importing from the external storage, the progress message.
@@ -1026,10 +1002,9 @@ limitations under the License.
   <string name="import_success"
     translation_description="When importing from the external storage, the success message.
 
-      %1$d the number of files successfully imported. E.g., '2'.
-      %2$s the number of files in the directory. E.g., '2 files'.
-      %3$s the directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
-    Imported %1$d of %2$s from %3$s.
+      %1$s the number of files. E.g., '2 files'.
+      %2$s the directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
+    Imported %1$s from %2$s.
   </string>
 
   <!-- Maps List -->
@@ -1079,27 +1054,6 @@ limitations under the License.
       user that the marker will be permanently deleted from the device.">
     The marker will be permanently deleted from the device.
   </string>
-  <string name="marker_detail_statistics_title"
-    translation_description="In the marker detail page, the title for the statistics section
-      indicating that the data below are since the last split marker.">
-    Since last split marker:
-  </string>
-  <string name="marker_detail_waypoint_marker_type"
-    translation_description="In the marker detail page, the label for the marker type.
-
-      %1$s marker type. E.g., 'building'.">
-    Marker type: %1$s
-  </string>
-  <string name="marker_edit_marker_type"
-    translation_description="In the marker edit page, the label for the marker type, including an
-      example.">
-    Marker type (e.g. waterfall)
-  </string>
-  <string name="marker_edit_marker_type_hint"
-    translation_description="In the marker edit page, the hint in the marker type text field when it
-      is empty.">
-    Marker type
-  </string>
   <string name="marker_label_end"
     translation_description="When inserting a marker to indicate the end of a track, the marker's
       name. E.g., 'track_name (End)'.
@@ -1114,10 +1068,6 @@ limitations under the License.
       %1$s track name. E.g., 'track_name'.">
     %1$s (Start)
   </string>
-  <string name="marker_list_empty_message"
-    translation_description="The message when the marker list is empty.">
-    You don\'t have any markers.
-  </string>
   <string name="marker_name_format"
     translation_description="When adding a marker, the string format for the default name.
 
@@ -1131,7 +1081,38 @@ limitations under the License.
     Split %1$d
   </string>
 
-  <!-- Menu Items -->
+  <!-- Marker Detail -->
+  <string name="marker_detail_statistics_title"
+    translation_description="In the marker detail page, the title for the statistics section
+      indicating that the data below are since the last split marker.">
+    Since last split marker:
+  </string>
+  <string name="marker_detail_waypoint_marker_type"
+    translation_description="In the marker detail page, the label for the marker type.
+
+      %1$s marker type. E.g., 'building'.">
+    Marker type: %1$s
+  </string>
+
+  <!-- Marker Edit -->
+  <string name="marker_edit_marker_type"
+    translation_description="In the marker edit page, the label for the marker type, including an
+      example.">
+    Marker type (e.g. waterfall)
+  </string>
+  <string name="marker_edit_marker_type_hint"
+    translation_description="In the marker edit page, the hint in the marker type text field when it
+      is empty.">
+    Marker type
+  </string>
+
+  <!-- Marker List -->
+  <string name="marker_list_empty_message"
+    translation_description="The message when the marker list is empty.">
+    You don\'t have any markers.
+  </string>
+
+  <!-- Menu -->
   <string name="menu_aggregated_statistics"
     translation_description="In the menu, to go to the aggregated statistics page.
 
@@ -1373,14 +1354,28 @@ limitations under the License.
     write data to Google My Tracks and start/stop Google My Tracks recording
   </string>
 
-  <!-- Restore -->
-  <string name="restore_error"
-    translation_description="When restoring from backup, the error message.">
-    Unable to restore from backup.
+  <!-- Save -->
+  <string name="save_error"
+    translation_description="When saving to the external storage, the error message indicating that
+      only some of the tracks are saved.
+
+      %1$d the number of tracks successfully saved. E.g., '1'.
+      %1$s the number of tracks to save. E.g., '2 tracks'.
+      %2$s the directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
+    Saved %1$d of %2$s to %3$s.
   </string>
-  <string name="restore_success"
-    translation_description="When restoring from backup, the success message.">
-    Finished restoring from backup.
+  <string name="save_progress_message"
+    translation_description="When saving to the external storage, the progress message.
+
+      %1$s: the directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
+    Saving to %1$s&#8230;
+  </string>
+  <string name="save_success"
+    translation_description="When saving to the external storage, the success message.
+
+      %1$s the number of tracks. E.g., '2 tracks'.
+      %2$s the directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
+    Saved %1$s to %2$s.
   </string>
 
   <!-- Search -->
@@ -1586,6 +1581,25 @@ limitations under the License.
     Sending
   </string>
 
+  <!-- Settings -->
+  <string name="settings_not_while_recording"
+    translation_description="In settings, the summary for an option that is not available during a
+      track recording.">
+    Not available while recording a track.
+  </string>
+  <string name="settings_show"
+    translation_description="In settings, the section label to show additional values.
+
+      Character limit: ~26 (1 line)">
+    Show
+  </string>
+  <string name="settings_switch_account"
+    translation_description="In the 'Settings' page, the option to switch account.
+
+      Character limit: ~26 (1 line)">
+    Switch account
+  </string>
+
   <!-- Settings Backup -->
   <string name="settings_backup"
     translation_description="In the 'Settings' page, the option to change the data backup related
@@ -1594,12 +1608,18 @@ limitations under the License.
       Character limit: ~26 (1 line)">
     Backup
   </string>
+
+  <!-- Settings Backup Now -->
   <string name="settings_backup_now"
     translation_description="In the 'Backup' settings, the option to backup to the external storage
       now.
 
       Character limit: ~26 (1 line)">
     Backup now
+  </string>
+  <string name="settings_backup_now_error"
+    translation_description="When backing up to the external storage, the error messag.">
+    Unable to backup.
   </string>
   <string name="settings_backup_now_progress_message"
     translation_description="In the 'Backup' settings, after pressing the 'Backup now' option, the
@@ -1612,6 +1632,12 @@ limitations under the License.
       explaining that all tracks and settings will be written to the external storage.">
     Write a full copy of all your tracks and settings to the external storage.
   </string>
+  <string name="settings_backup_now_success"
+    translation_description="When backing up to the external storage, the success message">
+    Finished backup.
+  </string>
+
+  <!-- Settings Backup Restore -->
   <string name="settings_backup_restore"
     translation_description="In the 'Backup' settings, the option to restore from the external
       storage.
@@ -1625,6 +1651,10 @@ limitations under the License.
       and it will overwrite all the current tracks and settings.">
     Restoring a backup from the external storage will overwrite all your current tracks and
     settings.
+  </string>
+  <string name="settings_backup_restore_error"
+    translation_description="When restoring from backup, the error message.">
+    Unable to restore from backup.
   </string>
   <string name="settings_backup_restore_no_backup"
     translation_description="In the 'Backup' settings, after pressing the 'Restore now' option, the
@@ -1646,6 +1676,10 @@ limitations under the License.
     translation_description="In the 'Backup' settings, the summary for the 'Restore now' option
       explaining that it restores all tracks and settings from the external storage.">
     Restore all tracks and settings from the external storage.
+  </string>
+  <string name="settings_backup_restore_success"
+    translation_description="When restoring from backup, the success message.">
+    Finished restoring from backup.
   </string>
 
   <!-- Settings Chart -->
@@ -1729,13 +1763,6 @@ limitations under the License.
       explaining that it configures how colors are used to color a track based on slow, medium, and
       fast speed.">
     The way to color a track based on slow, medium, and fast speed.
-  </string>
-
-  <!-- Settings Not While Recording -->
-  <string name="settings_not_while_recording"
-    translation_description="In settings, the summary for an option that is not available during a
-      track recording.">
-    Not available while recording a track.
   </string>
 
   <!-- Settings Recording -->
@@ -2093,14 +2120,6 @@ limitations under the License.
     New maps created in Google Maps will be public, instead of unlisted. See %1$s for more info.
   </string>
 
-  <!-- Settings Show -->
-  <string name="settings_show"
-    translation_description="In settings, the section label to show additional values.
-
-      Character limit: ~26 (1 line)">
-    Show
-  </string>
-
   <!-- Settings Stats -->
   <string name="settings_stats_coordinate"
     translation_description="In the 'Stats settings, the option to show latitude and longitude.
@@ -2138,14 +2157,6 @@ limitations under the License.
 
       Character limit: ~23 (1 line)">
     Preferred units
-  </string>
-
-  <!--  Settings Switch Account -->
-  <string name="settings_switch_account"
-    translation_description="In the 'Settings' page, the option to switch account.
-
-      Character limit: ~26 (1 line)">
-    Switch account
   </string>
 
   <!-- Share Track -->
@@ -2193,7 +2204,7 @@ limitations under the License.
     I would like to share a track with you
   </string>
 
-  <!-- Stats Page -->
+  <!-- Stats -->
   <string name="stats_average_moving_pace"
     translation_description="In the 'Stats' page, the average moving pace.">
     Avg moving pace
@@ -2278,6 +2289,19 @@ limitations under the License.
   </string>
 
   <!-- Track -->
+  <string name="track_name_format"
+    translation_description="When creating a new track, the string format to name the track.
+
+      %1$d: track number. E.g., '1'.">
+    Track %1$d
+  </string>
+  <string name="track_record_notification"
+    translation_description="When recording a track, the message on the My Tracks notification
+      informing the user that My Tracks is actively recording his track.">
+    Recording your track&#8230;
+  </string>
+
+  <!-- Track Detail -->
   <string name="track_detail_chart_tab"
     translation_description="In the track detail page, the title of the tab showing the chart.">
     Chart
@@ -2310,6 +2334,8 @@ limitations under the License.
     translation_description="In the track detail page, the title of the tab showing the stats.">
     Stats
   </string>
+
+  <!-- Track Edit -->
   <string name="track_edit_activity_type"
     translation_description="In the page to edit a track, the label for the text field to edit the
       activity type, including an example.">
@@ -2324,6 +2350,8 @@ limitations under the License.
     translation_description="The title of the track edit page when saving a new track.">
     New Track
   </string>
+
+  <!-- Track List -->
   <string name="track_list_delete_all_confirm_message"
     translation_description="When deleting all the tracks, the confirmation dialog message informing
       the user that all tracks and markers will be permanently deleted from the device.">
@@ -2344,22 +2372,55 @@ limitations under the License.
       success.">
     Now recording a new track.
   </string>
-  <string name="track_name_format"
-    translation_description="When creating a new track, the string format to name the track.
-
-      %1$d: track number. E.g., '1'.">
-    Track %1$d
-  </string>
-  <string name="track_record_notification"
-    translation_description="When recording a track, the message on the My Tracks notification
-      informing the user that My Tracks is actively recording his track.">
-    Recording your track&#8230;
-  </string>
 
   <!-- Track Widget -->
   <string name="track_widget_config_title"
     translation_description="Title of the page to configure the My Tracks widget items.">
     Configure Widget Items
+  </string>
+
+  <!-- Tracks -->
+  <string name="tracks_few"
+    translation_description="The phrase for 'few' tracks. This is used when the language requires
+      special treatment of 'small' numbers. See
+      http://developer.android.com/guide/topics/resources/string-resource.html#Plurals
+
+      %1$d an integer number. The number is a small number.">
+    %1$d tracks
+  </string>
+  <string name="tracks_many"
+    translation_description="The phrase for 'many' tracks. This is used when the language requires
+      special treatment of 'large' numbers. See
+      http://developer.android.com/guide/topics/resources/string-resource.html#Plurals
+
+      %1$d an integer number. The number is a large number.">
+    %1$d tracks
+  </string>
+  <string name="tracks_one"
+    translation_description="The phrase for 1 track. This is used when the language requires special
+      treatment of numbers like one. See
+      http://developer.android.com/guide/topics/resources/string-resource.html#Plurals">
+    1 track
+  </string>
+  <string name="tracks_other"
+    translation_description="The phrase for 'other' tracks. This is used when the language does not
+      require special treatment of the given quantity (as with all numbers in Chinese). See
+      http://developer.android.com/guide/topics/resources/string-resource.html#Plurals
+
+      %1$d an integer number.">
+    %1$d tracks
+  </string>
+  <string name="tracks_two"
+    translation_description="The phrase for 2 tracks. This is used when the language requires
+      special treatment of numbers like two. See
+      http://developer.android.com/guide/topics/resources/string-resource.html#Plurals">
+    2 tracks
+  </string>
+  <string name="tracks_zero"
+    translation_description="The phrase for 0 tracks. This is used when the language requires
+      special treatment of the number 0. See
+      http://developer.android.com/guide/topics/resources/string-resource.html#Plurals">
+    0 tracks
   </string>
 
   <!-- Unit -->
@@ -2395,6 +2456,7 @@ limitations under the License.
     translation_description="Abbreviation for minutes per mile. E.g, '5 min/mi'.">
     min/mi
   </string>
+
   <!-- Value -->
   <string name="value_adapt_accuracy"
     translation_description="In a setting picker, the value to adapt for accuracy.">
