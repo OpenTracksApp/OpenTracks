@@ -54,6 +54,7 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     // Create a new track with 3 gps data.
     EndToEndTestUtils.createTrackIfEmpty(3, true);
     instrumentation.waitForIdleSync();
+
     // Create a empty track.
     EndToEndTestUtils.createSimpleTrack(0, true);
     instrumentation.waitForIdleSync();
@@ -69,12 +70,14 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     // Create a new track with two markers.
     EndToEndTestUtils.startRecording();
     instrumentation.waitForIdleSync();
+
     // Send Gps before creating marker.
     EndToEndTestUtils.sendGps(2);
     EndToEndTestUtils.createWaypoint(0);
     EndToEndTestUtils.sendGps(2, 2);
     EndToEndTestUtils.createWaypoint(1);
     EndToEndTestUtils.sendGps(2, 4);
+
     // Back to tracks list.
     EndToEndTestUtils.SOLO.goBack();
     instrumentation.waitForIdleSync();
@@ -82,6 +85,7 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
 
     // Export this track and then delete it.
     EndToEndTestUtils.deleteExportedFiles(EndToEndTestUtils.GPX);
+
     // Click to export tracks(At least one track) to Gpx files.
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_save_all), true);
     EndToEndTestUtils.SOLO
@@ -95,8 +99,11 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     // Import this tracks.
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_import), true);
     EndToEndTestUtils.SOLO.waitForText(getImportSuccessMessage(1, EndToEndTestUtils.GPX));
-    // Check import tracks should be equal with the sum of trackNumber and
-    // gpxFilesNumber;
+
+    /*
+     * Check import tracks should be equal with the sum of trackNumber and
+     * gpxFilesNumber;
+     */
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     instrumentation.waitForIdleSync();
@@ -113,10 +120,12 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
 
     // Check the markers.
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_markers), true);
+
     // The first marker.
     assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.WAYPOINT_NAME + 1));
     assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.WAYPOINT_TYPE + 1));
     assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.WAYPOINT_DESC + 1));
+
     // The second marker.
     assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.WAYPOINT_NAME + 2));
     assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.WAYPOINT_TYPE + 2));
@@ -159,6 +168,7 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     EndToEndTestUtils.deleteExportedFiles(EndToEndTestUtils.KML);
     int gpxFilesNumber = 0;
     File[] allGpxFiles = EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX);
+
     // For the first export, there is no MyTracks folder.
     if (allGpxFiles != null) {
       gpxFilesNumber = EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX).length;
@@ -181,6 +191,7 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     EndToEndTestUtils.SOLO.waitForText(getSaveSuccessMessage(1, EndToEndTestUtils.GPX));
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+
     // Check export file.
     assertEquals(gpxFilesNumber + trackNumber,
         EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX).length);
@@ -192,12 +203,18 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
 
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_import), true);
     EndToEndTestUtils.rotateAllActivities();
-    // Wait for the prefix of import success string is much faster than wait
-    // the whole string.
-    EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.import_success).split("%")[0]);
-    // Check import tracks should be equal with the sum of trackNumber and
-    // gpxFilesNumber;
+
+    /*
+     * Wait for the prefix of import success string is much faster than wait the
+     * whole string.
+     */
+    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.import_success).split(
+        "%")[0]);
+
+    /*
+     * Check import tracks should be equal with the sum of trackNumber and
+     * gpxFilesNumber;
+     */
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     instrumentation.waitForIdleSync();
@@ -215,6 +232,7 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     EndToEndTestUtils.SOLO.waitForText(getSaveSuccessMessage(2, EndToEndTestUtils.KM));
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+
     // Check export files.
     assertEquals(gpxFilesNumber, EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX).length);
     assertEquals(trackNumber, EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.KML).length);
@@ -225,19 +243,20 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     EndToEndTestUtils.SOLO.finishOpenedActivities();
     super.tearDown();
   }
-  
+
   private String getSaveSuccessMessage(int count, String type) {
-    String tracks = activityMyTracks.getResources().getQuantityString(R.plurals.tracks, count, count);
+    String tracks = activityMyTracks.getResources().getQuantityString(R.plurals.tracks, count,
+        count);
     String directoryName = FileUtils.buildExternalDirectoryPath(type);
     return activityMyTracks.getString(R.string.save_success, tracks, directoryName);
   }
-  
+
   private String getImportSuccessMessage(int count, String type) {
     String files = activityMyTracks.getResources().getQuantityString(R.plurals.files, count, count);
     String directoryName = FileUtils.buildExternalDirectoryPath(type);
     return activityMyTracks.getString(R.string.import_success, files, directoryName);
   }
-  
+
   private String getImportErrorMessage(int count, int total, String type) {
     String files = activityMyTracks.getResources().getQuantityString(R.plurals.files, total, total);
     String directoryName = FileUtils.buildExternalDirectoryPath(type);
