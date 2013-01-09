@@ -136,7 +136,7 @@ public class BigTestUtils {
   }
 
   /**
-   * Unlocks and wake up the device.
+   * Unlocks and wakes up the device.
    */
   public static void unlockAndWakeupDevice() {
     // The menu item of setting should be found if the screen is not locked.

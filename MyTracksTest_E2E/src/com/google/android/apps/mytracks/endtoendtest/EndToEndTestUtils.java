@@ -53,46 +53,39 @@ import junit.framework.Assert;
  * @author Youtao Liu
  */
 public class EndToEndTestUtils {
-
-  private static final String ANDROID_LOCAL_IP = "10.0.2.2";
-  // usually 5554.
   public static int emulatorPort = 5556;
-
+  // usually 5554.
   private static final int ORIENTATION_PORTRAIT = 1;
   private static final int ORIENTATION_LANDSCAPE = 0;
-  // Pause 200ms between each send.
-  static final double START_LONGITUDE = 51;
-  static final double START_LATITUDE = -1.3f;
-  static final double DELTA_LONGITUDE = 0.0005f;
-  static final double DELTA_LADITUDE = 0.0005f;
-  static final String WAYPOINT_NAME = "testWaypoint";
-  static final String WAYPOINT_TYPE = "testWaypoinType";
-  static final String WAYPOINT_DESC = "testWaypointDesc";
-  private static final String NO_GPS_MESSAGE_PREFIX = "GPS is not available";
 
+  private static final String ANDROID_LOCAL_IP = "10.0.2.2";
+  private static final String NO_GPS_MESSAGE_PREFIX = "GPS is not available";
   private static final String MOREOPTION_CLASSNAME = "com.android.internal.view.menu.ActionMenuPresenter$OverflowMenuButton";
   private static final String MENUITEM_CLASSNAME = "com.android.internal.view.menu.IconMenuItemView";
 
-  static final String DEFAULTACTIVITYTYPE = "TestActivity";
-  public static String activityType = DEFAULTACTIVITYTYPE;
-  static String trackName;
-  static final String TRACK_NAME_PREFIX = "testTrackName";
-  static String trackDesc;
-  static final String TRACK_DESC_PREFIX = "testTrackDesc";
-  static final String GPX = "gpx";
-  static final String KML = "kml";
-  static final String CSV = "csv";
-  static final String TCX = "tcx";
-  static final String BACKUPS = "backups";
-  static final String MENU_MORE = "More";
+  // Pause 200ms between each send.
+  public static final double START_LONGITUDE = 51;
+  public static final double START_LATITUDE = -1.3f;
+  public static final double DELTA_LONGITUDE = 0.0005f;
+  public static final double DELTA_LADITUDE = 0.0005f;
+  public static final String WAYPOINT_NAME = "testWaypoint";
+  public static final String WAYPOINT_TYPE = "testWaypoinType";
+  public static final String WAYPOINT_DESC = "testWaypointDesc";
+  public static final String DEFAULTACTIVITYTYPE = "TestActivity";
+  public static final String TRACK_NAME_PREFIX = "testTrackName";
+  public static final String TRACK_DESC_PREFIX = "testTrackDesc";
+  public static final String GPX = "gpx";
+  public static final String KML = "kml";
+  public static final String CSV = "csv";
+  public static final String TCX = "tcx";
+  public static final String BACKUPS = "backups";
+  public static final String MENU_MORE = "More";
+  public static final String LOG_TAG = "MyTracksTest";
 
   // Following is some check strings in English and Chinese
   private static final HashMap<String, String> RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL = new HashMap<String, String>();
   private static final HashMap<String, String> KM_MULTILINGUAL = new HashMap<String, String>();
   private static final HashMap<String, String> MILE_MULTILINGUAL = new HashMap<String, String>();
-  public static String RELATIVE_STARTTIME_POSTFIX = "";
-  public static String KM = "";
-  public static String MILE = "";
 
   public static final int TINY_WAIT_TIME = 200;
   public static final int VERY_SHORT_WAIT_TIME = 500;
@@ -101,7 +94,13 @@ public class EndToEndTestUtils {
   public static final int LONG_WAIT_TIME = 15000;
   public static final int SUPER_LONG_WAIT_TIME = 100000;
 
+  public static String activityType = DEFAULTACTIVITYTYPE;
+  public static String RELATIVE_STARTTIME_POSTFIX = "";
+  public static String KM = "";
+  public static String MILE = "";
   public static String deviceLanguage = "";
+  public static String trackName;
+  public static String trackDesc;
 
   static {
     RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("es", "mins ago");
@@ -125,15 +124,17 @@ public class EndToEndTestUtils {
 
   public static Solo SOLO;
   public static Instrumentation instrumentation;
-  static TrackListActivity activityMytracks;
-  // Check whether the UI has an action bar which is related with the version of
-  // Android OS.
-  static boolean hasActionBar = false;
-  static boolean isEmulator = true;
-  static boolean hasGpsSingal = true;
-  static boolean isCheckedFirstLaunch = false;
-  static boolean isGooglePlayServicesLatest = true;
-  public static final String LOG_TAG = "MyTracksTest";
+  public static TrackListActivity activityMytracks;
+
+  /*
+   * Check whether the UI has an action bar which is related with the version of
+   * Android OS.
+   */
+  public static boolean hasActionBar = false;
+  public static boolean isEmulator = true;
+  public static boolean hasGpsSingal = true;
+  public static boolean isCheckedFirstLaunch = false;
+  public static boolean isGooglePlayServicesLatest = true;
 
   private EndToEndTestUtils() {}
 
