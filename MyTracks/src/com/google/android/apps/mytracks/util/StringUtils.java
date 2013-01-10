@@ -41,7 +41,7 @@ import java.util.regex.Pattern;
 public class StringUtils {
 
   private static final SimpleDateFormat ISO_8601_DATE_TIME_FORMAT = new SimpleDateFormat(
-      "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+      "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
   private static final SimpleDateFormat ISO_8601_BASE = new SimpleDateFormat(
       "yyyy-MM-dd'T'HH:mm:ss");
   private static final Pattern ISO_8601_EXTRAS = Pattern.compile(
