@@ -43,7 +43,7 @@ public class StringUtils {
   private static final SimpleDateFormat ISO_8601_DATE_TIME_FORMAT = new SimpleDateFormat(
       "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
   private static final SimpleDateFormat ISO_8601_BASE = new SimpleDateFormat(
-      "yyyy-MM-dd'T'HH:mm:ss");
+      "yyyy-MM-dd'T'HH:mm:ss", Locale.US);
   private static final Pattern ISO_8601_EXTRAS = Pattern.compile(
       "^(\\.\\d+)?(?:Z|([+-])(\\d{2}):(\\d{2}))?$");
   static {
