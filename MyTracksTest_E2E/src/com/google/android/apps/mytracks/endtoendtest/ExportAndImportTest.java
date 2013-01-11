@@ -97,7 +97,7 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     EndToEndTestUtils.deleteAllTracks();
 
     // Import this tracks.
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_import), true);
+    importTracks(EndToEndTestUtils.GPX);
     EndToEndTestUtils.SOLO.waitForText(getImportSuccessMessage(1, EndToEndTestUtils.GPX));
 
     /*
@@ -158,7 +158,7 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
    * <li>Create two tracks, one of them is empty(Have no Gps data).</li>
    * <li>Tests import when there is no track file.</li>
    * <li>Tests export tracks to Gpx files.</li>
-   * <li>Tests import files to tracks.</li>
+   * <li>Tests import Gpx files to tracks.</li>
    * <li>Tests export tracks to Kml files.</li>
    * </ul>
    */
@@ -177,8 +177,8 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     // Get track number in current track list of MyTracks.
     int trackNumber = EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount();
 
-    // No file to imported.
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_import), true);
+    // No Gpx file to imported.
+    importTracks(EndToEndTestUtils.GPX);
     EndToEndTestUtils.SOLO.waitForText(getImportErrorMessage(0, 0, EndToEndTestUtils.GPX));
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
@@ -192,16 +192,16 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
 
-    // Check export file.
+    // Check export Gpx file.
     assertEquals(gpxFilesNumber + trackNumber,
         EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX).length);
     instrumentation.waitForIdleSync();
 
-    // Click to import track.
+    // Click to import Gpx track.
     gpxFilesNumber = EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX).length;
     trackNumber = EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount();
 
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_import), true);
+    importTracks(EndToEndTestUtils.GPX);
     EndToEndTestUtils.rotateAllActivities();
 
     /*
@@ -236,6 +236,30 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     // Check export files.
     assertEquals(gpxFilesNumber, EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX).length);
     assertEquals(trackNumber, EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.KML).length);
+
+    // Click to import KML track.
+    int KMLFilesNumber = EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.KML).length;
+    instrumentation.waitForIdleSync();
+    trackNumber = EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount();
+
+    importTracks(EndToEndTestUtils.KML);
+
+    /*
+     * Wait for the prefix of import success string is much faster than wait the
+     * whole string.
+     */
+    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.import_success).split(
+        "%")[0]);
+
+    /*
+     * Check import KML tracks should be equal with the sum of trackNumber and
+     * KMLFilesNumber;
+     */
+    EndToEndTestUtils
+        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+    instrumentation.waitForIdleSync();
+    assertEquals(trackNumber + KMLFilesNumber, EndToEndTestUtils.SOLO.getCurrentListViews().get(0)
+        .getCount());
   }
 
   @Override
@@ -261,5 +285,15 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     String files = activityMyTracks.getResources().getQuantityString(R.plurals.files, total, total);
     String directoryName = FileUtils.buildExternalDirectoryPath(type);
     return activityMyTracks.getString(R.string.import_error, count, files, directoryName);
+  }
+
+  /**
+   * Imports tracks from external storage.
+   * 
+   * @param fileType the file type, can be GPX and KML currently
+   */
+  private void importTracks(String fileType) {
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_import_all), true);
+    EndToEndTestUtils.SOLO.clickOnText(fileType.toUpperCase());
   }
 }
