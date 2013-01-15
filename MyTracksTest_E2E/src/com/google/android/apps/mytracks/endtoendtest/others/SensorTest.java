@@ -198,7 +198,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
         .findViewById(viewID));
     assertNotNull(sensorValueText);
     String realValue = sensorValueText.getText().toString();
-    String noneValue = trackListActivity.getString(R.string.settings_sensor_type_none);
+    String noneValue = trackListActivity.getString(R.string.value_none);
     assertNotSame(realValue, noneValue);
   }
   

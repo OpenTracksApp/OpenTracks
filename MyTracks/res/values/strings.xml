@@ -719,6 +719,61 @@ limitations under the License.
     Success
   </string>
 
+  <!-- Google Settings -->
+  <string name="google_settings_title"
+    translation_description="In the 'Settings' page, the option to change the Google settings.
+
+      Character limit: ~23 (1 line)">
+    Google
+  </string>
+  <string name="google_settings_account_title"
+    translation_description="In the 'Google' settings, the option to switch Google account.
+
+      Character limit: ~23 (1 line)">
+    Switch account
+  </string>
+  <string name="google_settings_drive_sync_title"
+    translation_description="In the 'Google' settings, the checkbox to sync tracks with Google
+      Drive.
+
+      Character limit: ~23 (1 line)">
+    Sync Google Drive
+  </string>
+  <string name="google_settings_drive_sync_summary_on"
+    translation_description="In the 'Google' settings, the summary for the 'Sync Google Drive'
+      checkbox when it is checked explaining that all tracks will be synced to a Google Drive
+      account.
+
+      %1$s account name. E.g., 'foo@foo.com'.">
+    All tracks will be synced to %1$s Google Drive
+  </string>
+  <string name="google_settings_maps_public_title"
+    translation_description="In the 'Google' settings, the checkbox to make new maps created in 
+      Google Maps public instead of unlisted. See 
+      http://support.google.com/maps/bin/answer.py?answer=144365 for public versus unlisted.
+
+      Character limit: ~23 (1 line)">
+    New maps public
+  </string>
+  <string name="google_settings_maps_public_summary_off"
+    translation_description="In the 'Google' settings, the summary for the 'New maps public'
+      checkbox when it is unchecked explaining that new maps created in Google Maps will be
+      unlisted, instead of public. See http://support.google.com/maps/bin/answer.py?answer=144365
+      for public versus unlisted.
+
+      %1$s url. E.g., 'support.google.com/maps/bin/answer.py?answer=144365'.">
+    New maps created in Google Maps will be unlisted, instead of public. See %1$s for more info.
+  </string>
+  <string name="google_settings_maps_public_summary_on"
+    translation_description="In the 'Google' settings, the summary for the 'New maps public'
+      checkbox when it is checked explaining that new maps created in Google Maps will be public,
+      instead of unlisted. See http://support.google.com/maps/bin/answer.py?answer=144365 for public
+      versus unlisted.
+
+      %1$s url. E.g., 'support.google.com/maps/bin/answer.py?answer=144365'.">
+    New maps created in Google Maps will be public, instead of unlisted. See %1$s for more info.
+  </string>
+
   <!-- Gps -->
   <string name="gps_google_location_settings"
      translation_description="In Android, the Google location settings to modify location settings
@@ -1593,12 +1648,6 @@ limitations under the License.
       Character limit: ~26 (1 line)">
     Show
   </string>
-  <string name="settings_switch_account"
-    translation_description="In the 'Settings' page, the option to switch account.
-
-      Character limit: ~26 (1 line)">
-    Switch account
-  </string>
 
   <!-- Settings Backup -->
   <string name="settings_backup"
@@ -2029,13 +2078,6 @@ limitations under the License.
       Character limit: ~20 (1 line)">
     ANT+
   </string>
-  <string name="settings_sensor_type_none"
-    translation_description="In the 'Sensor' settings, for the 'Sensor type' dropdown, the option to
-      not connect to any sensor.
-
-      Character limit: ~20 (1 line)">
-    None
-  </string>
   <string name="settings_sensor_type_polar"
     translation_description="In the 'Sensor' settings, for the 'Sensor type' dropdown, the option to
       connect to a Polar bluetooth sensor. Do not translate Polar, the company name, but can
@@ -2092,32 +2134,6 @@ limitations under the License.
       option when it is checked explaining that other apps can read, write, start/stop recording My
       Tracks data.">
     Other apps can read, write, start/stop recording My Tracks data.
-  </string>
-  <string name="settings_sharing_new_map_public"
-    translation_description="In the 'Sharing' settings, the checkbox option to make new maps created
-      in Google Maps public, instead of unlisted. See
-      http://support.google.com/maps/bin/answer.py?answer=144365 for public versus unlisted.
-
-      Character limit: ~23 (1 line)">
-    New maps public
-  </string>
-  <string name="settings_sharing_new_map_public_summary_off"
-    translation_description="In the 'Sharing' settings, the summary for the 'New maps public'
-      checkbox option when it is unchecked explaining that new maps created in Google Maps will be
-      unlisted, instead of public. See
-      http://support.google.com/maps/bin/answer.py?answer=144365 for public versus unlisted.
-
-      %1$s url. E.g., 'support.google.com/maps/bin/answer.py?answer=144365'.">
-    New maps created in Google Maps will be unlisted, instead of public. See %1$s for more info.
-  </string>
-  <string name="settings_sharing_new_map_public_summary_on"
-    translation_description="In the 'Sharing' settings, the summary for the 'New maps public'
-      checkbox option when it is checked explaining that new maps created in Google Maps will be
-      public, instead of unlisted. See
-      http://support.google.com/maps/bin/answer.py?answer=144365 for public versus unlisted.
-
-      %1$s url. E.g., 'support.google.com/maps/bin/answer.py?answer=144365'.">
-    New maps created in Google Maps will be public, instead of unlisted. See %1$s for more info.
   </string>
 
   <!-- Settings Stats -->
@@ -2631,6 +2647,10 @@ limitations under the License.
   <string name="value_never"
     translation_description="In a setting picker, the value to never use the feature.">
     Never
+  </string>
+  <string name="value_none"
+    translation_description="In a setting picker, the value to pick none of the options.">
+    None
   </string>
   <string name="value_off"
     translation_description="In a setting picker, the value to turn off the feature.">

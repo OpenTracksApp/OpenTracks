@@ -223,7 +223,7 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
       return true;
     } else {
       boolean defaultMapPublic = PreferencesUtils.getBoolean(
-          context, R.string.default_map_public_key, PreferencesUtils.DEFAULT_MAP_PUBLIC_DEFAULT);
+          context, R.string.google_settings_maps_public_key, PreferencesUtils.GOOGLE_SETTINGS_MAPS_PUBLIC_DEFAULT);
       try {
         String description = track.getCategory() + "\n" + track.getDescription() + "\n"
             + context.getString(R.string.send_google_by_my_tracks, "", "");

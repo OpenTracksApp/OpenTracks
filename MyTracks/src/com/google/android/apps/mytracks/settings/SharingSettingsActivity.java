@@ -35,7 +35,6 @@ public class SharingSettingsActivity extends AbstractSettingsActivity {
 
   private static final int DIALOG_CONFIRM_ALLOW_ACCESS_ID = 0;
 
-  private CheckBoxPreference defaultMapPublicCheckBoxPreference;
   private CheckBoxPreference allowAccessCheckBoxPreference;
 
   @SuppressWarnings("deprecation")
@@ -44,15 +43,6 @@ public class SharingSettingsActivity extends AbstractSettingsActivity {
     super.onCreate(bundle);
     addPreferencesFromResource(R.xml.sharing_settings);
 
-    defaultMapPublicCheckBoxPreference = (CheckBoxPreference) findPreference(
-        getString(R.string.default_map_public_key));
-    defaultMapPublicCheckBoxPreference.setSummaryOn(getString(
-        R.string.settings_sharing_new_map_public_summary_on,
-        getString(R.string.maps_public_unlisted_url)));
-    defaultMapPublicCheckBoxPreference.setSummaryOff(getString(
-        R.string.settings_sharing_new_map_public_summary_off,
-        getString(R.string.maps_public_unlisted_url)));
-    
     allowAccessCheckBoxPreference = (CheckBoxPreference) findPreference(
         getString(R.string.allow_access_key));
     allowAccessCheckBoxPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {

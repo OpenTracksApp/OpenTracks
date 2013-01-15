@@ -99,7 +99,7 @@ public class SensorUtils {
   public static String getStateAsString(Sensor.SensorState state, Context c) {
     switch (state) {
       case NONE:
-        return c.getString(R.string.settings_sensor_type_none);
+        return c.getString(R.string.value_none);
       case CONNECTING:
         return c.getString(R.string.sensor_state_connecting);
       case CONNECTED:

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Copyright 2012 Google Inc.
+Copyright 2013 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,11 +15,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-  android:title="@string/settings_sharing" >
+  android:title="@string/google_settings_title" >
+  <ListPreference
+    android:defaultValue=""
+    android:key="@string/google_settings_account_key"
+    android:title="@string/google_settings_account_title" />
   <CheckBoxPreference
     android:defaultValue="false"
-    android:key="@string/allow_access_key"
-    android:summaryOff="@string/settings_sharing_allow_access_summary_off"
-    android:summaryOn="@string/settings_sharing_allow_access_summary_on"
-    android:title="@string/settings_sharing_allow_access" />
+    android:key="@string/google_settings_drive_sync_key"
+    android:title="@string/google_settings_drive_sync_title" />
+  <CheckBoxPreference
+    android:defaultValue="false"
+    android:key="@string/google_settings_maps_public_key"
+    android:title="@string/google_settings_maps_public_title" />
 </PreferenceScreen>

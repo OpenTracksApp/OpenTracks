@@ -30,8 +30,9 @@ limitations under the License.
   <string name="chart_show_power_key">chartShowPower</string>
   <string name="chart_show_speed_key">chartShowSpeed</string>
   <string name="default_activity_key">defaultActivity</string>
-  <string name="default_map_public_key">defaultMapPublic</string>
-  <string name="google_account_key">googleAccount</string>
+  <string name="google_settings_account_key">googleSettingsAccount</string>
+  <string name="google_settings_drive_sync_key">googleSettingsDriveSync</string>
+  <string name="google_settings_maps_public_key">googleSettingsMapsPublic</string>
   <string name="max_recording_distance_key">maxRecordingDistance</string>
   <string name="metric_units_key">metricUnits</string>
   <string name="min_recording_distance_key">minRecordingDistance</string>
@@ -60,7 +61,7 @@ limitations under the License.
   <string name="track_widget_item3">trackWidgetItem3</string>
   <string name="track_widget_item4">trackWidgetItem4</string>
   <string name="voice_frequency_key">voiceFrequency</string>
-        
+
   <!-- Keys for persistend preferences. But they should not get backed up or restored. -->
   <string name="auto_resume_track_current_retry_key">autoResumeTrackCurrentRetry</string>
   <string name="recording_track_id_key">recordingTrackId</string>
@@ -68,6 +69,7 @@ limitations under the License.
   <string name="selected_track_id_key">selectedTrackId</string>
 
   <!-- Keys for non-persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
+  <string name="google_settings_key">googleSettings</string>
   <string name="settings_backup_key">settingsBackup</string>
   <string name="settings_backup_now_key">settingsBackupNow</string>
   <string name="settings_backup_restore_key">settingsBackupRestore</string>

@@ -22,23 +22,16 @@ import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.util.Log;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * An activity for accessing settings.
@@ -51,7 +44,6 @@ public class SettingsActivity extends AbstractSettingsActivity {
   private static final String TAG = SettingsActivity.class.getSimpleName();
   private static final int DIALOG_CONFIRM_RESET_ID = 0;
 
-  private ListPreference googleAccountListPreference;
   private Preference resetPreference;
 
   @SuppressWarnings("deprecation")
@@ -60,100 +52,15 @@ public class SettingsActivity extends AbstractSettingsActivity {
     super.onCreate(bundle);
     addPreferencesFromResource(R.xml.settings);
 
-    Preference mapPreference = findPreference(getString(R.string.settings_map_key));
-    mapPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-        @Override
-      public boolean onPreferenceClick(Preference preference) {
-        Intent intent = IntentUtils.newIntent(SettingsActivity.this, MapSettingsActivity.class);
-        startActivity(intent);
-        return true;
-      }
-    });
-
-    Preference chartPreference = findPreference(getString(R.string.settings_chart_key));
-    chartPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-        @Override
-      public boolean onPreferenceClick(Preference preference) {
-        Intent intent = IntentUtils.newIntent(SettingsActivity.this, ChartSettingsActivity.class);
-        startActivity(intent);
-        return true;
-      }
-    });
-
-    Preference statsPreference = findPreference(getString(R.string.settings_stats_key));
-    statsPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-        @Override
-      public boolean onPreferenceClick(Preference preference) {
-        Intent intent = IntentUtils.newIntent(SettingsActivity.this, StatsSettingsActivity.class);
-        startActivity(intent);
-        return true;
-      }
-    });
-
-    Preference recordingPreference = findPreference(getString(R.string.settings_recording_key));
-    recordingPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-        @Override
-      public boolean onPreferenceClick(Preference preference) {
-        Intent intent = IntentUtils.newIntent(
-            SettingsActivity.this, RecordingSettingsActivity.class);
-        startActivity(intent);
-        return true;
-      }
-    });
-
-    Preference sharingPreference = findPreference(getString(R.string.settings_sharing_key));
-    sharingPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-        @Override
-      public boolean onPreferenceClick(Preference preference) {
-        Intent intent = IntentUtils.newIntent(SettingsActivity.this, SharingSettingsActivity.class);
-        startActivity(intent);
-        return true;
-      }
-    });
-
-    Preference sensorPreference = findPreference(getString(R.string.settings_sensor_key));
-    sensorPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-        @Override
-      public boolean onPreferenceClick(Preference preference) {
-        Intent intent = IntentUtils.newIntent(SettingsActivity.this, SensorSettingsActivity.class);
-        startActivity(intent);
-        return true;
-      }
-    });
-
-    Preference backupPreference = findPreference(getString(R.string.settings_backup_key));
-    backupPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-        @Override
-      public boolean onPreferenceClick(Preference preference) {
-        Intent intent = IntentUtils.newIntent(SettingsActivity.this, BackupSettingsActivity.class);
-        startActivity(intent);
-        return true;
-      }
-    });
-
-    googleAccountListPreference = (ListPreference) findPreference(getString(R.string.google_account_key));
-    List<String> entries = new ArrayList<String>();
-    Account[] accounts = AccountManager.get(this).getAccountsByType(Constants.ACCOUNT_TYPE);
-    for (Account account : accounts) {
-      entries.add(account.name);
-    }
-    googleAccountListPreference.setEntries(entries.toArray(new CharSequence[entries.size()]));
-    googleAccountListPreference.setEntryValues(entries.toArray(
-        new CharSequence[entries.size()]));
-    if (entries.size() == 1) {
-      googleAccountListPreference.setValueIndex(0);
-    }
-    String googleAccount = PreferencesUtils.getString(this, R.string.google_account_key,
-        PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
-    updateSwitchAccountSummary(googleAccount);
-    googleAccountListPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-      @Override
-      public boolean onPreferenceChange(Preference preference, Object newValue) {
-        updateSwitchAccountSummary((String) newValue);
-        return true;
-      }
-    });
-
+    configPreference(R.string.google_settings_key, GoogleSettingsActivity.class);
+    configPreference(R.string.settings_map_key, MapSettingsActivity.class);
+    configPreference(R.string.settings_chart_key, ChartSettingsActivity.class);
+    configPreference(R.string.settings_stats_key, StatsSettingsActivity.class);
+    configPreference(R.string.settings_recording_key, RecordingSettingsActivity.class);
+    configPreference(R.string.settings_sharing_key, SharingSettingsActivity.class);
+    configPreference(R.string.settings_sensor_key, SensorSettingsActivity.class);
+    configPreference(R.string.settings_backup_key, BackupSettingsActivity.class);
+    
     resetPreference = findPreference(getString(R.string.settings_reset_key));
     resetPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
         @Override
@@ -164,6 +71,24 @@ public class SettingsActivity extends AbstractSettingsActivity {
     });
   }
 
+  /**
+   * Configures a preference by starting a new activity when it is clicked.
+   * 
+   * @param key the preference key
+   * @param cl the class to start the new activity
+   */
+  private void configPreference(int key, final Class<?> cl) {
+    Preference preference = findPreference(getString(key));
+    preference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+        @Override
+      public boolean onPreferenceClick(Preference preference) {
+        Intent intent = IntentUtils.newIntent(SettingsActivity.this, cl);
+        startActivity(intent);
+        return true;
+      }
+    });
+  }
+  
   @Override
   protected void onResume() {
     super.onResume();
@@ -172,17 +97,6 @@ public class SettingsActivity extends AbstractSettingsActivity {
     resetPreference.setEnabled(!isRecording);
     resetPreference.setSummary(isRecording ? R.string.settings_not_while_recording
         : R.string.settings_reset_summary);
-  }
-
-  /**
-   * Updates the switch account summary.
-   * 
-   * @param value the value
-   */
-  private void updateSwitchAccountSummary(String value) {
-    googleAccountListPreference.setSummary(
-        PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT.equals(value) ? getString(R.string.value_unknown)
-            : value);
   }
 
   @Override
