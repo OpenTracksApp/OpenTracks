@@ -378,7 +378,7 @@ limitations under the License.
   <string name="description_activity_type"
     translation_description="Activity type description.
 
-      %1$s activity type. E.g., 'hiking'">
+      %1$s activity type. E.g., 'hiking'.">
     Activity type: %1$s
   </string>
   <string name="description_average_moving_pace"
@@ -493,7 +493,7 @@ limitations under the License.
   <string name="description_moving_time"
     translation_description="Moving time description.
 
-      %1$s time. E.g., '1:08:59'">
+      %1$s time. E.g., '1:08:59'.">
     Moving time: %1$s
   </string>
   <string name="description_pace_imperial"
@@ -507,7 +507,7 @@ limitations under the License.
   <string name="description_recorded_time"
     translation_description="Recorded time description.
 
-      %1$s time. E.g, '2/15/2012 1:40 PM'">
+      %1$s time. E.g., '2/15/2012 1:40 PM'.">
     Recorded: %1$s
   </string>
   <string name="description_sensor_cadence"
@@ -544,7 +544,7 @@ limitations under the License.
   <string name="description_total_time"
     translation_description="Total time description.
 
-      %1$s time. E.g., '1:08:59'">
+      %1$s time. E.g., '1:08:59'.">
     Total time: %1$s
   </string>
   <string name="description_track_point"
@@ -717,61 +717,6 @@ limitations under the License.
   <string name="generic_success_title"
     translation_description="The title on an alert dialog indicating success.">
     Success
-  </string>
-
-  <!-- Google Settings -->
-  <string name="google_settings_title"
-    translation_description="In the 'Settings' page, the option to change the Google settings.
-
-      Character limit: ~23 (1 line)">
-    Google
-  </string>
-  <string name="google_settings_account_title"
-    translation_description="In the 'Google' settings, the option to switch Google account.
-
-      Character limit: ~23 (1 line)">
-    Switch account
-  </string>
-  <string name="google_settings_drive_sync_title"
-    translation_description="In the 'Google' settings, the checkbox to sync tracks with Google
-      Drive.
-
-      Character limit: ~23 (1 line)">
-    Sync Google Drive
-  </string>
-  <string name="google_settings_drive_sync_summary_on"
-    translation_description="In the 'Google' settings, the summary for the 'Sync Google Drive'
-      checkbox when it is checked explaining that all tracks will be synced to a Google Drive
-      account.
-
-      %1$s account name. E.g., 'foo@foo.com'.">
-    All tracks will be synced to %1$s Google Drive
-  </string>
-  <string name="google_settings_maps_public_title"
-    translation_description="In the 'Google' settings, the checkbox to make new maps created in 
-      Google Maps public instead of unlisted. See 
-      http://support.google.com/maps/bin/answer.py?answer=144365 for public versus unlisted.
-
-      Character limit: ~23 (1 line)">
-    New maps public
-  </string>
-  <string name="google_settings_maps_public_summary_off"
-    translation_description="In the 'Google' settings, the summary for the 'New maps public'
-      checkbox when it is unchecked explaining that new maps created in Google Maps will be
-      unlisted, instead of public. See http://support.google.com/maps/bin/answer.py?answer=144365
-      for public versus unlisted.
-
-      %1$s url. E.g., 'support.google.com/maps/bin/answer.py?answer=144365'.">
-    New maps created in Google Maps will be unlisted, instead of public. See %1$s for more info.
-  </string>
-  <string name="google_settings_maps_public_summary_on"
-    translation_description="In the 'Google' settings, the summary for the 'New maps public'
-      checkbox when it is checked explaining that new maps created in Google Maps will be public,
-      instead of unlisted. See http://support.google.com/maps/bin/answer.py?answer=144365 for public
-      versus unlisted.
-
-      %1$s url. E.g., 'support.google.com/maps/bin/answer.py?answer=144365'.">
-    New maps created in Google Maps will be public, instead of unlisted. See %1$s for more info.
   </string>
 
   <!-- Gps -->
@@ -1208,7 +1153,7 @@ limitations under the License.
     translation_description="Under the import all menu option, the submenu option to import all
       files of a certain file format.
 
-      %1$s: file format. e.g., 'GPX', 'KML'
+      %1$s: file format. E.g., 'GPX'.
       Character limit: ~20 (1 line)">
     Import %1$s
   </string>
@@ -1447,7 +1392,7 @@ limitations under the License.
     translation_description="For a marker returned in the search result, the text field indicating
       the track that the marker belongs to.
 
-      %1$s: track name. E.g., 'Grand Canyon trail'">
+      %1$s: track name. E.g., 'Grand Canyon trail'.">
     In track \'%1$s\'.
   </string>
   <string name="search_voice_prompt"
@@ -1555,9 +1500,9 @@ limitations under the License.
   </string>
   <string name="send_google_track_part_label"
     translation_description="When sending a track to Google, the label to name segments of a large
-      track. E.g., 'track_name (Part 1)'
+      track. E.g., 'track_name (Part 1)'.
 
-      %1$s: track name. E.g., 'track_name'
+      %1$s: track name. E.g., 'track_name'.
       %2$d: part number. E.g., '1'.">
     %1$s (Part %2$d)
   </string>
@@ -1565,7 +1510,7 @@ limitations under the License.
   <!-- Sensor State -->
   <string name="sensor_state_battery"
     translation_description="In the 'Sensor state' page, the label for the battery level on the bike
-      sensor. E.g, 'Battery level: 50 %'.">
+      sensor. E.g., 'Battery level: 50 %'.">
     Battery level
   </string>
   <string name="sensor_state_cadence"
@@ -1749,69 +1694,128 @@ limitations under the License.
     X axis
   </string>
 
+  <!-- Settings Google -->
+  <string name="settings_google"
+    translation_description="In the 'Settings' page, the option to change the Google settings.
+
+      Character limit: ~23 (1 line)">
+    Google
+  </string>
+  <string name="settings_google_account_title"
+    translation_description="In the 'Google' settings, the option to switch Google account.
+
+      Character limit: ~23 (1 line)">
+    Switch account
+  </string>
+  <string name="settings_google_drive_sync_summary_on"
+    translation_description="In the 'Google' settings, the summary for the 'Sync Google Drive'
+      checkbox when it is checked explaining that all tracks will be synced to a Google Drive
+      account.
+
+      %1$s account name. E.g., 'foo@foo.com'.">
+    All tracks will be synced to %1$s Google Drive
+  </string>
+  <string name="settings_google_drive_sync_title"
+    translation_description="In the 'Google' settings, the checkbox to sync tracks with Google
+      Drive.
+
+      Character limit: ~23 (1 line)">
+    Sync Google Drive
+  </string>
+  <string name="settings_google_maps_public_summary_off"
+    translation_description="In the 'Google' settings, the summary for the 'New maps public'
+      checkbox when it is unchecked explaining that new maps created in Google Maps will be
+      unlisted, instead of public. See http://support.google.com/maps/bin/answer.py?answer=144365
+      for public versus unlisted.
+
+      %1$s url. E.g., 'support.google.com/maps/bin/answer.py?answer=144365'.">
+    New maps created in Google Maps will be unlisted, instead of public. See %1$s for more info.
+  </string>
+  <string name="settings_google_maps_public_summary_on"
+    translation_description="In the 'Google' settings, the summary for the 'New maps public'
+      checkbox when it is checked explaining that new maps created in Google Maps will be public,
+      instead of unlisted. See http://support.google.com/maps/bin/answer.py?answer=144365 for public
+      versus unlisted.
+
+      %1$s url. E.g., 'support.google.com/maps/bin/answer.py?answer=144365'.">
+    New maps created in Google Maps will be public, instead of unlisted. See %1$s for more info.
+  </string>
+  <string name="settings_google_maps_public_title"
+    translation_description="In the 'Google' settings, the checkbox to make new maps created in
+      Google Maps public instead of unlisted. See
+      http://support.google.com/maps/bin/answer.py?answer=144365 for public versus unlisted.
+
+      Character limit: ~23 (1 line)">
+    New maps public
+  </string>
+
   <!-- Settings Map -->
   <string name="settings_map_medium"
-    translation_description="In the 'Map' settings, under the 'Fixed thresholds' configurations, the
-      option for configuring the top medium speed.
+    translation_description="In the 'Map' settings, under the 'Fixed thresholds' section, the option
+      to configure the top medium speed.
 
       Character limit: ~23 (1 line)">
     Top medium speed
-  </string>
-  <string name="settings_map_percentage"
-    translation_description="In the 'Map' settings, under the 'Dynamic thresholds' configurations,
-      the option for configuring the percentage from the average speed for the medium speed range.
+  </string><string name="settings_map_percentage"
+    translation_description="In the 'Map' settings, under the 'Dynamic thresholds' section, the
+      option to configure the medium speed range as a percentage from the average speed.
 
       Character limit: ~23 (1 line)">
     Percentage from average
   </string>
   <string name="settings_map_percentage_summary"
-    translation_description="In the 'Map' settings, under the 'Dynamic thresholds' configurations,
-      the summary for the 'Percentage from average' option explaining that it sets the percentage
-      from the average speed for the medium speed range. The 'Dynamic thresholds' track color mode
-      uses different colors to color a track depending on whether the speed is above, in, or below
-      the medium speed range.">
-    Percentage from the average speed for the medium speed range.
+    translation_description="In the 'Map' settings, under the 'Dynamic thresholds' section, the
+      summary for the 'Percentage from average' option explaining that the medium speed range is set
+      as a percentage from the average speed.
+
+      %1$d: an integer value. E.g., '15'.">
+    The medium speed range is %1$d %% from the average speed
   </string>
   <string name="settings_map_slow"
-    translation_description="In the 'Map' settings, under the 'Fixed thresholds' configurations, the
-      option for configuring the top slow speed.
+    translation_description="In the 'Map' settings, under the 'Fixed thresholds' section, the option
+      to configure the top slow speed.
 
       Character limit: ~23 (1 line)">
     Top slow speed
   </string>
   <string name="settings_map_track_color_mode"
-    translation_description="In the 'Map' settings, the option to select a track color mode for how
-      to use different colors to color a track based on slow, medium, and fast speed.
+    translation_description="In the 'Map' settings, the picker to select how track color is
+      configured.
 
       Character limit: ~23 (1 line)">
     Track color
-  </string>
-  <string name="settings_map_track_color_mode_dynamic"
-    translation_description="In the 'Map' settings, for the 'Track color mode' dropdown, the option
-      to use different colors to color a track based on dynamically determined speed thresholds.
+  </string><string name="settings_map_track_color_mode_dynamic"
+    translation_description="In the 'Map' settings, for the 'Track color' picker, the option to use
+      dynamic thresholds to set slow, medium, and fast speed when coloring a track based on speed.
 
       Character limit: ~20 (1 line)">
     Dynamic thresholds
   </string>
+  <string name="settings_map_track_color_mode_dynamic_summary"
+    translation_description="In the 'Map' settings, the summary for the 'Track color' picker when
+      the 'Dynamic thresholds' is selected explaining that it uses dynamic thresholds to set slow,
+      medium, and fast speed when coloring a track based on speed.">
+    Use dynamic thresholds to set slow, medium, and fast speed when coloring a track based on speed
+  </string>
   <string name="settings_map_track_color_mode_fixed"
-    translation_description="In the 'Map' settings, for the 'Track color mode' dropdown, the option
-      to use different colors to color a track based on fixed speed thresholds.
+    translation_description="In the 'Map' settings, for the 'Track color' picker, the option to use
+      fixed thresholds to set slow, medium, and fast speed when coloring a track based on speed.
 
       Character limit: ~20 (1 line)">
     Fixed thresholds
   </string>
+  <string name="settings_map_track_color_mode_fixed_summary"
+    translation_description="In the 'Map' settings, the summary for the 'Track color' picker when
+      the 'Fixed thresholds' is selected explaining that it uses fixed thresholds to set slow,
+      medium, and fast speed when coloring a track based on speed.">
+    Use fixed thresholds to set slow, medium, and fast speed when coloring a track based on speed
+  </string>
   <string name="settings_map_track_color_mode_single"
-    translation_description="In the 'Map' settings, for the 'Track color mode' dropdown, the option
-      to use a single color for all speeds.
+    translation_description="In the 'Map' settings, for the 'Track color' picker, the option to use
+      a single color to color a track.
 
       Character limit: ~20 (1 line)">
     Single color
-  </string>
-  <string name="settings_map_track_color_mode_summary"
-    translation_description="In the 'Map' settings, the summary for the 'Track color mode' option
-      explaining that it configures how colors are used to color a track based on slow, medium, and
-      fast speed.">
-    The way to color a track based on slow, medium, and fast speed.
   </string>
 
   <!-- Settings Recording -->
@@ -2211,7 +2215,7 @@ limitations under the License.
     translation_description="When sharing a track URL with friends, the body of the message. Note
       that \n is the newline character.
 
-      %1$s: url. E.g, 'https://maps.google.com/maps'.
+      %1$s: url. E.g., 'https://maps.google.com/maps'.
       %2$s: track description.">
     I think you might be interested in this track:\n\n%1$s\n\n%2$s
   </string>
@@ -2449,7 +2453,7 @@ limitations under the License.
     km
   </string>
   <string name="unit_kilometer_per_hour"
-    translation_description="Abbreviation for kilometers per hour. E.g, '5 km/h'.">
+    translation_description="Abbreviation for kilometers per hour. E.g., '5 km/h'.">
     km/h
   </string>
   <string name="unit_meter"
@@ -2461,15 +2465,15 @@ limitations under the License.
     mi
   </string>
   <string name="unit_mile_per_hour"
-    translation_description="Abbreviation for miles per hour. E.g, '5 mi/h'.">
+    translation_description="Abbreviation for miles per hour. E.g., '5 mi/h'.">
     mi/h
   </string>
   <string name="unit_minute_per_kilometer"
-    translation_description="Abbreviation for minutes per kilometer. E.g, '5 min/km'.">
+    translation_description="Abbreviation for minutes per kilometer. E.g., '5 min/km'.">
     min/km
   </string>
   <string name="unit_minute_per_mile"
-    translation_description="Abbreviation for minutes per mile. E.g, '5 min/mi'.">
+    translation_description="Abbreviation for minutes per mile. E.g., '5 min/mi'.">
     min/mi
   </string>
 
@@ -2488,160 +2492,160 @@ limitations under the License.
   </string>
   <string name="value_coordinate_degree"
     translation_description="To display a latitude or longitude coordinate in degree. E.g.,
-      2.2 \u00B0. \u00B0 is the unicode value for the degree symbol.
+      '2.2 \u00B0'. \u00B0 is the unicode value for the degree symbol.
 
-      %1$s: a string value of the coordinate. E.g., '2.2'">
+      %1$s: a string value of the coordinate. E.g., '2.2'.">
     %1$s \u00B0
   </string>
   <string name="value_float_feet"
     translation_description="Display a float value in feet (ft).
 
-      %1$.2f: a float number. E.g., '2.22'">
+      %1$.2f: a float number. E.g., '2.22'.">
     %1$.2f ft
   </string>
   <string name="value_float_kilometer"
     translation_description="Display a float value in kilometers (km).
 
-      %1$.2f: a float number. E.g., '2.22'">
+      %1$.2f: a float number. E.g., '2.22'.">
     %1$.2f km
   </string>
   <string name="value_float_kilometer_hour"
     translation_description="Display a float value in kilometers per hour (km/h).
 
-      %1$.2f: a float number. E.g., '2.22'">
+      %1$.2f: a float number. E.g., '2.22'.">
     %1$.2f km/h
   </string>
   <string name="value_float_meter"
     translation_description="Display a float value in meters (m).
 
-      %1$.2f: a float number. E.g., '2.22'">
+      %1$.2f: a float number. E.g., '2.22'.">
     %1$.2f m
   </string>
   <string name="value_float_mile"
     translation_description="Display a float value in miles (mi).
 
-      %1$.2f: a float number. E.g., '2.22'">
+      %1$.2f: a float number. E.g., '2.22'.">
     %1$.2f mi
   </string>
   <string name="value_float_mile_hour"
     translation_description="Display a float value in miles per hour (mi/h).
 
-      %1$.2f: a float number. E.g., '2.22'">
+      %1$.2f: a float number. E.g., '2.22'.">
     %1$.2f mi/h
   </string>
   <string name="value_float_mile_poor_gps"
     translation_description="In a setting picker, the string format to display a float value in
       miles (mi), recommended when having poor GPS signal.
 
-      %1$.1f: a float number. E.g., '2.2'">
+      %1$.1f: a float number. E.g., '2.2'.">
     %1$.1f mi (poor GPS)
   </string>
   <string name="value_float_minute_kilometer"
     translation_description="Display a float value in minutes per kilometer (min/km).
 
-      %1$.2f: a float number. E.g., '2.22'">
+      %1$.2f: a float number. E.g., '2.22'.">
     %1$.2f min/km
   </string>
   <string name="value_float_minute_mile"
     translation_description="Display a float value in minutes per mile (min/mi).
 
-      %1$.2f: a float number. E.g., '2.22'">
+      %1$.2f: a float number. E.g., '2.22'.">
     %1$.2f min/mi
   </string>
   <string name="value_integer_feet"
     translation_description="In a setting picker, the string format to display an integer value in
       feet (ft).
 
-      %1$d: an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'.">
     %1$d ft
   </string>
   <string name="value_integer_feet_excellent_gps"
     translation_description="In a setting picker, the string format to display an integer value in
       feet (ft), recommended when having excellent GPS signal.
 
-      %1$d: an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'.">
     %1$d ft (excellent GPS)
   </string>
   <string name="value_integer_feet_recommended"
     translation_description="In a setting picker, the string format to display an integer value in
       feet (ft) and that the value is the recommended value.
 
-      %1$d: an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'.">
     %1$d ft (recommended)
   </string>
   <string name="value_integer_kilometer"
     translation_description="In a setting picker, the string format to display an integer value in
       kilometers (km).
 
-      %1$d: an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'.">
     %1$d km
   </string>
   <string name="value_integer_kilometer_hour"
     translation_description="Display an integer value in kilometers per hour (km/h).
 
-      %1$d: an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'.">
     %1$d km/h
   </string>
   <string name="value_integer_meter"
     translation_description="In a setting picker, the string format to display an integer value in
       meters (m).
 
-      %1$d: an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'.">
     %1$d m
   </string>
   <string name="value_integer_meter_excellent_gps"
     translation_description="In a setting picker, the string format to display an integer value in
       meters (m), recommended when having excellent GPS signal.
 
-      %1$d: an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'.">
     %1$d m (excellent GPS)
   </string>
   <string name="value_integer_meter_poor_gps"
     translation_description="In a setting picker, the string format to display an integer value in
       meters (m), recommended when having poor GPS signal.
 
-      %1$d: an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'.">
     %1$d m (poor GPS)
   </string>
   <string name="value_integer_meter_recommended"
     translation_description="In a setting picker, the string format to display an integer value in
       meters (m) and that the value is the recommended value.
 
-      %1$d: an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'.">
     %1$d m (recommended)
   </string>
   <string name="value_integer_mile"
     translation_description="In a setting picker, the string format to display an integer value in
       miles (mi).
 
-      %1$d: an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'.">
     %1$d mi
   </string>
   <string name="value_integer_mile_hour"
     translation_description="Display an integer value in miles per hour (mi/h).
 
-      %1$d: an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'.">
     %1$d mi/h
   </string>
   <string name="value_integer_minute"
     translation_description="In a setting picker, the string format to display an integer value in
       minutes (min).
 
-      %1$d: an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'.">
     %1$d min
   </string>
   <string name="value_integer_percent"
      translation_description="To display a value in percent like 2 %. %% is the escape sequence for
       the percent symbol.
 
-      %1$d: an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'.">
     %1$d %%
   </string>
   <string name="value_integer_second"
     translation_description="In a setting picker, the string format to display an integer value in
       seconds (s).
 
-      %1$d: an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'.">
     %1$d s
   </string>
   <string name="value_never"
@@ -2835,10 +2839,10 @@ limitations under the License.
   <string name="voice_template"
     translation_description="For the voice announcement, the template to make an announcement.
 
-      %1$s: distance string. E.g., '1 mile' or '1.2 miles', '1 kilometer', '2.2 kilometers'
-      %2$s: time string. E.g., '1 hour and 30 minutes' or '20 minutes 1 second'
-      %3$s: speed/pace string. For speed, e.g., '2.2 miles per hour', '1 kilometer per hour'. For
-      pace, e.g., '2 hours 1 minute per mile', '30 minutes 1 second per kilometer'.">
+      %1$s: distance string. E.g., '2.2 kilometers'.
+      %2$s: time string. E.g., '20 minutes 1 second'.
+      %3$s: speed/pace string. E.g., '2.2 miles per hour' for speed and
+      '30 minutes 1 second per kilometer' for pace.">
     My Tracks %1$s in %2$s at %3$s.
   </string>
   <string name="voice_total_distance_kilometers_few"

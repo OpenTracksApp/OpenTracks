@@ -36,35 +36,36 @@ public class PreferencesUtils {
   public static final boolean ALLOW_ACCESS_DEFAULT = false;
   public static final int AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT = 0;
 
+  // Values for auto_resume_track_timeout_key
   public static final int AUTO_RESUME_TRACK_TIMEOUT_ALWAYS = -1;
   public static final int AUTO_RESUME_TRACK_TIMEOUT_DEFAULT = 10;
   public static final int AUTO_RESUME_TRACK_TIMEOUT_NEVER = 0;
 
   public static final String BLUETOOTH_SENSOR_DEFAULT = "";
-
   public static final boolean CHART_BY_DISTANCE_DEFAULT = true;
   public static final boolean CHART_SHOW_CADENCE_DEFAULT = true;
   public static final boolean CHART_SHOW_ELEVATION_DEFAULT = true;
   public static final boolean CHART_SHOW_HEART_RATE_DEFAULT = true;
   public static final boolean CHART_SHOW_POWER_DEFAULT = true;
   public static final boolean CHART_SHOW_SPEED_DEFAULT = true;
-
   public static final String DEFAULT_ACTIVITY_DEFAULT = "";
-
+  public static final boolean DEFAULT_MAP_PUBLIC_DEFAULT = false;
+  public static final boolean DRIVE_SYNC_DEFAULT = false;  
+  
+  // Value for split_frequency_key and voice_frequency_key
   public static final int FREQUENCY_OFF = 0;
   
-  public static final String GOOGLE_SETTINGS_ACCOUNT_DEFAULT = "";
-  public static final boolean GOOGLE_SETTINGS_DRIVE_SYNC_DEFAULT = false;
-  public static final boolean GOOGLE_SETTINGS_MAPS_PUBLIC_DEFAULT = false;
-  
+  public static final String GOOGLE_ACCOUNT_DEFAULT = "";
   public static final int MAX_RECORDING_DISTANCE_DEFAULT = 200;
   public static final boolean METRIC_UNITS_DEFAULT = true;
   public static final int MIN_RECORDING_DISTANCE_DEFAULT = 5;
 
+  // Values for min_recording_interval_key
   public static final int MIN_RECORDING_INTERVAL_ADAPT_ACCURACY = -1;
   public static final int MIN_RECORDING_INTERVAL_ADAPT_BATTERY_LIFE = -2;
   public static final int MIN_RECORDING_INTERVAL_DEFAULT = 0;
 
+  // Values for min_required_accuracy
   public static final int MIN_REQUIRED_ACCURACY_DEFAULT = 200;
   public static final int MIN_REQUIRED_ACCURACY_EXCELLENT = 10;
   public static final int MIN_REQUIRED_ACCURACY_POOR = 5000;
@@ -77,30 +78,23 @@ public class PreferencesUtils {
   public static final boolean SEND_TO_DOCS_DEFAULT = true;
   public static final boolean SEND_TO_FUSION_TABLES_DEFAULT = true;
   public static final boolean SEND_TO_MAPS_DEFAULT = true;
-  
-  public static final String SENSOR_TYPE_DEFAULT = "NONE";
-  
+  public static final String SENSOR_TYPE_DEFAULT = "NONE"; 
   public static final boolean SHOW_CONFIRM_PLAY_DIALOG_DEFAULT = true;
   public static final boolean SHOW_CONFIRM_SHARING_DIALOG_DEFAULT = true;
   public static final int SPLIT_FREQUENCY_DEFAULT = 0;
-
   public static final boolean STATS_SHOW_COORDINATE_DEFAULT = false;
   public static final boolean STATS_SHOW_ELEVATION_DEFAULT = false;
   public static final boolean STATS_SHOW_GRADE_DEFAULT = false;
   public static final boolean STATS_SHOW_MOVING_TIME_DEFAULT = false;
-
   public static final String TRACK_COLOR_MODE_DEFAULT = "SINGLE";
   public static final int TRACK_COLOR_MODE_MEDIUM_DEFAULT = 15;
   public static final int TRACK_COLOR_MODE_PERCENTAGE_DEFAULT = 25;
   public static final int TRACK_COLOR_MODE_SLOW_DEFAULT = 9;
-
   public static final String TRACK_NAME_DEFAULT = "LOCATION";
-
   public static final int TRACK_WIDGET_ITEM1_DEFAULT = 3; // moving time
   public static final int TRACK_WIDGET_ITEM2_DEFAULT = 0; // distance
   public static final int TRACK_WIDGET_ITEM3_DEFAULT = 1; // total time
   public static final int TRACK_WIDGET_ITEM4_DEFAULT = 2; // average speed
-  
   public static final int VOICE_FREQUENCY_DEFAULT = 0;
 
   private PreferencesUtils() {}

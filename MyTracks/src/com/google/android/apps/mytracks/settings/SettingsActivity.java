@@ -52,7 +52,7 @@ public class SettingsActivity extends AbstractSettingsActivity {
     super.onCreate(bundle);
     addPreferencesFromResource(R.xml.settings);
 
-    configPreference(R.string.google_settings_key, GoogleSettingsActivity.class);
+    configPreference(R.string.settings_google_key, GoogleSettingsActivity.class);
     configPreference(R.string.settings_map_key, MapSettingsActivity.class);
     configPreference(R.string.settings_chart_key, ChartSettingsActivity.class);
     configPreference(R.string.settings_stats_key, StatsSettingsActivity.class);

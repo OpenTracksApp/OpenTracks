@@ -98,7 +98,7 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
     RadioButton newMapRadioButton = (RadioButton) view.findViewById(
         R.id.choose_upload_service_new_map);
     boolean defaultMapPublic = PreferencesUtils.getBoolean(activity,
-        R.string.google_settings_maps_public_key, PreferencesUtils.GOOGLE_SETTINGS_MAPS_PUBLIC_DEFAULT);
+        R.string.default_map_public_key, PreferencesUtils.DEFAULT_MAP_PUBLIC_DEFAULT);
     newMapRadioButton.setText(defaultMapPublic ? R.string.send_google_new_public_map
         : R.string.send_google_new_unlisted_map);
 

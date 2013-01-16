@@ -38,8 +38,8 @@ import java.util.List;
  */
 public class GoogleSettingsActivity extends AbstractSettingsActivity {
 
-  private ListPreference googleSettingsAccount;
-  private CheckBoxPreference settingsGoogleDriveSync;
+  private ListPreference googleAccount;
+  private CheckBoxPreference driveSync;
 
   @SuppressWarnings("deprecation")
   @Override
@@ -47,8 +47,8 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
     super.onCreate(bundle);
     addPreferencesFromResource(R.xml.google_settings);
 
-    googleSettingsAccount = (ListPreference) findPreference(
-        getString(R.string.google_settings_account_key));
+    googleAccount = (ListPreference) findPreference(
+        getString(R.string.google_account_key));
     List<String> entries = new ArrayList<String>();
     List<String> entryValues = new ArrayList<String>();
     Account[] accounts = AccountManager.get(this).getAccountsByType(Constants.ACCOUNT_TYPE);
@@ -57,11 +57,11 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
       entryValues.add(account.name);
     }
     entries.add(getString(R.string.value_none));
-    entryValues.add(PreferencesUtils.GOOGLE_SETTINGS_ACCOUNT_DEFAULT);
+    entryValues.add(PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
     
-    googleSettingsAccount.setEntries(entries.toArray(new CharSequence[entries.size()]));
-    googleSettingsAccount.setEntryValues(entryValues.toArray(new CharSequence[entries.size()]));
-    googleSettingsAccount.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+    googleAccount.setEntries(entries.toArray(new CharSequence[entries.size()]));
+    googleAccount.setEntryValues(entryValues.toArray(new CharSequence[entries.size()]));
+    googleAccount.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
         @Override
       public boolean onPreferenceChange(Preference preference, Object newValue) {
         updateUi((String) newValue, true);
@@ -69,19 +69,19 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
       }
     });
 
-    settingsGoogleDriveSync = (CheckBoxPreference) findPreference(
-        getString(R.string.google_settings_drive_sync_key));
+    driveSync = (CheckBoxPreference) findPreference(
+        getString(R.string.drive_sync_key));
 
     CheckBoxPreference settingsGoogleMapsPublic = (CheckBoxPreference) findPreference(
-        getString(R.string.google_settings_maps_public_key));
-    settingsGoogleMapsPublic.setSummaryOn(getString(R.string.google_settings_maps_public_summary_on,
+        getString(R.string.default_map_public_key));
+    settingsGoogleMapsPublic.setSummaryOn(getString(R.string.settings_google_maps_public_summary_on,
         getString(R.string.maps_public_unlisted_url)));
     settingsGoogleMapsPublic.setSummaryOff(getString(
-        R.string.google_settings_maps_public_summary_off,
+        R.string.settings_google_maps_public_summary_off,
         getString(R.string.maps_public_unlisted_url)));
 
-    String account = PreferencesUtils.getString(this, R.string.google_settings_account_key,
-        PreferencesUtils.GOOGLE_SETTINGS_ACCOUNT_DEFAULT);
+    String account = PreferencesUtils.getString(this, R.string.google_account_key,
+        PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
     updateUi(account, false);
   }
 
@@ -92,15 +92,15 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
    * @param uncheckDriveSync true to uncheck drive sync
    */
   private void updateUi(String account, boolean uncheckDriveSync) {
-    googleSettingsAccount.setSummary(PreferencesUtils.GOOGLE_SETTINGS_ACCOUNT_DEFAULT.equals(
+    googleAccount.setSummary(PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT.equals(
         account) ? getString(R.string.value_unknown)
         : account);
-    boolean hasAccount = !PreferencesUtils.GOOGLE_SETTINGS_ACCOUNT_DEFAULT.equals(account);
-    settingsGoogleDriveSync.setEnabled(hasAccount);
-    settingsGoogleDriveSync.setSummaryOn(
-        getString(R.string.google_settings_drive_sync_summary_on, account));
+    boolean hasAccount = !PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT.equals(account);
+    driveSync.setEnabled(hasAccount);
+    driveSync.setSummaryOn(
+        getString(R.string.settings_google_drive_sync_summary_on, account));
     if (uncheckDriveSync) {
-      settingsGoogleDriveSync.setChecked(false);
+      driveSync.setChecked(false);
     }
   }
 }

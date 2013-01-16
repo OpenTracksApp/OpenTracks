@@ -17,9 +17,9 @@ limitations under the License.
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
   android:title="@string/menu_settings" >
   <Preference
-    android:key="@string/google_settings_key"
+    android:key="@string/settings_google_key"
     android:persistent="false"
-    android:title="@string/google_settings_title" />
+    android:title="@string/settings_google" />
   <Preference
     android:key="@string/settings_map_key"
     android:persistent="false"
