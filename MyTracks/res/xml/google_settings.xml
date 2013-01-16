@@ -15,17 +15,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-  android:title="@string/google_settings_title" >
+  android:title="@string/settings_google" >
   <ListPreference
     android:defaultValue=""
-    android:key="@string/google_settings_account_key"
-    android:title="@string/google_settings_account_title" />
+    android:key="@string/google_account_key"
+    android:title="@string/settings_google_account_title" />
   <CheckBoxPreference
     android:defaultValue="false"
-    android:key="@string/google_settings_drive_sync_key"
-    android:title="@string/google_settings_drive_sync_title" />
+    android:key="@string/drive_sync_key"
+    android:title="@string/settings_google_drive_sync_title" />
   <CheckBoxPreference
     android:defaultValue="false"
-    android:key="@string/google_settings_maps_public_key"
-    android:title="@string/google_settings_maps_public_title" />
+    android:key="@string/default_map_public_key"
+    android:title="@string/settings_google_maps_public_title" />
 </PreferenceScreen>

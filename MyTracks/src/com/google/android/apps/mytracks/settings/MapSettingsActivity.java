@@ -41,9 +41,10 @@ public class MapSettingsActivity extends AbstractSettingsActivity {
 
   private static final String TAG = MapSettingsActivity.class.getSimpleName();
 
-  private EditTextPreference slowEditTextPreference;
-  private EditTextPreference mediumEditTextPreference;
-  private EditTextPreference percentageEditTextPreference;
+  private ListPreference trackColorModePreference;
+  private EditTextPreference slowPreference;
+  private EditTextPreference mediumPreference;
+  private EditTextPreference percentagePreference;
 
   @SuppressWarnings("deprecation")
   @Override
@@ -51,15 +52,33 @@ public class MapSettingsActivity extends AbstractSettingsActivity {
     super.onCreate(bundle);
     addPreferencesFromResource(R.xml.map_settings);
 
-    slowEditTextPreference = (EditTextPreference) findPreference(
-        getString(R.string.settings_map_slow_display_key));
-    mediumEditTextPreference = (EditTextPreference) findPreference(
-        getString(R.string.settings_map_medium_display_key));
-    percentageEditTextPreference = (EditTextPreference) findPreference(
-        getString(R.string.settings_map_percentage_display_key));
-
-    ListPreference trackColorModeListPreference = (ListPreference) findPreference(
+    trackColorModePreference = (ListPreference) findPreference(
         getString(R.string.track_color_mode_key));
+    slowPreference = (EditTextPreference) findPreference(
+        getString(R.string.settings_map_slow_display_key));
+    mediumPreference = (EditTextPreference) findPreference(
+        getString(R.string.settings_map_medium_display_key));
+    percentagePreference = (EditTextPreference) findPreference(
+        getString(R.string.settings_map_percentage_display_key));
+    
+    configTrackColorModePerference();
+    configSpeedPreference(slowPreference, R.string.track_color_mode_slow_key,
+        PreferencesUtils.TRACK_COLOR_MODE_SLOW_DEFAULT);
+    configSpeedPreference(mediumPreference, R.string.track_color_mode_medium_key,
+        PreferencesUtils.TRACK_COLOR_MODE_MEDIUM_DEFAULT);
+    configPercentagePreference();
+
+    updateSpeedSummary(slowPreference, R.string.track_color_mode_slow_key,
+        PreferencesUtils.TRACK_COLOR_MODE_SLOW_DEFAULT);
+    updateSpeedSummary(mediumPreference, R.string.track_color_mode_medium_key,
+        PreferencesUtils.TRACK_COLOR_MODE_MEDIUM_DEFAULT);
+    updatePercentageSummary();
+  }
+
+  /**
+   * Configures the track color mode preference.
+   */
+  private void configTrackColorModePerference() {
     OnPreferenceChangeListener listener = new OnPreferenceChangeListener() {
         @Override
       public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -67,52 +86,61 @@ public class MapSettingsActivity extends AbstractSettingsActivity {
         return true;
       }
     };
-    String trackColorModeValue = PreferencesUtils.getString(
+    String trackColorMode = PreferencesUtils.getString(
         this, R.string.track_color_mode_key, PreferencesUtils.TRACK_COLOR_MODE_DEFAULT);
-    configurePreference(trackColorModeListPreference,
+    configurePreference(trackColorModePreference,
         getResources().getStringArray(R.array.track_color_mode_options),
-        getResources().getStringArray(R.array.track_color_mode_values),
-        R.string.settings_map_track_color_mode_summary, trackColorModeValue, listener);
-
-    configureSpeedEditTextPreference(R.string.track_color_mode_slow_key);
-    configureSpeedEditTextPreference(R.string.track_color_mode_medium_key);
-    configurePercentageEditTextPreference();
-
-    updatePercentageSummary();
+        getResources().getStringArray(R.array.track_color_mode_values), trackColorMode, listener);
   }
 
   /**
-   * Configures the speed edit text preference.
+   * Configures the speed preference.
    * 
-   * @param keyId the key id
+   * @param preference the preference
+   * @param key the key 
+   * @param defaultValue the default value
    */
-  private void configureSpeedEditTextPreference(final int keyId) {
-    final EditTextPreference editTextPreference = keyId == R.string.track_color_mode_slow_key ? slowEditTextPreference
-        : mediumEditTextPreference;
-    editTextPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+  private void configSpeedPreference(
+      EditTextPreference preference, final int key, final int defaultValue) {
+    preference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
         @Override
-      public boolean onPreferenceChange(Preference preference, Object newValue) {
-        storeSpeedValue(keyId, (String) newValue);
-        updateSpeedSummary(keyId);
+      public boolean onPreferenceChange(Preference pref, Object newValue) {
+          
+        // Need to obtain the current min and max values  
+        int minValue;
+        int maxValue;
+        if (key == R.string.track_color_mode_slow_key) {
+          minValue = 0;
+          maxValue = PreferencesUtils.getInt(
+              MapSettingsActivity.this, R.string.track_color_mode_medium_key,
+              PreferencesUtils.TRACK_COLOR_MODE_MEDIUM_DEFAULT);
+        } else {
+          minValue = PreferencesUtils.getInt(
+              MapSettingsActivity.this, R.string.track_color_mode_slow_key,
+              PreferencesUtils.TRACK_COLOR_MODE_SLOW_DEFAULT);
+          maxValue = Integer.MAX_VALUE;
+        }
+        storeSpeedValue(key, minValue, maxValue, defaultValue, (String) newValue);
+        updateSpeedSummary(pref, key, defaultValue);
         return true;
       }
     });
-    editTextPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+    preference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
         @Override
-      public boolean onPreferenceClick(Preference preference) {
-        int value = getSpeedDisplayValue(keyId);
-        ((EditTextPreference) preference).getEditText().setText(String.valueOf(value));
+      public boolean onPreferenceClick(Preference pref) {
+        int value = getSpeedDisplayValue(key, defaultValue);
+        ((EditTextPreference) pref).getEditText().setText(String.valueOf(value));
         return true;
       }
     });
-    configureImeActionDone(editTextPreference);
+    configImeActionDone(preference);
   }
 
   /**
-   * Configures the percentage edit text preference.
+   * Configures the percentage preference.
    */
-  private void configurePercentageEditTextPreference() {
-    percentageEditTextPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+  private void configPercentagePreference() {
+    percentagePreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
         @Override
       public boolean onPreferenceChange(Preference preference, Object newValue) {
         String displayValue = (String) newValue;
@@ -132,7 +160,7 @@ public class MapSettingsActivity extends AbstractSettingsActivity {
         return true;
       }
     });
-    percentageEditTextPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+    percentagePreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
         @Override
       public boolean onPreferenceClick(Preference preference) {
         int value = PreferencesUtils.getInt(
@@ -142,7 +170,7 @@ public class MapSettingsActivity extends AbstractSettingsActivity {
         return true;
       }
     });
-    configureImeActionDone(percentageEditTextPreference);
+    configImeActionDone(percentagePreference);
   }
 
   /**
@@ -150,7 +178,7 @@ public class MapSettingsActivity extends AbstractSettingsActivity {
    * 
    * @param editTextPreference the edit text preference
    */
-  private void configureImeActionDone(final EditTextPreference editTextPreference) {
+  private void configImeActionDone(final EditTextPreference editTextPreference) {
     editTextPreference.getEditText()
         .setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -166,13 +194,6 @@ public class MapSettingsActivity extends AbstractSettingsActivity {
         });
   }
 
-  @Override
-  protected void onResume() {
-    super.onResume();
-    updateSpeedSummary(R.string.track_color_mode_slow_key);
-    updateSpeedSummary(R.string.track_color_mode_medium_key);
-  }
-
   /**
    * Updates the UI by the track color mode.
    * 
@@ -183,32 +204,54 @@ public class MapSettingsActivity extends AbstractSettingsActivity {
         getString(R.string.settings_map_track_color_mode_fixed_value));
     boolean isDynamicValue = trackColorMode.equals(
         getString(R.string.settings_map_track_color_mode_dynamic_value));
-    slowEditTextPreference.setEnabled(isFixedValue);
-    mediumEditTextPreference.setEnabled(isFixedValue);
-    percentageEditTextPreference.setEnabled(isDynamicValue);
+    if (isDynamicValue) {
+      trackColorModePreference.setSummary(R.string.settings_map_track_color_mode_dynamic_summary);
+    } else if (isFixedValue) {
+      trackColorModePreference.setSummary(R.string.settings_map_track_color_mode_fixed_summary);
+    } else {
+      trackColorModePreference.setSummary(R.string.settings_map_track_color_mode_single);
+    }
+    slowPreference.setEnabled(isFixedValue);
+    mediumPreference.setEnabled(isFixedValue);
+    percentagePreference.setEnabled(isDynamicValue);
   }
 
   /**
-   * Stores the speed value, always in metric units.
+   * Updates a speed summary.
+   * 
+   * @param preference the preference
+   * @param keyId the key id
+   * @param defaultValue the default value
+   */
+  private void updateSpeedSummary(Preference preference, int keyId, int defaultValue) {
+    boolean metric = PreferencesUtils.getBoolean(
+        this, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
+    int displayValue = getSpeedDisplayValue(keyId, defaultValue);
+    preference.setSummary(getString(
+        metric ? R.string.value_integer_kilometer_hour : R.string.value_integer_mile_hour,
+        displayValue));
+  }
+
+  /**
+   * Updates the percentage summary.
+   */
+  private void updatePercentageSummary() {
+    int value = PreferencesUtils.getInt(this, R.string.track_color_mode_percentage_key,
+        PreferencesUtils.TRACK_COLOR_MODE_PERCENTAGE_DEFAULT);
+    percentagePreference.setSummary(getString(R.string.settings_map_percentage_summary, value));
+  }
+
+  /**
+   * Stores a speed value, always in metric units.
    * 
    * @param keyId the key id
+   * @param minValue the min value
+   * @param maxValue the max value
+   * @param defaultValue the default value
    * @param displayValue the display value
    */
-  private void storeSpeedValue(int keyId, String displayValue) {
-    int maxValue;
-    int minValue;
-    int defaultValue;
-    if (keyId == R.string.track_color_mode_slow_key) {
-      minValue = 0;
-      maxValue = PreferencesUtils.getInt(this, R.string.track_color_mode_medium_key,
-          PreferencesUtils.TRACK_COLOR_MODE_MEDIUM_DEFAULT);
-      defaultValue = PreferencesUtils.TRACK_COLOR_MODE_SLOW_DEFAULT;
-    } else {
-      minValue = PreferencesUtils.getInt(
-          this, R.string.track_color_mode_slow_key, PreferencesUtils.TRACK_COLOR_MODE_SLOW_DEFAULT);
-      maxValue = Integer.MAX_VALUE;
-      defaultValue = PreferencesUtils.TRACK_COLOR_MODE_MEDIUM_DEFAULT;
-    }
+  private void storeSpeedValue(
+      int keyId, int minValue, int maxValue, int defaultValue, String displayValue) {
     int value;
     try {
       value = Integer.parseInt(displayValue);
@@ -231,46 +274,18 @@ public class MapSettingsActivity extends AbstractSettingsActivity {
   }
 
   /**
-   * Gets the speed display value, in metric or imperial depending on the
-   * preferred units.
+   * Gets a speed display value in metric or imperial depending on the preferred
+   * units.
    * 
    * @param keyId the key id
+   * @param defaultValue the default value
    */
-  private int getSpeedDisplayValue(int keyId) {
-    int defaultValue = keyId == R.string.track_color_mode_slow_key ? PreferencesUtils.TRACK_COLOR_MODE_SLOW_DEFAULT
-        : PreferencesUtils.TRACK_COLOR_MODE_MEDIUM_DEFAULT;
+  private int getSpeedDisplayValue(int keyId, int defaultValue) {
     int value = PreferencesUtils.getInt(this, keyId, defaultValue);
     if (!PreferencesUtils.getBoolean(
         this, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT)) {
       value = (int) (value * UnitConversions.KM_TO_MI);
     }
     return value;
-  }
-
-  /**
-   * Updates the speed summary.
-   * 
-   * @param keyId the key id
-   */
-  private void updateSpeedSummary(int keyId) {
-    EditTextPreference editTextPreference = keyId == R.string.track_color_mode_slow_key ? slowEditTextPreference
-        : mediumEditTextPreference;
-    boolean metric = PreferencesUtils.getBoolean(
-        this, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
-    int displayValue = getSpeedDisplayValue(keyId);
-    editTextPreference.setSummary(getString(
-        metric ? R.string.value_integer_kilometer_hour : R.string.value_integer_mile_hour,
-        displayValue));
-  }
-
-  /**
-   * Updates the percentage summary.
-   */
-  private void updatePercentageSummary() {
-    int value = PreferencesUtils.getInt(MapSettingsActivity.this,
-        R.string.track_color_mode_percentage_key,
-        PreferencesUtils.TRACK_COLOR_MODE_PERCENTAGE_DEFAULT);
-    percentageEditTextPreference.setSummary(getString(R.string.settings_map_percentage_summary)
-        + "\n" + getString(R.string.value_integer_percent, value));
   }
 }

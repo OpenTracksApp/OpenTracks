@@ -125,6 +125,28 @@ public class AbstractSettingsActivity extends PreferenceActivity {
     }
   }
 
+  protected void configurePreference(final Preference preference, final String[] options,
+      final String[] values, String value, final OnPreferenceChangeListener listener) {
+    if (options != null) {
+      ((ListPreference) preference).setEntries(options);
+    }
+    if (values != null) {
+      ((ListPreference) preference).setEntryValues(values);
+    }
+    preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+        @Override
+      public boolean onPreferenceChange(Preference pref, Object newValue) {
+        if (listener != null) {
+          listener.onPreferenceChange(pref, newValue);
+        }
+        return true;
+      }
+    });
+    if (listener != null) {
+      listener.onPreferenceChange(preference, value);
+    }
+  }
+  
   /**
    * Updates a preference when a stored value changes.
    * 

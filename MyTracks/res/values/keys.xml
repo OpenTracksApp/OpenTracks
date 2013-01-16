@@ -15,6 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
+
   <!-- Keys for persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
   <string name="allow_access_key">allowAccess</string>
   <string name="ant_bike_cadence_sensor_id_key">antBikeCadenceSensorId</string>
@@ -30,9 +31,9 @@ limitations under the License.
   <string name="chart_show_power_key">chartShowPower</string>
   <string name="chart_show_speed_key">chartShowSpeed</string>
   <string name="default_activity_key">defaultActivity</string>
-  <string name="google_settings_account_key">googleSettingsAccount</string>
-  <string name="google_settings_drive_sync_key">googleSettingsDriveSync</string>
-  <string name="google_settings_maps_public_key">googleSettingsMapsPublic</string>
+  <string name="default_map_public_key">defaultMapPublic</string>
+  <string name="drive_sync_key">driveSync</string>
+  <string name="google_account_key">googleAccount</string>
   <string name="max_recording_distance_key">maxRecordingDistance</string>
   <string name="metric_units_key">metricUnits</string>
   <string name="min_recording_distance_key">minRecordingDistance</string>
@@ -69,11 +70,11 @@ limitations under the License.
   <string name="selected_track_id_key">selectedTrackId</string>
 
   <!-- Keys for non-persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
-  <string name="google_settings_key">googleSettings</string>
   <string name="settings_backup_key">settingsBackup</string>
   <string name="settings_backup_now_key">settingsBackupNow</string>
   <string name="settings_backup_restore_key">settingsBackupRestore</string>
   <string name="settings_chart_key">settingsChart</string>
+  <string name="settings_google_key">settingsGoogle</string>
   <string name="settings_map_key">settingsMap</string>
   <string name="settings_map_medium_display_key">settingsMapMediumDisplay</string>
   <string name="settings_map_percentage_display_key">settingsMapPercentageDisplay</string>
@@ -91,4 +92,5 @@ limitations under the License.
   <string name="settings_sensor_root_key">settingsSensorRoot</string>
   <string name="settings_sharing_key">settingsSharing</string>
   <string name="settings_stats_key">settingsStats</string>
+
 </resources>
