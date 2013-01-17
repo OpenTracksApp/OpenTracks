@@ -961,7 +961,7 @@ public class EndToEndTestUtils {
    */
   public static void createWaypoint(int markerNumber) {
     findMenuItem(activityMytracks.getString(R.string.menu_markers), true);
-    if (markerNumber > 0) {
+    if (markerNumber > 0 && hasGpsSingal) {
       SOLO.waitForText(WAYPOINT_NAME);
       int actualMarkerNumber = SOLO.getCurrentListViews().get(0).getCount();
       Assert.assertEquals(markerNumber, actualMarkerNumber);

@@ -118,19 +118,20 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.trackDesc));
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_cancel));
 
-    // Check the markers.
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_markers), true);
+    if (EndToEndTestUtils.hasGpsSingal) {
+      // Check the markers.
+      EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_markers), true);
 
-    // The first marker.
-    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.WAYPOINT_NAME + 1));
-    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.WAYPOINT_TYPE + 1));
-    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.WAYPOINT_DESC + 1));
+      // The first marker.
+      assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.WAYPOINT_NAME + 1));
+      assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.WAYPOINT_TYPE + 1));
+      assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.WAYPOINT_DESC + 1));
 
-    // The second marker.
-    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.WAYPOINT_NAME + 2));
-    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.WAYPOINT_TYPE + 2));
-    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.WAYPOINT_DESC + 2));
-
+      // The second marker.
+      assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.WAYPOINT_NAME + 2));
+      assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.WAYPOINT_TYPE + 2));
+      assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.WAYPOINT_DESC + 2));
+    }
   }
 
   /**
