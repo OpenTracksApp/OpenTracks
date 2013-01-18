@@ -15,13 +15,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-  android:title="@string/settings_backup" >
+  android:title="@string/settings_backup_reset" >
   <Preference
-    android:key="@string/settings_backup_now_key"
+    android:key="@string/settings_backup_key"
     android:persistent="false"
     android:title="@string/settings_backup_now" />
   <Preference
-    android:key="@string/settings_backup_restore_key"
+    android:key="@string/settings_restore_key"
     android:persistent="false"
     android:title="@string/settings_backup_restore" />
+  <Preference
+    android:key="@string/settings_reset_key"
+    android:persistent="false"
+    android:title="@string/settings_reset" />
 </PreferenceScreen>

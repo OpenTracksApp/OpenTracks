@@ -1585,7 +1585,7 @@ limitations under the License.
   <string name="settings_not_while_recording"
     translation_description="In settings, the summary for an option that is not available during a
       track recording.">
-    Not available while recording a track.
+    Not available while recording a track
   </string>
   <string name="settings_show"
     translation_description="In settings, the section label to show additional values.
@@ -1594,19 +1594,18 @@ limitations under the License.
     Show
   </string>
 
-  <!-- Settings Backup -->
-  <string name="settings_backup"
-    translation_description="In the 'Settings' page, the option to change the data backup related
-      settings.
+  <!-- Settings Backup Reset -->
+  <string name="settings_backup_reset"
+    translation_description="In the 'Settings' page, the option backup and reset.
 
       Character limit: ~26 (1 line)">
-    Backup
+    Backup &amp; reset
   </string>
 
   <!-- Settings Backup Now -->
   <string name="settings_backup_now"
-    translation_description="In the 'Backup' settings, the option to backup to the external storage
-      now.
+    translation_description="In the 'Backup and reset' settings, the option to backup to the
+      external storage now.
 
       Character limit: ~26 (1 line)">
     Backup now
@@ -1616,15 +1615,15 @@ limitations under the License.
     Unable to backup.
   </string>
   <string name="settings_backup_now_progress_message"
-    translation_description="In the 'Backup' settings, after pressing the 'Backup now' option, the
-      progress message telling the user that it is writing all tracks and settings to the external
-      storage.">
+    translation_description="In the 'Backup and reset' settings, after pressing the 'Backup now'
+      option, the progress message telling the user that it is writing all tracks and settings to
+      the external storage.">
     Writing all tracks and settings&#8230;
   </string>
   <string name="settings_backup_now_summary"
-    translation_description="In the 'Backup' settings, the summary for the 'Backup now' option
-      explaining that all tracks and settings will be written to the external storage.">
-    Write a full copy of all your tracks and settings to the external storage.
+    translation_description="In the 'Backup and reset' settings, the summary for the 'Backup now'
+      option explaining that all tracks and settings will be written to the external storage.">
+    Write a full copy of all your tracks and settings to the external storage
   </string>
   <string name="settings_backup_now_success"
     translation_description="When backing up to the external storage, the success message">
@@ -1633,16 +1632,16 @@ limitations under the License.
 
   <!-- Settings Backup Restore -->
   <string name="settings_backup_restore"
-    translation_description="In the 'Backup' settings, the option to restore from the external
-      storage.
+    translation_description="In the 'Backup and reset' settings, the option to restore from the
+      external storage.
 
       Character limit: ~26 (1 line)">
     Restore now
   </string>
   <string name="settings_backup_restore_confirm_message"
-    translation_description="In the 'Backup' settings, after pressing the 'Restore now' option, the
-      message in the alert dialog asking the user to confirm that he wants to restore from a backup
-      and it will overwrite all the current tracks and settings.">
+    translation_description="In the 'Backup and reset' settings, after pressing the 'Restore now'
+      option, the message in the alert dialog asking the user to confirm that he wants to restore
+      from a backup and it will overwrite all the current tracks and settings.">
     Restoring a backup from the external storage will overwrite all your current tracks and
     settings.
   </string>
@@ -1651,25 +1650,26 @@ limitations under the License.
     Unable to restore from backup.
   </string>
   <string name="settings_backup_restore_no_backup"
-    translation_description="In the 'Backup' settings, after pressing the 'Restore now' option, the
-      message in the alert dialog informing the user that there is no backup to restore from.">
+    translation_description="In the 'Backup and reset' settings, after pressing the 'Restore now'
+      option, the message in the alert dialog informing the user that there is no backup to restore
+      from.">
     No backup found.
   </string>
   <string name="settings_backup_restore_progress_message"
-    translation_description="In the 'Backup' settings, after pressing the 'Restore now' option, the
-      progress message informing that My Tracks is reading all tracks and settings from the backup
-      on the external storage.">
+    translation_description="In the 'Backup and reset' settings, after pressing the 'Restore now'
+      option, the progress message informing that My Tracks is reading all tracks and settings from
+      the backup on the external storage.">
     Reading all tracks and settings&#8230;
   </string>
   <string name="settings_backup_restore_select_title"
-    translation_description="In the 'Backup' settings, after pressing the 'Restore now' option, the
-      title in the picker dialog asking the user to select a backup.">
+    translation_description="In the 'Backup and reset' settings, after pressing the 'Restore now'
+      option, the title in the picker dialog asking the user to select a backup.">
     Select a backup to restore
   </string>
   <string name="settings_backup_restore_summary"
-    translation_description="In the 'Backup' settings, the summary for the 'Restore now' option
-      explaining that it restores all tracks and settings from the external storage.">
-    Restore all tracks and settings from the external storage.
+    translation_description="In the 'Backup and reset' settings, the summary for the 'Restore now'
+      option explaining that it restores all tracks and settings from the external storage.">
+    Restore all tracks and settings from the external storage
   </string>
   <string name="settings_backup_restore_success"
     translation_description="When restoring from backup, the success message.">
@@ -1943,27 +1943,27 @@ limitations under the License.
 
   <!-- Settings Reset -->
   <string name="settings_reset"
-    translation_description="In the 'Settings' page, the option to reset everything to the defaults.
+    translation_description="In the 'Backup and reset' settings, the option to reset all settings to
+      the default values.
 
       Character limit: ~26 (1 line)">
     Reset
   </string>
   <string name="settings_reset_confirm_message"
-    translation_description="In the 'Settings' page, after pressing the 'Reset' option, the
-      confirmation dialog message informing the user that all settings will be reverted.">
-    All your settings will be erased and reverted to the default values. Saved tracks will be
-    preserved.
+    translation_description="In the 'Backup and reset' settings, after pressing the 'Reset' option,
+      the confirmation dialog message informing the user that all settings will be reverted.">
+    All settings will be erased and reverted to the default values. Saved tracks will be preserved.
   </string>
   <string name="settings_reset_done"
-    translation_description="In the 'Settings' page, after pressing the 'Reset' option, the
-      confirmation dialog informing the user that all settings have been reverted to their
-      defaults.">
-    All settings have been reverted to their defaults.
+    translation_description="In the 'Backup and reset' settings, after pressing the 'Reset' option,
+      the confirmation dialog informing the user that all settings have been reverted to the default
+      values.">
+    All settings have been reverted to the default values.
   </string>
   <string name="settings_reset_summary"
-    translation_description="In the 'Settings' page, the summary for the 'Reset' option explaining
-      reverting all the settings to the default values.">
-    Revert all your settings to the default values.
+    translation_description="In the 'Backup and reset' settings, the summary for the 'Reset' option
+      explaining it will revert all settings to the default values.">
+    Revert all your settings to the default values
   </string>
 
   <!-- Settings Sensor -->
@@ -2047,7 +2047,6 @@ limitations under the License.
       %1$s: sensor name. E.g., 'Polar Bluetooth'.">
    Connected to %1$s
   </string>
-  
   <string name="settings_sensor_type"
     translation_description="In the 'Sensor' settings, the picker to choose a sensor type.
 
@@ -2055,7 +2054,7 @@ limitations under the License.
     Sensor type
   </string>
   <string name="settings_sensor_type_ant"
-    translation_description="In the 'Sensor' settings, the option in the 'Sensor type' picker to 
+    translation_description="In the 'Sensor' settings, the option in the 'Sensor type' picker to
       choose an ANT+ sensor. Note that ANT+ is a radio standard.
 
       Character limit: ~20 (1 line)">
