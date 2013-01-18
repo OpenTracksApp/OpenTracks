@@ -52,7 +52,7 @@ public class AbstractSettingsActivity extends PreferenceActivity {
     preferenceManager.setSharedPreferencesMode(Context.MODE_PRIVATE);
 
     // Set up automatic preferences backup
-    backupPreferencesListener =  new BackupPreferencesListener(this);
+    backupPreferencesListener = new BackupPreferencesListener(this);
 
     preferenceManager.getSharedPreferences()
         .registerOnSharedPreferenceChangeListener(backupPreferencesListener);
@@ -79,15 +79,15 @@ public class AbstractSettingsActivity extends PreferenceActivity {
   /**
    * Configures a list preference.
    * 
-   * @param listPreference the preference
+   * @param listPreference the list preference
    * @param summary the summary array
    * @param options the options array
    * @param values the values array
    * @param value the value
    * @param listener optional listener
    */
-  protected void configureListPreference(ListPreference listPreference,
-      final String[] summary, final String[] options, final String[] values, String value,
+  protected void configureListPreference(ListPreference listPreference, final String[] summary,
+      final String[] options, final String[] values, String value,
       final OnPreferenceChangeListener listener) {
     listPreference.setEntryValues(values);
     listPreference.setEntries(options);
@@ -106,95 +106,17 @@ public class AbstractSettingsActivity extends PreferenceActivity {
       listener.onPreferenceChange(listPreference, value);
     }
   }
-  
-  /**
-   * Configures a preference.
-   * 
-   * @param preference the preference
-   * @param options the list of displayed options
-   * @param values the list of stored values
-   * @param summaryId the summary id
-   * @param value the stored value
-   * @param listener listener to invoke
-   */
-  @Deprecated
-  protected void configurePreference(final Preference preference, final String[] options,
-      final String[] values, final int summaryId, String value,
-      final OnPreferenceChangeListener listener) {
-    if (options != null) {
-      ((ListPreference) preference).setEntries(options);
-    }
-    if (values != null) {
-      ((ListPreference) preference).setEntryValues(values);
-    }
-    preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-        @Override
-      public boolean onPreferenceChange(Preference pref, Object newValue) {
-        updatePreferenceSummary(pref, options, values, summaryId, (String) newValue);
-        if (listener != null) {
-          listener.onPreferenceChange(pref, newValue);
-        }
-        return true;
-      }
-    });
-    updatePreferenceSummary(preference, options, values, summaryId, value);
-    if (listener != null) {
-      listener.onPreferenceChange(preference, value);
-    }
-  }
-  
-  /**
-   * Updates a preference when a stored value changes.
-   * 
-   * @param preference the preference
-   * @param options the list of displayed options
-   * @param values the list of stored values
-   * @param summaryId the summary id
-   * @param value the stored value
-   */
-  @Deprecated
-  private void updatePreferenceSummary(
-      Preference preference, String[] options, String[] values, int summaryId, String value) {
-    String option;
-    if (options != null && values != null) {
-      option = getOption(options, values, value);
-      if (option == null) {
-        option = getString(R.string.value_unknown);
-      }
-    } else {
-      option = value != null && value.length() != 0 ? value : getString(R.string.value_unknown);
-    }
-    String summary = getString(summaryId, option);
-    preference.setSummary(summary);
-  }
-
-  /**
-   * Gets the display option for a stored value.
-   * 
-   * @param options the list of the display options
-   * @param values the list of the stored values
-   * @param value the store value
-   */
-  @Deprecated
-  private String getOption(String[] options, String[] values, String value) {
-    for (int i = 0; i < values.length; i++) {
-      if (value.equals(values[i])) {
-        return options[i];
-      }
-    }
-    return null;
-  }
 
   /**
    * Update the preference summary.
    * 
    * @param preference the preference
    * @param summary the summary array
-   * @param values the value array
+   * @param values the values array
    * @param value the value
    */
   private void updatePreferenceSummary(
-      Preference preference, String[] summary,  String[] values, String value) {
+      Preference preference, String[] summary, String[] values, String value) {
     int index = getIndex(values, value);
     if (index == -1) {
       preference.setSummary(R.string.value_unknown);

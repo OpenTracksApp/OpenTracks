@@ -161,26 +161,26 @@ limitations under the License.
     <item>5000</item>
   </string-array>
   <string-array name="sensor_type_all_options">
-    <item>@string/value_none</item>
-    <item>@string/settings_sensor_type_ant</item>
     <item>@string/settings_sensor_type_polar</item>
     <item>@string/settings_sensor_type_zephyr</item>
+    <item>@string/settings_sensor_type_ant</item>
+    <item>@string/value_none</item>
   </string-array>
   <string-array name="sensor_type_all_values">
-    <item>@string/sensor_type_value_none</item>
-    <item>@string/sensor_type_value_ant</item>
     <item>@string/sensor_type_value_polar</item>
     <item>@string/sensor_type_value_zephyr</item>
+    <item>@string/sensor_type_value_ant</item>
+    <item>@string/sensor_type_value_none</item>    
   </string-array>
   <string-array name="sensor_type_bluetooth_options">
-    <item>@string/value_none</item>
     <item>@string/settings_sensor_type_polar</item>
     <item>@string/settings_sensor_type_zephyr</item>
+    <item>@string/value_none</item>
   </string-array>
   <string-array name="sensor_type_bluetooth_values">
-    <item>@string/sensor_type_value_none</item>
     <item>@string/sensor_type_value_polar</item>
     <item>@string/sensor_type_value_zephyr</item>
+    <item>@string/sensor_type_value_none</item>
   </string-array>
   <string-array name="track_color_mode_options">
     <item>@string/settings_map_track_color_mode_single</item>
