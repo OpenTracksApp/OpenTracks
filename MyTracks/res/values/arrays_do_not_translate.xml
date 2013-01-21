@@ -15,6 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
+
   <!-- Do not translate any arrays in this file. -->
   <string-array name="activity_types">
     <item>@string/activity_type_airplane</item>
@@ -160,31 +161,36 @@ limitations under the License.
     <item>5000</item>
   </string-array>
   <string-array name="sensor_type_all_options">
-    <item>@string/value_none</item>
-    <item>@string/settings_sensor_type_ant</item>
     <item>@string/settings_sensor_type_polar</item>
     <item>@string/settings_sensor_type_zephyr</item>
+    <item>@string/settings_sensor_type_ant</item>
+    <item>@string/value_none</item>
   </string-array>
   <string-array name="sensor_type_all_values">
-    <item>@string/sensor_type_value_none</item>
-    <item>@string/sensor_type_value_ant</item>
     <item>@string/sensor_type_value_polar</item>
     <item>@string/sensor_type_value_zephyr</item>
+    <item>@string/sensor_type_value_ant</item>
+    <item>@string/sensor_type_value_none</item>    
   </string-array>
   <string-array name="sensor_type_bluetooth_options">
-    <item>@string/value_none</item>
     <item>@string/settings_sensor_type_polar</item>
     <item>@string/settings_sensor_type_zephyr</item>
+    <item>@string/value_none</item>
   </string-array>
   <string-array name="sensor_type_bluetooth_values">
-    <item>@string/sensor_type_value_none</item>
     <item>@string/sensor_type_value_polar</item>
     <item>@string/sensor_type_value_zephyr</item>
+    <item>@string/sensor_type_value_none</item>
   </string-array>
   <string-array name="track_color_mode_options">
     <item>@string/settings_map_track_color_mode_single</item>
     <item>@string/settings_map_track_color_mode_fixed</item>
     <item>@string/settings_map_track_color_mode_dynamic</item>
+  </string-array>
+  <string-array name="track_color_mode_summary">
+    <item>@string/settings_map_track_color_mode_single</item>
+    <item>@string/settings_map_track_color_mode_fixed_summary</item>
+    <item>@string/settings_map_track_color_mode_dynamic_summary</item>
   </string-array>
   <string-array name="track_color_mode_values">
     <item>@string/settings_map_track_color_mode_single_value</item>
@@ -256,4 +262,5 @@ limitations under the License.
     <item>@string/waypoint_type_water_fountain</item>
     <item>@string/waypoint_type_waypoint</item>
   </string-array>
+
 </resources>

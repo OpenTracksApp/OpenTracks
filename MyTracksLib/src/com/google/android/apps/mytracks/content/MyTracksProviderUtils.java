@@ -228,6 +228,13 @@ public interface MyTracksProviderUtils {
   public long getLastTrackPointId(long trackId);
 
   /**
+   * Gets the first valid location for a track. Returns null if it doesn't exist.
+   * 
+   * @param trackId the track id
+   */
+  public Location getFirstValidTrackPoint(long trackId);
+  
+  /**
    * Gets the last valid location for a track. Returns null if it doesn't exist.
    * 
    * @param trackId the track id

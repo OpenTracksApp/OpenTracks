@@ -41,178 +41,224 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity {
     boolean metricUnits = PreferencesUtils.getBoolean(
         this, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
 
-    int voiceFrequencyValue = PreferencesUtils.getInt(
-        this, R.string.voice_frequency_key, PreferencesUtils.VOICE_FREQUENCY_DEFAULT);
-    ListPreference voiceFrequencyListPreference = (ListPreference) findPreference(
-        getString(R.string.voice_frequency_key));
-    configurePreference(voiceFrequencyListPreference,
-        StringUtils.getFrequencyOptions(this, metricUnits),
-        getResources().getStringArray(R.array.frequency_values),
-        R.string.settings_recording_voice_frequency_summary, String.valueOf(voiceFrequencyValue));
+    configFrequencyPreference(R.string.voice_frequency_key,
+        PreferencesUtils.VOICE_FREQUENCY_DEFAULT, R.array.frequency_values, metricUnits);
+    configFrequencyPreference(R.string.split_frequency_key,
+        PreferencesUtils.SPLIT_FREQUENCY_DEFAULT, R.array.frequency_values, metricUnits);
+    configTrackName();
+    configDefaultActivity();
+    configListPreference(R.string.min_recording_interval_key,
+        PreferencesUtils.MIN_RECORDING_INTERVAL_DEFAULT, R.array.min_recording_interval_values,
+        metricUnits);
+    configListPreference(R.string.min_recording_distance_key,
+        PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT, R.array.min_recording_distance_values,
+        metricUnits);
+    configListPreference(R.string.max_recording_distance_key,
+        PreferencesUtils.MAX_RECORDING_DISTANCE_DEFAULT, R.array.max_recording_distance_values,
+        metricUnits);
+    configListPreference(R.string.min_required_accuracy_key,
+        PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT, R.array.min_required_accuracy_values,
+        metricUnits);
+    configListPreference(R.string.auto_resume_track_timeout_key,
+        PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_DEFAULT,
+        R.array.auto_resume_track_timeout_values, metricUnits);
+  }
 
-    int splitFrequencyValue = PreferencesUtils.getInt(
-        this, R.string.split_frequency_key, PreferencesUtils.SPLIT_FREQUENCY_DEFAULT);
-    ListPreference splitFrequencyListPreference = (ListPreference) findPreference(
-        getString(R.string.split_frequency_key));
-    configurePreference(splitFrequencyListPreference,
-        StringUtils.getFrequencyOptions(this, metricUnits),
-        getResources().getStringArray(R.array.frequency_values),
-        R.string.settings_recording_split_frequency_summary, String.valueOf(splitFrequencyValue));
+  private void configFrequencyPreference(
+      int key, int defaultValue, int valueArray, boolean metricUnits) {
+    ListPreference preference = (ListPreference) findPreference(getString(key));
+    int value = PreferencesUtils.getInt(this, key, defaultValue);
+    String[] values = getResources().getStringArray(valueArray);
+    String[] options = StringUtils.getFrequencyOptions(this, metricUnits);
+    configureListPreference(preference, options, options, values, String.valueOf(value), null);
+  }
 
-    String trackNameValue = PreferencesUtils.getString(
+  private void configTrackName() {
+    ListPreference preference = (ListPreference) findPreference(getString(R.string.track_name_key));
+    String value = PreferencesUtils.getString(
         this, R.string.track_name_key, PreferencesUtils.TRACK_NAME_DEFAULT);
-    ListPreference trackNameListPreference = (ListPreference) findPreference(
-        getString(R.string.track_name_key));
-    configurePreference(trackNameListPreference,
-        getResources().getStringArray(R.array.track_name_options),
-        getResources().getStringArray(R.array.track_name_values),
-        R.string.settings_recording_track_name_summary, trackNameValue);
+    String[] values = getResources().getStringArray(R.array.track_name_values);
+    String[] options = getResources().getStringArray(R.array.track_name_options);
+    configureListPreference(preference, options, options, values, value, null);
+  }
 
-    String defaultActivityValue = PreferencesUtils.getString(
+  private void configDefaultActivity() {
+    Preference preference = findPreference(getString(R.string.default_activity_key));
+    String value = PreferencesUtils.getString(
         this, R.string.default_activity_key, PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT);
-    Preference defaultActivityPreference = findPreference(getString(R.string.default_activity_key));
-    configurePreference(defaultActivityPreference, null, null,
-        R.string.settings_recording_default_activity_summary, defaultActivityValue);
+    preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+        @Override
+      public boolean onPreferenceChange(Preference pref, Object newValue) {
+        String stringValue = (String) newValue;
+        pref.setSummary(stringValue != null
+            && !stringValue.equals(PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT) ? stringValue
+            : getString(R.string.value_unknown));
+        return true;
+      }
+    });
+    preference.setSummary(
+        value != null && !value.equals(PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT) ? value
+            : getString(R.string.value_unknown));
+  }
 
-    int minRecordingIntervalValue = PreferencesUtils.getInt(
-        this, R.string.min_recording_interval_key, PreferencesUtils.MIN_RECORDING_INTERVAL_DEFAULT);
-    ListPreference minRecordingIntervalListPreference = (ListPreference) findPreference(
-        getString(R.string.min_recording_interval_key));
-    configurePreference(minRecordingIntervalListPreference, getMinRecordingIntervalOptions(),
-        getResources().getStringArray(R.array.min_recording_interval_values),
-        R.string.settings_recording_min_recording_interval_summary,
-        String.valueOf(minRecordingIntervalValue));
-
-    int minRecordingDistanceValue = PreferencesUtils.getInt(
-        this, R.string.min_recording_distance_key, PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT);
-    ListPreference minRecordingDistanceListPreference = (ListPreference) findPreference(
-        getString(R.string.min_recording_distance_key));
-    configurePreference(minRecordingDistanceListPreference,
-        getMinRecordingDistanceOptions(metricUnits),
-        getResources().getStringArray(R.array.min_recording_distance_values),
-        R.string.settings_recording_min_recording_distance_summary,
-        String.valueOf(minRecordingDistanceValue));
-
-    int maxRecordingDistanceValue = PreferencesUtils.getInt(
-        this, R.string.max_recording_distance_key, PreferencesUtils.MAX_RECORDING_DISTANCE_DEFAULT);
-    ListPreference maxRecordingDistanceListPreference = (ListPreference) findPreference(
-        getString(R.string.max_recording_distance_key));
-    configurePreference(maxRecordingDistanceListPreference,
-        getMaxRecordingDistanceOptions(metricUnits),
-        getResources().getStringArray(R.array.max_recording_distance_values),
-        R.string.settings_recording_max_recording_distance_summary,
-        String.valueOf(maxRecordingDistanceValue));
-
-    int minRequiredAcuracyValue = PreferencesUtils.getInt(
-        this, R.string.min_required_accuracy_key, PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT);
-    ListPreference minRequiredAccuracyListPreference = (ListPreference) findPreference(
-        getString(R.string.min_required_accuracy_key));
-    configurePreference(minRequiredAccuracyListPreference,
-        getMinRequiredAccuracyOptions(metricUnits),
-        getResources().getStringArray(R.array.min_required_accuracy_values),
-        R.string.settings_recording_min_required_accuracy_summary,
-        String.valueOf(minRequiredAcuracyValue));
-
-    int autoResumeTrackTimeoutValue = PreferencesUtils.getInt(this,
-        R.string.auto_resume_track_timeout_key, PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_DEFAULT);
-    ListPreference autoResumeTrackTimeoutListPreference = (ListPreference) findPreference(
-        getString(R.string.auto_resume_track_timeout_key));
-    configurePreference(autoResumeTrackTimeoutListPreference, getAutoResumeTrackTimeoutOptions(),
-        getResources().getStringArray(R.array.auto_resume_track_timeout_values),
-        R.string.settings_recording_auto_resume_track_timeout_summary,
-        String.valueOf(autoResumeTrackTimeoutValue));
+  private void configListPreference(
+      int key, int defaultValue, int valueArray, boolean metricUnits) {
+    ListPreference preference = (ListPreference) findPreference(getString(key));
+    int value = PreferencesUtils.getInt(this, key, defaultValue);
+    String[] values = getResources().getStringArray(valueArray);
+    String[] options = new String[values.length];
+    String[] summary = new String[values.length];
+    switch (key) {
+      case R.string.min_recording_interval_key:
+        setMinRecordingIntervalSummaryAndOptions(summary, options, values);
+        break;
+      case R.string.min_recording_distance_key:
+        setMinRecordingDistanceSummaryAndOptions(summary, options, values, metricUnits);
+        break;
+      case R.string.max_recording_distance_key:
+        setMaxRecordingDistanceSummaryAndOptions(summary, options, values, metricUnits);
+        break;
+      case R.string.min_required_accuracy_key:
+        setMinRequiredAccuracySummaryAndOptions(summary, options, values, metricUnits);
+        break;
+      case R.string.auto_resume_track_timeout_key:
+        setAutoResumeTrackTimeoutSummaryAndOptions(summary, options, values);
+        break;
+      default:
+        return;
+    }
+    configureListPreference(preference, summary, options, values, String.valueOf(value), null);
   }
 
   /**
-   * Gets the min recording interval display options.
+   * Sets the min recording interval summary and options.
+   * 
+   * @param summary the summary
+   * @param options the options
+   * @param values the values
    */
-  private String[] getMinRecordingIntervalOptions() {
-    String[] values = getResources().getStringArray(R.array.min_recording_interval_values);
-    String[] options = new String[values.length];
+  private void setMinRecordingIntervalSummaryAndOptions(
+      String[] summary, String[] options, String[] values) {
     for (int i = 0; i < values.length; i++) {
       int value = Integer.parseInt(values[i]);
       switch (value) {
         case PreferencesUtils.MIN_RECORDING_INTERVAL_ADAPT_BATTERY_LIFE:
           options[i] = getString(R.string.value_adapt_battery_life);
+          summary[i] = options[i];
           break;
         case PreferencesUtils.MIN_RECORDING_INTERVAL_ADAPT_ACCURACY:
           options[i] = getString(R.string.value_adapt_accuracy);
+          summary[i] = options[i];
           break;
         case PreferencesUtils.MIN_RECORDING_INTERVAL_DEFAULT:
           options[i] = getString(R.string.value_smallest_recommended);
+          summary[i] = getString(R.string.value_smallest);
           break;
         default:
           options[i] = value < 60 ? getString(R.string.value_integer_second, value)
               : getString(R.string.value_integer_minute, value / 60);
+          summary[i] = getString(
+              R.string.settings_recording_location_frequency_summary, options[i]);
       }
     }
-    return options;
   }
 
   /**
-   * Gets the min recording distance display options.
+   * Sets the min recording distance summary and options.
    * 
-   * @param metricUnits true to display metric units
+   * @param summary the summary
+   * @param options the options
+   * @param values the values
+   * @param metricUnits true for metric units
    */
-  private String[] getMinRecordingDistanceOptions(boolean metricUnits) {
-    String[] values = getResources().getStringArray(R.array.min_recording_distance_values);
-    String[] options = new String[values.length];
+  private void setMinRecordingDistanceSummaryAndOptions(
+      String[] summary, String[] options, String[] values, boolean metricUnits) {
     for (int i = 0; i < values.length; i++) {
       int value = Integer.parseInt(values[i]);
+      String displayValue;
       if (metricUnits) {
-        options[i] = getString(
-            value == PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT ? R.string.value_integer_meter_recommended
-                : R.string.value_integer_meter, value);
+        displayValue = getString(R.string.value_integer_meter, value);
+        switch (value) {
+          case PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT:
+            options[i] = getString(R.string.value_integer_meter_recommended, value);
+            break;
+          default:
+            options[i] = displayValue;
+        }
       } else {
         int feet = (int) (value * UnitConversions.M_TO_FT);
-        options[i] = getString(
-            value == PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT ? R.string.value_integer_feet_recommended
-                : R.string.value_integer_feet, feet);
+        displayValue = getString(R.string.value_integer_feet, feet);
+        switch (value) {
+          case PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT:
+            options[i] = getString(R.string.value_integer_feet_recommended, feet);
+            break;
+          default:
+            options[i] = displayValue;
+        }
       }
+      summary[i] = getString(R.string.settings_recording_location_frequency_summary, displayValue);
     }
-    return options;
   }
 
   /**
-   * Gets the max recording distance display options.
+   * Sets the max recording distance summary and options.
    * 
-   * @param metricUnits true to display metric units
+   * @param summary the summary
+   * @param options the options
+   * @param values the values
+   * @param metricUnits true for metric units
    */
-  private String[] getMaxRecordingDistanceOptions(boolean metricUnits) {
-    String[] values = getResources().getStringArray(R.array.max_recording_distance_values);
-    String[] options = new String[values.length];
+  private void setMaxRecordingDistanceSummaryAndOptions(
+      String[] summary, String[] options, String[] values, boolean metricUnits) {
     for (int i = 0; i < values.length; i++) {
       int value = Integer.parseInt(values[i]);
+      String displayValue;
       if (metricUnits) {
-        options[i] = getString(
-            value == PreferencesUtils.MAX_RECORDING_DISTANCE_DEFAULT ? R.string.value_integer_meter_recommended
-                : R.string.value_integer_meter, value);
+        displayValue = getString(R.string.value_integer_meter, value);
+        switch (value) {
+          case PreferencesUtils.MAX_RECORDING_DISTANCE_DEFAULT:
+            options[i] = getString(R.string.value_integer_meter_recommended, value);
+            break;
+          default:
+            options[i] = displayValue;
+        }
       } else {
         int feet = (int) (value * UnitConversions.M_TO_FT);
         if (feet < 2000) {
-          options[i] = getString(
-              value == PreferencesUtils.MAX_RECORDING_DISTANCE_DEFAULT ? R.string.value_integer_feet_recommended
-                  : R.string.value_integer_feet, feet);
+          displayValue = getString(R.string.value_integer_feet, feet);
+          switch (value) {
+            case PreferencesUtils.MAX_RECORDING_DISTANCE_DEFAULT:
+              options[i] = getString(R.string.value_integer_feet_recommended, feet);
+              break;
+            default:
+              options[i] = displayValue;
+          }
         } else {
           double mile = feet * UnitConversions.FT_TO_MI;
-          options[i] = getString(R.string.value_float_mile, mile);
+          displayValue = getString(R.string.value_float_mile, mile);
+          options[i] = displayValue;
         }
       }
+      summary[i] = getString(
+          R.string.settings_recording_max_recording_distance_summary, displayValue);
     }
-    return options;
   }
 
   /**
-   * Gets the min required accuracy display options.
+   * Sets the min required accuracy summary and options.
    * 
-   * @param metricUnits true to display metric units
+   * @param summary the summary
+   * @param options the options
+   * @param values the values
+   * @param metricUnits true for metric units
    */
-  private String[] getMinRequiredAccuracyOptions(boolean metricUnits) {
-    String[] values = getResources().getStringArray(R.array.min_required_accuracy_values);
-    String[] options = new String[values.length];
+  private void setMinRequiredAccuracySummaryAndOptions(
+      String[] summary, String[] options, String[] values, boolean metricUnits) {
     for (int i = 0; i < values.length; i++) {
       int value = Integer.parseInt(values[i]);
+      String displayValue;
       if (metricUnits) {
+        displayValue = getString(R.string.value_integer_meter, value);
         switch (value) {
           case PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT:
             options[i] = getString(R.string.value_integer_meter_recommended, value);
@@ -224,11 +270,12 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity {
             options[i] = getString(R.string.value_integer_meter_poor_gps, value);
             break;
           default:
-            options[i] = getString(R.string.value_integer_meter, value);
+            options[i] = displayValue;
         }
       } else {
         int feet = (int) (value * UnitConversions.M_TO_FT);
         if (feet < 2000) {
+          displayValue = getString(R.string.value_integer_feet, feet);
           switch (value) {
             case PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT:
               options[i] = getString(R.string.value_integer_feet_recommended, feet);
@@ -237,38 +284,52 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity {
               options[i] = getString(R.string.value_integer_feet_excellent_gps, feet);
               break;
             default:
-              options[i] = getString(R.string.value_integer_feet, feet);
+              options[i] = displayValue;
           }
         } else {
           double mile = feet * UnitConversions.FT_TO_MI;
-          options[i] = getString(
-              value == PreferencesUtils.MIN_REQUIRED_ACCURACY_POOR ? R.string.value_float_mile_poor_gps
-                  : R.string.value_float_mile, mile);
+          displayValue = getString(R.string.value_float_mile, mile);
+          switch (value) {
+            case PreferencesUtils.MIN_REQUIRED_ACCURACY_POOR:
+              options[i] = getString(R.string.value_float_mile_poor_gps, mile);
+              break;
+            default:
+              options[i] = displayValue;
+          }
         }
       }
+      summary[i] = getString(
+          R.string.settings_recording_min_required_accuracy_summary, displayValue);
     }
-    return options;
   }
 
   /**
-   * Gets the auto resume track timeout display options.
+   * Sets the auto resume track timeout summary and options.
+   * 
+   * @param summary the summary
+   * @param options the options
+   * @param values the values
    */
-  private String[] getAutoResumeTrackTimeoutOptions() {
-    String[] values = getResources().getStringArray(R.array.auto_resume_track_timeout_values);
-    String[] options = new String[values.length];
+  private void setAutoResumeTrackTimeoutSummaryAndOptions(
+      String[] summary, String[] options, String[] values) {
     for (int i = 0; i < values.length; i++) {
       int value = Integer.parseInt(values[i]);
       switch (value) {
         case PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_NEVER:
           options[i] = getString(R.string.value_never);
+          summary[i] = getString(
+              R.string.settings_recording_auto_resume_track_timeout_never_summary);
           break;
         case PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_ALWAYS:
           options[i] = getString(R.string.value_always);
+          summary[i] = getString(
+              R.string.settings_recording_auto_resume_track_timeout_always_summary);
           break;
         default:
           options[i] = getString(R.string.value_integer_minute, value);
+          summary[i] = getString(
+              R.string.settings_recording_auto_resume_track_timeout_summary, options[i]);
       }
     }
-    return options;
   }
 }

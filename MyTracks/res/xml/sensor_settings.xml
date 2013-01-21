@@ -23,7 +23,7 @@ limitations under the License.
     android:title="@string/settings_sensor_type" />
   <PreferenceCategory
     android:key="@string/settings_sensor_bluetooth_key"
-    android:title="@string/settings_sensor_bluetooth_options" >
+    android:title="@string/settings_sensor_bluetooth" >
     <Preference
       android:key="@string/settings_sensor_bluetooth_pairing_key"
       android:persistent="false"
@@ -36,7 +36,7 @@ limitations under the License.
   </PreferenceCategory>
   <PreferenceCategory
     android:key="@string/settings_sensor_ant_key"
-    android:title="@string/settings_sensor_ant_options" >
+    android:title="@string/settings_sensor_type_ant" >
     <Preference
       android:key="@string/settings_sensor_ant_reset_heart_rate_monitor_key"
       android:persistent="false"

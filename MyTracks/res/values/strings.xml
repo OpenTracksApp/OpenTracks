@@ -1585,7 +1585,7 @@ limitations under the License.
   <string name="settings_not_while_recording"
     translation_description="In settings, the summary for an option that is not available during a
       track recording.">
-    Not available while recording a track.
+    Not available while recording a track
   </string>
   <string name="settings_show"
     translation_description="In settings, the section label to show additional values.
@@ -1594,19 +1594,18 @@ limitations under the License.
     Show
   </string>
 
-  <!-- Settings Backup -->
-  <string name="settings_backup"
-    translation_description="In the 'Settings' page, the option to change the data backup related
-      settings.
+  <!-- Settings Backup Reset -->
+  <string name="settings_backup_reset"
+    translation_description="In the 'Settings' page, the option backup and reset.
 
       Character limit: ~26 (1 line)">
-    Backup
+    Backup &amp; reset
   </string>
 
   <!-- Settings Backup Now -->
   <string name="settings_backup_now"
-    translation_description="In the 'Backup' settings, the option to backup to the external storage
-      now.
+    translation_description="In the 'Backup and reset' settings, the option to backup to the
+      external storage now.
 
       Character limit: ~26 (1 line)">
     Backup now
@@ -1616,15 +1615,15 @@ limitations under the License.
     Unable to backup.
   </string>
   <string name="settings_backup_now_progress_message"
-    translation_description="In the 'Backup' settings, after pressing the 'Backup now' option, the
-      progress message telling the user that it is writing all tracks and settings to the external
-      storage.">
+    translation_description="In the 'Backup and reset' settings, after pressing the 'Backup now'
+      option, the progress message telling the user that it is writing all tracks and settings to
+      the external storage.">
     Writing all tracks and settings&#8230;
   </string>
   <string name="settings_backup_now_summary"
-    translation_description="In the 'Backup' settings, the summary for the 'Backup now' option
-      explaining that all tracks and settings will be written to the external storage.">
-    Write a full copy of all your tracks and settings to the external storage.
+    translation_description="In the 'Backup and reset' settings, the summary for the 'Backup now'
+      option explaining that all tracks and settings will be written to the external storage.">
+    Write a full copy of all your tracks and settings to the external storage
   </string>
   <string name="settings_backup_now_success"
     translation_description="When backing up to the external storage, the success message">
@@ -1633,16 +1632,16 @@ limitations under the License.
 
   <!-- Settings Backup Restore -->
   <string name="settings_backup_restore"
-    translation_description="In the 'Backup' settings, the option to restore from the external
-      storage.
+    translation_description="In the 'Backup and reset' settings, the option to restore from the
+      external storage.
 
       Character limit: ~26 (1 line)">
     Restore now
   </string>
   <string name="settings_backup_restore_confirm_message"
-    translation_description="In the 'Backup' settings, after pressing the 'Restore now' option, the
-      message in the alert dialog asking the user to confirm that he wants to restore from a backup
-      and it will overwrite all the current tracks and settings.">
+    translation_description="In the 'Backup and reset' settings, after pressing the 'Restore now'
+      option, the message in the alert dialog asking the user to confirm that he wants to restore
+      from a backup and it will overwrite all the current tracks and settings.">
     Restoring a backup from the external storage will overwrite all your current tracks and
     settings.
   </string>
@@ -1651,25 +1650,26 @@ limitations under the License.
     Unable to restore from backup.
   </string>
   <string name="settings_backup_restore_no_backup"
-    translation_description="In the 'Backup' settings, after pressing the 'Restore now' option, the
-      message in the alert dialog informing the user that there is no backup to restore from.">
+    translation_description="In the 'Backup and reset' settings, after pressing the 'Restore now'
+      option, the message in the alert dialog informing the user that there is no backup to restore
+      from.">
     No backup found.
   </string>
   <string name="settings_backup_restore_progress_message"
-    translation_description="In the 'Backup' settings, after pressing the 'Restore now' option, the
-      progress message informing that My Tracks is reading all tracks and settings from the backup
-      on the external storage.">
+    translation_description="In the 'Backup and reset' settings, after pressing the 'Restore now'
+      option, the progress message informing that My Tracks is reading all tracks and settings from
+      the backup on the external storage.">
     Reading all tracks and settings&#8230;
   </string>
   <string name="settings_backup_restore_select_title"
-    translation_description="In the 'Backup' settings, after pressing the 'Restore now' option, the
-      title in the picker dialog asking the user to select a backup.">
+    translation_description="In the 'Backup and reset' settings, after pressing the 'Restore now'
+      option, the title in the picker dialog asking the user to select a backup.">
     Select a backup to restore
   </string>
   <string name="settings_backup_restore_summary"
-    translation_description="In the 'Backup' settings, the summary for the 'Restore now' option
-      explaining that it restores all tracks and settings from the external storage.">
-    Restore all tracks and settings from the external storage.
+    translation_description="In the 'Backup and reset' settings, the summary for the 'Restore now'
+      option explaining that it restores all tracks and settings from the external storage.">
+    Restore all tracks and settings from the external storage
   </string>
   <string name="settings_backup_restore_success"
     translation_description="When restoring from backup, the success message.">
@@ -1820,73 +1820,84 @@ limitations under the License.
 
   <!-- Settings Recording -->
   <string name="settings_recording"
-    translation_description="In the 'Settings' page, the option to change the track recording
-      settings.
+    translation_description="In the 'Settings' page, the option to change the recording settings.
 
       Character limit: ~26 (1 line)">
     Recording
   </string>
+  <string name="settings_recording_auto_resume_track_timeout_always_summary"
+    translation_description="In the 'Recording' settings, the summary for the 'Auto-resume' setting
+      when 'Always' is selected.">
+    Always resume a recording after reboot
+  </string>
+  <string name="settings_recording_auto_resume_track_timeout_never_summary"
+    translation_description="In the 'Recording' settings, the summary for the 'Auto-resume' setting
+      when 'Never' is selected.">
+    Never resume a recording after reboot
+  </string>
+  <string name="settings_recording_auto_resume_track_timeout_summary"
+    translation_description="In the 'Recording' settings, the summary for the 'Auto-resume' setting
+      when a time value is selected.
+
+      %1$s time value. E.g., '5 min'.">
+    Resume a recording after reboot if the last recorded loation was within the last %1$s
+  </string>
   <string name="settings_recording_auto_resume_track_timeout_title"
-    translation_description="In the 'Recording' settings, the title to configure resuming a
-      recording track after reboot.
+    translation_description="In the 'Recording' settings, the title to configure automatically
+      resuming a recording after reboot.
 
       Character limit: ~23 (1 line)">
     Auto-resume
   </string>
-  <string name="settings_recording_auto_resume_track_timeout_summary"
-    translation_description="In the 'Recording' settings, the summary for the 'Auto-resume' setting.
-      Occasionaly, phones will reboot due to crashes or users would need to change battery during a
-      long recording. My Tracks will resume a recording after reboot if it was recording beforehand
-      and that the last recorded time is recent, within certain minutes.">
-    Recording is resumed after reboot if the last recorded time is within this.
-  </string>
   <string name="settings_recording_default_activity_title"
     translation_description="In the 'Recording' settings, the title to configure the default
-      activity type for a new track.
+      activity type for a new track. E.g., 'hiking'.
 
       Character limit: ~23 (1 line)">
-    Default activity
+    Default activity type
   </string>
-  <string name="settings_recording_default_activity_summary"
-    translation_description="In the 'Recording' settings, the summary for the 'Default activity'
-      setting.">
-    Default activity type for a new track.
+  <string name="settings_recording_location_frequency_summary"
+    translation_description="In the 'Recording' settings, the summary for how frequent a location
+      should be recorded.
+
+      %1$s distance or time. E.g., '5 m' or '1 s'.">
+    %1$s between recorded locations
+  </string>
+  <string name="settings_recording_max_recording_distance_summary"
+    translation_description="In the 'Recording' settings, the summary for the 'Max distance'
+      setting.
+
+      %1$s distance value. E.g., '5 m'.">
+    A new segment is created if the distance between two locations is greater than %1$s
   </string>
   <string name="settings_recording_max_recording_distance_title"
     translation_description="In the 'Recording' settings, the title to configure the maximum
-      distance.
+      distance between 2 locations in a segment. A new segment is created if the distance between 2
+      locations is greater than this value.
 
       Character limit: ~23 (1 line)">
     Max distance
   </string>
-  <string name="settings_recording_max_recording_distance_summary"
-    translation_description="In the 'Recording' settings, the summary for the 'Max distance'
-      setting.">
-    Maximum distance between locations in the same segment.
-  </string>
   <string name="settings_recording_min_recording_distance_title"
-    translation_description="In the 'Recording' settings, the title to configure the minimum
-      distance.
+    translation_description="In the 'Recording' settings, the title to configure the distance
+      between two recorded locations.
 
       Character limit: ~23 (1 line)">
-    Min distance
-  </string>
-  <string name="settings_recording_min_recording_distance_summary"
-    translation_description="In the 'Recording' settings, the summary for the 'Min distance'
-      setting.">
-    Minimum distance between recorded locations.
+    Recording distance interval
   </string>
   <string name="settings_recording_min_recording_interval_title"
     translation_description="In the 'Recording' settings, the title to configure the time between
-      two GPS locations.
+      two recorded locations.
 
       Character limit: ~23 (1 line)">
-    Location frequency
+    Recording time interval
   </string>
-  <string name="settings_recording_min_recording_interval_summary"
-    translation_description="In the 'Recording' settings, the summary for the 'Location frequency'
-      setting.">
-    Time between two GPS locations.
+  <string name="settings_recording_min_required_accuracy_summary"
+    translation_description="In the 'Recording' settings, the summary for the 'GPS accuracy'
+      setting.
+
+      %1$s distance value. E.g., '10 m'.">
+    Location is ignored if its accuracy is less than %1$s
   </string>
   <string name="settings_recording_min_required_accuracy_title"
     translation_description="In the 'Recording' settings, the title to configure the GPS accuracy.
@@ -1894,211 +1905,173 @@ limitations under the License.
       Character limit: ~23 (1 line)">
     GPS accuracy
   </string>
-  <string name="settings_recording_min_required_accuracy_summary"
-    translation_description="In the 'Recording' settings, the summary for the 'GPS accuracy'
-      setting..">
-    GPS location is ignored if it is not this accurate.
-  </string>
-  <string name="settings_recording_split_frequency_summary"
-    translation_description="In the 'Recording' settings, the summary for the 'Split frequency'
-      setting.">
-    Time/distance between two split markers.
-  </string>
   <string name="settings_recording_track_name_date_iso_8601_option"
-    translation_description="In the 'Recording' settings, the option in the 'Track name' setting
-      to use the track starting time in the ISO-8601 format as the track name.
+    translation_description="In the 'Recording' settings, the option in the 'Default track name'
+      setting to use the track starting time in the ISO-8601 format as the default track name.
 
       Character limit: ~20 (1 line)">
     Date (ISO 8601)
   </string>
   <string name="settings_recording_track_name_date_local_option"
-    translation_description="In the 'Recording' settings, the option in the 'Track name' setting to
-      use the track starting time in the local default format as the track name.
+    translation_description="In the 'Recording' settings, the option in the 'Defaul track name'
+     setting to use the track starting time in the local format as the default track name.
 
       Character limit: ~20 (1 line)">
     Date (local)
   </string>
   <string name="settings_recording_track_name_location_option"
-    translation_description="In the 'Recording' settings, the option in the 'Track name' setting to
-      use the track location as the track name.
+    translation_description="In the 'Recording' settings, the option in the 'Defaul track name'
+      setting to use the track starting location as the default track name.
 
       Character limit: ~20 (1 line)">
     Location
   </string>
   <string name="settings_recording_track_name_number_option"
-    translation_description="In the 'Recording' settings, the option in the 'Track name' setting to
-      use a number as the track name.
+    translation_description="In the 'Recording' settings, the option in the 'Default track name'
+      setting to use number as the default track name.
 
       Character limit: ~20 (1 line)">
     Number
   </string>
   <string name="settings_recording_track_name_title"
-    translation_description="In the 'Recording' settings, the title to configure the way to name a
-      new track.
+    translation_description="In the 'Recording' settings, the option to configure how the default
+      track name is named.
 
       Character limit: ~23 (1 line)">
-    Track name
-  </string>
-  <string name="settings_recording_track_name_summary"
-    translation_description="In the 'Recording' settings, the summary for the 'Track name'
-      setting.">
-    Way to name a new track.
-  </string>
-  <string name="settings_recording_voice_frequency_summary"
-    translation_description="In the 'Recording' settings, the summary for the 'Voice frequency'
-      setting.">
-    Time/distance between two voice announcements.
+    Default track name
   </string>
 
   <!-- Settings Reset -->
   <string name="settings_reset"
-    translation_description="In the 'Settings' page, the option to reset everything to the defaults.
+    translation_description="In the 'Backup and reset' settings, the option to reset all settings to
+      the default values.
 
       Character limit: ~26 (1 line)">
     Reset
   </string>
   <string name="settings_reset_confirm_message"
-    translation_description="In the 'Settings' page, after pressing the 'Reset' option, the
-      confirmation dialog message informing the user that all settings will be reverted.">
-    All your settings will be erased and reverted to the default values. Saved tracks will be
-    preserved.
+    translation_description="In the 'Backup and reset' settings, after pressing the 'Reset' option,
+      the confirmation dialog message informing the user that all settings will be reverted.">
+    All settings will be erased and reverted to the default values. Saved tracks will be preserved.
   </string>
   <string name="settings_reset_done"
-    translation_description="In the 'Settings' page, after pressing the 'Reset' option, the
-      confirmation dialog informing the user that all settings have been reverted to their
-      defaults.">
-    All settings have been reverted to their defaults.
+    translation_description="In the 'Backup and reset' settings, after pressing the 'Reset' option,
+      the confirmation dialog informing the user that all settings have been reverted to the default
+      values.">
+    All settings have been reverted to the default values.
   </string>
   <string name="settings_reset_summary"
-    translation_description="In the 'Settings' page, the summary for the 'Reset' option explaining
-      reverting all the settings to the default values.">
-    Revert all your settings to the default values.
+    translation_description="In the 'Backup and reset' settings, the summary for the 'Reset' option
+      explaining it will revert all settings to the default values.">
+    Revert all your settings to the default values
   </string>
 
   <!-- Settings Sensor -->
   <string name="settings_sensor"
-    translation_description="In the 'Settings' page, the option to change the sensor related
-      settings.
+    translation_description="In the 'Settings' page, the option to change the sensor settings.
 
       Character limit: ~26 (1 line)">
     Sensor
   </string>
-  <string name="settings_sensor_ant_options"
-    translation_description="In the 'Sensor' settings, the section header to configure the ANT+
-      options. Note that ANT+ is a radio standard.
-
-      Character limit: ~26 (1 line)">
-    ANT+ options
+  <string name="settings_sensor_ant_not_connected"
+    translation_description="In the 'Sensor' settings, the summary to indicate that an ANT+ sensor
+      is not connected.">
+    Not connected
   </string>
   <string name="settings_sensor_ant_paired"
-    translation_description="In the 'Sensor' settings, the summary to indicate the paired ANT+
-     device. Note that ANT+ is a radio standard.
+    translation_description="In the 'Sensor' settings, the summary to indicate that an ANT+ sensor
+      is paired. Note that ANT+ is a radio standard.
 
       %1$d: device id number. E.g., '1'.">
-    Paired with: %1$d
+    Paired with %1$d
   </string>
   <string name="settings_sensor_ant_reset_bike_cadence_sensor"
-    translation_description="In the 'Sensor' settings, under the 'ANT+ options', the option to reset
+    translation_description="In the 'Sensor' settings, under the 'ANT+' section, the option to reset
       an ANT+ bike cadence sensor. Note that ANT+ is a radio standard.
 
       Character limit: ~26 (1 line)">
     Reset bike cadence
   </string>
   <string name="settings_sensor_ant_reset_combined_bike_sensor"
-    translation_description="In the 'Sensor' settings, under the 'ANT+ options', the option to reset
+    translation_description="In the 'Sensor' settings, under the 'ANT+' section, the option to reset
       an ANT+ combined bike cadence and speed sensor. Note that ANT+ is a radio standard.
 
       Character limit: ~26 (1 line)">
     Reset combined bike
   </string>
   <string name="settings_sensor_ant_reset_heart_rate_monitor"
-    translation_description="In the 'Sensor' settings, under the 'ANT+ options', the option to reset
+    translation_description="In the 'Sensor' settings, under the 'ANT+' section, the option to reset
       an ANT+ heart rate monitor. Note that ANT+ is a radio standard.
 
       Character limit: ~26 (1 line)">
     Reset heart rate
   </string>
   <string name="settings_sensor_ant_reset_speed_distance_monitor"
-    translation_description="In the 'Sensor' settings, under the 'ANT+ options', the option to reset
+    translation_description="In the 'Sensor' settings, under the 'ANT+' section, the option to reset
       an ANT+ stride based speed distance monitor, also known as foot pod. Note that ANT+ is a radio
       standard.
 
       Character limit: ~26 (1 line)">
     Reset foot pod
   </string>
-  <string name="settings_sensor_bluetooth_options"
-    translation_description="In the 'Sensor' settings, the section header to configure the Bluetooth
-      options.
+  <string name="settings_sensor_bluetooth"
+    translation_description="In the 'Sensor' settings, the section to configure the Bluetooth
+      settings.
 
       Character limit: ~26 (1 line)">
-   Bluetooth options
+    Bluetooth
   </string>
   <string name="settings_sensor_bluetooth_pairing"
-    translation_description="In the 'Sensor' settings, under the 'Bluetooth options' configurations,
-      the option to pair with a Bluetooth device.
+    translation_description="In the 'Sensor' settings, under the 'Bluetooth' section, the option to
+      pair with a Bluetooth sensor.
 
       Character limit: ~26 (1 line)">
     Bluetooth pairing
   </string>
   <string name="settings_sensor_bluetooth_pairing_summary"
-    translation_description="In the 'Sensor' settings, under the 'Bluetooth options' configurations,
-      the summary for the 'Bluetooth pairing' option explaining that it will open the Android's
-      Bluetooth settings to pair a device.">
-    Open Android\'s Bluetooth settings to pair a device.
+    translation_description="In the 'Sensor' settings, under the 'Bluetooth' section, the summary
+      for the 'Bluetooth pairing' option explaining that it will open the Android's Bluetooth
+      settings to pair a sensor.">
+    Open Android\'s Bluetooth settings to pair a sensor
   </string>
   <string name="settings_sensor_bluetooth_sensor"
-    translation_description="In the 'Sensor' settings, under the 'Bluetooth options' configurations,
-      the dropdown option to pick a Bluetooth sensor.
+    translation_description="In the 'Sensor' settings, under the 'Bluetooth' section, the picker to
+      choose a Bluetooth sensor.
 
       Character limit: ~23 (1 line)">
     Bluetooth sensor
   </string>
-  <string name="settings_sensor_bluetooth_sensor_summary"
-    translation_description="In the 'Sensor' settings, under the 'Bluetooth options' configurations,
-      the summary for the 'Bluetooth sensor' dropdown option explaining it is to pick a Bluetooth
-      sensor to connect to.">
-    The Bluetooth sensor to connect to.
-  </string>
   <string name="settings_sensor_connected"
-    translation_description="The message when connected to a sensor.
+    translation_description="A message when a sensor is connected.
 
-      %1$s: sensor name. E.g., 'polar bluetooth'.">
+      %1$s: sensor name. E.g., 'Polar Bluetooth'.">
    Connected to %1$s
   </string>
-  <string name="settings_sensor_not_connected"
-    translation_description="The message when not connected to a sensor.">
-    Not connected.
-  </string>
   <string name="settings_sensor_type"
-    translation_description="In the 'Sensor' settings, the dropdown option to choose a sensor type.
+    translation_description="In the 'Sensor' settings, the picker to choose a sensor type.
 
       Character limit: ~23 (1 line)">
     Sensor type
   </string>
   <string name="settings_sensor_type_ant"
-    translation_description="In the 'Sensor' settings, for the 'Sensor type' dropdown, the option to
-      connect to an ANT+ sensor. Note that ANT+ is a radio standard.
+    translation_description="In the 'Sensor' settings, the option in the 'Sensor type' picker to
+      choose an ANT+ sensor. Note that ANT+ is a radio standard.
 
       Character limit: ~20 (1 line)">
     ANT+
   </string>
   <string name="settings_sensor_type_polar"
-    translation_description="In the 'Sensor' settings, for the 'Sensor type' dropdown, the option to
-      connect to a Polar bluetooth sensor. Do not translate Polar, the company name, but can
-      translate Bluetooth, the radio standard.
+    translation_description="In the 'Sensor' settings, the option in the 'Sensor type' picker to
+      choose a Polar bluetooth sensor. Do not translate Polar, the company name, but can translate
+      Bluetooth, the radio standard.
 
       Character limit: ~20 (1 line)">
     Polar Bluetooth
   </string>
-  <string name="settings_sensor_type_summary"
-    translation_description="In the 'Sensor' settings, the summary for the 'Sensor type' option
-      explaining that it is to configure the type of sensor to connect to.">
-    The type of sensor to connect to.
-  </string>
   <string name="settings_sensor_type_zephyr"
-    translation_description="In the 'Sensor' settings, for the 'Sensor type' dropdown, the option to
-      connect to a Zephyr bluetooth sensor. Do not translate Zephyr, the company name, but can
-      translate Bluetooth, the radio standard.
+    translation_description="In the 'Sensor' settings, the option in the 'Sensor type' picker to
+      choose a Zephyr bluetooth sensor. Do not translate Zephyr, the company name, but can translate
+      Bluetooth, the radio standard.
 
       Character limit: ~20 (1 line)">
     Zephyr Bluetooth
@@ -2659,6 +2632,10 @@ limitations under the License.
   <string name="value_off"
     translation_description="In a setting picker, the value to turn off the feature.">
     Off
+  </string>
+  <string name="value_smallest"
+    translation_description="In a setting picker, the value to use the smallest value.">
+    Smallest
   </string>
   <string name="value_smallest_recommended"
     translation_description="In a setting picker, the value to use the smallest value, also the

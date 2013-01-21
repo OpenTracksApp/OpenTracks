@@ -41,7 +41,6 @@ public class MapSettingsActivity extends AbstractSettingsActivity {
 
   private static final String TAG = MapSettingsActivity.class.getSimpleName();
 
-  private ListPreference trackColorModePreference;
   private EditTextPreference slowPreference;
   private EditTextPreference mediumPreference;
   private EditTextPreference percentagePreference;
@@ -52,8 +51,6 @@ public class MapSettingsActivity extends AbstractSettingsActivity {
     super.onCreate(bundle);
     addPreferencesFromResource(R.xml.map_settings);
 
-    trackColorModePreference = (ListPreference) findPreference(
-        getString(R.string.track_color_mode_key));
     slowPreference = (EditTextPreference) findPreference(
         getString(R.string.settings_map_slow_display_key));
     mediumPreference = (EditTextPreference) findPreference(
@@ -79,6 +76,8 @@ public class MapSettingsActivity extends AbstractSettingsActivity {
    * Configures the track color mode preference.
    */
   private void configTrackColorModePerference() {
+    ListPreference preference = (ListPreference) findPreference(
+        getString(R.string.track_color_mode_key));
     OnPreferenceChangeListener listener = new OnPreferenceChangeListener() {
         @Override
       public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -86,11 +85,12 @@ public class MapSettingsActivity extends AbstractSettingsActivity {
         return true;
       }
     };
-    String trackColorMode = PreferencesUtils.getString(
+    String value = PreferencesUtils.getString(
         this, R.string.track_color_mode_key, PreferencesUtils.TRACK_COLOR_MODE_DEFAULT);
-    configurePreference(trackColorModePreference,
-        getResources().getStringArray(R.array.track_color_mode_options),
-        getResources().getStringArray(R.array.track_color_mode_values), trackColorMode, listener);
+    String[] values = getResources().getStringArray(R.array.track_color_mode_values);
+    String[] options = getResources().getStringArray(R.array.track_color_mode_options);
+    String[] summary = getResources().getStringArray(R.array.track_color_mode_summary);
+    configureListPreference(preference, summary, options, values, value, listener);
   }
 
   /**
@@ -204,13 +204,6 @@ public class MapSettingsActivity extends AbstractSettingsActivity {
         getString(R.string.settings_map_track_color_mode_fixed_value));
     boolean isDynamicValue = trackColorMode.equals(
         getString(R.string.settings_map_track_color_mode_dynamic_value));
-    if (isDynamicValue) {
-      trackColorModePreference.setSummary(R.string.settings_map_track_color_mode_dynamic_summary);
-    } else if (isFixedValue) {
-      trackColorModePreference.setSummary(R.string.settings_map_track_color_mode_fixed_summary);
-    } else {
-      trackColorModePreference.setSummary(R.string.settings_map_track_color_mode_single);
-    }
     slowPreference.setEnabled(isFixedValue);
     mediumPreference.setEnabled(isFixedValue);
     percentagePreference.setEnabled(isDynamicValue);

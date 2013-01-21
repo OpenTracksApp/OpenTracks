@@ -749,6 +749,18 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   }
 
   @Override
+  public Location getFirstValidTrackPoint(long trackId) {
+    if (trackId < 0) {
+      return null;
+    }
+    String selection = TrackPointsColumns._ID + "=(select min(" + TrackPointsColumns._ID + ") from "
+        + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID + "=? AND "
+        + TrackPointsColumns.LATITUDE + "<=" + MAX_LATITUDE + ")";
+    String[] selectionArgs = new String[] { Long.toString(trackId) };
+    return findTrackPointBy(selection, selectionArgs);
+  }
+  
+  @Override
   public Location getLastValidTrackPoint(long trackId) {
     if (trackId < 0) {
       return null;
