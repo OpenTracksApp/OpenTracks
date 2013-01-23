@@ -48,13 +48,19 @@ public class GpxImporter extends AbstractImporter {
   private static final String ATTRIBUTE_LAT = "lat";
   private static final String ATTRIBUTE_LON = "lon";
 
-  public GpxImporter(Context context) {
-    super(context);
+  /**
+   * Constructor.
+   * 
+   * @param context the context
+   * @param importTrackId track id to import to. -1L to import to a new track.
+   */
+  public GpxImporter(Context context, long importTrackId) {
+    super(context, importTrackId);
   }
 
   @VisibleForTesting
   public GpxImporter(Context context, MyTracksProviderUtils myTracksProviderUtils) {
-    super(context, myTracksProviderUtils);
+    super(context, -1L, myTracksProviderUtils);
   }
 
   @Override
@@ -112,7 +118,7 @@ public class GpxImporter extends AbstractImporter {
   }
 
   @Override
-  protected void onTrackStart() {
+  protected void onTrackStart() throws SAXException {
     super.onTrackStart();
     name = null;
     description = null;

@@ -101,6 +101,7 @@ abstract class AbstractImporter extends DefaultHandler {
   private static final int MAX_BUFFERED_LOCATIONS = 512;
 
   private final Context context;
+  private final long importTrackId;
   private final MyTracksProviderUtils myTracksProviderUtils;
   private final int minRecordingDistance;
   private final List<Long> trackIds;
@@ -124,17 +125,25 @@ abstract class AbstractImporter extends DefaultHandler {
   protected String time;
   protected String waypointType;
 
-  protected AbstractImporter(Context context) {
-    this(context, MyTracksProviderUtils.Factory.get(context));
+  /**
+   * Constructor.
+   * 
+   * @param context the context
+   * @param importTrackId the track id to import to. -1L to import to a new
+   *          track.
+   */
+  protected AbstractImporter(Context context, long importTrackId) {
+    this(context, importTrackId, MyTracksProviderUtils.Factory.get(context));
   }
 
   @VisibleForTesting
   protected AbstractImporter(
-      Context context, MyTracksProviderUtils myTracksProviderUtils) {
+      Context context, long importTrackId, MyTracksProviderUtils myTracksProviderUtils) {
     this.context = context;
+    this.importTrackId = importTrackId;
     this.myTracksProviderUtils = myTracksProviderUtils;
-    this.minRecordingDistance = PreferencesUtils.getInt(context, R.string.min_recording_distance_key,
-        PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT);
+    this.minRecordingDistance = PreferencesUtils.getInt(context,
+        R.string.min_recording_distance_key, PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT);
     trackIds = new ArrayList<Long>();
     waypoints = new ArrayList<Waypoint>();
   }
@@ -286,12 +295,22 @@ abstract class AbstractImporter extends DefaultHandler {
   /**
    * On track start.
    */
-  protected void onTrackStart() {
+  protected void onTrackStart() throws SAXException {
     trackData = new TrackData();
-    Uri uri = myTracksProviderUtils.insertTrack(trackData.track);
-    long id = Long.parseLong(uri.getLastPathSegment());
-    trackIds.add(id);
-    trackData.track.setId(id);
+    long trackId;
+    if (importTrackId == -1L) {
+      Uri uri = myTracksProviderUtils.insertTrack(trackData.track);
+      trackId = Long.parseLong(uri.getLastPathSegment());
+    } else {
+      if (trackIds.size() > 0) {
+        throw new SAXException(createErrorMessage(
+            "Cannot import more than one track to an existing track " + importTrackId));
+      }
+      trackId = importTrackId;
+      myTracksProviderUtils.clearTrack(trackId);
+    }
+    trackIds.add(trackId);
+    trackData.track.setId(trackId);
   }
 
   /**

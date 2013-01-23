@@ -41,6 +41,13 @@ public interface MyTracksProviderUtils {
   public static final String AUTHORITY = "com.google.android.maps.mytracks";
 
   /**
+   * Clears a track. Removes waypoints and trackpoints. Only keeps the track id.
+   * 
+   * @param trackId the track id
+   */
+  public void clearTrack(long trackId);
+
+  /**
    * Creates a {@link Track} from a cursor.
    * 
    * @param cursor the cursor pointing to the track
@@ -122,7 +129,8 @@ public interface MyTracksProviderUtils {
    * deletion. The generator is used to update the next statistics waypoint.
    * 
    * @param waypointId the waypoint id
-   * @param descriptionGenerator the description generator. Can be null for waypoint marker
+   * @param descriptionGenerator the description generator. Can be null for
+   *          waypoint marker
    */
   public void deleteWaypoint(long waypointId, DescriptionGenerator descriptionGenerator);
 
@@ -143,8 +151,8 @@ public interface MyTracksProviderUtils {
   public Waypoint getLastWaypoint(long trackId, WaypointType waypointType);
 
   /**
-   * Gets the next waypoint number for a type. Returns -1 if not able to get the next
-   * waypoint number.
+   * Gets the next waypoint number for a type. Returns -1 if not able to get the
+   * next waypoint number.
    * 
    * @param trackId the track id
    * @param waypointType the waypoint type
@@ -165,7 +173,8 @@ public interface MyTracksProviderUtils {
    * @param selection the selection. Can be null
    * @param selectionArgs the selection arguments. Can be null
    * @param sortOrder the sort order. Can be null
-   * @param maxWaypoints the maximum number of waypoints to return. -1 for no limit
+   * @param maxWaypoints the maximum number of waypoints to return. -1 for no
+   *          limit
    */
   public Cursor getWaypointCursor(
       String selection, String[] selectionArgs, String sortOrder, int maxWaypoints);
@@ -176,7 +185,8 @@ public interface MyTracksProviderUtils {
    * 
    * @param trackId the track id
    * @param minWaypointId the minimum waypoint id. -1L to ignore
-   * @param maxWaypoints the maximum number of waypoints to return. -1 for no limit
+   * @param maxWaypoints the maximum number of waypoints to return. -1 for no
+   *          limit
    */
   public Cursor getWaypointCursor(long trackId, long minWaypointId, int maxWaypoints);
 
@@ -228,12 +238,13 @@ public interface MyTracksProviderUtils {
   public long getLastTrackPointId(long trackId);
 
   /**
-   * Gets the first valid location for a track. Returns null if it doesn't exist.
+   * Gets the first valid location for a track. Returns null if it doesn't
+   * exist.
    * 
    * @param trackId the track id
    */
   public Location getFirstValidTrackPoint(long trackId);
-  
+
   /**
    * Gets the last valid location for a track. Returns null if it doesn't exist.
    * 

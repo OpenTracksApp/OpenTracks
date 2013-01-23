@@ -51,6 +51,14 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   }
 
   @Override
+  public void clearTrack(long trackId) {
+    deleteTrackPointsAndWaypoints(trackId);
+    Track track = new Track();
+    track.setId(trackId);
+    updateTrack(track);
+  }
+
+  @Override
   public Track createTrack(Cursor cursor) {
     int idIndex = cursor.getColumnIndexOrThrow(TracksColumns._ID);
     int nameIndex = cursor.getColumnIndexOrThrow(TracksColumns.NAME);
@@ -164,6 +172,21 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
 
   @Override
   public void deleteTrack(long trackId) {
+    deleteTrackPointsAndWaypoints(trackId);
+
+    // Delete track last since it triggers a database vaccum call
+    contentResolver.delete(TracksColumns.CONTENT_URI, TracksColumns._ID + "=?",
+        new String[] { Long.toString(trackId) });
+  }
+
+  /**
+   * Deletes track points and waypoints of a track. Assumes
+   * {@link TracksColumns#STARTID}, {@link TracksColumns#STOPID}, and
+   * {@link TracksColumns#NUMPOINTS} will be updated by the caller.
+   * 
+   * @param trackId the track id
+   */
+  private void deleteTrackPointsAndWaypoints(long trackId) {
     Track track = getTrack(trackId);
     if (track != null) {
       String where = TrackPointsColumns._ID + ">=? AND " + TrackPointsColumns._ID + "<=?";
@@ -172,9 +195,6 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
       contentResolver.delete(TrackPointsColumns.CONTENT_URI, where, selectionArgs);
     }
     contentResolver.delete(WaypointsColumns.CONTENT_URI, WaypointsColumns.TRACKID + "=?",
-        new String[] { Long.toString(trackId) });
-    // Delete tracks last since it triggers a database vaccum call
-    contentResolver.delete(TracksColumns.CONTENT_URI, TracksColumns._ID + "=?",
         new String[] { Long.toString(trackId) });
   }
 
@@ -759,7 +779,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     String[] selectionArgs = new String[] { Long.toString(trackId) };
     return findTrackPointBy(selection, selectionArgs);
   }
-  
+
   @Override
   public Location getLastValidTrackPoint(long trackId) {
     if (trackId < 0) {
