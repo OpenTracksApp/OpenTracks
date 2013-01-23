@@ -85,6 +85,9 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     int mapIdIndex = cursor.getColumnIndexOrThrow(TracksColumns.MAPID);
     int tableIdIndex = cursor.getColumnIndexOrThrow(TracksColumns.TABLEID);
     int iconIndex = cursor.getColumnIndexOrThrow(TracksColumns.ICON);
+    int driveIdIndex = cursor.getColumnIndexOrThrow(TracksColumns.DRIVEID);
+    int modifiedTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.MODIFIEDTIME);
+    int sharedWithMeIndex = cursor.getColumnIndexOrThrow(TracksColumns.SHAREDWITHME);
 
     Track track = new Track();
     TripStatistics tripStatistics = track.getTripStatistics();
@@ -158,6 +161,15 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     }
     if (!cursor.isNull(iconIndex)) {
       track.setIcon(cursor.getString(iconIndex));
+    }
+    if (!cursor.isNull(driveIdIndex)) {
+      track.setDriveId(cursor.getString(driveIdIndex));
+    }
+    if (!cursor.isNull(modifiedTimeIndex)) {
+      track.setModifiedTime(cursor.getLong(modifiedTimeIndex));
+    }
+    if (!cursor.isNull(sharedWithMeIndex)) {
+      track.setSharedWithMe(cursor.getInt(sharedWithMeIndex) == 1);
     }
     return track;
   }
@@ -302,6 +314,9 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     values.put(TracksColumns.MAPID, track.getMapId());
     values.put(TracksColumns.TABLEID, track.getTableId());
     values.put(TracksColumns.ICON, track.getIcon());
+    values.put(TracksColumns.DRIVEID, track.getDriveId());
+    values.put(TracksColumns.MODIFIEDTIME, track.getModifiedTime());
+    values.put(TracksColumns.SHAREDWITHME, track.isSharedWithMe());
     return values;
   }
 

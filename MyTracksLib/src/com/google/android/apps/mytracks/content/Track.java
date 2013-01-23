@@ -32,19 +32,24 @@ import java.util.ArrayList;
  */
 public class Track implements Parcelable {
 
-  private long id = -1;
+  private long id = -1L;
   private String name = "";
   private String description = "";
   private String category = "";
-  private long startId = -1;
-  private long stopId = -1;
+  private long startId = -1L;
+  private long stopId = -1L;
 
-  // The number of location points (present even if the points themselves are
-  // not loaded)
+  /*
+   * The number of location points (present even if the points themselves are
+   * not loaded)
+   */
   private int numberOfPoints = 0;
   private String mapId = "";
   private String tableId = "";
   private String icon = "";
+  private String driveId = "";
+  private long modifiedTime = -1L;
+  private boolean sharedWithMe = false;
 
   private TripStatistics tripStatistics = new TripStatistics();
 
@@ -64,13 +69,16 @@ public class Track implements Parcelable {
     mapId = in.readString();
     tableId = in.readString();
     icon = in.readString();
+    driveId = in.readString();
+    modifiedTime = in.readLong();
+    sharedWithMe = in.readByte() == 1;
 
     ClassLoader classLoader = getClass().getClassLoader();
     tripStatistics = in.readParcelable(classLoader);
 
     for (int i = 0; i < numberOfPoints; ++i) {
-      Location loc = in.readParcelable(classLoader);
-      locations.add(loc);
+      Location location = in.readParcelable(classLoader);
+      locations.add(location);
     }
   }
 
@@ -91,6 +99,10 @@ public class Track implements Parcelable {
     dest.writeString(mapId);
     dest.writeString(tableId);
     dest.writeString(icon);
+    dest.writeString(driveId);
+    dest.writeLong(modifiedTime);
+    dest.writeByte((byte) (sharedWithMe ? 1 : 0));
+
     dest.writeParcelable(tripStatistics, 0);
     for (int i = 0; i < numberOfPoints; ++i) {
       dest.writeParcelable(locations.get(i), 0);
@@ -189,6 +201,30 @@ public class Track implements Parcelable {
     this.icon = icon;
   }
 
+  public String getDriveId() {
+    return driveId;
+  }
+
+  public void setDriveId(String driveId) {
+    this.driveId = driveId;
+  }
+
+  public long getModifiedTime() {
+    return modifiedTime;
+  }
+
+  public void setModifiedTime(long modifiedTime) {
+    this.modifiedTime = modifiedTime;
+  }
+
+  public boolean isSharedWithMe() {
+    return sharedWithMe;
+  }
+
+  public void setSharedWithMe(boolean sharedWithMe) {
+    this.sharedWithMe = sharedWithMe;
+  }
+
   public TripStatistics getTripStatistics() {
     return tripStatistics;
   }
@@ -197,8 +233,8 @@ public class Track implements Parcelable {
     this.tripStatistics = tripStatistics;
   }
 
-  public void addLocation(Location l) {
-    locations.add(l);
+  public void addLocation(Location location) {
+    locations.add(location);
   }
 
   public ArrayList<Location> getLocations() {

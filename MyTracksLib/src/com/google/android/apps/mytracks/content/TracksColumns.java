@@ -66,7 +66,9 @@ public interface TracksColumns extends BaseColumns {
   public static final String MINLON = "minlon"; // minimum longitude
   public static final String MAXLON = "maxlon"; // maximum longitude
   public static final String AVGSPEED = "avgspeed"; // average speed
-  public static final String AVGMOVINGSPEED = "avgmovingspeed"; // average moving speed
+
+  // average moving speed
+  public static final String AVGMOVINGSPEED = "avgmovingspeed";
   public static final String MAXSPEED = "maxspeed"; // maximum speed
   public static final String MINELEVATION = "minelevation"; // minimum elevation
   public static final String MAXELEVATION = "maxelevation"; // maximum elevation
@@ -76,69 +78,78 @@ public interface TracksColumns extends BaseColumns {
   public static final String MAPID = "mapid"; // Google Maps id
   public static final String TABLEID = "tableid"; // Google Fusion Tables id
   public static final String ICON = "icon"; // track activity type icon
-  
-  public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" 
-      + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
-      + NAME + " STRING, " 
-      + DESCRIPTION + " STRING, "
-      + CATEGORY + " STRING, " 
-      + STARTID + " INTEGER, " 
-      + STOPID + " INTEGER, " 
-      + STARTTIME + " INTEGER, " 
-      + STOPTIME + " INTEGER, " 
-      + NUMPOINTS + " INTEGER, " 
-      + TOTALDISTANCE + " FLOAT, " 
-      + TOTALTIME + " INTEGER, " 
-      + MOVINGTIME + " INTEGER, " 
-      + MINLAT + " INTEGER, "
-      + MAXLAT + " INTEGER, " 
-      + MINLON + " INTEGER, " 
-      + MAXLON + " INTEGER, " 
-      + AVGSPEED + " FLOAT, " 
-      + AVGMOVINGSPEED + " FLOAT, " 
-      + MAXSPEED + " FLOAT, " 
-      + MINELEVATION + " FLOAT, "
-      + MAXELEVATION + " FLOAT, " 
-      + ELEVATIONGAIN + " FLOAT, " 
-      + MINGRADE + " FLOAT, " 
-      + MAXGRADE + " FLOAT, " 
-      + MAPID + " STRING, " 
-      + TABLEID + " STRING, " 
-      + ICON + " STRING" 
-      + ");";
+  public static final String DRIVEID = "driveid"; // Google Drive file id
 
-  public static final String[] COLUMNS = {
-      _ID,
-      NAME,
-      DESCRIPTION,
-      CATEGORY,
-      STARTID,
-      STOPID,
-      STARTTIME,
-      STOPTIME,
-      NUMPOINTS,
-      TOTALDISTANCE,
-      TOTALTIME,
-      MOVINGTIME,
-      MINLAT,
-      MAXLAT,
-      MINLON,
-      MAXLON,
-      AVGSPEED,
-      AVGMOVINGSPEED,
-      MAXSPEED,
-      MINELEVATION,
-      MAXELEVATION,
-      ELEVATIONGAIN,
-      MINGRADE,
-      MAXGRADE,
-      MAPID,
-      TABLEID,
-      ICON
-  };
+  // Google drive file modified time
+  public static final String MODIFIEDTIME = "modifiedtime";
 
-  public static final byte[] COLUMN_TYPES = {
-      ContentTypeIds.LONG_TYPE_ID, // id
+  // 1 if the Google Drive file is from the "Shared with me" directory
+  public static final String SHAREDWITHME = "sharedwithme";
+
+  public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" // table
+      + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " // id
+      + NAME + " STRING, " // name
+      + DESCRIPTION + " STRING, " // description
+      + CATEGORY + " STRING, " // category
+      + STARTID + " INTEGER, " // start id
+      + STOPID + " INTEGER, " // stop id
+      + STARTTIME + " INTEGER, " // start time
+      + STOPTIME + " INTEGER, " // stop time
+      + NUMPOINTS + " INTEGER, " // num points
+      + TOTALDISTANCE + " FLOAT, " // total distance
+      + TOTALTIME + " INTEGER, " // total time
+      + MOVINGTIME + " INTEGER, " // moving time
+      + MINLAT + " INTEGER, " // min latitude
+      + MAXLAT + " INTEGER, " // max latitude
+      + MINLON + " INTEGER, " // min longitude
+      + MAXLON + " INTEGER, " // max longitude
+      + AVGSPEED + " FLOAT, " // average speed
+      + AVGMOVINGSPEED + " FLOAT, " // average moving speed
+      + MAXSPEED + " FLOAT, " // max speed
+      + MINELEVATION + " FLOAT, " // min elevation
+      + MAXELEVATION + " FLOAT, " // max elevation
+      + ELEVATIONGAIN + " FLOAT, " // elevation gain
+      + MINGRADE + " FLOAT, " // min grade
+      + MAXGRADE + " FLOAT, " // max grade
+      + MAPID + " STRING, " // map id
+      + TABLEID + " STRING, " // table id
+      + ICON + " STRING, " // icon
+      + DRIVEID + " STRING, " // drive id
+      + MODIFIEDTIME + " INTEGER, " // modified time
+      + SHAREDWITHME + " INTEGER" + ");"; // shared with me
+
+  public static final String[] COLUMNS = { _ID, // id
+      NAME, // name
+      DESCRIPTION, // description
+      CATEGORY, // category
+      STARTID, // start id
+      STOPID, // stop id
+      STARTTIME, // start time
+      STOPTIME, // stop time
+      NUMPOINTS, // num points
+      TOTALDISTANCE, // total distance
+      TOTALTIME, // total time
+      MOVINGTIME, // moving time
+      MINLAT, // min latitude
+      MAXLAT, // max latitude
+      MINLON, // min longitude
+      MAXLON, // max longitude
+      AVGSPEED, // average speed
+      AVGMOVINGSPEED, // average moving speed
+      MAXSPEED, // max speed
+      MINELEVATION, // min elevation
+      MAXELEVATION, // max elevation
+      ELEVATIONGAIN, // elevation gain
+      MINGRADE, // min grade
+      MAXGRADE, // max grade
+      MAPID, // map id
+      TABLEID, // table id
+      ICON, // icon
+      DRIVEID, // drive id
+      MODIFIEDTIME, // modified time
+      SHAREDWITHME }; // shared with me
+
+  public static final byte[] COLUMN_TYPES = { ContentTypeIds.LONG_TYPE_ID, // id
       ContentTypeIds.STRING_TYPE_ID, // name
       ContentTypeIds.STRING_TYPE_ID, // description
       ContentTypeIds.STRING_TYPE_ID, // category
@@ -164,6 +175,9 @@ public interface TracksColumns extends BaseColumns {
       ContentTypeIds.FLOAT_TYPE_ID, // max grade
       ContentTypeIds.STRING_TYPE_ID, // map id
       ContentTypeIds.STRING_TYPE_ID, // table id
-      ContentTypeIds.STRING_TYPE_ID // icon
-    };
+      ContentTypeIds.STRING_TYPE_ID, // icon
+      ContentTypeIds.STRING_TYPE_ID, // drive id
+      ContentTypeIds.LONG_TYPE_ID, // modified time
+      ContentTypeIds.BOOLEAN_TYPE_ID // shared with me
+  };
 }

@@ -37,6 +37,8 @@ import android.os.Process;
 import android.text.TextUtils;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 /**
  * A {@link ContentProvider} that handles access to track points, tracks, and
  * waypoints tables.
@@ -46,32 +48,35 @@ import android.util.Log;
 public class MyTracksProvider extends ContentProvider {
 
   private static final String TAG = MyTracksProvider.class.getSimpleName();
+  private static final int DATABASE_VERSION = 21;
+  private static final String DRIVE_IDS_QUERY = TracksColumns.DRIVEID + " IS NOT NULL AND "
+      + TracksColumns.DRIVEID + "!=''";
+
   @VisibleForTesting
   static final String DATABASE_NAME = "mytracks.db";
-  private static final int DATABASE_VERSION = 20;
 
   /**
    * Database helper for creating and upgrading the database.
    */
   @VisibleForTesting
   static class DatabaseHelper extends SQLiteOpenHelper {
-  
+
     public DatabaseHelper(Context context) {
       this(context, DATABASE_NAME);
     }
-    
+
     @VisibleForTesting
     public DatabaseHelper(Context context, String databaseName) {
       super(context, databaseName, null, DATABASE_VERSION);
     }
-  
+
     @Override
     public void onCreate(SQLiteDatabase db) {
       db.execSQL(TrackPointsColumns.CREATE_TABLE);
       db.execSQL(TracksColumns.CREATE_TABLE);
       db.execSQL(WaypointsColumns.CREATE_TABLE);
     }
-  
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
       Log.w(TAG, "Upgrading database from version " + oldVersion + " to " + newVersion);
@@ -83,24 +88,39 @@ public class MyTracksProvider extends ContentProvider {
         onCreate(db);
       } else {
         // Incremental upgrades. One if statement per DB version.
-  
+
         // Add track points SENSOR column
         if (oldVersion <= 17) {
           Log.w(TAG, "Upgrade DB: Adding sensor column.");
           db.execSQL("ALTER TABLE " + TrackPointsColumns.TABLE_NAME + " ADD "
               + TrackPointsColumns.SENSOR + " BLOB");
         }
+
         // Add tracks TABLEID column
         if (oldVersion <= 18) {
           Log.w(TAG, "Upgrade DB: Adding tableid column.");
           db.execSQL("ALTER TABLE " + TracksColumns.TABLE_NAME + " ADD " + TracksColumns.TABLEID
               + " STRING");
         }
+
         // Add tracks ICON column
         if (oldVersion <= 19) {
           Log.w(TAG, "Upgrade DB: Adding icon column.");
           db.execSQL(
               "ALTER TABLE " + TracksColumns.TABLE_NAME + " ADD " + TracksColumns.ICON + " STRING");
+        }
+
+        // Add track DRIVEID, MODIFIEDTIME, and SHAREDWITHME columns
+        if (oldVersion <= 20) {
+          Log.w(TAG, "Upgrade DB: Adding driveid column.");
+          db.execSQL("ALTER TABLE " + TracksColumns.TABLE_NAME + " ADD " + TracksColumns.DRIVEID
+              + " STRING");
+          Log.w(TAG, "Upgrade DB: Adding modifiedtime column.");
+          db.execSQL("ALTER TABLE " + TracksColumns.TABLE_NAME + " ADD "
+              + TracksColumns.MODIFIEDTIME + " INTEGER");
+          Log.w(TAG, "Upgrade DB: Adding sharedwithme column.");
+          db.execSQL("ALTER TABLE " + TracksColumns.TABLE_NAME + " ADD "
+              + TracksColumns.SHAREDWITHME + " INTEGER");
         }
       }
     }
@@ -139,9 +159,10 @@ public class MyTracksProvider extends ContentProvider {
   public boolean onCreate() {
     return onCreate(getContext());
   }
-  
+
   /**
    * Helper method to make onCreate is testable.
+   * 
    * @param context context to creates database
    * @return true means run successfully
    */
@@ -180,7 +201,18 @@ public class MyTracksProvider extends ContentProvider {
       default:
         throw new IllegalArgumentException("Unknown URL " + url);
     }
-  
+
+    boolean driveSync = false;
+    String driveIds = "";
+    if (table.equals(TracksColumns.TABLE_NAME)) {
+      driveSync = PreferencesUtils.getBoolean(
+          getContext(), R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT);
+      if (driveSync) {
+        driveIds = where != null ? getDriveIds(null, where, selectionArgs)
+            : getDriveIds(new String[] { TracksColumns.DRIVEID }, DRIVE_IDS_QUERY, null);
+      }
+    }
+
     Log.w(MyTracksProvider.TAG, "Deleting table " + table);
     int count;
     try {
@@ -190,8 +222,20 @@ public class MyTracksProvider extends ContentProvider {
     } finally {
       db.endTransaction();
     }
+
+    if (driveSync && table.equals(TracksColumns.TABLE_NAME)) {
+      String driveDeletedList = PreferencesUtils.getString(getContext(),
+          R.string.drive_deleted_list_key, PreferencesUtils.DRIVE_DELETED_LIST_DEFAULT);
+      if (driveDeletedList.equals(PreferencesUtils.DRIVE_DELETED_LIST_DEFAULT)) {
+        driveDeletedList = driveIds;
+      } else {
+        driveDeletedList += ";" + driveIds;
+      }
+      PreferencesUtils.setString(getContext(), R.string.drive_deleted_list_key, driveDeletedList);
+    }
+
     getContext().getContentResolver().notifyChange(url, null, true);
-  
+
     if (shouldVacuum) {
       // If a potentially large amount of data was deleted, reclaim its space.
       Log.i(TAG, "Vacuuming the database.");
@@ -251,7 +295,7 @@ public class MyTracksProvider extends ContentProvider {
     try {
       // Use a transaction in order to make the insertions run as a single batch
       db.beginTransaction();
-  
+
       UrlType urlType = getUrlType(url);
       for (numInserted = 0; numInserted < valuesBulk.length; numInserted++) {
         ContentValues contentValues = valuesBulk[numInserted];
@@ -463,5 +507,30 @@ public class MyTracksProvider extends ContentProvider {
       return uri;
     }
     throw new SQLException("Failed to insert a waypoint " + url);
+  }
+
+  /**
+   * Gets a list of dirve ids.
+   * 
+   * @param projection the projection
+   * @param where where
+   * @param selectionArgs selection args
+   */
+  private String getDriveIds(String[] projection, String where, String[] selectionArgs) {
+    ArrayList<String> driveIds = new ArrayList<String>();
+    Cursor cursor = query(TracksColumns.CONTENT_URI, projection, where, selectionArgs, null);
+    if (cursor != null) {
+      int index = cursor.getColumnIndex(TracksColumns.DRIVEID);
+      if (cursor.moveToFirst()) {
+        do {
+          String driveId = cursor.getString(index);
+          if (driveId != null && !driveId.equals("")) {
+            driveIds.add(driveId);
+          }
+        } while (cursor.moveToNext());
+      }
+      cursor.close();
+    }
+    return TextUtils.join(";", driveIds);
   }
 }
