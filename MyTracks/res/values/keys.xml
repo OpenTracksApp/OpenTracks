@@ -65,6 +65,8 @@ limitations under the License.
 
   <!-- Keys for persistend preferences. But they should not get backed up or restored. -->
   <string name="auto_resume_track_current_retry_key">autoResumeTrackCurrentRetry</string>
+  <string name="drive_deleted_list_key">driveDeletedList</string>
+  <string name="drive_largest_change_id_key">driveLargestChangeId</string>
   <string name="recording_track_id_key">recordingTrackId</string>
   <string name="recording_track_paused_key">recordingTrackPaused</string>
   <string name="selected_track_id_key">selectedTrackId</string>
