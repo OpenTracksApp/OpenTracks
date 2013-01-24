@@ -91,9 +91,11 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.SOLO.goBack();
 
     // Reset all settings.
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup_reset));
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_reset));
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+    EndToEndTestUtils.SOLO.goBack();
 
     // Check settings.
     // Add following scroll up for a bug of Robotium.
@@ -245,6 +247,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
 
     // Write to SD card.
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup_reset));
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup));
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup_now));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
@@ -255,11 +258,13 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     // Delete all tracks.
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.SOLO.goBack();
+    EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.deleteAllTracks();
     instrumentation.waitForIdleSync();
 
     // Read from SD card.
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup_reset));
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup));
     EndToEndTestUtils.SOLO
         .clickOnText(activityMyTracks.getString(R.string.settings_backup_restore));
@@ -268,6 +273,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
         activityMyTracks.getString(R.string.settings_backup_restore_success), 0,
         EndToEndTestUtils.SUPER_LONG_WAIT_TIME));
+    EndToEndTestUtils.SOLO.goBack();
     // Check restore track.
     assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.trackName));
   }

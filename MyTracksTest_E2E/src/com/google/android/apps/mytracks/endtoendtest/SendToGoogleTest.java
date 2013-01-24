@@ -19,7 +19,6 @@ import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.maps.mytracks.R;
 import com.google.wireless.gdata.data.Entry;
 
-import android.annotation.TargetApi;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.CheckBox;
@@ -37,7 +36,6 @@ public class SendToGoogleTest extends ActivityInstrumentationTestCase2<TrackList
   private Instrumentation instrumentation;
   private TrackListActivity activityMyTracks;
 
-  @TargetApi(15)
   public SendToGoogleTest() {
     super(TrackListActivity.class);
   }

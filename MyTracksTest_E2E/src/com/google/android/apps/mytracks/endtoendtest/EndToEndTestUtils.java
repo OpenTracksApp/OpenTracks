@@ -859,11 +859,13 @@ public class EndToEndTestUtils {
    */
   public static void resetAllSettings(Activity activityMyTracks, boolean keepInSettingList) {
     findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup_reset));
     SOLO.waitForText(activityMyTracks.getString(R.string.settings_reset));
     SOLO.clickOnText(activityMyTracks.getString(R.string.settings_reset));
     getButtonOnScreen(activityMytracks.getString(R.string.generic_ok), true, true);
     Assert.assertTrue(SOLO.waitForText(activityMyTracks.getString(R.string.settings_reset_done)));
-
+    instrumentation.waitForIdleSync();
+    SOLO.goBack();
     instrumentation.waitForIdleSync();
     if (!keepInSettingList) {
       SOLO.goBack();
