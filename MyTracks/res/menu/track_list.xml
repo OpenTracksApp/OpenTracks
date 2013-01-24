@@ -67,6 +67,10 @@ limitations under the License.
     android:id="@+id/track_list_aggregated_statistics"
     android:title="@string/menu_aggregated_statistics"/>
   <item
+    android:icon="@drawable/menu_sync_now"
+    android:id="@+id/track_list_sync_now"
+    android:title="@string/menu_sync_now"/>  
+  <item
     android:icon="@drawable/menu_settings"
     android:id="@+id/track_list_settings"
     android:title="@string/menu_settings"/>

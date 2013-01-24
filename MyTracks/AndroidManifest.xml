@@ -41,6 +41,10 @@ limitations under the License.
   <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.local" />
   <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.wise" />
   <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.writely" />
+  <!-- Permission for Android sync provider -->
+  <uses-permission android:name="android.permission.READ_SYNC_STATS" />
+  <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+  <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
   <!-- Permission to access Google services to communicate with the map servers. -->
   <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
   <!-- Permission to read phone state so voice announcement will not interrupt ongoing calls -->
@@ -225,6 +229,16 @@ limitations under the License.
       </intent-filter>
     </activity>
     <!-- Services -->
+    <service
+      android:exported="true"
+      android:name="com.google.android.apps.mytracks.io.sync.SyncService" >
+      <intent-filter>
+        <action android:name="android.content.SyncAdapter" />
+      </intent-filter>
+      <meta-data
+        android:name="android.content.SyncAdapter"
+        android:resource="@xml/sync_adapter" />
+    </service>
     <service
       android:exported="false"
       android:name="com.google.android.apps.mytracks.services.ControlRecordingService" />

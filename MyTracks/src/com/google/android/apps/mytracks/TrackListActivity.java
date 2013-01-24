@@ -30,6 +30,7 @@ import com.google.android.apps.mytracks.fragments.WelcomeDialogFragment;
 import com.google.android.apps.mytracks.io.file.ImportActivity;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
+import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.settings.SettingsActivity;
@@ -164,6 +165,12 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
             recordingTrackPaused = PreferencesUtils.getBoolean(TrackListActivity.this,
                 R.string.recording_track_paused_key,
                 PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+          }
+          if (key == null || key.equals(PreferencesUtils.getKey(
+              TrackListActivity.this, R.string.drive_sync_key))) {
+            driveSync = PreferencesUtils.getBoolean(TrackListActivity.this,
+                R.string.drive_sync_key,
+                PreferencesUtils.DRIVE_SYNC_DEFAULT);
           }
           if (key != null) {
             runOnUiThread(new Runnable() {
@@ -320,13 +327,15 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
   private boolean metricUnits = PreferencesUtils.METRIC_UNITS_DEFAULT;
   private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
   private boolean recordingTrackPaused = PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT;
-
+  private boolean driveSync = PreferencesUtils.DRIVE_SYNC_DEFAULT;
+  
   // Menu items
   private MenuItem searchMenuItem;
   private MenuItem startGpsMenuItem;
   private MenuItem importAllMenuItem;
   private MenuItem saveAllMenuItem;
   private MenuItem deleteAllMenuItem;
+  private MenuItem syncNowMenuItem;
 
   private boolean startNewRecording = false; // true to start a new recording
   private boolean startGps = false;
@@ -507,7 +516,8 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
     importAllMenuItem = menu.findItem(R.id.track_list_import_all);
     saveAllMenuItem = menu.findItem(R.id.track_list_save_all);
     deleteAllMenuItem = menu.findItem(R.id.track_list_delete_all);
-
+    syncNowMenuItem = menu.findItem(R.id.track_list_sync_now);
+    
     ApiAdapterFactory.getApiAdapter().configureSearchWidget(this, searchMenuItem);
     updateMenuItems(recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
     return true;
@@ -561,6 +571,9 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
       case R.id.track_list_aggregated_statistics:
         intent = IntentUtils.newIntent(this, AggregatedStatsActivity.class);
         startActivity(intent);
+        return true;
+      case R.id.track_list_sync_now:
+        SyncUtils.syncNow(this);
         return true;
       case R.id.track_list_settings:
         intent = IntentUtils.newIntent(this, SettingsActivity.class);
@@ -668,6 +681,9 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
     }
     if (deleteAllMenuItem != null) {
       deleteAllMenuItem.setVisible(!isRecording);
+    }
+    if (syncNowMenuItem != null) {
+      syncNowMenuItem.setVisible(driveSync);
     }
   }
 

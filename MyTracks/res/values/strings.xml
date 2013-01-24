@@ -1277,6 +1277,12 @@ limitations under the License.
       Character limit: ~20 (1 line)">
     Stop GPS
   </string>
+  <string name="menu_sync_now"
+    translation_description="In the menu, to sync now with Google Drive.
+
+      Character limit: ~20 (1 line)">
+    Sync now
+  </string>
   <string name="menu_terrain"
     translation_description="In the menu, under the map layer option, the submenu to display
       terrain.
@@ -1342,6 +1348,15 @@ limitations under the License.
       installation when the app wants to read My Tracks data.">
     read Google My Tracks data
   </string>
+  <string name="permission_request_message"
+    translation_description="The message when requesting permission.
+      %1$s account name. E.g., 'foo@foo.com'.">
+    for account %1$s
+  </string>
+  <string name="permission_request_title"
+    translation_description="The title when requesting permission.">
+    Request permission
+  </string>
   <string name="permission_write_description"
     translation_description="The permission description the Google Play Store shows during app
       installation when the app wants to write data to My Tracks.">
@@ -1353,7 +1368,7 @@ limitations under the License.
       installation when the app wants to write data to My Tracks.">
     write data to Google My Tracks and start/stop Google My Tracks recording
   </string>
-
+  
   <!-- Save -->
   <string name="save_error"
     translation_description="When saving to the external storage, the error message indicating that
@@ -1393,7 +1408,7 @@ limitations under the License.
       the track that the marker belongs to.
 
       %1$s: track name. E.g., 'Grand Canyon trail'.">
-    In track \'%1$s\'.
+    In track &#8216;%1$s&#8217;.
   </string>
   <string name="search_voice_prompt"
     translation_description="Prompt shown when the user activates voice search, asking him to speak
@@ -1706,6 +1721,26 @@ limitations under the License.
 
       Character limit: ~23 (1 line)">
     Switch account
+  </string>
+  <string name="settings_google_drive_sync_confirm_message_off"
+    translation_description="In the 'Google' settings, the confirmation message when unchecking
+      'Sync Google Drive' checkbox.
+
+      %1$s account name. E.g., 'foo@foo.com'.">
+    This will remove sync with %1$s Google Drive. If sync again, all tracks will be treated as new.
+  </string>
+  <string name="settings_google_drive_sync_confirm_message_on"
+    translation_description="In the 'Google' settings, the confirmation message when checking the
+      'Sync Google Drive' checkbox.
+
+      %1$s account name. E.g., 'foo@foo.com'.
+      %2$s folder name. E.g., 'My Tracks'.">
+    This will sync with %1$s Google Drive &#8216;%2$s&#8217; folder. All files in the folder will be
+    synced as new tracks. If not desired, move those files to a different folder beforehand.
+  </string>
+  <string name="settings_google_drive_sync_no_permission"
+    translation_description="The message when unable to get Google Drive permission.">
+    Unable to get Google Drive permission.
   </string>
   <string name="settings_google_drive_sync_summary_on"
     translation_description="In the 'Google' settings, the summary for the 'Sync Google Drive'

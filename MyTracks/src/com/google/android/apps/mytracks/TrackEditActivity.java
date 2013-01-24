@@ -116,6 +116,7 @@ public class TrackEditActivity extends AbstractMyTracksActivity {
         track.setCategory(category);
         track.setIcon(TrackIconUtils.getIconValue(TrackEditActivity.this, category));
         track.setDescription(description.getText().toString());
+        track.setModifiedTime(System.currentTimeMillis());
         myTracksProviderUtils.updateTrack(track);
         finish();
       }

@@ -16,6 +16,7 @@
 
 package com.google.android.apps.mytracks.content;
 
+import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
@@ -49,8 +50,6 @@ public class MyTracksProvider extends ContentProvider {
 
   private static final String TAG = MyTracksProvider.class.getSimpleName();
   private static final int DATABASE_VERSION = 21;
-  private static final String DRIVE_IDS_QUERY = TracksColumns.DRIVEID + " IS NOT NULL AND "
-      + TracksColumns.DRIVEID + "!=''";
 
   @VisibleForTesting
   static final String DATABASE_NAME = "mytracks.db";
@@ -209,7 +208,7 @@ public class MyTracksProvider extends ContentProvider {
           getContext(), R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT);
       if (driveSync) {
         driveIds = where != null ? getDriveIds(null, where, selectionArgs)
-            : getDriveIds(new String[] { TracksColumns.DRIVEID }, DRIVE_IDS_QUERY, null);
+            : getDriveIds(new String[] { TracksColumns.DRIVEID }, SyncUtils.DRIVE_IDS_QUERY, null);
       }
     }
 
