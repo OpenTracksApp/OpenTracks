@@ -329,7 +329,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     assertEquals(activityMyTracks.getString(R.string.settings_map_track_color_mode_fixed_value),
         PreferencesUtils.getString(context, R.string.track_color_mode_key, errorString));
   }
-  
+
   /**
    * Tests the setting of dynamic track color settings.
    */
@@ -349,7 +349,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     assertEquals(activityMyTracks.getString(R.string.settings_map_track_color_mode_dynamic_value),
         PreferencesUtils.getString(context, R.string.track_color_mode_key, errorString));
   }
-  
+
   /**
    * Tests the setting of single track color settings.
    */
@@ -367,6 +367,50 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
         .getString(R.string.settings_map_track_color_mode_dynamic_value));
     assertEquals(activityMyTracks.getString(R.string.settings_map_track_color_mode_single_value),
         PreferencesUtils.getString(context, R.string.track_color_mode_key, errorString));
+  }
+
+  /**
+   * Tests the setting and menu item of sync.
+   */
+  public void testSyncNowMenu() {
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_google));
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
+        .getString(R.string.settings_google_account_title));
+
+    // Whether test account is bound.
+    if (EndToEndTestUtils.SOLO.waitForText(GoogleUtils.ACCOUNT_NAME, 1,
+        EndToEndTestUtils.TINY_WAIT_TIME)) {
+      EndToEndTestUtils.SOLO.clickOnText(GoogleUtils.ACCOUNT_NAME);
+      instrumentation.waitForIdleSync();
+      assertTrue(EndToEndTestUtils.findTextView(
+          activityMyTracks.getString(R.string.settings_google_drive_sync_title)).isEnabled());
+    } else {
+      EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.value_none));
+      instrumentation.waitForIdleSync();
+      assertFalse(EndToEndTestUtils.findTextView(
+          activityMyTracks.getString(R.string.settings_google_drive_sync_title)).isEnabled());
+      return;
+    }
+
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
+        .getString(R.string.settings_google_drive_sync_title));
+
+    boolean isSyncChecked = false;
+    if (EndToEndTestUtils.SOLO.waitForText(
+        activityMyTracks.getString(R.string.settings_google_drive_sync_confirm_message_on).split(
+            "%")[0], 1, EndToEndTestUtils.SHORT_WAIT_TIME)) {
+      isSyncChecked = true;
+    } else {
+      assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(
+          R.string.settings_google_drive_sync_confirm_message_off).split("%")[0]));
+      isSyncChecked = false;
+    }
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));
+    EndToEndTestUtils.SOLO.goBack();
+    EndToEndTestUtils.SOLO.goBack();
+    assertEquals(isSyncChecked,
+        EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_sync_now), false));
   }
 
   @Override

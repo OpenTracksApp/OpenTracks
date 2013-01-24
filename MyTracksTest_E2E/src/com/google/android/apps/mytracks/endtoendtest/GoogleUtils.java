@@ -64,6 +64,7 @@ import java.util.Locale;
  */
 public class GoogleUtils {
   public static final String DOCUMENT_NAME_PREFIX = "My Tracks";
+  public static final String ACCOUNT_NAME = "mytrackstest@gmail.com";
   public static final String SPREADSHEET_NAME = DOCUMENT_NAME_PREFIX + "-" + EndToEndTestUtils.activityType;
 
   /**
