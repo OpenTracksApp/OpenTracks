@@ -162,6 +162,17 @@ public class SyncUtils {
     }
     return null;
   }
+  
+  /**
+   * Cancels any notification to request drive permission.
+   * 
+   * @param context the context
+   */
+  public static void cancelNotification(Context context) {
+    NotificationManager notificationManager = (NotificationManager) context.getSystemService(
+        Context.NOTIFICATION_SERVICE);
+    notificationManager.cancel(NOTIFICATION_ID);
+  }
 
   /**
    * Syncs now for the current account.

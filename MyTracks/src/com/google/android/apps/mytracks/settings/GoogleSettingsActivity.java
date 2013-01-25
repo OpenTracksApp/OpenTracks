@@ -138,11 +138,12 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     switch (requestCode) {
       case SyncUtils.DRIVE_PERMISSION_REQUEST_CODE:
+        SyncUtils.cancelNotification(this);
         if (resultCode == Activity.RESULT_OK) {
           permissionCallback.onSuccess();
         } else {
           permissionCallback.onFailure();
-        }
+        }        
         break;
       default:
         super.onActivityResult(requestCode, resultCode, data);

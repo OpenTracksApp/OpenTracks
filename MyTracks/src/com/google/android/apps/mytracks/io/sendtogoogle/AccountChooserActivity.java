@@ -96,6 +96,7 @@ public class AccountChooserActivity extends Activity {
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     switch (requestCode) {
       case SyncUtils.DRIVE_PERMISSION_REQUEST_CODE:
+        SyncUtils.cancelNotification(this);
         if (resultCode == Activity.RESULT_OK) {
           driveCallback.onSuccess();
         } else {
