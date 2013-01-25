@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks.io.fusiontables;
 
 import com.google.android.apps.mytracks.io.docs.SendDocsActivity;
@@ -28,7 +29,7 @@ import android.content.Intent;
 
 /**
  * An activity to send a track to Google Fusion Tables.
- *
+ * 
  * @author Jimmy Shih
  */
 public class SendFusionTablesActivity extends AbstractSendActivity {
@@ -52,17 +53,17 @@ public class SendFusionTablesActivity extends AbstractSendActivity {
     startActivity(intent);
     finish();
   }
-  
+
   @VisibleForTesting
   Class<?> getNextClass(SendRequest request, boolean isCancel) {
-  if (isCancel) {
-        return UploadResultActivity.class;
+    if (isCancel) {
+      return UploadResultActivity.class;
+    } else {
+      if (request.isSendDocs()) {
+        return SendDocsActivity.class;
       } else {
-        if (request.isSendDocs()) {
-          return SendDocsActivity.class;
-        } else {
-          return UploadResultActivity.class;
-        }
+        return UploadResultActivity.class;
       }
+    }
   }
 }
