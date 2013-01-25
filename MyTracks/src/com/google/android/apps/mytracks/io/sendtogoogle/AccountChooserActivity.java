@@ -13,10 +13,12 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks.io.sendtogoogle;
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.io.docs.SendDocsActivity;
+import com.google.android.apps.mytracks.io.drive.SendDriveActivity;
 import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesActivity;
 import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesUtils;
 import com.google.android.apps.mytracks.io.gdata.docs.DocumentsClient;
@@ -24,6 +26,7 @@ import com.google.android.apps.mytracks.io.gdata.docs.SpreadsheetsClient;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsConstants;
 import com.google.android.apps.mytracks.io.maps.ChooseMapActivity;
 import com.google.android.apps.mytracks.io.maps.SendMapsActivity;
+import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
@@ -52,28 +55,9 @@ import java.io.IOException;
  */
 public class AccountChooserActivity extends Activity {
 
-  private static final String TAG = AccountChooserActivity.class.getSimpleName();
-  
+  private static final String TAG = AccountChooserActivity.class.getSimpleName();  
   private static final int DIALOG_NO_ACCOUNT_ID = 0;
   private static final int DIALOG_CHOOSER_ID = 1;
-
-  /**
-   * A callback after getting the permission to access a Google service.
-   *
-   * @author Jimmy Shih
-   */
-  private interface PermissionCallback {
-   
-    /**
-     * To be invoked when the permission is granted.
-     */
-    public void onSuccess();
-
-    /**
-     * To be invoked when the permission is not granted.
-     */
-    public void onFailure();
-  }
 
   private SendRequest sendRequest;
   private Account[] accounts;
@@ -92,7 +76,7 @@ public class AccountChooserActivity extends Activity {
     if (accounts.length == 1) {
       sendRequest.setAccount(accounts[0]);
       PreferencesUtils.setString(this, R.string.google_account_key, accounts[0].name);
-      getPermission(MapsConstants.SERVICE_NAME, sendRequest.isSendMaps(), mapsCallback);
+      checkDrivePermission(accounts[0].name);
       return;
     }
 
@@ -101,13 +85,28 @@ public class AccountChooserActivity extends Activity {
     for (int i = 0; i < accounts.length; i++) {
       if (accounts[i].name.equals(googleAccount)) {
         sendRequest.setAccount(accounts[i]);
-        getPermission(MapsConstants.SERVICE_NAME, sendRequest.isSendMaps(), mapsCallback);
+        checkDrivePermission(accounts[i].name);
         return;
       }
     }
     showDialog(DIALOG_CHOOSER_ID);
   }
 
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    switch (requestCode) {
+      case SyncUtils.DRIVE_PERMISSION_REQUEST_CODE:
+        if (resultCode == Activity.RESULT_OK) {
+          driveCallback.onSuccess();
+        } else {
+          driveCallback.onFailure();
+        }
+        break;
+      default:
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+  }
+  
   @Override
   protected Dialog onCreateDialog(int id) {
     switch (id) {
@@ -163,12 +162,25 @@ public class AccountChooserActivity extends Activity {
             PreferencesUtils.setString(
                 AccountChooserActivity.this, R.string.google_account_key, account.name);
             sendRequest.setAccount(account);
-            getPermission(MapsConstants.SERVICE_NAME, sendRequest.isSendMaps(), mapsCallback);
+            checkDrivePermission(account.name);
           }
         })
         .setSingleChoiceItems(choices, 0, null)
         .setTitle(R.string.send_google_choose_account_title)
         .create();
+  }
+  
+  /**
+   * Checks the Drive permission.
+   * 
+   * @param accountName the account name
+   */
+  private void checkDrivePermission(String accountName) {
+    if (sendRequest.isSendDrive()) {
+      SyncUtils.checkPermissionByActivity(this, accountName, driveCallback);      
+    } else {
+      driveCallback.onSuccess();
+    }
   }
   
   private PermissionCallback spreadsheetsCallback = new PermissionCallback() {
@@ -209,6 +221,17 @@ public class AccountChooserActivity extends Activity {
     public void onSuccess() {
       getPermission(
           SendFusionTablesUtils.SERVICE, sendRequest.isSendFusionTables(), fusionTablesCallback);
+    }
+    @Override
+    public void onFailure() {
+      handleNoAccountPermission();
+    }
+  };
+  
+  private PermissionCallback driveCallback = new PermissionCallback() {
+    @Override
+    public void onSuccess() {
+      getPermission(MapsConstants.SERVICE_NAME, sendRequest.isSendMaps(), mapsCallback);
     }
     @Override
     public void onFailure() {
@@ -270,7 +293,9 @@ public class AccountChooserActivity extends Activity {
    */
   private void startNextActivity() {
     Class<?> next;
-    if (sendRequest.isSendMaps()) {
+    if (sendRequest.isSendDrive()) {
+      next = SendDriveActivity.class;
+    } else if (sendRequest.isSendMaps()) {
       next = sendRequest.isNewMap() ? SendMapsActivity.class : ChooseMapActivity.class;
     } else if (sendRequest.isSendFusionTables()) {
       next = SendFusionTablesActivity.class;

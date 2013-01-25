@@ -203,6 +203,7 @@ limitations under the License.
     <activity android:name="com.google.android.apps.mytracks.io.backup.RestoreActivity" />
     <activity android:name="com.google.android.apps.mytracks.io.backup.RestoreChooserActivity" />
     <activity android:name="com.google.android.apps.mytracks.io.docs.SendDocsActivity" />
+    <activity android:name="com.google.android.apps.mytracks.io.drive.SendDriveActivity" />
     <activity android:name="com.google.android.apps.mytracks.io.file.SaveActivity" />
     <activity android:name="com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesActivity" />
     <activity

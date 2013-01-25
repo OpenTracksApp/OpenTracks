@@ -80,6 +80,7 @@ Google은 이용자에 대한 위치정보의 이용∙제공사실을 위치정
   <string name="my_tracks_web_url">www.google.com/mobile/mytracks</string>
   <string name="permission_notification_value">com.google.android.apps.mytracks.MYTRACKS_NOTIFICATIONS</string>
   <string name="send_google_docs_url">docs.google.com</string>
+  <string name="send_google_drive_url">drive.google.com</string>
   <string name="send_google_fusion_tables_url">google.com/fusiontables</string>
   <string name="send_google_maps_url">maps.google.com</string>
   <string name="sensor_type_value_ant">ANT</string>

@@ -398,12 +398,10 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
 
     boolean isSyncChecked = false;
     if (EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.settings_google_drive_sync_confirm_message_on).split(
+        activityMyTracks.getString(R.string.settings_google_drive_sync_confirm_message).split(
             "%")[0], 1, EndToEndTestUtils.SHORT_WAIT_TIME)) {
       isSyncChecked = true;
     } else {
-      assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(
-          R.string.settings_google_drive_sync_confirm_message_off).split("%")[0]));
       isSyncChecked = false;
     }
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));

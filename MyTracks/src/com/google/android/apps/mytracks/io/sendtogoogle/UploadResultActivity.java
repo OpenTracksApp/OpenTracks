@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks.io.sendtogoogle;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
@@ -90,11 +91,13 @@ public class UploadResultActivity extends FragmentActivity {
     }
     view = getLayoutInflater().inflate(R.layout.upload_result, null);
 
+    LinearLayout driveResult = (LinearLayout) view.findViewById(R.id.upload_result_drive_result);
     LinearLayout mapsResult = (LinearLayout) view.findViewById(R.id.upload_result_maps_result);
     LinearLayout fusionTablesResult = (LinearLayout) view.findViewById(
         R.id.upload_result_fusion_tables_result);
     LinearLayout docsResult = (LinearLayout) view.findViewById(R.id.upload_result_docs_result);
 
+    ImageView driveResultIcon = (ImageView) view.findViewById(R.id.upload_result_drive_result_icon);
     ImageView mapsResultIcon = (ImageView) view.findViewById(R.id.upload_result_maps_result_icon);
     ImageView fusionTablesResultIcon = (ImageView) view.findViewById(
         R.id.upload_result_fusion_tables_result_icon);
@@ -104,6 +107,16 @@ public class UploadResultActivity extends FragmentActivity {
     TextView errorFooter = (TextView) view.findViewById(R.id.upload_result_error_footer);
 
     boolean hasError = false;
+    if (!sendRequest.isSendDrive()) {
+      driveResult.setVisibility(View.GONE);
+    } else {
+      if (!sendRequest.isDriveSuccess()) {
+        driveResultIcon.setImageResource(R.drawable.failure);
+        driveResultIcon.setContentDescription(getString(R.string.generic_error_title));
+        hasError = true;
+      }
+    }
+    
     if (!sendRequest.isSendMaps()) {
       mapsResult.setVisibility(View.GONE);
     } else {
@@ -173,5 +186,4 @@ public class UploadResultActivity extends FragmentActivity {
     resultDialog = builder.create();
     return resultDialog;
   }
-
 }

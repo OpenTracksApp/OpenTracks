@@ -21,6 +21,34 @@ limitations under the License.
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:padding="8dp" >
+    <!-- Google Drive result -->
+    <LinearLayout
+      android:id="@+id/upload_result_drive_result"
+      android:layout_height="wrap_content"
+      android:layout_width="wrap_content"
+      android:orientation="horizontal" >
+      <ImageView
+        android:contentDescription="@string/generic_success_title"
+        android:id="@+id/upload_result_drive_result_icon"
+        android:layout_gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:padding="4dp"
+        android:src="@drawable/success" />
+      <LinearLayout
+        android:layout_gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="8dp" >
+        <TextView
+          android:text="@string/send_google_drive"
+          style="@style/TextMedium" />
+        <TextView
+          android:text="@string/send_google_drive_url"
+          style="@style/TextSmall" />
+      </LinearLayout>
+    </LinearLayout>
     <!-- Google Maps result -->
     <LinearLayout
       android:id="@+id/upload_result_maps_result"

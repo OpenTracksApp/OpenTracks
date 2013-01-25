@@ -1721,31 +1721,29 @@ limitations under the License.
       Character limit: ~23 (1 line)">
     Google
   </string>
+  <string name="settings_google_account_confirm_message"
+    translation_description="In the 'Google' settings, the confirmation message when switching
+      account.
+
+      %1$s account name. E.g., 'foo@foo.com'.">
+    This will remove any mappings between tracks and %1$s Google Drive. After removal, when sending
+    to Google Drive or syncing with Google Drive, all tracks will be treated as new.
+  </string>
   <string name="settings_google_account_title"
     translation_description="In the 'Google' settings, the option to switch Google account.
 
       Character limit: ~23 (1 line)">
     Switch account
   </string>
-  <string name="settings_google_drive_sync_confirm_message_off"
-    translation_description="In the 'Google' settings, the confirmation message when unchecking
-      'Sync Google Drive' checkbox.
-
-      %1$s account name. E.g., 'foo@foo.com'.">
-    This will remove sync with %1$s Google Drive. If sync again, all tracks will be treated as new.
-  </string>
-  <string name="settings_google_drive_sync_confirm_message_on"
+  <string name="settings_google_drive_sync_confirm_message"
     translation_description="In the 'Google' settings, the confirmation message when checking the
       'Sync Google Drive' checkbox.
 
       %1$s account name. E.g., 'foo@foo.com'.
       %2$s folder name. E.g., 'My Tracks'.">
-    This will sync with %1$s Google Drive &#8216;%2$s&#8217; folder. All files in the folder will be
-    synced as new tracks. If not desired, move those files to a different folder beforehand.
-  </string>
-  <string name="settings_google_drive_sync_no_permission"
-    translation_description="The message when unable to get Google Drive permission.">
-    Unable to get Google Drive permission.
+    Check the files in %1$s Google Drive &#8216;%2$s&#8217; folder. Files not mapped to existing
+    tracks will be synced as new tracks. If not desired, move those files to a different folder
+    beforehand.
   </string>
   <string name="settings_google_drive_sync_summary_on"
     translation_description="In the 'Google' settings, the summary for the 'Sync Google Drive'
