@@ -1436,6 +1436,11 @@ limitations under the License.
       checkbox option to send to Google Docs.">
     Google Docs
   </string>
+  <string name="send_google_drive"
+    translation_description="When sending a track to Google, under the 'Send to...' dialog, the
+      checkbox option to send to Google Drive.">
+    Google Drive
+  </string>
   <string name="send_google_error"
     translation_description="When sending a track to Google, a message indicating that an error has
       occurred and ask the user to try again.">

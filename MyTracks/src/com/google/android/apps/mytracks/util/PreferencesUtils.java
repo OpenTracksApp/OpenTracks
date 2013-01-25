@@ -78,9 +78,12 @@ public class PreferencesUtils {
   public static final boolean RECORDING_TRACK_PAUSED_DEFAULT = true;
   public static final boolean REPORT_SPEED_DEFAULT = true;
   public static final long SELECTED_TRACK_ID_DEFAULT = -1L;
-  public static final boolean SEND_TO_DOCS_DEFAULT = true;
-  public static final boolean SEND_TO_FUSION_TABLES_DEFAULT = true;
-  public static final boolean SEND_TO_MAPS_DEFAULT = true;
+  
+  public static final boolean SEND_TO_DRIVE_DEFAULT = false;
+  public static final boolean SEND_TO_DOCS_DEFAULT = false;
+  public static final boolean SEND_TO_FUSION_TABLES_DEFAULT = false;
+  public static final boolean SEND_TO_MAPS_DEFAULT = false;
+  
   public static final String SENSOR_TYPE_DEFAULT = "NONE"; 
   public static final boolean SHOW_CONFIRM_PLAY_DIALOG_DEFAULT = true;
   public static final boolean SHOW_CONFIRM_SHARING_DIALOG_DEFAULT = true;
