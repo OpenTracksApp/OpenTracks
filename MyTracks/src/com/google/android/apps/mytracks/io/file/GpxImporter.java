@@ -52,15 +52,14 @@ public class GpxImporter extends AbstractImporter {
    * Constructor.
    * 
    * @param context the context
-   * @param importTrackId track id to import to. -1L to import to a new track.
    */
-  public GpxImporter(Context context, long importTrackId) {
-    super(context, importTrackId);
+  public GpxImporter(Context context) {
+    super(context);
   }
 
   @VisibleForTesting
   public GpxImporter(Context context, MyTracksProviderUtils myTracksProviderUtils) {
-    super(context, -1L, myTracksProviderUtils);
+    super(context, myTracksProviderUtils);
   }
 
   @Override
@@ -118,7 +117,7 @@ public class GpxImporter extends AbstractImporter {
   }
 
   @Override
-  protected void onTrackStart() throws SAXException {
+  protected void onTrackStart() {
     super.onTrackStart();
     name = null;
     description = null;

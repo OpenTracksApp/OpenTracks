@@ -254,7 +254,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         InputStream inputStream = downloadDriveFile(driveFile);
         // TODO: should retry if inputStream is null
         if (inputStream != null) {
-          KmlImporter kmlImporter = new KmlImporter(context, -1L);
+          KmlImporter kmlImporter = new KmlImporter(context);
           long[] tracksIds = kmlImporter.importFile(inputStream);
           if (tracksIds.length == 1) {
             Track track = myTracksProviderUtils.getTrack(tracksIds[0]);
@@ -333,20 +333,29 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         track.setModifiedTime(driveModifiedTime);
         myTracksProviderUtils.updateTrack(track);
       } else {
-        KmlImporter kmlImporter = new KmlImporter(context, track.getId());
+        KmlImporter kmlImporter = new KmlImporter(context);
         long[] tracksIds = kmlImporter.importFile(inputStream);
         if (tracksIds.length == 1) {
+          // Delete track and update the new imported track
+          track.setDriveId("");
+          myTracksProviderUtils.updateTrack(track);
+          myTracksProviderUtils.deleteTrack(track.getId());
+                    
           Track newTrack = myTracksProviderUtils.getTrack(tracksIds[0]);
           newTrack.setDriveId(driveFile.getId());
           newTrack.setModifiedTime(driveModifiedTime);
           myTracksProviderUtils.updateTrack(newTrack);
         } else {
-
           /*
-           * TODO: Should revert the track back to the original.
+           * Do not need to retry, the drive file is invalid. Remove imported
+           * tracks and update the track modified time.
            */
-          Log.e(
-              TAG, "Unable to update drive change. Imported size is not 1 for " + track.getName());
+          Log.e(TAG, "Unable to update drive change for track " + track.getName());
+          for (int i = 0; i < tracksIds.length; i++) {
+            myTracksProviderUtils.deleteTrack(tracksIds[i]);
+          }
+          track.setModifiedTime(driveModifiedTime);
+          myTracksProviderUtils.updateTrack(track);
         }
       }
     }
