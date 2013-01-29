@@ -24,7 +24,7 @@ import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.fragments.ChartFragment;
 import com.google.android.apps.mytracks.fragments.ChooseActivityDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChooseUploadServiceDialogFragment;
-import com.google.android.apps.mytracks.fragments.ConfirmPlayDialogFragment;
+import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment.DeleteOneTrackCaller;
 import com.google.android.apps.mytracks.fragments.FrequencyDialogFragment;
@@ -39,6 +39,7 @@ import com.google.android.apps.mytracks.settings.SettingsActivity;
 import com.google.android.apps.mytracks.util.AnalyticsUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -311,6 +312,25 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     return super.onPrepareOptionsMenu(menu);
   }
 
+  public void onConfirmDialogDone(int id) {
+    switch (id) {
+      case R.string.show_confirm_play_earth_dialog_key:
+        AnalyticsUtils.sendPageViews(this, "/action/play");
+        Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
+            .putExtra(SaveActivity.EXTRA_TRACK_ID, trackId)
+            .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.KML)
+            .putExtra(SaveActivity.EXTRA_PLAY_TRACK, true);
+        startActivity(intent);
+        break;
+      case R.string.show_confirm_sharing_dialog_key:
+        AnalyticsUtils.sendPageViews(this, "/action/share");
+        ChooseActivityDialogFragment.newInstance(trackId, null).show(
+            getSupportFragmentManager(), ChooseActivityDialogFragment.CHOOSE_ACTIVITY_DIALOG_TAG);
+        break;
+      default:
+    }
+  }
+  
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     Intent intent;
@@ -323,17 +343,21 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
         return true;
       case R.id.track_detail_play:
         if (isEarthInstalled()) {
-          ConfirmPlayDialogFragment.newInstance(trackId)
-              .show(getSupportFragmentManager(), ConfirmPlayDialogFragment.CONFIRM_PLAY_DIALOG_TAG);
+          ConfirmDialogFragment.newInstance(R.string.show_confirm_play_earth_dialog_key,
+              PreferencesUtils.SHOW_CONFIRM_PLAY_DIALOG_DEFAULT,
+              getString(R.string.track_detail_play_confirm_message))
+              .show(getSupportFragmentManager(), ConfirmDialogFragment.CONFIRM_DIALOG_TAG);
         } else {
           new InstallEarthDialogFragment().show(
               getSupportFragmentManager(), InstallEarthDialogFragment.INSTALL_EARTH_DIALOG_TAG);
         }
         return true;
       case R.id.track_detail_share:
-        AnalyticsUtils.sendPageViews(this, "/action/share");
-        ChooseActivityDialogFragment.newInstance(trackId, null).show(
-            getSupportFragmentManager(), ChooseActivityDialogFragment.CHOOSE_ACTIVITY_DIALOG_TAG);
+        ConfirmDialogFragment.newInstance(R.string.show_confirm_sharing_dialog_key,
+            PreferencesUtils.SHOW_CONFIRM_SHARING_DIALOG_DEFAULT,
+            StringUtils.getHtml(
+                this, R.string.share_track_confirm_message, R.string.maps_public_unlisted_url))
+            .show(getSupportFragmentManager(), ConfirmDialogFragment.CONFIRM_DIALOG_TAG);
         return true;
       case R.id.track_detail_markers:
         intent = IntentUtils.newIntent(this, MarkerListActivity.class)

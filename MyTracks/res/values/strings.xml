@@ -918,7 +918,7 @@ limitations under the License.
     translation_description="In the 'Help' page, the answer on share visibility.">
     By default, tracks sent to Google Maps are unlisted, tracks sent to Google Fusion Tables are
     public, and tracks sent to Google Docs are private. For Google Maps, you can change the
-    default between public and unlisted via Settings -> Sharing. After uploading tracks, you can
+    default between public and unlisted via Settings -> Google. After uploading tracks, you can
     change their visibility in Google Maps, Google Fusion Tables, and Google Docs.
   </string>
   <string name="help_share_visibility_question"
@@ -2196,7 +2196,7 @@ limitations under the License.
 
       %1$s url. E.g., 'support.google.com/maps/bin/answer.py?answer=144365'.">
     This will upload your track to Google Maps so that you can share the map url with friends. The
-    map will be either public or unlisted depending on your setting at Settings -> Sharing. For more
+    map will be either public or unlisted depending on your setting at Settings -> Google. For more
     info on public versus unlisted, see %1$s.
   </string>
   <string name="share_track_picker_title"
