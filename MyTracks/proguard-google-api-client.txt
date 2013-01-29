@@ -23,3 +23,16 @@
 # Needed by google-api-client-android when linking against an older platform version
 
 -dontwarn com.google.api.client.googleapis.extensions.android.**
+
+# Additional flags from
+# http://stackoverflow.com/questions/14410520/google-drive-api-doesnt-play-well-with-proguard-npe
+-keep class com.google.** { *;}
+-keep interface com.google.** { *;}
+-dontwarn com.google.**
+-keepattributes *Annotation*,Signature
+-keep class * extends com.google.api.client.json.GenericJson {
+*;
+}
+-keep class com.google.api.services.drive.** {
+*;
+}
