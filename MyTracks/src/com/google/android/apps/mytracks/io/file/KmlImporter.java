@@ -71,14 +71,15 @@ public class KmlImporter extends AbstractImporter {
    * Constructor.
    * 
    * @param context the context
+   * @param importTrackId track id to import to. -1L to import to a new track.
    */
-  public KmlImporter(Context context) {
-    super(context);
+  public KmlImporter(Context context, long importTrackId) {
+    super(context, importTrackId);
   }
 
   @VisibleForTesting
   public KmlImporter(Context context, MyTracksProviderUtils myTracksProviderUtils) {
-    super(context, myTracksProviderUtils);
+    super(context, -1L, myTracksProviderUtils);
   }
 
   @Override

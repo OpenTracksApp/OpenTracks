@@ -41,6 +41,13 @@ public interface MyTracksProviderUtils {
   public static final String AUTHORITY = "com.google.android.maps.mytracks";
 
   /**
+   * Clears a track. Removes waypoints and trackpoints. Only keeps the track id.
+   * 
+   * @param trackId the track id
+   */
+  public void clearTrack(long trackId);
+
+  /**
    * Creates a {@link Track} from a cursor.
    * 
    * @param cursor the cursor pointing to the track

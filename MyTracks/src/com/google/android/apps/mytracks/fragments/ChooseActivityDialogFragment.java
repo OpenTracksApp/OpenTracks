@@ -16,7 +16,7 @@
 
 package com.google.android.apps.mytracks.fragments;
 
-import com.google.android.apps.mytracks.io.sendtogoogle.ConfirmSharingActivity;
+import com.google.android.apps.mytracks.io.sendtogoogle.AccountChooserActivity;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.maps.mytracks.R;
@@ -120,7 +120,7 @@ public class ChooseActivityDialogFragment extends DialogFragment {
               sendRequest.setNewMap(true);
               sendRequest.setSharingAppPackageName(packageName);
               sendRequest.setSharingAppClassName(className);
-              Intent intent = IntentUtils.newIntent(activity, ConfirmSharingActivity.class)
+              Intent intent = IntentUtils.newIntent(activity, AccountChooserActivity.class)
                   .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
               startActivity(intent);
               dismiss();
