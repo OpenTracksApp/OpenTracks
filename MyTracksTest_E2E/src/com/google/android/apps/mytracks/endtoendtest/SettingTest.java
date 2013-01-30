@@ -64,7 +64,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     // Change a setting of Map.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
     instrumentation.waitForIdleSync();
-    
+
     // Rotate on a sub setting page.
     EndToEndTestUtils.rotateAllActivities();
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks
@@ -74,7 +74,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.SOLO.clickOnCheckBox(0);
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.SOLO.goBack();
-    
+
     // Change a setting of sharing.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_sharing));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
@@ -123,10 +123,10 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
    */
   public void testChangePreferredUnits() {
     EndToEndTestUtils.createTrackIfEmpty(5, false);
-    
+
     // Change it and verify it.
     ChangePreferredUnits();
-    
+
     // Change it back and verify it.
     ChangePreferredUnits();
   }
@@ -136,7 +136,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
    */
   public void testChangeStatsSettings_underRecording_chart() {
     EndToEndTestUtils.startRecording();
-    
+
     // Test just change preferred units when display CHART tab.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_chart_tab));
     EndToEndTestUtils.sendGps(3);
@@ -274,19 +274,40 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
         .clickOnText(activityMyTracks.getString(R.string.settings_backup_restore));
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
-    
+
     // Now there should be 2 backups.
     instrumentation.waitForIdleSync();
     assertEquals(2, EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount());
-    // Click the older one for the older one contains tracks and the newer backup is empty.
-    EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.SOLO.getCurrentListViews().get(0)
-        .getItemAtPosition(1).toString());
+    
+    // Click the first one.
+    EndToEndTestUtils.SOLO.clickOnView(EndToEndTestUtils.SOLO.getCurrentListViews().get(0)
+        .getChildAt(0));
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(
+        activityMyTracks.getString(R.string.settings_backup_restore_success), 0,
+        EndToEndTestUtils.SUPER_LONG_WAIT_TIME));
+
+    // Check restore track.
+    instrumentation.waitForIdleSync();
+    boolean isContainTrack = EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.trackName);
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup_reset));
+    EndToEndTestUtils.SOLO
+        .clickOnText(activityMyTracks.getString(R.string.settings_backup_restore));
+    EndToEndTestUtils
+        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+    instrumentation.waitForIdleSync();
+    
+    // Click the second one.
+    EndToEndTestUtils.SOLO.clickOnView(EndToEndTestUtils.SOLO.getCurrentListViews().get(0)
+        .getChildAt(1));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
         activityMyTracks.getString(R.string.settings_backup_restore_success), 0,
         EndToEndTestUtils.SUPER_LONG_WAIT_TIME));
     
-    // Check restore track.
-    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.trackName));
+    // For the older backup contains tracks and the newer backup is empty. The
+    // search result of twice must be different.
+    instrumentation.waitForIdleSync();
+    assertTrue(isContainTrack != EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.trackName));
   }
 
   /**
@@ -296,13 +317,13 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
   public void testRecording() {
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_recording));
-    
+
     // Changes the setting of recording name.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
         .getString(R.string.settings_recording_track_name_title));
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
         .getString(R.string.settings_recording_track_name_number_option));
-    
+
     // Changes the setting of default activity.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
         .getString(R.string.settings_recording_default_activity_title));
