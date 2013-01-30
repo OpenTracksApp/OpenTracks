@@ -19,6 +19,7 @@ import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.endtoendtest.EndToEndTestUtils;
 import com.google.android.apps.mytracks.endtoendtest.GoogleUtils;
 import com.google.android.maps.mytracks.R;
+import com.google.api.services.drive.Drive;
 
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
@@ -26,14 +27,15 @@ import android.test.ActivityInstrumentationTestCase2;
 import java.io.IOException;
 
 /**
- * Tests the two-ways sync of MyTracks and Google Drive.
+ * Tests how MyTracks to sync with Google Drive.
  * 
  * @author Youtao Liu
  */
 public class SyncMyTracksWithDriveTest extends ActivityInstrumentationTestCase2<TrackListActivity> {
 
+  public static Drive drive;
   private Instrumentation instrumentation;
-  private TrackListActivity activityMyTracks;
+  private TrackListActivity trackListActivity;
 
   public SyncMyTracksWithDriveTest() {
     super(TrackListActivity.class);
@@ -43,9 +45,10 @@ public class SyncMyTracksWithDriveTest extends ActivityInstrumentationTestCase2<
   protected void setUp() throws Exception {
     super.setUp();
     instrumentation = getInstrumentation();
-    activityMyTracks = getActivity();
-    EndToEndTestUtils.setupForAllTest(instrumentation, activityMyTracks);
+    trackListActivity = getActivity();
+    EndToEndTestUtils.setupForAllTest(instrumentation, trackListActivity);
     SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME);
+    drive = SyncTestUtils.getGoogleDrive(trackListActivity.getApplicationContext());
   }
 
   /**
@@ -58,12 +61,11 @@ public class SyncMyTracksWithDriveTest extends ActivityInstrumentationTestCase2<
     EndToEndTestUtils.createTrackIfEmpty(0, true);
     EndToEndTestUtils.findMenuItem(
         EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
-    SyncTestUtils.checkFilesNumber(1);
-    
-    SyncTestUtils.removeKMLFiles();
+    SyncTestUtils.checkFilesNumber(1, drive);
+
+    SyncTestUtils.removeKMLFiles(drive);
     EndToEndTestUtils.findMenuItem(
         EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
     SyncTestUtils.checkTracksNumber(0);
   }
-
 }

@@ -19,28 +19,24 @@ import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.endtoendtest.EndToEndTestUtils;
 import com.google.android.apps.mytracks.endtoendtest.GoogleUtils;
 import com.google.android.maps.mytracks.R;
-import com.google.api.client.http.GenericUrl;
-import com.google.api.client.http.HttpResponse;
-import com.google.api.services.drive.model.File;
+import com.google.api.services.drive.Drive;
 
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.KeyEvent;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 /**
- * Tests the two-ways sync of MyTracks and Google Drive.
+ * Tests how Google Drive to sync with MyTracks.
  * 
  * @author Youtao Liu
  */
 public class SyncDriveWithMyTracksTest extends ActivityInstrumentationTestCase2<TrackListActivity> {
 
+  public static Drive drive;
   private Instrumentation instrumentation;
-  private TrackListActivity activityMyTracks;
+  private TrackListActivity trackListActivity;
 
   public SyncDriveWithMyTracksTest() {
     super(TrackListActivity.class);
@@ -50,14 +46,14 @@ public class SyncDriveWithMyTracksTest extends ActivityInstrumentationTestCase2<
   protected void setUp() throws Exception {
     super.setUp();
     instrumentation = getInstrumentation();
-    activityMyTracks = getActivity();
-    EndToEndTestUtils.setupForAllTest(instrumentation, activityMyTracks);
+    trackListActivity = getActivity();
+    EndToEndTestUtils.setupForAllTest(instrumentation, trackListActivity);
     SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME);
+    drive = SyncTestUtils.getGoogleDrive(trackListActivity.getApplicationContext());
   }
 
   /**
-   * Deletes all tracks in MyTracks and checks in Google Drive. Then creates one
-   * tracks in MyTracks and checks it in Google Drive.
+   * Deletes all tracks in MyTracks and checks in Google Drive.
    * 
    * @throws IOException
    */
@@ -65,12 +61,12 @@ public class SyncDriveWithMyTracksTest extends ActivityInstrumentationTestCase2<
     EndToEndTestUtils.deleteAllTracks();
     EndToEndTestUtils.findMenuItem(
         EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
-    SyncTestUtils.checkFilesNumber(0);
+    SyncTestUtils.checkFilesNumber(0, drive);
   }
 
   /**
-   * Creates one empty track and non-empty track in MyTracks and then check them
-   * in Google Drive.
+   * Creates one empty track and one non-empty track in MyTracks and then check
+   * them in Google Drive.
    * 
    * @throws IOException
    */
@@ -80,12 +76,11 @@ public class SyncDriveWithMyTracksTest extends ActivityInstrumentationTestCase2<
     EndToEndTestUtils.createSimpleTrack(3, true);
     EndToEndTestUtils.findMenuItem(
         EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
-    SyncTestUtils.checkFilesNumber(2);
+    SyncTestUtils.checkFilesNumber(2, drive);
   }
 
   /**
-   * Creates one empty track and non-empty track in MyTracks and then check them
-   * in Google Drive.
+   * Edits a tracks in MyTracks and checks it on Google Drive after sync.
    * 
    * @throws IOException
    */
@@ -95,25 +90,24 @@ public class SyncDriveWithMyTracksTest extends ActivityInstrumentationTestCase2<
     // Sync this track.
     EndToEndTestUtils.findMenuItem(
         EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
-    SyncTestUtils.updateDriveData(activityMyTracks.getApplicationContext());
-    assertTrue(SyncTestUtils.checkFile(EndToEndTestUtils.trackName, true));
-    String oldTrack = getContentOfFile(SyncTestUtils.getFile(EndToEndTestUtils.trackName));
+    assertTrue(SyncTestUtils.checkFile(EndToEndTestUtils.trackName, true, drive));
+    String oldTrack = SyncTestUtils.getContentOfFile(SyncTestUtils.getFile(EndToEndTestUtils.trackName, drive), drive);
 
     String oldTrackName = EndToEndTestUtils.trackName;
 
     // Edit this track.
     EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.trackName);
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_edit), true);
+    EndToEndTestUtils.findMenuItem(trackListActivity.getString(R.string.menu_edit), true);
     String newTrackName = EndToEndTestUtils.TRACK_NAME_PREFIX + "_new" + System.currentTimeMillis();
     String newType = EndToEndTestUtils.activityType + newTrackName;
     String newDesc = "desc" + newTrackName;
     instrumentation.waitForIdleSync();
-    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.generic_save));
+    EndToEndTestUtils.SOLO.waitForText(trackListActivity.getString(R.string.generic_save));
     sendKeys(KeyEvent.KEYCODE_DEL);
     EndToEndTestUtils.enterTextAvoidSoftKeyBoard(0, newTrackName);
     EndToEndTestUtils.enterTextAvoidSoftKeyBoard(1, newType);
     EndToEndTestUtils.enterTextAvoidSoftKeyBoard(2, newDesc);
-    EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_save));
+    EndToEndTestUtils.SOLO.clickOnButton(trackListActivity.getString(R.string.generic_save));
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.SOLO.goBack();
     instrumentation.waitForIdleSync();
@@ -121,34 +115,14 @@ public class SyncDriveWithMyTracksTest extends ActivityInstrumentationTestCase2<
     // Sync again.
     EndToEndTestUtils.findMenuItem(
         EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
-    SyncTestUtils.updateDriveData(activityMyTracks.getApplicationContext());
-    assertFalse(SyncTestUtils.checkFile(oldTrackName, false));
-    assertTrue(SyncTestUtils.checkFile(newTrackName, true));
-    String newTrack = getContentOfFile(SyncTestUtils.getFile(newTrackName));
 
     // Check.
+    assertTrue(SyncTestUtils.checkFile(oldTrackName, false, drive));
+    assertTrue(SyncTestUtils.checkFile(newTrackName, true, drive));
+    String newTrack = SyncTestUtils.getContentOfFile(SyncTestUtils.getFile(newTrackName,drive), drive);
     assertNotSame(oldTrack, newTrack);
     assertTrue(newTrack.indexOf(newTrackName) > 0);
     assertTrue(newTrack.indexOf(newType) > 0);
     assertTrue(newTrack.indexOf(newDesc) > 0);
-  }
-
-  private String getContentOfFile(File file) throws IOException {
-    SyncTestUtils.updateDriveData(activityMyTracks.getApplicationContext());
-    HttpResponse resp = SyncTestUtils.drive.getRequestFactory()
-        .buildGetRequest(new GenericUrl(file.getDownloadUrl())).execute();
-    InputStream response = resp.getContent();
-    BufferedReader br = new BufferedReader(new InputStreamReader(response));
-
-    StringBuilder sb = new StringBuilder();
-
-    String line;
-    while ((line = br.readLine()) != null) {
-      sb.append(line);
-    }
-    String fileContent = sb.toString();
-
-    br.close();
-    return fileContent;
   }
 }

@@ -20,13 +20,18 @@ import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.http.GenericUrl;
+import com.google.api.client.http.HttpResponse;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
 
 import android.content.Context;
 import android.widget.CheckBox;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Locale;
 
@@ -38,25 +43,35 @@ import junit.framework.Assert;
  * @author Youtao Liu
  */
 public class SyncTestUtils {
-  public static Drive drive;
-  public static String folderId;
-  public static List<File> files;
+
   public static final String KML_FILE_POSTFIX = ".kml";
   public static final long MAX_TIME_TO_WAIT_SYNC = 50000;
 
   /**
-   * Updates the Drive object and query files from Google Drive.
+   * Gets drive object of Google Drive.
    * 
-   * @param context
-   * @throws IOException
+   * @param context the context of application
+   * @return drive drive object of Google Drive
+
    */
-  public static void updateDriveData(Context context) throws IOException {
+  public static Drive getGoogleDrive(Context context) {
     String googleAccount = PreferencesUtils.getString(context, R.string.google_account_key,
         PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
     GoogleAccountCredential credential = SyncUtils.getCredential(context, googleAccount);
-    drive = SyncUtils.getDriveService(credential);
-    folderId = SyncUtils.getMyTracksFolder(context, drive);
-    files = drive.files().list()
+    return SyncUtils.getDriveService(credential);
+  }
+
+  /**
+   * Queries files from Google Drive.
+   * 
+   * @param context the context of application
+   * @param drive drive object of Google Drive
+   * @return KML file on Google drive
+   * @throws IOException
+   */
+  public static List<File> updateDriveFiles(Context context, Drive drive) throws IOException {
+    String folderId = SyncUtils.getMyTracksFolder(context, drive);
+    return drive.files().list()
         .setQ(String.format(Locale.US, SyncUtils.GET_KML_FILES_QUERY, folderId)).execute()
         .getItems();
   }
@@ -65,40 +80,46 @@ public class SyncTestUtils {
    * Finds whether a file is existed by the name of track.
    * 
    * @param trackName name of track
+   * @param drive drive object of Google Drive
+   * @return the file be found
+   * @throws IOException
    */
-  public static File getFile(String trackName) {
-    File resultFile = null;
+  public static File getFile(String trackName, Drive drive) throws IOException {
+    List<File> files = updateDriveFiles(EndToEndTestUtils.activityMytracks.getApplicationContext(),
+        drive);
     for (int i = 0; i < files.size(); i++) {
       File file = files.get(i);
       String title = file.getTitle();
       if (title.equals(trackName + KML_FILE_POSTFIX)) {
-        resultFile = file;
-        break;
+        return file;
       }
     }
-    return resultFile;
+    return null;
   }
 
   /**
    * Removes all KML files on Google Drive.
    * 
+   * @param drive drive object of Google Drive
    * @throws IOException
    */
-  public static void removeKMLFiles() throws IOException {
+  public static void removeKMLFiles(Drive drive) throws IOException {
+    List<File> files = SyncTestUtils.updateDriveFiles(
+        EndToEndTestUtils.activityMytracks.getApplicationContext(), drive);
     for (int i = 0; i < files.size(); i++) {
       File file = files.get(i);
-      removeFile(file);
+      removeFile(file, drive);
     }
-
   }
 
   /**
    * Removes one file on Google Drive.
    * 
    * @param file the file to remove
+   * @param drive drive object of Google Drive
    * @throws IOException
    */
-  public static void removeFile(File file) throws IOException {
+  public static void removeFile(File file, Drive drive) throws IOException {
     drive.files().trash(file.getId()).execute();
   }
 
@@ -153,12 +174,14 @@ public class SyncTestUtils {
    * Checks the files number on Google Drive
    * 
    * @param number number of files on Google Drive
+   * @param drive drive object of Google Drive
    * @throws IOException
    */
-  public static void checkFilesNumber(int number) throws IOException {
+  public static void checkFilesNumber(int number, Drive drive) throws IOException {
     long startTime = System.currentTimeMillis();
     while (System.currentTimeMillis() - startTime < MAX_TIME_TO_WAIT_SYNC) {
-      updateDriveData(EndToEndTestUtils.activityMytracks.getApplicationContext());
+      List<File> files = updateDriveFiles(
+          EndToEndTestUtils.activityMytracks.getApplicationContext(), drive);
       if (files.size() == number) {
         return;
       }
@@ -186,17 +209,42 @@ public class SyncTestUtils {
    * Checks one file on Google Drive
    * 
    * @param trackName the name of track
-   * @param expectStatus true means this track should be existed
+   * @param shouldExist true means this track should be existed
+   * @param drive drive object of Google Drive
+   * @return true means the actual result is same as expectation
    * @throws IOException
    */
-  public static boolean checkFile(String trackName, boolean expectStatus) throws IOException {
+  public static boolean checkFile(String trackName, boolean shouldExist, Drive drive)
+      throws IOException {
     long startTime = System.currentTimeMillis();
     while (System.currentTimeMillis() - startTime < MAX_TIME_TO_WAIT_SYNC) {
-      updateDriveData(EndToEndTestUtils.activityMytracks.getApplicationContext());
-      if ((getFile(trackName) != null) == expectStatus) {
+      if ((getFile(trackName, drive) != null) == shouldExist) {
         return true;
       }
     }
     return false;
+  }
+
+  /**
+   * Gets the content of a file on Google Drive.
+   * 
+   * @param file file to read
+   * @param drive drive object of Google Drive
+   * @return the string content of the file
+   * @throws IOException
+   */
+  public static String getContentOfFile(File file, Drive drive) throws IOException {
+    HttpResponse resp = drive.getRequestFactory()
+        .buildGetRequest(new GenericUrl(file.getDownloadUrl())).execute();
+    InputStream response = resp.getContent();
+    BufferedReader br = new BufferedReader(new InputStreamReader(response));
+    StringBuilder sb = new StringBuilder();
+    String line;
+    while ((line = br.readLine()) != null) {
+      sb.append(line);
+    }
+    String fileContent = sb.toString();
+    br.close();
+    return fileContent;
   }
 }
