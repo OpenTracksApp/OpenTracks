@@ -99,7 +99,12 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
         String googleAccount = PreferencesUtils.getString(
             GoogleSettingsActivity.this, R.string.google_account_key,
             PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
-        if (!newGoogleAccount.equals(googleAccount)) {
+        if (googleAccount == null
+            || googleAccount.equals(PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT)) {
+          updateUiByAccountName(newGoogleAccount);
+          return true;
+        }
+        if (!googleAccount.equals(newGoogleAccount)) {
           Bundle newBundle = new Bundle();
           newBundle.putString(ACCOUNT_NAME_KEY, newGoogleAccount);
           showDialog(DIALOG_CONFIRM_SWITCH_ACCOUNT, newBundle);
