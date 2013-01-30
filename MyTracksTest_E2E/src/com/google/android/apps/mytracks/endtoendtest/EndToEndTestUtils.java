@@ -136,8 +136,6 @@ public class EndToEndTestUtils {
   public static boolean isCheckedFirstLaunch = false;
   public static boolean isGooglePlayServicesLatest = true;
 
-  private EndToEndTestUtils() {}
-
   /**
    * Checks the language, then sets the fields with right string.
    */

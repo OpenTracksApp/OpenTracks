@@ -20,7 +20,6 @@ import com.google.android.apps.mytracks.endtoendtest.EndToEndTestUtils;
 import com.google.android.apps.mytracks.endtoendtest.GoogleUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.api.services.drive.Drive;
-import com.google.api.services.drive.model.File;
 
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
@@ -28,17 +27,17 @@ import android.test.ActivityInstrumentationTestCase2;
 import java.io.IOException;
 
 /**
- * Tests how MyTracks to sync with Google Drive.
+ * Tests the situation when user use multiple account in MyTracks.
  * 
  * @author Youtao Liu
  */
-public class SyncMyTracksWithDriveTest extends ActivityInstrumentationTestCase2<TrackListActivity> {
+public class MultiAccountsSyncTest extends ActivityInstrumentationTestCase2<TrackListActivity> {
 
   public static Drive drive;
   private Instrumentation instrumentation;
   private TrackListActivity trackListActivity;
 
-  public SyncMyTracksWithDriveTest() {
+  public MultiAccountsSyncTest() {
     super(TrackListActivity.class);
   }
 
@@ -49,69 +48,75 @@ public class SyncMyTracksWithDriveTest extends ActivityInstrumentationTestCase2<
     trackListActivity = getActivity();
     EndToEndTestUtils.setupForAllTest(instrumentation, trackListActivity);
     drive = SyncTestUtils.setUpForSyncTest(GoogleUtils.ACCOUNT_NAME_1);
+    EndToEndTestUtils.deleteAllTracks();
   }
 
   /**
-   * Deletes all tracks on Google Drive and checks in MyTracks.
+   * Tests sync tracks with Google Drive of two accounts.
    * 
    * @throws IOException
    */
-  public void testDeleteAllTracksOnDrive() throws IOException {
-    EndToEndTestUtils.deleteAllTracks();
-    EndToEndTestUtils.createTrackIfEmpty(0, true);
+  public void testSyncTracksWithMultiAccounts() throws IOException {
+    // Create tracks with first track.
+    EndToEndTestUtils.createSimpleTrack(0, true);
+
+    // Create tracks with second track.
+    SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_2);
+    EndToEndTestUtils.createSimpleTrack(0, true);
+
+    // Sync with Google Drive and then check it of the second account.
     EndToEndTestUtils.findMenuItem(
         EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
+    drive = SyncTestUtils.setUpForSyncTest(GoogleUtils.ACCOUNT_NAME_2);
     SyncTestUtils.checkFilesNumber(drive);
 
-    SyncTestUtils.removeKMLFiles(drive);
+    // Check Google Drive of the first account.
+    SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_1);
     EndToEndTestUtils.findMenuItem(
         EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
-    SyncTestUtils.checkTracksNumber(0);
+    drive = SyncTestUtils.setUpForSyncTest(GoogleUtils.ACCOUNT_NAME_1);
+    SyncTestUtils.checkFilesNumber(drive);
   }
-  
+
   /**
-   * Deletes one file on Google Drive and checks it in MyTracks.
+   * Creates three tracks and the deletes one in one account, and then deletes
+   * another one in another account. Keeps one tracks, then sync with two
+   * accounts.
    * 
    * @throws IOException
    */
-  public void testDeleteOneFileOnDrive() throws IOException {
-    EndToEndTestUtils.deleteAllTracks();
-    instrumentation.waitForIdleSync();
+  public void testDeleteTracksWithMultiAccounts() throws IOException {
     EndToEndTestUtils.createSimpleTrack(0, true);
     EndToEndTestUtils.createSimpleTrack(0, true);
+    EndToEndTestUtils.createSimpleTrack(0, true);
+
+    // Delete one track.
+    EndToEndTestUtils.SOLO.clickOnView(EndToEndTestUtils.SOLO.getCurrentListViews().get(0)
+        .getChildAt(0));
+    EndToEndTestUtils.SOLO.clickOnMenuItem(EndToEndTestUtils.activityMytracks
+        .getString(R.string.menu_delete));
+
+    // Switch account and delete another track.
+    SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_2);
+    EndToEndTestUtils.SOLO.clickOnView(EndToEndTestUtils.SOLO.getCurrentListViews().get(0)
+        .getChildAt(0));
+    EndToEndTestUtils.SOLO.clickOnMenuItem(EndToEndTestUtils.activityMytracks
+        .getString(R.string.menu_delete));
+
+    // Check Google Drive of the first account.
+    SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_1);
     EndToEndTestUtils.findMenuItem(
         EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
+    drive = SyncTestUtils.setUpForSyncTest(GoogleUtils.ACCOUNT_NAME_1);
     SyncTestUtils.checkFilesNumber(drive);
 
-    // Remove one track from Google Drive
-    File file = SyncTestUtils.getFile(EndToEndTestUtils.trackName, drive);
-    SyncTestUtils.removeFile(file, drive);
+    // Check Google Drive of the second account.
+    SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_2);
     EndToEndTestUtils.findMenuItem(
         EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
+    drive = SyncTestUtils.setUpForSyncTest(GoogleUtils.ACCOUNT_NAME_2);
     SyncTestUtils.checkFilesNumber(drive);
-    SyncTestUtils.checkTracksNumber(1);
+
   }
-  
-  /**
-   * Tests deleting and creating MyTracks folder on Google Dive by MyTracks.
-   * 
-   * @throws IOException
-   */
-  public void testCreateMyTracksOnDrive() throws IOException {
-    EndToEndTestUtils.deleteAllTracks();
-    instrumentation.waitForIdleSync();
-    EndToEndTestUtils.createSimpleTrack(0, true);
-    EndToEndTestUtils.createSimpleTrack(0, true);
-    EndToEndTestUtils.findMenuItem(
-        EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
-    instrumentation.waitForIdleSync();
-    SyncTestUtils.checkFilesNumber(drive);
-    File folder = SyncTestUtils.getMyTracksFolder(trackListActivity.getApplicationContext(), drive);
-    assertNotNull(folder);
-    
-    SyncTestUtils.removeFile(folder, drive);
-    EndToEndTestUtils.findMenuItem(
-        EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
-    SyncTestUtils.checkFilesNumber(drive);
-  }
+
 }

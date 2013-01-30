@@ -412,9 +412,9 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
         .getString(R.string.settings_google_account_title));
 
     // Whether test account is bound.
-    if (EndToEndTestUtils.SOLO.waitForText(GoogleUtils.ACCOUNT_NAME, 1,
+    if (EndToEndTestUtils.SOLO.waitForText(GoogleUtils.ACCOUNT_NAME_1, 1,
         EndToEndTestUtils.TINY_WAIT_TIME)) {
-      EndToEndTestUtils.SOLO.clickOnText(GoogleUtils.ACCOUNT_NAME);
+      EndToEndTestUtils.SOLO.clickOnText(GoogleUtils.ACCOUNT_NAME_1);
       instrumentation.waitForIdleSync();
       assertTrue(EndToEndTestUtils.findTextView(
           activityMyTracks.getString(R.string.settings_google_drive_sync_title)).isEnabled());

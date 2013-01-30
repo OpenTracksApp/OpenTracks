@@ -48,8 +48,7 @@ public class SyncDriveWithMyTracksTest extends ActivityInstrumentationTestCase2<
     instrumentation = getInstrumentation();
     trackListActivity = getActivity();
     EndToEndTestUtils.setupForAllTest(instrumentation, trackListActivity);
-    SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME);
-    drive = SyncTestUtils.getGoogleDrive(trackListActivity.getApplicationContext());
+    drive = SyncTestUtils.setUpForSyncTest(GoogleUtils.ACCOUNT_NAME_1);
   }
 
   /**
@@ -61,7 +60,23 @@ public class SyncDriveWithMyTracksTest extends ActivityInstrumentationTestCase2<
     EndToEndTestUtils.deleteAllTracks();
     EndToEndTestUtils.findMenuItem(
         EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
-    SyncTestUtils.checkFilesNumber(0, drive);
+    SyncTestUtils.checkFilesNumber(drive);
+  }
+
+  /**
+   * Deletes one track in MyTracks and checks it in Google Drive.
+   * 
+   * @throws IOException
+   */
+  public void testDeleteOneTracksInMyTracks() throws IOException {
+    EndToEndTestUtils.createTrackIfEmpty(2, false);
+    EndToEndTestUtils.SOLO.clickOnMenuItem(EndToEndTestUtils.activityMytracks
+        .getString(R.string.menu_delete));
+    EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
+        .getString(R.string.generic_ok));
+    EndToEndTestUtils.findMenuItem(
+        EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
+    SyncTestUtils.checkFile(EndToEndTestUtils.trackName, false, drive);
   }
 
   /**
@@ -76,7 +91,7 @@ public class SyncDriveWithMyTracksTest extends ActivityInstrumentationTestCase2<
     EndToEndTestUtils.createSimpleTrack(3, true);
     EndToEndTestUtils.findMenuItem(
         EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
-    SyncTestUtils.checkFilesNumber(2, drive);
+    SyncTestUtils.checkFilesNumber(drive);
   }
 
   /**
@@ -90,8 +105,9 @@ public class SyncDriveWithMyTracksTest extends ActivityInstrumentationTestCase2<
     // Sync this track.
     EndToEndTestUtils.findMenuItem(
         EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
-    assertTrue(SyncTestUtils.checkFile(EndToEndTestUtils.trackName, true, drive));
-    String oldTrack = SyncTestUtils.getContentOfFile(SyncTestUtils.getFile(EndToEndTestUtils.trackName, drive), drive);
+    SyncTestUtils.checkFile(EndToEndTestUtils.trackName, true, drive);
+    String oldTrack = SyncTestUtils.getContentOfFile(
+        SyncTestUtils.getFile(EndToEndTestUtils.trackName, drive), drive);
 
     String oldTrackName = EndToEndTestUtils.trackName;
 
@@ -117,9 +133,10 @@ public class SyncDriveWithMyTracksTest extends ActivityInstrumentationTestCase2<
         EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
 
     // Check.
-    assertTrue(SyncTestUtils.checkFile(oldTrackName, false, drive));
-    assertTrue(SyncTestUtils.checkFile(newTrackName, true, drive));
-    String newTrack = SyncTestUtils.getContentOfFile(SyncTestUtils.getFile(newTrackName,drive), drive);
+    SyncTestUtils.checkFile(oldTrackName, false, drive);
+    SyncTestUtils.checkFile(newTrackName, true, drive);
+    String newTrack = SyncTestUtils.getContentOfFile(SyncTestUtils.getFile(newTrackName, drive),
+        drive);
     assertNotSame(oldTrack, newTrack);
     assertTrue(newTrack.indexOf(newTrackName) > 0);
     assertTrue(newTrack.indexOf(newType) > 0);

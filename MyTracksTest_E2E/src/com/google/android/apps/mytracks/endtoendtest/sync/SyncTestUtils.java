@@ -20,18 +20,22 @@ import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpResponse;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
+import com.google.api.services.drive.model.FileList;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.CheckBox;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -48,11 +52,21 @@ public class SyncTestUtils {
   public static final long MAX_TIME_TO_WAIT_SYNC = 50000;
 
   /**
+   * Setups sync tests.
+   * 
+   * @param accountName the name of account
+   * @return drive object of Goolge Drive
+   */
+  public static Drive setUpForSyncTest(String accountName) {
+    SyncTestUtils.enableSync(accountName);
+    return SyncTestUtils.getGoogleDrive(EndToEndTestUtils.activityMytracks.getApplicationContext());
+  }
+
+  /**
    * Gets drive object of Google Drive.
    * 
    * @param context the context of application
    * @return drive drive object of Google Drive
-
    */
   public static Drive getGoogleDrive(Context context) {
     String googleAccount = PreferencesUtils.getString(context, R.string.google_account_key,
@@ -62,7 +76,7 @@ public class SyncTestUtils {
   }
 
   /**
-   * Queries files from Google Drive.
+   * Queries KML files from Google Drive.
    * 
    * @param context the context of application
    * @param drive drive object of Google Drive
@@ -70,7 +84,11 @@ public class SyncTestUtils {
    * @throws IOException
    */
   public static List<File> updateDriveFiles(Context context, Drive drive) throws IOException {
-    String folderId = SyncUtils.getMyTracksFolder(context, drive);
+    File folder = SyncTestUtils.getMyTracksFolder(context, drive);
+    if ( folder == null) {
+      return new ArrayList<File>();
+    }
+    String folderId = folder.getId();
     return drive.files().list()
         .setQ(String.format(Locale.US, SyncUtils.GET_KML_FILES_QUERY, folderId)).execute()
         .getItems();
@@ -164,26 +182,29 @@ public class SyncTestUtils {
           EndToEndTestUtils.SHORT_WAIT_TIME);
       EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
           .getString(R.string.generic_ok));
-
-      EndToEndTestUtils.SOLO.goBack();
-      EndToEndTestUtils.SOLO.goBack();
     }
+    EndToEndTestUtils.SOLO.goBack();
+    EndToEndTestUtils.SOLO.goBack();
   }
 
   /**
    * Checks the files number on Google Drive
    * 
-   * @param number number of files on Google Drive
    * @param drive drive object of Google Drive
    * @throws IOException
    */
-  public static void checkFilesNumber(int number, Drive drive) throws IOException {
+  public static void checkFilesNumber(Drive drive) throws IOException {
     long startTime = System.currentTimeMillis();
     while (System.currentTimeMillis() - startTime < MAX_TIME_TO_WAIT_SYNC) {
-      List<File> files = updateDriveFiles(
-          EndToEndTestUtils.activityMytracks.getApplicationContext(), drive);
-      if (files.size() == number) {
-        return;
+      try {
+        int trackNumber = EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount();
+        List<File> files = updateDriveFiles(
+            EndToEndTestUtils.activityMytracks.getApplicationContext(), drive);
+        if (files.size() == trackNumber) {
+          return;
+        }
+      } catch (GoogleJsonResponseException e) {
+        EndToEndTestUtils.sleep(EndToEndTestUtils.SHORT_WAIT_TIME);
       }
     }
     Assert.fail();
@@ -222,6 +243,7 @@ public class SyncTestUtils {
         return true;
       }
     }
+    Assert.fail();
     return false;
   }
 
@@ -246,5 +268,29 @@ public class SyncTestUtils {
     String fileContent = sb.toString();
     br.close();
     return fileContent;
+  }
+
+  /**
+   * Gets the MyTracks folder on Google Drive.
+   * 
+   * @param context context of application
+   * @param drive drive object of Google Drive
+   * @return the MyTracks folder on Google Drive
+   */
+  public static File getMyTracksFolder(Context context, Drive drive) {
+    try {
+      String folderName = context.getString(R.string.my_tracks_app_name);
+      com.google.api.services.drive.Drive.Files.List list = drive.files().list()
+          .setQ(String.format(Locale.US, SyncUtils.GET_MY_TRACKS_FOLDER_QUERY, folderName));
+      FileList result = list.execute();
+      for (File file : result.getItems()) {
+        if (file.getTitle().equals(folderName)) {
+          return file;
+        }
+      }
+    } catch (IOException e) {
+      Log.e(EndToEndTestUtils.LOG_TAG, "IOException", e);
+    }
+    return null;
   }
 }
