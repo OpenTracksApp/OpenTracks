@@ -313,7 +313,11 @@ public class EndToEndTestUtils {
       resetPreferredUnits();
     }
     
-    deleteAllTracks();
+    int trackNumber = SOLO.getCurrentListViews().get(0).getCount();
+    if (trackNumber > 3) {
+      deleteAllTracks();
+    }
+    
     resetAllSettings(activityMyTracks, false);
     instrumentation.waitForIdleSync();
 
