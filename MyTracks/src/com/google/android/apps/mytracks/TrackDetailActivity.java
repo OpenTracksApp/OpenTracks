@@ -21,6 +21,7 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
+import com.google.android.apps.mytracks.fragments.AddPeopleDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChartFragment;
 import com.google.android.apps.mytracks.fragments.ChooseActivityDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChooseUploadServiceDialogFragment;
@@ -76,7 +77,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
 
   private static final String TAG = TrackDetailActivity.class.getSimpleName();
   private static final String CURRENT_TAB_TAG_KEY = "current_tab_tag_key";
-
+  
   // The following are set in onCreate
   private SharedPreferences sharedPreferences;
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
@@ -96,6 +97,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   private MenuItem insertMarkerMenuItem;
   private MenuItem playMenuItem;
   private MenuItem shareMenuItem;
+  private MenuItem shareDriveMenuItem;
   private MenuItem sendGoogleMenuItem;
   private MenuItem saveMenuItem;
   private MenuItem voiceFrequencyMenuItem;
@@ -294,6 +296,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     insertMarkerMenuItem = menu.findItem(R.id.track_detail_insert_marker);
     playMenuItem = menu.findItem(R.id.track_detail_play);
     shareMenuItem = menu.findItem(R.id.track_detail_share);
+    shareDriveMenuItem = menu.findItem(R.id.track_detail_share_drive);
     sendGoogleMenuItem = menu.findItem(R.id.track_detail_send_google);
     saveMenuItem = menu.findItem(R.id.track_detail_save);
     voiceFrequencyMenuItem = menu.findItem(R.id.track_detail_voice_frequency);
@@ -312,9 +315,14 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     return super.onPrepareOptionsMenu(menu);
   }
 
+  /**
+   * Invokes when the confirm dialog is done.
+   * 
+   * @param id the confirm id
+   */
   public void onConfirmDialogDone(int id) {
     switch (id) {
-      case R.string.show_confirm_play_earth_dialog_key:
+      case R.string.confirm_play_earth_key:
         AnalyticsUtils.sendPageViews(this, "/action/play");
         Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
             .putExtra(SaveActivity.EXTRA_TRACK_ID, trackId)
@@ -322,10 +330,14 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
             .putExtra(SaveActivity.EXTRA_PLAY_TRACK, true);
         startActivity(intent);
         break;
-      case R.string.show_confirm_sharing_dialog_key:
+      case R.string.confirm_share_map_key:
         AnalyticsUtils.sendPageViews(this, "/action/share");
         ChooseActivityDialogFragment.newInstance(trackId, null).show(
             getSupportFragmentManager(), ChooseActivityDialogFragment.CHOOSE_ACTIVITY_DIALOG_TAG);
+        break;
+      case R.string.confirm_share_drive_key:
+        AddPeopleDialogFragment.newInstance(trackId)
+            .show(getSupportFragmentManager(), AddPeopleDialogFragment.ADD_PEOPLE_DIALOG_TAG);
         break;
       default:
     }
@@ -343,8 +355,8 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
         return true;
       case R.id.track_detail_play:
         if (isEarthInstalled()) {
-          ConfirmDialogFragment.newInstance(R.string.show_confirm_play_earth_dialog_key,
-              PreferencesUtils.SHOW_CONFIRM_PLAY_DIALOG_DEFAULT,
+          ConfirmDialogFragment.newInstance(R.string.confirm_play_earth_key,
+              PreferencesUtils.CONFIRM_PLAY_EARTH_DEFAULT,
               getString(R.string.track_detail_play_confirm_message))
               .show(getSupportFragmentManager(), ConfirmDialogFragment.CONFIRM_DIALOG_TAG);
         } else {
@@ -353,10 +365,15 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
         }
         return true;
       case R.id.track_detail_share:
-        ConfirmDialogFragment.newInstance(R.string.show_confirm_sharing_dialog_key,
-            PreferencesUtils.SHOW_CONFIRM_SHARING_DIALOG_DEFAULT,
-            StringUtils.getHtml(
-                this, R.string.share_track_confirm_message, R.string.maps_public_unlisted_url))
+        ConfirmDialogFragment.newInstance(R.string.confirm_share_map_key,
+            PreferencesUtils.CONFIRM_SHARE_MAP_DEFAULT, StringUtils.getHtml(
+                this, R.string.share_track_map_confirm_message, R.string.maps_public_unlisted_url))
+            .show(getSupportFragmentManager(), ConfirmDialogFragment.CONFIRM_DIALOG_TAG);
+        return true;
+      case R.id.track_detail_share_drive:
+        ConfirmDialogFragment.newInstance(R.string.confirm_share_drive_key,
+            PreferencesUtils.CONFIRM_SHARE_DRIVE_DEFAULT,
+            getString(R.string.share_track_drive_confirm_message))
             .show(getSupportFragmentManager(), ConfirmDialogFragment.CONFIRM_DIALOG_TAG);
         return true;
       case R.id.track_detail_markers:
@@ -501,6 +518,9 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     }
     if (shareMenuItem != null) {
       shareMenuItem.setVisible(!isRecording);
+    }
+    if (shareDriveMenuItem != null) {
+      shareDriveMenuItem.setVisible(!isRecording);
     }
     if (sendGoogleMenuItem != null) {
       sendGoogleMenuItem.setVisible(!isRecording);

@@ -295,13 +295,14 @@ public class SyncUtils {
    * @param drive the drive
    * @param folderId the folder id
    * @param track the track
+   * @return the added drive file id or null.
    */
-  public static boolean addDriveFile(Context context, MyTracksProviderUtils myTracksProviderUtils,
+  public static String addDriveFile(Context context, MyTracksProviderUtils myTracksProviderUtils,
       Drive drive, String folderId, Track track) throws IOException {
     java.io.File file = getFile(context, myTracksProviderUtils, track);
     if (file == null) {
       Log.e(TAG, "Unable to add Drive file. File is null for track " + track.getName());
-      return false;
+      return null;
     }
 
     try {
@@ -323,12 +324,13 @@ public class SyncUtils {
       File uploadedFile = drive.files().insert(newMetaData, fileContent).execute();
       if (uploadedFile == null) {
         Log.e(TAG, "Unable to add Drive file. Uploaded file is null for track " + track.getName());
-        return false;
+        return null;
       }
-      track.setDriveId(uploadedFile.getId());
+      String id = uploadedFile.getId();
+      track.setDriveId(id);
       track.setModifiedTime(uploadedFile.getModifiedDate().getValue());
       myTracksProviderUtils.updateTrack(track);
-      return true;
+      return id;
     } finally {
       file.delete();
     }

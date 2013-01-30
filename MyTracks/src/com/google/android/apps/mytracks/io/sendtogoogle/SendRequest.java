@@ -33,6 +33,7 @@ public class SendRequest implements Parcelable {
   private long trackId = -1L;
   private String sharingAppPackageName = null;
   private String sharingAppClassName = null;
+  private String acl = null;
   private boolean sendDrive = false;
   private boolean sendMaps = false;
   private boolean sendFusionTables = false;
@@ -93,6 +94,22 @@ public class SendRequest implements Parcelable {
     this.sharingAppClassName = sharingAppClassName;
   }
 
+  /**
+   * Gets the email address of the user to share the track with.
+   */
+  public String getAcl() {
+    return acl;
+  }
+  
+  /**
+   * Sets the email address of the user to share the track with.
+   * 
+   * @param acl the email address
+   */
+  public void setAcl(String acl) {
+    this.acl = acl;
+  }
+  
   /**
    * True if the user has selected the send to Google Drive option.
    */
@@ -279,6 +296,7 @@ public class SendRequest implements Parcelable {
     trackId = in.readLong();
     sharingAppPackageName = in.readString();
     sharingAppClassName = in.readString();
+    acl = in.readString();
     sendDrive = in.readByte() == 1;
     sendMaps = in.readByte() == 1;
     sendFusionTables = in.readByte() == 1;
@@ -302,6 +320,7 @@ public class SendRequest implements Parcelable {
     out.writeLong(trackId);
     out.writeString(sharingAppPackageName);
     out.writeString(sharingAppClassName);
+    out.writeString(acl);
     out.writeByte((byte) (sendDrive ? 1 : 0));
     out.writeByte((byte) (sendMaps ? 1 : 0));
     out.writeByte((byte) (sendFusionTables ? 1 : 0));

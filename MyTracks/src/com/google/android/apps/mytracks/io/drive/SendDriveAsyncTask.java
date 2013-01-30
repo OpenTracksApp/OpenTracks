@@ -23,6 +23,7 @@ import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
+import com.google.api.services.drive.model.Permission;
 
 import android.accounts.Account;
 import android.content.Context;
@@ -42,12 +43,18 @@ public class SendDriveAsyncTask extends AbstractSendAsyncTask {
   private final long trackId;
   private final Account account;
   private final Context context;
+  private final String[] acl;
   private final MyTracksProviderUtils myTracksProviderUtils;
 
-  public SendDriveAsyncTask(SendDriveActivity activity, long trackId, Account account) {
+  public SendDriveAsyncTask(SendDriveActivity activity, long trackId, Account account, String acl) {
     super(activity);
     this.trackId = trackId;
     this.account = account;
+    if (acl != null) {
+      this.acl = acl.split(",");
+    } else {
+      this.acl = null;
+    }
 
     context = activity.getApplicationContext();
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
@@ -78,13 +85,22 @@ public class SendDriveAsyncTask extends AbstractSendAsyncTask {
       if (driveId != null && !driveId.equals("")) {
         File driveFile = drive.files().get(driveId).execute();
         if (SyncUtils.isDriveFileValid(driveFile, folderId)) {
-          return SyncUtils.updateDriveFile(context, myTracksProviderUtils, drive, driveFile, track);
+          if (SyncUtils.updateDriveFile(context, myTracksProviderUtils, drive, driveFile, track)) {
+            addPermission(drive, driveId);
+            return true;
+          }
         }
         track.setDriveId("");
         track.setModifiedTime(-1L);
         myTracksProviderUtils.updateTrack(track);
       }
-      return SyncUtils.addDriveFile(context, myTracksProviderUtils, drive, folderId, track);
+
+      String id = SyncUtils.addDriveFile(context, myTracksProviderUtils, drive, folderId, track);
+      if (id == null) {
+        return false;
+      }
+      addPermission(drive, id);
+      return true;
     } catch (IOException e) {
       Log.e(TAG, "IOException", e);
       return false;
@@ -93,4 +109,25 @@ public class SendDriveAsyncTask extends AbstractSendAsyncTask {
 
   @Override
   protected void invalidateToken() {}
+
+  /**
+   * Adds permision.
+   * 
+   * @param drive the drive
+   * @param driveId the drive id
+   */
+  private void addPermission(Drive drive, String driveId) throws IOException {
+    if (acl != null) {
+      for (String email : acl) {
+        email = email.trim();
+        if (!email.equals("")) {
+          Permission permission = new Permission();
+          permission.setValue(email);
+          permission.setType("user");
+          permission.setRole("reader");
+          drive.permissions().insert(driveId, permission).execute();
+        }
+      }
+    }
+  }
 }

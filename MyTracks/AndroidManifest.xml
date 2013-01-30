@@ -52,6 +52,8 @@ limitations under the License.
   <!-- Permission to read/write external storage -->
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+  <!--  Permission to read contacts -->
+  <uses-permission android:name="android.permission.READ_CONTACTS" />
   <!-- Permissions to access My Tracks data -->
   <uses-permission android:name="com.google.android.apps.mytracks.MYTRACKS_NOTIFICATIONS" />
   <uses-permission android:name="com.google.android.apps.mytracks.READ_TRACK_DATA" />

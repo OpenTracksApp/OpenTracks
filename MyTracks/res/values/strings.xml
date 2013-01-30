@@ -1252,6 +1252,12 @@ limitations under the License.
       Character limit: ~20 (1 line)">
     Share
   </string>
+  <string name="menu_share_drive"
+    translation_description="In the menu, to share a track via Google Drive.
+
+      Character limit: ~20 (1 line)">
+    Share via Drive
+  </string>
   <string name="menu_show_on_map"
     translation_description="In the menu, to show a track or a marker on the map.
 
@@ -2191,13 +2197,28 @@ limitations under the License.
   </string>
 
   <!-- Share Track -->
-  <string name="share_track_confirm_message"
-    translation_description="The confirmation message when sharing a track with friends.
+  <string name="share_track_add_people"
+    translation_description="The dialog title for adding people to share a track with.">
+    Add people
+  </string>  
+  <string name="share_track_add_people_hint"
+    translation_description="The hint in the auto complete text box for entering email addresses.">
+    Enter email addresses
+  </string>  
+  <string name="share_track_drive_confirm_message"
+    translation_description="The confirmation message when sharing a track via Google Drive with
+      friends.">
+    This will upload your track to Google Drive so you can share the file with friends. The file
+    will be private and only those you have shared with will have access.
+  </string>
+  <string name="share_track_map_confirm_message"
+    translation_description="The confirmation message when sharing a track via Google Maps with
+      friends.
 
       %1$s url. E.g., 'support.google.com/maps/bin/answer.py?answer=144365'.">
-    This will upload your track to Google Maps so that you can share the map url with friends. The
-    map will be either public or unlisted depending on your setting at Settings -> Google. For more
-    info on public versus unlisted, see %1$s.
+    This will upload your track to Google Maps so you can share the map url with friends. The map
+    will be either public or unlisted depending on your setting at Settings -> Google. For more info
+    on public versus unlisted, see %1$s.
   </string>
   <string name="share_track_picker_title"
     translation_description="When sharing a track with friends, the title on the picker to ask the
