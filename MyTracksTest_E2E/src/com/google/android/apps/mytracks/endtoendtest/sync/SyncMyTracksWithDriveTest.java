@@ -17,7 +17,6 @@ package com.google.android.apps.mytracks.endtoendtest.sync;
 
 import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.endtoendtest.EndToEndTestUtils;
-import com.google.android.apps.mytracks.endtoendtest.GoogleUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
@@ -34,7 +33,7 @@ import java.io.IOException;
  */
 public class SyncMyTracksWithDriveTest extends ActivityInstrumentationTestCase2<TrackListActivity> {
 
-  public static Drive drive;
+  private Drive drive;
   private Instrumentation instrumentation;
   private TrackListActivity trackListActivity;
 
@@ -47,8 +46,7 @@ public class SyncMyTracksWithDriveTest extends ActivityInstrumentationTestCase2<
     super.setUp();
     instrumentation = getInstrumentation();
     trackListActivity = getActivity();
-    EndToEndTestUtils.setupForAllTest(instrumentation, trackListActivity);
-    drive = SyncTestUtils.setUpForSyncTest(GoogleUtils.ACCOUNT_NAME_1);
+    drive = SyncTestUtils.setUpForSyncTest(instrumentation, trackListActivity);
   }
 
   /**
@@ -57,7 +55,9 @@ public class SyncMyTracksWithDriveTest extends ActivityInstrumentationTestCase2<
    * @throws IOException
    */
   public void testDeleteAllTracksOnDrive() throws IOException {
-    EndToEndTestUtils.deleteAllTracks();
+    if (!SyncTestUtils.runSyncTest) {
+      return;
+    }
     EndToEndTestUtils.createTrackIfEmpty(0, true);
     EndToEndTestUtils.findMenuItem(
         EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
@@ -68,14 +68,16 @@ public class SyncMyTracksWithDriveTest extends ActivityInstrumentationTestCase2<
         EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
     SyncTestUtils.checkTracksNumber(0);
   }
-  
+
   /**
    * Deletes one file on Google Drive and checks it in MyTracks.
    * 
    * @throws IOException
    */
   public void testDeleteOneFileOnDrive() throws IOException {
-    EndToEndTestUtils.deleteAllTracks();
+    if (!SyncTestUtils.runSyncTest) {
+      return;
+    }
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.createSimpleTrack(0, true);
     EndToEndTestUtils.createSimpleTrack(0, true);
@@ -91,14 +93,16 @@ public class SyncMyTracksWithDriveTest extends ActivityInstrumentationTestCase2<
     SyncTestUtils.checkFilesNumber(drive);
     SyncTestUtils.checkTracksNumber(1);
   }
-  
+
   /**
    * Tests deleting and creating MyTracks folder on Google Dive by MyTracks.
    * 
    * @throws IOException
    */
   public void testCreateMyTracksOnDrive() throws IOException {
-    EndToEndTestUtils.deleteAllTracks();
+    if (!SyncTestUtils.runSyncTest) {
+      return;
+    }
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.createSimpleTrack(0, true);
     EndToEndTestUtils.createSimpleTrack(0, true);
@@ -108,7 +112,7 @@ public class SyncMyTracksWithDriveTest extends ActivityInstrumentationTestCase2<
     SyncTestUtils.checkFilesNumber(drive);
     File folder = SyncTestUtils.getMyTracksFolder(trackListActivity.getApplicationContext(), drive);
     assertNotNull(folder);
-    
+
     SyncTestUtils.removeFile(folder, drive);
     EndToEndTestUtils.findMenuItem(
         EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);

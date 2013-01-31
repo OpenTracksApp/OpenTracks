@@ -15,7 +15,9 @@
  */
 package com.google.android.apps.mytracks.endtoendtest.sync;
 
+import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.endtoendtest.EndToEndTestUtils;
+import com.google.android.apps.mytracks.endtoendtest.GoogleUtils;
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
@@ -27,6 +29,7 @@ import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
 
+import android.app.Instrumentation;
 import android.content.Context;
 import android.util.Log;
 import android.widget.CheckBox;
@@ -48,18 +51,64 @@ import junit.framework.Assert;
  */
 public class SyncTestUtils {
 
+  public static boolean isCheckedRunSyncTest = false;
+  public static boolean runSyncTest = false;
   public static final String KML_FILE_POSTFIX = ".kml";
   public static final long MAX_TIME_TO_WAIT_SYNC = 50000;
 
   /**
    * Setups sync tests.
    * 
-   * @param accountName the name of account
-   * @return drive object of Goolge Drive
+   * @param instrumentation the instrumentation is used for test
+   * @param trackListActivity the startup activity
+   * @return the drive object of current account
+   * @throws IOException
    */
-  public static Drive setUpForSyncTest(String accountName) {
-    SyncTestUtils.enableSync(accountName);
-    return SyncTestUtils.getGoogleDrive(EndToEndTestUtils.activityMytracks.getApplicationContext());
+  public static Drive setUpForSyncTest(Instrumentation instrumentation,
+      TrackListActivity trackListActivity) throws IOException {
+    if (runSyncTest || !isCheckedRunSyncTest) {
+      EndToEndTestUtils.setupForAllTest(instrumentation, trackListActivity);
+    }
+    if (!isCheckedRunSyncTest) {
+      runSyncTest = canRunSyncTest();
+      isCheckedRunSyncTest = true;
+    }
+    if (runSyncTest) {
+      EndToEndTestUtils.deleteAllTracks();
+      SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_1);
+      Drive drive1 = SyncTestUtils.getGoogleDrive(EndToEndTestUtils.activityMytracks
+          .getApplicationContext());
+      removeKMLFiles(drive1);
+      SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_2);
+      Drive drive2 = SyncTestUtils.getGoogleDrive(EndToEndTestUtils.activityMytracks
+          .getApplicationContext());
+      removeKMLFiles(drive2);
+      return drive2;
+    }
+    return null;
+  }
+
+  /**
+   * Runs sync tests when both test accounts are bound with the devices.
+   * 
+   * @return true means can run sync tests in this device
+   */
+  public static boolean canRunSyncTest() {
+    EndToEndTestUtils.findMenuItem(
+        EndToEndTestUtils.activityMytracks.getString(R.string.menu_settings), true);
+    EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
+        .getString(R.string.settings_google));
+    EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
+        .getString(R.string.settings_google_account_title));
+    boolean canRunSyncE2ETest = EndToEndTestUtils.SOLO.waitForText(GoogleUtils.ACCOUNT_NAME_1, 1,
+        EndToEndTestUtils.SHORT_WAIT_TIME)
+        && EndToEndTestUtils.SOLO.waitForText(GoogleUtils.ACCOUNT_NAME_2, 1,
+            EndToEndTestUtils.TINY_WAIT_TIME);
+    EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
+        .getString(R.string.generic_cancel));
+    EndToEndTestUtils.SOLO.goBack();
+    EndToEndTestUtils.SOLO.goBack();
+    return canRunSyncE2ETest;
   }
 
   /**
@@ -85,7 +134,7 @@ public class SyncTestUtils {
    */
   public static List<File> updateDriveFiles(Context context, Drive drive) throws IOException {
     File folder = SyncTestUtils.getMyTracksFolder(context, drive);
-    if ( folder == null) {
+    if (folder == null) {
       return new ArrayList<File>();
     }
     String folderId = folder.getId();
@@ -180,6 +229,7 @@ public class SyncTestUtils {
           EndToEndTestUtils.activityMytracks.getString(
               R.string.settings_google_drive_sync_confirm_message).split("%")[0], 1,
           EndToEndTestUtils.SHORT_WAIT_TIME);
+      Assert.assertTrue(EndToEndTestUtils.SOLO.searchText(accountName, true));
       EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
           .getString(R.string.generic_ok));
     }
