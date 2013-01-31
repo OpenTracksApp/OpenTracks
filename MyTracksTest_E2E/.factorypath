@@ -1,0 +1,6 @@
+<factorypath>
+    <factorypathentry kind="WKSPJAR" id="/MyTracksTest/libs/AndroidMockGenerator.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="ANDROID_SDK/platforms/android-17/android.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="WKSPJAR" id="/MyTracksLib/bin/mytrackslib.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="MYTRACKS_BIN/classes" enabled="true" runInBatchMode="false"/>
+</factorypath>
