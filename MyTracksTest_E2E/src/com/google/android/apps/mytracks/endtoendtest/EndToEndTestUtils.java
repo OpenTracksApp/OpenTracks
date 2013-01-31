@@ -310,12 +310,12 @@ public class EndToEndTestUtils {
         activityMytracks.getString(R.string.welcome_title), 0, SHORT_WAIT_TIME)) {
       resetPreferredUnits();
     }
-    
+
     int trackNumber = SOLO.getCurrentListViews().get(0).getCount();
     if (trackNumber > 3) {
       deleteAllTracks();
     }
-    
+
     resetAllSettings(activityMyTracks, false);
     instrumentation.waitForIdleSync();
 
@@ -419,6 +419,8 @@ public class EndToEndTestUtils {
     if (isClick) {
       SOLO.scrollUp();
       SOLO.clickOnView(oneTrack);
+      EndToEndTestUtils.SOLO.waitForText(activityMytracks
+          .getString(R.string.track_detail_chart_tab));
     }
     return false;
   }

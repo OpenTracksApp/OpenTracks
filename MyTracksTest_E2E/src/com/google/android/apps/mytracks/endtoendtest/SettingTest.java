@@ -278,7 +278,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     // Now there should be 2 backups.
     instrumentation.waitForIdleSync();
     assertEquals(2, EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount());
-    
+
     // Click the first one.
     EndToEndTestUtils.SOLO.clickOnView(EndToEndTestUtils.SOLO.getCurrentListViews().get(0)
         .getChildAt(0));
@@ -296,14 +296,14 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     instrumentation.waitForIdleSync();
-    
+
     // Click the second one.
     EndToEndTestUtils.SOLO.clickOnView(EndToEndTestUtils.SOLO.getCurrentListViews().get(0)
         .getChildAt(1));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
         activityMyTracks.getString(R.string.settings_backup_restore_success), 0,
         EndToEndTestUtils.SUPER_LONG_WAIT_TIME));
-    
+
     // For the older backup contains tracks and the newer backup is empty. The
     // search result of twice must be different.
     instrumentation.waitForIdleSync();
@@ -421,6 +421,8 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     } else {
       EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.value_none));
       instrumentation.waitForIdleSync();
+      EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+          .getString(R.string.settings_google_drive_sync_title));
       assertFalse(EndToEndTestUtils.findTextView(
           activityMyTracks.getString(R.string.settings_google_drive_sync_title)).isEnabled());
       return;
