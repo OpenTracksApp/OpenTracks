@@ -22,6 +22,7 @@ import android.test.AndroidTestCase;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Tests {@link TrackNameUtils}.
@@ -51,7 +52,8 @@ public class TrackNameUtilsTest extends AndroidTestCase {
   public void testTrackName_date_iso_8601() {
     PreferencesUtils.setString(getContext(), R.string.track_name_key,
         getContext().getString(R.string.settings_recording_track_name_date_iso_8601_value));
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(TrackNameUtils.ISO_8601_FORMAT);
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+        TrackNameUtils.ISO_8601_FORMAT, Locale.US);
     assertEquals(simpleDateFormat.format(new Date(START_TIME)),
         TrackNameUtils.getTrackName(getContext(), TRACK_ID, START_TIME, null));
   }

@@ -40,6 +40,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -52,8 +53,8 @@ import java.util.zip.ZipOutputStream;
  */
 class ExternalFileBackup {
   // Filename format - in UTC
-  private static final SimpleDateFormat BACKUP_FILENAME_FORMAT =
-      new SimpleDateFormat("'backup-'yyyy-MM-dd_HH-mm-ss'.zip'");
+  private static final SimpleDateFormat BACKUP_FILENAME_FORMAT = new SimpleDateFormat(
+      "'backup-'yyyy-MM-dd_HH-mm-ss'.zip'", Locale.US);
   static {
     BACKUP_FILENAME_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
   }
