@@ -46,7 +46,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     super.setUp();
     instrumentation = getInstrumentation();
     activityMyTracks = getActivity();
-    EndToEndTestUtils.setupForDebug(instrumentation, activityMyTracks);
+    EndToEndTestUtils.setupForAllTest(instrumentation, activityMyTracks);
   }
 
   /**
@@ -64,6 +64,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     // Change a setting of Map.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
     instrumentation.waitForIdleSync();
+
     // Rotate on a sub setting page.
     EndToEndTestUtils.rotateAllActivities();
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks
@@ -73,6 +74,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.SOLO.clickOnCheckBox(0);
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.SOLO.goBack();
+
     // Change a setting of sharing.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_sharing));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
@@ -95,6 +97,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_reset));
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+    instrumentation.waitForIdleSync();
     EndToEndTestUtils.SOLO.goBack();
 
     // Check settings.
@@ -120,8 +123,10 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
    */
   public void testChangePreferredUnits() {
     EndToEndTestUtils.createTrackIfEmpty(5, false);
+
     // Change it and verify it.
     ChangePreferredUnits();
+
     // Change it back and verify it.
     ChangePreferredUnits();
   }
@@ -131,6 +136,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
    */
   public void testChangeStatsSettings_underRecording_chart() {
     EndToEndTestUtils.startRecording();
+
     // Test just change preferred units when display CHART tab.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_chart_tab));
     EndToEndTestUtils.sendGps(3);
@@ -248,7 +254,6 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     // Write to SD card.
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup_reset));
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup));
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup_now));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
         activityMyTracks.getString(R.string.settings_backup_now_success), 0,
@@ -258,24 +263,51 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     // Delete all tracks.
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.SOLO.goBack();
-    EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.deleteAllTracks();
     instrumentation.waitForIdleSync();
 
     // Read from SD card.
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup_reset));
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup));
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup_now));
     EndToEndTestUtils.SOLO
         .clickOnText(activityMyTracks.getString(R.string.settings_backup_restore));
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+
+    // Now there should be 2 backups.
+    instrumentation.waitForIdleSync();
+    assertEquals(2, EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount());
+
+    // Click the first one.
+    EndToEndTestUtils.SOLO.clickOnView(EndToEndTestUtils.SOLO.getCurrentListViews().get(0)
+        .getChildAt(0));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
         activityMyTracks.getString(R.string.settings_backup_restore_success), 0,
         EndToEndTestUtils.SUPER_LONG_WAIT_TIME));
-    EndToEndTestUtils.SOLO.goBack();
+
     // Check restore track.
-    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.trackName));
+    instrumentation.waitForIdleSync();
+    boolean isContainTrack = EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.trackName);
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup_reset));
+    EndToEndTestUtils.SOLO
+        .clickOnText(activityMyTracks.getString(R.string.settings_backup_restore));
+    EndToEndTestUtils
+        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+    instrumentation.waitForIdleSync();
+
+    // Click the second one.
+    EndToEndTestUtils.SOLO.clickOnView(EndToEndTestUtils.SOLO.getCurrentListViews().get(0)
+        .getChildAt(1));
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(
+        activityMyTracks.getString(R.string.settings_backup_restore_success), 0,
+        EndToEndTestUtils.SUPER_LONG_WAIT_TIME));
+
+    // For the older backup contains tracks and the newer backup is empty. The
+    // search result of twice must be different.
+    instrumentation.waitForIdleSync();
+    assertTrue(isContainTrack != EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.trackName));
   }
 
   /**
@@ -285,18 +317,19 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
   public void testRecording() {
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_recording));
+
     // Changes the setting of recording name.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
         .getString(R.string.settings_recording_track_name_title));
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
         .getString(R.string.settings_recording_track_name_number_option));
+
     // Changes the setting of default activity.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
         .getString(R.string.settings_recording_default_activity_title));
     EndToEndTestUtils.enterTextAvoidSoftKeyBoard(0, EndToEndTestUtils.activityType);
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
-
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.SOLO.goBack();
 
@@ -379,15 +412,17 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
         .getString(R.string.settings_google_account_title));
 
     // Whether test account is bound.
-    if (EndToEndTestUtils.SOLO.waitForText(GoogleUtils.ACCOUNT_NAME, 1,
+    if (EndToEndTestUtils.SOLO.waitForText(GoogleUtils.ACCOUNT_NAME_1, 1,
         EndToEndTestUtils.TINY_WAIT_TIME)) {
-      EndToEndTestUtils.SOLO.clickOnText(GoogleUtils.ACCOUNT_NAME);
+      EndToEndTestUtils.SOLO.clickOnText(GoogleUtils.ACCOUNT_NAME_1);
       instrumentation.waitForIdleSync();
       assertTrue(EndToEndTestUtils.findTextView(
           activityMyTracks.getString(R.string.settings_google_drive_sync_title)).isEnabled());
     } else {
       EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.value_none));
       instrumentation.waitForIdleSync();
+      EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+          .getString(R.string.settings_google_drive_sync_title));
       assertFalse(EndToEndTestUtils.findTextView(
           activityMyTracks.getString(R.string.settings_google_drive_sync_title)).isEnabled());
       return;
@@ -397,9 +432,10 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
         .getString(R.string.settings_google_drive_sync_title));
 
     boolean isSyncChecked = false;
-    if (EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.settings_google_drive_sync_confirm_message).split(
-            "%")[0], 1, EndToEndTestUtils.SHORT_WAIT_TIME)) {
+    if (EndToEndTestUtils.SOLO
+        .waitForText(activityMyTracks
+            .getString(R.string.settings_google_drive_sync_confirm_message).split("%")[0], 1,
+            EndToEndTestUtils.SHORT_WAIT_TIME)) {
       isSyncChecked = true;
     } else {
       isSyncChecked = false;

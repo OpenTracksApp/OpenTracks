@@ -87,12 +87,15 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.createTrackIfEmpty(1, false);
     instrumentation.waitForIdleSync();
+    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.track_detail_chart_tab));
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_map_layer), true);
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.menu_terrain));
     instrumentation.waitForIdleSync();
+    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.track_detail_chart_tab));
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_map_layer), true);
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.menu_satellite));
     instrumentation.waitForIdleSync();
+    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.track_detail_chart_tab));
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_map_layer), true);
     // But in some languages only has one match(Such as French).
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.menu_map));

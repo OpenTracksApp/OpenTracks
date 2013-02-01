@@ -111,6 +111,7 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     // Check the track name, activity and description.
     assertTrue(EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.trackName));
     EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.trackName);
+    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.track_detail_chart_tab));
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_edit), true);
     instrumentation.waitForIdleSync();
     assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.trackName));

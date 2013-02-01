@@ -93,6 +93,7 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
     int trackNumberOld = trackListView.get(0).getCount();
 
     EndToEndTestUtils.SOLO.clickOnView(trackListView.get(0).getChildAt(0));
+    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.track_detail_chart_tab));
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete), true);
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
