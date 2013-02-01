@@ -27,7 +27,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import java.io.IOException;
 
 /**
- * Tests how MyTracks to sync with Google Drive.
+ * Tests making changes on My Tracks when syncing My Tracks with Google Drive.
  * 
  * @author Youtao Liu
  */

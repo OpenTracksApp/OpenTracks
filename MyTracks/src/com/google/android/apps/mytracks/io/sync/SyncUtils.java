@@ -76,9 +76,6 @@ public class SyncUtils {
   public static final String GET_KML_FILES_QUERY = "'%s' in parents and mimeType = '"
       + KML_MIME_TYPE + "' and trashed = false";
   
-  public static final String GET_MYTRACKS_FOLDER_QUERY = "'%s' in parents and mimeType = '"
-      + KML_MIME_TYPE + "' and trashed = false";
-
   private static final String FOLDER_MIME_TYPE = "application/vnd.google-apps.folder";
   @VisibleForTesting
   public static final String GET_MY_TRACKS_FOLDER_QUERY =

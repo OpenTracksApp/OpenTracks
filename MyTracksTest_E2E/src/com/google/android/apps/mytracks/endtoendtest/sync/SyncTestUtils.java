@@ -36,7 +36,6 @@ import android.widget.CheckBox;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,11 +56,11 @@ public class SyncTestUtils {
   public static final long MAX_TIME_TO_WAIT_SYNC = 50000;
 
   /**
-   * Setups sync tests.
+   * Sets up sync tests.
    * 
    * @param instrumentation the instrumentation is used for test
    * @param trackListActivity the startup activity
-   * @return the drive object of current account
+   * @return a Google Drive object
    * @throws IOException
    */
   public static Drive setUpForSyncTest(Instrumentation instrumentation,
@@ -115,7 +114,7 @@ public class SyncTestUtils {
    * Gets drive object of Google Drive.
    * 
    * @param context the context of application
-   * @return drive drive object of Google Drive
+   * @return a Google Drive object
    */
   public static Drive getGoogleDrive(Context context) {
     String googleAccount = PreferencesUtils.getString(context, R.string.google_account_key,
@@ -125,14 +124,14 @@ public class SyncTestUtils {
   }
 
   /**
-   * Queries KML files from Google Drive.
+   * Gets KML files from Google Drive of current account.
    * 
    * @param context the context of application
-   * @param drive drive object of Google Drive
+   * @param drive a Google Drive object
    * @return KML file on Google drive
    * @throws IOException
    */
-  public static List<File> updateDriveFiles(Context context, Drive drive) throws IOException {
+  public static List<File> getDriveFiles(Context context, Drive drive) throws IOException {
     File folder = SyncTestUtils.getMyTracksFolder(context, drive);
     if (folder == null) {
       return new ArrayList<File>();
@@ -147,12 +146,12 @@ public class SyncTestUtils {
    * Finds whether a file is existed by the name of track.
    * 
    * @param trackName name of track
-   * @param drive drive object of Google Drive
+   * @param drive a Google Drive object
    * @return the file be found
    * @throws IOException
    */
   public static File getFile(String trackName, Drive drive) throws IOException {
-    List<File> files = updateDriveFiles(EndToEndTestUtils.activityMytracks.getApplicationContext(),
+    List<File> files = getDriveFiles(EndToEndTestUtils.activityMytracks.getApplicationContext(),
         drive);
     for (int i = 0; i < files.size(); i++) {
       File file = files.get(i);
@@ -167,11 +166,11 @@ public class SyncTestUtils {
   /**
    * Removes all KML files on Google Drive.
    * 
-   * @param drive drive object of Google Drive
+   * @param drive a Google Drive object
    * @throws IOException
    */
   public static void removeKMLFiles(Drive drive) throws IOException {
-    List<File> files = SyncTestUtils.updateDriveFiles(
+    List<File> files = SyncTestUtils.getDriveFiles(
         EndToEndTestUtils.activityMytracks.getApplicationContext(), drive);
     for (int i = 0; i < files.size(); i++) {
       File file = files.get(i);
@@ -183,7 +182,7 @@ public class SyncTestUtils {
    * Removes one file on Google Drive.
    * 
    * @param file the file to remove
-   * @param drive drive object of Google Drive
+   * @param drive a Google Drive object
    * @throws IOException
    */
   public static void removeFile(File file, Drive drive) throws IOException {
@@ -240,7 +239,7 @@ public class SyncTestUtils {
   /**
    * Checks the files number on Google Drive
    * 
-   * @param drive drive object of Google Drive
+   * @param drive a Google Drive object
    * @throws IOException
    */
   public static void checkFilesNumber(Drive drive) throws IOException {
@@ -248,7 +247,7 @@ public class SyncTestUtils {
     while (System.currentTimeMillis() - startTime < MAX_TIME_TO_WAIT_SYNC) {
       try {
         int trackNumber = EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount();
-        List<File> files = updateDriveFiles(
+        List<File> files = getDriveFiles(
             EndToEndTestUtils.activityMytracks.getApplicationContext(), drive);
         if (files.size() == trackNumber) {
           return;
@@ -281,7 +280,7 @@ public class SyncTestUtils {
    * 
    * @param trackName the name of track
    * @param shouldExist true means this track should be existed
-   * @param drive drive object of Google Drive
+   * @param drive a Google Drive object
    * @return true means the actual result is same as expectation
    * @throws IOException
    */
@@ -289,7 +288,8 @@ public class SyncTestUtils {
       throws IOException {
     long startTime = System.currentTimeMillis();
     while (System.currentTimeMillis() - startTime < MAX_TIME_TO_WAIT_SYNC) {
-      if ((getFile(trackName, drive) != null) == shouldExist) {
+      boolean exist = getFile(trackName, drive) != null;
+      if (exist == shouldExist) {
         return true;
       }
     }
@@ -301,15 +301,14 @@ public class SyncTestUtils {
    * Gets the content of a file on Google Drive.
    * 
    * @param file file to read
-   * @param drive drive object of Google Drive
+   * @param drive a Google Drive object
    * @return the string content of the file
    * @throws IOException
    */
   public static String getContentOfFile(File file, Drive drive) throws IOException {
     HttpResponse resp = drive.getRequestFactory()
         .buildGetRequest(new GenericUrl(file.getDownloadUrl())).execute();
-    InputStream response = resp.getContent();
-    BufferedReader br = new BufferedReader(new InputStreamReader(response));
+    BufferedReader br = new BufferedReader(new InputStreamReader(resp.getContent()));
     StringBuilder sb = new StringBuilder();
     String line;
     while ((line = br.readLine()) != null) {
@@ -324,7 +323,7 @@ public class SyncTestUtils {
    * Gets the MyTracks folder on Google Drive.
    * 
    * @param context context of application
-   * @param drive drive object of Google Drive
+   * @param drive a Google Drive object
    * @return the MyTracks folder on Google Drive
    */
   public static File getMyTracksFolder(Context context, Drive drive) {

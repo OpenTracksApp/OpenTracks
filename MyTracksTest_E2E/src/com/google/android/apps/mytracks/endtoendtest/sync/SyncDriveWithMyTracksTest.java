@@ -27,7 +27,7 @@ import android.view.KeyEvent;
 import java.io.IOException;
 
 /**
- * Tests how Google Drive to sync with MyTracks.
+ * Tests making changes on Google Drive when syncing My Tracks with Google Drive.
  * 
  * @author Youtao Liu
  */

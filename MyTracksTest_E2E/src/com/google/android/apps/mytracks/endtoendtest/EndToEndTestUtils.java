@@ -312,6 +312,8 @@ public class EndToEndTestUtils {
     }
 
     int trackNumber = SOLO.getCurrentListViews().get(0).getCount();
+    // Delete all tracks when there are two many tracks which may make some test
+    // run slowly, such as sync test cases.
     if (trackNumber > 3) {
       deleteAllTracks();
     }

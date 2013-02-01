@@ -50,7 +50,19 @@ public class MultiAccountsSyncTest extends ActivityInstrumentationTestCase2<Trac
   }
 
   /**
-   * Tests sync tracks with Google Drive of two accounts.
+   * Tests sync tracks with Google Drive of two accounts with following
+   * sequence:
+   * <ul>
+   * <li>1. Enable sync with account1.</li>
+   * <li>2. Create a track.</li>
+   * <li>3. Enable sync with account2.</li>
+   * <li>4. Create a track.</li>
+   * <li>5. Sync and check</li>
+   * <li>6. Enable sync with account1.</li>
+   * <li>7. Sync and check</li>
+   * <li>8. Enable sync with account2.</li>
+   * <li>9. Check</li>
+   * </ul>
    * 
    * @throws IOException
    */
@@ -78,12 +90,24 @@ public class MultiAccountsSyncTest extends ActivityInstrumentationTestCase2<Trac
         EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
     drive = SyncTestUtils.getGoogleDrive(trackListActivity.getApplicationContext());
     SyncTestUtils.checkFilesNumber(drive);
+
+    // Back to account1 change check that files are still existed.
+    SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_2);
+    drive = SyncTestUtils.getGoogleDrive(trackListActivity.getApplicationContext());
+    SyncTestUtils.checkFilesNumber(drive);
   }
 
   /**
-   * Creates three tracks and the deletes one in one account, and then deletes
-   * another one in another account. Keeps one tracks, then sync with two
-   * accounts.
+   * Tests the behavior of MyTracks about delete operation and switch accounts
+   * with following sequence.:
+   * <ul>
+   * <li>1. Create 3 tracks.</li>
+   * <li>2. Delete 1 track.</li>
+   * <li>3. Sync with account2(account2 should have 2 files).</li>
+   * <li>4. Delete 1 track (account2 should have 1 file).</li>
+   * <li>5. Sync with account 1 (account 1 should have 1 file, account2 should
+   * also have 1 file).</li>
+   * </ul>
    * 
    * @throws IOException
    */
@@ -132,5 +156,4 @@ public class MultiAccountsSyncTest extends ActivityInstrumentationTestCase2<Trac
     super.tearDown();
     EndToEndTestUtils.SOLO.finishOpenedActivities();
   }
-
 }
