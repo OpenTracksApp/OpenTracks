@@ -292,6 +292,15 @@ public class SearchListActivity extends AbstractMyTracksActivity implements Dele
   public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
     super.onCreateContextMenu(menu, v, menuInfo);
     getMenuInflater().inflate(R.menu.list_context_menu, menu);
+    
+    Map<String, Object> item = arrayAdapter.getItem(((AdapterContextMenuInfo) menuInfo).position);
+    Long trackId = (Long) item.get(TRACK_ID_FIELD);
+    Long markerId = (Long) item.get(MARKER_ID_FIELD);
+    Track track = myTracksProviderUtils.getTrack(trackId);
+    menu.findItem(R.id.list_context_menu_edit).setVisible(!track.isSharedWithMe());
+    if (markerId != null) {
+      menu.findItem(R.id.list_context_menu_delete).setVisible(!track.isSharedWithMe());
+    }
   }
 
   @Override

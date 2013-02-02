@@ -606,6 +606,9 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
   public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
     super.onCreateContextMenu(menu, v, menuInfo);
     getMenuInflater().inflate(R.menu.list_context_menu, menu);
+    long trackId = ((AdapterContextMenuInfo) menuInfo).id;
+    Track track = myTracksProviderUtils.getTrack(trackId);
+    menu.findItem(R.id.list_context_menu_edit).setVisible(!track.isSharedWithMe());
   }
 
   @Override
