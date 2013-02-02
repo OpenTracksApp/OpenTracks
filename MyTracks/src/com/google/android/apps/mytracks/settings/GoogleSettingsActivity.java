@@ -121,6 +121,7 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
           showDialog(DIALOG_CONFIRM_DRIVE_SYNC_ON);
         } else {
           handleSync(false);
+          clearSyncState();
         }
         return false;
       }
@@ -198,8 +199,8 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
                 @Override
               public void onClick(DialogInterface d, int button) {
                 googleAccountPreference.setValue(newValue);
-                clearSyncState();
                 handleSync(false);
+                clearSyncState();
                 updateUiByAccountName(newValue);
               }
             });
@@ -215,25 +216,25 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
   }
 
   /**
-   * Clears the sync state.
+   * Clears the sync state. Assumes sync is turned off. Do not want clearing the
+   * state to cause sync activities.
    */
   private void clearSyncState() {
-    PreferencesUtils.setLong(this, R.string.drive_largest_change_id_key,
-        PreferencesUtils.DRIVE_LARGEST_CHANGE_ID_DEFAULT);
-    PreferencesUtils.setString(
-        this, R.string.drive_deleted_list_key, PreferencesUtils.DRIVE_DELETED_LIST_DEFAULT);
-
     MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
     Cursor cursor = null;
     try {
-      cursor = myTracksProviderUtils.getTrackCursor(SyncUtils.DRIVE_IDS_QUERY, null, null);
+      cursor = myTracksProviderUtils.getTrackCursor(SyncUtils.DRIVE_ID_TRACKS_QUERY, null, null);
       if (cursor != null && cursor.moveToFirst()) {
         do {
           Track track = myTracksProviderUtils.createTrack(cursor);
-          track.setDriveId("");
-          track.setModifiedTime(-1L);
-          track.setSharedWithMe(false);
-          myTracksProviderUtils.updateTrack(track);
+          if (track.isSharedWithMe()) {
+            myTracksProviderUtils.deleteTrack(track.getId());
+          } else {
+            track.setDriveId("");
+            track.setModifiedTime(-1L);
+            track.setSharedWithMe(false);
+            myTracksProviderUtils.updateTrack(track);
+          }
         } while (cursor.moveToNext());
       }
     } finally {
@@ -241,6 +242,12 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
         cursor.close();
       }
     }
+    PreferencesUtils.setLong(this, R.string.drive_largest_change_id_key,
+        PreferencesUtils.DRIVE_LARGEST_CHANGE_ID_DEFAULT);
+    
+    // Clear the driveDeletedList last
+    PreferencesUtils.setString(
+        this, R.string.drive_deleted_list_key, PreferencesUtils.DRIVE_DELETED_LIST_DEFAULT);
   }
 
   /**

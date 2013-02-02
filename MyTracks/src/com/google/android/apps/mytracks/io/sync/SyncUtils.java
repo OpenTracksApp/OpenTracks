@@ -65,20 +65,38 @@ import java.util.Locale;
  */
 public class SyncUtils {
 
+  // Request code to obtain Drive permission
   public static final int DRIVE_PERMISSION_REQUEST_CODE = 1;
 
-  public static final String DRIVE_IDS_QUERY = TracksColumns.DRIVEID + " IS NOT NULL AND "
+  // Get tracks with drive id
+  public static final String DRIVE_ID_TRACKS_QUERY = TracksColumns.DRIVEID + " IS NOT NULL AND "
       + TracksColumns.DRIVEID + "!=''";
-  public static final String NO_DRIVE_ID_QUERY = TracksColumns.DRIVEID + " IS NULL OR "
+
+  // Get tracks with drive id that are owned by me, not tracks ashared with me.
+  public static final String DRIVE_ID_TRACKS_BY_ME_QUERY = DRIVE_ID_TRACKS_QUERY + " AND "
+      + TracksColumns.SHAREDWITHME + "!=1";
+
+  // Get tracks without drive id
+  public static final String NO_DRIVE_ID_TRACKS_QUERY = TracksColumns.DRIVEID + " IS NULL OR "
       + TracksColumns.DRIVEID + "=''";
 
+  // KML mime type
   public static final String KML_MIME_TYPE = "application/vnd.google-earth.kml+xml";
-  public static final String GET_KML_FILES_QUERY = "'%s' in parents and mimeType = '"
+
+  // Get My Tracks folder KML files
+  public static final String MY_TRACKS_FOLDER_FILES_QUERY = "'%s' in parents and mimeType = '"
       + KML_MIME_TYPE + "' and trashed = false";
-  
+
+  // Get shared with me KML files
+  public static final String SHARED_WITH_ME_FILES_QUERY = "sharedWithMe and mimeType = '"
+      + KML_MIME_TYPE + "'";
+
+  // Folder mime type
   private static final String FOLDER_MIME_TYPE = "application/vnd.google-apps.folder";
+
+  // Get My Tracks folder
   @VisibleForTesting
-  public static final String GET_MY_TRACKS_FOLDER_QUERY =
+  public static final String MY_TRACKS_FOLDER_QUERY =
       "'root' in parents and title = '%s' and mimeType = '" + FOLDER_MIME_TYPE
       + "' and trashed = false";
 
@@ -164,7 +182,7 @@ public class SyncUtils {
     }
     return null;
   }
-  
+
   /**
    * Cancels any notification to request drive permission.
    * 
@@ -236,7 +254,7 @@ public class SyncUtils {
     try {
       String folderName = context.getString(R.string.my_tracks_app_name);
       List list = drive.files()
-          .list().setQ(String.format(Locale.US, GET_MY_TRACKS_FOLDER_QUERY, folderName));
+          .list().setQ(String.format(Locale.US, MY_TRACKS_FOLDER_QUERY, folderName));
       FileList result = list.execute();
       for (File file : result.getItems()) {
         if (file.getTitle().equals(folderName)) {
@@ -254,21 +272,33 @@ public class SyncUtils {
   }
 
   /**
-   * Returns true if the drive file is a kml file in the My Tracks folder and
-   * not trashed.
+   * Returns true if the drive file is a Shared with me KML file.
+   * 
+   * @param driveFile the drive file
+   */
+  public static boolean isSharedWithMe(File driveFile) {
+    if (driveFile == null) {
+      return false;
+    }
+    if (!SyncUtils.KML_MIME_TYPE.equals(driveFile.getMimeType())) {
+      return false;
+    }
+    return driveFile.getSharedWithMeDate() != null;
+  }
+
+  /**
+   * Returns true if the drive file is a valid KML file in the My Tracks folder
+   * and not trashed.
    * 
    * @param driveFile the drive file
    * @param folderId the My Tracks folder id
    */
-  public static boolean isDriveFileValid(File driveFile, String folderId) {
-    if (isInFolder(driveFile, folderId)) {
-      return !driveFile.getLabels().getTrashed();
-    }
-    return false;
+  public static boolean isValid(File driveFile, String folderId) {
+    return isInFolder(driveFile, folderId) && !driveFile.getLabels().getTrashed();
   }
 
   /**
-   * Returns true if the drive file is a kml file in the My Tracks folder.
+   * Returns true if the drive file is a KML file in the My Tracks folder.
    * 
    * @param driveFile the drive file
    * @param folderId the My Tracks folder id

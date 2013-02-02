@@ -1732,8 +1732,9 @@ limitations under the License.
       account.
 
       %1$s account name. E.g., 'foo@foo.com'.">
-    This will remove any mappings between tracks and %1$s Google Drive. After removal, when sending
-    to Google Drive or syncing with Google Drive, all tracks will be treated as new.
+    This will remove mappings between tracks and %1$s Google Drive. No tracks and no Google Drive
+    files will get removed. After switching account, when sending to Google Drive or syncing with
+    Google Drive, all tracks will be treated as new.
   </string>
   <string name="settings_google_account_title"
     translation_description="In the 'Google' settings, the option to switch Google account.
@@ -1747,9 +1748,8 @@ limitations under the License.
 
       %1$s account name. E.g., 'foo@foo.com'.
       %2$s folder name. E.g., 'My Tracks'.">
-    Check the files in %1$s Google Drive &#8216;%2$s&#8217; folder. Files not mapped to existing
-    tracks will be synced as new tracks. If not desired, move those files to a different folder
-    beforehand.
+    All files in the %1$s Google Drive &#8216;%2$s&#8217; folder will be treated as new. If not
+    desired, move the files to a different folder beforehand.
   </string>
   <string name="settings_google_drive_sync_summary_on"
     translation_description="In the 'Google' settings, the summary for the 'Sync Google Drive'

@@ -84,11 +84,10 @@ public class SendDriveAsyncTask extends AbstractSendAsyncTask {
       String driveId = track.getDriveId();
       if (driveId != null && !driveId.equals("")) {
         File driveFile = drive.files().get(driveId).execute();
-        if (SyncUtils.isDriveFileValid(driveFile, folderId)) {
-          if (SyncUtils.updateDriveFile(context, myTracksProviderUtils, drive, driveFile, track)) {
-            addPermission(drive, driveId);
-            return true;
-          }
+        if (SyncUtils.isValid(driveFile, folderId)
+            && SyncUtils.updateDriveFile(context, myTracksProviderUtils, drive, driveFile, track)) {
+          addPermission(drive, driveId);
+          return true;
         }
         track.setDriveId("");
         track.setModifiedTime(-1L);

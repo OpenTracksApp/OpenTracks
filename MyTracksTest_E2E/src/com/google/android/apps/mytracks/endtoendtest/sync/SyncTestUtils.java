@@ -138,7 +138,7 @@ public class SyncTestUtils {
     }
     String folderId = folder.getId();
     return drive.files().list()
-        .setQ(String.format(Locale.US, SyncUtils.GET_KML_FILES_QUERY, folderId)).execute()
+        .setQ(String.format(Locale.US, SyncUtils.MY_TRACKS_FOLDER_FILES_QUERY, folderId)).execute()
         .getItems();
   }
 
@@ -330,7 +330,7 @@ public class SyncTestUtils {
     try {
       String folderName = context.getString(R.string.my_tracks_app_name);
       com.google.api.services.drive.Drive.Files.List list = drive.files().list()
-          .setQ(String.format(Locale.US, SyncUtils.GET_MY_TRACKS_FOLDER_QUERY, folderName));
+          .setQ(String.format(Locale.US, SyncUtils.MY_TRACKS_FOLDER_QUERY, folderName));
       FileList result = list.execute();
       for (File file : result.getItems()) {
         if (file.getTitle().equals(folderName)) {
