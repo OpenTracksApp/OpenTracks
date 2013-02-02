@@ -16,6 +16,7 @@
 
 package com.google.android.apps.mytracks;
 
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.TrackDataListener;
@@ -194,6 +195,17 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
         public boolean onClick(int itemId, int position, long id) {
           return handleContextItem(itemId, id);
         }
+
+          @Override
+          public boolean canEdit(int position, long id) {
+            Track track = myTracksProviderUtils.getTrack(id);
+            return !track.isSharedWithMe();
+          }
+
+          @Override
+          public boolean canDelete(int position, long id) {
+            return true;
+          }
       };
 
   private final OnClickListener recordListener = new OnClickListener() {
@@ -316,6 +328,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
   };
 
   // The following are set in onCreate
+  private MyTracksProviderUtils myTracksProviderUtils;
   private SharedPreferences sharedPreferences;
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
   private TrackController trackController;
@@ -347,6 +360,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
     setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
     setContentView(R.layout.track_list);
 
+    myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
     sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
 
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(

@@ -17,6 +17,7 @@
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment;
@@ -71,6 +72,18 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
         public boolean onClick(int itemId, int position, long id) {
           return handleContextItem(itemId, id);
         }
+
+          @Override
+          public boolean canEdit(int position, long id) {
+            Track track = myTracksProviderUtils.getTrack(trackId);
+            return !track.isSharedWithMe();
+          }
+
+          @Override
+          public boolean canDelete(int poistion, long id) {
+            Track track = myTracksProviderUtils.getTrack(trackId);
+            return !track.isSharedWithMe();
+          }
       };
 
   /*
@@ -104,6 +117,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
         }
       };
 
+  private MyTracksProviderUtils myTracksProviderUtils;
   private SharedPreferences sharedPreferences;
 
   private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
@@ -120,6 +134,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
+    myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
     sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1L);
     if (trackId == -1L) {
@@ -167,8 +182,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
     ApiAdapterFactory.getApiAdapter()
         .configureListViewContextualMenu(this, listView, contextualActionModeCallback);
 
-    final long firstWaypointId = MyTracksProviderUtils.Factory.get(this)
-        .getFirstWaypointId(trackId);
+    final long firstWaypointId = myTracksProviderUtils.getFirstWaypointId(trackId);
     getSupportLoaderManager().initLoader(0, null, new LoaderCallbacks<Cursor>() {
         @Override
       public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {

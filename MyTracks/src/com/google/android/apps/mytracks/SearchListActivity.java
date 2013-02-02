@@ -128,11 +128,32 @@ public class SearchListActivity extends AbstractMyTracksActivity implements Dele
         public boolean onClick(int itemId, int position, long id) {
           return handleContextItem(itemId, position);
         }
+
+          @Override
+          public boolean canEdit(int position, long id) {
+            Map<String, Object> item = arrayAdapter.getItem(position);
+            Long trackId = (Long) item.get(TRACK_ID_FIELD);
+            Track track = myTracksProviderUtils.getTrack(trackId);
+            return !track.isSharedWithMe();
+          }
+
+          @Override
+          public boolean canDelete(int position, long id) {
+            Map<String, Object> item = arrayAdapter.getItem(position);
+            Long trackId = (Long) item.get(TRACK_ID_FIELD);
+            Long markerId = (Long) item.get(MARKER_ID_FIELD);
+            if (markerId != null) {
+              Track track = myTracksProviderUtils.getTrack(trackId);
+              return !track.isSharedWithMe();
+            } else {
+              return true;
+            }
+           }
       };
 
+  private MyTracksProviderUtils myTracksProviderUtils;
   private SharedPreferences sharedPreferences;
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
-  private MyTracksProviderUtils myTracksProviderUtils;
   private SearchEngine searchEngine;
   private SearchRecentSuggestions searchRecentSuggestions;
   private MyTracksLocationManager myTracksLocationManager;
@@ -151,9 +172,9 @@ public class SearchListActivity extends AbstractMyTracksActivity implements Dele
     super.onCreate(savedInstanceState);
     setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
+    myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
     sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
-    myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
     searchEngine = new SearchEngine(myTracksProviderUtils);
     searchRecentSuggestions = SearchEngineProvider.newHelper(this);
     myTracksLocationManager = new MyTracksLocationManager(this);

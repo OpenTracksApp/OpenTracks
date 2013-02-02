@@ -73,8 +73,12 @@ public class Api11Adapter extends Api10Adapter {
           }
           @Override
           public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            // Return false to indicate no change.
-            return false;
+            menu.findItem(R.id.list_context_menu_edit)
+                .setVisible(contextualActionModeCallback.canEdit(position, id));
+            menu.findItem(R.id.list_context_menu_delete)
+                .setVisible(contextualActionModeCallback.canDelete(position, id));
+            // Return true to indicate change
+            return true;
           }
           @Override
           public void onDestroyActionMode(ActionMode mode) {

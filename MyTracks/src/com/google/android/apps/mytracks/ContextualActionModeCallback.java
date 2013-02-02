@@ -22,7 +22,7 @@ package com.google.android.apps.mytracks;
  * @author Jimmy Shih
  */
 public interface ContextualActionModeCallback {
-    
+
   /**
    * Invoked when an item is selected.
    * 
@@ -31,4 +31,20 @@ public interface ContextualActionModeCallback {
    * @param id the id of the selected row, if available
    */
   public boolean onClick(int itemId, int position, long id);
+
+  /**
+   * True if the item in the selected row can be edited.
+   * 
+   * @param position the position of the selected row
+   * @param id the id of the selected row
+   */
+  public boolean canEdit(int position, long id);
+
+  /**
+   * True if the item in the selected row can be deleted.
+   * 
+   * @param position the position of the selected row
+   * @param id the id of the selected row
+   */
+  public boolean canDelete(int position, long id);
 }
