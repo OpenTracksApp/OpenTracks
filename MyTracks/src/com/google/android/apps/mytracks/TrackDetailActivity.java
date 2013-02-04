@@ -79,6 +79,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   private static final String CURRENT_TAB_TAG_KEY = "current_tab_tag_key";
   
   // The following are set in onCreate
+  private MyTracksProviderUtils myTracksProviderUtils;
   private SharedPreferences sharedPreferences;
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
   private TrackDataHub trackDataHub;
@@ -184,6 +185,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     super.onCreate(savedInstanceState);
     handleIntent(getIntent());
 
+    myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
     sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
 
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(
@@ -292,7 +294,10 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
         .setTitle(getString(R.string.menu_save_format, fileTypes[2]));
     menu.findItem(R.id.track_detail_save_tcx)
         .setTitle(getString(R.string.menu_save_format, fileTypes[3]));
-
+    
+    Track track = myTracksProviderUtils.getTrack(trackId);
+    menu.findItem(R.id.track_detail_edit).setVisible(!track.isSharedWithMe());
+    
     insertMarkerMenuItem = menu.findItem(R.id.track_detail_insert_marker);
     playMenuItem = menu.findItem(R.id.track_detail_play);
     shareMenuItem = menu.findItem(R.id.track_detail_share);
@@ -466,7 +471,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     trackId = intent.getLongExtra(EXTRA_TRACK_ID, -1L);
     markerId = intent.getLongExtra(EXTRA_MARKER_ID, -1L);
     if (markerId != -1L) {
-      Waypoint waypoint = MyTracksProviderUtils.Factory.get(this).getWaypoint(markerId);
+      Waypoint waypoint = myTracksProviderUtils.getWaypoint(markerId);
       if (waypoint == null) {
         exit();
         return;
@@ -539,7 +544,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     if (isRecording) {
       title = getString(isPaused ? R.string.generic_paused : R.string.generic_recording);
     } else {
-      Track track = MyTracksProviderUtils.Factory.get(this).getTrack(trackId);
+      Track track = myTracksProviderUtils.getTrack(trackId);
       title = track != null ? track.getName() : getString(R.string.my_tracks_app_name);
     }
     setTitle(title);

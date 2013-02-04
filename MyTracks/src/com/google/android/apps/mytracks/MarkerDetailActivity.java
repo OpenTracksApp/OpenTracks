@@ -17,6 +17,7 @@
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment;
@@ -42,6 +43,7 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity {
   public static final String EXTRA_MARKER_ID = "marker_id";
   private static final String TAG = MarkerDetailActivity.class.getSimpleName();
 
+  private MyTracksProviderUtils myTracksProviderUtils;
   private long markerId;
   private Waypoint waypoint;
 
@@ -53,6 +55,7 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity {
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
 
+    myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
     markerId = getIntent().getLongExtra(EXTRA_MARKER_ID, -1L);
     if (markerId == -1L) {
       Log.d(TAG, "invalid marker id");
@@ -99,6 +102,10 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity {
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.marker_detail, menu);
+    
+    Track track = myTracksProviderUtils.getTrack(waypoint.getTrackId());
+    menu.findItem(R.id.marker_detail_edit).setVisible(!track.isSharedWithMe());
+    menu.findItem(R.id.marker_detail_delete).setVisible(!track.isSharedWithMe());    
     return true;
   }
 
