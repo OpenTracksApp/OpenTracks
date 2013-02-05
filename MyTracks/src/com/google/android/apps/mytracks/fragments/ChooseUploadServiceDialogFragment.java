@@ -48,10 +48,12 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
   public static final String CHOOSE_UPLOAD_SERVICE_DIALOG_TAG = "chooseUploadService";
 
   private static final String KEY_SEND_REQUEST = "sendRequest";
+  private static final String KEY_HIDE_DRIVE = "hideDrive";
 
-  public static ChooseUploadServiceDialogFragment newInstance(SendRequest sendRequest) {
+  public static ChooseUploadServiceDialogFragment newInstance(SendRequest sendRequest, boolean hideDrive) {
     Bundle bundle = new Bundle();
     bundle.putParcelable(KEY_SEND_REQUEST, sendRequest);
+    bundle.putBoolean(KEY_HIDE_DRIVE, hideDrive);
 
     ChooseUploadServiceDialogFragment chooseUploadServiceDialogFragment = new ChooseUploadServiceDialogFragment();
     chooseUploadServiceDialogFragment.setArguments(bundle);
@@ -60,7 +62,8 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
 
   private FragmentActivity activity;
   private SendRequest sendRequest;
-
+  private boolean hideDrive;
+  
   private CheckBox driveCheckBox;
   private CheckBox mapsCheckBox;
   private CheckBox fusionTablesCheckBox;
@@ -73,8 +76,12 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     activity = getActivity();
     sendRequest = getArguments().getParcelable(KEY_SEND_REQUEST);
-
+    hideDrive = getArguments().getBoolean(KEY_HIDE_DRIVE);
+    
     View view = activity.getLayoutInflater().inflate(R.layout.choose_upload_service, null);
+
+    view.findViewById(R.id.choose_upload_service_drive_options)
+        .setVisibility(hideDrive ? View.GONE : View.VISIBLE);
 
     driveCheckBox = (CheckBox) view.findViewById(R.id.choose_upload_service_drive);
     mapsCheckBox = (CheckBox) view.findViewById(R.id.choose_upload_service_maps);
@@ -131,7 +138,7 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
                 activity, R.string.send_to_fusion_tables_key, fusionTablesCheckBox.isChecked());
             PreferencesUtils.setBoolean(
                 activity, R.string.send_to_docs_key, docsCheckBox.isChecked());
-            if (driveCheckBox.isChecked() || mapsCheckBox.isChecked()
+            if (sendDrive() || mapsCheckBox.isChecked()
                 || fusionTablesCheckBox.isChecked() || docsCheckBox.isChecked()) {
               startNextActivity();
             } else {
@@ -153,7 +160,7 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
    * Starts the next activity, {@link AccountChooserActivity}.
    */
   private void startNextActivity() {
-    sendRequest.setSendDrive(driveCheckBox.isChecked());
+    sendRequest.setSendDrive(sendDrive());
     sendRequest.setSendMaps(mapsCheckBox.isChecked());
     sendRequest.setSendFusionTables(fusionTablesCheckBox.isChecked());
     sendRequest.setSendDocs(docsCheckBox.isChecked());
@@ -180,5 +187,12 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
     if (sendRequest.isSendDocs()) {
       AnalyticsUtils.sendPageViews(activity, "/send/docs");
     }
+  }
+  
+  /**
+   * True to send to Google Drive.
+   */
+  private boolean sendDrive() {
+    return !hideDrive && driveCheckBox.isChecked();
   }
 }

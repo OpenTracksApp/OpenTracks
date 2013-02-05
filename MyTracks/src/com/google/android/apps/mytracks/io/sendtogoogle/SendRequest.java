@@ -23,7 +23,7 @@ import android.os.Parcelable;
 /**
  * Send request states for sending a track to Google Maps, Google Fusion Tables,
  * and Google Docs.
- *
+ * 
  * @author Jimmy Shih
  */
 public class SendRequest implements Parcelable {
@@ -48,7 +48,7 @@ public class SendRequest implements Parcelable {
 
   /**
    * Creates a new send request.
-   *
+   * 
    * @param trackId the track id
    */
   public SendRequest(long trackId) {
@@ -100,7 +100,7 @@ public class SendRequest implements Parcelable {
   public String getAcl() {
     return acl;
   }
-  
+
   /**
    * Sets the email address of the user to share the track with.
    * 
@@ -109,7 +109,7 @@ public class SendRequest implements Parcelable {
   public void setAcl(String acl) {
     this.acl = acl;
   }
-  
+
   /**
    * True if the user has selected the send to Google Drive option.
    */
@@ -136,7 +136,7 @@ public class SendRequest implements Parcelable {
 
   /**
    * Sets the send to Google Maps option.
-   *
+   * 
    * @param sendMaps true if the user has selected the send to Google Maps
    *          option
    */
@@ -153,7 +153,7 @@ public class SendRequest implements Parcelable {
 
   /**
    * Sets the send to Google Fusion Tables option.
-   *
+   * 
    * @param sendFusionTables true if the user has selected the send to Google
    *          Fusion Tables option
    */
@@ -170,7 +170,7 @@ public class SendRequest implements Parcelable {
 
   /**
    * Sets the send to Google Docs option.
-   *
+   * 
    * @param sendDocs true if the user has selected the send to Google Docs
    *          option
    */
@@ -187,7 +187,7 @@ public class SendRequest implements Parcelable {
 
   /**
    * Sets the new map option.
-   *
+   * 
    * @param newMap true if the user has selected to create a new Google Maps.
    */
   public void setNewMap(boolean newMap) {
@@ -203,7 +203,7 @@ public class SendRequest implements Parcelable {
 
   /**
    * Sets the account.
-   *
+   * 
    * @param account the account
    */
   public void setAccount(Account account) {
@@ -220,7 +220,7 @@ public class SendRequest implements Parcelable {
 
   /**
    * Sets the map id.
-   *
+   * 
    * @param mapId the map id
    */
   public void setMapId(String mapId) {
@@ -236,13 +236,13 @@ public class SendRequest implements Parcelable {
 
   /**
    * Sets the Google Drive result.
-   *
+   * 
    * @param driveSuccess true if sending to Google Drive is success
    */
   public void setDriveSuccess(boolean driveSuccess) {
     this.driveSuccess = driveSuccess;
   }
-  
+
   /**
    * True if sending to Google Maps is success.
    */
@@ -252,7 +252,7 @@ public class SendRequest implements Parcelable {
 
   /**
    * Sets the Google Maps result.
-   *
+   * 
    * @param mapsSuccess true if sending to Google Maps is success
    */
   public void setMapsSuccess(boolean mapsSuccess) {
@@ -268,7 +268,7 @@ public class SendRequest implements Parcelable {
 
   /**
    * Sets the Google Fusion Tables result.
-   *
+   * 
    * @param fusionTablesSuccess true if sending to Google Fusion Tables is
    *          success
    */
@@ -285,7 +285,7 @@ public class SendRequest implements Parcelable {
 
   /**
    * Sets the Google Docs result.
-   *
+   * 
    * @param docsSuccess true if sending to Google Docs is success
    */
   public void setDocsSuccess(boolean docsSuccess) {
@@ -334,14 +334,14 @@ public class SendRequest implements Parcelable {
     out.writeByte((byte) (docsSuccess ? 1 : 0));
   }
 
-  public static final Parcelable.Creator<SendRequest> CREATOR = new Parcelable.Creator<
-      SendRequest>() {
-    public SendRequest createFromParcel(Parcel in) {
-      return new SendRequest(in);
-    }
+  public static final Parcelable.Creator<SendRequest>
+      CREATOR = new Parcelable.Creator<SendRequest>() {
+        public SendRequest createFromParcel(Parcel in) {
+          return new SendRequest(in);
+        }
 
-    public SendRequest[] newArray(int size) {
-      return new SendRequest[size];
-    }
-  };
+        public SendRequest[] newArray(int size) {
+          return new SendRequest[size];
+        }
+      };
 }

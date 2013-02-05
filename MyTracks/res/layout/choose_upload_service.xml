@@ -21,7 +21,7 @@ limitations under the License.
     android:layout_width="match_parent"
     android:padding="8dp"
     android:stretchColumns="1" >
-    <TableRow>
+    <TableRow android:id="@+id/choose_upload_service_drive_options">
       <ImageView
         android:contentDescription="@string/send_google_drive"
         android:src="@drawable/google_drive_icon"

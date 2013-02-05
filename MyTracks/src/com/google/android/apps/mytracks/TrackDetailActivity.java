@@ -297,11 +297,13 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     
     Track track = myTracksProviderUtils.getTrack(trackId);
     menu.findItem(R.id.track_detail_edit).setVisible(!track.isSharedWithMe());
+    shareDriveMenuItem = menu.findItem(R.id.track_detail_share_drive);
+    shareDriveMenuItem.setEnabled(!track.isSharedWithMe());
+    shareDriveMenuItem.setVisible(!track.isSharedWithMe());
     
     insertMarkerMenuItem = menu.findItem(R.id.track_detail_insert_marker);
     playMenuItem = menu.findItem(R.id.track_detail_play);
     shareMenuItem = menu.findItem(R.id.track_detail_share);
-    shareDriveMenuItem = menu.findItem(R.id.track_detail_share_drive);
     sendGoogleMenuItem = menu.findItem(R.id.track_detail_send_google);
     saveMenuItem = menu.findItem(R.id.track_detail_save);
     voiceFrequencyMenuItem = menu.findItem(R.id.track_detail_voice_frequency);
@@ -398,8 +400,9 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
         return true;
       case R.id.track_detail_send_google:
         AnalyticsUtils.sendPageViews(this, "/action/send_google");
-        ChooseUploadServiceDialogFragment.newInstance(new SendRequest(trackId)).show(
-            getSupportFragmentManager(),
+        Track track = myTracksProviderUtils.getTrack(trackId);
+        ChooseUploadServiceDialogFragment.newInstance(
+            new SendRequest(trackId), track.isSharedWithMe()).show(getSupportFragmentManager(),
             ChooseUploadServiceDialogFragment.CHOOSE_UPLOAD_SERVICE_DIALOG_TAG);
         return true;
       case R.id.track_detail_save_gpx:
@@ -524,7 +527,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     if (shareMenuItem != null) {
       shareMenuItem.setVisible(!isRecording);
     }
-    if (shareDriveMenuItem != null) {
+    if (shareDriveMenuItem != null && shareDriveMenuItem.isEnabled()) {
       shareDriveMenuItem.setVisible(!isRecording);
     }
     if (sendGoogleMenuItem != null) {

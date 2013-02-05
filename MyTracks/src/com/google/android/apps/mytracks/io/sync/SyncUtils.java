@@ -85,7 +85,7 @@ public class SyncUtils {
 
   // Get My Tracks folder KML files
   public static final String MY_TRACKS_FOLDER_FILES_QUERY = "'%s' in parents and mimeType = '"
-      + KML_MIME_TYPE + "' and trashed = false";
+      + KML_MIME_TYPE + "' and trashed = false and not sharedWithMe";
 
   // Get shared with me KML files
   public static final String SHARED_WITH_ME_FILES_QUERY = "sharedWithMe and mimeType = '"
@@ -98,7 +98,7 @@ public class SyncUtils {
   @VisibleForTesting
   public static final String MY_TRACKS_FOLDER_QUERY =
       "'root' in parents and title = '%s' and mimeType = '" + FOLDER_MIME_TYPE
-      + "' and trashed = false";
+      + "' and trashed = false and not sharedWithMe";
 
   private static final String TAG = SyncUtils.class.getSimpleName();
   private static final String SYNC_AUTHORITY = "com.google.android.maps.mytracks";
@@ -308,6 +308,9 @@ public class SyncUtils {
       return false;
     }
     if (!SyncUtils.KML_MIME_TYPE.equals(driveFile.getMimeType())) {
+      return false;
+    }
+    if (driveFile.getSharedWithMeDate() != null) {
       return false;
     }
     for (ParentReference parentReference : driveFile.getParents()) {
