@@ -30,6 +30,7 @@ import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.maps.mytracks.R;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.client.http.FileContent;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.drive.Drive;
@@ -98,7 +99,7 @@ public class SyncUtils {
   @VisibleForTesting
   public static final String MY_TRACKS_FOLDER_QUERY =
       "'root' in parents and title = '%s' and mimeType = '" + FOLDER_MIME_TYPE
-      + "' and trashed = false and not sharedWithMe";
+      + "' and trashed = false";
 
   private static final String TAG = SyncUtils.class.getSimpleName();
   private static final String SYNC_AUTHORITY = "com.google.android.maps.mytracks";
@@ -129,16 +130,18 @@ public class SyncUtils {
           });
         } catch (UserRecoverableAuthException e) {
           activity.startActivityForResult(e.getIntent(), DRIVE_PERMISSION_REQUEST_CODE);
-        } catch (IOException e) {
-          Log.e(TAG, "IOException", e);
+        }  catch (GoogleAuthException e) {
+          Log.e(TAG, "GoogleAuthException", e);
           activity.runOnUiThread(new Runnable() {
               @Override
             public void run() {
               permissionCallback.onFailure();
             }
           });
-        } catch (GoogleAuthException e) {
-          Log.e(TAG, "GoogleAuthException", e);
+        } catch (UserRecoverableAuthIOException e) {
+          activity.startActivityForResult(e.getIntent(), DRIVE_PERMISSION_REQUEST_CODE);
+        } catch (IOException e) {
+          Log.e(TAG, "IOException", e);
           activity.runOnUiThread(new Runnable() {
               @Override
             public void run() {
@@ -161,25 +164,14 @@ public class SyncUtils {
     try {
       return getGoogleAccountCredential(context, accountName);
     } catch (UserRecoverableAuthException e) {
-      Intent intent = e.getIntent();
-      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_FROM_BACKGROUND);
-
-      PendingIntent pendingIntent = PendingIntent.getActivity(
-          context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-      NotificationCompat.Builder builder = new NotificationCompat.Builder(context).setAutoCancel(
-          true).setContentIntent(pendingIntent)
-          .setContentText(context.getString(R.string.permission_request_message, accountName))
-          .setContentTitle(context.getString(R.string.permission_request_title))
-          .setSmallIcon(android.R.drawable.ic_dialog_alert)
-          .setTicker(context.getString(R.string.permission_request_title));
-      NotificationManager notificationManager = (NotificationManager) context.getSystemService(
-          Context.NOTIFICATION_SERVICE);
-      notificationManager.notify(NOTIFICATION_ID, builder.build());
-    } catch (IOException e) {
-      Log.e(TAG, "IOException", e);
+      sendNotification(context, accountName, e.getIntent());
     } catch (GoogleAuthException e) {
       Log.e(TAG, "GoogleAuthException", e);
-    }
+    } catch (UserRecoverableAuthIOException e) {
+      sendNotification(context, accountName, e.getIntent());      
+    } catch (IOException e) {
+      Log.e(TAG, "IOException", e);
+    } 
     return null;
   }
 
@@ -250,25 +242,20 @@ public class SyncUtils {
    * @param context the context
    * @param drive the drive
    */
-  public static String getMyTracksFolder(Context context, Drive drive) {
-    try {
-      String folderName = context.getString(R.string.my_tracks_app_name);
-      List list = drive.files()
-          .list().setQ(String.format(Locale.US, MY_TRACKS_FOLDER_QUERY, folderName));
-      FileList result = list.execute();
-      for (File file : result.getItems()) {
-        if (file.getTitle().equals(folderName)) {
-          return file.getId();
-        }
+  public static String getMyTracksFolder(Context context, Drive drive) throws IOException {
+    String folderName = context.getString(R.string.my_tracks_app_name);
+    List list = drive.files()
+        .list().setQ(String.format(Locale.US, MY_TRACKS_FOLDER_QUERY, folderName));
+    FileList result = list.execute();
+    for (File file : result.getItems()) {
+      if (file.getTitle().equals(folderName)) {
+        return file.getId();
       }
-      File file = new File();
-      file.setTitle(folderName);
-      file.setMimeType(FOLDER_MIME_TYPE);
-      return drive.files().insert(file).execute().getId();
-    } catch (IOException e) {
-      Log.e(TAG, "IOException", e);
-      return null;
     }
+    File file = new File();
+    file.setTitle(folderName);
+    file.setMimeType(FOLDER_MIME_TYPE);
+    return drive.files().insert(file).execute().getId();
   }
 
   /**
@@ -364,6 +351,7 @@ public class SyncUtils {
       String id = uploadedFile.getId();
       track.setDriveId(id);
       track.setModifiedTime(uploadedFile.getModifiedDate().getValue());
+      track.setSharedWithMe(false);
       myTracksProviderUtils.updateTrack(track);
       return id;
     } finally {
@@ -417,7 +405,7 @@ public class SyncUtils {
    * @param context the context
    * @param accountName the account name
    */
-  private static GoogleAccountCredential getGoogleAccountCredential(
+  public static GoogleAccountCredential getGoogleAccountCredential(
       Context context, String accountName) throws IOException, GoogleAuthException {
     GoogleAccountCredential credential = GoogleAccountCredential.usingOAuth2(
         context, DriveScopes.DRIVE);
@@ -426,6 +414,29 @@ public class SyncUtils {
     return credential;
   }
 
+  /**
+   * Sends a notification to request permission.
+   * 
+   * @param context the context
+   * @param accountName the account name
+   * @param intent the intent
+   */
+  public static void sendNotification(Context context, String accountName, Intent intent) {
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_FROM_BACKGROUND);
+  
+    PendingIntent pendingIntent = PendingIntent.getActivity(
+        context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    NotificationCompat.Builder builder = new NotificationCompat.Builder(context).setAutoCancel(
+        true).setContentIntent(pendingIntent)
+        .setContentText(context.getString(R.string.permission_request_message, accountName))
+        .setContentTitle(context.getString(R.string.permission_request_title))
+        .setSmallIcon(android.R.drawable.ic_dialog_alert)
+        .setTicker(context.getString(R.string.permission_request_title));
+    NotificationManager notificationManager = (NotificationManager) context.getSystemService(
+        Context.NOTIFICATION_SERVICE);
+    notificationManager.notify(NOTIFICATION_ID, builder.build());
+  }
+  
   /**
    * Gets a file from a track.
    * 

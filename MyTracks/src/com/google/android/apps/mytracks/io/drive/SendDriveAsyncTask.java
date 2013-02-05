@@ -20,14 +20,16 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.io.sendtogoogle.AbstractSendAsyncTask;
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
+import com.google.android.gms.auth.GoogleAuthException;
+import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.Permission;
 
 import android.accounts.Account;
 import android.content.Context;
-import android.util.Log;
 
 import java.io.IOException;
 
@@ -38,12 +40,10 @@ import java.io.IOException;
  */
 public class SendDriveAsyncTask extends AbstractSendAsyncTask {
 
-  private static final String TAG = SendDriveAsyncTask.class.getSimpleName();
-
   private final long trackId;
   private final Account account;
-  private final Context context;
   private final String[] acl;
+  private final Context context;
   private final MyTracksProviderUtils myTracksProviderUtils;
 
   public SendDriveAsyncTask(SendDriveActivity activity, long trackId, Account account, String acl) {
@@ -68,18 +68,18 @@ public class SendDriveAsyncTask extends AbstractSendAsyncTask {
 
   @Override
   protected boolean performTask() {
-    GoogleAccountCredential credential = SyncUtils.getCredential(context, account.name);
-    if (credential == null) {
-      return false;
-    }
-
-    Drive drive = SyncUtils.getDriveService(credential);
-    String folderId = SyncUtils.getMyTracksFolder(context, drive);
-    if (folderId == null) {
-      return false;
-    }
-
     try {
+      GoogleAccountCredential credential = SyncUtils.getGoogleAccountCredential(
+          context, account.name);
+      if (credential == null) {
+        return false;
+      }
+      Drive drive = SyncUtils.getDriveService(credential);
+      String folderId = SyncUtils.getMyTracksFolder(context, drive);
+      if (folderId == null) {
+        return false;
+      }
+
       Track track = myTracksProviderUtils.getTrack(trackId);
       String driveId = track.getDriveId();
       if (driveId != null && !driveId.equals("")) {
@@ -91,6 +91,7 @@ public class SendDriveAsyncTask extends AbstractSendAsyncTask {
         }
         track.setDriveId("");
         track.setModifiedTime(-1L);
+        track.setSharedWithMe(false);
         myTracksProviderUtils.updateTrack(track);
       }
 
@@ -100,9 +101,16 @@ public class SendDriveAsyncTask extends AbstractSendAsyncTask {
       }
       addPermission(drive, id);
       return true;
-    } catch (IOException e) {
-      Log.e(TAG, "IOException", e);
+    } catch (UserRecoverableAuthIOException e) {
+      SyncUtils.sendNotification(context, account.name, e.getIntent());
       return false;
+    } catch (IOException e) {
+      return retryTask();
+    } catch (UserRecoverableAuthException e) {
+      SyncUtils.sendNotification(context, account.name, e.getIntent());
+      return false;
+    } catch (GoogleAuthException e) {
+      return retryTask();
     }
   }
 
@@ -110,7 +118,7 @@ public class SendDriveAsyncTask extends AbstractSendAsyncTask {
   protected void invalidateToken() {}
 
   /**
-   * Adds permision.
+   * Adds permission.
    * 
    * @param drive the drive
    * @param driveId the drive id

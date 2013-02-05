@@ -104,12 +104,11 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
       driveAccountName = account.name;
     }
 
-    String folderId = SyncUtils.getMyTracksFolder(context, drive);
-    if (folderId == null) {
-      return;
-    }
-
     try {
+      String folderId = SyncUtils.getMyTracksFolder(context, drive);
+      if (folderId == null) {
+        return;
+      }
       long largestChangeId = PreferencesUtils.getLong(
           context, R.string.drive_largest_change_id_key);
       if (largestChangeId == PreferencesUtils.DRIVE_LARGEST_CHANGE_ID_DEFAULT) {
