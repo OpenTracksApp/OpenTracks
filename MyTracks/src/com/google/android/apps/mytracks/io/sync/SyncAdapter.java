@@ -161,14 +161,18 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         context, R.string.drive_deleted_list_key, PreferencesUtils.DRIVE_DELETED_LIST_DEFAULT);
     String deletedIds[] = TextUtils.split(driveDeletedList, ";");
     for (String id : deletedIds) {
-      File driveFile = drive.files().get(id).execute();
-      if (SyncUtils.isInFolder(driveFile, folderId)) {
-        if (!driveFile.getLabels().getTrashed()) {
-          drive.files().trash(id).execute();
+      try {
+        File driveFile = drive.files().get(id).execute();
+        if (SyncUtils.isInFolder(driveFile, folderId)) {
+          if (!driveFile.getLabels().getTrashed()) {
+            drive.files().trash(id).execute();
+          }
+          // if trashed, ignore
+        } else if (SyncUtils.isSharedWithMe(driveFile)) {
+          drive.files().delete(id).execute();
         }
-        // if trashed, ignore
-      } else if (SyncUtils.isSharedWithMe(driveFile)) {
-        drive.files().delete(id).execute();
+      } catch (IOException e) {
+        // safe to ignore
       }
     }
     PreferencesUtils.setString(

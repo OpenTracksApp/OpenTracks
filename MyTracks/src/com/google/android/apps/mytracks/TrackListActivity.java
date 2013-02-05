@@ -66,7 +66,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.widget.ResourceCursorAdapter;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -97,7 +96,8 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
   private static final int GOOGLE_PLAY_SERVICES_REQUEST_CODE = 0;
   private static final String[] PROJECTION = new String[] { TracksColumns._ID, TracksColumns.NAME,
       TracksColumns.DESCRIPTION, TracksColumns.CATEGORY, TracksColumns.STARTTIME,
-      TracksColumns.TOTALDISTANCE, TracksColumns.TOTALTIME, TracksColumns.ICON };
+      TracksColumns.TOTALDISTANCE, TracksColumns.TOTALTIME, TracksColumns.ICON,
+      TracksColumns.SHAREDWITHME};
 
   // Callback when the trackRecordingServiceConnection binding changes.
   private final Runnable bindChangedCallback = new Runnable() {
@@ -180,7 +180,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
                 boolean isRecording = recordingTrackId
                     != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
                 updateMenuItems(isRecording);
-                resourceCursorAdapter.notifyDataSetChanged();
+                sectionResourceCursorAdapter.notifyDataSetChanged();
                 trackController.update(isRecording, recordingTrackPaused);
               }
             });
@@ -333,7 +333,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
   private TrackController trackController;
   private ListView listView;
-  private ResourceCursorAdapter resourceCursorAdapter;
+  private SectionResourceCursorAdapter sectionResourceCursorAdapter;
   private TrackDataHub trackDataHub;
 
   // Preferences
@@ -379,7 +379,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
         startActivity(intent);
       }
     });
-    resourceCursorAdapter = new ResourceCursorAdapter(this, R.layout.list_item, null, 0) {
+    sectionResourceCursorAdapter = new SectionResourceCursorAdapter(this, R.layout.list_item, null, 0) {
         @Override
       public void bindView(View view, Context context, Cursor cursor) {
         int idIndex = cursor.getColumnIndex(TracksColumns._ID);
@@ -406,7 +406,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
             totalDistance, startTimeDisplay, cursor.getString(descriptionIndex));
       }
     };
-    listView.setAdapter(resourceCursorAdapter);
+    listView.setAdapter(sectionResourceCursorAdapter);
     ApiAdapterFactory.getApiAdapter()
         .configureListViewContextualMenu(this, listView, contextualActionModeCallback);
 
@@ -414,17 +414,17 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
         @Override
       public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
         return new CursorLoader(TrackListActivity.this, TracksColumns.CONTENT_URI, PROJECTION, null,
-            null, TracksColumns._ID + " DESC");
+            null, TracksColumns.SHAREDWITHME + " ASC, " + TracksColumns._ID + " DESC");
       }
 
         @Override
       public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        resourceCursorAdapter.swapCursor(cursor);
+        sectionResourceCursorAdapter.swapCursor(cursor);
       }
 
         @Override
       public void onLoaderReset(Loader<Cursor> loader) {
-        resourceCursorAdapter.swapCursor(null);
+        sectionResourceCursorAdapter.swapCursor(null);
       }
     });
     trackDataHub = TrackDataHub.newInstance(this);
@@ -462,7 +462,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
     // Update UI
     boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
     updateMenuItems(isRecording);
-    resourceCursorAdapter.notifyDataSetChanged();
+    sectionResourceCursorAdapter.notifyDataSetChanged();
     trackController.update(isRecording, recordingTrackPaused);
   }
   

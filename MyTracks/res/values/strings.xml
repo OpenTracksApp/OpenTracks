@@ -2424,7 +2424,12 @@ limitations under the License.
       success.">
     Now recording a new track.
   </string>
-
+  <string name="track_list_shared_with_me"
+    translation_description="The section header for &#8216;Shared with me&#8217; tracks from Google
+      Drive.">
+    Shared with me
+  </string>
+  
   <!-- Track Widget -->
   <string name="track_widget_config_title"
     translation_description="Title of the page to configure the My Tracks widget items.">
