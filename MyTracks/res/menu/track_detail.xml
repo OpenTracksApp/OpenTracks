@@ -59,10 +59,18 @@ limitations under the License.
     android:orderInCategory="8"
     android:title="@string/menu_save">
     <menu>
-      <item android:id="@+id/track_detail_save_gpx"/>
-      <item android:id="@+id/track_detail_save_kml"/>
-      <item android:id="@+id/track_detail_save_csv"/>
-      <item android:id="@+id/track_detail_save_tcx"/>
+      <item
+        android:id="@+id/track_detail_save_gpx"
+        android:title=""/>
+      <item
+        android:id="@+id/track_detail_save_kml"
+        android:title=""/>
+      <item
+        android:id="@+id/track_detail_save_csv"
+        android:title=""/>
+      <item
+        android:id="@+id/track_detail_save_tcx"
+        android:title=""/>
     </menu>
   </item>
   <item

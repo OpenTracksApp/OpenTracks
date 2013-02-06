@@ -80,7 +80,7 @@ public class MapSettingsActivity extends AbstractSettingsActivity {
         getString(R.string.track_color_mode_key));
     OnPreferenceChangeListener listener = new OnPreferenceChangeListener() {
         @Override
-      public boolean onPreferenceChange(Preference preference, Object newValue) {
+      public boolean onPreferenceChange(Preference pref, Object newValue) {
         updateUiByTrackColorMode((String) newValue);
         return true;
       }
