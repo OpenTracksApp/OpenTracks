@@ -17,7 +17,9 @@
 package com.google.android.apps.mytracks.fragments;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.util.DialogUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Dialog;
@@ -47,7 +49,16 @@ public class DeleteAllTrackDialogFragment extends DialogFragment {
             new Thread(new Runnable() {
               @Override
               public void run() {
+                PreferencesUtils.setBoolean(
+                    activity, R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT);
+                SyncUtils.disableSync(activity);
                 MyTracksProviderUtils.Factory.get(activity).deleteAllTracks();
+                PreferencesUtils.setLong(activity, R.string.drive_largest_change_id_key,
+                    PreferencesUtils.DRIVE_LARGEST_CHANGE_ID_DEFAULT);
+
+                // Clear the drive_deleted_list_key last
+                PreferencesUtils.setString(activity, R.string.drive_deleted_list_key,
+                    PreferencesUtils.DRIVE_DELETED_LIST_DEFAULT);
               }
             }).start();
           }

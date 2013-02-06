@@ -2405,9 +2405,9 @@ limitations under the License.
 
   <!-- Track List -->
   <string name="track_list_delete_all_confirm_message"
-    translation_description="When deleting all the tracks, the confirmation dialog message informing
-      the user that all tracks and markers will be permanently deleted from the device.">
-    All tracks and markers will be permanently deleted from the device.
+    translation_description="When deleting all the tracks, the confirmation dialog message.">
+    All tracks and markers will be permanently deleted from the device. This will also disable
+    Google Drive sync if it is enabled.
   </string>
   <string name="track_list_empty_message"
     translation_description="When the track list is empty, the message informing the user to click

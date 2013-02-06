@@ -245,7 +245,7 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
     PreferencesUtils.setLong(this, R.string.drive_largest_change_id_key,
         PreferencesUtils.DRIVE_LARGEST_CHANGE_ID_DEFAULT);
     
-    // Clear the driveDeletedList last
+    // Clear the drive_deleted_list_key last
     PreferencesUtils.setString(
         this, R.string.drive_deleted_list_key, PreferencesUtils.DRIVE_DELETED_LIST_DEFAULT);
   }
@@ -259,11 +259,7 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
     driveSyncPreference.setChecked(value);
 
     // Turn off everything
-    Account[] accounts = AccountManager.get(GoogleSettingsActivity.this)
-        .getAccountsByType(Constants.ACCOUNT_TYPE);
-    for (Account account : accounts) {
-      SyncUtils.disableSync(account);
-    }
+    SyncUtils.disableSync(this);
 
     if (value) {
 
@@ -271,8 +267,9 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
       ContentResolver.setMasterSyncAutomatically(true);
 
       // Enable sync for account
-      String googleAccount = PreferencesUtils.getString(GoogleSettingsActivity.this,
-          R.string.google_account_key, PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
+      String googleAccount = PreferencesUtils.getString(
+          this, R.string.google_account_key, PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
+      Account[] accounts = AccountManager.get(this).getAccountsByType(Constants.ACCOUNT_TYPE);
       for (Account account : accounts) {
         if (account.name.equals(googleAccount)) {
           SyncUtils.enableSync(account);

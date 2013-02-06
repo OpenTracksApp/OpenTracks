@@ -208,7 +208,8 @@ public class MyTracksProvider extends ContentProvider {
           getContext(), R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT);
       if (driveSync) {
         driveIds = where != null ? getDriveIds(null, where, selectionArgs)
-            : getDriveIds(new String[] { TracksColumns.DRIVEID }, SyncUtils.DRIVE_ID_TRACKS_BY_ME_QUERY, null);
+            : getDriveIds(
+                new String[] { TracksColumns.DRIVEID }, SyncUtils.DRIVE_ID_TRACKS_QUERY, null);
       }
     }
 

@@ -73,10 +73,6 @@ public class SyncUtils {
   public static final String DRIVE_ID_TRACKS_QUERY = TracksColumns.DRIVEID + " IS NOT NULL AND "
       + TracksColumns.DRIVEID + "!=''";
 
-  // Get tracks with drive id that are owned by me, not tracks ashared with me.
-  public static final String DRIVE_ID_TRACKS_BY_ME_QUERY = DRIVE_ID_TRACKS_QUERY + " AND "
-      + TracksColumns.SHAREDWITHME + "!=1";
-
   // Get tracks without drive id
   public static final String NO_DRIVE_ID_TRACKS_QUERY = TracksColumns.DRIVEID + " IS NULL OR "
       + TracksColumns.DRIVEID + "=''";
@@ -224,12 +220,15 @@ public class SyncUtils {
   /**
    * Disables sync.
    * 
-   * @param account the account
+   * @param context the context
    */
-  public static void disableSync(Account account) {
-    ContentResolver.cancelSync(account, SYNC_AUTHORITY);
-    ContentResolver.setIsSyncable(account, SYNC_AUTHORITY, 0);
-    ContentResolver.setSyncAutomatically(account, SYNC_AUTHORITY, false);
+  public static void disableSync(Context context) {
+    Account[] accounts = AccountManager.get(context).getAccountsByType(Constants.ACCOUNT_TYPE);
+    for (Account account : accounts) {
+      ContentResolver.cancelSync(account, SYNC_AUTHORITY);
+      ContentResolver.setIsSyncable(account, SYNC_AUTHORITY, 0);
+      ContentResolver.setSyncAutomatically(account, SYNC_AUTHORITY, false);
+    }
   }
 
   /**
