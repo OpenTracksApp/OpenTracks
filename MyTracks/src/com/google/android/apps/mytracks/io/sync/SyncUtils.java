@@ -86,7 +86,7 @@ public class SyncUtils {
 
   // Get My Tracks folder KML files
   public static final String MY_TRACKS_FOLDER_FILES_QUERY = "'%s' in parents and mimeType = '"
-      + KML_MIME_TYPE + "' and trashed = false and not sharedWithMe";
+      + KML_MIME_TYPE + "' and trashed = false";
 
   // Get shared with me KML files
   public static final String SHARED_WITH_ME_FILES_QUERY = "sharedWithMe and mimeType = '"
@@ -106,6 +106,21 @@ public class SyncUtils {
   private static final int NOTIFICATION_ID = 0;
 
   private SyncUtils() {}
+
+  /**
+   * Gets the google account credential.
+   * 
+   * @param context the context
+   * @param accountName the account name
+   */
+  public static GoogleAccountCredential getGoogleAccountCredential(
+      Context context, String accountName) throws IOException, GoogleAuthException {
+    GoogleAccountCredential credential = GoogleAccountCredential.usingOAuth2(
+        context, DriveScopes.DRIVE);
+    credential.setSelectedAccountName(accountName);
+    credential.getToken();
+    return credential;
+  }
 
   /**
    * Checks permission by an activity. Will start an activity to request
@@ -130,7 +145,7 @@ public class SyncUtils {
           });
         } catch (UserRecoverableAuthException e) {
           activity.startActivityForResult(e.getIntent(), DRIVE_PERMISSION_REQUEST_CODE);
-        }  catch (GoogleAuthException e) {
+        } catch (GoogleAuthException e) {
           Log.e(TAG, "GoogleAuthException", e);
           activity.runOnUiThread(new Runnable() {
               @Override
@@ -155,24 +170,26 @@ public class SyncUtils {
   }
 
   /**
-   * Gets the drive credential. Needs to be run in a background thread.
+   * Sends a notification to request permission.
    * 
    * @param context the context
    * @param accountName the account name
+   * @param intent the intent
    */
-  public static GoogleAccountCredential getCredential(Context context, String accountName) {
-    try {
-      return getGoogleAccountCredential(context, accountName);
-    } catch (UserRecoverableAuthException e) {
-      sendNotification(context, accountName, e.getIntent());
-    } catch (GoogleAuthException e) {
-      Log.e(TAG, "GoogleAuthException", e);
-    } catch (UserRecoverableAuthIOException e) {
-      sendNotification(context, accountName, e.getIntent());      
-    } catch (IOException e) {
-      Log.e(TAG, "IOException", e);
-    } 
-    return null;
+  public static void sendNotification(Context context, String accountName, Intent intent) {
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_FROM_BACKGROUND);
+
+    PendingIntent pendingIntent = PendingIntent.getActivity(
+        context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    NotificationCompat.Builder builder = new NotificationCompat.Builder(context).setAutoCancel(true)
+        .setContentIntent(pendingIntent)
+        .setContentText(context.getString(R.string.permission_request_message, accountName))
+        .setContentTitle(context.getString(R.string.permission_request_title))
+        .setSmallIcon(android.R.drawable.ic_dialog_alert)
+        .setTicker(context.getString(R.string.permission_request_title));
+    NotificationManager notificationManager = (NotificationManager) context.getSystemService(
+        Context.NOTIFICATION_SERVICE);
+    notificationManager.notify(NOTIFICATION_ID, builder.build());
   }
 
   /**
@@ -310,17 +327,19 @@ public class SyncUtils {
   }
 
   /**
-   * Adds a Drive file.
+   * Inserts a Drive file.
    * 
-   * @param context the context
-   * @param myTracksProviderUtils the myTracksProviderUtils
    * @param drive the drive
    * @param folderId the folder id
+   * @param context the context
+   * @param myTracksProviderUtils the myTracksProviderUtils
    * @param track the track
+   * @param canRetry true if can retry
    * @return the added drive file id or null.
    */
-  public static String addDriveFile(Context context, MyTracksProviderUtils myTracksProviderUtils,
-      Drive drive, String folderId, Track track) throws IOException {
+  public static String insertDriveFile(Drive drive, String folderId, Context context,
+      MyTracksProviderUtils myTracksProviderUtils, Track track, boolean canRetry)
+      throws IOException {
     java.io.File file = getFile(context, myTracksProviderUtils, track);
     if (file == null) {
       Log.e(TAG, "Unable to add Drive file. File is null for track " + track.getName());
@@ -329,21 +348,7 @@ public class SyncUtils {
 
     try {
       Log.d(TAG, "Add Drive file for track " + track.getName());
-      FileContent fileContent = new FileContent(KML_MIME_TYPE, file);
-
-      // file's parent
-      ParentReference parentReference = new ParentReference();
-      parentReference.setId(folderId);
-      ArrayList<ParentReference> parents = new ArrayList<ParentReference>();
-      parents.add(parentReference);
-
-      // file's metadata
-      File newMetaData = new File();
-      newMetaData.setTitle(track.getName() + "." + TrackFileFormat.KML.getExtension());
-      newMetaData.setMimeType(KML_MIME_TYPE);
-      newMetaData.setParents(parents);
-
-      File uploadedFile = drive.files().insert(newMetaData, fileContent).execute();
+      File uploadedFile = insertDriveFile(drive, folderId, track.getName(), file, canRetry);
       if (uploadedFile == null) {
         Log.e(TAG, "Unable to add Drive file. Uploaded file is null for track " + track.getName());
         return null;
@@ -360,16 +365,55 @@ public class SyncUtils {
   }
 
   /**
-   * Updates a Drive file.
+   * Inserts a Drive file.
    * 
-   * @param context the context
-   * @param myTracksProviderUtils the myTracksProviderUtils
+   * @param drive the drive
+   * @param folderId the folder id
+   * @param name the track name
+   * @param file the track file
+   * @param canRetry true if can retry
+   */
+  private static File insertDriveFile(
+      Drive drive, String folderId, String name, java.io.File file, boolean canRetry)
+      throws IOException {
+    try {
+      FileContent fileContent = new FileContent(KML_MIME_TYPE, file);
+
+      // file's parent
+      ParentReference parentReference = new ParentReference();
+      parentReference.setId(folderId);
+      ArrayList<ParentReference> parents = new ArrayList<ParentReference>();
+      parents.add(parentReference);
+
+      // file's metadata
+      File newMetaData = new File();
+      newMetaData.setTitle(name + "." + TrackFileFormat.KML.getExtension());
+      newMetaData.setMimeType(KML_MIME_TYPE);
+      newMetaData.setParents(parents);
+
+      return drive.files().insert(newMetaData, fileContent).execute();
+    } catch (UserRecoverableAuthIOException e) {
+      throw e;
+    } catch (IOException e) {
+      if (canRetry) {
+        return insertDriveFile(drive, folderId, name, file, false);
+      }
+      throw e;
+    }
+  }
+
+  /**
+   * Updates a Drive file. Returns true if successful.
+   * 
    * @param drive the drive
    * @param driveFile the drive file
+   * @param context the context
+   * @param myTracksProviderUtils the myTracksProviderUtils
    * @param track the track
+   * @param canRetry true if can retry
    */
-  public static boolean updateDriveFile(Context context,
-      MyTracksProviderUtils myTracksProviderUtils, Drive drive, File driveFile, Track track)
+  public static boolean updateDriveFile(Drive drive, File driveFile, Context context,
+      MyTracksProviderUtils myTracksProviderUtils, Track track, boolean canRetry)
       throws IOException {
     Log.d(TAG, "Update drive file for track " + track.getName());
     java.io.File file = SyncUtils.getFile(context, myTracksProviderUtils, track);
@@ -379,18 +423,13 @@ public class SyncUtils {
       return false;
     } else {
       try {
-        FileContent fileContent = new FileContent(KML_MIME_TYPE, file);
-
-        driveFile.setTitle(track.getName() + "." + TrackFileFormat.KML.getExtension());
-        File updatedFile = drive.files()
-            .update(driveFile.getId(), driveFile, fileContent).execute();
+        File updatedFile = updateDriveFile(drive, driveFile, track.getName(), file, canRetry);
         if (updatedFile == null) {
           Log.e(TAG,
               "Unable to update drive file. Updated file is null for track " + track.getName());
           return false;
         }
-        long newModifiedTime = updatedFile.getModifiedDate().getValue();
-        track.setModifiedTime(newModifiedTime);
+        track.setModifiedTime(updatedFile.getModifiedDate().getValue());
         myTracksProviderUtils.updateTrack(track);
         return true;
       } finally {
@@ -400,43 +439,31 @@ public class SyncUtils {
   }
 
   /**
-   * Gets the google account credential.
+   * Updates a Drive file.
    * 
-   * @param context the context
-   * @param accountName the account name
+   * @param drive the drive
+   * @param driveFile the drive file
+   * @param name the track name
+   * @param file the track file
+   * @param canRetry true if can retry
    */
-  public static GoogleAccountCredential getGoogleAccountCredential(
-      Context context, String accountName) throws IOException, GoogleAuthException {
-    GoogleAccountCredential credential = GoogleAccountCredential.usingOAuth2(
-        context, DriveScopes.DRIVE);
-    credential.setSelectedAccountName(accountName);
-    credential.getToken();
-    return credential;
+  private static File updateDriveFile(
+      Drive drive, File driveFile, String name, java.io.File file, boolean canRetry)
+      throws IOException {
+    try {
+      FileContent fileContent = new FileContent(KML_MIME_TYPE, file);
+      driveFile.setTitle(name + "." + TrackFileFormat.KML.getExtension());
+      return drive.files().update(driveFile.getId(), driveFile, fileContent).execute();
+    } catch (UserRecoverableAuthIOException e) {
+      throw e;
+    } catch (IOException e) {
+      if (canRetry) {
+        return updateDriveFile(drive, driveFile, name, file, false);
+      }
+      throw e;
+    }
   }
 
-  /**
-   * Sends a notification to request permission.
-   * 
-   * @param context the context
-   * @param accountName the account name
-   * @param intent the intent
-   */
-  public static void sendNotification(Context context, String accountName, Intent intent) {
-    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_FROM_BACKGROUND);
-  
-    PendingIntent pendingIntent = PendingIntent.getActivity(
-        context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-    NotificationCompat.Builder builder = new NotificationCompat.Builder(context).setAutoCancel(
-        true).setContentIntent(pendingIntent)
-        .setContentText(context.getString(R.string.permission_request_message, accountName))
-        .setContentTitle(context.getString(R.string.permission_request_title))
-        .setSmallIcon(android.R.drawable.ic_dialog_alert)
-        .setTicker(context.getString(R.string.permission_request_title));
-    NotificationManager notificationManager = (NotificationManager) context.getSystemService(
-        Context.NOTIFICATION_SERVICE);
-    notificationManager.notify(NOTIFICATION_ID, builder.build());
-  }
-  
   /**
    * Gets a file from a track.
    * 

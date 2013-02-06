@@ -20,6 +20,7 @@ import com.google.android.apps.mytracks.endtoendtest.EndToEndTestUtils;
 import com.google.android.apps.mytracks.endtoendtest.GoogleUtils;
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.maps.mytracks.R;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
@@ -61,10 +62,9 @@ public class SyncTestUtils {
    * @param instrumentation the instrumentation is used for test
    * @param trackListActivity the startup activity
    * @return a Google Drive object
-   * @throws IOException
    */
   public static Drive setUpForSyncTest(Instrumentation instrumentation,
-      TrackListActivity trackListActivity) throws IOException {
+      TrackListActivity trackListActivity) throws IOException, GoogleAuthException {
     if (runSyncTest || !isCheckedRunSyncTest) {
       EndToEndTestUtils.setupForAllTest(instrumentation, trackListActivity);
     }
@@ -116,10 +116,11 @@ public class SyncTestUtils {
    * @param context the context of application
    * @return a Google Drive object
    */
-  public static Drive getGoogleDrive(Context context) {
-    String googleAccount = PreferencesUtils.getString(context, R.string.google_account_key,
-        PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
-    GoogleAccountCredential credential = SyncUtils.getCredential(context, googleAccount);
+  public static Drive getGoogleDrive(Context context) throws IOException, GoogleAuthException {
+    String googleAccount = PreferencesUtils.getString(
+        context, R.string.google_account_key, PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
+    GoogleAccountCredential credential = SyncUtils.getGoogleAccountCredential(
+        context, googleAccount);
     return SyncUtils.getDriveService(credential);
   }
 

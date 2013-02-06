@@ -24,8 +24,6 @@ import com.google.api.services.drive.Drive;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 
-import java.io.IOException;
-
 /**
  * Tests the situation when user use multiple account in MyTracks.
  * 
@@ -63,10 +61,8 @@ public class MultiAccountsSyncTest extends ActivityInstrumentationTestCase2<Trac
    * <li>8. Enable sync with account2.</li>
    * <li>9. Check</li>
    * </ul>
-   * 
-   * @throws IOException
    */
-  public void testSyncTracksWithMultiAccounts() throws IOException {
+  public void testSyncTracksWithMultiAccounts() throws Exception {
     if (!SyncTestUtils.runSyncTest) {
       return;
     }
@@ -108,10 +104,8 @@ public class MultiAccountsSyncTest extends ActivityInstrumentationTestCase2<Trac
    * <li>5. Sync with account 1 (account 1 should have 1 file, account2 should
    * also have 1 file).</li>
    * </ul>
-   * 
-   * @throws IOException
    */
-  public void testDeleteTracksWithMultiAccounts() throws IOException {
+  public void testDeleteTracksWithMultiAccounts() throws Exception {
     if (!SyncTestUtils.runSyncTest) {
       return;
     }

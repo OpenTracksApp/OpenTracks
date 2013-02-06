@@ -45,6 +45,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
@@ -174,7 +175,8 @@ abstract class AbstractImporter extends DefaultHandler {
    * @param inputStream the input stream.
    * @return an array of imported track ids.
    */
-  public long[] importFile(InputStream inputStream) throws Exception {
+  public long[] importFile(InputStream inputStream)
+      throws SAXException, IOException, ParserConfigurationException {
     SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
     SAXParser saxParser = saxParserFactory.newSAXParser();
 
@@ -186,9 +188,11 @@ abstract class AbstractImporter extends DefaultHandler {
       long end = System.currentTimeMillis();
       Log.d(Constants.TAG, "Total import time: " + (end - start) + "ms");
     } catch (SAXException e) {
-      handleException(e);
+      handleException();
+      throw e;
     } catch (IOException e) {
-      handleException(e);
+      handleException();
+      throw e;
     }
     long[] result = new long[trackIds.size()];
     for (int i = 0; i < result.length; i++) {
@@ -578,13 +582,10 @@ abstract class AbstractImporter extends DefaultHandler {
 
   /**
    * Handles an exception.
-   * 
-   * @param e the exception
    */
-  private void handleException(Exception e) throws Exception {
+  private void handleException() {
     for (long trackId : trackIds) {
       myTracksProviderUtils.deleteTrack(trackId);
     }
-    throw e;
   }
 }
