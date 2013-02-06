@@ -90,7 +90,7 @@ public class SyncUtils {
 
   // Get shared with me KML files
   public static final String SHARED_WITH_ME_FILES_QUERY = "sharedWithMe and mimeType = '"
-      + KML_MIME_TYPE + "'";
+      + KML_MIME_TYPE + "' and trashed = false";
 
   // Folder mime type
   private static final String FOLDER_MIME_TYPE = "application/vnd.google-apps.folder";
@@ -265,7 +265,7 @@ public class SyncUtils {
         .list().setQ(String.format(Locale.US, MY_TRACKS_FOLDER_QUERY, folderName));
     FileList result = list.execute();
     for (File file : result.getItems()) {
-      if (file.getTitle().equals(folderName)) {
+      if (file.getSharedWithMeDate() == null && file.getTitle().equals(folderName)) {
         return file.getId();
       }
     }

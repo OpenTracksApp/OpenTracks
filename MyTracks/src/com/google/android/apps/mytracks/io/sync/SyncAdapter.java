@@ -149,12 +149,12 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     // Get all the KML files in the "My Drive:/My Tracks" folder
     Files.List myTracksFolderRequest = drive.files()
         .list().setQ(String.format(Locale.US, SyncUtils.MY_TRACKS_FOLDER_FILES_QUERY, folderId));
-    Map<String, File> myTracksFolderMap = getFiles(myTracksFolderRequest);
+    Map<String, File> myTracksFolderMap = getFiles(myTracksFolderRequest, true);
 
     // Get all the KML files in the "Shared with me:/" folder
     Files.List sharedWithMeRequest = drive.files()
         .list().setQ(SyncUtils.SHARED_WITH_ME_FILES_QUERY);
-    Map<String, File> sharedWithMeMap = getFiles(sharedWithMeRequest);
+    Map<String, File> sharedWithMeMap = getFiles(sharedWithMeRequest, false);
 
     try {
       insertNewDriveFiles(myTracksFolderMap.values());
@@ -324,14 +324,19 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
    * Gets all the files from a request.
    * 
    * @param request the request
+   * @param excludeSharedWithMe true to exclude shared with me files
    * @return a map of file id to file
    */
-  private Map<String, File> getFiles(Files.List request) throws IOException {
+  private Map<String, File> getFiles(Files.List request, boolean excludeSharedWithMe)
+      throws IOException {
     Map<String, File> idToFileMap = new HashMap<String, File>();
     do {
       FileList files = request.execute();
 
       for (File file : files.getItems()) {
+        if (excludeSharedWithMe && file.getSharedWithMeDate() != null) {
+          continue;
+        }
         idToFileMap.put(file.getId(), file);
       }
       request.setPageToken(files.getNextPageToken());
@@ -359,14 +364,12 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
           changes.put(change.getFileId(), null);
         } else {
           File file = change.getFile();
-          if (SyncUtils.isInFolder(file, folderId)) {
+          if (SyncUtils.isInFolder(file, folderId) || SyncUtils.isSharedWithMe(file)) {
             if (file.getLabels().getTrashed()) {
               changes.put(change.getFileId(), null);
             } else {
               changes.put(change.getFileId(), file);
             }
-          } else if (SyncUtils.isSharedWithMe(file)) {
-            changes.put(change.getFileId(), file);
           }
         }
       }
@@ -446,7 +449,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         }
         // if trashed, ignore
       } else if (SyncUtils.isSharedWithMe(driveFile)) {
-        drive.files().delete(driveId).execute();
+        if (!driveFile.getLabels().getTrashed()) {
+          drive.files().delete(driveId).execute();
+        }
+        // if trashed, ignore
       }
     } catch (UserRecoverableAuthIOException e) {
       throw e;
