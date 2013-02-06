@@ -77,7 +77,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
 
   private static final String TAG = TrackDetailActivity.class.getSimpleName();
   private static final String CURRENT_TAB_TAG_KEY = "current_tab_tag_key";
-  
+
   // The following are set in onCreate
   private MyTracksProviderUtils myTracksProviderUtils;
   private SharedPreferences sharedPreferences;
@@ -230,7 +230,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   protected void onResume() {
     super.onResume();
     trackDataHub.loadTrack(trackId);
-    
+
     // Update UI
     boolean isRecording = trackId == recordingTrackId;
     updateMenuItems(isRecording, recordingTrackPaused);
@@ -294,13 +294,13 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
         .setTitle(getString(R.string.menu_save_format, fileTypes[2]));
     menu.findItem(R.id.track_detail_save_tcx)
         .setTitle(getString(R.string.menu_save_format, fileTypes[3]));
-    
+
     Track track = myTracksProviderUtils.getTrack(trackId);
     menu.findItem(R.id.track_detail_edit).setVisible(!track.isSharedWithMe());
     shareDriveMenuItem = menu.findItem(R.id.track_detail_share_drive);
     shareDriveMenuItem.setEnabled(!track.isSharedWithMe());
     shareDriveMenuItem.setVisible(!track.isSharedWithMe());
-    
+
     insertMarkerMenuItem = menu.findItem(R.id.track_detail_insert_marker);
     playMenuItem = menu.findItem(R.id.track_detail_play);
     shareMenuItem = menu.findItem(R.id.track_detail_share);
@@ -349,7 +349,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
       default:
     }
   }
-  
+
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     Intent intent;
@@ -458,6 +458,16 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   @Override
   public TrackRecordingServiceConnection getTrackRecordingServiceConnection() {
     return trackRecordingServiceConnection;
+  }
+
+  @Override
+  public void onTrackDeleted() {
+    runOnUiThread(new Runnable() {
+        @Override
+      public void run() {
+        finish();
+      }
+    });
   }
 
   /**

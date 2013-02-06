@@ -16,20 +16,16 @@
 
 package com.google.android.apps.mytracks.fragments;
 
-import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.util.DialogUtils;
-import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
@@ -50,7 +46,16 @@ public class DeleteOneTrackDialogFragment extends DialogFragment {
    * @author Jimmy Shih
    */
   public interface DeleteOneTrackCaller {
+
+    /**
+     * Gets the track recording service connection.
+     */
     public TrackRecordingServiceConnection getTrackRecordingServiceConnection();
+
+    /**
+     * Called when a track is deleted.
+     */
+    public void onTrackDeleted();
   }
 
   public static DeleteOneTrackDialogFragment newInstance(long trackId) {
@@ -62,42 +67,39 @@ public class DeleteOneTrackDialogFragment extends DialogFragment {
     return deleteOneTrackDialogFragment;
   }
 
-  private FragmentActivity activity;
+  private FragmentActivity fragmentActivity;
   private DeleteOneTrackCaller caller;
 
   @Override
-  public void onAttach(Activity anActivity) {
-    super.onAttach(anActivity);
+  public void onAttach(Activity activity) {
+    super.onAttach(activity);
     try {
-      caller = (DeleteOneTrackCaller) anActivity;
+      caller = (DeleteOneTrackCaller) activity;
     } catch (ClassCastException e) {
-      throw new ClassCastException(anActivity.toString() + " must implement DeleteOneTrackCaller");
+      throw new ClassCastException(activity.toString() + " must implement DeleteOneTrackCaller");
     }
   }
 
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
-    activity = getActivity();
-    return DialogUtils.createConfirmationDialog(activity,
+    fragmentActivity = getActivity();
+    return DialogUtils.createConfirmationDialog(fragmentActivity,
         R.string.track_detail_delete_confirm_message, new DialogInterface.OnClickListener() {
             @Override
           public void onClick(DialogInterface dialog, int which) {
             final long trackId = getArguments().getLong(KEY_TRACK_ID);
-            final Context context = activity;
-            if (trackId == PreferencesUtils.getLong(context, R.string.recording_track_id_key)) {
+            if (trackId
+                == PreferencesUtils.getLong(fragmentActivity, R.string.recording_track_id_key)) {
               TrackRecordingServiceConnectionUtils.stopRecording(
-                  context, caller.getTrackRecordingServiceConnection(), false);
+                  fragmentActivity, caller.getTrackRecordingServiceConnection(), false);
             }
             new Thread(new Runnable() {
-              @Override
+                @Override
               public void run() {
-                MyTracksProviderUtils.Factory.get(context).deleteTrack(trackId);
+                MyTracksProviderUtils.Factory.get(fragmentActivity).deleteTrack(trackId);
+                caller.onTrackDeleted();
               }
             }).start();
-            Intent intent = IntentUtils.newIntent(context, TrackListActivity.class);
-            startActivity(intent);
-            // Close the activity since its content can change after delete
-            activity.finish();
           }
         });
   }

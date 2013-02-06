@@ -25,6 +25,7 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment;
+import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment.DeleteOneMarkerCaller;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment.DeleteOneTrackCaller;
 import com.google.android.apps.mytracks.services.MyTracksLocationManager;
@@ -73,7 +74,8 @@ import java.util.SortedSet;
  * 
  * @author Rodrigo Damazio
  */
-public class SearchListActivity extends AbstractMyTracksActivity implements DeleteOneTrackCaller {
+public class SearchListActivity extends AbstractMyTracksActivity
+    implements DeleteOneTrackCaller, DeleteOneMarkerCaller {
 
   private static final String TAG = SearchListActivity.class.getSimpleName();
 
@@ -130,25 +132,25 @@ public class SearchListActivity extends AbstractMyTracksActivity implements Dele
         }
 
           @Override
-          public boolean canEdit(int position, long id) {
-            Map<String, Object> item = arrayAdapter.getItem(position);
-            Long trackId = (Long) item.get(TRACK_ID_FIELD);
-            Track track = myTracksProviderUtils.getTrack(trackId);
-            return !track.isSharedWithMe();
-          }
+        public boolean canEdit(int position, long id) {
+          Map<String, Object> item = arrayAdapter.getItem(position);
+          Long trackId = (Long) item.get(TRACK_ID_FIELD);
+          Track track = myTracksProviderUtils.getTrack(trackId);
+          return !track.isSharedWithMe();
+        }
 
           @Override
-          public boolean canDelete(int position, long id) {
-            Map<String, Object> item = arrayAdapter.getItem(position);
-            Long trackId = (Long) item.get(TRACK_ID_FIELD);
-            Long markerId = (Long) item.get(MARKER_ID_FIELD);
-            if (markerId != null) {
-              Track track = myTracksProviderUtils.getTrack(trackId);
-              return !track.isSharedWithMe();
-            } else {
-              return true;
-            }
-           }
+        public boolean canDelete(int position, long id) {
+          Map<String, Object> item = arrayAdapter.getItem(position);
+          Long trackId = (Long) item.get(TRACK_ID_FIELD);
+          Long markerId = (Long) item.get(MARKER_ID_FIELD);
+          if (markerId != null) {
+            Track track = myTracksProviderUtils.getTrack(trackId);
+            return !track.isSharedWithMe();
+          } else {
+            return true;
+          }
+        }
       };
 
   private MyTracksProviderUtils myTracksProviderUtils;
@@ -245,7 +247,7 @@ public class SearchListActivity extends AbstractMyTracksActivity implements Dele
     super.onResume();
     arrayAdapter.notifyDataSetChanged();
   }
-  
+
   @Override
   protected void onStop() {
     super.onStop();
@@ -292,7 +294,7 @@ public class SearchListActivity extends AbstractMyTracksActivity implements Dele
   public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
     super.onCreateContextMenu(menu, v, menuInfo);
     getMenuInflater().inflate(R.menu.list_context_menu, menu);
-    
+
     Map<String, Object> item = arrayAdapter.getItem(((AdapterContextMenuInfo) menuInfo).position);
     Long trackId = (Long) item.get(TRACK_ID_FIELD);
     Long markerId = (Long) item.get(MARKER_ID_FIELD);
@@ -515,5 +517,25 @@ public class SearchListActivity extends AbstractMyTracksActivity implements Dele
   @Override
   public TrackRecordingServiceConnection getTrackRecordingServiceConnection() {
     return trackRecordingServiceConnection;
+  }
+
+  @Override
+  public void onTrackDeleted() {
+    runOnUiThread(new Runnable() {
+        @Override
+      public void run() {
+        handleIntent(getIntent());
+      }
+    });
+  }
+
+  @Override
+  public void onMarkerDeleted() {
+    runOnUiThread(new Runnable() {
+        @Override
+      public void run() {
+        handleIntent(getIntent());
+      }
+    });
   }
 }

@@ -21,6 +21,7 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment;
+import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment.DeleteOneMarkerCaller;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.StatsUtils;
 import com.google.android.maps.mytracks.R;
@@ -35,10 +36,11 @@ import android.widget.TextView;
 
 /**
  * An activity to display marker detail info.
- *
+ * 
  * @author Leif Hendrik Wilden
  */
-public class MarkerDetailActivity extends AbstractMyTracksActivity {
+public class MarkerDetailActivity extends AbstractMyTracksActivity
+    implements DeleteOneMarkerCaller {
 
   public static final String EXTRA_MARKER_ID = "marker_id";
   private static final String TAG = MarkerDetailActivity.class.getSimpleName();
@@ -87,8 +89,8 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity {
       statisticsSection.setVisibility(View.GONE);
 
       TextView markerType = (TextView) findViewById(R.id.marker_detail_waypoint_marker_type);
-      markerType.setText(getString(
-          R.string.marker_detail_waypoint_marker_type, waypoint.getCategory()));
+      markerType.setText(
+          getString(R.string.marker_detail_waypoint_marker_type, waypoint.getCategory()));
       TextView description = (TextView) findViewById(R.id.marker_detail_waypoint_description);
       description.setText(getString(R.string.generic_description_line, waypoint.getDescription()));
     } else {
@@ -98,14 +100,14 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity {
       StatsUtils.setLocationValues(this, waypoint.getLocation(), false);
     }
   }
-  
+
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.marker_detail, menu);
-    
+
     Track track = myTracksProviderUtils.getTrack(waypoint.getTrackId());
     menu.findItem(R.id.marker_detail_edit).setVisible(!track.isSharedWithMe());
-    menu.findItem(R.id.marker_detail_delete).setVisible(!track.isSharedWithMe());    
+    menu.findItem(R.id.marker_detail_delete).setVisible(!track.isSharedWithMe());
     return true;
   }
 
@@ -116,7 +118,7 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity {
     startActivity(intent);
     finish();
   }
-  
+
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     Intent intent;
@@ -139,5 +141,15 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity {
       default:
         return super.onOptionsItemSelected(item);
     }
+  }
+
+  @Override
+  public void onMarkerDeleted() {
+    runOnUiThread(new Runnable() {
+        @Override
+      public void run() {
+        finish();
+      }
+    });
   }
 }

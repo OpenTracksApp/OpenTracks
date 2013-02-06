@@ -97,7 +97,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
   private static final String[] PROJECTION = new String[] { TracksColumns._ID, TracksColumns.NAME,
       TracksColumns.DESCRIPTION, TracksColumns.CATEGORY, TracksColumns.STARTTIME,
       TracksColumns.TOTALDISTANCE, TracksColumns.TOTALTIME, TracksColumns.ICON,
-      TracksColumns.SHAREDWITHME};
+      TracksColumns.SHAREDWITHME };
 
   // Callback when the trackRecordingServiceConnection binding changes.
   private final Runnable bindChangedCallback = new Runnable() {
@@ -167,10 +167,9 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
                 R.string.recording_track_paused_key,
                 PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
           }
-          if (key == null || key.equals(PreferencesUtils.getKey(
-              TrackListActivity.this, R.string.drive_sync_key))) {
-            driveSync = PreferencesUtils.getBoolean(TrackListActivity.this,
-                R.string.drive_sync_key,
+          if (key == null || key.equals(
+              PreferencesUtils.getKey(TrackListActivity.this, R.string.drive_sync_key))) {
+            driveSync = PreferencesUtils.getBoolean(TrackListActivity.this, R.string.drive_sync_key,
                 PreferencesUtils.DRIVE_SYNC_DEFAULT);
           }
           if (key != null) {
@@ -197,15 +196,15 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
         }
 
           @Override
-          public boolean canEdit(int position, long id) {
-            Track track = myTracksProviderUtils.getTrack(id);
-            return !track.isSharedWithMe();
-          }
+        public boolean canEdit(int position, long id) {
+          Track track = myTracksProviderUtils.getTrack(id);
+          return !track.isSharedWithMe();
+        }
 
           @Override
-          public boolean canDelete(int position, long id) {
-            return true;
-          }
+        public boolean canDelete(int position, long id) {
+          return true;
+        }
       };
 
   private final OnClickListener recordListener = new OnClickListener() {
@@ -341,7 +340,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
   private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
   private boolean recordingTrackPaused = PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT;
   private boolean driveSync = PreferencesUtils.DRIVE_SYNC_DEFAULT;
-  
+
   // Menu items
   private MenuItem searchMenuItem;
   private MenuItem startGpsMenuItem;
@@ -379,7 +378,8 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
         startActivity(intent);
       }
     });
-    sectionResourceCursorAdapter = new SectionResourceCursorAdapter(this, R.layout.list_item, null, 0) {
+    sectionResourceCursorAdapter = new SectionResourceCursorAdapter(
+        this, R.layout.list_item, null, 0) {
         @Override
       public void bindView(View view, Context context, Cursor cursor) {
         int idIndex = cursor.getColumnIndex(TracksColumns._ID);
@@ -465,7 +465,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
     sectionResourceCursorAdapter.notifyDataSetChanged();
     trackController.update(isRecording, recordingTrackPaused);
   }
-  
+
   @Override
   protected void onPause() {
     super.onPause();
@@ -531,7 +531,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
     saveAllMenuItem = menu.findItem(R.id.track_list_save_all);
     deleteAllMenuItem = menu.findItem(R.id.track_list_delete_all);
     syncNowMenuItem = menu.findItem(R.id.track_list_sync_now);
-    
+
     ApiAdapterFactory.getApiAdapter().configureSearchWidget(this, searchMenuItem);
     updateMenuItems(recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
     return true;
@@ -634,6 +634,11 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
     return trackRecordingServiceConnection;
   }
 
+  @Override
+  public void onTrackDeleted() {
+    // Do nothing
+  }
+
   /**
    * Shows start up dialogs.
    */
@@ -658,7 +663,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
        * doesn't show through.
        */
       findViewById(R.id.track_list_empty_view).setVisibility(View.VISIBLE);
-      
+
       checkGooglePlayServices();
     }
   }
@@ -668,7 +673,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
     if (code != ConnectionResult.SUCCESS) {
       Dialog dialog = GooglePlayServicesUtil.getErrorDialog(
           code, this, GOOGLE_PLAY_SERVICES_REQUEST_CODE, new DialogInterface.OnCancelListener() {
-  
+
               @Override
             public void onCancel(DialogInterface dialogInterface) {
               finish();

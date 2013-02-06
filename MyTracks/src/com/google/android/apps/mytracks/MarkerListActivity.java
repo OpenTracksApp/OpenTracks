@@ -21,6 +21,7 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment;
+import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment.DeleteOneMarkerCaller;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.ListItemUtils;
@@ -55,7 +56,7 @@ import android.widget.ListView;
  * 
  * @author Leif Hendrik Wilden
  */
-public class MarkerListActivity extends AbstractMyTracksActivity {
+public class MarkerListActivity extends AbstractMyTracksActivity implements DeleteOneMarkerCaller {
 
   public static final String EXTRA_TRACK_ID = "track_id";
 
@@ -74,16 +75,16 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
         }
 
           @Override
-          public boolean canEdit(int position, long id) {
-            Track track = myTracksProviderUtils.getTrack(trackId);
-            return !track.isSharedWithMe();
-          }
+        public boolean canEdit(int position, long id) {
+          Track track = myTracksProviderUtils.getTrack(trackId);
+          return !track.isSharedWithMe();
+        }
 
           @Override
-          public boolean canDelete(int poistion, long id) {
-            Track track = myTracksProviderUtils.getTrack(trackId);
-            return !track.isSharedWithMe();
-          }
+        public boolean canDelete(int poistion, long id) {
+          Track track = myTracksProviderUtils.getTrack(trackId);
+          return !track.isSharedWithMe();
+        }
       };
 
   /*
@@ -313,5 +314,10 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
       }
     }
     return super.onKeyUp(keyCode, event);
+  }
+
+  @Override
+  public void onMarkerDeleted() {
+    // Do nothing
   }
 }
