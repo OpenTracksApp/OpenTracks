@@ -393,7 +393,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     long driveModifiedTime = driveFile.getModifiedDate().getValue();
     if (modifiedTime > driveModifiedTime) {
       Log.d(TAG, "Updating track change for track " + track.getName() + " and drive file "
-          + driveFile.getOriginalFilename());
+          + driveFile.getTitle());
       if (!SyncUtils.updateDriveFile(
           drive, driveFile, context, myTracksProviderUtils, track, true)) {
         Log.e(TAG, "Unable to update drive file");
@@ -402,34 +402,62 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
       }
     } else if (modifiedTime < driveModifiedTime) {
       Log.d(TAG, "Updating drive change for track " + track.getName() + " and drive file "
-          + driveFile.getOriginalFilename());
-      InputStream inputStream = downloadDriveFile(driveFile, true);
-      if (inputStream != null) {
-        KmlImporter kmlImporter = new KmlImporter(context, track.getId());
-        try {
-          long[] trackIds = kmlImporter.importFile(inputStream);
-          if (trackIds.length == 1) {
-            Track newTrack = myTracksProviderUtils.getTrack(trackIds[0]);
-            newTrack.setDriveId(driveFile.getId());
-            newTrack.setModifiedTime(driveModifiedTime);
-            newTrack.setSharedWithMe(driveFile.getSharedWithMeDate() != null);
-            myTracksProviderUtils.updateTrack(newTrack);
-            return;
-          } else {
-            Log.e(TAG, "Unable to merge, imported size is not 1");
-          }
-        } catch (SAXException e) {
-          Log.e(TAG, "Unable to merge", e);
-        } catch (ParserConfigurationException e) {
-          Log.e(TAG, "Unable to merge", e);
-        } catch (IOException e) {
-          Log.e(TAG, "Unable to merge", e);
-        }
+          + driveFile.getTitle());
+      if (!updateTrack(track, driveFile)) {
+        Log.e(TAG, "Unable to update drive change");
+        track.setModifiedTime(driveModifiedTime);
+        myTracksProviderUtils.updateTrack(track);
       }
-      Log.e(TAG, "Unable to update drive change");
-      track.setModifiedTime(driveModifiedTime);
-      myTracksProviderUtils.updateTrack(track);
     }
+  }
+
+  /**
+   * Updates track based on drive file changes. Returns true if successful.
+   * 
+   * @param track the track
+   * @param driveFile the drive file
+   */
+  private boolean updateTrack(Track track, File driveFile) throws IOException {
+    java.io.File file = null;
+    try {
+      file = SyncUtils.getFile(context, myTracksProviderUtils, track);
+      String digest = SyncUtils.md5(file);
+      if (digest != null && digest.equals(driveFile.getMd5Checksum())) {
+        track.setModifiedTime(driveFile.getModifiedDate().getValue());
+        myTracksProviderUtils.updateTrack(track);
+        return true;
+      }
+    } finally {
+      if (file != null) {
+        file.delete();
+      }
+    }
+    InputStream inputStream = downloadDriveFile(driveFile, true);
+    if (inputStream == null) {
+      Log.e(TAG, "Unable to update track. Input stream is null for track " + track.getName());
+      return false;
+    }
+    KmlImporter kmlImporter = new KmlImporter(context, track.getId());
+    try {
+      long[] trackIds = kmlImporter.importFile(inputStream);
+      if (trackIds.length == 1) {
+        Track newTrack = myTracksProviderUtils.getTrack(trackIds[0]);
+        newTrack.setDriveId(driveFile.getId());
+        newTrack.setModifiedTime(driveFile.getModifiedByMeDate().getValue());
+        newTrack.setSharedWithMe(driveFile.getSharedWithMeDate() != null);
+        myTracksProviderUtils.updateTrack(newTrack);
+        return true;
+      } else {
+        Log.e(TAG, "Unable to merge, imported size is not 1");
+      }
+    } catch (SAXException e) {
+      Log.e(TAG, "Unable to merge", e);
+    } catch (ParserConfigurationException e) {
+      Log.e(TAG, "Unable to merge", e);
+    } catch (IOException e) {
+      Log.e(TAG, "Unable to merge", e);
+    }
+    return false;
   }
 
   /**
