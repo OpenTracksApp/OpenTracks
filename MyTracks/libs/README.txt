@@ -13,6 +13,7 @@ Google APIs Client Library for Java:
 google-api-client-1.12.0-beta.jar
 google-api-client-android-1.12.0-beta.jar
 google-api-services-drive-v2-rev30-1.12.0-beta.jar
+google-api-services-fusiontables-v1-rev16-1.12.0-beta.jar
 google-http-client-1.12.0-beta.jar
 google-http-client-android-1.12.0-beta.jar
 google-http-client-gson-1.12.0-beta.jar
