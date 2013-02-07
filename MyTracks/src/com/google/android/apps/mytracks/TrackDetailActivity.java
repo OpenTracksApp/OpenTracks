@@ -234,13 +234,13 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     // Update UI
     boolean isRecording = trackId == recordingTrackId;
     updateMenuItems(isRecording, recordingTrackPaused);
-    trackController.update(isRecording, recordingTrackPaused);
+    trackController.onResume(isRecording, recordingTrackPaused);
   }
 
   @Override
   protected void onPause() {
     super.onPause();
-    trackController.stop();
+    trackController.onPause();
   }
 
   @Override

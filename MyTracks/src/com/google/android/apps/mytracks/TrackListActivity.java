@@ -463,7 +463,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
     boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
     updateMenuItems(isRecording);
     sectionResourceCursorAdapter.notifyDataSetChanged();
-    trackController.update(isRecording, recordingTrackPaused);
+    trackController.onResume(isRecording, recordingTrackPaused);
   }
 
   @Override
@@ -474,7 +474,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
     trackDataHub.unregisterTrackDataListener(trackDataListener);
 
     // Update UI
-    trackController.stop();
+    trackController.onPause();
   }
 
   @Override

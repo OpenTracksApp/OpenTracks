@@ -48,18 +48,21 @@ public class TrackController {
   private final TextView totalTimeTextView;
   private final ImageButton recordImageButton;
   private final ImageButton stopImageButton;
-  private final boolean alwaysShow;
-
+  private final boolean alwaysShow; 
+  
   private boolean isRecording;
   private boolean isPaused;
   private long totalTime = 0;
+  
   // the timestamp for the toal time
   private long totalTimeTimestamp = 0;
 
+  private boolean isResumed = false;
+  
   // A runnable to update the total time.
   private final Runnable updateTotalTimeRunnable = new Runnable() {
     public void run() {
-      if (isRecording && !isPaused) {
+      if (isResumed && isRecording && !isPaused) {
         totalTimeTextView.setText(StringUtils.formatElapsedTimeWithHour(
             System.currentTimeMillis() - totalTimeTimestamp + totalTime));
         handler.postDelayed(this, ONE_SECOND);
@@ -84,12 +87,15 @@ public class TrackController {
   }
 
   public void update(boolean recording, boolean paused) {
+    if (!isResumed) {
+      return;
+    }
     isRecording = recording;
     isPaused = paused;
     containerView.setVisibility(alwaysShow || isRecording ? View.VISIBLE : View.GONE);
 
     if (!alwaysShow && !isRecording) {
-      stop();
+      stopTimer();
       return;
     }
 
@@ -108,7 +114,7 @@ public class TrackController {
       statusTextView.setText(isPaused ? R.string.generic_paused : R.string.generic_recording);
     }
 
-    stop();
+    stopTimer();
     totalTime = isRecording ? getTotalTime() : 0L;
     totalTimeTextView.setText(StringUtils.formatElapsedTimeWithHour(totalTime));
     if (isRecording && !isPaused) {
@@ -117,10 +123,20 @@ public class TrackController {
     }
   }
 
+  public void onResume(boolean recording, boolean paused) {
+    isResumed = true;
+    update(recording, paused);
+  }
+  
+  public void onPause() {
+    isResumed = false;
+    stopTimer();    
+  }
+  
   /**
    * Stops the timer.
    */
-  public void stop() {
+  private void stopTimer() {
     handler.removeCallbacks(updateTotalTimeRunnable);
   }
 
