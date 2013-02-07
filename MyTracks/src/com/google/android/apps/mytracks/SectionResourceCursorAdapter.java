@@ -21,7 +21,6 @@ import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DataSetObserver;
 import android.support.v4.widget.ResourceCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,24 +45,7 @@ public abstract class SectionResourceCursorAdapter extends ResourceCursorAdapter
   public SectionResourceCursorAdapter(Context context, int layout, Cursor cursor, int flags) {
     super(context, layout, cursor, flags);
     this.layoutInflater = LayoutInflater.from(context);
-
-    if (cursor != null) {
-      sharedWithMeIndex = getSharedWithMeIndex();
-      cursor.registerDataSetObserver(dataSetObserver);
-    }
   }
-
-  private DataSetObserver dataSetObserver = new DataSetObserver() {
-      @Override
-    public void onChanged() {
-      sharedWithMeIndex = getSharedWithMeIndex();
-    };
-
-      @Override
-    public void onInvalidated() {
-      sharedWithMeIndex = -1;
-    };
-  };
 
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
@@ -122,15 +104,8 @@ public abstract class SectionResourceCursorAdapter extends ResourceCursorAdapter
 
   @Override
   public Cursor swapCursor(Cursor newCursor) {
-    if (getCursor() != null) {
-      getCursor().unregisterDataSetObserver(dataSetObserver);
-    }
-
     Cursor oldCursor = super.swapCursor(newCursor);
-    if (newCursor != null) {
-      sharedWithMeIndex = getSharedWithMeIndex();
-      newCursor.registerDataSetObserver(dataSetObserver);
-    }
+    sharedWithMeIndex = getSharedWithMeIndex();
     return oldCursor;
   }
 
@@ -145,7 +120,7 @@ public abstract class SectionResourceCursorAdapter extends ResourceCursorAdapter
       do {
         int sharedWithMe = cursor.getInt(index);
         if (sharedWithMe == 1) {
-          // Returns the index where sharedWithMe == 1 
+          // Returns the index where sharedWithMe == 1
           return i;
         }
         i++;
