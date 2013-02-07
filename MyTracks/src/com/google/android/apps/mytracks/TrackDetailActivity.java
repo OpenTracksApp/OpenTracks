@@ -183,9 +183,9 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
     handleIntent(getIntent());
 
-    myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
     sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
 
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(
@@ -486,24 +486,15 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     if (markerId != -1L) {
       Waypoint waypoint = myTracksProviderUtils.getWaypoint(markerId);
       if (waypoint == null) {
-        exit();
+        finish();        
         return;
       }
       trackId = waypoint.getTrackId();
     }
     if (trackId == -1L) {
-      exit();
+      finish();
       return;
     }
-  }
-
-  /**
-   * Exists and returns to {@link TrackListActivity}.
-   */
-  private void exit() {
-    Intent newIntent = IntentUtils.newIntent(this, TrackListActivity.class);
-    startActivity(newIntent);
-    finish();
   }
 
   /**
