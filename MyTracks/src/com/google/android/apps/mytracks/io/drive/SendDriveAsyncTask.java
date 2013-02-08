@@ -19,6 +19,7 @@ package com.google.android.apps.mytracks.io.drive;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.io.sendtogoogle.AbstractSendAsyncTask;
+import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.UserRecoverableAuthException;
@@ -69,8 +70,8 @@ public class SendDriveAsyncTask extends AbstractSendAsyncTask {
   @Override
   protected boolean performTask() {
     try {
-      GoogleAccountCredential credential = SyncUtils.getGoogleAccountCredential(
-          context, account.name);
+      GoogleAccountCredential credential = SendToGoogleUtils.getGoogleAccountCredential(
+          context, account.name, SendToGoogleUtils.DRIVE_SCOPE);
       if (credential == null) {
         return false;
       }
@@ -102,15 +103,17 @@ public class SendDriveAsyncTask extends AbstractSendAsyncTask {
       }
       addPermission(drive, id);
       return true;
-    } catch (UserRecoverableAuthIOException e) {
-      SyncUtils.sendNotification(context, account.name, e.getIntent());
-      return false;
-    } catch (IOException e) {
-      return retryTask();
     } catch (UserRecoverableAuthException e) {
-      SyncUtils.sendNotification(context, account.name, e.getIntent());
+      SendToGoogleUtils.sendNotification(
+          context, account.name, e.getIntent(), SendToGoogleUtils.DRIVE_NOTIFICATION_ID);
       return false;
     } catch (GoogleAuthException e) {
+      return retryTask();
+    } catch (UserRecoverableAuthIOException e) {
+      SendToGoogleUtils.sendNotification(
+          context, account.name, e.getIntent(), SendToGoogleUtils.DRIVE_NOTIFICATION_ID);
+      return false;
+    } catch (IOException e) {
       return retryTask();
     }
   }

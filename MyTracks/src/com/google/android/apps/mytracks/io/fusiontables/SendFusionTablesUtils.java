@@ -22,9 +22,6 @@ import com.google.common.annotations.VisibleForTesting;
 import android.location.Location;
 import android.util.Log;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -107,7 +104,8 @@ public class SendFusionTablesUtils {
    * @param string the string
    * @return the escaped string.
    */
-  public static String escapeSqlString(String string) {
+  @VisibleForTesting
+  static String escapeSqlString(String string) {
     return string.replaceAll("'", "''");
   }
 
@@ -158,47 +156,6 @@ public class SendFusionTablesUtils {
     if (location.hasAltitude()) {
       builder.append(",");
       builder.append(location.getAltitude());
-    }
-  }
-
-  /**
-   * Gets the table id from an input streawm.
-   *
-   * @param inputStream input stream
-   * @return table id or null if not available.
-   */
-  public static String getTableId(InputStream inputStream) {
-    if (inputStream == null) {
-      Log.d(TAG, "inputStream is null");
-      return null;
-    }
-    byte[] result = new byte[1024];
-    int read;
-    try {
-      read = inputStream.read(result);
-    } catch (IOException e) {
-      Log.d(TAG, "Unable to read result", e);
-      return null;
-    }
-    if (read == -1) {
-      Log.d(TAG, "no data read");
-      return null;
-    }
-    String s;
-    try {
-      s = new String(result, 0, read, UTF8);
-    } catch (UnsupportedEncodingException e) {
-      Log.d(TAG, "Unable to parse result", e);
-      return null;
-    }
-
-    String[] lines = s.split("\n");
-    if (lines.length > 1 && lines[0].equals(TABLE_ID)) {
-      // returns the next line
-      return lines[1];
-    } else {
-      Log.d(TAG, "Response is not valid: " + s);
-      return null;
     }
   }
 }

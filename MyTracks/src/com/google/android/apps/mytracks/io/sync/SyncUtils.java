@@ -22,11 +22,8 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.io.file.TrackWriter;
-import com.google.android.apps.mytracks.io.sendtogoogle.PermissionCallback;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
-import com.google.android.gms.auth.GoogleAuthException;
-import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.maps.mytracks.R;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
@@ -35,7 +32,6 @@ import com.google.api.client.http.FileContent;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.Drive.Files.List;
-import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
 import com.google.api.services.drive.model.ParentReference;
@@ -43,14 +39,9 @@ import com.google.common.annotations.VisibleForTesting;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.app.Activity;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import java.io.FileInputStream;
@@ -69,9 +60,6 @@ import java.util.Locale;
  * @author Jimmy Shih
  */
 public class SyncUtils {
-
-  // Request code to obtain Drive permission
-  public static final int DRIVE_PERMISSION_REQUEST_CODE = 1;
 
   // Get tracks with drive id
   public static final String DRIVE_ID_TRACKS_QUERY = TracksColumns.DRIVEID + " IS NOT NULL AND "
@@ -103,105 +91,8 @@ public class SyncUtils {
 
   private static final String TAG = SyncUtils.class.getSimpleName();
   private static final String SYNC_AUTHORITY = "com.google.android.maps.mytracks";
-  private static final int NOTIFICATION_ID = 0;
 
   private SyncUtils() {}
-
-  /**
-   * Gets the google account credential.
-   * 
-   * @param context the context
-   * @param accountName the account name
-   */
-  public static GoogleAccountCredential getGoogleAccountCredential(
-      Context context, String accountName) throws IOException, GoogleAuthException {
-    GoogleAccountCredential credential = GoogleAccountCredential.usingOAuth2(
-        context, DriveScopes.DRIVE);
-    credential.setSelectedAccountName(accountName);
-    credential.getToken();
-    return credential;
-  }
-
-  /**
-   * Checks permission by an activity. Will start an activity to request
-   * permission with request code {@link #DRIVE_PERMISSION_REQUEST_CODE}.
-   * 
-   * @param activity the activity
-   * @param accountName the account name
-   * @param permissionCallback the permission callback
-   */
-  public static void checkPermissionByActivity(final Activity activity, final String accountName,
-      final PermissionCallback permissionCallback) {
-    Thread thread = new Thread(new Runnable() {
-        @Override
-      public void run() {
-        try {
-          getGoogleAccountCredential(activity, accountName);
-          activity.runOnUiThread(new Runnable() {
-              @Override
-            public void run() {
-              permissionCallback.onSuccess();
-            }
-          });
-        } catch (UserRecoverableAuthException e) {
-          activity.startActivityForResult(e.getIntent(), DRIVE_PERMISSION_REQUEST_CODE);
-        } catch (GoogleAuthException e) {
-          Log.e(TAG, "GoogleAuthException", e);
-          activity.runOnUiThread(new Runnable() {
-              @Override
-            public void run() {
-              permissionCallback.onFailure();
-            }
-          });
-        } catch (UserRecoverableAuthIOException e) {
-          activity.startActivityForResult(e.getIntent(), DRIVE_PERMISSION_REQUEST_CODE);
-        } catch (IOException e) {
-          Log.e(TAG, "IOException", e);
-          activity.runOnUiThread(new Runnable() {
-              @Override
-            public void run() {
-              permissionCallback.onFailure();
-            }
-          });
-        }
-      }
-    });
-    thread.start();
-  }
-
-  /**
-   * Sends a notification to request permission.
-   * 
-   * @param context the context
-   * @param accountName the account name
-   * @param intent the intent
-   */
-  public static void sendNotification(Context context, String accountName, Intent intent) {
-    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_FROM_BACKGROUND);
-
-    PendingIntent pendingIntent = PendingIntent.getActivity(
-        context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-    NotificationCompat.Builder builder = new NotificationCompat.Builder(context).setAutoCancel(true)
-        .setContentIntent(pendingIntent)
-        .setContentText(context.getString(R.string.permission_request_message, accountName))
-        .setContentTitle(context.getString(R.string.permission_request_title))
-        .setSmallIcon(android.R.drawable.ic_dialog_alert)
-        .setTicker(context.getString(R.string.permission_request_title));
-    NotificationManager notificationManager = (NotificationManager) context.getSystemService(
-        Context.NOTIFICATION_SERVICE);
-    notificationManager.notify(NOTIFICATION_ID, builder.build());
-  }
-
-  /**
-   * Cancels any notification to request drive permission.
-   * 
-   * @param context the context
-   */
-  public static void cancelNotification(Context context) {
-    NotificationManager notificationManager = (NotificationManager) context.getSystemService(
-        Context.NOTIFICATION_SERVICE);
-    notificationManager.cancel(NOTIFICATION_ID);
-  }
 
   /**
    * Syncs now for the current account.

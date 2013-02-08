@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.endtoendtest.sync;
 import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.endtoendtest.EndToEndTestUtils;
 import com.google.android.apps.mytracks.endtoendtest.GoogleUtils;
+import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.gms.auth.GoogleAuthException;
@@ -119,8 +120,8 @@ public class SyncTestUtils {
   public static Drive getGoogleDrive(Context context) throws IOException, GoogleAuthException {
     String googleAccount = PreferencesUtils.getString(
         context, R.string.google_account_key, PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
-    GoogleAccountCredential credential = SyncUtils.getGoogleAccountCredential(
-        context, googleAccount);
+    GoogleAccountCredential credential = SendToGoogleUtils.getGoogleAccountCredential(
+        context, googleAccount, SendToGoogleUtils.DRIVE_SCOPE);
     return SyncUtils.getDriveService(credential);
   }
 

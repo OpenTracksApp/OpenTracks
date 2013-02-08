@@ -20,6 +20,7 @@ import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.io.sendtogoogle.PermissionCallback;
+import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
@@ -143,8 +144,8 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     switch (requestCode) {
-      case SyncUtils.DRIVE_PERMISSION_REQUEST_CODE:
-        SyncUtils.cancelNotification(this);
+      case SendToGoogleUtils.DRIVE_PERMISSION_REQUEST_CODE:
+        SendToGoogleUtils.cancelNotification(this, SendToGoogleUtils.DRIVE_NOTIFICATION_ID);
         if (resultCode == Activity.RESULT_OK) {
           permissionCallback.onSuccess();
         } else {
@@ -173,8 +174,9 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
                 String googleAccount = PreferencesUtils.getString(
                     GoogleSettingsActivity.this, R.string.google_account_key,
                     PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
-                SyncUtils.checkPermissionByActivity(
-                    GoogleSettingsActivity.this, googleAccount, permissionCallback);
+                SendToGoogleUtils.checkPermissionByActivity(GoogleSettingsActivity.this,
+                    googleAccount, SendToGoogleUtils.DRIVE_SCOPE,
+                    SendToGoogleUtils.DRIVE_PERMISSION_REQUEST_CODE, permissionCallback);
               }
             });
         break;

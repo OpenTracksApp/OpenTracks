@@ -17,7 +17,6 @@ package com.google.android.apps.mytracks.endtoendtest;
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.io.docs.SendDocsUtils;
-import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesAsyncTask;
 import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesUtils;
 import com.google.android.apps.mytracks.io.gdata.GDataClientFactory;
 import com.google.android.apps.mytracks.io.gdata.docs.DocumentsClient;
@@ -63,11 +62,17 @@ import java.util.Locale;
  * @author Youtao Liu
  */
 public class GoogleUtils {
+  
   public static final String DOCUMENT_NAME_PREFIX = "My Tracks";
   public static final String ACCOUNT_NAME_1 = "mytrackstest@gmail.com";
   public static final String ACCOUNT_NAME_2 = "mytrackstest2@gmail.com";
   public static final String SPREADSHEET_NAME = DOCUMENT_NAME_PREFIX + "-" + EndToEndTestUtils.activityType;
 
+  private static final String APP_NAME_PREFIX = "Google-MyTracks-";
+  private static final String CONTENT_TYPE = "application/x-www-form-urlencoded";
+  private static final String FUSION_TABLES_BASE_URL = "https://www.google.com/fusiontables/api/query";
+  private static final String GDATA_VERSION = "2";
+  
   /**
    * Gets the account to access Google Services.
    * 
@@ -408,7 +413,7 @@ public class GoogleUtils {
       String fusionTableAuthToken = AccountManager.get(context).blockingGetAuthToken(getAccount(context),
           SendFusionTablesUtils.SERVICE, false);
 
-      GenericUrl url = new GenericUrl(SendFusionTablesAsyncTask.FUSION_TABLES_BASE_URL);
+      GenericUrl url = new GenericUrl(FUSION_TABLES_BASE_URL);
       String sql = "sql=" + query;
       ByteArrayInputStream inputStream = new ByteArrayInputStream(sql.getBytes());
       InputStreamContent inputStreamContent = new InputStreamContent(null, inputStream);
@@ -418,11 +423,11 @@ public class GoogleUtils {
           .createRequestFactory(new MethodOverride())).buildPostRequest(url, inputStreamContent);
 
       GoogleHeaders headers = new GoogleHeaders();
-      headers.setApplicationName(SendFusionTablesAsyncTask.APP_NAME_PREFIX
+      headers.setApplicationName(APP_NAME_PREFIX
           + SystemUtils.getMyTracksVersion(context));
-      headers.setGDataVersion(SendFusionTablesAsyncTask.GDATA_VERSION);
+      headers.setGDataVersion(GDATA_VERSION);
       headers.setGoogleLogin(fusionTableAuthToken);
-      headers.setContentType(SendFusionTablesAsyncTask.CONTENT_TYPE);
+      headers.setContentType(CONTENT_TYPE);
       request.setHeaders(headers);
 
       HttpResponse response;

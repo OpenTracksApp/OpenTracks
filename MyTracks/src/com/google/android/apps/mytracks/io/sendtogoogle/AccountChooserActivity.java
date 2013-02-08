@@ -20,13 +20,11 @@ import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.io.docs.SendDocsActivity;
 import com.google.android.apps.mytracks.io.drive.SendDriveActivity;
 import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesActivity;
-import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesUtils;
 import com.google.android.apps.mytracks.io.gdata.docs.DocumentsClient;
 import com.google.android.apps.mytracks.io.gdata.docs.SpreadsheetsClient;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsConstants;
 import com.google.android.apps.mytracks.io.maps.ChooseMapActivity;
 import com.google.android.apps.mytracks.io.maps.SendMapsActivity;
-import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
@@ -50,12 +48,12 @@ import java.io.IOException;
 
 /**
  * A chooser to select an account.
- *
+ * 
  * @author Jimmy Shih
  */
 public class AccountChooserActivity extends Activity {
 
-  private static final String TAG = AccountChooserActivity.class.getSimpleName();  
+  private static final String TAG = AccountChooserActivity.class.getSimpleName();
   private static final int DIALOG_NO_ACCOUNT_ID = 0;
   private static final int DIALOG_CHOOSER_ID = 1;
 
@@ -72,20 +70,20 @@ public class AccountChooserActivity extends Activity {
       showDialog(DIALOG_NO_ACCOUNT_ID);
       return;
     }
-    
+
     if (accounts.length == 1) {
       sendRequest.setAccount(accounts[0]);
       PreferencesUtils.setString(this, R.string.google_account_key, accounts[0].name);
-      checkDrivePermission(accounts[0].name);
+      checkDrivePermission();
       return;
     }
 
-    String googleAccount = PreferencesUtils.getString(this, R.string.google_account_key,
-        PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
+    String googleAccount = PreferencesUtils.getString(
+        this, R.string.google_account_key, PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
     for (int i = 0; i < accounts.length; i++) {
       if (accounts[i].name.equals(googleAccount)) {
         sendRequest.setAccount(accounts[i]);
-        checkDrivePermission(accounts[i].name);
+        checkDrivePermission();
         return;
       }
     }
@@ -95,39 +93,43 @@ public class AccountChooserActivity extends Activity {
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     switch (requestCode) {
-      case SyncUtils.DRIVE_PERMISSION_REQUEST_CODE:
-        SyncUtils.cancelNotification(this);
+      case SendToGoogleUtils.DRIVE_PERMISSION_REQUEST_CODE:
+        SendToGoogleUtils.cancelNotification(this, SendToGoogleUtils.DRIVE_NOTIFICATION_ID);
         if (resultCode == Activity.RESULT_OK) {
           driveCallback.onSuccess();
         } else {
           driveCallback.onFailure();
         }
         break;
+      case SendToGoogleUtils.FUSION_TABLES_PERMISSION_REQUEST_CODE:
+        SendToGoogleUtils.cancelNotification(this, SendToGoogleUtils.FUSION_TABLES_NOTIFICATION_ID);
+        if (resultCode == Activity.RESULT_OK) {
+          fusionTablesCallback.onSuccess();
+        } else {
+          fusionTablesCallback.onFailure();
+        }
+        break;
       default:
         super.onActivityResult(requestCode, resultCode, data);
     }
   }
-  
+
   @Override
   protected Dialog onCreateDialog(int id) {
     switch (id) {
       case DIALOG_NO_ACCOUNT_ID:
-        return new AlertDialog.Builder(this)
-            .setCancelable(true)
+        return new AlertDialog.Builder(this).setCancelable(true)
             .setMessage(R.string.send_google_no_account_message)
             .setOnCancelListener(new DialogInterface.OnCancelListener() {
-              @Override
+                @Override
               public void onCancel(DialogInterface dialog) {
                 finish();
               }
-            })
-            .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
+            }).setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
               public void onClick(DialogInterface dialog, int which) {
                 finish();
               }
-            })
-            .setTitle(R.string.send_google_no_account_title)
-            .create();
+            }).setTitle(R.string.send_google_no_account_title).create();
       case DIALOG_CHOOSER_ID:
         return createChooserDialog();
       default:
@@ -143,103 +145,115 @@ public class AccountChooserActivity extends Activity {
     for (int i = 0; i < accounts.length; i++) {
       choices[i] = accounts[i].name;
     }
-    return new AlertDialog.Builder(this)
-        .setCancelable(true)
+    return new AlertDialog.Builder(this).setCancelable(true)
         .setNegativeButton(R.string.generic_cancel, new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int which) {
             finish();
           }
-        })
-        .setOnCancelListener(new DialogInterface.OnCancelListener() {
-          @Override
+        }).setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
           public void onCancel(DialogInterface dialog) {
             finish();
           }
-        })
-        .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
+        }).setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int which) {
             int position = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
             Account account = accounts[position];
             PreferencesUtils.setString(
                 AccountChooserActivity.this, R.string.google_account_key, account.name);
             sendRequest.setAccount(account);
-            checkDrivePermission(account.name);
+            checkDrivePermission();
           }
-        })
-        .setSingleChoiceItems(choices, 0, null)
-        .setTitle(R.string.send_google_choose_account_title)
-        .create();
+        }).setSingleChoiceItems(choices, 0, null)
+        .setTitle(R.string.send_google_choose_account_title).create();
   }
-  
+
   /**
    * Checks the Drive permission.
-   * 
-   * @param accountName the account name
    */
-  private void checkDrivePermission(String accountName) {
+  private void checkDrivePermission() {
     if (sendRequest.isSendDrive()) {
-      SyncUtils.checkPermissionByActivity(this, accountName, driveCallback);      
+      SendToGoogleUtils.checkPermissionByActivity(this, sendRequest.getAccount().name,
+          SendToGoogleUtils.DRIVE_SCOPE, SendToGoogleUtils.DRIVE_PERMISSION_REQUEST_CODE,
+          driveCallback);
     } else {
       driveCallback.onSuccess();
     }
   }
-  
+
+  /**
+   * Checks the Fusion Tables permission.
+   */
+  private void checkFusionTablesPermission() {
+    if (sendRequest.isSendFusionTables()) {
+      SendToGoogleUtils.checkPermissionByActivity(this, sendRequest.getAccount().name,
+          SendToGoogleUtils.FUSION_TABLES_SCOPE,
+          SendToGoogleUtils.FUSION_TABLES_PERMISSION_REQUEST_CODE, fusionTablesCallback);
+    } else {
+      fusionTablesCallback.onSuccess();
+    }
+  }
+
   private PermissionCallback spreadsheetsCallback = new PermissionCallback() {
-    @Override
+      @Override
     public void onSuccess() {
       startNextActivity();
-    }  
-    @Override
+    }
+
+      @Override
     public void onFailure() {
       handleNoAccountPermission();
     }
   };
-  
+
   private PermissionCallback docsCallback = new PermissionCallback() {
-    @Override
+      @Override
     public void onSuccess() {
       getPermission(SpreadsheetsClient.SERVICE, sendRequest.isSendDocs(), spreadsheetsCallback);
-    }  
-    @Override
+    }
+
+      @Override
     public void onFailure() {
       handleNoAccountPermission();
     }
   };
-  
+
   private PermissionCallback fusionTablesCallback = new PermissionCallback() {
-    @Override
+      @Override
     public void onSuccess() {
       getPermission(DocumentsClient.SERVICE, sendRequest.isSendDocs(), docsCallback);
-    }  
-    @Override
+    }
+
+      @Override
     public void onFailure() {
       handleNoAccountPermission();
     }
   };
-  
+
   private PermissionCallback mapsCallback = new PermissionCallback() {
-    @Override
+      @Override
     public void onSuccess() {
-      getPermission(
-          SendFusionTablesUtils.SERVICE, sendRequest.isSendFusionTables(), fusionTablesCallback);
+      checkFusionTablesPermission();
     }
-    @Override
+
+      @Override
     public void onFailure() {
       handleNoAccountPermission();
     }
   };
-  
+
   private PermissionCallback driveCallback = new PermissionCallback() {
-    @Override
+      @Override
     public void onSuccess() {
       getPermission(MapsConstants.SERVICE_NAME, sendRequest.isSendMaps(), mapsCallback);
     }
-    @Override
+
+      @Override
     public void onFailure() {
       handleNoAccountPermission();
     }
   };
-  
+
   /**
    * Gets the user permission to access a service.
    * 
@@ -252,7 +266,7 @@ public class AccountChooserActivity extends Activity {
     if (needPermission) {
       AccountManager.get(this).getAuthToken(sendRequest.getAccount(), authTokenType, null, this,
           new AccountManagerCallback<Bundle>() {
-            @Override
+              @Override
             public void run(AccountManagerFuture<Bundle> future) {
               try {
                 if (future.getResult().getString(AccountManager.KEY_AUTHTOKEN) != null) {
@@ -290,7 +304,6 @@ public class AccountChooserActivity extends Activity {
    * !sendMaps && !sendFusionTables && sendDocs -> {@link SendDocsActivity}
    * <p>
    * !sendMaps && !sendFusionTables && !sendDocs -> {@link UploadResultActivity}
-   *
    */
   private void startNextActivity() {
     Class<?> next;
@@ -310,7 +323,7 @@ public class AccountChooserActivity extends Activity {
     startActivity(intent);
     finish();
   }
-  
+
   /**
    * Handles when not able to get account permission.
    */

@@ -20,8 +20,6 @@ import com.google.android.apps.mytracks.stats.TripStatistics;
 
 import android.location.Location;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import junit.framework.TestCase;
@@ -224,63 +222,5 @@ public class SendFusionTablesUtilsTest extends TestCase {
     location.setAltitude(30.3);
     SendFusionTablesUtils.appendLocation(location, builder);
     assertEquals("10.1,20.2,30.3", builder.toString());
-  }
-
-  /**
-   * Tests {@link SendFusionTablesUtils#getTableId(InputStream)} with a null
-   * inputstream.
-   */
-  public void testGetTableId_null() {
-    assertEquals(null, SendFusionTablesUtils.getTableId(null));
-  }
-
-  /**
-   * Tests {@link SendFusionTablesUtils#getTableId(InputStream)} with an
-   * inputstream containing no data.
-   */
-  public void testGetTableId_no_data() {
-    InputStream inputStream = new ByteArrayInputStream(new byte[0]);
-    assertEquals(null, SendFusionTablesUtils.getTableId(inputStream));
-  }
-
-  /**
-   * Tests {@link SendFusionTablesUtils#getTableId(InputStream)} with an empty
-   * inputstream.
-   */
-  public void testGetTableId_empty() {
-    String string = "";
-    InputStream inputStream = new ByteArrayInputStream(string.getBytes());
-    assertEquals(null, SendFusionTablesUtils.getTableId(inputStream));
-  }
-
-  /**
-   * Tests {@link SendFusionTablesUtils#getTableId(InputStream)} with an one
-   * line inputstream.
-   */
-  public void testGetTableId_one_line() {
-    String string = "tableid";
-    InputStream inputStream = new ByteArrayInputStream(string.getBytes());
-    assertEquals(null, SendFusionTablesUtils.getTableId(inputStream));
-  }
-
-  /**
-   * Tests {@link SendFusionTablesUtils#getTableId(InputStream)} with an
-   * inputstream not containing "tableid".
-   */
-  public void testGetTableId_no_table_id() {
-    String string = "error\n123";
-    InputStream inputStream = new ByteArrayInputStream(string.getBytes());
-    assertEquals(null, SendFusionTablesUtils.getTableId(inputStream));
-  }
-
-  /**
-   * Tests {@link SendFusionTablesUtils#getTableId(InputStream)} with a valid
-   * inputstream.
-   */
-  public void testGetTableId() {
-    String string = "tableid\n123";
-    InputStream inputStream = null;
-    inputStream = new ByteArrayInputStream(string.getBytes());
-    assertEquals("123", SendFusionTablesUtils.getTableId(inputStream));
   }
 }

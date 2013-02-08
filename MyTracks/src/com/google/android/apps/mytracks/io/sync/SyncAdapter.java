@@ -19,6 +19,7 @@ package com.google.android.apps.mytracks.io.sync;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.io.file.KmlImporter;
+import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.UserRecoverableAuthException;
@@ -101,8 +102,8 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     try {
-      GoogleAccountCredential credential = SyncUtils.getGoogleAccountCredential(
-          context, account.name);
+      GoogleAccountCredential credential = SendToGoogleUtils.getGoogleAccountCredential(
+          context, account.name, SendToGoogleUtils.DRIVE_SCOPE);
       if (credential == null) {
         return;
       }
@@ -125,11 +126,13 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
       }
       insertNewTracks(folderId);
     } catch (UserRecoverableAuthException e) {
-      SyncUtils.sendNotification(context, account.name, e.getIntent());
+      SendToGoogleUtils.sendNotification(
+          context, account.name, e.getIntent(), SendToGoogleUtils.DRIVE_NOTIFICATION_ID);
     } catch (GoogleAuthException e) {
       Log.e(TAG, "GoogleAuthException", e);
     } catch (UserRecoverableAuthIOException e) {
-      SyncUtils.sendNotification(context, account.name, e.getIntent());
+      SendToGoogleUtils.sendNotification(
+          context, account.name, e.getIntent(), SendToGoogleUtils.DRIVE_NOTIFICATION_ID);
     } catch (IOException e) {
       Log.e(TAG, "IOException", e);
     }
