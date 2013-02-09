@@ -94,7 +94,8 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
         activity, R.string.send_to_maps_key, PreferencesUtils.SEND_TO_MAPS_DEFAULT));
     fusionTablesCheckBox.setChecked(PreferencesUtils.getBoolean(
         activity, R.string.send_to_fusion_tables_key,
-        PreferencesUtils.SEND_TO_FUSION_TABLES_DEFAULT));
+        PreferencesUtils.SEND_TO_FUSION_TABLES_DEFAULT));    
+    
     docsCheckBox.setChecked(PreferencesUtils.getBoolean(
         activity, R.string.send_to_docs_key, PreferencesUtils.SEND_TO_DOCS_DEFAULT));
 
@@ -123,7 +124,16 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
     } else {
       newMapRadioButton.setChecked(true);
     }
-
+    
+    // Update fusion table
+    boolean defaultTablePublic = PreferencesUtils.getBoolean(activity,
+        R.string.default_table_public_key,
+        PreferencesUtils.DEFAULT_TABLE_PUBLIC_DEFAULT);
+    String text = getString(R.string.send_google_fusion_tables) + "\n"
+        + getString(defaultTablePublic ? R.string.send_google_fusion_tables_public
+            : R.string.send_google_fusion_tables_private);
+    fusionTablesCheckBox.setText(text);
+    
     return new AlertDialog.Builder(activity).setNegativeButton(R.string.generic_cancel, null)
         .setPositiveButton(R.string.send_google_send_now, new DialogInterface.OnClickListener() {
             @Override

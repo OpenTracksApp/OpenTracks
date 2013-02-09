@@ -11,7 +11,9 @@ import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.io.sendtogoogle.AbstractSendAsyncTask;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
+import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.util.LocationUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.maps.mytracks.R;
@@ -19,6 +21,8 @@ import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.services.drive.Drive;
+import com.google.api.services.drive.model.Permission;
 import com.google.api.services.fusiontables.Fusiontables;
 import com.google.api.services.fusiontables.Fusiontables.Query.Sql;
 import com.google.api.services.fusiontables.model.Column;
@@ -114,6 +118,10 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
       publishProgress(PROGRESS_SET_STYLE);
       setStyle(fusiontables, tableId);
       setTemplate(fusiontables, tableId);
+      if (!setPermission(tableId)) {
+        Log.d(TAG, "Cannot set permission for table " + tableId);
+        return false;
+      }
       
       // Upload all the track points plus the start and end markers
       publishProgress(PROGRESS_UPLOAD_DATA_MIN);
@@ -189,6 +197,26 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
     fusiontables.template().insert(tableId, template).execute();
   }
 
+  private boolean setPermission(String tableId) throws IOException, GoogleAuthException {
+    boolean defaultTablePublic = PreferencesUtils.getBoolean(context,
+        R.string.default_table_public_key,
+        PreferencesUtils.DEFAULT_TABLE_PUBLIC_DEFAULT);
+    if (!defaultTablePublic) {
+      return true;
+    }
+    GoogleAccountCredential driveCredential = SendToGoogleUtils.getGoogleAccountCredential(
+        context, account.name, SendToGoogleUtils.DRIVE_SCOPE);
+    if (driveCredential == null) {
+      return false;
+    }
+    Drive drive = SyncUtils.getDriveService(driveCredential);
+    Permission permission = new Permission();
+    permission.setType("anyone");
+    permission.setRole("reader");
+    drive.permissions().insert(tableId, permission).execute();
+    return true;
+  }
+  
   /**
    * Uploads all the points in a track. *
    * 

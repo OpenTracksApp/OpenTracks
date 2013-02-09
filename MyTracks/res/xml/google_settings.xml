@@ -28,4 +28,10 @@ limitations under the License.
     android:defaultValue="false"
     android:key="@string/default_map_public_key"
     android:title="@string/settings_google_maps_public_title" />
+  <CheckBoxPreference
+    android:defaultValue="false"
+    android:key="@string/default_table_public_key"
+    android:summaryOff="@string/settings_google_fusion_tables_public_summary_off"
+    android:summaryOn="@string/settings_google_fusion_tables_public_summary_on"
+    android:title="@string/settings_google_fusion_tables_public_title" />
 </PreferenceScreen>

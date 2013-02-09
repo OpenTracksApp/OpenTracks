@@ -56,6 +56,7 @@ public class PreferencesUtils {
 
   public static final String DEFAULT_ACTIVITY_DEFAULT = "";
   public static final boolean DEFAULT_MAP_PUBLIC_DEFAULT = false;
+  public static final boolean DEFAULT_TABLE_PUBLIC_DEFAULT = false;
   public static final String DRIVE_DELETED_LIST_DEFAULT = "";
   public static final long DRIVE_LARGEST_CHANGE_ID_DEFAULT = -1L;
   public static final boolean DRIVE_SYNC_DEFAULT = false;  

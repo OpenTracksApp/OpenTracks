@@ -63,7 +63,6 @@ limitations under the License.
         style="@style/ChooseUploadServiceImageView" />
       <CheckBox
         android:id="@+id/choose_upload_service_fusion_tables"
-        android:text="@string/send_google_fusion_tables_new_public_table"
         style="@style/ChooseUploadServiceCheckBox" />
     </TableRow>
     <TableRow>

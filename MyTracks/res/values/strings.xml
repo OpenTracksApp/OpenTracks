@@ -1461,11 +1461,15 @@ limitations under the License.
     translation_description="When sending a track to Google, the Google Fusion Tables name.">
     Google Fusion Tables
   </string>
-  <string name="send_google_fusion_tables_new_public_table"
-    translation_description="When sending a track to Google, under the 'Send to...' dialog, the
-      checkbox option to send to Google Fusion Tables as a new public table. Note that \n is the new
-      line character.">
-    Google Fusion Tables\n(new public table)
+  <string name="send_google_fusion_tables_private"
+    translation_description="When sending a track to Google Fusion Tables, indicate a new private
+      table will get created.">
+    (new private table)
+  </string>
+  <string name="send_google_fusion_tables_public"
+    translation_description="When sending a track to Google Fusion Tables, indicate a new public
+      table will get created.">
+    (new public table)
   </string>
   <string name="send_google_maps"
     translation_description="When sending a track to Google, under the 'Send to...' dialog, the
@@ -1765,6 +1769,25 @@ limitations under the License.
 
       Character limit: ~23 (1 line)">
     Sync Google Drive
+  </string>
+  <string name="settings_google_fusion_tables_public_summary_off"
+    translation_description="In the 'Google' settings, the summary for the 'New tables public'
+      checkbox when it is unchecked explaining that new tables created in Google Fusion Tables will
+      be private, instead of public.">
+    New tables created in Google Fusion Tables will be private, instead of public.
+  </string>
+  <string name="settings_google_fusion_tables_public_summary_on"
+    translation_description="In the 'Google' settings, the summary for the 'New tables public'
+      checkbox when it is checked explaining that new tables created in Google Fusion Tables will be
+      public, instead of private.">
+    New tables created in Google Fusion Tables will be public, instead of private.
+  </string>
+  <string name="settings_google_fusion_tables_public_title"
+    translation_description="In the 'Google' settings, the checkbox to make new tables created in
+      Google Fusion Tables public instead of private.
+
+      Character limit: ~23 (1 line)">
+    New tables public
   </string>
   <string name="settings_google_maps_public_summary_off"
     translation_description="In the 'Google' settings, the summary for the 'New maps public'

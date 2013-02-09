@@ -15,7 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
-
   <!-- Keys for persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
   <string name="allow_access_key">allowAccess</string>
   <string name="ant_bike_cadence_sensor_id_key">antBikeCadenceSensorId</string>
@@ -35,6 +34,7 @@ limitations under the License.
   <string name="confirm_share_map_key">confirmShareMap</string>
   <string name="default_activity_key">defaultActivity</string>
   <string name="default_map_public_key">defaultMapPublic</string>
+  <string name="default_table_public_key">defaultTablePublic</string>
   <string name="drive_sync_key">driveSync</string>
   <string name="google_account_key">googleAccount</string>
   <string name="max_recording_distance_key">maxRecordingDistance</string>
@@ -48,7 +48,7 @@ limitations under the License.
   <string name="send_to_drive_key">sendToDrive</string>
   <string name="send_to_fusion_tables_key">sendToFusionTables</string>
   <string name="send_to_maps_key">sendToMaps</string>
-  <string name="sensor_type_key">sensorType</string>  
+  <string name="sensor_type_key">sensorType</string>
   <string name="split_frequency_key">splitFrequency</string>
   <string name="stats_show_coordinate_key">statsShowCoordinate</string>
   <string name="stats_show_elevation_key">statsShowElevation</string>
@@ -64,7 +64,6 @@ limitations under the License.
   <string name="track_widget_item3">trackWidgetItem3</string>
   <string name="track_widget_item4">trackWidgetItem4</string>
   <string name="voice_frequency_key">voiceFrequency</string>
-
   <!-- Keys for persistend preferences. But they should not get backed up or restored. -->
   <string name="auto_resume_track_current_retry_key">autoResumeTrackCurrentRetry</string>
   <string name="drive_deleted_list_key">driveDeletedList</string>
@@ -72,7 +71,6 @@ limitations under the License.
   <string name="recording_track_id_key">recordingTrackId</string>
   <string name="recording_track_paused_key">recordingTrackPaused</string>
   <string name="selected_track_id_key">selectedTrackId</string>
-
   <!-- Keys for non-persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
   <string name="settings_backup_key">settingsBackup</string>
   <string name="settings_backup_reset_key">settingsBackupReset</string>
@@ -96,5 +94,4 @@ limitations under the License.
   <string name="settings_sensor_root_key">settingsSensorRoot</string>
   <string name="settings_sharing_key">settingsSharing</string>
   <string name="settings_stats_key">settingsStats</string>
-
 </resources>

@@ -172,7 +172,7 @@ public class AccountChooserActivity extends Activity {
    * Checks the Drive permission.
    */
   private void checkDrivePermission() {
-    if (sendRequest.isSendDrive()) {
+    if (sendRequest.isSendDrive() || sendRequest.isSendFusionTables()) {
       SendToGoogleUtils.checkPermissionByActivity(this, sendRequest.getAccount().name,
           SendToGoogleUtils.DRIVE_SCOPE, SendToGoogleUtils.DRIVE_PERMISSION_REQUEST_CODE,
           driveCallback);
