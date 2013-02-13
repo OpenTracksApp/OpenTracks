@@ -60,6 +60,11 @@ public class SendToGoogleUtils {
   public static final String FUSION_TABLES_SCOPE = FusiontablesScopes.FUSIONTABLES;
   public static final int FUSION_TABLES_NOTIFICATION_ID = 2;
 
+  // Request code to obtain Spreadsheet permission
+  public static final int SPREADSHEET_PERMISSION_REQUEST_CODE = 3;
+  public static final String SPREADSHEET_SCOPE = "https://spreadsheets.google.com/feeds";
+  public static final int SPREADSHEET_NOTIFICATION_ID = 3;
+  
   private SendToGoogleUtils() {}
 
   /**
@@ -153,6 +158,20 @@ public class SendToGoogleUtils {
     credential.setSelectedAccountName(accountName);
     credential.getToken();
     return credential;
+  }
+
+  /**
+   * Gets the OAuth2 token.
+   * 
+   * @param context the context
+   * @param accountName the account name
+   * @param scope the scope
+   */
+  public static String getToken(Context context, String accountName, String scope)
+      throws IOException, GoogleAuthException {
+    GoogleAccountCredential credential = GoogleAccountCredential.usingOAuth2(context, scope);
+    credential.setSelectedAccountName(accountName);
+    return credential.getToken();
   }
 
   /**

@@ -159,7 +159,7 @@ public class SyncUtils {
         .list().setQ(String.format(Locale.US, MY_TRACKS_FOLDER_QUERY, folderName));
     FileList result = list.execute();
     for (File file : result.getItems()) {
-      if (file.getSharedWithMeDate() == null && file.getTitle().equals(folderName)) {
+      if (file.getSharedWithMeDate() == null) {
         return file.getId();
       }
     }

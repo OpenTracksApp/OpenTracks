@@ -20,8 +20,6 @@ import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.io.docs.SendDocsActivity;
 import com.google.android.apps.mytracks.io.drive.SendDriveActivity;
 import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesActivity;
-import com.google.android.apps.mytracks.io.gdata.docs.DocumentsClient;
-import com.google.android.apps.mytracks.io.gdata.docs.SpreadsheetsClient;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsConstants;
 import com.google.android.apps.mytracks.io.maps.ChooseMapActivity;
 import com.google.android.apps.mytracks.io.maps.SendMapsActivity;
@@ -109,6 +107,14 @@ public class AccountChooserActivity extends Activity {
           fusionTablesCallback.onFailure();
         }
         break;
+      case SendToGoogleUtils.SPREADSHEET_PERMISSION_REQUEST_CODE:
+        SendToGoogleUtils.cancelNotification(this, SendToGoogleUtils.SPREADSHEET_NOTIFICATION_ID);
+        if (resultCode == Activity.RESULT_OK) {
+          spreadsheetsCallback.onSuccess();
+        } else {
+          spreadsheetsCallback.onFailure();
+        }
+        break;
       default:
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -172,7 +178,17 @@ public class AccountChooserActivity extends Activity {
    * Checks the Drive permission.
    */
   private void checkDrivePermission() {
-    if (sendRequest.isSendDrive() || sendRequest.isSendFusionTables()) {
+    boolean needDrivePermission = sendRequest.isSendDrive();
+    if (!needDrivePermission) {
+      boolean defaultTablePublic = PreferencesUtils.getBoolean(
+          this, R.string.default_table_public_key, PreferencesUtils.DEFAULT_TABLE_PUBLIC_DEFAULT);
+      needDrivePermission = defaultTablePublic && sendRequest.isSendFusionTables();
+    }
+    if (!needDrivePermission) {
+      needDrivePermission = sendRequest.isSendDocs();
+    }
+
+    if (needDrivePermission) {
       SendToGoogleUtils.checkPermissionByActivity(this, sendRequest.getAccount().name,
           SendToGoogleUtils.DRIVE_SCOPE, SendToGoogleUtils.DRIVE_PERMISSION_REQUEST_CODE,
           driveCallback);
@@ -193,6 +209,19 @@ public class AccountChooserActivity extends Activity {
       fusionTablesCallback.onSuccess();
     }
   }
+ 
+  /**
+   * Checks the Spreadsheet permission.
+   */
+  private void checkSpreadsheetPermission() {
+    if (sendRequest.isSendDocs()) {
+      SendToGoogleUtils.checkPermissionByActivity(this, sendRequest.getAccount().name,
+          SendToGoogleUtils.SPREADSHEET_SCOPE,
+          SendToGoogleUtils.SPREADSHEET_PERMISSION_REQUEST_CODE, spreadsheetsCallback);
+    } else {
+      spreadsheetsCallback.onSuccess();
+    }
+  }
 
   private PermissionCallback spreadsheetsCallback = new PermissionCallback() {
       @Override
@@ -206,22 +235,10 @@ public class AccountChooserActivity extends Activity {
     }
   };
 
-  private PermissionCallback docsCallback = new PermissionCallback() {
-      @Override
-    public void onSuccess() {
-      getPermission(SpreadsheetsClient.SERVICE, sendRequest.isSendDocs(), spreadsheetsCallback);
-    }
-
-      @Override
-    public void onFailure() {
-      handleNoAccountPermission();
-    }
-  };
-
   private PermissionCallback fusionTablesCallback = new PermissionCallback() {
       @Override
     public void onSuccess() {
-      getPermission(DocumentsClient.SERVICE, sendRequest.isSendDocs(), docsCallback);
+      checkSpreadsheetPermission();
     }
 
       @Override

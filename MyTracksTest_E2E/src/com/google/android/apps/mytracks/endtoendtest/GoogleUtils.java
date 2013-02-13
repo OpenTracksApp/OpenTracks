@@ -16,12 +16,8 @@
 package com.google.android.apps.mytracks.endtoendtest;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.io.docs.SendDocsUtils;
 import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesUtils;
 import com.google.android.apps.mytracks.io.gdata.GDataClientFactory;
-import com.google.android.apps.mytracks.io.gdata.docs.DocumentsClient;
-import com.google.android.apps.mytracks.io.gdata.docs.SpreadsheetsClient;
-import com.google.android.apps.mytracks.io.gdata.docs.XmlDocsGDataParserFactory;
 import com.google.android.apps.mytracks.io.gdata.maps.MapFeatureEntry;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsClient;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsConstants;
@@ -39,7 +35,6 @@ import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.InputStreamContent;
 import com.google.wireless.gdata.data.Entry;
-import com.google.wireless.gdata.data.Feed;
 import com.google.wireless.gdata.parser.GDataParser;
 
 import android.accounts.Account;
@@ -50,10 +45,8 @@ import android.util.Log;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Provides utilities to access Google Maps, Google Documents, Google Fusion
@@ -186,30 +179,32 @@ public class GoogleUtils {
    * @return the entry of the document, null means can not find the spreadsheet.
    */
   public static Entry searchSpreadsheetByTitle(String title, Activity activity) {
-    Context context = activity.getApplicationContext(); 
-    DocumentsClient documentsClient = new DocumentsClient(
-        GDataClientFactory.getGDataClient(context),
-        new XmlDocsGDataParserFactory(new AndroidXmlParserFactory()));
+    // TODO change to using OAuth2 and the new spreadsheet gdata library
     
-    try {
-      String documentsAuthToken = AccountManager.get(context)
-          .blockingGetAuthToken(getAccount(context), documentsClient.getServiceName(), false);
-      String uri = String.format(Locale.US, SendDocsUtils.GET_SPREADSHEET_BY_TITLE_URI,
-          URLEncoder.encode(title, "utf-8"));
-      GDataParser gDataParser = documentsClient.getParserForFeed(Entry.class, uri,
-          documentsAuthToken);
-      gDataParser.init();
-
-      while (gDataParser.hasMoreData()) {
-        Entry entry = gDataParser.readNextEntry(null);
-        String entryTitle = entry.getTitle();
-        if (entryTitle.equals(title)) { 
-          return entry; 
-        }
-      }
-    } catch (Exception e) {
-      Log.d(EndToEndTestUtils.LOG_TAG, "Unable to fetch spreadsheet.", e);
-    }
+//    Context context = activity.getApplicationContext(); 
+//    DocumentsClient documentsClient = new DocumentsClient(
+//        GDataClientFactory.getGDataClient(context),
+//        new XmlDocsGDataParserFactory(new AndroidXmlParserFactory()));
+//    
+//    try {
+//      String documentsAuthToken = AccountManager.get(context)
+//          .blockingGetAuthToken(getAccount(context), documentsClient.getServiceName(), false);
+//      String uri = String.format(Locale.US, SendDocsUtils.GET_SPREADSHEET_BY_TITLE_URI,
+//          URLEncoder.encode(title, "utf-8"));
+//      GDataParser gDataParser = documentsClient.getParserForFeed(Entry.class, uri,
+//          documentsAuthToken);
+//      gDataParser.init();
+//
+//      while (gDataParser.hasMoreData()) {
+//        Entry entry = gDataParser.readNextEntry(null);
+//        String entryTitle = entry.getTitle();
+//        if (entryTitle.equals(title)) { 
+//          return entry; 
+//        }
+//      }
+//    } catch (Exception e) {
+//      Log.d(EndToEndTestUtils.LOG_TAG, "Unable to fetch spreadsheet.", e);
+//    }
     return null;
   }
   
@@ -220,31 +215,32 @@ public class GoogleUtils {
    * @param activity to get context
    */
   public static void deleteSpreadsheetByTitle(String title, Activity activity) {
-    Context context = activity.getApplicationContext();
-    DocumentsClient documentsClient = new DocumentsClient(
-        GDataClientFactory.getGDataClient(context), new XmlDocsGDataParserFactory(
-            new AndroidXmlParserFactory()));
-
-    try {
-      String documentsAuthToken = AccountManager.get(context).blockingGetAuthToken(
-          getAccount(context), documentsClient.getServiceName(), false);
-      String uri = String.format(Locale.US, SendDocsUtils.GET_SPREADSHEET_BY_TITLE_URI,
-          URLEncoder.encode(title, "utf-8"));
-      GDataParser gDataParser = documentsClient.getParserForFeed(Entry.class, uri,
-          documentsAuthToken);
-      gDataParser.init();
-
-      while (gDataParser.hasMoreData()) {
-        Entry entry = gDataParser.readNextEntry(null);
-        String entryTitle = entry.getTitle();
-        if (entryTitle.equals(title)) {
-          documentsClient.deleteEntry(entry.getEditUri(), documentsAuthToken);
-          Log.d(EndToEndTestUtils.LOG_TAG, "Delete one spreadsheet.");
-        }
-      }
-    } catch (Exception e) {
-      Log.e(EndToEndTestUtils.LOG_TAG, "Unable to fetch spreadsheet.", e);
-    }
+    // TODO change to using OAuth2 and the new spreadsheet gdata library
+//    Context context = activity.getApplicationContext();
+//    DocumentsClient documentsClient = new DocumentsClient(
+//        GDataClientFactory.getGDataClient(context), new XmlDocsGDataParserFactory(
+//            new AndroidXmlParserFactory()));
+//
+//    try {
+//      String documentsAuthToken = AccountManager.get(context).blockingGetAuthToken(
+//          getAccount(context), documentsClient.getServiceName(), false);
+//      String uri = String.format(Locale.US, SendDocsUtils.GET_SPREADSHEET_BY_TITLE_URI,
+//          URLEncoder.encode(title, "utf-8"));
+//      GDataParser gDataParser = documentsClient.getParserForFeed(Entry.class, uri,
+//          documentsAuthToken);
+//      gDataParser.init();
+//
+//      while (gDataParser.hasMoreData()) {
+//        Entry entry = gDataParser.readNextEntry(null);
+//        String entryTitle = entry.getTitle();
+//        if (entryTitle.equals(title)) {
+//          documentsClient.deleteEntry(entry.getEditUri(), documentsAuthToken);
+//          Log.d(EndToEndTestUtils.LOG_TAG, "Delete one spreadsheet.");
+//        }
+//      }
+//    } catch (Exception e) {
+//      Log.e(EndToEndTestUtils.LOG_TAG, "Unable to fetch spreadsheet.", e);
+//    }
   }
   
   /**
@@ -256,30 +252,30 @@ public class GoogleUtils {
    */
   public static List<Entry> searchAllSpreadsheetByTitle(String title, Activity activity) {
     List<Entry> docs = new ArrayList<Entry>();
-    Context context = activity.getApplicationContext(); 
-    DocumentsClient documentsClient = new DocumentsClient(
-        GDataClientFactory.getGDataClient(context),
-        new XmlDocsGDataParserFactory(new AndroidXmlParserFactory()));
-    
-    try {
-      String documentsAuthToken = AccountManager.get(context)
-          .blockingGetAuthToken(getAccount(context), documentsClient.getServiceName(), false);
-      String uri = String.format(Locale.US, SendDocsUtils.GET_SPREADSHEET_BY_TITLE_URI,
-          URLEncoder.encode(title, "utf-8"));
-      GDataParser gDataParser = documentsClient.getParserForFeed(Entry.class, uri,
-          documentsAuthToken);
-      gDataParser.init();
-
-      while (gDataParser.hasMoreData()) {
-        Entry entry = gDataParser.readNextEntry(null);
-        String entryTitle = entry.getTitle();
-        if (entryTitle.equals(title)) { 
-          docs.add(entry);
-        }
-      }
-    } catch (Exception e) {
-      Log.d(EndToEndTestUtils.LOG_TAG, "Unable to fetch spreadsheet.", e);
-    }
+//    Context context = activity.getApplicationContext(); 
+//    DocumentsClient documentsClient = new DocumentsClient(
+//        GDataClientFactory.getGDataClient(context),
+//        new XmlDocsGDataParserFactory(new AndroidXmlParserFactory()));
+//    
+//    try {
+//      String documentsAuthToken = AccountManager.get(context)
+//          .blockingGetAuthToken(getAccount(context), documentsClient.getServiceName(), false);
+//      String uri = String.format(Locale.US, SendDocsUtils.GET_SPREADSHEET_BY_TITLE_URI,
+//          URLEncoder.encode(title, "utf-8"));
+//      GDataParser gDataParser = documentsClient.getParserForFeed(Entry.class, uri,
+//          documentsAuthToken);
+//      gDataParser.init();
+//
+//      while (gDataParser.hasMoreData()) {
+//        Entry entry = gDataParser.readNextEntry(null);
+//        String entryTitle = entry.getTitle();
+//        if (entryTitle.equals(title)) { 
+//          docs.add(entry);
+//        }
+//      }
+//    } catch (Exception e) {
+//      Log.d(EndToEndTestUtils.LOG_TAG, "Unable to fetch spreadsheet.", e);
+//    }
     return docs;
   }
   
@@ -294,38 +290,38 @@ public class GoogleUtils {
    * @return true means find the track name in the spreadsheet
    */
   private static boolean searchTrackTitleInSpreadsheet(String title, Activity activity, String spreadsheetTitle, boolean isDelete) {
-    String spreadsheetId = searchSpreadsheetByTitle(spreadsheetTitle, activity).getId().replace(SendDocsUtils.SPREADSHEET_ID_PREFIX, "");
-    if(spreadsheetId == null) {
-      Log.d(EndToEndTestUtils.LOG_TAG, "Unable to find the spreadsheet -- " + spreadsheetTitle);
-      return false;
-    }
-    Context context = activity.getApplicationContext();
-    try {
-    SpreadsheetsClient spreadsheetsClient = new SpreadsheetsClient(
-        GDataClientFactory.getGDataClient(context), new XmlDocsGDataParserFactory(new AndroidXmlParserFactory()));
-    String spreadsheetsAuthToken = AccountManager.get(activity.getApplicationContext()).blockingGetAuthToken(
-        getAccount(context), spreadsheetsClient.getServiceName(), false);
-    
-    String weekSheetId = SendDocsUtils.getWorksheetId(spreadsheetId, spreadsheetsClient, spreadsheetsAuthToken);
-    String worksheetUri = String.format(Locale.US, SendDocsUtils.GET_WORKSHEET_URI, URLEncoder.encode(spreadsheetId, "utf-8"),
-        weekSheetId);
-
-    GDataParser gDataParser = spreadsheetsClient.getParserForFeed(Feed.class, worksheetUri,
-        spreadsheetsAuthToken);
-    gDataParser.init();
-    while (gDataParser.hasMoreData()) {
-      Entry entry = gDataParser.readNextEntry(null);
-      String entryTitle = entry.getTitle();
-      if (entryTitle.indexOf(title) > -1) { 
-        if (isDelete) {
-          spreadsheetsClient.deleteEntry(entry.getEditUri(), spreadsheetsAuthToken);
-        }
-        return true;
-      }
-    }
-    } catch (Exception e) {
-      Log.d(EndToEndTestUtils.LOG_TAG, "Unable to fetch content of spreadsheet.", e);
-    }
+//    String spreadsheetId = searchSpreadsheetByTitle(spreadsheetTitle, activity).getId().replace(SendDocsUtils.SPREADSHEET_ID_PREFIX, "");
+//    if(spreadsheetId == null) {
+//      Log.d(EndToEndTestUtils.LOG_TAG, "Unable to find the spreadsheet -- " + spreadsheetTitle);
+//      return false;
+//    }
+//    Context context = activity.getApplicationContext();
+//    try {
+//    SpreadsheetsClient spreadsheetsClient = new SpreadsheetsClient(
+//        GDataClientFactory.getGDataClient(context), new XmlDocsGDataParserFactory(new AndroidXmlParserFactory()));
+//    String spreadsheetsAuthToken = AccountManager.get(activity.getApplicationContext()).blockingGetAuthToken(
+//        getAccount(context), spreadsheetsClient.getServiceName(), false);
+//    
+//    String weekSheetId = SendDocsUtils.getWorksheetId(spreadsheetId, spreadsheetsClient, spreadsheetsAuthToken);
+//    String worksheetUri = String.format(Locale.US, SendDocsUtils.GET_WORKSHEET_URI, URLEncoder.encode(spreadsheetId, "utf-8"),
+//        weekSheetId);
+//
+//    GDataParser gDataParser = spreadsheetsClient.getParserForFeed(Feed.class, worksheetUri,
+//        spreadsheetsAuthToken);
+//    gDataParser.init();
+//    while (gDataParser.hasMoreData()) {
+//      Entry entry = gDataParser.readNextEntry(null);
+//      String entryTitle = entry.getTitle();
+//      if (entryTitle.indexOf(title) > -1) { 
+//        if (isDelete) {
+//          spreadsheetsClient.deleteEntry(entry.getEditUri(), spreadsheetsAuthToken);
+//        }
+//        return true;
+//      }
+//    }
+//    } catch (Exception e) {
+//      Log.d(EndToEndTestUtils.LOG_TAG, "Unable to fetch content of spreadsheet.", e);
+//    }
     return false;
   }
   
