@@ -43,7 +43,7 @@ public class HelpActivity extends AbstractMyTracksActivity {
     TextView sendTrack = (TextView) findViewById(R.id.help_send_track_answer);
     sendTrack.setText(StringUtils.getHtml(
         this, R.string.help_send_track_answer, R.string.send_google_maps_url,
-        R.string.send_google_fusion_tables_url, R.string.send_google_docs_url));
+        R.string.send_google_fusion_tables_url, R.string.send_google_spreadsheets_url));
 
     findViewById(R.id.help_ok).setOnClickListener(new OnClickListener() {
       public void onClick(View v) {

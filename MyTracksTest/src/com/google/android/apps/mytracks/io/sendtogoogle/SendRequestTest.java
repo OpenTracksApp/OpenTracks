@@ -59,13 +59,13 @@ public class SendRequestTest extends AndroidTestCase {
   }
 
   /**
-   * Tests the method {@link SendRequest#isSendDocs()}. The value should be set
+   * Tests the method {@link SendRequest#isSendSpreadsheets()}. The value should be set
    * to false which is its default value when it is initialed in setup method.
    */
-  public void testIsSendDocs() {
-    assertEquals(false, sendRequest.isSendDocs());
-    sendRequest.setSendDocs(true);
-    assertEquals(true, sendRequest.isSendDocs());
+  public void testIsSendSpreadsheets() {
+    assertEquals(false, sendRequest.isSendSpreadsheets());
+    sendRequest.setSendSpreadsheets(true);
+    assertEquals(true, sendRequest.isSendSpreadsheets());
   }
 
   /**
@@ -122,14 +122,14 @@ public class SendRequestTest extends AndroidTestCase {
   }
 
   /**
-   * Tests the method {@link SendRequest#isDocsSuccess()}. The value should be
+   * Tests the method {@link SendRequest#isSpreadsheetsSuccess()}. The value should be
    * set to false which is its default value when it is initialed in setup
    * method.
    */
-  public void testIsDocsSuccess() {
-    assertEquals(false, sendRequest.isDocsSuccess());
-    sendRequest.setDocsSuccess(true);
-    assertEquals(true, sendRequest.isDocsSuccess());
+  public void testIsSpreadsheetsSuccess() {
+    assertEquals(false, sendRequest.isSpreadsheetsSuccess());
+    sendRequest.setSpreadsheetSuccess(true);
+    assertEquals(true, sendRequest.isSpreadsheetsSuccess());
   }
 
   /**
@@ -163,14 +163,14 @@ public class SendRequestTest extends AndroidTestCase {
     assertTrue(sendRequest.isSendDrive());
     assertTrue(sendRequest.isSendMaps());
     assertTrue(sendRequest.isSendFusionTables());
-    assertTrue(sendRequest.isSendDocs());
+    assertTrue(sendRequest.isSendSpreadsheets());
     assertTrue(sendRequest.isNewMap());
     assertEquals(account, sendRequest.getAccount());
     assertEquals(MAPID, sendRequest.getMapId());
     assertTrue(sendRequest.isDriveSuccess());
     assertTrue(sendRequest.isMapsSuccess());
     assertTrue(sendRequest.isFusionTablesSuccess());
-    assertTrue(sendRequest.isDocsSuccess());
+    assertTrue(sendRequest.isSpreadsheetsSuccess());
   }
 
   /**
@@ -204,14 +204,14 @@ public class SendRequestTest extends AndroidTestCase {
     assertFalse(sendRequest.isSendDrive());
     assertFalse(sendRequest.isSendMaps());
     assertFalse(sendRequest.isSendFusionTables());
-    assertFalse(sendRequest.isSendDocs());
+    assertFalse(sendRequest.isSendSpreadsheets());
     assertFalse(sendRequest.isNewMap());
     assertEquals(account, sendRequest.getAccount());
     assertEquals(MAPID, sendRequest.getMapId());
     assertFalse(sendRequest.isDriveSuccess());
     assertFalse(sendRequest.isMapsSuccess());
     assertFalse(sendRequest.isFusionTablesSuccess());
-    assertFalse(sendRequest.isDocsSuccess());
+    assertFalse(sendRequest.isSpreadsheetsSuccess());
   }
 
   /**
@@ -230,14 +230,14 @@ public class SendRequestTest extends AndroidTestCase {
     boolean sendDrive = parcel.readByte() == 1;
     boolean sendMaps = parcel.readByte() == 1;
     boolean sendFusionTables = parcel.readByte() == 1;
-    boolean sendDocs = parcel.readByte() == 1;
+    boolean sendSpreadsheets = parcel.readByte() == 1;
     boolean newMap = parcel.readByte() == 1;
     Parcelable account = parcel.readParcelable(null);
     String mapId = parcel.readString();
     boolean driveSuccess = parcel.readByte() == 1;
     boolean mapsSuccess = parcel.readByte() == 1;
     boolean fusionTablesSuccess = parcel.readByte() == 1;
-    boolean docsSuccess = parcel.readByte() == 1;
+    boolean spreadsheetsSuccess = parcel.readByte() == 1;
     assertEquals(1, trackId);
     assertNull(sharingAppPackageName);
     assertNull(sharingAppClassName);
@@ -245,14 +245,14 @@ public class SendRequestTest extends AndroidTestCase {
     assertFalse(sendDrive);
     assertFalse(sendMaps);
     assertFalse(sendFusionTables);
-    assertFalse(sendDocs);
+    assertFalse(sendSpreadsheets);
     assertFalse(newMap);
     assertNull(account);
     assertNull(mapId);
     assertFalse(driveSuccess);
     assertFalse(mapsSuccess);
     assertFalse(fusionTablesSuccess);
-    assertFalse(docsSuccess);
+    assertFalse(spreadsheetsSuccess);
   }
 
   /**
@@ -266,7 +266,7 @@ public class SendRequestTest extends AndroidTestCase {
     sendRequest.setSendDrive(true);
     sendRequest.setSendMaps(true);
     sendRequest.setSendFusionTables(true);
-    sendRequest.setSendDocs(true);
+    sendRequest.setSendSpreadsheets(true);
     sendRequest.setNewMap(true);
     Account accountNew = new Account(ACCOUNTNAME + "2", ACCOUNTYPE + "2");
     sendRequest.setAccount(accountNew);
@@ -274,7 +274,7 @@ public class SendRequestTest extends AndroidTestCase {
     sendRequest.setMapsSuccess(true);
     sendRequest.setDriveSuccess(true);
     sendRequest.setFusionTablesSuccess(true);
-    sendRequest.setDocsSuccess(true);
+    sendRequest.setSpreadsheetSuccess(true);
     Parcel parcel = Parcel.obtain();
     parcel.setDataPosition(0);
     sendRequest.writeToParcel(parcel, 1);
@@ -286,14 +286,14 @@ public class SendRequestTest extends AndroidTestCase {
     boolean sendDrive = parcel.readByte() == 1;
     boolean sendMaps = parcel.readByte() == 1;
     boolean sendFusionTables = parcel.readByte() == 1;
-    boolean sendDocs = parcel.readByte() == 1;
+    boolean sendSpreadsheets = parcel.readByte() == 1;
     boolean newMap = parcel.readByte() == 1;
     Parcelable account = parcel.readParcelable(null);
     String mapId = parcel.readString();
     boolean driveSuccess = parcel.readByte() == 1;
     boolean mapsSuccess = parcel.readByte() == 1;
     boolean fusionTablesSuccess = parcel.readByte() == 1;
-    boolean docsSuccess = parcel.readByte() == 1;
+    boolean spreadsheetsSuccess = parcel.readByte() == 1;
     assertEquals(4, trackId);
     assertEquals("package", sharingAppPackageName);
     assertEquals("class", sharingAppClassName);
@@ -301,13 +301,13 @@ public class SendRequestTest extends AndroidTestCase {
     assertTrue(sendDrive);
     assertTrue(sendMaps);
     assertTrue(sendFusionTables);
-    assertTrue(sendDocs);
+    assertTrue(sendSpreadsheets);
     assertTrue(newMap);
     assertEquals(accountNew, account);
     assertEquals(MAPID, mapId);
     assertTrue(driveSuccess);
     assertTrue(mapsSuccess);
     assertTrue(fusionTablesSuccess);
-    assertTrue(docsSuccess);
+    assertTrue(spreadsheetsSuccess);
   }
 }

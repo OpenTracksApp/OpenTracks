@@ -15,10 +15,10 @@
  */
 package com.google.android.apps.mytracks.io.maps;
 
-import com.google.android.apps.mytracks.io.docs.SendDocsActivity;
 import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesActivity;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.io.sendtogoogle.UploadResultActivity;
+import com.google.android.apps.mytracks.io.spreadsheets.SendSpreadsheetsActivity;
 
 import android.test.AndroidTestCase;
 
@@ -42,11 +42,11 @@ public class SendMapsActivityTest extends AndroidTestCase {
   /**
    * Tests the method
    * {@link SendMapsActivity#getNextClass(SendRequest, boolean)}. Sets the flags
-   * of "sendFusionTables","sendDocs" and "cancel" to true, true and false.
+   * of "sendFusionTables","sendSpreadsheets" and "cancel" to true, true and false.
    */
   public void testGetNextClass_notCancelSendFusionTables() {
     sendRequest.setSendFusionTables(true);
-    sendRequest.setSendDocs(true);
+    sendRequest.setSendSpreadsheets(true);
     Class<?> next = sendMapsActivity.getNextClass(sendRequest, false);
     assertEquals(SendFusionTablesActivity.class, next);
   }
@@ -54,23 +54,23 @@ public class SendMapsActivityTest extends AndroidTestCase {
   /**
    * Tests the method
    * {@link SendMapsActivity#getNextClass(SendRequest, boolean)}. Sets the flags
-   * of "sendFusionTables","sendDocs" and "cancel" to false, true and false.
+   * of "sendFusionTables","sendSpreadsheets" and "cancel" to false, true and false.
   */
-  public void testGetNextClass_notCancelSendDocs() {
+  public void testGetNextClass_notCancelSendSpreadsheets() {
     sendRequest.setSendFusionTables(false);
-    sendRequest.setSendDocs(true);
+    sendRequest.setSendSpreadsheets(true);
     Class<?> next = sendMapsActivity.getNextClass(sendRequest, false);
-    assertEquals(SendDocsActivity.class, next);
+    assertEquals(SendSpreadsheetsActivity.class, next);
   }
   
   /**
    * Tests the method
    * {@link SendMapsActivity#getNextClass(SendRequest, boolean)}. Sets the flags
-   * of "sendFusionTables","sendDocs" and "cancel" to false, false and false.
+   * of "sendFusionTables","sendSpreadsheets" and "cancel" to false, false and false.
    */
   public void testGetNextClass_notCancelNotSend() {
     sendRequest.setSendFusionTables(false);
-    sendRequest.setSendDocs(false);
+    sendRequest.setSendSpreadsheets(false);
     Class<?> next = sendMapsActivity.getNextClass(sendRequest, false);
     assertEquals(UploadResultActivity.class, next);
   }
@@ -78,11 +78,11 @@ public class SendMapsActivityTest extends AndroidTestCase {
   /**
    * Tests the method
    * {@link SendMapsActivity#getNextClass(SendRequest, boolean)}. Sets the flags
-   * of "sendFusionTables","sendDocs" and "cancel" to true, true and true.
+   * of "sendFusionTables","sendSpreadsheets" and "cancel" to true, true and true.
    */
-  public void testGetNextClass_cancelSendDocs() {
+  public void testGetNextClass_cancelSendSpreadsheets() {
     sendRequest.setSendFusionTables(true);
-    sendRequest.setSendDocs(true);
+    sendRequest.setSendSpreadsheets(true);
     Class<?> next = sendMapsActivity.getNextClass(sendRequest, true);
     assertEquals(UploadResultActivity.class, next);
   }

@@ -22,7 +22,7 @@ import android.os.Parcelable;
 
 /**
  * Send request states for sending a track to Google Maps, Google Fusion Tables,
- * and Google Docs.
+ * and Google Spreadsheets.
  * 
  * @author Jimmy Shih
  */
@@ -37,13 +37,13 @@ public class SendRequest implements Parcelable {
   private boolean sendDrive = false;
   private boolean sendMaps = false;
   private boolean sendFusionTables = false;
-  private boolean sendDocs = false;
+  private boolean sendSpreadsheets = false;
   private boolean newMap = false;
   private Account account = null;
   private String mapId = null;
   private boolean driveSuccess = false;
   private boolean mapsSuccess = false;
-  private boolean docsSuccess = false;
+  private boolean spreadsheetsSuccess = false;
   private boolean fusionTablesSuccess = false;
 
   /**
@@ -162,20 +162,20 @@ public class SendRequest implements Parcelable {
   }
 
   /**
-   * True if the user has selected the send to Google Docs option.
+   * True if the user has selected the send to Google Spreadsheets option.
    */
-  public boolean isSendDocs() {
-    return sendDocs;
+  public boolean isSendSpreadsheets() {
+    return sendSpreadsheets;
   }
 
   /**
-   * Sets the send to Google Docs option.
+   * Sets the send to Google Spreadsheets option.
    * 
-   * @param sendDocs true if the user has selected the send to Google Docs
-   *          option
+   * @param sendSpreadsheets true if the user has selected the send to Google
+   *          Spreadsheets option
    */
-  public void setSendDocs(boolean sendDocs) {
-    this.sendDocs = sendDocs;
+  public void setSendSpreadsheets(boolean sendSpreadsheets) {
+    this.sendSpreadsheets = sendSpreadsheets;
   }
 
   /**
@@ -277,19 +277,20 @@ public class SendRequest implements Parcelable {
   }
 
   /**
-   * True if sending to Google Docs is success.
+   * True if sending to Google Spreadsheets is success.
    */
-  public boolean isDocsSuccess() {
-    return docsSuccess;
+  public boolean isSpreadsheetsSuccess() {
+    return spreadsheetsSuccess;
   }
 
   /**
-   * Sets the Google Docs result.
+   * Sets the Google Spreadsheets result.
    * 
-   * @param docsSuccess true if sending to Google Docs is success
+   * @param spreadsheetsSuccess true if sending to Google Spreadsheets is
+   *          success
    */
-  public void setDocsSuccess(boolean docsSuccess) {
-    this.docsSuccess = docsSuccess;
+  public void setSpreadsheetSuccess(boolean spreadsheetsSuccess) {
+    this.spreadsheetsSuccess = spreadsheetsSuccess;
   }
 
   private SendRequest(Parcel in) {
@@ -300,14 +301,14 @@ public class SendRequest implements Parcelable {
     sendDrive = in.readByte() == 1;
     sendMaps = in.readByte() == 1;
     sendFusionTables = in.readByte() == 1;
-    sendDocs = in.readByte() == 1;
+    sendSpreadsheets = in.readByte() == 1;
     newMap = in.readByte() == 1;
     account = in.readParcelable(null);
     mapId = in.readString();
     driveSuccess = in.readByte() == 1;
     mapsSuccess = in.readByte() == 1;
     fusionTablesSuccess = in.readByte() == 1;
-    docsSuccess = in.readByte() == 1;
+    spreadsheetsSuccess = in.readByte() == 1;
   }
 
   @Override
@@ -324,14 +325,14 @@ public class SendRequest implements Parcelable {
     out.writeByte((byte) (sendDrive ? 1 : 0));
     out.writeByte((byte) (sendMaps ? 1 : 0));
     out.writeByte((byte) (sendFusionTables ? 1 : 0));
-    out.writeByte((byte) (sendDocs ? 1 : 0));
+    out.writeByte((byte) (sendSpreadsheets ? 1 : 0));
     out.writeByte((byte) (newMap ? 1 : 0));
     out.writeParcelable(account, 0);
     out.writeString(mapId);
     out.writeByte((byte) (driveSuccess ? 1 : 0));
     out.writeByte((byte) (mapsSuccess ? 1 : 0));
     out.writeByte((byte) (fusionTablesSuccess ? 1 : 0));
-    out.writeByte((byte) (docsSuccess ? 1 : 0));
+    out.writeByte((byte) (spreadsheetsSuccess ? 1 : 0));
   }
 
   public static final Parcelable.Creator<SendRequest>

@@ -17,12 +17,12 @@
 package com.google.android.apps.mytracks.io.sendtogoogle;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.io.docs.SendDocsActivity;
 import com.google.android.apps.mytracks.io.drive.SendDriveActivity;
 import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesActivity;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsConstants;
 import com.google.android.apps.mytracks.io.maps.ChooseMapActivity;
 import com.google.android.apps.mytracks.io.maps.SendMapsActivity;
+import com.google.android.apps.mytracks.io.spreadsheets.SendSpreadsheetsActivity;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
@@ -185,7 +185,7 @@ public class AccountChooserActivity extends Activity {
       needDrivePermission = defaultTablePublic && sendRequest.isSendFusionTables();
     }
     if (!needDrivePermission) {
-      needDrivePermission = sendRequest.isSendDocs();
+      needDrivePermission = sendRequest.isSendSpreadsheets();
     }
 
     if (needDrivePermission) {
@@ -214,7 +214,7 @@ public class AccountChooserActivity extends Activity {
    * Checks the Spreadsheet permission.
    */
   private void checkSpreadsheetPermission() {
-    if (sendRequest.isSendDocs()) {
+    if (sendRequest.isSendSpreadsheets()) {
       SendToGoogleUtils.checkPermissionByActivity(this, sendRequest.getAccount().name,
           SendToGoogleUtils.SPREADSHEET_SCOPE,
           SendToGoogleUtils.SPREADSHEET_PERMISSION_REQUEST_CODE, spreadsheetsCallback);
@@ -312,15 +312,17 @@ public class AccountChooserActivity extends Activity {
   /**
    * Starts the next activity. If
    * <p>
+   * sendDrive -> {@link SendDriveActivity}
+   * <p>
    * sendMaps and newMap -> {@link SendMapsActivity}
    * <p>
    * sendMaps and !newMap -> {@link ChooseMapActivity}
    * <p>
    * !sendMaps && sendFusionTables -> {@link SendFusionTablesActivity}
    * <p>
-   * !sendMaps && !sendFusionTables && sendDocs -> {@link SendDocsActivity}
+   * !sendMaps && !sendFusionTables && sendSpreadsheets -> {@link SendSpreadsheetsActivity}
    * <p>
-   * !sendMaps && !sendFusionTables && !sendDocs -> {@link UploadResultActivity}
+   * !sendMaps && !sendFusionTables && !sendSpreadsheets -> {@link UploadResultActivity}
    */
   private void startNextActivity() {
     Class<?> next;
@@ -330,8 +332,8 @@ public class AccountChooserActivity extends Activity {
       next = sendRequest.isNewMap() ? SendMapsActivity.class : ChooseMapActivity.class;
     } else if (sendRequest.isSendFusionTables()) {
       next = SendFusionTablesActivity.class;
-    } else if (sendRequest.isSendDocs()) {
-      next = SendDocsActivity.class;
+    } else if (sendRequest.isSendSpreadsheets()) {
+      next = SendSpreadsheetsActivity.class;
     } else {
       next = UploadResultActivity.class;
     }

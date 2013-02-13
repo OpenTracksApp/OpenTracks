@@ -15,12 +15,12 @@
  */
 package com.google.android.apps.mytracks.io.maps;
 
-import com.google.android.apps.mytracks.io.docs.SendDocsActivity;
 import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesActivity;
 import com.google.android.apps.mytracks.io.sendtogoogle.AbstractSendActivity;
 import com.google.android.apps.mytracks.io.sendtogoogle.AbstractSendAsyncTask;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.io.sendtogoogle.UploadResultActivity;
+import com.google.android.apps.mytracks.io.spreadsheets.SendSpreadsheetsActivity;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
@@ -62,8 +62,8 @@ public class SendMapsActivity extends AbstractSendActivity {
     } else {
       if (request.isSendFusionTables()) {
         return SendFusionTablesActivity.class;
-      } else if (request.isSendDocs()) {
-        return SendDocsActivity.class;
+      } else if (request.isSendSpreadsheets()) {
+        return SendSpreadsheetsActivity.class;
       } else {
         return UploadResultActivity.class;
       }

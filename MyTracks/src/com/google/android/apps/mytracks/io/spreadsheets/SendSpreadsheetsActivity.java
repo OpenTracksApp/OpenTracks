@@ -13,7 +13,8 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks.io.docs;
+
+package com.google.android.apps.mytracks.io.spreadsheets;
 
 import com.google.android.apps.mytracks.io.sendtogoogle.AbstractSendActivity;
 import com.google.android.apps.mytracks.io.sendtogoogle.AbstractSendAsyncTask;
@@ -25,25 +26,25 @@ import com.google.android.maps.mytracks.R;
 import android.content.Intent;
 
 /**
- * An activity to send a track to Google Docs.
+ * An activity to send a track to Google Spreadsheet.
  *
  * @author Jimmy Shih
  */
-public class SendDocsActivity extends AbstractSendActivity {
+public class SendSpreadsheetsActivity extends AbstractSendActivity {
 
   @Override
   protected AbstractSendAsyncTask createAsyncTask() {
-    return new SendDocsAsyncTask(this, sendRequest.getTrackId(), sendRequest.getAccount());
+    return new SendSpreadsheetsAsyncTask(this, sendRequest.getTrackId(), sendRequest.getAccount());
   }
 
   @Override
   protected String getServiceName() {
-    return getString(R.string.send_google_docs);
+    return getString(R.string.send_google_spreadsheets);
   }
 
   @Override
   protected void startNextActivity(boolean success, boolean isCancel) {
-    sendRequest.setDocsSuccess(success);
+    sendRequest.setSpreadsheetSuccess(success);
     Intent intent = IntentUtils.newIntent(this, UploadResultActivity.class)
         .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
     startActivity(intent);

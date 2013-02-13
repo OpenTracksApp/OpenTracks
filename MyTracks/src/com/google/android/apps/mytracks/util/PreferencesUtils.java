@@ -86,9 +86,9 @@ public class PreferencesUtils {
   public static final long SELECTED_TRACK_ID_DEFAULT = -1L;
   
   public static final boolean SEND_TO_DRIVE_DEFAULT = false;
-  public static final boolean SEND_TO_DOCS_DEFAULT = false;
   public static final boolean SEND_TO_FUSION_TABLES_DEFAULT = false;
   public static final boolean SEND_TO_MAPS_DEFAULT = false;
+  public static final boolean SEND_TO_SPREADSHEETS_DEFAULT = false;
   
   public static final String SENSOR_TYPE_DEFAULT = "NONE"; 
   public static final int SPLIT_FREQUENCY_DEFAULT = 0;

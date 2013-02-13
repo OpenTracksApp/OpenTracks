@@ -50,7 +50,8 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
   private static final String KEY_SEND_REQUEST = "sendRequest";
   private static final String KEY_HIDE_DRIVE = "hideDrive";
 
-  public static ChooseUploadServiceDialogFragment newInstance(SendRequest sendRequest, boolean hideDrive) {
+  public static ChooseUploadServiceDialogFragment newInstance(
+      SendRequest sendRequest, boolean hideDrive) {
     Bundle bundle = new Bundle();
     bundle.putParcelable(KEY_SEND_REQUEST, sendRequest);
     bundle.putBoolean(KEY_HIDE_DRIVE, hideDrive);
@@ -63,11 +64,11 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
   private FragmentActivity activity;
   private SendRequest sendRequest;
   private boolean hideDrive;
-  
+
   private CheckBox driveCheckBox;
   private CheckBox mapsCheckBox;
   private CheckBox fusionTablesCheckBox;
-  private CheckBox docsCheckBox;
+  private CheckBox spreadsheetsCheckBox;
 
   private TableRow mapsOptionTableRow;
   private RadioButton existingMapRadioButton;
@@ -77,7 +78,7 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
     activity = getActivity();
     sendRequest = getArguments().getParcelable(KEY_SEND_REQUEST);
     hideDrive = getArguments().getBoolean(KEY_HIDE_DRIVE);
-    
+
     View view = activity.getLayoutInflater().inflate(R.layout.choose_upload_service, null);
 
     view.findViewById(R.id.choose_upload_service_drive_options)
@@ -86,7 +87,7 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
     driveCheckBox = (CheckBox) view.findViewById(R.id.choose_upload_service_drive);
     mapsCheckBox = (CheckBox) view.findViewById(R.id.choose_upload_service_maps);
     fusionTablesCheckBox = (CheckBox) view.findViewById(R.id.choose_upload_service_fusion_tables);
-    docsCheckBox = (CheckBox) view.findViewById(R.id.choose_upload_service_docs);
+    spreadsheetsCheckBox = (CheckBox) view.findViewById(R.id.choose_upload_service_spreadsheets);
 
     driveCheckBox.setChecked(PreferencesUtils.getBoolean(
         activity, R.string.send_to_drive_key, PreferencesUtils.SEND_TO_DRIVE_DEFAULT));
@@ -94,10 +95,11 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
         activity, R.string.send_to_maps_key, PreferencesUtils.SEND_TO_MAPS_DEFAULT));
     fusionTablesCheckBox.setChecked(PreferencesUtils.getBoolean(
         activity, R.string.send_to_fusion_tables_key,
-        PreferencesUtils.SEND_TO_FUSION_TABLES_DEFAULT));    
-    
-    docsCheckBox.setChecked(PreferencesUtils.getBoolean(
-        activity, R.string.send_to_docs_key, PreferencesUtils.SEND_TO_DOCS_DEFAULT));
+        PreferencesUtils.SEND_TO_FUSION_TABLES_DEFAULT));
+
+    spreadsheetsCheckBox.setChecked(PreferencesUtils.getBoolean(
+        activity, R.string.send_to_spreadsheets_key,
+        PreferencesUtils.SEND_TO_SPREADSHEETS_DEFAULT));
 
     mapsCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
       public void onCheckedChanged(CompoundButton button, boolean checked) {
@@ -124,16 +126,15 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
     } else {
       newMapRadioButton.setChecked(true);
     }
-    
+
     // Update fusion table
-    boolean defaultTablePublic = PreferencesUtils.getBoolean(activity,
-        R.string.default_table_public_key,
-        PreferencesUtils.DEFAULT_TABLE_PUBLIC_DEFAULT);
+    boolean defaultTablePublic = PreferencesUtils.getBoolean(
+        activity, R.string.default_table_public_key, PreferencesUtils.DEFAULT_TABLE_PUBLIC_DEFAULT);
     String text = getString(R.string.send_google_fusion_tables) + "\n"
         + getString(defaultTablePublic ? R.string.send_google_fusion_tables_public
             : R.string.send_google_fusion_tables_private);
     fusionTablesCheckBox.setText(text);
-    
+
     return new AlertDialog.Builder(activity).setNegativeButton(R.string.generic_cancel, null)
         .setPositiveButton(R.string.send_google_send_now, new DialogInterface.OnClickListener() {
             @Override
@@ -147,9 +148,9 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
             PreferencesUtils.setBoolean(
                 activity, R.string.send_to_fusion_tables_key, fusionTablesCheckBox.isChecked());
             PreferencesUtils.setBoolean(
-                activity, R.string.send_to_docs_key, docsCheckBox.isChecked());
-            if (sendDrive() || mapsCheckBox.isChecked()
-                || fusionTablesCheckBox.isChecked() || docsCheckBox.isChecked()) {
+                activity, R.string.send_to_spreadsheets_key, spreadsheetsCheckBox.isChecked());
+            if (sendDrive() || mapsCheckBox.isChecked() || fusionTablesCheckBox.isChecked()
+                || spreadsheetsCheckBox.isChecked()) {
               startNextActivity();
             } else {
               Toast.makeText(activity, R.string.send_google_no_service_selected, Toast.LENGTH_LONG)
@@ -173,7 +174,7 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
     sendRequest.setSendDrive(sendDrive());
     sendRequest.setSendMaps(mapsCheckBox.isChecked());
     sendRequest.setSendFusionTables(fusionTablesCheckBox.isChecked());
-    sendRequest.setSendDocs(docsCheckBox.isChecked());
+    sendRequest.setSendSpreadsheets(spreadsheetsCheckBox.isChecked());
     sendRequest.setNewMap(!existingMapRadioButton.isChecked());
     sendStats();
     Intent intent = IntentUtils.newIntent(activity, AccountChooserActivity.class)
@@ -194,11 +195,11 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
     if (sendRequest.isSendFusionTables()) {
       AnalyticsUtils.sendPageViews(activity, "/send/fusion_tables");
     }
-    if (sendRequest.isSendDocs()) {
-      AnalyticsUtils.sendPageViews(activity, "/send/docs");
+    if (sendRequest.isSendSpreadsheets()) {
+      AnalyticsUtils.sendPageViews(activity, "/send/spreadsheets");
     }
   }
-  
+
   /**
    * True to send to Google Drive.
    */

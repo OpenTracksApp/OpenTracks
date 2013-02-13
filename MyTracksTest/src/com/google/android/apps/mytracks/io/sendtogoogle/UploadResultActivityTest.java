@@ -38,10 +38,10 @@ public class UploadResultActivityTest extends
   private TextView successFooter;
   private LinearLayout mapsResult;
   private LinearLayout fusionTablesResult;
-  private LinearLayout docsResult;
+  private LinearLayout spreadsheetsResult;
   private ImageView mapsResultIcon;
   private ImageView fusionTablesResultIcon;
-  private ImageView docsResultIcon;
+  private ImageView spreadsheetsResultIcon;
 
   private String successTitle;
   private String errorTitle;
@@ -64,11 +64,11 @@ public class UploadResultActivityTest extends
 
     assertEquals(View.VISIBLE, mapsResult.getVisibility());
     assertEquals(View.VISIBLE, fusionTablesResult.getVisibility());
-    assertEquals(View.VISIBLE, docsResult.getVisibility());
+    assertEquals(View.VISIBLE, spreadsheetsResult.getVisibility());
 
     assertEquals(successTitle, mapsResultIcon.getContentDescription());
     assertEquals(successTitle, fusionTablesResultIcon.getContentDescription());
-    assertEquals(successTitle, docsResultIcon.getContentDescription());
+    assertEquals(successTitle, spreadsheetsResultIcon.getContentDescription());
   }
 
   /**
@@ -83,19 +83,19 @@ public class UploadResultActivityTest extends
 
     assertEquals(View.VISIBLE, mapsResult.getVisibility());
     assertEquals(View.VISIBLE, fusionTablesResult.getVisibility());
-    assertEquals(View.VISIBLE, docsResult.getVisibility());
+    assertEquals(View.VISIBLE, spreadsheetsResult.getVisibility());
 
     assertEquals(errorTitle, mapsResultIcon.getContentDescription());
     assertEquals(errorTitle, fusionTablesResultIcon.getContentDescription());
-    assertEquals(errorTitle, docsResultIcon.getContentDescription());
+    assertEquals(errorTitle, spreadsheetsResultIcon.getContentDescription());
   }
 
   /**
    * Checks the display of dialog when match following items:
    * <ul>
-   * <li>Only send to Maps and Docs.</li>
+   * <li>Only send to Maps and Spreadsheets.</li>
    * <li>Send to Maps successful.</li>
-   * <li>Send to Docs failed.</li>
+   * <li>Send to Spreadsheets failed.</li>
    * </ul>
    */
   public void testPartialSuccess() {
@@ -105,10 +105,10 @@ public class UploadResultActivityTest extends
 
     assertEquals(View.VISIBLE, mapsResult.getVisibility());
     assertEquals(View.GONE, fusionTablesResult.getVisibility());
-    assertEquals(View.VISIBLE, docsResult.getVisibility());
+    assertEquals(View.VISIBLE, spreadsheetsResult.getVisibility());
 
     assertEquals(successTitle, mapsResultIcon.getContentDescription());
-    assertEquals(errorTitle, docsResultIcon.getContentDescription());
+    assertEquals(errorTitle, spreadsheetsResultIcon.getContentDescription());
   }
 
   /**
@@ -116,21 +116,21 @@ public class UploadResultActivityTest extends
    * 
    * @param isSendMaps
    * @param isSendFusionTables
-   * @param isSendDocs
+   * @param isSendSpreadsheets
    * @param isMapsSuccess
    * @param isFusionTablesSuccess
-   * @param isDocsSuccess
+   * @param isSpreadsheetSuccess
    */
-  private void initialActivity(boolean isSendMaps, boolean isSendFusionTables, boolean isSendDocs,
-      boolean isMapsSuccess, boolean isFusionTablesSuccess, boolean isDocsSuccess) {
+  private void initialActivity(boolean isSendMaps, boolean isSendFusionTables, boolean isSendSpreadsheets,
+      boolean isMapsSuccess, boolean isFusionTablesSuccess, boolean isSpreadsheetSuccess) {
     Intent intent = new Intent();
     SendRequest sendRequest = new SendRequest(1L);
     sendRequest.setSendMaps(isSendMaps);
     sendRequest.setSendFusionTables(isSendFusionTables);
-    sendRequest.setSendDocs(isSendDocs);
+    sendRequest.setSendSpreadsheets(isSendSpreadsheets);
     sendRequest.setMapsSuccess(isMapsSuccess);
     sendRequest.setFusionTablesSuccess(isFusionTablesSuccess);
-    sendRequest.setDocsSuccess(isDocsSuccess);
+    sendRequest.setSpreadsheetSuccess(isSpreadsheetSuccess);
     intent.putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
     setActivityIntent(intent);
     uploadResultActivity = this.getActivity();
@@ -149,11 +149,11 @@ public class UploadResultActivityTest extends
 
     mapsResult = (LinearLayout) view.findViewById(R.id.upload_result_maps_result);
     fusionTablesResult = (LinearLayout) view.findViewById(R.id.upload_result_fusion_tables_result);
-    docsResult = (LinearLayout) view.findViewById(R.id.upload_result_docs_result);
+    spreadsheetsResult = (LinearLayout) view.findViewById(R.id.upload_result_spreadsheets_result);
 
     mapsResultIcon = (ImageView) view.findViewById(R.id.upload_result_maps_result_icon);
     fusionTablesResultIcon = (ImageView) view
         .findViewById(R.id.upload_result_fusion_tables_result_icon);
-    docsResultIcon = (ImageView) view.findViewById(R.id.upload_result_docs_result_icon);
+    spreadsheetsResultIcon = (ImageView) view.findViewById(R.id.upload_result_spreadsheets_result_icon);
   }
 }

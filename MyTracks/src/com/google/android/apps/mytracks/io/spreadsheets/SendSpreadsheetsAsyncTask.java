@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.google.android.apps.mytracks.io.docs;
+package com.google.android.apps.mytracks.io.spreadsheets;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
@@ -55,13 +55,13 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * AsyncTask to send a track to Google Docs.
+ * AsyncTask to send a track to Google Spreadsheet.
  * 
  * @author Jimmy Shih
  */
-public class SendDocsAsyncTask extends AbstractSendAsyncTask {
+public class SendSpreadsheetsAsyncTask extends AbstractSendAsyncTask {
 
-  private static final String TAG = SendDocsAsyncTask.class.getSimpleName();
+  private static final String TAG = SendSpreadsheetsAsyncTask.class.getSimpleName();
   private static final String
       GOOGLE_SPREADSHEET_MIME_TYPE = "application/vnd.google-apps.spreadsheet";
   private static final String
@@ -82,7 +82,7 @@ public class SendDocsAsyncTask extends AbstractSendAsyncTask {
   private final Context context;
   private final MyTracksProviderUtils myTracksProviderUtils;
 
-  public SendDocsAsyncTask(SendDocsActivity activity, long trackId, Account account) {
+  public SendSpreadsheetsAsyncTask(SendSpreadsheetsActivity activity, long trackId, Account account) {
     super(activity);
     this.trackId = trackId;
     this.account = account;
@@ -262,21 +262,21 @@ public class SendDocsAsyncTask extends AbstractSendAsyncTask {
     row.getCustomElements().setValueLocal(
         "movingtime", StringUtils.formatElapsedTimeWithHour(tripStatistics.getMovingTime()));
     row.getCustomElements().setValueLocal(
-        "distance", SendDocsUtils.getDistance(tripStatistics.getTotalDistance(), metricUnits));
+        "distance", SendSpreadsheetsUtils.getDistance(tripStatistics.getTotalDistance(), metricUnits));
     row.getCustomElements().setValueLocal("distanceunit", distanceUnit);
     row.getCustomElements().setValueLocal(
-        "averagespeed", SendDocsUtils.getSpeed(tripStatistics.getAverageSpeed(), metricUnits));
+        "averagespeed", SendSpreadsheetsUtils.getSpeed(tripStatistics.getAverageSpeed(), metricUnits));
     row.getCustomElements().setValueLocal("averagemovingspeed",
-        SendDocsUtils.getSpeed(tripStatistics.getAverageMovingSpeed(), metricUnits));
+        SendSpreadsheetsUtils.getSpeed(tripStatistics.getAverageMovingSpeed(), metricUnits));
     row.getCustomElements().setValueLocal(
-        "maxspeed", SendDocsUtils.getSpeed(tripStatistics.getMaxSpeed(), metricUnits));
+        "maxspeed", SendSpreadsheetsUtils.getSpeed(tripStatistics.getMaxSpeed(), metricUnits));
     row.getCustomElements().setValueLocal("speedunit", speedUnit);
     row.getCustomElements().setValueLocal("elevationgain",
-        SendDocsUtils.getElevation(tripStatistics.getTotalElevationGain(), metricUnits));
+        SendSpreadsheetsUtils.getElevation(tripStatistics.getTotalElevationGain(), metricUnits));
     row.getCustomElements().setValueLocal(
-        "minelevation", SendDocsUtils.getElevation(tripStatistics.getMinElevation(), metricUnits));
+        "minelevation", SendSpreadsheetsUtils.getElevation(tripStatistics.getMinElevation(), metricUnits));
     row.getCustomElements().setValueLocal(
-        "maxelevation", SendDocsUtils.getElevation(tripStatistics.getMaxElevation(), metricUnits));
+        "maxelevation", SendSpreadsheetsUtils.getElevation(tripStatistics.getMaxElevation(), metricUnits));
     row.getCustomElements().setValueLocal("elevationunit", elevationUnit);
 
     String map = SendMapsUtils.getMapUrl(track);

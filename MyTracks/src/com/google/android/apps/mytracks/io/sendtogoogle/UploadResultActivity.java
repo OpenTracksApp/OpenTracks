@@ -67,7 +67,7 @@ public class UploadResultActivity extends FragmentActivity {
       finish();
       return;
     }
-    
+
     if (sendRequest.isSendMaps() && sendRequest.isMapsSuccess()) {
       shareUrl = SendMapsUtils.getMapUrl(track);
       if (sendRequest.getSharingAppPackageName() != null) {
@@ -80,9 +80,8 @@ public class UploadResultActivity extends FragmentActivity {
     }
     if (shareUrl == null && sendRequest.isSendFusionTables()
         && sendRequest.isFusionTablesSuccess()) {
-      boolean defaultTablePublic = PreferencesUtils.getBoolean(this,
-          R.string.default_table_public_key,
-          PreferencesUtils.DEFAULT_TABLE_PUBLIC_DEFAULT);
+      boolean defaultTablePublic = PreferencesUtils.getBoolean(
+          this, R.string.default_table_public_key, PreferencesUtils.DEFAULT_TABLE_PUBLIC_DEFAULT);
       if (defaultTablePublic) {
         shareUrl = SendFusionTablesUtils.getMapUrl(track);
       }
@@ -101,13 +100,15 @@ public class UploadResultActivity extends FragmentActivity {
     LinearLayout mapsResult = (LinearLayout) view.findViewById(R.id.upload_result_maps_result);
     LinearLayout fusionTablesResult = (LinearLayout) view.findViewById(
         R.id.upload_result_fusion_tables_result);
-    LinearLayout docsResult = (LinearLayout) view.findViewById(R.id.upload_result_docs_result);
+    LinearLayout spreadsheetsResult = (LinearLayout) view.findViewById(
+        R.id.upload_result_spreadsheets_result);
 
     ImageView driveResultIcon = (ImageView) view.findViewById(R.id.upload_result_drive_result_icon);
     ImageView mapsResultIcon = (ImageView) view.findViewById(R.id.upload_result_maps_result_icon);
     ImageView fusionTablesResultIcon = (ImageView) view.findViewById(
         R.id.upload_result_fusion_tables_result_icon);
-    ImageView docsResultIcon = (ImageView) view.findViewById(R.id.upload_result_docs_result_icon);
+    ImageView spreadsheetsResultIcon = (ImageView) view.findViewById(
+        R.id.upload_result_spreadsheets_result_icon);
 
     TextView successFooter = (TextView) view.findViewById(R.id.upload_result_success_footer);
     TextView errorFooter = (TextView) view.findViewById(R.id.upload_result_error_footer);
@@ -122,7 +123,7 @@ public class UploadResultActivity extends FragmentActivity {
         hasError = true;
       }
     }
-    
+
     if (!sendRequest.isSendMaps()) {
       mapsResult.setVisibility(View.GONE);
     } else {
@@ -143,12 +144,12 @@ public class UploadResultActivity extends FragmentActivity {
       }
     }
 
-    if (!sendRequest.isSendDocs()) {
-      docsResult.setVisibility(View.GONE);
+    if (!sendRequest.isSendSpreadsheets()) {
+      spreadsheetsResult.setVisibility(View.GONE);
     } else {
-      if (!sendRequest.isDocsSuccess()) {
-        docsResultIcon.setImageResource(R.drawable.failure);
-        docsResultIcon.setContentDescription(getString(R.string.generic_error_title));
+      if (!sendRequest.isSpreadsheetsSuccess()) {
+        spreadsheetsResultIcon.setImageResource(R.drawable.failure);
+        spreadsheetsResultIcon.setContentDescription(getString(R.string.generic_error_title));
         hasError = true;
       }
     }
@@ -159,22 +160,19 @@ public class UploadResultActivity extends FragmentActivity {
       errorFooter.setVisibility(View.GONE);
     }
 
-    AlertDialog.Builder builder = new AlertDialog.Builder(this)
-        .setCancelable(true)
+    AlertDialog.Builder builder = new AlertDialog.Builder(this).setCancelable(true)
         .setIcon(hasError ? android.R.drawable.ic_dialog_alert : android.R.drawable.ic_dialog_info)
         .setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
           public void onCancel(DialogInterface dialog) {
             finish();
           }
-        })
-        .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
+        }).setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
             @Override
           public void onClick(DialogInterface dialog, int which) {
             finish();
           }
-        })
-        .setTitle(hasError ? R.string.generic_error_title : R.string.generic_success_title)
+        }).setTitle(hasError ? R.string.generic_error_title : R.string.generic_success_title)
         .setView(view);
 
     // Add a Share URL button if shareUrl exists

@@ -795,8 +795,8 @@ limitations under the License.
     deletes the recorded tracks from the device memory. If you have saved tracks or backups on the
     external storage, you  must delete them separately. You can access the external storage using
     any file manager app from the Play Store or using a USB cable to connect your device to your
-    computer. Tracks uploaded to Google Maps, Google Fusion Tables, and Google Docs must also be
-    deleted separately.
+    computer. Tracks uploaded to Google Maps, Google Fusion Tables, and Google Spreadsheets must
+    also be deleted separately.
   </string>
   <string name="help_delete_tracks_question"
     translation_description="In the 'Help' page, the question on delete tracks.">
@@ -875,8 +875,8 @@ limitations under the License.
     translation_description="In the 'Help' page, the answer on what is My Tracks.">
     My Tracks allows you to record GPS tracks and visualize your walking, running, biking or any
     other activity while watching live performance statistics. My Tracks makes it easy to archive
-    your training history with Google Maps, Google Fusion Tables, and Google Docs, and share your
-    activities with friends and the world.
+    your training history with Google Maps, Google Fusion Tables, and Google Spreadsheets, and share
+    your activities with friends and the world.
   </string>
   <string name="help_my_tracks_question"
     translation_description="In the 'Help' page, the question on what is My Tracks.">
@@ -896,10 +896,10 @@ limitations under the License.
 
       %1$s url. E.g., 'maps.google.com'.
       %2$s url. E.g., 'google.com/fusiontables'.
-      %3$s url. E.g., 'docs.google.com'.">
-    You can send a track to Google Maps, Google Fusion Tables, and Google Docs. Tracks sent to
-    Google Maps are at %1$s, &#8220;My Places&#8221;. Tracks sent to Google Fusion Tables are at
-    %2$s. Tracks sent to Google Docs are at %3$s.
+      %3$s url. E.g., 'drive.google.com'.">
+    You can send a track to Google Maps, Google Fusion Tables, and Google Spreadsheets. Tracks sent
+    to Google Maps are at %1$s, &#8220;My Places&#8221;. Tracks sent to Google Fusion Tables are at
+    %2$s. Tracks sent to Google Spreadsheets are at %3$s.
   </string>
   <string name="help_send_track_question"
     translation_description="In the 'Help' page, the question on sending a track.">
@@ -917,13 +917,13 @@ limitations under the License.
   <string name="help_share_visibility_answer"
     translation_description="In the 'Help' page, the answer on share visibility.">
     By default, tracks sent to Google Maps are unlisted, tracks sent to Google Fusion Tables are
-    public, and tracks sent to Google Docs are private. For Google Maps, you can change the
+    private, and tracks sent to Google Spreadsheets are private. For Google Maps, you can change the
     default between public and unlisted via Settings -> Google. After uploading tracks, you can
-    change their visibility in Google Maps, Google Fusion Tables, and Google Docs.
+    change their visibility in Google Maps, Google Fusion Tables, and Google Spreadsheets.
   </string>
   <string name="help_share_visibility_question"
     translation_description="In the 'Help' page, the question on share visibility.">
-    Who can see the tracks I send to Google Maps, Google Fusion Tables, and Google Docs?
+    Who can see the tracks I send to Google Maps, Google Fusion Tables, and Google Spreadsheets?
   </string>
   <string name="help_split_marker_answer"
     translation_description="In the 'Help' page, the answer on split markers.">
@@ -1437,11 +1437,6 @@ limitations under the License.
     translation_description="When sending to Google, the dialog title to choose a Google account.">
     Choose account
   </string>
-  <string name="send_google_docs"
-    translation_description="When sending a track to Google, under the 'Send to...' dialog, the
-      checkbox option to send to Google Docs.">
-    Google Docs
-  </string>
   <string name="send_google_drive"
     translation_description="When sending a track to Google, under the 'Send to...' dialog, the
       checkbox option to send to Google Drive.">
@@ -1509,13 +1504,18 @@ limitations under the License.
   <string name="send_google_progress_message"
     translation_description="When sending a track to a Google service, the progress message.
 
-      %1$s: service name. 'Google Maps', 'Google Fusion Tables', or 'Google Docs'.">
+      %1$s: service name. 'Google Maps', 'Google Fusion Tables', or 'Google Spreadsheets'.">
     Sending to %1$s&#8230;
   </string>
   <string name="send_google_send_now"
     translation_description="When sending a track to Google, under the 'Send to...' dialog, the
       button on the bottom to send the track to the selected Google services.">
     Send now
+  </string>
+  <string name="send_google_spreadsheets"
+    translation_description="When sending a track to Google, under the 'Send to...' dialog, the
+      checkbox option to send to Google Spreadsheets.">
+    Google Spreadsheets
   </string>
   <string name="send_google_success_footer"
     translation_description="When sending a track to Google, the additional comment on the bottom of
@@ -1525,7 +1525,7 @@ limitations under the License.
   <string name="send_google_title"
     translation_description="When sending a track to Google, the dialog title to choose the Google
       services to send the track to. The user can choose Google Maps, Google Fusion Tables, and
-      Google Docs.">
+      Google Spreadsheets.">
     Send to&#8230;
   </string>
   <string name="send_google_track_part_label"

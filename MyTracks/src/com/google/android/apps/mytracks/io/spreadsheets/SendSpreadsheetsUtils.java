@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.google.android.apps.mytracks.io.docs;
+package com.google.android.apps.mytracks.io.spreadsheets;
 
 import com.google.android.apps.mytracks.util.UnitConversions;
 
@@ -22,13 +22,13 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 /**
- * Utilities for sending a track to Google Docs.
+ * Utilities for sending a track to Google Spreadsheet.
  * 
  * @author Jimmy Shih
  */
-public class SendDocsUtils {
+public class SendSpreadsheetsUtils {
 
-  // Google Docs can only parse numbers in the English locale.
+  // Google Spreadsheet can only parse numbers in the English locale.
   private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance(Locale.ENGLISH);
   private static final NumberFormat INTEGER_FORMAT = NumberFormat.getIntegerInstance(
       Locale.ENGLISH);
@@ -38,7 +38,7 @@ public class SendDocsUtils {
     NUMBER_FORMAT.setMinimumFractionDigits(2);
   }
 
-  private SendDocsUtils() {}
+  private SendSpreadsheetsUtils() {}
 
   /**
    * Gets the distance. Performs unit conversion and formatting.

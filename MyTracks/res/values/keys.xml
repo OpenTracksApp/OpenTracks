@@ -44,10 +44,10 @@ limitations under the License.
   <string name="min_required_accuracy_key">minRequiredAccuracy</string>
   <string name="pick_existing_map_key">pickExistingMap</string>
   <string name="report_speed_key">reportSpeed</string>
-  <string name="send_to_docs_key">sendToDocs</string>
   <string name="send_to_drive_key">sendToDrive</string>
   <string name="send_to_fusion_tables_key">sendToFusionTables</string>
   <string name="send_to_maps_key">sendToMaps</string>
+  <string name="send_to_spreadsheets_key">sendToSpreadsheets</string>
   <string name="sensor_type_key">sensorType</string>
   <string name="split_frequency_key">splitFrequency</string>
   <string name="stats_show_coordinate_key">statsShowCoordinate</string>
