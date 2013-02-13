@@ -106,11 +106,6 @@ limitations under the License.
     <item name="android:layout_gravity">center</item>
     <item name="android:padding">8dp</item>
   </style>
-  <!-- list item stats -->
-  <style name="ListItemStats" parent="@style/TextSmall">
-    <item name="android:singleLine">true</item>
-    <item name="android:textColor">@android:color/secondary_text_dark</item>
-  </style>
   <!-- scroll view -->
   <style name="ScrollView">
     <item name="android:layout_height">match_parent</item>

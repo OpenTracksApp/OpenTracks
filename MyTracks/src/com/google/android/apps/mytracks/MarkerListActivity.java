@@ -26,7 +26,6 @@ import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.ListItemUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
-import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
@@ -170,13 +169,10 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
         int iconId = statistics ? R.drawable.yellow_pushpin : R.drawable.blue_pushpin;
         String category = statistics ? null : cursor.getString(categoryIndex);
         String description = statistics ? null : cursor.getString(descriptionIndex);
-        long time = cursor.getLong(timeIndex);
-        String startTime = time == 0L ? null
-            : StringUtils.formatRelativeDateTime(MarkerListActivity.this, time);
-
+        
         ListItemUtils.setListItem(MarkerListActivity.this, view, false, true, iconId,
-            R.string.icon_marker, cursor.getString(nameIndex), category, null, null, startTime,
-            description);
+            R.string.icon_marker, cursor.getString(nameIndex), category, null, null,
+            cursor.getLong(timeIndex), description);
       }
     };
     listView.setAdapter(resourceCursorAdapter);

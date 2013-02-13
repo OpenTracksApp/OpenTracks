@@ -15,17 +15,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:gravity="center_vertical"
+  android:gravity="top"
   android:layout_height="wrap_content"
   android:layout_width="match_parent"
   android:minHeight="?android:attr/listPreferredItemHeight"
   android:orientation="horizontal"
-  android:padding="8dp" >
+  android:paddingBottom="12dp"
+  android:paddingLeft="12dp"
+  android:paddingRight="12dp"
+  android:paddingTop="8dp" >
   <ImageView
     android:contentDescription="@string/icon_track"
     android:id="@+id/list_item_icon"
     android:layout_height="wrap_content"
-    android:layout_width="wrap_content" />
+    android:layout_width="wrap_content"
+    android:paddingTop="4dp" />
   <LinearLayout
     android:layout_height="wrap_content"
     android:layout_marginLeft="8dp"
@@ -35,36 +39,33 @@ limitations under the License.
       android:layout_height="wrap_content"
       android:layout_width="match_parent"
       android:orientation="horizontal" >
-      <TextView
-        android:id="@+id/list_item_name"
-        android:singleLine="true"
-        style="@style/TextLarge" />
-      <TextView
-        android:id="@+id/list_item_category"
-        android:layout_marginLeft="8dp"
-        android:singleLine="true"
-        style="@style/TextSmall" />
-    </LinearLayout>
-    <LinearLayout
-      android:layout_height="wrap_content"
-      android:layout_width="match_parent"
-      android:orientation="horizontal" >
-      <TextView
-        android:id="@+id/list_item_total_time"
-        android:layout_marginRight="8dp"
-        style="@style/ListItemStats" />
-      <TextView
-        android:id="@+id/list_item_total_distance"
-        android:layout_marginRight="8dp"
-        style="@style/ListItemStats" />
+      <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:orientation="vertical" >
+        <TextView
+          android:id="@+id/list_item_name"
+          android:layout_width="fill_parent"
+          android:singleLine="true"
+          style="@style/TextLarge" />
+      </LinearLayout>
       <TextView
         android:id="@+id/list_item_start_time"
-        style="@style/ListItemStats" />
+        android:layout_gravity="bottom"
+        android:singleLine="true"
+        android:textColor="@android:color/secondary_text_dark"
+        style="@style/TextSmall" />
     </LinearLayout>
     <TextView
-        android:id="@+id/list_item_recording"
-        android:singleLine="true"
-        style="@style/TextSmall" />
+      android:id="@+id/list_item_time_distance"
+      android:singleLine="true"
+      android:textColor="@android:color/primary_text_dark"
+      style="@style/TextSmall" />
+    <TextView
+      android:id="@+id/list_item_recording"
+      android:singleLine="true"
+      style="@style/TextSmall" />
     <TextView
       android:id="@+id/list_item_description"
       android:singleLine="false"

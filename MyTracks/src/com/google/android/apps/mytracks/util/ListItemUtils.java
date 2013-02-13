@@ -50,7 +50,7 @@ public class ListItemUtils {
    */
   public static void setListItem(Context context, View view, boolean isRecording, boolean isPaused,
       int iconId, int iconContentDescriptionId, String name, String category, String totalTime,
-      String totalDistance, String startTime, String description) {
+      String totalDistance, long startTime, String description) {
 
     if (isRecording) {
       iconId = isPaused ? R.drawable.track_paused : R.drawable.track_recording;
@@ -65,17 +65,12 @@ public class ListItemUtils {
     TextView nameTextView = (TextView) view.findViewById(R.id.list_item_name);
     nameTextView.setText(name);
 
-    TextView categoryTextView = (TextView) view.findViewById(R.id.list_item_category);
-    setTextView(categoryTextView, category, 0);
-
-    TextView totalTimeTextView = (TextView) view.findViewById(R.id.list_item_total_time);
-    setTextView(totalTimeTextView, isRecording ? null : totalTime, 0);
-
-    TextView totalDistanceTextView = (TextView) view.findViewById(R.id.list_item_total_distance);
-    setTextView(totalDistanceTextView, isRecording ? null : totalDistance, 0);
+    TextView timeDistanceTextView = (TextView) view.findViewById(R.id.list_item_time_distance);
+    setTextView(timeDistanceTextView, getTimeDistance(isRecording, totalTime, totalDistance), 0);
 
     TextView startTimeTextView = (TextView) view.findViewById(R.id.list_item_start_time);
-    setTextView(startTimeTextView, isRecording ? null : startTime, 0);
+    setTextView(
+        startTimeTextView, isRecording ? null : StringUtils.formatTime(context, startTime), 0);
 
     TextView recordingTextView = (TextView) view.findViewById(R.id.list_item_recording);
     String value = isRecording ? context.getString(
@@ -87,9 +82,49 @@ public class ListItemUtils {
     setTextView(recordingTextView, value, color);
 
     TextView descriptionTextView = (TextView) view.findViewById(R.id.list_item_description);
-    setTextView(descriptionTextView, isRecording ? null : description, 0);
+    setTextView(descriptionTextView, getDescription(isRecording, category, description), 0);
   }
 
+  /**
+   * Gets the time/distance text.
+   * 
+   * @param isRecording true if recording
+   * @param totalTime the total time
+   * @param totalDistance the total distance
+   */
+  private static String getTimeDistance(boolean isRecording, String totalTime, String totalDistance) {
+    if (isRecording) {
+      return null;
+    }
+    if (totalDistance == null || totalDistance.length() == 0) {
+      return totalTime;
+    }
+    if (totalTime == null || totalTime.length() == 0) {
+      return totalDistance;
+    }
+    return totalTime + " (" + totalDistance + ")";
+  }
+  
+  /**
+   * Gets the description text.
+   * 
+   * @param isRecording true if recording
+   * @param category the category
+   * @param description the description
+   */
+  private static String getDescription(boolean isRecording, String category, String description) {
+    if (isRecording) {
+      return null;
+    }
+    if (category == null || category.length() == 0) {
+      return description;
+    }
+    if (description == null || description.length() == 0) {
+      return category;
+    }
+    return "[" + category + "] " + description;
+  }
+  
   /**
    * Sets a text view.
    * 

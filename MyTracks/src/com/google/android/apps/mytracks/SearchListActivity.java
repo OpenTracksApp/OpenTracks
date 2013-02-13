@@ -219,7 +219,7 @@ public class SearchListActivity extends AbstractMyTracksActivity
         String category = (String) resultMap.get(CATEGORY_FIELD);
         String totalTime = (String) resultMap.get(TOTAL_TIME_FIELD);
         String totalDistance = (String) resultMap.get(TOTAL_DISTANCE_FIELD);
-        String startTime = (String) resultMap.get(START_TIME_FIELD);
+        Long startTime = (Long) resultMap.get(START_TIME_FIELD);
         String description = (String) resultMap.get(DESCRIPTION_FIELD);
 
         ListItemUtils.setListItem(SearchListActivity.this, view, isRecording, isPaused, iconId,
@@ -466,7 +466,6 @@ public class SearchListActivity extends AbstractMyTracksActivity
     }
 
     boolean statistics = waypoint.getType() == WaypointType.STATISTICS;
-    long time = waypoint.getLocation().getTime();
 
     resultMap.put(IS_RECORDING_FIELD, false);
     resultMap.put(IS_PAUSED_FIELD, true);
@@ -478,8 +477,7 @@ public class SearchListActivity extends AbstractMyTracksActivity
     resultMap.put(TOTAL_TIME_FIELD, trackName == null ? null
         : getString(R.string.search_list_marker_track_location, trackName));
     resultMap.put(TOTAL_DISTANCE_FIELD, null);
-    resultMap.put(
-        START_TIME_FIELD, time == 0L ? null : StringUtils.formatRelativeDateTime(this, time));
+    resultMap.put(START_TIME_FIELD, waypoint.getLocation().getTime());
     resultMap.put(DESCRIPTION_FIELD, statistics ? null : waypoint.getDescription());
     resultMap.put(TRACK_ID_FIELD, waypoint.getTrackId());
     resultMap.put(MARKER_ID_FIELD, waypoint.getId());
@@ -492,23 +490,20 @@ public class SearchListActivity extends AbstractMyTracksActivity
    * @param resultMap the result map
    */
   private void prepareTrackForDisplay(Track track, Map<String, Object> resultMap) {
-    boolean isRecording = track.getId() == recordingTrackId;
-    String name = track.getName();
     TripStatistics tripStatitics = track.getTripStatistics();
-    long startTime = tripStatitics.getStartTime();
-    String startTimeDisplay = StringUtils.formatDateTime(this, startTime).equals(name) ? null
-        : StringUtils.formatRelativeDateTime(this, startTime);
+    String icon = track.getIcon();
+    String category = icon != null && !icon.equals("") ? null : track.getCategory();
 
-    resultMap.put(IS_RECORDING_FIELD, isRecording);
+    resultMap.put(IS_RECORDING_FIELD, track.getId() == recordingTrackId);
     resultMap.put(IS_PAUSED_FIELD, recordingTrackPaused);
-    resultMap.put(ICON_ID_FIELD, TrackIconUtils.getIconDrawable(track.getIcon()));
+    resultMap.put(ICON_ID_FIELD, TrackIconUtils.getIconDrawable(icon));
     resultMap.put(ICON_CONTENT_DESCRIPTION_ID_FIELD, R.string.icon_track);
-    resultMap.put(NAME_FIELD, name);
-    resultMap.put(CATEGORY_FIELD, track.getCategory());
+    resultMap.put(NAME_FIELD, track.getName());
+    resultMap.put(CATEGORY_FIELD, category);
     resultMap.put(TOTAL_TIME_FIELD, StringUtils.formatElapsedTime(tripStatitics.getTotalTime()));
     resultMap.put(TOTAL_DISTANCE_FIELD,
         StringUtils.formatDistance(this, tripStatitics.getTotalDistance(), metricUnits));
-    resultMap.put(START_TIME_FIELD, startTimeDisplay);
+    resultMap.put(START_TIME_FIELD, tripStatitics.getStartTime());
     resultMap.put(DESCRIPTION_FIELD, track.getDescription());
     resultMap.put(TRACK_ID_FIELD, track.getId());
     resultMap.put(MARKER_ID_FIELD, null);

@@ -25,7 +25,6 @@ import android.text.format.DateUtils;
 
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -65,19 +64,22 @@ public class StringUtils {
   }
 
   /**
-   * Formats the relative date and time based on user's phone date/time
-   * preferences.
+   * Formats the time based on user's phone date/time preferences.
    * 
    * @param context the context
    * @param time the time in milliseconds
    */
-  public static String formatRelativeDateTime(Context context, long time) {
-    long now = Calendar.getInstance().getTimeInMillis();
-    if (now - time > DateUtils.WEEK_IN_MILLIS) {
-      return formatDateTime(context, time);
+  public static String formatTime(Context context, long time) {
+    if (time == 0L) {
+      return null;
+    }
+    if (DateUtils.isToday(time)) {
+      return DateUtils.getRelativeTimeSpanString(time, System.currentTimeMillis(),
+          DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE).toString();
     } else {
-      return DateUtils.getRelativeTimeSpanString(
-          time, now, DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE).toString();
+      return DateUtils.formatDateTime(context, time, DateUtils.FORMAT_SHOW_DATE
+          | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_MONTH
+          | DateUtils.FORMAT_ABBREV_TIME);
     }
   }
 

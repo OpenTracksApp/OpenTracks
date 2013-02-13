@@ -392,18 +392,19 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
         int descriptionIndex = cursor.getColumnIndex(TracksColumns.DESCRIPTION);
 
         boolean isRecording = cursor.getLong(idIndex) == recordingTrackId;
-        int iconId = TrackIconUtils.getIconDrawable(cursor.getString(iconIndex));
+        String icon = cursor.getString(iconIndex);
+        int iconId = TrackIconUtils.getIconDrawable(icon);
         String name = cursor.getString(nameIndex);
+        String category = icon != null && !icon.equals("") ? null : cursor.getString(categoryIndex);
         String totalTime = StringUtils.formatElapsedTime(cursor.getLong(totalTimeIndex));
         String totalDistance = StringUtils.formatDistance(
             TrackListActivity.this, cursor.getDouble(totalDistanceIndex), metricUnits);
         long startTime = cursor.getLong(startTimeIndex);
-        String startTimeDisplay = StringUtils.formatDateTime(context, startTime).equals(name) ? null
-            : StringUtils.formatRelativeDateTime(context, startTime);
-
+        String description = cursor.getString(descriptionIndex);
+        
         ListItemUtils.setListItem(TrackListActivity.this, view, isRecording, recordingTrackPaused,
-            iconId, R.string.icon_track, name, cursor.getString(categoryIndex), totalTime,
-            totalDistance, startTimeDisplay, cursor.getString(descriptionIndex));
+            iconId, R.string.icon_track, name, category, totalTime,
+            totalDistance, startTime, description);
       }
     };
     listView.setAdapter(sectionResourceCursorAdapter);
@@ -414,7 +415,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
         @Override
       public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
         return new CursorLoader(TrackListActivity.this, TracksColumns.CONTENT_URI, PROJECTION, null,
-            null, TracksColumns.SHAREDWITHME + " ASC, " + TracksColumns._ID + " DESC");
+            null, TracksColumns.SHAREDWITHME + " ASC, " + TracksColumns.STARTTIME + " DESC");
       }
 
         @Override
