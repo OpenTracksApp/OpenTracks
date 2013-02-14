@@ -35,7 +35,7 @@ limitations under the License.
     android:title="@string/menu_share">
   </item>
   <item
-    android:icon="@drawable/menu_share"
+    android:icon="@drawable/menu_share_drive"
     android:id="@+id/track_detail_share_drive"
     android:orderInCategory="4"
     android:showAsAction="ifRoom"

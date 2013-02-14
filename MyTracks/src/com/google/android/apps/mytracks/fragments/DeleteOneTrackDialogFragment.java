@@ -37,9 +37,6 @@ import android.support.v4.app.FragmentActivity;
  */
 public class DeleteOneTrackDialogFragment extends DialogFragment {
 
-  public static final String DELETE_ONE_TRACK_DIALOG_TAG = "deleteOneTrackDialog";
-  private static final String KEY_TRACK_ID = "trackId";
-
   /**
    * Interface for caller of this dialog fragment.
    * 
@@ -57,6 +54,9 @@ public class DeleteOneTrackDialogFragment extends DialogFragment {
      */
     public void onTrackDeleted();
   }
+  
+  public static final String DELETE_ONE_TRACK_DIALOG_TAG = "deleteOneTrackDialog";
+  private static final String KEY_TRACK_ID = "trackId";
 
   public static DeleteOneTrackDialogFragment newInstance(long trackId) {
     Bundle bundle = new Bundle();

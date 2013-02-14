@@ -23,6 +23,9 @@ import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.TrackDataType;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.fragments.AddPeopleDialogFragment;
+import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment;
+import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment.ConfirmCaller;
 import com.google.android.apps.mytracks.fragments.DeleteAllTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment.DeleteOneTrackCaller;
@@ -89,7 +92,8 @@ import java.util.Locale;
  * 
  * @author Leif Hendrik Wilden
  */
-public class TrackListActivity extends FragmentActivity implements DeleteOneTrackCaller {
+public class TrackListActivity extends FragmentActivity
+    implements ConfirmCaller, DeleteOneTrackCaller {
 
   private static final String TAG = TrackListActivity.class.getSimpleName();
   private static final String START_GPS_KEY = "start_gps_key";
@@ -195,15 +199,12 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
           return handleContextItem(itemId, id);
         }
 
-          @Override
-        public boolean canEdit(int position, long id) {
+        public void onPrepare(Menu menu, int position, long id) {
           Track track = myTracksProviderUtils.getTrack(id);
-          return !track.isSharedWithMe();
-        }
-
-          @Override
-        public boolean canDelete(int position, long id) {
-          return true;
+          menu.findItem(R.id.list_context_menu_share_drive).setVisible(!track.isSharedWithMe());
+          menu.findItem(R.id.list_context_menu_show_on_map).setVisible(false);
+          menu.findItem(R.id.list_context_menu_edit).setVisible(!track.isSharedWithMe());
+          menu.findItem(R.id.list_context_menu_delete).setVisible(true);
         }
       };
 
@@ -401,10 +402,10 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
             TrackListActivity.this, cursor.getDouble(totalDistanceIndex), metricUnits);
         long startTime = cursor.getLong(startTimeIndex);
         String description = cursor.getString(descriptionIndex);
-        
+
         ListItemUtils.setListItem(TrackListActivity.this, view, isRecording, recordingTrackPaused,
-            iconId, R.string.icon_track, name, category, totalTime,
-            totalDistance, startTime, description);
+            iconId, R.string.icon_track, name, category, totalTime, totalDistance, startTime,
+            description);
       }
     };
     listView.setAdapter(sectionResourceCursorAdapter);
@@ -607,9 +608,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
   public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
     super.onCreateContextMenu(menu, v, menuInfo);
     getMenuInflater().inflate(R.menu.list_context_menu, menu);
-    long trackId = ((AdapterContextMenuInfo) menuInfo).id;
-    Track track = myTracksProviderUtils.getTrack(trackId);
-    menu.findItem(R.id.list_context_menu_edit).setVisible(!track.isSharedWithMe());
+    contextualActionModeCallback.onPrepare(menu, 0, ((AdapterContextMenuInfo) menuInfo).id);
   }
 
   @Override
@@ -628,6 +627,17 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
       }
     }
     return super.onKeyUp(keyCode, event);
+  }
+
+  @Override
+  public void onConfirmed(int confirmId, long trackId) {
+    switch (confirmId) {
+      case R.string.confirm_share_drive_key:
+        AddPeopleDialogFragment.newInstance(trackId)
+            .show(getSupportFragmentManager(), AddPeopleDialogFragment.ADD_PEOPLE_DIALOG_TAG);
+        break;
+      default:
+    }
   }
 
   @Override
@@ -763,6 +773,12 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
   private boolean handleContextItem(int itemId, long trackId) {
     Intent intent;
     switch (itemId) {
+      case R.id.list_context_menu_share_drive:
+        ConfirmDialogFragment.newInstance(R.string.confirm_share_drive_key,
+            PreferencesUtils.CONFIRM_SHARE_DRIVE_DEFAULT,
+            getString(R.string.share_track_drive_confirm_message), trackId)
+            .show(getSupportFragmentManager(), ConfirmDialogFragment.CONFIRM_DIALOG_TAG);
+        return true;
       case R.id.list_context_menu_show_on_map:
         intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
             .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);

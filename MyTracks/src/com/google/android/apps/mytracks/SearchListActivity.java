@@ -24,6 +24,9 @@ import com.google.android.apps.mytracks.content.SearchEngineProvider;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
+import com.google.android.apps.mytracks.fragments.AddPeopleDialogFragment;
+import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment;
+import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment.ConfirmCaller;
 import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment.DeleteOneMarkerCaller;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
@@ -75,7 +78,7 @@ import java.util.SortedSet;
  * @author Rodrigo Damazio
  */
 public class SearchListActivity extends AbstractMyTracksActivity
-    implements DeleteOneTrackCaller, DeleteOneMarkerCaller {
+    implements ConfirmCaller, DeleteOneTrackCaller, DeleteOneMarkerCaller {
 
   private static final String TAG = SearchListActivity.class.getSimpleName();
 
@@ -131,25 +134,17 @@ public class SearchListActivity extends AbstractMyTracksActivity
           return handleContextItem(itemId, position);
         }
 
-          @Override
-        public boolean canEdit(int position, long id) {
-          Map<String, Object> item = arrayAdapter.getItem(position);
-          Long trackId = (Long) item.get(TRACK_ID_FIELD);
-          Track track = myTracksProviderUtils.getTrack(trackId);
-          return !track.isSharedWithMe();
-        }
-
-          @Override
-        public boolean canDelete(int position, long id) {
+        public void onPrepare(Menu menu, int position, long id) {
           Map<String, Object> item = arrayAdapter.getItem(position);
           Long trackId = (Long) item.get(TRACK_ID_FIELD);
           Long markerId = (Long) item.get(MARKER_ID_FIELD);
-          if (markerId != null) {
-            Track track = myTracksProviderUtils.getTrack(trackId);
-            return !track.isSharedWithMe();
-          } else {
-            return true;
-          }
+          Track track = myTracksProviderUtils.getTrack(trackId);
+          menu.findItem(R.id.list_context_menu_share_drive)
+              .setVisible(markerId == null && !track.isSharedWithMe());
+          menu.findItem(R.id.list_context_menu_show_on_map).setVisible(markerId != null);
+          menu.findItem(R.id.list_context_menu_edit).setVisible(!track.isSharedWithMe());
+          menu.findItem(R.id.list_context_menu_delete)
+              .setVisible(markerId == null || !track.isSharedWithMe());
         }
       };
 
@@ -295,14 +290,8 @@ public class SearchListActivity extends AbstractMyTracksActivity
     super.onCreateContextMenu(menu, v, menuInfo);
     getMenuInflater().inflate(R.menu.list_context_menu, menu);
 
-    Map<String, Object> item = arrayAdapter.getItem(((AdapterContextMenuInfo) menuInfo).position);
-    Long trackId = (Long) item.get(TRACK_ID_FIELD);
-    Long markerId = (Long) item.get(MARKER_ID_FIELD);
-    Track track = myTracksProviderUtils.getTrack(trackId);
-    menu.findItem(R.id.list_context_menu_edit).setVisible(!track.isSharedWithMe());
-    if (markerId != null) {
-      menu.findItem(R.id.list_context_menu_delete).setVisible(!track.isSharedWithMe());
-    }
+    int position = ((AdapterContextMenuInfo) menuInfo).position;
+    contextualActionModeCallback.onPrepare(menu, position, 0);
   }
 
   @Override
@@ -337,6 +326,12 @@ public class SearchListActivity extends AbstractMyTracksActivity
     Long markerId = (Long) item.get(MARKER_ID_FIELD);
     Intent intent;
     switch (itemId) {
+      case R.id.list_context_menu_share_drive:
+        ConfirmDialogFragment.newInstance(R.string.confirm_share_drive_key,
+            PreferencesUtils.CONFIRM_SHARE_DRIVE_DEFAULT,
+            getString(R.string.share_track_drive_confirm_message), trackId)
+            .show(getSupportFragmentManager(), ConfirmDialogFragment.CONFIRM_DIALOG_TAG);
+        return true;
       case R.id.list_context_menu_show_on_map:
         if (markerId != null) {
           intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
@@ -507,6 +502,17 @@ public class SearchListActivity extends AbstractMyTracksActivity
     resultMap.put(DESCRIPTION_FIELD, track.getDescription());
     resultMap.put(TRACK_ID_FIELD, track.getId());
     resultMap.put(MARKER_ID_FIELD, null);
+  }
+
+  @Override
+  public void onConfirmed(int confirmId, long trackId) {
+    switch (confirmId) {
+      case R.string.confirm_share_drive_key:
+        AddPeopleDialogFragment.newInstance(trackId)
+            .show(getSupportFragmentManager(), AddPeopleDialogFragment.ADD_PEOPLE_DIALOG_TAG);
+        break;
+      default:
+    }
   }
 
   @Override

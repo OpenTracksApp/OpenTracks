@@ -16,6 +16,8 @@
 
 package com.google.android.apps.mytracks;
 
+import android.view.Menu;
+
 /**
  * Callback when an item in the contextual action mode is selected.
  * 
@@ -33,18 +35,11 @@ public interface ContextualActionModeCallback {
   public boolean onClick(int itemId, int position, long id);
 
   /**
-   * True if the item in the selected row can be edited.
+   * Invoked to prepare the menu for the selected item.
    * 
-   * @param position the position of the selected row
-   * @param id the id of the selected row
+   * @param menu the menu
+   * @param position the position of the selected item
+   * @param id the id of the selected item
    */
-  public boolean canEdit(int position, long id);
-
-  /**
-   * True if the item in the selected row can be deleted.
-   * 
-   * @param position the position of the selected row
-   * @param id the id of the selected row
-   */
-  public boolean canDelete(int position, long id);
+  public void onPrepare(Menu menu, int position, long id);
 }

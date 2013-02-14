@@ -16,6 +16,11 @@ limitations under the License.
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
   <item
+    android:icon="@drawable/menu_share_drive"
+    android:id="@+id/list_context_menu_share_drive"
+    android:showAsAction="ifRoom"
+    android:title="@string/menu_share_drive"/>
+  <item
     android:icon="@drawable/menu_show_on_map"
     android:id="@+id/list_context_menu_show_on_map"
     android:showAsAction="ifRoom"

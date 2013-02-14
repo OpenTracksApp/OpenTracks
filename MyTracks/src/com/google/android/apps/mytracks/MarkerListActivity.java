@@ -73,16 +73,12 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
           return handleContextItem(itemId, id);
         }
 
-          @Override
-        public boolean canEdit(int position, long id) {
+        public void onPrepare(Menu menu, int position, long id) {
           Track track = myTracksProviderUtils.getTrack(trackId);
-          return !track.isSharedWithMe();
-        }
-
-          @Override
-        public boolean canDelete(int poistion, long id) {
-          Track track = myTracksProviderUtils.getTrack(trackId);
-          return !track.isSharedWithMe();
+          menu.findItem(R.id.list_context_menu_share_drive).setVisible(false);
+          menu.findItem(R.id.list_context_menu_show_on_map).setVisible(true);
+          menu.findItem(R.id.list_context_menu_edit).setVisible(!track.isSharedWithMe());
+          menu.findItem(R.id.list_context_menu_delete).setVisible(!track.isSharedWithMe());
         }
       };
 
@@ -169,7 +165,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
         int iconId = statistics ? R.drawable.yellow_pushpin : R.drawable.blue_pushpin;
         String category = statistics ? null : cursor.getString(categoryIndex);
         String description = statistics ? null : cursor.getString(descriptionIndex);
-        
+
         ListItemUtils.setListItem(MarkerListActivity.this, view, false, true, iconId,
             R.string.icon_marker, cursor.getString(nameIndex), category, null, null,
             cursor.getLong(timeIndex), description);
@@ -259,9 +255,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
   public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
     super.onCreateContextMenu(menu, v, menuInfo);
     getMenuInflater().inflate(R.menu.list_context_menu, menu);
-    Track track = myTracksProviderUtils.getTrack(trackId);
-    menu.findItem(R.id.list_context_menu_edit).setVisible(!track.isSharedWithMe());
-    menu.findItem(R.id.list_context_menu_delete).setVisible(!track.isSharedWithMe());
+    contextualActionModeCallback.onPrepare(menu, 0, 0);
   }
 
   @Override

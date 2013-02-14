@@ -16,10 +16,10 @@
 
 package com.google.android.apps.mytracks.fragments;
 
-import com.google.android.apps.mytracks.TrackDetailActivity;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -36,24 +36,51 @@ import android.widget.TextView;
  */
 public class ConfirmDialogFragment extends DialogFragment {
 
+  /**
+   * Interface for caller of this dialog fragment.
+   * 
+   * @author Jimmy Shih
+   */
+  public interface ConfirmCaller {
+
+    /**
+     * Called when confirmed.
+     */
+    public void onConfirmed(int confirmId, long trackId);
+  }
+
   public static final String CONFIRM_DIALOG_TAG = "confirmDialog";
 
   private static final String KEY_CONFIRM_ID = "confirmId";
   private static final String KEY_DEFAULT_VALUE = "defaultValue";
   private static final String KEY_MESSAGE = "message";
-
+  private static final String KEY_TRACK_ID = "trackId";
+  
   private CheckBox checkBox;
 
   public static ConfirmDialogFragment newInstance(
-      int confirmId, boolean defaultValue, CharSequence message) {
+      int confirmId, boolean defaultValue, CharSequence message, long trackId) {
     Bundle bundle = new Bundle();
     bundle.putInt(KEY_CONFIRM_ID, confirmId);
     bundle.putBoolean(KEY_DEFAULT_VALUE, defaultValue);
     bundle.putCharSequence(KEY_MESSAGE, message);
+    bundle.putLong(KEY_TRACK_ID, trackId);
     
     ConfirmDialogFragment confirmDialogFragment = new ConfirmDialogFragment();
     confirmDialogFragment.setArguments(bundle);
     return confirmDialogFragment;
+  }
+
+  private ConfirmCaller caller;
+
+  @Override
+  public void onAttach(Activity activity) {
+    super.onAttach(activity);
+    try {
+      caller = (ConfirmCaller) activity;
+    } catch (ClassCastException e) {
+      throw new ClassCastException(activity.toString() + " must implement ConfirmCaller");
+    }
   }
 
   @Override
@@ -62,9 +89,9 @@ public class ConfirmDialogFragment extends DialogFragment {
     int confirmId = getArguments().getInt(KEY_CONFIRM_ID);
     boolean defaultValue = getArguments().getBoolean(KEY_DEFAULT_VALUE);
     if (!PreferencesUtils.getBoolean(getActivity(), confirmId, defaultValue)) {
+      long trackId = getArguments().getLong(KEY_TRACK_ID);
       dismiss();
-      TrackDetailActivity trackDetailActivity = (TrackDetailActivity) getActivity();
-      trackDetailActivity.onConfirmDialogDone(confirmId);
+      caller.onConfirmed(confirmId, trackId);
     }
   }
 
@@ -80,9 +107,9 @@ public class ConfirmDialogFragment extends DialogFragment {
             @Override
           public void onClick(DialogInterface dialog, int which) {
             int confirmId = getArguments().getInt(KEY_CONFIRM_ID);
+            long trackId = getArguments().getLong(KEY_TRACK_ID);
             PreferencesUtils.setBoolean(getActivity(), confirmId, !checkBox.isChecked());
-            TrackDetailActivity trackDetailActivity = (TrackDetailActivity) getActivity();
-            trackDetailActivity.onConfirmDialogDone(confirmId);
+            caller.onConfirmed(confirmId, trackId);
           }
         }).setTitle(R.string.generic_confirm_title).setView(view).create();
   }

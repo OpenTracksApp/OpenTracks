@@ -59,32 +59,33 @@ public class Api11Adapter extends Api10Adapter {
       final ContextualActionModeCallback contextualActionModeCallback) {
     listView.setOnItemLongClickListener(new OnItemLongClickListener() {
       ActionMode actionMode;
-      @Override
+
+        @Override
       public boolean onItemLongClick(
           AdapterView<?> parent, View view, final int position, final long id) {
         if (actionMode != null) {
           return false;
         }
         actionMode = activity.startActionMode(new ActionMode.Callback() {
-          @Override
+            @Override
           public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             mode.getMenuInflater().inflate(R.menu.list_context_menu, menu);
             return true;
           }
-          @Override
+
+            @Override
           public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            menu.findItem(R.id.list_context_menu_edit)
-                .setVisible(contextualActionModeCallback.canEdit(position, id));
-            menu.findItem(R.id.list_context_menu_delete)
-                .setVisible(contextualActionModeCallback.canDelete(position, id));
+            contextualActionModeCallback.onPrepare(menu, position, id);
             // Return true to indicate change
             return true;
           }
-          @Override
+
+            @Override
           public void onDestroyActionMode(ActionMode mode) {
             actionMode = null;
           }
-          @Override
+
+            @Override
           public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             mode.finish();
             return contextualActionModeCallback.onClick(item.getItemId(), position, id);
