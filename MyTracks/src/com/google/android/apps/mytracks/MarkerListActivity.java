@@ -74,7 +74,6 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
         }
 
         public void onPrepare(Menu menu, int position, long id) {
-          Track track = myTracksProviderUtils.getTrack(trackId);
           menu.findItem(R.id.list_context_menu_share_drive).setVisible(false);
           menu.findItem(R.id.list_context_menu_show_on_map).setVisible(true);
           menu.findItem(R.id.list_context_menu_edit).setVisible(!track.isSharedWithMe());
@@ -119,7 +118,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
   private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
   private boolean recordingTrackPaused = PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT;
 
-  private long trackId = -1;
+  private Track track;
   private ResourceCursorAdapter resourceCursorAdapter;
 
   // UI elements
@@ -132,13 +131,14 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
 
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
     sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1L);
+    long trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1L);
     if (trackId == -1L) {
       Log.d(TAG, "invalid track id");
       finish();
       return;
     }
-
+    track = myTracksProviderUtils.getTrack(trackId);
+    
     setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
     ListView listView = (ListView) findViewById(R.id.marker_list);
@@ -165,10 +165,9 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
         int iconId = statistics ? R.drawable.yellow_pushpin : R.drawable.blue_pushpin;
         String category = statistics ? null : cursor.getString(categoryIndex);
         String description = statistics ? null : cursor.getString(descriptionIndex);
-
         ListItemUtils.setListItem(MarkerListActivity.this, view, false, true, iconId,
             R.string.icon_marker, cursor.getString(nameIndex), category, null, null,
-            cursor.getLong(timeIndex), description);
+            cursor.getLong(timeIndex), description, track.getSharedOwner());
       }
     };
     listView.setAdapter(resourceCursorAdapter);
@@ -181,7 +180,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
       public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
         return new CursorLoader(MarkerListActivity.this, WaypointsColumns.CONTENT_URI, PROJECTION,
             WaypointsColumns.TRACKID + "=? AND " + WaypointsColumns._ID + "!=?",
-            new String[] { String.valueOf(trackId), String.valueOf(firstWaypointId) }, null);
+            new String[] { String.valueOf(track.getId()), String.valueOf(firstWaypointId) }, null);
       }
 
         @Override
@@ -232,7 +231,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
 
   private void updateMenu() {
     if (insertMarkerMenuItem != null) {
-      insertMarkerMenuItem.setVisible(trackId == recordingTrackId && !recordingTrackPaused);
+      insertMarkerMenuItem.setVisible(track.getId() == recordingTrackId && !recordingTrackPaused);
     }
   }
 
@@ -241,7 +240,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
     switch (item.getItemId()) {
       case R.id.marker_list_insert_marker:
         Intent intent = IntentUtils.newIntent(this, MarkerEditActivity.class)
-            .putExtra(MarkerEditActivity.EXTRA_TRACK_ID, trackId);
+            .putExtra(MarkerEditActivity.EXTRA_TRACK_ID, track.getId());
         startActivity(intent);
         return true;
       case R.id.marker_list_search:
@@ -287,7 +286,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
         startActivity(intent);
         return true;
       case R.id.list_context_menu_delete:
-        DeleteOneMarkerDialogFragment.newInstance(markerId, trackId).show(
+        DeleteOneMarkerDialogFragment.newInstance(markerId, track.getId()).show(
             getSupportFragmentManager(),
             DeleteOneMarkerDialogFragment.DELETE_ONE_MARKER_DIALOG_TAG);
         return true;

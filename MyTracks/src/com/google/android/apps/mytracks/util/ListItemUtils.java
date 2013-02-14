@@ -53,7 +53,7 @@ public class ListItemUtils {
    */
   public static void setListItem(Context context, View view, boolean isRecording, boolean isPaused,
       int iconId, int iconContentDescriptionId, String name, String category, String totalTime,
-      String totalDistance, long startTime, String description) {
+      String totalDistance, long startTime, String description, String sharedOwner) {
 
     if (isRecording) {
       iconId = isPaused ? R.drawable.track_paused : R.drawable.track_recording;
@@ -69,7 +69,8 @@ public class ListItemUtils {
     nameTextView.setText(name);
 
     TextView timeDistanceTextView = (TextView) view.findViewById(R.id.list_item_time_distance);
-    setTextView(timeDistanceTextView, getTimeDistance(isRecording, totalTime, totalDistance), 0);
+    setTextView(timeDistanceTextView,
+        getTimeDistance(isRecording, sharedOwner, totalTime, totalDistance), 0);
 
     String[] startTimeDisplay = getStartTime(isRecording, context, startTime);
     TextView dateTextView = (TextView) view.findViewById(R.id.list_item_date);
@@ -95,21 +96,32 @@ public class ListItemUtils {
    * Gets the time/distance text.
    * 
    * @param isRecording true if recording
+   * @param sharedOwner the shared owner
    * @param totalTime the total time
    * @param totalDistance the total distance
    */
   private static String getTimeDistance(
-      boolean isRecording, String totalTime, String totalDistance) {
+      boolean isRecording, String sharedOwner, String totalTime, String totalDistance) {
     if (isRecording) {
       return null;
     }
-    if (totalDistance == null || totalDistance.length() == 0) {
-      return totalTime;
+    StringBuffer buffer = new StringBuffer();
+    if (sharedOwner != null && sharedOwner.length() != 0) {
+      buffer.append(sharedOwner);      
     }
-    if (totalTime == null || totalTime.length() == 0) {
-      return totalDistance;
+    if (totalTime != null && totalTime.length() != 0) {
+      if (buffer.length() != 0) {
+        buffer.append(" \u2027" );
+      }
+      buffer.append(totalDistance);
+    }    
+    if (totalDistance != null && totalDistance.length() != 0) {
+      if (buffer.length() != 0) {
+        buffer.append(" ");
+      }
+      buffer.append("(" + totalDistance + ")");
     }
-    return totalTime + " (" + totalDistance + ")";
+    return buffer.toString();
   }
 
   /**

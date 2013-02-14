@@ -90,10 +90,7 @@ public class SendDriveAsyncTask extends AbstractSendAsyncTask {
           addPermission(drive, driveId);
           return true;
         }
-        track.setDriveId("");
-        track.setModifiedTime(-1L);
-        track.setSharedWithMe(false);
-        myTracksProviderUtils.updateTrack(track);
+        SyncUtils.updateTrackWithDriveFileInfo(myTracksProviderUtils, track, null);
       }
 
       String id = SyncUtils.insertDriveFile(

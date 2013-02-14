@@ -101,7 +101,7 @@ public class TrackListActivity extends FragmentActivity
   private static final String[] PROJECTION = new String[] { TracksColumns._ID, TracksColumns.NAME,
       TracksColumns.DESCRIPTION, TracksColumns.CATEGORY, TracksColumns.STARTTIME,
       TracksColumns.TOTALDISTANCE, TracksColumns.TOTALTIME, TracksColumns.ICON,
-      TracksColumns.SHAREDWITHME };
+      TracksColumns.SHAREDWITHME, TracksColumns.SHAREDOWNER };
 
   // Callback when the trackRecordingServiceConnection binding changes.
   private final Runnable bindChangedCallback = new Runnable() {
@@ -391,7 +391,8 @@ public class TrackListActivity extends FragmentActivity
         int totalDistanceIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALDISTANCE);
         int startTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME);
         int descriptionIndex = cursor.getColumnIndex(TracksColumns.DESCRIPTION);
-
+        int sharedOwnerIndex = cursor.getColumnIndex(TracksColumns.SHAREDOWNER);
+        
         boolean isRecording = cursor.getLong(idIndex) == recordingTrackId;
         String icon = cursor.getString(iconIndex);
         int iconId = TrackIconUtils.getIconDrawable(icon);
@@ -402,10 +403,11 @@ public class TrackListActivity extends FragmentActivity
             TrackListActivity.this, cursor.getDouble(totalDistanceIndex), metricUnits);
         long startTime = cursor.getLong(startTimeIndex);
         String description = cursor.getString(descriptionIndex);
+        String sharedOwner = cursor.getString(sharedOwnerIndex);
 
         ListItemUtils.setListItem(TrackListActivity.this, view, isRecording, recordingTrackPaused,
             iconId, R.string.icon_track, name, category, totalTime, totalDistance, startTime,
-            description);
+            description, sharedOwner);
       }
     };
     listView.setAdapter(sectionResourceCursorAdapter);

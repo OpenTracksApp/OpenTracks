@@ -120,6 +120,9 @@ public class MyTracksProvider extends ContentProvider {
           Log.w(TAG, "Upgrade DB: Adding sharedwithme column.");
           db.execSQL("ALTER TABLE " + TracksColumns.TABLE_NAME + " ADD "
               + TracksColumns.SHAREDWITHME + " INTEGER");
+          Log.w(TAG, "Upgrade DB: Adding sharedowner column.");
+          db.execSQL("ALTER TABLE " + TracksColumns.TABLE_NAME + " ADD " + TracksColumns.SHAREDOWNER
+              + " STRING");
         }
       }
     }

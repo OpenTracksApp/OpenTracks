@@ -247,12 +247,8 @@ public class SyncUtils {
         Log.e(TAG, "Unable to add Drive file. Uploaded file is null for track " + track.getName());
         return null;
       }
-      String id = uploadedFile.getId();
-      track.setDriveId(id);
-      track.setModifiedTime(uploadedFile.getModifiedDate().getValue());
-      track.setSharedWithMe(false);
-      myTracksProviderUtils.updateTrack(track);
-      return id;
+      SyncUtils.updateTrackWithDriveFileInfo(myTracksProviderUtils, track, uploadedFile);
+      return uploadedFile.getId();
     } finally {
       file.delete();
     }
@@ -406,6 +402,24 @@ public class SyncUtils {
     }
     Log.d(TAG, "Unable to get file for track " + track.getName());
     return null;
+  }
+  
+  /**
+   * Updates track with drive file info.
+   * 
+   * @param myTracksProviderUtils the myTracksProviderUtils
+   * @param track the track
+   * @param driveFile the drive file
+   */
+  public static void updateTrackWithDriveFileInfo(
+      MyTracksProviderUtils myTracksProviderUtils, Track track, File driveFile) {
+    track.setDriveId(driveFile != null ? driveFile.getId() : "");
+    track.setModifiedTime(driveFile != null ? driveFile.getModifiedDate().getValue() : -1L);
+    track.setSharedWithMe(driveFile != null ? driveFile.getSharedWithMeDate() != null : false);
+    track.setSharedOwner(driveFile != null && driveFile.getSharedWithMeDate() != null
+        && driveFile.getOwnerNames().size() > 0 ? driveFile.getOwnerNames().get(0)
+        : "");
+    myTracksProviderUtils.updateTrack(track);
   }
 
   /**

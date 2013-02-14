@@ -86,6 +86,9 @@ public interface TracksColumns extends BaseColumns {
   // 1 if the Google Drive file is from the "Shared with me" directory
   public static final String SHAREDWITHME = "sharedwithme";
 
+  // The owner of the shared with me track
+  public static final String SHAREDOWNER = "sharedOwner";
+
   public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" // table
       + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " // id
       + NAME + " STRING, " // name
@@ -116,7 +119,8 @@ public interface TracksColumns extends BaseColumns {
       + ICON + " STRING, " // icon
       + DRIVEID + " STRING, " // drive id
       + MODIFIEDTIME + " INTEGER, " // modified time
-      + SHAREDWITHME + " INTEGER" + ");"; // shared with me
+      + SHAREDWITHME + " INTEGER, " // shared with me
+      + SHAREDOWNER + " STRING" + ");"; // shared owner
 
   public static final String[] COLUMNS = { _ID, // id
       NAME, // name
@@ -147,7 +151,8 @@ public interface TracksColumns extends BaseColumns {
       ICON, // icon
       DRIVEID, // drive id
       MODIFIEDTIME, // modified time
-      SHAREDWITHME }; // shared with me
+      SHAREDWITHME, // shared with me
+      SHAREDOWNER }; // shared owner
 
   public static final byte[] COLUMN_TYPES = { ContentTypeIds.LONG_TYPE_ID, // id
       ContentTypeIds.STRING_TYPE_ID, // name
@@ -178,6 +183,7 @@ public interface TracksColumns extends BaseColumns {
       ContentTypeIds.STRING_TYPE_ID, // icon
       ContentTypeIds.STRING_TYPE_ID, // drive id
       ContentTypeIds.LONG_TYPE_ID, // modified time
-      ContentTypeIds.BOOLEAN_TYPE_ID // shared with me
+      ContentTypeIds.BOOLEAN_TYPE_ID, // shared with me
+      ContentTypeIds.STRING_TYPE_ID // shared owner
   };
 }

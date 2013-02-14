@@ -88,7 +88,8 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     int driveIdIndex = cursor.getColumnIndexOrThrow(TracksColumns.DRIVEID);
     int modifiedTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.MODIFIEDTIME);
     int sharedWithMeIndex = cursor.getColumnIndexOrThrow(TracksColumns.SHAREDWITHME);
-
+    int sharedOwnerIndex = cursor.getColumnIndexOrThrow(TracksColumns.SHAREDOWNER);
+    
     Track track = new Track();
     TripStatistics tripStatistics = track.getTripStatistics();
     if (!cursor.isNull(idIndex)) {
@@ -170,6 +171,9 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     }
     if (!cursor.isNull(sharedWithMeIndex)) {
       track.setSharedWithMe(cursor.getInt(sharedWithMeIndex) == 1);
+    }
+    if (!cursor.isNull(sharedOwnerIndex)) {
+      track.setSharedOwner(cursor.getString(sharedOwnerIndex));
     }
     return track;
   }
@@ -321,6 +325,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     values.put(TracksColumns.DRIVEID, track.getDriveId());
     values.put(TracksColumns.MODIFIEDTIME, track.getModifiedTime());
     values.put(TracksColumns.SHAREDWITHME, track.isSharedWithMe());
+    values.put(TracksColumns.SHAREDOWNER, track.getSharedOwner());
     return values;
   }
 

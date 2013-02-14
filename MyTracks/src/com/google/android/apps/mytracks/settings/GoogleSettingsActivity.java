@@ -232,10 +232,7 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
           if (track.isSharedWithMe()) {
             myTracksProviderUtils.deleteTrack(track.getId());
           } else {
-            track.setDriveId("");
-            track.setModifiedTime(-1L);
-            track.setSharedWithMe(false);
-            myTracksProviderUtils.updateTrack(track);
+            SyncUtils.updateTrackWithDriveFileInfo(myTracksProviderUtils, track, null);
           }
         } while (cursor.moveToNext());
       }
