@@ -113,7 +113,7 @@ public class ListItemUtils {
       if (buffer.length() != 0) {
         buffer.append(" \u2027" );
       }
-      buffer.append(totalDistance);
+      buffer.append(totalTime);
     }    
     if (totalDistance != null && totalDistance.length() != 0) {
       if (buffer.length() != 0) {
