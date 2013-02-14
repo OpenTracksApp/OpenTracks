@@ -71,7 +71,8 @@ import java.util.Locale;
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
-public class TrackDetailActivity extends AbstractMyTracksActivity implements ConfirmCaller, DeleteOneTrackCaller {
+public class TrackDetailActivity extends AbstractMyTracksActivity
+    implements ConfirmCaller, DeleteOneTrackCaller {
 
   public static final String EXTRA_TRACK_ID = "track_id";
   public static final String EXTRA_MARKER_ID = "marker_id";
@@ -98,8 +99,8 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Con
 
   private MenuItem insertMarkerMenuItem;
   private MenuItem playMenuItem;
-  private MenuItem shareMenuItem;
   private MenuItem shareDriveMenuItem;
+  private MenuItem shareMenuItem;
   private MenuItem sendGoogleMenuItem;
   private MenuItem saveMenuItem;
   private MenuItem voiceFrequencyMenuItem;
@@ -344,17 +345,17 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Con
               getSupportFragmentManager(), InstallEarthDialogFragment.INSTALL_EARTH_DIALOG_TAG);
         }
         return true;
-      case R.id.track_detail_share:
-        ConfirmDialogFragment.newInstance(R.string.confirm_share_map_key,
-            PreferencesUtils.CONFIRM_SHARE_MAP_DEFAULT, StringUtils.getHtml(
-                this, R.string.share_track_map_confirm_message, R.string.maps_public_unlisted_url),
-            trackId).show(getSupportFragmentManager(), ConfirmDialogFragment.CONFIRM_DIALOG_TAG);
-        return true;
       case R.id.track_detail_share_drive:
         ConfirmDialogFragment.newInstance(R.string.confirm_share_drive_key,
             PreferencesUtils.CONFIRM_SHARE_DRIVE_DEFAULT,
             getString(R.string.share_track_drive_confirm_message), trackId)
             .show(getSupportFragmentManager(), ConfirmDialogFragment.CONFIRM_DIALOG_TAG);
+        return true;
+      case R.id.track_detail_share:
+        ConfirmDialogFragment.newInstance(R.string.confirm_share_map_key,
+            PreferencesUtils.CONFIRM_SHARE_MAP_DEFAULT, StringUtils.getHtml(
+                this, R.string.share_track_map_confirm_message, R.string.maps_public_unlisted_url),
+            trackId).show(getSupportFragmentManager(), ConfirmDialogFragment.CONFIRM_DIALOG_TAG);
         return true;
       case R.id.track_detail_markers:
         intent = IntentUtils.newIntent(this, MarkerListActivity.class)
@@ -483,7 +484,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Con
     if (markerId != -1L) {
       Waypoint waypoint = myTracksProviderUtils.getWaypoint(markerId);
       if (waypoint == null) {
-        finish();        
+        finish();
         return;
       }
       trackId = waypoint.getTrackId();

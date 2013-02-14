@@ -28,18 +28,18 @@ limitations under the License.
     android:showAsAction="ifRoom"
     android:title="@string/menu_play"/>
   <item
-    android:icon="@drawable/menu_share"
-    android:id="@+id/track_detail_share"
-    android:orderInCategory="3"
-    android:showAsAction="ifRoom"
-    android:title="@string/menu_share">
-  </item>
-  <item
     android:icon="@drawable/menu_share_drive"
     android:id="@+id/track_detail_share_drive"
-    android:orderInCategory="4"
+    android:orderInCategory="3"
     android:showAsAction="ifRoom"
     android:title="@string/menu_share_drive">
+  </item>
+  <item
+    android:icon="@drawable/menu_share"
+    android:id="@+id/track_detail_share"
+    android:orderInCategory="4"
+    android:showAsAction="ifRoom"
+    android:title="@string/menu_share">
   </item>
   <item
     android:icon="@drawable/menu_markers"

@@ -51,17 +51,36 @@ limitations under the License.
           style="@style/TextLarge" />
       </LinearLayout>
       <TextView
-        android:id="@+id/list_item_start_time"
+        android:id="@+id/list_item_date"
         android:layout_gravity="bottom"
+        android:paddingLeft="8dp"
         android:singleLine="true"
         android:textColor="@android:color/secondary_text_dark"
         style="@style/TextSmall" />
     </LinearLayout>
-    <TextView
-      android:id="@+id/list_item_time_distance"
-      android:singleLine="true"
-      android:textColor="@android:color/primary_text_dark"
-      style="@style/TextSmall" />
+    <LinearLayout
+      android:layout_height="wrap_content"
+      android:layout_width="match_parent"
+      android:orientation="horizontal" >
+      <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:orientation="vertical" >
+        <TextView
+          android:id="@+id/list_item_time_distance"
+          android:singleLine="true"
+          android:textColor="@android:color/primary_text_dark"
+          style="@style/TextSmall" />
+      </LinearLayout>
+      <TextView
+        android:id="@+id/list_item_time"
+        android:layout_gravity="bottom"
+        android:paddingLeft="8dp"
+        android:singleLine="true"
+        android:textColor="@android:color/secondary_text_dark"
+        style="@style/TextSmall" />
+    </LinearLayout>
     <TextView
       android:id="@+id/list_item_recording"
       android:singleLine="true"

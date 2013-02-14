@@ -19,9 +19,12 @@ package com.google.android.apps.mytracks.util;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.Calendar;
 
 /**
  * Utilities to display a list item.
@@ -68,9 +71,12 @@ public class ListItemUtils {
     TextView timeDistanceTextView = (TextView) view.findViewById(R.id.list_item_time_distance);
     setTextView(timeDistanceTextView, getTimeDistance(isRecording, totalTime, totalDistance), 0);
 
-    TextView startTimeTextView = (TextView) view.findViewById(R.id.list_item_start_time);
-    setTextView(
-        startTimeTextView, isRecording ? null : StringUtils.formatTime(context, startTime), 0);
+    String[] startTimeDisplay = getStartTime(isRecording, context, startTime);
+    TextView dateTextView = (TextView) view.findViewById(R.id.list_item_date);
+    setTextView(dateTextView, startTimeDisplay[0], 0);
+
+    TextView timeTextView = (TextView) view.findViewById(R.id.list_item_time);
+    setTextView(timeTextView, startTimeDisplay[1], 0);
 
     TextView recordingTextView = (TextView) view.findViewById(R.id.list_item_recording);
     String value = isRecording ? context.getString(
@@ -92,7 +98,8 @@ public class ListItemUtils {
    * @param totalTime the total time
    * @param totalDistance the total distance
    */
-  private static String getTimeDistance(boolean isRecording, String totalTime, String totalDistance) {
+  private static String getTimeDistance(
+      boolean isRecording, String totalTime, String totalDistance) {
     if (isRecording) {
       return null;
     }
@@ -104,7 +111,7 @@ public class ListItemUtils {
     }
     return totalTime + " (" + totalDistance + ")";
   }
-  
+
   /**
    * Gets the description text.
    * 
@@ -124,7 +131,46 @@ public class ListItemUtils {
     }
     return "[" + category + "] " + description;
   }
-  
+
+  /**
+   * Gets the start time text.
+   * 
+   * @param isRecording true if recording
+   * @param context the context
+   * @param startTime the start time
+   * @return array of two strings.
+   */
+  private static String[] getStartTime(boolean isRecording, Context context, long startTime) {
+    if (isRecording || startTime == 0L) {
+      return new String[] { null, null };
+    }
+    if (DateUtils.isToday(startTime)) {
+      return new String[] { DateUtils.getRelativeTimeSpanString(
+          startTime, System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS,
+          DateUtils.FORMAT_ABBREV_RELATIVE).toString(), null };
+    }
+    int flags = DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL;
+    if (!isThisYear(startTime)) {
+      flags |= DateUtils.FORMAT_NUMERIC_DATE;
+    }
+    return new String[] { DateUtils.formatDateTime(context, startTime, flags),
+        DateUtils.formatDateTime(
+            context, startTime, DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_TIME) };
+  }
+
+  /**
+   * True if the time is this year.
+   * 
+   * @param time the time
+   */
+  private static boolean isThisYear(long time) {
+    Calendar now = Calendar.getInstance();
+    Calendar calendar = Calendar.getInstance();
+    now.setTimeInMillis(System.currentTimeMillis());
+    calendar.setTimeInMillis(time);
+    return now.get(Calendar.YEAR) == calendar.get(Calendar.YEAR);
+  }
+
   /**
    * Sets a text view.
    * 

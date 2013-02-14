@@ -59,28 +59,9 @@ public class StringUtils {
    * @param time the time in milliseconds
    */
   public static String formatDateTime(Context context, long time) {
-    return android.text.format.DateFormat.getDateFormat(context).format(time) + " "
+    return DateUtils.formatDateTime(
+        context, time, DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE) + " "
         + DateUtils.formatDateTime(context, time, DateUtils.FORMAT_SHOW_TIME).toString();
-  }
-
-  /**
-   * Formats the time based on user's phone date/time preferences.
-   * 
-   * @param context the context
-   * @param time the time in milliseconds
-   */
-  public static String formatTime(Context context, long time) {
-    if (time == 0L) {
-      return null;
-    }
-    if (DateUtils.isToday(time)) {
-      return DateUtils.getRelativeTimeSpanString(time, System.currentTimeMillis(),
-          DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE).toString();
-    } else {
-      return DateUtils.formatDateTime(context, time, DateUtils.FORMAT_SHOW_DATE
-          | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_MONTH
-          | DateUtils.FORMAT_ABBREV_TIME);
-    }
   }
 
   /**
