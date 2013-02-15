@@ -111,7 +111,7 @@ public class ListItemUtils {
     }
     if (totalTime != null && totalTime.length() != 0) {
       if (buffer.length() != 0) {
-        buffer.append(" \u2027" );
+        buffer.append(" \u2027 ");
       }
       buffer.append(totalTime);
     }    
