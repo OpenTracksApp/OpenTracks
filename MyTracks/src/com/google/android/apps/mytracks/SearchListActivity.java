@@ -24,13 +24,14 @@ import com.google.android.apps.mytracks.content.SearchEngineProvider;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
-import com.google.android.apps.mytracks.fragments.AddPeopleDialogFragment;
 import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment;
 import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment.ConfirmCaller;
 import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment.DeleteOneMarkerCaller;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment.DeleteOneTrackCaller;
+import com.google.android.apps.mytracks.io.sendtogoogle.AccountChooserActivity;
+import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.services.MyTracksLocationManager;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.stats.TripStatistics;
@@ -510,11 +511,15 @@ public class SearchListActivity extends AbstractMyTracksActivity
   }
 
   @Override
-  public void onConfirmed(int confirmId, long trackId) {
+  public void onConfirmDone(int confirmId, long trackId) {
     switch (confirmId) {
       case R.string.confirm_share_drive_key:
-        AddPeopleDialogFragment.newInstance(trackId)
-            .show(getSupportFragmentManager(), AddPeopleDialogFragment.ADD_PEOPLE_DIALOG_TAG);
+        SendRequest sendRequest = new SendRequest(trackId);
+        sendRequest.setSendDrive(true);
+        sendRequest.setDriveShare(true);
+        Intent intent = IntentUtils.newIntent(this, AccountChooserActivity.class)
+            .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
+        startActivity(intent);
         break;
       default:
     }
@@ -526,7 +531,7 @@ public class SearchListActivity extends AbstractMyTracksActivity
   }
 
   @Override
-  public void onTrackDeleted() {
+  public void onDeleteOneTrackDone() {
     runOnUiThread(new Runnable() {
         @Override
       public void run() {
@@ -536,7 +541,7 @@ public class SearchListActivity extends AbstractMyTracksActivity
   }
 
   @Override
-  public void onMarkerDeleted() {
+  public void onDeleteOneMarkerDone() {
     runOnUiThread(new Runnable() {
         @Override
       public void run() {

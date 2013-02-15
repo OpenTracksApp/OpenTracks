@@ -26,12 +26,16 @@ import android.test.AndroidTestCase;
  * @author Youtao Liu
  */
 public class SendRequestTest extends AndroidTestCase {
+
   private SendRequest sendRequest;
 
-  final static private String ACCOUNTNAME = "testAccount1";
-  final static private String ACCOUNTYPE = "testType1";
-  final static private String MAPID = "mapId1";
-
+  private static final String SHARING_APP_PACKAGE_NAME = "package";
+  private static final String SHARING_APP_CLASS_NAME = "class";
+  private final static String ACCOUNTNAME = "testAccount1";
+  private final static String ACCOUNTYPE = "testType1";
+  private final static String MAPID = "mapId1";
+  private final static String DRIVE_SHARE_EMAILS = "foo@foo.com";
+  
   @Override
   protected void setUp() throws Exception {
     super.setUp();
@@ -141,11 +145,12 @@ public class SendRequestTest extends AndroidTestCase {
     parcel.writeLong(2);
     parcel.writeString("");
     parcel.writeString("");
-    parcel.writeString("");
     parcel.writeByte((byte) 1);
     parcel.writeByte((byte) 1);
     parcel.writeByte((byte) 1);
     parcel.writeByte((byte) 1);
+    parcel.writeByte((byte) 1);
+    parcel.writeString(DRIVE_SHARE_EMAILS);
     parcel.writeByte((byte) 1);
     Account account = new Account(ACCOUNTNAME, ACCOUNTYPE);
     parcel.writeParcelable(account, 0);
@@ -159,11 +164,12 @@ public class SendRequestTest extends AndroidTestCase {
     assertEquals(2, sendRequest.getTrackId());
     assertEquals("", sendRequest.getSharingAppPackageName());
     assertEquals("", sendRequest.getSharingAppClassName());
-    assertEquals("", sendRequest.getAcl());
     assertTrue(sendRequest.isSendDrive());
     assertTrue(sendRequest.isSendMaps());
     assertTrue(sendRequest.isSendFusionTables());
     assertTrue(sendRequest.isSendSpreadsheets());
+    assertTrue(sendRequest.isDriveShare());
+    assertEquals(DRIVE_SHARE_EMAILS, sendRequest.getDriveShareEmails());
     assertTrue(sendRequest.isNewMap());
     assertEquals(account, sendRequest.getAccount());
     assertEquals(MAPID, sendRequest.getMapId());
@@ -182,11 +188,12 @@ public class SendRequestTest extends AndroidTestCase {
     parcel.writeLong(4);
     parcel.writeString(null);
     parcel.writeString(null);
+    parcel.writeByte((byte) 0);
+    parcel.writeByte((byte) 0);
+    parcel.writeByte((byte) 0);
+    parcel.writeByte((byte) 0);
+    parcel.writeByte((byte) 0);
     parcel.writeString(null);
-    parcel.writeByte((byte) 0);
-    parcel.writeByte((byte) 0);
-    parcel.writeByte((byte) 0);
-    parcel.writeByte((byte) 0);
     parcel.writeByte((byte) 0);
     Account account = new Account(ACCOUNTNAME, ACCOUNTYPE);
     parcel.writeParcelable(account, 0);
@@ -200,11 +207,12 @@ public class SendRequestTest extends AndroidTestCase {
     assertEquals(4, sendRequest.getTrackId());
     assertNull(sendRequest.getSharingAppPackageName());
     assertNull(sendRequest.getSharingAppClassName());
-    assertNull(sendRequest.getAcl());
     assertFalse(sendRequest.isSendDrive());
     assertFalse(sendRequest.isSendMaps());
     assertFalse(sendRequest.isSendFusionTables());
     assertFalse(sendRequest.isSendSpreadsheets());
+    assertFalse(sendRequest.isDriveShare());
+    assertNull(sendRequest.getDriveShareEmails());
     assertFalse(sendRequest.isNewMap());
     assertEquals(account, sendRequest.getAccount());
     assertEquals(MAPID, sendRequest.getMapId());
@@ -226,11 +234,12 @@ public class SendRequestTest extends AndroidTestCase {
     long trackId = parcel.readLong();
     String sharingAppPackageName = parcel.readString();
     String sharingAppClassName = parcel.readString();
-    String acl = parcel.readString();
     boolean sendDrive = parcel.readByte() == 1;
     boolean sendMaps = parcel.readByte() == 1;
     boolean sendFusionTables = parcel.readByte() == 1;
     boolean sendSpreadsheets = parcel.readByte() == 1;
+    boolean driveShare = parcel.readByte() == 1;
+    String dirveShareEmails = parcel.readString();
     boolean newMap = parcel.readByte() == 1;
     Parcelable account = parcel.readParcelable(null);
     String mapId = parcel.readString();
@@ -241,11 +250,12 @@ public class SendRequestTest extends AndroidTestCase {
     assertEquals(1, trackId);
     assertNull(sharingAppPackageName);
     assertNull(sharingAppClassName);
-    assertNull(acl);
     assertFalse(sendDrive);
     assertFalse(sendMaps);
     assertFalse(sendFusionTables);
     assertFalse(sendSpreadsheets);
+    assertFalse(driveShare);
+    assertNull(dirveShareEmails);
     assertFalse(newMap);
     assertNull(account);
     assertNull(mapId);
@@ -260,13 +270,14 @@ public class SendRequestTest extends AndroidTestCase {
    */
   public void testWriteToParcel() {
     sendRequest = new SendRequest(4);
-    sendRequest.setSharingAppPackageName("package");
-    sendRequest.setSharingAppClassName("class");
-    sendRequest.setAcl("acl");
+    sendRequest.setSharingAppPackageName(SHARING_APP_PACKAGE_NAME);
+    sendRequest.setSharingAppClassName(SHARING_APP_CLASS_NAME);
     sendRequest.setSendDrive(true);
     sendRequest.setSendMaps(true);
     sendRequest.setSendFusionTables(true);
     sendRequest.setSendSpreadsheets(true);
+    sendRequest.setDriveShare(true);
+    sendRequest.setDriveShareEmails(DRIVE_SHARE_EMAILS);
     sendRequest.setNewMap(true);
     Account accountNew = new Account(ACCOUNTNAME + "2", ACCOUNTYPE + "2");
     sendRequest.setAccount(accountNew);
@@ -282,11 +293,12 @@ public class SendRequestTest extends AndroidTestCase {
     long trackId = parcel.readLong();
     String sharingAppPackageName = parcel.readString();
     String sharingAppClassName = parcel.readString();
-    String acl = parcel.readString();
     boolean sendDrive = parcel.readByte() == 1;
     boolean sendMaps = parcel.readByte() == 1;
     boolean sendFusionTables = parcel.readByte() == 1;
     boolean sendSpreadsheets = parcel.readByte() == 1;
+    boolean shareDrive = parcel.readByte() == 1;
+    String driveShareEmails = parcel.readString();
     boolean newMap = parcel.readByte() == 1;
     Parcelable account = parcel.readParcelable(null);
     String mapId = parcel.readString();
@@ -295,13 +307,14 @@ public class SendRequestTest extends AndroidTestCase {
     boolean fusionTablesSuccess = parcel.readByte() == 1;
     boolean spreadsheetsSuccess = parcel.readByte() == 1;
     assertEquals(4, trackId);
-    assertEquals("package", sharingAppPackageName);
-    assertEquals("class", sharingAppClassName);
-    assertEquals("acl", acl);
+    assertEquals(SHARING_APP_PACKAGE_NAME, sharingAppPackageName);
+    assertEquals(SHARING_APP_CLASS_NAME, sharingAppClassName);
     assertTrue(sendDrive);
     assertTrue(sendMaps);
     assertTrue(sendFusionTables);
     assertTrue(sendSpreadsheets);
+    assertTrue(shareDrive);
+    assertEquals(DRIVE_SHARE_EMAILS, driveShareEmails);
     assertTrue(newMap);
     assertEquals(accountNew, account);
     assertEquals(MAPID, mapId);

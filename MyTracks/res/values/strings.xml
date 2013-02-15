@@ -2220,11 +2220,11 @@ limitations under the License.
   </string>
 
   <!-- Share Track -->
-  <string name="share_track_add_people"
-    translation_description="The dialog title for adding people to share a track with.">
-    Add people
+  <string name="share_track_add_emails_title"
+    translation_description="The dialog title for adding emails to share a track with.">
+    Add emails
   </string>  
-  <string name="share_track_add_people_hint"
+  <string name="share_track_add_emails_hint"
     translation_description="The hint in the auto complete text box for entering email addresses.">
     Enter email addresses
   </string>  

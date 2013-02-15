@@ -16,16 +16,12 @@
 
 package com.google.android.apps.mytracks.fragments;
 
-import com.google.android.apps.mytracks.io.sendtogoogle.AccountChooserActivity;
-import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
-import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -38,35 +34,62 @@ import android.widget.FilterQueryProvider;
 import android.widget.MultiAutoCompleteTextView;
 
 /**
- * A DialogFragment to add people to share a track with.
+ * A DialogFragment to add emails.
  * 
  * @author Jimmy Shih
  */
-public class AddPeopleDialogFragment extends DialogFragment {
+public class AddEmailsDialogFragment extends DialogFragment {
 
-  public static final String ADD_PEOPLE_DIALOG_TAG = "addPeopleDialog";
+  /**
+   * Interface for caller of this dialog fragment.
+   * 
+   * @author Jimmy Shih
+   */
+  public interface AddEmailsCaller {
+
+    /**
+     * Called when add emails is done.
+     * 
+     * @param emails the added emails
+     */
+    public void onAddEmailsDone(String emails);
+  }
+
+  public static final String ADD_EMAILS_DIALOG_TAG = "addEmailsDialog";
 
   private static final String KEY_TRACK_ID = "trackId";
 
-  public static AddPeopleDialogFragment newInstance(long trackId) {
+  public static AddEmailsDialogFragment newInstance(long trackId) {
     Bundle bundle = new Bundle();
     bundle.putLong(KEY_TRACK_ID, trackId);
 
-    AddPeopleDialogFragment addPeopleDialogFragment = new AddPeopleDialogFragment();
+    AddEmailsDialogFragment addPeopleDialogFragment = new AddEmailsDialogFragment();
     addPeopleDialogFragment.setArguments(bundle);
     return addPeopleDialogFragment;
   }
 
   private MultiAutoCompleteTextView multiAutoCompleteTextView;
+  private AddEmailsCaller caller;
+
+  @Override
+  public void onAttach(Activity activity) {
+    super.onAttach(activity);
+    try {
+      caller = (AddEmailsCaller) activity;
+    } catch (ClassCastException e) {
+      throw new ClassCastException(
+          activity.toString() + " must implement " + AddEmailsCaller.class.getSimpleName());
+    }
+  }
 
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     FragmentActivity activity = getActivity();
-    View view = activity.getLayoutInflater().inflate(R.layout.add_people, null);
-    multiAutoCompleteTextView = (MultiAutoCompleteTextView) view.findViewById(R.id.add_people);
+    View view = activity.getLayoutInflater().inflate(R.layout.add_emails, null);
+    multiAutoCompleteTextView = (MultiAutoCompleteTextView) view.findViewById(R.id.add_emails);
     multiAutoCompleteTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 
-    SimpleCursorAdapter adapter = new SimpleCursorAdapter(getActivity(), R.layout.add_people_item,
+    SimpleCursorAdapter adapter = new SimpleCursorAdapter(getActivity(), R.layout.add_emails_item,
         getCursor(getActivity(), null), new String[] {
             ContactsContract.Contacts.DISPLAY_NAME, ContactsContract.CommonDataKinds.Email.DATA },
         new int[] { android.R.id.text1, android.R.id.text2 }, 0);
@@ -85,24 +108,28 @@ public class AddPeopleDialogFragment extends DialogFragment {
     });
     multiAutoCompleteTextView.setAdapter(adapter);
 
-    return new AlertDialog.Builder(activity).setNegativeButton(R.string.generic_cancel, null)
-        .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
+    return new AlertDialog.Builder(activity).setNegativeButton(
+        R.string.generic_cancel, new DialogInterface.OnClickListener() {
+
             @Override
           public void onClick(DialogInterface dialog, int which) {
-            String acl = multiAutoCompleteTextView.getText().toString();
-            if (acl != null && !acl.equals("")) {
-              long trackId = getArguments().getLong(KEY_TRACK_ID);
-              SendRequest sendRequest = new SendRequest(trackId);
-              sendRequest.setSendDrive(true);
-              sendRequest.setAcl(acl);
-              Intent intent = IntentUtils.newIntent(getActivity(), AccountChooserActivity.class)
-                  .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
-              startActivity(intent);
-            }
+              caller.onAddEmailsDone(null);
           }
-        }).setTitle(R.string.share_track_add_people).setView(view).create();
+        }).setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
+        @Override
+      public void onClick(DialogInterface dialog, int which) {
+        String acl = multiAutoCompleteTextView.getText().toString();
+        caller.onAddEmailsDone(acl);
+      }
+    }).setTitle(R.string.share_track_add_emails_title).setView(view).create();
   }
 
+  @Override
+  public void onCancel(DialogInterface dialog) {
+    super.onCancel(dialog);
+    caller.onAddEmailsDone(null);
+  }
+  
   /**
    * Gets the cursor
    * 

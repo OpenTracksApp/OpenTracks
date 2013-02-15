@@ -23,7 +23,6 @@ import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.TrackDataType;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.fragments.AddPeopleDialogFragment;
 import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment;
 import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment.ConfirmCaller;
 import com.google.android.apps.mytracks.fragments.DeleteAllTrackDialogFragment;
@@ -34,6 +33,8 @@ import com.google.android.apps.mytracks.fragments.WelcomeDialogFragment;
 import com.google.android.apps.mytracks.io.file.ImportActivity;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
+import com.google.android.apps.mytracks.io.sendtogoogle.AccountChooserActivity;
+import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
@@ -632,11 +633,15 @@ public class TrackListActivity extends FragmentActivity
   }
 
   @Override
-  public void onConfirmed(int confirmId, long trackId) {
+  public void onConfirmDone(int confirmId, long trackId) {
     switch (confirmId) {
       case R.string.confirm_share_drive_key:
-        AddPeopleDialogFragment.newInstance(trackId)
-            .show(getSupportFragmentManager(), AddPeopleDialogFragment.ADD_PEOPLE_DIALOG_TAG);
+        SendRequest sendRequest = new SendRequest(trackId);
+        sendRequest.setSendDrive(true);
+        sendRequest.setDriveShare(true);
+        Intent intent = IntentUtils.newIntent(this, AccountChooserActivity.class)
+            .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
+        startActivity(intent);
         break;
       default:
     }
@@ -648,7 +653,7 @@ public class TrackListActivity extends FragmentActivity
   }
 
   @Override
-  public void onTrackDeleted() {
+  public void onDeleteOneTrackDone() {
     // Do nothing
   }
 

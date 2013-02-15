@@ -22,9 +22,9 @@ limitations under the License.
     android:orientation="vertical"
     android:padding="8dp" >
     <MultiAutoCompleteTextView
-      android:hint="@string/share_track_add_people_hint"
+      android:hint="@string/share_track_add_emails_hint"
       android:completionThreshold="1"
-      android:id="@+id/add_people"
+      android:id="@+id/add_emails"
       android:imeOptions="actionDone"
       android:layout_height="wrap_content"
       android:layout_width="match_parent"

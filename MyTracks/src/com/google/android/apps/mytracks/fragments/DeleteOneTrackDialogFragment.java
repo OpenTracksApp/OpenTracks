@@ -50,9 +50,9 @@ public class DeleteOneTrackDialogFragment extends DialogFragment {
     public TrackRecordingServiceConnection getTrackRecordingServiceConnection();
 
     /**
-     * Called when a track is deleted.
+     * Called when delete one track is done.
      */
-    public void onTrackDeleted();
+    public void onDeleteOneTrackDone();
   }
   
   public static final String DELETE_ONE_TRACK_DIALOG_TAG = "deleteOneTrackDialog";
@@ -98,7 +98,7 @@ public class DeleteOneTrackDialogFragment extends DialogFragment {
                 @Override
               public void run() {
                 MyTracksProviderUtils.Factory.get(fragmentActivity).deleteTrack(trackId);
-                caller.onTrackDeleted();
+                caller.onDeleteOneTrackDone();
               }
             }).start();
           }

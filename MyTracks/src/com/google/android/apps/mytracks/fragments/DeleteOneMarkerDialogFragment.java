@@ -35,22 +35,22 @@ import android.support.v4.app.FragmentActivity;
  */
 public class DeleteOneMarkerDialogFragment extends DialogFragment {
 
-  public static final String DELETE_ONE_MARKER_DIALOG_TAG = "deleteOneMarkerDialog";
-  private static final String KEY_MARKER_ID = "markerId";
-  private static final String KEY_TRACK_ID = "trackId";
-
   /**
    * Interface for caller of this dialog fragment.
    * 
    * @author Jimmy Shih
    */
   public interface DeleteOneMarkerCaller {
-
+  
     /**
-     * Called when a marker is deleted.
+     * Called when delete one marker is done.
      */
-    public void onMarkerDeleted();
+    public void onDeleteOneMarkerDone();
   }
+
+  public static final String DELETE_ONE_MARKER_DIALOG_TAG = "deleteOneMarkerDialog";
+  private static final String KEY_MARKER_ID = "markerId";
+  private static final String KEY_TRACK_ID = "trackId";
 
   public static DeleteOneMarkerDialogFragment newInstance(long markerId, long trackId) {
     Bundle bundle = new Bundle();
@@ -89,7 +89,7 @@ public class DeleteOneMarkerDialogFragment extends DialogFragment {
                 MyTracksProviderUtils.Factory.get(fragmentActivity).deleteWaypoint(
                     getArguments().getLong(KEY_MARKER_ID),
                     new DescriptionGeneratorImpl(fragmentActivity));
-                caller.onMarkerDeleted();
+                caller.onDeleteOneMarkerDone();
               }
             }).start();
           }

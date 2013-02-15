@@ -17,6 +17,8 @@
 package com.google.android.apps.mytracks.io.sendtogoogle;
 
 import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.fragments.AddEmailsDialogFragment;
+import com.google.android.apps.mytracks.fragments.AddEmailsDialogFragment.AddEmailsCaller;
 import com.google.android.apps.mytracks.io.drive.SendDriveActivity;
 import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesActivity;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsConstants;
@@ -39,6 +41,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -49,7 +52,7 @@ import java.io.IOException;
  * 
  * @author Jimmy Shih
  */
-public class AccountChooserActivity extends Activity {
+public class AccountChooserActivity extends FragmentActivity implements AddEmailsCaller {
 
   private static final String TAG = AccountChooserActivity.class.getSimpleName();
   private static final int DIALOG_NO_ACCOUNT_ID = 0;
@@ -141,6 +144,17 @@ public class AccountChooserActivity extends Activity {
       default:
         return null;
     }
+  }
+
+  @Override
+  public void onAddEmailsDone(String emails) {
+    if (emails != null && !emails.equals("")) {
+      sendRequest.setDriveShareEmails(emails);
+      Intent intent = IntentUtils.newIntent(this, SendDriveActivity.class)
+          .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
+      startActivity(intent);
+    }
+    finish();
   }
 
   /**
@@ -327,7 +341,13 @@ public class AccountChooserActivity extends Activity {
   private void startNextActivity() {
     Class<?> next;
     if (sendRequest.isSendDrive()) {
-      next = SendDriveActivity.class;
+      if (sendRequest.isDriveShare()) {
+        AddEmailsDialogFragment.newInstance(sendRequest.getTrackId())
+            .show(getSupportFragmentManager(), AddEmailsDialogFragment.ADD_EMAILS_DIALOG_TAG);
+        return;
+      } else {
+        next = SendDriveActivity.class;
+      }
     } else if (sendRequest.isSendMaps()) {
       next = sendRequest.isNewMap() ? SendMapsActivity.class : ChooseMapActivity.class;
     } else if (sendRequest.isSendFusionTables()) {

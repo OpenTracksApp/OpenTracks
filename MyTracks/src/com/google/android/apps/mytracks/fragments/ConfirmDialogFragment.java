@@ -44,9 +44,9 @@ public class ConfirmDialogFragment extends DialogFragment {
   public interface ConfirmCaller {
 
     /**
-     * Called when confirmed.
+     * Called when confirm is done.
      */
-    public void onConfirmed(int confirmId, long trackId);
+    public void onConfirmDone(int confirmId, long trackId);
   }
 
   public static final String CONFIRM_DIALOG_TAG = "confirmDialog";
@@ -92,7 +92,7 @@ public class ConfirmDialogFragment extends DialogFragment {
     if (!PreferencesUtils.getBoolean(getActivity(), confirmId, defaultValue)) {
       long trackId = getArguments().getLong(KEY_TRACK_ID);
       dismiss();
-      caller.onConfirmed(confirmId, trackId);
+      caller.onConfirmDone(confirmId, trackId);
     }
   }
 
@@ -110,7 +110,7 @@ public class ConfirmDialogFragment extends DialogFragment {
             int confirmId = getArguments().getInt(KEY_CONFIRM_ID);
             long trackId = getArguments().getLong(KEY_TRACK_ID);
             PreferencesUtils.setBoolean(getActivity(), confirmId, !checkBox.isChecked());
-            caller.onConfirmed(confirmId, trackId);
+            caller.onConfirmDone(confirmId, trackId);
           }
         }).setTitle(R.string.generic_confirm_title).setView(view).create();
   }

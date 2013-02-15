@@ -21,7 +21,6 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
-import com.google.android.apps.mytracks.fragments.AddPeopleDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChartFragment;
 import com.google.android.apps.mytracks.fragments.ChooseActivityDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChooseUploadServiceDialogFragment;
@@ -35,6 +34,7 @@ import com.google.android.apps.mytracks.fragments.MyTracksMapFragment;
 import com.google.android.apps.mytracks.fragments.StatsFragment;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
+import com.google.android.apps.mytracks.io.sendtogoogle.AccountChooserActivity;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.settings.SettingsActivity;
@@ -430,11 +430,12 @@ public class TrackDetailActivity extends AbstractMyTracksActivity
   }
 
   @Override
-  public void onConfirmed(int confirmId, long confirmTrackId) {
+  public void onConfirmDone(int confirmId, long confirmTrackId) {
+    Intent intent;
     switch (confirmId) {
       case R.string.confirm_play_earth_key:
         AnalyticsUtils.sendPageViews(this, "/action/play");
-        Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
+        intent = IntentUtils.newIntent(this, SaveActivity.class)
             .putExtra(SaveActivity.EXTRA_TRACK_ID, confirmTrackId)
             .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.KML)
             .putExtra(SaveActivity.EXTRA_PLAY_TRACK, true);
@@ -446,8 +447,12 @@ public class TrackDetailActivity extends AbstractMyTracksActivity
             getSupportFragmentManager(), ChooseActivityDialogFragment.CHOOSE_ACTIVITY_DIALOG_TAG);
         break;
       case R.string.confirm_share_drive_key:
-        AddPeopleDialogFragment.newInstance(confirmTrackId)
-            .show(getSupportFragmentManager(), AddPeopleDialogFragment.ADD_PEOPLE_DIALOG_TAG);
+        SendRequest sendRequest = new SendRequest(trackId);
+        sendRequest.setSendDrive(true);
+        sendRequest.setDriveShare(true);
+        intent = IntentUtils.newIntent(this, AccountChooserActivity.class)
+            .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
+        startActivity(intent);
         break;
       default:
     }
@@ -459,7 +464,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity
   }
 
   @Override
-  public void onTrackDeleted() {
+  public void onDeleteOneTrackDone() {
     runOnUiThread(new Runnable() {
         @Override
       public void run() {

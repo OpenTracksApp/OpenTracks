@@ -39,7 +39,7 @@ public class SendDriveActivity extends AbstractSendActivity {
   @Override
   protected AbstractSendAsyncTask createAsyncTask() {
     return new SendDriveAsyncTask(
-        this, sendRequest.getTrackId(), sendRequest.getAccount(), sendRequest.getAcl());
+        this, sendRequest.getTrackId(), sendRequest.getAccount(), sendRequest.getDriveShareEmails());
   }
 
   @Override

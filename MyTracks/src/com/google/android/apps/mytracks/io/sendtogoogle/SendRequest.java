@@ -33,11 +33,12 @@ public class SendRequest implements Parcelable {
   private long trackId = -1L;
   private String sharingAppPackageName = null;
   private String sharingAppClassName = null;
-  private String acl = null;
   private boolean sendDrive = false;
   private boolean sendMaps = false;
   private boolean sendFusionTables = false;
   private boolean sendSpreadsheets = false;
+  private boolean driveShare = false;
+  private String driveShareEmails = null;
   private boolean newMap = false;
   private Account account = null;
   private String mapId = null;
@@ -92,22 +93,6 @@ public class SendRequest implements Parcelable {
    */
   public void setSharingAppClassName(String sharingAppClassName) {
     this.sharingAppClassName = sharingAppClassName;
-  }
-
-  /**
-   * Gets the email address of the user to share the track with.
-   */
-  public String getAcl() {
-    return acl;
-  }
-
-  /**
-   * Sets the email address of the user to share the track with.
-   * 
-   * @param acl the email address
-   */
-  public void setAcl(String acl) {
-    this.acl = acl;
   }
 
   /**
@@ -178,6 +163,22 @@ public class SendRequest implements Parcelable {
     this.sendSpreadsheets = sendSpreadsheets;
   }
 
+  public boolean isDriveShare() {
+    return driveShare;
+  }
+  
+  public void setDriveShare(boolean driveShare) {
+    this.driveShare = driveShare;
+  }
+  
+  public String getDriveShareEmails() {
+    return driveShareEmails;
+  }
+  
+  public void setDriveShareEmails(String driveShareEmails) {
+    this.driveShareEmails = driveShareEmails;
+  }
+   
   /**
    * True if the user has selected to create a new Google Maps.
    */
@@ -297,11 +298,12 @@ public class SendRequest implements Parcelable {
     trackId = in.readLong();
     sharingAppPackageName = in.readString();
     sharingAppClassName = in.readString();
-    acl = in.readString();
     sendDrive = in.readByte() == 1;
     sendMaps = in.readByte() == 1;
     sendFusionTables = in.readByte() == 1;
     sendSpreadsheets = in.readByte() == 1;
+    driveShare = in.readByte() == 1;
+    driveShareEmails = in.readString();
     newMap = in.readByte() == 1;
     account = in.readParcelable(null);
     mapId = in.readString();
@@ -321,11 +323,12 @@ public class SendRequest implements Parcelable {
     out.writeLong(trackId);
     out.writeString(sharingAppPackageName);
     out.writeString(sharingAppClassName);
-    out.writeString(acl);
     out.writeByte((byte) (sendDrive ? 1 : 0));
     out.writeByte((byte) (sendMaps ? 1 : 0));
     out.writeByte((byte) (sendFusionTables ? 1 : 0));
     out.writeByte((byte) (sendSpreadsheets ? 1 : 0));
+    out.writeByte((byte) (driveShare ? 1 : 0));
+    out.writeString(driveShareEmails);
     out.writeByte((byte) (newMap ? 1 : 0));
     out.writeParcelable(account, 0);
     out.writeString(mapId);

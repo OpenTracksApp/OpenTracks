@@ -144,7 +144,7 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity
   }
 
   @Override
-  public void onMarkerDeleted() {
+  public void onDeleteOneMarkerDone() {
     runOnUiThread(new Runnable() {
         @Override
       public void run() {

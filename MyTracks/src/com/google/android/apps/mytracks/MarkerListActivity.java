@@ -306,7 +306,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
   }
 
   @Override
-  public void onMarkerDeleted() {
+  public void onDeleteOneMarkerDone() {
     // Do nothing
   }
 }
