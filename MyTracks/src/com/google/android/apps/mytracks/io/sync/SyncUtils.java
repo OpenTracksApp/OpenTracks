@@ -153,20 +153,20 @@ public class SyncUtils {
    * @param context the context
    * @param drive the drive
    */
-  public static String getMyTracksFolder(Context context, Drive drive) throws IOException {
+  public static File getMyTracksFolder(Context context, Drive drive) throws IOException {
     String folderName = context.getString(R.string.my_tracks_app_name);
     List list = drive.files()
         .list().setQ(String.format(Locale.US, MY_TRACKS_FOLDER_QUERY, folderName));
     FileList result = list.execute();
     for (File file : result.getItems()) {
       if (file.getSharedWithMeDate() == null) {
-        return file.getId();
+        return file;
       }
     }
     File file = new File();
     file.setTitle(folderName);
     file.setMimeType(FOLDER_MIME_TYPE);
-    return drive.files().insert(file).execute().getId();
+    return drive.files().insert(file).execute();
   }
 
   /**

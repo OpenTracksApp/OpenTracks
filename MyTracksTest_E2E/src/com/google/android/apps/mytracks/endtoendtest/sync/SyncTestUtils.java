@@ -29,11 +29,9 @@ import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpResponse;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
-import com.google.api.services.drive.model.FileList;
 
 import android.app.Instrumentation;
 import android.content.Context;
-import android.util.Log;
 import android.widget.CheckBox;
 
 import java.io.BufferedReader;
@@ -134,7 +132,7 @@ public class SyncTestUtils {
    * @throws IOException
    */
   public static List<File> getDriveFiles(Context context, Drive drive) throws IOException {
-    File folder = SyncTestUtils.getMyTracksFolder(context, drive);
+    File folder = SyncUtils.getMyTracksFolder(context, drive);
     if (folder == null) {
       return new ArrayList<File>();
     }
@@ -319,29 +317,5 @@ public class SyncTestUtils {
     String fileContent = sb.toString();
     br.close();
     return fileContent;
-  }
-
-  /**
-   * Gets the MyTracks folder on Google Drive.
-   * 
-   * @param context context of application
-   * @param drive a Google Drive object
-   * @return the MyTracks folder on Google Drive
-   */
-  public static File getMyTracksFolder(Context context, Drive drive) {
-    try {
-      String folderName = context.getString(R.string.my_tracks_app_name);
-      com.google.api.services.drive.Drive.Files.List list = drive.files().list()
-          .setQ(String.format(Locale.US, SyncUtils.MY_TRACKS_FOLDER_QUERY, folderName));
-      FileList result = list.execute();
-      for (File file : result.getItems()) {
-        if (file.getTitle().equals(folderName)) {
-          return file;
-        }
-      }
-    } catch (IOException e) {
-      Log.e(EndToEndTestUtils.LOG_TAG, "IOException", e);
-    }
-    return null;
   }
 }

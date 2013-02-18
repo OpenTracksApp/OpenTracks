@@ -17,6 +17,7 @@ package com.google.android.apps.mytracks.endtoendtest.sync;
 
 import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.endtoendtest.EndToEndTestUtils;
+import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
@@ -110,7 +111,7 @@ public class SyncMyTracksWithDriveTest extends ActivityInstrumentationTestCase2<
         EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
     instrumentation.waitForIdleSync();
     SyncTestUtils.checkFilesNumber(drive);
-    File folder = SyncTestUtils.getMyTracksFolder(trackListActivity.getApplicationContext(), drive);
+    File folder = SyncUtils.getMyTracksFolder(trackListActivity.getApplicationContext(), drive);
     assertNotNull(folder);
 
     SyncTestUtils.removeFile(folder, drive);

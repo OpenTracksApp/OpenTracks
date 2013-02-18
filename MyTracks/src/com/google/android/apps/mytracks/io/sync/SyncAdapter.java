@@ -113,7 +113,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         driveAccountName = account.name;
       }
 
-      String folderId = SyncUtils.getMyTracksFolder(context, drive);
+      String folderId = SyncUtils.getMyTracksFolder(context, drive).getId();
       if (folderId == null) {
         return;
       }
