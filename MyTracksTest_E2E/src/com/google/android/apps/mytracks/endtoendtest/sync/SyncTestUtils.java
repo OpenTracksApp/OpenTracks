@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.endtoendtest.sync;
 import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.endtoendtest.EndToEndTestUtils;
 import com.google.android.apps.mytracks.endtoendtest.GoogleUtils;
+import com.google.android.apps.mytracks.endtoendtest.RunConfiguration;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
@@ -51,7 +52,6 @@ import junit.framework.Assert;
 public class SyncTestUtils {
 
   public static boolean isCheckedRunSyncTest = false;
-  public static boolean runSyncTest = false;
   public static final String KML_FILE_POSTFIX = ".kml";
   public static final long MAX_TIME_TO_WAIT_SYNC = 50000;
 
@@ -64,14 +64,13 @@ public class SyncTestUtils {
    */
   public static Drive setUpForSyncTest(Instrumentation instrumentation,
       TrackListActivity trackListActivity) throws IOException, GoogleAuthException {
-    if (runSyncTest || !isCheckedRunSyncTest) {
+    if (RunConfiguration.getInstance().runSyncTest || !isCheckedRunSyncTest) {
       EndToEndTestUtils.setupForAllTest(instrumentation, trackListActivity);
     }
     if (!isCheckedRunSyncTest) {
-      runSyncTest = canRunSyncTest();
       isCheckedRunSyncTest = true;
     }
-    if (runSyncTest) {
+    if (RunConfiguration.getInstance().runSyncTest) {
       EndToEndTestUtils.deleteAllTracks();
       SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_1);
       Drive drive1 = SyncTestUtils.getGoogleDrive(EndToEndTestUtils.activityMytracks
@@ -87,39 +86,16 @@ public class SyncTestUtils {
   }
 
   /**
-   * Runs sync tests when both test accounts are bound with the devices.
-   * 
-   * @return true means can run sync tests in this device
-   */
-  public static boolean canRunSyncTest() {
-    EndToEndTestUtils.findMenuItem(
-        EndToEndTestUtils.activityMytracks.getString(R.string.menu_settings), true);
-    EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
-        .getString(R.string.settings_google));
-    EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
-        .getString(R.string.settings_google_account_title));
-    boolean canRunSyncE2ETest = EndToEndTestUtils.SOLO.waitForText(GoogleUtils.ACCOUNT_NAME_1, 1,
-        EndToEndTestUtils.SHORT_WAIT_TIME)
-        && EndToEndTestUtils.SOLO.waitForText(GoogleUtils.ACCOUNT_NAME_2, 1,
-            EndToEndTestUtils.TINY_WAIT_TIME);
-    EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
-        .getString(R.string.generic_cancel));
-    EndToEndTestUtils.SOLO.goBack();
-    EndToEndTestUtils.SOLO.goBack();
-    return canRunSyncE2ETest;
-  }
-
-  /**
    * Gets drive object of Google Drive.
    * 
    * @param context the context of application
    * @return a Google Drive object
    */
   public static Drive getGoogleDrive(Context context) throws IOException, GoogleAuthException {
-    String googleAccount = PreferencesUtils.getString(
-        context, R.string.google_account_key, PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
-    GoogleAccountCredential credential = SendToGoogleUtils.getGoogleAccountCredential(
-        context, googleAccount, SendToGoogleUtils.DRIVE_SCOPE);
+    String googleAccount = PreferencesUtils.getString(context, R.string.google_account_key,
+        PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
+    GoogleAccountCredential credential = SendToGoogleUtils.getGoogleAccountCredential(context,
+        googleAccount, SendToGoogleUtils.DRIVE_SCOPE);
     return SyncUtils.getDriveService(credential);
   }
 

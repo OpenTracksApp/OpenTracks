@@ -17,6 +17,7 @@ package com.google.android.apps.mytracks.endtoendtest.others;
 
 import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.endtoendtest.EndToEndTestUtils;
+import com.google.android.apps.mytracks.endtoendtest.RunConfiguration;
 import com.google.android.maps.mytracks.R;
 
 import android.app.AlertDialog;
@@ -54,7 +55,7 @@ public class ResourceUsageTest extends ActivityInstrumentationTestCase2<TrackLis
   @Override
   protected void setUp() throws Exception {
     super.setUp();
-    runTest = BigTestUtils.runResourceUsageTest;
+    runTest = RunConfiguration.runResourceUsageTest;
     if (!runTest) {
       return;
     }

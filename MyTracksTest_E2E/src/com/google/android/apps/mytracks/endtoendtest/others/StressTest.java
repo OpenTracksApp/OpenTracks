@@ -17,6 +17,7 @@ package com.google.android.apps.mytracks.endtoendtest.others;
 
 import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.endtoendtest.EndToEndTestUtils;
+import com.google.android.apps.mytracks.endtoendtest.RunConfiguration;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Instrumentation;
@@ -46,7 +47,7 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
 
   @Override
   protected void setUp() throws Exception {
-    runTest = BigTestUtils.runStressTest;
+    runTest = RunConfiguration.runStressTest;
     super.setUp();
     if (!runTest) {
       return;

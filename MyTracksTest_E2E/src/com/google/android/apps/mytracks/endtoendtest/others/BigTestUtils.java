@@ -30,13 +30,6 @@ import junit.framework.Assert;
  */
 public class BigTestUtils {
 
-  /**
-   * Set to false as default. True to run the test. Default to false since this
-   * test can take a long time.
-   */
-  public static boolean runStressTest = true;
-  public static boolean runSensorTest = true;
-  public static boolean runResourceUsageTest = true;
   public static final String DISABLE_MESSAGE = "This test is disabled";
   public static final String MYTRACKS_PROCESS_NAME = "com.google.android.maps.mytracks";
   public static final String MYTRACKS_TEST_INFO_FILE = "MyTracksTestInfo.txt";

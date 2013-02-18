@@ -17,6 +17,7 @@ package com.google.android.apps.mytracks.endtoendtest.sync;
 
 import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.endtoendtest.EndToEndTestUtils;
+import com.google.android.apps.mytracks.endtoendtest.RunConfiguration;
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.api.services.drive.Drive;
@@ -56,7 +57,7 @@ public class SyncMyTracksWithDriveTest extends ActivityInstrumentationTestCase2<
    * @throws IOException
    */
   public void testDeleteAllTracksOnDrive() throws IOException {
-    if (!SyncTestUtils.runSyncTest) {
+    if (!RunConfiguration.getInstance().runSyncTest) {
       return;
     }
     EndToEndTestUtils.createTrackIfEmpty(0, true);
@@ -76,7 +77,7 @@ public class SyncMyTracksWithDriveTest extends ActivityInstrumentationTestCase2<
    * @throws IOException
    */
   public void testDeleteOneFileOnDrive() throws IOException {
-    if (!SyncTestUtils.runSyncTest) {
+    if (!RunConfiguration.getInstance().runSyncTest) {
       return;
     }
     instrumentation.waitForIdleSync();
@@ -101,7 +102,7 @@ public class SyncMyTracksWithDriveTest extends ActivityInstrumentationTestCase2<
    * @throws IOException
    */
   public void testCreateMyTracksOnDrive() throws IOException {
-    if (!SyncTestUtils.runSyncTest) {
+    if (!RunConfiguration.getInstance().runSyncTest) {
       return;
     }
     instrumentation.waitForIdleSync();

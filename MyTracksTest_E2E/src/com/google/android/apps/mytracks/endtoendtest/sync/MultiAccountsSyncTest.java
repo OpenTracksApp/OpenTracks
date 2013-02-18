@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.endtoendtest.sync;
 import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.endtoendtest.EndToEndTestUtils;
 import com.google.android.apps.mytracks.endtoendtest.GoogleUtils;
+import com.google.android.apps.mytracks.endtoendtest.RunConfiguration;
 import com.google.android.maps.mytracks.R;
 import com.google.api.services.drive.Drive;
 
@@ -63,7 +64,7 @@ public class MultiAccountsSyncTest extends ActivityInstrumentationTestCase2<Trac
    * </ul>
    */
   public void testSyncTracksWithMultiAccounts() throws Exception {
-    if (!SyncTestUtils.runSyncTest) {
+    if (!RunConfiguration.getInstance().runSyncTest) {
       return;
     }
     SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_1);
@@ -106,7 +107,7 @@ public class MultiAccountsSyncTest extends ActivityInstrumentationTestCase2<Trac
    * </ul>
    */
   public void testDeleteTracksWithMultiAccounts() throws Exception {
-    if (!SyncTestUtils.runSyncTest) {
+    if (!RunConfiguration.getInstance().runSyncTest) {
       return;
     }
     EndToEndTestUtils.createSimpleTrack(0, true);
