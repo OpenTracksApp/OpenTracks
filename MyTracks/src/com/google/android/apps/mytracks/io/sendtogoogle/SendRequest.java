@@ -21,8 +21,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Send request states for sending a track to Google Maps, Google Fusion Tables,
- * and Google Spreadsheets.
+ * Send request states for sending a track to Google Drive, Google Maps, Google
+ * Fusion Tables, and Google Spreadsheets.
  * 
  * @author Jimmy Shih
  */
@@ -31,17 +31,22 @@ public class SendRequest implements Parcelable {
   public static final String SEND_REQUEST_KEY = "sendRequest";
 
   private long trackId = -1L;
-  private String sharingAppPackageName = null;
-  private String sharingAppClassName = null;
   private boolean sendDrive = false;
   private boolean sendMaps = false;
   private boolean sendFusionTables = false;
   private boolean sendSpreadsheets = false;
+
   private boolean driveShare = false;
   private String driveShareEmails = null;
-  private boolean newMap = false;
+
+  private boolean mapsShare = false;
+  private String mapsSharePackageName = null;
+  private String mapsShareClassName = null;
+  private boolean mapsExistingMap = false;
+  private String mapsExistingMapId = null;
+
   private Account account = null;
-  private String mapId = null;
+
   private boolean driveSuccess = false;
   private boolean mapsSuccess = false;
   private boolean spreadsheetsSuccess = false;
@@ -56,109 +61,38 @@ public class SendRequest implements Parcelable {
     this.trackId = trackId;
   }
 
-  /**
-   * Get the track id.
-   */
   public long getTrackId() {
     return trackId;
   }
 
-  /**
-   * Gets the sharing app package name.
-   */
-  public String getSharingAppPackageName() {
-    return sharingAppPackageName;
-  }
-
-  /**
-   * Sets the sharing app package name.
-   * 
-   * @param sharingAppPackageName the sharing app package name
-   */
-  public void setSharingAppPackageName(String sharingAppPackageName) {
-    this.sharingAppPackageName = sharingAppPackageName;
-  }
-
-  /**
-   * Gets the sharing app class name.
-   */
-  public String getSharingAppClassName() {
-    return sharingAppClassName;
-  }
-
-  /**
-   * Sets the sharing app class name.
-   * 
-   * @param sharingAppClassName the sharing app class name
-   */
-  public void setSharingAppClassName(String sharingAppClassName) {
-    this.sharingAppClassName = sharingAppClassName;
-  }
-
-  /**
-   * True if the user has selected the send to Google Drive option.
-   */
   public boolean isSendDrive() {
     return sendDrive;
   }
 
-  /**
-   * Sets the send to Google Drive option.
-   * 
-   * @param sendDrive true if the user has selected the send to Google Drive
-   *          option
-   */
   public void setSendDrive(boolean sendDrive) {
     this.sendDrive = sendDrive;
   }
 
-  /**
-   * True if the user has selected the send to Google Maps option.
-   */
   public boolean isSendMaps() {
     return sendMaps;
   }
 
-  /**
-   * Sets the send to Google Maps option.
-   * 
-   * @param sendMaps true if the user has selected the send to Google Maps
-   *          option
-   */
   public void setSendMaps(boolean sendMaps) {
     this.sendMaps = sendMaps;
   }
 
-  /**
-   * True if the user has selected the send to Google Fusion Tables option.
-   */
   public boolean isSendFusionTables() {
     return sendFusionTables;
   }
 
-  /**
-   * Sets the send to Google Fusion Tables option.
-   * 
-   * @param sendFusionTables true if the user has selected the send to Google
-   *          Fusion Tables option
-   */
   public void setSendFusionTables(boolean sendFusionTables) {
     this.sendFusionTables = sendFusionTables;
   }
 
-  /**
-   * True if the user has selected the send to Google Spreadsheets option.
-   */
   public boolean isSendSpreadsheets() {
     return sendSpreadsheets;
   }
 
-  /**
-   * Sets the send to Google Spreadsheets option.
-   * 
-   * @param sendSpreadsheets true if the user has selected the send to Google
-   *          Spreadsheets option
-   */
   public void setSendSpreadsheets(boolean sendSpreadsheets) {
     this.sendSpreadsheets = sendSpreadsheets;
   }
@@ -166,147 +100,113 @@ public class SendRequest implements Parcelable {
   public boolean isDriveShare() {
     return driveShare;
   }
-  
+
   public void setDriveShare(boolean driveShare) {
     this.driveShare = driveShare;
   }
-  
+
   public String getDriveShareEmails() {
     return driveShareEmails;
   }
-  
+
   public void setDriveShareEmails(String driveShareEmails) {
     this.driveShareEmails = driveShareEmails;
   }
-   
-  /**
-   * True if the user has selected to create a new Google Maps.
-   */
-  public boolean isNewMap() {
-    return newMap;
+
+  public boolean isMapsShare() {
+    return mapsShare;
   }
 
-  /**
-   * Sets the new map option.
-   * 
-   * @param newMap true if the user has selected to create a new Google Maps.
-   */
-  public void setNewMap(boolean newMap) {
-    this.newMap = newMap;
+  public void setMapsShare(boolean mapsShare) {
+    this.mapsShare = mapsShare;
   }
 
-  /**
-   * Gets the account.
-   */
+  public String getMapsSharePackageName() {
+    return mapsSharePackageName;
+  }
+
+  public void setMapsSharePackageName(String mapsSharePackageName) {
+    this.mapsSharePackageName = mapsSharePackageName;
+  }
+
+  public String getMapsShareClassName() {
+    return mapsShareClassName;
+  }
+
+  public void setMapsShareClassName(String mapsShareClassName) {
+    this.mapsShareClassName = mapsShareClassName;
+  }
+
+  public boolean isMapsExistingMap() {
+    return mapsExistingMap;
+  }
+
+  public void setMapsExistingMap(boolean mapsExistingMap) {
+    this.mapsExistingMap = mapsExistingMap;
+  }
+
+  public String getMapsExistingMapId() {
+    return mapsExistingMapId;
+  }
+
+  public void setMapsExistingMapId(String mapsExistingMapId) {
+    this.mapsExistingMapId = mapsExistingMapId;
+  }
+
   public Account getAccount() {
     return account;
   }
 
-  /**
-   * Sets the account.
-   * 
-   * @param account the account
-   */
   public void setAccount(Account account) {
     this.account = account;
   }
 
-  /**
-   * Gets the selected map id if the user has selected to send a track to an
-   * existing Google Maps.
-   */
-  public String getMapId() {
-    return mapId;
-  }
-
-  /**
-   * Sets the map id.
-   * 
-   * @param mapId the map id
-   */
-  public void setMapId(String mapId) {
-    this.mapId = mapId;
-  }
-
-  /**
-   * True if sending to Google Drive is success.
-   */
   public boolean isDriveSuccess() {
     return driveSuccess;
   }
 
-  /**
-   * Sets the Google Drive result.
-   * 
-   * @param driveSuccess true if sending to Google Drive is success
-   */
   public void setDriveSuccess(boolean driveSuccess) {
     this.driveSuccess = driveSuccess;
   }
 
-  /**
-   * True if sending to Google Maps is success.
-   */
   public boolean isMapsSuccess() {
     return mapsSuccess;
   }
 
-  /**
-   * Sets the Google Maps result.
-   * 
-   * @param mapsSuccess true if sending to Google Maps is success
-   */
   public void setMapsSuccess(boolean mapsSuccess) {
     this.mapsSuccess = mapsSuccess;
   }
 
-  /**
-   * True if sending to Google Fusion Tables is success.
-   */
   public boolean isFusionTablesSuccess() {
     return fusionTablesSuccess;
   }
 
-  /**
-   * Sets the Google Fusion Tables result.
-   * 
-   * @param fusionTablesSuccess true if sending to Google Fusion Tables is
-   *          success
-   */
   public void setFusionTablesSuccess(boolean fusionTablesSuccess) {
     this.fusionTablesSuccess = fusionTablesSuccess;
   }
 
-  /**
-   * True if sending to Google Spreadsheets is success.
-   */
   public boolean isSpreadsheetsSuccess() {
     return spreadsheetsSuccess;
   }
 
-  /**
-   * Sets the Google Spreadsheets result.
-   * 
-   * @param spreadsheetsSuccess true if sending to Google Spreadsheets is
-   *          success
-   */
-  public void setSpreadsheetSuccess(boolean spreadsheetsSuccess) {
+  public void setSpreadsheetsSuccess(boolean spreadsheetsSuccess) {
     this.spreadsheetsSuccess = spreadsheetsSuccess;
   }
 
   private SendRequest(Parcel in) {
     trackId = in.readLong();
-    sharingAppPackageName = in.readString();
-    sharingAppClassName = in.readString();
     sendDrive = in.readByte() == 1;
     sendMaps = in.readByte() == 1;
     sendFusionTables = in.readByte() == 1;
     sendSpreadsheets = in.readByte() == 1;
     driveShare = in.readByte() == 1;
     driveShareEmails = in.readString();
-    newMap = in.readByte() == 1;
+    mapsShare = in.readByte() == 1;
+    mapsSharePackageName = in.readString();
+    mapsShareClassName = in.readString();
+    mapsExistingMap = in.readByte() == 1;
+    mapsExistingMapId = in.readString();
     account = in.readParcelable(null);
-    mapId = in.readString();
     driveSuccess = in.readByte() == 1;
     mapsSuccess = in.readByte() == 1;
     fusionTablesSuccess = in.readByte() == 1;
@@ -321,17 +221,18 @@ public class SendRequest implements Parcelable {
   @Override
   public void writeToParcel(Parcel out, int flags) {
     out.writeLong(trackId);
-    out.writeString(sharingAppPackageName);
-    out.writeString(sharingAppClassName);
     out.writeByte((byte) (sendDrive ? 1 : 0));
     out.writeByte((byte) (sendMaps ? 1 : 0));
     out.writeByte((byte) (sendFusionTables ? 1 : 0));
     out.writeByte((byte) (sendSpreadsheets ? 1 : 0));
     out.writeByte((byte) (driveShare ? 1 : 0));
     out.writeString(driveShareEmails);
-    out.writeByte((byte) (newMap ? 1 : 0));
+    out.writeByte((byte) (mapsShare ? 1 : 0));
+    out.writeString(mapsSharePackageName);
+    out.writeString(mapsShareClassName);
+    out.writeByte((byte) (mapsExistingMap ? 1 : 0));
+    out.writeString(mapsExistingMapId);
     out.writeParcelable(account, 0);
-    out.writeString(mapId);
     out.writeByte((byte) (driveSuccess ? 1 : 0));
     out.writeByte((byte) (mapsSuccess ? 1 : 0));
     out.writeByte((byte) (fusionTablesSuccess ? 1 : 0));

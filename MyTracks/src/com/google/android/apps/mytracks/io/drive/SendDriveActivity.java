@@ -62,7 +62,7 @@ public class SendDriveActivity extends AbstractSendActivity {
       return UploadResultActivity.class;
     } else {
       if (sendRequest.isSendMaps()) {
-        return sendRequest.isNewMap() ? SendMapsActivity.class : ChooseMapActivity.class;
+        return sendRequest.isMapsExistingMap() ? ChooseMapActivity.class : SendMapsActivity.class;
       } else if (sendRequest.isSendFusionTables()) {
         return SendFusionTablesActivity.class;
       } else if (sendRequest.isSendSpreadsheets()) {

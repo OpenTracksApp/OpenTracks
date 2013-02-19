@@ -44,7 +44,7 @@ public class SendSpreadsheetsActivity extends AbstractSendActivity {
 
   @Override
   protected void startNextActivity(boolean success, boolean isCancel) {
-    sendRequest.setSpreadsheetSuccess(success);
+    sendRequest.setSpreadsheetsSuccess(success);
     Intent intent = IntentUtils.newIntent(this, UploadResultActivity.class)
         .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
     startActivity(intent);

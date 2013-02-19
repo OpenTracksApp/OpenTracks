@@ -21,6 +21,8 @@ import com.google.android.apps.mytracks.fragments.AddEmailsDialogFragment;
 import com.google.android.apps.mytracks.fragments.AddEmailsDialogFragment.AddEmailsCaller;
 import com.google.android.apps.mytracks.fragments.ChooseAccountDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChooseAccountDialogFragment.ChooseAccountCaller;
+import com.google.android.apps.mytracks.fragments.ChooseActivityDialogFragment;
+import com.google.android.apps.mytracks.fragments.ChooseActivityDialogFragment.ChooseActivityCaller;
 import com.google.android.apps.mytracks.io.drive.SendDriveActivity;
 import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesActivity;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsConstants;
@@ -52,7 +54,7 @@ import java.io.IOException;
  * @author Jimmy Shih
  */
 public class AccountChooserActivity extends FragmentActivity
-    implements ChooseAccountCaller, AddEmailsCaller {
+    implements ChooseAccountCaller, AddEmailsCaller, ChooseActivityCaller {
 
   private static final String TAG = AccountChooserActivity.class.getSimpleName();
 
@@ -115,6 +117,19 @@ public class AccountChooserActivity extends FragmentActivity
     if (emails != null && !emails.equals("")) {
       sendRequest.setDriveShareEmails(emails);
       Intent intent = IntentUtils.newIntent(this, SendDriveActivity.class)
+          .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
+      startActivity(intent);
+    }
+    finish();
+  }
+
+  @Override
+  public void onChooseActivityDone(String packageName, String className) {
+    if (packageName != null && className != null) {
+      sendRequest.setMapsSharePackageName(packageName);
+      sendRequest.setMapsShareClassName(className);
+      Intent intent = IntentUtils.newIntent(
+          this, sendRequest.isMapsExistingMap() ? ChooseMapActivity.class : SendMapsActivity.class)
           .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
       startActivity(intent);
     }
@@ -284,7 +299,12 @@ public class AccountChooserActivity extends FragmentActivity
         next = SendDriveActivity.class;
       }
     } else if (sendRequest.isSendMaps()) {
-      next = sendRequest.isNewMap() ? SendMapsActivity.class : ChooseMapActivity.class;
+      if (sendRequest.isMapsShare()) {
+        new ChooseActivityDialogFragment().show(
+            getSupportFragmentManager(), ChooseActivityDialogFragment.CHOOSE_ACTIVITY_DIALOG_TAG);
+        return;
+      }
+      next = sendRequest.isMapsExistingMap() ? ChooseMapActivity.class : SendMapsActivity.class;
     } else if (sendRequest.isSendFusionTables()) {
       next = SendFusionTablesActivity.class;
     } else if (sendRequest.isSendSpreadsheets()) {

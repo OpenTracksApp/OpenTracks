@@ -209,7 +209,7 @@ public class ChooseMapActivity extends Activity {
    * @param mapId the chosen map id
    */
   private void startNextActivity(String mapId) {
-    sendRequest.setMapId(mapId);
+    sendRequest.setMapsExistingMapId(mapId);
     Intent intent = IntentUtils.newIntent(this, SendMapsActivity.class)
         .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
     startActivity(intent);

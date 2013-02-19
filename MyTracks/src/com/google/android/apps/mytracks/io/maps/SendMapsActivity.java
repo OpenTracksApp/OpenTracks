@@ -37,7 +37,7 @@ public class SendMapsActivity extends AbstractSendActivity {
   @Override
   protected AbstractSendAsyncTask createAsyncTask() {
     return new SendMapsAsyncTask(
-        this, sendRequest.getTrackId(), sendRequest.getAccount(), sendRequest.getMapId());
+        this, sendRequest.getTrackId(), sendRequest.getAccount(), sendRequest.getMapsExistingMapId());
   }
 
   @Override

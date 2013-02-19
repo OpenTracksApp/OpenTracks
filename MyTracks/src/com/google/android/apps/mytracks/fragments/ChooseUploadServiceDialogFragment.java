@@ -175,7 +175,7 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
     sendRequest.setSendMaps(mapsCheckBox.isChecked());
     sendRequest.setSendFusionTables(fusionTablesCheckBox.isChecked());
     sendRequest.setSendSpreadsheets(spreadsheetsCheckBox.isChecked());
-    sendRequest.setNewMap(!existingMapRadioButton.isChecked());
+    sendRequest.setMapsExistingMap(existingMapRadioButton.isChecked());
     sendStats();
     Intent intent = IntentUtils.newIntent(activity, AccountChooserActivity.class)
         .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);

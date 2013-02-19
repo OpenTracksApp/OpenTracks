@@ -19,6 +19,7 @@ package com.google.android.apps.mytracks.io.sendtogoogle;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.fragments.ChooseActivityDialogFragment;
+import com.google.android.apps.mytracks.fragments.ChooseActivityDialogFragment.ChooseActivityCaller;
 import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesUtils;
 import com.google.android.apps.mytracks.io.maps.SendMapsUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
@@ -43,7 +44,7 @@ import android.widget.TextView;
  * 
  * @author Jimmy Shih
  */
-public class UploadResultActivity extends FragmentActivity {
+public class UploadResultActivity extends FragmentActivity implements ChooseActivityCaller {
 
   private static final String TAG = UploadResultActivity.class.getSimpleName();
   @VisibleForTesting
@@ -70,9 +71,9 @@ public class UploadResultActivity extends FragmentActivity {
 
     if (sendRequest.isSendMaps() && sendRequest.isMapsSuccess()) {
       shareUrl = SendMapsUtils.getMapUrl(track);
-      if (sendRequest.getSharingAppPackageName() != null) {
+      if (sendRequest.getMapsSharePackageName() != null) {
         Intent intent = IntentUtils.newShareUrlIntent(this, sendRequest.getTrackId(), shareUrl,
-            sendRequest.getSharingAppPackageName(), sendRequest.getSharingAppClassName());
+            sendRequest.getMapsSharePackageName(), sendRequest.getMapsShareClassName());
         startActivity(intent);
         finish();
         return;
@@ -181,13 +182,22 @@ public class UploadResultActivity extends FragmentActivity {
           R.string.share_track_share_url, new DialogInterface.OnClickListener() {
               @Override
             public void onClick(DialogInterface dialog, int which) {
-              ChooseActivityDialogFragment.newInstance(sendRequest.getTrackId(), shareUrl).show(
-                  getSupportFragmentManager(),
+              new ChooseActivityDialogFragment().show(getSupportFragmentManager(),
                   ChooseActivityDialogFragment.CHOOSE_ACTIVITY_DIALOG_TAG);
             }
           });
     }
     resultDialog = builder.create();
     return resultDialog;
+  }
+
+  @Override
+  public void onChooseActivityDone(String packageName, String className) {
+    if (packageName != null && className != null) {
+      Intent intent = IntentUtils.newShareUrlIntent(
+          this, sendRequest.getTrackId(), shareUrl, packageName, className);
+      startActivity(intent);
+    }
+    finish();
   }
 }

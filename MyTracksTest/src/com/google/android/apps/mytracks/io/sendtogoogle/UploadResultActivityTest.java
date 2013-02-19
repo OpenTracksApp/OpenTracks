@@ -130,7 +130,7 @@ public class UploadResultActivityTest extends
     sendRequest.setSendSpreadsheets(isSendSpreadsheets);
     sendRequest.setMapsSuccess(isMapsSuccess);
     sendRequest.setFusionTablesSuccess(isFusionTablesSuccess);
-    sendRequest.setSpreadsheetSuccess(isSpreadsheetSuccess);
+    sendRequest.setSpreadsheetsSuccess(isSpreadsheetSuccess);
     intent.putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
     setActivityIntent(intent);
     uploadResultActivity = this.getActivity();

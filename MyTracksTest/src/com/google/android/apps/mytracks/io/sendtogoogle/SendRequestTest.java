@@ -29,13 +29,13 @@ public class SendRequestTest extends AndroidTestCase {
 
   private SendRequest sendRequest;
 
-  private static final String SHARING_APP_PACKAGE_NAME = "package";
-  private static final String SHARING_APP_CLASS_NAME = "class";
+  private static final String MAPS_SHARE_PACKAGE_NAME = "package";
+  private static final String MAPS_SHARE_CLASS_NAME = "class";
   private final static String ACCOUNTNAME = "testAccount1";
   private final static String ACCOUNTYPE = "testType1";
-  private final static String MAPID = "mapId1";
+  private final static String MAPS_EXISTING_MAP_ID = "mapId1";
   private final static String DRIVE_SHARE_EMAILS = "foo@foo.com";
-  
+
   @Override
   protected void setUp() throws Exception {
     super.setUp();
@@ -63,8 +63,9 @@ public class SendRequestTest extends AndroidTestCase {
   }
 
   /**
-   * Tests the method {@link SendRequest#isSendSpreadsheets()}. The value should be set
-   * to false which is its default value when it is initialed in setup method.
+   * Tests the method {@link SendRequest#isSendSpreadsheets()}. The value should
+   * be set to false which is its default value when it is initialed in setup
+   * method.
    */
   public void testIsSendSpreadsheets() {
     assertEquals(false, sendRequest.isSendSpreadsheets());
@@ -73,13 +74,14 @@ public class SendRequestTest extends AndroidTestCase {
   }
 
   /**
-   * Tests the method {@link SendRequest#isNewMap()}. The value should be set to
-   * false which is its default value when it is initialed in setup method.
+   * Tests the method {@link SendRequest#isMapsExistingMap()}. The value should
+   * be set to false which is its default value when it is initialed in setup
+   * method.
    */
   public void testIsNewMap() {
-    assertEquals(false, sendRequest.isNewMap());
-    sendRequest.setNewMap(true);
-    assertEquals(true, sendRequest.isNewMap());
+    assertEquals(false, sendRequest.isMapsExistingMap());
+    sendRequest.setMapsExistingMap(true);
+    assertEquals(true, sendRequest.isMapsExistingMap());
   }
 
   /**
@@ -94,12 +96,13 @@ public class SendRequestTest extends AndroidTestCase {
   }
 
   /**
-   * Tests the method {@link SendRequest#getMapId()}. The value should be set to
-   * null which is its default value when it is initialed in setup method.
+   * Tests the method {@link SendRequest#getMapsExistingMapId()}. The value
+   * should be set to null which is its default value when it is initialed in
+   * setup method.
    */
-  public void testGetMapId() {
-    assertEquals(null, sendRequest.getMapId());
-    sendRequest.setMapId("1");
+  public void testGetMapsExistingMapId() {
+    assertEquals(null, sendRequest.getMapsExistingMapId());
+    sendRequest.setMapsExistingMapId("1");
     assertEquals("1", "1");
   }
 
@@ -126,13 +129,13 @@ public class SendRequestTest extends AndroidTestCase {
   }
 
   /**
-   * Tests the method {@link SendRequest#isSpreadsheetsSuccess()}. The value should be
-   * set to false which is its default value when it is initialed in setup
-   * method.
+   * Tests the method {@link SendRequest#isSpreadsheetsSuccess()}. The value
+   * should be set to false which is its default value when it is initialed in
+   * setup method.
    */
   public void testIsSpreadsheetsSuccess() {
     assertEquals(false, sendRequest.isSpreadsheetsSuccess());
-    sendRequest.setSpreadsheetSuccess(true);
+    sendRequest.setSpreadsheetsSuccess(true);
     assertEquals(true, sendRequest.isSpreadsheetsSuccess());
   }
 
@@ -143,8 +146,6 @@ public class SendRequestTest extends AndroidTestCase {
     Parcel parcel = Parcel.obtain();
     parcel.setDataPosition(0);
     parcel.writeLong(2);
-    parcel.writeString("");
-    parcel.writeString("");
     parcel.writeByte((byte) 1);
     parcel.writeByte((byte) 1);
     parcel.writeByte((byte) 1);
@@ -152,9 +153,12 @@ public class SendRequestTest extends AndroidTestCase {
     parcel.writeByte((byte) 1);
     parcel.writeString(DRIVE_SHARE_EMAILS);
     parcel.writeByte((byte) 1);
+    parcel.writeString("");
+    parcel.writeString("");
+    parcel.writeByte((byte) 1);
+    parcel.writeString(MAPS_EXISTING_MAP_ID);
     Account account = new Account(ACCOUNTNAME, ACCOUNTYPE);
     parcel.writeParcelable(account, 0);
-    parcel.writeString(MAPID);
     parcel.writeByte((byte) 1);
     parcel.writeByte((byte) 1);
     parcel.writeByte((byte) 1);
@@ -162,17 +166,18 @@ public class SendRequestTest extends AndroidTestCase {
     parcel.setDataPosition(0);
     sendRequest = SendRequest.CREATOR.createFromParcel(parcel);
     assertEquals(2, sendRequest.getTrackId());
-    assertEquals("", sendRequest.getSharingAppPackageName());
-    assertEquals("", sendRequest.getSharingAppClassName());
     assertTrue(sendRequest.isSendDrive());
     assertTrue(sendRequest.isSendMaps());
     assertTrue(sendRequest.isSendFusionTables());
     assertTrue(sendRequest.isSendSpreadsheets());
     assertTrue(sendRequest.isDriveShare());
     assertEquals(DRIVE_SHARE_EMAILS, sendRequest.getDriveShareEmails());
-    assertTrue(sendRequest.isNewMap());
+    assertTrue(sendRequest.isMapsShare());
+    assertEquals("", sendRequest.getMapsSharePackageName());
+    assertEquals("", sendRequest.getMapsShareClassName());
+    assertTrue(sendRequest.isMapsExistingMap());
+    assertEquals(MAPS_EXISTING_MAP_ID, sendRequest.getMapsExistingMapId());
     assertEquals(account, sendRequest.getAccount());
-    assertEquals(MAPID, sendRequest.getMapId());
     assertTrue(sendRequest.isDriveSuccess());
     assertTrue(sendRequest.isMapsSuccess());
     assertTrue(sendRequest.isFusionTablesSuccess());
@@ -186,8 +191,6 @@ public class SendRequestTest extends AndroidTestCase {
     Parcel parcel = Parcel.obtain();
     parcel.setDataPosition(0);
     parcel.writeLong(4);
-    parcel.writeString(null);
-    parcel.writeString(null);
     parcel.writeByte((byte) 0);
     parcel.writeByte((byte) 0);
     parcel.writeByte((byte) 0);
@@ -195,9 +198,12 @@ public class SendRequestTest extends AndroidTestCase {
     parcel.writeByte((byte) 0);
     parcel.writeString(null);
     parcel.writeByte((byte) 0);
+    parcel.writeString(null);
+    parcel.writeString(null);
+    parcel.writeByte((byte) 0);
+    parcel.writeString(MAPS_EXISTING_MAP_ID);
     Account account = new Account(ACCOUNTNAME, ACCOUNTYPE);
     parcel.writeParcelable(account, 0);
-    parcel.writeString(MAPID);
     parcel.writeByte((byte) 0);
     parcel.writeByte((byte) 0);
     parcel.writeByte((byte) 0);
@@ -205,17 +211,18 @@ public class SendRequestTest extends AndroidTestCase {
     parcel.setDataPosition(0);
     sendRequest = SendRequest.CREATOR.createFromParcel(parcel);
     assertEquals(4, sendRequest.getTrackId());
-    assertNull(sendRequest.getSharingAppPackageName());
-    assertNull(sendRequest.getSharingAppClassName());
     assertFalse(sendRequest.isSendDrive());
     assertFalse(sendRequest.isSendMaps());
     assertFalse(sendRequest.isSendFusionTables());
     assertFalse(sendRequest.isSendSpreadsheets());
     assertFalse(sendRequest.isDriveShare());
     assertNull(sendRequest.getDriveShareEmails());
-    assertFalse(sendRequest.isNewMap());
+    assertFalse(sendRequest.isMapsShare());
+    assertNull(sendRequest.getMapsSharePackageName());
+    assertNull(sendRequest.getMapsShareClassName());
+    assertFalse(sendRequest.isMapsExistingMap());
+    assertEquals(MAPS_EXISTING_MAP_ID, sendRequest.getMapsExistingMapId());
     assertEquals(account, sendRequest.getAccount());
-    assertEquals(MAPID, sendRequest.getMapId());
     assertFalse(sendRequest.isDriveSuccess());
     assertFalse(sendRequest.isMapsSuccess());
     assertFalse(sendRequest.isFusionTablesSuccess());
@@ -232,33 +239,35 @@ public class SendRequestTest extends AndroidTestCase {
     sendRequest.writeToParcel(parcel, 1);
     parcel.setDataPosition(0);
     long trackId = parcel.readLong();
-    String sharingAppPackageName = parcel.readString();
-    String sharingAppClassName = parcel.readString();
     boolean sendDrive = parcel.readByte() == 1;
     boolean sendMaps = parcel.readByte() == 1;
     boolean sendFusionTables = parcel.readByte() == 1;
     boolean sendSpreadsheets = parcel.readByte() == 1;
     boolean driveShare = parcel.readByte() == 1;
     String dirveShareEmails = parcel.readString();
-    boolean newMap = parcel.readByte() == 1;
+    boolean mapsShare = parcel.readByte() == 1;
+    String mapsSharePackageName = parcel.readString();
+    String mapsShareClassName = parcel.readString();
+    boolean mapsExistingMap = parcel.readByte() == 1;
+    String mapsExistingMapId = parcel.readString();
     Parcelable account = parcel.readParcelable(null);
-    String mapId = parcel.readString();
     boolean driveSuccess = parcel.readByte() == 1;
     boolean mapsSuccess = parcel.readByte() == 1;
     boolean fusionTablesSuccess = parcel.readByte() == 1;
     boolean spreadsheetsSuccess = parcel.readByte() == 1;
     assertEquals(1, trackId);
-    assertNull(sharingAppPackageName);
-    assertNull(sharingAppClassName);
     assertFalse(sendDrive);
     assertFalse(sendMaps);
     assertFalse(sendFusionTables);
     assertFalse(sendSpreadsheets);
     assertFalse(driveShare);
     assertNull(dirveShareEmails);
-    assertFalse(newMap);
+    assertFalse(mapsShare);
+    assertNull(mapsSharePackageName);
+    assertNull(mapsShareClassName);
+    assertFalse(mapsExistingMap);
+    assertNull(mapsExistingMapId);
     assertNull(account);
-    assertNull(mapId);
     assertFalse(driveSuccess);
     assertFalse(mapsSuccess);
     assertFalse(fusionTablesSuccess);
@@ -270,54 +279,57 @@ public class SendRequestTest extends AndroidTestCase {
    */
   public void testWriteToParcel() {
     sendRequest = new SendRequest(4);
-    sendRequest.setSharingAppPackageName(SHARING_APP_PACKAGE_NAME);
-    sendRequest.setSharingAppClassName(SHARING_APP_CLASS_NAME);
     sendRequest.setSendDrive(true);
     sendRequest.setSendMaps(true);
     sendRequest.setSendFusionTables(true);
     sendRequest.setSendSpreadsheets(true);
     sendRequest.setDriveShare(true);
     sendRequest.setDriveShareEmails(DRIVE_SHARE_EMAILS);
-    sendRequest.setNewMap(true);
+    sendRequest.setMapsShare(true);
+    sendRequest.setMapsSharePackageName(MAPS_SHARE_PACKAGE_NAME);
+    sendRequest.setMapsShareClassName(MAPS_SHARE_CLASS_NAME);
+    sendRequest.setMapsExistingMap(true);
+    sendRequest.setMapsExistingMapId(MAPS_EXISTING_MAP_ID);
     Account accountNew = new Account(ACCOUNTNAME + "2", ACCOUNTYPE + "2");
     sendRequest.setAccount(accountNew);
-    sendRequest.setMapId(MAPID);
     sendRequest.setMapsSuccess(true);
     sendRequest.setDriveSuccess(true);
     sendRequest.setFusionTablesSuccess(true);
-    sendRequest.setSpreadsheetSuccess(true);
+    sendRequest.setSpreadsheetsSuccess(true);
     Parcel parcel = Parcel.obtain();
     parcel.setDataPosition(0);
     sendRequest.writeToParcel(parcel, 1);
     parcel.setDataPosition(0);
     long trackId = parcel.readLong();
-    String sharingAppPackageName = parcel.readString();
-    String sharingAppClassName = parcel.readString();
     boolean sendDrive = parcel.readByte() == 1;
     boolean sendMaps = parcel.readByte() == 1;
     boolean sendFusionTables = parcel.readByte() == 1;
     boolean sendSpreadsheets = parcel.readByte() == 1;
     boolean shareDrive = parcel.readByte() == 1;
     String driveShareEmails = parcel.readString();
-    boolean newMap = parcel.readByte() == 1;
+    boolean mapsShare = parcel.readByte() == 1;
+    String mapsSharePackageName = parcel.readString();
+    String mapsShareClassName = parcel.readString();
+    boolean mapsExistingMap = parcel.readByte() == 1;
+    String mapsExistingMapId = parcel.readString();
     Parcelable account = parcel.readParcelable(null);
-    String mapId = parcel.readString();
     boolean driveSuccess = parcel.readByte() == 1;
     boolean mapsSuccess = parcel.readByte() == 1;
     boolean fusionTablesSuccess = parcel.readByte() == 1;
     boolean spreadsheetsSuccess = parcel.readByte() == 1;
     assertEquals(4, trackId);
-    assertEquals(SHARING_APP_PACKAGE_NAME, sharingAppPackageName);
-    assertEquals(SHARING_APP_CLASS_NAME, sharingAppClassName);
     assertTrue(sendDrive);
     assertTrue(sendMaps);
     assertTrue(sendFusionTables);
     assertTrue(sendSpreadsheets);
     assertTrue(shareDrive);
     assertEquals(DRIVE_SHARE_EMAILS, driveShareEmails);
-    assertTrue(newMap);
+    assertTrue(mapsShare);
+    assertEquals(MAPS_SHARE_PACKAGE_NAME, mapsSharePackageName);
+    assertEquals(MAPS_SHARE_CLASS_NAME, mapsShareClassName);
+    assertTrue(mapsExistingMap);
+    assertEquals(MAPS_EXISTING_MAP_ID, mapsExistingMapId);
     assertEquals(accountNew, account);
-    assertEquals(MAPID, mapId);
     assertTrue(driveSuccess);
     assertTrue(mapsSuccess);
     assertTrue(fusionTablesSuccess);

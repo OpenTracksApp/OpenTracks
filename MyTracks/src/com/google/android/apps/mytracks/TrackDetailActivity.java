@@ -22,7 +22,6 @@ import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.fragments.ChartFragment;
-import com.google.android.apps.mytracks.fragments.ChooseActivityDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChooseUploadServiceDialogFragment;
 import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment;
 import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment.ConfirmCaller;
@@ -431,6 +430,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity
 
   @Override
   public void onConfirmDone(int confirmId, long confirmTrackId) {
+    SendRequest sendRequest;
     Intent intent;
     switch (confirmId) {
       case R.string.confirm_play_earth_key:
@@ -442,12 +442,17 @@ public class TrackDetailActivity extends AbstractMyTracksActivity
         startActivity(intent);
         break;
       case R.string.confirm_share_map_key:
-        AnalyticsUtils.sendPageViews(this, "/action/share");
-        ChooseActivityDialogFragment.newInstance(confirmTrackId, null).show(
-            getSupportFragmentManager(), ChooseActivityDialogFragment.CHOOSE_ACTIVITY_DIALOG_TAG);
+        AnalyticsUtils.sendPageViews(this, "/action/share_map");
+        sendRequest = new SendRequest(trackId);
+        sendRequest.setSendMaps(true);
+        sendRequest.setMapsShare(true);
+        intent = IntentUtils.newIntent(this, AccountChooserActivity.class)
+            .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
+        startActivity(intent);
         break;
       case R.string.confirm_share_drive_key:
-        SendRequest sendRequest = new SendRequest(trackId);
+        AnalyticsUtils.sendPageViews(this, "/action/share_drive");
+        sendRequest = new SendRequest(trackId);
         sendRequest.setSendDrive(true);
         sendRequest.setDriveShare(true);
         intent = IntentUtils.newIntent(this, AccountChooserActivity.class)

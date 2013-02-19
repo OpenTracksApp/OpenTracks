@@ -102,10 +102,10 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
 
     AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock);
     SendMapsAsyncTask sendMapsAsyncTask = new SendMapsAsyncTask(sendMapsActivityMock,
-        sendRequest.getTrackId(), sendRequest.getAccount(), sendRequest.getMapId(),
+        sendRequest.getTrackId(), sendRequest.getAccount(), sendRequest.getMapsExistingMapId(),
         myTracksProviderUtilsMock);
     sendMapsAsyncTask.saveResult();
-    assertEquals(sendRequest.getMapId(), track.getMapId());
+    assertEquals(sendRequest.getMapsExistingMapId(), track.getMapId());
     AndroidMock.verify(sendMapsActivityMock, myTracksProviderUtilsMock);
   }
 
