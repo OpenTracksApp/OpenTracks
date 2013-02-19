@@ -43,7 +43,9 @@ public abstract class AbstractMyTracksActivity extends FragmentActivity {
     setContentView(getLayoutResId());
 
     // Configure action bar must be after setContentView
-    ApiAdapterFactory.getApiAdapter().configureActionBarHomeAsUp(this);
+    if (configureActionBarHomeAsUp()) {
+      ApiAdapterFactory.getApiAdapter().configureActionBarHomeAsUp(this);
+    }
   }
 
   /**
@@ -59,6 +61,13 @@ public abstract class AbstractMyTracksActivity extends FragmentActivity {
   }
 
   /**
+   * Returns true to configure the action bar home button as the up button.
+   */
+  protected boolean configureActionBarHomeAsUp() {
+    return true;
+  }
+
+  /**
    * Callback when the home menu item is selected.
    */
   protected void onHomeSelected() {
@@ -67,10 +76,10 @@ public abstract class AbstractMyTracksActivity extends FragmentActivity {
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    if (item.getItemId() != android.R.id.home) {
-      return super.onOptionsItemSelected(item);
+    if (item.getItemId() == android.R.id.home) {
+      onHomeSelected();
+      return true;
     }
-    onHomeSelected();
-    return true;
+    return super.onOptionsItemSelected(item);
   }
 }

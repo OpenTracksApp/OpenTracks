@@ -64,9 +64,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.Settings;
-import android.speech.tts.TextToSpeech;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -93,7 +91,7 @@ import java.util.Locale;
  * 
  * @author Leif Hendrik Wilden
  */
-public class TrackListActivity extends FragmentActivity
+public class TrackListActivity extends AbstractMyTracksActivity
     implements ConfirmCaller, DeleteOneTrackCaller {
 
   private static final String TAG = TrackListActivity.class.getSimpleName();
@@ -357,9 +355,7 @@ public class TrackListActivity extends FragmentActivity
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
     setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
-    setContentView(R.layout.track_list);
 
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
     sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
@@ -511,6 +507,16 @@ public class TrackListActivity extends FragmentActivity
     }
   }
 
+  @Override
+  protected int getLayoutResId() {
+    return R.layout.track_list;
+  }
+
+  @Override
+  protected boolean configureActionBarHomeAsUp() {
+    return false;    
+  }
+  
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.track_list, menu);
