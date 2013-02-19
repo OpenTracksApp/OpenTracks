@@ -17,6 +17,7 @@ package com.google.android.apps.mytracks.endtoendtest.sync;
 
 import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.endtoendtest.EndToEndTestUtils;
+import com.google.android.apps.mytracks.endtoendtest.RunConfiguration;
 import com.google.android.maps.mytracks.R;
 import com.google.api.services.drive.Drive;
 
@@ -27,7 +28,8 @@ import android.view.KeyEvent;
 import java.io.IOException;
 
 /**
- * Tests making changes on Google Drive when syncing My Tracks with Google Drive.
+ * Tests making changes on Google Drive when syncing My Tracks with Google
+ * Drive.
  * 
  * @author Youtao Liu
  */
@@ -55,7 +57,7 @@ public class SyncDriveWithMyTracksTest extends ActivityInstrumentationTestCase2<
    * @throws IOException
    */
   public void testDeleteAllTracksInMyTracks() throws IOException {
-    if (!SyncTestUtils.runSyncTest) {
+    if (!RunConfiguration.getInstance().runSyncTest) {
       return;
     }
     EndToEndTestUtils.deleteAllTracks();
@@ -70,7 +72,7 @@ public class SyncDriveWithMyTracksTest extends ActivityInstrumentationTestCase2<
    * @throws IOException
    */
   public void testDeleteOneTracksInMyTracks() throws IOException {
-    if (!SyncTestUtils.runSyncTest) {
+    if (!RunConfiguration.getInstance().runSyncTest) {
       return;
     }
     EndToEndTestUtils.createTrackIfEmpty(2, false);
@@ -90,7 +92,7 @@ public class SyncDriveWithMyTracksTest extends ActivityInstrumentationTestCase2<
    * @throws IOException
    */
   public void testCreateTracksInMyTracks() throws IOException {
-    if (!SyncTestUtils.runSyncTest) {
+    if (!RunConfiguration.getInstance().runSyncTest) {
       return;
     }
     EndToEndTestUtils.deleteAllTracks();
@@ -107,7 +109,7 @@ public class SyncDriveWithMyTracksTest extends ActivityInstrumentationTestCase2<
    * @throws IOException
    */
   public void testEditTrackInMyTracks() throws IOException {
-    if (!SyncTestUtils.runSyncTest) {
+    if (!RunConfiguration.getInstance().runSyncTest) {
       return;
     }
     EndToEndTestUtils.createTrackIfEmpty(3, true);
@@ -152,7 +154,7 @@ public class SyncDriveWithMyTracksTest extends ActivityInstrumentationTestCase2<
     assertTrue(newTrack.indexOf(newType) > 0);
     assertTrue(newTrack.indexOf(newDesc) > 0);
   }
-  
+
   @Override
   protected void tearDown() throws Exception {
     super.tearDown();
