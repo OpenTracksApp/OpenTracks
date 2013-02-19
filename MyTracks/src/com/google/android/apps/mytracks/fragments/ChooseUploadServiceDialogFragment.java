@@ -16,17 +16,13 @@
 
 package com.google.android.apps.mytracks.fragments;
 
-import com.google.android.apps.mytracks.io.sendtogoogle.AccountChooserActivity;
-import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
-import com.google.android.apps.mytracks.util.AnalyticsUtils;
-import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
@@ -45,15 +41,26 @@ import android.widget.Toast;
  */
 public class ChooseUploadServiceDialogFragment extends DialogFragment {
 
+  /**
+   * Interface for caller of this dialog fragment.
+   * 
+   * @author Jimmy Shih
+   */
+  public interface ChooseUploadServiceCaller {
+
+    /**
+     * Called when choose upload service is done.
+     */
+    public void onChooseUploadServiceDone(boolean sendDrive, boolean sendMaps,
+        boolean sendFusionTables, boolean sendSpreadsheets, boolean mapsExistingMap);
+  }
+
   public static final String CHOOSE_UPLOAD_SERVICE_DIALOG_TAG = "chooseUploadService";
 
-  private static final String KEY_SEND_REQUEST = "sendRequest";
   private static final String KEY_HIDE_DRIVE = "hideDrive";
 
-  public static ChooseUploadServiceDialogFragment newInstance(
-      SendRequest sendRequest, boolean hideDrive) {
+  public static ChooseUploadServiceDialogFragment newInstance(boolean hideDrive) {
     Bundle bundle = new Bundle();
-    bundle.putParcelable(KEY_SEND_REQUEST, sendRequest);
     bundle.putBoolean(KEY_HIDE_DRIVE, hideDrive);
 
     ChooseUploadServiceDialogFragment chooseUploadServiceDialogFragment = new ChooseUploadServiceDialogFragment();
@@ -61,8 +68,8 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
     return chooseUploadServiceDialogFragment;
   }
 
+  private ChooseUploadServiceCaller caller;
   private FragmentActivity activity;
-  private SendRequest sendRequest;
   private boolean hideDrive;
 
   private CheckBox driveCheckBox;
@@ -74,9 +81,19 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
   private RadioButton existingMapRadioButton;
 
   @Override
+  public void onAttach(Activity activity) {
+    super.onAttach(activity);
+    try {
+      caller = (ChooseUploadServiceCaller) activity;
+    } catch (ClassCastException e) {
+      throw new ClassCastException(activity.toString() + " must implement "
+          + ChooseUploadServiceCaller.class.getSimpleName());
+    }
+  }
+
+  @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     activity = getActivity();
-    sendRequest = getArguments().getParcelable(KEY_SEND_REQUEST);
     hideDrive = getArguments().getBoolean(KEY_HIDE_DRIVE);
 
     View view = activity.getLayoutInflater().inflate(R.layout.choose_upload_service, null);
@@ -151,7 +168,9 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
                 activity, R.string.send_to_spreadsheets_key, spreadsheetsCheckBox.isChecked());
             if (sendDrive() || mapsCheckBox.isChecked() || fusionTablesCheckBox.isChecked()
                 || spreadsheetsCheckBox.isChecked()) {
-              startNextActivity();
+              caller.onChooseUploadServiceDone(sendDrive(), mapsCheckBox.isChecked(),
+                  fusionTablesCheckBox.isChecked(), spreadsheetsCheckBox.isChecked(),
+                  existingMapRadioButton.isChecked());
             } else {
               Toast.makeText(activity, R.string.send_google_no_service_selected, Toast.LENGTH_LONG)
                   .show();
@@ -165,39 +184,6 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
    */
   private void updateMapsOption() {
     mapsOptionTableRow.setVisibility(mapsCheckBox.isChecked() ? View.VISIBLE : View.GONE);
-  }
-
-  /**
-   * Starts the next activity, {@link AccountChooserActivity}.
-   */
-  private void startNextActivity() {
-    sendRequest.setSendDrive(sendDrive());
-    sendRequest.setSendMaps(mapsCheckBox.isChecked());
-    sendRequest.setSendFusionTables(fusionTablesCheckBox.isChecked());
-    sendRequest.setSendSpreadsheets(spreadsheetsCheckBox.isChecked());
-    sendRequest.setMapsExistingMap(existingMapRadioButton.isChecked());
-    sendStats();
-    Intent intent = IntentUtils.newIntent(activity, AccountChooserActivity.class)
-        .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
-    startActivity(intent);
-  }
-
-  /**
-   * Sends stats to Google Analytics.
-   */
-  private void sendStats() {
-    if (sendRequest.isSendDrive()) {
-      AnalyticsUtils.sendPageViews(activity, "/send/drive");
-    }
-    if (sendRequest.isSendMaps()) {
-      AnalyticsUtils.sendPageViews(activity, "/send/maps");
-    }
-    if (sendRequest.isSendFusionTables()) {
-      AnalyticsUtils.sendPageViews(activity, "/send/fusion_tables");
-    }
-    if (sendRequest.isSendSpreadsheets()) {
-      AnalyticsUtils.sendPageViews(activity, "/send/spreadsheets");
-    }
   }
 
   /**

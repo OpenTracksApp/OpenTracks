@@ -120,6 +120,7 @@ public class ChooseActivityDialogFragment extends DialogFragment {
             DisplayInfo displayInfo = (DisplayInfo) alertDialog.getListView()
                 .getItemAtPosition(which);
             ActivityInfo activityInfo = displayInfo.resolveInfo.activityInfo;
+            dismiss();
             caller.onChooseActivityDone(
                 activityInfo.applicationInfo.packageName, activityInfo.name);
           }

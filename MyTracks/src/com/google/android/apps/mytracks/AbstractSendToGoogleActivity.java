@@ -1,12 +1,12 @@
 /*
  * Copyright 2012 Google Inc.
- *
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- *
+ * 
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -14,9 +14,8 @@
  * the License.
  */
 
-package com.google.android.apps.mytracks.io.sendtogoogle;
+package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.fragments.AddEmailsDialogFragment;
 import com.google.android.apps.mytracks.fragments.AddEmailsDialogFragment.AddEmailsCaller;
 import com.google.android.apps.mytracks.fragments.ChooseAccountDialogFragment;
@@ -28,6 +27,10 @@ import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesActivity
 import com.google.android.apps.mytracks.io.gdata.maps.MapsConstants;
 import com.google.android.apps.mytracks.io.maps.ChooseMapActivity;
 import com.google.android.apps.mytracks.io.maps.SendMapsActivity;
+import com.google.android.apps.mytracks.io.sendtogoogle.PermissionCallback;
+import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
+import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
+import com.google.android.apps.mytracks.io.sendtogoogle.UploadResultActivity;
 import com.google.android.apps.mytracks.io.spreadsheets.SendSpreadsheetsActivity;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
@@ -42,28 +45,73 @@ import android.accounts.OperationCanceledException;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.io.IOException;
 
 /**
- * A chooser to select an account.
+ * An abstract class for sending a track to Google services.
  * 
  * @author Jimmy Shih
  */
-public class AccountChooserActivity extends FragmentActivity
+public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActivity
     implements ChooseAccountCaller, AddEmailsCaller, ChooseActivityCaller {
 
-  private static final String TAG = AccountChooserActivity.class.getSimpleName();
+  private static final String TAG = AbstractMyTracksActivity.class.getSimpleName();
 
   private SendRequest sendRequest;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    sendRequest = getIntent().getParcelableExtra(SendRequest.SEND_REQUEST_KEY);
+  private PermissionCallback driveCallback = new PermissionCallback() {
+      @Override
+    public void onSuccess() {
+      getPermission(MapsConstants.SERVICE_NAME, sendRequest.isSendMaps(), mapsCallback);
+    }
+
+      @Override
+    public void onFailure() {
+      handleNoAccountPermission();
+    }
+  };
+
+  private PermissionCallback mapsCallback = new PermissionCallback() {
+      @Override
+    public void onSuccess() {
+      checkFusionTablesPermission();
+    }
+
+      @Override
+    public void onFailure() {
+      handleNoAccountPermission();
+    }
+  };
+
+  private PermissionCallback fusionTablesCallback = new PermissionCallback() {
+      @Override
+    public void onSuccess() {
+      checkSpreadsheetPermission();
+    }
+
+      @Override
+    public void onFailure() {
+      handleNoAccountPermission();
+    }
+  };
+
+  private PermissionCallback spreadsheetsCallback = new PermissionCallback() {
+      @Override
+    public void onSuccess() {
+      startNextActivity();
+    }
+
+      @Override
+    public void onFailure() {
+      handleNoAccountPermission();
+    }
+  };
+
+  public void sendToGoogle(SendRequest request) {
+    sendRequest = request;
     new ChooseAccountDialogFragment().show(
         getSupportFragmentManager(), ChooseAccountDialogFragment.CHOOSE_ACCOUNT_DIALOG_TAG);
   }
@@ -100,12 +148,10 @@ public class AccountChooserActivity extends FragmentActivity
     }
   }
 
-  @Override
   public void onChooseAccountDone() {
     String googleAccount = PreferencesUtils.getString(
         this, R.string.google_account_key, PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
     if (googleAccount == null || googleAccount.equals(PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT)) {
-      finish();
       return;
     }
     sendRequest.setAccount(new Account(googleAccount, Constants.ACCOUNT_TYPE));
@@ -120,7 +166,6 @@ public class AccountChooserActivity extends FragmentActivity
           .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
       startActivity(intent);
     }
-    finish();
   }
 
   @Override
@@ -133,7 +178,6 @@ public class AccountChooserActivity extends FragmentActivity
           .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
       startActivity(intent);
     }
-    finish();
   }
 
   /**
@@ -184,54 +228,6 @@ public class AccountChooserActivity extends FragmentActivity
       spreadsheetsCallback.onSuccess();
     }
   }
-
-  private PermissionCallback spreadsheetsCallback = new PermissionCallback() {
-      @Override
-    public void onSuccess() {
-      startNextActivity();
-    }
-
-      @Override
-    public void onFailure() {
-      handleNoAccountPermission();
-    }
-  };
-
-  private PermissionCallback fusionTablesCallback = new PermissionCallback() {
-      @Override
-    public void onSuccess() {
-      checkSpreadsheetPermission();
-    }
-
-      @Override
-    public void onFailure() {
-      handleNoAccountPermission();
-    }
-  };
-
-  private PermissionCallback mapsCallback = new PermissionCallback() {
-      @Override
-    public void onSuccess() {
-      checkFusionTablesPermission();
-    }
-
-      @Override
-    public void onFailure() {
-      handleNoAccountPermission();
-    }
-  };
-
-  private PermissionCallback driveCallback = new PermissionCallback() {
-      @Override
-    public void onSuccess() {
-      getPermission(MapsConstants.SERVICE_NAME, sendRequest.isSendMaps(), mapsCallback);
-    }
-
-      @Override
-    public void onFailure() {
-      handleNoAccountPermission();
-    }
-  };
 
   /**
    * Gets the user permission to access a service.
@@ -315,7 +311,6 @@ public class AccountChooserActivity extends FragmentActivity
     Intent intent = IntentUtils.newIntent(this, next)
         .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
     startActivity(intent);
-    finish();
   }
 
   /**
@@ -323,6 +318,5 @@ public class AccountChooserActivity extends FragmentActivity
    */
   private void handleNoAccountPermission() {
     Toast.makeText(this, R.string.send_google_no_account_permission, Toast.LENGTH_LONG).show();
-    finish();
   }
 }

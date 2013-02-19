@@ -94,38 +94,22 @@ public class ChooseAccountDialogFragment extends DialogFragment {
     if (accounts.length == 0) {
       return new AlertDialog.Builder(getActivity()).setMessage(
           R.string.send_google_no_account_message).setTitle(R.string.send_google_no_account_title)
-          .setPositiveButton(R.string.generic_ok, new OnClickListener() {
-              @Override
-            public void onClick(DialogInterface dialog, int which) {
-              caller.onChooseAccountDone();
-            }
-          }).create();
+          .setPositiveButton(R.string.generic_ok, null).create();
     }
     String[] choices = new String[accounts.length];
     for (int i = 0; i < accounts.length; i++) {
       choices[i] = accounts[i].name;
     }
-    return new AlertDialog.Builder(getActivity()).setNegativeButton(
-        R.string.generic_cancel, new OnClickListener() {
+    return new AlertDialog.Builder(getActivity()).setNegativeButton(R.string.generic_cancel, null)
+        .setPositiveButton(R.string.generic_ok, new OnClickListener() {
             @Override
           public void onClick(DialogInterface dialog, int which) {
+            int position = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+            PreferencesUtils.setString(
+                getActivity(), R.string.google_account_key, accounts[position].name);
             caller.onChooseAccountDone();
           }
-        }).setPositiveButton(R.string.generic_ok, new OnClickListener() {
-        @Override
-      public void onClick(DialogInterface dialog, int which) {
-        int position = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-        PreferencesUtils.setString(
-            getActivity(), R.string.google_account_key, accounts[position].name);
-        caller.onChooseAccountDone();
-      }
-    }).setSingleChoiceItems(choices, 0, null).setTitle(R.string.send_google_choose_account_title)
-        .create();
-  }
-
-  @Override
-  public void onCancel(DialogInterface dialog) {
-    super.onCancel(dialog);
-    caller.onChooseAccountDone();
+        }).setSingleChoiceItems(choices, 0, null)
+        .setTitle(R.string.send_google_choose_account_title).create();
   }
 }

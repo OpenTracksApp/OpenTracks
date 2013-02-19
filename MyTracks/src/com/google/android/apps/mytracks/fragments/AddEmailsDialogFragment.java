@@ -108,28 +108,16 @@ public class AddEmailsDialogFragment extends DialogFragment {
     });
     multiAutoCompleteTextView.setAdapter(adapter);
 
-    return new AlertDialog.Builder(activity).setNegativeButton(
-        R.string.generic_cancel, new DialogInterface.OnClickListener() {
-
+    return new AlertDialog.Builder(activity).setNegativeButton(R.string.generic_cancel, null)
+        .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
             @Override
           public void onClick(DialogInterface dialog, int which) {
-              caller.onAddEmailsDone(null);
+            String acl = multiAutoCompleteTextView.getText().toString();
+            caller.onAddEmailsDone(acl);
           }
-        }).setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
-        @Override
-      public void onClick(DialogInterface dialog, int which) {
-        String acl = multiAutoCompleteTextView.getText().toString();
-        caller.onAddEmailsDone(acl);
-      }
-    }).setTitle(R.string.share_track_add_emails_title).setView(view).create();
+        }).setTitle(R.string.share_track_add_emails_title).setView(view).create();
   }
 
-  @Override
-  public void onCancel(DialogInterface dialog) {
-    super.onCancel(dialog);
-    caller.onAddEmailsDone(null);
-  }
-  
   /**
    * Gets the cursor
    * 

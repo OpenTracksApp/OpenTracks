@@ -30,11 +30,11 @@ import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment.DeleteOneMarkerCaller;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment.DeleteOneTrackCaller;
-import com.google.android.apps.mytracks.io.sendtogoogle.AccountChooserActivity;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.services.MyTracksLocationManager;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.AnalyticsUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.ListItemUtils;
@@ -78,7 +78,7 @@ import java.util.SortedSet;
  * 
  * @author Rodrigo Damazio
  */
-public class SearchListActivity extends AbstractMyTracksActivity
+public class SearchListActivity extends AbstractSendToGoogleActivity
     implements ConfirmCaller, DeleteOneTrackCaller, DeleteOneMarkerCaller {
 
   private static final String TAG = SearchListActivity.class.getSimpleName();
@@ -514,12 +514,11 @@ public class SearchListActivity extends AbstractMyTracksActivity
   public void onConfirmDone(int confirmId, long trackId) {
     switch (confirmId) {
       case R.string.confirm_share_drive_key:
+        AnalyticsUtils.sendPageViews(this, "/action/share_drive");
         SendRequest sendRequest = new SendRequest(trackId);
         sendRequest.setSendDrive(true);
         sendRequest.setDriveShare(true);
-        Intent intent = IntentUtils.newIntent(this, AccountChooserActivity.class)
-            .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
-        startActivity(intent);
+        sendToGoogle(sendRequest);
         break;
       default:
     }

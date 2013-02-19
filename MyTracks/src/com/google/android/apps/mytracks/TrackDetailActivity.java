@@ -23,6 +23,7 @@ import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.fragments.ChartFragment;
 import com.google.android.apps.mytracks.fragments.ChooseUploadServiceDialogFragment;
+import com.google.android.apps.mytracks.fragments.ChooseUploadServiceDialogFragment.ChooseUploadServiceCaller;
 import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment;
 import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment.ConfirmCaller;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
@@ -33,7 +34,6 @@ import com.google.android.apps.mytracks.fragments.MyTracksMapFragment;
 import com.google.android.apps.mytracks.fragments.StatsFragment;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
-import com.google.android.apps.mytracks.io.sendtogoogle.AccountChooserActivity;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.settings.SettingsActivity;
@@ -70,8 +70,8 @@ import java.util.Locale;
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
-public class TrackDetailActivity extends AbstractMyTracksActivity
-    implements ConfirmCaller, DeleteOneTrackCaller {
+public class TrackDetailActivity extends AbstractSendToGoogleActivity
+    implements ConfirmCaller, ChooseUploadServiceCaller, DeleteOneTrackCaller {
 
   public static final String EXTRA_TRACK_ID = "track_id";
   public static final String EXTRA_MARKER_ID = "marker_id";
@@ -374,8 +374,8 @@ public class TrackDetailActivity extends AbstractMyTracksActivity
       case R.id.track_detail_send_google:
         AnalyticsUtils.sendPageViews(this, "/action/send_google");
         Track track = myTracksProviderUtils.getTrack(trackId);
-        ChooseUploadServiceDialogFragment.newInstance(
-            new SendRequest(trackId), track.isSharedWithMe()).show(getSupportFragmentManager(),
+        ChooseUploadServiceDialogFragment.newInstance(track.isSharedWithMe()).show(
+            getSupportFragmentManager(),
             ChooseUploadServiceDialogFragment.CHOOSE_UPLOAD_SERVICE_DIALOG_TAG);
         return true;
       case R.id.track_detail_save_gpx:
@@ -446,21 +446,41 @@ public class TrackDetailActivity extends AbstractMyTracksActivity
         sendRequest = new SendRequest(trackId);
         sendRequest.setSendMaps(true);
         sendRequest.setMapsShare(true);
-        intent = IntentUtils.newIntent(this, AccountChooserActivity.class)
-            .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
-        startActivity(intent);
+        sendToGoogle(sendRequest);
         break;
       case R.string.confirm_share_drive_key:
         AnalyticsUtils.sendPageViews(this, "/action/share_drive");
         sendRequest = new SendRequest(trackId);
         sendRequest.setSendDrive(true);
         sendRequest.setDriveShare(true);
-        intent = IntentUtils.newIntent(this, AccountChooserActivity.class)
-            .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
-        startActivity(intent);
+        sendToGoogle(sendRequest);
         break;
       default:
     }
+  }
+
+  @Override
+  public void onChooseUploadServiceDone(boolean sendDrive, boolean sendMaps,
+      boolean sendFusionTables, boolean sendSpreadsheets, boolean mapsExistingMap) {
+    SendRequest sendRequest = new SendRequest(trackId);
+    sendRequest.setSendDrive(sendDrive);
+    sendRequest.setSendMaps(sendMaps);
+    sendRequest.setSendFusionTables(sendFusionTables);
+    sendRequest.setSendSpreadsheets(sendSpreadsheets);
+    sendRequest.setMapsExistingMap(mapsExistingMap);
+    if (sendDrive) {
+      AnalyticsUtils.sendPageViews(this, "/send/drive");
+    }
+    if (sendMaps) {
+      AnalyticsUtils.sendPageViews(this, "/send/maps");
+    }
+    if (sendFusionTables) {
+      AnalyticsUtils.sendPageViews(this, "/send/fusion_tables");
+    }
+    if (sendSpreadsheets) {
+      AnalyticsUtils.sendPageViews(this, "/send/spreadsheets");
+    }
+    sendToGoogle(sendRequest);
   }
 
   @Override

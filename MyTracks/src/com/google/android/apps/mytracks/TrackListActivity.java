@@ -33,7 +33,6 @@ import com.google.android.apps.mytracks.fragments.WelcomeDialogFragment;
 import com.google.android.apps.mytracks.io.file.ImportActivity;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
-import com.google.android.apps.mytracks.io.sendtogoogle.AccountChooserActivity;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
@@ -91,7 +90,7 @@ import java.util.Locale;
  * 
  * @author Leif Hendrik Wilden
  */
-public class TrackListActivity extends AbstractMyTracksActivity
+public class TrackListActivity extends AbstractSendToGoogleActivity
     implements ConfirmCaller, DeleteOneTrackCaller {
 
   private static final String TAG = TrackListActivity.class.getSimpleName();
@@ -642,12 +641,11 @@ public class TrackListActivity extends AbstractMyTracksActivity
   public void onConfirmDone(int confirmId, long trackId) {
     switch (confirmId) {
       case R.string.confirm_share_drive_key:
+        AnalyticsUtils.sendPageViews(this, "/action/share_drive");
         SendRequest sendRequest = new SendRequest(trackId);
         sendRequest.setSendDrive(true);
         sendRequest.setDriveShare(true);
-        Intent intent = IntentUtils.newIntent(this, AccountChooserActivity.class)
-            .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
-        startActivity(intent);
+        sendToGoogle(sendRequest);
         break;
       default:
     }
