@@ -17,6 +17,9 @@
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.fragments.AboutDialogFragment;
+import com.google.android.apps.mytracks.fragments.AboutDialogFragment.AboutCaller;
+import com.google.android.apps.mytracks.fragments.EulaDialogFragment;
+import com.google.android.apps.mytracks.fragments.EulaDialogFragment.EulaCaller;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -30,7 +33,7 @@ import android.widget.TextView;
  * 
  * @author Sandor Dornbush
  */
-public class HelpActivity extends AbstractMyTracksActivity {
+public class HelpActivity extends AbstractMyTracksActivity implements AboutCaller, EulaCaller {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -61,5 +64,16 @@ public class HelpActivity extends AbstractMyTracksActivity {
   @Override
   protected int getLayoutResId() {
     return R.layout.help;
+  }
+
+  @Override
+  public void onAboutLicense() {
+    EulaDialogFragment.newInstance(true)
+        .show(getSupportFragmentManager(), EulaDialogFragment.EULA_DIALOG_TAG);
+  }
+
+  @Override
+  public void onEulaDone() {
+    // Do nothing    
   }
 }

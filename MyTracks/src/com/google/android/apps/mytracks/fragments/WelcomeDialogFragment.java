@@ -16,10 +16,9 @@
 
 package com.google.android.apps.mytracks.fragments;
 
-import com.google.android.apps.mytracks.TrackListActivity;
-import com.google.android.apps.mytracks.util.EulaUtils;
 import com.google.android.maps.mytracks.R;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -34,33 +33,49 @@ import android.support.v4.app.FragmentActivity;
  */
 public class WelcomeDialogFragment extends DialogFragment {
 
+  /**
+   * Interface for caller of this dialog fragment.
+   * 
+   * @author Jimmy Shih
+   */
+  public interface WelcomeCaller {
+
+    /**
+     * Called when choose account is done.
+     */
+    public void onWelcomeDone();
+  }
+
   public static final String WELCOME_DIALOG_TAG = "welcomeDialog";
 
-  private FragmentActivity activity;
-  
+  private WelcomeCaller caller;
+  private FragmentActivity fragmentActivity;
+
   @Override
-  public void onCancel(DialogInterface arg0) {
-    onDone();
-  }
-  
-  @Override
-  public Dialog onCreateDialog(Bundle savedInstanceState) {
-    activity = getActivity();
-    return new AlertDialog.Builder(activity)
-        .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
-          @Override
-          public void onClick(DialogInterface dialog, int which) {
-            onDone();
-          }
-        })
-        .setTitle(R.string.welcome_title)
-        .setMessage(R.string.welcome_message)
-        .create();
+  public void onAttach(Activity activity) {
+    super.onAttach(activity);
+    try {
+      caller = (WelcomeCaller) activity;
+    } catch (ClassCastException e) {
+      throw new ClassCastException(
+          activity.toString() + " must implement " + WelcomeCaller.class.getSimpleName());
+    }
   }
 
-  private void onDone() {
-    EulaUtils.setShowWelcome(activity);
-    TrackListActivity trackListActivity = (TrackListActivity) activity;
-    trackListActivity.showStartupDialogs();
+  @Override
+  public Dialog onCreateDialog(Bundle savedInstanceState) {
+    fragmentActivity = getActivity();
+    return new AlertDialog.Builder(fragmentActivity).setPositiveButton(
+        R.string.generic_ok, new DialogInterface.OnClickListener() {
+            @Override
+          public void onClick(DialogInterface dialog, int which) {
+            caller.onWelcomeDone();
+          }
+        }).setTitle(R.string.welcome_title).setMessage(R.string.welcome_message).create();
+  }
+
+  @Override
+  public void onCancel(DialogInterface arg0) {
+    caller.onWelcomeDone();
   }
 }

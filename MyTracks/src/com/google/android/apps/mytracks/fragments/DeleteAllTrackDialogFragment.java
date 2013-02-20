@@ -37,12 +37,12 @@ public class DeleteAllTrackDialogFragment extends DialogFragment {
 
   public static final String DELETE_ALL_TRACK_DIALOG_TAG = "deleteAllTrackDialog";
 
-  private FragmentActivity activity;
+  private FragmentActivity fragmentActivity;
   
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
-    activity = getActivity();
-    return DialogUtils.createConfirmationDialog(activity,
+    fragmentActivity = getActivity();
+    return DialogUtils.createConfirmationDialog(fragmentActivity,
         R.string.track_list_delete_all_confirm_message, new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int which) {
@@ -50,14 +50,14 @@ public class DeleteAllTrackDialogFragment extends DialogFragment {
               @Override
               public void run() {
                 PreferencesUtils.setBoolean(
-                    activity, R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT);
-                SyncUtils.disableSync(activity);
-                MyTracksProviderUtils.Factory.get(activity).deleteAllTracks();
-                PreferencesUtils.setLong(activity, R.string.drive_largest_change_id_key,
+                    fragmentActivity, R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT);
+                SyncUtils.disableSync(fragmentActivity);
+                MyTracksProviderUtils.Factory.get(fragmentActivity).deleteAllTracks();
+                PreferencesUtils.setLong(fragmentActivity, R.string.drive_largest_change_id_key,
                     PreferencesUtils.DRIVE_LARGEST_CHANGE_ID_DEFAULT);
 
                 // Clear the drive_deleted_list_key last
-                PreferencesUtils.setString(activity, R.string.drive_deleted_list_key,
+                PreferencesUtils.setString(fragmentActivity, R.string.drive_deleted_list_key,
                     PreferencesUtils.DRIVE_DELETED_LIST_DEFAULT);
               }
             }).start();

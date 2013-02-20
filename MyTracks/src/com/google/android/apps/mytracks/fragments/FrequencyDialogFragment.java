@@ -52,23 +52,23 @@ public class FrequencyDialogFragment extends DialogFragment {
     return frequencyDialogFragment;
   }
 
-  private FragmentActivity activity; 
+  private FragmentActivity fragmentActivity; 
   
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
-    activity = getActivity();
+    fragmentActivity = getActivity();
     
     final int preferenceId = getArguments().getInt(KEY_PREFERENCE_ID);
     int defaultValue = getArguments().getInt(KEY_DEFAULT_VALUE);
     int titleId = getArguments().getInt(KEY_TITLE_ID);
-    int frequencyValue = PreferencesUtils.getInt(activity, preferenceId, defaultValue);
+    int frequencyValue = PreferencesUtils.getInt(fragmentActivity, preferenceId, defaultValue);
 
-    return new AlertDialog.Builder(activity)
+    return new AlertDialog.Builder(fragmentActivity)
         .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int which) {
             int listIndex = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-            PreferencesUtils.setInt(activity, preferenceId, getFrequencyValue(listIndex));
+            PreferencesUtils.setInt(fragmentActivity, preferenceId, getFrequencyValue(listIndex));
           }
         })
         .setSingleChoiceItems(getFrequencyDisplayOptions(), getListIndex(frequencyValue), null)
@@ -81,8 +81,8 @@ public class FrequencyDialogFragment extends DialogFragment {
    */
   private String[] getFrequencyDisplayOptions() {
     boolean metricUnits = PreferencesUtils.getBoolean(
-        activity, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
-    return StringUtils.getFrequencyOptions(activity, metricUnits);
+        fragmentActivity, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
+    return StringUtils.getFrequencyOptions(fragmentActivity, metricUnits);
   }
 
   /**

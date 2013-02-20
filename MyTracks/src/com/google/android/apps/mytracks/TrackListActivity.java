@@ -29,7 +29,9 @@ import com.google.android.apps.mytracks.fragments.DeleteAllTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment.DeleteOneTrackCaller;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment;
+import com.google.android.apps.mytracks.fragments.EulaDialogFragment.EulaCaller;
 import com.google.android.apps.mytracks.fragments.WelcomeDialogFragment;
+import com.google.android.apps.mytracks.fragments.WelcomeDialogFragment.WelcomeCaller;
 import com.google.android.apps.mytracks.io.file.ImportActivity;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
@@ -91,7 +93,7 @@ import java.util.Locale;
  * @author Leif Hendrik Wilden
  */
 public class TrackListActivity extends AbstractSendToGoogleActivity
-    implements ConfirmCaller, DeleteOneTrackCaller {
+    implements EulaCaller, WelcomeCaller, ConfirmCaller, DeleteOneTrackCaller {
 
   private static final String TAG = TrackListActivity.class.getSimpleName();
   private static final String START_GPS_KEY = "start_gps_key";
@@ -688,6 +690,21 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
 
       checkGooglePlayServices();
     }
+  }
+
+  @Override
+  public void onEulaDone() {
+    if (EulaUtils.getAcceptEula(this)) {
+      showStartupDialogs();
+      return;
+    }
+    finish();    
+  }
+
+  @Override
+  public void onWelcomeDone() {
+    EulaUtils.setShowWelcome(this);
+    showStartupDialogs();    
   }
 
   private void checkGooglePlayServices() {

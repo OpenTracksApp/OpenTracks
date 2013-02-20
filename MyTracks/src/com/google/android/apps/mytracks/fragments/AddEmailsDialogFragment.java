@@ -68,8 +68,9 @@ public class AddEmailsDialogFragment extends DialogFragment {
     return addPeopleDialogFragment;
   }
 
-  private MultiAutoCompleteTextView multiAutoCompleteTextView;
   private AddEmailsCaller caller;
+  private FragmentActivity fragmentActivity;
+  private MultiAutoCompleteTextView multiAutoCompleteTextView;
 
   @Override
   public void onAttach(Activity activity) {
@@ -84,13 +85,13 @@ public class AddEmailsDialogFragment extends DialogFragment {
 
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
-    FragmentActivity activity = getActivity();
-    View view = activity.getLayoutInflater().inflate(R.layout.add_emails, null);
+    fragmentActivity = getActivity();
+    View view = fragmentActivity.getLayoutInflater().inflate(R.layout.add_emails, null);
     multiAutoCompleteTextView = (MultiAutoCompleteTextView) view.findViewById(R.id.add_emails);
     multiAutoCompleteTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 
-    SimpleCursorAdapter adapter = new SimpleCursorAdapter(getActivity(), R.layout.add_emails_item,
-        getCursor(getActivity(), null), new String[] {
+    SimpleCursorAdapter adapter = new SimpleCursorAdapter(fragmentActivity,
+        R.layout.add_emails_item, getCursor(fragmentActivity, null), new String[] {
             ContactsContract.Contacts.DISPLAY_NAME, ContactsContract.CommonDataKinds.Email.DATA },
         new int[] { android.R.id.text1, android.R.id.text2 }, 0);
     adapter.setCursorToStringConverter(new SimpleCursorAdapter.CursorToStringConverter() {
@@ -103,12 +104,13 @@ public class AddEmailsDialogFragment extends DialogFragment {
     adapter.setFilterQueryProvider(new FilterQueryProvider() {
         @Override
       public Cursor runQuery(CharSequence constraint) {
-        return getCursor(getActivity(), constraint);
+        return getCursor(fragmentActivity, constraint);
       }
     });
     multiAutoCompleteTextView.setAdapter(adapter);
 
-    return new AlertDialog.Builder(activity).setNegativeButton(R.string.generic_cancel, null)
+    return new AlertDialog.Builder(fragmentActivity).setNegativeButton(
+        R.string.generic_cancel, null)
         .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
             @Override
           public void onClick(DialogInterface dialog, int which) {

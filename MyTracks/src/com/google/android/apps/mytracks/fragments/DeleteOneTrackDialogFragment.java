@@ -67,8 +67,8 @@ public class DeleteOneTrackDialogFragment extends DialogFragment {
     return deleteOneTrackDialogFragment;
   }
 
-  private FragmentActivity fragmentActivity;
   private DeleteOneTrackCaller caller;
+  private FragmentActivity fragmentActivity;
 
   @Override
   public void onAttach(Activity activity) {

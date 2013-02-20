@@ -25,6 +25,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -55,7 +56,7 @@ public class ConfirmDialogFragment extends DialogFragment {
   private static final String KEY_DEFAULT_VALUE = "defaultValue";
   private static final String KEY_MESSAGE = "message";
   private static final String KEY_TRACK_ID = "trackId";
-  
+
   private CheckBox checkBox;
 
   public static ConfirmDialogFragment newInstance(
@@ -65,13 +66,14 @@ public class ConfirmDialogFragment extends DialogFragment {
     bundle.putBoolean(KEY_DEFAULT_VALUE, defaultValue);
     bundle.putCharSequence(KEY_MESSAGE, message);
     bundle.putLong(KEY_TRACK_ID, trackId);
-    
+
     ConfirmDialogFragment confirmDialogFragment = new ConfirmDialogFragment();
     confirmDialogFragment.setArguments(bundle);
     return confirmDialogFragment;
   }
 
   private ConfirmCaller caller;
+  private FragmentActivity fragmentActivity;
 
   @Override
   public void onAttach(Activity activity) {
@@ -89,7 +91,8 @@ public class ConfirmDialogFragment extends DialogFragment {
     super.onCreate(savedInstanceState);
     int confirmId = getArguments().getInt(KEY_CONFIRM_ID);
     boolean defaultValue = getArguments().getBoolean(KEY_DEFAULT_VALUE);
-    if (!PreferencesUtils.getBoolean(getActivity(), confirmId, defaultValue)) {
+    fragmentActivity = getActivity();
+    if (!PreferencesUtils.getBoolean(fragmentActivity, confirmId, defaultValue)) {
       long trackId = getArguments().getLong(KEY_TRACK_ID);
       dismiss();
       caller.onConfirmDone(confirmId, trackId);
@@ -98,18 +101,19 @@ public class ConfirmDialogFragment extends DialogFragment {
 
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
-    View view = getActivity().getLayoutInflater().inflate(R.layout.confirm_dialog, null);
+    View view = fragmentActivity.getLayoutInflater().inflate(R.layout.confirm_dialog, null);
     TextView textView = (TextView) view.findViewById(R.id.confirm_dialog_message);
     textView.setText(getArguments().getCharSequence(KEY_MESSAGE));
     checkBox = (CheckBox) view.findViewById(R.id.confirm_dialog_check_box);
 
-    return new AlertDialog.Builder(getActivity()).setNegativeButton(android.R.string.cancel, null)
+    return new AlertDialog.Builder(fragmentActivity).setNegativeButton(
+        android.R.string.cancel, null)
         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
           public void onClick(DialogInterface dialog, int which) {
             int confirmId = getArguments().getInt(KEY_CONFIRM_ID);
             long trackId = getArguments().getLong(KEY_TRACK_ID);
-            PreferencesUtils.setBoolean(getActivity(), confirmId, !checkBox.isChecked());
+            PreferencesUtils.setBoolean(fragmentActivity, confirmId, !checkBox.isChecked());
             caller.onConfirmDone(confirmId, trackId);
           }
         }).setTitle(R.string.generic_confirm_title).setView(view).create();

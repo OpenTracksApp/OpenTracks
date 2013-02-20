@@ -19,6 +19,7 @@ package com.google.android.apps.mytracks.fragments;
 import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.maps.mytracks.R;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -35,27 +36,48 @@ import android.widget.TextView;
  */
 public class AboutDialogFragment extends DialogFragment {
 
+  /**
+   * Interface for caller of this dialog fragment.
+   * 
+   * @author Jimmy Shih
+   */
+  public interface AboutCaller {
+
+    /**
+     * Called when about license is invoked.
+     */
+    public void onAboutLicense();
+  }
+
   public static final String ABOUT_DIALOG_TAG = "aboutDialog";
 
-  private FragmentActivity activity;
-  
+  private AboutCaller caller;
+  private FragmentActivity fragmentActivity;
+
+  @Override
+  public void onAttach(Activity activity) {
+    super.onAttach(activity);
+    try {
+      caller = (AboutCaller) activity;
+    } catch (ClassCastException e) {
+      throw new ClassCastException(
+          activity.toString() + " must implement " + AboutCaller.class.getSimpleName());
+    }
+  }
+
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
-    activity = getActivity();
-    View view = activity.getLayoutInflater().inflate(R.layout.about, null);
+    fragmentActivity = getActivity();
+    View view = fragmentActivity.getLayoutInflater().inflate(R.layout.about, null);
     TextView aboutVersion = (TextView) view.findViewById(R.id.about_version);
-    aboutVersion.setText(SystemUtils.getMyTracksVersion(activity));
-    return new AlertDialog.Builder(activity)
-        .setNegativeButton(R.string.about_license, new DialogInterface.OnClickListener() {
-          @Override
+    aboutVersion.setText(SystemUtils.getMyTracksVersion(fragmentActivity));
+    return new AlertDialog.Builder(fragmentActivity).setNegativeButton(
+        R.string.about_license, new DialogInterface.OnClickListener() {
+            @Override
           public void onClick(DialogInterface dialog, int which) {
-            EulaDialogFragment.newInstance(true).show(
-                activity.getSupportFragmentManager(), EulaDialogFragment.EULA_DIALOG_TAG);
+            caller.onAboutLicense();
           }
-        })
-        .setPositiveButton(R.string.generic_ok, null)
-        .setTitle(R.string.help_about)
-        .setView(view)
+        }).setPositiveButton(R.string.generic_ok, null).setTitle(R.string.help_about).setView(view)
         .create();
   }
 }

@@ -62,8 +62,8 @@ public class DeleteOneMarkerDialogFragment extends DialogFragment {
     return deleteOneMarkerDialogFragment;
   }
 
-  private FragmentActivity fragmentActivity;
   private DeleteOneMarkerCaller caller;
+  private FragmentActivity fragmentActivity;
 
   @Override
   public void onAttach(Activity activity) {

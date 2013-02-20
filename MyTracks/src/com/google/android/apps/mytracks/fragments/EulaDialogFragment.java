@@ -16,11 +16,11 @@
 
 package com.google.android.apps.mytracks.fragments;
 
-import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.util.EulaUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -36,6 +36,19 @@ import java.util.Locale;
  * @author Jimmy Shih
  */
 public class EulaDialogFragment extends DialogFragment {
+
+  /**
+   * Interface for caller of this dialog fragment.
+   * 
+   * @author Jimmy Shih
+   */
+  public interface EulaCaller {
+
+    /**
+     * Called when eula is done.
+     */
+    public void onEulaDone();
+  }
 
   public static final String EULA_DIALOG_TAG = "eulaDialog";
   private static final String KEY_HAS_ACCEPTED = "hasAccepted";
@@ -56,65 +69,60 @@ public class EulaDialogFragment extends DialogFragment {
     return eulaDialogFragment;
   }
 
-  private FragmentActivity activity;
-  
+  private EulaCaller caller;
+  private FragmentActivity fragmentActivity;
+
   @Override
-  public void onCancel(DialogInterface arg0) {
-    if (!getArguments().getBoolean(KEY_HAS_ACCEPTED)) {
-      exitApp();
+  public void onAttach(Activity activity) {
+    super.onAttach(activity);
+    try {
+      caller = (EulaCaller) activity;
+    } catch (ClassCastException e) {
+      throw new ClassCastException(
+          activity.toString() + " must implement " + EulaCaller.class.getSimpleName());
     }
   }
-  
+
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
-    activity = getActivity();
-    
+    fragmentActivity = getActivity();
+
     boolean hasAccepted = getArguments().getBoolean(KEY_HAS_ACCEPTED);
-    AlertDialog.Builder builder = new AlertDialog.Builder(activity)
-        .setMessage(getEulaText())
-        .setTitle(R.string.eula_title);
+    AlertDialog.Builder builder = new AlertDialog.Builder(fragmentActivity).setMessage(
+        getEulaText()).setTitle(R.string.eula_title);
 
     if (hasAccepted) {
       builder.setPositiveButton(R.string.generic_ok, null);
     } else {
       builder.setNegativeButton(R.string.eula_decline, new DialogInterface.OnClickListener() {
-        @Override
+          @Override
         public void onClick(DialogInterface dialog, int which) {
-          exitApp();
+          caller.onEulaDone();
         }
-      })
-      .setPositiveButton(R.string.eula_accept, new DialogInterface.OnClickListener() {
-        @Override
+      }).setPositiveButton(R.string.eula_accept, new DialogInterface.OnClickListener() {
+          @Override
         public void onClick(DialogInterface dialog, int which) {
-          EulaUtils.setAcceptEula(activity);
+          EulaUtils.setAcceptEula(fragmentActivity);
           PreferencesUtils.setBoolean(
-              activity, R.string.metric_units_key, !Locale.US.equals(Locale.getDefault()));
-          TrackListActivity trackListActivity = (TrackListActivity) activity;
-          trackListActivity.showStartupDialogs();
+              fragmentActivity, R.string.metric_units_key, !Locale.US.equals(Locale.getDefault()));
+          caller.onEulaDone();
         }
       });
     }
     return builder.create();
   }
 
-  /**
-   * Exits the application.
-   */
-  private void exitApp() {
-    activity.finish();
+  @Override
+  public void onCancel(DialogInterface arg0) {
+    caller.onEulaDone();
   }
 
   /**
    * Gets the EULA text.
-   * 
    */
   private String getEulaText() {
-    String tos = getString(R.string.eula_date) 
-        + "\n\n"
-        + getString(R.string.eula_body, GOOGLE_URL) 
-        + "\n\n" 
-        + getString(R.string.eula_footer, GOOGLE_URL) 
-        + "\n\n" 
+    String tos = getString(R.string.eula_date) + "\n\n" + getString(R.string.eula_body, GOOGLE_URL)
+        + "\n\n" + getString(R.string.eula_footer, GOOGLE_URL) + "\n\n"
         + getString(R.string.eula_copyright_year);
     boolean isKorean = getResources().getConfiguration().locale.getLanguage().equals(KOREAN);
     if (isKorean) {

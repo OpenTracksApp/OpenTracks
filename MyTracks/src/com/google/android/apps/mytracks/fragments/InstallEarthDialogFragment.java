@@ -39,12 +39,12 @@ public class InstallEarthDialogFragment extends DialogFragment {
 
   public static final String INSTALL_EARTH_DIALOG_TAG = "installEarthDialog";
 
-  private FragmentActivity activity;
+  private FragmentActivity fragmentActivity;
   
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
-    activity = getActivity();
-    return new AlertDialog.Builder(activity)
+    fragmentActivity = getActivity();
+    return new AlertDialog.Builder(fragmentActivity)
         .setMessage(R.string.track_detail_install_earth_message)
         .setNegativeButton(android.R.string.cancel, null)
         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -55,7 +55,7 @@ public class InstallEarthDialogFragment extends DialogFragment {
               startActivity(intent);
             } catch (ActivityNotFoundException e) {
               Toast.makeText(
-                  activity, R.string.track_detail_install_earth_error, Toast.LENGTH_LONG)
+                  fragmentActivity, R.string.track_detail_install_earth_error, Toast.LENGTH_LONG)
                   .show();
             }
           }
