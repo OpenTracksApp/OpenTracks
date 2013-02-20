@@ -20,13 +20,13 @@ import com.google.android.apps.mytracks.fragments.AboutDialogFragment;
 import com.google.android.apps.mytracks.fragments.AboutDialogFragment.AboutCaller;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment.EulaCaller;
-import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.TextView;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 /**
  * An activity that displays the help page.
@@ -39,14 +39,10 @@ public class HelpActivity extends AbstractMyTracksActivity implements AboutCalle
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    TextView mapsPublicUnlisted = (TextView) findViewById(R.id.help_maps_public_unlisted_answer);
-    mapsPublicUnlisted.setText(StringUtils.getHtml(
-        this, R.string.help_maps_public_unlisted_answer, R.string.maps_public_unlisted_url));
-
-    TextView sendTrack = (TextView) findViewById(R.id.help_send_track_answer);
-    sendTrack.setText(StringUtils.getHtml(
-        this, R.string.help_send_track_answer, R.string.send_google_maps_url,
-        R.string.send_google_fusion_tables_url, R.string.send_google_spreadsheets_url));
+    WebView webView = (WebView) findViewById(R.id.help_webview);
+    webView.loadUrl(getString(R.string.my_tracks_help_url));
+    webView.getSettings().setJavaScriptEnabled(true);
+    webView.setWebViewClient(new WebViewClient());
 
     findViewById(R.id.help_ok).setOnClickListener(new OnClickListener() {
       public void onClick(View v) {
@@ -74,6 +70,6 @@ public class HelpActivity extends AbstractMyTracksActivity implements AboutCalle
 
   @Override
   public void onEulaDone() {
-    // Do nothing    
+    // Do nothing
   }
 }

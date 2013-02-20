@@ -69,11 +69,11 @@ Google은 이용자에 대한 위치정보의 이용∙제공사실을 위치정
 구글코리아 유한회사\n
 대표자: 염동훈\n
 주소 : 서울 강남구 역삼동 737 강남파이낸스센터 22층\n
-전화번호 : (02) 531-9000\n
-  </string>
+전화번호 : (02) 531-9000\n</string>
   <string name="maps_public_unlisted_url">support.google.com/maps/bin/answer.py?answer=144365</string>
   <string name="marker_statistics_icon_url">http://maps.google.com/mapfiles/ms/micons/ylw-pushpin.png</string>
   <string name="marker_waypoint_icon_url">http://maps.google.com/mapfiles/ms/micons/blue-pushpin.png</string>
+  <string name="my_tracks_help_url">http://support.google.com/gmm/bin/topic.py?topic=2391064</string>
   <string name="my_tracks_privacy_url">www.google.com/policies/privacy/</string>
   <string name="my_tracks_recording_service_name">My Tracks Recording Service</string>
   <string name="my_tracks_support_url">groups.google.com/a/googleproductforums.com/forum/#!categories/maps/mytracks</string>
