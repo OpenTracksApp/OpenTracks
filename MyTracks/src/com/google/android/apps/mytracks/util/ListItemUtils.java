@@ -138,10 +138,14 @@ public class ListItemUtils {
     if (category == null || category.length() == 0) {
       return description;
     }
-    if (description == null || description.length() == 0) {
-      return category;
+
+    StringBuffer buffer = new StringBuffer();
+
+    buffer.append("[" + category + "]");
+    if (description != null && description.length() != 0) {
+      buffer.append(" " + description);
     }
-    return "[" + category + "] " + description;
+    return buffer.toString();
   }
 
   /**

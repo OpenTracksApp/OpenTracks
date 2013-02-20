@@ -14,81 +14,73 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:gravity="top"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_height="wrap_content"
   android:layout_width="match_parent"
   android:minHeight="?android:attr/listPreferredItemHeight"
-  android:orientation="horizontal"
   android:paddingBottom="12dp"
-  android:paddingLeft="12dp"
   android:paddingRight="12dp"
-  android:paddingTop="8dp" >
-  <ImageView
-    android:contentDescription="@string/icon_track"
-    android:id="@+id/list_item_icon"
+  android:paddingTop="8dp"
+  android:shrinkColumns="1"
+  android:stretchColumns="1" >
+  <TableRow
     android:layout_height="wrap_content"
-    android:layout_width="wrap_content"
-    android:paddingTop="4dp" />
-  <LinearLayout
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="8dp"
-    android:layout_width="match_parent"
-    android:orientation="vertical" >
-    <LinearLayout
+    android:layout_width="match_parent" >
+    <ImageView
+      android:contentDescription="@string/icon_track"
+      android:id="@+id/list_item_icon"
+      android:layout_gravity="center_vertical"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="8dp"
+      android:layout_marginRight="8dp"
+      android:layout_width="wrap_content" />
+    <TableLayout
       android:layout_height="wrap_content"
       android:layout_width="match_parent"
-      android:orientation="horizontal" >
-      <LinearLayout
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:orientation="vertical" >
+      android:shrinkColumns="0"
+      android:stretchColumns="0" >
+      <TableRow>
         <TextView
           android:id="@+id/list_item_name"
+          android:layout_gravity="bottom"
           android:layout_width="fill_parent"
           android:singleLine="true"
           style="@style/TextLarge" />
-      </LinearLayout>
-      <TextView
-        android:id="@+id/list_item_date"
-        android:layout_gravity="bottom"
-        android:paddingLeft="8dp"
-        android:singleLine="true"
-        android:textColor="@android:color/secondary_text_dark"
-        style="@style/TextSmall" />
-    </LinearLayout>
-    <LinearLayout
-      android:layout_height="wrap_content"
-      android:layout_width="match_parent"
-      android:orientation="horizontal" >
-      <LinearLayout
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:orientation="vertical" >
+        <TextView
+          android:id="@+id/list_item_date"
+          style="@style/ListItemDate" />
+      </TableRow>
+      <TableRow>
         <TextView
           android:id="@+id/list_item_time_distance"
+          android:layout_gravity="bottom"
+          android:layout_width="fill_parent"
           android:singleLine="true"
           android:textColor="@android:color/primary_text_dark"
           style="@style/TextSmall" />
-      </LinearLayout>
-      <TextView
-        android:id="@+id/list_item_time"
-        android:layout_gravity="bottom"
-        android:paddingLeft="8dp"
-        android:singleLine="true"
-        android:textColor="@android:color/secondary_text_dark"
-        style="@style/TextSmall" />
-    </LinearLayout>
+        <TextView
+          android:id="@+id/list_item_time"
+          style="@style/ListItemDate" />
+      </TableRow>
+    </TableLayout>
+  </TableRow>
+  <TableRow
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent" >
     <TextView
       android:id="@+id/list_item_recording"
+      android:layout_column="1"
       android:singleLine="true"
       style="@style/TextSmall" />
+  </TableRow>
+  <TableRow
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent" >
     <TextView
       android:id="@+id/list_item_description"
+      android:layout_column="1"
       android:singleLine="false"
       android:textColor="@android:color/secondary_text_dark"
       style="@style/TextSmall" />
-  </LinearLayout>
-</LinearLayout>
+  </TableRow>
+</TableLayout>
