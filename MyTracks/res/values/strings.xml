@@ -617,9 +617,9 @@ limitations under the License.
     translation_description="Error message when the external storage is not available.">
     External storage not available.
   </string>
-  <string name="external_storage_not_writeable"
-    translation_description="Error message when the external storage is not writeable.">
-    External storage not writeable.
+  <string name="external_storage_not_writable"
+    translation_description="Error message when the external storage is not writable.">
+    External storage not writable.
   </string>
 
   <!-- Files -->
@@ -1478,7 +1478,7 @@ limitations under the License.
     Backup now
   </string>
   <string name="settings_backup_now_error"
-    translation_description="When backing up to the external storage, the error messag.">
+    translation_description="When backing up to the external storage, the error message.">
     Unable to backup.
   </string>
   <string name="settings_backup_now_progress_message"
@@ -1660,7 +1660,8 @@ limitations under the License.
 
       Character limit: ~23 (1 line)">
     Top medium speed
-  </string><string name="settings_map_percentage"
+  </string>
+  <string name="settings_map_percentage"
     translation_description="In the 'Map' settings, under the 'Dynamic thresholds' section, the
       option to configure the medium speed range as a percentage from the average speed.
 
@@ -1744,7 +1745,7 @@ limitations under the License.
       when a time value is selected.
 
       %1$s time value. E.g., '5 min'.">
-    Resume a recording after reboot if the last recorded loation was within the last %1$s
+    Resume a recording after reboot if the last recorded location was within the last %1$s
   </string>
   <string name="settings_recording_auto_resume_track_timeout_title"
     translation_description="In the 'Recording' settings, the title to configure automatically
@@ -1817,14 +1818,14 @@ limitations under the License.
     Date (ISO 8601)
   </string>
   <string name="settings_recording_track_name_date_local_option"
-    translation_description="In the 'Recording' settings, the option in the 'Defaul track name'
+    translation_description="In the 'Recording' settings, the option in the 'Default track name'
      setting to use the track starting time in the local format as the default track name.
 
       Character limit: ~20 (1 line)">
     Date (local)
   </string>
   <string name="settings_recording_track_name_location_option"
-    translation_description="In the 'Recording' settings, the option in the 'Defaul track name'
+    translation_description="In the 'Recording' settings, the option in the 'Default track name'
       setting to use the track starting location as the default track name.
 
       Character limit: ~20 (1 line)">

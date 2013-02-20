@@ -81,12 +81,12 @@ public class BackupAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   @Override
   protected Boolean doInBackground(Void... params) {
     if (!FileUtils.isExternalStorageWriteable()) {
-      messageId = R.string.external_storage_not_writeable;
+      messageId = R.string.external_storage_not_writable;
       return false;
     }
 
     if (!externalFileBackup.isBackupsDirectoryAvailable(true)) {
-      messageId = R.string.external_storage_not_writeable;
+      messageId = R.string.external_storage_not_writable;
       return false;
     }
 
