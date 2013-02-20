@@ -76,7 +76,11 @@ public class SendDriveAsyncTask extends AbstractSendAsyncTask {
         return false;
       }
       Drive drive = SyncUtils.getDriveService(credential);
-      String folderId = SyncUtils.getMyTracksFolder(context, drive).getId();
+      File folder = SyncUtils.getMyTracksFolder(context, drive);
+      if (folder == null) {
+        return false;
+      }
+      String folderId = folder.getId();
       if (folderId == null) {
         return false;
       }
