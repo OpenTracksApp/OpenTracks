@@ -51,8 +51,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -154,6 +156,12 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         .list().setQ(String.format(Locale.US, SyncUtils.MY_TRACKS_FOLDER_FILES_QUERY, folderId));
     Map<String, File> myTracksFolderMap = getFiles(myTracksFolderRequest, true);
 
+    // Handle tracks that are already uploaded to Google Drive
+    Set<String> syncedDriveIds = updateSyncedTracks(folderId);
+    for (String driveId : syncedDriveIds) {
+      myTracksFolderMap.remove(driveId);
+    }
+
     // Get all the KML files in the "Shared with me:/" folder
     Files.List sharedWithMeRequest = drive.files()
         .list().setQ(SyncUtils.SHARED_WITH_ME_FILES_QUERY);
@@ -172,7 +180,9 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         if (cursor != null && cursor.moveToFirst()) {
           do {
             Track track = myTracksProviderUtils.createTrack(cursor);
-            myTracksProviderUtils.deleteTrack(track.getId());
+            if (!syncedDriveIds.contains(track.getDriveId())) {
+              myTracksProviderUtils.deleteTrack(track.getId());
+            }
           } while (cursor.moveToNext());
         }
       } finally {
@@ -182,6 +192,47 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
       }
       throw e;
     }
+  }
+
+  /**
+   * Updates synced tracks.
+   * 
+   * @param folderId the folder id
+   * @return drive ids of the synced tracks
+   */
+  private Set<String> updateSyncedTracks(String folderId) throws IOException {
+    Set<String> result = new HashSet<String>();
+    Cursor cursor = null;
+    try {
+      cursor = myTracksProviderUtils.getTrackCursor(SyncUtils.DRIVE_ID_TRACKS_QUERY, null, null);
+      if (cursor != null && cursor.moveToFirst()) {
+        do {
+          Track track = myTracksProviderUtils.createTrack(cursor);
+          String driveId = track.getDriveId();
+          if (driveId != null && !driveId.equals("")) {
+            if (!track.isSharedWithMe()) {
+              File driveFile = drive.files().get(driveId).execute();
+              if (SyncUtils.isValid(driveFile, folderId)) {
+                merge(track, driveFile);
+                result.add(driveId);
+              } else {
+                /*
+                 * Track has a drive id, but the drive id is no longer valid.
+                 * E.g., the file is moved to another folder. Clear the drive
+                 * id.
+                 */
+                SyncUtils.updateTrackWithDriveFileInfo(myTracksProviderUtils, track, null);
+              }
+            }
+          }
+        } while (cursor.moveToNext());
+      }
+    } finally {
+      if (cursor != null) {
+        cursor.close();
+      }
+    }
+    return result;
   }
 
   /**
@@ -237,9 +288,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                  * E.g., the file is moved to another folder. Clear the drive
                  * id.
                  */
-                track.setDriveId("");
-                track.setModifiedTime(-1L);
-                myTracksProviderUtils.updateTrack(track);
+                SyncUtils.updateTrackWithDriveFileInfo(myTracksProviderUtils, track, null);
               }
             }
           }
