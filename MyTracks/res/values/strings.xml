@@ -1246,17 +1246,17 @@ limitations under the License.
       Character limit: ~20 (1 line)">
     Settings
   </string>
-  <string name="menu_share"
-    translation_description="In the menu, to share a track.
+  <string name="menu_share_maps"
+    translation_description="In the menu, to share a track via Google Maps.
 
       Character limit: ~20 (1 line)">
-    Share
+    Share via Google Maps
   </string>
   <string name="menu_share_drive"
     translation_description="In the menu, to share a track via Google Drive.
 
       Character limit: ~20 (1 line)">
-    Share via Drive
+    Share via Google Drive
   </string>
   <string name="menu_show_on_map"
     translation_description="In the menu, to show a track or a marker on the map.
@@ -2234,7 +2234,7 @@ limitations under the License.
     This will upload your track to Google Drive so you can share the file with friends. The file
     will be private and only those you have shared with will have access.
   </string>
-  <string name="share_track_map_confirm_message"
+  <string name="share_track_maps_confirm_message"
     translation_description="The confirmation message when sharing a track via Google Maps with
       friends.
 

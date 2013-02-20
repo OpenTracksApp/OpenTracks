@@ -135,7 +135,7 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
    * @return null when no such item
    */
   private View findShareItem(int index) {
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_share), true);
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_share_maps), true);
     ArrayList<View> views = EndToEndTestUtils.SOLO.getViews();
     int i = 0;
     for (View view : views) {

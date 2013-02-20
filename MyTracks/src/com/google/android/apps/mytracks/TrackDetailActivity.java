@@ -99,7 +99,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
   private MenuItem insertMarkerMenuItem;
   private MenuItem playMenuItem;
   private MenuItem shareDriveMenuItem;
-  private MenuItem shareMenuItem;
+  private MenuItem shareMapsMenuItem;
   private MenuItem sendGoogleMenuItem;
   private MenuItem saveMenuItem;
   private MenuItem voiceFrequencyMenuItem;
@@ -304,7 +304,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
 
     insertMarkerMenuItem = menu.findItem(R.id.track_detail_insert_marker);
     playMenuItem = menu.findItem(R.id.track_detail_play);
-    shareMenuItem = menu.findItem(R.id.track_detail_share);
+    shareMapsMenuItem = menu.findItem(R.id.track_detail_share_maps);
     sendGoogleMenuItem = menu.findItem(R.id.track_detail_send_google);
     saveMenuItem = menu.findItem(R.id.track_detail_save);
     voiceFrequencyMenuItem = menu.findItem(R.id.track_detail_voice_frequency);
@@ -350,10 +350,10 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
             getString(R.string.share_track_drive_confirm_message), trackId)
             .show(getSupportFragmentManager(), ConfirmDialogFragment.CONFIRM_DIALOG_TAG);
         return true;
-      case R.id.track_detail_share:
+      case R.id.track_detail_share_maps:
         ConfirmDialogFragment.newInstance(R.string.confirm_share_map_key,
             PreferencesUtils.CONFIRM_SHARE_MAP_DEFAULT, StringUtils.getHtml(
-                this, R.string.share_track_map_confirm_message, R.string.maps_public_unlisted_url),
+                this, R.string.share_track_maps_confirm_message, R.string.maps_public_unlisted_url),
             trackId).show(getSupportFragmentManager(), ConfirmDialogFragment.CONFIRM_DIALOG_TAG);
         return true;
       case R.id.track_detail_markers:
@@ -553,8 +553,8 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
     if (playMenuItem != null) {
       playMenuItem.setVisible(!isRecording);
     }
-    if (shareMenuItem != null) {
-      shareMenuItem.setVisible(!isRecording);
+    if (shareMapsMenuItem != null) {
+      shareMapsMenuItem.setVisible(!isRecording);
     }
     if (shareDriveMenuItem != null && shareDriveMenuItem.isEnabled()) {
       shareDriveMenuItem.setVisible(!isRecording);
