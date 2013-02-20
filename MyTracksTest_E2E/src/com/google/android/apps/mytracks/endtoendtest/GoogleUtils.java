@@ -24,17 +24,30 @@ import com.google.android.apps.mytracks.io.gdata.maps.MapsConstants;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsGDataConverter;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsMapMetadata;
 import com.google.android.apps.mytracks.io.gdata.maps.XmlMapsGDataParserFactory;
+import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
+import com.google.android.apps.mytracks.io.spreadsheets.SendSpreadsheetsAsyncTask;
+import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.common.gdata.AndroidXmlParserFactory;
 import com.google.android.maps.mytracks.R;
+import com.google.api.client.auth.oauth2.BearerToken;
+import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.GoogleHeaders;
 import com.google.api.client.googleapis.MethodOverride;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.InputStreamContent;
-import com.google.wireless.gdata.data.Entry;
+import com.google.api.services.drive.Drive;
+import com.google.api.services.drive.model.File;
+import com.google.api.services.drive.model.FileList;
+import com.google.gdata.client.spreadsheet.SpreadsheetService;
+import com.google.gdata.data.spreadsheet.ListEntry;
+import com.google.gdata.data.spreadsheet.ListFeed;
+import com.google.gdata.data.spreadsheet.WorksheetEntry;
+import com.google.gdata.data.spreadsheet.WorksheetFeed;
 import com.google.wireless.gdata.parser.GDataParser;
 
 import android.accounts.Account;
@@ -45,8 +58,11 @@ import android.util.Log;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Provides utilities to access Google Maps, Google Documents, Google Fusion
@@ -55,17 +71,24 @@ import java.util.List;
  * @author Youtao Liu
  */
 public class GoogleUtils {
-  
+
   public static final String DOCUMENT_NAME_PREFIX = "My Tracks";
+  // This is the preferred account.
   public static final String ACCOUNT_NAME_1 = "mytrackstest@gmail.com";
   public static final String ACCOUNT_NAME_2 = "mytrackstest2@gmail.com";
-  public static final String SPREADSHEET_NAME = DOCUMENT_NAME_PREFIX + "-" + EndToEndTestUtils.activityType;
+  public static final String SPREADSHEET_NAME = DOCUMENT_NAME_PREFIX + "-"
+      + EndToEndTestUtils.activityType;
 
   private static final String APP_NAME_PREFIX = "Google-MyTracks-";
   private static final String CONTENT_TYPE = "application/x-www-form-urlencoded";
   private static final String FUSION_TABLES_BASE_URL = "https://www.google.com/fusiontables/api/query";
   private static final String GDATA_VERSION = "2";
-  
+  private static final String WORK_SHEET_NAME = "Log";
+  private static final String TRANCK_NAME_COLUMN = "Name";
+
+  private static final String TEST_TRACKS_QUERY = "'root' in parents and title contains '"
+      + EndToEndTestUtils.TRACK_NAME_PREFIX + "' and trashed = false";
+
   /**
    * Gets the account to access Google Services.
    * 
@@ -75,7 +98,7 @@ public class GoogleUtils {
   private static Account getAccount(Context context) {
     return AccountManager.get(context).getAccountsByType(Constants.ACCOUNT_TYPE)[0];
   }
-  
+
   /**
    * Gets Google maps of a user.
    * 
@@ -135,8 +158,8 @@ public class GoogleUtils {
           && oneData.getTitle().equals(title)) {
         if (isDelete) {
           try {
-            mapsClient.deleteEntry(oneData.getGDataEditUri(), AccountManager.get(context).blockingGetAuthToken(getAccount(context),
-                MapsConstants.SERVICE_NAME, false));
+            mapsClient.deleteEntry(oneData.getGDataEditUri(), AccountManager.get(context)
+                .blockingGetAuthToken(getAccount(context), MapsConstants.SERVICE_NAME, false));
             return true;
           } catch (Exception e) {
             Log.d(EndToEndTestUtils.LOG_TAG, "Unable to drop map", e);
@@ -148,7 +171,7 @@ public class GoogleUtils {
     }
     return false;
   }
-  
+
   /**
    * Searches a map in user's Google Maps.
    * 
@@ -159,7 +182,7 @@ public class GoogleUtils {
   public static boolean searchMap(String title, Activity activity) {
     return searchMapByTitle(title, activity, false);
   }
-  
+
   /**
    * Searches a map in user's Google Maps and then delete it.
    * 
@@ -172,170 +195,147 @@ public class GoogleUtils {
   }
 
   /**
-   * Searches a doc in user's Google Documents.
+   * Removes old tracks created by MyTracks test.
    * 
-   * @param title the title of doc
-   * @param activity to get context
-   * @return the entry of the document, null means can not find the spreadsheet.
+   * @param activity
+   * @param accountName
    */
-  public static Entry searchSpreadsheetByTitle(String title, Activity activity) {
-    // TODO change to using OAuth2 and the new spreadsheet gdata library
-    
-//    Context context = activity.getApplicationContext(); 
-//    DocumentsClient documentsClient = new DocumentsClient(
-//        GDataClientFactory.getGDataClient(context),
-//        new XmlDocsGDataParserFactory(new AndroidXmlParserFactory()));
-//    
-//    try {
-//      String documentsAuthToken = AccountManager.get(context)
-//          .blockingGetAuthToken(getAccount(context), documentsClient.getServiceName(), false);
-//      String uri = String.format(Locale.US, SendDocsUtils.GET_SPREADSHEET_BY_TITLE_URI,
-//          URLEncoder.encode(title, "utf-8"));
-//      GDataParser gDataParser = documentsClient.getParserForFeed(Entry.class, uri,
-//          documentsAuthToken);
-//      gDataParser.init();
-//
-//      while (gDataParser.hasMoreData()) {
-//        Entry entry = gDataParser.readNextEntry(null);
-//        String entryTitle = entry.getTitle();
-//        if (entryTitle.equals(title)) { 
-//          return entry; 
-//        }
-//      }
-//    } catch (Exception e) {
-//      Log.d(EndToEndTestUtils.LOG_TAG, "Unable to fetch spreadsheet.", e);
-//    }
-    return null;
+  public static void deleteTestTracksOnGoogleDrive(Activity activity, String accountName) {
+    try {
+      GoogleAccountCredential driveCredential = SendToGoogleUtils.getGoogleAccountCredential(
+          activity.getApplicationContext(), accountName, SendToGoogleUtils.DRIVE_SCOPE);
+      if (driveCredential == null) {
+        return;
+      }
+
+      Drive drive = SyncUtils.getDriveService(driveCredential);
+      com.google.api.services.drive.Drive.Files.List list = drive.files().list()
+          .setQ(TEST_TRACKS_QUERY);
+      List<File> files = list.execute().getItems();
+      for (Iterator<File> iterator = files.iterator(); iterator.hasNext();) {
+        File file = (File) iterator.next();
+        drive.files().delete(file.getId()).execute();
+      }
+    } catch (Exception e) {
+      Log.e(EndToEndTestUtils.LOG_TAG, "Delete test tracks failed.");
+    }
   }
-  
+
   /**
    * Delete spreadsheet which name is title.
    * 
    * @param title the name of spreadsheet
    * @param activity to get context
+   * @param accountName the name of Google account
+   * @return true means delete successfully
    */
-  public static void deleteSpreadsheetByTitle(String title, Activity activity) {
-    // TODO change to using OAuth2 and the new spreadsheet gdata library
-//    Context context = activity.getApplicationContext();
-//    DocumentsClient documentsClient = new DocumentsClient(
-//        GDataClientFactory.getGDataClient(context), new XmlDocsGDataParserFactory(
-//            new AndroidXmlParserFactory()));
-//
-//    try {
-//      String documentsAuthToken = AccountManager.get(context).blockingGetAuthToken(
-//          getAccount(context), documentsClient.getServiceName(), false);
-//      String uri = String.format(Locale.US, SendDocsUtils.GET_SPREADSHEET_BY_TITLE_URI,
-//          URLEncoder.encode(title, "utf-8"));
-//      GDataParser gDataParser = documentsClient.getParserForFeed(Entry.class, uri,
-//          documentsAuthToken);
-//      gDataParser.init();
-//
-//      while (gDataParser.hasMoreData()) {
-//        Entry entry = gDataParser.readNextEntry(null);
-//        String entryTitle = entry.getTitle();
-//        if (entryTitle.equals(title)) {
-//          documentsClient.deleteEntry(entry.getEditUri(), documentsAuthToken);
-//          Log.d(EndToEndTestUtils.LOG_TAG, "Delete one spreadsheet.");
-//        }
-//      }
-//    } catch (Exception e) {
-//      Log.e(EndToEndTestUtils.LOG_TAG, "Unable to fetch spreadsheet.", e);
-//    }
+  public static boolean deleteSpreadsheetByTitle(String title, Activity activity, String accountName) {
+    try {
+      GoogleAccountCredential driveCredential = SendToGoogleUtils.getGoogleAccountCredential(
+          activity.getApplicationContext(), accountName, SendToGoogleUtils.DRIVE_SCOPE);
+      if (driveCredential == null) {
+        return false;
+      }
+
+      Drive drive = SyncUtils.getDriveService(driveCredential);
+      com.google.api.services.drive.Drive.Files.List list = drive.files().list()
+          .setQ(String.format(Locale.US, SendSpreadsheetsAsyncTask.GET_SPREADSHEET_QUERY, title));
+      List<File> files = list.execute().getItems();
+      for (Iterator<File> iterator = files.iterator(); iterator.hasNext();) {
+        File file = (File) iterator.next();
+        drive.files().delete(file.getId()).execute();
+      }
+      return true;
+    } catch (Exception e) {
+      Log.e(EndToEndTestUtils.LOG_TAG, "Search spreadsheet failed.");
+    }
+    return false;
   }
-  
+
   /**
    * Searches docs in user's Google Documents.
    * 
    * @param title the title of doc
    * @param activity to get context
-   * @return the entry of the document, null means can not find the spreadsheet.
+   * @param accountName the name of Google account
+   * @return the file list of the document, null means can not find the
+   *         spreadsheets
    */
-  public static List<Entry> searchAllSpreadsheetByTitle(String title, Activity activity) {
-    List<Entry> docs = new ArrayList<Entry>();
-//    Context context = activity.getApplicationContext(); 
-//    DocumentsClient documentsClient = new DocumentsClient(
-//        GDataClientFactory.getGDataClient(context),
-//        new XmlDocsGDataParserFactory(new AndroidXmlParserFactory()));
-//    
-//    try {
-//      String documentsAuthToken = AccountManager.get(context)
-//          .blockingGetAuthToken(getAccount(context), documentsClient.getServiceName(), false);
-//      String uri = String.format(Locale.US, SendDocsUtils.GET_SPREADSHEET_BY_TITLE_URI,
-//          URLEncoder.encode(title, "utf-8"));
-//      GDataParser gDataParser = documentsClient.getParserForFeed(Entry.class, uri,
-//          documentsAuthToken);
-//      gDataParser.init();
-//
-//      while (gDataParser.hasMoreData()) {
-//        Entry entry = gDataParser.readNextEntry(null);
-//        String entryTitle = entry.getTitle();
-//        if (entryTitle.equals(title)) { 
-//          docs.add(entry);
-//        }
-//      }
-//    } catch (Exception e) {
-//      Log.d(EndToEndTestUtils.LOG_TAG, "Unable to fetch spreadsheet.", e);
-//    }
-    return docs;
+  public static List<File> searchAllSpreadsheetByTitle(String title, Activity activity,
+      String accountName) {
+    try {
+      GoogleAccountCredential driveCredential = SendToGoogleUtils.getGoogleAccountCredential(
+          activity.getApplicationContext(), accountName, SendToGoogleUtils.DRIVE_SCOPE);
+      if (driveCredential == null) {
+        return null;
+      }
+
+      Drive drive = SyncUtils.getDriveService(driveCredential);
+      com.google.api.services.drive.Drive.Files.List list = drive.files().list()
+          .setQ(String.format(Locale.US, SendSpreadsheetsAsyncTask.GET_SPREADSHEET_QUERY, title));
+      FileList result = list.execute();
+      return result.getItems();
+    } catch (Exception e) {
+      Log.e(EndToEndTestUtils.LOG_TAG, "Search spreadsheet failed.");
+    }
+    return null;
   }
-  
-  
+
   /**
    * Searches a track title in a spreadsheet.
    * 
-   * @param title the track name to search
+   * @param trackName the track name to search
    * @param activity to get context
    * @param spreadsheetTitle the title of spreadsheet
-   * @param isDelete whether delete the information of this track in the document
+   * @param isDelete whether delete the information of this track in the
+   *          document
+   * @param accountName the name of Google account
    * @return true means find the track name in the spreadsheet
    */
-  private static boolean searchTrackTitleInSpreadsheet(String title, Activity activity, String spreadsheetTitle, boolean isDelete) {
-//    String spreadsheetId = searchSpreadsheetByTitle(spreadsheetTitle, activity).getId().replace(SendDocsUtils.SPREADSHEET_ID_PREFIX, "");
-//    if(spreadsheetId == null) {
-//      Log.d(EndToEndTestUtils.LOG_TAG, "Unable to find the spreadsheet -- " + spreadsheetTitle);
-//      return false;
-//    }
-//    Context context = activity.getApplicationContext();
-//    try {
-//    SpreadsheetsClient spreadsheetsClient = new SpreadsheetsClient(
-//        GDataClientFactory.getGDataClient(context), new XmlDocsGDataParserFactory(new AndroidXmlParserFactory()));
-//    String spreadsheetsAuthToken = AccountManager.get(activity.getApplicationContext()).blockingGetAuthToken(
-//        getAccount(context), spreadsheetsClient.getServiceName(), false);
-//    
-//    String weekSheetId = SendDocsUtils.getWorksheetId(spreadsheetId, spreadsheetsClient, spreadsheetsAuthToken);
-//    String worksheetUri = String.format(Locale.US, SendDocsUtils.GET_WORKSHEET_URI, URLEncoder.encode(spreadsheetId, "utf-8"),
-//        weekSheetId);
-//
-//    GDataParser gDataParser = spreadsheetsClient.getParserForFeed(Feed.class, worksheetUri,
-//        spreadsheetsAuthToken);
-//    gDataParser.init();
-//    while (gDataParser.hasMoreData()) {
-//      Entry entry = gDataParser.readNextEntry(null);
-//      String entryTitle = entry.getTitle();
-//      if (entryTitle.indexOf(title) > -1) { 
-//        if (isDelete) {
-//          spreadsheetsClient.deleteEntry(entry.getEditUri(), spreadsheetsAuthToken);
-//        }
-//        return true;
-//      }
-//    }
-//    } catch (Exception e) {
-//      Log.d(EndToEndTestUtils.LOG_TAG, "Unable to fetch content of spreadsheet.", e);
-//    }
+  private static boolean searchTrackTitleInSpreadsheet(String trackName, Activity activity,
+      String spreadsheetTitle, boolean isDelete, String accountName) {
+    try {
+      // Get spreadsheet Id.
+      String spreadsheetId = searchAllSpreadsheetByTitle(spreadsheetTitle, activity, accountName)
+          .get(0).getId();
+      
+      // Get spreadsheet service.
+      SpreadsheetService spreadsheetService = new SpreadsheetService(spreadsheetTitle);
+      Credential credential = new Credential(BearerToken.authorizationHeaderAccessMethod());
+      credential.setAccessToken(SendToGoogleUtils.getToken(activity.getApplicationContext(),
+          accountName, SendToGoogleUtils.SPREADSHEET_SCOPE));
+      spreadsheetService.setOAuth2Credentials(credential);
+      
+      // Get work sheet.
+      WorksheetFeed feed = spreadsheetService.getFeed(
+          new URL(String.format(Locale.US, SendSpreadsheetsAsyncTask.GET_WORKSHEETS_URI,
+              spreadsheetId)), WorksheetFeed.class);
+      List<WorksheetEntry> data = feed.getEntries();
+      for (Iterator<WorksheetEntry> iterator = data.iterator(); iterator.hasNext();) {
+        WorksheetEntry worksheetEntry = (WorksheetEntry) iterator.next();
+        String title = worksheetEntry.getTitle().getPlainText();
+        if (title.equals(WORK_SHEET_NAME)) {
+          URL listFeedUrl = worksheetEntry.getListFeedUrl();
+          List<ListEntry> listFeed = spreadsheetService.getFeed(listFeedUrl, ListFeed.class)
+              .getEntries();
+          for (Iterator<ListEntry> iterator2 = listFeed.iterator(); iterator2.hasNext();) {
+            ListEntry listEntry = (ListEntry) iterator2.next();
+            String name = listEntry.getCustomElements().getValue(TRANCK_NAME_COLUMN);
+            if (name.equals(trackName)) {
+              if (isDelete) {
+                listEntry.delete();
+              }
+              return true;
+            }
+          }
+        }
+      }
+    } catch (Exception e) {
+      Log.e(EndToEndTestUtils.LOG_TAG, "Search spreadsheet failed.");
+    }
     return false;
   }
-  
-  /**
-   * Searches a track in spreadsheet.
-   * 
-   * @param title the track name to search
-   * @param activity to get context
-   * @return true means find the track name in the spreadsheet
-   */
-  public static boolean searchTrackInSpreadSheet(String title, Activity activity) {
-    return searchTrackTitleInSpreadsheet(title, activity, GoogleUtils.SPREADSHEET_NAME, false);
-  }
-  
+
   /**
    * Searches and deletes a track in spreadsheet.
    * 
@@ -343,8 +343,9 @@ public class GoogleUtils {
    * @param activity to get context
    * @return true means find and delete successfully
    */
-  public static boolean deleteTrackInSpreadSheet(String title, Activity activity) {
-    return searchTrackTitleInSpreadsheet(title, activity, GoogleUtils.SPREADSHEET_NAME, true);
+  public static boolean deleteTrackInSpreadSheet(String title, Activity activity, String account) {
+    return searchTrackTitleInSpreadsheet(title, activity, GoogleUtils.SPREADSHEET_NAME, true,
+        account);
   }
 
   /**
@@ -358,20 +359,21 @@ public class GoogleUtils {
     Context context = activity.getApplicationContext();
     try {
       HttpResponse response = sendFusionTableQuery("SHOW TABLES", context);
-      // We can use index of method to check new table for every track name is unique.
-      if (response != null && response.parseAsString().indexOf(title) > 0) { 
-        return true; 
+      // We can use index of method to check new table for every track name is
+      // unique.
+      if (response != null && response.parseAsString().indexOf(title) > 0) {
+        return true;
       }
     } catch (Exception e) {
       Log.d(EndToEndTestUtils.LOG_TAG, "Unable to query fusion table.", e);
     }
     return false;
   }
-  
+
   /**
    * Drops one fusion table which contain the string in title of current user.
    * 
-   * @param title the title of a track to drop 
+   * @param title the title of a track to drop
    * @param activity to get context
    * @return the result of drop
    */
@@ -388,7 +390,7 @@ public class GoogleUtils {
         // The first column is the table id.
         if (secondColumn.equals(title)) {
           sendFusionTableQuery("DROP TABLE " + firstColumn, context);
-          return true; 
+          return true;
         }
       }
     } catch (IOException e) {
@@ -396,7 +398,7 @@ public class GoogleUtils {
     }
     return false;
   }
-  
+
   /**
    * Sends query to operate fusion tables.
    * 
@@ -406,8 +408,8 @@ public class GoogleUtils {
    */
   private static HttpResponse sendFusionTableQuery(String query, Context context) {
     try {
-      String fusionTableAuthToken = AccountManager.get(context).blockingGetAuthToken(getAccount(context),
-          SendFusionTablesUtils.SERVICE, false);
+      String fusionTableAuthToken = AccountManager.get(context).blockingGetAuthToken(
+          getAccount(context), SendFusionTablesUtils.SERVICE, false);
 
       GenericUrl url = new GenericUrl(FUSION_TABLES_BASE_URL);
       String sql = "sql=" + query;
@@ -419,8 +421,7 @@ public class GoogleUtils {
           .createRequestFactory(new MethodOverride())).buildPostRequest(url, inputStreamContent);
 
       GoogleHeaders headers = new GoogleHeaders();
-      headers.setApplicationName(APP_NAME_PREFIX
-          + SystemUtils.getMyTracksVersion(context));
+      headers.setApplicationName(APP_NAME_PREFIX + SystemUtils.getMyTracksVersion(context));
       headers.setGDataVersion(GDATA_VERSION);
       headers.setGoogleLogin(fusionTableAuthToken);
       headers.setContentType(CONTENT_TYPE);
@@ -434,19 +435,19 @@ public class GoogleUtils {
       return null;
     }
   }
-  
+
   /**
    * Checks whether the status of account is right to use.
    * 
    * @return true means the status of account is good for sending
    */
   public static boolean isAccountAvailable() {
- // Check whether no account is binded with this device.
+    // Check whether no account is binded with this device.
     if (EndToEndTestUtils.SOLO.waitForText(
         EndToEndTestUtils.activityMytracks.getString(R.string.send_google_no_account_title), 1,
         EndToEndTestUtils.SHORT_WAIT_TIME)) {
-      EndToEndTestUtils.getButtonOnScreen(EndToEndTestUtils.activityMytracks.getString(R.string.generic_ok), true,
-          true);
+      EndToEndTestUtils.getButtonOnScreen(
+          EndToEndTestUtils.activityMytracks.getString(R.string.generic_ok), true, true);
       return false;
     }
 
@@ -454,17 +455,18 @@ public class GoogleUtils {
     if (EndToEndTestUtils.SOLO.waitForText(
         EndToEndTestUtils.activityMytracks.getString(R.string.send_google_choose_account_title), 1,
         EndToEndTestUtils.SHORT_WAIT_TIME)) {
-      EndToEndTestUtils.getButtonOnScreen(EndToEndTestUtils.activityMytracks.getString(R.string.generic_ok), false,
-          true);
+      EndToEndTestUtils.SOLO.clickOnText(GoogleUtils.ACCOUNT_NAME_1);
+      EndToEndTestUtils.getButtonOnScreen(
+          EndToEndTestUtils.activityMytracks.getString(R.string.generic_ok), false, true);
     }
 
     // Check whether no account permission.
     if (EndToEndTestUtils.SOLO.waitForText(
-        EndToEndTestUtils.activityMytracks.getString(R.string.send_google_no_account_permission), 1,
-        EndToEndTestUtils.SHORT_WAIT_TIME)) {
+        EndToEndTestUtils.activityMytracks.getString(R.string.send_google_no_account_permission),
+        1, EndToEndTestUtils.SHORT_WAIT_TIME)) {
       return false;
     }
-    
+
     return true;
   }
 
