@@ -28,6 +28,8 @@ import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment.ConfirmC
 import com.google.android.apps.mytracks.fragments.DeleteAllTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment.DeleteOneTrackCaller;
+import com.google.android.apps.mytracks.fragments.EnableSyncDialogFragment;
+import com.google.android.apps.mytracks.fragments.EnableSyncDialogFragment.EnableSyncCaller;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment.EulaCaller;
 import com.google.android.apps.mytracks.fragments.WelcomeDialogFragment;
@@ -93,7 +95,7 @@ import java.util.Locale;
  * @author Leif Hendrik Wilden
  */
 public class TrackListActivity extends AbstractSendToGoogleActivity
-    implements EulaCaller, WelcomeCaller, ConfirmCaller, DeleteOneTrackCaller {
+    implements EulaCaller, WelcomeCaller, EnableSyncCaller, ConfirmCaller, DeleteOneTrackCaller {
 
   private static final String TAG = TrackListActivity.class.getSimpleName();
   private static final String START_GPS_KEY = "start_gps_key";
@@ -720,7 +722,31 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
           });
       if (dialog != null) {
         dialog.show();
+        return;
       }
+    }
+    showEnableSync();
+  }
+
+  private void showEnableSync() {
+    if (EulaUtils.getShowEnableSync(this)) {
+      Fragment fragment = getSupportFragmentManager()
+          .findFragmentByTag(EnableSyncDialogFragment.ENABLE_SYNC_DIALOG_TAG);
+      if (fragment == null) {
+        new EnableSyncDialogFragment().show(
+            getSupportFragmentManager(), EnableSyncDialogFragment.ENABLE_SYNC_DIALOG_TAG);
+      }
+    }
+  }
+
+  @Override
+  public void onEnableSyncDone(boolean enable) {
+    EulaUtils.setShowEnableSync(this);
+    if (enable) {
+      SendRequest sendRequest = new SendRequest(-1L);
+      sendRequest.setSendDrive(true);
+      sendRequest.setDriveEnableSync(true);
+      sendToGoogle(sendRequest);
     }
   }
 

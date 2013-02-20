@@ -36,6 +36,7 @@ public class SendRequest implements Parcelable {
   private boolean sendFusionTables = false;
   private boolean sendSpreadsheets = false;
 
+  private boolean driveEnableSync = false;
   private boolean driveShare = false;
   private String driveShareEmails = null;
 
@@ -95,6 +96,14 @@ public class SendRequest implements Parcelable {
 
   public void setSendSpreadsheets(boolean sendSpreadsheets) {
     this.sendSpreadsheets = sendSpreadsheets;
+  }
+
+  public boolean isDriveEnableSync() {
+    return driveEnableSync;
+  }
+
+  public void setDriveEnableSync(boolean driveEnableSync) {
+    this.driveEnableSync = driveEnableSync;
   }
 
   public boolean isDriveShare() {
@@ -199,6 +208,7 @@ public class SendRequest implements Parcelable {
     sendMaps = in.readByte() == 1;
     sendFusionTables = in.readByte() == 1;
     sendSpreadsheets = in.readByte() == 1;
+    driveEnableSync = in.readByte() == 1;
     driveShare = in.readByte() == 1;
     driveShareEmails = in.readString();
     mapsShare = in.readByte() == 1;
@@ -225,6 +235,7 @@ public class SendRequest implements Parcelable {
     out.writeByte((byte) (sendMaps ? 1 : 0));
     out.writeByte((byte) (sendFusionTables ? 1 : 0));
     out.writeByte((byte) (sendSpreadsheets ? 1 : 0));
+    out.writeByte((byte) (driveEnableSync ? 1 : 0));    
     out.writeByte((byte) (driveShare ? 1 : 0));
     out.writeString(driveShareEmails);
     out.writeByte((byte) (mapsShare ? 1 : 0));

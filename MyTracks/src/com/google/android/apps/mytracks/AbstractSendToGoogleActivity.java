@@ -32,6 +32,7 @@ import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
 import com.google.android.apps.mytracks.io.sendtogoogle.UploadResultActivity;
 import com.google.android.apps.mytracks.io.spreadsheets.SendSpreadsheetsActivity;
+import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
@@ -43,6 +44,7 @@ import android.accounts.AccountManagerFuture;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -287,7 +289,19 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
   private void startNextActivity() {
     Class<?> next;
     if (sendRequest.isSendDrive()) {
-      if (sendRequest.isDriveShare()) {
+      if (sendRequest.isDriveEnableSync()) {
+        PreferencesUtils.setBoolean(this, R.string.drive_sync_key, true);
+
+        // Turn off everything
+        SyncUtils.disableSync(this);
+
+        // Turn on sync
+        ContentResolver.setMasterSyncAutomatically(true);
+
+        // Enable sync for account
+        SyncUtils.enableSync(sendRequest.getAccount());     
+        return;
+      } else if (sendRequest.isDriveShare()) {
         AddEmailsDialogFragment.newInstance(sendRequest.getTrackId())
             .show(getSupportFragmentManager(), AddEmailsDialogFragment.ADD_EMAILS_DIALOG_TAG);
         return;
