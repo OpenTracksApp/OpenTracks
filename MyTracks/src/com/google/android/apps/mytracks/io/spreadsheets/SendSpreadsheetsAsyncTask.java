@@ -38,6 +38,7 @@ import com.google.api.client.http.ByteArrayContent;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.gdata.client.spreadsheet.SpreadsheetService;
 import com.google.gdata.data.spreadsheet.ListEntry;
 import com.google.gdata.data.spreadsheet.WorksheetEntry;
@@ -66,10 +67,12 @@ public class SendSpreadsheetsAsyncTask extends AbstractSendAsyncTask {
       GOOGLE_SPREADSHEET_MIME_TYPE = "application/vnd.google-apps.spreadsheet";
   private static final String
       OPENDOCUMENT_SPREADSHEET_MIME_TYPE = "application/x-vnd.oasis.opendocument.spreadsheet";
-  private static final String GET_SPREADSHEET_QUERY =
+  @VisibleForTesting
+  public static final String GET_SPREADSHEET_QUERY =
       "'root' in parents and title = '%s' and mimeType = '" + GOOGLE_SPREADSHEET_MIME_TYPE
       + "' and trashed = false";
-  private static final String
+  @VisibleForTesting
+  public static final String
       GET_WORKSHEETS_URI = "https://spreadsheets.google.com/feeds/worksheets/%s/private/full";
 
   private static final int PROGRESS_GET_SPREADSHEET_ID = 0;

@@ -16,13 +16,16 @@
 package com.google.android.apps.mytracks.endtoendtest;
 
 import com.google.android.apps.mytracks.TrackListActivity;
+import com.google.android.apps.mytracks.endtoendtest.sync.SyncTestUtils;
+import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.maps.mytracks.R;
-import com.google.wireless.gdata.data.Entry;
+import com.google.api.services.drive.model.File;
 
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.CheckBox;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,22 +48,29 @@ public class SendToGoogleTest extends ActivityInstrumentationTestCase2<TrackList
     super.setUp();
     instrumentation = getInstrumentation();
     activityMyTracks = getActivity();
+    GoogleUtils.deleteTestTracksOnGoogleDrive(activityMyTracks, GoogleUtils.ACCOUNT_NAME_1);
     EndToEndTestUtils.setupForAllTest(instrumentation, activityMyTracks);
   }
 
   /**
-   * Check all services and send to google.
+   * Checks all services and send to google.
+   * 
+   * @throws GoogleAuthException
+   * @throws IOException
    */
-  public void testCreateAndSendTrack_send() {
+  public void testCreateAndSendTrack_send() throws IOException, GoogleAuthException {
     EndToEndTestUtils.createTrackIfEmpty(1, false);
     instrumentation.waitForIdleSync();
     checkSendTrackToGoogle();
   }
 
   /**
-   * Check all services and send to google.
+   * Checks all services and send to google.
+   * 
+   * @throws GoogleAuthException
+   * @throws IOException
    */
-  public void testCreateAndSendTrack_sendPausedTrack() {
+  public void testCreateAndSendTrack_sendPausedTrack() throws IOException, GoogleAuthException {
     EndToEndTestUtils.deleteAllTracks();
     EndToEndTestUtils.createTrackWithPause(3);
     instrumentation.waitForIdleSync();
@@ -75,7 +85,7 @@ public class SendToGoogleTest extends ActivityInstrumentationTestCase2<TrackList
     String testActivity = "(TestActivity)";
     EndToEndTestUtils.activityType = testActivity;
     GoogleUtils.deleteSpreadsheetByTitle("My Tracks-" + EndToEndTestUtils.activityType,
-        EndToEndTestUtils.activityMytracks);
+        EndToEndTestUtils.activityMytracks, GoogleUtils.ACCOUNT_NAME_1);
     EndToEndTestUtils.createSimpleTrack(1, false);
     boolean result = sendToGoogle();
     result = result && sendToGoogle();
@@ -83,26 +93,32 @@ public class SendToGoogleTest extends ActivityInstrumentationTestCase2<TrackList
     // Result is true mean has account bound with this device and send
     // successful.
     if (result) {
-      List<Entry> spreadsheetEntry = GoogleUtils
-          .searchAllSpreadsheetByTitle(GoogleUtils.DOCUMENT_NAME_PREFIX + "-"
-              + EndToEndTestUtils.activityType, activityMyTracks);
-      assertEquals(1, spreadsheetEntry.size());
+      List<File> fileList = GoogleUtils.searchAllSpreadsheetByTitle(
+          GoogleUtils.DOCUMENT_NAME_PREFIX + "-" + EndToEndTestUtils.activityType,
+          activityMyTracks, GoogleUtils.ACCOUNT_NAME_1);
+      assertEquals(1, fileList.size());
     }
   }
 
   /**
    * Checks the process of sending track to google.
+   * 
+   * @throws GoogleAuthException
+   * @throws IOException
    */
-  private void checkSendTrackToGoogle() {
+  private void checkSendTrackToGoogle() throws IOException, GoogleAuthException {
     if (!sendToGoogle()) {
       return;
     }
-    // Check whether all data is correct on Google Map, Documents, and
+    // Check whether all data is correct on Google Drive, Maps, Documents, and
     // Spreadsheet.
+    assertTrue(SyncTestUtils.checkFile(EndToEndTestUtils.trackName, true,
+        SyncTestUtils.getGoogleDrive(activityMyTracks.getApplicationContext())));
     assertTrue(GoogleUtils.deleteMap(EndToEndTestUtils.trackName, activityMyTracks));
     assertTrue(GoogleUtils.searchFusionTableByTitle(EndToEndTestUtils.TRACK_NAME_PREFIX,
         activityMyTracks));
-    assertTrue(GoogleUtils.deleteTrackInSpreadSheet(EndToEndTestUtils.trackName, activityMyTracks));
+    assertTrue(GoogleUtils.deleteTrackInSpreadSheet(EndToEndTestUtils.trackName, activityMyTracks,
+        GoogleUtils.ACCOUNT_NAME_1));
     assertTrue(GoogleUtils.dropFusionTables(EndToEndTestUtils.trackName, activityMyTracks));
   }
 
@@ -114,14 +130,16 @@ public class SendToGoogleTest extends ActivityInstrumentationTestCase2<TrackList
   private boolean sendToGoogle() {
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_send_google), true);
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.send_google_title));
+    instrumentation.waitForIdleSync();
     ArrayList<CheckBox> checkBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
     for (int i = 0; i < checkBoxs.size(); i++) {
       if (!checkBoxs.get(i).isChecked()) {
-        EndToEndTestUtils.SOLO.clickOnCheckBox(i);
+        EndToEndTestUtils.SOLO.clickOnView(checkBoxs.get(i));
+        instrumentation.waitForIdleSync();
       }
     }
 
-    if (checkBoxs.size() < 3) {
+    if (checkBoxs.size() < 4) {
       EndToEndTestUtils.SOLO.scrollDown();
       checkBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
 
@@ -136,6 +154,7 @@ public class SendToGoogleTest extends ActivityInstrumentationTestCase2<TrackList
     EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.send_google_send_now),
         true, true);
 
+    instrumentation.waitForIdleSync();
     if (!GoogleUtils.isAccountAvailable()) {
       return false;
     }
@@ -143,10 +162,17 @@ public class SendToGoogleTest extends ActivityInstrumentationTestCase2<TrackList
     // Following check the process of "Send to Google".
     assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
         .getString(R.string.generic_progress_title)));
-    // Waiting the send is finish.
+
+    // Waiting the send is finish. Should double check it for the progress
+    // dialog may disappear and display again while switch to next send(There
+    // are four sends currently, there are send to drive, maps, fusion table and
+    // spreadsheet).
     while (EndToEndTestUtils.SOLO.waitForText(
         activityMyTracks.getString(R.string.generic_progress_title), 1,
-        EndToEndTestUtils.SHORT_WAIT_TIME)) {}
+        EndToEndTestUtils.SHORT_WAIT_TIME)
+        || EndToEndTestUtils.SOLO.waitForText(
+            activityMyTracks.getString(R.string.generic_progress_title), 1,
+            EndToEndTestUtils.SHORT_WAIT_TIME)) {}
 
     // Check whether the result dialog is display.
     assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
@@ -155,7 +181,7 @@ public class SendToGoogleTest extends ActivityInstrumentationTestCase2<TrackList
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     return true;
   }
-  
+
   @Override
   protected void tearDown() throws Exception {
     EndToEndTestUtils.activityType = EndToEndTestUtils.DEFAULTACTIVITYTYPE;
