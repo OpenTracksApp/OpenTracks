@@ -562,14 +562,14 @@ limitations under the License.
       Google Drive.">
     Do you want to sync your tracks with Google Drive? This will allow you to view your tracks in
     Google Drive, share tracks via Google Drive, and view tracks shared with you. All tracks synced
-    to Google Drive will be private by default.     
+    to Google Drive will be private by default.
   </string>
   <string name="enable_sync_title"
     translation_description="The dialog title asking the user if he wants to enable sync with Google
       Drive.">
     Sync with Google Drive
   </string>
-        
+
   <!-- Eula -->
   <string name="eula_accept"
     translation_description="In the 'Terms of Service' dialog, the button to accept.">
@@ -779,183 +779,6 @@ limitations under the License.
     translation_description="In the 'Help' page, the button on the bottom to open the 'About My
       Tracks' dialog.">
     About My Tracks
-  </string>
-  <string name="help_battery_life_answer"
-    translation_description="In the 'Help' page, the answer on battery life.">
-    The GPS receiver draws a relatively high amount of power, so a fully charged battery typically
-    survives less than 5 hours. Battery life depends on many factors, including signal strength,
-    battery freshness, and tasks running in parallel. Switching off some or all of the device\'s
-    radios will lengthen battery life. Putting the device into Airplane mode will yield the best
-    results.
-  </string>
-  <string name="help_battery_life_question"
-    translation_description="In the 'Help' page, the question on battery life.">
-    How long does the battery last when recording tracks?
-  </string>
-  <string name="help_data_connection_answer"
-    translation_description="In the 'Help' page, the answer on data connection.">
-    Cell signal or data connection is not required to record GPS tracks. However, if there is no
-    data connection, you will not be able to see a map. Instead, you will see a grey screen or a
-    partial map. Tracks, represented as simple lines, can still be recorded even if there is no data
-    connection.
-  </string>
-  <string name="help_data_connection_question"
-    translation_description="In the 'Help' page, the question on data connection.">
-    Do I need cell signal and data connection to use My Tracks?
-  </string>
-  <string name="help_delete_tracks_answer"
-    translation_description="In the 'Help' page, the answer on delete tracks.">
-    From the track list, select &#8220;Delete all&#8221; when not recording. This permanently
-    deletes the recorded tracks from the device memory. If you have saved tracks or backups on the
-    external storage, you  must delete them separately. You can access the external storage using
-    any file manager app from the Play Store or using a USB cable to connect your device to your
-    computer. Tracks uploaded to Google Maps, Google Fusion Tables, and Google Spreadsheets must
-    also be deleted separately.
-  </string>
-  <string name="help_delete_tracks_question"
-    translation_description="In the 'Help' page, the question on delete tracks.">
-    How do I delete all the tracks from the device?
-  </string>
-  <string name="help_edit_tracks_answer"
-    translation_description="In the 'Help' page, the answer on edit tracks.">
-    Currently, you can\'t with My Tracks. But you can upload your tracks to Google or save them to
-    the external storage to modify them there.
-  </string>
-  <string name="help_edit_tracks_question"
-    translation_description="In the 'Help' page, the question on edit tracks.">
-    How can I edit or correct tracks for accuracy?
-  </string>
-  <string name="help_elevation_precision_answer"
-    translation_description="In the 'Help' page, the help content answer on elevation precision.">
-    GPS receivers measure elevations much less precisely than latitude and longitude. Elevations
-    can sometimes be off by a few hundred feet, though relative changes are tracked more precisely.
-    To get a good elevation measurement, make sure that you have a strong GPS signal and wait a few
-    minutes for the elevation to settle to a stable value.
-  </string>
-  <string name="help_elevation_precision_question"
-    translation_description="In the 'Help' page, the question on elevation precision.">
-    How precise is the elevation measurement?
-  </string>
-  <string name="help_external_storage_access_answer"
-    translation_description="In the 'Help' page, the answer on external storage access.">
-    Tracks saved on the external storage are not encrypted. Any application on the device can access
-    them.
-  </string>
-  <string name="help_external_storage_access_question"
-    translation_description="In the 'Help' page, the question on external storage access.">
-    Who can access the tracks saved on the external storage?
-  </string>
-  <string name="help_gps_signal_answer"
-    translation_description="In the 'Help' page, the answer on the GPS signal message.">
-    For My Tracks to work, your device needs to be in line-of-sight contact with the GPS satellites.
-    If the line-of-sight is obstructed by trees, buildings or canyon walls, you may not get an
-    accurate signal. If you see the message, wait a minute or two. If your device still does not
-    find a signal, move to an area clear of obstructions and try again.
-  </string>
-  <string name="help_gps_signal_question"
-    translation_description="In the 'Help' page, the question on the GPS signal message.">
-    Why does the application sometimes display &#8220;Waiting for GPS signal.&#8221;?
-  </string>
-  <string name="help_location_precision_answer"
-    translation_description="In the 'Help' page, the answer on location precision.">
-    Under optimal conditions, the location error can be +/- 20 feet (6 meters). However, precision
-    depends on the quality of the GPS signal. The blue circle around the orange location arrow
-    indicates estimated precision. (You may need to zoom in or zoom out to see the circle.) You can
-    change the GPS precision at Settings -> Recording -> GPS accuracy.
-  </string>
-  <string name="help_location_precision_question"
-    translation_description="In the 'Help' page, the question on location precision.">
-    How precise are the recorded tracks?
-  </string>
-  <string name="help_maps_public_unlisted_answer"
-    translation_description="In the 'Help' page, the answer on public versus unlisted maps.
-
-      %1$s url. E.g., 'support.google.com/maps/bin/answer.py?answer=144365'.">
-    See %1$s.
-  </string>
-  <string name="help_maps_public_unlisted_question"
-    translation_description="In the 'Help' page, the question on public versus unlisted maps.">
-    What is the difference between public and unlisted when sending a track to Google Maps?
-  </string>
-  <string name="help_marker_answer"
-    translation_description="In the 'Help' page, the answer on markers.">
-    Markers are used to annotate a location.
-  </string>
-  <string name="help_marker_question"
-    translation_description="In the 'Help' page, the question on markers.">
-    What are markers?
-  </string>
-  <string name="help_my_tracks_answer"
-    translation_description="In the 'Help' page, the answer on what is My Tracks.">
-    My Tracks allows you to record GPS tracks and visualize your walking, running, biking or any
-    other activity while watching live performance statistics. My Tracks makes it easy to archive
-    your training history with Google Maps, Google Fusion Tables, and Google Spreadsheets, and share
-    your activities with friends and the world.
-  </string>
-  <string name="help_my_tracks_question"
-    translation_description="In the 'Help' page, the question on what is My Tracks.">
-    What is My Tracks?
-  </string>
-  <string name="help_saved_files_answer"
-    translation_description="In the 'Help' page, the answer on saved files.">
-    You can use Google Earth or similar applications to visualize and edit GPS tracks.
-  </string>
-  <string name="help_saved_files_question"
-    translation_description="In the 'Help' page, the question on saved files.">
-    What can I do with tracks after saving them to the external storage or sharing such files with
-    friends?
-  </string>
-  <string name="help_send_track_answer"
-    translation_description="In the 'Help' page, the answer on sending a track.
-
-      %1$s url. E.g., 'maps.google.com'.
-      %2$s url. E.g., 'google.com/fusiontables'.
-      %3$s url. E.g., 'drive.google.com'.">
-    You can send a track to Google Maps, Google Fusion Tables, and Google Spreadsheets. Tracks sent
-    to Google Maps are at %1$s, &#8220;My Places&#8221;. Tracks sent to Google Fusion Tables are at
-    %2$s. Tracks sent to Google Spreadsheets are at %3$s.
-  </string>
-  <string name="help_send_track_question"
-    translation_description="In the 'Help' page, the question on sending a track.">
-    Where can I send a track?
-  </string>
-  <string name="help_share_friends_answer"
-    translation_description="In the 'Help' page, the answer on sharing with friends.">
-    You can share a track as a link to Google Maps. Your track will first get uploaded to Google
-    Maps.
-  </string>
-  <string name="help_share_friends_question"
-    translation_description="In the 'Help' page, the question on sharing with friends.">
-    How do I share a track with friends?
-  </string>
-  <string name="help_share_visibility_answer"
-    translation_description="In the 'Help' page, the answer on share visibility.">
-    By default, tracks sent to Google Maps are unlisted, tracks sent to Google Fusion Tables are
-    private, and tracks sent to Google Spreadsheets are private. For Google Maps, you can change the
-    default between public and unlisted via Settings -> Google. After uploading tracks, you can
-    change their visibility in Google Maps, Google Fusion Tables, and Google Spreadsheets.
-  </string>
-  <string name="help_share_visibility_question"
-    translation_description="In the 'Help' page, the question on share visibility.">
-    Who can see the tracks I send to Google Maps, Google Fusion Tables, and Google Spreadsheets?
-  </string>
-  <string name="help_split_marker_answer"
-    translation_description="In the 'Help' page, the answer on split markers.">
-    Split markers are used to segment a track to calculate statistics for each segment. Split
-    markers are inserted by setting the split frequency from the menu.
-  </string>
-  <string name="help_split_marker_question"
-    translation_description="In the 'Help' page, the question on split markers.">
-    What are split markers?
-  </string>
-  <string name="help_split_track_answer"
-    translation_description="In the 'Help' page, the answer on splitting long tracks.">
-    Tracks on Google Maps and Google Fusion Tables are limited to certain sizes.
-  </string>
-  <string name="help_split_track_question"
-    translation_description="In the 'Help' page, the question on splitting long tracks.">
-    Why do very long tracks split into multiple segments upon sending them to Google Maps and
-    Google Fusion Tables?
   </string>
 
   <!-- Icon -->
@@ -1388,7 +1211,7 @@ limitations under the License.
       installation when the app wants to write data to My Tracks.">
     write data to Google My Tracks and start/stop Google My Tracks recording
   </string>
-  
+
   <!-- Save -->
   <string name="save_error"
     translation_description="When saving to the external storage, the error message indicating that
@@ -2237,11 +2060,11 @@ limitations under the License.
   <string name="share_track_add_emails_title"
     translation_description="The dialog title for adding emails to share a track with.">
     Add emails
-  </string>  
+  </string>
   <string name="share_track_add_emails_hint"
     translation_description="The hint in the auto complete text box for entering email addresses.">
     Enter email addresses
-  </string>  
+  </string>
   <string name="share_track_drive_confirm_message"
     translation_description="The confirmation message when sharing a track via Google Drive with
       friends.">
@@ -2466,7 +2289,7 @@ limitations under the License.
       Drive.">
     Shared with me
   </string>
-  
+
   <!-- Track Widget -->
   <string name="track_widget_config_title"
     translation_description="Title of the page to configure the My Tracks widget items.">

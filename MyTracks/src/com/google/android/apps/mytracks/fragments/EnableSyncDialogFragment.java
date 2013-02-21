@@ -16,6 +16,7 @@
 
 package com.google.android.apps.mytracks.fragments;
 
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -64,20 +65,31 @@ public class EnableSyncDialogFragment extends DialogFragment {
   }
 
   @Override
-  public Dialog onCreateDialog(Bundle savedInstanceState) {
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
     fragmentActivity = getActivity();
-    return new AlertDialog.Builder(fragmentActivity).setNegativeButton(
-        R.string.generic_cancel, new OnClickListener() {
+    if (PreferencesUtils.getBoolean(
+        fragmentActivity, R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT)) {
+      dismiss();
+      caller.onEnableSyncDone(false);
+      return;
+    }
+  }
+
+  @Override
+  public Dialog onCreateDialog(Bundle savedInstanceState) {
+    return new AlertDialog.Builder(fragmentActivity).setMessage(R.string.enable_sync_message)
+        .setNegativeButton(R.string.generic_cancel, new OnClickListener() {
             @Override
           public void onClick(DialogInterface dialog, int which) {
             caller.onEnableSyncDone(false);
           }
         }).setPositiveButton(R.string.generic_ok, new OnClickListener() {
-        @Override
-      public void onClick(DialogInterface dialog, int which) {
-        caller.onEnableSyncDone(true);
-      }
-    }).setTitle(R.string.enable_sync_title).setMessage(R.string.enable_sync_message).create();
+            @Override
+          public void onClick(DialogInterface dialog, int which) {
+            caller.onEnableSyncDone(true);
+          }
+        }).setTitle(R.string.enable_sync_title).create();
   }
 
   @Override
