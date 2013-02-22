@@ -356,11 +356,11 @@ public class EndToEndTestUtils {
    */
   private static void verifyFirstLaunch() {
     getButtonOnScreen(activityMytracks.getString(R.string.eula_accept), true, true);
-    if (SOLO.waitForText(activityMytracks.getString(R.string.generic_ok))) {
+    if (SOLO.waitForText(activityMytracks.getString(R.string.welcome_title))) {
       // Click for welcome.
       getButtonOnScreen(activityMytracks.getString(R.string.generic_ok), true, true);
-      // Click for choose units.
-      getButtonOnScreen(activityMytracks.getString(R.string.generic_ok), true, true);
+      // Click for Sync with Google Drive(Don't enable sync as default).
+      getButtonOnScreen(activityMytracks.getString(R.string.generic_cancel), true, true);
       instrumentation.waitForIdleSync();
     }
   }

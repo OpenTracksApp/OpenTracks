@@ -59,7 +59,8 @@ public class SendToGoogleTest extends ActivityInstrumentationTestCase2<TrackList
    * @throws IOException
    */
   public void testCreateAndSendTrack_send() throws IOException, GoogleAuthException {
-    EndToEndTestUtils.createTrackIfEmpty(1, false);
+    // Create a new track.
+    EndToEndTestUtils.createSimpleTrack(1, false);
     instrumentation.waitForIdleSync();
     checkSendTrackToGoogle();
   }

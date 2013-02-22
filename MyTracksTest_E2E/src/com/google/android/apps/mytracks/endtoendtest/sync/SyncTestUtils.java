@@ -53,7 +53,7 @@ public class SyncTestUtils {
 
   public static boolean isCheckedRunSyncTest = false;
   public static final String KML_FILE_POSTFIX = ".kml";
-  public static final long MAX_TIME_TO_WAIT_SYNC = 50000;
+  public static final long MAX_TIME_TO_WAIT_SYNC = 100000;
 
   /**
    * Sets up sync tests.
@@ -64,7 +64,7 @@ public class SyncTestUtils {
    */
   public static Drive setUpForSyncTest(Instrumentation instrumentation,
       TrackListActivity trackListActivity) throws IOException, GoogleAuthException {
-    if (RunConfiguration.getInstance().runSyncTest || !isCheckedRunSyncTest) {
+    if (!isCheckedRunSyncTest || RunConfiguration.getInstance().runSyncTest) {
       EndToEndTestUtils.setupForAllTest(instrumentation, trackListActivity);
     }
     if (!isCheckedRunSyncTest) {
@@ -171,20 +171,22 @@ public class SyncTestUtils {
    * @param accountName the account which is used to sync with
    */
   public static void enableSync(String accountName) {
+    EndToEndTestUtils.instrumentation.waitForIdleSync();
     EndToEndTestUtils.findMenuItem(
         EndToEndTestUtils.activityMytracks.getString(R.string.menu_settings), true);
     EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
         .getString(R.string.settings_google));
     EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
         .getString(R.string.settings_google_account_title));
+    EndToEndTestUtils.instrumentation.waitForIdleSync();
 
     // Whether test account is bound.
-    if (EndToEndTestUtils.SOLO.waitForText(accountName, 1, EndToEndTestUtils.TINY_WAIT_TIME)) {
+    if (EndToEndTestUtils.SOLO.waitForText(accountName, 1, EndToEndTestUtils.SHORT_WAIT_TIME)) {
       EndToEndTestUtils.SOLO.clickOnText(accountName);
       EndToEndTestUtils.instrumentation.waitForIdleSync();
       if (EndToEndTestUtils.SOLO.waitForText(
           EndToEndTestUtils.activityMytracks.getString(
-              R.string.settings_google_account_confirm_message).split("%")[0], 1,
+              R.string.generic_confirm_title), 1,
           EndToEndTestUtils.SHORT_WAIT_TIME)) {
         EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
             .getString(R.string.generic_ok));
@@ -210,6 +212,7 @@ public class SyncTestUtils {
     }
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.SOLO.goBack();
+    EndToEndTestUtils.instrumentation.waitForIdleSync();
   }
 
   /**
@@ -222,6 +225,7 @@ public class SyncTestUtils {
     long startTime = System.currentTimeMillis();
     while (System.currentTimeMillis() - startTime < MAX_TIME_TO_WAIT_SYNC) {
       try {
+        EndToEndTestUtils.sleep(EndToEndTestUtils.SHORT_WAIT_TIME);
         int trackNumber = EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount();
         List<File> files = getDriveFiles(
             EndToEndTestUtils.activityMytracks.getApplicationContext(), drive);

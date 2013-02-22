@@ -146,11 +146,9 @@ public class CreateTrackTest extends ActivityInstrumentationTestCase2<TrackListA
   }
 
   /**
-   * Tests the display of track start time. Use relative time (x mins ago) for
-   * the start time if it is within the past week. But only show the start time
-   * if it is different from the track name.
+   * Tests the display of track relative time.
    */
-  public void testTrackStartTime() {
+  public void testTrackRelativeTime() {
     // Delete all track first.
     EndToEndTestUtils.deleteAllTracks(); 
     // Reset all settings.
@@ -167,12 +165,7 @@ public class CreateTrackTest extends ActivityInstrumentationTestCase2<TrackListA
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.SOLO.goBack();
     instrumentation.waitForIdleSync();
-    assertFalse(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.RELATIVE_STARTTIME_POSTFIX, 1, false, true));
-
-    // Test should show relative time for createSimpleTrack would save a track
-    // name that is different with the start time.
-    EndToEndTestUtils.createSimpleTrack(2, true);
-    assertTrue(EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.RELATIVE_STARTTIME_POSTFIX, 1, EndToEndTestUtils.NORMAL_WAIT_TIME));
+    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.RELATIVE_STARTTIME_POSTFIX, 1, false, true));
   }
   
   /**
