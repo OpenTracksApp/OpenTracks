@@ -16,7 +16,6 @@
 package com.google.android.apps.mytracks.endtoendtest;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesUtils;
 import com.google.android.apps.mytracks.io.gdata.GDataClientFactory;
 import com.google.android.apps.mytracks.io.gdata.maps.MapFeatureEntry;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsClient;
@@ -81,6 +80,7 @@ public class GoogleUtils {
 
   private static final String APP_NAME_PREFIX = "Google-MyTracks-";
   private static final String CONTENT_TYPE = "application/x-www-form-urlencoded";
+  private static final String FUSION_TABLES_SERVICE = "fusiontables";
   private static final String FUSION_TABLES_BASE_URL = "https://www.google.com/fusiontables/api/query";
   private static final String GDATA_VERSION = "2";
   private static final String WORK_SHEET_NAME = "Log";
@@ -409,7 +409,7 @@ public class GoogleUtils {
   private static HttpResponse sendFusionTableQuery(String query, Context context) {
     try {
       String fusionTableAuthToken = AccountManager.get(context).blockingGetAuthToken(
-          getAccount(context), SendFusionTablesUtils.SERVICE, false);
+          getAccount(context), FUSION_TABLES_SERVICE, false);
 
       GenericUrl url = new GenericUrl(FUSION_TABLES_BASE_URL);
       String sql = "sql=" + query;

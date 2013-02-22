@@ -64,6 +64,7 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity {
         R.array.auto_resume_track_timeout_values, metricUnits);
   }
 
+  @SuppressWarnings("deprecation")
   private void configFrequencyPreference(
       int key, int defaultValue, int valueArray, boolean metricUnits) {
     ListPreference preference = (ListPreference) findPreference(getString(key));
@@ -73,6 +74,7 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity {
     configureListPreference(preference, options, options, values, String.valueOf(value), null);
   }
 
+  @SuppressWarnings("deprecation")
   private void configTrackName() {
     ListPreference preference = (ListPreference) findPreference(getString(R.string.track_name_key));
     String value = PreferencesUtils.getString(
@@ -82,6 +84,7 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity {
     configureListPreference(preference, options, options, values, value, null);
   }
 
+  @SuppressWarnings("deprecation")
   private void configDefaultActivity() {
     Preference preference = findPreference(getString(R.string.default_activity_key));
     String value = PreferencesUtils.getString(
@@ -101,6 +104,7 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity {
             : getString(R.string.value_unknown));
   }
 
+  @SuppressWarnings("deprecation")
   private void configListPreference(
       int key, int defaultValue, int valueArray, boolean metricUnits) {
     ListPreference preference = (ListPreference) findPreference(getString(key));

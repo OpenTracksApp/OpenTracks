@@ -69,6 +69,7 @@ public class SensorSettingsActivity extends AbstractSettingsActivity {
     }
   }
 
+  @SuppressWarnings("deprecation")
   private void configSensorType(boolean hasAntSupport) {
     ListPreference preference = (ListPreference) findPreference(
         getString(R.string.sensor_type_key));

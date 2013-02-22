@@ -75,6 +75,7 @@ public class MapSettingsActivity extends AbstractSettingsActivity {
   /**
    * Configures the track color mode preference.
    */
+  @SuppressWarnings("deprecation")
   private void configTrackColorModePerference() {
     ListPreference preference = (ListPreference) findPreference(
         getString(R.string.track_color_mode_key));

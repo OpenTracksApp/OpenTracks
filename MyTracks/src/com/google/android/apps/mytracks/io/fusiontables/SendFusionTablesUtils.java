@@ -32,9 +32,6 @@ import java.util.Locale;
  */
 public class SendFusionTablesUtils {
 
-  public static final String SERVICE = "fusiontables";
-  private static final String UTF8 = "UTF8";
-  private static final String TABLE_ID = "tableid";
   private static final String MAP_URL = "https://www.google.com/fusiontables/embedviz?"
       + "viz=MAP&q=select+col0,+col1,+col2,+col3+from+%s+&h=false&lat=%f&lng=%f&z=%d&t=1&l=col2";
   private static final String TAG = SendFusionTablesUtils.class.getSimpleName();
