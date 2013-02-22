@@ -635,23 +635,6 @@
     {
       "files": [
         {
-          "path": "libs/jsr305-1.3.9.jar", 
-          "type": "binary"
-        }, 
-        {
-          "path": "dependencies/APACHE-LICENSE.txt", 
-          "type": "license"
-        }
-      ], 
-      "version": "1.3.9", 
-      "name": "JSR 305", 
-      "environments": [
-        "*"
-      ]
-    }, 
-    {
-      "files": [
-        {
           "path": "libs/transaction-api-1.1.jar", 
           "type": "binary"
         }, 
