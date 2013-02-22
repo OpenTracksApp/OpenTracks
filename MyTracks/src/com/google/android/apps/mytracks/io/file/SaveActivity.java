@@ -83,7 +83,7 @@ public class SaveActivity extends Activity {
     playTrack = intent.getBooleanExtra(EXTRA_PLAY_TRACK, false);
 
     if (!FileUtils.isExternalStorageWriteable()) {
-      Toast.makeText(this, R.string.external_storage_not_writeable, Toast.LENGTH_LONG).show();
+      Toast.makeText(this, R.string.external_storage_not_writable, Toast.LENGTH_LONG).show();
       finish();
       return;
     }
@@ -94,7 +94,7 @@ public class SaveActivity extends Activity {
 
     File directory = new File(directoryName);
     if (!FileUtils.ensureDirectoryExists(directory)) {
-      Toast.makeText(this, R.string.external_storage_not_writeable, Toast.LENGTH_LONG).show();
+      Toast.makeText(this, R.string.external_storage_not_writable, Toast.LENGTH_LONG).show();
       finish();
       return;
     }

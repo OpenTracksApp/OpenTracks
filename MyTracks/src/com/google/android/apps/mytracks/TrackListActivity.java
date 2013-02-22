@@ -55,17 +55,27 @@ import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtil
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.maps.mytracks.R;
+import com.google.userfeedback.android.api.UserFeedback;
+import com.google.userfeedback.android.api.UserFeedbackSpec;
 
 import android.app.Dialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.location.Location;
+import android.os.Binder;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.RemoteException;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -87,6 +97,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -607,6 +618,32 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         intent = IntentUtils.newIntent(this, SettingsActivity.class);
         startActivity(intent);
         return true;
+      case R.id.track_list_feedback:
+        if (isFeedbackAvailable()) {
+          intent = new Intent(Intent.ACTION_BUG_REPORT);
+          ServiceConnection conn = new ServiceConnection() {
+  
+            public void onServiceDisconnected(ComponentName name) {}
+  
+              @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+              try {
+                service.transact(Binder.FIRST_CALL_TRANSACTION, Parcel.obtain(), null, 0);
+              } catch (RemoteException e) {
+                // TODO(jshih): Auto-generated catch block
+                e.printStackTrace();
+              }
+            }
+          };
+          // Bind to the service after creating it if necessary
+          bindService(intent, conn, BIND_AUTO_CREATE);
+        } else {
+          UserFeedbackSpec spec = new UserFeedbackSpec(this, "com.google.android.maps.mytracks:V *:S", 
+              "com.google.android.maps.mytracks.USER_INITIATED_FEEDBACK_REPORT");          
+          UserFeedback userFeedback = new UserFeedback();
+          userFeedback.startFeedback(spec);
+        }
+        return true;
       case R.id.track_list_help:
         intent = IntentUtils.newIntent(this, HelpActivity.class);
         startActivity(intent);
@@ -616,6 +653,18 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     }
   }
 
+  private boolean isFeedbackAvailable() {
+    List<ResolveInfo> infos = getPackageManager().queryIntentServices(
+      new Intent(Intent.ACTION_BUG_REPORT), PackageManager.MATCH_DEFAULT_ONLY);
+    for (ResolveInfo info : infos) {
+      if (info.serviceInfo != null && info.serviceInfo.packageName != null
+          && info.serviceInfo.packageName.equals("com.google.android.feedback")) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
   @Override
   public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
     super.onCreateContextMenu(menu, v, menuInfo);
