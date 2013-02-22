@@ -117,6 +117,7 @@ public class MultiAccountsSyncTest extends ActivityInstrumentationTestCase2<Trac
     // Delete one track.
     EndToEndTestUtils.SOLO.clickOnView(EndToEndTestUtils.SOLO.getCurrentListViews().get(0)
         .getChildAt(0));
+    EndToEndTestUtils.instrumentation.waitForIdleSync();
     EndToEndTestUtils.SOLO.clickOnMenuItem(EndToEndTestUtils.activityMytracks
         .getString(R.string.menu_delete));
     EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
