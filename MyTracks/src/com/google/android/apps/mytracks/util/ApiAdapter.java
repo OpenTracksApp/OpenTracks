@@ -19,6 +19,7 @@ import com.google.android.apps.mytracks.ContextualActionModeCallback;
 import com.google.api.client.http.HttpTransport;
 
 import android.app.Activity;
+import android.appwidget.AppWidgetManager;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.SharedPreferences;
@@ -169,5 +170,24 @@ public interface ApiAdapter {
    * 
    * @param menu the search menu
    */
-  public boolean handleSearchKey(MenuItem menu);  
+  public boolean handleSearchKey(MenuItem menu);
+  
+  /**
+   * Gets the app widget size.
+   * <p>
+   * Due to changes in API level 16.
+   * 
+   * @param appWidgetManager the app widget manager
+   * @param appWidgetId the app widget id
+   */
+  public int getAppWidgetSize(AppWidgetManager appWidgetManager, int appWidgetId);
+  
+  /**
+   * Sets the app widget size.
+   * 
+   * @param appWidgetManager the app widget manager.
+   * @param appWidgetId the app widgit id
+   * @param size the size
+   */
+  public void setAppWidgetSize(AppWidgetManager appWidgetManager, int appWidgetId, int size);
 }
