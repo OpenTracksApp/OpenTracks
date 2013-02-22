@@ -38,6 +38,7 @@ import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.settings.SettingsActivity;
 import com.google.android.apps.mytracks.util.AnalyticsUtils;
+import com.google.android.apps.mytracks.util.GoogleFeedbackUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
@@ -104,6 +105,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
   private MenuItem saveMenuItem;
   private MenuItem voiceFrequencyMenuItem;
   private MenuItem splitFrequencyMenuItem;
+  private MenuItem feedbackMenuItem;
 
   private final Runnable bindChangedCallback = new Runnable() {
       @Override
@@ -309,7 +311,9 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
     saveMenuItem = menu.findItem(R.id.track_detail_save);
     voiceFrequencyMenuItem = menu.findItem(R.id.track_detail_voice_frequency);
     splitFrequencyMenuItem = menu.findItem(R.id.track_detail_split_frequency);
-
+    feedbackMenuItem = menu.findItem(R.id.track_detail_split_frequency);
+    feedbackMenuItem.setVisible(GoogleFeedbackUtils.isAvailable(this));
+    
     updateMenuItems(trackId == recordingTrackId, recordingTrackPaused);
     return true;
   }
@@ -406,6 +410,9 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
       case R.id.track_detail_settings:
         intent = IntentUtils.newIntent(this, SettingsActivity.class);
         startActivity(intent);
+        return true;
+      case R.id.track_detail_feedback:
+        GoogleFeedbackUtils.bindFeedback(this);
         return true;
       case R.id.track_detail_help:
         intent = IntentUtils.newIntent(this, HelpActivity.class);
