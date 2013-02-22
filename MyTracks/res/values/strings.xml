@@ -974,6 +974,12 @@ limitations under the License.
       Character limit: ~20 (1 line)">
     Edit
   </string>
+  <string name="menu_feedback"
+    translation_description="In the menu, to enter feedback.
+
+      Character limit: ~20 (1 line)">
+    Feedback
+  </string>
   <string name="menu_help"
     translation_description="In the menu, to go to the help page.
 
