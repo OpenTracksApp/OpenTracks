@@ -355,8 +355,8 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
             .show(getSupportFragmentManager(), ConfirmDialogFragment.CONFIRM_DIALOG_TAG);
         return true;
       case R.id.track_detail_share_maps:
-        ConfirmDialogFragment.newInstance(R.string.confirm_share_map_key,
-            PreferencesUtils.CONFIRM_SHARE_MAP_DEFAULT, StringUtils.getHtml(
+        ConfirmDialogFragment.newInstance(R.string.confirm_share_maps_key,
+            PreferencesUtils.CONFIRM_SHARE_MAPS_DEFAULT, StringUtils.getHtml(
                 this, R.string.share_track_maps_confirm_message, R.string.maps_public_unlisted_url),
             trackId).show(getSupportFragmentManager(), ConfirmDialogFragment.CONFIRM_DIALOG_TAG);
         return true;
@@ -448,8 +448,8 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
             .putExtra(SaveActivity.EXTRA_PLAY_TRACK, true);
         startActivity(intent);
         break;
-      case R.string.confirm_share_map_key:
-        AnalyticsUtils.sendPageViews(this, "/action/share_map");
+      case R.string.confirm_share_maps_key:
+        AnalyticsUtils.sendPageViews(this, "/action/share_maps");
         sendRequest = new SendRequest(trackId);
         sendRequest.setSendMaps(true);
         sendRequest.setMapsShare(true);

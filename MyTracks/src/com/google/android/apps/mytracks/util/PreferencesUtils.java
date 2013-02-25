@@ -52,7 +52,7 @@ public class PreferencesUtils {
 
   public static final boolean CONFIRM_PLAY_EARTH_DEFAULT = true;
   public static final boolean CONFIRM_SHARE_DRIVE_DEFAULT = true;
-  public static final boolean CONFIRM_SHARE_MAP_DEFAULT = true;
+  public static final boolean CONFIRM_SHARE_MAPS_DEFAULT = true;
 
   public static final String DEFAULT_ACTIVITY_DEFAULT = "";
   public static final boolean DEFAULT_MAP_PUBLIC_DEFAULT = false;
