@@ -52,13 +52,8 @@ public class DeleteAllTrackDialogFragment extends DialogFragment {
                 PreferencesUtils.setBoolean(
                     fragmentActivity, R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT);
                 SyncUtils.disableSync(fragmentActivity);
+                SyncUtils.clearSyncState(fragmentActivity);
                 MyTracksProviderUtils.Factory.get(fragmentActivity).deleteAllTracks();
-                PreferencesUtils.setLong(fragmentActivity, R.string.drive_largest_change_id_key,
-                    PreferencesUtils.DRIVE_LARGEST_CHANGE_ID_DEFAULT);
-
-                // Clear the drive_deleted_list_key last
-                PreferencesUtils.setString(fragmentActivity, R.string.drive_deleted_list_key,
-                    PreferencesUtils.DRIVE_DELETED_LIST_DEFAULT);
               }
             }).start();
           }

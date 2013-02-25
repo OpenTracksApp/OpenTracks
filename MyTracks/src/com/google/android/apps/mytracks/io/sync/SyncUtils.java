@@ -41,6 +41,7 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -135,6 +136,38 @@ public class SyncUtils {
     ContentResolver.setIsSyncable(account, SYNC_AUTHORITY, 1);
     ContentResolver.setSyncAutomatically(account, SYNC_AUTHORITY, true);
     ContentResolver.requestSync(account, SYNC_AUTHORITY, new Bundle());
+  }
+
+  /**
+   * Clears the sync state. Assumes sync is turned off. Do not want clearing the
+   * state to cause sync activities.
+   */
+  public static void clearSyncState(Context context) {
+    MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
+    Cursor cursor = null;
+    try {
+      cursor = myTracksProviderUtils.getTrackCursor(SyncUtils.DRIVE_ID_TRACKS_QUERY, null, null);
+      if (cursor != null && cursor.moveToFirst()) {
+        do {
+          Track track = myTracksProviderUtils.createTrack(cursor);
+          if (track.isSharedWithMe()) {
+            myTracksProviderUtils.deleteTrack(track.getId());
+          } else {
+            SyncUtils.updateTrackWithDriveFileInfo(myTracksProviderUtils, track, null);
+          }
+        } while (cursor.moveToNext());
+      }
+    } finally {
+      if (cursor != null) {
+        cursor.close();
+      }
+    }
+    PreferencesUtils.setLong(context, R.string.drive_largest_change_id_key,
+        PreferencesUtils.DRIVE_LARGEST_CHANGE_ID_DEFAULT);
+
+    // Clear the drive_deleted_list_key last
+    PreferencesUtils.setString(
+        context, R.string.drive_deleted_list_key, PreferencesUtils.DRIVE_DELETED_LIST_DEFAULT);
   }
 
   /**
