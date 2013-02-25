@@ -141,7 +141,6 @@ limitations under the License.
     android:hardwareAccelerated="true"
     android:icon="@drawable/my_tracks_icon"
     android:label="@string/my_tracks_app_name"
-    android:name="com.google.android.apps.mytracks.MyTracksApplication"
     android:theme="@style/ThemeSelector" >
     <!-- For data backup -->
     <meta-data

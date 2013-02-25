@@ -40,6 +40,7 @@ import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
+import com.google.android.apps.mytracks.services.RemoveTempFilesService;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.settings.SettingsActivity;
 import com.google.android.apps.mytracks.util.AnalyticsUtils;
@@ -55,6 +56,7 @@ import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.maps.mytracks.BuildConfig;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Dialog;
@@ -360,6 +362,13 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    
+    if (BuildConfig.DEBUG) {
+      ApiAdapterFactory.getApiAdapter().enableStrictMode();
+    }
+    Intent intent = new Intent(this, RemoveTempFilesService.class);
+    startService(intent);    
+    
     setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
