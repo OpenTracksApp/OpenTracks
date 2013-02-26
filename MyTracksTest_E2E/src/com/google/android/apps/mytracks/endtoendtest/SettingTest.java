@@ -97,11 +97,14 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_reset));
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.settings_reset_done));
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.SOLO.goBack();
 
     // Check settings.
     // Add following scroll up for a bug of Robotium.
+    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.track_detail_stats_tab),
+        1, EndToEndTestUtils.NORMAL_WAIT_TIME);
     EndToEndTestUtils.SOLO.scrollUp();
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
@@ -416,6 +419,8 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
         EndToEndTestUtils.TINY_WAIT_TIME)) {
       EndToEndTestUtils.SOLO.clickOnText(GoogleUtils.ACCOUNT_NAME_1);
       instrumentation.waitForIdleSync();
+      EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+          .getString(R.string.settings_google_drive_sync_title));
       assertTrue(EndToEndTestUtils.findTextView(
           activityMyTracks.getString(R.string.settings_google_drive_sync_title)).isEnabled());
     } else {
