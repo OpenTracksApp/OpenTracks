@@ -2065,8 +2065,9 @@ limitations under the License.
 
   <!-- Share Track -->
   <string name="share_track_add_emails_title"
-    translation_description="The dialog title for adding emails to share a track with.">
-    Add emails
+    translation_description="The dialog title for entering email addresses for sharing a track
+      with.">
+    Share track with
   </string>
   <string name="share_track_add_emails_hint"
     translation_description="The hint in the auto complete text box for entering email addresses.">
