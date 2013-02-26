@@ -22,6 +22,7 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.services.ControlRecordingService;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
@@ -31,13 +32,13 @@ import android.annotation.TargetApi;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.appwidget.AppWidgetProviderInfo;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.TaskStackBuilder;
-import android.util.SparseIntArray;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -51,13 +52,12 @@ import android.widget.RemoteViews;
  */
 public class TrackWidgetProvider extends AppWidgetProvider {
 
+  public static final int KEYGUARD_DEFAULT_SIZE = 1;
+  public static final int HOME_SCREEN_DEFAULT_SIZE = 2;
+
   private static final int TWO_CELLS = 110;
   private static final int THREE_CELLS = 180;
   private static final int FOUR_CELLS = 250;
-
-  // Array of appwidget id to height size in cells
-  private static final SparseIntArray HEIGHT_SIZE = new SparseIntArray();
-  private static final int DEFAULT_SIZE = 2;
 
   private static final int[] ITEM1_IDS = { R.id.track_widget_item1_label,
       R.id.track_widget_item1_value, R.id.track_widget_item1_unit,
@@ -86,8 +86,9 @@ public class TrackWidgetProvider extends AppWidgetProvider {
       int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
           new ComponentName(context, TrackWidgetProvider.class));
       for (int appWidgetId : appWidgetIds) {
-        RemoteViews remoteViews = getRemoteViews(
-            context, trackId, HEIGHT_SIZE.get(appWidgetId, DEFAULT_SIZE));
+        int size = ApiAdapterFactory.getApiAdapter()
+            .getAppWidgetSize(appWidgetManager, appWidgetId);
+        RemoteViews remoteViews = getRemoteViews(context, trackId, size);
         appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
       }
     }
@@ -99,19 +100,24 @@ public class TrackWidgetProvider extends AppWidgetProvider {
       Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
     if (newOptions != null) {
       int size;
-      int height = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT);
-      if (height == 0) {
-        size = 2;
-      } else if (height >= FOUR_CELLS) {
-        size = 4;
-      } else if (height >= THREE_CELLS) {
-        size = 3;
-      } else if (height >= TWO_CELLS) {
-        size = 2;
-      } else {
+      if (newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_HOST_CATEGORY, -1)
+          == AppWidgetProviderInfo.WIDGET_CATEGORY_KEYGUARD) {
         size = 1;
+      } else {
+        int height = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT);
+        if (height == 0) {
+          size = 2;
+        } else if (height >= FOUR_CELLS) {
+          size = 4;
+        } else if (height >= THREE_CELLS) {
+          size = 3;
+        } else if (height >= TWO_CELLS) {
+          size = 2;
+        } else {
+          size = 1;
+        }
       }
-      HEIGHT_SIZE.put(appWidgetId, size);
+      ApiAdapterFactory.getApiAdapter().setAppWidgetSize(appWidgetManager, appWidgetId, size);
       RemoteViews remoteViews = getRemoteViews(context, -1L, size);
       appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
     }
@@ -126,8 +132,9 @@ public class TrackWidgetProvider extends AppWidgetProvider {
    */
   public static void updateAppWidget(
       Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
-    RemoteViews remoteViews = getRemoteViews(
-        context, -1L, HEIGHT_SIZE.get(appWidgetId, DEFAULT_SIZE));
+    int size = ApiAdapterFactory.getApiAdapter().getAppWidgetSize(appWidgetManager, appWidgetId);
+    ApiAdapterFactory.getApiAdapter().setAppWidgetSize(appWidgetManager, appWidgetId, size);
+    RemoteViews remoteViews = getRemoteViews(context, -1L, size);
     appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
   }
 

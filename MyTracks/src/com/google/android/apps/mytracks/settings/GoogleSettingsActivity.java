@@ -17,8 +17,6 @@
 package com.google.android.apps.mytracks.settings;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.io.sendtogoogle.PermissionCallback;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
@@ -34,7 +32,6 @@ import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
@@ -122,7 +119,6 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
           showDialog(DIALOG_CONFIRM_DRIVE_SYNC_ON);
         } else {
           handleSync(false);
-          clearSyncState();
         }
         return false;
       }
@@ -202,7 +198,6 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
               public void onClick(DialogInterface d, int button) {
                 googleAccountPreference.setValue(newValue);
                 handleSync(false);
-                clearSyncState();
                 updateUiByAccountName(newValue);
               }
             });
@@ -215,38 +210,6 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
       default:
     }
     super.onPrepareDialog(id, dialog, bundle);
-  }
-
-  /**
-   * Clears the sync state. Assumes sync is turned off. Do not want clearing the
-   * state to cause sync activities.
-   */
-  private void clearSyncState() {
-    MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
-    Cursor cursor = null;
-    try {
-      cursor = myTracksProviderUtils.getTrackCursor(SyncUtils.DRIVE_ID_TRACKS_QUERY, null, null);
-      if (cursor != null && cursor.moveToFirst()) {
-        do {
-          Track track = myTracksProviderUtils.createTrack(cursor);
-          if (track.isSharedWithMe()) {
-            myTracksProviderUtils.deleteTrack(track.getId());
-          } else {
-            SyncUtils.updateTrackWithDriveFileInfo(myTracksProviderUtils, track, null);
-          }
-        } while (cursor.moveToNext());
-      }
-    } finally {
-      if (cursor != null) {
-        cursor.close();
-      }
-    }
-    PreferencesUtils.setLong(this, R.string.drive_largest_change_id_key,
-        PreferencesUtils.DRIVE_LARGEST_CHANGE_ID_DEFAULT);
-    
-    // Clear the drive_deleted_list_key last
-    PreferencesUtils.setString(
-        this, R.string.drive_deleted_list_key, PreferencesUtils.DRIVE_DELETED_LIST_DEFAULT);
   }
 
   /**
@@ -275,6 +238,8 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
           break;
         }
       }
+    } else {
+      SyncUtils.clearSyncState(this);
     }
   }
 

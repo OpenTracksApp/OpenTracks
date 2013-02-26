@@ -17,7 +17,6 @@
 	<classpathentry kind="lib" path="libs/httpcore-{{ features.httpCoreVersion }}.jar" sourcepath="libs-sources/httpcore-{{ features.httpCoreVersion }}-sources.jar"/>
 	<classpathentry kind="lib" path="libs/jackson-core-asl-{{ features.jacksonCoreAslVersion }}.jar" sourcepath="libs-sources/jackson-core-asl-{{ features.jacksonCoreAslVersion }}-sources.jar"/>
 	<classpathentry kind="lib" path="libs/jdo2-api-{{ features.jdo2ApiVersion }}.jar" sourcepath="libs-sources/jdo2-api-{{ features.jdo2ApiVersion }}-sources.jar"/>
-	<classpathentry kind="lib" path="libs/jsr305-{{ features.jsr305Version }}.jar"/>
 	<classpathentry kind="lib" path="libs/protobuf-java-{{ features.protobufVersion }}.jar" sourcepath="libs-sources/protobuf-java-{{ features.protobufVersion }}-sources.jar"/>
 	<classpathentry kind="lib" path="libs/transaction-api-{{ features.transactionApiVersion }}.jar" sourcepath="libs-sources/transaction-api-{{ features.transactionApiVersion }}-sources.jar"/>
 	<classpathentry kind="lib" path="libs/xpp3-{{ features.xpp3Version }}.jar" sourcepath="libs-sources/xpp3-{{ features.xpp3Version }}-sources.jar"/>

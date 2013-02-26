@@ -31,7 +31,7 @@ limitations under the License.
   <string name="chart_show_speed_key">chartShowSpeed</string>
   <string name="confirm_play_earth_key">confirmPlayEarth</string>
   <string name="confirm_share_drive_key">confirmShareDrive</string>
-  <string name="confirm_share_map_key">confirmShareMap</string>
+  <string name="confirm_share_maps_key">confirmShareMaps</string>
   <string name="default_activity_key">defaultActivity</string>
   <string name="default_map_public_key">defaultMapPublic</string>
   <string name="default_table_public_key">defaultTablePublic</string>

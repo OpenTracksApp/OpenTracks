@@ -74,6 +74,10 @@ limitations under the License.
     android:icon="@drawable/menu_settings"
     android:id="@+id/track_list_settings"
     android:title="@string/menu_settings"/>
+  <item 
+    android:icon="@drawable/menu_feedback"
+    android:id="@+id/track_list_feedback"
+    android:title="@string/menu_feedback"/>
   <item
     android:icon="@drawable/menu_help"
     android:id="@+id/track_list_help"

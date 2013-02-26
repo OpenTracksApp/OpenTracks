@@ -54,6 +54,7 @@ public class SettingsActivity extends AbstractSettingsActivity {
    * @param key the preference key
    * @param cl the class to start the new activity
    */
+  @SuppressWarnings("deprecation")
   private void configPreference(int key, final Class<?> cl) {
     Preference preference = findPreference(getString(key));
     preference.setOnPreferenceClickListener(new OnPreferenceClickListener() {

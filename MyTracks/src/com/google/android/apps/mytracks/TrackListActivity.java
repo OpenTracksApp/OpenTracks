@@ -40,11 +40,13 @@ import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
+import com.google.android.apps.mytracks.services.RemoveTempFilesService;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.settings.SettingsActivity;
 import com.google.android.apps.mytracks.util.AnalyticsUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.EulaUtils;
+import com.google.android.apps.mytracks.util.GoogleFeedbackUtils;
 import com.google.android.apps.mytracks.util.GoogleLocationUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.ListItemUtils;
@@ -54,6 +56,7 @@ import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.maps.mytracks.BuildConfig;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Dialog;
@@ -351,6 +354,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   private MenuItem saveAllMenuItem;
   private MenuItem deleteAllMenuItem;
   private MenuItem syncNowMenuItem;
+  private MenuItem feedbackMenuItem;
 
   private boolean startNewRecording = false; // true to start a new recording
   private boolean startGps = false;
@@ -358,6 +362,13 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    
+    if (BuildConfig.DEBUG) {
+      ApiAdapterFactory.getApiAdapter().enableStrictMode();
+    }
+    Intent intent = new Intent(this, RemoveTempFilesService.class);
+    startService(intent);    
+    
     setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
@@ -545,6 +556,8 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     saveAllMenuItem = menu.findItem(R.id.track_list_save_all);
     deleteAllMenuItem = menu.findItem(R.id.track_list_delete_all);
     syncNowMenuItem = menu.findItem(R.id.track_list_sync_now);
+    feedbackMenuItem = menu.findItem(R.id.track_list_feedback);
+    feedbackMenuItem.setVisible(GoogleFeedbackUtils.isAvailable(this));
 
     ApiAdapterFactory.getApiAdapter().configureSearchWidget(this, searchMenuItem);
     updateMenuItems(recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
@@ -607,6 +620,9 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         intent = IntentUtils.newIntent(this, SettingsActivity.class);
         startActivity(intent);
         return true;
+      case R.id.track_list_feedback:
+        GoogleFeedbackUtils.bindFeedback(this);
+        return true;
       case R.id.track_list_help:
         intent = IntentUtils.newIntent(this, HelpActivity.class);
         startActivity(intent);
@@ -615,7 +631,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         return super.onOptionsItemSelected(item);
     }
   }
-
+  
   @Override
   public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
     super.onCreateContextMenu(menu, v, menuInfo);

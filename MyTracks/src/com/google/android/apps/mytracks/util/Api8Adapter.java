@@ -18,10 +18,12 @@ package com.google.android.apps.mytracks.util;
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.ContextualActionModeCallback;
 import com.google.android.apps.mytracks.services.sensors.BluetoothConnectionManager;
+import com.google.android.apps.mytracks.widgets.TrackWidgetProvider;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.apache.ApacheHttpTransport;
 
 import android.app.Activity;
+import android.appwidget.AppWidgetManager;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.SharedPreferences.Editor;
@@ -135,5 +137,15 @@ public class Api8Adapter implements ApiAdapter {
   public boolean handleSearchKey(MenuItem menuItem) {
     // Return false and allow the framework to handle the search key.
     return false;
+  }
+
+  @Override
+  public int getAppWidgetSize(AppWidgetManager appWidgetManager, int appWidgetId) {
+    return TrackWidgetProvider.HOME_SCREEN_DEFAULT_SIZE;
+  }
+
+  @Override
+  public void setAppWidgetSize(AppWidgetManager appWidgetManager, int appWidgetId, int size) {
+    // Do nothing    
   }
 }
