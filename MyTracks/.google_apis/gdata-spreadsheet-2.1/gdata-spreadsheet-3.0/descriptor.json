@@ -1,0 +1,17 @@
+{
+  "kind": "discovery#directoryItem",
+  "id": "gdata-spreadsheet:3.0",
+  "name": "gdata-spreadsheet",
+  "version": "2.1",
+  "title": "Spreadsheets",
+  "publisher": "Google",
+  "description": "With Google Spreadsheets, you can easily create, share, and edit spreadsheets online. The Google Spreadsheets APIs provide a framework for developers to programatically interface with and extend Google Spreadsheets.",
+  "downloadLink": "static/gdata-spreadsheet-3.0.zip",
+  "icons": {
+    "x16": "icons/gdata-spreadsheet-16.png"
+  },
+  "tosLink": "http://code.google.com/terms.html",
+  "releaseDate": "2009-11-05",
+  "documentationLink": "http://code.google.com/apis/spreadsheets/data/3.0/developers_guide.html",
+  "preferred": true
+}
