@@ -275,7 +275,7 @@ public class ChartView extends View {
         double[] dataPoint = dataPoints.get(i);
         xExtremityMonitor.update(dataPoint[0]);
         for (int j = 0; j < series.length; j++) {
-          if (!Double.isNaN(dataPoint[j])) {
+          if (!Double.isNaN(dataPoint[j + 1])) {
             series[j].update(dataPoint[j + 1]);
           }
         }
