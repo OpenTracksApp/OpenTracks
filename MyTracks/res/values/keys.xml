@@ -37,6 +37,7 @@ limitations under the License.
   <string name="default_table_public_key">defaultTablePublic</string>
   <string name="drive_sync_key">driveSync</string>
   <string name="google_account_key">googleAccount</string>
+  <string name="map_type_key">mapType</string>
   <string name="max_recording_distance_key">maxRecordingDistance</string>
   <string name="metric_units_key">metricUnits</string>
   <string name="min_recording_distance_key">minRecordingDistance</string>

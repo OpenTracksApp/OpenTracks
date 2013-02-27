@@ -31,6 +31,7 @@ import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.GoogleLocationUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.LocationUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -80,8 +81,7 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
   private static final String
       KEEP_CURRENT_LOCATION_VISIBLE_KEY = "keep_current_location_visible_key";
   private static final String ZOOM_TO_CURRENT_LOCATION_KEY = "zoom_to_current_location_key";
-  private static final String MAP_TYPE = "map_type";
-  
+
   private static final float DEFAULT_ZOOM_LEVEL = 18f;
 
   // Google's latitude and longitude
@@ -125,7 +125,6 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
   public void onCreate(Bundle bundle) {
     super.onCreate(bundle);
     setHasOptionsMenu(true);
-    ApiAdapterFactory.getApiAdapter().invalidMenu(getActivity());
     mapOverlay = new MapOverlay(getActivity());
   }
 
@@ -224,15 +223,18 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
       zoomToCurrentLocation = savedInstanceState.getBoolean(ZOOM_TO_CURRENT_LOCATION_KEY, false);
       currentLocation = (Location) savedInstanceState.getParcelable(CURRENT_LOCATION_KEY);
       updateCurrentLocation();
-      if (googleMap != null) {
-        googleMap.setMapType(savedInstanceState.getInt(MAP_TYPE, GoogleMap.MAP_TYPE_NORMAL));
-      }
     }
   }
 
   @Override
   public void onResume() {
     super.onResume();
+    if (googleMap != null) {
+      int mapType = PreferencesUtils.getInt(
+          getActivity(), R.string.map_type_key, PreferencesUtils.MAP_TYPE_DEFAUlT);
+      googleMap.setMapType(mapType);
+      ApiAdapterFactory.getApiAdapter().invalidMenu(getActivity());
+    }
     resumeTrackDataHub();
   }
 
@@ -244,9 +246,6 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
     }
     outState.putBoolean(KEEP_CURRENT_LOCATION_VISIBLE_KEY, keepCurrentLocationVisible);
     outState.putBoolean(ZOOM_TO_CURRENT_LOCATION_KEY, zoomToCurrentLocation);
-    if (googleMap != null) {
-      outState.putInt(MAP_TYPE, googleMap.getMapType());
-    }
   }
 
   @Override
@@ -333,6 +332,7 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
     if (googleMap != null) {
       googleMap.setMapType(type);
       menuItem.setChecked(true);
+      PreferencesUtils.setInt(getActivity(), R.string.map_type_key, type);
     }
     return true;
   }
@@ -637,12 +637,13 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
               tripStatistics.getTopDegrees(), tripStatistics.getRightDegrees());
           LatLngBounds bounds = LatLngBounds.builder()
               .include(southWest).include(northEast).build();
-          
+
           /**
-           * Note cannot call CameraUpdate.newLatLngBounds(LatLngBounds bounds, int padding)
-           * if the map view has not undergone layout. Thus calling 
-           * CameraUpdate.newLatLngBounds(LatLngBounds bounds, int width, int height, int padding)
-           * after making sure that mapView is valid in the above code.
+           * Note cannot call CameraUpdate.newLatLngBounds(LatLngBounds bounds,
+           * int padding) if the map view has not undergone layout. Thus calling
+           * CameraUpdate.newLatLngBounds(LatLngBounds bounds, int width, int
+           * height, int padding) after making sure that mapView is valid in the
+           * above code.
            */
           CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(
               bounds, mapView.getWidth(), mapView.getHeight(), MAP_VIEW_PADDING);
