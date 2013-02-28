@@ -19,7 +19,7 @@ limitations under the License.
   <!-- About -->
   <string name="about_copyright_notice"
     translation_description="In the 'About My Tracks' page, the copyright notice.">
-    Copyright 2009 Google Inc.
+    Copyright 2013 Google Inc.
   </string>
   <string name="about_license"
     translation_description="In the 'About My Tracks' page, the button on the bottom to open the
@@ -588,7 +588,7 @@ limitations under the License.
   <string name="eula_copyright_year"
     translation_description="The copyright year in the 'Terms of Service'. See
       http://m.google.com/toscountry. \u00A9 is the unicode value for the copyright symbol.">
-    \u00A92012
+    \u00A92013
   </string>
   <string name="eula_date"
     translation_description="The date in the 'Terms of Service'. See

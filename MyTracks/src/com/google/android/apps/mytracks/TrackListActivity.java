@@ -385,9 +385,9 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     listView.setOnItemClickListener(new OnItemClickListener() {
         @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = IntentUtils.newIntent(TrackListActivity.this, TrackDetailActivity.class)
+        Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackDetailActivity.class)
             .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, id);
-        startActivity(intent);
+        startActivity(newIntent);
       }
     });
     sectionResourceCursorAdapter = new SectionResourceCursorAdapter(
