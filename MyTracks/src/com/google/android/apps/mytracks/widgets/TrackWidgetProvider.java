@@ -82,15 +82,30 @@ public class TrackWidgetProvider extends AppWidgetProvider {
         || context.getString(R.string.track_stopped_broadcast_action).equals(action)
         || context.getString(R.string.track_update_broadcast_action).equals(action)) {
       long trackId = intent.getLongExtra(context.getString(R.string.track_id_broadcast_extra), -1L);
-      AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-      int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
-          new ComponentName(context, TrackWidgetProvider.class));
-      for (int appWidgetId : appWidgetIds) {
-        int size = ApiAdapterFactory.getApiAdapter()
-            .getAppWidgetSize(appWidgetManager, appWidgetId);
-        RemoteViews remoteViews = getRemoteViews(context, trackId, size);
-        appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
-      }
+      updateAllWidgets(context, trackId);
+    }
+  }
+
+  @Override
+  public void onEnabled(Context context) {
+    // Need to update all widgets after phone reboot
+    updateAllWidgets(context, -1L);
+  }
+
+  /**
+   * Updates all widgets.
+   * 
+   * @param context the context
+   * @param trackId track id
+   */
+  private void updateAllWidgets(Context context, long trackId) {
+    AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+    int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
+        new ComponentName(context, TrackWidgetProvider.class));
+    for (int appWidgetId : appWidgetIds) {
+      int size = ApiAdapterFactory.getApiAdapter().getAppWidgetSize(appWidgetManager, appWidgetId);
+      RemoteViews remoteViews = getRemoteViews(context, trackId, size);
+      appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
     }
   }
 
