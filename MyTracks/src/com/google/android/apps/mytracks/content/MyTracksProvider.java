@@ -225,7 +225,8 @@ public class MyTracksProvider extends ContentProvider {
     } finally {
       db.endTransaction();
     }
-
+    getContext().getContentResolver().notifyChange(url, null, false);
+    
     if (driveSync && table.equals(TracksColumns.TABLE_NAME)) {
       String driveDeletedList = PreferencesUtils.getString(getContext(),
           R.string.drive_deleted_list_key, PreferencesUtils.DRIVE_DELETED_LIST_DEFAULT);
@@ -235,9 +236,7 @@ public class MyTracksProvider extends ContentProvider {
         driveDeletedList += ";" + driveIds;
       }
       PreferencesUtils.setString(getContext(), R.string.drive_deleted_list_key, driveDeletedList);
-    }
-
-    getContext().getContentResolver().notifyChange(url, null, true);
+    }    
 
     if (shouldVacuum) {
       // If a potentially large amount of data was deleted, reclaim its space.
@@ -286,6 +285,7 @@ public class MyTracksProvider extends ContentProvider {
     } finally {
       db.endTransaction();
     }
+    getContext().getContentResolver().notifyChange(url, null, false);
     return result;
   }
 
@@ -311,6 +311,7 @@ public class MyTracksProvider extends ContentProvider {
     } finally {
       db.endTransaction();
     }
+    getContext().getContentResolver().notifyChange(url, null, false);
     return numInserted;
   }
 
@@ -408,7 +409,7 @@ public class MyTracksProvider extends ContentProvider {
     } finally {
       db.endTransaction();
     }
-    getContext().getContentResolver().notifyChange(url, null, true);
+    getContext().getContentResolver().notifyChange(url, null, false);
     return count;
   }
 
@@ -468,9 +469,7 @@ public class MyTracksProvider extends ContentProvider {
     }
     long rowId = db.insert(TrackPointsColumns.TABLE_NAME, TrackPointsColumns._ID, values);
     if (rowId >= 0) {
-      Uri uri = ContentUris.appendId(TrackPointsColumns.CONTENT_URI.buildUpon(), rowId).build();
-      getContext().getContentResolver().notifyChange(url, null, true);
-      return uri;
+      return ContentUris.appendId(TrackPointsColumns.CONTENT_URI.buildUpon(), rowId).build();
     }
     throw new SQLiteException("Failed to insert a track point " + url);
   }
@@ -489,9 +488,7 @@ public class MyTracksProvider extends ContentProvider {
     }
     long rowId = db.insert(TracksColumns.TABLE_NAME, TracksColumns._ID, contentValues);
     if (rowId >= 0) {
-      Uri uri = ContentUris.appendId(TracksColumns.CONTENT_URI.buildUpon(), rowId).build();
-      getContext().getContentResolver().notifyChange(url, null, true);
-      return uri;
+      return ContentUris.appendId(TracksColumns.CONTENT_URI.buildUpon(), rowId).build();
     }
     throw new SQLException("Failed to insert a track " + url);
   }
@@ -505,9 +502,7 @@ public class MyTracksProvider extends ContentProvider {
   private Uri insertWaypoint(Uri url, ContentValues contentValues) {
     long rowId = db.insert(WaypointsColumns.TABLE_NAME, WaypointsColumns._ID, contentValues);
     if (rowId >= 0) {
-      Uri uri = ContentUris.appendId(WaypointsColumns.CONTENT_URI.buildUpon(), rowId).build();
-      getContext().getContentResolver().notifyChange(url, null, true);
-      return uri;
+      return ContentUris.appendId(WaypointsColumns.CONTENT_URI.buildUpon(), rowId).build();
     }
     throw new SQLException("Failed to insert a waypoint " + url);
   }

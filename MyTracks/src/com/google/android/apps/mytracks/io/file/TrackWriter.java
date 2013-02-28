@@ -240,7 +240,8 @@ public class TrackWriter {
         wroteSegment = false;
       }
       if (wroteTrack) {
-        trackFormatWriter.writeEndTrack(locationFactory.lastLocation);
+        Location lastValidTrackPoint = myTracksProviderUtils.getLastValidTrackPoint(track.getId());
+        trackFormatWriter.writeEndTrack(lastValidTrackPoint);
       } else {
         // Write an empty track
         trackFormatWriter.writeBeginTrack(null);
