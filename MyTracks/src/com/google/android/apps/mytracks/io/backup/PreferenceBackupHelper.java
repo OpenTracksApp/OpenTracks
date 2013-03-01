@@ -47,6 +47,7 @@ public class PreferenceBackupHelper {
     doNotBackup.add(context.getString(R.string.auto_resume_track_current_retry_key));
     doNotBackup.add(context.getString(R.string.drive_deleted_list_key));
     doNotBackup.add(context.getString(R.string.drive_largest_change_id_key));
+    doNotBackup.add(context.getString(R.string.drive_sync_key));
     doNotBackup.add(context.getString(R.string.recording_track_id_key));
     doNotBackup.add(context.getString(R.string.recording_track_paused_key));
     doNotBackup.add(context.getString(R.string.selected_track_id_key));
