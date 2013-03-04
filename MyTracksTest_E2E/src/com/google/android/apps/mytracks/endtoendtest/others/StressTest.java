@@ -97,7 +97,7 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
     for (int i = 0; (System.currentTimeMillis() - startTime) < TEST_DURATION_IN_MILLISECONDS; i++) {
       EndToEndTestUtils.sendGps(10, i * 10);
       EndToEndTestUtils.rotateCurrentActivity();
-      Log.i(EndToEndTestUtils.LOG_TAG, String.format("Totate %d times in %d minutes!", i, 
+      Log.i(EndToEndTestUtils.LOG_TAG, String.format("Totate %d times in %d minutes!", i,
           (System.currentTimeMillis() - startTime) / 1000 / 60));
     }
   }
@@ -126,7 +126,7 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
     }
     EndToEndTestUtils.stopRecording(true);
   }
-  
+
   /**
    * Records a long track.
    */
@@ -159,6 +159,8 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
       // Create one way points.
       EndToEndTestUtils.sendGps(10, 10 * i);
       EndToEndTestUtils.createWaypoint(i);
+      instrumentation.waitForIdleSync();
+      EndToEndTestUtils.SOLO.waitForText(trackListActivity.getString(R.string.generic_recording));
       EndToEndTestUtils.pauseRecording();
 
       EndToEndTestUtils.SOLO
@@ -170,6 +172,7 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
       EndToEndTestUtils.SOLO.clickOnText(trackListActivity
           .getString(R.string.track_detail_stats_tab));
       instrumentation.waitForIdleSync();
+      EndToEndTestUtils.SOLO.waitForText(trackListActivity.getString(R.string.generic_paused));
       EndToEndTestUtils.resumeRecording();
       logStatus(++i);
     }
