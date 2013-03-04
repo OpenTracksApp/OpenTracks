@@ -827,10 +827,17 @@ public class TrackRecordingService extends Service {
         Log.d(TAG, "Ignore onLocationChangedAsync. Poor accuracy.");
         return;
       }
+      
+      // Fix for phones that do not set the time field
+      if (location.getTime() == 0L) {
+        location.setTime(System.currentTimeMillis());
+      }
 
       Location lastValidTrackPoint = getLastValidTrackPointInCurrentSegment(track.getId());
-      long idleTime = lastValidTrackPoint != null ? location.getTime() - lastValidTrackPoint.getTime()
-          : 0L;
+      long idleTime = 0L;
+      if (lastValidTrackPoint != null && location.getTime() > lastValidTrackPoint.getTime()) {
+        idleTime = location.getTime() - lastValidTrackPoint.getTime();
+      }      
       locationListenerPolicy.updateIdleTime(idleTime);
       if (currentRecordingInterval != locationListenerPolicy.getDesiredPollingInterval()) {
         registerLocationListener();
