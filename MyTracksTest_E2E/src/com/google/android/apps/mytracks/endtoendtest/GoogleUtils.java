@@ -26,22 +26,18 @@ import com.google.android.apps.mytracks.io.gdata.maps.XmlMapsGDataParserFactory;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
 import com.google.android.apps.mytracks.io.spreadsheets.SendSpreadsheetsAsyncTask;
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
-import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.common.gdata.AndroidXmlParserFactory;
 import com.google.android.maps.mytracks.R;
 import com.google.api.client.auth.oauth2.BearerToken;
 import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.googleapis.GoogleHeaders;
-import com.google.api.client.googleapis.MethodOverride;
+import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.client.http.GenericUrl;
-import com.google.api.client.http.HttpRequest;
-import com.google.api.client.http.HttpResponse;
-import com.google.api.client.http.InputStreamContent;
+import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
+import com.google.api.services.fusiontables.Fusiontables;
+import com.google.api.services.fusiontables.model.Table;
 import com.google.gdata.client.spreadsheet.SpreadsheetService;
 import com.google.gdata.data.spreadsheet.ListEntry;
 import com.google.gdata.data.spreadsheet.ListFeed;
@@ -55,8 +51,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -77,12 +71,6 @@ public class GoogleUtils {
   public static final String ACCOUNT_NAME_2 = "mytrackstest2@gmail.com";
   public static final String SPREADSHEET_NAME = DOCUMENT_NAME_PREFIX + "-"
       + EndToEndTestUtils.activityType;
-
-  private static final String APP_NAME_PREFIX = "Google-MyTracks-";
-  private static final String CONTENT_TYPE = "application/x-www-form-urlencoded";
-  private static final String FUSION_TABLES_SERVICE = "fusiontables";
-  private static final String FUSION_TABLES_BASE_URL = "https://www.google.com/fusiontables/api/query";
-  private static final String GDATA_VERSION = "2";
   private static final String WORK_SHEET_NAME = "Log";
   private static final String TRANCK_NAME_COLUMN = "Name";
 
@@ -298,14 +286,14 @@ public class GoogleUtils {
       // Get spreadsheet Id.
       String spreadsheetId = searchAllSpreadsheetByTitle(spreadsheetTitle, activity, accountName)
           .get(0).getId();
-      
+
       // Get spreadsheet service.
       SpreadsheetService spreadsheetService = new SpreadsheetService(spreadsheetTitle);
       Credential credential = new Credential(BearerToken.authorizationHeaderAccessMethod());
       credential.setAccessToken(SendToGoogleUtils.getToken(activity.getApplicationContext(),
           accountName, SendToGoogleUtils.SPREADSHEET_SCOPE));
       spreadsheetService.setOAuth2Credentials(credential);
-      
+
       // Get work sheet.
       WorksheetFeed feed = spreadsheetService.getFeed(
           new URL(String.format(Locale.US, SendSpreadsheetsAsyncTask.GET_WORKSHEETS_URI,
@@ -351,89 +339,38 @@ public class GoogleUtils {
   /**
    * Searches a fusion table in user's Google tables.
    * 
-   * @param title the title of fusion table
-   * @param activity to get context
-   * @return true means find the fusion table
+   * @param tableName name of fusion table to search
+   * @param context android context
+   * @param accountName name of account
+   * @param isDelete whether delete this track
+   * @return true means find and delete fusion table
    */
-  public static boolean searchFusionTableByTitle(String title, Activity activity) {
-    Context context = activity.getApplicationContext();
+  public static boolean searchFusionTableByTitle(String tableName, Context context,
+      String accountName, boolean isDelete) {
     try {
-      HttpResponse response = sendFusionTableQuery("SHOW TABLES", context);
-      // We can use index of method to check new table for every track name is
-      // unique.
-      if (response != null && response.parseAsString().indexOf(title) > 0) {
-        return true;
+      GoogleAccountCredential credential = SendToGoogleUtils.getGoogleAccountCredential(context,
+          accountName, SendToGoogleUtils.FUSION_TABLES_SCOPE);
+      if (credential == null) {
+        return false;
       }
-    } catch (Exception e) {
-      Log.d(EndToEndTestUtils.LOG_TAG, "Unable to query fusion table.", e);
-    }
-    return false;
-  }
-
-  /**
-   * Drops one fusion table which contain the string in title of current user.
-   * 
-   * @param title the title of a track to drop
-   * @param activity to get context
-   * @return the result of drop
-   */
-  public static boolean dropFusionTables(String title, Activity activity) {
-    Context context = activity.getApplicationContext();
-
-    HttpResponse response = sendFusionTableQuery("SHOW TABLES", context);
-    String[] rowsTable;
-    try {
-      rowsTable = response.parseAsString().split("\n");
-      for (String row : rowsTable) {
-        String firstColumn = row.split(",")[0];
-        String secondColumn = row.split(",")[1];
-        // The first column is the table id.
-        if (secondColumn.equals(title)) {
-          sendFusionTableQuery("DROP TABLE " + firstColumn, context);
+      Fusiontables fusiontables = new Fusiontables.Builder(AndroidHttp.newCompatibleTransport(),
+          new GsonFactory(), credential).build();
+      List<Table> tables = fusiontables.table().list().execute().getItems();
+      for (Iterator<Table> iterator = tables.iterator(); iterator.hasNext();) {
+        Table table = (Table) iterator.next();
+        String title = table.getName();
+        if (title.equals(tableName)) {
+          if (isDelete) {
+            fusiontables.table().delete(table.getTableId()).execute();
+          }
           return true;
         }
       }
-    } catch (IOException e) {
-      Log.d(EndToEndTestUtils.LOG_TAG, "Failed when delete all fusion tables.", e);
+
+    } catch (Exception e) {
+      Log.d(EndToEndTestUtils.LOG_TAG, "Failed when operate fusion table.", e);
     }
     return false;
-  }
-
-  /**
-   * Sends query to operate fusion tables.
-   * 
-   * @param query to executed
-   * @param context application context
-   * @return the response of execution
-   */
-  private static HttpResponse sendFusionTableQuery(String query, Context context) {
-    try {
-      String fusionTableAuthToken = AccountManager.get(context).blockingGetAuthToken(
-          getAccount(context), FUSION_TABLES_SERVICE, false);
-
-      GenericUrl url = new GenericUrl(FUSION_TABLES_BASE_URL);
-      String sql = "sql=" + query;
-      ByteArrayInputStream inputStream = new ByteArrayInputStream(sql.getBytes());
-      InputStreamContent inputStreamContent = new InputStreamContent(null, inputStream);
-      HttpRequest request;
-
-      request = (ApiAdapterFactory.getApiAdapter().getHttpTransport()
-          .createRequestFactory(new MethodOverride())).buildPostRequest(url, inputStreamContent);
-
-      GoogleHeaders headers = new GoogleHeaders();
-      headers.setApplicationName(APP_NAME_PREFIX + SystemUtils.getMyTracksVersion(context));
-      headers.setGDataVersion(GDATA_VERSION);
-      headers.setGoogleLogin(fusionTableAuthToken);
-      headers.setContentType(CONTENT_TYPE);
-      request.setHeaders(headers);
-
-      HttpResponse response;
-      response = request.execute();
-      return response;
-    } catch (Exception e) {
-      Log.d(EndToEndTestUtils.LOG_TAG, "Failed when send fusion table query.", e);
-      return null;
-    }
   }
 
   /**

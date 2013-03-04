@@ -48,6 +48,7 @@ public class SendToGoogleTest extends ActivityInstrumentationTestCase2<TrackList
     super.setUp();
     instrumentation = getInstrumentation();
     activityMyTracks = getActivity();
+    
     GoogleUtils.deleteTestTracksOnGoogleDrive(activityMyTracks, GoogleUtils.ACCOUNT_NAME_1);
     EndToEndTestUtils.setupForAllTest(instrumentation, activityMyTracks);
   }
@@ -116,11 +117,10 @@ public class SendToGoogleTest extends ActivityInstrumentationTestCase2<TrackList
     assertTrue(SyncTestUtils.checkFile(EndToEndTestUtils.trackName, true,
         SyncTestUtils.getGoogleDrive(activityMyTracks.getApplicationContext())));
     assertTrue(GoogleUtils.deleteMap(EndToEndTestUtils.trackName, activityMyTracks));
-    assertTrue(GoogleUtils.searchFusionTableByTitle(EndToEndTestUtils.TRACK_NAME_PREFIX,
-        activityMyTracks));
+    assertTrue(GoogleUtils.searchFusionTableByTitle(EndToEndTestUtils.trackName,
+        activityMyTracks,GoogleUtils.ACCOUNT_NAME_1,true));
     assertTrue(GoogleUtils.deleteTrackInSpreadSheet(EndToEndTestUtils.trackName, activityMyTracks,
         GoogleUtils.ACCOUNT_NAME_1));
-    assertTrue(GoogleUtils.dropFusionTables(EndToEndTestUtils.trackName, activityMyTracks));
   }
 
   /**
