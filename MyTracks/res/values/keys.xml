@@ -35,7 +35,6 @@ limitations under the License.
   <string name="default_activity_key">defaultActivity</string>
   <string name="default_map_public_key">defaultMapPublic</string>
   <string name="default_table_public_key">defaultTablePublic</string>
-  <string name="drive_sync_key">driveSync</string>
   <string name="google_account_key">googleAccount</string>
   <string name="map_type_key">mapType</string>
   <string name="max_recording_distance_key">maxRecordingDistance</string>
@@ -69,6 +68,7 @@ limitations under the License.
   <string name="auto_resume_track_current_retry_key">autoResumeTrackCurrentRetry</string>
   <string name="drive_deleted_list_key">driveDeletedList</string>
   <string name="drive_largest_change_id_key">driveLargestChangeId</string>
+  <string name="drive_sync_key">driveSync</string>
   <string name="recording_track_id_key">recordingTrackId</string>
   <string name="recording_track_paused_key">recordingTrackPaused</string>
   <string name="selected_track_id_key">selectedTrackId</string>

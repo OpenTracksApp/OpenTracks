@@ -16,6 +16,8 @@
 
 package com.google.android.apps.mytracks.io.backup;
 
+import com.google.android.apps.mytracks.io.sync.SyncUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.os.AsyncTask;
@@ -84,7 +86,11 @@ public class RestoreAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   @Override
   protected Boolean doInBackground(Void... params) {
     try {
+      PreferencesUtils.setBoolean(
+          restoreActivity, R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT);
+      SyncUtils.disableSync(restoreActivity);
       externalFileBackup.restoreFromDate(date);
+      SyncUtils.clearSyncState(restoreActivity);
       messageId = R.string.settings_backup_restore_success;
       return true;
     } catch (IOException e) {
