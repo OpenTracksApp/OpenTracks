@@ -27,6 +27,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
+import android.view.KeyEvent;
 
 import java.util.Locale;
 
@@ -98,6 +99,14 @@ public class EulaDialogFragment extends DialogFragment {
           @Override
         public void onClick(DialogInterface dialog, int which) {
           caller.onEulaDone();
+        }
+      }).setOnKeyListener(new DialogInterface.OnKeyListener() {
+          @Override
+        public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+          if (keyCode == KeyEvent.KEYCODE_SEARCH) {
+            return true;
+          }
+          return false;
         }
       }).setPositiveButton(R.string.eula_accept, new DialogInterface.OnClickListener() {
           @Override
