@@ -1514,9 +1514,10 @@ limitations under the License.
   <string name="settings_backup_restore_confirm_message"
     translation_description="In the 'Backup and reset' settings, after pressing the 'Restore now'
       option, the message in the alert dialog asking the user to confirm that he wants to restore
-      from a backup and it will overwrite all the current tracks and settings.">
-    Restoring a backup from the external storage will overwrite all your current tracks and
-    settings.
+      from a backup.">
+    Restoring a backup from external storage will delete all your tracks and settings, and update
+    them with the backup copy. If Google Drive sync is enabled, this will disable it. No tracks will
+    be deleted on Google Drive.
   </string>
   <string name="settings_backup_restore_error"
     translation_description="When restoring from backup, the error message.">
@@ -1579,9 +1580,8 @@ limitations under the License.
       account.
 
       %1$s account name. E.g., 'foo@foo.com'.">
-    This will remove mappings between tracks and %1$s Google Drive. No tracks and no Google Drive
-    files will get removed. After switching account, when sending to Google Drive or syncing with
-    Google Drive, all tracks will be treated as new.
+    This will remove any association between your tracks and %1$s Google Drive. If Google Drive sync
+    is enabled for %1$s, this will disable it. No tracks will be deleted on %1$s Google Drive.
   </string>
   <string name="settings_google_account_title"
     translation_description="In the 'Google' settings, the option to switch Google account.
@@ -1595,8 +1595,8 @@ limitations under the License.
 
       %1$s account name. E.g., 'foo@foo.com'.
       %2$s folder name. E.g., 'My Tracks'.">
-    All files in the %1$s Google Drive &#8216;%2$s&#8217; folder will be treated as new. If not
-    desired, move the files to a different folder beforehand.
+    All files in the %1$s Google Drive &#8216;%2$s&#8217; folder will be treated as new tracks for
+    import. If not desired, move the files to a different folder beforehand.
   </string>
   <string name="settings_google_drive_sync_summary_on"
     translation_description="In the 'Google' settings, the summary for the 'Sync Google Drive'
@@ -1863,7 +1863,8 @@ limitations under the License.
   <string name="settings_reset_confirm_message"
     translation_description="In the 'Backup and reset' settings, after pressing the 'Reset' option,
       the confirmation dialog message informing the user that all settings will be reverted.">
-    All settings will be erased and reverted to the default values. Saved tracks will be preserved.
+    All settings will be reverted to the default values. This will not delete any tracks on the
+    device or on Google Drive.
   </string>
   <string name="settings_reset_done"
     translation_description="In the 'Backup and reset' settings, after pressing the 'Reset' option,
@@ -2229,7 +2230,8 @@ limitations under the License.
   <string name="track_detail_delete_confirm_message"
     translation_description="When deleting a track, the confirmation message informing the user that
       the track and its markers will be permanently deleted from the device.">
-    The track and its markers will be permanently deleted from the device.
+    The track and its markers will be permanently deleted from the device. If Google Drive sync is
+    enabled, this will also delete the track on Google Drive.
   </string>
   <string name="track_detail_install_earth_message"
     translation_description="When playing a track, the message informing the user that he needs
@@ -2274,8 +2276,8 @@ limitations under the License.
   <!-- Track List -->
   <string name="track_list_delete_all_confirm_message"
     translation_description="When deleting all the tracks, the confirmation dialog message.">
-    All tracks and markers will be permanently deleted from the device. This will also disable
-    Google Drive sync if it is enabled.
+    All tracks and markers will be permanently deleted from the device. If Google Drive sync is
+    enabled, this will disable it. No tracks will be deleted on Google Drive.
   </string>
   <string name="track_list_empty_message"
     translation_description="When the track list is empty, the message informing the user to click
