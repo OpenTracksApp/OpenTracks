@@ -68,10 +68,6 @@ limitations under the License.
   <style name="EditLabel.WithIcon" parent="@style/TextMedium.WithIcon">
     <item name="android:layout_width">match_parent</item>
   </style>
-  <!-- edit label with icon, width padding top -->
-  <style name="EditLabel.WithIcon.WithPaddingTop">
-    <item name="android:paddingTop">16dp</item>
-  </style>
   <!-- edit label with padding top -->
   <style name="EditLabel.WithPaddingTop">
     <item name="android:paddingTop">16dp</item>
