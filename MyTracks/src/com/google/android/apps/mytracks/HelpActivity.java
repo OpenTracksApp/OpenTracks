@@ -28,6 +28,8 @@ import android.view.View.OnClickListener;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import java.util.Locale;
+
 /**
  * An activity that displays the help page.
  * 
@@ -40,7 +42,11 @@ public class HelpActivity extends AbstractMyTracksActivity implements AboutCalle
     super.onCreate(savedInstanceState);
 
     WebView webView = (WebView) findViewById(R.id.help_webview);
-    webView.loadUrl(getString(R.string.my_tracks_help_url));
+    String language = Locale.getDefault().getLanguage();
+    if (language == null || language.equals("")) {
+      language = "en";
+    }
+    webView.loadUrl(getString(R.string.my_tracks_help_url, language));
     webView.getSettings().setJavaScriptEnabled(true);
     webView.setWebViewClient(new WebViewClient());
 
