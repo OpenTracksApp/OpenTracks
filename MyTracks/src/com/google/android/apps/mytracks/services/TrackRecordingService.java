@@ -250,11 +250,7 @@ public class TrackRecordingService extends Service {
       @Override
     public void run() {
       if (isRecording() && !isPaused()) {
-        handler.post(new Runnable() {
-          public void run() {
-            registerLocationListener();
-          }
-        });
+        registerLocationListener();
       }
     }
   };
@@ -962,20 +958,29 @@ public class TrackRecordingService extends Service {
    * Registers the location listener.
    */
   private void registerLocationListener() {
-    unregisterLocationListener();
+    /*
+     * Use the handler so the requestLocationUpdaets locationListener will be
+     * invoked on the handler thread.
+     */
+    handler.post(new Runnable() {
+      public void run() {
+        unregisterLocationListener();
 
-    if (myTracksLocationManager == null) {
-      Log.e(TAG, "locationManager is null.");
-      return;
-    }
-    try {
-      long interval = locationListenerPolicy.getDesiredPollingInterval();
-      myTracksLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, interval,
-          locationListenerPolicy.getMinDistance(), locationListener);
-      currentRecordingInterval = interval;
-    } catch (RuntimeException e) {
-      Log.e(TAG, "Could not register location listener.", e);
-    }
+        if (myTracksLocationManager == null) {
+          Log.e(TAG, "locationManager is null.");
+          return;
+        }
+        try {
+          long interval = locationListenerPolicy.getDesiredPollingInterval();
+          myTracksLocationManager.requestLocationUpdates(
+              LocationManager.GPS_PROVIDER, interval, locationListenerPolicy.getMinDistance(),
+              locationListener);
+          currentRecordingInterval = interval;
+        } catch (RuntimeException e) {
+          Log.e(TAG, "Could not register location listener.", e);
+        }
+      }
+    });
   }
 
   /**
