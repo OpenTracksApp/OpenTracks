@@ -37,10 +37,7 @@ limitations under the License.
   <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
   <uses-permission android:name="android.permission.USE_CREDENTIALS" />
   <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH" />
-  <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.fusiontables" />
   <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.local" />
-  <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.wise" />
-  <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.writely" />
   <!-- Permission for Android sync provider -->
   <uses-permission android:name="android.permission.READ_SYNC_STATS" />
   <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
