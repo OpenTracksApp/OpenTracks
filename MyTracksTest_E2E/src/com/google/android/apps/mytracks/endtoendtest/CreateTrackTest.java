@@ -91,7 +91,7 @@ public class CreateTrackTest extends ActivityInstrumentationTestCase2<TrackListA
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_edit), true);
 
     String newTrackName = EndToEndTestUtils.TRACK_NAME_PREFIX + "_new" + System.currentTimeMillis();
-    String newType = EndToEndTestUtils.activityType; 
+    String newType = EndToEndTestUtils.activityType;
     String newDesc = "desc" + newTrackName;
 
     instrumentation.waitForIdleSync();
@@ -101,6 +101,15 @@ public class CreateTrackTest extends ActivityInstrumentationTestCase2<TrackListA
 
     EndToEndTestUtils.enterTextAvoidSoftKeyBoard(0, newTrackName);
     EndToEndTestUtils.enterTextAvoidSoftKeyBoard(1, newType);
+
+    EndToEndTestUtils.SOLO.clickOnView(EndToEndTestUtils.SOLO.getCurrentActivity().findViewById(
+        R.id.track_edit_activity_type_icon));
+    EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+        .getString(R.string.track_edit_activity_type_hint));
+    EndToEndTestUtils.SOLO.clickOnView(EndToEndTestUtils.SOLO.getImage(0));
+    // The test type should be replaced by the first type option.
+    assertFalse(EndToEndTestUtils.SOLO.searchText(newType));
+
     EndToEndTestUtils.enterTextAvoidSoftKeyBoard(2, newDesc);
     EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_save));
     instrumentation.waitForIdleSync();
@@ -124,7 +133,7 @@ public class CreateTrackTest extends ActivityInstrumentationTestCase2<TrackListA
       assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks
           .getString(R.string.generic_recording)));
     }
-    
+
     EndToEndTestUtils.createWaypoint(0);
     EndToEndTestUtils.sendGps(2, 2);
     // Back to tracks list.
@@ -150,11 +159,12 @@ public class CreateTrackTest extends ActivityInstrumentationTestCase2<TrackListA
    */
   public void testTrackRelativeTime() {
     // Delete all track first.
-    EndToEndTestUtils.deleteAllTracks(); 
+    EndToEndTestUtils.deleteAllTracks();
     // Reset all settings.
     EndToEndTestUtils.resetAllSettings(activityMyTracks, false);
-    
-    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.track_list_empty_message)));
+
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+        .getString(R.string.track_list_empty_message)));
     // Test should not show relative time.
     EndToEndTestUtils.startRecording();
     instrumentation.waitForIdleSync();
@@ -165,9 +175,10 @@ public class CreateTrackTest extends ActivityInstrumentationTestCase2<TrackListA
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.SOLO.goBack();
     instrumentation.waitForIdleSync();
-    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.RELATIVE_STARTTIME_POSTFIX, 1, false, true));
+    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.RELATIVE_STARTTIME_POSTFIX, 1,
+        false, true));
   }
-  
+
   /**
    * Tests whether the split marker is created as setting.
    */
@@ -185,7 +196,7 @@ public class CreateTrackTest extends ActivityInstrumentationTestCase2<TrackListA
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     // Send Gps to give a distance more than one kilometer or one mile.
-    EndToEndTestUtils.sendGps(20);    
+    EndToEndTestUtils.sendGps(20);
     assertTrue(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_markers),
         true));
     instrumentation.waitForIdleSync();
@@ -198,7 +209,7 @@ public class CreateTrackTest extends ActivityInstrumentationTestCase2<TrackListA
 
     EndToEndTestUtils.stopRecording(true);
   }
-  
+
   @Override
   protected void tearDown() throws Exception {
     EndToEndTestUtils.SOLO.finishOpenedActivities();
