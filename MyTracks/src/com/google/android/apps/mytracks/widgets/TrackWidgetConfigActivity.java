@@ -86,7 +86,7 @@ public class TrackWidgetConfigActivity extends Activity {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(
             TrackWidgetConfigActivity.this);
         TrackWidgetProvider.updateAppWidget(
-            TrackWidgetConfigActivity.this, appWidgetManager, appWidgetId);
+            TrackWidgetConfigActivity.this, appWidgetManager, appWidgetId, -1L);
         PreferencesUtils.setInt(TrackWidgetConfigActivity.this, R.string.track_widget_item1,
             item1.getSelectedItemPosition());
         PreferencesUtils.setInt(TrackWidgetConfigActivity.this, R.string.track_widget_item2,

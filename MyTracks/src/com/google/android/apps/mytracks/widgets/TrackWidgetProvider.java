@@ -89,23 +89,15 @@ public class TrackWidgetProvider extends AppWidgetProvider {
   @Override
   public void onEnabled(Context context) {
     super.onEnabled(context);
-    // Need to update all widgets after phone reboot
+    // Need to update all app widgets after phone reboot
     updateAllAppWidgets(context, -1L);
   }
 
-  /**
-   * Updates all app widgets.
-   * 
-   * @param context the context
-   * @param trackId track id
-   */
-  private void updateAllAppWidgets(Context context, long trackId) {
-    AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-    int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
-        new ComponentName(context, TrackWidgetProvider.class));
-    for (int appWidgetId : appWidgetIds) {
-      updateAppWidget(context, appWidgetManager, appWidgetId);
-    }
+  @Override
+  public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+    super.onUpdate(context, appWidgetManager, appWidgetIds);
+    // Need to update all app widgets after software update
+    updateAllAppWidgets(context, -1L);
   }
 
   @TargetApi(16)
@@ -135,7 +127,7 @@ public class TrackWidgetProvider extends AppWidgetProvider {
       int size = ApiAdapterFactory.getApiAdapter().getAppWidgetSize(appWidgetManager, appWidgetId);
       if (size != newSize) {
         ApiAdapterFactory.getApiAdapter().setAppWidgetSize(appWidgetManager, appWidgetId, newSize);
-        updateAppWidget(context, appWidgetManager, appWidgetId);
+        updateAppWidget(context, appWidgetManager, appWidgetId, -1L);
       }
     }
   }
@@ -146,12 +138,28 @@ public class TrackWidgetProvider extends AppWidgetProvider {
    * @param context the context
    * @param appWidgetManager the app widget manager
    * @param appWidgetId the app widget id
+   * @param trackId the track id. -1L to not specify one
    */
   public static void updateAppWidget(
-      Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
+      Context context, AppWidgetManager appWidgetManager, int appWidgetId, long trackId) {
     int size = ApiAdapterFactory.getApiAdapter().getAppWidgetSize(appWidgetManager, appWidgetId);
-    RemoteViews remoteViews = getRemoteViews(context, -1L, size);
+    RemoteViews remoteViews = getRemoteViews(context, trackId, size);
     appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
+  }
+  
+  /**
+   * Updates all app widgets.
+   * 
+   * @param context the context
+   * @param trackId track id
+   */
+  private static void updateAllAppWidgets(Context context, long trackId) {
+    AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+    int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
+        new ComponentName(context, TrackWidgetProvider.class));
+    for (int appWidgetId : appWidgetIds) {
+      updateAppWidget(context, appWidgetManager, appWidgetId, trackId);
+    }
   }
 
   /**
