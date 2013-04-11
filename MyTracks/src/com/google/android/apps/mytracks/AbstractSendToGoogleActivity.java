@@ -61,7 +61,8 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
     implements ChooseAccountCaller, AddEmailsCaller, ChooseActivityCaller {
 
   private static final String TAG = AbstractMyTracksActivity.class.getSimpleName();
-
+  private static final String SEND_REQUEST_KEY = "send_request_key";
+  
   private SendRequest sendRequest;
 
   private PermissionCallback driveCallback = new PermissionCallback() {
@@ -118,6 +119,20 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
         getSupportFragmentManager(), ChooseAccountDialogFragment.CHOOSE_ACCOUNT_DIALOG_TAG);
   }
 
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    if (savedInstanceState != null) {
+      sendRequest = savedInstanceState.getParcelable(SEND_REQUEST_KEY);
+    }
+  }
+  
+  @Override
+  protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    outState.putParcelable(SEND_REQUEST_KEY, sendRequest);
+  }
+  
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     switch (requestCode) {
