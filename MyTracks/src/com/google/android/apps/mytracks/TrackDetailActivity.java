@@ -92,7 +92,6 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
   // From intent
   private long trackId;
   private long markerId;
-  private Track track;
 
   // Preferences
   private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
@@ -299,10 +298,12 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
     menu.findItem(R.id.track_detail_save_tcx)
         .setTitle(getString(R.string.menu_save_format, fileTypes[3]));
 
-    menu.findItem(R.id.track_detail_edit).setVisible(!track.isSharedWithMe());
+    Track track = myTracksProviderUtils.getTrack(trackId);
+    boolean sharedWithMe = track != null ? track.isSharedWithMe() : true;
+    menu.findItem(R.id.track_detail_edit).setVisible(!sharedWithMe);
     shareDriveMenuItem = menu.findItem(R.id.track_detail_share_drive);
-    shareDriveMenuItem.setEnabled(!track.isSharedWithMe());
-    shareDriveMenuItem.setVisible(!track.isSharedWithMe());
+    shareDriveMenuItem.setEnabled(!sharedWithMe);
+    shareDriveMenuItem.setVisible(!sharedWithMe);
 
     insertMarkerMenuItem = menu.findItem(R.id.track_detail_insert_marker);
     playMenuItem = menu.findItem(R.id.track_detail_play);
@@ -377,7 +378,9 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
         return true;
       case R.id.track_detail_send_google:
         AnalyticsUtils.sendPageViews(this, "/action/send_google");
-        ChooseUploadServiceDialogFragment.newInstance(track.isSharedWithMe()).show(
+        Track track = myTracksProviderUtils.getTrack(trackId);
+        boolean sharedWithMe = track != null ? track.isSharedWithMe() : true;
+        ChooseUploadServiceDialogFragment.newInstance(sharedWithMe).show(
             getSupportFragmentManager(),
             ChooseUploadServiceDialogFragment.CHOOSE_UPLOAD_SERVICE_DIALOG_TAG);
         return true;
@@ -518,6 +521,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
     trackId = intent.getLongExtra(EXTRA_TRACK_ID, -1L);
     markerId = intent.getLongExtra(EXTRA_MARKER_ID, -1L);
     if (markerId != -1L) {
+      // Use the trackId from the marker
       Waypoint waypoint = myTracksProviderUtils.getWaypoint(markerId);
       if (waypoint == null) {
         finish();
@@ -529,8 +533,16 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
       finish();
       return;
     }
-    track = myTracksProviderUtils.getTrack(trackId);
+    Track track = myTracksProviderUtils.getTrack(trackId);
     if (track == null) {
+      // Use the last track if markerId is not set
+      if (markerId == -1L) {
+        track = myTracksProviderUtils.getLastTrack();
+        if (track != null) {
+          trackId = track.getId();
+          return;
+        }
+      }
       finish();
       return;
     }
@@ -587,7 +599,8 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
     if (isRecording) {
       title = getString(isPaused ? R.string.generic_paused : R.string.generic_recording);
     } else {
-      title = track.getName();
+      Track track = myTracksProviderUtils.getTrack(trackId);
+      title = track != null ? track.getName() : "";
     }
     setTitle(title);
   }
