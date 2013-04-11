@@ -684,12 +684,14 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
    */
   private LatLng getDefaultLatLng() {
     MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(getActivity());
-    Location location = myTracksProviderUtils.getLastValidTrackPoint();
-    if (location != null) {
-      return new LatLng(location.getLatitude(), location.getLongitude());
-    } else {
-      return new LatLng(DEFAULT_LATITUDE, DEFAULT_LONGITUDE);
+    Track track = myTracksProviderUtils.getLastTrack();
+    if (track != null) {
+      Location location = myTracksProviderUtils.getLastValidTrackPoint(track.getId());
+      if (location != null) {
+        return new LatLng(location.getLatitude(), location.getLongitude());
+      }
     }
+    return new LatLng(DEFAULT_LATITUDE, DEFAULT_LONGITUDE);    
   }
 
   /**
