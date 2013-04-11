@@ -82,30 +82,29 @@ public class TrackWidgetProvider extends AppWidgetProvider {
         || context.getString(R.string.track_stopped_broadcast_action).equals(action)
         || context.getString(R.string.track_update_broadcast_action).equals(action)) {
       long trackId = intent.getLongExtra(context.getString(R.string.track_id_broadcast_extra), -1L);
-      updateAllWidgets(context, trackId);
+      updateAllAppWidgets(context, trackId);
     }
   }
 
   @Override
   public void onEnabled(Context context) {
+    super.onEnabled(context);
     // Need to update all widgets after phone reboot
-    updateAllWidgets(context, -1L);
+    updateAllAppWidgets(context, -1L);
   }
 
   /**
-   * Updates all widgets.
+   * Updates all app widgets.
    * 
    * @param context the context
    * @param trackId track id
    */
-  private void updateAllWidgets(Context context, long trackId) {
+  private void updateAllAppWidgets(Context context, long trackId) {
     AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
     int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
         new ComponentName(context, TrackWidgetProvider.class));
     for (int appWidgetId : appWidgetIds) {
-      int size = ApiAdapterFactory.getApiAdapter().getAppWidgetSize(appWidgetManager, appWidgetId);
-      RemoteViews remoteViews = getRemoteViews(context, trackId, size);
-      appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
+      updateAppWidget(context, appWidgetManager, appWidgetId);
     }
   }
 
@@ -113,28 +112,31 @@ public class TrackWidgetProvider extends AppWidgetProvider {
   @Override
   public void onAppWidgetOptionsChanged(
       Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
+    super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
     if (newOptions != null) {
-      int size;
+      int newSize;
       if (newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_HOST_CATEGORY, -1)
           == AppWidgetProviderInfo.WIDGET_CATEGORY_KEYGUARD) {
-        size = 1;
+        newSize = 1;
       } else {
         int height = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT);
         if (height == 0) {
-          size = 2;
+          newSize = 2;
         } else if (height >= FOUR_CELLS) {
-          size = 4;
+          newSize = 4;
         } else if (height >= THREE_CELLS) {
-          size = 3;
+          newSize = 3;
         } else if (height >= TWO_CELLS) {
-          size = 2;
+          newSize = 2;
         } else {
-          size = 1;
+          newSize = 1;
         }
       }
-      ApiAdapterFactory.getApiAdapter().setAppWidgetSize(appWidgetManager, appWidgetId, size);
-      RemoteViews remoteViews = getRemoteViews(context, -1L, size);
-      appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
+      int size = ApiAdapterFactory.getApiAdapter().getAppWidgetSize(appWidgetManager, appWidgetId);
+      if (size != newSize) {
+        ApiAdapterFactory.getApiAdapter().setAppWidgetSize(appWidgetManager, appWidgetId, newSize);
+        updateAppWidget(context, appWidgetManager, appWidgetId);
+      }
     }
   }
 
@@ -148,7 +150,6 @@ public class TrackWidgetProvider extends AppWidgetProvider {
   public static void updateAppWidget(
       Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
     int size = ApiAdapterFactory.getApiAdapter().getAppWidgetSize(appWidgetManager, appWidgetId);
-    ApiAdapterFactory.getApiAdapter().setAppWidgetSize(appWidgetManager, appWidgetId, size);
     RemoteViews remoteViews = getRemoteViews(context, -1L, size);
     appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
   }
