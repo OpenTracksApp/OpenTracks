@@ -210,6 +210,27 @@ public class GoogleUtils {
   }
 
   /**
+   * Removes old tracks on Google Maps created by MyTracks test.
+   * 
+   * @param activity
+   */
+  public static void deleteTracksOnGoogleMaps(Activity activity) {
+    Context context = activity.getApplicationContext();
+    MapsClient mapsClient = new MapsClient(GDataClientFactory.getGDataClient(context),
+        new XmlMapsGDataParserFactory(new AndroidXmlParserFactory()));
+    ArrayList<MapsMapMetadata> mapData = getMaps(context, mapsClient);
+    for (MapsMapMetadata oneData : mapData) {
+
+      try {
+        mapsClient.deleteEntry(oneData.getGDataEditUri(), AccountManager.get(context)
+            .blockingGetAuthToken(getAccount(context), MapsConstants.SERVICE_NAME, false));
+      } catch (Exception e) {
+        Log.d(EndToEndTestUtils.LOG_TAG, "Unable to drop map", e);
+      }
+    }
+  }
+
+  /**
    * Delete spreadsheet which name is title.
    * 
    * @param title the name of spreadsheet
