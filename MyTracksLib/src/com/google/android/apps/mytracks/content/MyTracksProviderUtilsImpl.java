@@ -238,9 +238,9 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   public Track getLastTrack() {
     Cursor cursor = null;
     try {
-      String selection = TracksColumns._ID + "=(select max(" + TracksColumns._ID + ") from "
-          + TracksColumns.TABLE_NAME + ")";
-      cursor = getTrackCursor(null, selection, null, TracksColumns._ID);
+      // Using the same order as shown in the track list
+      cursor = getTrackCursor(null, null, null,
+          TracksColumns.SHAREDWITHME + " ASC, " + TracksColumns.STARTTIME + " DESC");
       if (cursor != null && cursor.moveToNext()) {
         return createTrack(cursor);
       }
@@ -814,14 +814,6 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
         + TrackPointsColumns.LATITUDE + "<=" + MAX_LATITUDE + ")";
     String[] selectionArgs = new String[] { Long.toString(trackId) };
     return findTrackPointBy(selection, selectionArgs);
-  }
-
-  @Override
-  public Location getLastValidTrackPoint() {
-    String selection = TrackPointsColumns._ID + "=(select max(" + TrackPointsColumns._ID + ") from "
-        + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.LATITUDE + "<="
-        + MAX_LATITUDE + ")";
-    return findTrackPointBy(selection, null);
   }
 
   @Override

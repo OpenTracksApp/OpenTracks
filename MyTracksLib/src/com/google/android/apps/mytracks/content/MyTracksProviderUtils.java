@@ -253,11 +253,6 @@ public interface MyTracksProviderUtils {
   public Location getLastValidTrackPoint(long trackId);
 
   /**
-   * Gets the last valid location recorded. Returns null if it doesn't exist.
-   */
-  public Location getLastValidTrackPoint();
-
-  /**
    * Creates a location cursor. The caller owns the returned cursor and is
    * responsible for closing it.
    * 

@@ -20,15 +20,12 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.gms.auth.GoogleAuthException;
-import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.maps.mytracks.R;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.fusiontables.FusiontablesScopes;
 import com.google.common.annotations.VisibleForTesting;
 
-import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -172,55 +169,6 @@ public class SendToGoogleUtils {
     GoogleAccountCredential credential = GoogleAccountCredential.usingOAuth2(context, scope);
     credential.setSelectedAccountName(accountName);
     return credential.getToken();
-  }
-
-  /**
-   * Checks permission by an activity. Will start an activity to request
-   * permission using the request code.
-   * 
-   * @param activity the activity
-   * @param accountName the account name
-   * @param scope the scope
-   * @param requestCode the request code
-   * @param permissionCallback the permission callback
-   */
-  public static void checkPermissionByActivity(final Activity activity, final String accountName,
-      final String scope, final int requestCode, final PermissionCallback permissionCallback) {
-    Thread thread = new Thread(new Runnable() {
-        @Override
-      public void run() {
-        try {
-          getGoogleAccountCredential(activity, accountName, scope);
-          activity.runOnUiThread(new Runnable() {
-              @Override
-            public void run() {
-              permissionCallback.onSuccess();
-            }
-          });
-        } catch (UserRecoverableAuthException e) {
-          activity.startActivityForResult(e.getIntent(), requestCode);
-        } catch (GoogleAuthException e) {
-          Log.e(TAG, "GoogleAuthException", e);
-          activity.runOnUiThread(new Runnable() {
-              @Override
-            public void run() {
-              permissionCallback.onFailure();
-            }
-          });
-        } catch (UserRecoverableAuthIOException e) {
-          activity.startActivityForResult(e.getIntent(), requestCode);
-        } catch (IOException e) {
-          Log.e(TAG, "IOException", e);
-          activity.runOnUiThread(new Runnable() {
-              @Override
-            public void run() {
-              permissionCallback.onFailure();
-            }
-          });
-        }
-      }
-    });
-    thread.start();
   }
 
   /**

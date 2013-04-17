@@ -95,10 +95,31 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
   // Current location
   private Location currentLocation;
 
-  // True to keep the currentLocation visible
+  /**
+   * True to continue keeping the current location visible on the screen.
+   * <p>
+   * Set to true when <br>
+   * 1. user clicks on the my location button <br>
+   * Set to false when <br>
+   * 1. showing a marker <br>
+   * 2. user manually zooms/pans
+   */
   private boolean keepCurrentLocationVisible;
 
-  // True to zoom to currentLocation when it is available
+  /**
+   * True to zoom/center the current location when it is available.
+   * <p>
+   * Set to true when <br>
+   * 1. user clicks on the my location button <br>
+   * 2. first location during a recording <br>
+   * Set to false when <br>
+   * 1. showing a marker <br>
+   * 2. user manually zooms/pans <br>
+   * 3. after zooming to the current location <br>
+   * <p>
+   * The last one is to support the use case of zooming only once. After zoom,
+   * set it to false. E.g., only zoom to the first location during a recording.
+   */
   private boolean zoomToCurrentLocation;
 
   private OnLocationChangedListener onLocationChangedListener;
@@ -221,8 +242,8 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
       keepCurrentLocationVisible = savedInstanceState.getBoolean(
           KEEP_CURRENT_LOCATION_VISIBLE_KEY, false);
       zoomToCurrentLocation = savedInstanceState.getBoolean(ZOOM_TO_CURRENT_LOCATION_KEY, false);
-      currentLocation = (Location) savedInstanceState.getParcelable(CURRENT_LOCATION_KEY);
-      updateCurrentLocation();
+      Location location = (Location) savedInstanceState.getParcelable(CURRENT_LOCATION_KEY);
+      setCurrentLocation(location);
     }
   }
 
@@ -236,6 +257,7 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
       ApiAdapterFactory.getApiAdapter().invalidMenu(getActivity());
     }
     resumeTrackDataHub();
+    updateCurrentLocation();
   }
 
   @Override
@@ -348,7 +370,7 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
           }
           boolean myLocationEnabled = true;
           if (state == LocationState.DISABLED) {
-            currentLocation = null;
+            setCurrentLocation(null);
             myLocationEnabled = false;
           }
           googleMap.setMyLocationEnabled(myLocationEnabled);
@@ -415,14 +437,11 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
   @Override
   public void onLocationChanged(final Location location) {
     if (isResumed()) {
-      if (isSelectedTrackRecording() && currentLocation == null && location != null) {
-        zoomToCurrentLocation = true;
-      }
-      currentLocation = location;
+      setCurrentLocation(location);
       updateCurrentLocation();
     }
   }
-
+  
   @Override
   public void onHeadingChanged(double heading) {
     // We don't care.
@@ -587,6 +606,19 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
   }
 
   /**
+   * Sets the current location.
+   * 
+   * @param location the location
+   */
+  private void setCurrentLocation(Location location) {
+    // If recording, zoom to the first location
+    if (isSelectedTrackRecording() && currentLocation == null && location != null) {
+      zoomToCurrentLocation = true;
+    }
+    currentLocation = location;
+  }
+
+  /**
    * Updates the current location and zoom to it if necessary.
    */
   private void updateCurrentLocation() {
@@ -684,12 +716,14 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
    */
   private LatLng getDefaultLatLng() {
     MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(getActivity());
-    Location location = myTracksProviderUtils.getLastValidTrackPoint();
-    if (location != null) {
-      return new LatLng(location.getLatitude(), location.getLongitude());
-    } else {
-      return new LatLng(DEFAULT_LATITUDE, DEFAULT_LONGITUDE);
+    Track track = myTracksProviderUtils.getLastTrack();
+    if (track != null) {
+      Location location = myTracksProviderUtils.getLastValidTrackPoint(track.getId());
+      if (location != null) {
+        return new LatLng(location.getLatitude(), location.getLongitude());
+      }
     }
+    return new LatLng(DEFAULT_LATITUDE, DEFAULT_LONGITUDE);    
   }
 
   /**

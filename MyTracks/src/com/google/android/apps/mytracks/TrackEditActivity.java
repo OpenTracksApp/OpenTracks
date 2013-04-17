@@ -47,7 +47,7 @@ public class TrackEditActivity extends AbstractMyTracksActivity
   public static final String EXTRA_NEW_TRACK = "new_track";
 
   private static final String TAG = TrackEditActivity.class.getSimpleName();
-  private static final String ICON_VALUE = "icon_value";
+  private static final String ICON_VALUE_KEY = "icon_value_key";
 
   private Long trackId;
   private MyTracksProviderUtils myTracksProviderUtils;
@@ -115,7 +115,7 @@ public class TrackEditActivity extends AbstractMyTracksActivity
 
     iconValue = null;
     if (bundle != null) {
-      iconValue = bundle.getString(ICON_VALUE);
+      iconValue = bundle.getString(ICON_VALUE_KEY);
     }
     if (iconValue == null) {
       iconValue = track.getIcon();
@@ -164,7 +164,7 @@ public class TrackEditActivity extends AbstractMyTracksActivity
   @Override
   public void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
-    outState.putString(ICON_VALUE, iconValue);
+    outState.putString(ICON_VALUE_KEY, iconValue);
   }
 
   @Override
