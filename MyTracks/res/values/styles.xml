@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+  <!-- about value -->
+  <style name="AboutValue" parent="@style/TextMedium">
+    <item name="android:paddingLeft">48dp</item>
+  </style>
+  <!-- bottom button -->
+  <style name="BottomButton" parent="@android:style/Widget.DeviceDefault.Button.Borderless">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_weight">1</item>
+    <item name="android:layout_width">0dp</item>
+    <item name="android:maxLines">2</item>
+  </style>
+  <!-- bottom button bar -->
+  <style name="BottomButtonBar" parent="@android:style/DeviceDefault.ButtonBar">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:orientation">horizontal</item>
+    <item name="android:measureWithLargestChild">true</item>
+  </style>
+  <!-- choose upload service checkbox -->
+  <style name="ChooseUploadServiceCheckBox" parent="@style/TextMedium">
+    <item name="android:layout_gravity">center_vertical</item>
+    <item name="android:layout_marginLeft">8dp</item>
+    <item name="android:layout_width">0dp</item>
+    <item name="android:maxLines">5</item>
+  </style>
+  <!-- choose upload service image view -->
+  <style name="ChooseUploadServiceImageView">
+    <item name="android:layout_gravity">center</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+  </style>
+  <!-- edit category -->
+  <style name="EditCategory" parent="@style/TextMedium">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:selectAllOnFocus">true</item>
+    <item name="android:singleLine">true</item>
+  </style>
+  <!-- edit description -->
+  <style name="EditDescription" parent="@style/TextMedium">
+    <item name="android:inputType">textAutoCorrect|textCapSentences|textMultiLine</item>
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:maxLines">50</item>
+    <item name="android:selectAllOnFocus">true</item>
+    <item name="android:singleLine">false</item>
+  </style>
+  <!-- edit label -->
+  <style name="EditLabel" parent="@style/TextMedium">
+    <item name="android:layout_width">match_parent</item>
+  </style>
+  <!-- edit label with icon -->
+  <style name="EditLabel.WithIcon" parent="@style/TextMedium.WithIcon">
+    <item name="android:layout_width">match_parent</item>
+  </style>
+  <!-- edit label with padding top -->
+  <style name="EditLabel.WithPaddingTop">
+    <item name="android:paddingTop">16dp</item>
+  </style>
+  <!-- edit name marker -->
+  <style name="EditNameMarker" parent="@style/TextMedium.WithIcon">
+    <item name="android:inputType">textAutoCorrect|textCapWords</item>
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:selectAllOnFocus">true</item>
+    <item name="android:singleLine">true</item>
+  </style>
+  <!-- edit name track -->
+  <style name="EditNameTrack" parent="@style/TextMedium">
+    <item name="android:inputType">textAutoCorrect|textCapWords</item>
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:selectAllOnFocus">true</item>
+    <item name="android:singleLine">true</item>
+  </style>
+  <!-- help answer -->
+  <style name="HelpAnswer" parent="@style/TextSmall">
+    <item name="android:autoLink">web</item>
+    <item name="android:paddingBottom">8dp</item>
+  </style>
+  <!-- help question -->
+  <style name="HelpQuestion" parent="@style/TextMedium">
+    <item name="android:paddingTop">8dp</item>
+    <item name="android:textStyle">bold</item>
+  </style>
+  <!-- list empty text view -->
+  <style name="ListEmptyTextView" parent="@style/TextLarge">
+    <item name="android:gravity">center</item>
+    <item name="android:layout_gravity">center</item>
+    <item name="android:padding">8dp</item>
+  </style>
+  <!-- list item date -->
+  <style name="ListItemDate" parent="@style/TextSmall">
+    <item name="android:gravity">right</item>
+    <item name="android:layout_gravity">bottom</item>
+    <item name="android:paddingLeft">8dp</item>
+    <item name="android:singleLine">true</item>
+    <item name="android:textColor">@android:color/secondary_text_dark</item>
+  </style>
+  <!-- scroll view -->
+  <style name="ScrollView">
+    <item name="android:layout_height">match_parent</item>
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:scrollbarStyle">outsideInset</item>
+  </style>
+  <!-- scroll view with bottom buttons -->
+  <style name="ScrollView.WithBottomButtons">
+    <item name="android:layout_height">0dp</item>
+    <item name="android:layout_weight">1</item>
+  </style>
+  <!-- sensor state value -->
+  <style name="SensorStateValue" parent="@style/TextLarge">
+    <item name="android:background">@android:color/background_light</item>
+    <item name="android:gravity">right</item>
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:paddingRight">8dp</item>
+    <item name="android:textColor">@android:color/primary_text_light</item>
+  </style>
+  <!-- stats label -->
+  <style name="StatsLabel" parent="@style/TextMedium">
+    <item name="android:layout_weight">1</item>
+    <item name="android:layout_width">0dp</item>
+  </style>
+  <!-- stats spacer -->
+  <style name="StatsSpacer">
+    <item name="android:layout_height">match_parent</item>
+    <item name="android:layout_width">8dp</item>
+  </style>
+  <!-- stats value -->
+  <style name="StatsValue" parent="@style/TextLarge">
+    <item name="android:background">@android:color/background_light</item>
+    <item name="android:gravity">right</item>
+    <item name="android:layout_weight">1</item>
+    <item name="android:layout_width">0dp</item>
+    <item name="android:paddingRight">8dp</item>
+    <item name="android:textColor">@android:color/primary_text_light</item>
+  </style>
+  <!-- text choose activity -->
+  <style name="TextChooseActivity">
+    <item name="android:textSize">18sp</item>
+  </style>
+  <!-- text large -->
+  <style name="TextLarge">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:textSize">22sp</item>
+  </style>
+  <!-- text large with top margin -->
+  <style name="TextLarge.WithTopMargin">
+    <item name="android:layout_marginTop">8dp</item>
+  </style>
+  <!-- text medium -->
+  <style name="TextMedium">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:textSize">18sp</item>
+  </style>
+  <!-- text medium with icon -->
+  <style name="TextMedium.WithIcon">
+    <item name="android:drawablePadding">8dp</item>
+    <item name="android:gravity">center_vertical</item>
+  </style>
+  <!-- text micro -->
+  <style name="TextMicro">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:textSize">12sp</item>
+  </style>
+  <!-- text small -->
+  <style name="TextSmall">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:textSize">14sp</item>
+  </style>
+  <!-- theme selector -->
+  <style name="ThemeSelector" parent="android:Theme" />
+  <!-- track controller container -->
+  <style name="TrackControllerContainer">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:orientation">vertical</item>
+  </style>
+  <!-- track widget bounding box -->
+  <style name="TrackWidgetBoundingBox">
+    <item name="android:background">@drawable/track_widget_background</item>
+    <item name="android:layout_height">match_parent</item>
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:padding">@dimen/widget_margin</item>
+  </style>
+  <!-- track widget button -->
+  <style name="TrackWidgetButton">
+    <item name="android:background">@android:color/transparent</item>
+    <item name="android:layout_gravity">center_vertical</item>
+    <item name="android:scaleType">fitXY</item>
+  </style>
+  <!-- track widget button container -->
+  <style name="TrackWidgetButtonContainer">
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:layout_height">0dp</item>
+    <item name="android:layout_weight">1</item>
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:orientation">horizontal</item>
+    <item name="android:paddingBottom">4dp</item>
+    <item name="android:paddingTop">4dp</item>
+  </style>
+  <!-- track widget button record -->
+  <style name="TrackWidgetButtonRecord" parent="@style/TrackWidgetButton">
+    <item name="android:layout_height">63dp</item>
+    <item name="android:layout_width">75dp</item>
+    <item name="android:src">@drawable/btn_record</item>
+  </style>
+  <!-- track widget button stop -->
+  <style name="TrackWidgetButtonStop" parent="@style/TrackWidgetButton">
+    <item name="android:layout_height">63dp</item>
+    <item name="android:layout_width">63dp</item>
+    <item name="android:src">@drawable/btn_stop_0</item>
+  </style>
+  <!-- track widget config spiner -->
+  <style name="TrackWidgetConfigSpinner">
+    <item name="android:layout_gravity">center_horizontal</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_margin">8dp</item>
+    <item name="android:layout_width">match_parent</item>
+  </style>
+  <!-- Track widget frame -->
+  <style name="TrackWidgetFrame">
+    <item name="android:layout_alignParentTop">true</item>
+    <item name="android:layout_height">match_parent</item>
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:orientation">vertical</item>
+  </style>
+  <!-- track widget horizontal line -->
+  <style name="TrackWidgetHorizontalLine">
+    <item name="android:background">@color/track_widget_line</item>
+    <item name="android:layout_height">1dp</item>
+    <item name="android:layout_width">0dp</item>
+  </style>
+  <!-- track widget horizontal spacer -->
+  <style name="TrackWidgetHorizontalSpacer">
+    <item name="android:layout_height">1dp</item>
+    <item name="android:layout_width">0dp</item>
+  </style>
+  <!-- track widget horizontal separator -->
+  <style name="TrackWidgetHorizontalSeparator">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:orientation">horizontal</item>
+  </style>
+  <!-- track widget item container -->
+  <style name="TrackWidgetItemContainer">
+    <item name="android:layout_gravity">center_horizontal</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_weight">1</item>
+    <item name="android:layout_width">0dp</item>
+    <item name="android:orientation">vertical</item>
+    <item name="android:paddingBottom">2dp</item>
+    <item name="android:paddingTop">2dp</item>
+  </style>
+  <!-- track widget item container 4x2 -->
+  <style name="TrackWidgetItemContainer4x2" parent="@style/TrackWidgetItemContainer">
+    <item name="android:paddingBottom">4dp</item>
+    <item name="android:paddingTop">4dp</item>
+  </style>
+  <!-- track widget item container 4x3 -->
+  <style name="TrackWidgetItemContainer4x3" parent="@style/TrackWidgetItemContainer">
+    <item name="android:paddingBottom">6dp</item>
+    <item name="android:paddingTop">12dp</item>
+  </style>
+  <!-- track widget item container 4x4 -->
+  <style name="TrackWidgetItemContainer4x4" parent="@style/TrackWidgetItemContainer">
+    <item name="android:paddingBottom">12dp</item>
+    <item name="android:paddingTop">12dp</item>
+  </style>
+  <!-- track widget label -->
+  <style name="TrackWidgetLabel">
+    <item name="android:layout_gravity">center_horizontal</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:singleLine">true</item>
+    <item name="android:textAllCaps">true</item>
+    <item name="android:textColor">@color/orange</item>
+    <item name="android:textSize">10dp</item>
+    <item name="android:textStyle">bold</item>
+  </style>
+  <!-- track widget label 4x4 -->
+  <style name="TrackWidgetLabel4x4" parent="@style/TrackWidgetLabel">
+    <item name="android:textSize">14dp</item>
+  </style>
+  <!-- track widget logo -->
+  <style name="TrackWidgetLogo">
+    <item name="android:layout_alignParentRight">true</item>
+    <item name="android:layout_alignParentTop">true</item>
+    <item name="android:layout_height">24dp</item>
+    <item name="android:layout_width">24dp</item>
+    <item name="android:padding">4dp</item>
+    <item name="android:scaleType">fitXY</item>
+    <item name="android:src">@drawable/my_tracks_icon</item>
+  </style>
+  <!-- track widget logo 4x4 -->
+  <style name="TrackWidgetLogo4x4" parent="@style/TrackWidgetLogo">
+    <item name="android:layout_height">30dp</item>
+    <item name="android:layout_width">30dp</item>
+  </style>
+  <!-- track widget stats container -->
+  <style name="TrackWidgetStatsContainer">
+    <item name="android:clickable">true</item>
+    <item name="android:layout_height">0dp</item>
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:orientation">vertical</item>
+    <item name="android:padding">4dp</item>
+  </style>
+  <!-- track widget stats section -->
+  <style name="TrackWidgetStatsSection">
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:layout_height">0dp</item>
+    <item name="android:layout_weight">1</item>
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:orientation">horizontal</item>
+  </style>
+  <!-- track widget unit -->
+  <style name="TrackWidgetUnit">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_weight">1</item>
+    <item name="android:layout_width">0dp</item>
+    <item name="android:paddingLeft">4dp</item>
+    <item name="android:singleLine">true</item>
+    <item name="android:textSize">10dp</item>
+  </style>
+  <!-- track widget unit 4x3 -->
+  <style name="TrackWidgetUnit4x3" parent="@style/TrackWidgetUnit">
+    <item name="android:textSize">14dp</item>
+  </style>
+  <!-- track widget unit 4x4 -->
+  <style name="TrackWidgetUnit4x4" parent="@style/TrackWidgetUnit">
+    <item name="android:textSize">18dp</item>
+  </style>
+  <!-- track widget value -->
+  <style name="TrackWidgetValue" parent="@style/TextMedium">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_weight">2</item>
+    <item name="android:layout_width">0dp</item>
+    <item name="android:singleLine">true</item>
+    <item name="android:textColor">@android:color/white</item>
+    <item name="android:textStyle">bold</item>
+  </style>
+  <!-- track widget value 4x3 -->
+  <style name="TrackWidgetValue4x3" parent="@style/TrackWidgetValue">
+    <item name="android:textSize">28sp</item>
+  </style>
+  <!-- track widget value 4x4 -->
+  <style name="TrackWidgetValue4x4" parent="@style/TrackWidgetValue">
+    <item name="android:textSize">36sp</item>
+  </style>
+  <!-- track widget value container -->
+  <style name="TrackWidgetValueContainer">
+    <item name="android:layout_gravity">center_horizontal</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginTop">-4dp</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:orientation">horizontal</item>
+  </style>
+  <!-- track widget value container 4x3 -->
+  <style name="TrackWidgetValueContainer4x3" parent="@style/TrackWidgetValueContainer">
+    <item name="android:layout_marginTop">-2dp</item>
+  </style>
+  <!-- track widget vertical line -->
+  <style name="TrackWidgetVerticalLine">
+    <item name="android:background">@color/track_widget_line</item>
+    <item name="android:layout_height">0dp</item>
+    <item name="android:layout_width">1dp</item>
+  </style>
+  <!-- track widget vertical spacer -->
+  <style name="TrackWidgetVerticalSpacer">
+    <item name="android:layout_height">0dp</item>
+    <item name="android:layout_width">1dp</item>
+  </style>
+  <!-- track widget vertical separator -->
+  <style name="TrackWidgetVerticalSeparator">
+    <item name="android:layout_height">match_parent</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:orientation">vertical</item>
+  </style>
+</resources>
