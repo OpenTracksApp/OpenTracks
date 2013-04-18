@@ -1097,17 +1097,11 @@ limitations under the License.
       Character limit: ~20 (1 line)">
     Settings
   </string>
-  <string name="menu_share_maps"
-    translation_description="In the menu, to share a track via Google Maps.
+  <string name="menu_share"
+    translation_description="In the menu, to share a track.
 
       Character limit: ~20 (1 line)">
-    Share via Google Maps
-  </string>
-  <string name="menu_share_drive"
-    translation_description="In the menu, to share a track via Google Drive.
-
-      Character limit: ~20 (1 line)">
-    Share via Google Drive
+    Share
   </string>
   <string name="menu_show_on_map"
     translation_description="In the menu, to show a track or a marker on the map.
@@ -2032,7 +2026,24 @@ limitations under the License.
       Tracks data.">
     Other apps can read, write, start/stop recording My Tracks data.
   </string>
-
+  <string name="settings_sharing_share_track"
+    translation_description="In the 'Sharing' settings, the option to configure how to share a
+      track.
+    
+      Character limit: ~23 (1 line)">
+    Share track
+  </string>
+  <string name="settings_sharing_share_track_drive"
+    translation_description="In the 'Sharing' settings, the option in the 'Share track' setting to
+      share via Google Drive.">
+    Via Google Drive
+  </string>
+  <string name="settings_sharing_share_track_maps"
+    translation_description="In the 'Sharing' settings, the option in the 'Share track' setting to
+      share via Google Maps url.">
+    Via Google Maps url
+  </string>  
+  
   <!-- Settings Stats -->
   <string name="settings_stats_coordinate"
     translation_description="In the 'Stats settings, the option to show latitude and longitude.

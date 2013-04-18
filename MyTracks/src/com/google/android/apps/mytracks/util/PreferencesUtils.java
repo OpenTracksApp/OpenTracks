@@ -94,6 +94,7 @@ public class PreferencesUtils {
   public static final boolean SEND_TO_SPREADSHEETS_DEFAULT = false;
 
   public static final String SENSOR_TYPE_DEFAULT = "NONE";
+  public static final String SHARE_TRACK_DEFAULT = "DRIVE";
   public static final int SPLIT_FREQUENCY_DEFAULT = 0;
   public static final boolean STATS_SHOW_COORDINATE_DEFAULT = false;
   public static final boolean STATS_SHOW_ELEVATION_DEFAULT = false;

@@ -49,6 +49,7 @@ limitations under the License.
   <string name="send_to_maps_key">sendToMaps</string>
   <string name="send_to_spreadsheets_key">sendToSpreadsheets</string>
   <string name="sensor_type_key">sensorType</string>
+  <string name="share_track_key">shareTrack</string>
   <string name="split_frequency_key">splitFrequency</string>
   <string name="stats_show_coordinate_key">statsShowCoordinate</string>
   <string name="stats_show_elevation_key">statsShowElevation</string>

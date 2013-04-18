@@ -74,7 +74,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
         }
 
         public void onPrepare(Menu menu, int position, long id) {
-          menu.findItem(R.id.list_context_menu_share_drive).setVisible(false);
+          menu.findItem(R.id.list_context_menu_share).setVisible(false);
           menu.findItem(R.id.list_context_menu_show_on_map).setVisible(true);
           menu.findItem(R.id.list_context_menu_edit).setVisible(!track.isSharedWithMe());
           menu.findItem(R.id.list_context_menu_delete).setVisible(!track.isSharedWithMe());

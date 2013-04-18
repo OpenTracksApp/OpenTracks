@@ -25,7 +25,6 @@ import com.google.android.apps.mytracks.fragments.ChartFragment;
 import com.google.android.apps.mytracks.fragments.ChooseUploadServiceDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChooseUploadServiceDialogFragment.ChooseUploadServiceCaller;
 import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment;
-import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment.ConfirmCaller;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment.DeleteOneTrackCaller;
 import com.google.android.apps.mytracks.fragments.FrequencyDialogFragment;
@@ -41,7 +40,6 @@ import com.google.android.apps.mytracks.util.AnalyticsUtils;
 import com.google.android.apps.mytracks.util.GoogleFeedbackUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
-import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -72,7 +70,7 @@ import java.util.Locale;
  * @author Rodrigo Damazio
  */
 public class TrackDetailActivity extends AbstractSendToGoogleActivity
-    implements ConfirmCaller, ChooseUploadServiceCaller, DeleteOneTrackCaller {
+    implements ChooseUploadServiceCaller, DeleteOneTrackCaller {
 
   public static final String EXTRA_TRACK_ID = "track_id";
   public static final String EXTRA_MARKER_ID = "marker_id";
@@ -99,8 +97,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
 
   private MenuItem insertMarkerMenuItem;
   private MenuItem playMenuItem;
-  private MenuItem shareDriveMenuItem;
-  private MenuItem shareMapsMenuItem;
+  private MenuItem shareMenuItem;
   private MenuItem sendGoogleMenuItem;
   private MenuItem saveMenuItem;
   private MenuItem voiceFrequencyMenuItem;
@@ -301,13 +298,12 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
     Track track = myTracksProviderUtils.getTrack(trackId);
     boolean sharedWithMe = track != null ? track.isSharedWithMe() : true;
     menu.findItem(R.id.track_detail_edit).setVisible(!sharedWithMe);
-    shareDriveMenuItem = menu.findItem(R.id.track_detail_share_drive);
-    shareDriveMenuItem.setEnabled(!sharedWithMe);
-    shareDriveMenuItem.setVisible(!sharedWithMe);
+    shareMenuItem = menu.findItem(R.id.track_detail_share);
+    shareMenuItem.setEnabled(!sharedWithMe);
+    shareMenuItem.setVisible(!sharedWithMe);
 
     insertMarkerMenuItem = menu.findItem(R.id.track_detail_insert_marker);
     playMenuItem = menu.findItem(R.id.track_detail_play);
-    shareMapsMenuItem = menu.findItem(R.id.track_detail_share_maps);
     sendGoogleMenuItem = menu.findItem(R.id.track_detail_send_google);
     saveMenuItem = menu.findItem(R.id.track_detail_save);
     voiceFrequencyMenuItem = menu.findItem(R.id.track_detail_voice_frequency);
@@ -349,17 +345,8 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
               getSupportFragmentManager(), InstallEarthDialogFragment.INSTALL_EARTH_DIALOG_TAG);
         }
         return true;
-      case R.id.track_detail_share_drive:
-        ConfirmDialogFragment.newInstance(R.string.confirm_share_drive_key,
-            PreferencesUtils.CONFIRM_SHARE_DRIVE_DEFAULT,
-            getString(R.string.share_track_drive_confirm_message), trackId)
-            .show(getSupportFragmentManager(), ConfirmDialogFragment.CONFIRM_DIALOG_TAG);
-        return true;
-      case R.id.track_detail_share_maps:
-        ConfirmDialogFragment.newInstance(R.string.confirm_share_maps_key,
-            PreferencesUtils.CONFIRM_SHARE_MAPS_DEFAULT, StringUtils.getHtml(
-                this, R.string.share_track_maps_confirm_message, R.string.maps_public_unlisted_url),
-            trackId).show(getSupportFragmentManager(), ConfirmDialogFragment.CONFIRM_DIALOG_TAG);
+      case R.id.track_detail_share:
+        confirmShare(trackId);       
         return true;
       case R.id.track_detail_markers:
         intent = IntentUtils.newIntent(this, MarkerListActivity.class)
@@ -439,32 +426,17 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
 
   @Override
   public void onConfirmDone(int confirmId, long confirmTrackId) {
-    SendRequest sendRequest;
-    Intent intent;
     switch (confirmId) {
       case R.string.confirm_play_earth_key:
         AnalyticsUtils.sendPageViews(this, "/action/play");
-        intent = IntentUtils.newIntent(this, SaveActivity.class)
+        Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
             .putExtra(SaveActivity.EXTRA_TRACK_ID, confirmTrackId)
             .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.KML)
             .putExtra(SaveActivity.EXTRA_PLAY_TRACK, true);
         startActivity(intent);
         break;
-      case R.string.confirm_share_maps_key:
-        AnalyticsUtils.sendPageViews(this, "/action/share_maps");
-        sendRequest = new SendRequest(trackId);
-        sendRequest.setSendMaps(true);
-        sendRequest.setMapsShare(true);
-        sendToGoogle(sendRequest);
-        break;
-      case R.string.confirm_share_drive_key:
-        AnalyticsUtils.sendPageViews(this, "/action/share_drive");
-        sendRequest = new SendRequest(trackId);
-        sendRequest.setSendDrive(true);
-        sendRequest.setDriveShare(true);
-        sendToGoogle(sendRequest);
-        break;
       default:
+        super.onConfirmDone(confirmId, confirmTrackId);
     }
   }
 
@@ -576,11 +548,8 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
     if (playMenuItem != null) {
       playMenuItem.setVisible(!isRecording);
     }
-    if (shareMapsMenuItem != null) {
-      shareMapsMenuItem.setVisible(!isRecording);
-    }
-    if (shareDriveMenuItem != null && shareDriveMenuItem.isEnabled()) {
-      shareDriveMenuItem.setVisible(!isRecording);
+    if (shareMenuItem != null && shareMenuItem.isEnabled()) {
+      shareMenuItem.setVisible(!isRecording);
     }
     if (sendGoogleMenuItem != null) {
       sendGoogleMenuItem.setVisible(!isRecording);

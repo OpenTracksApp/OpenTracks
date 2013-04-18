@@ -17,12 +17,14 @@
 package com.google.android.apps.mytracks.settings;
 
 import com.google.android.apps.mytracks.util.DialogUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 
@@ -35,6 +37,7 @@ public class SharingSettingsActivity extends AbstractSettingsActivity {
 
   private static final int DIALOG_CONFIRM_ALLOW_ACCESS_ID = 0;
 
+  private ListPreference shareTrackListPreference;
   private CheckBoxPreference allowAccessCheckBoxPreference;
 
   @SuppressWarnings("deprecation")
@@ -42,6 +45,14 @@ public class SharingSettingsActivity extends AbstractSettingsActivity {
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
     addPreferencesFromResource(R.xml.sharing_settings);
+    
+    shareTrackListPreference = (ListPreference) findPreference(getString(R.string.share_track_key));
+    String value = PreferencesUtils.getString(
+        this, R.string.share_track_key, PreferencesUtils.SHARE_TRACK_DEFAULT);
+    String[] values = getResources().getStringArray(R.array.share_track_values);
+    String[] options = getResources().getStringArray(R.array.share_track_options);
+    configureListPreference(shareTrackListPreference, options, options, values, value, null);
+    
 
     allowAccessCheckBoxPreference = (CheckBoxPreference) findPreference(
         getString(R.string.allow_access_key));

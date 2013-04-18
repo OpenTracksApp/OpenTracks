@@ -23,8 +23,6 @@ import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.TrackDataType;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment;
-import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment.ConfirmCaller;
 import com.google.android.apps.mytracks.fragments.DeleteAllTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment.DeleteOneTrackCaller;
@@ -96,7 +94,7 @@ import java.util.Locale;
  * @author Leif Hendrik Wilden
  */
 public class TrackListActivity extends AbstractSendToGoogleActivity
-    implements EulaCaller, EnableSyncCaller, ConfirmCaller, DeleteOneTrackCaller {
+    implements EulaCaller, EnableSyncCaller, DeleteOneTrackCaller {
 
   private static final String TAG = TrackListActivity.class.getSimpleName();
   private static final String START_GPS_KEY = "start_gps_key";
@@ -204,7 +202,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
 
         public void onPrepare(Menu menu, int position, long id) {
           Track track = myTracksProviderUtils.getTrack(id);
-          menu.findItem(R.id.list_context_menu_share_drive).setVisible(!track.isSharedWithMe());
+          menu.findItem(R.id.list_context_menu_share).setVisible(!track.isSharedWithMe());
           menu.findItem(R.id.list_context_menu_show_on_map).setVisible(false);
           menu.findItem(R.id.list_context_menu_edit).setVisible(!track.isSharedWithMe());
           menu.findItem(R.id.list_context_menu_delete).setVisible(true);
@@ -656,20 +654,6 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   }
 
   @Override
-  public void onConfirmDone(int confirmId, long trackId) {
-    switch (confirmId) {
-      case R.string.confirm_share_drive_key:
-        AnalyticsUtils.sendPageViews(this, "/action/share_drive");
-        SendRequest sendRequest = new SendRequest(trackId);
-        sendRequest.setSendDrive(true);
-        sendRequest.setDriveShare(true);
-        sendToGoogle(sendRequest);
-        break;
-      default:
-    }
-  }
-
-  @Override
   public TrackRecordingServiceConnection getTrackRecordingServiceConnection() {
     return trackRecordingServiceConnection;
   }
@@ -828,11 +812,8 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   private boolean handleContextItem(int itemId, long trackId) {
     Intent intent;
     switch (itemId) {
-      case R.id.list_context_menu_share_drive:
-        ConfirmDialogFragment.newInstance(R.string.confirm_share_drive_key,
-            PreferencesUtils.CONFIRM_SHARE_DRIVE_DEFAULT,
-            getString(R.string.share_track_drive_confirm_message), trackId)
-            .show(getSupportFragmentManager(), ConfirmDialogFragment.CONFIRM_DIALOG_TAG);
+      case R.id.list_context_menu_share:
+        confirmShare(trackId);        
         return true;
       case R.id.list_context_menu_show_on_map:
         intent = IntentUtils.newIntent(this, TrackDetailActivity.class)

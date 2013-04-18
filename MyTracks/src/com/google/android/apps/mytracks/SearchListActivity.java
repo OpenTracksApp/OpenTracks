@@ -24,17 +24,13 @@ import com.google.android.apps.mytracks.content.SearchEngineProvider;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
-import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment;
-import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment.ConfirmCaller;
 import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment.DeleteOneMarkerCaller;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment.DeleteOneTrackCaller;
-import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.services.MyTracksLocationManager;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.apps.mytracks.util.AnalyticsUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.ListItemUtils;
@@ -79,7 +75,7 @@ import java.util.SortedSet;
  * @author Rodrigo Damazio
  */
 public class SearchListActivity extends AbstractSendToGoogleActivity
-    implements ConfirmCaller, DeleteOneTrackCaller, DeleteOneMarkerCaller {
+    implements DeleteOneTrackCaller, DeleteOneMarkerCaller {
 
   private static final String TAG = SearchListActivity.class.getSimpleName();
 
@@ -141,7 +137,7 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
           Long trackId = (Long) item.get(TRACK_ID_FIELD);
           Long markerId = (Long) item.get(MARKER_ID_FIELD);
           Track track = myTracksProviderUtils.getTrack(trackId);
-          menu.findItem(R.id.list_context_menu_share_drive)
+          menu.findItem(R.id.list_context_menu_share)
               .setVisible(markerId == null && !track.isSharedWithMe());
           menu.findItem(R.id.list_context_menu_show_on_map).setVisible(markerId != null);
           menu.findItem(R.id.list_context_menu_edit).setVisible(!track.isSharedWithMe());
@@ -328,11 +324,8 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
     Long markerId = (Long) item.get(MARKER_ID_FIELD);
     Intent intent;
     switch (itemId) {
-      case R.id.list_context_menu_share_drive:
-        ConfirmDialogFragment.newInstance(R.string.confirm_share_drive_key,
-            PreferencesUtils.CONFIRM_SHARE_DRIVE_DEFAULT,
-            getString(R.string.share_track_drive_confirm_message), trackId)
-            .show(getSupportFragmentManager(), ConfirmDialogFragment.CONFIRM_DIALOG_TAG);
+      case R.id.list_context_menu_share:
+        confirmShare(trackId);        
         return true;
       case R.id.list_context_menu_show_on_map:
         if (markerId != null) {
@@ -508,20 +501,6 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
     resultMap.put(SHARED_OWNER_FIELD, track.getSharedOwner());
     resultMap.put(TRACK_ID_FIELD, track.getId());
     resultMap.put(MARKER_ID_FIELD, null);
-  }
-
-  @Override
-  public void onConfirmDone(int confirmId, long trackId) {
-    switch (confirmId) {
-      case R.string.confirm_share_drive_key:
-        AnalyticsUtils.sendPageViews(this, "/action/share_drive");
-        SendRequest sendRequest = new SendRequest(trackId);
-        sendRequest.setSendDrive(true);
-        sendRequest.setDriveShare(true);
-        sendToGoogle(sendRequest);
-        break;
-      default:
-    }
   }
 
   @Override

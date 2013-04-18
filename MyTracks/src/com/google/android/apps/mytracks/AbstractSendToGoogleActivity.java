@@ -24,6 +24,8 @@ import com.google.android.apps.mytracks.fragments.ChooseAccountDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChooseAccountDialogFragment.ChooseAccountCaller;
 import com.google.android.apps.mytracks.fragments.ChooseActivityDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChooseActivityDialogFragment.ChooseActivityCaller;
+import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment;
+import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment.ConfirmCaller;
 import com.google.android.apps.mytracks.io.drive.SendDriveActivity;
 import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesActivity;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsConstants;
@@ -34,8 +36,10 @@ import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
 import com.google.android.apps.mytracks.io.sendtogoogle.UploadResultActivity;
 import com.google.android.apps.mytracks.io.spreadsheets.SendSpreadsheetsActivity;
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
+import com.google.android.apps.mytracks.util.AnalyticsUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.accounts.Account;
@@ -59,8 +63,9 @@ import java.io.IOException;
  * 
  * @author Jimmy Shih
  */
-public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActivity
-    implements ChooseAccountCaller, CheckPermissionCaller, AddEmailsCaller, ChooseActivityCaller {
+public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActivity implements
+    ChooseAccountCaller, CheckPermissionCaller, AddEmailsCaller, ChooseActivityCaller,
+    ConfirmCaller {
 
   private static final String TAG = AbstractMyTracksActivity.class.getSimpleName();
   private static final String SEND_REQUEST_KEY = "send_request_key";
@@ -328,5 +333,42 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
    */
   private void onPermissionFailure() {
     Toast.makeText(this, R.string.send_google_no_account_permission, Toast.LENGTH_LONG).show();
+  }
+
+  protected void confirmShare(long trackId) {
+    String shareTrack = PreferencesUtils.getString(
+        this, R.string.share_track_key, PreferencesUtils.SHARE_TRACK_DEFAULT);
+    if (shareTrack.equals(PreferencesUtils.SHARE_TRACK_DEFAULT)) {
+      ConfirmDialogFragment.newInstance(R.string.confirm_share_drive_key,
+          PreferencesUtils.CONFIRM_SHARE_DRIVE_DEFAULT,
+          getString(R.string.share_track_drive_confirm_message), trackId)
+          .show(getSupportFragmentManager(), ConfirmDialogFragment.CONFIRM_DIALOG_TAG);
+    } else {
+      ConfirmDialogFragment.newInstance(R.string.confirm_share_maps_key,
+          PreferencesUtils.CONFIRM_SHARE_MAPS_DEFAULT, StringUtils.getHtml(this,
+              R.string.share_track_maps_confirm_message, R.string.maps_public_unlisted_url),
+          trackId).show(getSupportFragmentManager(), ConfirmDialogFragment.CONFIRM_DIALOG_TAG);
+    }  
+  }
+
+  @Override
+  public void onConfirmDone(int confirmId, long trackId) {
+    switch (confirmId) {
+      case R.string.confirm_share_drive_key:
+        AnalyticsUtils.sendPageViews(this, "/action/share_drive");
+        SendRequest sendRequest = new SendRequest(trackId);
+        sendRequest.setSendDrive(true);
+        sendRequest.setDriveShare(true);
+        sendToGoogle(sendRequest);
+        break;
+      case R.string.confirm_share_maps_key:
+        AnalyticsUtils.sendPageViews(this, "/action/share_maps");
+        sendRequest = new SendRequest(trackId);
+        sendRequest.setSendMaps(true);
+        sendRequest.setMapsShare(true);
+        sendToGoogle(sendRequest);
+        break;    
+      default:
+    }
   }
 }

@@ -16,6 +16,10 @@ limitations under the License.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
   android:title="@string/settings_sharing" >
+  <ListPreference
+    android:defaultValue="@string/settings_sharing_share_track_drive_value"
+    android:key="@string/share_track_key"
+    android:title="@string/settings_sharing_share_track" />
   <CheckBoxPreference
     android:defaultValue="false"
     android:key="@string/allow_access_key"
