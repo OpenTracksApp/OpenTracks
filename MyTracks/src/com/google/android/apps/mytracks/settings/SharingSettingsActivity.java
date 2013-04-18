@@ -28,6 +28,9 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * An activity for accessing the sharing settings.
  * 
@@ -45,14 +48,27 @@ public class SharingSettingsActivity extends AbstractSettingsActivity {
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
     addPreferencesFromResource(R.xml.sharing_settings);
-    
+
     shareTrackListPreference = (ListPreference) findPreference(getString(R.string.share_track_key));
     String value = PreferencesUtils.getString(
         this, R.string.share_track_key, PreferencesUtils.SHARE_TRACK_DEFAULT);
-    String[] values = getResources().getStringArray(R.array.share_track_values);
-    String[] options = getResources().getStringArray(R.array.share_track_options);
+
+    String fileTypes[] = getResources().getStringArray(R.array.file_types);
+    ArrayList<String> shareTrackValues = new ArrayList<String>(
+        Arrays.asList(getResources().getStringArray(R.array.share_track_values)));
+    for (String fileType : fileTypes) {
+      shareTrackValues.add(fileType);
+    }
+    String[] values = shareTrackValues.toArray(new String[shareTrackValues.size()]);
+
+    ArrayList<String> shareTrackOptions = new ArrayList<String>(
+        Arrays.asList(getResources().getStringArray(R.array.share_track_options)));
+    for (String fileType : fileTypes) {
+      shareTrackOptions.add(getString(R.string.settings_sharing_share_track_file, fileType));
+    }
+    String[] options = shareTrackOptions.toArray(new String[shareTrackOptions.size()]);
+
     configureListPreference(shareTrackListPreference, options, options, values, value, null);
-    
 
     allowAccessCheckBoxPreference = (CheckBoxPreference) findPreference(
         getString(R.string.allow_access_key));

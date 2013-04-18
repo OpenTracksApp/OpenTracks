@@ -2038,6 +2038,13 @@ limitations under the License.
       share via Google Drive.">
     Via Google Drive
   </string>
+  <string name="settings_sharing_share_track_file"
+    translation_description="In the 'Sharing' settings, the option in the 'Share track' setting to
+      share as a file.
+      
+       %1$s: file format. E.g., 'GPX'.">
+    As %1$s file
+  </string>
   <string name="settings_sharing_share_track_maps"
     translation_description="In the 'Sharing' settings, the option in the 'Share track' setting to
       share via Google Maps url.">
@@ -2098,6 +2105,10 @@ limitations under the License.
       friends.">
     This will upload your track to Google Drive so you can share the file with friends. The file
     will be private and only those you have shared with will have access.
+  </string>
+  <string name="share_track_file_confirm_message"
+    translation_description="The confirmation message when sharing a track as a file.">
+    This will save your track to external storage so you can share the file.    
   </string>
   <string name="share_track_maps_confirm_message"
     translation_description="The confirmation message when sharing a track via Google Maps with

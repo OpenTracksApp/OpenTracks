@@ -27,6 +27,8 @@ import com.google.android.apps.mytracks.fragments.ChooseActivityDialogFragment.C
 import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment;
 import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment.ConfirmCaller;
 import com.google.android.apps.mytracks.io.drive.SendDriveActivity;
+import com.google.android.apps.mytracks.io.file.SaveActivity;
+import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesActivity;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsConstants;
 import com.google.android.apps.mytracks.io.maps.ChooseMapActivity;
@@ -52,6 +54,7 @@ import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.widget.Toast;
@@ -338,36 +341,63 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
   protected void confirmShare(long trackId) {
     String shareTrack = PreferencesUtils.getString(
         this, R.string.share_track_key, PreferencesUtils.SHARE_TRACK_DEFAULT);
-    if (shareTrack.equals(PreferencesUtils.SHARE_TRACK_DEFAULT)) {
+    String driveValue = getString(R.string.settings_sharing_share_track_drive_value);
+    String mapsValue = getString(R.string.settings_sharing_share_track_maps_value);
+    if (shareTrack.equals(driveValue)) {
       ConfirmDialogFragment.newInstance(R.string.confirm_share_drive_key,
           PreferencesUtils.CONFIRM_SHARE_DRIVE_DEFAULT,
           getString(R.string.share_track_drive_confirm_message), trackId)
           .show(getSupportFragmentManager(), ConfirmDialogFragment.CONFIRM_DIALOG_TAG);
-    } else {
+    } else if (shareTrack.equals(mapsValue)) {
       ConfirmDialogFragment.newInstance(R.string.confirm_share_maps_key,
-          PreferencesUtils.CONFIRM_SHARE_MAPS_DEFAULT, StringUtils.getHtml(this,
-              R.string.share_track_maps_confirm_message, R.string.maps_public_unlisted_url),
+          PreferencesUtils.CONFIRM_SHARE_MAPS_DEFAULT, StringUtils.getHtml(
+              this, R.string.share_track_maps_confirm_message, R.string.maps_public_unlisted_url),
           trackId).show(getSupportFragmentManager(), ConfirmDialogFragment.CONFIRM_DIALOG_TAG);
-    }  
+    } else {
+      ConfirmDialogFragment.newInstance(R.string.confirm_share_file_key,
+          PreferencesUtils.CONFIRM_SHARE_FILE_DEFAULT,
+          getString(R.string.share_track_file_confirm_message), trackId)
+          .show(getSupportFragmentManager(), ConfirmDialogFragment.CONFIRM_DIALOG_TAG);
+    }
   }
 
   @Override
   public void onConfirmDone(int confirmId, long trackId) {
+    SendRequest newRequest;
     switch (confirmId) {
       case R.string.confirm_share_drive_key:
         AnalyticsUtils.sendPageViews(this, "/action/share_drive");
-        SendRequest sendRequest = new SendRequest(trackId);
-        sendRequest.setSendDrive(true);
-        sendRequest.setDriveShare(true);
-        sendToGoogle(sendRequest);
+        newRequest = new SendRequest(trackId);
+        newRequest.setSendDrive(true);
+        newRequest.setDriveShare(true);
+        sendToGoogle(newRequest);
         break;
       case R.string.confirm_share_maps_key:
         AnalyticsUtils.sendPageViews(this, "/action/share_maps");
-        sendRequest = new SendRequest(trackId);
-        sendRequest.setSendMaps(true);
-        sendRequest.setMapsShare(true);
-        sendToGoogle(sendRequest);
-        break;    
+        newRequest = new SendRequest(trackId);
+        newRequest.setSendMaps(true);
+        newRequest.setMapsShare(true);
+        sendToGoogle(newRequest);
+        break;
+      case R.string.confirm_share_file_key:
+        String shareTrack = PreferencesUtils.getString(
+            this, R.string.share_track_key, PreferencesUtils.SHARE_TRACK_DEFAULT);
+        TrackFileFormat trackFileFormat;
+        if (shareTrack.equals(TrackFileFormat.GPX.name())) {
+          trackFileFormat = TrackFileFormat.GPX;
+        } else if (shareTrack.equals(TrackFileFormat.KML.name())) {
+          trackFileFormat = TrackFileFormat.KML;
+        } else if (shareTrack.equals(TrackFileFormat.CSV.name())) {
+          trackFileFormat = TrackFileFormat.CSV;
+        } else {
+          trackFileFormat = TrackFileFormat.TCX;
+        }
+        Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
+            .putExtra(SaveActivity.EXTRA_TRACK_ID, trackId)
+            .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat)
+            .putExtra(SaveActivity.EXTRA_SHARE_TRACK, true);
+        startActivity(intent);
+        break;
       default:
     }
   }
