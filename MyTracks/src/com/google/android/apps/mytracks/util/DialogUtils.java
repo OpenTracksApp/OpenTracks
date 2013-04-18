@@ -61,8 +61,8 @@ public class DialogUtils {
     AlertDialog.Builder builder = new AlertDialog.Builder(context)
         .setCancelable(true)
         .setIcon(android.R.drawable.ic_dialog_alert)
-        .setNegativeButton(android.R.string.cancel, cancelListener)
-        .setPositiveButton(android.R.string.ok, okListener)
+        .setNegativeButton(R.string.generic_no, cancelListener)
+        .setPositiveButton(R.string.generic_yes, okListener)
         .setTitle(R.string.generic_confirm_title);
     if (messageId != -1) {
       builder.setMessage(messageId);

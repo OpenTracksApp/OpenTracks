@@ -708,6 +708,10 @@ limitations under the License.
       %1$s name. E.g., 'Track 1'.">
     Name: %1$s
   </string>
+  <string name="generic_no"
+    translation_description="The text on a button to say no.">
+    No    
+  </string>
   <string name="generic_ok"
     translation_description="The text on a button to say ok.">
     OK
@@ -732,7 +736,11 @@ limitations under the License.
     translation_description="The title on an alert dialog indicating success.">
     Success
   </string>
-
+  <string name="generic_yes"
+    translation_description="The text on a button to say yes.">
+    Yes    
+  </string>
+    
   <!-- Gps -->
   <string name="gps_google_location_settings"
      translation_description="In Android, the Google location settings to modify location settings

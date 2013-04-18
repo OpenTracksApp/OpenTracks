@@ -79,12 +79,12 @@ public class EnableSyncDialogFragment extends DialogFragment {
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     return new AlertDialog.Builder(fragmentActivity).setMessage(R.string.enable_sync_message)
-        .setNegativeButton(R.string.generic_cancel, new OnClickListener() {
+        .setNegativeButton(R.string.generic_no, new OnClickListener() {
             @Override
           public void onClick(DialogInterface dialog, int which) {
             caller.onEnableSyncDone(false);
           }
-        }).setPositiveButton(R.string.generic_ok, new OnClickListener() {
+        }).setPositiveButton(R.string.generic_yes, new OnClickListener() {
             @Override
           public void onClick(DialogInterface dialog, int which) {
             caller.onEnableSyncDone(true);
