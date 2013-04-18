@@ -3081,16 +3081,4 @@ limitations under the License.
       completion suggestion for a waypoint.">
     waypoint
   </string>
-
-  <!-- Welcome -->
-  <string name="welcome_message"
-    translation_description="The message of the welcome dialog. Note that \n is the newline
-      character.">
-    Welcome to My Tracks. Use this app to record your GPS tracks, aggregate your stats over time,
-    and share your paths with friends.\n\nHappy Exploring,\nThe My Tracks Team
-  </string>
-  <string name="welcome_title"
-    translation_description="The title of the welcome dialog.">
-    Welcome to My Tracks
-  </string>
 </resources>

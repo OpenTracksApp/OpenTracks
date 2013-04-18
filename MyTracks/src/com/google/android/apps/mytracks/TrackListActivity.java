@@ -32,8 +32,6 @@ import com.google.android.apps.mytracks.fragments.EnableSyncDialogFragment;
 import com.google.android.apps.mytracks.fragments.EnableSyncDialogFragment.EnableSyncCaller;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment.EulaCaller;
-import com.google.android.apps.mytracks.fragments.WelcomeDialogFragment;
-import com.google.android.apps.mytracks.fragments.WelcomeDialogFragment.WelcomeCaller;
 import com.google.android.apps.mytracks.io.file.ImportActivity;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
@@ -98,7 +96,7 @@ import java.util.Locale;
  * @author Leif Hendrik Wilden
  */
 public class TrackListActivity extends AbstractSendToGoogleActivity
-    implements EulaCaller, WelcomeCaller, EnableSyncCaller, ConfirmCaller, DeleteOneTrackCaller {
+    implements EulaCaller, EnableSyncCaller, ConfirmCaller, DeleteOneTrackCaller {
 
   private static final String TAG = TrackListActivity.class.getSimpleName();
   private static final String START_GPS_KEY = "start_gps_key";
@@ -692,13 +690,6 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         EulaDialogFragment.newInstance(false)
             .show(getSupportFragmentManager(), EulaDialogFragment.EULA_DIALOG_TAG);
       }
-    } else if (EulaUtils.getShowWelcome(this)) {
-      Fragment fragment = getSupportFragmentManager()
-          .findFragmentByTag(WelcomeDialogFragment.WELCOME_DIALOG_TAG);
-      if (fragment == null) {
-        new WelcomeDialogFragment().show(
-            getSupportFragmentManager(), WelcomeDialogFragment.WELCOME_DIALOG_TAG);
-      }
     } else {
       /*
        * Before the welcome sequence, the empty view is not visible so that it
@@ -717,12 +708,6 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
       return;
     }
     finish();    
-  }
-
-  @Override
-  public void onWelcomeDone() {
-    EulaUtils.setShowWelcome(this);
-    showStartupDialogs();    
   }
 
   private void checkGooglePlayServices() {
