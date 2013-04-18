@@ -107,8 +107,8 @@ public class ConfirmDialogFragment extends DialogFragment {
     checkBox = (CheckBox) view.findViewById(R.id.confirm_dialog_check_box);
 
     return new AlertDialog.Builder(fragmentActivity).setNegativeButton(
-        android.R.string.cancel, null)
-        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+        R.string.generic_no, null)
+        .setPositiveButton(R.string.generic_yes, new DialogInterface.OnClickListener() {
             @Override
           public void onClick(DialogInterface dialog, int which) {
             int confirmId = getArguments().getInt(KEY_CONFIRM_ID);

@@ -235,7 +235,7 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
         final String newValue = bundle.getString(ACCOUNT_NAME_KEY);
         alertDialog.setMessage(
             getString(R.string.settings_google_account_confirm_message, googleAccount));
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(android.R.string.ok),
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.generic_yes),
             new DialogInterface.OnClickListener() {
                 @Override
               public void onClick(DialogInterface d, int button) {
