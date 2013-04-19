@@ -13,7 +13,7 @@
         they need to install Google Play services (from Play Store) [CHAR LIMIT=NONE] -->
     <string name="common_google_play_services_install_text_tablet" msgid="7351599665250191022">This app won\'t run without Google Play services, which are missing from your tablet.</string>
 
-    <!-- Button in confirmation dialog for installing Google Play services [CHAR LIMIT=30] -->
+    <!-- Button in confirmation dialog for installing Google Play services [CHAR LIMIT=40] -->
     <string name="common_google_play_services_install_button" msgid="7153882981874058840">Get Google Play services</string>
 
     <!-- Title of confirmation dialog informing user they need to enable
@@ -26,7 +26,7 @@
 
     <!-- Button in confirmation dialog to enable Google Play services.  Clicking it
         will direct user to application settings of Google Play services where they
-        can enable it [CHAR LIMIT=30] -->
+        can enable it [CHAR LIMIT=40] -->
     <string name="common_google_play_services_enable_button" msgid="2523291102206661146">Enable Google Play services</string>
 
     <!-- Title of confirmation dialog informing user that they need to update
@@ -37,11 +37,32 @@
         Google Play services (from Play Store) [CHAR LIMIT=NONE] -->
     <string name="common_google_play_services_update_text" msgid="9053896323427875356">This app won\'t run unless you update Google Play services.</string>
 
-    <!-- Message in confirmation dialog informing user there is an unknow issue in Google Player
+    <!-- Message in confirmation dialog informing user there is an unknown issue in Google Play
         services [CHAR LIMIT=NONE] -->
     <string name="common_google_play_services_unknown_issue">Unknown issue with Google Play services.</string>
 
-    <!-- Button in confirmation dialog for updating Google Play services [CHAR LIMIT=20] -->
+    <!-- Title of confirmation dialog informing user that Google Play services is not supported on their device [CHAR LIMIT=40] -->
+    <string name="common_google_play_services_unsupported_title">Google Play services</string>
+
+    <!-- Message in confirmation dialog informing user that Google Play services is not supported on their device [CHAR LIMIT=NONE] -->
+    <string name="common_google_play_services_unsupported_text">Google Play services, which some of your applications rely on, is not supported by your device. Please contact the manufacturer for assistance.</string>
+
+    <!-- Button in confirmation dialog for updating Google Play services [CHAR LIMIT=40] -->
     <string name="common_google_play_services_update_button" msgid="6556509956452265614">Update</string>
 
+    <!-- Long form sign-in button text. This is the placeholder text, used if we can't
+        find the service-side assets. [CHAR LIMIT=25] -->
+    <string name="common_signin_button_text_long">Sign in with Google</string>
+
+
+  <!-- Auth client code resources (prefix with auth_client --><skip />
+  <!--  Title for notification shown when GooglePlayServices is unavailable [CHAR LIMIT=70] -->
+  <string name="auth_client_availability_notification_title">Install/Update/Enable Google Play services</string>
+
+  <!--  Title for notification shown when GooglePlayServices is unavailable [CHAR LIMIT=42] -->
+  <string name="auth_client_play_services_err_notification_msg">Google Play services error</string>
+
+  <!--  Requested by string saying which app requested the notification. [CHAR LIMIT=42] -->
+  <string name="auth_client_requested_by_msg">Requested by <xliff:g id="app_name">%1$s</xliff:g></string>
+  <!-- End Auth client resources --><skip />
 </resources>

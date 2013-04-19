@@ -10,7 +10,13 @@
     <string name="common_google_play_services_enable_button" msgid="4181637455539816337">"啟用 Google Play 服務"</string>
     <string name="common_google_play_services_update_title" msgid="6006316683626838685">"更新 Google Play 服務"</string>
     <string name="common_google_play_services_update_text" msgid="448354684997260580">"您必須更新 Google Play 服務，才能執行這個應用程式。"</string>
-    <!-- no translation found for common_google_play_services_unknown_issue (4762332809710093730) -->
-    <skip />
+    <string name="common_google_play_services_unknown_issue" msgid="4762332809710093730">"Google Play 服務發生不明問題。"</string>
+    <string name="common_google_play_services_unsupported_title" msgid="6334768798839376943">"Google Play 服務"</string>
+    <string name="common_google_play_services_unsupported_text" msgid="3542578567569488671">"您的裝置不支援部分應用程式所需的 Google Play 服務。如需協助，請與您的裝置製造商聯絡。"</string>
     <string name="common_google_play_services_update_button" msgid="8932944190611227642">"更新"</string>
+    <string name="common_signin_button_text_long" msgid="2429381841831957106">"使用 Google 帳戶登入"</string>
+
+    <string name="auth_client_availability_notification_title" msgid="8472377992819116328">"安裝/更新/啟用 Google Play 服務"</string>
+    <string name="auth_client_play_services_err_notification_msg" msgid="3635065018897986478">"Google Play 服務錯誤"</string>
+    <string name="auth_client_requested_by_msg" msgid="6304135633531965756">"提出要求的應用程式：<xliff:g id="APP_NAME">%1$s</xliff:g>"</string>
 </resources>
