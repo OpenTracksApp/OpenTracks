@@ -291,10 +291,6 @@ public class EndToEndTestUtils {
       setIsEmulator();
       if ((getButtonOnScreen(activityMytracks.getString(R.string.eula_accept), false, false) != null)) {
         verifyFirstLaunch();
-      } else if (SOLO.waitForText(
-      // After reset setting, welcome page will show again.
-          activityMytracks.getString(R.string.welcome_title), 0, SHORT_WAIT_TIME)) {
-        resetPreferredUnits();
       }
       hasActionBar = setHasActionBar();
       checkLanguage();
@@ -307,10 +303,6 @@ public class EndToEndTestUtils {
         hasGpsSingal = !SOLO.waitForText(NO_GPS_MESSAGE_PREFIX, 1, SHORT_WAIT_TIME);
         SOLO.goBack();
       }
-    } else if (SOLO.waitForText(
-    // After reset setting, welcome page will show again.
-        activityMytracks.getString(R.string.welcome_title), 0, SHORT_WAIT_TIME)) {
-      resetPreferredUnits();
     }
 
     int trackNumber = SOLO.getCurrentListViews().get(0).getCount();
@@ -356,11 +348,9 @@ public class EndToEndTestUtils {
    */
   private static void verifyFirstLaunch() {
     getButtonOnScreen(activityMytracks.getString(R.string.eula_accept), true, true);
-    if (SOLO.waitForText(activityMytracks.getString(R.string.welcome_title))) {
-      // Click for welcome.
-      getButtonOnScreen(activityMytracks.getString(R.string.generic_ok), true, true);
+    if (SOLO.waitForText(activityMytracks.getString(R.string.enable_sync_title))) {
       // Click for Sync with Google Drive(Don't enable sync as default).
-      getButtonOnScreen(activityMytracks.getString(R.string.generic_cancel), true, true);
+      getButtonOnScreen(activityMytracks.getString(R.string.generic_no), true, true);
       instrumentation.waitForIdleSync();
     }
   }
@@ -872,7 +862,7 @@ public class EndToEndTestUtils {
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup_reset));
     SOLO.waitForText(activityMyTracks.getString(R.string.settings_reset));
     SOLO.clickOnText(activityMyTracks.getString(R.string.settings_reset));
-    getButtonOnScreen(activityMytracks.getString(R.string.generic_ok), true, true);
+    getButtonOnScreen(activityMytracks.getString(R.string.generic_yes), true, true);
     Assert.assertTrue(SOLO.waitForText(activityMyTracks.getString(R.string.settings_reset_done)));
     instrumentation.waitForIdleSync();
     SOLO.goBack();
