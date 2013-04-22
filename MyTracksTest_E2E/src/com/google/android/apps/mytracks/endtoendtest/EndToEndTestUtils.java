@@ -323,16 +323,6 @@ public class EndToEndTestUtils {
   }
 
   /**
-   * Checks if need reset preferred units.
-   */
-  private static void resetPreferredUnits() {
-    getButtonOnScreen(activityMytracks.getString(R.string.generic_ok), true, true);
-    SOLO.waitForText(activityMytracks.getString(R.string.settings_stats_units_title));
-    getButtonOnScreen(activityMytracks.getString(R.string.generic_ok), true, true);
-    instrumentation.waitForIdleSync();
-  }
-
-  /**
    * Rotates the given activity.
    * 
    * @param activity a given activity
@@ -524,7 +514,7 @@ public class EndToEndTestUtils {
   public static void deleteAllTracks() {
     if (!isTrackListEmpty(false)) {
       findMenuItem(activityMytracks.getString(R.string.menu_delete_all), true);
-      getButtonOnScreen(activityMytracks.getString(R.string.generic_ok), true, true);
+      getButtonOnScreen(activityMytracks.getString(R.string.generic_yes), true, true);
     }
   }
 
