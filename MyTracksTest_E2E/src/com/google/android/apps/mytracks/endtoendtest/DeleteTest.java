@@ -62,7 +62,7 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.rotateAllActivities();
     EndToEndTestUtils
-        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_yes), true, true);
     instrumentation.waitForIdleSync();
     assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
         .getString(R.string.track_list_empty_message)));
@@ -101,7 +101,7 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.track_detail_chart_tab));
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete), true);
     EndToEndTestUtils
-        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_yes), true, true);
     instrumentation.waitForIdleSync();
     trackListView = EndToEndTestUtils.SOLO.getCurrentListViews();
     int trackNumberNew = trackListView.get(0).getCount();
@@ -118,7 +118,7 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete), true);
     EndToEndTestUtils
-        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_yes), true, true);
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.checkNotRecording();
   }
