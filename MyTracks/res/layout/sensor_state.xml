@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+  style="@style/ScrollView" >
+  <LinearLayout
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp" >
+    <TextView
+      android:text="@string/menu_sensor_state"
+      style="@style/TextMedium" />
+    <TextView
+      android:id="@+id/sensor_state"
+      style="@style/SensorStateValue" />
+    <!-- Last sensor time -->
+    <TextView
+      android:text="@string/sensor_state_last_sensor_time"
+      style="@style/TextMedium" />
+    <TextView
+      android:id="@+id/sensor_state_last_sensor_time"
+      style="@style/SensorStateValue" />
+    <!-- Heart rate -->
+    <TextView
+      android:text="@string/sensor_state_heart_rate"
+      style="@style/TextMedium" />
+    <TextView
+      android:id="@+id/sensor_state_heart_rate"
+      style="@style/SensorStateValue" />
+    <!-- Cadence -->
+    <TextView
+      android:text="@string/sensor_state_cadence"
+      style="@style/TextMedium" />
+    <TextView
+      android:id="@+id/sensor_state_cadence"
+      style="@style/SensorStateValue" />
+    <!-- Power -->
+    <TextView
+      android:text="@string/sensor_state_power"
+      style="@style/TextMedium" />
+    <TextView
+      android:id="@+id/sensor_state_power"
+      style="@style/SensorStateValue" />
+    <!-- Battery level -->
+    <TextView
+      android:text="@string/sensor_state_battery"
+      style="@style/TextMedium" />
+    <TextView
+      android:id="@+id/sensor_state_battery"
+      style="@style/SensorStateValue" />
+  </LinearLayout>
+</ScrollView>
