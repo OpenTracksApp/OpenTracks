@@ -4,7 +4,7 @@ applications that wish to use these files should consult the appropriate
 licenses or the JAR's authors.
 
 Android Support Package:
-android-support-v4.jar (version 11)
+android-support-v4.jar (version 12)
 
 Ant+:
 antlib.jar - see http://www.thisisant.com/pages/developer-zone/android-api
