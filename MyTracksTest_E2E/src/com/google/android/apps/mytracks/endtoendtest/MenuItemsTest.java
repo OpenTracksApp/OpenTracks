@@ -76,11 +76,14 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
 
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_help), true);
-    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.help_about), true, true);
-    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
-    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+    EndToEndTestUtils
+        .getButtonOnScreen(activityMyTracks.getString(R.string.help_about), true, true);
+    EndToEndTestUtils
+        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+    EndToEndTestUtils
+        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
   }
-  
+
   /**
    * Tests search menu item.
    */
@@ -92,11 +95,74 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
     instrumentation.waitForIdleSync();
     assertEquals(1, EndToEndTestUtils.SOLO.getCurrentListViews().size());
   }
-  
+
   /**
-   * Tests the share menu item. This test to check whether crash will happen during the share.
+   * Tests the share a track with Google Drive.
    */
-  public void testShareActivity() {
+  public void testShareActivity_withDrive() {
+    EndToEndTestUtils.createSimpleTrack(0, false);
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_sharing));
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
+        .getString(R.string.settings_sharing_share_track));
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
+        .getString(R.string.settings_sharing_share_track_drive));
+    EndToEndTestUtils.SOLO.goBack();
+    EndToEndTestUtils.SOLO.goBack();
+
+    // Click share, check message and cancel the share.
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_share), true);
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+        .getString(R.string.share_track_drive_confirm_message)));
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_no));
+    assertFalse(EndToEndTestUtils.SOLO.waitForText(
+        activityMyTracks.getString(R.string.share_track_add_emails_title), 1,
+        EndToEndTestUtils.VERY_SHORT_WAIT_TIME));
+
+    // Click share again and confirm the share.
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_share), true);
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_yes));
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+        .getString(R.string.share_track_add_emails_title)));
+
+    // Input account to share and click OK button.
+    EndToEndTestUtils.enterTextAvoidSoftKeyBoard(0, GoogleUtils.ACCOUNT_NAME_2);
+    EndToEndTestUtils
+        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+
+    // Waiting the send is finish.
+    while (EndToEndTestUtils.SOLO.waitForText(
+        activityMyTracks.getString(R.string.generic_progress_title), 1,
+        EndToEndTestUtils.SHORT_WAIT_TIME)) {}
+
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.SOLO
+        .getString(R.string.generic_success_title)));
+    EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.SOLO.getString(R.string.generic_ok));
+  }
+
+  /**
+   * Tests the share a track with Google Maps.
+   */
+  public void testShareActivity_withMaps() {
+    EndToEndTestUtils.createTrackIfEmpty(0, false);
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_sharing));
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
+        .getString(R.string.settings_sharing_share_track));
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
+        .getString(R.string.settings_sharing_share_track_maps));
+    EndToEndTestUtils.SOLO.goBack();
+    EndToEndTestUtils.SOLO.goBack();
+
+    // Click share, check message and cancel the share.
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_share), true);
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(
+        R.string.share_track_maps_confirm_message).split("\\%")[0]));
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_no));
+    assertFalse(EndToEndTestUtils.SOLO.waitForText(
+        activityMyTracks.getString(R.string.share_track_add_emails_title), 1,
+        EndToEndTestUtils.VERY_SHORT_WAIT_TIME));   
+
     // Try all share items.
     for (int i = 0;; i++) {
       EndToEndTestUtils.createTrackIfEmpty(0, false);
@@ -107,14 +173,14 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
       EndToEndTestUtils.SOLO.clickOnView(oneItemView);
       EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true,
           true);
-      if(!GoogleUtils.isAccountAvailable()) {
+      if (!GoogleUtils.isAccountAvailable()) {
         break;
       }
       // Waiting the send is finish.
       while (EndToEndTestUtils.SOLO.waitForText(
           activityMyTracks.getString(R.string.generic_progress_title), 1,
           EndToEndTestUtils.SHORT_WAIT_TIME)) {}
-      
+
       // Check whether data is correct on Google Map and then delete it.
       assertTrue(GoogleUtils.deleteMap(EndToEndTestUtils.trackName, activityMyTracks));
 
@@ -135,7 +201,8 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
    * @return null when no such item
    */
   private View findShareItem(int index) {
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_share_maps), true);
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_share), true);
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_yes));
     ArrayList<View> views = EndToEndTestUtils.SOLO.getViews();
     int i = 0;
     for (View view : views) {
@@ -158,32 +225,36 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
    */
   public void testFrequencyMenu() {
     EndToEndTestUtils.startRecording();
-    
+
     assertTrue(EndToEndTestUtils.findMenuItem(
         activityMyTracks.getString(R.string.menu_voice_frequency), false));
     assertTrue(EndToEndTestUtils.findMenuItem(
         activityMyTracks.getString(R.string.menu_split_frequency), false));
-    
+
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_recording));
-    assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks.getString(R.string.menu_voice_frequency), 1, true, true));
-    assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks.getString(R.string.menu_split_frequency), 1, true, true));
+    assertTrue(EndToEndTestUtils.SOLO.searchText(
+        activityMyTracks.getString(R.string.menu_voice_frequency), 1, true, true));
+    assertTrue(EndToEndTestUtils.SOLO.searchText(
+        activityMyTracks.getString(R.string.menu_split_frequency), 1, true, true));
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.SOLO.goBack();
 
     EndToEndTestUtils.stopRecording(true);
-    
+
     assertFalse(EndToEndTestUtils.findMenuItem(
         activityMyTracks.getString(R.string.menu_voice_frequency), false));
     assertFalse(EndToEndTestUtils.findMenuItem(
         activityMyTracks.getString(R.string.menu_split_frequency), false));
-    
+
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_recording));
-    assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks.getString(R.string.menu_voice_frequency), 1, true, true));
-    assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks.getString(R.string.menu_split_frequency), 1, true, true));
+    assertTrue(EndToEndTestUtils.SOLO.searchText(
+        activityMyTracks.getString(R.string.menu_voice_frequency), 1, true, true));
+    assertTrue(EndToEndTestUtils.SOLO.searchText(
+        activityMyTracks.getString(R.string.menu_split_frequency), 1, true, true));
   }
-  
+
   /**
    * Tests starting and stopping GPS.
    */

@@ -196,7 +196,7 @@ public class CreateTrackTest extends ActivityInstrumentationTestCase2<TrackListA
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     // Send Gps to give a distance more than one kilometer or one mile.
-    EndToEndTestUtils.sendGps(20);
+    EndToEndTestUtils.sendGps(50);
     assertTrue(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_markers),
         true));
     instrumentation.waitForIdleSync();

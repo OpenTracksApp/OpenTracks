@@ -312,14 +312,14 @@ public class EndToEndTestUtils {
       deleteAllTracks();
     }
 
-    resetAllSettings(activityMyTracks, false);
-    instrumentation.waitForIdleSync();
-
     // Check whether is under recording. If previous test failed, the recording
     // may not be recording.
     if (isUnderRecording()) {
       stopRecording(true);
     }
+
+    resetAllSettings(activityMyTracks, false);
+    instrumentation.waitForIdleSync();
   }
 
   /**

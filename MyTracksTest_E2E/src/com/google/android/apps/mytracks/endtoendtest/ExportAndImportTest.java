@@ -250,6 +250,7 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
      * Wait for the prefix of import success string is much faster than wait the
      * whole string.
      */
+    EndToEndTestUtils.waitTextToDisappear(activityMyTracks.getString(R.string.generic_progress_title));
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.import_success).split(
         "%")[0]);
 

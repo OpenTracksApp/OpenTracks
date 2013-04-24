@@ -184,6 +184,19 @@ public class SendToGoogleTest extends ActivityInstrumentationTestCase2<TrackList
     return true;
   }
 
+  /**
+   * Sends a large track to Google.
+   * 
+   * @throws GoogleAuthException
+   * @throws IOException
+   */
+  public void testSendLargeTrackToGoogle() throws IOException, GoogleAuthException {
+    EndToEndTestUtils.deleteAllTracks();
+    EndToEndTestUtils.createSimpleTrack(200, false);
+    instrumentation.waitForIdleSync();
+    checkSendTrackToGoogle();
+  }
+
   @Override
   protected void tearDown() throws Exception {
     EndToEndTestUtils.activityType = EndToEndTestUtils.DEFAULTACTIVITYTYPE;
