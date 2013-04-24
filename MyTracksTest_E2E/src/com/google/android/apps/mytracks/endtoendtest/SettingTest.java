@@ -87,7 +87,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
         activityMyTracks.getString(R.string.settings_sharing_allow_access_confirm_message), 1,
         EndToEndTestUtils.NORMAL_WAIT_TIME));
-    EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_ok));
+    EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_yes));
     instrumentation.waitForIdleSync();
     assertEquals(!newMapsPublic, EndToEndTestUtils.SOLO.getCurrentCheckBoxes().get(0).isChecked());
     EndToEndTestUtils.SOLO.goBack();
@@ -96,7 +96,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup_reset));
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_reset));
     EndToEndTestUtils
-        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_yes), true, true);
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.settings_reset_done));
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.SOLO.goBack();
@@ -276,7 +276,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.SOLO
         .clickOnText(activityMyTracks.getString(R.string.settings_backup_restore));
     EndToEndTestUtils
-        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_yes), true, true);
 
     // Now there should be 2 backups.
     instrumentation.waitForIdleSync();
@@ -297,7 +297,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.SOLO
         .clickOnText(activityMyTracks.getString(R.string.settings_backup_restore));
     EndToEndTestUtils
-        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_yes), true, true);
     instrumentation.waitForIdleSync();
 
     // Click the second one.
@@ -445,7 +445,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     } else {
       isSyncChecked = false;
     }
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_yes));
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.SOLO.goBack();
     assertEquals(isSyncChecked,
