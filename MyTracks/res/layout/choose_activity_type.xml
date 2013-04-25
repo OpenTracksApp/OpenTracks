@@ -18,7 +18,6 @@ limitations under the License.
   android:layout_height="wrap_content"
   android:layout_width="match_parent"
   android:numColumns="4"
-  android:paddingBottom="20dp"
-  android:paddingTop="20dp"
-  android:stretchMode="columnWidth"
-  android:verticalSpacing="20dp" />
+  android:padding="4dp"
+  android:stretchMode="spacingWidth"
+  android:verticalSpacing="4dp" />
