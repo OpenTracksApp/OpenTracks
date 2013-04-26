@@ -743,6 +743,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   private void updateMenuItems(boolean isRecording) {
     if (startGpsMenuItem != null) {
       startGpsMenuItem.setTitle(startGps ? R.string.menu_stop_gps : R.string.menu_start_gps);
+      startGpsMenuItem.setIcon(startGps ? R.drawable.menu_stop_gps : R.drawable.menu_start_gps);
       startGpsMenuItem.setVisible(!isRecording);
     }
     if (importAllMenuItem != null) {
