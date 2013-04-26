@@ -19,6 +19,8 @@ package com.google.android.apps.mytracks.util;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.util.Pair;
 
 import java.util.ArrayList;
@@ -155,6 +157,34 @@ public class TrackIconUtils {
       return WALK;
     }
     return "";
+  }
+
+  /**
+   * Inverts the colors in a bitmap.
+   *
+   * @param source the source
+   */
+  public static Bitmap invertBitmap(Bitmap source) {
+    Bitmap output = Bitmap.createBitmap(source.getWidth(), source.getHeight(), source.getConfig());
+    int height = source.getHeight();
+    int width = source.getWidth();
+    int pixelColor;
+    int alpha;
+    int red;
+    int green;
+    int blue;
+
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        pixelColor = source.getPixel(x, y);
+        alpha = Color.alpha(pixelColor);
+        red = 255 - Color.red(pixelColor);
+        green = 255 - Color.green(pixelColor);
+        blue = 255 - Color.blue(pixelColor);
+        output.setPixel(x, y, Color.argb(alpha, red, green, blue));
+      }
+    }
+    return output;
   }
 
   /**

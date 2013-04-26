@@ -164,6 +164,13 @@ public interface ApiAdapter {
   public void invalidMenu(Activity activity);
 
   /**
+   * True if the spinner background is light color.
+   * <p>
+   * Due to changes in API level 11.
+   */
+  public boolean isSpinnerBackgroundLight();
+  
+  /**
    * Handles the search key press. Returns true if handled.
    * <p>
    * Due to changes in API level 14.

@@ -134,6 +134,11 @@ public class Api8Adapter implements ApiAdapter {
   }
 
   @Override
+  public boolean isSpinnerBackgroundLight() {
+    return true;    
+  }
+  
+  @Override
   public boolean handleSearchKey(MenuItem menuItem) {
     // Return false and allow the framework to handle the search key.
     return false;

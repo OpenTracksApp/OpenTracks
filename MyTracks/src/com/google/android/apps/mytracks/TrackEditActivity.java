@@ -20,10 +20,12 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.apps.mytracks.util.TrackNameUtils;
 import com.google.android.maps.mytracks.R;
 
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
 import android.os.Bundle;
@@ -131,13 +133,14 @@ public class TrackEditActivity extends AbstractMyTracksActivity
         new StringBuilder[] {new StringBuilder(iconValue)}) {
       @Override
       public View getView(int position, View convertView, android.view.ViewGroup parent) {
-        ImageView imageView;
-        if (convertView != null) {
-          imageView = (ImageView) convertView;
-        } else {
-          imageView = new ImageView(getContext());
+        ImageView imageView =
+            convertView != null ? (ImageView) convertView : new ImageView(getContext());
+        Bitmap source = BitmapFactory.decodeResource(
+            getResources(), TrackIconUtils.getIconDrawable(getItem(position).toString()));
+        if (ApiAdapterFactory.getApiAdapter().isSpinnerBackgroundLight()) {
+          source = TrackIconUtils.invertBitmap(source);
         }
-        imageView.setImageResource(TrackIconUtils.getIconDrawable(getItem(position).toString()));
+        imageView.setImageBitmap(source);
         imageView.setMinimumHeight(height);
         imageView.setMinimumWidth(width);
         imageView.setPadding(padding, padding, padding, padding);
