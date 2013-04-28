@@ -26,17 +26,24 @@ import java.util.List;
 
 /**
  * Image adapter for choosing an activity type.
- * 
+ *
  * @author apoorvn
  */
 public class ChooseActivityTypeImageAdapter extends BaseAdapter {
 
   private final Context context;
   private final List<Integer> imageIds;
+  private final int width;
+  private final int height;
+  private final int padding;
 
-  public ChooseActivityTypeImageAdapter(Context context, List<Integer> imageIds) {
+  public ChooseActivityTypeImageAdapter(
+      Context context, List<Integer> imageIds, int width, int height, int padding) {
     this.context = context;
     this.imageIds = imageIds;
+    this.width = width;
+    this.height = height;
+    this.padding = padding;
   }
 
   @Override
@@ -63,6 +70,9 @@ public class ChooseActivityTypeImageAdapter extends BaseAdapter {
       imageView = (ImageView) convertView;
     }
     imageView.setImageResource(imageIds.get(position));
+    imageView.setMinimumHeight(height);
+    imageView.setMinimumWidth(width);
+    imageView.setPadding(padding, padding, padding, padding);
     return imageView;
   }
 }

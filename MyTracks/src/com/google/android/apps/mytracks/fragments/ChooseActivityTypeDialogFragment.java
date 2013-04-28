@@ -22,6 +22,8 @@ import com.google.android.maps.mytracks.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.graphics.BitmapFactory;
+import android.graphics.BitmapFactory.Options;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
@@ -34,14 +36,14 @@ import java.util.List;
 
 /**
  * A DialogFragment to choose an activity type.
- * 
+ *
  * @author apoorvn
  */
 public class ChooseActivityTypeDialogFragment extends DialogFragment {
 
   /**
    * Interface for caller of this dialog fragment.
-   * 
+   *
    * @author apoorvn
    */
   public interface ChooseActivityTypeCaller {
@@ -69,8 +71,8 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
 
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
-    GridView gridView = (GridView) getActivity()
-        .getLayoutInflater().inflate(R.layout.choose_activity_type, null);
+    GridView gridView =
+        (GridView) getActivity().getLayoutInflater().inflate(R.layout.choose_activity_type, null);
 
     final List<String> iconValues = TrackIconUtils.getAllIconValues();
     List<Integer> imageIds = new ArrayList<Integer>();
@@ -78,11 +80,19 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
       imageIds.add(TrackIconUtils.getIconDrawable(iconValue));
     }
 
-    ChooseActivityTypeImageAdapter imageAdapter = new ChooseActivityTypeImageAdapter(
-        getActivity(), imageIds);
+    Options options = new BitmapFactory.Options();
+    options.inJustDecodeBounds = true;
+    BitmapFactory.decodeResource(getResources(), R.drawable.track_airplane, options);
+    int padding = 32;
+    int width = options.outWidth + 2 * padding;
+    int height = options.outHeight + 2 * padding;
+    gridView.setColumnWidth(width);
+
+    ChooseActivityTypeImageAdapter imageAdapter =
+        new ChooseActivityTypeImageAdapter(getActivity(), imageIds, width, height, padding);
     gridView.setAdapter(imageAdapter);
     gridView.setOnItemClickListener(new OnItemClickListener() {
-        @Override
+      @Override
       public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
         dismiss();
         caller.onChooseActivityTypeDone(iconValues.get(position));

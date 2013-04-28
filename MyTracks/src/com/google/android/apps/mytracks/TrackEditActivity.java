@@ -1,12 +1,12 @@
 /*
  * Copyright 2008 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -20,24 +20,31 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.apps.mytracks.util.TrackNameUtils;
 import com.google.android.maps.mytracks.R;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BitmapFactory.Options;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.Spinner;
 
 /**
  * An activity that let's the user see and edit the user editable track meta
  * data such as track name, activity type, and track description.
- * 
+ *
  * @author Leif Hendrik Wilden
  */
 public class TrackEditActivity extends AbstractMyTracksActivity
@@ -56,7 +63,7 @@ public class TrackEditActivity extends AbstractMyTracksActivity
 
   private EditText name;
   private AutoCompleteTextView activityType;
-  private ImageButton activityTypeIcon;
+  private Spinner activityTypeIcon;
   private EditText description;
 
   @Override
@@ -88,28 +95,19 @@ public class TrackEditActivity extends AbstractMyTracksActivity
         this, R.array.activity_types, android.R.layout.simple_dropdown_item_1line);
     activityType.setAdapter(adapter);
     activityType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-        @Override
+      @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         setActivityTypeIcon(TrackIconUtils.getIconValue(
             TrackEditActivity.this, (String) activityType.getAdapter().getItem(position)));
       }
     });
     activityType.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-        @Override
+      @Override
       public void onFocusChange(View v, boolean hasFocus) {
         if (!hasFocus) {
           setActivityTypeIcon(TrackIconUtils.getIconValue(
               TrackEditActivity.this, activityType.getText().toString()));
         }
-      }
-    });
-
-    activityTypeIcon = (ImageButton) findViewById(R.id.track_edit_activity_type_icon);
-    activityTypeIcon.setOnClickListener(new View.OnClickListener() {
-        @Override
-      public void onClick(View v) {
-        new ChooseActivityTypeDialogFragment().show(getSupportFragmentManager(),
-            ChooseActivityTypeDialogFragment.CHOOSE_ACTIVITY_TYPE_DIALOG_TAG);
       }
     });
 
@@ -120,14 +118,65 @@ public class TrackEditActivity extends AbstractMyTracksActivity
     if (iconValue == null) {
       iconValue = track.getIcon();
     }
-    setActivityTypeIcon(iconValue);
+
+    // Add a border around the icon
+    Options options = new BitmapFactory.Options();
+    options.inJustDecodeBounds = true;
+    BitmapFactory.decodeResource(getResources(), R.drawable.track_airplane, options);
+    final int padding = 4;
+    final int width = options.outWidth + 2 * padding;
+    final int height = options.outHeight + 2 * padding;
+
+    activityTypeIcon = (Spinner) findViewById(R.id.track_edit_activity_type_icon);
+    ArrayAdapter<StringBuilder> activityTypeIconAdapter = new ArrayAdapter<StringBuilder>(
+        this, android.R.layout.simple_spinner_item,
+        new StringBuilder[] {new StringBuilder(iconValue)}) {
+      @Override
+      public View getView(int position, View convertView, android.view.ViewGroup parent) {
+        ImageView imageView =
+            convertView != null ? (ImageView) convertView : new ImageView(getContext());
+        Bitmap source = BitmapFactory.decodeResource(
+            getResources(), TrackIconUtils.getIconDrawable(getItem(position).toString()));
+        if (ApiAdapterFactory.getApiAdapter().isSpinnerBackgroundLight()) {
+          source = TrackIconUtils.invertBitmap(source);
+        }
+        imageView.setImageBitmap(source);
+        imageView.setMinimumHeight(height);
+        imageView.setMinimumWidth(width);
+        imageView.setPadding(padding, padding, padding, padding);
+        return imageView;
+      }
+    };
+    activityTypeIcon.setAdapter(activityTypeIconAdapter);
+    activityTypeIcon.setOnTouchListener(new View.OnTouchListener() {
+      @Override
+      public boolean onTouch(View v, MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+          new ChooseActivityTypeDialogFragment().show(getSupportFragmentManager(),
+              ChooseActivityTypeDialogFragment.CHOOSE_ACTIVITY_TYPE_DIALOG_TAG);
+        }
+        return true;
+      }
+    });
+    activityTypeIcon.setOnKeyListener(new View.OnKeyListener() {
+      @Override
+      public boolean onKey(View v, int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
+          new ChooseActivityTypeDialogFragment().show(getSupportFragmentManager(),
+              ChooseActivityTypeDialogFragment.CHOOSE_ACTIVITY_TYPE_DIALOG_TAG);
+          return true;
+        } else {
+          return false;
+        }
+      }
+    });
 
     description = (EditText) findViewById(R.id.track_edit_description);
     description.setText(track.getDescription());
 
     Button save = (Button) findViewById(R.id.track_edit_save);
     save.setOnClickListener(new View.OnClickListener() {
-        @Override
+      @Override
       public void onClick(View v) {
         track.setName(name.getText().toString());
         String category = activityType.getText().toString();
@@ -152,7 +201,7 @@ public class TrackEditActivity extends AbstractMyTracksActivity
     } else {
       setTitle(R.string.menu_edit);
       cancel.setOnClickListener(new View.OnClickListener() {
-          @Override
+        @Override
         public void onClick(View v) {
           finish();
         }
@@ -174,12 +223,17 @@ public class TrackEditActivity extends AbstractMyTracksActivity
 
   /**
    * Sets the activity type icon.
-   * 
+   *
    * @param value the icon value
    */
   private void setActivityTypeIcon(String value) {
     iconValue = value;
-    activityTypeIcon.setImageResource(TrackIconUtils.getIconDrawable(value));
+    ArrayAdapter<StringBuilder> adapter =
+        (ArrayAdapter<StringBuilder>) activityTypeIcon.getAdapter();
+    StringBuilder stringBuilder = adapter.getItem(0);
+    stringBuilder.delete(0, stringBuilder.length());
+    stringBuilder.append(value);
+    adapter.notifyDataSetChanged();
   }
 
   @Override
