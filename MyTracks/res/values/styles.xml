@@ -346,21 +346,22 @@ limitations under the License.
     <item name="android:textSize">18dp</item>
   </style>
   <!-- track widget value -->
-  <style name="TrackWidgetValue" parent="@style/TextMedium">
+  <style name="TrackWidgetValue">    
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_weight">2</item>
     <item name="android:layout_width">0dp</item>
     <item name="android:singleLine">true</item>
     <item name="android:textColor">@android:color/white</item>
+    <item name="android:textSize">18dp</item>
     <item name="android:textStyle">bold</item>
   </style>
   <!-- track widget value 4x3 -->
   <style name="TrackWidgetValue4x3" parent="@style/TrackWidgetValue">
-    <item name="android:textSize">28sp</item>
+    <item name="android:textSize">28dp</item>
   </style>
   <!-- track widget value 4x4 -->
   <style name="TrackWidgetValue4x4" parent="@style/TrackWidgetValue">
-    <item name="android:textSize">36sp</item>
+    <item name="android:textSize">36dp</item>
   </style>
   <!-- track widget value container -->
   <style name="TrackWidgetValueContainer">
