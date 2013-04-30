@@ -24,8 +24,8 @@ import com.google.android.apps.mytracks.content.SearchEngineProvider;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
-import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment;
-import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment.DeleteOneMarkerCaller;
+import com.google.android.apps.mytracks.fragments.DeleteMarkerDialogFragment;
+import com.google.android.apps.mytracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
 import com.google.android.apps.mytracks.fragments.DeleteTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteTrackDialogFragment.DeleteTrackCaller;
 import com.google.android.apps.mytracks.services.MyTracksLocationManager;
@@ -75,7 +75,7 @@ import java.util.SortedSet;
  * @author Rodrigo Damazio
  */
 public class SearchListActivity extends AbstractSendToGoogleActivity
-    implements DeleteTrackCaller, DeleteOneMarkerCaller {
+    implements DeleteTrackCaller, DeleteMarkerCaller {
 
   private static final String TAG = SearchListActivity.class.getSimpleName();
 
@@ -351,9 +351,8 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
         return true;
       case R.id.list_context_menu_delete:
         if (markerId != null) {
-          DeleteOneMarkerDialogFragment.newInstance(markerId, trackId).show(
-              getSupportFragmentManager(),
-              DeleteOneMarkerDialogFragment.DELETE_ONE_MARKER_DIALOG_TAG);
+          DeleteMarkerDialogFragment.newInstance(new long[] { markerId }).show(
+              getSupportFragmentManager(), DeleteMarkerDialogFragment.DELETE_MARKER_DIALOG_TAG);
         } else {
           DeleteTrackDialogFragment.newInstance(false, new long[] { trackId })
               .show(getSupportFragmentManager(), DeleteTrackDialogFragment.DELETE_TRACK_DIALOG_TAG);
@@ -519,7 +518,7 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
   }
 
   @Override
-  public void onDeleteOneMarkerDone() {
+  public void onDeleteMarkerDone() {
     runOnUiThread(new Runnable() {
         @Override
       public void run() {

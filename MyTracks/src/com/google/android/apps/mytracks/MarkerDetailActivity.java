@@ -20,8 +20,8 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
-import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment;
-import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment.DeleteOneMarkerCaller;
+import com.google.android.apps.mytracks.fragments.DeleteMarkerDialogFragment;
+import com.google.android.apps.mytracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.StatsUtils;
 import com.google.android.maps.mytracks.R;
@@ -39,8 +39,7 @@ import android.widget.TextView;
  * 
  * @author Leif Hendrik Wilden
  */
-public class MarkerDetailActivity extends AbstractMyTracksActivity
-    implements DeleteOneMarkerCaller {
+public class MarkerDetailActivity extends AbstractMyTracksActivity implements DeleteMarkerCaller {
 
   public static final String EXTRA_MARKER_ID = "marker_id";
   private static final String TAG = MarkerDetailActivity.class.getSimpleName();
@@ -134,9 +133,8 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity
         startActivity(intent);
         return true;
       case R.id.marker_detail_delete:
-        DeleteOneMarkerDialogFragment.newInstance(markerId, waypoint.getTrackId()).show(
-            getSupportFragmentManager(),
-            DeleteOneMarkerDialogFragment.DELETE_ONE_MARKER_DIALOG_TAG);
+        DeleteMarkerDialogFragment.newInstance(new long[] { markerId })
+            .show(getSupportFragmentManager(), DeleteMarkerDialogFragment.DELETE_MARKER_DIALOG_TAG);
         return true;
       default:
         return super.onOptionsItemSelected(item);
@@ -144,7 +142,7 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity
   }
 
   @Override
-  public void onDeleteOneMarkerDone() {
+  public void onDeleteMarkerDone() {
     runOnUiThread(new Runnable() {
         @Override
       public void run() {

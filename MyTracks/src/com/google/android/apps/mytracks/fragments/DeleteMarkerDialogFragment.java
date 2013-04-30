@@ -29,67 +29,68 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 
 /**
- * A DialogFragment to delete one marker.
+ * A DialogFragment to delete marker.
  * 
  * @author Jimmy Shih
  */
-public class DeleteOneMarkerDialogFragment extends DialogFragment {
+public class DeleteMarkerDialogFragment extends DialogFragment {
 
   /**
    * Interface for caller of this dialog fragment.
    * 
    * @author Jimmy Shih
    */
-  public interface DeleteOneMarkerCaller {
-  
+  public interface DeleteMarkerCaller {
+
     /**
-     * Called when delete one marker is done.
+     * Called when delete marker is done.
      */
-    public void onDeleteOneMarkerDone();
+    public void onDeleteMarkerDone();
   }
 
-  public static final String DELETE_ONE_MARKER_DIALOG_TAG = "deleteOneMarkerDialog";
-  private static final String KEY_MARKER_ID = "markerId";
-  private static final String KEY_TRACK_ID = "trackId";
+  public static final String DELETE_MARKER_DIALOG_TAG = "deleteMarkerDialog";
+  private static final String KEY_MARKER_IDS = "markerIds";
 
-  public static DeleteOneMarkerDialogFragment newInstance(long markerId, long trackId) {
+  public static DeleteMarkerDialogFragment newInstance(long[] markerIds) {
     Bundle bundle = new Bundle();
-    bundle.putLong(KEY_MARKER_ID, markerId);
-    bundle.putLong(KEY_TRACK_ID, trackId);
+    bundle.putLongArray(KEY_MARKER_IDS, markerIds);
 
-    DeleteOneMarkerDialogFragment deleteOneMarkerDialogFragment = new DeleteOneMarkerDialogFragment();
-    deleteOneMarkerDialogFragment.setArguments(bundle);
-    return deleteOneMarkerDialogFragment;
+    DeleteMarkerDialogFragment deleteMarkerDialogFragment = new DeleteMarkerDialogFragment();
+    deleteMarkerDialogFragment.setArguments(bundle);
+    return deleteMarkerDialogFragment;
   }
 
-  private DeleteOneMarkerCaller caller;
-  private FragmentActivity fragmentActivity;
+  private DeleteMarkerCaller caller;
 
   @Override
   public void onAttach(Activity activity) {
     super.onAttach(activity);
     try {
-      caller = (DeleteOneMarkerCaller) activity;
+      caller = (DeleteMarkerCaller) activity;
     } catch (ClassCastException e) {
       throw new ClassCastException(
-          activity.toString() + " must implement " + DeleteOneMarkerCaller.class.getSimpleName());
+          activity.toString() + " must implement " + DeleteMarkerCaller.class.getSimpleName());
     }
   }
 
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
-    fragmentActivity = getActivity();
-    return DialogUtils.createConfirmationDialog(fragmentActivity,
-        R.string.marker_delete_one_marker_confirm_message, new DialogInterface.OnClickListener() {
+    final FragmentActivity fragmentActivity = getActivity();
+    final long[] markerIds = getArguments().getLongArray(KEY_MARKER_IDS);
+    int messageId = markerIds.length > 1 ? R.string.marker_delete_multiple_confirm_message
+        : R.string.marker_delete_one_confirm_message;
+    return DialogUtils.createConfirmationDialog(
+        fragmentActivity, messageId, new DialogInterface.OnClickListener() {
             @Override
           public void onClick(DialogInterface dialog, int which) {
             new Thread(new Runnable() {
                 @Override
               public void run() {
-                MyTracksProviderUtils.Factory.get(fragmentActivity).deleteWaypoint(
-                    getArguments().getLong(KEY_MARKER_ID),
-                    new DescriptionGeneratorImpl(fragmentActivity));
-                caller.onDeleteOneMarkerDone();
+                for (long markerId : markerIds) {
+                  MyTracksProviderUtils.Factory.get(fragmentActivity)
+                      .deleteWaypoint(markerId, new DescriptionGeneratorImpl(fragmentActivity));
+                }
+                caller.onDeleteMarkerDone();
               }
             }).start();
           }

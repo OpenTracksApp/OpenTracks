@@ -20,8 +20,8 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
-import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment;
-import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment.DeleteOneMarkerCaller;
+import com.google.android.apps.mytracks.fragments.DeleteMarkerDialogFragment;
+import com.google.android.apps.mytracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.ListItemUtils;
@@ -55,7 +55,7 @@ import android.widget.ListView;
  * 
  * @author Leif Hendrik Wilden
  */
-public class MarkerListActivity extends AbstractMyTracksActivity implements DeleteOneMarkerCaller {
+public class MarkerListActivity extends AbstractMyTracksActivity implements DeleteMarkerCaller {
 
   public static final String EXTRA_TRACK_ID = "track_id";
 
@@ -286,9 +286,8 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
         startActivity(intent);
         return true;
       case R.id.list_context_menu_delete:
-        DeleteOneMarkerDialogFragment.newInstance(markerId, track.getId()).show(
-            getSupportFragmentManager(),
-            DeleteOneMarkerDialogFragment.DELETE_ONE_MARKER_DIALOG_TAG);
+        DeleteMarkerDialogFragment.newInstance(new long[] { markerId })
+            .show(getSupportFragmentManager(), DeleteMarkerDialogFragment.DELETE_MARKER_DIALOG_TAG);
         return true;
       default:
         return false;
@@ -306,7 +305,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
   }
 
   @Override
-  public void onDeleteOneMarkerDone() {
+  public void onDeleteMarkerDone() {
     // Do nothing
   }
 }

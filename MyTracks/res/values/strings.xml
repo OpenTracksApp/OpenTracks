@@ -894,10 +894,13 @@ limitations under the License.
     translation_description="When adding a marker, the message indicating success.">
     A marker was inserted.
   </string>
-  <string name="marker_delete_one_marker_confirm_message"
-    translation_description="When deleting a marker, the confirmation dialog message informing the
-      user that the marker will be permanently deleted from the device.">
+  <string name="marker_delete_one_confirm_message"
+    translation_description="When deleting one marker, the confirmation message.">
     The marker will be permanently deleted from the device.
+  </string>
+  <string name="marker_delete_multiple_confirm_message"
+    translation_description="When deleting multiple markers, the confirmation message.">
+    The markers will be permanently deleted from the device.
   </string>
   <string name="marker_label_end"
     translation_description="When inserting a marker to indicate the end of a track, the marker's
