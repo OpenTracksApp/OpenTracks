@@ -844,6 +844,17 @@ limitations under the License.
       %1$s: the directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
     Importing from %1$s&#8230;
   </string>
+  <string name="import_selection_option"
+    translation_description="When importing from external storage, the option to import all
+      files of a certain file format.
+
+      %1$s: file format. E.g., 'GPX'.">
+    Import all %1$s
+  </string>
+  <string name="import_selection_title"
+     translation_description="The dialog title when importing from external storage.">
+    Import from external storage
+  </string>
   <string name="import_success"
     translation_description="When importing from the external storage, the success message.
 
@@ -1016,15 +1027,7 @@ limitations under the License.
     translation_description="In the menu, to import all tracks from the external storage.
 
       Character limit: ~20 (1 line)">
-    Import all from external storage
-  </string>
-  <string name="menu_import_all_format"
-    translation_description="Under the import all menu option, the submenu option to import all
-      files of a certain file format.
-
-      %1$s: file format. E.g., 'GPX'.
-      Character limit: ~20 (1 line)">
-    Import %1$s
+    Import all
   </string>
   <string name="menu_insert_marker"
     translation_description="In the menu, to insert a marker.

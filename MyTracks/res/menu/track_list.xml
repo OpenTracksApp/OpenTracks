@@ -30,14 +30,6 @@ limitations under the License.
     android:icon="@drawable/menu_import"
     android:id="@+id/track_list_import_all"
     android:title="@string/menu_import_all">
-    <menu>
-      <item
-        android:id="@+id/track_list_import_all_gpx"
-        android:title=""/>
-      <item
-        android:id="@+id/track_list_import_all_kml"
-        android:title=""/>
-    </menu>
   </item>
   <item
     android:icon="@drawable/menu_save"
