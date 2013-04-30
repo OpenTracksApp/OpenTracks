@@ -119,7 +119,7 @@ public class ListItemUtils {
       if (buffer.length() != 0) {
         buffer.append(" ");
       }
-      buffer.append(" / " + totalDistance);
+      buffer.append("(" + totalDistance + ")");
     }
     return buffer.toString();
   }

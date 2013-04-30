@@ -47,4 +47,6 @@ limitations under the License.
   <color name="normal_path">#F75858FA</color>
   <!-- dynamic track fast path, red -->
   <color name="fast_path">#F7DF0101</color>
+  <!-- track controller background -->
+  <color name="track_controller_background">#FF272727</color>
 </resources>

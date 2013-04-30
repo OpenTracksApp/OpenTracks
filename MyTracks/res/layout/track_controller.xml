@@ -16,7 +16,7 @@ limitations under the License.
 -->
 <merge xmlns:android="http://schemas.android.com/apk/res/android" >
   <LinearLayout
-    android:background="@color/black"
+    android:background="@color/track_controller_background"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:orientation="horizontal"
@@ -67,8 +67,4 @@ limitations under the License.
       android:layout_weight="1"
       android:layout_width="0dp" />
   </LinearLayout>
-  <View
-    android:background="@color/gray"
-    android:layout_height="1dp"
-    android:layout_width="match_parent" />
 </merge>
