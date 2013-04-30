@@ -26,8 +26,8 @@ import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment.DeleteOneMarkerCaller;
-import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
-import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment.DeleteOneTrackCaller;
+import com.google.android.apps.mytracks.fragments.DeleteTrackDialogFragment;
+import com.google.android.apps.mytracks.fragments.DeleteTrackDialogFragment.DeleteTrackCaller;
 import com.google.android.apps.mytracks.services.MyTracksLocationManager;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.stats.TripStatistics;
@@ -75,7 +75,7 @@ import java.util.SortedSet;
  * @author Rodrigo Damazio
  */
 public class SearchListActivity extends AbstractSendToGoogleActivity
-    implements DeleteOneTrackCaller, DeleteOneMarkerCaller {
+    implements DeleteTrackCaller, DeleteOneMarkerCaller {
 
   private static final String TAG = SearchListActivity.class.getSimpleName();
 
@@ -355,8 +355,8 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
               getSupportFragmentManager(),
               DeleteOneMarkerDialogFragment.DELETE_ONE_MARKER_DIALOG_TAG);
         } else {
-          DeleteOneTrackDialogFragment.newInstance(trackId).show(getSupportFragmentManager(),
-              DeleteOneTrackDialogFragment.DELETE_ONE_TRACK_DIALOG_TAG);
+          DeleteTrackDialogFragment.newInstance(false, new long[] { trackId })
+              .show(getSupportFragmentManager(), DeleteTrackDialogFragment.DELETE_TRACK_DIALOG_TAG);
         }
         return true;
       default:
@@ -509,7 +509,7 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
   }
 
   @Override
-  public void onDeleteOneTrackDone() {
+  public void onDeleteTrackDone() {
     runOnUiThread(new Runnable() {
         @Override
       public void run() {

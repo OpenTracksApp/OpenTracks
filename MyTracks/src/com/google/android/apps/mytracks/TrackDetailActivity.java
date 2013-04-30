@@ -25,8 +25,8 @@ import com.google.android.apps.mytracks.fragments.ChartFragment;
 import com.google.android.apps.mytracks.fragments.ChooseUploadServiceDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChooseUploadServiceDialogFragment.ChooseUploadServiceCaller;
 import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment;
-import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
-import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment.DeleteOneTrackCaller;
+import com.google.android.apps.mytracks.fragments.DeleteTrackDialogFragment;
+import com.google.android.apps.mytracks.fragments.DeleteTrackDialogFragment.DeleteTrackCaller;
 import com.google.android.apps.mytracks.fragments.FrequencyDialogFragment;
 import com.google.android.apps.mytracks.fragments.InstallEarthDialogFragment;
 import com.google.android.apps.mytracks.fragments.MyTracksMapFragment;
@@ -72,7 +72,7 @@ import java.util.Locale;
  * @author Rodrigo Damazio
  */
 public class TrackDetailActivity extends AbstractSendToGoogleActivity
-    implements ChooseUploadServiceCaller, DeleteOneTrackCaller {
+    implements ChooseUploadServiceCaller, DeleteTrackCaller {
 
   public static final String EXTRA_TRACK_ID = "track_id";
   public static final String EXTRA_MARKER_ID = "marker_id";
@@ -405,8 +405,8 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
         startActivity(intent);
         return true;
       case R.id.track_detail_delete:
-        DeleteOneTrackDialogFragment.newInstance(trackId).show(
-            getSupportFragmentManager(), DeleteOneTrackDialogFragment.DELETE_ONE_TRACK_DIALOG_TAG);
+        DeleteTrackDialogFragment.newInstance(false, new long[] { trackId })
+            .show(getSupportFragmentManager(), DeleteTrackDialogFragment.DELETE_TRACK_DIALOG_TAG);
         return true;
       case R.id.track_detail_sensor_state:
         intent = IntentUtils.newIntent(this, SensorStateActivity.class);
@@ -486,7 +486,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
   }
 
   @Override
-  public void onDeleteOneTrackDone() {
+  public void onDeleteTrackDone() {
     runOnUiThread(new Runnable() {
         @Override
       public void run() {

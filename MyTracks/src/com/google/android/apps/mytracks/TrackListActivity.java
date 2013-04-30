@@ -23,9 +23,8 @@ import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.TrackDataType;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.fragments.DeleteAllTrackDialogFragment;
-import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
-import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment.DeleteOneTrackCaller;
+import com.google.android.apps.mytracks.fragments.DeleteTrackDialogFragment;
+import com.google.android.apps.mytracks.fragments.DeleteTrackDialogFragment.DeleteTrackCaller;
 import com.google.android.apps.mytracks.fragments.EnableSyncDialogFragment;
 import com.google.android.apps.mytracks.fragments.EnableSyncDialogFragment.EnableSyncCaller;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment;
@@ -94,7 +93,7 @@ import java.util.Locale;
  * @author Leif Hendrik Wilden
  */
 public class TrackListActivity extends AbstractSendToGoogleActivity
-    implements EulaCaller, EnableSyncCaller, DeleteOneTrackCaller {
+    implements EulaCaller, EnableSyncCaller, DeleteTrackCaller {
 
   private static final String TAG = TrackListActivity.class.getSimpleName();
   private static final String START_GPS_KEY = "start_gps_key";
@@ -602,8 +601,8 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         startSaveActivity(TrackFileFormat.TCX);
         return true;
       case R.id.track_list_delete_all:
-        new DeleteAllTrackDialogFragment().show(
-            getSupportFragmentManager(), DeleteAllTrackDialogFragment.DELETE_ALL_TRACK_DIALOG_TAG);
+        DeleteTrackDialogFragment.newInstance(true, new long[] {})
+            .show(getSupportFragmentManager(), DeleteTrackDialogFragment.DELETE_TRACK_DIALOG_TAG);
         return true;
       case R.id.track_list_aggregated_statistics:
         intent = IntentUtils.newIntent(this, AggregatedStatsActivity.class);
@@ -659,7 +658,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   }
 
   @Override
-  public void onDeleteOneTrackDone() {
+  public void onDeleteTrackDone() {
     // Do nothing
   }
 
@@ -827,8 +826,8 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         startActivity(intent);
         return true;
       case R.id.list_context_menu_delete:
-        DeleteOneTrackDialogFragment.newInstance(trackId).show(
-            getSupportFragmentManager(), DeleteOneTrackDialogFragment.DELETE_ONE_TRACK_DIALOG_TAG);
+        DeleteTrackDialogFragment.newInstance(false, new long[] { trackId })
+            .show(getSupportFragmentManager(), DeleteTrackDialogFragment.DELETE_TRACK_DIALOG_TAG);
         return true;
       default:
         return false;

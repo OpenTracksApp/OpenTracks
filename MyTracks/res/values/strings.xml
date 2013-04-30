@@ -2252,16 +2252,27 @@ limitations under the License.
     Recording your track&#8230;
   </string>
 
+  <!-- Track Delete -->
+  <string name="track_delete_all_confirm_message"
+    translation_description="When deleting all the tracks, the confirmation message.">
+    All tracks and markers will be permanently deleted from the device. If Google Drive sync is
+    enabled, this will disable it. No tracks will be deleted on Google Drive.
+  </string>
+  <string name="track_delete_one_confirm_message"
+    translation_description="When deleting one track, the confirmation message.">
+    The track and its markers will be permanently deleted from the device. If Google Drive sync is
+    enabled, this will also delete the track on Google Drive.
+  </string>
+  <string name="track_delete_multiple_confirm_message"
+    translation_description="When deleting multiple tracks, the confirmation message.">
+    The tracks and their markers will be permanently deleted from the device. If Google Drive sync
+    is enabled, this will also delete the tracks on Google Drive.
+  </string>  
+  
   <!-- Track Detail -->
   <string name="track_detail_chart_tab"
     translation_description="In the track detail page, the title of the tab showing the chart.">
     Chart
-  </string>
-  <string name="track_detail_delete_confirm_message"
-    translation_description="When deleting a track, the confirmation message informing the user that
-      the track and its markers will be permanently deleted from the device.">
-    The track and its markers will be permanently deleted from the device. If Google Drive sync is
-    enabled, this will also delete the track on Google Drive.
   </string>
   <string name="track_detail_install_earth_message"
     translation_description="When playing a track, the message informing the user that he needs
@@ -2304,11 +2315,6 @@ limitations under the License.
   </string>
 
   <!-- Track List -->
-  <string name="track_list_delete_all_confirm_message"
-    translation_description="When deleting all the tracks, the confirmation dialog message.">
-    All tracks and markers will be permanently deleted from the device. If Google Drive sync is
-    enabled, this will disable it. No tracks will be deleted on Google Drive.
-  </string>
   <string name="track_list_empty_message"
     translation_description="When the track list is empty, the message informing the user to click
       on the record button to start a new recording">
