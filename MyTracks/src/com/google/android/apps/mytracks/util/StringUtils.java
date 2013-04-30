@@ -85,10 +85,13 @@ public class StringUtils {
      * level 17, it returns strings like "1:0:00" instead of "1:00:00", which
      * breaks several unit tests.
      */
-    long elapsedSeconds = time / 1000;
+    if (time < 0) {
+      return "-";
+    }
     long hours = 0;
     long minutes = 0;
     long seconds = 0;
+    long elapsedSeconds = time / 1000;
 
     if (elapsedSeconds >= 3600) {
       hours = elapsedSeconds / 3600;
