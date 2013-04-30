@@ -31,7 +31,9 @@ public class ApiAdapterFactory {
    */
   public static ApiAdapter getApiAdapter() {
     if (apiAdapter == null) {
-      if (Build.VERSION.SDK_INT >= 16) {
+      if (Build.VERSION.SDK_INT >= 17) {
+        apiAdapter = new Api17Adapter();
+      } else if (Build.VERSION.SDK_INT >= 16) {
         apiAdapter = new Api16Adapter();
       } else if (Build.VERSION.SDK_INT >= 14) {
         apiAdapter = new Api14Adapter();

@@ -59,12 +59,10 @@ public class TabsAdapter extends FragmentPagerAdapter
    */
   private static final class TabInfo {
 
-    private final String tag;
     private final Class<?> clss;
     private final Bundle bundle;
 
-    public TabInfo(String tag, Class<?> clss, Bundle bunlde) {
-      this.tag = tag;
+    public TabInfo(Class<?> clss, Bundle bunlde) {
       this.clss = clss;
       this.bundle = bunlde;
     }
@@ -106,9 +104,8 @@ public class TabsAdapter extends FragmentPagerAdapter
   public void addTab(TabHost.TabSpec tabSpec, Class<?> clss, Bundle bundle) {
     tabSpec.setContent(new DummyTabFactory(context));
 
-    String tag = tabSpec.getTag();
-    TabInfo info = new TabInfo(tag, clss, bundle);
-
+    TabInfo info = new TabInfo(clss, bundle);
+    
     tabInfos.add(info);
     tabHost.addTab(tabSpec);
     notifyDataSetChanged();

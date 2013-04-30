@@ -25,6 +25,7 @@ import android.location.Location;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Locale;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -80,7 +81,7 @@ public class SearchEngine {
   public static class SearchQuery {
     public SearchQuery(String textQuery, Location currentLocation, long currentTrackId,
         long currentTimestamp) {
-      this.textQuery = textQuery.toLowerCase();
+      this.textQuery = textQuery.toLowerCase(Locale.getDefault());
       this.currentLocation = currentLocation;
       this.currentTrackId = currentTrackId;
       this.currentTimestamp = currentTimestamp;
@@ -333,13 +334,13 @@ public class SearchEngine {
       String name, String description, String category) {
     // Title boost: track name > description > category.
     double boost = 1.0;
-    if (name.toLowerCase().contains(query.textQuery)) {
+    if (name.toLowerCase(Locale.getDefault()).contains(query.textQuery)) {
       boost *= TRACK_NAME_PROMOTION;
     }
-    if (description.toLowerCase().contains(query.textQuery)) {
+    if (description.toLowerCase(Locale.getDefault()).contains(query.textQuery)) {
       boost *= TRACK_DESCRIPTION_PROMOTION;
     }
-    if (category.toLowerCase().contains(query.textQuery)) {
+    if (category.toLowerCase(Locale.getDefault()).contains(query.textQuery)) {
       boost *= TRACK_CATEGORY_PROMOTION;
     }
     return boost;

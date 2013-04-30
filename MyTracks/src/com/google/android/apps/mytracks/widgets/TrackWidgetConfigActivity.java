@@ -29,6 +29,7 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Activity to configure the track widget.
@@ -124,7 +125,7 @@ public class TrackWidgetConfigActivity extends Activity {
   }
 
   private void addItem(List<CharSequence> list, int id) {
-    list.add(getString(id).toUpperCase());
+    list.add(getString(id).toUpperCase(Locale.getDefault()));
   }
 
   private void configSpinner(Spinner spinner, List<CharSequence> list, int position) {

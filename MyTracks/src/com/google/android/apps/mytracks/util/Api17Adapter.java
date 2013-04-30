@@ -20,33 +20,22 @@ import com.google.android.apps.mytracks.widgets.TrackWidgetProvider;
 
 import android.annotation.TargetApi;
 import android.appwidget.AppWidgetManager;
+import android.appwidget.AppWidgetProviderInfo;
 import android.os.Bundle;
 
 /**
- * API level 16 specific implementation of the {@link ApiAdapter}.
+ * API level 17 specific implementation of the {@link ApiAdapter}.
  * 
  * @author Jimmy Shih
  */
-@TargetApi(16)
-public class Api16Adapter extends Api14Adapter {
-
-  private static final String APP_WIDGET_SIZE_KEY = "app_widget_size_key";
+@TargetApi(17)
+public class Api17Adapter extends Api16Adapter {
 
   @Override
-  public int getAppWidgetSize(AppWidgetManager appWidgetManager, int appWidgetId) {
-    Bundle bundle = appWidgetManager.getAppWidgetOptions(appWidgetId);
-    return bundle.getInt(APP_WIDGET_SIZE_KEY, getAppWidgetSizeDefault(bundle));
-  }
-  
-  @SuppressWarnings("unused")
   protected int getAppWidgetSizeDefault(Bundle bundle) {
-    return TrackWidgetProvider.HOME_SCREEN_DEFAULT_SIZE;
-  }
-  
-  @Override
-  public void setAppWidgetSize(AppWidgetManager appWidgetManager, int appWidgetId, int size) {
-    Bundle bundle = new Bundle();
-    bundle.putInt(APP_WIDGET_SIZE_KEY, size);
-    appWidgetManager.updateAppWidgetOptions(appWidgetId, bundle);
+    boolean isKeyguard = bundle.getInt(AppWidgetManager.OPTION_APPWIDGET_HOST_CATEGORY, -1)
+        == AppWidgetProviderInfo.WIDGET_CATEGORY_KEYGUARD;
+    return isKeyguard ? TrackWidgetProvider.KEYGUARD_DEFAULT_SIZE
+        : TrackWidgetProvider.HOME_SCREEN_DEFAULT_SIZE;
   }
 }

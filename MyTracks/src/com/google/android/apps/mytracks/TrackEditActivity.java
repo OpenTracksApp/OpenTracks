@@ -226,6 +226,7 @@ public class TrackEditActivity extends AbstractMyTracksActivity
    *
    * @param value the icon value
    */
+  @SuppressWarnings("unchecked")
   private void setActivityTypeIcon(String value) {
     iconValue = value;
     ArrayAdapter<StringBuilder> adapter =
