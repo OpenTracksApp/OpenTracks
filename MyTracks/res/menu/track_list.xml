@@ -35,20 +35,6 @@ limitations under the License.
     android:icon="@drawable/menu_save"
     android:id="@+id/track_list_save_all"
     android:title="@string/menu_save_all">
-    <menu>
-      <item
-        android:id="@+id/track_list_save_all_gpx"
-        android:title=""/>
-      <item
-        android:id="@+id/track_list_save_all_kml"
-        android:title=""/>
-      <item
-        android:id="@+id/track_list_save_all_csv"
-        android:title=""/>
-      <item
-        android:id="@+id/track_list_save_all_tcx"
-        android:title=""/>
-    </menu>
   </item>
   <item
     android:icon="@drawable/menu_delete"

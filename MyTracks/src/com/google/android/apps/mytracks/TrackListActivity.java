@@ -29,8 +29,8 @@ import com.google.android.apps.mytracks.fragments.EnableSyncDialogFragment;
 import com.google.android.apps.mytracks.fragments.EnableSyncDialogFragment.EnableSyncCaller;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment.EulaCaller;
-import com.google.android.apps.mytracks.fragments.ImportSelectionDialogFragment;
-import com.google.android.apps.mytracks.fragments.ImportSelectionDialogFragment.ImportSelectionCaller;
+import com.google.android.apps.mytracks.fragments.FileTypeDialogFragment;
+import com.google.android.apps.mytracks.fragments.FileTypeDialogFragment.FileTypeCaller;
 import com.google.android.apps.mytracks.io.file.ImportActivity;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
@@ -95,7 +95,7 @@ import java.util.Locale;
  * @author Leif Hendrik Wilden
  */
 public class TrackListActivity extends AbstractSendToGoogleActivity
-    implements EulaCaller, EnableSyncCaller, DeleteTrackCaller, ImportSelectionCaller {
+    implements EulaCaller, EnableSyncCaller, DeleteTrackCaller, FileTypeCaller {
 
   private static final String TAG = TrackListActivity.class.getSimpleName();
   private static final String START_GPS_KEY = "start_gps_key";
@@ -537,17 +537,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.track_list, menu);
-    String fileTypes[] = getResources().getStringArray(R.array.file_types);
-    // Save all submenu titles
-    menu.findItem(R.id.track_list_save_all_gpx)
-        .setTitle(getString(R.string.menu_save_format, fileTypes[0]));
-    menu.findItem(R.id.track_list_save_all_kml)
-        .setTitle(getString(R.string.menu_save_format, fileTypes[1]));
-    menu.findItem(R.id.track_list_save_all_csv)
-        .setTitle(getString(R.string.menu_save_format, fileTypes[2]));
-    menu.findItem(R.id.track_list_save_all_tcx)
-        .setTitle(getString(R.string.menu_save_format, fileTypes[3]));
-
+    
     searchMenuItem = menu.findItem(R.id.track_list_search);
     startGpsMenuItem = menu.findItem(R.id.track_list_start_gps);
     importAllMenuItem = menu.findItem(R.id.track_list_import_all);
@@ -586,20 +576,14 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         updateMenuItems(recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
         return true;
       case R.id.track_list_import_all:
-        new ImportSelectionDialogFragment().show(
-            getSupportFragmentManager(), ImportSelectionDialogFragment.IMPORT_SELECTION_DIALOG_TAG);
-         return true;
-      case R.id.track_list_save_all_gpx:
-        startSaveActivity(TrackFileFormat.GPX);
+        FileTypeDialogFragment.newInstance(R.id.track_list_import_all,
+            R.string.import_selection_title, R.string.import_selection_option, 2)
+            .show(getSupportFragmentManager(), FileTypeDialogFragment.FILE_TYPE_DIALOG_TAG);
         return true;
-      case R.id.track_list_save_all_kml:
-        startSaveActivity(TrackFileFormat.KML);
-        return true;
-      case R.id.track_list_save_all_csv:
-        startSaveActivity(TrackFileFormat.CSV);
-        return true;
-      case R.id.track_list_save_all_tcx:
-        startSaveActivity(TrackFileFormat.TCX);
+      case R.id.track_list_save_all:
+        FileTypeDialogFragment.newInstance(R.id.track_list_save_all, R.string.save_selection_title,
+            R.string.save_all_selection_option, 4)
+            .show(getSupportFragmentManager(), FileTypeDialogFragment.FILE_TYPE_DIALOG_TAG);
         return true;
       case R.id.track_list_delete_all:
         DeleteTrackDialogFragment.newInstance(true, new long[] {})
@@ -666,15 +650,28 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   public void onDeleteTrackDone() {
     // Do nothing
   }
-
+  
   @Override
-  public void onImportSelectionDone(TrackFileFormat trackFileFormat) {
-    AnalyticsUtils.sendPageViews(
-        this, "/action/import_all_" + trackFileFormat.name().toLowerCase(Locale.US));
-    Intent intent = IntentUtils.newIntent(this, ImportActivity.class)
-        .putExtra(ImportActivity.EXTRA_IMPORT_ALL, true)
-        .putExtra(ImportActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);
-    startActivity(intent);    
+  public void onFileTypeDone(int menuId, TrackFileFormat trackFileFormat) {
+    Intent intent;
+    switch (menuId) {
+      case R.id.track_list_save_all:
+        AnalyticsUtils.sendPageViews(
+            this, "/action/save_all_" + trackFileFormat.name().toLowerCase(Locale.US));
+        intent = IntentUtils.newIntent(this, SaveActivity.class)
+            .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);
+        startActivity(intent);
+        break;
+      case R.id.track_list_import_all:
+        AnalyticsUtils.sendPageViews(
+            this, "/action/import_all_" + trackFileFormat.name().toLowerCase(Locale.US));
+        intent = IntentUtils.newIntent(this, ImportActivity.class)
+            .putExtra(ImportActivity.EXTRA_IMPORT_ALL, true)
+            .putExtra(ImportActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);
+        startActivity(intent);
+        break;
+      default:
+    }
   }
 
   /**
@@ -788,19 +785,6 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
      * invoked.
      */
     bindChangedCallback.run();
-  }
-
-  /**
-   * Starts the {@link SaveActivity} to save all tracks.
-   * 
-   * @param trackFileFormat the track file format
-   */
-  private void startSaveActivity(TrackFileFormat trackFileFormat) {
-    AnalyticsUtils.sendPageViews(
-        this, "/action/save_all_" + trackFileFormat.name().toLowerCase(Locale.US));
-    Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
-        .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);
-    startActivity(intent);
   }
 
   /**

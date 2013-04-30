@@ -710,7 +710,7 @@ limitations under the License.
   </string>
   <string name="generic_no"
     translation_description="The text on a button to say no.">
-    No    
+    No
   </string>
   <string name="generic_ok"
     translation_description="The text on a button to say ok.">
@@ -738,9 +738,9 @@ limitations under the License.
   </string>
   <string name="generic_yes"
     translation_description="The text on a button to say yes.">
-    Yes    
+    Yes
   </string>
-    
+
   <!-- Gps -->
   <string name="gps_google_location_settings"
      translation_description="In Android, the Google location settings to modify location settings
@@ -845,14 +845,14 @@ limitations under the License.
     Importing from %1$s&#8230;
   </string>
   <string name="import_selection_option"
-    translation_description="When importing from external storage, the option to import all
+    translation_description="When importing from external storage, the option to import all the
       files of a certain file format.
 
-      %1$s: file format. E.g., 'GPX'.">
+      %1$s: file format. 'GPX', 'KML', 'CSV', or 'TCX'.">
     Import all %1$s
   </string>
   <string name="import_selection_title"
-     translation_description="The dialog title when importing from external storage.">
+     translation_description="The dialog title to import from external storage.">
     Import from external storage
   </string>
   <string name="import_success"
@@ -877,7 +877,7 @@ limitations under the License.
     translation_description="Option to select all the items in a list.">
     Select all
   </string>
-    
+
   <!-- Maps List -->
   <string name="maps_list_error"
     translation_description="When sending a track to an existing Google Map, the text on the Maps'
@@ -1024,7 +1024,7 @@ limitations under the License.
     Help
   </string>
   <string name="menu_import_all"
-    translation_description="In the menu, to import all tracks from the external storage.
+    translation_description="In the menu, to import all the tracks from the external storage.
 
       Character limit: ~20 (1 line)">
     Import all
@@ -1078,21 +1078,13 @@ limitations under the License.
     translation_description="In the menu, to save a track to the external storage.
 
       Character limit: ~20 (1 line)">
-    Save to external storage
+    Save
   </string>
   <string name="menu_save_all"
     translation_description="In the menu, to save all the tracks to the external storage.
 
       Character limit: ~20 (1 line)">
-    Save all to external storage
-  </string>
-  <string name="menu_save_format"
-    translation_description="Under the save to external storage menu option, the option to save a
-      track as a certain file format.
-
-      %1$s: file format. 'GPX', 'KML', 'CSV', or 'TCX'.
-      Character limit: ~20 (1 line)">
-    Save as %1$s
+    Save all
   </string>
   <string name="menu_search"
     translation_description="In the menu, to start a textual search for tracks or markers.
@@ -1242,6 +1234,13 @@ limitations under the License.
   </string>
 
   <!-- Save -->
+  <string name="save_all_selection_option"
+    translation_description="When saving to external storage, the option to save all the tracks as a
+      certain file format.
+
+      %1$s: file format. 'GPX', 'KML', 'CSV', or 'TCX'.">
+    Save all as %1$s
+  </string>
   <string name="save_error"
     translation_description="When saving to the external storage, the error message indicating that
       only some of the tracks are saved.
@@ -1256,6 +1255,17 @@ limitations under the License.
 
       %1$s: the directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
     Saving to %1$s&#8230;
+  </string>
+  <string name="save_selection_option"
+    translation_description="When saving to external storage, the option to save a track as a
+      certain file format.
+
+      %1$s: file format. 'GPX', 'KML', 'CSV', or 'TCX'.">
+    Save as %1$s
+  </string>
+  <string name="save_selection_title"
+    translation_description="The dialog title to save to external storage.">
+    Save to external storage
   </string>
   <string name="save_success"
     translation_description="When saving to the external storage, the success message.
@@ -2050,7 +2060,7 @@ limitations under the License.
   <string name="settings_sharing_share_track"
     translation_description="In the 'Sharing' settings, the option to configure how to share a
       track.
-    
+
       Character limit: ~23 (1 line)">
     Share track
   </string>
@@ -2062,7 +2072,7 @@ limitations under the License.
   <string name="settings_sharing_share_track_file"
     translation_description="In the 'Sharing' settings, the option in the 'Share track' setting to
       share as a file.
-      
+
        %1$s: file format. E.g., 'GPX'.">
     As %1$s file
   </string>
@@ -2070,8 +2080,8 @@ limitations under the License.
     translation_description="In the 'Sharing' settings, the option in the 'Share track' setting to
       share via Google Maps url.">
     Via Google Maps url
-  </string>  
-  
+  </string>
+
   <!-- Settings Stats -->
   <string name="settings_stats_coordinate"
     translation_description="In the 'Stats settings, the option to show latitude and longitude.
@@ -2129,7 +2139,7 @@ limitations under the License.
   </string>
   <string name="share_track_file_confirm_message"
     translation_description="The confirmation message when sharing a track as a file.">
-    This will save your track to external storage so you can share the file.    
+    This will save your track to external storage so you can share the file.
   </string>
   <string name="share_track_maps_confirm_message"
     translation_description="The confirmation message when sharing a track via Google Maps with
@@ -2288,8 +2298,8 @@ limitations under the License.
     translation_description="When deleting multiple tracks, the confirmation message.">
     The tracks and their markers will be permanently deleted from the device. If Google Drive sync
     is enabled, this will also delete the tracks on Google Drive.
-  </string>  
-  
+  </string>
+
   <!-- Track Detail -->
   <string name="track_detail_chart_tab"
     translation_description="In the track detail page, the title of the tab showing the chart.">

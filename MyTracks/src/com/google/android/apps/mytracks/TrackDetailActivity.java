@@ -27,6 +27,8 @@ import com.google.android.apps.mytracks.fragments.ChooseUploadServiceDialogFragm
 import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteTrackDialogFragment.DeleteTrackCaller;
+import com.google.android.apps.mytracks.fragments.FileTypeDialogFragment;
+import com.google.android.apps.mytracks.fragments.FileTypeDialogFragment.FileTypeCaller;
 import com.google.android.apps.mytracks.fragments.FrequencyDialogFragment;
 import com.google.android.apps.mytracks.fragments.InstallEarthDialogFragment;
 import com.google.android.apps.mytracks.fragments.MyTracksMapFragment;
@@ -72,7 +74,7 @@ import java.util.Locale;
  * @author Rodrigo Damazio
  */
 public class TrackDetailActivity extends AbstractSendToGoogleActivity
-    implements ChooseUploadServiceCaller, DeleteTrackCaller {
+    implements ChooseUploadServiceCaller, DeleteTrackCaller, FileTypeCaller {
 
   public static final String EXTRA_TRACK_ID = "track_id";
   public static final String EXTRA_MARKER_ID = "marker_id";
@@ -301,15 +303,6 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.track_detail, menu);
-    String fileTypes[] = getResources().getStringArray(R.array.file_types);
-    menu.findItem(R.id.track_detail_save_gpx)
-        .setTitle(getString(R.string.menu_save_format, fileTypes[0]));
-    menu.findItem(R.id.track_detail_save_kml)
-        .setTitle(getString(R.string.menu_save_format, fileTypes[1]));
-    menu.findItem(R.id.track_detail_save_csv)
-        .setTitle(getString(R.string.menu_save_format, fileTypes[2]));
-    menu.findItem(R.id.track_detail_save_tcx)
-        .setTitle(getString(R.string.menu_save_format, fileTypes[3]));
 
     Track track = myTracksProviderUtils.getTrack(trackId);
     boolean sharedWithMe = track != null ? track.isSharedWithMe() : true;
@@ -387,18 +380,11 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
             getSupportFragmentManager(),
             ChooseUploadServiceDialogFragment.CHOOSE_UPLOAD_SERVICE_DIALOG_TAG);
         return true;
-      case R.id.track_detail_save_gpx:
-        startSaveActivity(TrackFileFormat.GPX);
-        return true;
-      case R.id.track_detail_save_kml:
-        startSaveActivity(TrackFileFormat.KML);
-        return true;
-      case R.id.track_detail_save_csv:
-        startSaveActivity(TrackFileFormat.CSV);
-        return true;
-      case R.id.track_detail_save_tcx:
-        startSaveActivity(TrackFileFormat.TCX);
-        return true;
+      case R.id.track_detail_save:
+        FileTypeDialogFragment.newInstance(R.id.track_detail_save, R.string.save_selection_title,
+            R.string.save_selection_option, 4)
+            .show(getSupportFragmentManager(), FileTypeDialogFragment.FILE_TYPE_DIALOG_TAG);
+        return true;       
       case R.id.track_detail_edit:
         intent = IntentUtils.newIntent(this, TrackEditActivity.class)
             .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackId);
@@ -494,6 +480,21 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
       }
     });
   }
+  
+  @Override
+  public void onFileTypeDone(int menuId, TrackFileFormat trackFileFormat) {
+    switch (menuId) {
+      case R.id.track_detail_save:
+        AnalyticsUtils.sendPageViews(
+            this, "/action/save_" + trackFileFormat.name().toLowerCase(Locale.US));
+        Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
+            .putExtra(SaveActivity.EXTRA_TRACK_ID, trackId)
+            .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);
+        startActivity(intent);
+        break;
+      default:
+    }
+  }
 
   /**
    * Gets the {@link TrackDataHub}.
@@ -588,20 +589,6 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
       title = track != null ? track.getName() : "";
     }
     setTitle(title);
-  }
-
-  /**
-   * Starts the {@link SaveActivity} to save a track.
-   * 
-   * @param trackFileFormat the track file format
-   */
-  private void startSaveActivity(TrackFileFormat trackFileFormat) {
-    AnalyticsUtils.sendPageViews(
-        this, "/action/save_" + trackFileFormat.name().toLowerCase(Locale.US));
-    Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
-        .putExtra(SaveActivity.EXTRA_TRACK_ID, trackId)
-        .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);
-    startActivity(intent);
   }
 
   /**

@@ -28,55 +28,76 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
 /**
- * A DialogFragment to select an import type, gpx, kml, etc.
+ * A DialogFragment to select a file type, gpx, kml, etc.
  * 
  * @author Jimmy Shih
  */
-public class ImportSelectionDialogFragment extends DialogFragment {
+public class FileTypeDialogFragment extends DialogFragment {
 
   /**
    * Interface for caller of this dialog fragment.
    * 
    * @author Jimmy Shih
    */
-  public interface ImportSelectionCaller {
+  public interface FileTypeCaller {
 
     /**
-     * Called when import selection is done.
+     * Called when file type selection is done.
      */
-    public void onImportSelectionDone(TrackFileFormat trackFileFormat);
+    public void onFileTypeDone(int menuId, TrackFileFormat trackFileFormat);
   }
 
-  public static final String IMPORT_SELECTION_DIALOG_TAG = "importSelection";
+  public static final String FILE_TYPE_DIALOG_TAG = "fileType";
 
-  private ImportSelectionCaller caller;
+  private static final String KEY_MENU_ID = "menuId";
+  private static final String KEY_TITLE_ID = "titleId";
+  private static final String KEY_OPTION_ID = "optionId";
+  private static final String KEY_SIZE = "size";
+
+  public static FileTypeDialogFragment newInstance(
+      int menuId, int titleId, int optionId, int size) {
+    Bundle bundle = new Bundle();
+    bundle.putInt(KEY_MENU_ID, menuId);
+    bundle.putInt(KEY_TITLE_ID, titleId);
+    bundle.putInt(KEY_OPTION_ID, optionId);
+    bundle.putInt(KEY_SIZE, size);
+
+    FileTypeDialogFragment fileTypeDialogFragment = new FileTypeDialogFragment();
+    fileTypeDialogFragment.setArguments(bundle);
+    return fileTypeDialogFragment;
+  }
+
+  private FileTypeCaller caller;
 
   @Override
   public void onAttach(Activity activity) {
     super.onAttach(activity);
     try {
-      caller = (ImportSelectionCaller) activity;
+      caller = (FileTypeCaller) activity;
     } catch (ClassCastException e) {
       throw new ClassCastException(
-          activity.toString() + " must implement " + ImportSelectionCaller.class.getSimpleName());
+          activity.toString() + " must implement " + FileTypeCaller.class.getSimpleName());
     }
   }
 
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
-    String[] choices = new String[2];
     String fileTypes[] = getResources().getStringArray(R.array.file_types);
-    choices[0] = getString(R.string.import_selection_option, fileTypes[0]);
-    choices[1] = getString(R.string.import_selection_option, fileTypes[1]);
-
+    int size = getArguments().getInt(KEY_SIZE);
+    int optionId = getArguments().getInt(KEY_OPTION_ID);
+    final int titleId = getArguments().getInt(KEY_TITLE_ID);
+    final int menuId = getArguments().getInt(KEY_MENU_ID);
+    String[] choices = new String[size];
+    for (int i = 0; i < choices.length; i++) {
+      choices[i] = getString(optionId, fileTypes[i]);
+    }
     return new AlertDialog.Builder(getActivity()).setNegativeButton(R.string.generic_cancel, null)
         .setPositiveButton(R.string.generic_ok, new OnClickListener() {
             @Override
           public void onClick(DialogInterface dialog, int which) {
             int position = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-            caller.onImportSelectionDone(position == 0 ? TrackFileFormat.GPX : TrackFileFormat.KML);
+            caller.onFileTypeDone(menuId, TrackFileFormat.values()[position]);
           }
-        }).setSingleChoiceItems(choices, 0, null).setTitle(R.string.import_selection_title)
-        .create();
+        }).setSingleChoiceItems(choices, 0, null).setTitle(titleId).create();
   }
 }
