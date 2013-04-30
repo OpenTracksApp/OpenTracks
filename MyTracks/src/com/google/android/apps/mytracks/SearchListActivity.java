@@ -128,21 +128,32 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
   private ContextualActionModeCallback
       contextualActionModeCallback = new ContextualActionModeCallback() {
           @Override
-        public boolean onClick(int itemId, int position, long id) {
-          return handleContextItem(itemId, position);
+        public boolean onClick(int itemId, int[] positions, long[] ids) {
+          return handleContextItem(itemId, positions);          
         }
-
-        public void onPrepare(Menu menu, int position, long id) {
-          Map<String, Object> item = arrayAdapter.getItem(position);
-          Long trackId = (Long) item.get(TRACK_ID_FIELD);
-          Long markerId = (Long) item.get(MARKER_ID_FIELD);
-          Track track = myTracksProviderUtils.getTrack(trackId);
+          @Override
+        public void onPrepare(Menu menu, int[] positions, long[] ids) {
+          boolean shareWithMe = true;
+          Long markerId = null;
+          if (positions.length == 1) {
+            Map<String, Object> item = arrayAdapter.getItem(positions[0]);
+            Long trackId = (Long) item.get(TRACK_ID_FIELD);            
+            Track track = myTracksProviderUtils.getTrack(trackId);
+            shareWithMe = track.isSharedWithMe();
+            markerId = (Long) item.get(MARKER_ID_FIELD);
+          }
+          // Only one item, the item is a track, and the item is not a sharedWithMe track
           menu.findItem(R.id.list_context_menu_share)
-              .setVisible(markerId == null && !track.isSharedWithMe());
-          menu.findItem(R.id.list_context_menu_show_on_map).setVisible(markerId != null);
-          menu.findItem(R.id.list_context_menu_edit).setVisible(!track.isSharedWithMe());
+              .setVisible(positions.length == 1 && markerId == null && !shareWithMe);
+          // Only one item, the item is a marker
+          menu.findItem(R.id.list_context_menu_show_on_map)
+              .setVisible(positions.length == 1 && markerId != null);
+          // Only one item, can be track or marker, but cannot be a sharedWithMe item
+          menu.findItem(R.id.list_context_menu_edit)
+              .setVisible(positions.length == 1 && !shareWithMe);
+          // Only one item. If marker, cannot be a shareWithMe item. If track, no restriction
           menu.findItem(R.id.list_context_menu_delete)
-              .setVisible(markerId == null || !track.isSharedWithMe());
+              .setVisible(positions.length == 1 && (markerId == null || !shareWithMe));
         }
       };
 
@@ -288,14 +299,14 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
     super.onCreateContextMenu(menu, v, menuInfo);
     getMenuInflater().inflate(R.menu.list_context_menu, menu);
 
-    int position = ((AdapterContextMenuInfo) menuInfo).position;
-    contextualActionModeCallback.onPrepare(menu, position, 0);
+    AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
+    contextualActionModeCallback.onPrepare(menu, new int[] {info.position}, new long[] {info.id});
   }
 
   @Override
   public boolean onContextItemSelected(MenuItem item) {
-    AdapterContextMenuInfo adapterContextMenuInfo = (AdapterContextMenuInfo) item.getMenuInfo();
-    if (handleContextItem(item.getItemId(), adapterContextMenuInfo.position)) {
+    AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+    if (handleContextItem(item.getItemId(), new int[] {info.position})) {
       return true;
     }
     return super.onContextItemSelected(item);
@@ -315,26 +326,24 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
    * Handles a context item selection.
    * 
    * @param itemId the menu item id
-   * @param position the position of the selected row
+   * @param positions the positions of the selected rows
    * @return true if handled.
    */
-  private boolean handleContextItem(int itemId, int position) {
-    Map<String, Object> item = arrayAdapter.getItem(position);
+  private boolean handleContextItem(int itemId, int[] positions) {
+    if (positions.length != 1) {
+      return false;
+    }
+    Map<String, Object> item = arrayAdapter.getItem(positions[0]);
     Long trackId = (Long) item.get(TRACK_ID_FIELD);
     Long markerId = (Long) item.get(MARKER_ID_FIELD);
     Intent intent;
     switch (itemId) {
       case R.id.list_context_menu_share:
-        confirmShare(trackId);        
+        confirmShare(trackId);
         return true;
       case R.id.list_context_menu_show_on_map:
-        if (markerId != null) {
-          intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
-              .putExtra(TrackDetailActivity.EXTRA_MARKER_ID, markerId);
-        } else {
-          intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
-              .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);
-        }
+        intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
+            .putExtra(TrackDetailActivity.EXTRA_MARKER_ID, markerId);
         startActivity(intent);
         return true;
       case R.id.list_context_menu_edit:
@@ -346,6 +355,7 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
               .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackId);
         }
         startActivity(intent);
+
         // Close the search result since its content can change after edit.
         finish();
         return true;

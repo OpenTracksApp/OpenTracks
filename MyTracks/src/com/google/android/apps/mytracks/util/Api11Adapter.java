@@ -23,17 +23,22 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
+import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,51 +60,142 @@ public class Api11Adapter extends Api10Adapter {
   }
 
   @Override
-  public void configureListViewContextualMenu(final Activity activity, ListView listView,
+  public void configureListViewContextualMenu(final Activity activity, final ListView listView,
       final ContextualActionModeCallback contextualActionModeCallback) {
-    listView.setOnItemLongClickListener(new OnItemLongClickListener() {
-      ActionMode actionMode;
+    listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+    listView.setMultiChoiceModeListener(new MultiChoiceModeListener() {
 
         @Override
-      public boolean onItemLongClick(
-          AdapterView<?> parent, View view, final int position, final long id) {
-        if (actionMode != null) {
-          return false;
-        }
-        actionMode = activity.startActionMode(new ActionMode.Callback() {
+      public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+        mode.getMenuInflater().inflate(R.menu.list_context_menu, menu);
+        final Spinner spinner = new Spinner(activity) {
             @Override
-          public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            mode.getMenuInflater().inflate(R.menu.list_context_menu, menu);
-            return true;
+          public void setSelection(int position) {
+            super.setSelection(position);
+            // Fire event when selecting the same item
+            if (position == getSelectedItemPosition()) {
+              getOnItemSelectedListener()
+                  .onItemSelected(this, getSelectedView(), position, getSelectedItemId());
+            }
           }
-
+        };
+        ArrayAdapter<StringBuilder> adapter = new ArrayAdapter<StringBuilder>(
+            activity, android.R.layout.simple_spinner_item,
+            new StringBuilder[] { new StringBuilder("") }) {
             @Override
-          public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            contextualActionModeCallback.onPrepare(menu, position, id);
-            // Return true to indicate change
-            return true;
-          }
-
+          public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            // Display select all/ deselect all
+            View view = super.getDropDownView(position, convertView, parent);
+            TextView textView = (TextView) view;
+            int messageId = listView.getCheckedItemCount() == listView.getCount()
+                ? R.string.list_deselect_all
+                : R.string.list_select_all;
+            textView.setText(messageId);
+            return view;
+          };
+        };
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        
+        // Use a post to prevent the spinner item from firing when first created
+        spinner.post(new Runnable() {
             @Override
-          public void onDestroyActionMode(ActionMode mode) {
-            actionMode = null;
-          }
+          public void run() {
+            spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+                @Override
+              public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // Handle select all/ deselect all
+                int size = listView.getCount();
+                boolean allSelected = listView.getCheckedItemCount() == size;
+                for (int i = 0; i < size; i++) {
+                  listView.setItemChecked(i, !allSelected);
+                }
+              }
 
-            @Override
-          public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            mode.finish();
-            return contextualActionModeCallback.onClick(item.getItemId(), position, id);
+                @Override
+              public void onNothingSelected(AdapterView<?> parent) {
+                // Do nothing
+              }
+            });
           }
         });
-        TextView textView = (TextView) view.findViewById(R.id.list_item_name);
-        if (textView != null) {
-          actionMode.setTitle(textView.getText());
-        }
-        view.setSelected(true);
+        mode.setCustomView(spinner);
+        setActionModeTitle(mode);
         return true;
       }
+
+        @Override
+      public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+        contextualActionModeCallback.onPrepare(
+            menu, getCheckedPositions(listView), listView.getCheckedItemIds());
+        return true;
+      }
+
+        @Override
+      public void onDestroyActionMode(ActionMode mode) {
+        // Do nothing
+      }
+
+        @SuppressWarnings("unchecked")
+        @Override
+      public void onItemCheckedStateChanged(
+          ActionMode mode, int position, long id, boolean checked) {
+        setActionModeTitle(mode);
+
+        // Update action mode title
+        Spinner spinner = (Spinner) mode.getCustomView();
+        ArrayAdapter<StringBuilder> adapter = (ArrayAdapter<StringBuilder>) spinner.getAdapter();
+        adapter.notifyDataSetChanged();
+
+        // Update contextual action mode items
+        mode.invalidate();
+      }
+
+        @Override
+      public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+        if (contextualActionModeCallback.onClick(
+            item.getItemId(), getCheckedPositions(listView), listView.getCheckedItemIds())) {
+          mode.finish();
+        }
+        return true;
+      }
+        
+      /**
+       * Sets the action mode title
+       * 
+       * @param mode action mode
+       */
+      private void setActionModeTitle(ActionMode mode) {
+        Spinner spinner = (Spinner) mode.getCustomView();
+        StringBuilder stringBuilder = (StringBuilder) spinner.getSelectedItem();
+        stringBuilder.delete(0, stringBuilder.length());
+
+        int count = listView.getCheckedItemCount();
+        stringBuilder.append(activity.getString(R.string.list_item_selected, count));
+      }
+      
+      /**
+       * Gets the checked positions in a list view.
+       * 
+       * @param list the list view
+       */
+      private int[] getCheckedPositions(ListView list) {
+        SparseBooleanArray positions  = list.getCheckedItemPositions();
+        ArrayList<Integer> arrayList = new ArrayList<Integer>();
+        for (int i = 0; i < positions.size(); i++) {
+          int key = positions.keyAt(i);
+          if (positions.valueAt(i)) {
+            arrayList.add(key);
+          }
+        }
+        int[] result = new int[arrayList.size()];
+        for (int i = 0; i < arrayList.size(); i++) {
+          result[i] = arrayList.get(i);
+        }
+        return result;
+      }
     });
-  };
+  }
 
   @Override
   public void configureSearchWidget(Activity activity, final MenuItem menuItem) {

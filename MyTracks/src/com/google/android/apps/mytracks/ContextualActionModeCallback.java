@@ -19,27 +19,27 @@ package com.google.android.apps.mytracks;
 import android.view.Menu;
 
 /**
- * Callback when an item in the contextual action mode is selected.
+ * Callback when items in the contextual action mode are selected.
  * 
  * @author Jimmy Shih
  */
 public interface ContextualActionModeCallback {
 
   /**
-   * Invoked when an item is selected.
-   * 
-   * @param itemId the context menu item id
-   * @param position the position of the selected row
-   * @param id the id of the selected row, if available
-   */
-  public boolean onClick(int itemId, int position, long id);
-
-  /**
-   * Invoked to prepare the menu for the selected item.
+   * Invoked to prepare the menu for the selected items.
    * 
    * @param menu the menu
-   * @param position the position of the selected item
-   * @param id the id of the selected item
+   * @param positions the selected items' positions
+   * @param ids the selected items' ids, if available
    */
-  public void onPrepare(Menu menu, int position, long id);
+  public void onPrepare(Menu menu, int[] positions, long[] ids);
+
+  /**
+   * Invoked when items are selected.
+   * 
+   * @param itemId the context menu item id
+   * @param positions the selected items' positions
+   * @param ids the selected items' ids, if available
+   */
+  public boolean onClick(int itemId, int[] positions, long[] ids);
 }

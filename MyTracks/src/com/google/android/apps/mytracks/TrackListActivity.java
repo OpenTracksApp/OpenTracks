@@ -194,18 +194,24 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   // Callback when an item is selected in the contextual action mode
   private final ContextualActionModeCallback
       contextualActionModeCallback = new ContextualActionModeCallback() {
-          @Override
-        public boolean onClick(int itemId, int position, long id) {
-          return handleContextItem(itemId, id);
-        }
 
-        public void onPrepare(Menu menu, int position, long id) {
-          Track track = myTracksProviderUtils.getTrack(id);
-          menu.findItem(R.id.list_context_menu_share).setVisible(!track.isSharedWithMe());
+          @Override
+        public void onPrepare(Menu menu, int[] positions, long[] ids) {
+          boolean shareWithMe = true;
+          if (ids.length == 1) {
+            Track track = myTracksProviderUtils.getTrack(ids[0]);
+            shareWithMe = track.isSharedWithMe();
+          }
+          menu.findItem(R.id.list_context_menu_share).setVisible(!shareWithMe);
           menu.findItem(R.id.list_context_menu_show_on_map).setVisible(false);
-          menu.findItem(R.id.list_context_menu_edit).setVisible(!track.isSharedWithMe());
+          menu.findItem(R.id.list_context_menu_edit).setVisible(!shareWithMe);
           menu.findItem(R.id.list_context_menu_delete).setVisible(true);
         }
+
+          @Override
+        public boolean onClick(int itemId, int[] positions, long[] ids) {
+          return handleContextItem(itemId, ids);
+        };
       };
 
   private final OnClickListener recordListener = new OnClickListener() {
@@ -631,12 +637,16 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
     super.onCreateContextMenu(menu, v, menuInfo);
     getMenuInflater().inflate(R.menu.list_context_menu, menu);
-    contextualActionModeCallback.onPrepare(menu, 0, ((AdapterContextMenuInfo) menuInfo).id);
+
+    AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
+    contextualActionModeCallback.onPrepare(
+        menu, new int[] { info.position }, new long[] { info.id });
   }
 
   @Override
   public boolean onContextItemSelected(MenuItem item) {
-    if (handleContextItem(item.getItemId(), ((AdapterContextMenuInfo) item.getMenuInfo()).id)) {
+    AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+    if (handleContextItem(item.getItemId(), new long[] { info.id })) {
       return true;
     }
     return super.onContextItemSelected(item);
@@ -806,27 +816,22 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
    * Handles a context item selection.
    * 
    * @param itemId the menu item id
-   * @param trackId the track id
+   * @param trackIds the track ids
    * @return true if handled.
    */
-  private boolean handleContextItem(int itemId, long trackId) {
-    Intent intent;
+  private boolean handleContextItem(int itemId, long[] trackIds) {
     switch (itemId) {
       case R.id.list_context_menu_share:
-        confirmShare(trackId);        
-        return true;
-      case R.id.list_context_menu_show_on_map:
-        intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
-            .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);
-        startActivity(intent);
+        confirmShare(trackIds[0]);
         return true;
       case R.id.list_context_menu_edit:
-        intent = IntentUtils.newIntent(this, TrackEditActivity.class)
-            .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackId);
+        Intent intent = IntentUtils.newIntent(this, TrackEditActivity.class)
+            .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackIds[0]);
         startActivity(intent);
         return true;
       case R.id.list_context_menu_delete:
-        DeleteTrackDialogFragment.newInstance(false, new long[] { trackId })
+        boolean deleteAll = listView.getCount() == trackIds.length;
+        DeleteTrackDialogFragment.newInstance(deleteAll, trackIds)
             .show(getSupportFragmentManager(), DeleteTrackDialogFragment.DELETE_TRACK_DIALOG_TAG);
         return true;
       default:

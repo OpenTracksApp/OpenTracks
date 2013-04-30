@@ -101,6 +101,8 @@ limitations under the License.
     <item name="android:layout_gravity">center</item>
     <item name="android:padding">8dp</item>
   </style>
+  <!-- list item -->
+  <style name="ListItem" />
   <!-- list item date -->
   <style name="ListItemDate" parent="@style/TextSmall">
     <item name="android:gravity">right</item>

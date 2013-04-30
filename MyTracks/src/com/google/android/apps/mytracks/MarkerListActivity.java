@@ -69,15 +69,17 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
   private ContextualActionModeCallback
       contextualActionModeCallback = new ContextualActionModeCallback() {
           @Override
-        public boolean onClick(int itemId, int position, long id) {
-          return handleContextItem(itemId, id);
+        public void onPrepare(Menu menu, int[] positions, long[] ids) {
+          menu.findItem(R.id.list_context_menu_share).setVisible(false);
+          menu.findItem(R.id.list_context_menu_show_on_map).setVisible(ids.length == 1);
+          menu.findItem(R.id.list_context_menu_edit)
+              .setVisible(ids.length == 1 && !track.isSharedWithMe());
+          menu.findItem(R.id.list_context_menu_delete).setVisible(!track.isSharedWithMe());
         }
 
-        public void onPrepare(Menu menu, int position, long id) {
-          menu.findItem(R.id.list_context_menu_share).setVisible(false);
-          menu.findItem(R.id.list_context_menu_show_on_map).setVisible(true);
-          menu.findItem(R.id.list_context_menu_edit).setVisible(!track.isSharedWithMe());
-          menu.findItem(R.id.list_context_menu_delete).setVisible(!track.isSharedWithMe());
+          @Override
+        public boolean onClick(int itemId, int[] positions, long[] ids) {
+          return handleContextItem(itemId, ids);
         }
       };
 
@@ -254,12 +256,15 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
   public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
     super.onCreateContextMenu(menu, v, menuInfo);
     getMenuInflater().inflate(R.menu.list_context_menu, menu);
-    contextualActionModeCallback.onPrepare(menu, 0, 0);
+    
+    AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
+    contextualActionModeCallback.onPrepare(menu, new int[] {info.position}, new long[] {info.id});
   }
 
   @Override
   public boolean onContextItemSelected(MenuItem item) {
-    if (handleContextItem(item.getItemId(), ((AdapterContextMenuInfo) item.getMenuInfo()).id)) {
+    AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+    if (handleContextItem(item.getItemId(), new long[] {info.id})) {
       return true;
     }
     return super.onContextItemSelected(item);
@@ -269,24 +274,28 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
    * Handles a context item selection.
    * 
    * @param itemId the menu item id
-   * @param markerId the marker id
+   * @param markerIds the marker ids
    * @return true if handled.
    */
-  private boolean handleContextItem(int itemId, long markerId) {
+  private boolean handleContextItem(int itemId, long[] markerIds) {
     Intent intent;
     switch (itemId) {
       case R.id.list_context_menu_show_on_map:
-        intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
-            .putExtra(TrackDetailActivity.EXTRA_MARKER_ID, markerId);
-        startActivity(intent);
+        if (markerIds.length == 1) {
+          intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
+              .putExtra(TrackDetailActivity.EXTRA_MARKER_ID, markerIds[0]);
+          startActivity(intent);
+        }
         return true;
       case R.id.list_context_menu_edit:
-        intent = IntentUtils.newIntent(this, MarkerEditActivity.class)
-            .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, markerId);
-        startActivity(intent);
+        if (markerIds.length == 1) {
+          intent = IntentUtils.newIntent(this, MarkerEditActivity.class)
+              .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, markerIds[0]);
+          startActivity(intent);
+        }
         return true;
       case R.id.list_context_menu_delete:
-        DeleteMarkerDialogFragment.newInstance(new long[] { markerId })
+        DeleteMarkerDialogFragment.newInstance(markerIds)
             .show(getSupportFragmentManager(), DeleteMarkerDialogFragment.DELETE_MARKER_DIALOG_TAG);
         return true;
       default:

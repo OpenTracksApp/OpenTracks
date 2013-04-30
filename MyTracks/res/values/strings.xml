@@ -852,6 +852,21 @@ limitations under the License.
     Imported %1$s from %2$s.
   </string>
 
+  <!-- List item -->
+  <string name="list_deselect_all"
+    translation_description="Option to deselect all the items in a list.">
+    Deselect all
+  </string>
+  <string name="list_item_selected"
+    translation_description="Title indictating the number of items selected in a list.
+      %1$d: an integer value. E.g., '2'.">
+    %1$d selected
+  </string>
+  <string name="list_select_all"
+    translation_description="Option to select all the items in a list.">
+    Select all
+  </string>
+    
   <!-- Maps List -->
   <string name="maps_list_error"
     translation_description="When sending a track to an existing Google Map, the text on the Maps'
