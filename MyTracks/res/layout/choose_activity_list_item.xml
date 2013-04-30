@@ -39,7 +39,6 @@ limitations under the License.
       android:layout_width="wrap_content"
       android:maxLines="2"
       android:paddingLeft="16dp"
-      android:textAppearance="?android:attr/textAppearanceListItemSmall"
       style="@style/TextChooseActivity" />
     <TextView
       android:id="@+id/choose_activity_list_item_text2"
@@ -47,7 +46,6 @@ limitations under the License.
       android:layout_width="wrap_content"
       android:maxLines="2"
       android:paddingLeft="16dp"
-      android:textAppearance="?android:attr/textAppearanceListItemSmall"
       style="@style/TextChooseActivity" />
   </LinearLayout>
 </LinearLayout>

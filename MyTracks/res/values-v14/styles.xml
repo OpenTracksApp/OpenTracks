@@ -32,7 +32,7 @@ limitations under the License.
   </style>
   <style name="TextChooseActivity"> 
     <!-- Same as TextChooseActivity in values/styles.xml except removing textSize and using textAppearance -->
-    <!-- However, not able to specify textAppearance to @android:attr/textAppearanceListItemSmall -->
+    <item name="android:textAppearance">?android:attr/textAppearanceListItemSmall</item>
   </style>
   <!-- The style for large size text -->
   <style name="TextLarge" parent="@android:style/TextAppearance.DeviceDefault.Large">
