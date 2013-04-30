@@ -110,7 +110,7 @@ public class TrackController {
     statusTextView.setVisibility(isRecording ? View.VISIBLE : View.INVISIBLE);
     if (isRecording) {
       statusTextView.setTextColor(
-          activity.getResources().getColor(isPaused ? android.R.color.white : R.color.red));
+          activity.getResources().getColor(isPaused ? android.R.color.white : R.color.recording_text));
       statusTextView.setText(isPaused ? R.string.generic_paused : R.string.generic_recording);
     }
 

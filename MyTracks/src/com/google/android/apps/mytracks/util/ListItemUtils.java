@@ -84,7 +84,7 @@ public class ListItemUtils {
         isPaused ? R.string.generic_paused : R.string.generic_recording)
         : null;
     int color = isRecording ? context.getResources()
-        .getColor(isPaused ? android.R.color.white : R.color.red)
+        .getColor(isPaused ? android.R.color.white : R.color.recording_text)
         : 0;
     setTextView(recordingTextView, value, color);
 

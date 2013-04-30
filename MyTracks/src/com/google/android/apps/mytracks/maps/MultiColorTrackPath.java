@@ -41,9 +41,9 @@ public class MultiColorTrackPath implements TrackPath {
   
   public MultiColorTrackPath(Context context, TrackPathDescriptor trackPathDescriptor) {
     this.trackPathDescriptor = trackPathDescriptor;
-    slowColor = context.getResources().getColor(R.color.slow_path);
-    normalColor = context.getResources().getColor(R.color.normal_path);
-    fastColor = context.getResources().getColor(R.color.fast_path);
+    slowColor = context.getResources().getColor(R.color.track_color_slow);
+    normalColor = context.getResources().getColor(R.color.track_color_normal);
+    fastColor = context.getResources().getColor(R.color.track_color_fast);
   }
 
   @Override

@@ -472,7 +472,7 @@ public class TrackWidgetProvider extends AppWidgetProvider {
     if (isRecording) {
       status = context.getString(
           recordingTrackPaused ? R.string.generic_paused : R.string.generic_recording);
-      colorId = recordingTrackPaused ? android.R.color.white : R.color.red;
+      colorId = recordingTrackPaused ? android.R.color.white : R.color.recording_text;
     } else {
       status = "";
       colorId = android.R.color.white;

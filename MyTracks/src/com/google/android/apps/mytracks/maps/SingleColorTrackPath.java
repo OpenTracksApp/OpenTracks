@@ -36,7 +36,7 @@ public class SingleColorTrackPath implements TrackPath {
   final int color;
   
   public SingleColorTrackPath(Context context) {
-    color = context.getResources().getColor(R.color.fast_path);
+    color = context.getResources().getColor(R.color.track_color_fast);
   }
 
   @Override

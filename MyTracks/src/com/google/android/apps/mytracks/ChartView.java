@@ -135,54 +135,54 @@ public class ChartView extends View {
         new int[] { 5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000 },
         R.string.description_elevation_metric,
         R.string.description_elevation_imperial,
-        R.color.elevation_fill,
-        R.color.elevation_border);
+        R.color.chart_elevation_fill,
+        R.color.chart_elevation_border);
     series[SPEED_SERIES] = new ChartValueSeries(context,
         0,
         Integer.MAX_VALUE,
         new int[] {1, 5, 10, 20, 50, 100 },
         R.string.description_speed_metric,
         R.string.description_speed_imperial,
-        R.color.speed_fill,
-        R.color.speed_border);
+        R.color.chart_speed_fill,
+        R.color.chart_speed_border);
     series[PACE_SERIES] = new ChartValueSeries(context,
         0,
         Integer.MAX_VALUE,
         new int[] {1, 2, 5, 10, 15, 20, 30, 60, 120 },
         R.string.description_pace_metric,
         R.string.description_pace_imperial,
-        R.color.pace_fill,
-        R.color.pace_border);
+        R.color.chart_pace_fill,
+        R.color.chart_pace_border);
     series[HEART_RATE_SERIES] = new ChartValueSeries(context,
         0,
         Integer.MAX_VALUE,
         new int[] {25, 50 },
         R.string.description_sensor_heart_rate,
         R.string.description_sensor_heart_rate,
-        R.color.heart_rate_fill,
-        R.color.heart_rate_border);
+        R.color.chart_heart_rate_fill,
+        R.color.chart_heart_rate_border);
     series[CADENCE_SERIES] = new ChartValueSeries(context,
         0,
         Integer.MAX_VALUE,
         new int[] {5, 10, 25, 50 },
         R.string.description_sensor_cadence,
         R.string.description_sensor_cadence,
-        R.color.cadence_fill,
-        R.color.cadence_border);
+        R.color.chart_cadence_fill,
+        R.color.chart_cadence_border);
     series[POWER_SERIES] = new ChartValueSeries(context,
         0,
         1000,
         new int[] { 5, 50, 100, 200 },
         R.string.description_sensor_power,
         R.string.description_sensor_power,
-        R.color.power_fill,
-        R.color.power_border);
+        R.color.chart_power_fill,
+        R.color.chart_power_border);
 
     float scale = context.getResources().getDisplayMetrics().density;
 
     axisPaint = new Paint();
     axisPaint.setStyle(Style.STROKE);
-    axisPaint.setColor(context.getResources().getColor(R.color.black));
+    axisPaint.setColor(context.getResources().getColor(android.R.color.black));
     axisPaint.setAntiAlias(true);
     axisPaint.setTextSize(SMALL_TEXT_SIZE * scale);
 
@@ -191,13 +191,13 @@ public class ChartView extends View {
 
     gridPaint = new Paint();
     gridPaint.setStyle(Style.STROKE);
-    gridPaint.setColor(context.getResources().getColor(R.color.gray));
+    gridPaint.setColor(context.getResources().getColor(android.R.color.darker_gray));
     gridPaint.setAntiAlias(false);
     gridPaint.setPathEffect(new DashPathEffect(new float[] { 3, 2 }, 0));
 
     markerPaint = new Paint();
     markerPaint.setStyle(Style.STROKE);
-    markerPaint.setColor(context.getResources().getColor(R.color.gray));
+    markerPaint.setColor(context.getResources().getColor(android.R.color.darker_gray));
     markerPaint.setAntiAlias(false);
 
     pointer = context.getResources().getDrawable(R.drawable.arrow_180);
