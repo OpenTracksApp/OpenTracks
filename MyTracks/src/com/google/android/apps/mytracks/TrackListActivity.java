@@ -57,6 +57,7 @@ import com.google.android.maps.mytracks.BuildConfig;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Dialog;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -370,10 +371,8 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
       ApiAdapterFactory.getApiAdapter().enableStrictMode();
     }
     Intent intent = new Intent(this, RemoveTempFilesService.class);
-    startService(intent);    
-    
-    setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
-
+    startService(intent);       
+   
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
     sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
 
@@ -383,6 +382,16 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     trackController = new TrackController(
         this, trackRecordingServiceConnection, true, recordListener, stopListener);
 
+    setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
+    // Show trackController when search dialog is dismissed
+    SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
+    searchManager.setOnDismissListener(new SearchManager.OnDismissListener() {      
+        @Override
+      public void onDismiss() {
+          trackController.show();        
+      }
+    });
+    
     listView = (ListView) findViewById(R.id.track_list);
     listView.setEmptyView(findViewById(R.id.track_list_empty_view));
     listView.setOnItemClickListener(new OnItemClickListener() {
@@ -547,7 +556,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     feedbackMenuItem = menu.findItem(R.id.track_list_feedback);
     feedbackMenuItem.setVisible(GoogleFeedbackUtils.isAvailable(this));
 
-    ApiAdapterFactory.getApiAdapter().configureSearchWidget(this, searchMenuItem);
+    ApiAdapterFactory.getApiAdapter().configureSearchWidget(this, searchMenuItem, trackController);
     updateMenuItems(recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
     return true;
   }
@@ -640,6 +649,13 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     }
     return super.onKeyUp(keyCode, event);
   }
+  
+  @Override
+  public boolean onSearchRequested() {
+    // Hide trackController when search dialog is shown
+    trackController.hide();
+    return super.onSearchRequested();
+  };
 
   @Override
   public TrackRecordingServiceConnection getTrackRecordingServiceConnection() {

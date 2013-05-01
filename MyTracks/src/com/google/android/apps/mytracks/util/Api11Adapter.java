@@ -17,6 +17,7 @@
 package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.ContextualActionModeCallback;
+import com.google.android.apps.mytracks.TrackController;
 import com.google.android.maps.mytracks.R;
 
 import android.annotation.TargetApi;
@@ -198,11 +199,26 @@ public class Api11Adapter extends Api10Adapter {
   }
 
   @Override
-  public void configureSearchWidget(Activity activity, final MenuItem menuItem) {
+  public void configureSearchWidget(
+      Activity activity, MenuItem menuItem, final TrackController trackController) {
     SearchManager searchManager = (SearchManager) activity.getSystemService(Context.SEARCH_SERVICE);
     SearchView searchView = (SearchView) menuItem.getActionView();
     searchView.setSearchableInfo(searchManager.getSearchableInfo(activity.getComponentName()));
     searchView.setQueryRefinementEnabled(true);
+    searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+      
+        @Override
+      public void onFocusChange(View v, boolean hasFocus) {
+          // Hide and show trackController when search widget has focus/no focus
+          if (trackController != null) {
+            if (hasFocus) {
+              trackController.hide();
+            } else {
+              trackController.show();
+            }
+          }        
+      }
+    });
   }
 
   @Override

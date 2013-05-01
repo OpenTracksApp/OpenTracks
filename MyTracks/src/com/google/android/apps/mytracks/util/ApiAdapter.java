@@ -16,6 +16,7 @@
 package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.ContextualActionModeCallback;
+import com.google.android.apps.mytracks.TrackController;
 import com.google.api.client.http.HttpTransport;
 
 import android.app.Activity;
@@ -134,8 +135,11 @@ public interface ApiAdapter {
    * 
    * @param activity the activity
    * @param menuItem the search menu item
+   * @param trackController the track controller to hide/show when search widget
+   *          is expanded/collapsed. Can be null
    */
-  public void configureSearchWidget(Activity activity, MenuItem menuItem);
+  public void configureSearchWidget(
+      Activity activity, MenuItem menuItem, TrackController trackController);
  
   /**
    * Handles the search menu selection. Returns true if handled.

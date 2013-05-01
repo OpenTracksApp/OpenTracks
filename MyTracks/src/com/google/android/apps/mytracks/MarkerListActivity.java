@@ -226,7 +226,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
     getMenuInflater().inflate(R.menu.marker_list, menu);
     insertMarkerMenuItem = menu.findItem(R.id.marker_list_insert_marker);
     searchMenuItem = menu.findItem(R.id.marker_list_search);
-    ApiAdapterFactory.getApiAdapter().configureSearchWidget(this, searchMenuItem);
+    ApiAdapterFactory.getApiAdapter().configureSearchWidget(this, searchMenuItem, null);
     updateMenu();
     return true;
   }

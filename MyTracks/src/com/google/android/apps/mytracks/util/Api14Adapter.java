@@ -16,6 +16,8 @@
 
 package com.google.android.apps.mytracks.util;
 
+import com.google.android.apps.mytracks.TrackController;
+
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -38,16 +40,18 @@ public class Api14Adapter extends Api11Adapter {
   }
 
   @Override
-  public void configureSearchWidget(Activity activity, final MenuItem menuItem) {
-    super.configureSearchWidget(activity, menuItem);
+  public void configureSearchWidget(
+      Activity activity, final MenuItem menuItem, TrackController trackController) {
+    super.configureSearchWidget(activity, menuItem, trackController);
     SearchView searchView = (SearchView) menuItem.getActionView();
     searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-      @Override
+        @Override
       public boolean onQueryTextSubmit(String query) {
         menuItem.collapseActionView();
         return false;
       }
-      @Override
+
+        @Override
       public boolean onQueryTextChange(String newText) {
         return false;
       }
@@ -57,7 +61,8 @@ public class Api14Adapter extends Api11Adapter {
       public boolean onSuggestionSelect(int position) {
         return false;
       }
-      @Override
+
+        @Override
       public boolean onSuggestionClick(int position) {
         menuItem.collapseActionView();
         return false;

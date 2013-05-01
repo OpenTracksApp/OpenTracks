@@ -17,6 +17,7 @@ package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.ContextualActionModeCallback;
+import com.google.android.apps.mytracks.TrackController;
 import com.google.android.apps.mytracks.services.sensors.BluetoothConnectionManager;
 import com.google.android.apps.mytracks.widgets.TrackWidgetProvider;
 import com.google.api.client.http.HttpTransport;
@@ -111,7 +112,8 @@ public class Api8Adapter implements ApiAdapter {
   }
 
   @Override
-  public void configureSearchWidget(Activity activity, MenuItem menuItem) {
+  public void configureSearchWidget(
+      Activity activity, MenuItem menuItem, TrackController trackController) {
     // Do nothing
   }
 

@@ -280,7 +280,7 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.search_list, menu);
     searchMenuItem = menu.findItem(R.id.search_list_search);
-    ApiAdapterFactory.getApiAdapter().configureSearchWidget(this, searchMenuItem);
+    ApiAdapterFactory.getApiAdapter().configureSearchWidget(this, searchMenuItem, null);
     return true;
   }
 

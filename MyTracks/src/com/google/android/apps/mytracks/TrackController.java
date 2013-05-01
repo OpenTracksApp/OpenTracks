@@ -133,6 +133,14 @@ public class TrackController {
     stopTimer();    
   }
   
+  public void hide() {
+    containerView.setVisibility(View.GONE);
+  }
+  
+  public void show() {
+    containerView.setVisibility(View.VISIBLE);
+  }
+  
   /**
    * Stops the timer.
    */
