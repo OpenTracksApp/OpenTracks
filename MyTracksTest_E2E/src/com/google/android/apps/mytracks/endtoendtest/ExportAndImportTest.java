@@ -88,9 +88,11 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
 
     // Click to export tracks(At least one track) to Gpx files.
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_save_all), true);
-    EndToEndTestUtils.SOLO
-        .clickOnText(String.format(activityMyTracks.getString(R.string.menu_save_format),
-            EndToEndTestUtils.GPX.toUpperCase()));
+    EndToEndTestUtils.SOLO.clickOnText(String.format(
+        activityMyTracks.getString(R.string.save_all_selection_option),
+        EndToEndTestUtils.GPX.toUpperCase()));
+    EndToEndTestUtils.getButtonOnScreen(
+        EndToEndTestUtils.activityMytracks.getString(R.string.generic_ok), true, true);
     EndToEndTestUtils.SOLO.waitForText(getSaveSuccessMessage(1, EndToEndTestUtils.GPX));
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
@@ -187,9 +189,11 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
 
     // Click to export tracks(At least one track) to Gpx files.
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_save_all), true);
-    EndToEndTestUtils.SOLO
-        .clickOnText(String.format(activityMyTracks.getString(R.string.menu_save_format),
-            EndToEndTestUtils.GPX.toUpperCase()));
+    EndToEndTestUtils.SOLO.clickOnText(String.format(
+        activityMyTracks.getString(R.string.save_all_selection_option),
+        EndToEndTestUtils.GPX.toUpperCase()));
+    EndToEndTestUtils.getButtonOnScreen(
+        EndToEndTestUtils.activityMytracks.getString(R.string.generic_ok), true, true);
     EndToEndTestUtils.SOLO.waitForText(getSaveSuccessMessage(1, EndToEndTestUtils.GPX));
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
@@ -228,9 +232,11 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     gpxFilesNumber = EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX).length;
     trackNumber = EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount();
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_save_all), true);
-    EndToEndTestUtils.SOLO
-        .clickOnText(String.format(activityMyTracks.getString(R.string.menu_save_format),
-            EndToEndTestUtils.KML.toUpperCase()));
+    EndToEndTestUtils.SOLO.clickOnText(String.format(
+        activityMyTracks.getString(R.string.save_all_selection_option),
+        EndToEndTestUtils.KML.toUpperCase()));
+    EndToEndTestUtils.getButtonOnScreen(
+        EndToEndTestUtils.activityMytracks.getString(R.string.generic_ok), true, true);
     EndToEndTestUtils.SOLO.waitForText(getSaveSuccessMessage(2, EndToEndTestUtils.KM));
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
@@ -250,7 +256,8 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
      * Wait for the prefix of import success string is much faster than wait the
      * whole string.
      */
-    EndToEndTestUtils.waitTextToDisappear(activityMyTracks.getString(R.string.generic_progress_title));
+    EndToEndTestUtils.waitTextToDisappear(activityMyTracks
+        .getString(R.string.generic_progress_title));
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.import_success).split(
         "%")[0]);
 
@@ -298,5 +305,7 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
   private void importTracks(String fileType) {
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_import_all), true);
     EndToEndTestUtils.SOLO.clickOnText(fileType.toUpperCase());
+    EndToEndTestUtils.getButtonOnScreen(
+        EndToEndTestUtils.activityMytracks.getString(R.string.generic_ok), true, true);
   }
 }

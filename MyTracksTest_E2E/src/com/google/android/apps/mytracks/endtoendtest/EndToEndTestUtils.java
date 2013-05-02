@@ -546,6 +546,8 @@ public class EndToEndTestUtils {
     findMenuItem(activityMytracks.getString(R.string.menu_save), true);
     instrumentation.waitForIdleSync();
     SOLO.clickOnText(trackKind.toUpperCase());
+    EndToEndTestUtils
+    .getButtonOnScreen(activityMytracks.getString(R.string.generic_ok), true, true);
     SOLO.waitForText(activityMytracks.getString(R.string.generic_success_title));
   }
 

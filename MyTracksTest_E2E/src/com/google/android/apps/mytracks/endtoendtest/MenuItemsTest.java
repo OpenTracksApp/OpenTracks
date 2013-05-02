@@ -122,10 +122,19 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
     // Click share again and confirm the share.
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_share), true);
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_yes));
-    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.share_track_add_emails_title)));
+
+    // If Choose account dialog prompt, choose the first account.
+    if (EndToEndTestUtils.SOLO.waitForText(
+        activityMyTracks.getString(R.string.send_google_choose_account_title), 1,
+        EndToEndTestUtils.SHORT_WAIT_TIME)) {
+      EndToEndTestUtils.SOLO.clickOnText(GoogleUtils.ACCOUNT_NAME_1);
+      EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true,
+          true);
+    }
 
     // Input account to share and click OK button.
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+        .getString(R.string.share_track_add_emails_title)));
     EndToEndTestUtils.enterTextAvoidSoftKeyBoard(0, GoogleUtils.ACCOUNT_NAME_2);
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
@@ -161,7 +170,7 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_no));
     assertFalse(EndToEndTestUtils.SOLO.waitForText(
         activityMyTracks.getString(R.string.share_track_add_emails_title), 1,
-        EndToEndTestUtils.VERY_SHORT_WAIT_TIME));   
+        EndToEndTestUtils.VERY_SHORT_WAIT_TIME));
 
     // Try all share items.
     for (int i = 0;; i++) {
