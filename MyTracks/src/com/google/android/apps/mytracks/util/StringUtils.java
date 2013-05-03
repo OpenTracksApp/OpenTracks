@@ -151,7 +151,8 @@ public class StringUtils {
 
   /**
    * Gets the distance in an array of two strings. The first string is the
-   * distance. The second string is the unit.
+   * distance. The second string is the unit. The first string is null if the
+   * distance is invalid.
    * 
    * @param context the context
    * @param distance the distance
@@ -160,7 +161,7 @@ public class StringUtils {
   public static String[] getDistanceParts(Context context, double distance, boolean metricUnits) {
     String[] result = new String[2];
     if (Double.isNaN(distance) || Double.isInfinite(distance)) {
-      result[0] = context.getString(R.string.value_unknown);
+      result[0] = null;
       result[1] = context.getString(metricUnits ? R.string.unit_meter : R.string.unit_feet);
       return result;
     }
@@ -222,8 +223,9 @@ public class StringUtils {
   }
 
   /**
-   * Gets the speed in an array of two strings. The first string is the
-   * speed. The second string is the unit.
+   * Gets the speed in an array of two strings. The first string is the speed.
+   * The second string is the unit. The first string is null if speed is
+   * invalid.
    * 
    * @param context the context
    * @param speed the speed
@@ -241,7 +243,7 @@ public class StringUtils {
     }
     result[1] = context.getString(unitId);
     if (Double.isNaN(speed) || Double.isInfinite(speed)) {
-      result[0] = context.getString(R.string.value_unknown);
+      result[0] = null;
       return result;
     }
     speed *= UnitConversions.MS_TO_KMH;

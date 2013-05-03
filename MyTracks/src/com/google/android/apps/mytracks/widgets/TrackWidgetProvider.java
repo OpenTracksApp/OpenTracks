@@ -314,6 +314,9 @@ public class TrackWidgetProvider extends AppWidgetProvider {
       TripStatistics tripStatistics, boolean metricUnits) {
     double totalDistance = tripStatistics == null ? Double.NaN : tripStatistics.getTotalDistance();
     String[] totalDistanceParts = StringUtils.getDistanceParts(context, totalDistance, metricUnits);
+    if (totalDistanceParts[0] == null) {
+      totalDistanceParts[0] = context.getString(R.string.value_unknown);
+    }    
     remoteViews.setTextViewText(ids[0], context.getString(R.string.stats_distance));
     remoteViews.setTextViewText(ids[1], totalDistanceParts[0]);
     remoteViews.setTextViewText(ids[2], totalDistanceParts[1]);
@@ -367,6 +370,11 @@ public class TrackWidgetProvider extends AppWidgetProvider {
 
     Double speed = tripStatistics == null ? Double.NaN : tripStatistics.getAverageSpeed();
     String[] speedParts = StringUtils.getSpeedParts(context, speed, metricUnits, reportSpeed);
+    
+    if (speedParts[0] == null) {
+      speedParts[0] = context.getString(R.string.value_unknown);
+    }
+    
     remoteViews.setTextViewText(ids[1], speedParts[0]);
     remoteViews.setTextViewText(ids[2], speedParts[1]);
   }
@@ -406,6 +414,11 @@ public class TrackWidgetProvider extends AppWidgetProvider {
 
     Double speed = tripStatistics == null ? Double.NaN : tripStatistics.getAverageMovingSpeed();
     String[] speedParts = StringUtils.getSpeedParts(context, speed, metricUnits, reportSpeed);
+    
+    if (speedParts[0] == null) {
+      speedParts[0] = context.getString(R.string.value_unknown);
+    }
+    
     remoteViews.setTextViewText(ids[1], speedParts[0]);
     remoteViews.setTextViewText(ids[2], speedParts[1]);
   }
