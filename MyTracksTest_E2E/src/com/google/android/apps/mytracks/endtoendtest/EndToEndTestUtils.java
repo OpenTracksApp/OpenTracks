@@ -290,9 +290,8 @@ public class EndToEndTestUtils {
         Log.e(LOG_TAG, "Need update Google Play Services");
       }
       setIsEmulator();
-      if ((getButtonOnScreen(activityMytracks.getString(R.string.eula_accept), false, false) != null)) {
-        verifyFirstLaunch();
-      }
+
+      verifyFirstLaunch();
       hasActionBar = setHasActionBar();
       checkLanguage();
       isCheckedFirstLaunch = true;
@@ -338,7 +337,9 @@ public class EndToEndTestUtils {
    * Accepts terms and configures units.
    */
   private static void verifyFirstLaunch() {
-    getButtonOnScreen(activityMytracks.getString(R.string.eula_accept), true, true);
+    if ((getButtonOnScreen(activityMytracks.getString(R.string.eula_accept), false, false) != null)) {
+      getButtonOnScreen(activityMytracks.getString(R.string.eula_accept), true, true);
+    }
     if (SOLO.waitForText(activityMytracks.getString(R.string.enable_sync_title))) {
       // Click for Sync with Google Drive(Don't enable sync as default).
       getButtonOnScreen(activityMytracks.getString(R.string.generic_no), true, true);

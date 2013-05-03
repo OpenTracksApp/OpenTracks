@@ -112,6 +112,64 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
   }
 
   /**
+   * Deletes multiple tracks in {@link TrackListActivity}.
+   */
+  public void testMultipleDeleteInTrackList() {
+    if (!EndToEndTestUtils.hasActionBar) {
+      return;
+    }
+
+    // Get the number of track( or tracks)
+    ArrayList<ListView> trackListView = EndToEndTestUtils.SOLO.getCurrentListViews();
+    int trackNumber = trackListView.get(0).getCount();
+
+    if (trackNumber < 3) {
+      for (int i = 0; i < 3 - trackNumber; i++) {
+        EndToEndTestUtils.createSimpleTrack(0, true);
+
+      }
+    }
+
+    // Get the number of track( or tracks)
+    trackListView = EndToEndTestUtils.SOLO.getCurrentListViews();
+    int trackNumberOld = trackListView.get(0).getCount();
+
+    assertTrue(trackNumberOld > 2);
+
+    // Select 3 tracks.
+    EndToEndTestUtils.SOLO.clickLongOnView(trackListView.get(0).getChildAt(0));
+    assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks.getString(
+        R.string.list_item_selected, 1)));
+    EndToEndTestUtils.SOLO.clickOnView(trackListView.get(0).getChildAt(1));
+    assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks.getString(
+        R.string.list_item_selected, 2)));
+    EndToEndTestUtils.SOLO.clickOnView(trackListView.get(0).getChildAt(2));
+    assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks.getString(
+        R.string.list_item_selected, 3)));
+
+    // Deselect the first one.
+    EndToEndTestUtils.SOLO.clickOnView(trackListView.get(0).getChildAt(0));
+    assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks.getString(
+        R.string.list_item_selected, 2)));
+
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete), true);
+    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_yes), true,
+        true);
+
+    instrumentation.waitForIdleSync();
+    int trackNumberNew = trackNumberOld;
+    long startTime = System.currentTimeMillis();
+    // Wait a few seconds for the delete.
+    while (trackNumberNew != trackNumberOld - 2
+        && (System.currentTimeMillis() - startTime) < EndToEndTestUtils.SHORT_WAIT_TIME) {
+      trackListView = EndToEndTestUtils.SOLO.getCurrentListViews();
+      trackNumberNew = trackListView.get(0).getCount();
+      EndToEndTestUtils.sleep(EndToEndTestUtils.VERY_SHORT_WAIT_TIME);
+    }
+    assertEquals(trackNumberOld - 2, trackNumberNew);
+  }
+
+  /**
    * Deletes a track which is under recording.
    */
   public void testDeleteOneTrackUnderRecording() {
