@@ -21,8 +21,14 @@ import com.google.android.apps.mytracks.fragments.MyTracksMapFragment;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Instrumentation;
+import android.graphics.Point;
 import android.test.ActivityInstrumentationTestCase2;
+import android.util.Log;
+import android.view.Display;
+import android.view.View;
 import android.widget.TextView;
+
+import junit.framework.Assert;
 
 /**
  * Tests switching views and the menu list of each view.
@@ -106,6 +112,60 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
         activityMyTracks.getString(R.string.menu_map), 2);
     if (text != null) {
       EndToEndTestUtils.SOLO.clickOnView(text);
+    }
+  }
+
+  /**
+   * Tests the position of track controller in landscape view and portrait view
+   * on different activities.
+   */
+  public void testTrackControllerPostion() {
+    checkTrackController();
+    EndToEndTestUtils.rotateAllActivities();
+    instrumentation.waitForIdleSync();
+    checkTrackController();
+
+    EndToEndTestUtils.startRecording();
+    instrumentation.waitForIdleSync();
+    checkTrackController();
+    EndToEndTestUtils.rotateAllActivities();
+    instrumentation.waitForIdleSync();
+    checkTrackController();
+
+    EndToEndTestUtils.stopRecording(true);
+  }
+
+  /**
+   * Checks the position of track controller in landscape view and portrait
+   * view.
+   */
+  private void checkTrackController() {
+    View controller = EndToEndTestUtils.SOLO.getCurrentActivity().findViewById(
+        R.id.track_controler_container);
+
+    Display display = EndToEndTestUtils.SOLO.getCurrentActivity().getWindowManager()
+        .getDefaultDisplay();
+    Point size = new Point();
+    display.getSize(size);
+    int width = size.x;
+    int height = size.y;
+
+    Log.i(EndToEndTestUtils.LOG_TAG, width + ":" + height);
+
+    // In landscape view
+    if (width > height) {
+      Assert.assertTrue(controller.getWidth() < controller.getHeight());
+      Assert.assertTrue(controller.getTop() < height / 2);
+      Assert.assertTrue(controller.getRight() < width / 2);
+    }
+
+    // In portrait view
+    else {
+      Assert.assertTrue(controller.getWidth() > controller.getHeight());
+      Log.i(EndToEndTestUtils.LOG_TAG, controller.getTop() + ":" + controller.getRight());
+
+      Assert.assertTrue(controller.getTop() > height / 2);
+      Assert.assertTrue(controller.getRight() > width / 2);
     }
   }
 
