@@ -239,7 +239,7 @@ limitations under the License.
   </style>
   <!-- track widget horizontal line -->
   <style name="TrackWidgetHorizontalLine">
-    <item name="android:background">@color/track_widget_line</item>
+    <item name="android:background">@color/stats_separator</item>
     <item name="android:layout_height">1dp</item>
     <item name="android:layout_width">0dp</item>
   </style>
@@ -285,7 +285,7 @@ limitations under the License.
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">wrap_content</item>
     <item name="android:singleLine">true</item>
-    <item name="android:textColor">@color/track_widget_label</item>
+    <item name="android:textColor">@color/stats_large_label</item>
     <item name="android:textSize">10dp</item>
     <item name="android:textStyle">bold</item>
   </style>
@@ -373,7 +373,7 @@ limitations under the License.
   </style>
   <!-- track widget vertical line -->
   <style name="TrackWidgetVerticalLine">
-    <item name="android:background">@color/track_widget_line</item>
+    <item name="android:background">@color/stats_separator</item>
     <item name="android:layout_height">0dp</item>
     <item name="android:layout_width">1dp</item>
   </style>
