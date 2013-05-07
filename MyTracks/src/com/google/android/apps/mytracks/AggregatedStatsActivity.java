@@ -42,7 +42,7 @@ public class AggregatedStatsActivity extends AbstractMyTracksActivity {
 
   @Override
   protected int getLayoutResId() {
-    return R.layout.aggregated_stats;
+    return R.layout.stats;
   }
 
   /**

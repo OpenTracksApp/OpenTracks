@@ -189,40 +189,6 @@ public class StringUtils {
   }
 
   /**
-   * Formats the speed.
-   * 
-   * @param context the context
-   * @param speed the speed in meters per second
-   * @param metricUnits true to use metric units. False to use imperial units
-   * @param reportSpeed true to report as speed. False to report as pace
-   */
-  public static String formatSpeed(
-      Context context, double speed, boolean metricUnits, boolean reportSpeed) {
-    if (Double.isNaN(speed) || Double.isInfinite(speed)) {
-      return context.getString(R.string.value_unknown);
-    }
-    speed *= UnitConversions.MS_TO_KMH;
-    if (metricUnits) {
-      if (reportSpeed) {
-        return context.getString(R.string.value_float_kilometer_hour, speed);
-      } else {
-        // convert from hours to minutes
-        double pace = speed == 0 ? 0.0 : 60.0 / speed;
-        return context.getString(R.string.value_float_minute_kilometer, pace);
-      }
-    } else {
-      speed *= UnitConversions.KM_TO_MI;
-      if (reportSpeed) {
-        return context.getString(R.string.value_float_mile_hour, speed);
-      } else {
-        // convert from hours to minutes
-        double pace = speed == 0 ? 0.0 : 60.0 / speed;
-        return context.getString(R.string.value_float_minute_mile, pace);
-      }
-    }
-  }
-
-  /**
    * Gets the speed in an array of two strings. The first string is the speed.
    * The second string is the unit. The first string is null if speed is
    * invalid.

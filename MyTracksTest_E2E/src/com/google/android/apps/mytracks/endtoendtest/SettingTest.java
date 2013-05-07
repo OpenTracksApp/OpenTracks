@@ -211,7 +211,8 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
       EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.stats_elevation));
     }
     if (changeGrade) {
-      EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_stats_grade));
+      EndToEndTestUtils.SOLO.clickOnText(
+          activityMyTracks.getString(R.string.settings_stats_grade_elevation));
     }
     if (changeLatLong) {
       EndToEndTestUtils.SOLO.clickOnText(activityMyTracks

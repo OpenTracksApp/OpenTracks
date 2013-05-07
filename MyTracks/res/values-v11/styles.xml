@@ -31,7 +31,7 @@ limitations under the License.
   </style>
   <style name="ListItem">
     <item name="android:background">?android:attr/activatedBackgroundIndicator</item>
-  </style>  
+  </style>
   <style name="MyTracksActionBar" parent="@android:style/Widget.Holo.ActionBar">
     <!-- Same image as the source except using a grey line instead of a blue line -->
     <item name="android:background">@drawable/ab_transparent_dark_holo</item>

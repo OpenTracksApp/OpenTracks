@@ -130,24 +130,82 @@ limitations under the License.
     <item name="android:paddingRight">8dp</item>
     <item name="android:textColor">@android:color/primary_text_light</item>
   </style>
-  <!-- stats label -->
-  <style name="StatsLabel" parent="@style/TextMedium">
-    <item name="android:layout_weight">1</item>
-    <item name="android:layout_width">0dp</item>
+  <!-- stats horizontal line -->
+  <style name="StatsHorizontalLine">
+    <item name="android:background">@color/stats_separator</item>
+    <item name="android:layout_height">1dp</item>
+    <item name="android:layout_width">match_parent</item>
   </style>
-  <!-- stats spacer -->
-  <style name="StatsSpacer">
-    <item name="android:layout_height">match_parent</item>
-    <item name="android:layout_width">8dp</item>
-  </style>
-  <!-- stats value -->
-  <style name="StatsValue" parent="@style/TextLarge">
-    <item name="android:background">@android:color/background_light</item>
-    <item name="android:gravity">right</item>
-    <item name="android:layout_weight">1</item>
+  <!-- stats large item container -->
+  <style name="StatsLargeItemContainer">
+    <item name="android:layout_gravity">top</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_weight">10</item>
     <item name="android:layout_width">0dp</item>
+    <item name="android:orientation">vertical</item>
+    <item name="android:paddingBottom">6dp</item>
+    <item name="android:paddingLeft">8dp</item>
     <item name="android:paddingRight">8dp</item>
-    <item name="android:textColor">@android:color/primary_text_light</item>
+    <item name="android:paddingTop">6dp</item>
+  </style>
+  <!-- stats large label -->
+  <style name="StatsLargeLabel" parent="@style/TextSmall">
+    <item name="android:gravity">right</item>
+    <item name="android:layout_gravity">right</item>
+    <item name="android:singleLine">false</item>
+    <item name="android:textColor">@color/stats_large_label</item>
+    <item name="android:textStyle">bold</item>
+  </style>
+  <!-- stats large value -->
+  <style name="StatsLargeValue">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:singleLine">true</item>
+    <item name="android:textColor">@android:color/white</item>
+    <item name="android:textSize">32sp</item>
+    <item name="android:textStyle">bold</item>
+  </style>
+  <!-- stats large value container -->
+  <style name="StatsLargeValueContainer">
+    <item name="android:layout_gravity">right</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginTop">-4dp</item>
+    <item name="android:layout_width">wrap_content</item>
+  </style>
+  <!-- stats scroll view -->
+  <style name="StatsScrollView" parent="@style/ScrollView">
+    <item name="android:scrollbarStyle">outsideOverlay</item>
+  </style>  
+  <!-- stats small item container -->
+  <style name="StatsSmallItemContainer" parent="@style/StatsLargeItemContainer">
+    <item name="android:paddingTop">12dp</item>
+  </style>
+  <!-- stats small label -->
+  <style name="StatsSmallLabel" parent="@style/TextSmall">
+    <item name="android:gravity">right</item>
+    <item name="android:layout_gravity">right</item>
+    <item name="android:singleLine">false</item>
+    <item name="android:textStyle">bold</item>
+  </style>
+  <!-- stats small value -->
+  <style name="StatsSmallValue" parent="@style/TextLarge">
+    <item name="android:singleLine">true</item>
+    <item name="android:textColor">@android:color/white</item>
+  </style>
+  <!-- stats small value container -->
+  <style name="StatsSmallValueContainer" parent="@style/StatsLargeValueContainer">
+    <item name="android:layout_marginTop">-2dp</item>
+  </style>
+  <!-- stats unit -->
+  <style name="StatsUnit" parent="@style/TextSmall">
+    <item name="android:paddingLeft">4dp</item>
+    <item name="android:singleLine">true</item>
+  </style>
+  <!-- stats vertical spacer -->
+  <style name="StatsVerticalSpacer">
+    <item name="android:layout_height">match_parent</item>
+    <item name="android:layout_weight">1</item>
+    <item name="android:layout_width">0dp</item>
   </style>
   <!-- text choose activity -->
   <style name="TextChooseActivity">
@@ -342,7 +400,7 @@ limitations under the License.
     <item name="android:textSize">18dp</item>
   </style>
   <!-- track widget value -->
-  <style name="TrackWidgetValue">    
+  <style name="TrackWidgetValue">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_weight">2</item>
     <item name="android:layout_width">0dp</item>

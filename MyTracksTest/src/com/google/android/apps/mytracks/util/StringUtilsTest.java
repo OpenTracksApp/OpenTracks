@@ -91,28 +91,6 @@ public class StringUtilsTest extends AndroidTestCase {
   }
 
   /**
-   * Tests {@link StringUtils#formatSpeed(android.content.Context, double,
-   * boolean, boolean)}.
-   */
-  public void testFormatSpeed() {
-    // Speed in metric
-    assertEquals("36.00 km/h", StringUtils.formatSpeed(getContext(), 10, true, true));
-    // Speed in imperial
-    assertEquals("22.37 mi/h", StringUtils.formatSpeed(getContext(), 10, false, true));
-    // Pace in metric
-    assertEquals("1.67 min/km", StringUtils.formatSpeed(getContext(), 10, true, false));
-    // Pace in imperial
-    assertEquals("2.68 min/mi", StringUtils.formatSpeed(getContext(), 10, false, false));
-    // zero pace
-    assertEquals("0.00 min/km", StringUtils.formatSpeed(getContext(), 0, true, false));
-    assertEquals("0.00 min/mi", StringUtils.formatSpeed(getContext(), 0, false, false));
-    // speed is NaN
-    assertEquals("-", StringUtils.formatSpeed(getContext(), Double.NaN, true, true));
-    // speed is infinite
-    assertEquals("-", StringUtils.formatSpeed(getContext(), Double.NEGATIVE_INFINITY, true, true));
-  }
-
-  /**
    * Tests {@link StringUtils#formatCData(String)}.
    */
   public void testFormatCData() {

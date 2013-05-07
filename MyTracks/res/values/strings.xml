@@ -2089,12 +2089,12 @@ limitations under the License.
       Character limit: ~23 (1 line)">
     Latitude/Longitude
   </string>
-  <string name="settings_stats_grade"
-    translation_description="In the 'Stats settings, the option to show grade. Grade is the amount
-      of inclination to the horizontal, also known as slope or incline.
+  <string name="settings_stats_grade_elevation"
+    translation_description="In the 'Stats settings, the option to show grade and elevation. Grade
+      is the amount of inclination to the horizontal, also known as slope or incline.
 
       Character limit: ~23 (1 line)">
-    Grade
+    Grade/Elevation
   </string>
   <string name="settings_stats_rate_title"
     translation_description="In the 'Stats' settings, the option to change the preferred rate,
@@ -2209,14 +2209,19 @@ limitations under the License.
       Character limit: ~23 (1 line)">
     Elevation
   </string>
-  <string name="stats_elevation_gain"
-    translation_description="In the 'Stats' page, the elevation gain.">
-    Elevation gain
-  </string>
   <string name="stats_fastest_pace"
     translation_description="In the 'Stats' page, the fastest pace.">
     Fastest pace
   </string>
+  <string name="stats_gain"
+    translation_description="In the 'Stats' page, the gain of a value. E.g, gain in elevation.">
+    Gain
+  </string>
+  <string name="stats_grade"
+    translation_description="In the 'Stats' page, the grade. Grade is the amount of inclination to
+      the horizontal, also known as slope or incline.">
+    Grade
+  </string>  
   <string name="stats_latitude"
     translation_description="In the 'Stats' page, the latitude.">
     Latitude
@@ -2225,25 +2230,17 @@ limitations under the License.
     translation_description="In the 'Stats' page, the longitude.">
     Longitude
   </string>
-  <string name="stats_max_elevation"
-    translation_description="In the 'Stats' page, the maximum elevation.">
-    Max elevation
-  </string>
-  <string name="stats_max_grade"
-    translation_description="In the 'Stats' page, the maximum grade.">
-    Max grade
+  <string name="stats_max"
+    translation_description="In the 'Stats' page, the maximum of a value.">
+    Max
   </string>
   <string name="stats_max_speed"
     translation_description="In the 'Stats' page, the maximum speed.">
     Max speed
   </string>
-  <string name="stats_min_elevation"
-    translation_description="In the 'Stats' page, the minimum elevation.">
-    Min elevation
-  </string>
-  <string name="stats_min_grade"
-    translation_description="In the 'Stats' page, the minimum grade.">
-    Min grade
+  <string name="stats_min"
+    translation_description="In the 'Stats' page, the minimum of a value.">
+    Min
   </string>
   <string name="stats_moving_time"
     translation_description="In the 'Stats' page, the moving time.">
@@ -2464,13 +2461,6 @@ limitations under the License.
     translation_description="In a setting picker, the value to always enable the option.">
     Always
   </string>
-  <string name="value_coordinate_degree"
-    translation_description="To display a latitude or longitude coordinate in degree. E.g.,
-      '2.2 \u00B0'. \u00B0 is the unicode value for the degree symbol.
-
-      %1$s: a string value of the coordinate. E.g., '2.2'.">
-    %1$s \u00B0
-  </string>
   <string name="value_float_feet"
     translation_description="Display a float value in feet (ft).
 
@@ -2482,12 +2472,6 @@ limitations under the License.
 
       %1$.2f: a float number. E.g., '2.22'.">
     %1$.2f km
-  </string>
-  <string name="value_float_kilometer_hour"
-    translation_description="Display a float value in kilometers per hour (km/h).
-
-      %1$.2f: a float number. E.g., '2.22'.">
-    %1$.2f km/h
   </string>
   <string name="value_float_meter"
     translation_description="Display a float value in meters (m).
@@ -2501,30 +2485,12 @@ limitations under the License.
       %1$.2f: a float number. E.g., '2.22'.">
     %1$.2f mi
   </string>
-  <string name="value_float_mile_hour"
-    translation_description="Display a float value in miles per hour (mi/h).
-
-      %1$.2f: a float number. E.g., '2.22'.">
-    %1$.2f mi/h
-  </string>
   <string name="value_float_mile_poor_gps"
     translation_description="In a setting picker, the string format to display a float value in
       miles (mi), recommended when having poor GPS signal.
 
       %1$.1f: a float number. E.g., '2.2'.">
     %1$.1f mi (poor GPS)
-  </string>
-  <string name="value_float_minute_kilometer"
-    translation_description="Display a float value in minutes per kilometer (min/km).
-
-      %1$.2f: a float number. E.g., '2.22'.">
-    %1$.2f min/km
-  </string>
-  <string name="value_float_minute_mile"
-    translation_description="Display a float value in minutes per mile (min/mi).
-
-      %1$.2f: a float number. E.g., '2.22'.">
-    %1$.2f min/mi
   </string>
   <string name="value_integer_feet"
     translation_description="In a setting picker, the string format to display an integer value in
