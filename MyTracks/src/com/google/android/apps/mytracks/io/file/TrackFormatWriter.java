@@ -23,26 +23,30 @@ import android.location.Location;
 import java.io.OutputStream;
 
 /**
- * Interface for writing a track to file.
+ * Interface for writing tracks to a file.
  *
  * The expected sequence of calls is:
- * <ol>
- *   <li>{@link #prepare}
- *   <li>{@link #writeHeader}
- *   <li>{@link #writeBeginWaypoints}
- *   <li>For each waypoint: {@link #writeWaypoint}
- *   <li>{@link #writeEndWaypoints}
- *   <li>{@link #writeBeginTrack}
- *   <li>For each segment:
- *   <ol>
- *     <li>{@link #writeOpenSegment}
- *     <li>For each location in the segment: {@link #writeLocation}
- *     <li>{@link #writeCloseSegment}
- *   </ol>
- *   <li>{@link #writeEndTrack}
- *   <li>{@link #writeFooter}
- *   <li>{@link #close}
- * </ol>
+ * <ul>
+ *   <li>{@link #prepare}</li>
+ *   <li>{@link #writeHeader}</li>
+ *   <li>For each track:</li>
+ *   <ul>
+ *     <li>{@link #writeBeginWaypoints}
+ *     <li>For each waypoint: {@link #writeWaypoint}
+ *     <li>{@link #writeEndWaypoints}
+ *     <li>{@link #writeBeginTrack}
+ *     <li>For each segment:
+ *       <ul>
+ *         <li>{@link #writeOpenSegment}</li>
+ *         <li>For each location in the segment: {@link #writeLocation}</li>
+ *         <li>{@link #writeCloseSegment}</li>
+ *       </ul>
+ *     </li>
+ *     <li>{@link #writeEndTrack}</li>
+ *   </ul>   
+ *   <li>{@link #writeFooter}</li>
+ *   <li>{@link #close}</li>
+ * </ul>
  *
  * @author Rodrigo Damazio
  */
@@ -54,12 +58,11 @@ public interface TrackFormatWriter {
   public String getExtension();
 
   /**
-   * Sets up the writer to write the given track.
+   * Sets up the file handler.
    *
-   * @param track the track to write
-   * @param outputStream the output stream to write the track to
+   * @param outputStream the output stream for the file handler
    */
-  public void prepare(Track track, OutputStream outputStream);
+  public void prepare(OutputStream outputStream);
 
   /**
    * Closes the underlying file handler.
@@ -67,9 +70,11 @@ public interface TrackFormatWriter {
   public void close();
 
   /**
-   * Writes the header.
+   * Writes the header for a file
+   * 
+   * @param track the track
    */
-  public void writeHeader();
+  public void writeHeader(Track track);
 
   /**
    * Writes the footer.
@@ -96,16 +101,18 @@ public interface TrackFormatWriter {
   /**
    * Writes the beginning of the track.
    * 
+   * @param track the track
    * @param firstLocation the first location
    */
-  public void writeBeginTrack(Location firstLocation);
+  public void writeBeginTrack(Track track, Location firstLocation);
 
   /**
    * Writes the end of the track.
    * 
+   * @param track the track
    * @param lastLocation the last location
    */
-  public void writeEndTrack(Location lastLocation);
+  public void writeEndTrack(Track track, Location lastLocation);
 
   /**
    * Writes the statements necessary to open a new segment.

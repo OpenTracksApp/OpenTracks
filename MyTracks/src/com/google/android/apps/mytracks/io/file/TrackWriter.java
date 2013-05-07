@@ -105,8 +105,8 @@ public class TrackWriter {
         @Override
       public void run() {
         try {
-          trackFormatWriter.prepare(track, outputStream);
-          trackFormatWriter.writeHeader();
+          trackFormatWriter.prepare(outputStream);
+          trackFormatWriter.writeHeader(track);
           writeWaypoints();
           writeLocations();
           trackFormatWriter.writeFooter();
@@ -206,7 +206,7 @@ public class TrackWriter {
         boolean isSegmentValid = isLocationValid && isLastLocationValid;
         if (!wroteTrack && isSegmentValid) {
           // Found the first two consecutive locations that are valid
-          trackFormatWriter.writeBeginTrack(locationFactory.lastLocation);
+          trackFormatWriter.writeBeginTrack(track, locationFactory.lastLocation);
           wroteTrack = true;
         }
 
@@ -241,11 +241,11 @@ public class TrackWriter {
       }
       if (wroteTrack) {
         Location lastValidTrackPoint = myTracksProviderUtils.getLastValidTrackPoint(track.getId());
-        trackFormatWriter.writeEndTrack(lastValidTrackPoint);
+        trackFormatWriter.writeEndTrack(track, lastValidTrackPoint);
       } else {
         // Write an empty track
-        trackFormatWriter.writeBeginTrack(null);
-        trackFormatWriter.writeEndTrack(null);
+        trackFormatWriter.writeBeginTrack(track, null);
+        trackFormatWriter.writeEndTrack(track, null);
       }
     } finally {
       iterator.close();

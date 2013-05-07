@@ -70,7 +70,6 @@ public class KmlTrackWriter implements TrackFormatWriter {
 
   private final Context context;
   private final DescriptionGenerator descriptionGenerator;
-  private Track track;
   private PrintWriter printWriter;
   private ArrayList<Integer> powerList = new ArrayList<Integer>();
   private ArrayList<Integer> cadenceList = new ArrayList<Integer>();
@@ -95,8 +94,7 @@ public class KmlTrackWriter implements TrackFormatWriter {
   }
 
   @Override
-  public void prepare(Track aTrack, OutputStream outputStream) {
-    this.track = aTrack;
+  public void prepare(OutputStream outputStream) {
     this.printWriter = new PrintWriter(outputStream);
   }
 
@@ -109,7 +107,7 @@ public class KmlTrackWriter implements TrackFormatWriter {
   }
 
   @Override
-  public void writeHeader() {
+  public void writeHeader(Track track) {
     if (printWriter != null) {
       printWriter.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
       printWriter.println("<kml xmlns=\"http://www.opengis.net/kml/2.2\"");
@@ -170,7 +168,7 @@ public class KmlTrackWriter implements TrackFormatWriter {
   }
 
   @Override
-  public void writeBeginTrack(Location firstLocation) {
+  public void writeBeginTrack(Track track, Location firstLocation) {
     if (printWriter != null) {
       String name = context.getString(R.string.marker_label_start, track.getName());
       writePlacemark(name, "", "", START_STYLE, firstLocation);
@@ -187,7 +185,7 @@ public class KmlTrackWriter implements TrackFormatWriter {
   }
 
   @Override
-  public void writeEndTrack(Location lastLocation) {
+  public void writeEndTrack(Track track, Location lastLocation) {
     if (printWriter != null) {
       printWriter.println("</gx:MultiTrack>");
       printWriter.println("</Placemark>");
