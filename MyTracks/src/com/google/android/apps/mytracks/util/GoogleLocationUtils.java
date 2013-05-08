@@ -23,7 +23,7 @@ import android.content.pm.ResolveInfo;
 
 /**
  * Utilities for Google location settings
- *
+ * 
  * @author Jimmy Shih
  */
 public class GoogleLocationUtils {
@@ -32,7 +32,9 @@ public class GoogleLocationUtils {
       ACTION_GOOGLE_LOCATION_SETTINGS = "com.google.android.gsf.GOOGLE_LOCATION_SETTINGS";
   private static final String
       ACTION_GOOGLE_APPS_LOCATION_SETTINGS = "com.google.android.gsf.GOOGLE_APPS_LOCATION_SETTINGS";
-  
+
+  private GoogleLocationUtils() {}
+
   /**
    * Returns true if the Google location settings is available.
    */

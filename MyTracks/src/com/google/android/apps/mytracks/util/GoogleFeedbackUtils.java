@@ -42,6 +42,8 @@ public class GoogleFeedbackUtils {
 
   private static Boolean available = null;
 
+  private GoogleFeedbackUtils() {}
+
   /**
    * Returns true if the Google Feedback is available.
    * 
