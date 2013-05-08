@@ -87,6 +87,13 @@ public class EnableSyncDialogFragment extends DialogFragment {
         }).setPositiveButton(R.string.generic_yes, new OnClickListener() {
             @Override
           public void onClick(DialogInterface dialog, int which) {
+            /*
+             * google_account_key can be set from the android backup service. If
+             * the user wants to enable sync, make sure google_account_key is
+             * cleared so the user can choose an account.
+             */
+            PreferencesUtils.setString(fragmentActivity, R.string.google_account_key,
+                PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
             caller.onEnableSyncDone(true);
           }
         }).setTitle(R.string.enable_sync_title).create();
