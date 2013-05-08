@@ -345,7 +345,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
         if (GoogleEarthUtils.isEarthInstalled(this)) {
           ConfirmDialogFragment.newInstance(R.string.confirm_play_earth_key,
               PreferencesUtils.CONFIRM_PLAY_EARTH_DEFAULT,
-              getString(R.string.track_detail_play_confirm_message), trackId)
+              getString(R.string.track_detail_play_confirm_message), new long[] { trackId })
               .show(getSupportFragmentManager(), ConfirmDialogFragment.CONFIRM_DIALOG_TAG);
         } else {
           new InstallEarthDialogFragment().show(
@@ -425,18 +425,18 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
   }
 
   @Override
-  public void onConfirmDone(int confirmId, long confirmTrackId) {
+  public void onConfirmDone(int confirmId, long[] confirmTrackIds) {
     switch (confirmId) {
       case R.string.confirm_play_earth_key:
         AnalyticsUtils.sendPageViews(this, "/action/play");
         Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
-            .putExtra(SaveActivity.EXTRA_TRACK_ID, confirmTrackId)
+            .putExtra(SaveActivity.EXTRA_TRACK_ID, confirmTrackIds[0])
             .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.KML)
             .putExtra(SaveActivity.EXTRA_PLAY_TRACK, true);
         startActivity(intent);
         break;
       default:
-        super.onConfirmDone(confirmId, confirmTrackId);
+        super.onConfirmDone(confirmId, confirmTrackIds);
     }
   }
 
