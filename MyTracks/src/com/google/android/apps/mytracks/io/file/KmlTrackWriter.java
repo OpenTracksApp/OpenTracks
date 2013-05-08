@@ -24,6 +24,7 @@ import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
+import com.google.android.apps.mytracks.util.GoogleEarthUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
@@ -41,11 +42,6 @@ import java.util.ArrayList;
  * @author Leif Hendrik Wilden
  */
 public class KmlTrackWriter implements TrackFormatWriter {
-
-  /**
-   * ID of the KML feature to play a tour.
-   */
-  public static final String TOUR_FEATURE_ID = "tour";
 
   private static final String WAYPOINT_STYLE = "waypoint";
   private static final String STATISTICS_STYLE = "statistics";
@@ -112,7 +108,7 @@ public class KmlTrackWriter implements TrackFormatWriter {
       printWriter.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
       printWriter.println("<kml xmlns=\"http://www.opengis.net/kml/2.2\"");
       printWriter.println("xmlns:gx=\"http://www.google.com/kml/ext/2.2\"");
-      printWriter.println("xmlns:atom=\"http://www.w3.org/2005/Atom\">"); 
+      printWriter.println("xmlns:atom=\"http://www.w3.org/2005/Atom\">");
       printWriter.println("<Document>");
       printWriter.println("<open>1</open>");
       printWriter.println("<visibility>1</visibility>");
@@ -172,7 +168,7 @@ public class KmlTrackWriter implements TrackFormatWriter {
     if (printWriter != null) {
       String name = context.getString(R.string.marker_label_start, track.getName());
       writePlacemark(name, "", "", START_STYLE, firstLocation);
-      printWriter.println("<Placemark id=\"" + TOUR_FEATURE_ID + "\">");
+      printWriter.println("<Placemark id=\"" + GoogleEarthUtils.TOUR_FEATURE_ID_VALUE + "\">");
       printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
       printWriter.println(
           "<description>" + StringUtils.formatCData(track.getDescription()) + "</description>");

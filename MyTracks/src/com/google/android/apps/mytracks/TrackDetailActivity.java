@@ -39,6 +39,7 @@ import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.settings.SettingsActivity;
 import com.google.android.apps.mytracks.util.AnalyticsUtils;
+import com.google.android.apps.mytracks.util.GoogleEarthUtils;
 import com.google.android.apps.mytracks.util.GoogleFeedbackUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
@@ -49,8 +50,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.TaskStackBuilder;
@@ -64,7 +63,6 @@ import android.view.View.OnClickListener;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -319,7 +317,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
     splitFrequencyMenuItem = menu.findItem(R.id.track_detail_split_frequency);
     feedbackMenuItem = menu.findItem(R.id.track_detail_split_frequency);
     feedbackMenuItem.setVisible(GoogleFeedbackUtils.isAvailable(this));
-    
+
     updateMenuItems(trackId == recordingTrackId, recordingTrackPaused);
     return true;
   }
@@ -344,7 +342,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
         startActivity(intent);
         return true;
       case R.id.track_detail_play:
-        if (isEarthInstalled()) {
+        if (GoogleEarthUtils.isEarthInstalled(this)) {
           ConfirmDialogFragment.newInstance(R.string.confirm_play_earth_key,
               PreferencesUtils.CONFIRM_PLAY_EARTH_DEFAULT,
               getString(R.string.track_detail_play_confirm_message), trackId)
@@ -355,7 +353,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
         }
         return true;
       case R.id.track_detail_share:
-        confirmShare(trackId);       
+        confirmShare(trackId);
         return true;
       case R.id.track_detail_markers:
         intent = IntentUtils.newIntent(this, MarkerListActivity.class)
@@ -384,7 +382,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
         FileTypeDialogFragment.newInstance(R.id.track_detail_save, R.string.save_selection_title,
             R.string.save_selection_option, 4)
             .show(getSupportFragmentManager(), FileTypeDialogFragment.FILE_TYPE_DIALOG_TAG);
-        return true;       
+        return true;
       case R.id.track_detail_edit:
         intent = IntentUtils.newIntent(this, TrackEditActivity.class)
             .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackId);
@@ -480,7 +478,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
       }
     });
   }
-  
+
   @Override
   public void onFileTypeDone(int menuId, TrackFileFormat trackFileFormat) {
     switch (menuId) {
@@ -589,21 +587,5 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
       title = track != null ? track.getName() : "";
     }
     setTitle(title);
-  }
-
-  /**
-   * Returns true if Google Earth app is installed.
-   */
-  private boolean isEarthInstalled() {
-    List<ResolveInfo> infos = getPackageManager().queryIntentActivities(
-        new Intent().setType(SaveActivity.GOOGLE_EARTH_KML_MIME_TYPE),
-        PackageManager.MATCH_DEFAULT_ONLY);
-    for (ResolveInfo info : infos) {
-      if (info.activityInfo != null && info.activityInfo.packageName != null
-          && info.activityInfo.packageName.equals(SaveActivity.GOOGLE_EARTH_PACKAGE)) {
-        return true;
-      }
-    }
-    return false;
   }
 }
