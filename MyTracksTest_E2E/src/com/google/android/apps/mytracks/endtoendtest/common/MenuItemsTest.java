@@ -87,15 +87,29 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
   }
 
   /**
-   * Tests search menu item.
+   * Tests search menu item. Checks the display and hide of record controller
+   * during search.
    */
   public void testSearch() {
     EndToEndTestUtils.createSimpleTrack(0, true);
+    assertTrue(isControllerShown());
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_search), true);
+    assertFalse(isControllerShown());
     EndToEndTestUtils.enterTextAvoidSoftKeyBoard(0, EndToEndTestUtils.trackName);
     sendKeys(KeyEvent.KEYCODE_ENTER);
     instrumentation.waitForIdleSync();
     assertEquals(1, EndToEndTestUtils.SOLO.getCurrentListViews().size());
+    EndToEndTestUtils.SOLO.goBack();
+    assertTrue(isControllerShown());
+  }
+
+  /**
+   * Gets the status whether is controller is shown.
+   * 
+   * @return true mean the controller is display and false mean it is disappear
+   */
+  private boolean isControllerShown() {
+    return activityMyTracks.findViewById(R.id.track_controler_container).isShown();
   }
 
   /**
