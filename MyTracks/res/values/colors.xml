@@ -28,11 +28,11 @@ limitations under the License.
   <color name="chart_speed_border">#FF0066FF</color> <!-- blue -->
   <color name="chart_speed_fill">#40C8E0FF</color> <!-- transparent blue -->
   <color name="recording_text">#FFBE161B</color> <!-- red -->
+  <color name="stats_large_label">#FFFAAD2C</color> <!-- orange -->
+  <color name="stats_separator">#99999999</color> <!-- light gray -->
   <color name="track_color_fast">#F7DF0101</color> <!-- red color -->
   <color name="track_color_normal">#F75858FA</color> <!-- blue color -->
   <color name="track_color_slow">#F774DF00</color> <!-- green color -->
   <color name="track_controller_background">#FF272727</color> <!-- dark gray -->
-  <color name="track_widget_label">#FFFAAD2C</color> <!-- orange -->
-  <color name="track_widget_line">#99999999</color> <!-- light gray -->
   <color name="warning_background">#FFFF8800</color> <!-- orange dark -->
 </resources>

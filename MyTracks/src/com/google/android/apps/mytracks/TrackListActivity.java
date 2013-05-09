@@ -366,13 +366,13 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    
+
     if (BuildConfig.DEBUG) {
       ApiAdapterFactory.getApiAdapter().enableStrictMode();
     }
     Intent intent = new Intent(this, RemoveTempFilesService.class);
-    startService(intent);       
-   
+    startService(intent);
+
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
     sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
 
@@ -385,13 +385,13 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
     // Show trackController when search dialog is dismissed
     SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
-    searchManager.setOnDismissListener(new SearchManager.OnDismissListener() {      
+    searchManager.setOnDismissListener(new SearchManager.OnDismissListener() {
         @Override
       public void onDismiss() {
-          trackController.show();        
+        trackController.show();
       }
     });
-    
+
     listView = (ListView) findViewById(R.id.track_list);
     listView.setEmptyView(findViewById(R.id.track_list_empty_view));
     listView.setOnItemClickListener(new OnItemClickListener() {
@@ -415,7 +415,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         int startTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME);
         int descriptionIndex = cursor.getColumnIndex(TracksColumns.DESCRIPTION);
         int sharedOwnerIndex = cursor.getColumnIndex(TracksColumns.SHAREDOWNER);
-        
+
         boolean isRecording = cursor.getLong(idIndex) == recordingTrackId;
         String icon = cursor.getString(iconIndex);
         int iconId = TrackIconUtils.getIconDrawable(icon);
@@ -540,13 +540,13 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
 
   @Override
   protected boolean configureActionBarHomeAsUp() {
-    return false;    
+    return false;
   }
-  
+
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.track_list, menu);
-    
+
     searchMenuItem = menu.findItem(R.id.track_list_search);
     startGpsMenuItem = menu.findItem(R.id.track_list_start_gps);
     importAllMenuItem = menu.findItem(R.id.track_list_import_all);
@@ -620,7 +620,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         return super.onOptionsItemSelected(item);
     }
   }
-  
+
   @Override
   public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
     super.onCreateContextMenu(menu, v, menuInfo);
@@ -649,7 +649,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     }
     return super.onKeyUp(keyCode, event);
   }
-  
+
   @Override
   public boolean onSearchRequested() {
     // Hide trackController when search dialog is shown
@@ -666,7 +666,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   public void onDeleteTrackDone() {
     // Do nothing
   }
-  
+
   @Override
   public void onFileTypeDone(int menuId, TrackFileFormat trackFileFormat) {
     Intent intent;
@@ -675,6 +675,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         AnalyticsUtils.sendPageViews(
             this, "/action/save_all_" + trackFileFormat.name().toLowerCase(Locale.US));
         intent = IntentUtils.newIntent(this, SaveActivity.class)
+            .putExtra(SaveActivity.EXTRA_TRACK_IDS, new long[] {-1L})
             .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);
         startActivity(intent);
         break;
@@ -718,7 +719,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
       showStartupDialogs();
       return;
     }
-    finish();    
+    finish();
   }
 
   private void checkGooglePlayServices() {
@@ -812,6 +813,9 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
    */
   private boolean handleContextItem(int itemId, long[] trackIds) {
     switch (itemId) {
+      case R.id.list_context_menu_play:
+        confirmPlay(trackIds);
+        return true;
       case R.id.list_context_menu_share:
         confirmShare(trackIds[0]);
         return true;

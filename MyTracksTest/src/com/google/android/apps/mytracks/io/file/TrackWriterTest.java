@@ -76,7 +76,7 @@ public class TrackWriterTest extends AndroidTestCase {
 
       }
     };
-    trackWriter = new TrackWriter(myTracksProviderUtils, track, trackFormatWriter, onWriteListener);
+    trackWriter = new TrackWriter(myTracksProviderUtils, new Track[] {track}, trackFormatWriter, onWriteListener);
   }
 
   @Override
@@ -91,10 +91,10 @@ public class TrackWriterTest extends AndroidTestCase {
   public void testWriteTrack_emptyTrack() throws Exception {
 
     // Set expected mock behavior
-    trackFormatWriter.prepare(track, outputStream);
-    trackFormatWriter.writeHeader();
-    trackFormatWriter.writeBeginTrack(null);
-    trackFormatWriter.writeEndTrack(null);
+    trackFormatWriter.prepare(outputStream);
+    trackFormatWriter.writeHeader(track);
+    trackFormatWriter.writeBeginTrack(track, null);
+    trackFormatWriter.writeEndTrack(track, null);
     trackFormatWriter.writeFooter();
     trackFormatWriter.close();
 
@@ -123,10 +123,10 @@ public class TrackWriterTest extends AndroidTestCase {
         myTracksProviderUtils.bulkInsertTrackPoint(locations, locations.length, TRACK_ID));
 
     // Set expected mock behavior
-    trackFormatWriter.prepare(track, outputStream);
-    trackFormatWriter.writeHeader();
-    trackFormatWriter.writeBeginTrack(null);
-    trackFormatWriter.writeEndTrack(null);
+    trackFormatWriter.prepare(outputStream);
+    trackFormatWriter.writeHeader(track);
+    trackFormatWriter.writeBeginTrack(track, null);
+    trackFormatWriter.writeEndTrack(track, null);
     trackFormatWriter.writeFooter();
     trackFormatWriter.close();
 
@@ -162,8 +162,8 @@ public class TrackWriterTest extends AndroidTestCase {
       waypoint.setId(i + 1);
     }
 
-    trackFormatWriter.prepare(track, outputStream);
-    trackFormatWriter.writeHeader();
+    trackFormatWriter.prepare(outputStream);
+    trackFormatWriter.writeHeader(track);
 
     // Expect reading/writing of the waypoints (except the first)
     trackFormatWriter.writeBeginWaypoints();
@@ -172,7 +172,7 @@ public class TrackWriterTest extends AndroidTestCase {
     trackFormatWriter.writeEndWaypoints();
 
     // Begin the track
-    trackFormatWriter.writeBeginTrack(locationEq(locations[0]));
+    trackFormatWriter.writeBeginTrack(trackEq(track), locationEq(locations[0]));
 
     // Write locations 1-2
     trackFormatWriter.writeOpenSegment();
@@ -190,7 +190,7 @@ public class TrackWriterTest extends AndroidTestCase {
     trackFormatWriter.writeCloseSegment();
 
     // End the track
-    trackFormatWriter.writeEndTrack(locationEq(locations[5]));
+    trackFormatWriter.writeEndTrack(trackEq(track), locationEq(locations[5]));
 
     trackFormatWriter.writeFooter();
     trackFormatWriter.close();
@@ -260,6 +260,33 @@ public class TrackWriterTest extends AndroidTestCase {
       public void appendTo(StringBuffer buffer) {
         buffer.append("locationEq(");
         buffer.append(location);
+        buffer.append(")");
+      }
+    });
+    return null;
+  }
+
+  /**
+   * Track equals.
+   * 
+   * @param track1 the track
+   */
+  private Track trackEq(final Track track1) {
+    EasyMock.reportMatcher(new IArgumentMatcher() {
+        @Override
+      public boolean matches(Object object) {
+        if (object == null || track1 == null) {
+          return track1 == object;
+        }
+        Track track2 = (Track) object;
+
+        return track1.getName().equals(track2.getName());
+      }
+
+        @Override
+      public void appendTo(StringBuffer buffer) {
+        buffer.append("trackEq(");
+        buffer.append(track1);
         buffer.append(")");
       }
     });

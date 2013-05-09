@@ -58,7 +58,6 @@ public class CsvTrackWriter implements TrackFormatWriter {
 
   private final Context context;
   private PrintWriter printWriter;
-  private Track track;
   private int segmentIndex;
   private int pointIndex;
 
@@ -72,8 +71,7 @@ public class CsvTrackWriter implements TrackFormatWriter {
   }
 
   @Override
-  public void prepare(Track aTrack, OutputStream out) {
-    track = aTrack;
+  public void prepare(OutputStream out) {
     printWriter = new PrintWriter(out);
     segmentIndex = 0;
     pointIndex = 0;
@@ -85,7 +83,7 @@ public class CsvTrackWriter implements TrackFormatWriter {
   }
 
   @Override
-  public void writeHeader() {
+  public void writeHeader(Track track) {
     writeCommaSeparatedLine(context.getString(R.string.generic_name),
         context.getString(R.string.track_edit_activity_type_hint),
         context.getString(R.string.generic_description));
@@ -133,7 +131,7 @@ public class CsvTrackWriter implements TrackFormatWriter {
   }
 
   @Override
-  public void writeBeginTrack(Location firstPoint) {
+  public void writeBeginTrack(Track track, Location firstPoint) {
     writeCommaSeparatedLine(context.getString(R.string.description_track_segment),
         context.getString(R.string.description_track_point),
         context.getString(R.string.description_location_latitude),
@@ -149,7 +147,7 @@ public class CsvTrackWriter implements TrackFormatWriter {
   }
 
   @Override
-  public void writeEndTrack(Location lastPoint) {
+  public void writeEndTrack(Track track, Location lastPoint) {
     // Do nothing
   }
 

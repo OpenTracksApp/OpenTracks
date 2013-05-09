@@ -70,6 +70,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
       contextualActionModeCallback = new ContextualActionModeCallback() {
           @Override
         public void onPrepare(Menu menu, int[] positions, long[] ids) {
+          menu.findItem(R.id.list_context_menu_play).setVisible(false);
           menu.findItem(R.id.list_context_menu_share).setVisible(false);
           menu.findItem(R.id.list_context_menu_show_on_map).setVisible(ids.length == 1);
           menu.findItem(R.id.list_context_menu_edit)

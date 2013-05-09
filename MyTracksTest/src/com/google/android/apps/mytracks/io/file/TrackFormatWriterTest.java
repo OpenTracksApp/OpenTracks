@@ -115,13 +115,13 @@ public abstract class TrackFormatWriterTest extends AndroidTestCase {
    */
   protected String writeTrack(TrackFormatWriter writer) throws Exception {
     OutputStream output = new ByteArrayOutputStream(BUFFER_SIZE);
-    writer.prepare(track, output);
-    writer.writeHeader();
+    writer.prepare(output);
+    writer.writeHeader(track);
     writer.writeBeginWaypoints();
     writer.writeWaypoint(wp1);
     writer.writeWaypoint(wp2);
     writer.writeEndWaypoints();
-    writer.writeBeginTrack(location1);
+    writer.writeBeginTrack(track, location1);
     writer.writeOpenSegment();
     writer.writeLocation(location1);
     writer.writeLocation(location2);
@@ -130,7 +130,7 @@ public abstract class TrackFormatWriterTest extends AndroidTestCase {
     writer.writeLocation(location3);
     writer.writeLocation(location4);
     writer.writeCloseSegment();
-    writer.writeEndTrack(location4);
+    writer.writeEndTrack(track, location4);
     writer.writeFooter();
     writer.close();
     return output.toString();

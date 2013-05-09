@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-  style="@style/ScrollView" >
+  style="@style/StatsScrollView" >
   <LinearLayout
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
@@ -44,14 +44,7 @@ limitations under the License.
       <TextView
         android:text="@string/marker_detail_statistics_title"
         style="@style/TextLarge.WithTopMargin" />
-      <TableLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:paddingTop="8dp"
-        android:shrinkColumns="0,2"
-        android:stretchColumns="0,2" >
-        <include layout="@layout/stats_core" />
-      </TableLayout>
+      <include layout="@layout/stats_content" />
     </LinearLayout>
   </LinearLayout>
 </ScrollView>

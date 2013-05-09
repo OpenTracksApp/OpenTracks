@@ -24,6 +24,7 @@ import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
+import com.google.android.apps.mytracks.util.GoogleEarthUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
@@ -41,11 +42,6 @@ import java.util.ArrayList;
  * @author Leif Hendrik Wilden
  */
 public class KmlTrackWriter implements TrackFormatWriter {
-
-  /**
-   * ID of the KML feature to play a tour.
-   */
-  public static final String TOUR_FEATURE_ID = "tour";
 
   private static final String WAYPOINT_STYLE = "waypoint";
   private static final String STATISTICS_STYLE = "statistics";
@@ -70,7 +66,6 @@ public class KmlTrackWriter implements TrackFormatWriter {
 
   private final Context context;
   private final DescriptionGenerator descriptionGenerator;
-  private Track track;
   private PrintWriter printWriter;
   private ArrayList<Integer> powerList = new ArrayList<Integer>();
   private ArrayList<Integer> cadenceList = new ArrayList<Integer>();
@@ -95,8 +90,7 @@ public class KmlTrackWriter implements TrackFormatWriter {
   }
 
   @Override
-  public void prepare(Track aTrack, OutputStream outputStream) {
-    this.track = aTrack;
+  public void prepare(OutputStream outputStream) {
     this.printWriter = new PrintWriter(outputStream);
   }
 
@@ -109,12 +103,12 @@ public class KmlTrackWriter implements TrackFormatWriter {
   }
 
   @Override
-  public void writeHeader() {
+  public void writeHeader(Track track) {
     if (printWriter != null) {
       printWriter.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
       printWriter.println("<kml xmlns=\"http://www.opengis.net/kml/2.2\"");
       printWriter.println("xmlns:gx=\"http://www.google.com/kml/ext/2.2\"");
-      printWriter.println("xmlns:atom=\"http://www.w3.org/2005/Atom\">"); 
+      printWriter.println("xmlns:atom=\"http://www.w3.org/2005/Atom\">");
       printWriter.println("<Document>");
       printWriter.println("<open>1</open>");
       printWriter.println("<visibility>1</visibility>");
@@ -170,11 +164,11 @@ public class KmlTrackWriter implements TrackFormatWriter {
   }
 
   @Override
-  public void writeBeginTrack(Location firstLocation) {
+  public void writeBeginTrack(Track track, Location firstLocation) {
     if (printWriter != null) {
       String name = context.getString(R.string.marker_label_start, track.getName());
       writePlacemark(name, "", "", START_STYLE, firstLocation);
-      printWriter.println("<Placemark id=\"" + TOUR_FEATURE_ID + "\">");
+      printWriter.println("<Placemark id=\"" + GoogleEarthUtils.TOUR_FEATURE_ID_VALUE + "\">");
       printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
       printWriter.println(
           "<description>" + StringUtils.formatCData(track.getDescription()) + "</description>");
@@ -187,7 +181,7 @@ public class KmlTrackWriter implements TrackFormatWriter {
   }
 
   @Override
-  public void writeEndTrack(Location lastLocation) {
+  public void writeEndTrack(Track track, Location lastLocation) {
     if (printWriter != null) {
       printWriter.println("</gx:MultiTrack>");
       printWriter.println("</Placemark>");

@@ -52,7 +52,6 @@ public class GpxTrackWriter implements TrackFormatWriter {
   }
 
   private final Context context;
-  private Track track;
   private PrintWriter printWriter;
 
   public GpxTrackWriter(Context context) {
@@ -65,8 +64,7 @@ public class GpxTrackWriter implements TrackFormatWriter {
   }
 
   @Override
-  public void prepare(Track aTrack, OutputStream outputStream) {
-    this.track = aTrack;
+  public void prepare(OutputStream outputStream) {
     this.printWriter = new PrintWriter(outputStream);
   }
 
@@ -79,7 +77,7 @@ public class GpxTrackWriter implements TrackFormatWriter {
   }
 
   @Override
-  public void writeHeader() {
+  public void writeHeader(Track track) {
     if (printWriter != null) {
       printWriter.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
       printWriter.println("<gpx");
@@ -109,7 +107,7 @@ public class GpxTrackWriter implements TrackFormatWriter {
   }
 
   @Override
-  public void writeBeginTrack(Location firstLocation) {
+  public void writeBeginTrack(Track track, Location firstLocation) {
     if (printWriter != null) {
       printWriter.println("<trk>");
       printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
@@ -120,7 +118,7 @@ public class GpxTrackWriter implements TrackFormatWriter {
   }
 
   @Override
-  public void writeEndTrack(Location lastLocation) {
+  public void writeEndTrack(Track track, Location lastLocation) {
     if (printWriter != null) {
       printWriter.println("</trk>");
     }

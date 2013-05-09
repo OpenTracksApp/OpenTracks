@@ -33,7 +33,7 @@ import android.util.Log;
 import java.io.OutputStream;
 
 /**
- * Track Writer for writing a track to an {@link OutputStream}.
+ * Track Writer for writing tracks to an {@link OutputStream}.
  * 
  * @author Sandor Dornbush
  * @author Rodrigo Damazio
@@ -49,7 +49,7 @@ public class TrackWriter {
      * When a track location is written.
      * 
      * @param number the location number
-     * @param max the maximum number of locations, for calculation of completion
+     * @param max the maximum number of locations in a track, for calculation of completion
      *          percentage
      */
     public void onWrite(int number, int max);
@@ -58,7 +58,7 @@ public class TrackWriter {
   private final static String TAG = TrackWriter.class.getSimpleName();
 
   private final MyTracksProviderUtils myTracksProviderUtils;
-  private final Track track;
+  private final Track[] tracks;
   private final TrackFormatWriter trackFormatWriter;
   private final OnWriteListener onWriteListener;
 
@@ -70,20 +70,20 @@ public class TrackWriter {
    * 
    * @param context the context
    * @param myTracksProviderUtils the my tracks provider utils
-   * @param track the track
+   * @param tracks the tracks
    * @param trackFileFormat the track file format
    * @param onWriteListener the on write listener
    */
-  public TrackWriter(Context context, MyTracksProviderUtils myTracksProviderUtils, Track track,
+  public TrackWriter(Context context, MyTracksProviderUtils myTracksProviderUtils, Track[] tracks,
       TrackFileFormat trackFileFormat, OnWriteListener onWriteListener) {
-    this(myTracksProviderUtils, track, trackFileFormat.newFormatWriter(context), onWriteListener);
+    this(myTracksProviderUtils, tracks, trackFileFormat.newFormatWriter(context), onWriteListener);
   }
 
   @VisibleForTesting
-  public TrackWriter(MyTracksProviderUtils myTracksProviderUtils, Track track,
+  public TrackWriter(MyTracksProviderUtils myTracksProviderUtils, Track[] tracks,
       TrackFormatWriter trackFormatWriter, OnWriteListener onWriteListener) {
     this.myTracksProviderUtils = myTracksProviderUtils;
-    this.track = track;
+    this.tracks = tracks;
     this.trackFormatWriter = trackFormatWriter;
     this.onWriteListener = onWriteListener;
   }
@@ -105,10 +105,14 @@ public class TrackWriter {
         @Override
       public void run() {
         try {
-          trackFormatWriter.prepare(track, outputStream);
-          trackFormatWriter.writeHeader();
-          writeWaypoints();
-          writeLocations();
+          trackFormatWriter.prepare(outputStream);
+          trackFormatWriter.writeHeader(tracks[0]);
+          long startTime = tracks[0].getTripStatistics().getStartTime();
+          for (int i = 0; i < tracks.length; i++) {
+            writeWaypoints(tracks[i]);
+            long offset = tracks[i].getTripStatistics().getStartTime() - startTime;
+            writeLocations(tracks[i], offset);
+          }
           trackFormatWriter.writeFooter();
           trackFormatWriter.close();
           success = true;
@@ -147,7 +151,7 @@ public class TrackWriter {
   /**
    * Writes the waypoints.
    */
-  private void writeWaypoints() {
+  private void writeWaypoints(Track track) {
     /*
      * TODO: Stream through the waypoints in chunks. I am leaving the number of
      * waypoints very high which should not be a problem because we don't try to
@@ -185,7 +189,7 @@ public class TrackWriter {
   /**
    * Writes the locations.
    */
-  private void writeLocations() throws InterruptedException {
+  private void writeLocations(Track track, long offset) throws InterruptedException {
     boolean wroteTrack = false;
     boolean wroteSegment = false;
     boolean isLastLocationValid = false;
@@ -197,6 +201,7 @@ public class TrackWriter {
       int locationNumber = 0;
       while (iterator.hasNext()) {
         Location location = iterator.next();
+        setLocationTime(location, offset);
         if (Thread.interrupted()) {
           throw new InterruptedException();
         }
@@ -205,8 +210,8 @@ public class TrackWriter {
         boolean isLocationValid = LocationUtils.isValidLocation(location);
         boolean isSegmentValid = isLocationValid && isLastLocationValid;
         if (!wroteTrack && isSegmentValid) {
-          // Found the first two consecutive locations that are valid
-          trackFormatWriter.writeBeginTrack(locationFactory.lastLocation);
+          // Found the first two consecutive locations that are valid          
+          trackFormatWriter.writeBeginTrack(track, locationFactory.lastLocation);
           wroteTrack = true;
         }
 
@@ -241,17 +246,30 @@ public class TrackWriter {
       }
       if (wroteTrack) {
         Location lastValidTrackPoint = myTracksProviderUtils.getLastValidTrackPoint(track.getId());
-        trackFormatWriter.writeEndTrack(lastValidTrackPoint);
+        setLocationTime(lastValidTrackPoint, offset);
+        trackFormatWriter.writeEndTrack(track, lastValidTrackPoint);
       } else {
         // Write an empty track
-        trackFormatWriter.writeBeginTrack(null);
-        trackFormatWriter.writeEndTrack(null);
+        trackFormatWriter.writeBeginTrack(track, null);
+        trackFormatWriter.writeEndTrack(track, null);
       }
     } finally {
       iterator.close();
     }
   }
 
+  /**
+   * Sets a location time.
+   * 
+   * @param location the location
+   * @param offset the time offset
+   */
+  private void setLocationTime(Location location, long offset) {
+    if (location != null) {
+      location.setTime(location.getTime() - offset);
+    }
+  }
+  
   /**
    * Track writer location factory. Keeping the last two locations.
    * 

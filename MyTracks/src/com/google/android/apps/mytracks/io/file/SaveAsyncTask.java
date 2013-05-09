@@ -46,7 +46,7 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
   private SaveActivity saveActivity;
   private final TrackFileFormat trackFileFormat;
-  private final long trackId;
+  private final long[] trackIds;
   private final File directory;
   private final Context context;
   private final MyTracksProviderUtils myTracksProviderUtils;
@@ -75,10 +75,10 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
    * @param directory the directory to save to
    */
   public SaveAsyncTask(
-      SaveActivity saveActivity, TrackFileFormat trackFileFormat, long trackId, File directory) {
+      SaveActivity saveActivity, TrackFileFormat trackFileFormat, long[] trackIds, File directory) {
     this.saveActivity = saveActivity;
     this.trackFileFormat = trackFileFormat;
-    this.trackId = trackId;
+    this.trackIds = trackIds;
     this.directory = directory;
     context = saveActivity.getApplicationContext();
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
@@ -118,16 +118,24 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   @Override
   protected Boolean doInBackground(Void... params) {
     try {
-      if (trackId != -1L) {
+      if (trackIds.length == 1 && trackIds[0] == -1L) {
+        return saveAllTracks();
+      } else {
         totalCount = 1;
-        if (saveOneTrack(trackId)) {
+        Track[] tracks = new Track[trackIds.length];
+        for (int i = 0; i < trackIds.length; i++) {
+          tracks[i] = myTracksProviderUtils.getTrack(trackIds[i]);
+          if (tracks[i] == null) {
+            Log.d(TAG, "No track for " + trackIds[i]);
+            return false;
+          }
+        }
+        if (saveTracks(tracks)) {
           successCount = 1;
           return true;
         } else {
           return false;
         }
-      } else {
-        return saveAllTracks();
       }
     } finally {
       // Release the wake lock if obtained
@@ -160,17 +168,15 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   }
 
   /**
-   * Saves one track.
+   * Saves tracks to one file.
    * 
-   * @param id the track id
+   * @param tracks the tracks
    */
-  private Boolean saveOneTrack(long id) {   
-    Track track = myTracksProviderUtils.getTrack(id);
-    if (track == null) {
-      Log.d(TAG, "No track for " + id);
+  private Boolean saveTracks(Track[] tracks) {
+    if (tracks.length == 0) {
       return false;
     }
-  
+    Track track = tracks[0];
     // Make sure the file doesn't exist yet (possibly by changing the filename)
     String fileName = FileUtils.buildUniqueFileName(
         directory, track.getName(), trackFileFormat.getExtension());
@@ -178,21 +184,21 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
       Log.d(TAG, "Unable to get a unique filename for " + track.getName());
       return false;
     }
-    
+
     trackWriter = new TrackWriter(
-        context, myTracksProviderUtils, track, trackFileFormat, new TrackWriter.OnWriteListener() {
+        context, myTracksProviderUtils, tracks, trackFileFormat, new TrackWriter.OnWriteListener() {
             @Override
           public void onWrite(int number, int max) {
             /*
              * If only saving one track, update the progress dialog once every
              * 500 points
              */
-            if (trackId != -1L && number % 500 == 0) {
+            if (trackIds.length == 1 && trackIds[0] != -1L && number % 500 == 0) {
               publishProgress(number, max);
             }
           }
         });
-  
+
     File file = null;
     try {
       file = new File(directory, fileName);
@@ -201,8 +207,8 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     } catch (FileNotFoundException e) {
       Log.d(TAG, "File not found " + fileName, e);
       return false;
-    }   
-  
+    }
+
     if (trackWriter.wasSuccess()) {
       savedPath = file.getAbsolutePath();
     } else {
@@ -224,14 +230,13 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         return false;
       }
       totalCount = cursor.getCount();
-      int idIndex = cursor.getColumnIndexOrThrow(TracksColumns._ID);
       for (int i = 0; i < totalCount; i++) {
         if (isCancelled()) {
           return false;
         }
         cursor.moveToPosition(i);
-        long id = cursor.getLong(idIndex);
-        if (saveOneTrack(id)) {
+        Track track = myTracksProviderUtils.createTrack(cursor);
+        if (track != null && saveTracks(new Track[] { track })) {
           successCount++;
         }
         publishProgress(i + 1, totalCount);

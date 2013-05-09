@@ -102,7 +102,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
         public void run() {
           if (isResumed()) {
             lastLocation = null;
-            StatsUtils.setLocationValues(getActivity(), lastLocation, true);
+            StatsUtils.setLocationValues(getActivity(), lastLocation, isSelectedTrackRecording());
           }
         }
       });
@@ -118,11 +118,12 @@ public class StatsFragment extends Fragment implements TrackDataListener {
           if (isResumed()) {
             if (isSelectedTrackRecording() && !isSelectedTrackPaused()) {
               lastLocation = location;
-              StatsUtils.setLocationValues(getActivity(), location, true);
+              StatsUtils.setLocationValues(getActivity(), location, isSelectedTrackRecording());
             } else {
               if (lastLocation != null) {
                 lastLocation = null;
-                StatsUtils.setLocationValues(getActivity(), lastLocation, true);
+                StatsUtils.setLocationValues(
+                    getActivity(), lastLocation, isSelectedTrackRecording());
               }
             }
           }
@@ -277,6 +278,6 @@ public class StatsFragment extends Fragment implements TrackDataListener {
    */
   private void updateUi(FragmentActivity activity) {
     StatsUtils.setTripStatisticsValues(activity, lastTripStatistics);
-    StatsUtils.setLocationValues(activity, lastLocation, true);
+    StatsUtils.setLocationValues(activity, lastLocation, isSelectedTrackRecording());
   }
 }

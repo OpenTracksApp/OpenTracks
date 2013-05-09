@@ -16,6 +16,11 @@ limitations under the License.
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
   <item
+    android:icon="@drawable/menu_play"
+    android:id="@+id/list_context_menu_play"
+    android:showAsAction="ifRoom"
+    android:title="@string/menu_play"/>
+  <item
     android:icon="@drawable/menu_share"
     android:id="@+id/list_context_menu_share"
     android:showAsAction="ifRoom"

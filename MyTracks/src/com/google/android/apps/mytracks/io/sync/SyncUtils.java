@@ -427,7 +427,7 @@ public class SyncUtils {
     java.io.File file = new java.io.File(directory,
         FileUtils.buildUniqueFileName(directory, track.getName(), trackFileFormat.getExtension()));
     TrackWriter trackWriter = new TrackWriter(
-        context, myTracksProviderUtils, track, trackFileFormat, null);
+        context, myTracksProviderUtils, new Track[] {track}, trackFileFormat, null);
 
     trackWriter.writeTrack(new FileOutputStream(file));
     if (trackWriter.wasSuccess()) {

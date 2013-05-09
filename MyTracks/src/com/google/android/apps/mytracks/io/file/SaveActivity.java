@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.io.file;
 
 import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.FileUtils;
+import com.google.android.apps.mytracks.util.GoogleEarthUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -27,7 +28,6 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -42,23 +42,15 @@ import java.io.File;
 public class SaveActivity extends Activity {
 
   public static final String EXTRA_TRACK_FILE_FORMAT = "track_file_format";
-  public static final String EXTRA_TRACK_ID = "track_id";
+  public static final String EXTRA_TRACK_IDS = "track_ids";
   public static final String EXTRA_PLAY_TRACK = "play_track";
   public static final String EXTRA_SHARE_TRACK = "share_track";
-
-  public static final String GOOGLE_EARTH_KML_MIME_TYPE = "application/vnd.google-earth.kml+xml";
-  public static final String GOOGLE_EARTH_PACKAGE = "com.google.earth";
-  public static final String GOOGLE_EARTH_MARKET_URL = "market://details?id="
-      + GOOGLE_EARTH_PACKAGE;
-  private static final String
-      GOOGLE_EARTH_TOUR_FEATURE_ID = "com.google.earth.EXTRA.tour_feature_id";
-  private static final String GOOGLE_EARTH_CLASS = "com.google.earth.EarthActivity";
 
   private static final int DIALOG_PROGRESS_ID = 0;
   private static final int DIALOG_RESULT_ID = 1;
 
   private TrackFileFormat trackFileFormat;
-  private long trackId;
+  private long[] trackIds;
   private boolean playTrack;
   private boolean shareTrack;
   private String directoryName;
@@ -78,7 +70,7 @@ public class SaveActivity extends Activity {
 
     Intent intent = getIntent();
     trackFileFormat = intent.getParcelableExtra(EXTRA_TRACK_FILE_FORMAT);
-    trackId = intent.getLongExtra(EXTRA_TRACK_ID, -1L);
+    trackIds = intent.getLongArrayExtra(EXTRA_TRACK_IDS);
     playTrack = intent.getBooleanExtra(EXTRA_PLAY_TRACK, false);
     shareTrack = intent.getBooleanExtra(EXTRA_SHARE_TRACK, false);
 
@@ -104,7 +96,7 @@ public class SaveActivity extends Activity {
       saveAsyncTask = (SaveAsyncTask) retained;
       saveAsyncTask.setActivity(this);
     } else {
-      saveAsyncTask = new SaveAsyncTask(this, trackFileFormat, trackId, directory);
+      saveAsyncTask = new SaveAsyncTask(this, trackFileFormat, trackIds, directory);
       saveAsyncTask.execute();
     }
   }
@@ -175,23 +167,17 @@ public class SaveActivity extends Activity {
     removeDialog(DIALOG_PROGRESS_ID);
     if (successCount == 1 && totalCount == 1 && savedPath != null) {
       if (playTrack) {
-        Intent intent = new Intent().addFlags(
-            Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
-            .putExtra(GOOGLE_EARTH_TOUR_FEATURE_ID, KmlTrackWriter.TOUR_FEATURE_ID)
-            .setClassName(GOOGLE_EARTH_PACKAGE, GOOGLE_EARTH_CLASS)
-            .setDataAndType(Uri.fromFile(new File(savedPath)), GOOGLE_EARTH_KML_MIME_TYPE);
-        startActivity(intent);
+        startActivity(GoogleEarthUtils.getPlayInEarthIntent(savedPath));
         finish();
         return;
       } else if (shareTrack) {
-        Intent intent = IntentUtils.newShareFileIntent(this, trackId, savedPath, trackFileFormat);
-        startActivity(
-            Intent.createChooser(intent, getString(R.string.share_track_picker_title)));
+        Intent intent = IntentUtils.newShareFileIntent(this, trackIds[0], savedPath, trackFileFormat);
+        startActivity(Intent.createChooser(intent, getString(R.string.share_track_picker_title)));
         finish();
         return;
-      } 
+      }
     }
-    showDialog(DIALOG_RESULT_ID);    
+    showDialog(DIALOG_RESULT_ID);
   }
 
   /**

@@ -29,16 +29,8 @@ limitations under the License.
   <PreferenceCategory android:title="@string/settings_show" >
     <CheckBoxPreference
       android:defaultValue="false"
-      android:key="@string/stats_show_moving_time_key"
-      android:title="@string/stats_moving_time" />
-    <CheckBoxPreference
-      android:defaultValue="false"
-      android:key="@string/stats_show_elevation_key"
-      android:title="@string/stats_elevation" />
-    <CheckBoxPreference
-      android:defaultValue="false"
-      android:key="@string/stats_show_grade_key"
-      android:title="@string/settings_stats_grade" />
+      android:key="@string/stats_show_grade_elevation_key"
+      android:title="@string/settings_stats_grade_elevation" />
     <CheckBoxPreference
       android:defaultValue="false"
       android:key="@string/stats_show_coordinate_key"

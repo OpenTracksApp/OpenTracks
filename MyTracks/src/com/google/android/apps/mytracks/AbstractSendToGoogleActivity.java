@@ -26,6 +26,7 @@ import com.google.android.apps.mytracks.fragments.ChooseActivityDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChooseActivityDialogFragment.ChooseActivityCaller;
 import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment;
 import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment.ConfirmCaller;
+import com.google.android.apps.mytracks.fragments.InstallEarthDialogFragment;
 import com.google.android.apps.mytracks.io.drive.SendDriveActivity;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
@@ -39,6 +40,7 @@ import com.google.android.apps.mytracks.io.sendtogoogle.UploadResultActivity;
 import com.google.android.apps.mytracks.io.spreadsheets.SendSpreadsheetsActivity;
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.util.AnalyticsUtils;
+import com.google.android.apps.mytracks.util.GoogleEarthUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
@@ -338,6 +340,28 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
     Toast.makeText(this, R.string.send_google_no_account_permission, Toast.LENGTH_LONG).show();
   }
 
+  /**
+   * Confirm playing tracks in Google Earth.
+   * 
+   * @param trackIds the track ids
+   */
+  protected void confirmPlay(long[] trackIds) {
+    if (GoogleEarthUtils.isEarthInstalled(this)) {
+      ConfirmDialogFragment.newInstance(R.string.confirm_play_earth_key,
+          PreferencesUtils.CONFIRM_PLAY_EARTH_DEFAULT,
+          getString(R.string.track_detail_play_confirm_message), trackIds)
+          .show(getSupportFragmentManager(), ConfirmDialogFragment.CONFIRM_DIALOG_TAG);
+    } else {
+      new InstallEarthDialogFragment().show(
+          getSupportFragmentManager(), InstallEarthDialogFragment.INSTALL_EARTH_DIALOG_TAG);
+    }
+  }
+
+  /**
+   * Confirm sharing a track.
+   * 
+   * @param trackId the track id
+   */
   protected void confirmShare(long trackId) {
     String shareTrack = PreferencesUtils.getString(
         this, R.string.share_track_key, PreferencesUtils.SHARE_TRACK_DEFAULT);
@@ -346,35 +370,46 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
     if (shareTrack.equals(driveValue)) {
       ConfirmDialogFragment.newInstance(R.string.confirm_share_drive_key,
           PreferencesUtils.CONFIRM_SHARE_DRIVE_DEFAULT,
-          getString(R.string.share_track_drive_confirm_message), trackId)
+          getString(R.string.share_track_drive_confirm_message), new long[] { trackId })
           .show(getSupportFragmentManager(), ConfirmDialogFragment.CONFIRM_DIALOG_TAG);
     } else if (shareTrack.equals(mapsValue)) {
       ConfirmDialogFragment.newInstance(R.string.confirm_share_maps_key,
           PreferencesUtils.CONFIRM_SHARE_MAPS_DEFAULT, StringUtils.getHtml(
               this, R.string.share_track_maps_confirm_message, R.string.maps_public_unlisted_url),
-          trackId).show(getSupportFragmentManager(), ConfirmDialogFragment.CONFIRM_DIALOG_TAG);
+          new long[] { trackId })
+          .show(getSupportFragmentManager(), ConfirmDialogFragment.CONFIRM_DIALOG_TAG);
     } else {
       ConfirmDialogFragment.newInstance(R.string.confirm_share_file_key,
           PreferencesUtils.CONFIRM_SHARE_FILE_DEFAULT,
-          getString(R.string.share_track_file_confirm_message), trackId)
+          getString(R.string.share_track_file_confirm_message), new long[] { trackId })
           .show(getSupportFragmentManager(), ConfirmDialogFragment.CONFIRM_DIALOG_TAG);
     }
   }
 
   @Override
-  public void onConfirmDone(int confirmId, long trackId) {
+  public void onConfirmDone(int confirmId, long[] trackIds) {
+    Intent intent;
     SendRequest newRequest;
+
     switch (confirmId) {
+      case R.string.confirm_play_earth_key:
+        AnalyticsUtils.sendPageViews(this, "/action/play");
+        intent = IntentUtils.newIntent(this, SaveActivity.class)
+            .putExtra(SaveActivity.EXTRA_TRACK_IDS, trackIds)
+            .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.KML)
+            .putExtra(SaveActivity.EXTRA_PLAY_TRACK, true);
+        startActivity(intent);
+        break;
       case R.string.confirm_share_drive_key:
         AnalyticsUtils.sendPageViews(this, "/action/share_drive");
-        newRequest = new SendRequest(trackId);
+        newRequest = new SendRequest(trackIds[0]);
         newRequest.setSendDrive(true);
         newRequest.setDriveShare(true);
         sendToGoogle(newRequest);
         break;
       case R.string.confirm_share_maps_key:
         AnalyticsUtils.sendPageViews(this, "/action/share_maps");
-        newRequest = new SendRequest(trackId);
+        newRequest = new SendRequest(trackIds[0]);
         newRequest.setSendMaps(true);
         newRequest.setMapsShare(true);
         sendToGoogle(newRequest);
@@ -392,8 +427,8 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
         } else {
           trackFileFormat = TrackFileFormat.TCX;
         }
-        Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
-            .putExtra(SaveActivity.EXTRA_TRACK_ID, trackId)
+        intent = IntentUtils.newIntent(this, SaveActivity.class)
+            .putExtra(SaveActivity.EXTRA_TRACK_IDS, trackIds)
             .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat)
             .putExtra(SaveActivity.EXTRA_SHARE_TRACK, true);
         startActivity(intent);

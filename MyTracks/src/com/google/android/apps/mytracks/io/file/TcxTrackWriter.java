@@ -84,7 +84,6 @@ public class TcxTrackWriter implements TrackFormatWriter {
       R.string.activity_type_walking };
 
   private final Context context;
-  private Track track;
   private PrintWriter printWriter;
   private SportType sportType;
 
@@ -93,10 +92,8 @@ public class TcxTrackWriter implements TrackFormatWriter {
   }
 
   @Override
-  public void prepare(Track aTrack, OutputStream out) {
-    this.track = aTrack;
+  public void prepare(OutputStream out) {
     this.printWriter = new PrintWriter(out);
-    this.sportType = getSportType(track.getCategory());
   }
 
   @Override
@@ -113,7 +110,7 @@ public class TcxTrackWriter implements TrackFormatWriter {
   }
 
   @Override
-  public void writeHeader() {
+  public void writeHeader(Track track) {
     if (printWriter != null) {
       printWriter.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
       printWriter.println("<TrainingCenterDatabase"
@@ -144,7 +141,8 @@ public class TcxTrackWriter implements TrackFormatWriter {
   }
 
   @Override
-  public void writeBeginTrack(Location firstPoint) {
+  public void writeBeginTrack(Track track, Location firstPoint) {
+    sportType = getSportType(track.getCategory());
     if (printWriter != null) {
       String startTime = StringUtils.formatDateTimeIso8601(
           track.getTripStatistics().getStartTime());
@@ -165,7 +163,7 @@ public class TcxTrackWriter implements TrackFormatWriter {
   }
 
   @Override
-  public void writeEndTrack(Location lastPoint) {
+  public void writeEndTrack(Track track, Location lastPoint) {
     if (printWriter != null) {
       printWriter.println("</Lap>");
       printWriter.println("<Notes>" + StringUtils.formatCData(track.getDescription()) + "</Notes>");

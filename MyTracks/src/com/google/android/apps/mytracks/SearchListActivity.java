@@ -142,6 +142,9 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
             shareWithMe = track.isSharedWithMe();
             markerId = (Long) item.get(MARKER_ID_FIELD);
           }
+          // Only one item, the item is a track
+          menu.findItem(R.id.list_context_menu_play)
+              .setVisible(positions.length == 1 && markerId == null);
           // Only one item, the item is a track, and the item is not a sharedWithMe track
           menu.findItem(R.id.list_context_menu_share)
               .setVisible(positions.length == 1 && markerId == null && !shareWithMe);
@@ -338,6 +341,9 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
     Long markerId = (Long) item.get(MARKER_ID_FIELD);
     Intent intent;
     switch (itemId) {
+      case R.id.list_context_menu_play:
+        confirmPlay(new long[] {trackId});
+        return true;
       case R.id.list_context_menu_share:
         confirmShare(trackId);
         return true;

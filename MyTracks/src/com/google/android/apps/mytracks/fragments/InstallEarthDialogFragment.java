@@ -16,7 +16,7 @@
 
 package com.google.android.apps.mytracks.fragments;
 
-import com.google.android.apps.mytracks.io.file.SaveActivity;
+import com.google.android.apps.mytracks.util.GoogleEarthUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.AlertDialog;
@@ -32,7 +32,7 @@ import android.widget.Toast;
 
 /**
  * A DialogFragment to install Google Earth.
- *
+ * 
  * @author Jimmy Shih
  */
 public class InstallEarthDialogFragment extends DialogFragment {
@@ -40,17 +40,17 @@ public class InstallEarthDialogFragment extends DialogFragment {
   public static final String INSTALL_EARTH_DIALOG_TAG = "installEarthDialog";
 
   private FragmentActivity fragmentActivity;
-  
+
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     fragmentActivity = getActivity();
-    return new AlertDialog.Builder(fragmentActivity)
-        .setMessage(R.string.track_detail_install_earth_message)
-        .setNegativeButton(R.string.generic_no, null)
+    return new AlertDialog.Builder(fragmentActivity).setMessage(
+        R.string.track_detail_install_earth_message).setNegativeButton(R.string.generic_no, null)
         .setPositiveButton(R.string.generic_yes, new DialogInterface.OnClickListener() {
-          @Override
+            @Override
           public void onClick(DialogInterface dialog, int which) {
-            Intent intent = new Intent().setData(Uri.parse(SaveActivity.GOOGLE_EARTH_MARKET_URL));
+            Intent intent = new Intent().setData(
+                Uri.parse(GoogleEarthUtils.GOOGLE_EARTH_MARKET_URL));
             try {
               startActivity(intent);
             } catch (ActivityNotFoundException e) {
@@ -59,8 +59,6 @@ public class InstallEarthDialogFragment extends DialogFragment {
                   .show();
             }
           }
-        })
-        .setTitle(R.string.generic_confirm_title)
-        .create();
+        }).setTitle(R.string.generic_confirm_title).create();
   }
 }
