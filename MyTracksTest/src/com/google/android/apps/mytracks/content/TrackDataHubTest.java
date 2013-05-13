@@ -23,7 +23,6 @@ import static com.google.android.testing.mocking.AndroidMock.isA;
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.TrackStubUtils;
 import com.google.android.apps.mytracks.content.DataSourceManager.CurrentLocationListener;
-import com.google.android.apps.mytracks.content.DataSourceManager.HeadingListener;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationFactory;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
 import com.google.android.apps.mytracks.content.TrackDataListener.LocationState;
@@ -39,8 +38,6 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.database.MatrixCursor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 import android.location.Location;
 import android.location.LocationListener;
 import android.provider.BaseColumns;
@@ -48,7 +45,6 @@ import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
 import android.test.mock.MockContentResolver;
 
-import java.lang.reflect.Constructor;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
@@ -123,7 +119,6 @@ public class TrackDataHubTest extends AndroidTestCase {
     dataSource.unregisterContentObserver(isA(ContentObserver.class));
     AndroidMock.expectLastCall().times(3);
     dataSource.unregisterLocationListener(isA(LocationListener.class));
-    dataSource.unregisterHeadingListener(isA(SensorEventListener.class));
     dataSource.unregisterOnSharedPreferenceChangeListener(
         isA(OnSharedPreferenceChangeListener.class));
     dataSource.close();
@@ -538,74 +533,6 @@ public class TrackDataHubTest extends AndroidTestCase {
   }
 
   /**
-   * Tests headings change.
-   */
-  public void testHeadingsChange() throws Exception {
-    dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceChangeListenerCapture));
-    Capture<SensorEventListener> sensorEventListenerCapture = new Capture<SensorEventListener>();
-    dataSource.registerHeadingListener(capture(sensorEventListenerCapture));
-    Capture<LocationListener> locationListenerCapture = new Capture<LocationListener>();
-    dataSource.registerLocationListener(capture(locationListenerCapture));
-
-    SensorEvent event = newSensorEvent();
-
-    // Expect location state changed
-    trackDataListener1.onLocationStateChanged(isA(LocationState.class));
-    AndroidMock.expectLastCall().anyTimes();
-
-    // First, get a dummy heading update
-    trackDataListener1.onHeadingChanged(0.0);
-
-    // Second, get a heading update without known location
-    trackDataListener1.onHeadingChanged(42.0f);
-    replay();
-
-    // Register one listener and update heading value
-    trackDataHub.start();
-    trackDataHub.registerTrackDataListener(
-        trackDataListener1, EnumSet.of(TrackDataType.HEADING, TrackDataType.LOCATION));
-    SensorEventListener sensorListener = sensorEventListenerCapture.getValue();
-    LocationListener locationListener = locationListenerCapture.getValue();
-    event.values[0] = 42.0f;
-    sensorListener.onSensorChanged(event);
-    verifyAndReset();
-
-    // Expect location state changed
-    trackDataListener1.onLocationStateChanged(isA(LocationState.class));
-    AndroidMock.expectLastCall().anyTimes();
-
-    // Expect location changed
-    trackDataListener1.onLocationChanged(isA(Location.class));
-    AndroidMock.expectLastCall().anyTimes();
-
-    // Expect a heading update with declination
-    trackDataListener1.onHeadingChanged(52.0);
-    AndroidMock.expect(dataSource.isAllowed()).andReturn(true);
-    replay();
-
-    // Update location and sensor
-    Location location = new Location("gps");
-    location.setLatitude(10.0);
-    location.setLongitude(20.0);
-    location.setAltitude(30.0);
-    declination = 10.0f;
-    locationListener.onLocationChanged(location);
-    sensorListener.onSensorChanged(event);
-    verifyAndReset();
-
-    trackDataListener1.onHeadingChanged(52.0);
-    replay();
-
-    /*
-     * Change declination. Should still get the old value since the declination
-     * is only updated once an hour.
-     */
-    declination = 20.0f;
-    sensorListener.onSensorChanged(event);
-    verifyAndReset();
-  }
-
-  /**
    * Tests preferences change.
    */
   public void testPreferencesChange() throws Exception {
@@ -654,15 +581,6 @@ public class TrackDataHubTest extends AndroidTestCase {
     listener.onSharedPreferenceChanged(
         sharedPreferences, PreferencesUtils.getKey(context, R.string.metric_units_key));
     verifyAndReset();
-  }
-
-  /**
-   * Creates a new sensor event.
-   */
-  private SensorEvent newSensorEvent() throws Exception {
-    Constructor<SensorEvent> constructor = SensorEvent.class.getDeclaredConstructor(int.class);
-    constructor.setAccessible(true);
-    return constructor.newInstance(3);
   }
 
   /**
@@ -878,21 +796,6 @@ public class TrackDataHubTest extends AndroidTestCase {
     trackDataHub.setLastSeenLocation(new Location("gps"));
     trackDataHub.start();
     trackDataHub.registerTrackDataListener(trackDataListener1, EnumSet.of(TrackDataType.LOCATION));
-    verifyAndReset();
-  }
-
-  /**
-   * Tests the method {@link TrackDataHub#start()}. This method would also cover
-   * some logic of {@link TrackDataHub#notifyHeadingChanged(float)}.
-   */
-  public void testRegisterHeadingListener() {    
-    dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceChangeListenerCapture));
-    Capture<HeadingListener> compassListener = new Capture<HeadingListener>();
-    dataSource.registerHeadingListener(capture(compassListener));    
-    trackDataListener1.onHeadingChanged(capture(new Capture<Float>()));
-    replay();
-    trackDataHub.start();
-    trackDataHub.registerTrackDataListener(trackDataListener1, EnumSet.of(TrackDataType.HEADING));
     verifyAndReset();
   }
 

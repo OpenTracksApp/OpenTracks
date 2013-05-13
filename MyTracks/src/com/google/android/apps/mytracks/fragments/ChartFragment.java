@@ -166,11 +166,6 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   }
 
   @Override
-  public void onHeadingChanged(double heading) {
-    // We don't care.
-  }
-
-  @Override
   public void onSelectedTrackChanged(Track track) {
     // We don't care.
   }

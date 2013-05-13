@@ -52,9 +52,6 @@ public class TrackDataHub implements DataSourceListener {
 
   private static final String TAG = TrackDataHub.class.getSimpleName();
 
-  // One hour in milliseconds
-  private static final int ONE_HOUR = 60 * 60 * 1000;
-
   private final Context context;
   private final TrackDataManager trackDataManager;
   private final MyTracksProviderUtils myTracksProviderUtils;
@@ -74,11 +71,6 @@ public class TrackDataHub implements DataSourceListener {
   private boolean reportSpeed;
   private int minRequiredAccuracy;
   private int minRecordingDistance;
-
-  // Heading values
-  private float lastHeading = 0;
-  private float lastDeclination = 0;
-  private long lastDeclinationUpdate = 0;
 
   // Location values
   private Location lastSeenLocation = null;
@@ -400,31 +392,6 @@ public class TrackDataHub implements DataSourceListener {
     });
   }
 
-  @Override
-  public void notifyHeadingChanged(final float heading) {
-    runInHanderThread(new Runnable() {
-        @Override
-      public void run() {
-        lastHeading = heading;
-
-        if (lastSeenLocation != null) {
-          // Update the declination at most once an hour
-          long now = System.currentTimeMillis();
-          if (now - lastDeclinationUpdate > ONE_HOUR) {
-            lastDeclinationUpdate = now;
-            long timestamp = lastSeenLocation.getTime();
-            if (timestamp == 0) {
-              // Hack for Samsung phones which don't populate the time field
-              timestamp = now;
-            }
-            lastDeclination = getDeclination(lastSeenLocation, timestamp);
-          }
-        }
-        notifyHeadingChange(trackDataManager.getListeners(TrackDataType.HEADING));
-      }
-    });
-  }
-
   /**
    * Loads data for all listeners. To be run in the {@link #handler} thread.
    */
@@ -459,7 +426,6 @@ public class TrackDataHub implements DataSourceListener {
     } else {
       notifyLocationStateChanged(trackDataManager.getListeners(TrackDataType.LOCATION));
     }
-    notifyHeadingChange(trackDataManager.getListeners(TrackDataType.HEADING));
   }
 
   /**
@@ -509,10 +475,6 @@ public class TrackDataHub implements DataSourceListener {
       } else {
         notifyLocationStateChanged(trackDataListeners);
       }
-    }
-
-    if (trackDataTypes.contains(TrackDataType.HEADING)) {
-      notifyHeadingChange(trackDataListeners);
     }
   }
 
@@ -743,21 +705,6 @@ public class TrackDataHub implements DataSourceListener {
 
     for (TrackDataListener trackDataListener : trackDataListeners) {
       trackDataListener.onLocationChanged(lastSeenLocation);
-    }
-  }
-
-  /**
-   * Notifies heading change. To be run in the {@link #handler} thread.
-   * 
-   * @param trackDataListeners the track data listeners to notify
-   */
-  private void notifyHeadingChange(Set<TrackDataListener> trackDataListeners) {
-    if (trackDataListeners.isEmpty()) {
-      return;
-    }
-    float value = lastHeading + lastDeclination;
-    for (TrackDataListener trackDataListener : trackDataListeners) {
-      trackDataListener.onHeadingChanged(value);
     }
   }
 

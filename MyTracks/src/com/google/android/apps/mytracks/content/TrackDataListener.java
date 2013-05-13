@@ -50,13 +50,6 @@ public interface TrackDataListener {
   public void onLocationChanged(Location location);
 
   /**
-   * Called when the heading changes.
-   * 
-   * @param heading the heading
-   */
-  public void onHeadingChanged(double heading);
-
-  /**
    * Called when the selected track changes. This will be followed by calls to
    * data methods such as {@link #onTrackUpdated(Track)},
    * {@link #clearTrackPoints()}, {@link #onSampledInTrackPoint(Location)},
