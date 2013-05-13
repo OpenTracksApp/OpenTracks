@@ -321,11 +321,6 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     }
 
       @Override
-    public void onHeadingChanged(double heading) {
-      // Ignore
-    }
-
-      @Override
     public void clearWaypoints() {
       // Ignore
     }

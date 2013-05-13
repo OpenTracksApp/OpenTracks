@@ -63,13 +63,6 @@ public interface DataSourceListener {
   public void notifyLocationProviderAvailable(boolean available);
 
   /**
-   * Notifies when the compass heading changes.
-   * 
-   * @param heading the new heading
-   */
-  public void notifyHeadingChanged(float heading);
-  
-  /**
    * Notifies when a preference changes.
    * 
    * @param key the preference key

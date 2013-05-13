@@ -28,9 +28,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.ContentObserver;
-import android.hardware.Sensor;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -51,14 +48,12 @@ public class DataSource {
   private final Context context;
   private final ContentResolver contentResolver;
   private final MyTracksLocationManager myTracksLocationManager;
-  private final SensorManager sensorManager;
   private final SharedPreferences sharedPreferences;
   
   public DataSource(Context context) {
     this.context = context;
     contentResolver = context.getContentResolver();
     myTracksLocationManager = new MyTracksLocationManager(context);
-    sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
     sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
   }
 
@@ -167,29 +162,6 @@ public class DataSource {
       return false;
     }
     return location.getTime() > System.currentTimeMillis() - MAX_LOCATION_AGE_MS;
-  }
-
-  /**
-   * Registers a heading listener.
-   * 
-   * @param listener the listener
-   */
-  public void registerHeadingListener(SensorEventListener listener) {
-    Sensor heading = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
-    if (heading == null) {
-      Log.d(TAG, "No heading sensor.");
-      return;
-    }
-    sensorManager.registerListener(listener, heading, SensorManager.SENSOR_DELAY_UI);
-  }
-
-  /**
-   * Unregisters a heading listener.
-   * 
-   * @param listener the listener
-   */
-  public void unregisterHeadingListener(SensorEventListener listener) {
-    sensorManager.unregisterListener(listener);
   }
 
   /**

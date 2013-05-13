@@ -441,11 +441,6 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
       updateCurrentLocation();
     }
   }
-  
-  @Override
-  public void onHeadingChanged(double heading) {
-    // We don't care.
-  }
 
   @Override
   public void onSelectedTrackChanged(final Track track) {

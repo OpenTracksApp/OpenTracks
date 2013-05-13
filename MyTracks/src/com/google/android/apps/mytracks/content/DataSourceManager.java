@@ -23,9 +23,6 @@ import com.google.common.annotations.VisibleForTesting;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.ContentObserver;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -139,25 +136,6 @@ public class DataSourceManager {
   }
 
   /**
-   * Listener for heading changes.
-   * 
-   * @author Jimmy Shih
-   */
-  @VisibleForTesting
-  class HeadingListener implements SensorEventListener {
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-      // Do nothing
-    }
-
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-      dataSourceListener.notifyHeadingChanged(event.values[0]);
-    }
-  }
-
-  /**
    * Listener for preference changes.
    * 
    * @author Jimmy Shih
@@ -181,7 +159,6 @@ public class DataSourceManager {
   private final WaypointsTableObserver waypointsTableObserver;
   private final TrackPointsTableObserver trackPointsTableObserver;
   private final CurrentLocationListener currentLocationListener;
-  private final HeadingListener headingListener;
   private final PreferenceListener preferenceListener;
 
   public DataSourceManager(DataSource dataSource, DataSourceListener dataSourceListener) {
@@ -193,7 +170,6 @@ public class DataSourceManager {
     waypointsTableObserver = new WaypointsTableObserver();
     trackPointsTableObserver = new TrackPointsTableObserver();
     currentLocationListener = new CurrentLocationListener();
-    headingListener = new HeadingListener();
     preferenceListener = new PreferenceListener();
   }
 
@@ -265,9 +241,6 @@ public class DataSourceManager {
       case LOCATION:
         dataSource.registerLocationListener(currentLocationListener);
         break;
-      case HEADING:
-        dataSource.registerHeadingListener(headingListener);
-        break;
       case PREFERENCE:
         dataSource.registerOnSharedPreferenceChangeListener(preferenceListener);
         break;
@@ -300,9 +273,6 @@ public class DataSourceManager {
         break;
       case LOCATION:
         dataSource.unregisterLocationListener(currentLocationListener);
-        break;
-      case HEADING:
-        dataSource.unregisterHeadingListener(headingListener);
         break;
       case PREFERENCE:
         dataSource.unregisterOnSharedPreferenceChangeListener(preferenceListener);
