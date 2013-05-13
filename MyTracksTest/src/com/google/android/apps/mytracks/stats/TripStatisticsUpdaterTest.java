@@ -235,7 +235,7 @@ public class TripStatisticsUpdaterTest extends TestCase {
           MOVING_SPEED, startTime + (timeOffset + i) * TEN_SECONDS);
       tripStatisticsUpdater.addLocation(location, PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT);
       tripStatistics = tripStatisticsUpdater.getTripStatistics();
-      
+
       assertEquals((timeOffset + i) * TEN_SECONDS, tripStatistics.getTotalTime());
       assertEquals((locationOffset + i) * TEN_SECONDS, tripStatistics.getMovingTime());
       assertEquals(i + locationOffset, tripStatisticsUpdater.getSmoothedElevation(),
@@ -309,8 +309,9 @@ public class TripStatisticsUpdaterTest extends TestCase {
   private void addLocations(int points, long startTime, TripStatistics tripStatistics,
       int timeOffset, int locationOffset) {
     for (int i = 0; i < points; i++) {
-      Location location = getLocation(i + locationOffset, (i + locationOffset) * .001,
-          MOVING_SPEED, startTime + (timeOffset + i) * TEN_SECONDS);
+      // 99999 means a speed should bigger than given speed.
+      Location location = getLocation(i + locationOffset, (i + locationOffset) * .001, 99999,
+          startTime + (timeOffset + i) * TEN_SECONDS);
       tripStatisticsUpdater.addLocation(location, PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT);
       tripStatistics = tripStatisticsUpdater.getTripStatistics();
 
