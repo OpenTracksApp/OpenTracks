@@ -15,8 +15,6 @@
  */
 package com.google.android.apps.mytracks.util;
 
-import com.google.android.apps.mytracks.Constants;
-
 import android.os.Environment;
 
 import java.io.File;
@@ -25,7 +23,7 @@ import junit.framework.TestCase;
 
 /**
  * Tests for {@link FileUtils}.
- *
+ * 
  * @author Rodrigo Damazio
  */
 public class FileUtilsTest extends TestCase {
@@ -35,7 +33,7 @@ public class FileUtilsTest extends TestCase {
    */
   public void testBuildExternalDirectoryPath() {
     String expectedName = Environment.getExternalStorageDirectory() + File.separator
-        + Constants.SDCARD_TOP_DIR + File.separator + "a" + File.separator + "b" + File.separator
+        + FileUtils.SDCARD_TOP_DIR + File.separator + "a" + File.separator + "b" + File.separator
         + "c";
     String dirName = FileUtils.buildExternalDirectoryPath("a", "b", "c");
     assertEquals(expectedName, dirName);

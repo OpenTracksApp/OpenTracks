@@ -18,7 +18,6 @@ package com.google.android.apps.mytracks.stats;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
 
-import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.common.annotations.VisibleForTesting;
@@ -36,6 +35,43 @@ import android.util.Log;
  */
 public class TripStatisticsUpdater {
 
+  /**
+   * The number of distance readings to smooth to get a stable signal.
+   */
+  @VisibleForTesting
+  static final int DISTANCE_SMOOTHING_FACTOR = 25;
+
+  /**
+   * The number of elevation readings to smooth to get a somewhat accurate
+   * signal.
+   */
+  @VisibleForTesting
+  static final int ELEVATION_SMOOTHING_FACTOR = 25;
+
+  /**
+   * The number of grade readings to smooth to get a somewhat accurate signal.
+   */
+  @VisibleForTesting
+  static final int GRADE_SMOOTHING_FACTOR = 5;
+
+  /**
+   * The number of speed reading to smooth to get a somewhat accurate signal.
+   */
+  @VisibleForTesting
+  static final int SPEED_SMOOTHING_FACTOR = 25;
+
+  /**
+   * Anything faster than that (in meters per second) will be considered moving.
+   */
+  private static final double MAX_NO_MOVEMENT_SPEED = 0.224;
+
+  /**
+   * Ignore any acceleration faster than this. Will ignore any speeds that imply
+   * accelaration greater than 2g's 2g = 19.6 m/s^2 = 0.0002 m/ms^2 = 0.02
+   * m/(m*ms)
+   */
+  private static final double MAX_ACCELERATION = 0.02;
+
   // The track's trip statistics
   private final TripStatistics tripStatistics;
 
@@ -49,17 +85,16 @@ public class TripStatisticsUpdater {
   private Location lastMovingLocation;
 
   // A buffer of the recent speed readings (m/s) for calculating max speed
-  private final DoubleBuffer speedBuffer = new DoubleBuffer(Constants.SPEED_SMOOTHING_FACTOR);
+  private final DoubleBuffer speedBuffer = new DoubleBuffer(SPEED_SMOOTHING_FACTOR);
 
   // A buffer of the recent elevation readings (m)
-  private final DoubleBuffer elevationBuffer = new DoubleBuffer(
-      Constants.ELEVATION_SMOOTHING_FACTOR);
+  private final DoubleBuffer elevationBuffer = new DoubleBuffer(ELEVATION_SMOOTHING_FACTOR);
 
   // A buffer of the recent distance readings (m) for calculating grade
-  private final DoubleBuffer distanceBuffer = new DoubleBuffer(Constants.DISTANCE_SMOOTHING_FACTOR);
+  private final DoubleBuffer distanceBuffer = new DoubleBuffer(DISTANCE_SMOOTHING_FACTOR);
 
   // A buffer of the recent grade calculations (%)
-  private final DoubleBuffer gradeBuffer = new DoubleBuffer(Constants.GRADE_SMOOTHING_FACTOR);
+  private final DoubleBuffer gradeBuffer = new DoubleBuffer(GRADE_SMOOTHING_FACTOR);
 
   /**
    * Creates a new trip statistics updater.
@@ -122,8 +157,7 @@ public class TripStatisticsUpdater {
       return;
     }
     double movingDistance = lastMovingLocation.distanceTo(location);
-    if (movingDistance < minRecordingDistance
-        && location.getSpeed() < Constants.MAX_NO_MOVEMENT_SPEED) {
+    if (movingDistance < minRecordingDistance && location.getSpeed() < MAX_NO_MOVEMENT_SPEED) {
       updateTime(location.getTime());
       lastLocation = location;
       return;
@@ -258,7 +292,7 @@ public class TripStatisticsUpdater {
      */
     long timeDifference = time - lastLocationTime;
     double speedDifference = Math.abs(lastLocationSpeed - speed);
-    if (speedDifference > Constants.MAX_ACCELERATION * timeDifference) {
+    if (speedDifference > MAX_ACCELERATION * timeDifference) {
       return false;
     }
 
@@ -272,6 +306,6 @@ public class TripStatisticsUpdater {
     }
     double average = speedBuffer.getAverage();
     double diff = Math.abs(average - speed);
-    return (speed < average * 10) && (diff < Constants.MAX_ACCELERATION * timeDifference);
+    return (speed < average * 10) && (diff < MAX_ACCELERATION * timeDifference);
   }
 }

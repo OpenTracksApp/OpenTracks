@@ -15,8 +15,6 @@
  */
 package com.google.android.apps.mytracks.services;
 
-import static com.google.android.apps.mytracks.Constants.RESUME_TRACK_EXTRA_NAME;
-
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.MyTracksProvider;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
@@ -57,13 +55,13 @@ import java.util.List;
 
 /**
  * Tests for the MyTracks track recording service.
- *
+ * <p>
+ * TODO: The original class, ServiceTestCase, has a few limitations, e.g. it's
+ * not possible to properly shutdown the service, unless tearDown() is called,
+ * which prevents from testing multiple scenarios in a single test (see
+ * runFunctionTest for more details).
+ * 
  * @author Bartlomiej Niechwiej
- *
- * TODO: The original class, ServiceTestCase, has a few limitations, e.g.
- * it's not possible to properly shutdown the service, unless tearDown()
- * is called, which prevents from testing multiple scenarios in a single
- * test (see runFunctionTest for more details).
  */
 public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingService> {
 
@@ -71,9 +69,9 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
   private MyTracksProviderUtils providerUtils;
 
   /*
-   * In order to support starting and binding to the service in the same
-   * unit test, we provide a workaround, as the original class doesn't allow
-   * to bind after the service has been previously started.
+   * In order to support starting and binding to the service in the same unit
+   * test, we provide a workaround, as the original class doesn't allow to bind
+   * after the service has been previously started.
    */
 
   private boolean bound;
@@ -84,9 +82,8 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
   }
 
   /**
-   * A context wrapper with the user provided {@link ContentResolver}.
-   *
-   * TODO: Move to test utils package.
+   * A context wrapper with the user provided {@link ContentResolver}. TODO:
+   * Move to test utils package.
    */
   public static class MockContext extends ContextWrapper {
     private final ContentResolver contentResolver;
@@ -106,8 +103,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
   protected IBinder bindService(Intent intent) {
     if (getService() != null) {
       if (bound) {
-        throw new IllegalStateException(
-            "Service: " + getService() + " is already bound");
+        throw new IllegalStateException("Service: " + getService() + " is already bound");
       }
       bound = true;
       serviceIntent = intent.cloneFilter();
@@ -144,12 +140,13 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     MyTracksProvider myTracksProvider = new MyTracksProvider();
     myTracksProvider.attachInfo(context, null);
     mockContentResolver.addProvider(MyTracksProviderUtils.AUTHORITY, myTracksProvider);
-    
+
     MockContentProvider settingsProvider = new MockContentProvider(context) {
         @Override
       public Bundle call(String method, String arg, Bundle extras) {
         return null;
       }
+
         @Override
       public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
           String sortOrder) {
@@ -157,12 +154,13 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
       }
     };
     mockContentResolver.addProvider(Settings.AUTHORITY, settingsProvider);
-    
+
     MockContentProvider googleSettingsProvider = new MockContentProvider(context) {
         @Override
       public Bundle call(String method, String arg, Bundle extras) {
         return null;
       }
+
         @Override
       public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
           String sortOrder) {
@@ -171,14 +169,17 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
           public int getCount() {
             return 1;
           }
+
             @Override
           public boolean moveToNext() {
             return true;
           }
+
             @Override
           public String getString(int columnIndex) {
             return MyTracksLocationManager.USE_LOCATION_FOR_SERVICES_ON;
           }
+
             @Override
           public void close() {}
         };
@@ -186,7 +187,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
       }
     };
     mockContentResolver.addProvider("com.google.settings", googleSettingsProvider);
-    
+
     // Set the context
     setContext(context);
 
@@ -227,7 +228,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
 
     // Start the service in "resume" mode (simulates the on-reboot action).
     Intent startIntent = createStartIntent();
-    startIntent.putExtra(RESUME_TRACK_EXTRA_NAME, true);
+    startIntent.putExtra(TrackRecordingService.RESUME_TRACK_EXTRA_NAME, true);
     startService(startIntent);
     assertNotNull(getService());
 
@@ -237,12 +238,13 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     assertEquals(123L, service.getRecordingTrackId());
   }
 
-  // TODO: shutdownService() has a bug and doesn't set mServiceCreated
-  // to false, thus preventing from a second call to onCreate().
-  // Report the bug to Android team.  Until then, the following tests
-  // and checks must be commented out.
-  //
-  // TODO: If fixed, remove "disabled" prefix from the test name.
+  /*
+   * TODO: shutdownService() has a bug and doesn't set mServiceCreated to false,
+   * thus preventing from a second call to onCreate(). Report the bug to Android
+   * team. Until then, the following tests and checks must be commented out.
+   * 
+   * TODO: If fixed, remove "disabled" prefix from the test name.
+   */
   @MediumTest
   public void disabledTestResumeAfterReboot_simulateReboot() throws Exception {
     updateAutoResumePrefs(PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT,
@@ -259,7 +261,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
 
     // Start the service in "resume" mode (simulates the on-reboot action).
     Intent startIntent = createStartIntent();
-    startIntent.putExtra(RESUME_TRACK_EXTRA_NAME, true);
+    startIntent.putExtra(TrackRecordingService.RESUME_TRACK_EXTRA_NAME, true);
     startService(startIntent);
     assertNotNull(getService());
 
@@ -277,7 +279,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
 
     // Start the service in "resume" mode (simulates the on-reboot action).
     Intent startIntent = createStartIntent();
-    startIntent.putExtra(RESUME_TRACK_EXTRA_NAME, true);
+    startIntent.putExtra(TrackRecordingService.RESUME_TRACK_EXTRA_NAME, true);
     startService(startIntent);
     assertNotNull(getService());
 
@@ -298,7 +300,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
 
     // Start the service in "resume" mode (simulates the on-reboot action).
     Intent startIntent = createStartIntent();
-    startIntent.putExtra(RESUME_TRACK_EXTRA_NAME, true);
+    startIntent.putExtra(TrackRecordingService.RESUME_TRACK_EXTRA_NAME, true);
     startService(startIntent);
     assertNotNull(getService());
 
@@ -319,7 +321,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
 
     // Start the service in "resume" mode (simulates the on-reboot action).
     Intent startIntent = createStartIntent();
-    startIntent.putExtra(RESUME_TRACK_EXTRA_NAME, true);
+    startIntent.putExtra(TrackRecordingService.RESUME_TRACK_EXTRA_NAME, true);
     startService(startIntent);
     assertNotNull(getService());
 
@@ -437,8 +439,8 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     assertEquals(1, receivedIntents.size());
     Intent broadcastIntent = receivedIntents.get(0);
     assertEquals(startAction, broadcastIntent.getAction());
-    assertEquals(id, broadcastIntent.getLongExtra(
-        context.getString(R.string.track_id_broadcast_extra), -1L));
+    assertEquals(id,
+        broadcastIntent.getLongExtra(context.getString(R.string.track_id_broadcast_extra), -1L));
 
     context.unregisterReceiver(startReceiver);
   }
@@ -483,8 +485,8 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     assertEquals(1, receivedIntents.size());
     Intent broadcastIntent = receivedIntents.get(0);
     assertEquals(stopAction, broadcastIntent.getAction());
-    assertEquals(123L, broadcastIntent.getLongExtra(
-        context.getString(R.string.track_id_broadcast_extra), -1L));
+    assertEquals(123L,
+        broadcastIntent.getLongExtra(context.getString(R.string.track_id_broadcast_extra), -1L));
 
     context.unregisterReceiver(stopReceiver);
   }
@@ -494,7 +496,10 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertFalse(service.isRecording());
 
-    // Ending the current track when there is no recording should not result in any error.
+    /*
+     * Ending the current track when there is no recording should not result in
+     * any error.
+     */
     service.endCurrentTrack();
 
     assertEquals(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT,
@@ -562,8 +567,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
 
     assertEquals(1, service.insertWaypoint(WaypointCreationRequest.DEFAULT_WAYPOINT));
     Waypoint wpt = providerUtils.getWaypoint(1);
-    assertEquals(getContext().getString(R.string.marker_waypoint_icon_url),
-        wpt.getIcon());
+    assertEquals(getContext().getString(R.string.marker_waypoint_icon_url), wpt.getIcon());
     assertEquals(getContext().getString(R.string.marker_name_format, 1), wpt.getName());
     assertEquals(WaypointType.WAYPOINT, wpt.getType());
     assertEquals(123L, wpt.getTrackId());
@@ -574,8 +578,8 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
 
   @MediumTest
   public void testWithProperties_voiceFrequencyDefault() throws Exception {
-    PreferencesUtils.setInt(context, R.string.voice_frequency_key,
-        PreferencesUtils.VOICE_FREQUENCY_DEFAULT);
+    PreferencesUtils.setInt(
+        context, R.string.voice_frequency_key, PreferencesUtils.VOICE_FREQUENCY_DEFAULT);
     fullRecordingSession();
   }
 
@@ -590,7 +594,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     PreferencesUtils.setInt(context, R.string.voice_frequency_key, 1);
     fullRecordingSession();
   }
-  
+
   @MediumTest
   public void testWithProperties_maxRecordingDistanceDefault() throws Exception {
     PreferencesUtils.setInt(context, R.string.max_recording_distance_key,
@@ -619,8 +623,8 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
 
   @MediumTest
   public void testWithProperties_splitFrequencyDefault() throws Exception {
-    PreferencesUtils.setInt(context, R.string.split_frequency_key,
-        PreferencesUtils.SPLIT_FREQUENCY_DEFAULT);
+    PreferencesUtils.setInt(
+        context, R.string.split_frequency_key, PreferencesUtils.SPLIT_FREQUENCY_DEFAULT);
     fullRecordingSession();
   }
 
@@ -690,8 +694,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
   }
 
   private ITrackRecordingService bindAndGetService(Intent intent) {
-    ITrackRecordingService service = ITrackRecordingService.Stub.asInterface(
-        bindService(intent));
+    ITrackRecordingService service = ITrackRecordingService.Stub.asInterface(bindService(intent));
     assertNotNull(service);
     return service;
   }
@@ -722,8 +725,8 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     assertTrue(track.getId() >= 0);
     providerUtils.insertTrack(track);
     assertEquals(track.getId(), providerUtils.getTrack(track.getId()).getId());
-    PreferencesUtils.setLong(context, R.string.recording_track_id_key, isRecording ? track.getId()
-        : PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
+    PreferencesUtils.setLong(context, R.string.recording_track_id_key,
+        isRecording ? track.getId() : PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
     PreferencesUtils.setBoolean(context, R.string.recording_track_paused_key, !isRecording);
   }
 
@@ -760,7 +763,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
       }
     }
 
-    // Stop the track.  Validate if it has correct data.
+    // Stop the track. Validate if it has correct data.
     service.endCurrentTrack();
     assertFalse(service.isRecording());
     assertEquals(-1L, service.getRecordingTrackId());
@@ -772,7 +775,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     assertTrue(tripStatistics.getStartTime() > 0);
     assertTrue(tripStatistics.getStopTime() >= tripStatistics.getStartTime());
   }
-  
+
   /**
    * Inserts a location and waits for 100ms.
    * 

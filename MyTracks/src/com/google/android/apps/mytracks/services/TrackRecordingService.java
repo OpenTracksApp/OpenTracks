@@ -16,8 +16,6 @@
 
 package com.google.android.apps.mytracks.services;
 
-import static com.google.android.apps.mytracks.Constants.RESUME_TRACK_EXTRA_NAME;
-
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.TrackDetailActivity;
 import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
@@ -82,6 +80,14 @@ import java.util.concurrent.Executors;
 public class TrackRecordingService extends Service {
 
   private static final String TAG = TrackRecordingService.class.getSimpleName();
+
+  /**
+   * The name of extra intent property to indicate whether we want to resume a
+   * previously recorded track.
+   */
+  public static final String
+      RESUME_TRACK_EXTRA_NAME = "com.google.android.apps.mytracks.RESUME_TRACK";
+  
   public static final double PAUSE_LATITUDE = 100.0;
   public static final double RESUME_LATITUDE = 200.0;
 

@@ -2,7 +2,6 @@
 
 package com.google.android.apps.mytracks.stats;
 
-import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 
 import android.location.Location;
@@ -103,21 +102,22 @@ public class TripStatisticsUpdaterTest extends TestCase {
   public void testElevationGain() throws Exception {
     for (double i = 0; i < 1000; i++) {
       double expectedGain;
-      if (i < Constants.ELEVATION_SMOOTHING_FACTOR - 1) {
+      if (i < TripStatisticsUpdater.ELEVATION_SMOOTHING_FACTOR - 1) {
         expectedGain = 0;
-      } else if (i < Constants.ELEVATION_SMOOTHING_FACTOR) {
+      } else if (i < TripStatisticsUpdater.ELEVATION_SMOOTHING_FACTOR) {
         expectedGain = 0.5;
       } else {
         expectedGain = 1.0;
       }
       assertEquals(expectedGain, tripStatisticsUpdater.updateElevation(i));
       assertEquals(i, tripStatisticsUpdater.getSmoothedElevation(),
-          Constants.ELEVATION_SMOOTHING_FACTOR / 2);
+          TripStatisticsUpdater.ELEVATION_SMOOTHING_FACTOR / 2);
 
       TripStatistics data = tripStatisticsUpdater.getTripStatistics();
       assertEquals(0.0, data.getMinElevation());
-      assertEquals(i, data.getMaxElevation(), Constants.ELEVATION_SMOOTHING_FACTOR / 2);
-      assertEquals(i, data.getTotalElevationGain(), Constants.ELEVATION_SMOOTHING_FACTOR);
+      assertEquals(i, data.getMaxElevation(), TripStatisticsUpdater.ELEVATION_SMOOTHING_FACTOR / 2);
+      assertEquals(
+          i, data.getTotalElevationGain(), TripStatisticsUpdater.ELEVATION_SMOOTHING_FACTOR);
     }
   }
 
@@ -133,7 +133,8 @@ public class TripStatisticsUpdaterTest extends TestCase {
        */
       tripStatisticsUpdater.updateElevation(i);
       tripStatisticsUpdater.updateGrade(100, 100);
-      if (i >= Constants.GRADE_SMOOTHING_FACTOR && i >= Constants.ELEVATION_SMOOTHING_FACTOR) {
+      if (i >= TripStatisticsUpdater.GRADE_SMOOTHING_FACTOR
+          && i >= TripStatisticsUpdater.ELEVATION_SMOOTHING_FACTOR) {
         assertEquals(1.0, tripStatisticsUpdater.getTripStatistics().getMaxGrade());
         assertEquals(1.0, tripStatisticsUpdater.getTripStatistics().getMinGrade());
       }
@@ -145,7 +146,8 @@ public class TripStatisticsUpdaterTest extends TestCase {
        */
       tripStatisticsUpdater.updateElevation(i);
       tripStatisticsUpdater.updateGrade(100, -100);
-      if (i >= Constants.GRADE_SMOOTHING_FACTOR && i >= Constants.ELEVATION_SMOOTHING_FACTOR) {
+      if (i >= TripStatisticsUpdater.GRADE_SMOOTHING_FACTOR
+          && i >= TripStatisticsUpdater.ELEVATION_SMOOTHING_FACTOR) {
         assertEquals(1.0, tripStatisticsUpdater.getTripStatistics().getMaxGrade());
         assertEquals(-1.0, tripStatisticsUpdater.getTripStatistics().getMinGrade());
       }
@@ -164,10 +166,10 @@ public class TripStatisticsUpdaterTest extends TestCase {
        */
       tripStatisticsUpdater.updateElevation(i);
       tripStatisticsUpdater.updateGrade(1, 100);
-      assertEquals(Double.NEGATIVE_INFINITY, tripStatisticsUpdater.getTripStatistics()
-          .getMaxGrade());
-      assertEquals(Double.POSITIVE_INFINITY, tripStatisticsUpdater.getTripStatistics()
-          .getMinGrade());
+      assertEquals(
+          Double.NEGATIVE_INFINITY, tripStatisticsUpdater.getTripStatistics().getMaxGrade());
+      assertEquals(
+          Double.POSITIVE_INFINITY, tripStatisticsUpdater.getTripStatistics().getMinGrade());
     }
   }
 
@@ -210,7 +212,7 @@ public class TripStatisticsUpdaterTest extends TestCase {
     double speed = 4.0;
     for (int i = 0; i < 1000; i++) {
       tripStatisticsUpdater.updateSpeed(i + ONE_SECOND, speed, i, speed);
-      if (i >= Constants.SPEED_SMOOTHING_FACTOR) {
+      if (i >= TripStatisticsUpdater.SPEED_SMOOTHING_FACTOR) {
         assertEquals(speed, tripStatisticsUpdater.getTripStatistics().getMaxSpeed());
       }
     }
@@ -231,28 +233,29 @@ public class TripStatisticsUpdaterTest extends TestCase {
       // Going up by 1 meter each time.
       // Moving by .001 degree latitude (111 meters).
       // Each time slice is 10 seconds.
-      Location location = getLocation(i + locationOffset, (i + locationOffset) * .001,
-          MOVING_SPEED, startTime + (timeOffset + i) * TEN_SECONDS);
+      Location location = getLocation(i + locationOffset, (i + locationOffset) * .001, MOVING_SPEED,
+          startTime + (timeOffset + i) * TEN_SECONDS);
       tripStatisticsUpdater.addLocation(location, PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT);
       tripStatistics = tripStatisticsUpdater.getTripStatistics();
 
       assertEquals((timeOffset + i) * TEN_SECONDS, tripStatistics.getTotalTime());
       assertEquals((locationOffset + i) * TEN_SECONDS, tripStatistics.getMovingTime());
       assertEquals(i + locationOffset, tripStatisticsUpdater.getSmoothedElevation(),
-          Constants.ELEVATION_SMOOTHING_FACTOR / 2);
+          TripStatisticsUpdater.ELEVATION_SMOOTHING_FACTOR / 2);
       assertEquals(0.0, tripStatistics.getMinElevation());
       assertEquals(i + locationOffset, tripStatistics.getMaxElevation(),
-          Constants.ELEVATION_SMOOTHING_FACTOR / 2);
+          TripStatisticsUpdater.ELEVATION_SMOOTHING_FACTOR / 2);
       assertEquals(i + locationOffset, tripStatistics.getTotalElevationGain(),
-          Constants.ELEVATION_SMOOTHING_FACTOR);
+          TripStatisticsUpdater.ELEVATION_SMOOTHING_FACTOR);
 
-      if (i + locationOffset >= Constants.SPEED_SMOOTHING_FACTOR) {
+      if (i + locationOffset >= TripStatisticsUpdater.SPEED_SMOOTHING_FACTOR) {
         assertEquals(MOVING_SPEED, tripStatistics.getMaxSpeed(), 0.1);
       }
 
       // If there are only moving locations in the track.
-      if (locationOffset == 0 && (i + locationOffset) >= Constants.DISTANCE_SMOOTHING_FACTOR
-          && (i + locationOffset) >= Constants.ELEVATION_SMOOTHING_FACTOR) {
+      if (locationOffset == 0
+          && (i + locationOffset) >= TripStatisticsUpdater.DISTANCE_SMOOTHING_FACTOR
+          && (i + locationOffset) >= TripStatisticsUpdater.ELEVATION_SMOOTHING_FACTOR) {
         // 1 m / 111 m = .009
         assertEquals(0.009, tripStatistics.getMinGrade(), 0.0001);
         assertEquals(0.009, tripStatistics.getMaxGrade(), 0.0001);
@@ -274,26 +277,26 @@ public class TripStatisticsUpdaterTest extends TestCase {
   private void addWaitLocations(int points, long startTime, TripStatistics tripStatistics,
       int timeOffset, int locationOffset) {
     for (int i = 0; i < points; i++) {
-      Location location = getLocation(locationOffset, locationOffset * .001, 0, startTime
-          + (i + timeOffset) * TEN_SECONDS);
+      Location location = getLocation(
+          locationOffset, locationOffset * .001, 0, startTime + (i + timeOffset) * TEN_SECONDS);
       tripStatisticsUpdater.addLocation(location, PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT);
 
       tripStatistics = tripStatisticsUpdater.getTripStatistics();
       assertEquals((i + timeOffset) * TEN_SECONDS, tripStatistics.getTotalTime());
       assertEquals((locationOffset) * TEN_SECONDS, tripStatistics.getMovingTime());
       assertEquals(locationOffset, tripStatisticsUpdater.getSmoothedElevation(),
-          Constants.ELEVATION_SMOOTHING_FACTOR / 2);
+          TripStatisticsUpdater.ELEVATION_SMOOTHING_FACTOR / 2);
       assertEquals(0.0, tripStatistics.getMinElevation());
       assertEquals(locationOffset, tripStatistics.getMaxElevation(),
-          Constants.ELEVATION_SMOOTHING_FACTOR / 2);
+          TripStatisticsUpdater.ELEVATION_SMOOTHING_FACTOR / 2);
       assertEquals(locationOffset, tripStatistics.getTotalElevationGain(),
-          Constants.ELEVATION_SMOOTHING_FACTOR);
-      if (locationOffset >= Constants.SPEED_SMOOTHING_FACTOR) {
+          TripStatisticsUpdater.ELEVATION_SMOOTHING_FACTOR);
+      if (locationOffset >= TripStatisticsUpdater.SPEED_SMOOTHING_FACTOR) {
         assertEquals(MOVING_SPEED, tripStatistics.getMaxSpeed(), 0.1);
       }
       assertEquals(MOVING_SPEED, tripStatistics.getMaxSpeed(), 0.1);
-      assertEquals(locationOffset * 111.0, tripStatistics.getTotalDistance(),
-          locationOffset * 111.0 * 0.01);
+      assertEquals(
+          locationOffset * 111.0, tripStatistics.getTotalDistance(), locationOffset * 111.0 * 0.01);
     }
   }
 

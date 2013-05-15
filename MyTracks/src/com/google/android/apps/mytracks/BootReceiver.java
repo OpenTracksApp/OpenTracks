@@ -16,7 +16,6 @@
 package com.google.android.apps.mytracks;
 
 import static android.content.Intent.ACTION_BOOT_COMPLETED;
-import static com.google.android.apps.mytracks.Constants.RESUME_TRACK_EXTRA_NAME;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.services.RemoveTempFilesService;
@@ -49,7 +48,7 @@ public class BootReceiver extends BroadcastReceiver {
     Log.d(TAG, "BootReceiver.onReceive: " + intent.getAction());
     if (ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
       Intent startIntent = new Intent(context, TrackRecordingService.class)
-          .putExtra(RESUME_TRACK_EXTRA_NAME, true);
+          .putExtra(TrackRecordingService.RESUME_TRACK_EXTRA_NAME, true);
       context.startService(startIntent);
 
       Intent removeTempFilesIntent = new Intent(context, RemoveTempFilesService.class);

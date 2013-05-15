@@ -17,7 +17,6 @@
 package com.google.android.apps.mytracks.content;
 
 import static com.google.android.apps.mytracks.Constants.MAX_DISPLAYED_WAYPOINTS_POINTS;
-import static com.google.android.apps.mytracks.Constants.MAX_LOCATION_AGE_MS;
 import static com.google.android.apps.mytracks.Constants.TARGET_DISPLAYED_TRACK_POINTS;
 
 import com.google.android.apps.mytracks.Constants;
@@ -53,6 +52,11 @@ public class TrackDataHub implements DataSourceListener {
 
   private static final String TAG = TrackDataHub.class.getSimpleName();
 
+  /**
+   * Maximum age of a location to be considered current.
+   */
+  private static final long MAX_LOCATION_AGE_MS = 60 * 1000; // 1 minute
+  
   private final Context context;
   private final TrackDataManager trackDataManager;
   private final MyTracksProviderUtils myTracksProviderUtils;

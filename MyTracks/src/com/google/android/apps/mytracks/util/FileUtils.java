@@ -15,7 +15,6 @@
  */
 package com.google.android.apps.mytracks.util;
 
-import com.google.android.apps.mytracks.Constants;
 import com.google.common.annotations.VisibleForTesting;
 
 import android.os.Environment;
@@ -30,6 +29,13 @@ import java.io.File;
 public class FileUtils {
 
   private FileUtils() {}
+
+  /**
+   * Name of the top-level directory inside the SD card where our files will be
+   * read from/written to.
+   */
+  @VisibleForTesting
+  static final String SDCARD_TOP_DIR = "MyTracks";
 
   /**
    * The maximum FAT32 path length. See the FAT32 spec at
@@ -88,7 +94,7 @@ public class FileUtils {
     StringBuilder dirNameBuilder = new StringBuilder();
     dirNameBuilder.append(Environment.getExternalStorageDirectory());
     dirNameBuilder.append(File.separatorChar);
-    dirNameBuilder.append(Constants.SDCARD_TOP_DIR);
+    dirNameBuilder.append(SDCARD_TOP_DIR);
     for (String component : components) {
       dirNameBuilder.append(File.separatorChar);
       dirNameBuilder.append(component);
