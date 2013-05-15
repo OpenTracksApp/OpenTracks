@@ -46,21 +46,13 @@ public interface DataSourceListener {
    * @param location the location
    */
   public void notifyLocationChanged(Location location);
-  
-  
+
   /**
    * Notifies when the location provider enabled status changes.
    * 
    * @param enabled true if enabled, false if not
    */
   public void notifyLocationProviderEnabled(boolean enabled);
-
-  /**
-   * Notifies when the location provider availability status changes.
-   * 
-   * @param available true if available, false if not
-   */
-  public void notifyLocationProviderAvailable(boolean available);
 
   /**
    * Notifies when a preference changes.

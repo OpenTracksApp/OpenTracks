@@ -26,7 +26,6 @@ import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.location.LocationProvider;
 import android.net.Uri;
 import android.os.Handler;
 import android.util.Log;
@@ -77,7 +76,7 @@ public class MyTracksLocationManager {
 
   /**
    * Observer for Google location settings.
-   *
+   * 
    * @author Jimmy Shih
    */
   private class GoogleSettingsObserver extends ContentObserver {
@@ -102,17 +101,17 @@ public class MyTracksLocationManager {
   }
 
   /**
-   * @see android.location.LocationManager#isProviderEnabled(java.lang.String)
+   * Returns true if gps provider is enabled.
    */
-  public boolean isProviderEnabled(String provider) {
-    return isAllowed ? locationManager.isProviderEnabled(provider) : false;
-  }
-
-  /**
-   * @see android.location.LocationManager#getProvider(java.lang.String)
-   */
-  public LocationProvider getProvider(String name) {
-    return isAllowed ? locationManager.getProvider(name) : null;
+  public boolean isGpsProviderEnabled() {
+    if (!isAllowed) {
+      return false;
+    }
+    String provider = LocationManager.GPS_PROVIDER;
+    if (locationManager.getProvider(provider) == null) {
+      return false;
+    }
+    return locationManager.isProviderEnabled(provider);
   }
 
   /**

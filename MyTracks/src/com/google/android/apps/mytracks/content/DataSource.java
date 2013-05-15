@@ -66,7 +66,7 @@ public class DataSource {
   }
 
   public boolean isGpsProviderEnabled() {
-    return myTracksLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    return myTracksLocationManager.isGpsProviderEnabled();
   }
 
   /**
@@ -94,22 +94,9 @@ public class DataSource {
    * @param listener the listener
    */
   public void registerLocationListener(LocationListener listener) {
-    // Check if the GPS provider exists
-    if (myTracksLocationManager.getProvider(LocationManager.GPS_PROVIDER) == null) {
-      listener.onProviderDisabled(LocationManager.GPS_PROVIDER);
-      unregisterLocationListener(listener);
-      return;
-    }
 
     // Listen for GPS location
     myTracksLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
-
-    // Update the listener with the current provider state
-    if (myTracksLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-      listener.onProviderEnabled(LocationManager.GPS_PROVIDER);
-    } else {
-      listener.onProviderDisabled(LocationManager.GPS_PROVIDER);
-    }
 
     // Listen for network location
     try {

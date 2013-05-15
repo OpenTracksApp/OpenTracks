@@ -371,17 +371,6 @@ public class TrackDataHub implements DataSourceListener {
   }
 
   @Override
-  public void notifyLocationProviderAvailable(final boolean available) {
-    runInHanderThread(new Runnable() {
-        @Override
-      public void run() {
-        hasFix = available;
-        notifyLocationStateChanged(trackDataManager.getListeners(TrackDataType.LOCATION));
-      }
-    });
-  }
-
-  @Override
   public void notifyLocationChanged(final Location location) {
     runInHanderThread(new Runnable() {
         @Override

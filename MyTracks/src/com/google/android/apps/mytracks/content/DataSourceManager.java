@@ -25,8 +25,6 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.ContentObserver;
 import android.location.Location;
 import android.location.LocationListener;
-import android.location.LocationManager;
-import android.location.LocationProvider;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -101,7 +99,6 @@ public class DataSourceManager {
    */
   @VisibleForTesting
   class CurrentLocationListener implements LocationListener {
-
     @Override
     public void onLocationChanged(Location location) {
       if (!dataSource.isAllowed()) {
@@ -111,28 +108,13 @@ public class DataSourceManager {
     }
 
     @Override
-    public void onProviderDisabled(String provider) {
-      if (!LocationManager.GPS_PROVIDER.equals(provider)) {
-        return;
-      }
-      dataSourceListener.notifyLocationProviderEnabled(false);
-    }
+    public void onProviderDisabled(String provider) {}
 
     @Override
-    public void onProviderEnabled(String provider) {
-      if (!dataSource.isAllowed() || !LocationManager.GPS_PROVIDER.equals(provider)) {
-        return;
-      }
-      dataSourceListener.notifyLocationProviderEnabled(true);
-    }
+    public void onProviderEnabled(String provider) {}
 
     @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-      if (!dataSource.isAllowed() || !LocationManager.GPS_PROVIDER.equals(provider)) {
-        return;
-      }
-      dataSourceListener.notifyLocationProviderAvailable(status == LocationProvider.AVAILABLE);
-    }
+    public void onStatusChanged(String provider, int status, Bundle extras) {}
   }
 
   /**
@@ -239,7 +221,16 @@ public class DataSourceManager {
         // Do nothing. SAMPLED_OUT_POINT_UPDATES is mapped to POINT_UPDATES.
         break;
       case LOCATION:
-        dataSource.registerLocationListener(currentLocationListener);
+        if (dataSource.isGpsProviderEnabled()) {  
+          dataSourceListener.notifyLocationProviderEnabled(true);
+        } else {
+          dataSourceListener.notifyLocationProviderEnabled(false);          
+        }
+        if (dataSource.isAllowed()) {
+          dataSource.registerLocationListener(currentLocationListener);
+        } else {
+          dataSource.unregisterLocationListener(currentLocationListener);
+        }
         break;
       case PREFERENCE:
         dataSource.registerOnSharedPreferenceChangeListener(preferenceListener);
