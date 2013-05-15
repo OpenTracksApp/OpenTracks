@@ -25,10 +25,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.ContentObserver;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Looper;
-import android.util.Log;
 
 /**
  * Data source on the phone.
@@ -36,9 +34,6 @@ import android.util.Log;
  * @author Rodrigo Damazio
  */
 public class DataSource {
-
-  private static final int NETWORK_PROVIDER_MIN_TIME = 5 * 60 * 1000; // 5 minutes
-  private static final String TAG = DataSource.class.getSimpleName();
 
   private final ContentResolver contentResolver;
   private final MyTracksLocationManager myTracksLocationManager;
@@ -86,19 +81,8 @@ public class DataSource {
    * 
    * @param listener the listener
    */
-  public void registerLocationListener(android.location.LocationListener listener) {
-
-    // Listen for GPS location
-    myTracksLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
-
-    // Listen for network location
-    try {
-      myTracksLocationManager.requestLocationUpdates(
-          LocationManager.NETWORK_PROVIDER, NETWORK_PROVIDER_MIN_TIME, 0, listener);
-    } catch (RuntimeException e) {
-      // Network location is optional, so just log the exception
-      Log.w(TAG, "Could not register for network location.", e);
-    }
+  public void registerLocationListener(LocationListener listener) {
+    myTracksLocationManager.requestLocationUpdates(0, 0, listener);
   }
 
   /**
@@ -106,8 +90,8 @@ public class DataSource {
    * 
    * @param listener the listener
    */
-  public void unregisterLocationListener(android.location.LocationListener listener) {
-    myTracksLocationManager.removeUpdates(listener);
+  public void unregisterLocationListener(LocationListener listener) {
+    myTracksLocationManager.removeLocationUpdates(listener);
   }
 
   /**

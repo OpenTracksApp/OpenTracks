@@ -109,9 +109,6 @@ public abstract class Constants {
   /** Maximum age of a GPS location to be considered current. */
   public static final long MAX_LOCATION_AGE_MS = 60 * 1000;  // 1 minute
 
-  /** Maximum age of a network location to be considered current. */
-  public static final long MAX_NETWORK_AGE_MS = 1000 * 60 * 10;  // 10 minutes
-
   /**
    * The type of account that we can use for gdata uploads.
    */

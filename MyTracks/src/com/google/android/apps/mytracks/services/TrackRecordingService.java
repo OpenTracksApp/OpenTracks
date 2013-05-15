@@ -41,6 +41,7 @@ import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.TrackNameUtils;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
 
@@ -54,11 +55,9 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Binder;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
@@ -216,21 +215,6 @@ public class TrackRecordingService extends Service {
       };
 
   private LocationListener locationListener = new LocationListener() {
-      @Override
-    public void onProviderDisabled(String provider) {
-      // Do nothing
-    }
-
-      @Override
-    public void onProviderEnabled(String provider) {
-      // Do nothing
-    }
-
-      @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-      // Do nothing
-    }
-
       @Override
     public void onLocationChanged(final Location location) {
       if (myTracksLocationManager == null || executorService == null
@@ -974,8 +958,7 @@ public class TrackRecordingService extends Service {
         try {
           long interval = locationListenerPolicy.getDesiredPollingInterval();
           myTracksLocationManager.requestLocationUpdates(
-              LocationManager.GPS_PROVIDER, interval, locationListenerPolicy.getMinDistance(),
-              locationListener);
+              interval, locationListenerPolicy.getMinDistance(), locationListener);
           currentRecordingInterval = interval;
         } catch (RuntimeException e) {
           Log.e(TAG, "Could not register location listener.", e);
@@ -992,7 +975,7 @@ public class TrackRecordingService extends Service {
       Log.e(TAG, "locationManager is null.");
       return;
     }
-    myTracksLocationManager.removeUpdates(locationListener);
+    myTracksLocationManager.removeLocationUpdates(locationListener);
   }
 
   /**

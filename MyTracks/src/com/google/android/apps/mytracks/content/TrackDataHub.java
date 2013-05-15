@@ -18,7 +18,6 @@ package com.google.android.apps.mytracks.content;
 
 import static com.google.android.apps.mytracks.Constants.MAX_DISPLAYED_WAYPOINTS_POINTS;
 import static com.google.android.apps.mytracks.Constants.MAX_LOCATION_AGE_MS;
-import static com.google.android.apps.mytracks.Constants.MAX_NETWORK_AGE_MS;
 import static com.google.android.apps.mytracks.Constants.TARGET_DISPLAYED_TRACK_POINTS;
 
 import com.google.android.apps.mytracks.Constants;
@@ -35,7 +34,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.hardware.GeomagneticField;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.Log;
@@ -683,23 +681,10 @@ public class TrackDataHub implements DataSourceListener {
     }
     boolean oldHasFix = hasFix;
     boolean oldHasGoodFix = hasGoodFix;
-    long now = System.currentTimeMillis();
-    if (location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
-      hasFix = !isLocationOld(location, now, MAX_LOCATION_AGE_MS);
-      hasGoodFix = location.getAccuracy() <= minRequiredAccuracy;
-      lastSeenLocation = location;
-    } else {
-      // A network location.
-
-      // If has a recent GPS location, ignore the network location.
-      if (!isLocationOld(lastSeenLocation, now, MAX_LOCATION_AGE_MS)) {
-        return;
-      }
-
-      hasFix = false;
-      hasGoodFix = false;
-      lastSeenLocation = isLocationOld(location, now, MAX_NETWORK_AGE_MS) ? null : location;
-    }
+    
+    hasFix = !isLocationOld(location, System.currentTimeMillis(), MAX_LOCATION_AGE_MS);
+    hasGoodFix = location.getAccuracy() <= minRequiredAccuracy;
+    lastSeenLocation = location;
 
     if (trackDataListeners.isEmpty()) {
       return;

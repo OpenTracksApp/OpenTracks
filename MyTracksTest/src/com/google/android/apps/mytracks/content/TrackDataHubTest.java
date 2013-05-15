@@ -28,6 +28,7 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIt
 import com.google.android.apps.mytracks.content.TrackDataListener.LocationState;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceTest.MockContext;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.maps.mytracks.R;
 import com.google.android.testing.mocking.AndroidMock;
 import com.google.android.testing.mocking.UsesMocks;
@@ -39,7 +40,6 @@ import android.database.ContentObserver;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.location.Location;
-import android.location.LocationListener;
 import android.provider.BaseColumns;
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;

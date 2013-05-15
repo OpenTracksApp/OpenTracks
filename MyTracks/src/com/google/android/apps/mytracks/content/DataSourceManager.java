@@ -18,14 +18,13 @@ package com.google.android.apps.mytracks.content;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
 
+import com.google.android.gms.location.LocationListener;
 import com.google.common.annotations.VisibleForTesting;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.ContentObserver;
 import android.location.Location;
-import android.location.LocationListener;
-import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
@@ -106,15 +105,6 @@ public class DataSourceManager {
       }
       dataSourceListener.notifyLocationChanged(location);
     }
-
-    @Override
-    public void onProviderDisabled(String provider) {}
-
-    @Override
-    public void onProviderEnabled(String provider) {}
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {}
   }
 
   /**
