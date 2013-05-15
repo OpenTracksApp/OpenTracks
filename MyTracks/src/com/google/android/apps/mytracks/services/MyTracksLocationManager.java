@@ -17,17 +17,22 @@
 package com.google.android.apps.mytracks.services;
 
 import com.google.android.apps.mytracks.util.GoogleLocationUtils;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
+import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
+import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.location.LocationListener;
 import com.google.common.annotations.VisibleForTesting;
 
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.ContentObserver;
 import android.database.Cursor;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 /**
@@ -50,13 +55,45 @@ public class MyTracksLocationManager {
   private static final String NAME = "name";
   private static final String VALUE = "value";
 
+  private final ConnectionCallbacks connectionCallbacks = new ConnectionCallbacks() {
+    @Override
+  public void onDisconnected() {}
+
+    @Override
+  public void onConnected(Bundle bunlde) {
+    handler.post(new Runnable() {
+        @Override
+      public void run() {
+        if (requestLastLocation != null && locationClient.isConnected()) {
+          requestLastLocation.onLocationChanged(locationClient.getLastLocation());
+          requestLastLocation = null;
+        }
+      }
+    });
+  }
+};
+
+  private final OnConnectionFailedListener
+      onConnectionFailedListener = new OnConnectionFailedListener() {
+          @Override
+        public void onConnectionFailed(ConnectionResult connectionResult) {}
+      };
+
+  private final Handler handler;
+  private final LocationClient locationClient;
+
   private final LocationManager locationManager;
   private final ContentResolver contentResolver;
   private final GoogleSettingsObserver observer;
   private boolean isAvailable;
   private boolean isAllowed;
-
-  public MyTracksLocationManager(Context context) {
+  private LocationListener requestLastLocation;
+  
+  public MyTracksLocationManager(Context context, Looper looper) {
+    handler = new Handler(looper);
+    locationClient = new LocationClient(context, connectionCallbacks, onConnectionFailedListener);
+    locationClient.connect();
+    
     locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
     contentResolver = context.getContentResolver();
     observer = new GoogleSettingsObserver();
@@ -71,6 +108,7 @@ public class MyTracksLocationManager {
    * Closes the {@link MyTracksLocationManager}.
    */
   public void close() {
+    locationClient.disconnect();
     contentResolver.unregisterContentObserver(observer);
   }
 
@@ -115,10 +153,23 @@ public class MyTracksLocationManager {
   }
 
   /**
-   * @see android.location.LocationManager#getLastKnownLocation(java.lang.String)
+   * Request last location.
+   * 
+   * @param locationListener location listener
    */
-  public Location getLastKnownLocation(String provider) {
-    return isAllowed ? locationManager.getLastKnownLocation(provider) : null;
+  public void requestLastLocation(final LocationListener locationListener) {
+    handler.post(new Runnable() {
+        @Override
+      public void run() {
+        if (!isAllowed) {         
+          requestLastLocation = null;
+          locationListener.onLocationChanged(null);
+        } else {
+          requestLastLocation = locationListener;
+          connectionCallbacks.onConnected(null);
+        }
+      }
+    });
   }
 
   /**
@@ -126,7 +177,7 @@ public class MyTracksLocationManager {
    *      long, float, android.location.LocationListener)
    */
   public void requestLocationUpdates(
-      String provider, long minTime, float minDistance, LocationListener listener) {
+      String provider, long minTime, float minDistance, android.location.LocationListener listener) {
     locationManager.requestLocationUpdates(provider, minTime, minDistance, listener);
   }
 
@@ -134,7 +185,7 @@ public class MyTracksLocationManager {
    * @param listener
    * @see android.location.LocationManager#removeUpdates(android.location.LocationListener)
    */
-  public void removeUpdates(LocationListener listener) {
+  public void removeUpdates(android.location.LocationListener listener) {
     locationManager.removeUpdates(listener);
   }
 

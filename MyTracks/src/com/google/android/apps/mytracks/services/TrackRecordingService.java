@@ -61,6 +61,7 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.Process;
@@ -267,7 +268,7 @@ public class TrackRecordingService extends Service {
     super.onCreate();
     context = this;
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
-    myTracksLocationManager = new MyTracksLocationManager(this);
+    myTracksLocationManager = new MyTracksLocationManager(this, Looper.myLooper());
     voiceExecutor = new PeriodicTaskExecutor(this, new AnnouncementPeriodicTaskFactory());
     splitExecutor = new PeriodicTaskExecutor(this, new SplitPeriodicTaskFactory());
     executorService = Executors.newSingleThreadExecutor();

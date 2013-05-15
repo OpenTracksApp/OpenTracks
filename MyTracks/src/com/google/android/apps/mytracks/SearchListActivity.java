@@ -38,6 +38,7 @@ import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.maps.mytracks.R;
 
 import android.app.SearchManager;
@@ -46,8 +47,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Looper;
 import android.provider.SearchRecentSuggestions;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -186,7 +187,7 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
     searchEngine = new SearchEngine(myTracksProviderUtils);
     searchRecentSuggestions = SearchEngineProvider.newHelper(this);
-    myTracksLocationManager = new MyTracksLocationManager(this);
+    myTracksLocationManager = new MyTracksLocationManager(this, Looper.myLooper());
 
     listView = (ListView) findViewById(R.id.search_list);
     listView.setEmptyView(findViewById(R.id.search_list_empty));
@@ -391,19 +392,23 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
       return;
     }
 
-    String textQuery = intent.getStringExtra(SearchManager.QUERY);
+    final String textQuery = intent.getStringExtra(SearchManager.QUERY);
     setTitle(textQuery);
 
-    Location currentLocation = myTracksLocationManager.getLastKnownLocation(
-        LocationManager.GPS_PROVIDER);
-    final SearchQuery query = new SearchQuery(
-        textQuery, currentLocation, -1L, System.currentTimeMillis());
-    new Thread() {
+    LocationListener locationListener = new LocationListener() {
         @Override
-      public void run() {
-        doSearch(query);
+      public void onLocationChanged(final Location location) {
+        new Thread() {
+            @Override
+          public void run() {
+            SearchQuery query = new SearchQuery(
+                textQuery, location, -1L, System.currentTimeMillis());
+            doSearch(query);
+          }
+        }.start();
       }
-    }.start();
+    };
+    myTracksLocationManager.requestLastLocation(locationListener);
   }
 
   /**

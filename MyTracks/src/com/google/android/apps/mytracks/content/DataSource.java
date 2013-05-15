@@ -16,24 +16,19 @@
 
 package com.google.android.apps.mytracks.content;
 
-import static com.google.android.apps.mytracks.Constants.MAX_LOCATION_AGE_MS;
-
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.services.MyTracksLocationManager;
-import com.google.android.apps.mytracks.util.GoogleLocationUtils;
-import com.google.android.maps.mytracks.R;
+import com.google.android.gms.location.LocationListener;
 
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.ContentObserver;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Looper;
 import android.util.Log;
-import android.widget.Toast;
 
 /**
  * Data source on the phone.
@@ -45,15 +40,13 @@ public class DataSource {
   private static final int NETWORK_PROVIDER_MIN_TIME = 5 * 60 * 1000; // 5 minutes
   private static final String TAG = DataSource.class.getSimpleName();
 
-  private final Context context;
   private final ContentResolver contentResolver;
   private final MyTracksLocationManager myTracksLocationManager;
   private final SharedPreferences sharedPreferences;
   
   public DataSource(Context context) {
-    this.context = context;
     contentResolver = context.getContentResolver();
-    myTracksLocationManager = new MyTracksLocationManager(context);
+    myTracksLocationManager = new MyTracksLocationManager(context, Looper.myLooper());
     sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
   }
 
@@ -93,7 +86,7 @@ public class DataSource {
    * 
    * @param listener the listener
    */
-  public void registerLocationListener(LocationListener listener) {
+  public void registerLocationListener(android.location.LocationListener listener) {
 
     // Listen for GPS location
     myTracksLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
@@ -113,42 +106,15 @@ public class DataSource {
    * 
    * @param listener the listener
    */
-  public void unregisterLocationListener(LocationListener listener) {
+  public void unregisterLocationListener(android.location.LocationListener listener) {
     myTracksLocationManager.removeUpdates(listener);
   }
 
   /**
-   * Gets the last known location.
+   * Request last location.
    */
-  public Location getLastKnownLocation() {
-    Location location = myTracksLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-    if (!isLocationRecent(location)) {
-      // Try network location
-      location = myTracksLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-      String toast;
-      if (isLocationRecent(location)) {
-        toast = context.getString(R.string.my_location_approximate_location);
-      } else {
-        String setting = context.getString(
-            GoogleLocationUtils.isAvailable(context) ? R.string.gps_google_location_settings
-                : R.string.gps_location_access);
-        toast = context.getString(R.string.my_location_no_gps, setting);
-      }
-      Toast.makeText(context, toast, Toast.LENGTH_LONG).show();
-    }
-    return location;
-  }
-
-  /**
-   * Returns true if the location is recent.
-   * 
-   * @param location the location
-   */
-  private boolean isLocationRecent(Location location) {
-    if (location == null) {
-      return false;
-    }
-    return location.getTime() > System.currentTimeMillis() - MAX_LOCATION_AGE_MS;
+  public void requestLastLocation(LocationListener locationListener) {
+    myTracksLocationManager.requestLastLocation(locationListener);
   }
 
   /**

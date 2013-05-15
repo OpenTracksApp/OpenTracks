@@ -24,8 +24,10 @@ import static com.google.android.apps.mytracks.Constants.TARGET_DISPLAYED_TRACK_
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
 import com.google.android.apps.mytracks.content.TrackDataListener.LocationState;
+import com.google.android.apps.mytracks.util.GoogleLocationUtils;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
 
@@ -37,6 +39,7 @@ import android.location.LocationManager;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.Collections;
 import java.util.EnumSet;
@@ -223,14 +226,28 @@ public class TrackDataHub implements DataSourceListener {
    * Forces update location and reports to all listeners.
    */
   public void forceUpdateLocation() {
-    final Location location = dataSource.getLastKnownLocation();
-    runInHanderThread(new Runnable() {
-        @Override
-      public void run() {
-        notifyLocationChanged(
-            location, false, trackDataManager.getListeners(TrackDataType.LOCATION));
-      }
-    });
+    if (!dataSource.isAllowed()) {
+      String setting = context.getString(
+          GoogleLocationUtils.isAvailable(context) ? R.string.gps_google_location_settings
+              : R.string.gps_location_access);
+      Toast.makeText(
+          context, context.getString(R.string.my_location_no_gps, setting), Toast.LENGTH_LONG)
+          .show();
+    } else {
+      LocationListener locationListener = new LocationListener() {
+          @Override
+        public void onLocationChanged(final Location location) {
+          runInHanderThread(new Runnable() {
+              @Override
+            public void run() {
+              notifyLocationChanged(
+                  location, false, trackDataManager.getListeners(TrackDataType.LOCATION));
+            }
+          });
+        }
+      };
+      dataSource.requestLastLocation(locationListener);
+    }
   }
 
   public boolean isGpsProviderEnabled() {

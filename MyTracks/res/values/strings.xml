@@ -1163,11 +1163,6 @@ limitations under the License.
   </string>
 
   <!-- My Location -->
-  <string name="my_location_approximate_location"
-    translation_description="When displaying the user's current location, a status message
-      indicating that GPS is not available and an approximate location is used instead.">
-    GPS is not available. An approximate location based on cell towers and WiFi networks is shown.
-  </string>
   <string name="my_location_no_gps"
     translation_description="When displaying the user's current location, a status message
       indicating that the current location cannot be determined.
