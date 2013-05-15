@@ -14,9 +14,6 @@
     <string name="common_google_play_services_unsupported_title" msgid="6334768798839376943">"Google Play-tjenester"</string>
     <string name="common_google_play_services_unsupported_text" msgid="3542578567569488671">"Google Play-tjenester, som nogle af dine applikationer er afhængige af, understøttes ikke af din enhed. Kontakt producenten for at få hjælp."</string>
     <string name="common_google_play_services_update_button" msgid="8932944190611227642">"Opdater"</string>
+    <string name="common_signin_button_text" msgid="9071884888741449141">"Log ind"</string>
     <string name="common_signin_button_text_long" msgid="2429381841831957106">"Log ind med Google"</string>
-
-    <string name="auth_client_availability_notification_title" msgid="8472377992819116328">"Installer/opdater/aktivér Google Play-tjenester"</string>
-    <string name="auth_client_play_services_err_notification_msg" msgid="3635065018897986478">"Fejl i Google Play-tjenester"</string>
-    <string name="auth_client_requested_by_msg" msgid="6304135633531965756">"Anmodning fra <xliff:g id="APP_NAME">%1$s</xliff:g>"</string>
 </resources>

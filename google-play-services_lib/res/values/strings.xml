@@ -50,10 +50,11 @@
     <!-- Button in confirmation dialog for updating Google Play services [CHAR LIMIT=40] -->
     <string name="common_google_play_services_update_button" msgid="6556509956452265614">Update</string>
 
-    <!-- Long form sign-in button text. This is the placeholder text, used if we can't
-        find the service-side assets. [CHAR LIMIT=25] -->
-    <string name="common_signin_button_text_long">Sign in with Google</string>
+    <!-- Sign-in button text [CHAR LIMIT=15] -->
+    <string name="common_signin_button_text">Sign in</string>
 
+    <!-- Long form sign-in button text [CHAR LIMIT=30] -->
+    <string name="common_signin_button_text_long">Sign in with Google</string>
 
   <!-- Auth client code resources (prefix with auth_client --><skip />
   <!--  Title for notification shown when GooglePlayServices is unavailable [CHAR LIMIT=70] -->
@@ -65,4 +66,23 @@
   <!--  Requested by string saying which app requested the notification. [CHAR LIMIT=42] -->
   <string name="auth_client_requested_by_msg">Requested by <xliff:g id="app_name">%1$s</xliff:g></string>
   <!-- End Auth client resources --><skip />
+
+    <!-- Location client code resources (prefix with location_client) -->
+
+    <!--
+        Begin strings for location.reporting
+    -->
+
+    <!--
+        Some InactiveReason names.  See more in OneUp/package/location/res/values/strings.xml
+    -->
+    <string name="location_client_ulr_inactive_age_under_13" translatable="false">
+        AgeUnder13
+    </string>
+    <string name="location_client_ulr_inactive_age_unknown" translatable="false">AgeUnknown</string>
+    <string name="location_client_ulr_inactive_unknown_restriction" translatable="false">
+        UnknownRestriction
+    </string>
+
+    <!-- End location client resources -->
 </resources>

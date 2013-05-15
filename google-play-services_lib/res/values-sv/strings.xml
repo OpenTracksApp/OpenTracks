@@ -14,9 +14,6 @@
     <string name="common_google_play_services_unsupported_title" msgid="6334768798839376943">"Google Play-tjänster"</string>
     <string name="common_google_play_services_unsupported_text" msgid="3542578567569488671">"Några av dina appar använder Google Play-tjänster som inte stöds av din enhet. Kontakta tillverkaren om du vill ha hjälp."</string>
     <string name="common_google_play_services_update_button" msgid="8932944190611227642">"Uppdatera"</string>
+    <string name="common_signin_button_text" msgid="9071884888741449141">"Logga in"</string>
     <string name="common_signin_button_text_long" msgid="2429381841831957106">"Logga in med Google"</string>
-
-    <string name="auth_client_availability_notification_title" msgid="8472377992819116328">"Installera/uppdatera/aktivera Google Play Tjänster"</string>
-    <string name="auth_client_play_services_err_notification_msg" msgid="3635065018897986478">"Fel på Google Play Tjänster"</string>
-    <string name="auth_client_requested_by_msg" msgid="6304135633531965756">"Begärdes av <xliff:g id="APP_NAME">%1$s</xliff:g>"</string>
 </resources>

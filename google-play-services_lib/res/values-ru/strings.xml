@@ -14,9 +14,6 @@
     <string name="common_google_play_services_unsupported_title" msgid="6334768798839376943">"Сервисы Google Play"</string>
     <string name="common_google_play_services_unsupported_text" msgid="3542578567569488671">"Сервисы Google Play, необходимые для работы некоторых приложений, не поддерживаются на вашем устройстве. Обратитесь к производителю."</string>
     <string name="common_google_play_services_update_button" msgid="8932944190611227642">"Обновить"</string>
+    <string name="common_signin_button_text" msgid="9071884888741449141">"Войти"</string>
     <string name="common_signin_button_text_long" msgid="2429381841831957106">"Войти в аккаунт Google"</string>
-
-    <string name="auth_client_availability_notification_title" msgid="8472377992819116328">"Установка/обновление/включение сервисов Google Play"</string>
-    <string name="auth_client_play_services_err_notification_msg" msgid="3635065018897986478">"Ошибка сервисов Google Play"</string>
-    <string name="auth_client_requested_by_msg" msgid="6304135633531965756">"Запрос от приложения \"<xliff:g id="APP_NAME">%1$s</xliff:g>\""</string>
 </resources>

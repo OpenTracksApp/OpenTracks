@@ -14,9 +14,6 @@
     <string name="common_google_play_services_unsupported_title" msgid="6334768798839376943">"Υπηρεσίες Google Play"</string>
     <string name="common_google_play_services_unsupported_text" msgid="3542578567569488671">"Οι υπηρεσίες Google Play, στις οποίες βασίζονται ορισμένες από τις εφαρμογές σας, δεν υποστηρίζονται στη συσκευή σας. Επικοινωνήστε με τον κατασκευαστή για υποστήριξη."</string>
     <string name="common_google_play_services_update_button" msgid="8932944190611227642">"Ενημέρωση"</string>
+    <string name="common_signin_button_text" msgid="9071884888741449141">"Σύνδεση"</string>
     <string name="common_signin_button_text_long" msgid="2429381841831957106">"Συνδεθείτε στο Google"</string>
-
-    <string name="auth_client_availability_notification_title" msgid="8472377992819116328">"Εγκατάσταση/ενημέρωση/ενεργοποίση υπηρεσιών Google Play"</string>
-    <string name="auth_client_play_services_err_notification_msg" msgid="3635065018897986478">"Σφάλμα υπηρεσιών Google Play"</string>
-    <string name="auth_client_requested_by_msg" msgid="6304135633531965756">"Υποβλήθηκε αίτημα από την εφαρμογή <xliff:g id="APP_NAME">%1$s</xliff:g>"</string>
 </resources>
