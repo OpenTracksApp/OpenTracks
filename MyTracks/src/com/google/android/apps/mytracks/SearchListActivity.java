@@ -187,7 +187,6 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
     searchEngine = new SearchEngine(myTracksProviderUtils);
     searchRecentSuggestions = SearchEngineProvider.newHelper(this);
-    myTracksLocationManager = new MyTracksLocationManager(this, Looper.myLooper());
 
     listView = (ListView) findViewById(R.id.search_list);
     listView.setEmptyView(findViewById(R.id.search_list_empty));
@@ -261,12 +260,6 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
     super.onStop();
     sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     trackRecordingServiceConnection.unbind();
-  }
-
-  @Override
-  protected void onDestroy() {
-    super.onDestroy();
-    myTracksLocationManager.close();
   }
 
   @Override
@@ -395,9 +388,11 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
     final String textQuery = intent.getStringExtra(SearchManager.QUERY);
     setTitle(textQuery);
 
+    myTracksLocationManager = new MyTracksLocationManager(this, Looper.myLooper());
     LocationListener locationListener = new LocationListener() {
         @Override
       public void onLocationChanged(final Location location) {
+        myTracksLocationManager.close();
         new Thread() {
             @Override
           public void run() {
