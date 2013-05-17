@@ -38,6 +38,7 @@ import com.google.android.apps.mytracks.stats.TripStatisticsUpdater;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.apps.mytracks.util.TrackNameUtils;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.maps.mytracks.R;
@@ -566,8 +567,11 @@ public class TrackRecordingService extends Service {
     // Update database
     track.setId(trackId);
     track.setName(TrackNameUtils.getTrackName(this, trackId, now, null));
-    track.setCategory(PreferencesUtils.getString(
-        this, R.string.default_activity_key, PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT));
+    
+    String category = PreferencesUtils.getString(
+        this, R.string.default_activity_key, PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT);
+    track.setCategory(category);
+    track.setIcon(TrackIconUtils.getIconValue(this, category));
     track.setTripStatistics(trackTripStatisticsUpdater.getTripStatistics());
     myTracksProviderUtils.updateTrack(track);
     insertWaypoint(WaypointCreationRequest.DEFAULT_START_TRACK);
