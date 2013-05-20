@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.services;
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.TrackDetailActivity;
+import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
 import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.MyTracksProvider;
@@ -44,7 +45,6 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
 
-import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
@@ -88,7 +88,7 @@ public class TrackRecordingService extends Service {
    */
   public static final String
       RESUME_TRACK_EXTRA_NAME = "com.google.android.apps.mytracks.RESUME_TRACK";
-  
+
   public static final double PAUSE_LATITUDE = 100.0;
   public static final double RESUME_LATITUDE = 200.0;
 
@@ -286,7 +286,7 @@ public class TrackRecordingService extends Service {
         Log.w(TAG, "track is null, but recordingTrackId not -1L. " + recordingTrackId);
         updateRecordingState(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, true);
       }
-      showNotification();
+      showNotification(false);
     }
   }
 
@@ -322,7 +322,7 @@ public class TrackRecordingService extends Service {
 
   @Override
   public void onDestroy() {
-    showNotification();
+    showNotification(false);
 
     sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     checkLocationListener.cancel();
@@ -403,7 +403,7 @@ public class TrackRecordingService extends Service {
 
     WaypointType waypointType = waypointCreationRequest.getType();
     boolean isStatistics = waypointType == WaypointType.STATISTICS;
-    
+
     // Get name
     String name;
     if (waypointCreationRequest.getName() != null) {
@@ -423,7 +423,7 @@ public class TrackRecordingService extends Service {
     String category = waypointCreationRequest.getCategory() != null ? waypointCreationRequest
         .getCategory()
         : "";
-        
+
     // Get tripStatistics, description, and icon
     TripStatistics tripStatistics;
     String description;
@@ -462,10 +462,10 @@ public class TrackRecordingService extends Service {
       length = 0.0;
       duration = 0L;
     }
-    
+
     // Insert waypoint
-    Waypoint waypoint = new Waypoint(name, description, category, icon, recordingTrackId, waypointType,
-        length, duration, -1L, -1L, location, tripStatistics);
+    Waypoint waypoint = new Waypoint(name, description, category, icon, recordingTrackId,
+        waypointType, length, duration, -1L, -1L, location, tripStatistics);
     Uri uri = myTracksProviderUtils.insertWaypoint(waypoint);
     return Long.parseLong(uri.getLastPathSegment());
   }
@@ -473,11 +473,16 @@ public class TrackRecordingService extends Service {
   /**
    * Starts the service as a foreground service.
    * 
-   * @param notification the notification for the foreground service
+   * @param pendingIntent the notification pending intent
+   * @param messageId the notification message id
    */
   @VisibleForTesting
-  protected void startForegroundService(Notification notification) {
-    startForeground(1, notification);
+  protected void startForegroundService(PendingIntent pendingIntent, int messageId) {
+    NotificationCompat.Builder builder = new NotificationCompat.Builder(this).setContentIntent(
+        pendingIntent).setContentText(getString(messageId))
+        .setContentTitle(getString(R.string.my_tracks_app_name)).setOngoing(true)
+        .setSmallIcon(R.drawable.my_tracks_notification_icon).setWhen(System.currentTimeMillis());
+    startForeground(1, builder.build());
   }
 
   /**
@@ -567,7 +572,7 @@ public class TrackRecordingService extends Service {
     // Update database
     track.setId(trackId);
     track.setName(TrackNameUtils.getTrackName(this, trackId, now, null));
-    
+
     String category = PreferencesUtils.getString(
         this, R.string.default_activity_key, PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT);
     track.setCategory(category);
@@ -592,7 +597,8 @@ public class TrackRecordingService extends Service {
     trackTripStatisticsUpdater = new TripStatisticsUpdater(tripStatistics.getStartTime());
 
     long markerStartTime;
-    Waypoint waypoint = myTracksProviderUtils.getLastWaypoint(recordingTrackId, WaypointType.STATISTICS);
+    Waypoint waypoint = myTracksProviderUtils.getLastWaypoint(
+        recordingTrackId, WaypointType.STATISTICS);
     if (waypoint != null && waypoint.getTripStatistics() != null) {
       markerStartTime = waypoint.getTripStatistics().getStopTime();
     } else {
@@ -661,24 +667,28 @@ public class TrackRecordingService extends Service {
    * @param trackStarted true if track is started, false if track is resumed
    */
   private void startRecording(boolean trackStarted) {
-    acquireWakeLock();
 
     // Update instance variables
     sensorManager = SensorManagerFactory.getSystemSensorManager(this);
     lastLocation = null;
     currentSegmentHasLocation = false;
 
-    // Register notifications
-    registerLocationListener();
-
-    // Send notifications
-    showNotification();
+    startGps();
     sendTrackBroadcast(trackStarted ? R.string.track_started_broadcast_action
         : R.string.track_resumed_broadcast_action, recordingTrackId);
 
     // Restore periodic tasks
     voiceExecutor.restore();
     splitExecutor.restore();
+  }
+
+  /**
+   * Starts gps.
+   */
+  private void startGps() {
+    acquireWakeLock();
+    registerLocationListener();
+    showNotification(true);
   }
 
   /**
@@ -705,19 +715,6 @@ public class TrackRecordingService extends Service {
     }
 
     endRecording(true, trackId);
-    stopSelf();
-  }
-
-  /**
-   * Gets the last valid track point in the current segment. Returns null if not available.
-   * 
-   * @param trackId the track id
-   */
-  private Location getLastValidTrackPointInCurrentSegment(long trackId) {
-    if (!currentSegmentHasLocation) {
-      return null;
-    }
-    return myTracksProviderUtils.getLastValidTrackPoint(trackId);
   }
 
   /**
@@ -767,15 +764,36 @@ public class TrackRecordingService extends Service {
     }
     lastLocation = null;
 
-    // Unregister notifications
-    unregisterLocationListener();
-
-    // Send notifications
-    showNotification();
     sendTrackBroadcast(trackStopped ? R.string.track_stopped_broadcast_action
         : R.string.track_paused_broadcast_action, trackId);
+    stopGps(trackStopped);
+  }
 
+  /**
+   * Stops gps.
+   * 
+   * @param stop true to stop self
+   */
+  private void stopGps(boolean stop) {
+    unregisterLocationListener();
+    showNotification(false);
     releaseWakeLock();
+    if (stop) {
+      stopSelf();
+    }
+  }
+
+  /**
+   * Gets the last valid track point in the current segment. Returns null if not
+   * available.
+   * 
+   * @param trackId the track id
+   */
+  private Location getLastValidTrackPointInCurrentSegment(long trackId) {
+    if (!currentSegmentHasLocation) {
+      return null;
+    }
+    return myTracksProviderUtils.getLastValidTrackPoint(trackId);
   }
 
   /**
@@ -818,7 +836,7 @@ public class TrackRecordingService extends Service {
         Log.d(TAG, "Ignore onLocationChangedAsync. Poor accuracy.");
         return;
       }
-      
+
       // Fix for phones that do not set the time field
       if (location.getTime() == 0L) {
         location.setTime(System.currentTimeMillis());
@@ -828,7 +846,7 @@ public class TrackRecordingService extends Service {
       long idleTime = 0L;
       if (lastValidTrackPoint != null && location.getTime() > lastValidTrackPoint.getTime()) {
         idleTime = location.getTime() - lastValidTrackPoint.getTime();
-      }      
+      }
       locationListenerPolicy.updateIdleTime(idleTime);
       if (currentRecordingInterval != locationListenerPolicy.getDesiredPollingInterval()) {
         registerLocationListener();
@@ -900,7 +918,7 @@ public class TrackRecordingService extends Service {
       return;
     }
     // Do not insert if inserted already
-    if (lastValidTrackPoint != null && lastValidTrackPoint.getTime()  == location.getTime()) {
+    if (lastValidTrackPoint != null && lastValidTrackPoint.getTime() == location.getTime()) {
       Log.w(TAG, "Ignore insertLocation. location time same as last valid track point time.");
       return;
     }
@@ -959,8 +977,6 @@ public class TrackRecordingService extends Service {
      */
     handler.post(new Runnable() {
       public void run() {
-        unregisterLocationListener();
-
         if (myTracksLocationManager == null) {
           Log.e(TAG, "locationManager is null.");
           return;
@@ -1028,21 +1044,32 @@ public class TrackRecordingService extends Service {
 
   /**
    * Shows the notification.
+   * 
+   * @param isGpsStarted true if GPS is started
    */
-  private void showNotification() {
-    if (isRecording() && !isPaused()) {
-      Intent intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
-          .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, recordingTrackId);
-      PendingIntent pendingIntent = TaskStackBuilder.create(this)
-          .addParentStack(TrackDetailActivity.class).addNextIntent(intent)
-          .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-      NotificationCompat.Builder builder = new NotificationCompat.Builder(this).setContentIntent(
-          pendingIntent).setContentText(getString(R.string.track_record_notification))
-          .setContentTitle(getString(R.string.my_tracks_app_name)).setOngoing(true)
-          .setSmallIcon(R.drawable.my_tracks_notification_icon).setWhen(System.currentTimeMillis());
-      startForegroundService(builder.build());
+  private void showNotification(boolean isGpsStarted) {
+    if (isRecording()) {
+      if (isPaused()) {
+        stopForegroundService();
+      } else {
+        Intent intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
+            .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, recordingTrackId);
+        PendingIntent pendingIntent = TaskStackBuilder.create(this)
+            .addParentStack(TrackDetailActivity.class).addNextIntent(intent)
+            .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        startForegroundService(pendingIntent, R.string.track_record_notification);
+      }
+      return;
     } else {
-      stopForegroundService();
+      // Not recording
+      if (isGpsStarted) {
+        Intent intent = IntentUtils.newIntent(this, TrackListActivity.class);
+        PendingIntent pendingIntent = TaskStackBuilder.create(this)
+            .addNextIntent(intent).getPendingIntent(0, 0);
+        startForegroundService(pendingIntent, R.string.gps_starting);
+      } else {
+        stopForegroundService();
+      }
     }
   }
 
@@ -1101,6 +1128,25 @@ public class TrackRecordingService extends Service {
       }
       deathRecipient = null;
       return true;
+    }
+
+    @Override
+    public void startGps() {
+      if (!canAccess()) {
+        return;
+      }
+      if (!trackRecordingService.isRecording()) {
+        trackRecordingService.startGps();
+      }
+    }
+
+    public void stopGps() {
+      if (!canAccess()) {
+        return;
+      }
+      if (!trackRecordingService.isRecording()) {
+        trackRecordingService.stopGps(true);
+      }
     }
 
     @Override

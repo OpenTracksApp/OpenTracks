@@ -24,6 +24,16 @@ import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 interface ITrackRecordingService {
 
   /**
+   * Starts gps.
+   */
+  void startGps();
+
+  /**
+   * Stops gps.
+   */
+  void stopGps();
+
+  /**
    * Starts recording a new track.
    *
    * @return the track ID of the new track.
@@ -85,14 +95,14 @@ interface ITrackRecordingService {
 
   /**
    * Gets the current sensor data. Returns null if there is no data.
-   
+
    * @return a byte array of the binary version of the Sensor.SensorDataSet object.
    */
   byte[] getSensorData();
 
   /**
    * Gets the current sensor manager state.
-   * 
+   *
    * return a Sensor.SensorState enum value.
    */
   int getSensorState();
