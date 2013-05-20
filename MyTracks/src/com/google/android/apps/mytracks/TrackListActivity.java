@@ -37,6 +37,7 @@ import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
+import com.google.android.apps.mytracks.services.MyTracksLocationManager;
 import com.google.android.apps.mytracks.services.RemoveTempFilesService;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.settings.SettingsActivity;
@@ -66,6 +67,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Looper;
 import android.os.Parcelable;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
@@ -563,21 +565,24 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
       case R.id.track_list_search:
         return ApiAdapterFactory.getApiAdapter().handleSearchMenuSelection(this);
       case R.id.track_list_start_gps:
-        if (!trackDataHub.isGpsProviderEnabled()) {
+        MyTracksLocationManager myTracksLocationManager = new MyTracksLocationManager(
+            this, Looper.myLooper());
+        if (!myTracksLocationManager.isGpsProviderEnabled()) {
           intent = GoogleLocationUtils.isAvailable(TrackListActivity.this) ? new Intent(
               GoogleLocationUtils.ACTION_GOOGLE_LOCATION_SETTINGS)
               : new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
           intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
           startActivity(intent);
-          return true;
+        } else {
+          startGps = !startGps;
+          Toast toast = Toast.makeText(
+              this, startGps ? R.string.gps_starting : R.string.gps_stopping, Toast.LENGTH_SHORT);
+          toast.setGravity(Gravity.CENTER, 0, 0);
+          toast.show();
+          handleStartGps();
+          updateMenuItems(recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
         }
-        startGps = !startGps;
-        Toast toast = Toast.makeText(
-            this, startGps ? R.string.gps_starting : R.string.gps_stopping, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
-        handleStartGps();
-        updateMenuItems(recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
+        myTracksLocationManager.close();
         return true;
       case R.id.track_list_import_all:
         FileTypeDialogFragment.newInstance(R.id.track_list_import_all,
