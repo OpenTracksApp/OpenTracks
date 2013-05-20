@@ -767,6 +767,10 @@ limitations under the License.
     translation_description="The message when starting GPS.">
     Starting GPS.
   </string>
+  <string name="gps_starting_error"
+    translation_description="The message when unable to start GPS.">
+    Unable to start GPS.
+  </string>
   <string name="gps_stopping"
     translation_description="The message when stopping GPS.">
     Stopping GPS.

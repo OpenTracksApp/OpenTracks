@@ -18,11 +18,7 @@ package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.content.TrackDataHub;
-import com.google.android.apps.mytracks.content.TrackDataListener;
-import com.google.android.apps.mytracks.content.TrackDataType;
 import com.google.android.apps.mytracks.content.TracksColumns;
-import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.fragments.DeleteTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteTrackDialogFragment.DeleteTrackCaller;
 import com.google.android.apps.mytracks.fragments.EnableSyncDialogFragment;
@@ -65,10 +61,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
-import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.Parcelable;
+import android.os.RemoteException;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -89,7 +85,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.EnumSet;
 import java.util.Locale;
 
 /**
@@ -101,7 +96,6 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     implements EulaCaller, EnableSyncCaller, DeleteTrackCaller, FileTypeCaller {
 
   private static final String TAG = TrackListActivity.class.getSimpleName();
-  private static final String START_GPS_KEY = "start_gps_key";
   private static final int GOOGLE_PLAY_SERVICES_REQUEST_CODE = 0;
   private static final String[] PROJECTION = new String[] { TracksColumns._ID, TracksColumns.NAME,
       TracksColumns.DESCRIPTION, TracksColumns.CATEGORY, TracksColumns.STARTTIME,
@@ -124,27 +118,41 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         }
       });
 
-      if (!startNewRecording) {
+      if (!startGps && !startNewRecording) {
         return;
       }
 
       ITrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
       if (service == null) {
-        Log.d(TAG, "service not available to start a new recording");
+        Log.d(TAG, "service not available to start gps or a new recording");
         return;
       }
-      try {
-        long trackId = service.startNewTrack();
-        startNewRecording = false;
-        Intent intent = IntentUtils.newIntent(TrackListActivity.this, TrackDetailActivity.class)
-            .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);
-        startActivity(intent);
-        Toast.makeText(
-            TrackListActivity.this, R.string.track_list_record_success, Toast.LENGTH_SHORT).show();
-      } catch (Exception e) {
-        Toast.makeText(TrackListActivity.this, R.string.track_list_record_error, Toast.LENGTH_LONG)
-            .show();
-        Log.e(TAG, "Unable to start a new recording.", e);
+      if (startNewRecording) {
+        startGps = false;
+        try {
+          long trackId = service.startNewTrack();
+          startNewRecording = false;
+          Intent intent = IntentUtils.newIntent(TrackListActivity.this, TrackDetailActivity.class)
+              .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);
+          startActivity(intent);
+          Toast.makeText(
+              TrackListActivity.this, R.string.track_list_record_success, Toast.LENGTH_SHORT)
+              .show();
+        } catch (RemoteException e) {
+          Toast.makeText(
+              TrackListActivity.this, R.string.track_list_record_error, Toast.LENGTH_LONG).show();
+          Log.e(TAG, "Unable to start a new recording.", e);
+        }
+      }
+      if (startGps) {
+        try {
+          service.startGps();
+          startGps = false;
+        } catch (RemoteException e) {
+          Toast.makeText(TrackListActivity.this, R.string.gps_starting_error, Toast.LENGTH_LONG)
+              .show();
+          Log.e(TAG, "Unable to start gps");
+        }
       }
     }
   };
@@ -185,9 +193,11 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
             runOnUiThread(new Runnable() {
                 @Override
               public void run() {
+                boolean isGpsStarted = TrackRecordingServiceConnectionUtils
+                    .isRecordingServiceRunning(TrackListActivity.this);
                 boolean isRecording = recordingTrackId
                     != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
-                updateMenuItems(isRecording);
+                updateMenuItems(isGpsStarted, isRecording);
                 sectionResourceCursorAdapter.notifyDataSetChanged();
                 trackController.update(isRecording, recordingTrackPaused);
               }
@@ -224,21 +234,19 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
       if (recordingTrackId == PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
         // Not recording -> Recording
         AnalyticsUtils.sendPageViews(TrackListActivity.this, "/action/record_track");
-        startGps = false;
-        handleStartGps();
-        updateMenuItems(true);
+        updateMenuItems(false, true);
         startRecording();
       } else {
         if (recordingTrackPaused) {
           // Paused -> Resume
           AnalyticsUtils.sendPageViews(TrackListActivity.this, "/action/resume_track");
-          updateMenuItems(true);
+          updateMenuItems(false, true);
           TrackRecordingServiceConnectionUtils.resumeTrack(trackRecordingServiceConnection);
           trackController.update(true, false);
         } else {
           // Recording -> Paused
           AnalyticsUtils.sendPageViews(TrackListActivity.this, "/action/pause_track");
-          updateMenuItems(true);
+          updateMenuItems(false, true);
           TrackRecordingServiceConnectionUtils.pauseTrack(trackRecordingServiceConnection);
           trackController.update(true, true);
         }
@@ -250,86 +258,9 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
       @Override
     public void onClick(View v) {
       AnalyticsUtils.sendPageViews(TrackListActivity.this, "/action/stop_recording");
-      updateMenuItems(false);
+      updateMenuItems(false, false);
       TrackRecordingServiceConnectionUtils.stopRecording(
           TrackListActivity.this, trackRecordingServiceConnection, true);
-    }
-  };
-
-  private final TrackDataListener trackDataListener = new TrackDataListener() {
-      @Override
-    public void onTrackUpdated(Track track) {
-      // Ignore
-    }
-
-      @Override
-    public void onSelectedTrackChanged(Track track) {
-      // Ignore
-    }
-
-      @Override
-    public void onSegmentSplit(Location location) {
-      // Ignore
-    }
-
-      @Override
-    public void onSampledOutTrackPoint(Location location) {
-      // Ignore
-    }
-
-      @Override
-    public void onSampledInTrackPoint(Location location) {
-      // Ignore
-    }
-
-      @Override
-    public boolean onReportSpeedChanged(boolean reportSpeed) {
-      return false;
-    }
-
-      @Override
-    public void onNewWaypointsDone() {
-      // Ignore
-    }
-
-      @Override
-    public void onNewWaypoint(Waypoint waypoint) {
-      // Ignore
-    }
-
-      @Override
-    public void onNewTrackPointsDone() {
-      // Ignore
-    }
-
-      @Override
-    public boolean onMinRecordingDistanceChanged(int minRecordingDistance) {
-      return false;
-    }
-
-      @Override
-    public boolean onMetricUnitsChanged(boolean isMetricUnits) {
-      return false;
-    }
-
-      @Override
-    public void onLocationStateChanged(LocationState locationState) {
-      // Ignore
-    }
-
-      @Override
-    public void onLocationChanged(Location location) {
-      // Ignore
-    }
-
-      @Override
-    public void clearWaypoints() {
-      // Ignore
-    }
-
-      @Override
-    public void clearTrackPoints() {
-      // Ignore
     }
   };
 
@@ -340,7 +271,6 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   private TrackController trackController;
   private ListView listView;
   private SectionResourceCursorAdapter sectionResourceCursorAdapter;
-  private TrackDataHub trackDataHub;
 
   // Preferences
   private boolean metricUnits = PreferencesUtils.METRIC_UNITS_DEFAULT;
@@ -357,8 +287,8 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   private MenuItem syncNowMenuItem;
   private MenuItem feedbackMenuItem;
 
+  private boolean startGps = false; // true to start gps
   private boolean startNewRecording = false; // true to start a new recording
-  private boolean startGps = false;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -375,7 +305,6 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
 
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(
         this, bindChangedCallback);
-
     trackController = new TrackController(
         this, trackRecordingServiceConnection, true, recordListener, stopListener);
 
@@ -451,10 +380,6 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         sectionResourceCursorAdapter.swapCursor(null);
       }
     });
-    trackDataHub = TrackDataHub.newInstance(this);
-    if (savedInstanceState != null) {
-      startGps = savedInstanceState.getBoolean(START_GPS_KEY);
-    }
     showStartupDialogs();
   }
 
@@ -471,8 +396,6 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     // Update track recording service connection
     TrackRecordingServiceConnectionUtils.startConnection(this, trackRecordingServiceConnection);
 
-    trackDataHub.start();
-
     AnalyticsUtils.sendPageViews(this, "/page/track_list");
   }
 
@@ -480,12 +403,10 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   protected void onResume() {
     super.onResume();
 
-    // Update track data hub
-    handleStartGps();
-
     // Update UI
+    boolean isGpsStarted = TrackRecordingServiceConnectionUtils.isRecordingServiceRunning(this);
     boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
-    updateMenuItems(isRecording);
+    updateMenuItems(isGpsStarted, isRecording);
     sectionResourceCursorAdapter.notifyDataSetChanged();
     trackController.onResume(isRecording, recordingTrackPaused);
   }
@@ -493,9 +414,6 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   @Override
   protected void onPause() {
     super.onPause();
-
-    // Update track data hub
-    trackDataHub.unregisterTrackDataListener(trackDataListener);
 
     // Update UI
     trackController.onPause();
@@ -510,15 +428,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
 
     trackRecordingServiceConnection.unbind();
 
-    trackDataHub.stop();
-
     AnalyticsUtils.dispatch();
-  }
-
-  @Override
-  protected void onSaveInstanceState(Bundle outState) {
-    super.onSaveInstanceState(outState);
-    outState.putBoolean(START_GPS_KEY, startGps);
   }
 
   @Override
@@ -554,7 +464,9 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     feedbackMenuItem.setVisible(GoogleFeedbackUtils.isAvailable(this));
 
     ApiAdapterFactory.getApiAdapter().configureSearchWidget(this, searchMenuItem, trackController);
-    updateMenuItems(recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
+    boolean isGpsStarted = TrackRecordingServiceConnectionUtils.isRecordingServiceRunning(this);
+    boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+    updateMenuItems(isGpsStarted, isRecording);
     return true;
   }
 
@@ -574,13 +486,37 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
           intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
           startActivity(intent);
         } else {
-          startGps = !startGps;
+          boolean isGpsStarted = TrackRecordingServiceConnectionUtils.isRecordingServiceRunning(
+              this);
+          boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+          
+          startGps = !isGpsStarted;
+
+          // Update menu
+          updateMenuItems(startGps, isRecording);
+
+          // Show toast
           Toast toast = Toast.makeText(
               this, startGps ? R.string.gps_starting : R.string.gps_stopping, Toast.LENGTH_SHORT);
           toast.setGravity(Gravity.CENTER, 0, 0);
           toast.show();
-          handleStartGps();
-          updateMenuItems(recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
+
+          // Invoke trackRecordingService
+          if (startGps) {
+            trackRecordingServiceConnection.startAndBind();
+            bindChangedCallback.run();
+          } else {
+            ITrackRecordingService trackRecordingService = trackRecordingServiceConnection
+                .getServiceIfBound();
+            if (trackRecordingService != null) {
+              try {
+                trackRecordingService.stopGps();
+              } catch (RemoteException e) {
+                Log.e(TAG, "Unable to stop gps.", e);
+              }
+            }
+            trackRecordingServiceConnection.unbindAndStop();
+          }
         }
         myTracksLocationManager.close();
         return true;
@@ -675,7 +611,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         AnalyticsUtils.sendPageViews(
             this, "/action/save_all_" + trackFileFormat.name().toLowerCase(Locale.US));
         intent = IntentUtils.newIntent(this, SaveActivity.class)
-            .putExtra(SaveActivity.EXTRA_TRACK_IDS, new long[] {-1L})
+            .putExtra(SaveActivity.EXTRA_TRACK_IDS, new long[] { -1L })
             .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);
         startActivity(intent);
         break;
@@ -766,13 +702,17 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   /**
    * Updates the menu items.
    * 
+   * @param isGpsStarted true if gps is started
    * @param isRecording true if recording
    */
-  private void updateMenuItems(boolean isRecording) {
+  private void updateMenuItems(boolean isGpsStarted, boolean isRecording) {
     if (startGpsMenuItem != null) {
-      startGpsMenuItem.setTitle(startGps ? R.string.menu_stop_gps : R.string.menu_start_gps);
-      startGpsMenuItem.setIcon(startGps ? R.drawable.menu_stop_gps : R.drawable.menu_start_gps);
       startGpsMenuItem.setVisible(!isRecording);
+      if (!isRecording) {
+        startGpsMenuItem.setTitle(isGpsStarted ? R.string.menu_stop_gps : R.string.menu_start_gps);
+        startGpsMenuItem.setIcon(
+            isGpsStarted ? R.drawable.menu_stop_gps : R.drawable.menu_start_gps);
+      }
     }
     if (importAllMenuItem != null) {
       importAllMenuItem.setVisible(!isRecording);
@@ -787,7 +727,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
       syncNowMenuItem.setVisible(driveSync);
     }
   }
-
+  
   /**
    * Starts a new recording.
    */
@@ -831,17 +771,6 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         return true;
       default:
         return false;
-    }
-  }
-
-  /**
-   * Handles starting gps.
-   */
-  private void handleStartGps() {
-    if (startGps) {
-      trackDataHub.registerTrackDataListener(trackDataListener, EnumSet.of(TrackDataType.LOCATION));
-    } else {
-      trackDataHub.unregisterTrackDataListener(trackDataListener);
     }
   }
 }
