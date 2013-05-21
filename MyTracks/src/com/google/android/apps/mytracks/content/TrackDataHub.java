@@ -355,6 +355,14 @@ public class TrackDataHub implements DataSourceListener {
             || key.equals(PreferencesUtils.getKey(context, R.string.min_required_accuracy_key))) {
           minRequiredAccuracy = PreferencesUtils.getInt(context, R.string.min_required_accuracy_key,
               PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT);
+          if (key != null) {
+            for (TrackDataListener trackDataListener :
+                trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
+              if (trackDataListener.onMinRequiredAccuracy(minRequiredAccuracy)) {
+                loadDataForListener(trackDataListener);
+              }
+            }
+          }
         }
         if (key == null
             || key.equals(PreferencesUtils.getKey(context, R.string.min_recording_distance_key))) {
@@ -409,6 +417,7 @@ public class TrackDataHub implements DataSourceListener {
         trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
       trackDataListener.onMetricUnitsChanged(metricUnits);
       trackDataListener.onReportSpeedChanged(reportSpeed);
+      trackDataListener.onMinRequiredAccuracy(minRequiredAccuracy);
       trackDataListener.onMinRecordingDistanceChanged(minRecordingDistance);
     }
 
@@ -444,6 +453,7 @@ public class TrackDataHub implements DataSourceListener {
     if (trackDataTypes.contains(TrackDataType.PREFERENCE)) {
       trackDataListener.onMetricUnitsChanged(metricUnits);
       trackDataListener.onReportSpeedChanged(reportSpeed);
+      trackDataListener.onMinRequiredAccuracy(minRequiredAccuracy);
       trackDataListener.onMinRecordingDistanceChanged(minRecordingDistance);
     }
 

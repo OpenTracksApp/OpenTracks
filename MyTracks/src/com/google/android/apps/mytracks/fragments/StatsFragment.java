@@ -23,6 +23,8 @@ import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.TrackDataType;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.LocationUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StatsUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -47,13 +49,15 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
   public static final String STATS_FRAGMENT_TAG = "statsFragment";
 
+  private static final long MAX_LOCATION_AGE_MS = 60 * 1000; // 1 minute
   private static final int ONE_SECOND = 1000;
-  
+
   private TrackDataHub trackDataHub;
   private Handler handler;
 
   private Location lastLocation = null;
   private TripStatistics lastTripStatistics = null;
+  private int minRequiredAccuracy = PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT;
 
   // A runnable to update the total time field.
   private final Runnable updateTotalTime = new Runnable() {
@@ -96,40 +100,12 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
   @Override
   public void onLocationStateChanged(LocationState state) {
-    if (isResumed() && state != LocationState.GOOD_FIX) {
-      getActivity().runOnUiThread(new Runnable() {
-          @Override
-        public void run() {
-          if (isResumed()) {
-            lastLocation = null;
-            StatsUtils.setLocationValues(getActivity(), lastLocation, isSelectedTrackRecording());
-          }
-        }
-      });
-    }
+    // We don't care.
   }
 
   @Override
   public void onLocationChanged(final Location location) {
-    if (isResumed()) {
-      getActivity().runOnUiThread(new Runnable() {
-          @Override
-        public void run() {
-          if (isResumed()) {
-            if (isSelectedTrackRecording() && !isSelectedTrackPaused()) {
-              lastLocation = location;
-              StatsUtils.setLocationValues(getActivity(), location, isSelectedTrackRecording());
-            } else {
-              if (lastLocation != null) {
-                lastLocation = null;
-                StatsUtils.setLocationValues(
-                    getActivity(), lastLocation, isSelectedTrackRecording());
-              }
-            }
-          }
-        }
-      });
-    }
+    // We don't care.
   }
 
   @Override
@@ -159,17 +135,17 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
   @Override
   public void clearTrackPoints() {
-    // We don't care.
+    lastLocation = null;
   }
 
   @Override
   public void onSampledInTrackPoint(Location location) {
-    // We don't care.
+    lastLocation = location;
   }
 
   @Override
   public void onSampledOutTrackPoint(Location location) {
-    // We don't care.
+    lastLocation = location;
   }
 
   @Override
@@ -179,7 +155,28 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
   @Override
   public void onNewTrackPointsDone() {
-    // We don't care.
+    if (isResumed()) {
+      getActivity().runOnUiThread(new Runnable() {
+          @Override
+        public void run() {
+          if (isResumed()) {
+            if (!isSelectedTrackRecording() || isSelectedTrackPaused()) {
+              lastLocation = null;
+            }
+
+            if (lastLocation != null) {
+              boolean hasFix = !isLocationOld(lastLocation);
+              boolean hasGoodFix = lastLocation.getAccuracy() <= minRequiredAccuracy;
+
+              if (!hasFix || !hasGoodFix) {
+                lastLocation = null;
+              }
+            }
+            StatsUtils.setLocationValues(getActivity(), lastLocation, isSelectedTrackRecording());
+          }
+        }
+      });
+    }
   }
 
   @Override
@@ -228,6 +225,12 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   }
 
   @Override
+  public boolean onMinRequiredAccuracy(int newValue) {
+    minRequiredAccuracy = newValue;
+    return false;
+  }
+
+  @Override
   public boolean onMinRecordingDistanceChanged(int minRecordingDistance) {
     // We don't care.
     return false;
@@ -240,7 +243,8 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   private synchronized void resumeTrackDataHub() {
     trackDataHub = ((TrackDetailActivity) getActivity()).getTrackDataHub();
     trackDataHub.registerTrackDataListener(this, EnumSet.of(TrackDataType.SELECTED_TRACK,
-        TrackDataType.TRACKS_TABLE, TrackDataType.LOCATION, TrackDataType.PREFERENCE));
+        TrackDataType.TRACKS_TABLE, TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE,
+        TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE, TrackDataType.PREFERENCE));
   }
 
   /**
@@ -266,6 +270,16 @@ public class StatsFragment extends Fragment implements TrackDataListener {
    */
   private synchronized boolean isSelectedTrackPaused() {
     return trackDataHub != null && trackDataHub.isSelectedTrackPaused();
+  }
+
+  /**
+   * Returns true if a location is old.
+   * 
+   * @param location the location
+   */
+  private boolean isLocationOld(Location location) {
+    return !LocationUtils.isValidLocation(location)
+        || (System.currentTimeMillis() - location.getTime() > MAX_LOCATION_AGE_MS);
   }
 
   /**

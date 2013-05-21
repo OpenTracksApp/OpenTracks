@@ -555,6 +555,12 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
   }
 
   @Override
+  public boolean onMinRequiredAccuracy(int minRequiredAccuracy) {
+    // We don't care.
+    return false;
+  }
+  
+  @Override
   public boolean onMinRecordingDistanceChanged(int minRecordingDistance) {
     // We don't care.
     return false;

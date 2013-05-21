@@ -135,6 +135,14 @@ public interface TrackDataListener {
   public boolean onReportSpeedChanged(boolean reportSpeed);
 
   /**
+   * Called when the min required accuracy preference value is changed.
+   * 
+   * @param minRequiredAccuracy the new value
+   * @return true to reload all the data, false otherwise
+   */
+  public boolean onMinRequiredAccuracy(int minRequiredAccuracy);
+  
+  /**
    * Called when the min recording distance preference value is changed.
    * 
    * @param minRecordingDistance the new value

@@ -298,6 +298,12 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   }
 
   @Override
+  public boolean onMinRequiredAccuracy(int minRequiredAccuracy) {
+    // We don't care.
+    return false;
+  }
+  
+  @Override
   public boolean onMinRecordingDistanceChanged(int value) {
     if (isResumed()) {
       if (minRecordingDistance == value) {
