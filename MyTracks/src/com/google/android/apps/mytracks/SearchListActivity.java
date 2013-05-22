@@ -166,7 +166,6 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
   private SearchEngine searchEngine;
   private SearchRecentSuggestions searchRecentSuggestions;
-  private MyTracksLocationManager myTracksLocationManager;
   private ArrayAdapter<Map<String, Object>> arrayAdapter;
 
   private boolean metricUnits = PreferencesUtils.METRIC_UNITS_DEFAULT;
@@ -388,7 +387,8 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
     final String textQuery = intent.getStringExtra(SearchManager.QUERY);
     setTitle(textQuery);
 
-    myTracksLocationManager = new MyTracksLocationManager(this, Looper.myLooper());
+    final MyTracksLocationManager myTracksLocationManager = new MyTracksLocationManager(
+        this, Looper.myLooper());
     LocationListener locationListener = new LocationListener() {
         @Override
       public void onLocationChanged(final Location location) {

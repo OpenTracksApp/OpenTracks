@@ -39,16 +39,33 @@ import android.util.Log;
 /**
  * My Tracks Location Manager. Applies Google location settings before allowing
  * access to {@link LocationManager}.
- *
+ * 
  * @author Jimmy Shih
  */
 public class MyTracksLocationManager {
+
+  /**
+   * Observer for Google location settings.
+   * 
+   * @author Jimmy Shih
+   */
+  private class GoogleSettingsObserver extends ContentObserver {
+
+    public GoogleSettingsObserver() {
+      super(new Handler());
+    }
+
+    @Override
+    public void onChange(boolean selfChange) {
+      isAllowed = isUseLocationForServicesOn();
+    }
+  }
 
   private static final String TAG = MyTracksLocationManager.class.getSimpleName();
 
   private static final String GOOGLE_SETTINGS_CONTENT_URI = "content://com.google.settings/partner";
   private static final String USE_LOCATION_FOR_SERVICES = "use_location_for_services";
-  
+
   // User has agreed to use location for Google services.
   @VisibleForTesting
   static final String USE_LOCATION_FOR_SERVICES_ON = "1";
@@ -100,13 +117,13 @@ public class MyTracksLocationManager {
   private LocationListener requestLocationUpdates;
   private float requestLocationUpdatesDistance;
   private long requestLocationUpdatesTime;
-  
+
   public MyTracksLocationManager(Context context, Looper looper) {
     this.looper = looper;
     handler = new Handler(looper);
     locationClient = new LocationClient(context, connectionCallbacks, onConnectionFailedListener);
     locationClient.connect();
-    
+
     locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
     contentResolver = context.getContentResolver();
     observer = new GoogleSettingsObserver();
@@ -123,23 +140,6 @@ public class MyTracksLocationManager {
   public void close() {
     locationClient.disconnect();
     contentResolver.unregisterContentObserver(observer);
-  }
-
-  /**
-   * Observer for Google location settings.
-   * 
-   * @author Jimmy Shih
-   */
-  private class GoogleSettingsObserver extends ContentObserver {
-
-    public GoogleSettingsObserver() {
-      super(new Handler());
-    }
-
-    @Override
-    public void onChange(boolean selfChange) {
-      isAllowed = isUseLocationForServicesOn();
-    }
   }
 
   /**
@@ -174,7 +174,7 @@ public class MyTracksLocationManager {
     handler.post(new Runnable() {
         @Override
       public void run() {
-        if (!isAllowed) {         
+        if (!isAllowed) {
           requestLastLocation = null;
           locationListener.onLocationChanged(null);
         } else {
