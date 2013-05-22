@@ -97,6 +97,8 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
 
   // Current location
   private Location currentLocation;
+  private Location lastTrackPoint;
+  private int minRequiredAccuracy = PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT;
 
   /**
    * True to continue keeping the current location visible on the screen.
@@ -285,7 +287,12 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
   public void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
     if (currentLocation != null) {
-      outState.putParcelable(CURRENT_LOCATION_KEY, currentLocation);
+      /*
+       * currentLocation is a MyTracksLocation object, which cannot be
+       * unmarshalled. Thus creating a Location object before placing it in the
+       * bundle.
+       */
+      outState.putParcelable(CURRENT_LOCATION_KEY, new Location(currentLocation));
     }
     outState.putBoolean(KEEP_CURRENT_LOCATION_VISIBLE_KEY, keepCurrentLocationVisible);
     outState.putBoolean(ZOOM_TO_CURRENT_LOCATION_KEY, zoomToCurrentLocation);
@@ -381,88 +388,15 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
   }
 
   @Override
-  public void onLocationStateChanged(final LocationState state) {
-    if (isResumed()) {
-      getActivity().runOnUiThread(new Runnable() {
-          @Override
-        public void run() {
-          if (!isResumed() || googleMap == null) {
-            return;
-          }
-          boolean myLocationEnabled = true;
-          if (state == LocationState.DISABLED) {
-            setCurrentLocation(null);
-            myLocationEnabled = false;
-          }
-          googleMap.setMyLocationEnabled(myLocationEnabled);
-
-          String message;
-          boolean isGpsDisabled;
-          if (!isSelectedTrackRecording()) {
-            message = null;
-            isGpsDisabled = false;
-          } else {
-            switch (state) {
-              case DISABLED:
-                String setting = getString(GoogleLocationUtils.isAvailable(getActivity())
-                    ? R.string.gps_google_location_settings
-                    : R.string.gps_location_access);
-                message = getString(R.string.gps_disabled, setting);
-                isGpsDisabled = true;
-                break;
-              case NO_FIX:
-                message = getString(R.string.gps_wait_for_signal);
-                isGpsDisabled = false;
-                break;
-              case BAD_FIX:
-                message = getString(R.string.gps_wait_for_better_signal);
-                isGpsDisabled = false;
-                break;
-              case GOOD_FIX:
-                message = null;
-                isGpsDisabled = false;
-                break;
-              default:
-                throw new IllegalArgumentException("Unexpected state: " + state);
-            }
-          }
-          if (message == null) {
-            messageTextView.setVisibility(View.GONE);
-            return;
-          }
-          messageTextView.setText(message);
-          messageTextView.setVisibility(View.VISIBLE);
-          if (isGpsDisabled) {
-            Toast.makeText(getActivity(), R.string.gps_not_found, Toast.LENGTH_LONG).show();
-
-            // Click to show the location source settings
-            messageTextView.setOnClickListener(new OnClickListener() {
-
-                @Override
-              public void onClick(View v) {
-                Intent intent = GoogleLocationUtils.isAvailable(getActivity()) ? new Intent(
-                    GoogleLocationUtils.ACTION_GOOGLE_LOCATION_SETTINGS)
-                    : new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-              }
-            });
-          } else {
-            messageTextView.setOnClickListener(null);
-          }
-        }
-      });
-    }
+  public void onLocationStateChanged(LocationState locationState) {
+    // We don't care.    
   }
-
+  
   @Override
-  public void onLocationChanged(final Location location) {
-    if (isResumed()) {
-      setCurrentLocation(location);
-      updateCurrentLocation();
-    }
+  public void onLocationChanged(Location location) {
+    // We don't care. 
   }
-
+  
   @Override
   public void onSelectedTrackChanged(final Track track) {
     if (isResumed()) {
@@ -489,7 +423,7 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
       }
     }
   }
-
+  
   @Override
   public void onTrackUpdated(Track track) {
     // We don't care.
@@ -497,6 +431,7 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
 
   @Override
   public void clearTrackPoints() {
+    lastTrackPoint = null;
     if (isResumed()) {
       mapOverlay.clearPoints();
       reloadPaths = true;
@@ -505,6 +440,7 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
 
   @Override
   public void onSampledInTrackPoint(final Location location) {
+    lastTrackPoint = location;
     if (isResumed()) {
       mapOverlay.addLocation(location);
     }
@@ -512,7 +448,7 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
 
   @Override
   public void onSampledOutTrackPoint(Location location) {
-    // We don't care.
+    lastTrackPoint = location;
   }
 
   @Override
@@ -530,6 +466,15 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
           if (isResumed() && googleMap != null) {
             mapOverlay.update(googleMap, paths, reloadPaths);
             reloadPaths = false;
+
+            if (!isSelectedTrackRecording() || isSelectedTrackPaused()) {
+              lastTrackPoint = null;
+            }
+            if (lastTrackPoint != null) {
+              setCurrentLocation(lastTrackPoint);
+              updateCurrentLocation();
+              setWarningMessage(true);
+            }
           }
         }
       });
@@ -576,8 +521,8 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
   }
 
   @Override
-  public boolean onMinRequiredAccuracy(int minRequiredAccuracy) {
-    // We don't care.
+  public boolean onMinRequiredAccuracy(int newValue) {
+    minRequiredAccuracy = newValue;
     return false;
   }
 
@@ -595,7 +540,17 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
     trackDataHub = ((TrackDetailActivity) getActivity()).getTrackDataHub();
     trackDataHub.registerTrackDataListener(this, EnumSet.of(TrackDataType.SELECTED_TRACK,
         TrackDataType.WAYPOINTS_TABLE, TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE,
-        TrackDataType.LOCATION));
+        TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE, TrackDataType.PREFERENCE));
+
+    MyTracksLocationManager myTracksLocationManager = new MyTracksLocationManager(
+        getActivity(), Looper.myLooper());
+    boolean isGpsProviderEnabled = myTracksLocationManager.isGpsProviderEnabled();
+
+    if (googleMap != null) {
+      googleMap.setMyLocationEnabled(isGpsProviderEnabled);
+    }
+    setWarningMessage(isGpsProviderEnabled);
+    myTracksLocationManager.close();
   }
 
   /**
@@ -615,6 +570,14 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
    */
   private synchronized boolean isSelectedTrackRecording() {
     return trackDataHub != null && trackDataHub.isSelectedTrackRecording();
+  }
+
+  /**
+   * Returns true if the selected track is paused. Needs to be synchronized
+   * because trackDataHub can be accessed by multiple threads.
+   */
+  private synchronized boolean isSelectedTrackPaused() {
+    return trackDataHub != null && trackDataHub.isSelectedTrackPaused();
   }
 
   /**
@@ -749,5 +712,66 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
     }
     LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
     return googleMap.getProjection().getVisibleRegion().latLngBounds.contains(latLng);
+  }
+
+  /**
+   * Sets the warning message.
+   * 
+   * @param isGpsProviderEnabled true if gps provider is enabled
+   */
+  private void setWarningMessage(boolean isGpsProviderEnabled) {
+    String message;
+    if (!isSelectedTrackRecording()) {
+      message = null;
+    } else {
+      if (isGpsProviderEnabled) {
+        boolean hasFix;
+        boolean hasGoodFix;
+        if (currentLocation == null) {
+          hasFix = false;
+          hasGoodFix = false;
+        } else {
+          hasFix = !LocationUtils.isLocationOld(currentLocation);
+          hasGoodFix = currentLocation.getAccuracy() <= minRequiredAccuracy;
+        }
+        if (!hasFix) {
+          message = getString(R.string.gps_wait_for_signal);
+        } else if (!hasGoodFix) {
+          message = getString(R.string.gps_wait_for_better_signal);
+        } else {
+          message = null;
+        }
+      } else {
+        String setting = getString(
+            GoogleLocationUtils.isAvailable(getActivity()) ? R.string.gps_google_location_settings
+                : R.string.gps_location_access);
+        message = getString(R.string.gps_disabled, setting);
+      }
+    }
+
+    if (message == null) {
+      messageTextView.setVisibility(View.GONE);
+      return;
+    }
+    messageTextView.setText(message);
+    messageTextView.setVisibility(View.VISIBLE);
+    if (isGpsProviderEnabled) {
+      messageTextView.setOnClickListener(null);
+    } else {
+      Toast.makeText(getActivity(), R.string.gps_not_found, Toast.LENGTH_LONG).show();
+
+      // Click to show the location source settings
+      messageTextView.setOnClickListener(new OnClickListener() {
+
+          @Override
+        public void onClick(View v) {
+          Intent intent = GoogleLocationUtils.isAvailable(getActivity()) ? new Intent(
+              GoogleLocationUtils.ACTION_GOOGLE_LOCATION_SETTINGS)
+              : new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+          intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+          startActivity(intent);
+        }
+      });
+    }
   }
 }

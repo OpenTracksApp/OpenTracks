@@ -31,6 +31,8 @@ import java.util.Stack;
  */
 public class LocationUtils {
 
+  private static final long MAX_LOCATION_AGE_MS = 60 * 1000; // 1 minute
+
   private LocationUtils() {}
 
   /**
@@ -158,5 +160,15 @@ public class LocationUtils {
   public static boolean isValidLocation(Location location) {
     return location != null && Math.abs(location.getLatitude()) <= 90
         && Math.abs(location.getLongitude()) <= 180;
+  }
+
+  /**
+   * Returns true if a location is old.
+   * 
+   * @param location the location
+   */
+  public static boolean isLocationOld(Location location) {
+    return !LocationUtils.isValidLocation(location)
+        || (System.currentTimeMillis() - location.getTime() > MAX_LOCATION_AGE_MS);
   }
 }

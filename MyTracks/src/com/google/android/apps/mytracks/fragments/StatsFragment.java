@@ -49,7 +49,6 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
   public static final String STATS_FRAGMENT_TAG = "statsFragment";
 
-  private static final long MAX_LOCATION_AGE_MS = 60 * 1000; // 1 minute
   private static final int ONE_SECOND = 1000;
 
   private TrackDataHub trackDataHub;
@@ -165,7 +164,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
             }
 
             if (lastLocation != null) {
-              boolean hasFix = !isLocationOld(lastLocation);
+              boolean hasFix = !LocationUtils.isLocationOld(lastLocation);
               boolean hasGoodFix = lastLocation.getAccuracy() <= minRequiredAccuracy;
 
               if (!hasFix || !hasGoodFix) {
@@ -270,16 +269,6 @@ public class StatsFragment extends Fragment implements TrackDataListener {
    */
   private synchronized boolean isSelectedTrackPaused() {
     return trackDataHub != null && trackDataHub.isSelectedTrackPaused();
-  }
-
-  /**
-   * Returns true if a location is old.
-   * 
-   * @param location the location
-   */
-  private boolean isLocationOld(Location location) {
-    return !LocationUtils.isValidLocation(location)
-        || (System.currentTimeMillis() - location.getTime() > MAX_LOCATION_AGE_MS);
   }
 
   /**
