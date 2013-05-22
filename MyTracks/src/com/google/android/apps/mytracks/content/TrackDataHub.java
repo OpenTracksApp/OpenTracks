@@ -21,7 +21,6 @@ import static com.google.android.apps.mytracks.Constants.TARGET_DISPLAYED_TRACK_
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
-import com.google.android.apps.mytracks.content.TrackDataListener.LocationState;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
@@ -29,7 +28,6 @@ import com.google.common.annotations.VisibleForTesting;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.hardware.GeomagneticField;
 import android.location.Location;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -48,12 +46,7 @@ import java.util.Set;
 public class TrackDataHub implements DataSourceListener {
 
   private static final String TAG = TrackDataHub.class.getSimpleName();
-
-  /**
-   * Maximum age of a location to be considered current.
-   */
-  private static final long MAX_LOCATION_AGE_MS = 60 * 1000; // 1 minute
-  
+ 
   private final Context context;
   private final TrackDataManager trackDataManager;
   private final MyTracksProviderUtils myTracksProviderUtils;
@@ -73,12 +66,6 @@ public class TrackDataHub implements DataSourceListener {
   private boolean reportSpeed;
   private int minRequiredAccuracy;
   private int minRecordingDistance;
-
-  // Location values
-  private Location lastSeenLocation = null;
-  private boolean hasProviderEnabled = true;
-  private boolean hasFix = false;
-  private boolean hasGoodFix = false;
 
   // Track points sampling state
   private int numLoadedPoints;
@@ -151,7 +138,6 @@ public class TrackDataHub implements DataSourceListener {
 
     handlerThread = null;
     handler = null;
-    dataSource.close();
     dataSource = null;
     dataSourceManager = null;
   }
@@ -351,28 +337,6 @@ public class TrackDataHub implements DataSourceListener {
     });
   }
 
-  @Override
-  public void notifyLocationProviderEnabled(final boolean enabled) {
-    runInHanderThread(new Runnable() {
-        @Override
-      public void run() {
-        hasProviderEnabled = enabled;
-        notifyLocationStateChanged(trackDataManager.getListeners(TrackDataType.LOCATION));
-      }
-    });
-  }
-
-  @Override
-  public void notifyLocationChanged(final Location location) {
-    runInHanderThread(new Runnable() {
-        @Override
-      public void run() {
-        notifyLocationChanged(
-            location, false, trackDataManager.getListeners(TrackDataType.LOCATION));
-      }
-    });
-  }
-
   /**
    * Loads data for all listeners. To be run in the {@link #handler} thread.
    */
@@ -401,13 +365,6 @@ public class TrackDataHub implements DataSourceListener {
         trackDataManager.getListeners(TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE),
         trackDataManager.getListeners(TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE));
     notifyWaypointsTableUpdate(trackDataManager.getListeners(TrackDataType.WAYPOINTS_TABLE));
-
-    if (lastSeenLocation != null) {
-      notifyLocationChanged(
-          lastSeenLocation, true, trackDataManager.getListeners(TrackDataType.LOCATION));
-    } else {
-      notifyLocationStateChanged(trackDataManager.getListeners(TrackDataType.LOCATION));
-    }
   }
 
   /**
@@ -450,14 +407,6 @@ public class TrackDataHub implements DataSourceListener {
 
     if (trackDataTypes.contains(TrackDataType.WAYPOINTS_TABLE)) {
       notifyWaypointsTableUpdate(trackDataListeners);
-    }
-
-    if (trackDataTypes.contains(TrackDataType.LOCATION)) {
-      if (lastSeenLocation != null) {
-        notifyLocationChanged(lastSeenLocation, true, trackDataListeners);
-      } else {
-        notifyLocationStateChanged(trackDataListeners);
-      }
     }
   }
 
@@ -621,64 +570,6 @@ public class TrackDataHub implements DataSourceListener {
   }
 
   /**
-   * Notifies location state changed. To be run in the {@link #handler} thread.
-   * 
-   * @param trackDataListeners the track data listeners to notify
-   */
-  private void notifyLocationStateChanged(Set<TrackDataListener> trackDataListeners) {
-    if (trackDataListeners.isEmpty()) {
-      return;
-    }
-    TrackDataListener.LocationState locationState;
-    if (!hasProviderEnabled) {
-      locationState = LocationState.DISABLED;
-      lastSeenLocation = null;
-    } else if (!hasFix) {
-      locationState = LocationState.NO_FIX;
-    } else if (!hasGoodFix) {
-      locationState = LocationState.BAD_FIX;
-    } else {
-      locationState = LocationState.GOOD_FIX;
-    }
-    for (TrackDataListener trackDataListener : trackDataListeners) {
-      trackDataListener.onLocationStateChanged(locationState);
-    }
-  }
-
-  /**
-   * Notifies location changed. To be run in the {@link #handler} thread.
-   * 
-   * @param location the location
-   * @param notifyLocationStateChange true to always notify location state
-   *          change
-   * @param trackDataListeners the track data listeners to notify
-   */
-  private void notifyLocationChanged(Location location, boolean notifyLocationStateChange,
-      Set<TrackDataListener> trackDataListeners) {
-    if (location == null) {
-      return;
-    }
-    boolean oldHasFix = hasFix;
-    boolean oldHasGoodFix = hasGoodFix;
-    
-    hasFix = !isLocationOld(location, System.currentTimeMillis(), MAX_LOCATION_AGE_MS);
-    hasGoodFix = location.getAccuracy() <= minRequiredAccuracy;
-    lastSeenLocation = location;
-
-    if (trackDataListeners.isEmpty()) {
-      return;
-    }
-
-    if (notifyLocationStateChange || hasFix != oldHasFix || hasGoodFix != oldHasGoodFix) {
-      notifyLocationStateChanged(trackDataListeners);
-    }
-
-    for (TrackDataListener trackDataListener : trackDataListeners) {
-      trackDataListener.onLocationChanged(lastSeenLocation);
-    }
-  }
-
-  /**
    * Resets the track points sampling states.
    */
   private void resetSamplingState() {
@@ -688,35 +579,11 @@ public class TrackDataHub implements DataSourceListener {
   }
 
   /**
-   * Returns true if a location is invalid or too old.
-   * 
-   * @param location the location
-   * @param now the current time
-   * @param maxAge the maximum age
-   */
-  private boolean isLocationOld(Location location, long now, long maxAge) {
-    return !LocationUtils.isValidLocation(location) || (now - location.getTime() > maxAge);
-  }
-
-  /**
    * Creates a {@link DataSource}.
    */
   @VisibleForTesting
   protected DataSource newDataSource() {
     return new DataSource(context);
-  }
-
-  /**
-   * Gets a declination.
-   * 
-   * @param location the location
-   * @param time the time
-   */
-  @VisibleForTesting
-  protected float getDeclination(Location location, long time) {
-    GeomagneticField field = new GeomagneticField((float) location.getLatitude(), (float) location
-        .getLongitude(), (float) location.getAltitude(), time);
-    return field.getDeclination();
   }
 
   /**
@@ -772,15 +639,5 @@ public class TrackDataHub implements DataSourceListener {
   @VisibleForTesting
   boolean isReportSpeed() {
     return reportSpeed;
-  }
-  
-  /**
-   * Sets the value of lastSeenLocation.
-   * 
-   * @param lastSeenLocation value of lastSeenLocation
-   */
-  @VisibleForTesting
-  void setLastSeenLocation(Location lastSeenLocation) {
-    this.lastSeenLocation = lastSeenLocation;
   }
 }

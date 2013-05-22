@@ -22,13 +22,10 @@ import static com.google.android.testing.mocking.AndroidMock.isA;
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.TrackStubUtils;
-import com.google.android.apps.mytracks.content.DataSourceManager.CurrentLocationListener;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationFactory;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
-import com.google.android.apps.mytracks.content.TrackDataListener.LocationState;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceTest.MockContext;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
-import com.google.android.gms.location.LocationListener;
 import com.google.android.maps.mytracks.R;
 import com.google.android.testing.mocking.AndroidMock;
 import com.google.android.testing.mocking.UsesMocks;
@@ -72,7 +69,6 @@ public class TrackDataHubTest extends AndroidTestCase {
   private TrackDataListener trackDataListener2;
   private Capture<OnSharedPreferenceChangeListener> preferenceChangeListenerCapture = new Capture<
       SharedPreferences.OnSharedPreferenceChangeListener>();
-  private float declination;
 
   @UsesMocks({ MyTracksProviderUtils.class, DataSource.class, TrackDataListener.class })
   @Override
@@ -96,11 +92,6 @@ public class TrackDataHubTest extends AndroidTestCase {
         // Run everything in the same thread
         runnable.run();
       }
-
-        @Override
-      protected float getDeclination(Location location, long timestamp) {
-        return declination;
-      }
     };
 
     trackDataListener1 = AndroidMock.createStrictMock(
@@ -118,10 +109,8 @@ public class TrackDataHubTest extends AndroidTestCase {
     // Expect everything to be unregistered.
     dataSource.unregisterContentObserver(isA(ContentObserver.class));
     AndroidMock.expectLastCall().times(3);
-    dataSource.unregisterLocationListener(isA(LocationListener.class));
     dataSource.unregisterOnSharedPreferenceChangeListener(
         isA(OnSharedPreferenceChangeListener.class));
-    dataSource.close();
     AndroidMock.replay(dataSource);
 
     trackDataHub.stop();
@@ -540,16 +529,22 @@ public class TrackDataHubTest extends AndroidTestCase {
     // Register two listeners
     PreferencesUtils.setBoolean(context, R.string.report_speed_key, true);
     PreferencesUtils.setBoolean(context, R.string.metric_units_key, true);
+    PreferencesUtils.setInt(context, R.string.min_required_accuracy_key,
+        PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT);
     PreferencesUtils.setInt(context, R.string.min_recording_distance_key,
         PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT);
 
     dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceChangeListenerCapture));
     expect(trackDataListener1.onMetricUnitsChanged(true)).andReturn(false);
     expect(trackDataListener1.onReportSpeedChanged(true)).andReturn(false);
+    expect(trackDataListener1.onMinRequiredAccuracy(PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT))
+        .andReturn(false);
     expect(trackDataListener1.onMinRecordingDistanceChanged(
         PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT)).andReturn(false);
     expect(trackDataListener2.onMetricUnitsChanged(true)).andReturn(false);
     expect(trackDataListener2.onReportSpeedChanged(true)).andReturn(false);
+    expect(trackDataListener2.onMinRequiredAccuracy(PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT))
+        .andReturn(false);
     expect(trackDataListener2.onMinRecordingDistanceChanged(
         PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT)).andReturn(false);
     replay();
@@ -763,39 +758,6 @@ public class TrackDataHubTest extends AndroidTestCase {
     trackDataHub.start();
     trackDataHub.registerTrackDataListener(
         trackDataListener1, EnumSet.of(TrackDataType.WAYPOINTS_TABLE));
-    verifyAndReset();
-  }
-
-  /**
-   * Tests the method {@link TrackDataHub#start()} when no last seen location.
-   */
-  public void testRegisterLocationListener_noLastSeenLocation() {
-    dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceChangeListenerCapture));
-    Capture<CurrentLocationListener> currentLocationListener = new Capture<
-        CurrentLocationListener>();
-    dataSource.registerLocationListener(capture(currentLocationListener));
-    trackDataListener1.onLocationStateChanged(capture(new Capture<LocationState>()));
-    replay();
-    trackDataHub.setLastSeenLocation(null);
-    trackDataHub.start();
-    trackDataHub.registerTrackDataListener(trackDataListener1, EnumSet.of(TrackDataType.LOCATION));
-    verifyAndReset();
-  }
-
-  /**
-   * Tests the method {@link TrackDataHub#start()} when has last seen location.
-   */
-  public void testRegisterLocationListener_hasLastSeenLocation() {
-    dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceChangeListenerCapture));
-    Capture<CurrentLocationListener> currentLocationListener = new Capture<
-        CurrentLocationListener>();
-    dataSource.registerLocationListener(capture(currentLocationListener));
-    trackDataListener1.onLocationStateChanged(capture(new Capture<LocationState>()));
-    trackDataListener1.onLocationChanged(capture(new Capture<Location>()));
-    replay();
-    trackDataHub.setLastSeenLocation(new Location("gps"));
-    trackDataHub.start();
-    trackDataHub.registerTrackDataListener(trackDataListener1, EnumSet.of(TrackDataType.LOCATION));
     verifyAndReset();
   }
 

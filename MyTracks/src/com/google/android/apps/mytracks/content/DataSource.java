@@ -17,8 +17,6 @@
 package com.google.android.apps.mytracks.content;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.services.MyTracksLocationManager;
-import com.google.android.gms.location.LocationListener;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -26,7 +24,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.ContentObserver;
 import android.net.Uri;
-import android.os.Looper;
 
 /**
  * Data source on the phone.
@@ -36,25 +33,11 @@ import android.os.Looper;
 public class DataSource {
 
   private final ContentResolver contentResolver;
-  private final MyTracksLocationManager myTracksLocationManager;
   private final SharedPreferences sharedPreferences;
   
   public DataSource(Context context) {
     contentResolver = context.getContentResolver();
-    myTracksLocationManager = new MyTracksLocationManager(context, Looper.myLooper());
     sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-  }
-
-  public void close() {
-    myTracksLocationManager.close();
-  }
-
-  public boolean isAllowed() {
-    return myTracksLocationManager.isAllowed();
-  }
-
-  public boolean isGpsProviderEnabled() {
-    return myTracksLocationManager.isGpsProviderEnabled();
   }
 
   /**
@@ -74,31 +57,6 @@ public class DataSource {
    */
   public void unregisterContentObserver(ContentObserver observer) {
     contentResolver.unregisterContentObserver(observer);
-  }
-
-  /**
-   * Registers a location listener.
-   * 
-   * @param listener the listener
-   */
-  public void registerLocationListener(LocationListener listener) {
-    myTracksLocationManager.requestLocationUpdates(0, 0, listener);
-  }
-
-  /**
-   * Unregisters a location listener.
-   * 
-   * @param listener the listener
-   */
-  public void unregisterLocationListener(LocationListener listener) {
-    myTracksLocationManager.removeLocationUpdates(listener);
-  }
-
-  /**
-   * Request last location.
-   */
-  public void requestLastLocation(LocationListener locationListener) {
-    myTracksLocationManager.requestLastLocation(locationListener);
   }
 
   /**

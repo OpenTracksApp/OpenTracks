@@ -16,7 +16,6 @@
 
 package com.google.android.apps.mytracks.content;
 
-import android.location.Location;
 
 /**
  * Listener to be invoked when {@link DataSource} changes.
@@ -39,20 +38,6 @@ public interface DataSourceListener {
    * Notifies when the track points table is updated.
    */
   public void notifyTrackPointsTableUpdated();
-
-  /**
-   * Notifies when the current location changes.
-   * 
-   * @param location the location
-   */
-  public void notifyLocationChanged(Location location);
-
-  /**
-   * Notifies when the location provider enabled status changes.
-   * 
-   * @param enabled true if enabled, false if not
-   */
-  public void notifyLocationProviderEnabled(boolean enabled);
 
   /**
    * Notifies when a preference changes.

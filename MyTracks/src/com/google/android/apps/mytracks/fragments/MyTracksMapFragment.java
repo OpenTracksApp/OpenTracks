@@ -386,16 +386,6 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
     }
     return true;
   }
-
-  @Override
-  public void onLocationStateChanged(LocationState locationState) {
-    // We don't care.    
-  }
-  
-  @Override
-  public void onLocationChanged(Location location) {
-    // We don't care. 
-  }
   
   @Override
   public void onSelectedTrackChanged(final Track track) {

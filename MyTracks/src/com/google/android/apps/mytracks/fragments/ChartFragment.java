@@ -156,16 +156,6 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   }
 
   @Override
-  public void onLocationStateChanged(LocationState state) {
-    // We don't care.
-  }
-
-  @Override
-  public void onLocationChanged(Location loc) {
-    // We don't care.
-  }
-
-  @Override
   public void onSelectedTrackChanged(Track track) {
     // We don't care.
   }

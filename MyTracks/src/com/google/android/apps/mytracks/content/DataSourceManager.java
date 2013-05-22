@@ -18,13 +18,9 @@ package com.google.android.apps.mytracks.content;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
 
-import com.google.android.gms.location.LocationListener;
-import com.google.common.annotations.VisibleForTesting;
-
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.ContentObserver;
-import android.location.Location;
 import android.os.Handler;
 import android.util.Log;
 
@@ -92,22 +88,6 @@ public class DataSourceManager {
   }
 
   /**
-   * Listener for location changes.
-   * 
-   * @author Jimmy Shih
-   */
-  @VisibleForTesting
-  class CurrentLocationListener implements LocationListener {
-    @Override
-    public void onLocationChanged(Location location) {
-      if (!dataSource.isAllowed()) {
-        return;
-      }
-      dataSourceListener.notifyLocationChanged(location);
-    }
-  }
-
-  /**
    * Listener for preference changes.
    * 
    * @author Jimmy Shih
@@ -130,7 +110,6 @@ public class DataSourceManager {
   private final TracksTableObserver tracksTableObserver;
   private final WaypointsTableObserver waypointsTableObserver;
   private final TrackPointsTableObserver trackPointsTableObserver;
-  private final CurrentLocationListener currentLocationListener;
   private final PreferenceListener preferenceListener;
 
   public DataSourceManager(DataSource dataSource, DataSourceListener dataSourceListener) {
@@ -141,7 +120,6 @@ public class DataSourceManager {
     tracksTableObserver = new TracksTableObserver();
     waypointsTableObserver = new WaypointsTableObserver();
     trackPointsTableObserver = new TrackPointsTableObserver();
-    currentLocationListener = new CurrentLocationListener();
     preferenceListener = new PreferenceListener();
   }
 
@@ -210,18 +188,6 @@ public class DataSourceManager {
       case SAMPLED_OUT_TRACK_POINTS_TABLE:
         // Do nothing. SAMPLED_OUT_POINT_UPDATES is mapped to POINT_UPDATES.
         break;
-      case LOCATION:
-        if (dataSource.isGpsProviderEnabled()) {  
-          dataSourceListener.notifyLocationProviderEnabled(true);
-        } else {
-          dataSourceListener.notifyLocationProviderEnabled(false);          
-        }
-        if (dataSource.isAllowed()) {
-          dataSource.registerLocationListener(currentLocationListener);
-        } else {
-          dataSource.unregisterLocationListener(currentLocationListener);
-        }
-        break;
       case PREFERENCE:
         dataSource.registerOnSharedPreferenceChangeListener(preferenceListener);
         break;
@@ -251,9 +217,6 @@ public class DataSourceManager {
         break;
       case SAMPLED_OUT_TRACK_POINTS_TABLE:
         // Do nothing. SAMPLED_OUT_POINT_UPDATES is mapped to POINT_UPDATES.
-        break;
-      case LOCATION:
-        dataSource.unregisterLocationListener(currentLocationListener);
         break;
       case PREFERENCE:
         dataSource.unregisterOnSharedPreferenceChangeListener(preferenceListener);

@@ -35,21 +35,6 @@ public interface TrackDataListener {
   }
 
   /**
-   * Called when the location state changes.
-   */
-  public void onLocationStateChanged(LocationState locationState);
-
-  /**
-   * Called when the location changes. This is meant for location display only,
-   * track point data is reported with other methods like
-   * {@link #onSampledInTrackPoint(Location)} and
-   * {@link #onSampledOutTrackPoint(Location)}.
-   * 
-   * @param location the location
-   */
-  public void onLocationChanged(Location location);
-
-  /**
    * Called when the selected track changes. This will be followed by calls to
    * data methods such as {@link #onTrackUpdated(Track)},
    * {@link #clearTrackPoints()}, {@link #onSampledInTrackPoint(Location)},

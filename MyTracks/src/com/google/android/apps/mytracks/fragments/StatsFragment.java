@@ -98,16 +98,6 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   }
 
   @Override
-  public void onLocationStateChanged(LocationState state) {
-    // We don't care.
-  }
-
-  @Override
-  public void onLocationChanged(final Location location) {
-    // We don't care.
-  }
-
-  @Override
   public void onSelectedTrackChanged(Track track) {
     if (isResumed()) {
       handler.removeCallbacks(updateTotalTime);
