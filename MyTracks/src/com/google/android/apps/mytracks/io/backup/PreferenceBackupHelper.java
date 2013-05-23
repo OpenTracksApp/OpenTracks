@@ -44,6 +44,7 @@ public class PreferenceBackupHelper {
 
   public PreferenceBackupHelper(Context context) {
     doNotBackup = new HashSet<String>();
+    doNotBackup.add(context.getString(R.string.activity_recognition_type_key));
     doNotBackup.add(context.getString(R.string.auto_resume_track_current_retry_key));
     doNotBackup.add(context.getString(R.string.drive_deleted_list_key));
     doNotBackup.add(context.getString(R.string.drive_largest_change_id_key));

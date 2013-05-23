@@ -35,13 +35,13 @@ import java.util.List;
 public class TrackIconUtils {
 
   private static final String AIRPLANE = "AIRPLANE";
-  private static final String BIKE = "BIKE";
+  public static final String BIKE = "BIKE";
   private static final String BOAT = "BOAT";
-  private static final String DRIVE = "DRIVE";
+  public static final String DRIVE = "DRIVE";
   private static final String RUN = "RUN";
   private static final String SKI = "SKI";
   private static final String SNOW_BOARDING = "SNOW_BOARDING";
-  private static final String WALK = "WALK";
+  public static final String WALK = "WALK";
 
   private TrackIconUtils() {}
 

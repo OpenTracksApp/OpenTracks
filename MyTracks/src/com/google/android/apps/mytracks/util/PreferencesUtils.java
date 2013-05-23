@@ -17,6 +17,7 @@
 package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.Constants;
+import com.google.android.gms.location.DetectedActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -30,6 +31,8 @@ import android.content.SharedPreferences.Editor;
  */
 public class PreferencesUtils {
 
+  public static final int ACTIVITY_RECOGNITION_TYPE_DEFAULT = DetectedActivity.UNKNOWN;
+  
   /*
    * Preferences values. The defaults need to match the defaults in the xml
    * files.

@@ -65,6 +65,7 @@ limitations under the License.
   <string name="track_widget_item4">trackWidgetItem4</string>
   <string name="voice_frequency_key">voiceFrequency</string>
   <!-- Keys for persistend preferences. But they should not get backed up or restored. -->
+  <string name="activity_recognition_type_key">activityRecognitionType</string>
   <string name="auto_resume_track_current_retry_key">autoResumeTrackCurrentRetry</string>
   <string name="drive_deleted_list_key">driveDeletedList</string>
   <string name="drive_largest_change_id_key">driveLargestChangeId</string>

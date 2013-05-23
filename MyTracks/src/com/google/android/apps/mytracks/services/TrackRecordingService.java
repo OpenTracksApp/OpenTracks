@@ -41,6 +41,11 @@ import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.apps.mytracks.util.TrackNameUtils;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
+import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
+import com.google.android.gms.location.ActivityRecognitionClient;
+import com.google.android.gms.location.DetectedActivity;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
@@ -57,6 +62,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Binder;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
@@ -81,6 +87,7 @@ import java.util.concurrent.Executors;
 public class TrackRecordingService extends Service {
 
   private static final String TAG = TrackRecordingService.class.getSimpleName();
+  private static final long ACTIVITY_RECOGNITION_INTERVAL = 60000; // 1 minute
 
   /**
    * The name of extra intent property to indicate whether we want to resume a
@@ -103,6 +110,8 @@ public class TrackRecordingService extends Service {
   private Context context;
   private MyTracksProviderUtils myTracksProviderUtils;
   private MyTracksLocationManager myTracksLocationManager;
+  private ActivityRecognitionClient activityRecognitionClient;
+  private PendingIntent activityRecognitionPendingIntent;  
   private PeriodicTaskExecutor voiceExecutor;
   private PeriodicTaskExecutor splitExecutor;
   private ExecutorService executorService;
@@ -247,6 +256,23 @@ public class TrackRecordingService extends Service {
     }
   };
 
+  private final ConnectionCallbacks activityRecognitionCallbacks = new ConnectionCallbacks() {
+      @Override
+    public void onDisconnected() {}
+
+      @Override
+    public void onConnected(Bundle bundle) {
+      activityRecognitionClient.requestActivityUpdates(
+          ACTIVITY_RECOGNITION_INTERVAL, activityRecognitionPendingIntent);
+    }
+  };
+
+  private final OnConnectionFailedListener
+      activityRecognitionFailedListener = new OnConnectionFailedListener() {
+
+          @Override
+        public void onConnectionFailed(ConnectionResult connectionResult) {}
+      };
   /*
    * Note that this service, through the AndroidManifest.xml, is configured to
    * allow both MyTracks and third party apps to invoke it. For the onCreate
@@ -260,6 +286,12 @@ public class TrackRecordingService extends Service {
     context = this;
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
     myTracksLocationManager = new MyTracksLocationManager(this, Looper.myLooper());
+    activityRecognitionPendingIntent = PendingIntent.getService(context, 0,
+        new Intent(context, ActivityRecognitionIntentService.class),
+        PendingIntent.FLAG_UPDATE_CURRENT);
+    activityRecognitionClient = new ActivityRecognitionClient(
+        context, activityRecognitionCallbacks, activityRecognitionFailedListener);
+    activityRecognitionClient.connect();    
     voiceExecutor = new PeriodicTaskExecutor(this, new AnnouncementPeriodicTaskFactory());
     splitExecutor = new PeriodicTaskExecutor(this, new SplitPeriodicTaskFactory());
     executorService = Executors.newSingleThreadExecutor();
@@ -352,6 +384,13 @@ public class TrackRecordingService extends Service {
     myTracksProviderUtils = null;
     myTracksLocationManager.close();
     myTracksLocationManager = null;
+    
+    if (activityRecognitionClient.isConnected()) {
+      activityRecognitionClient.removeActivityUpdates(activityRecognitionPendingIntent);
+    }
+    activityRecognitionClient.disconnect();
+    activityRecognitionPendingIntent.cancel();
+    
     binder.detachFromService();
     binder = null;
 
@@ -568,6 +607,8 @@ public class TrackRecordingService extends Service {
     // Update shared preferences
     updateRecordingState(trackId, false);
     PreferencesUtils.setInt(this, R.string.auto_resume_track_current_retry_key, 0);
+    PreferencesUtils.setInt(this, R.string.activity_recognition_type_key,
+        PreferencesUtils.ACTIVITY_RECOGNITION_TYPE_DEFAULT);
 
     // Update database
     track.setId(trackId);
@@ -711,7 +752,31 @@ public class TrackRecordingService extends Service {
     Track track = myTracksProviderUtils.getTrack(trackId);
     if (track != null && !paused) {
       insertLocation(track, lastLocation, getLastValidTrackPointInCurrentSegment(trackId));
-      updateRecordingTrack(track, myTracksProviderUtils.getLastTrackPointId(trackId), false);
+
+      int activityRecognitionType = PreferencesUtils.getInt(this,
+          R.string.activity_recognition_type_key,
+          PreferencesUtils.ACTIVITY_RECOGNITION_TYPE_DEFAULT);
+      if (activityRecognitionType != PreferencesUtils.ACTIVITY_RECOGNITION_TYPE_DEFAULT) {
+        String iconValue = null;
+        switch (activityRecognitionType) {
+          case DetectedActivity.IN_VEHICLE:
+            iconValue = TrackIconUtils.DRIVE;
+            break;
+          case DetectedActivity.ON_BICYCLE:
+            iconValue = TrackIconUtils.BIKE;
+            break;
+          case DetectedActivity.ON_FOOT:
+            iconValue = TrackIconUtils.WALK;
+            break;
+          default:
+            break;
+        }
+        if (iconValue != null) {
+          track.setIcon(iconValue);
+          track.setCategory(getString(TrackIconUtils.getIconActivityType(iconValue)));
+        }
+      }  
+      updateRecordingTrack(track, myTracksProviderUtils.getLastTrackPointId(trackId), false);      
     }
 
     endRecording(true, trackId);

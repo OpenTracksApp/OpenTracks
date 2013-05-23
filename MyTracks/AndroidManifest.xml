@@ -26,6 +26,8 @@ limitations under the License.
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.WAKE_LOCK" />
+  <!-- Permission for activity recognition -->
+  <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION" />
   <!-- Permissions to access sensors -->
   <uses-permission android:name="com.dsi.ant.permission.ANT" />
   <uses-permission android:name="com.dsi.ant.permission.ANT_ADMIN" />
@@ -243,6 +245,8 @@ limitations under the License.
         android:name="android.content.SyncAdapter"
         android:resource="@xml/sync_adapter" />
     </service>
+    <service
+      android:name="com.google.android.apps.mytracks.services.ActivityRecognitionIntentService" />
     <service
       android:exported="false"
       android:name="com.google.android.apps.mytracks.services.ControlRecordingService" />
