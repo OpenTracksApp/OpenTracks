@@ -455,9 +455,15 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
       getActivity().runOnUiThread(new Runnable() {
         public void run() {
           if (isResumed() && googleMap != null) {
-            mapOverlay.update(googleMap, paths, reloadPaths);
-            reloadPaths = false;
-
+            boolean hasStartMarker = mapOverlay.update(googleMap, paths, reloadPaths);
+            
+            /*
+             * If has the start marker, then don't need to reload the paths each
+             * time
+             */
+            if (hasStartMarker) {
+              reloadPaths = false;
+            }
             if (!isSelectedTrackRecording() || isSelectedTrackPaused()) {
               lastTrackPoint = null;
             }

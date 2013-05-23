@@ -210,9 +210,11 @@ public class MapOverlay {
    * @param googleMap the google map
    * @param paths the paths
    * @param reload true to reload all points
+   * @return true if has the start marker
    */
-  public void update(GoogleMap googleMap, ArrayList<Polyline> paths, boolean reload) {
+  public boolean update(GoogleMap googleMap, ArrayList<Polyline> paths, boolean reload) {
     synchronized (locations) {
+      boolean hasStartMarker = false;
       // Merge pendingLocations with locations
       int newLocations = pendingLocations.drainTo(locations);
       // Call updateState first because we want to update its state each time
@@ -221,7 +223,7 @@ public class MapOverlay {
         googleMap.clear();
         paths.clear();
         trackPath.updatePath(googleMap, paths, 0, locations);
-        updateStartAndEndMarkers(googleMap);
+        hasStartMarker = updateStartAndEndMarkers(googleMap);
         updateWaypoints(googleMap);
       } else {
         if (newLocations != 0) {
@@ -229,6 +231,7 @@ public class MapOverlay {
           trackPath.updatePath(googleMap, paths, numLocations - newLocations, locations);
         }
       }
+      return hasStartMarker;
     }
   }
 
@@ -236,8 +239,9 @@ public class MapOverlay {
    * Updates the start and end markers.
    * 
    * @param googleMap the google map
+   * @return true if has the start marker
    */
-  private void updateStartAndEndMarkers(GoogleMap googleMap) {
+  private boolean updateStartAndEndMarkers(GoogleMap googleMap) {
     // Add the end marker
     if (showEndMarker) {
       for (int i = locations.size() - 1; i >= 0; i--) {
@@ -253,6 +257,7 @@ public class MapOverlay {
     }
 
     // Add the start marker
+    boolean hasStartMarker = false;
     for (int i = 0; i < locations.size(); i++) {
       CachedLocation cachedLocation = locations.get(i);
       if (cachedLocation.valid) {
@@ -260,9 +265,11 @@ public class MapOverlay {
             .anchor(MARKER_X_ANCHOR, MARKER_Y_ANCHOR).draggable(false).visible(true)
             .icon(BitmapDescriptorFactory.fromResource(R.drawable.green_dot));
         googleMap.addMarker(markerOptions);
+        hasStartMarker = true;
         break;
       }
     }
+    return hasStartMarker;
   }
 
   /**
