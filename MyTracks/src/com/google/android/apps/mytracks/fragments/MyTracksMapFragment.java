@@ -105,6 +105,7 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
    * <p>
    * Set to true when <br>
    * 1. user clicks on the my location button <br>
+   * 2. first location during a recording <br>
    * Set to false when <br>
    * 1. showing a marker <br>
    * 2. user manually zooms/pans
@@ -578,6 +579,7 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
   private void setCurrentLocation(Location location) {
     // If recording, zoom to the first location
     if (isSelectedTrackRecording() && currentLocation == null && location != null) {
+      keepCurrentLocationVisible = true;
       zoomToCurrentLocation = true;
     }
     currentLocation = location;
