@@ -478,7 +478,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         return ApiAdapterFactory.getApiAdapter().handleSearchMenuSelection(this);
       case R.id.track_list_start_gps:
         MyTracksLocationManager myTracksLocationManager = new MyTracksLocationManager(
-            this, Looper.myLooper());
+            this, Looper.myLooper(), false);
         if (!myTracksLocationManager.isGpsProviderEnabled()) {
           intent = GoogleLocationUtils.isAvailable(TrackListActivity.this) ? new Intent(
               GoogleLocationUtils.ACTION_GOOGLE_LOCATION_SETTINGS)

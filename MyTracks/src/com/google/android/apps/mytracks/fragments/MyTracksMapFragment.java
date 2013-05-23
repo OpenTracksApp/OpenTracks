@@ -167,7 +167,7 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
         @Override
       public void onClick(View v) {
         final MyTracksLocationManager myTracksLocationManager = new MyTracksLocationManager(
-            getActivity(), Looper.myLooper());
+            getActivity(), Looper.myLooper(), true);
         if (!myTracksLocationManager.isAllowed()) {
           String setting = getString(
               GoogleLocationUtils.isAvailable(getActivity()) ? R.string.gps_google_location_settings
@@ -533,7 +533,7 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
         TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE, TrackDataType.PREFERENCE));
 
     MyTracksLocationManager myTracksLocationManager = new MyTracksLocationManager(
-        getActivity(), Looper.myLooper());
+        getActivity(), Looper.myLooper(), false);
     boolean isGpsProviderEnabled = myTracksLocationManager.isGpsProviderEnabled();
 
     if (googleMap != null) {

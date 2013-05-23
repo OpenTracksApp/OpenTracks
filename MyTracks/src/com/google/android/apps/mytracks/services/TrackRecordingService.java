@@ -285,7 +285,7 @@ public class TrackRecordingService extends Service {
     super.onCreate();
     context = this;
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
-    myTracksLocationManager = new MyTracksLocationManager(this, Looper.myLooper());
+    myTracksLocationManager = new MyTracksLocationManager(this, Looper.myLooper(), true);
     activityRecognitionPendingIntent = PendingIntent.getService(context, 0,
         new Intent(context, ActivityRecognitionIntentService.class),
         PendingIntent.FLAG_UPDATE_CURRENT);

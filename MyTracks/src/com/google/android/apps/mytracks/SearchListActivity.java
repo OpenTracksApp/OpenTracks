@@ -388,7 +388,7 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
     setTitle(textQuery);
 
     final MyTracksLocationManager myTracksLocationManager = new MyTracksLocationManager(
-        this, Looper.myLooper());
+        this, Looper.myLooper(), true);
     LocationListener locationListener = new LocationListener() {
         @Override
       public void onLocationChanged(final Location location) {

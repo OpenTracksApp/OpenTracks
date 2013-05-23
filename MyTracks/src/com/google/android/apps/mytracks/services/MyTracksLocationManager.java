@@ -107,10 +107,10 @@ public class MyTracksLocationManager {
   private final Looper looper;
   private final Handler handler;
   private final LocationClient locationClient;
-
   private final LocationManager locationManager;
   private final ContentResolver contentResolver;
   private final GoogleSettingsObserver observer;
+
   private boolean isAvailable;
   private boolean isAllowed;
   private LocationListener requestLastLocation;
@@ -118,15 +118,21 @@ public class MyTracksLocationManager {
   private float requestLocationUpdatesDistance;
   private long requestLocationUpdatesTime;
 
-  public MyTracksLocationManager(Context context, Looper looper) {
+  public MyTracksLocationManager(Context context, Looper looper, boolean enableLocaitonClient) {
     this.looper = looper;
     handler = new Handler(looper);
-    locationClient = new LocationClient(context, connectionCallbacks, onConnectionFailedListener);
-    locationClient.connect();
+
+    if (enableLocaitonClient) {
+      locationClient = new LocationClient(context, connectionCallbacks, onConnectionFailedListener);
+      locationClient.connect();
+    } else {
+      locationClient = null;
+    }
 
     locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
     contentResolver = context.getContentResolver();
     observer = new GoogleSettingsObserver();
+
     isAvailable = GoogleLocationUtils.isAvailable(context);
     isAllowed = isUseLocationForServicesOn();
 
@@ -138,7 +144,9 @@ public class MyTracksLocationManager {
    * Closes the {@link MyTracksLocationManager}.
    */
   public void close() {
-    locationClient.disconnect();
+    if (locationClient != null) {
+      locationClient.disconnect();
+    }
     contentResolver.unregisterContentObserver(observer);
   }
 
@@ -186,7 +194,8 @@ public class MyTracksLocationManager {
   }
 
   /**
-   * Requests location updates.
+   * Requests location updates. This is an ongoing request, thus the caller
+   * needs to check the status of {@link #isAllowed}.
    * 
    * @param minTime the minimal time
    * @param minDistance the minimal distance
@@ -215,7 +224,7 @@ public class MyTracksLocationManager {
         @Override
       public void run() {
         requestLocationUpdates = null;
-        if (locationClient.isConnected()) {
+        if (locationClient != null && locationClient.isConnected()) {
           locationClient.removeLocationUpdates(locationListener);
         }
       }
