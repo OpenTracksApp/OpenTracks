@@ -192,10 +192,23 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
       }
     });
     messageTextView = (TextView) layout.findViewById(R.id.map_message);
+    return layout;
+  }
 
+  @Override
+  public void onActivityCreated(Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
+    if (savedInstanceState != null) {
+      keepCurrentLocationVisible = savedInstanceState.getBoolean(
+          KEEP_CURRENT_LOCATION_VISIBLE_KEY, false);
+      zoomToCurrentLocation = savedInstanceState.getBoolean(ZOOM_TO_CURRENT_LOCATION_KEY, false);
+      Location location = (Location) savedInstanceState.getParcelable(CURRENT_LOCATION_KEY);
+      setCurrentLocation(location);
+    }
+    
     /*
-     * At this point, after super.onCreateView, getMap will not return null and
-     * we can initialize googleMap. However, onCreateView can be called multiple
+     * At this point, after onCreateView, getMap will not return null and we can
+     * initialize googleMap. However, onActivityCreated can be called multiple
      * times, e.g., when the user switches tabs. With
      * GoogleMapOptions.useViewLifecycleInFragment == false, googleMap lifecycle
      * is tied to the fragment lifecycle and the same googleMap object is
@@ -255,19 +268,6 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
       });
       googleMap.moveCamera(
           CameraUpdateFactory.newLatLngZoom(getDefaultLatLng(), googleMap.getMinZoomLevel()));
-    }
-    return layout;
-  }
-
-  @Override
-  public void onActivityCreated(Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
-    if (savedInstanceState != null) {
-      keepCurrentLocationVisible = savedInstanceState.getBoolean(
-          KEEP_CURRENT_LOCATION_VISIBLE_KEY, false);
-      zoomToCurrentLocation = savedInstanceState.getBoolean(ZOOM_TO_CURRENT_LOCATION_KEY, false);
-      Location location = (Location) savedInstanceState.getParcelable(CURRENT_LOCATION_KEY);
-      setCurrentLocation(location);
     }
   }
 
