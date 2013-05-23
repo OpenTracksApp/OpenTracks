@@ -45,10 +45,20 @@ public class PreferenceBackupHelper {
   public PreferenceBackupHelper(Context context) {
     doNotBackup = new HashSet<String>();
     doNotBackup.add(context.getString(R.string.activity_recognition_type_key));
+    doNotBackup.add(context.getString(R.string.ant_bike_cadence_sensor_id_key));
+    doNotBackup.add(context.getString(R.string.ant_combined_bike_sensor_id_key));
+    doNotBackup.add(context.getString(R.string.ant_heart_rate_monitor_id_key));
+    doNotBackup.add(context.getString(R.string.ant_speed_distance_monitor_id_key));
     doNotBackup.add(context.getString(R.string.auto_resume_track_current_retry_key));
+    doNotBackup.add(context.getString(R.string.bluetooth_sensor_key));
+    doNotBackup.add(context.getString(R.string.confirm_play_earth_key));
+    doNotBackup.add(context.getString(R.string.confirm_share_drive_key));
+    doNotBackup.add(context.getString(R.string.confirm_share_file_key));
+    doNotBackup.add(context.getString(R.string.confirm_share_maps_key));       
     doNotBackup.add(context.getString(R.string.drive_deleted_list_key));
     doNotBackup.add(context.getString(R.string.drive_largest_change_id_key));
     doNotBackup.add(context.getString(R.string.drive_sync_key));
+    doNotBackup.add(context.getString(R.string.google_account_key));
     doNotBackup.add(context.getString(R.string.recording_track_id_key));
     doNotBackup.add(context.getString(R.string.recording_track_paused_key));
     doNotBackup.add(context.getString(R.string.selected_track_id_key));

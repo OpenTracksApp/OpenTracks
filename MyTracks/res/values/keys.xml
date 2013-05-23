@@ -17,26 +17,16 @@ limitations under the License.
 <resources>
   <!-- Keys for persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
   <string name="allow_access_key">allowAccess</string>
-  <string name="ant_bike_cadence_sensor_id_key">antBikeCadenceSensorId</string>
-  <string name="ant_combined_bike_sensor_id_key">antCombinedBikeSensorId</string>
-  <string name="ant_heart_rate_monitor_id_key">antHeartRateMonitorId</string>
-  <string name="ant_speed_distance_monitor_id_key">antSpeedDistanceMonitorId</string>
   <string name="auto_resume_track_timeout_key">autoResumeTrackTimeout</string>
-  <string name="bluetooth_sensor_key">bluetoothSensor</string>
   <string name="chart_by_distance_key">chartByDistance</string>
   <string name="chart_show_cadence_key">chartShowCadence</string>
   <string name="chart_show_elevation_key">chartShowElevation</string>
   <string name="chart_show_heart_rate_key">chartShowHeartRate</string>
   <string name="chart_show_power_key">chartShowPower</string>
   <string name="chart_show_speed_key">chartShowSpeed</string>
-  <string name="confirm_play_earth_key">confirmPlayEarth</string>
-  <string name="confirm_share_drive_key">confirmShareDrive</string>
-  <string name="confirm_share_file_key">confirmShareFile</string>
-  <string name="confirm_share_maps_key">confirmShareMaps</string>
   <string name="default_activity_key">defaultActivity</string>
   <string name="default_map_public_key">defaultMapPublic</string>
   <string name="default_table_public_key">defaultTablePublic</string>
-  <string name="google_account_key">googleAccount</string>
   <string name="map_type_key">mapType</string>
   <string name="max_recording_distance_key">maxRecordingDistance</string>
   <string name="metric_units_key">metricUnits</string>
@@ -66,10 +56,20 @@ limitations under the License.
   <string name="voice_frequency_key">voiceFrequency</string>
   <!-- Keys for persistend preferences. But they should not get backed up or restored. -->
   <string name="activity_recognition_type_key">activityRecognitionType</string>
+  <string name="ant_bike_cadence_sensor_id_key">antBikeCadenceSensorId</string>
+  <string name="ant_combined_bike_sensor_id_key">antCombinedBikeSensorId</string>
+  <string name="ant_heart_rate_monitor_id_key">antHeartRateMonitorId</string>
+  <string name="ant_speed_distance_monitor_id_key">antSpeedDistanceMonitorId</string>
   <string name="auto_resume_track_current_retry_key">autoResumeTrackCurrentRetry</string>
+  <string name="bluetooth_sensor_key">bluetoothSensor</string>
+  <string name="confirm_play_earth_key">confirmPlayEarth</string>
+  <string name="confirm_share_drive_key">confirmShareDrive</string>
+  <string name="confirm_share_file_key">confirmShareFile</string>
+  <string name="confirm_share_maps_key">confirmShareMaps</string>
   <string name="drive_deleted_list_key">driveDeletedList</string>
   <string name="drive_largest_change_id_key">driveLargestChangeId</string>
   <string name="drive_sync_key">driveSync</string>
+  <string name="google_account_key">googleAccount</string>
   <string name="recording_track_id_key">recordingTrackId</string>
   <string name="recording_track_paused_key">recordingTrackPaused</string>
   <string name="selected_track_id_key">selectedTrackId</string>
