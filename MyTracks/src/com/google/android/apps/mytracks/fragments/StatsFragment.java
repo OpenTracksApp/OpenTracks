@@ -88,6 +88,9 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   public void onResume() {
     super.onResume();
     resumeTrackDataHub();
+    if (isSelectedTrackRecording()) {
+      handler.post(updateTotalTime);
+    }
   }
 
   @Override
@@ -99,12 +102,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
   @Override
   public void onSelectedTrackChanged(Track track) {
-    if (isResumed()) {
-      handler.removeCallbacks(updateTotalTime);
-      if (isSelectedTrackRecording()) {
-        handler.post(updateTotalTime);
-      }
-    }
+    // We don't care.
   }
 
   @Override
@@ -231,9 +229,9 @@ public class StatsFragment extends Fragment implements TrackDataListener {
    */
   private synchronized void resumeTrackDataHub() {
     trackDataHub = ((TrackDetailActivity) getActivity()).getTrackDataHub();
-    trackDataHub.registerTrackDataListener(this, EnumSet.of(TrackDataType.SELECTED_TRACK,
-        TrackDataType.TRACKS_TABLE, TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE,
-        TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE, TrackDataType.PREFERENCE));
+    trackDataHub.registerTrackDataListener(this, EnumSet.of(TrackDataType.TRACKS_TABLE,
+        TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE, TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE,
+        TrackDataType.PREFERENCE));
   }
 
   /**
