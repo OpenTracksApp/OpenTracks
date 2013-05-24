@@ -274,13 +274,27 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
   @Override
   public void onResume() {
     super.onResume();
+    resumeTrackDataHub();
+
+    MyTracksLocationManager myTracksLocationManager = new MyTracksLocationManager(
+        getActivity(), Looper.myLooper(), false);
+    boolean isGpsProviderEnabled = myTracksLocationManager.isGpsProviderEnabled();
+    myTracksLocationManager.close();
+
     if (googleMap != null) {
+
+      // Update map type
       int mapType = PreferencesUtils.getInt(
           getActivity(), R.string.map_type_key, PreferencesUtils.MAP_TYPE_DEFAUlT);
       googleMap.setMapType(mapType);
       ApiAdapterFactory.getApiAdapter().invalidMenu(getActivity());
+
+      // Disable my location if gps is disabled
+      googleMap.setMyLocationEnabled(isGpsProviderEnabled);
     }
-    resumeTrackDataHub();
+
+    // setWarningMessage depends on resumeTrackDataHub being invoked beforehand
+    setWarningMessage(isGpsProviderEnabled);
     updateCurrentLocation();
   }
 
@@ -538,16 +552,6 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
     trackDataHub.registerTrackDataListener(this, EnumSet.of(TrackDataType.SELECTED_TRACK,
         TrackDataType.WAYPOINTS_TABLE, TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE,
         TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE, TrackDataType.PREFERENCE));
-
-    MyTracksLocationManager myTracksLocationManager = new MyTracksLocationManager(
-        getActivity(), Looper.myLooper(), false);
-    boolean isGpsProviderEnabled = myTracksLocationManager.isGpsProviderEnabled();
-
-    if (googleMap != null) {
-      googleMap.setMyLocationEnabled(isGpsProviderEnabled);
-    }
-    setWarningMessage(isGpsProviderEnabled);
-    myTracksLocationManager.close();
   }
 
   /**
