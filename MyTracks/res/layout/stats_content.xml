@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2013 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+  <!-- Row 1: distance and speed -->
+  <LinearLayout
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent" >
+    <include
+      android:id="@+id/stats_distance"
+      layout="@layout/stats_large_item" />
+    <View style="@style/StatsVerticalSpacer" />
+    <include
+      android:id="@+id/stats_speed"
+      layout="@layout/stats_large_item" />
+  </LinearLayout>
+  <!-- Row 2: total time and average speed -->
+  <LinearLayout
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent" >
+    <include
+      android:id="@+id/stats_total_time"
+      layout="@layout/stats_large_item" />
+    <View style="@style/StatsVerticalSpacer" />
+    <include
+      android:id="@+id/stats_average_speed"
+      layout="@layout/stats_large_item" />
+  </LinearLayout>
+  <!-- Row 3: horizontal line -->
+  <View style="@style/StatsHorizontalLine" />
+  <!-- Row 3: moving time and average moving speed -->
+  <LinearLayout
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent" >
+    <include
+      android:id="@+id/stats_moving_time"
+      layout="@layout/stats_small_item" />
+    <View style="@style/StatsVerticalSpacer" />
+    <include
+      android:id="@+id/stats_average_moving_time"
+      layout="@layout/stats_small_item" />
+  </LinearLayout>
+  <!-- Row 4: empty and max speed -->
+  <LinearLayout
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent" >
+    <LinearLayout style="@style/StatsSmallItemContainer" />
+    <View style="@style/StatsVerticalSpacer" />
+    <include
+      android:id="@+id/stats_max_speed"
+      layout="@layout/stats_small_item" />
+  </LinearLayout>
+  <!-- Row 5: horizontal line -->
+  <View
+    android:id="@+id/stats_grade_elevation_horizontal_line"
+    style="@style/StatsHorizontalLine" />
+  <!-- Row 5: grade and elevation -->
+  <LinearLayout
+    android:id="@+id/stats_grade_elevation_container"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent" >
+    <!-- Grade -->
+    <LinearLayout style="@style/StatsSmallItemContainer" >
+      <!-- Grade label -->
+      <TextView
+        android:text="@string/stats_grade"
+        style="@style/StatsSmallLabel" />
+      <!-- Grade min -->
+      <include
+        android:id="@+id/stats_grade_min"
+        layout="@layout/stats_small_item_1line" />
+      <!-- Grade max -->
+      <include
+        android:id="@+id/stats_grade_max"
+        layout="@layout/stats_small_item_1line" />
+    </LinearLayout>
+    <View style="@style/StatsVerticalSpacer" />
+    <!-- Elevation -->
+    <LinearLayout style="@style/StatsSmallItemContainer" >
+      <!-- Elevation label -->
+      <TextView
+        android:text="@string/stats_elevation"
+        style="@style/StatsSmallLabel" />
+      <!-- Elevation -->
+      <include
+        android:id="@+id/stats_elevation"
+        layout="@layout/stats_small_item_1line" />
+      <!-- Elevation gain -->
+      <include
+        android:id="@+id/stats_elevation_gain"
+        layout="@layout/stats_small_item_1line" />
+      <!-- Elevation min -->
+      <include
+        android:id="@+id/stats_elevation_min"
+        layout="@layout/stats_small_item_1line" />
+      <!-- Elevation max -->
+      <include
+        android:id="@+id/stats_elevation_max"
+        layout="@layout/stats_small_item_1line" />
+    </LinearLayout>
+  </LinearLayout>
+  <!-- Row 6: horizontal line -->
+  <View
+    android:id="@+id/stats_coordinate_horizontal_line"
+    style="@style/StatsHorizontalLine" />
+  <!-- Row 6: latitude and longitude -->
+  <LinearLayout
+    android:id="@+id/stats_coordinate_container"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent" >
+    <include
+      android:id="@+id/stats_latitude"
+      layout="@layout/stats_small_item" />
+    <View style="@style/StatsVerticalSpacer" />
+    <include
+      android:id="@+id/stats_longitude"
+      layout="@layout/stats_small_item" />
+  </LinearLayout>
+</merge>
