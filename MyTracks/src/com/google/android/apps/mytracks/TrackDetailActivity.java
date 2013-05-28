@@ -51,7 +51,6 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -74,7 +73,6 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
   public static final String EXTRA_TRACK_ID = "track_id";
   public static final String EXTRA_MARKER_ID = "marker_id";
 
-  private static final String TAG = TrackDetailActivity.class.getSimpleName();
   private static final String CURRENT_TAB_TAG_KEY = "current_tab_tag_key";
 
   // The following are set in onCreate
@@ -218,7 +216,6 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
     }
     trackController = new TrackController(
         this, trackRecordingServiceConnection, false, recordListener, stopListener);
-    showMarker();
   }
 
   @Override
@@ -292,7 +289,6 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
   public void onNewIntent(Intent intent) {
     setIntent(intent);
     handleIntent(intent);
-    showMarker();
   }
 
   @Override
@@ -475,6 +471,13 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
   }
 
   /**
+   * Gets the marker id.
+   */
+  public long getMarkerId() {
+    return markerId;
+  }
+  
+  /**
    * Handles the data in the intent.
    */
   private void handleIntent(Intent intent) {
@@ -505,22 +508,6 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
       }
       finish();
       return;
-    }
-  }
-
-  /**
-   * Shows marker.
-   */
-  private void showMarker() {
-    if (markerId != -1L) {
-      MyTracksMapFragment mapFragmet = (MyTracksMapFragment) getSupportFragmentManager()
-          .findFragmentByTag(MyTracksMapFragment.MAP_FRAGMENT_TAG);
-      if (mapFragmet != null) {
-        tabHost.setCurrentTabByTag(MyTracksMapFragment.MAP_FRAGMENT_TAG);
-        mapFragmet.showMarker(trackId, markerId);
-      } else {
-        Log.e(TAG, "MapFragment is null");
-      }
     }
   }
 

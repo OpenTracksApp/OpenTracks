@@ -93,8 +93,10 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
 
   private static final int MAP_VIEW_PADDING = 32;
 
+  // States from TrackDetailActivity, set in onResume
   private TrackDataHub trackDataHub;
-
+  private long markerId;
+  
   // Current location
   private Location currentLocation;
   private Location lastTrackPoint;
@@ -129,10 +131,6 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
   private boolean zoomToCurrentLocation;
 
   private OnLocationChangedListener onLocationChangedListener;
-
-  // For showing a marker
-  private long markerTrackId = -1L;
-  private long markerId = -1L;
 
   // Current track
   private Track currentTrack;
@@ -274,6 +272,9 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
   @Override
   public void onResume() {
     super.onResume();
+
+    // First obtain the states from TrackDetailActivity
+    markerId = ((TrackDetailActivity) getActivity()).getMarkerId();
     resumeTrackDataHub();
 
     MyTracksLocationManager myTracksLocationManager = new MyTracksLocationManager(
@@ -317,29 +318,6 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
   public void onPause() {
     super.onPause();
     pauseTrackDataHub();
-  }
-
-  /**
-   * Shows the marker on the map.
-   * 
-   * @param trackId the track id
-   * @param id the marker id
-   */
-  public void showMarker(long trackId, long id) {
-    /*
-     * Synchronize to prevent race condition in changing markerTrackId and
-     * markerId variables.
-     */
-    synchronized (this) {
-      if (currentTrack != null && currentTrack.getId() == trackId) {
-        showMarker(id);
-        markerTrackId = -1L;
-        markerId = -1L;
-        return;
-      }
-      markerTrackId = trackId;
-      markerId = id;
-    }
   }
 
   @Override
@@ -409,21 +387,12 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
       boolean hasTrack = track != null;
       if (hasTrack) {
         mapOverlay.setShowEndMarker(!isSelectedTrackRecording());
-        synchronized (this) {
-          /*
-           * Synchronize to prevent race condition in changing markerTrackId and
-           * markerId variables.
-           */
-          if (track.getId() == markerTrackId) {
-            // Show the marker
-            showMarker(markerId);
-
-            markerTrackId = -1L;
-            markerId = -1L;
-          } else {
-            // Show the track
-            showTrack();
-          }
+        if (markerId != -1L) {
+          // Show the marker
+          showMarker(markerId);
+        } else {
+          // Show the track
+          showTrack();
         }
       }
     }
@@ -648,9 +617,9 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
               .include(southWest).include(northEast).build();
 
           /**
-           * Note cannot call CameraUpdate.newLatLngBounds(LatLngBounds bounds,
+           * Note cannot call CameraUpdateFactory.newLatLngBounds(LatLngBounds bounds,
            * int padding) if the map view has not undergone layout. Thus calling
-           * CameraUpdate.newLatLngBounds(LatLngBounds bounds, int width, int
+           * CameraUpdateFactory.newLatLngBounds(LatLngBounds bounds, int width, int
            * height, int padding) after making sure that mapView is valid in the
            * above code.
            */
