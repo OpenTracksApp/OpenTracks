@@ -156,11 +156,6 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   }
 
   @Override
-  public void onSelectedTrackChanged(Track track) {
-    // We don't care.
-  }
-
-  @Override
   public void onTrackUpdated(Track track) {
     if (isResumed()) {
       if (track == null || track.getTripStatistics() == null) {

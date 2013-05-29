@@ -172,9 +172,6 @@ public class DataSourceManager {
    */
   private void registerListener(TrackDataType trackDataType) {
     switch (trackDataType) {
-      case SELECTED_TRACK:
-        // Do nothing
-        break;
       case TRACKS_TABLE:
         dataSource.registerContentObserver(TracksColumns.CONTENT_URI, tracksTableObserver);
         break;
@@ -203,9 +200,6 @@ public class DataSourceManager {
    */
   private void unregisterListener(TrackDataType trackDataType) {
     switch (trackDataType) {
-      case SELECTED_TRACK:
-        // Do nothing
-        break;
       case TRACKS_TABLE:
         dataSource.unregisterContentObserver(tracksTableObserver);
         break;

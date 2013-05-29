@@ -342,7 +342,6 @@ public class TrackDataHub implements DataSourceListener {
       trackDataListener.onMinRecordingDistanceChanged(minRecordingDistance);
     }
 
-    notifySelectedTrackChanged(trackDataManager.getListeners(TrackDataType.SELECTED_TRACK));
     notifyTracksTableUpdate(trackDataManager.getListeners(TrackDataType.TRACKS_TABLE));
 
     for (TrackDataListener listener :
@@ -371,10 +370,6 @@ public class TrackDataHub implements DataSourceListener {
       trackDataListener.onMinRecordingDistanceChanged(minRecordingDistance);
     }
 
-    if (trackDataTypes.contains(TrackDataType.SELECTED_TRACK)) {
-      notifySelectedTrackChanged(trackDataListeners);
-    }
-
     if (trackDataTypes.contains(TrackDataType.TRACKS_TABLE)) {
       notifyTracksTableUpdate(trackDataListeners);
     }
@@ -395,21 +390,6 @@ public class TrackDataHub implements DataSourceListener {
 
     if (trackDataTypes.contains(TrackDataType.WAYPOINTS_TABLE)) {
       notifyWaypointsTableUpdate(trackDataListeners);
-    }
-  }
-
-  /**
-   * Notifies selected track changed. To be run in the {@link #handler} thread.
-   * 
-   * @param trackDataListeners the track data listeners to notify
-   */
-  private void notifySelectedTrackChanged(Set<TrackDataListener> trackDataListeners) {
-    if (trackDataListeners.isEmpty()) {
-      return;
-    }
-    Track track = myTracksProviderUtils.getTrack(selectedTrackId);
-    for (TrackDataListener trackDataListener : trackDataListeners) {
-      trackDataListener.onSelectedTrackChanged(track);
     }
   }
 

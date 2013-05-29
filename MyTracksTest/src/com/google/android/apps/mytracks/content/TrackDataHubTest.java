@@ -715,23 +715,6 @@ public class TrackDataHubTest extends AndroidTestCase {
   /**
    * Tests the method {@link TrackDataHub#start()}.
    */
-  public void testRegisterSelectedTrackListener() {
-    dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceChangeListenerCapture));
-    Track track = TrackStubUtils.createTrack(1);
-    expect(myTracksProviderUtils.getTrack(capture(new Capture<Long>()))).andReturn(track);
-    // Make the track id is unique.
-    PreferencesUtils.setLong(context, R.string.recording_track_id_key, System.currentTimeMillis());
-    trackDataListener1.onSelectedTrackChanged(track);
-    replay();
-    trackDataHub.start();
-    trackDataHub.registerTrackDataListener(
-        trackDataListener1, EnumSet.of(TrackDataType.SELECTED_TRACK));
-    verifyAndReset();
-  }
-
-  /**
-   * Tests the method {@link TrackDataHub#start()}.
-   */
   public void testRegisterTracksTableListener() {
     dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceChangeListenerCapture));
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();

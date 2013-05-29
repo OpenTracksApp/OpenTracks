@@ -35,17 +35,6 @@ public interface TrackDataListener {
   }
 
   /**
-   * Called when the selected track changes. This will be followed by calls to
-   * data methods such as {@link #onTrackUpdated(Track)},
-   * {@link #clearTrackPoints()}, {@link #onSampledInTrackPoint(Location)},
-   * etc., even if no track is currently selected (in which case you'll only get
-   * calls to clear the current data).
-   * 
-   * @param track the selected track or null if no track is selected
-   */
-  public void onSelectedTrackChanged(Track track);
-
-  /**
    * Called when the track or its statistics has been updated.
    * 
    * @param track the track

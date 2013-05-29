@@ -375,12 +375,7 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
     }
     return true;
   }
-  
-  @Override
-  public void onSelectedTrackChanged(final Track track) {
-    // We don't care.
-  }
-  
+
   @Override
   public void onTrackUpdated(Track track) {
     currentTrack = track;

@@ -22,7 +22,6 @@ package com.google.android.apps.mytracks.content;
  * @author Jimmy Shih
  */
 public enum TrackDataType {
-  SELECTED_TRACK, // selected track changes
   TRACKS_TABLE, // tracks table changes
   WAYPOINTS_TABLE, // waypoints table changes
   SAMPLED_IN_TRACK_POINTS_TABLE, // sampled-in track points table changes

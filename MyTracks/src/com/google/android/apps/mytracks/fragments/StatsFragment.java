@@ -101,11 +101,6 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   }
 
   @Override
-  public void onSelectedTrackChanged(Track track) {
-    // We don't care.
-  }
-
-  @Override
   public void onTrackUpdated(final Track track) {
     if (isResumed()) {
       getActivity().runOnUiThread(new Runnable() {
