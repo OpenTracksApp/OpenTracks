@@ -83,7 +83,6 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
   private static final String CURRENT_LOCATION_KEY = "current_location_key";
   private static final String
       KEEP_CURRENT_LOCATION_VISIBLE_KEY = "keep_current_location_visible_key";
-  private static final String ZOOM_TO_CURRENT_LOCATION_KEY = "zoom_to_current_location_key";
 
   private static final float DEFAULT_ZOOM_LEVEL = 18f;
 
@@ -113,22 +112,6 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
    * 2. user manually zooms/pans
    */
   private boolean keepCurrentLocationVisible;
-
-  /**
-   * True to zoom/center the current location when it is available.
-   * <p>
-   * Set to true when <br>
-   * 1. user clicks on the my location button <br>
-   * 2. first location during a recording <br>
-   * Set to false when <br>
-   * 1. showing a marker <br>
-   * 2. user manually zooms/pans <br>
-   * 3. after zooming to the current location <br>
-   * <p>
-   * The last one is to support the use case of zooming only once. After zoom,
-   * set it to false. E.g., only zoom to the first location during a recording.
-   */
-  private boolean zoomToCurrentLocation;
 
   private OnLocationChangedListener onLocationChangedListener;
 
@@ -181,9 +164,8 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
             public void onLocationChanged(Location location) {
               myTracksLocationManager.close();
               keepCurrentLocationVisible = true;
-              zoomToCurrentLocation = true;
               setCurrentLocation(location);
-              updateCurrentLocation();
+              updateCurrentLocation(true);
             }
           });
         }
@@ -199,9 +181,12 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
     if (savedInstanceState != null) {
       keepCurrentLocationVisible = savedInstanceState.getBoolean(
           KEEP_CURRENT_LOCATION_VISIBLE_KEY, false);
-      zoomToCurrentLocation = savedInstanceState.getBoolean(ZOOM_TO_CURRENT_LOCATION_KEY, false);
-      Location location = (Location) savedInstanceState.getParcelable(CURRENT_LOCATION_KEY);
-      setCurrentLocation(location);
+      if (keepCurrentLocationVisible) {
+        Location location = (Location) savedInstanceState.getParcelable(CURRENT_LOCATION_KEY);
+        if (location != null) {
+          setCurrentLocation(location);
+        }
+      }
     }
     
     /*
@@ -259,8 +244,7 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
         public void onCameraChange(CameraPosition cameraPosition) {
           if (isResumed() && keepCurrentLocationVisible && currentLocation != null
               && !isLocationVisible(currentLocation)) {
-            keepCurrentLocationVisible = false;
-            zoomToCurrentLocation = false;
+            keepCurrentLocationVisible = false;         
           }
         }
       });
@@ -296,12 +280,22 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
 
     // setWarningMessage depends on resumeTrackDataHub being invoked beforehand
     setWarningMessage(isGpsProviderEnabled);
-    updateCurrentLocation();
+    
+    if (markerId == -1L && isInTrackingMode()) {
+      updateCurrentLocation(true);      
+    } else {
+      if (googleMap != null) {
+        googleMap.moveCamera(
+            CameraUpdateFactory.newLatLngZoom(getDefaultLatLng(), googleMap.getMinZoomLevel()));
+      }
+    }
   }
 
   @Override
   public void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
+
+    outState.putBoolean(KEEP_CURRENT_LOCATION_VISIBLE_KEY, keepCurrentLocationVisible);
     if (currentLocation != null) {
       /*
        * currentLocation is a MyTracksLocation object, which cannot be
@@ -310,8 +304,6 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
        */
       outState.putParcelable(CURRENT_LOCATION_KEY, new Location(currentLocation));
     }
-    outState.putBoolean(KEEP_CURRENT_LOCATION_VISIBLE_KEY, keepCurrentLocationVisible);
-    outState.putBoolean(ZOOM_TO_CURRENT_LOCATION_KEY, zoomToCurrentLocation);
   }
 
   @Override
@@ -384,14 +376,11 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
   public void onSelectedTrackChanged(final Track track) {
     if (isResumed()) {
       currentTrack = track;
-      boolean hasTrack = track != null;
-      if (hasTrack) {
-        mapOverlay.setShowEndMarker(!isSelectedTrackRecording());
-        if (markerId != -1L) {
-          // Show the marker
-          showMarker(markerId);
-        } else {
-          // Show the track
+      mapOverlay.setShowEndMarker(!isSelectedTrackRecording());
+      if (markerId != -1L) {
+        showMarker(markerId);
+      } else {
+        if (!isInTrackingMode()) {
           showTrack();
         }
       }
@@ -447,12 +436,13 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
             if (hasStartMarker) {
               reloadPaths = false;
             }
-            if (!isSelectedTrackRecording() || isSelectedTrackPaused()) {
-              lastTrackPoint = null;
-            }
-            if (lastTrackPoint != null) {
-              setCurrentLocation(lastTrackPoint);
-              updateCurrentLocation();
+             
+            if (lastTrackPoint != null && isSelectedTrackRecording()) {
+              boolean firstLocation = setCurrentLocation(lastTrackPoint);
+              if (firstLocation) {
+                keepCurrentLocationVisible = true;                
+              }
+              updateCurrentLocation(firstLocation);
               setWarningMessage(true);
             }
           }
@@ -543,31 +533,27 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
   }
 
   /**
-   * Returns true if the selected track is paused. Needs to be synchronized
-   * because trackDataHub can be accessed by multiple threads.
-   */
-  private synchronized boolean isSelectedTrackPaused() {
-    return trackDataHub != null && trackDataHub.isSelectedTrackPaused();
-  }
-
-  /**
    * Sets the current location.
    * 
    * @param location the location
+   * @return true if this is the first location  
    */
-  private void setCurrentLocation(Location location) {
-    // If recording, zoom to the first location
-    if (isSelectedTrackRecording() && currentLocation == null && location != null) {
-      keepCurrentLocationVisible = true;
-      zoomToCurrentLocation = true;
+  private boolean setCurrentLocation(Location location) {
+    boolean firstLocation = false;
+    if (currentLocation == null && location != null) {
+      firstLocation = true;
     }
     currentLocation = location;
+    return firstLocation;
   }
 
   /**
-   * Updates the current location and zoom to it if necessary.
+   * Updates the current location.
+   * 
+   * @param forceZoom true to force zoom to the current location regardless of
+   *          the keepCurrentLocationVisible policy
    */
-  private void updateCurrentLocation() {
+  private void updateCurrentLocation(final boolean forceZoom) {
     getActivity().runOnUiThread(new Runnable() {
       public void run() {
         if (!isResumed() || googleMap == null || onLocationChangedListener == null
@@ -575,11 +561,9 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
           return;
         }
         onLocationChangedListener.onLocationChanged(currentLocation);
-        if (zoomToCurrentLocation
-            || (keepCurrentLocationVisible && !isLocationVisible(currentLocation))) {
+        if (forceZoom || (keepCurrentLocationVisible && !isLocationVisible(currentLocation))) {
           LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
           googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, DEFAULT_ZOOM_LEVEL));
-          zoomToCurrentLocation = false;
         }
       };
     });
@@ -649,7 +633,6 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
           Location location = waypoint.getLocation();
           LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
           keepCurrentLocationVisible = false;
-          zoomToCurrentLocation = false;
           CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, DEFAULT_ZOOM_LEVEL);
           googleMap.moveCamera(cameraUpdate);
         }
@@ -662,16 +645,20 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
    */
   private LatLng getDefaultLatLng() {
     MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(getActivity());
-    Track track = myTracksProviderUtils.getLastTrack();
-    if (track != null) {
-      Location location = myTracksProviderUtils.getLastValidTrackPoint(track.getId());
-      if (location != null) {
-        return new LatLng(location.getLatitude(), location.getLongitude());
-      }
+    Location location = myTracksProviderUtils.getLastValidTrackPoint();
+    if (location != null) {
+      return new LatLng(location.getLatitude(), location.getLongitude());
     }
     return new LatLng(DEFAULT_LATITUDE, DEFAULT_LONGITUDE);
   }
 
+  /**
+   * Returns true if in tracking mode.
+   */
+  private boolean isInTrackingMode() {
+    return keepCurrentLocationVisible && currentLocation != null && isSelectedTrackRecording();
+  }
+  
   /**
    * Returns true if the location is visible. Needs to run on the UI thread.
    * 

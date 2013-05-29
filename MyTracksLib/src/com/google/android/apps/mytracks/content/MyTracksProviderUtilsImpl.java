@@ -817,6 +817,14 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   }
 
   @Override
+  public Location getLastValidTrackPoint() {
+    String selection = TrackPointsColumns._ID + "=(select max(" + TrackPointsColumns._ID + ") from "
+        + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.LATITUDE + "<="
+        + MAX_LATITUDE + ")";
+    return findTrackPointBy(selection, null);
+  }
+  
+  @Override
   public Cursor getTrackPointCursor(
       long trackId, long startTrackPointId, int maxLocations, boolean descending) {
     if (trackId < 0) {
