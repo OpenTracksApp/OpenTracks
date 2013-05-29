@@ -62,6 +62,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -93,8 +94,9 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
   private static final int MAP_VIEW_PADDING = 32;
 
   // States from TrackDetailActivity, set in onResume
-  private TrackDataHub trackDataHub;
+  private long trackId;
   private long markerId;
+  private TrackDataHub trackDataHub;
   
   // Current location
   private Location currentLocation;
@@ -248,8 +250,6 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
           }
         }
       });
-      googleMap.moveCamera(
-          CameraUpdateFactory.newLatLngZoom(getDefaultLatLng(), googleMap.getMinZoomLevel()));
     }
   }
 
@@ -258,6 +258,7 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
     super.onResume();
 
     // First obtain the states from TrackDetailActivity
+    trackId = ((TrackDetailActivity) getActivity()).getTrackId();
     markerId = ((TrackDetailActivity) getActivity()).getMarkerId();
     resumeTrackDataHub();
 
@@ -281,14 +282,17 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
     // setWarningMessage depends on resumeTrackDataHub being invoked beforehand
     setWarningMessage(isGpsProviderEnabled);
     
-    if (markerId == -1L && isInTrackingMode()) {
-      updateCurrentLocation(true);      
+    currentTrack = MyTracksProviderUtils.Factory.get(getActivity()).getTrack(trackId);
+    mapOverlay.setShowEndMarker(!isSelectedTrackRecording());
+    if (markerId != -1L) {
+      showMarker(markerId);
     } else {
-      if (googleMap != null) {
-        googleMap.moveCamera(
-            CameraUpdateFactory.newLatLngZoom(getDefaultLatLng(), googleMap.getMinZoomLevel()));
-      }
-    }
+      if (keepCurrentLocationVisible && currentLocation != null && isSelectedTrackRecording()) {
+        updateCurrentLocation(true);
+      } else {
+        showTrack();
+      }      
+    }   
   }
 
   @Override
@@ -374,22 +378,12 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
   
   @Override
   public void onSelectedTrackChanged(final Track track) {
-    if (isResumed()) {
-      currentTrack = track;
-      mapOverlay.setShowEndMarker(!isSelectedTrackRecording());
-      if (markerId != -1L) {
-        showMarker(markerId);
-      } else {
-        if (!isInTrackingMode()) {
-          showTrack();
-        }
-      }
-    }
+    // We don't care.
   }
   
   @Override
   public void onTrackUpdated(Track track) {
-    // We don't care.
+    currentTrack = track;
   }
 
   @Override
@@ -509,7 +503,7 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
    */
   private synchronized void resumeTrackDataHub() {
     trackDataHub = ((TrackDetailActivity) getActivity()).getTrackDataHub();
-    trackDataHub.registerTrackDataListener(this, EnumSet.of(TrackDataType.SELECTED_TRACK,
+    trackDataHub.registerTrackDataListener(this, EnumSet.of(TrackDataType.TRACKS_TABLE,
         TrackDataType.WAYPOINTS_TABLE, TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE,
         TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE, TrackDataType.PREFERENCE));
   }
@@ -571,53 +565,83 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
   }
 
   /**
-   * Sets the camera over a track.
+   * Shows the current track by moving the camera over the track.
    */
   private void showTrack() {
-    getActivity().runOnUiThread(new Runnable() {
-        @Override
-      public void run() {
-        if (!isResumed() || googleMap == null || currentTrack == null
-            || currentTrack.getNumberOfPoints() < 2) {
-          return;
-        }
+    if (googleMap == null || currentTrack == null) {
+      return;
+    }
+    if (currentTrack.getNumberOfPoints() < 2) {
+      googleMap.moveCamera(
+          CameraUpdateFactory.newLatLngZoom(getDefaultLatLng(), googleMap.getMinZoomLevel()));
+      return;
+    }
 
-        /**
-         * Check that mapView is valid.
-         */
-        if (mapView == null || mapView.getWidth() == 0 || mapView.getHeight() == 0) {
-          return;
-        }
-
-        TripStatistics tripStatistics = currentTrack.getTripStatistics();
-        int latitudeSpanE6 = tripStatistics.getTop() - tripStatistics.getBottom();
-        int longitudeSpanE6 = tripStatistics.getRight() - tripStatistics.getLeft();
-        if (latitudeSpanE6 > 0 && latitudeSpanE6 < 180E6 && longitudeSpanE6 > 0
-            && longitudeSpanE6 < 360E6) {
-          LatLng southWest = new LatLng(
-              tripStatistics.getBottomDegrees(), tripStatistics.getLeftDegrees());
-          LatLng northEast = new LatLng(
-              tripStatistics.getTopDegrees(), tripStatistics.getRightDegrees());
-          LatLngBounds bounds = LatLngBounds.builder()
-              .include(southWest).include(northEast).build();
-
-          /**
-           * Note cannot call CameraUpdateFactory.newLatLngBounds(LatLngBounds bounds,
-           * int padding) if the map view has not undergone layout. Thus calling
-           * CameraUpdateFactory.newLatLngBounds(LatLngBounds bounds, int width, int
-           * height, int padding) after making sure that mapView is valid in the
-           * above code.
-           */
-          CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(
-              bounds, mapView.getWidth(), mapView.getHeight(), MAP_VIEW_PADDING);
-          googleMap.moveCamera(cameraUpdate);
-        }
+    if (mapView == null) {
+      return;
+    }
+    
+    if (mapView.getWidth() == 0 || mapView.getHeight() == 0) {
+      if (mapView.getViewTreeObserver().isAlive()) {
+        mapView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+            @Override
+          public void onGlobalLayout() {
+            ApiAdapterFactory.getApiAdapter()
+                .removeGlobalLayoutListener(mapView.getViewTreeObserver(), this);
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+              public void run() {
+                if (isResumed()) {
+                  moveCameraOverTrack();
+                }
+              }
+            });
+          }
+        });
       }
-    });
+      return;
+    }
+    moveCameraOverTrack();
   }
 
   /**
-   * Sets the camera over a marker.
+   * Moves the camera over the current track.
+   */
+  private void moveCameraOverTrack() {
+    /**
+     * Check all the required variables.
+     */
+    if (googleMap == null || currentTrack == null || currentTrack.getNumberOfPoints() < 2
+        || mapView == null || mapView.getWidth() == 0 || mapView.getHeight() == 0) {
+      return;
+    }
+
+    TripStatistics tripStatistics = currentTrack.getTripStatistics();
+    int latitudeSpanE6 = tripStatistics.getTop() - tripStatistics.getBottom();
+    int longitudeSpanE6 = tripStatistics.getRight() - tripStatistics.getLeft();
+    if (latitudeSpanE6 > 0 && latitudeSpanE6 < 180E6 && longitudeSpanE6 > 0
+        && longitudeSpanE6 < 360E6) {
+      LatLng southWest = new LatLng(
+          tripStatistics.getBottomDegrees(), tripStatistics.getLeftDegrees());
+      LatLng northEast = new LatLng(
+          tripStatistics.getTopDegrees(), tripStatistics.getRightDegrees());
+      LatLngBounds bounds = LatLngBounds.builder().include(southWest).include(northEast).build();
+
+      /**
+       * Note cannot call CameraUpdateFactory.newLatLngBounds(LatLngBounds
+       * bounds, int padding) if the map view has not undergone layout. Thus
+       * calling CameraUpdateFactory.newLatLngBounds(LatLngBounds bounds, int
+       * width, int height, int padding) after making sure that mapView is valid
+       * in the above code.
+       */
+      CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(
+          bounds, mapView.getWidth(), mapView.getHeight(), MAP_VIEW_PADDING);
+      googleMap.moveCamera(cameraUpdate);
+    }
+  }
+
+  /**
+   * Shows a marker by moving the camera over the marker.
    * 
    * @param id the marker id
    */
@@ -653,13 +677,6 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
     return new LatLng(DEFAULT_LATITUDE, DEFAULT_LONGITUDE);
   }
 
-  /**
-   * Returns true if in tracking mode.
-   */
-  private boolean isInTrackingMode() {
-    return keepCurrentLocationVisible && currentLocation != null && isSelectedTrackRecording();
-  }
-  
   /**
    * Returns true if the location is visible. Needs to run on the UI thread.
    * 

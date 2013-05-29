@@ -21,6 +21,8 @@ import com.google.android.apps.mytracks.widgets.TrackWidgetProvider;
 import android.annotation.TargetApi;
 import android.appwidget.AppWidgetManager;
 import android.os.Bundle;
+import android.view.ViewTreeObserver;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 
 /**
  * API level 16 specific implementation of the {@link ApiAdapter}.
@@ -48,5 +50,11 @@ public class Api16Adapter extends Api14Adapter {
     Bundle bundle = new Bundle();
     bundle.putInt(APP_WIDGET_SIZE_KEY, size);
     appWidgetManager.updateAppWidgetOptions(appWidgetId, bundle);
+  }
+  
+  @Override
+  public void removeGlobalLayoutListener(
+      ViewTreeObserver observer, OnGlobalLayoutListener listener) {
+    observer.removeOnGlobalLayoutListener(listener);
   }
 }

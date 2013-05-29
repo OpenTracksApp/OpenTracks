@@ -25,6 +25,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.SharedPreferences;
 import android.view.MenuItem;
+import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -195,10 +196,23 @@ public interface ApiAdapter {
   
   /**
    * Sets the app widget size.
+   * <p> 
+   * Due to changes in API level 16.
    * 
    * @param appWidgetManager the app widget manager.
    * @param appWidgetId the app widgit id
    * @param size the size
    */
   public void setAppWidgetSize(AppWidgetManager appWidgetManager, int appWidgetId, int size);
+  
+  /**
+   * Removes the global layout listener.
+   * <p>
+   * Due to changes in API level 16.
+   * 
+   * @param observer the observer
+   * @param listener the listener
+   */
+  public void removeGlobalLayoutListener(
+      ViewTreeObserver observer, ViewTreeObserver.OnGlobalLayoutListener listener);
 }

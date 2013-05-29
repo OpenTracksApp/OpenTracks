@@ -30,6 +30,8 @@ import android.bluetooth.BluetoothSocket;
 import android.content.SharedPreferences.Editor;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.ViewTreeObserver;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -154,5 +156,12 @@ public class Api8Adapter implements ApiAdapter {
   @Override
   public void setAppWidgetSize(AppWidgetManager appWidgetManager, int appWidgetId, int size) {
     // Do nothing    
+  }
+
+  @SuppressWarnings("deprecation")
+  @Override
+  public void removeGlobalLayoutListener(
+      ViewTreeObserver observer, OnGlobalLayoutListener listener) {
+    observer.removeGlobalOnLayoutListener(listener);    
   }
 }

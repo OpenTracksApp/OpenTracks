@@ -471,6 +471,13 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
   }
 
   /**
+   * Gets the track id.
+   */
+  public long getTrackId() {
+    return trackId;
+  }
+  
+  /**
    * Gets the marker id.
    */
   public long getMarkerId() {
