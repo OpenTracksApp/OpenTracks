@@ -16,11 +16,7 @@
 
 package com.google.android.apps.mytracks.maps;
 
-import static com.google.android.apps.mytracks.Constants.TAG;
-
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
@@ -30,7 +26,6 @@ import com.google.common.annotations.VisibleForTesting;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.util.Log;
 
 /**
  * A dynamic speed path descriptor.
@@ -79,18 +74,7 @@ public class DynamicSpeedTrackPathDescriptor implements TrackPathDescriptor {
   }
 
   @Override
-  public boolean updateState() {
-    long selectedTrackId = PreferencesUtils.getLong(context, R.string.selected_track_id_key);
-    if (selectedTrackId == PreferencesUtils.SELECTED_TRACK_ID_DEFAULT) {
-      Log.d(TAG, "No selected track id.");
-      return false;
-    }
-    Track track = MyTracksProviderUtils.Factory.get(context).getTrack(selectedTrackId);
-    if (track == null) {
-      Log.d(TAG, "No track for " + selectedTrackId);
-      return false;
-    }
-    TripStatistics tripStatistics = track.getTripStatistics();
+  public boolean updateState(TripStatistics tripStatistics) {
     double newAverageMovingSpeed = (int) Math.floor(
         tripStatistics.getAverageMovingSpeed() * UnitConversions.MS_TO_KMH);
 

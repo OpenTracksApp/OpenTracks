@@ -426,9 +426,10 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
     if (isResumed()) {
       getActivity().runOnUiThread(new Runnable() {
         public void run() {
-          if (isResumed() && googleMap != null) {
-            boolean hasStartMarker = mapOverlay.update(googleMap, paths, reloadPaths);
-            
+          if (isResumed() && googleMap != null && currentTrack != null) {
+            boolean hasStartMarker = mapOverlay.update(
+                googleMap, paths, currentTrack.getTripStatistics(), reloadPaths);
+
             /*
              * If has the start marker, then don't need to reload the paths each
              * time
@@ -436,11 +437,11 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
             if (hasStartMarker) {
               reloadPaths = false;
             }
-             
+
             if (lastTrackPoint != null && isSelectedTrackRecording()) {
               boolean firstLocation = setCurrentLocation(lastTrackPoint);
               if (firstLocation) {
-                keepCurrentLocationVisible = true;                
+                keepCurrentLocationVisible = true;
               }
               updateCurrentLocation(firstLocation);
               setWarningMessage(true);
@@ -470,8 +471,8 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
     if (isResumed()) {
       getActivity().runOnUiThread(new Runnable() {
         public void run() {
-          if (isResumed() && googleMap != null) {
-            mapOverlay.update(googleMap, paths, true);
+          if (isResumed() && googleMap != null && currentTrack != null) {
+            mapOverlay.update(googleMap, paths, currentTrack.getTripStatistics(), true);
           }
         }
       });

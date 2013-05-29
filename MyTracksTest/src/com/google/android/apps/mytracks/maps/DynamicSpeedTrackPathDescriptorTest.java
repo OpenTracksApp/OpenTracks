@@ -78,18 +78,6 @@ public class DynamicSpeedTrackPathDescriptorTest extends AndroidTestCase {
   }
 
   /**
-   * Tests {@link DynamicSpeedTrackPathDescriptor#updateState()} by wrong track
-   * id.
-   */
-  public void testNeedsRedraw_WrongTrackId() {
-    PreferencesUtils.setLong(context, R.string.selected_track_id_key,
-        PreferencesUtils.SELECTED_TRACK_ID_DEFAULT);
-    DynamicSpeedTrackPathDescriptor dynamicSpeedTrackPathDescriptor = new DynamicSpeedTrackPathDescriptor(
-        context);
-    assertEquals(false, dynamicSpeedTrackPathDescriptor.updateState());
-  }
-
-  /**
    * Tests {@link DynamicSpeedTrackPathDescriptor#updateState()} by different
    * averageMovingSpeed.
    */

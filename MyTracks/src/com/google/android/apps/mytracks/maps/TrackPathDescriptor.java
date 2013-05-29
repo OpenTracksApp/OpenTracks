@@ -16,6 +16,8 @@
 
 package com.google.android.apps.mytracks.maps;
 
+import com.google.android.apps.mytracks.stats.TripStatistics;
+
 /**
  * An interface for classes which describe how to draw a track path.
  * 
@@ -34,7 +36,10 @@ public interface TrackPathDescriptor {
   public int getNormalSpeed();
 
   /**
-   * Updates state. Returns true if the state is updated.
+   * Updates state.
+   * 
+   * @param tripstatistics the trip statistics
+   * @return true if the state is updated.
    */
-  public boolean updateState();
+  public boolean updateState(TripStatistics tripstatistics);
 }

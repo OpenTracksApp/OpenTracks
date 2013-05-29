@@ -22,6 +22,7 @@ import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.maps.TrackPath;
 import com.google.android.apps.mytracks.maps.TrackPathFactory;
+import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
@@ -209,17 +210,19 @@ public class MapOverlay {
    * 
    * @param googleMap the google map
    * @param paths the paths
+   * @param tripStatistics the trip statistics
    * @param reload true to reload all points
    * @return true if has the start marker
    */
-  public boolean update(GoogleMap googleMap, ArrayList<Polyline> paths, boolean reload) {
+  public boolean update(GoogleMap googleMap, ArrayList<Polyline> paths,
+      TripStatistics tripStatistics, boolean reload) {
     synchronized (locations) {
       boolean hasStartMarker = false;
       // Merge pendingLocations with locations
       int newLocations = pendingLocations.drainTo(locations);
       // Call updateState first because we want to update its state each time
       // (for dynamic coloring)
-      if (trackPath.updateState() || reload) {
+      if (trackPath.updateState(tripStatistics) || reload) {
         googleMap.clear();
         paths.clear();
         trackPath.updatePath(googleMap, paths, 0, locations);

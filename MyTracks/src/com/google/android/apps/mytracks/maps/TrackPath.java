@@ -17,6 +17,7 @@
 package com.google.android.apps.mytracks.maps;
 
 import com.google.android.apps.mytracks.MapOverlay.CachedLocation;
+import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Polyline;
 
@@ -30,7 +31,13 @@ import java.util.List;
  */
 public interface TrackPath {
 
-  public boolean updateState();
+  /**
+   * Updates state.
+   * 
+   * @param tripstatistics the trip statistics
+   * @return true if the state is updated.
+   */
+  public boolean updateState(TripStatistics tripStatistrics);
 
   /**
    * Updates the path.

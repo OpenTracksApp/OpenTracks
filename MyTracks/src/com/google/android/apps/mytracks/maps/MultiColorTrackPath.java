@@ -16,6 +16,7 @@
 package com.google.android.apps.mytracks.maps;
 
 import com.google.android.apps.mytracks.MapOverlay.CachedLocation;
+import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polyline;
@@ -47,8 +48,8 @@ public class MultiColorTrackPath implements TrackPath {
   }
 
   @Override
-  public boolean updateState() {
-    return trackPathDescriptor.updateState();
+  public boolean updateState(TripStatistics tripStatistics) {
+    return trackPathDescriptor.updateState(tripStatistics);
   }
 
   @Override

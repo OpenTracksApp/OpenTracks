@@ -17,6 +17,7 @@
 package com.google.android.apps.mytracks.maps;
 
 import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -71,7 +72,7 @@ public class FixedSpeedTrackPathDescriptor implements TrackPathDescriptor {
   }
 
   @Override
-  public boolean updateState() {
+  public boolean updateState(TripStatistics tripStatistics) {
     return false;
   }
 }
