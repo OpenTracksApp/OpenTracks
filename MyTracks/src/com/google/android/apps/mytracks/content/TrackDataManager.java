@@ -118,8 +118,6 @@ public class TrackDataManager {
     for (EnumSet<TrackDataType> value : listenerToTypesMap.values()) {
       types.addAll(value);
     }
-    // Always include preference
-    types.add(TrackDataType.PREFERENCE);
     return types;
   }
 }

@@ -126,7 +126,6 @@ public class TrackDataHubTest extends AndroidTestCase {
     Capture<ContentObserver> contentObserverCapture = new Capture<ContentObserver>();
     Track track = new Track();
     expect(myTracksProviderUtils.getTrack(TRACK_ID)).andStubReturn(track);
-    dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceChangeListenerCapture));
     dataSource.registerContentObserver(
         eq(TracksColumns.CONTENT_URI), capture(contentObserverCapture));
     trackDataListener1.onTrackUpdated(track);
@@ -192,7 +191,6 @@ public class TrackDataHubTest extends AndroidTestCase {
         .andStubAnswer(new FixedSizeCursorAnswer(2));
     expect(myTracksProviderUtils.createWaypoint(isA(Cursor.class)))
         .andReturn(waypoint1).andReturn(waypoint2).andReturn(waypoint1).andReturn(waypoint2);
-    dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceChangeListenerCapture));
     dataSource.registerContentObserver(
         eq(WaypointsColumns.CONTENT_URI), capture(contentObserverCapture));
     trackDataListener1.clearWaypoints();
@@ -268,7 +266,6 @@ public class TrackDataHubTest extends AndroidTestCase {
   public void testTrackPointsTableUpdate() {
     // Register one listener
     Capture<ContentObserver> contentObserverCapture = new Capture<ContentObserver>();
-    dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceChangeListenerCapture));
     dataSource.registerContentObserver(
         eq(TrackPointsColumns.CONTENT_URI), capture(contentObserverCapture));
 
@@ -339,7 +336,6 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     // Register one listener
     Capture<ContentObserver> contentObserverCapture = new Capture<ContentObserver>();
-    dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceChangeListenerCapture));
     dataSource.registerContentObserver(
         eq(TrackPointsColumns.CONTENT_URI), capture(contentObserverCapture));
 
@@ -391,7 +387,6 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     // Register one listener
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
-    dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceChangeListenerCapture));
     dataSource.registerContentObserver(
         eq(TrackPointsColumns.CONTENT_URI), capture(observerCapture));
 
@@ -442,7 +437,6 @@ public class TrackDataHubTest extends AndroidTestCase {
    */
   public void testTrackPointsTableUpdate_largeTrackSampling() {
     Capture<ContentObserver> contentObserverCapture = new Capture<ContentObserver>();
-    dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceChangeListenerCapture));
     dataSource.registerContentObserver(
         eq(TrackPointsColumns.CONTENT_URI), capture(contentObserverCapture));
 
@@ -479,7 +473,6 @@ public class TrackDataHubTest extends AndroidTestCase {
    */
   public void testTrackPointsTableUpdate_resampling() {
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
-    dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceChangeListenerCapture));
     dataSource.registerContentObserver(
         eq(TrackPointsColumns.CONTENT_URI), capture(observerCapture));
 
@@ -716,7 +709,6 @@ public class TrackDataHubTest extends AndroidTestCase {
    * Tests the method {@link TrackDataHub#start()}.
    */
   public void testRegisterTracksTableListener() {
-    dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceChangeListenerCapture));
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
     dataSource.registerContentObserver(eq(TracksColumns.CONTENT_URI), capture(observerCapture));
     Track track = TrackStubUtils.createTrack(1);
@@ -735,7 +727,6 @@ public class TrackDataHubTest extends AndroidTestCase {
    * Tests the method {@link TrackDataHub#start()}.
    */
   public void testRegisterWaypointsTableListener() {
-    dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceChangeListenerCapture));
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
     dataSource.registerContentObserver(eq(WaypointsColumns.CONTENT_URI), capture(observerCapture));
     expect(myTracksProviderUtils.getWaypointCursor(
