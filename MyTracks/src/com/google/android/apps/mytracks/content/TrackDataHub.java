@@ -156,7 +156,6 @@ public class TrackDataHub implements DataSourceListener {
           return;
         }
         selectedTrackId = trackId;
-        PreferencesUtils.setLong(context, R.string.selected_track_id_key, selectedTrackId);
         loadDataForAll();
       }
     });
@@ -259,17 +258,6 @@ public class TrackDataHub implements DataSourceListener {
     runInHanderThread(new Runnable() {
         @Override
       public void run() {
-        if (key == null
-            || key.equals(PreferencesUtils.getKey(context, R.string.selected_track_id_key))) {
-          long trackId = PreferencesUtils.getLong(context, R.string.selected_track_id_key);
-          boolean hasChanged = trackId != selectedTrackId;
-          selectedTrackId = trackId;
-          if (key != null) {
-            if (hasChanged) {
-              loadDataForAll();
-            }
-          }
-        }
         if (key == null
             || key.equals(PreferencesUtils.getKey(context, R.string.recording_track_id_key))) {
           recordingTrackId = PreferencesUtils.getLong(context, R.string.recording_track_id_key);

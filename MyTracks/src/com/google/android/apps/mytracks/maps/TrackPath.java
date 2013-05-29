@@ -34,10 +34,10 @@ public interface TrackPath {
   /**
    * Updates state.
    * 
-   * @param tripstatistics the trip statistics
+   * @param tripStatistics the trip statistics
    * @return true if the state is updated.
    */
-  public boolean updateState(TripStatistics tripStatistrics);
+  public boolean updateState(TripStatistics tripStatistics);
 
   /**
    * Updates the path.

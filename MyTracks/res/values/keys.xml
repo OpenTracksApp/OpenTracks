@@ -72,7 +72,6 @@ limitations under the License.
   <string name="google_account_key">googleAccount</string>
   <string name="recording_track_id_key">recordingTrackId</string>
   <string name="recording_track_paused_key">recordingTrackPaused</string>
-  <string name="selected_track_id_key">selectedTrackId</string>
   <!-- Keys for non-persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
   <string name="settings_backup_key">settingsBackup</string>
   <string name="settings_backup_reset_key">settingsBackupReset</string>

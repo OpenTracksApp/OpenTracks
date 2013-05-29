@@ -78,8 +78,8 @@ public class DynamicSpeedTrackPathDescriptorTest extends AndroidTestCase {
   }
 
   /**
-   * Tests {@link DynamicSpeedTrackPathDescriptor#updateState()} by different
-   * averageMovingSpeed.
+   * Tests {@link DynamicSpeedTrackPathDescriptor#updateState(com.google.android.apps.mytracks.stats.TripStatistics)}
+   * by different averageMovingSpeed.
    */
   public void testIsDiffereceSignificant() {
     DynamicSpeedTrackPathDescriptor dynamicSpeedTrackPathDescriptor = new DynamicSpeedTrackPathDescriptor(

@@ -99,7 +99,6 @@ public class TrackDataHubTest extends AndroidTestCase {
     trackDataListener2 = AndroidMock.createStrictMock(
         "trackDataListener2", TrackDataListener.class);
     PreferencesUtils.setLong(context, R.string.recording_track_id_key, TRACK_ID);
-    PreferencesUtils.setLong(context, R.string.selected_track_id_key, TRACK_ID);
   }
 
   @Override
@@ -135,6 +134,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     replay();
 
     trackDataHub.start();
+    trackDataHub.loadTrack(TRACK_ID);
     trackDataHub.registerTrackDataListener(
         trackDataListener1, EnumSet.of(TrackDataType.TRACKS_TABLE));
     trackDataHub.registerTrackDataListener(
@@ -206,6 +206,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     replay();
 
     trackDataHub.start();
+    trackDataHub.loadTrack(TRACK_ID);
     trackDataHub.registerTrackDataListener(
         trackDataListener1, EnumSet.of(TrackDataType.WAYPOINTS_TABLE));
     trackDataHub.registerTrackDataListener(
@@ -281,6 +282,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     replay();
 
     trackDataHub.start();
+    trackDataHub.loadTrack(TRACK_ID);
     trackDataHub.registerTrackDataListener(
         trackDataListener1, EnumSet.of(TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE));
     verifyAndReset();
@@ -352,6 +354,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     replay();
 
     trackDataHub.start();
+    trackDataHub.loadTrack(TRACK_ID);
     trackDataHub.registerTrackDataListener(
         trackDataListener1, EnumSet.of(TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE));
     verifyAndReset();
@@ -402,6 +405,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     replay();
 
     trackDataHub.start();
+    trackDataHub.loadTrack(TRACK_ID);
     trackDataHub.registerTrackDataListener(
         trackDataListener1, EnumSet.of(TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE));
     verifyAndReset();
@@ -462,6 +466,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     replay();
 
     trackDataHub.start();
+    trackDataHub.loadTrack(TRACK_ID);
     trackDataHub.registerTrackDataListener(
         trackDataListener1, EnumSet.of(TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE));
     trackDataHub.registerTrackDataListener(trackDataListener2, EnumSet.of(
@@ -490,6 +495,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     replay();
 
     trackDataHub.start();
+    trackDataHub.loadTrack(TRACK_ID);
     trackDataHub.registerTrackDataListener(
         trackDataListener1, EnumSet.of(TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE));
     verifyAndReset();
@@ -808,21 +814,5 @@ public class TrackDataHubTest extends AndroidTestCase {
     trackDataHub.notifyPreferenceChanged(PreferencesUtils
         .getKey(context, R.string.report_speed_key));
     assertEquals(!value, trackDataHub.isReportSpeed());
-  }
-  
-  /**
-   * Tests the method {@link TrackDataHub#notifyPreferenceChanged(String)} when
-   * the key is R.string.selected_track_id_key and no listener is registered.
-   */
-  public void testNotifyPreferenceChanged_trackIdNoListener() {
-    long value = 1;
-    PreferencesUtils.setLong(context, R.string.selected_track_id_key, value);
-    trackDataHub.notifyPreferenceChanged(PreferencesUtils
-        .getKey(context, R.string.selected_track_id_key));
-    assertEquals(value, trackDataHub.getSelectedTrackId());
-    PreferencesUtils.setLong(context, R.string.selected_track_id_key, value + 1);
-    trackDataHub.notifyPreferenceChanged(PreferencesUtils
-        .getKey(context, R.string.selected_track_id_key));
-    assertEquals(value + 1, trackDataHub.getSelectedTrackId());
   }
 }
