@@ -765,7 +765,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         startActivity(intent);
         return true;
       case R.id.list_context_menu_delete:
-        boolean deleteAll = listView.getCount() == trackIds.length;
+        boolean deleteAll = trackIds.length > 1 && trackIds.length == listView.getCount();
         DeleteTrackDialogFragment.newInstance(deleteAll, trackIds)
             .show(getSupportFragmentManager(), DeleteTrackDialogFragment.DELETE_TRACK_DIALOG_TAG);
         return true;
