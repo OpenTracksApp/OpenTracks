@@ -51,28 +51,15 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
     /**
      * Called when choose upload service is done.
      */
-    public void onChooseUploadServiceDone(boolean sendDrive, boolean sendMaps,
-        boolean sendFusionTables, boolean sendSpreadsheets, boolean mapsExistingMap);
+    public void onChooseUploadServiceDone(boolean sendMaps, boolean sendFusionTables,
+        boolean sendSpreadsheets, boolean mapsExistingMap);
   }
 
   public static final String CHOOSE_UPLOAD_SERVICE_DIALOG_TAG = "chooseUploadService";
 
-  private static final String KEY_HIDE_DRIVE = "hideDrive";
-
-  public static ChooseUploadServiceDialogFragment newInstance(boolean hideDrive) {
-    Bundle bundle = new Bundle();
-    bundle.putBoolean(KEY_HIDE_DRIVE, hideDrive);
-
-    ChooseUploadServiceDialogFragment chooseUploadServiceDialogFragment = new ChooseUploadServiceDialogFragment();
-    chooseUploadServiceDialogFragment.setArguments(bundle);
-    return chooseUploadServiceDialogFragment;
-  }
-
   private ChooseUploadServiceCaller caller;
   private FragmentActivity fragmentActivity;
-  private boolean hideDrive;
 
-  private CheckBox driveCheckBox;
   private CheckBox mapsCheckBox;
   private CheckBox fusionTablesCheckBox;
   private CheckBox spreadsheetsCheckBox;
@@ -94,20 +81,13 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     fragmentActivity = getActivity();
-    hideDrive = getArguments().getBoolean(KEY_HIDE_DRIVE);
 
     View view = fragmentActivity.getLayoutInflater().inflate(R.layout.choose_upload_service, null);
 
-    view.findViewById(R.id.choose_upload_service_drive_options)
-        .setVisibility(hideDrive ? View.GONE : View.VISIBLE);
-
-    driveCheckBox = (CheckBox) view.findViewById(R.id.choose_upload_service_drive);
     mapsCheckBox = (CheckBox) view.findViewById(R.id.choose_upload_service_maps);
     fusionTablesCheckBox = (CheckBox) view.findViewById(R.id.choose_upload_service_fusion_tables);
     spreadsheetsCheckBox = (CheckBox) view.findViewById(R.id.choose_upload_service_spreadsheets);
 
-    driveCheckBox.setChecked(PreferencesUtils.getBoolean(
-        fragmentActivity, R.string.send_to_drive_key, PreferencesUtils.SEND_TO_DRIVE_DEFAULT));
     mapsCheckBox.setChecked(PreferencesUtils.getBoolean(
         fragmentActivity, R.string.send_to_maps_key, PreferencesUtils.SEND_TO_MAPS_DEFAULT));
     fusionTablesCheckBox.setChecked(PreferencesUtils.getBoolean(
@@ -157,8 +137,6 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
             @Override
           public void onClick(DialogInterface dialog, int which) {
             PreferencesUtils.setBoolean(
-                fragmentActivity, R.string.send_to_drive_key, driveCheckBox.isChecked());
-            PreferencesUtils.setBoolean(
                 fragmentActivity, R.string.pick_existing_map_key, existingMapRadioButton.isChecked());
             PreferencesUtils.setBoolean(
                 fragmentActivity, R.string.send_to_maps_key, mapsCheckBox.isChecked());
@@ -166,9 +144,9 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
                 fragmentActivity, R.string.send_to_fusion_tables_key, fusionTablesCheckBox.isChecked());
             PreferencesUtils.setBoolean(
                 fragmentActivity, R.string.send_to_spreadsheets_key, spreadsheetsCheckBox.isChecked());
-            if (sendDrive() || mapsCheckBox.isChecked() || fusionTablesCheckBox.isChecked()
+            if (mapsCheckBox.isChecked() || fusionTablesCheckBox.isChecked()
                 || spreadsheetsCheckBox.isChecked()) {
-              caller.onChooseUploadServiceDone(sendDrive(), mapsCheckBox.isChecked(),
+              caller.onChooseUploadServiceDone(mapsCheckBox.isChecked(),
                   fusionTablesCheckBox.isChecked(), spreadsheetsCheckBox.isChecked(),
                   existingMapRadioButton.isChecked());
             } else {
@@ -184,12 +162,5 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
    */
   private void updateMapsOption() {
     mapsOptionTableRow.setVisibility(mapsCheckBox.isChecked() ? View.VISIBLE : View.GONE);
-  }
-
-  /**
-   * True to send to Google Drive.
-   */
-  private boolean sendDrive() {
-    return !hideDrive && driveCheckBox.isChecked();
   }
 }

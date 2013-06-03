@@ -92,7 +92,6 @@ public class PreferencesUtils {
   public static final boolean REPORT_SPEED_DEFAULT = true;
   public static final long SELECTED_TRACK_ID_DEFAULT = -1L;
 
-  public static final boolean SEND_TO_DRIVE_DEFAULT = false;
   public static final boolean SEND_TO_FUSION_TABLES_DEFAULT = false;
   public static final boolean SEND_TO_MAPS_DEFAULT = false;
   public static final boolean SEND_TO_SPREADSHEETS_DEFAULT = false;

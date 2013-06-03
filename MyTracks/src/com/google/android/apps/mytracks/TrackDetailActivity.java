@@ -362,10 +362,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
         return true;
       case R.id.track_detail_send_google:
         AnalyticsUtils.sendPageViews(this, "/action/send_google");
-        Track track = myTracksProviderUtils.getTrack(trackId);
-        boolean sharedWithMe = track != null ? track.isSharedWithMe() : true;
-        ChooseUploadServiceDialogFragment.newInstance(sharedWithMe).show(
-            getSupportFragmentManager(),
+        new ChooseUploadServiceDialogFragment().show(getSupportFragmentManager(),
             ChooseUploadServiceDialogFragment.CHOOSE_UPLOAD_SERVICE_DIALOG_TAG);
         return true;
       case R.id.track_detail_save:
@@ -415,17 +412,13 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
   }
 
   @Override
-  public void onChooseUploadServiceDone(boolean sendDrive, boolean sendMaps,
-      boolean sendFusionTables, boolean sendSpreadsheets, boolean mapsExistingMap) {
+  public void onChooseUploadServiceDone(boolean sendMaps, boolean sendFusionTables,
+      boolean sendSpreadsheets, boolean mapsExistingMap) {
     SendRequest sendRequest = new SendRequest(trackId);
-    sendRequest.setSendDrive(sendDrive);
     sendRequest.setSendMaps(sendMaps);
     sendRequest.setSendFusionTables(sendFusionTables);
     sendRequest.setSendSpreadsheets(sendSpreadsheets);
     sendRequest.setMapsExistingMap(mapsExistingMap);
-    if (sendDrive) {
-      AnalyticsUtils.sendPageViews(this, "/send/drive");
-    }
     if (sendMaps) {
       AnalyticsUtils.sendPageViews(this, "/send/maps");
     }
