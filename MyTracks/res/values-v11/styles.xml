@@ -34,9 +34,10 @@ limitations under the License.
     <item name="android:measureWithLargestChild">true</item>
   </style>
   <style name="ListItem">
-    <item name="android:background">?android:attr/activatedBackgroundIndicator</item>
+    <item name="android:background">@drawable/activated_background_mytracks</item>
   </style>
   <style name="ThemeSelector" parent="android:Theme.Holo">
     <item name="android:actionBarStyle">@style/ActionBarStyle.MyTracks</item>
+    <item name="android:actionModeBackground">@drawable/action_mode_background_mytracks</item>
   </style>
 </resources>

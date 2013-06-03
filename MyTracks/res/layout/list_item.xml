@@ -46,7 +46,7 @@ limitations under the License.
           android:layout_gravity="bottom"
           android:layout_width="fill_parent"
           android:singleLine="true"
-          style="@style/TextLarge" />
+          style="@style/TextMedium" />
         <TextView
           android:id="@+id/list_item_date"
           style="@style/ListItemDate" />
