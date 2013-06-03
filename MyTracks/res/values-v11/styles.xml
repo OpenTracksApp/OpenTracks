@@ -15,6 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
+  <style name="ActionBarStyle.MyTracks" parent="@android:style/Widget.Holo.ActionBar">
+    <!-- Same image as the source except using a grey line instead of a blue line -->
+    <item name="android:background">@drawable/ab_transparent_dark_holo</item>
+  </style>
   <style name="BottomButton" parent="@android:style/Widget.Holo.Button.Borderless">
     <!-- Same as BottomButton in values/styles.xml except inheriting from a parent -->
     <item name="android:layout_height">wrap_content</item>
@@ -32,11 +36,7 @@ limitations under the License.
   <style name="ListItem">
     <item name="android:background">?android:attr/activatedBackgroundIndicator</item>
   </style>
-  <style name="MyTracksActionBar" parent="@android:style/Widget.Holo.ActionBar">
-    <!-- Same image as the source except using a grey line instead of a blue line -->
-    <item name="android:background">@drawable/ab_transparent_dark_holo</item>
-  </style>
   <style name="ThemeSelector" parent="android:Theme.Holo">
-    <item name="android:actionBarStyle">@style/MyTracksActionBar</item>
+    <item name="android:actionBarStyle">@style/ActionBarStyle.MyTracks</item>
   </style>
 </resources>

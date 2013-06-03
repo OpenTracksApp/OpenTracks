@@ -28,6 +28,7 @@ import android.view.MenuItem;
 import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TabWidget;
 
 import java.io.IOException;
 import java.util.List;
@@ -173,7 +174,14 @@ public interface ApiAdapter {
    * <p>
    * Due to changes in API level 11.
    */
-  public boolean isSpinnerBackgroundLight();
+  public boolean isSpinnerBackgroundLight();  
+  
+  /**
+   * Sets the tab background.
+   * 
+   * @param tabWidget the tab widget
+   */
+  public void setTabBackground(TabWidget tabWidget);
   
   /**
    * Handles the search key press. Returns true if handled.

@@ -37,6 +37,7 @@ import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.settings.SettingsActivity;
 import com.google.android.apps.mytracks.util.AnalyticsUtils;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.GoogleFeedbackUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
@@ -214,6 +215,10 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
     if (savedInstanceState != null) {
       tabHost.setCurrentTabByTag(savedInstanceState.getString(CURRENT_TAB_TAG_KEY));
     }
+    
+    // Set the background after all three tabs are added
+    ApiAdapterFactory.getApiAdapter().setTabBackground(tabHost.getTabWidget());
+    
     trackController = new TrackController(
         this, trackRecordingServiceConnection, false, recordListener, stopListener);
   }

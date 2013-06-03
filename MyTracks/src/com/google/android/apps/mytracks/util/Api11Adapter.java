@@ -37,6 +37,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
+import android.widget.TabWidget;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -240,5 +241,12 @@ public class Api11Adapter extends Api10Adapter {
   @Override
   public boolean isSpinnerBackgroundLight() {
     return false;
+  }
+  
+  @Override
+  public void setTabBackground(TabWidget tabWidget) {
+    for (int i = 0; i < tabWidget.getChildCount(); i++) {
+      tabWidget.getChildAt(i).setBackgroundResource(R.drawable.tab_indicator_mytracks);
+    }
   }
 }

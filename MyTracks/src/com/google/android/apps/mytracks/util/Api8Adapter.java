@@ -35,6 +35,7 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TabWidget;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -140,6 +141,11 @@ public class Api8Adapter implements ApiAdapter {
   @Override
   public boolean isSpinnerBackgroundLight() {
     return true;    
+  }
+  
+  @Override
+  public void setTabBackground(TabWidget tabWidget) {
+    // Do nothing    
   }
   
   @Override
