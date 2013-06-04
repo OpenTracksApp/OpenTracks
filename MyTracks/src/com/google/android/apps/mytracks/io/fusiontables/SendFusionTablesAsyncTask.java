@@ -202,8 +202,8 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
 
   private boolean setPermission(String tableId) throws IOException, GoogleAuthException {
     boolean defaultTablePublic = PreferencesUtils.getBoolean(context,
-        R.string.default_table_public_key,
-        PreferencesUtils.DEFAULT_TABLE_PUBLIC_DEFAULT);
+        R.string.export_google_fusion_tables_public_key,
+        PreferencesUtils.EXPORT_GOOGLE_FUSION_TABLES_PUBLIC_DEFAULT);
     if (!defaultTablePublic) {
       return true;
     }

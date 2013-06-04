@@ -139,10 +139,10 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
 
     // Check Drive permission
     boolean needDrivePermission = sendRequest.isSendDrive();
-    if (!needDrivePermission) {
-      boolean defaultTablePublic = PreferencesUtils.getBoolean(
-          this, R.string.default_table_public_key, PreferencesUtils.DEFAULT_TABLE_PUBLIC_DEFAULT);
-      needDrivePermission = defaultTablePublic && sendRequest.isSendFusionTables();
+    if (!needDrivePermission && sendRequest.isSendFusionTables()) {
+      needDrivePermission = PreferencesUtils.getBoolean(this,
+          R.string.export_google_fusion_tables_public_key,
+          PreferencesUtils.EXPORT_GOOGLE_FUSION_TABLES_PUBLIC_DEFAULT);
     }
     if (!needDrivePermission) {
       needDrivePermission = sendRequest.isSendSpreadsheets();

@@ -32,19 +32,6 @@ limitations under the License.
     <item name="android:layout_width">match_parent</item>
     <item name="android:orientation">horizontal</item>
   </style>
-  <!-- choose upload service checkbox -->
-  <style name="ChooseUploadServiceCheckBox" parent="@style/TextMedium">
-    <item name="android:layout_gravity">center_vertical</item>
-    <item name="android:layout_marginLeft">8dp</item>
-    <item name="android:layout_width">0dp</item>
-    <item name="android:maxLines">5</item>
-  </style>
-  <!-- choose upload service image view -->
-  <style name="ChooseUploadServiceImageView">
-    <item name="android:layout_gravity">center</item>
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">wrap_content</item>
-  </style>
   <!-- edit category -->
   <style name="EditCategory" parent="@style/TextMedium">
     <item name="android:layout_width">match_parent</item>
@@ -85,6 +72,12 @@ limitations under the License.
     <item name="android:selectAllOnFocus">true</item>
     <item name="android:singleLine">true</item>
   </style>
+  <!-- export radio group -->
+  <style name="ExportRadioGroup">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginLeft">16dp</item>
+    <item name="android:layout_width">match_parent</item>
+  </style> 
   <!-- help answer -->
   <style name="HelpAnswer" parent="@style/TextSmall">
     <item name="android:autoLink">web</item>

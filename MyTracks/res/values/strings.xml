@@ -612,6 +612,59 @@ limitations under the License.
     Terms of Service
   </string>
 
+  <!-- Export -->
+  <string name="export_external_storage"
+    translation_description="When exporting a track, the option to export to external storage.">
+    External storage
+  </string>
+  <string name="export_external_storage_option"
+    translation_description="When exporting a track to external storage, the option to export as a
+      certain file format.
+
+      %1$s: file format. 'GPX', 'KML', 'CSV', or 'TCX'.">
+    as %1$s file
+  </string>
+  <string name="export_google_drive"
+    translation_description="When exporting a track, the option to export to Google Drive.">
+    Google Drive
+  </string>
+  <string name="export_google_fusion_tables"
+    translation_description="When exporting a track, the option to export to Google Fusion Tables.">
+    Google Fusion Tables
+  </string>
+  <string name="export_google_fusion_tables_private"
+    translation_description="When exporting a track to Google Fusion Tables, the option to export as
+      a new private table as opposed to a new public table.">
+    as new private table
+  </string>
+  <string name="export_google_fusion_tables_public"
+    translation_description="When exporting a trck to Google Fusion Tables, the option to export as
+      a new public table as opposed to a new private table.">
+    as new public table
+  </string>
+  <string name="export_google_maps"
+    translation_description="When exporting a track, the option to export to Google Maps.">
+    Google Maps
+  </string>
+  <string name="export_google_maps_public"
+    translation_description="When exporting a track to Google Maps, the option to export as a new
+      public map as opposed to a new unlisted map.">
+    as new public map
+  </string>
+  <string name="export_google_maps_unlisted"
+    translation_description="When sending a track to Google Maps, the option to export as a new
+      unlisted map as opposed to a new public map.">
+    as new unlisted map
+  </string>
+  <string name="export_google_spreadsheets"
+    translation_description="When exporting a track, the option to export to Google Spreadsheets.">
+    Google Spreadsheets
+  </string>
+  <string name="export_dialog_title"
+    translation_description="The dialog title when exporting a track.">
+    Export to&#8230;
+  </string>
+
   <!-- External Storage -->
   <string name="external_storage_not_available"
     translation_description="Error message when the external storage is not available.">
@@ -1299,49 +1352,10 @@ limitations under the License.
     translation_description="When sending to Google, the dialog title to choose a Google account.">
     Choose account
   </string>
-  <string name="send_google_drive"
-    translation_description="When sending a track to Google, under the 'Send to...' dialog, the
-      checkbox option to send to Google Drive.">
-    Google Drive
-  </string>
   <string name="send_google_error"
     translation_description="When sending a track to Google, a message indicating that an error has
       occurred and ask the user to try again.">
     An error has occurred. Please try again.
-  </string>
-  <string name="send_google_existing_map"
-    translation_description="When sending a track to Google Maps, the radio option to use an
-      existing map as opposed to create a new map.">
-    Use existing map
-  </string>
-  <string name="send_google_fusion_tables"
-    translation_description="When sending a track to Google, the Google Fusion Tables name.">
-    Google Fusion Tables
-  </string>
-  <string name="send_google_fusion_tables_private"
-    translation_description="When sending a track to Google Fusion Tables, indicate a new private
-      table will get created.">
-    (new private table)
-  </string>
-  <string name="send_google_fusion_tables_public"
-    translation_description="When sending a track to Google Fusion Tables, indicate a new public
-      table will get created.">
-    (new public table)
-  </string>
-  <string name="send_google_maps"
-    translation_description="When sending a track to Google, under the 'Send to...' dialog, the
-      checkbox option to send to Google Maps.">
-    Google Maps
-  </string>
-  <string name="send_google_new_public_map"
-    translation_description="When sending a track to Google Maps, the radio option to create a new
-      public map as opposed to use an existing map.">
-    Create new public map
-  </string>
-  <string name="send_google_new_unlisted_map"
-    translation_description="When sending a track to Google Maps, the radio option to create a new
-      unlisted map as opposed to use an existing map.">
-    Create new unlisted map
   </string>
   <string name="send_google_no_account_message"
     translation_description="When sending to Google, the dialog message when no Google account is
@@ -1358,37 +1372,16 @@ limitations under the License.
       permission.">
     Not able to get account permission. Make sure network is available.
   </string>
-  <string name="send_google_no_service_selected"
-    translation_description="When sending a track to Google, a message indicating that the user has
-      not selected any Google service and no data is sent.">
-    You did not select any service. The track was not sent.
-  </string>
   <string name="send_google_progress_message"
     translation_description="When sending a track to a Google service, the progress message.
 
       %1$s: service name. 'Google Maps', 'Google Fusion Tables', or 'Google Spreadsheets'.">
     Sending to %1$s&#8230;
   </string>
-  <string name="send_google_send_now"
-    translation_description="When sending a track to Google, under the 'Send to...' dialog, the
-      button on the bottom to send the track to the selected Google services.">
-    Send now
-  </string>
-  <string name="send_google_spreadsheets"
-    translation_description="When sending a track to Google, under the 'Send to...' dialog, the
-      checkbox option to send to Google Spreadsheets.">
-    Google Spreadsheets
-  </string>
   <string name="send_google_success_footer"
     translation_description="When sending a track to Google, the additional comment on the bottom of
       the result page.">
     It may take a few minutes before new tracks appear.
-  </string>
-  <string name="send_google_title"
-    translation_description="When sending a track to Google, the dialog title to choose the Google
-      services to send the track to. The user can choose Google Maps, Google Fusion Tables, and
-      Google Spreadsheets.">
-    Send to&#8230;
   </string>
   <string name="send_google_track_part_label"
     translation_description="When sending a track to Google, the label to name segments of a large
@@ -1631,51 +1624,6 @@ limitations under the License.
 
       Character limit: ~23 (1 line)">
     Sync Google Drive
-  </string>
-  <string name="settings_google_fusion_tables_public_summary_off"
-    translation_description="In the 'Google' settings, the summary for the 'New tables public'
-      checkbox when it is unchecked explaining that new tables created in Google Fusion Tables will
-      be private, instead of public.">
-    New tables created in Google Fusion Tables will be private, instead of public.
-  </string>
-  <string name="settings_google_fusion_tables_public_summary_on"
-    translation_description="In the 'Google' settings, the summary for the 'New tables public'
-      checkbox when it is checked explaining that new tables created in Google Fusion Tables will be
-      public, instead of private.">
-    New tables created in Google Fusion Tables will be public, instead of private.
-  </string>
-  <string name="settings_google_fusion_tables_public_title"
-    translation_description="In the 'Google' settings, the checkbox to make new tables created in
-      Google Fusion Tables public instead of private.
-
-      Character limit: ~23 (1 line)">
-    New tables public
-  </string>
-  <string name="settings_google_maps_public_summary_off"
-    translation_description="In the 'Google' settings, the summary for the 'New maps public'
-      checkbox when it is unchecked explaining that new maps created in Google Maps will be
-      unlisted, instead of public. See http://support.google.com/maps/bin/answer.py?answer=144365
-      for public versus unlisted.
-
-      %1$s url. E.g., 'support.google.com/maps/bin/answer.py?answer=144365'.">
-    New maps created in Google Maps will be unlisted, instead of public. See %1$s for more info.
-  </string>
-  <string name="settings_google_maps_public_summary_on"
-    translation_description="In the 'Google' settings, the summary for the 'New maps public'
-      checkbox when it is checked explaining that new maps created in Google Maps will be public,
-      instead of unlisted. See http://support.google.com/maps/bin/answer.py?answer=144365 for public
-      versus unlisted.
-
-      %1$s url. E.g., 'support.google.com/maps/bin/answer.py?answer=144365'.">
-    New maps created in Google Maps will be public, instead of unlisted. See %1$s for more info.
-  </string>
-  <string name="settings_google_maps_public_title"
-    translation_description="In the 'Google' settings, the checkbox to make new maps created in
-      Google Maps public instead of unlisted. See
-      http://support.google.com/maps/bin/answer.py?answer=144365 for public versus unlisted.
-
-      Character limit: ~23 (1 line)">
-    New maps public
   </string>
 
   <!-- Settings Map -->
@@ -2207,7 +2155,7 @@ limitations under the License.
     translation_description="In the 'Stats' page, the grade. Grade is the amount of inclination to
       the horizontal, also known as slope or incline.">
     Grade
-  </string>  
+  </string>
   <string name="stats_latitude"
     translation_description="In the 'Stats' page, the latitude.">
     Latitude

@@ -42,10 +42,10 @@ limitations under the License.
         android:orientation="vertical"
         android:paddingLeft="8dp" >
         <TextView
-          android:text="@string/send_google_drive"
+          android:text="@string/export_google_drive"
           style="@style/TextMedium" />
         <TextView
-          android:text="@string/send_google_drive_url"
+          android:text="@string/export_google_drive_url"
           style="@style/TextSmall" />
       </LinearLayout>
     </LinearLayout>
@@ -70,10 +70,10 @@ limitations under the License.
         android:orientation="vertical"
         android:paddingLeft="8dp" >
         <TextView
-          android:text="@string/send_google_maps"
+          android:text="@string/export_google_maps"
           style="@style/TextMedium" />
         <TextView
-          android:text="@string/send_google_maps_url"
+          android:text="@string/export_google_maps_url"
           style="@style/TextSmall" />
       </LinearLayout>
     </LinearLayout>
@@ -98,10 +98,10 @@ limitations under the License.
         android:orientation="vertical"
         android:paddingLeft="8dp" >
         <TextView
-          android:text="@string/send_google_fusion_tables"
+          android:text="@string/export_google_fusion_tables"
           style="@style/TextMedium" />
         <TextView
-          android:text="@string/send_google_fusion_tables_url"
+          android:text="@string/export_google_fusion_tables_url"
           style="@style/TextSmall" />
       </LinearLayout>
     </LinearLayout>
@@ -126,10 +126,10 @@ limitations under the License.
         android:orientation="vertical"
         android:paddingLeft="8dp" >
         <TextView
-          android:text="@string/send_google_spreadsheets"
+          android:text="@string/export_google_spreadsheets"
           style="@style/TextMedium" />
         <TextView
-          android:text="@string/send_google_spreadsheets_url"
+          android:text="@string/export_google_spreadsheets_url"
           style="@style/TextSmall" />
       </LinearLayout>
     </LinearLayout>

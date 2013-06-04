@@ -113,16 +113,7 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
         }
         return false;
       }
-    });
-
-    CheckBoxPreference defaultMapPublicPreference = (CheckBoxPreference) findPreference(
-        getString(R.string.default_map_public_key));
-    defaultMapPublicPreference.setSummaryOn(getString(
-        R.string.settings_google_maps_public_summary_on,
-        getString(R.string.maps_public_unlisted_url)));
-    defaultMapPublicPreference.setSummaryOff(getString(
-        R.string.settings_google_maps_public_summary_off,
-        getString(R.string.maps_public_unlisted_url)));
+    });  
 
     updateUiByAccountName(PreferencesUtils.getString(
         this, R.string.google_account_key, PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT));

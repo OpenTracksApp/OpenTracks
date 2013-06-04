@@ -81,8 +81,9 @@ public class UploadResultActivity extends FragmentActivity implements ChooseActi
     }
     if (shareUrl == null && sendRequest.isSendFusionTables()
         && sendRequest.isFusionTablesSuccess()) {
-      boolean defaultTablePublic = PreferencesUtils.getBoolean(
-          this, R.string.default_table_public_key, PreferencesUtils.DEFAULT_TABLE_PUBLIC_DEFAULT);
+      boolean defaultTablePublic = PreferencesUtils.getBoolean(this,
+          R.string.export_google_fusion_tables_public_key,
+          PreferencesUtils.EXPORT_GOOGLE_FUSION_TABLES_PUBLIC_DEFAULT);
       if (defaultTablePublic) {
         shareUrl = SendFusionTablesUtils.getMapUrl(track);
       }

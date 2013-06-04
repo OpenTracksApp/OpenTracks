@@ -42,7 +42,7 @@ public class SendMapsActivity extends AbstractSendActivity {
 
   @Override
   protected String getServiceName() {
-    return getString(R.string.send_google_maps);
+    return getString(R.string.export_google_maps);
   }
 
   @Override

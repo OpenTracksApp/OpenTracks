@@ -41,7 +41,7 @@ public class SendFusionTablesActivity extends AbstractSendActivity {
 
   @Override
   protected String getServiceName() {
-    return getString(R.string.send_google_fusion_tables);
+    return getString(R.string.export_google_fusion_tables);
   }
 
   @Override

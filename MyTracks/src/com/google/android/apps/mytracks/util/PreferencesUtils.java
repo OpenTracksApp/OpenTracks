@@ -17,6 +17,8 @@
 package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.fragments.ExportDialogFragment.ExportType;
+import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.gms.location.DetectedActivity;
 
 import android.annotation.SuppressLint;
@@ -59,12 +61,15 @@ public class PreferencesUtils {
   public static final boolean CONFIRM_SHARE_MAPS_DEFAULT = true;
 
   public static final String DEFAULT_ACTIVITY_DEFAULT = "";
-  public static final boolean DEFAULT_MAP_PUBLIC_DEFAULT = false;
-  public static final boolean DEFAULT_TABLE_PUBLIC_DEFAULT = false;
   public static final String DRIVE_DELETED_LIST_DEFAULT = "";
   public static final long DRIVE_LARGEST_CHANGE_ID_DEFAULT = -1L;
   public static final boolean DRIVE_SYNC_DEFAULT = false;
 
+  public static final String EXPORT_EXTERNAL_STORAGE_FORMAT_DEFAULT = TrackFileFormat.KML.name();
+  public static final boolean EXPORT_GOOGLE_FUSION_TABLES_PUBLIC_DEFAULT = false;
+  public static final boolean EXPORT_GOOGLE_MAPS_PUBLIC_DEFAULT = false;
+  public static final String EXPORT_TYPE_DEFAULT = ExportType.GOOGLE_MAPS.name();
+  
   // Value for split_frequency_key and voice_frequency_key
   public static final int FREQUENCY_OFF = 0;
 
@@ -86,15 +91,10 @@ public class PreferencesUtils {
   public static final int MIN_REQUIRED_ACCURACY_EXCELLENT = 10;
   public static final int MIN_REQUIRED_ACCURACY_POOR = 5000;
 
-  public static final boolean PICK_EXISTING_MAP_DEFAULT = false;
   public static final long RECORDING_TRACK_ID_DEFAULT = -1L;
   public static final boolean RECORDING_TRACK_PAUSED_DEFAULT = true;
   public static final boolean REPORT_SPEED_DEFAULT = true;
   public static final long SELECTED_TRACK_ID_DEFAULT = -1L;
-
-  public static final boolean SEND_TO_FUSION_TABLES_DEFAULT = false;
-  public static final boolean SEND_TO_MAPS_DEFAULT = false;
-  public static final boolean SEND_TO_SPREADSHEETS_DEFAULT = false;
 
   public static final String SENSOR_TYPE_DEFAULT = "NONE";
   public static final String SHARE_TRACK_DEFAULT = "DRIVE";

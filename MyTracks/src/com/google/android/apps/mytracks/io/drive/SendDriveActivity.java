@@ -44,7 +44,7 @@ public class SendDriveActivity extends AbstractSendActivity {
 
   @Override
   protected String getServiceName() {
-    return getString(R.string.send_google_drive);
+    return getString(R.string.export_google_drive);
   }
 
   @Override

@@ -39,7 +39,7 @@ public class SendSpreadsheetsActivity extends AbstractSendActivity {
 
   @Override
   protected String getServiceName() {
-    return getString(R.string.send_google_spreadsheets);
+    return getString(R.string.export_google_spreadsheets);
   }
 
   @Override

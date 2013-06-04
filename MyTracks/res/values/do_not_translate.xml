@@ -70,6 +70,10 @@ Google은 이용자에 대한 위치정보의 이용∙제공사실을 위치정
 대표자: 염동훈\n
 주소 : 서울 강남구 역삼동 737 강남파이낸스센터 22층\n
 전화번호 : (02) 531-9000\n</string>
+  <string name="export_google_drive_url">drive.google.com</string>
+  <string name="export_google_fusion_tables_url">google.com/fusiontables</string>
+  <string name="export_google_maps_url">maps.google.com</string>
+  <string name="export_google_spreadsheets_url">drive.google.com</string>
   <string name="maps_public_unlisted_url">support.google.com/maps/bin/answer.py?answer=144365</string>
   <string name="marker_statistics_icon_url">http://maps.google.com/mapfiles/ms/micons/ylw-pushpin.png</string>
   <string name="marker_waypoint_icon_url">http://maps.google.com/mapfiles/ms/micons/blue-pushpin.png</string>
@@ -79,10 +83,6 @@ Google은 이용자에 대한 위치정보의 이용∙제공사실을 위치정
   <string name="my_tracks_support_url">groups.google.com/a/googleproductforums.com/forum/#!categories/maps/mytracks</string>
   <string name="my_tracks_web_url">www.google.com/mobile/mytracks</string>
   <string name="permission_notification_value">com.google.android.apps.mytracks.MYTRACKS_NOTIFICATIONS</string>
-  <string name="send_google_drive_url">drive.google.com</string>
-  <string name="send_google_fusion_tables_url">google.com/fusiontables</string>
-  <string name="send_google_maps_url">maps.google.com</string>
-  <string name="send_google_spreadsheets_url">drive.google.com</string>
   <string name="sensor_type_value_ant">ANT</string>
   <string name="sensor_type_value_none">NONE</string>
   <string name="sensor_type_value_polar">POLAR</string>

@@ -22,9 +22,6 @@ import com.google.android.maps.mytracks.R;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.KeyEvent;
-import android.widget.CheckBox;
-
-import java.util.ArrayList;
 
 /**
  * Tests creating a track with markers, and editing and sending send a track.
@@ -46,41 +43,6 @@ public class CreateTrackTest extends ActivityInstrumentationTestCase2<TrackListA
     instrumentation = getInstrumentation();
     activityMyTracks = getActivity();
     EndToEndTestUtils.setupForAllTest(instrumentation, activityMyTracks);
-  }
-
-  /**
-   * Does not check any service and try to send to google.
-   */
-  public void testCreateAndSendTrack_notSend() {
-    EndToEndTestUtils.createTrackIfEmpty(1, false);
-    instrumentation.waitForIdleSync();
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_export), true);
-    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.send_google_title));
-    EndToEndTestUtils.rotateCurrentActivity();
-    instrumentation.waitForIdleSync();
-
-    ArrayList<CheckBox> checkBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
-    for (int i = 0; i < checkBoxs.size(); i++) {
-      if (checkBoxs.get(i).isChecked()) {
-        EndToEndTestUtils.SOLO.clickOnCheckBox(i);
-      }
-    }
-
-    if (checkBoxs.size() < 3) {
-      EndToEndTestUtils.SOLO.scrollDown();
-      checkBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
-      for (int i = 0; i < checkBoxs.size(); i++) {
-        if (checkBoxs.get(i).isChecked()) {
-          EndToEndTestUtils.SOLO.clickOnCheckBox(i);
-        }
-      }
-    }
-
-    instrumentation.waitForIdleSync();
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.send_google_send_now));
-    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.send_google_no_service_selected)));
-    // Stop here for do not really send.
   }
 
   /**

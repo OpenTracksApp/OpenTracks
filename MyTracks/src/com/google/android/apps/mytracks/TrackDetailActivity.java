@@ -22,13 +22,16 @@ import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.fragments.ChartFragment;
-import com.google.android.apps.mytracks.fragments.ChooseUploadServiceDialogFragment;
-import com.google.android.apps.mytracks.fragments.ChooseUploadServiceDialogFragment.ChooseUploadServiceCaller;
 import com.google.android.apps.mytracks.fragments.DeleteTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteTrackDialogFragment.DeleteTrackCaller;
+import com.google.android.apps.mytracks.fragments.ExportDialogFragment;
+import com.google.android.apps.mytracks.fragments.ExportDialogFragment.ExportCaller;
+import com.google.android.apps.mytracks.fragments.ExportDialogFragment.ExportType;
 import com.google.android.apps.mytracks.fragments.FrequencyDialogFragment;
 import com.google.android.apps.mytracks.fragments.MyTracksMapFragment;
 import com.google.android.apps.mytracks.fragments.StatsFragment;
+import com.google.android.apps.mytracks.io.file.SaveActivity;
+import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.settings.SettingsActivity;
@@ -45,6 +48,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
@@ -55,6 +59,8 @@ import android.view.View.OnClickListener;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
+import java.util.Locale;
+
 /**
  * An activity to show the track detail.
  * 
@@ -62,7 +68,7 @@ import android.widget.TabHost.TabSpec;
  * @author Rodrigo Damazio
  */
 public class TrackDetailActivity extends AbstractSendToGoogleActivity
-    implements ChooseUploadServiceCaller, DeleteTrackCaller {
+    implements ExportCaller, DeleteTrackCaller {
 
   public static final String EXTRA_TRACK_ID = "track_id";
   public static final String EXTRA_MARKER_ID = "marker_id";
@@ -352,9 +358,9 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
             .show(getSupportFragmentManager(), FrequencyDialogFragment.FREQUENCY_DIALOG_TAG);
         return true;
       case R.id.track_detail_export:
-        AnalyticsUtils.sendPageViews(this, "/action/send_google");
-        new ChooseUploadServiceDialogFragment().show(getSupportFragmentManager(),
-            ChooseUploadServiceDialogFragment.CHOOSE_UPLOAD_SERVICE_DIALOG_TAG);
+        AnalyticsUtils.sendPageViews(this, "/export");
+        new ExportDialogFragment().show(getSupportFragmentManager(),
+            ExportDialogFragment.EXPORT_DIALOG_TAG);
         return true;
       case R.id.track_detail_edit:
         intent = IntentUtils.newIntent(this, TrackEditActivity.class)
@@ -398,23 +404,33 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
   }
 
   @Override
-  public void onChooseUploadServiceDone(boolean sendMaps, boolean sendFusionTables,
-      boolean sendSpreadsheets, boolean mapsExistingMap) {
-    SendRequest sendRequest = new SendRequest(trackId);
-    sendRequest.setSendMaps(sendMaps);
-    sendRequest.setSendFusionTables(sendFusionTables);
-    sendRequest.setSendSpreadsheets(sendSpreadsheets);
-    sendRequest.setMapsExistingMap(mapsExistingMap);
-    if (sendMaps) {
-      AnalyticsUtils.sendPageViews(this, "/send/maps");
+  public void onExportDone(ExportType exportType, TrackFileFormat trackFileFormat) {
+    String pageView;
+    if (exportType == ExportType.EXTERNAL_STORAGE) {
+      pageView = "/export/external_storage_" + trackFileFormat.name().toLowerCase(Locale.US);
+      AnalyticsUtils.sendPageViews(this, pageView);
+      Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
+          .putExtra(SaveActivity.EXTRA_TRACK_IDS, new long[] { trackId })
+          .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);
+      startActivity(intent);
+    } else {
+      SendRequest sendRequest = new SendRequest(trackId);
+      switch (exportType) {
+        case GOOGLE_MAPS:
+          pageView = "/export/maps";
+          sendRequest.setSendMaps(true);
+          break;
+        case GOOGLE_FUSION_TABLES:
+          pageView = "/export/fusion_tables";
+          sendRequest.setSendFusionTables(true);
+          break;
+        default:
+          pageView = "/export/spreadsheets";
+          sendRequest.setSendSpreadsheets(true);
+      }
+      AnalyticsUtils.sendPageViews(this, pageView);
+      sendToGoogle(sendRequest);
     }
-    if (sendFusionTables) {
-      AnalyticsUtils.sendPageViews(this, "/send/fusion_tables");
-    }
-    if (sendSpreadsheets) {
-      AnalyticsUtils.sendPageViews(this, "/send/spreadsheets");
-    }
-    sendToGoogle(sendRequest);
   }
 
   @Override
