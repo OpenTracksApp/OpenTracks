@@ -37,7 +37,6 @@ limitations under the License.
   <string name="min_required_accuracy_key">minRequiredAccuracy</string>
   <string name="report_speed_key">reportSpeed</string>
   <string name="sensor_type_key">sensorType</string>
-  <string name="share_track_key">shareTrack</string>
   <string name="split_frequency_key">splitFrequency</string>
   <string name="stats_show_coordinate_key">statsShowCoordinate</string>
   <string name="stats_show_grade_elevation_key">statsShowGradeElevation</string>
@@ -61,8 +60,6 @@ limitations under the License.
   <string name="bluetooth_sensor_key">bluetoothSensor</string>
   <string name="confirm_play_earth_key">confirmPlayEarth</string>
   <string name="confirm_share_drive_key">confirmShareDrive</string>
-  <string name="confirm_share_file_key">confirmShareFile</string>
-  <string name="confirm_share_maps_key">confirmShareMaps</string>
   <string name="drive_deleted_list_key">driveDeletedList</string>
   <string name="drive_largest_change_id_key">driveLargestChangeId</string>
   <string name="drive_sync_key">driveSync</string>

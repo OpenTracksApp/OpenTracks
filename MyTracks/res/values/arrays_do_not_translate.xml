@@ -182,14 +182,6 @@ limitations under the License.
     <item>@string/sensor_type_value_zephyr</item>
     <item>@string/sensor_type_value_none</item>
   </string-array>
-  <string-array name="share_track_options">
-    <item>@string/settings_sharing_share_track_drive</item>
-    <item>@string/settings_sharing_share_track_maps</item>
-  </string-array>
-  <string-array name="share_track_values">
-    <item>@string/settings_sharing_share_track_drive_value</item>
-    <item>@string/settings_sharing_share_track_maps_value</item>
-  </string-array>
   <string-array name="track_color_mode_options">
     <item>@string/settings_map_track_color_mode_single</item>
     <item>@string/settings_map_track_color_mode_fixed</item>

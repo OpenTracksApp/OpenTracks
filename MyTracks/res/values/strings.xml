@@ -1959,30 +1959,6 @@ limitations under the License.
       Tracks data.">
     Other apps can read, write, start/stop recording My Tracks data.
   </string>
-  <string name="settings_sharing_share_track"
-    translation_description="In the 'Sharing' settings, the option to configure how to share a
-      track.
-
-      Character limit: ~23 (1 line)">
-    Share track
-  </string>
-  <string name="settings_sharing_share_track_drive"
-    translation_description="In the 'Sharing' settings, the option in the 'Share track' setting to
-      share via Google Drive.">
-    Via Google Drive
-  </string>
-  <string name="settings_sharing_share_track_file"
-    translation_description="In the 'Sharing' settings, the option in the 'Share track' setting to
-      share as a file.
-
-       %1$s: file format. E.g., 'GPX'.">
-    As %1$s file
-  </string>
-  <string name="settings_sharing_share_track_maps"
-    translation_description="In the 'Sharing' settings, the option in the 'Share track' setting to
-      share via Google Maps url.">
-    Via Google Maps url
-  </string>
 
   <!-- Settings Stats -->
   <string name="settings_stats_coordinate"
@@ -2038,19 +2014,6 @@ limitations under the License.
       friends.">
     This will upload your track to Google Drive so you can share the file with friends. The file
     will be private and only those you have shared with will have access.
-  </string>
-  <string name="share_track_file_confirm_message"
-    translation_description="The confirmation message when sharing a track as a file.">
-    This will save your track to external storage so you can share the file.
-  </string>
-  <string name="share_track_maps_confirm_message"
-    translation_description="The confirmation message when sharing a track via Google Maps with
-      friends.
-
-      %1$s url. E.g., 'support.google.com/maps/bin/answer.py?answer=144365'.">
-    This will upload your track to Google Maps so you can share the map url with friends. The map
-    will be either public or unlisted depending on your setting at Settings -> Google. For more info
-    on public versus unlisted, see %1$s.
   </string>
   <string name="share_track_picker_title"
     translation_description="When sharing a track with friends, the title on the picker to ask the

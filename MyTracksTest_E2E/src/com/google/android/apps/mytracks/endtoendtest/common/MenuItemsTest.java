@@ -17,19 +17,13 @@ package com.google.android.apps.mytracks.endtoendtest.common;
 
 import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.endtoendtest.EndToEndTestUtils;
-import com.google.android.apps.mytracks.endtoendtest.GoogleUtils;
-import com.google.android.apps.mytracks.endtoendtest.sync.SyncTestUtils;
-import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.maps.mytracks.R;
-import com.google.api.services.drive.Drive;
 
 import android.app.Instrumentation;
-import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.KeyEvent;
 import android.view.View;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -114,149 +108,6 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
    */
   private boolean isControllerShown() {
     return activityMyTracks.findViewById(R.id.track_controler_container).isShown();
-  }
-
-  /**
-   * Tests sharing a track with Google Drive.
-   * 
-   * @throws GoogleAuthException
-   * @throws IOException
-   */
-  public void testShareActivity_withDrive() throws IOException, GoogleAuthException {
-    // Prepare test environment.
-    SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_1);
-    Drive drive1 = SyncTestUtils.getGoogleDrive(EndToEndTestUtils.activityMytracks
-        .getApplicationContext());
-    SyncTestUtils.removeKMLFiles(drive1);
-    EndToEndTestUtils.deleteAllTracks();
-    SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_2);
-    Drive drive2 = SyncTestUtils.getGoogleDrive(EndToEndTestUtils.activityMytracks
-        .getApplicationContext());
-    SyncTestUtils.removeKMLFiles(drive2);
-    EndToEndTestUtils.deleteAllTracks();
-    EndToEndTestUtils.resetAllSettings(activityMyTracks, false);
-    
-    EndToEndTestUtils.createSimpleTrack(0, false);
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_sharing));
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
-        .getString(R.string.settings_sharing_share_track));
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
-        .getString(R.string.settings_sharing_share_track_drive));
-    EndToEndTestUtils.SOLO.goBack();
-    EndToEndTestUtils.SOLO.goBack();
-
-    // Click share, check message and cancel the share.
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_share), true);
-    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.share_track_drive_confirm_message)));
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_no));
-    assertFalse(EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.share_track_add_emails_title), 1,
-        EndToEndTestUtils.VERY_SHORT_WAIT_TIME));
-
-    // Click share again and confirm the share.
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_share), true);
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_yes));
-
-    boolean isAccount2Bound = false;
-    // If Choose account dialog prompt, choose the first account.
-    if (EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.send_google_choose_account_title), 1,
-        EndToEndTestUtils.SHORT_WAIT_TIME)) {
-      // Whether can found account2.
-      if (EndToEndTestUtils.SOLO.waitForText(GoogleUtils.ACCOUNT_NAME_2, 1,
-          EndToEndTestUtils.VERY_SHORT_WAIT_TIME)) {
-        isAccount2Bound = true;
-      }
-      EndToEndTestUtils.SOLO.clickOnText(GoogleUtils.ACCOUNT_NAME_1);
-      EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true,
-          true);
-    }
-
-    // Input account to share and click OK button.
-    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.share_track_add_emails_title)));
-    EndToEndTestUtils.enterTextAvoidSoftKeyBoard(0, GoogleUtils.ACCOUNT_NAME_2);
-    EndToEndTestUtils
-        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
-
-    // Waiting the send is finish.
-    while (EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.generic_progress_title), 1,
-        EndToEndTestUtils.SHORT_WAIT_TIME)) {}
-
-    assertTrue(EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.SOLO
-        .getString(R.string.generic_success_title)));
-    EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.SOLO.getString(R.string.generic_ok));
-
-    // Make more checks if the second account is also bound with this device.
-    if (isAccount2Bound) {
-      EndToEndTestUtils.SOLO.goBack();
-      SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_2);
-      EndToEndTestUtils.findMenuItem(
-          EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
-
-      assertTrue(EndToEndTestUtils.SOLO.waitForText(
-          activityMyTracks.getString(R.string.track_list_shared_with_me), 1,
-          EndToEndTestUtils.SUPER_LONG_WAIT_TIME));
-      assertTrue(EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.trackName, 1,
-          EndToEndTestUtils.SUPER_LONG_WAIT_TIME));
-    }
-  }
-
-  /**
-   * Tests the share a track with Google Maps.
-   */
-  public void testShareActivity_withMaps() {
-    EndToEndTestUtils.createTrackIfEmpty(0, false);
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_sharing));
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
-        .getString(R.string.settings_sharing_share_track));
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
-        .getString(R.string.settings_sharing_share_track_maps));
-    EndToEndTestUtils.SOLO.goBack();
-    EndToEndTestUtils.SOLO.goBack();
-
-    // Click share, check message and cancel the share.
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_share), true);
-    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(
-        R.string.share_track_maps_confirm_message).split("\\%")[0]));
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_no));
-    assertFalse(EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.share_track_add_emails_title), 1,
-        EndToEndTestUtils.VERY_SHORT_WAIT_TIME));
-
-    // Try all share items.
-    for (int i = 0;; i++) {
-      EndToEndTestUtils.createTrackIfEmpty(0, false);
-      View oneItemView = findShareItem(i);
-      if (oneItemView == null) {
-        break;
-      }
-      EndToEndTestUtils.SOLO.clickOnView(oneItemView);
-      EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true,
-          true);
-      if (!GoogleUtils.isAccountAvailable()) {
-        break;
-      }
-      // Waiting the send is finish.
-      while (EndToEndTestUtils.SOLO.waitForText(
-          activityMyTracks.getString(R.string.generic_progress_title), 1,
-          EndToEndTestUtils.SHORT_WAIT_TIME)) {}
-
-      // Check whether data is correct on Google Map and then delete it.
-      assertTrue(GoogleUtils.deleteMap(EndToEndTestUtils.trackName, activityMyTracks));
-
-      // Display the MyTracks activity for the share item may startup other
-      // applications.
-      Intent intent = new Intent();
-      intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-      intent.setClass(activityMyTracks.getApplicationContext(), TrackListActivity.class);
-      activityMyTracks.getApplicationContext().startActivity(intent);
-      EndToEndTestUtils.sleep(EndToEndTestUtils.NORMAL_WAIT_TIME);
-    }
   }
 
   /**

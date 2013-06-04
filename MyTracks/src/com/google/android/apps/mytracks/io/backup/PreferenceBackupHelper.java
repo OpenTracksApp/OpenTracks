@@ -53,8 +53,6 @@ public class PreferenceBackupHelper {
     doNotBackup.add(context.getString(R.string.bluetooth_sensor_key));
     doNotBackup.add(context.getString(R.string.confirm_play_earth_key));
     doNotBackup.add(context.getString(R.string.confirm_share_drive_key));
-    doNotBackup.add(context.getString(R.string.confirm_share_file_key));
-    doNotBackup.add(context.getString(R.string.confirm_share_maps_key));       
     doNotBackup.add(context.getString(R.string.drive_deleted_list_key));
     doNotBackup.add(context.getString(R.string.drive_largest_change_id_key));
     doNotBackup.add(context.getString(R.string.drive_sync_key));

@@ -57,8 +57,6 @@ public class PreferencesUtils {
 
   public static final boolean CONFIRM_PLAY_EARTH_DEFAULT = true;
   public static final boolean CONFIRM_SHARE_DRIVE_DEFAULT = true;
-  public static final boolean CONFIRM_SHARE_FILE_DEFAULT = true;
-  public static final boolean CONFIRM_SHARE_MAPS_DEFAULT = true;
 
   public static final String DEFAULT_ACTIVITY_DEFAULT = "";
   public static final String DRIVE_DELETED_LIST_DEFAULT = "";
@@ -97,7 +95,6 @@ public class PreferencesUtils {
   public static final long SELECTED_TRACK_ID_DEFAULT = -1L;
 
   public static final String SENSOR_TYPE_DEFAULT = "NONE";
-  public static final String SHARE_TRACK_DEFAULT = "DRIVE";
   public static final int SPLIT_FREQUENCY_DEFAULT = 0;
   public static final boolean STATS_SHOW_COORDINATE_DEFAULT = false;
   public static final boolean STATS_SHOW_GRADE_ELEVATION_DEFAULT = false;

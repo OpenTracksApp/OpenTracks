@@ -74,7 +74,6 @@ Google은 이용자에 대한 위치정보의 이용∙제공사실을 위치정
   <string name="export_google_fusion_tables_url">google.com/fusiontables</string>
   <string name="export_google_maps_url">maps.google.com</string>
   <string name="export_google_spreadsheets_url">drive.google.com</string>
-  <string name="maps_public_unlisted_url">support.google.com/maps/bin/answer.py?answer=144365</string>
   <string name="marker_statistics_icon_url">http://maps.google.com/mapfiles/ms/micons/ylw-pushpin.png</string>
   <string name="marker_waypoint_icon_url">http://maps.google.com/mapfiles/ms/micons/blue-pushpin.png</string>
   <string name="my_tracks_help_url">http://support.google.com/gmm/bin/topic.py?topic=2391064&amp;hl=%1$s</string>
@@ -94,8 +93,6 @@ Google은 이용자에 대한 위치정보의 이용∙제공사실을 위치정
   <string name="settings_recording_track_name_date_local_value">DATE_LOCAL</string>
   <string name="settings_recording_track_name_location_value">LOCATION</string>
   <string name="settings_recording_track_name_number_value">NUMBER</string>
-  <string name="settings_sharing_share_track_drive_value">DRIVE</string>
-  <string name="settings_sharing_share_track_maps_value">MAPS</string>
   <string name="track_action_end">com.google.android.apps.mytracks.END_CURRENT_TRACK</string>
   <string name="track_action_pause">com.google.android.apps.mytracks.PAUSE_CURRENT_TRACK</string>
   <string name="track_action_resume">com.google.android.apps.mytracks.RESUME_CURRENT_TRACK</string>
