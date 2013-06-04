@@ -83,7 +83,6 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
 
   private final long trackId;
   private final Account account;
-  private final String chooseMapId;
   private final MyTracksProviderUtils myTracksProviderUtils;
   private final Context context;
   private final GDataClient gDataClient;
@@ -95,9 +94,8 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
   private String mapId;
   int currentSegment;
 
-  public SendMapsAsyncTask(
-      SendMapsActivity activity, long trackId, Account account, String chooseMapId) {
-    this(activity, trackId, account, chooseMapId, MyTracksProviderUtils.Factory.get(
+  public SendMapsAsyncTask(SendMapsActivity activity, long trackId, Account account) {
+    this(activity, trackId, account, MyTracksProviderUtils.Factory.get(
         activity.getApplicationContext()));
   }
 
@@ -106,11 +104,10 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
    */
   @VisibleForTesting
   public SendMapsAsyncTask(SendMapsActivity activity, long trackId, Account account,
-      String chooseMapId, MyTracksProviderUtils myTracksProviderUtils) {
+      MyTracksProviderUtils myTracksProviderUtils) {
     super(activity);
     this.trackId = trackId;
     this.account = account;
-    this.chooseMapId = chooseMapId;
     this.myTracksProviderUtils = myTracksProviderUtils;
     context = activity.getApplicationContext();
 
@@ -218,30 +215,25 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
       return false;
     }
 
-    if (chooseMapId != null) {
-      mapId = chooseMapId;
-      return true;
-    } else {
-      boolean defaultMapPublic = PreferencesUtils.getBoolean(context,
-          R.string.export_google_maps_public_key,
-          PreferencesUtils.EXPORT_GOOGLE_MAPS_PUBLIC_DEFAULT);
-      try {
-        String description = track.getCategory() + "\n" + track.getDescription() + "\n"
-            + context.getString(R.string.send_google_by_my_tracks, "", "");
-        mapId = SendMapsUtils.createNewMap(
-            track.getName(), description, defaultMapPublic, mapsClient, authToken);
-      } catch (ParseException e) {
-        Log.d(TAG, "Unable to create a new map", e);
-        return false;
-      } catch (HttpException e) {
-        Log.d(TAG, "Unable to create a new map", e);
-        return false;
-      } catch (IOException e) {
-        Log.d(TAG, "Unable to create a new map", e);
-        return false;
-      }
-      return mapId != null;
+    boolean defaultMapPublic = PreferencesUtils.getBoolean(context,
+        R.string.export_google_maps_public_key, PreferencesUtils.EXPORT_GOOGLE_MAPS_PUBLIC_DEFAULT);
+    try {
+      String description = track.getCategory() + "\n" + track.getDescription() + "\n"
+          + context.getString(R.string.send_google_by_my_tracks, "", "");
+      mapId = SendMapsUtils.createNewMap(
+          track.getName(), description, defaultMapPublic, mapsClient, authToken);
+    } catch (ParseException e) {
+      Log.d(TAG, "Unable to create a new map", e);
+      return false;
+    } catch (HttpException e) {
+      Log.d(TAG, "Unable to create a new map", e);
+      return false;
+    } catch (IOException e) {
+      Log.d(TAG, "Unable to create a new map", e);
+      return false;
     }
+    return mapId != null;
+
   }
 
   /**

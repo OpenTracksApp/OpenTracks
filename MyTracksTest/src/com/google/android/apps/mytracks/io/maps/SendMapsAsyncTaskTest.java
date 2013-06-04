@@ -42,7 +42,6 @@ import org.xmlpull.v1.XmlPullParserException;
 public class SendMapsAsyncTaskTest extends AndroidTestCase {
 
   private static final long TRACK_ID = 1;
-  private static final String MAP_ID = "MapID_1";
   // Records the run times of {@link SendMapsAsyncTaskMock#uploadMarker(String,
   // String, String, Location)}
   private int uploadMarkerCounter = 0;
@@ -61,8 +60,8 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
     private boolean prepareAndUploadPointsResult = false;
 
     private SendMapsAsyncTaskMock(SendMapsActivity activity, long trackId, Account account,
-        String chooseMapId, MyTracksProviderUtils myTracksProviderUtils) {
-      super(activity, trackId, account, chooseMapId, myTracksProviderUtils);
+        MyTracksProviderUtils myTracksProviderUtils) {
+      super(activity, trackId, account, myTracksProviderUtils);
     }
 
     @Override
@@ -102,10 +101,8 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
 
     AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock);
     SendMapsAsyncTask sendMapsAsyncTask = new SendMapsAsyncTask(sendMapsActivityMock,
-        sendRequest.getTrackId(), sendRequest.getAccount(), sendRequest.getMapsExistingMapId(),
-        myTracksProviderUtilsMock);
+        sendRequest.getTrackId(), sendRequest.getAccount(), myTracksProviderUtilsMock);
     sendMapsAsyncTask.saveResult();
-    assertEquals(sendRequest.getMapsExistingMapId(), track.getMapId());
     AndroidMock.verify(sendMapsActivityMock, myTracksProviderUtilsMock);
   }
 
@@ -118,23 +115,9 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
     AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock);
     // Makes chooseMapId to null.
     SendMapsAsyncTask sendMapsAsyncTask = new SendMapsAsyncTask(sendMapsActivityMock,
-        sendRequest.getTrackId(), sendRequest.getAccount(), null, myTracksProviderUtilsMock);
+        sendRequest.getTrackId(), sendRequest.getAccount(), myTracksProviderUtilsMock);
     // Returns false for an exception would be thrown.
     assertFalse(sendMapsAsyncTask.fetchSendMapId(track));
-    AndroidMock.verify(sendMapsActivityMock, myTracksProviderUtilsMock);
-  }
-
-  /**
-   * Tests the method {@link SendMapsAsyncTask#fetchSendMapId(Track)} when
-   * chooseMapId is not null. And makes sure it returns false.
-   */
-  public void testFetchSendMapId_notNullMapID() {
-    Track track = TrackStubUtils.createTrack(1);
-    AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock);
-    SendMapsAsyncTask sendMapsAsyncTask = new SendMapsAsyncTask(sendMapsActivityMock,
-        sendRequest.getTrackId(), sendRequest.getAccount(), MAP_ID, myTracksProviderUtilsMock);
-    assertTrue(sendMapsAsyncTask.fetchSendMapId(track));
-    assertEquals(MAP_ID, sendMapsAsyncTask.getMapId());
     AndroidMock.verify(sendMapsActivityMock, myTracksProviderUtilsMock);
   }
 
@@ -148,7 +131,7 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
         .andReturn(null);
     AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock);
     SendMapsAsyncTask sendMapsAsyncTask = new SendMapsAsyncTask(sendMapsActivityMock,
-        sendRequest.getTrackId(), sendRequest.getAccount(), MAP_ID, myTracksProviderUtilsMock);
+        sendRequest.getTrackId(), sendRequest.getAccount(), myTracksProviderUtilsMock);
     assertFalse(sendMapsAsyncTask.uploadAllTrackPoints(track));
     AndroidMock.verify(sendMapsActivityMock, myTracksProviderUtilsMock);
   }
@@ -171,7 +154,7 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
 
     AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock, cursorMock);
     SendMapsAsyncTaskMock sendMapsAsyncTask = new SendMapsAsyncTaskMock(sendMapsActivityMock,
-        sendRequest.getTrackId(), sendRequest.getAccount(), MAP_ID, myTracksProviderUtilsMock);
+        sendRequest.getTrackId(), sendRequest.getAccount(), myTracksProviderUtilsMock);
     sendMapsAsyncTask.uploadMarkerResult[0] = false;
     assertFalse(sendMapsAsyncTask.uploadAllTrackPoints(track));
     assertEquals(1, uploadMarkerCounter);
@@ -198,7 +181,7 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
 
     AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock, cursorMock);
     SendMapsAsyncTaskMock sendMapsAsyncTask = new SendMapsAsyncTaskMock(sendMapsActivityMock,
-        sendRequest.getTrackId(), sendRequest.getAccount(), MAP_ID, myTracksProviderUtilsMock);
+        sendRequest.getTrackId(), sendRequest.getAccount(), myTracksProviderUtilsMock);
     // For will be failed when run prepareAndUploadPoints, it no require to
     // set uploadMarkerResult[1].
     sendMapsAsyncTask.uploadMarkerResult[0] = true;
@@ -228,7 +211,7 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
 
     AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock, cursorMock);
     SendMapsAsyncTaskMock sendMapsAsyncTask = new SendMapsAsyncTaskMock(sendMapsActivityMock,
-        sendRequest.getTrackId(), sendRequest.getAccount(), MAP_ID, myTracksProviderUtilsMock);
+        sendRequest.getTrackId(), sendRequest.getAccount(), myTracksProviderUtilsMock);
     sendMapsAsyncTask.uploadMarkerResult[0] = true;
     sendMapsAsyncTask.uploadMarkerResult[1] = false;
     sendMapsAsyncTask.prepareAndUploadPointsResult = true;
@@ -257,7 +240,7 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
 
     AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock, cursorMock);
     SendMapsAsyncTaskMock sendMapsAsyncTask = new SendMapsAsyncTaskMock(sendMapsActivityMock,
-        sendRequest.getTrackId(), sendRequest.getAccount(), MAP_ID, myTracksProviderUtilsMock);
+        sendRequest.getTrackId(), sendRequest.getAccount(), myTracksProviderUtilsMock);
     sendMapsAsyncTask.uploadMarkerResult[0] = true;
     sendMapsAsyncTask.uploadMarkerResult[1] = true;
     sendMapsAsyncTask.prepareAndUploadPointsResult = true;
@@ -278,7 +261,7 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
             Constants.MAX_LOADED_WAYPOINTS_POINTS)).andReturn(null);
     AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock);
     SendMapsAsyncTask sendMapsAsyncTask = new SendMapsAsyncTask(sendMapsActivityMock,
-        sendRequest.getTrackId(), sendRequest.getAccount(), MAP_ID, myTracksProviderUtilsMock);
+        sendRequest.getTrackId(), sendRequest.getAccount(), myTracksProviderUtilsMock);
     assertTrue(sendMapsAsyncTask.uploadWaypoints());
     AndroidMock.verify(sendMapsActivityMock, myTracksProviderUtilsMock);
   }
@@ -301,7 +284,7 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
 
     AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock, cursorMock);
     SendMapsAsyncTask sendMapsAsyncTask = new SendMapsAsyncTask(sendMapsActivityMock,
-        sendRequest.getTrackId(), sendRequest.getAccount(), MAP_ID, myTracksProviderUtilsMock);
+        sendRequest.getTrackId(), sendRequest.getAccount(), myTracksProviderUtilsMock);
 
     assertTrue(sendMapsAsyncTask.uploadWaypoints());
     AndroidMock.verify(sendMapsActivityMock, myTracksProviderUtilsMock, cursorMock);
@@ -332,7 +315,7 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
 
     AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock, cursorMock);
     SendMapsAsyncTask sendMapsAsyncTask = new SendMapsAsyncTask(sendMapsActivityMock,
-        sendRequest.getTrackId(), sendRequest.getAccount(), MAP_ID, myTracksProviderUtilsMock);
+        sendRequest.getTrackId(), sendRequest.getAccount(), myTracksProviderUtilsMock);
     sendMapsAsyncTask.setMapsGDataConverter(mapsGDataConverterMock);
     // Would be failed for there is no source for uploading.
     assertFalse(sendMapsAsyncTask.uploadWaypoints());

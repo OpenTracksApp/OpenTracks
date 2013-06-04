@@ -43,8 +43,6 @@ public class SendRequest implements Parcelable {
   private boolean mapsShare = false;
   private String mapsSharePackageName = null;
   private String mapsShareClassName = null;
-  private boolean mapsExistingMap = false;
-  private String mapsExistingMapId = null;
 
   private Account account = null;
 
@@ -146,22 +144,6 @@ public class SendRequest implements Parcelable {
     this.mapsShareClassName = mapsShareClassName;
   }
 
-  public boolean isMapsExistingMap() {
-    return mapsExistingMap;
-  }
-
-  public void setMapsExistingMap(boolean mapsExistingMap) {
-    this.mapsExistingMap = mapsExistingMap;
-  }
-
-  public String getMapsExistingMapId() {
-    return mapsExistingMapId;
-  }
-
-  public void setMapsExistingMapId(String mapsExistingMapId) {
-    this.mapsExistingMapId = mapsExistingMapId;
-  }
-
   public Account getAccount() {
     return account;
   }
@@ -214,8 +196,6 @@ public class SendRequest implements Parcelable {
     mapsShare = in.readByte() == 1;
     mapsSharePackageName = in.readString();
     mapsShareClassName = in.readString();
-    mapsExistingMap = in.readByte() == 1;
-    mapsExistingMapId = in.readString();
     account = in.readParcelable(null);
     driveSuccess = in.readByte() == 1;
     mapsSuccess = in.readByte() == 1;
@@ -241,8 +221,6 @@ public class SendRequest implements Parcelable {
     out.writeByte((byte) (mapsShare ? 1 : 0));
     out.writeString(mapsSharePackageName);
     out.writeString(mapsShareClassName);
-    out.writeByte((byte) (mapsExistingMap ? 1 : 0));
-    out.writeString(mapsExistingMapId);
     out.writeParcelable(account, 0);
     out.writeByte((byte) (driveSuccess ? 1 : 0));
     out.writeByte((byte) (mapsSuccess ? 1 : 0));

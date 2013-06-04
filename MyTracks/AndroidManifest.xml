@@ -212,9 +212,6 @@ limitations under the License.
     <activity android:name="com.google.android.apps.mytracks.io.drive.SendDriveActivity" />
     <activity android:name="com.google.android.apps.mytracks.io.file.SaveActivity" />
     <activity android:name="com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesActivity" />
-    <activity
-      android:label="@string/maps_list_title"
-      android:name="com.google.android.apps.mytracks.io.maps.ChooseMapActivity" />
     <activity android:name="com.google.android.apps.mytracks.io.maps.SendMapsActivity" />
     <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.UploadResultActivity" />
     <activity android:name="com.google.android.apps.mytracks.io.spreadsheets.SendSpreadsheetsActivity" />

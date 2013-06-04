@@ -32,7 +32,6 @@ import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesActivity;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsConstants;
-import com.google.android.apps.mytracks.io.maps.ChooseMapActivity;
 import com.google.android.apps.mytracks.io.maps.SendMapsActivity;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
@@ -200,8 +199,7 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
     if (packageName != null && className != null) {
       sendRequest.setMapsSharePackageName(packageName);
       sendRequest.setMapsShareClassName(className);
-      Intent intent = IntentUtils.newIntent(
-          this, sendRequest.isMapsExistingMap() ? ChooseMapActivity.class : SendMapsActivity.class)
+      Intent intent = IntentUtils.newIntent(this, SendMapsActivity.class)
           .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
       startActivity(intent);
     }
@@ -320,7 +318,7 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
             getSupportFragmentManager(), ChooseActivityDialogFragment.CHOOSE_ACTIVITY_DIALOG_TAG);
         return;
       }
-      next = sendRequest.isMapsExistingMap() ? ChooseMapActivity.class : SendMapsActivity.class;
+      next = SendMapsActivity.class;
     } else if (sendRequest.isSendFusionTables()) {
       next = SendFusionTablesActivity.class;
     } else if (sendRequest.isSendSpreadsheets()) {

@@ -935,38 +935,6 @@ limitations under the License.
     Select all
   </string>
 
-  <!-- Maps List -->
-  <string name="maps_list_error"
-    translation_description="When sending a track to an existing Google Map, the text on the Maps'
-      list page informing the user that his maps cannot be loaded at this time.">
-    Your maps could not be loaded at this time.
-  </string>
-  <string name="maps_list_no_maps"
-    translation_description="When sending a track to an existing Google Map, the text on the 'Maps'
-      list page informing the user that he doesn't have any maps.">
-    You don\'t have any maps.
-  </string>
-  <string name="maps_list_progress_message"
-    translation_description="When sending a track to an existing Google Map, the progress message
-      informing the user that his maps are being loaded.">
-    Loading your Google Maps&#8230;
-  </string>
-  <string name="maps_list_public_label"
-    translation_description="When sending a track to an existing Google Map, in the 'Maps' list
-      page, the label next to the maps that are public, as opposed to being unlisted.">
-    Public
-  </string>
-  <string name="maps_list_title"
-    translation_description="When sending a track to an existing Google Map, the title of the page
-      asking the user to pick a map.">
-    Pick a Map
-  </string>
-  <string name="maps_list_unlisted_label"
-    translation_description="When sending a track to an existing Google Map, in the 'Maps' list
-      page, the label next to the maps that are unlisted, as opposed to being public.">
-    Unlisted
-  </string>
-
   <!-- Marker -->
   <string name="marker_add_error"
     translation_description="When adding a marker, the message indicating error due to no GPS

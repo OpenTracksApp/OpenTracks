@@ -33,7 +33,6 @@ public class SendRequestTest extends AndroidTestCase {
   private static final String MAPS_SHARE_CLASS_NAME = "class";
   private final static String ACCOUNTNAME = "testAccount1";
   private final static String ACCOUNTYPE = "testType1";
-  private final static String MAPS_EXISTING_MAP_ID = "mapId1";
   private final static String DRIVE_SHARE_EMAILS = "foo@foo.com";
 
   @Override
@@ -74,17 +73,6 @@ public class SendRequestTest extends AndroidTestCase {
   }
 
   /**
-   * Tests the method {@link SendRequest#isMapsExistingMap()}. The value should
-   * be set to false which is its default value when it is initialed in setup
-   * method.
-   */
-  public void testIsNewMap() {
-    assertEquals(false, sendRequest.isMapsExistingMap());
-    sendRequest.setMapsExistingMap(true);
-    assertEquals(true, sendRequest.isMapsExistingMap());
-  }
-
-  /**
    * Tests the method {@link SendRequest#getAccount()}. The value should be set
    * to null which is its default value when it is initialed in setup method.
    */
@@ -93,17 +81,6 @@ public class SendRequestTest extends AndroidTestCase {
     Account account = new Account(ACCOUNTNAME, ACCOUNTYPE);
     sendRequest.setAccount(account);
     assertEquals(account, sendRequest.getAccount());
-  }
-
-  /**
-   * Tests the method {@link SendRequest#getMapsExistingMapId()}. The value
-   * should be set to null which is its default value when it is initialed in
-   * setup method.
-   */
-  public void testGetMapsExistingMapId() {
-    assertEquals(null, sendRequest.getMapsExistingMapId());
-    sendRequest.setMapsExistingMapId("1");
-    assertEquals("1", "1");
   }
 
   /**
@@ -156,8 +133,6 @@ public class SendRequestTest extends AndroidTestCase {
     parcel.writeByte((byte) 1);
     parcel.writeString("");
     parcel.writeString("");
-    parcel.writeByte((byte) 1);
-    parcel.writeString(MAPS_EXISTING_MAP_ID);
     Account account = new Account(ACCOUNTNAME, ACCOUNTYPE);
     parcel.writeParcelable(account, 0);
     parcel.writeByte((byte) 1);
@@ -177,8 +152,6 @@ public class SendRequestTest extends AndroidTestCase {
     assertTrue(sendRequest.isMapsShare());
     assertEquals("", sendRequest.getMapsSharePackageName());
     assertEquals("", sendRequest.getMapsShareClassName());
-    assertTrue(sendRequest.isMapsExistingMap());
-    assertEquals(MAPS_EXISTING_MAP_ID, sendRequest.getMapsExistingMapId());
     assertEquals(account, sendRequest.getAccount());
     assertTrue(sendRequest.isDriveSuccess());
     assertTrue(sendRequest.isMapsSuccess());
@@ -203,8 +176,6 @@ public class SendRequestTest extends AndroidTestCase {
     parcel.writeByte((byte) 0);
     parcel.writeString(null);
     parcel.writeString(null);
-    parcel.writeByte((byte) 0);
-    parcel.writeString(MAPS_EXISTING_MAP_ID);
     Account account = new Account(ACCOUNTNAME, ACCOUNTYPE);
     parcel.writeParcelable(account, 0);
     parcel.writeByte((byte) 0);
@@ -224,8 +195,6 @@ public class SendRequestTest extends AndroidTestCase {
     assertFalse(sendRequest.isMapsShare());
     assertNull(sendRequest.getMapsSharePackageName());
     assertNull(sendRequest.getMapsShareClassName());
-    assertFalse(sendRequest.isMapsExistingMap());
-    assertEquals(MAPS_EXISTING_MAP_ID, sendRequest.getMapsExistingMapId());
     assertEquals(account, sendRequest.getAccount());
     assertFalse(sendRequest.isDriveSuccess());
     assertFalse(sendRequest.isMapsSuccess());
@@ -253,8 +222,6 @@ public class SendRequestTest extends AndroidTestCase {
     boolean mapsShare = parcel.readByte() == 1;
     String mapsSharePackageName = parcel.readString();
     String mapsShareClassName = parcel.readString();
-    boolean mapsExistingMap = parcel.readByte() == 1;
-    String mapsExistingMapId = parcel.readString();
     Parcelable account = parcel.readParcelable(null);
     boolean driveSuccess = parcel.readByte() == 1;
     boolean mapsSuccess = parcel.readByte() == 1;
@@ -271,8 +238,6 @@ public class SendRequestTest extends AndroidTestCase {
     assertFalse(mapsShare);
     assertNull(mapsSharePackageName);
     assertNull(mapsShareClassName);
-    assertFalse(mapsExistingMap);
-    assertNull(mapsExistingMapId);
     assertNull(account);
     assertFalse(driveSuccess);
     assertFalse(mapsSuccess);
@@ -295,8 +260,6 @@ public class SendRequestTest extends AndroidTestCase {
     sendRequest.setMapsShare(true);
     sendRequest.setMapsSharePackageName(MAPS_SHARE_PACKAGE_NAME);
     sendRequest.setMapsShareClassName(MAPS_SHARE_CLASS_NAME);
-    sendRequest.setMapsExistingMap(true);
-    sendRequest.setMapsExistingMapId(MAPS_EXISTING_MAP_ID);
     Account accountNew = new Account(ACCOUNTNAME + "2", ACCOUNTYPE + "2");
     sendRequest.setAccount(accountNew);
     sendRequest.setMapsSuccess(true);
@@ -318,8 +281,6 @@ public class SendRequestTest extends AndroidTestCase {
     boolean mapsShare = parcel.readByte() == 1;
     String mapsSharePackageName = parcel.readString();
     String mapsShareClassName = parcel.readString();
-    boolean mapsExistingMap = parcel.readByte() == 1;
-    String mapsExistingMapId = parcel.readString();
     Parcelable account = parcel.readParcelable(null);
     boolean driveSuccess = parcel.readByte() == 1;
     boolean mapsSuccess = parcel.readByte() == 1;
@@ -336,8 +297,6 @@ public class SendRequestTest extends AndroidTestCase {
     assertTrue(mapsShare);
     assertEquals(MAPS_SHARE_PACKAGE_NAME, mapsSharePackageName);
     assertEquals(MAPS_SHARE_CLASS_NAME, mapsShareClassName);
-    assertTrue(mapsExistingMap);
-    assertEquals(MAPS_EXISTING_MAP_ID, mapsExistingMapId);
     assertEquals(accountNew, account);
     assertTrue(driveSuccess);
     assertTrue(mapsSuccess);
