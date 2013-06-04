@@ -32,9 +32,9 @@ limitations under the License.
     android:title="@string/menu_import_all">
   </item>
   <item
-    android:icon="@drawable/menu_save"
-    android:id="@+id/track_list_save_all"
-    android:title="@string/menu_save_all">
+    android:icon="@drawable/menu_export"
+    android:id="@+id/track_list_export_all"
+    android:title="@string/menu_export_all">
   </item>
   <item
     android:icon="@drawable/menu_delete"

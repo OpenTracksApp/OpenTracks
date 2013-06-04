@@ -132,7 +132,7 @@ public class SendToGoogleTest extends ActivityInstrumentationTestCase2<TrackList
    * @return true means send successfully
    */
   private boolean sendToGoogle() {
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_send_google), true);
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_export), true);
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.send_google_title));
     instrumentation.waitForIdleSync();
     ArrayList<CheckBox> checkBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();

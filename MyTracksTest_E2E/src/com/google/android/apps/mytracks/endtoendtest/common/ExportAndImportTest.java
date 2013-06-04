@@ -88,7 +88,7 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     EndToEndTestUtils.deleteExportedFiles(EndToEndTestUtils.GPX);
 
     // Click to export tracks(At least one track) to Gpx files.
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_save_all), true);
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_export_all), true);
     EndToEndTestUtils.SOLO.clickOnText(String.format(
         activityMyTracks.getString(R.string.save_all_selection_option),
         EndToEndTestUtils.GPX.toUpperCase()));
@@ -189,7 +189,7 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
 
     // Click to export tracks(At least one track) to Gpx files.
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_save_all), true);
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_export_all), true);
     EndToEndTestUtils.SOLO.clickOnText(String.format(
         activityMyTracks.getString(R.string.save_all_selection_option),
         EndToEndTestUtils.GPX.toUpperCase()));
@@ -232,7 +232,7 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     // Click to export tracks(At least two tracks) to KML files.
     gpxFilesNumber = EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX).length;
     trackNumber = EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount();
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_save_all), true);
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_export_all), true);
     EndToEndTestUtils.SOLO.clickOnText(String.format(
         activityMyTracks.getString(R.string.save_all_selection_option),
         EndToEndTestUtils.KML.toUpperCase()));

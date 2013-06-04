@@ -23,6 +23,7 @@ import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 import com.jayway.android.robotium.solo.Solo;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Context;
@@ -545,7 +546,7 @@ public class EndToEndTestUtils {
   public static void saveTrackToSdCard(String trackKind) {
     deleteExportedFiles(trackKind);
     instrumentation.waitForIdleSync();
-    findMenuItem(activityMytracks.getString(R.string.menu_save), true);
+    findMenuItem(activityMytracks.getString(R.string.menu_export), true);
     instrumentation.waitForIdleSync();
     SOLO.clickOnText(trackKind.toUpperCase());
     EndToEndTestUtils
@@ -611,6 +612,7 @@ public class EndToEndTestUtils {
    * 
    * @return false means can not check failed.
    */
+  @SuppressLint("NewApi")
   private static boolean setHasActionBar() {
     try {
       return activityMytracks.getActionBar() == null ? false : true;

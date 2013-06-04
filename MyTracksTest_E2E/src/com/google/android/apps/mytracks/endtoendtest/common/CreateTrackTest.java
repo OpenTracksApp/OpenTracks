@@ -54,7 +54,7 @@ public class CreateTrackTest extends ActivityInstrumentationTestCase2<TrackListA
   public void testCreateAndSendTrack_notSend() {
     EndToEndTestUtils.createTrackIfEmpty(1, false);
     instrumentation.waitForIdleSync();
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_send_google), true);
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_export), true);
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.send_google_title));
     EndToEndTestUtils.rotateCurrentActivity();
     instrumentation.waitForIdleSync();

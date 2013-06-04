@@ -282,7 +282,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   private MenuItem searchMenuItem;
   private MenuItem startGpsMenuItem;
   private MenuItem importAllMenuItem;
-  private MenuItem saveAllMenuItem;
+  private MenuItem exportAllMenuItem;
   private MenuItem deleteAllMenuItem;
   private MenuItem syncNowMenuItem;
   private MenuItem feedbackMenuItem;
@@ -457,7 +457,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     searchMenuItem = menu.findItem(R.id.track_list_search);
     startGpsMenuItem = menu.findItem(R.id.track_list_start_gps);
     importAllMenuItem = menu.findItem(R.id.track_list_import_all);
-    saveAllMenuItem = menu.findItem(R.id.track_list_save_all);
+    exportAllMenuItem = menu.findItem(R.id.track_list_export_all);
     deleteAllMenuItem = menu.findItem(R.id.track_list_delete_all);
     syncNowMenuItem = menu.findItem(R.id.track_list_sync_now);
     feedbackMenuItem = menu.findItem(R.id.track_list_feedback);
@@ -525,9 +525,9 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
             R.string.import_selection_title, R.string.import_selection_option, 2)
             .show(getSupportFragmentManager(), FileTypeDialogFragment.FILE_TYPE_DIALOG_TAG);
         return true;
-      case R.id.track_list_save_all:
-        FileTypeDialogFragment.newInstance(R.id.track_list_save_all, R.string.save_selection_title,
-            R.string.save_all_selection_option, 4)
+      case R.id.track_list_export_all:
+        FileTypeDialogFragment.newInstance(R.id.track_list_export_all,
+            R.string.save_selection_title, R.string.save_all_selection_option, 4)
             .show(getSupportFragmentManager(), FileTypeDialogFragment.FILE_TYPE_DIALOG_TAG);
         return true;
       case R.id.track_list_delete_all:
@@ -607,7 +607,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   public void onFileTypeDone(int menuId, TrackFileFormat trackFileFormat) {
     Intent intent;
     switch (menuId) {
-      case R.id.track_list_save_all:
+      case R.id.track_list_export_all:
         AnalyticsUtils.sendPageViews(
             this, "/action/save_all_" + trackFileFormat.name().toLowerCase(Locale.US));
         intent = IntentUtils.newIntent(this, SaveActivity.class)
@@ -717,8 +717,8 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     if (importAllMenuItem != null) {
       importAllMenuItem.setVisible(!isRecording);
     }
-    if (saveAllMenuItem != null) {
-      saveAllMenuItem.setVisible(!isRecording);
+    if (exportAllMenuItem != null) {
+      exportAllMenuItem.setVisible(!isRecording);
     }
     if (deleteAllMenuItem != null) {
       deleteAllMenuItem.setVisible(!isRecording);

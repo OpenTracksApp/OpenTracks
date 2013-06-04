@@ -1015,6 +1015,18 @@ limitations under the License.
       Character limit: ~20 (1 line)">
     Edit
   </string>
+  <string name="menu_export"
+    translation_description="In the menu, to export a track.
+
+      Character limit: ~20 (1 line)">
+    Export
+  </string>
+  <string name="menu_export_all"
+    translation_description="In the menu, to export all tracks.
+
+      Character limit: ~20 (1 line)">
+    Export all
+  </string>
   <string name="menu_feedback"
     translation_description="In the menu, to enter feedback.
 
@@ -1078,29 +1090,11 @@ limitations under the License.
       Character limit: ~20 (1 line)">
     Satellite with streets
   </string>
-  <string name="menu_save"
-    translation_description="In the menu, to save a track to the external storage.
-
-      Character limit: ~20 (1 line)">
-    Save
-  </string>
-  <string name="menu_save_all"
-    translation_description="In the menu, to save all the tracks to the external storage.
-
-      Character limit: ~20 (1 line)">
-    Save all
-  </string>
   <string name="menu_search"
     translation_description="In the menu, to start a textual search for tracks or markers.
 
       Character limit: ~20 (1 line)">
     Search
-  </string>
-  <string name="menu_send_google"
-    translation_description="In the menu, to send a track to Google.
-
-      Character limit: ~20 (1 line)">
-    Send to Google
   </string>
   <string name="menu_sensor_state"
     translation_description="In the menu, to go to the sensor state page.
@@ -1254,13 +1248,6 @@ limitations under the License.
 
       %1$s: the directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
     Saving to %1$s&#8230;
-  </string>
-  <string name="save_selection_option"
-    translation_description="When saving to external storage, the option to save a track as a
-      certain file format.
-
-      %1$s: file format. 'GPX', 'KML', 'CSV', or 'TCX'.">
-    Save as %1$s
   </string>
   <string name="save_selection_title"
     translation_description="The dialog title to save to external storage.">

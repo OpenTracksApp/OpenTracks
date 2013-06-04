@@ -71,7 +71,7 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
     trackListView = EndToEndTestUtils.SOLO.getCurrentListViews();
     assertEquals(0, trackListView.get(0).getCount());
     // Export when there is no track.
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_save_all), true);
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_export_all), true);
     EndToEndTestUtils.SOLO.clickOnText(String.format(
         activityMyTracks.getString(R.string.save_all_selection_option),
         EndToEndTestUtils.GPX.toUpperCase()));

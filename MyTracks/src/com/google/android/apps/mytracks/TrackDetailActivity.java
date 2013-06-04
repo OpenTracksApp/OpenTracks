@@ -26,13 +26,9 @@ import com.google.android.apps.mytracks.fragments.ChooseUploadServiceDialogFragm
 import com.google.android.apps.mytracks.fragments.ChooseUploadServiceDialogFragment.ChooseUploadServiceCaller;
 import com.google.android.apps.mytracks.fragments.DeleteTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteTrackDialogFragment.DeleteTrackCaller;
-import com.google.android.apps.mytracks.fragments.FileTypeDialogFragment;
-import com.google.android.apps.mytracks.fragments.FileTypeDialogFragment.FileTypeCaller;
 import com.google.android.apps.mytracks.fragments.FrequencyDialogFragment;
 import com.google.android.apps.mytracks.fragments.MyTracksMapFragment;
 import com.google.android.apps.mytracks.fragments.StatsFragment;
-import com.google.android.apps.mytracks.io.file.SaveActivity;
-import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.settings.SettingsActivity;
@@ -49,7 +45,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
@@ -60,8 +55,6 @@ import android.view.View.OnClickListener;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
-import java.util.Locale;
-
 /**
  * An activity to show the track detail.
  * 
@@ -69,7 +62,7 @@ import java.util.Locale;
  * @author Rodrigo Damazio
  */
 public class TrackDetailActivity extends AbstractSendToGoogleActivity
-    implements ChooseUploadServiceCaller, DeleteTrackCaller, FileTypeCaller {
+    implements ChooseUploadServiceCaller, DeleteTrackCaller {
 
   public static final String EXTRA_TRACK_ID = "track_id";
   public static final String EXTRA_MARKER_ID = "marker_id";
@@ -97,8 +90,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
   private MenuItem insertMarkerMenuItem;
   private MenuItem playMenuItem;
   private MenuItem shareMenuItem;
-  private MenuItem sendGoogleMenuItem;
-  private MenuItem saveMenuItem;
+  private MenuItem exportMenuItem;
   private MenuItem voiceFrequencyMenuItem;
   private MenuItem splitFrequencyMenuItem;
   private MenuItem feedbackMenuItem;
@@ -309,8 +301,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
 
     insertMarkerMenuItem = menu.findItem(R.id.track_detail_insert_marker);
     playMenuItem = menu.findItem(R.id.track_detail_play);
-    sendGoogleMenuItem = menu.findItem(R.id.track_detail_send_google);
-    saveMenuItem = menu.findItem(R.id.track_detail_save);
+    exportMenuItem = menu.findItem(R.id.track_detail_export);
     voiceFrequencyMenuItem = menu.findItem(R.id.track_detail_voice_frequency);
     splitFrequencyMenuItem = menu.findItem(R.id.track_detail_split_frequency);
     feedbackMenuItem = menu.findItem(R.id.track_detail_split_frequency);
@@ -360,15 +351,10 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
             PreferencesUtils.SPLIT_FREQUENCY_DEFAULT, R.string.menu_split_frequency)
             .show(getSupportFragmentManager(), FrequencyDialogFragment.FREQUENCY_DIALOG_TAG);
         return true;
-      case R.id.track_detail_send_google:
+      case R.id.track_detail_export:
         AnalyticsUtils.sendPageViews(this, "/action/send_google");
         new ChooseUploadServiceDialogFragment().show(getSupportFragmentManager(),
             ChooseUploadServiceDialogFragment.CHOOSE_UPLOAD_SERVICE_DIALOG_TAG);
-        return true;
-      case R.id.track_detail_save:
-        FileTypeDialogFragment.newInstance(R.id.track_detail_save, R.string.save_selection_title,
-            R.string.save_selection_option, 4)
-            .show(getSupportFragmentManager(), FileTypeDialogFragment.FILE_TYPE_DIALOG_TAG);
         return true;
       case R.id.track_detail_edit:
         intent = IntentUtils.newIntent(this, TrackEditActivity.class)
@@ -446,21 +432,6 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
     });
   }
 
-  @Override
-  public void onFileTypeDone(int menuId, TrackFileFormat trackFileFormat) {
-    switch (menuId) {
-      case R.id.track_detail_save:
-        AnalyticsUtils.sendPageViews(
-            this, "/action/save_" + trackFileFormat.name().toLowerCase(Locale.US));
-        Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
-            .putExtra(SaveActivity.EXTRA_TRACK_IDS, new long[] {trackId})
-            .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);
-        startActivity(intent);
-        break;
-      default:
-    }
-  }
-
   /**
    * Gets the {@link TrackDataHub}.
    */
@@ -531,11 +502,8 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
     if (shareMenuItem != null && shareMenuItem.isEnabled()) {
       shareMenuItem.setVisible(!isRecording);
     }
-    if (sendGoogleMenuItem != null) {
-      sendGoogleMenuItem.setVisible(!isRecording);
-    }
-    if (saveMenuItem != null) {
-      saveMenuItem.setVisible(!isRecording);
+    if (exportMenuItem != null) {
+      exportMenuItem.setVisible(!isRecording);
     }
     if (voiceFrequencyMenuItem != null) {
       voiceFrequencyMenuItem.setVisible(isRecording);
