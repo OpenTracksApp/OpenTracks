@@ -23,7 +23,6 @@ import com.google.android.apps.mytracks.fragments.CheckPermissionFragment.CheckP
 import com.google.android.apps.mytracks.fragments.ChooseAccountDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChooseAccountDialogFragment.ChooseAccountCaller;
 import com.google.android.apps.mytracks.fragments.ChooseActivityDialogFragment;
-import com.google.android.apps.mytracks.fragments.ChooseActivityDialogFragment.ChooseActivityCaller;
 import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment;
 import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment.ConfirmCaller;
 import com.google.android.apps.mytracks.fragments.InstallEarthDialogFragment;
@@ -67,8 +66,7 @@ import java.io.IOException;
  * @author Jimmy Shih
  */
 public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActivity implements
-    ChooseAccountCaller, CheckPermissionCaller, AddEmailsCaller, ChooseActivityCaller,
-    ConfirmCaller {
+    ChooseAccountCaller, CheckPermissionCaller, AddEmailsCaller, ConfirmCaller {
 
   private static final String TAG = AbstractMyTracksActivity.class.getSimpleName();
   private static final String SEND_REQUEST_KEY = "send_request_key";
@@ -193,17 +191,6 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
     }
   }
 
-  @Override
-  public void onChooseActivityDone(String packageName, String className) {
-    if (packageName != null && className != null) {
-      sendRequest.setMapsSharePackageName(packageName);
-      sendRequest.setMapsShareClassName(className);
-      Intent intent = IntentUtils.newIntent(this, SendMapsActivity.class)
-          .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
-      startActivity(intent);
-    }
-  }
-
   private void onDrivePermissionSuccess() {
     // Check Maps permission
     if (sendRequest.isSendMaps()) {
@@ -312,11 +299,6 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
         next = SendDriveActivity.class;
       }
     } else if (sendRequest.isSendMaps()) {
-      if (sendRequest.isMapsShare()) {
-        new ChooseActivityDialogFragment().show(
-            getSupportFragmentManager(), ChooseActivityDialogFragment.CHOOSE_ACTIVITY_DIALOG_TAG);
-        return;
-      }
       next = SendMapsActivity.class;
     } else if (sendRequest.isSendFusionTables()) {
       next = SendFusionTablesActivity.class;

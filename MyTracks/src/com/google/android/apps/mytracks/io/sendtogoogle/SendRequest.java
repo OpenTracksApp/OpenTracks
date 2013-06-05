@@ -40,10 +40,6 @@ public class SendRequest implements Parcelable {
   private boolean driveShare = false;
   private String driveShareEmails = null;
 
-  private boolean mapsShare = false;
-  private String mapsSharePackageName = null;
-  private String mapsShareClassName = null;
-
   private Account account = null;
 
   private boolean driveSuccess = false;
@@ -120,30 +116,6 @@ public class SendRequest implements Parcelable {
     this.driveShareEmails = driveShareEmails;
   }
 
-  public boolean isMapsShare() {
-    return mapsShare;
-  }
-
-  public void setMapsShare(boolean mapsShare) {
-    this.mapsShare = mapsShare;
-  }
-
-  public String getMapsSharePackageName() {
-    return mapsSharePackageName;
-  }
-
-  public void setMapsSharePackageName(String mapsSharePackageName) {
-    this.mapsSharePackageName = mapsSharePackageName;
-  }
-
-  public String getMapsShareClassName() {
-    return mapsShareClassName;
-  }
-
-  public void setMapsShareClassName(String mapsShareClassName) {
-    this.mapsShareClassName = mapsShareClassName;
-  }
-
   public Account getAccount() {
     return account;
   }
@@ -193,9 +165,6 @@ public class SendRequest implements Parcelable {
     driveEnableSync = in.readByte() == 1;
     driveShare = in.readByte() == 1;
     driveShareEmails = in.readString();
-    mapsShare = in.readByte() == 1;
-    mapsSharePackageName = in.readString();
-    mapsShareClassName = in.readString();
     account = in.readParcelable(null);
     driveSuccess = in.readByte() == 1;
     mapsSuccess = in.readByte() == 1;
@@ -218,9 +187,6 @@ public class SendRequest implements Parcelable {
     out.writeByte((byte) (driveEnableSync ? 1 : 0));    
     out.writeByte((byte) (driveShare ? 1 : 0));
     out.writeString(driveShareEmails);
-    out.writeByte((byte) (mapsShare ? 1 : 0));
-    out.writeString(mapsSharePackageName);
-    out.writeString(mapsShareClassName);
     out.writeParcelable(account, 0);
     out.writeByte((byte) (driveSuccess ? 1 : 0));
     out.writeByte((byte) (mapsSuccess ? 1 : 0));

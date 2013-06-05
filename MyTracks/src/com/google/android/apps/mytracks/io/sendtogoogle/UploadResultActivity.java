@@ -71,13 +71,6 @@ public class UploadResultActivity extends FragmentActivity implements ChooseActi
 
     if (sendRequest.isSendMaps() && sendRequest.isMapsSuccess()) {
       shareUrl = SendMapsUtils.getMapUrl(track);
-      if (sendRequest.getMapsSharePackageName() != null) {
-        Intent intent = IntentUtils.newShareUrlIntent(this, sendRequest.getTrackId(), shareUrl,
-            sendRequest.getMapsSharePackageName(), sendRequest.getMapsShareClassName());
-        startActivity(intent);
-        finish();
-        return;
-      }
     }
     if (shareUrl == null && sendRequest.isSendFusionTables()
         && sendRequest.isFusionTablesSuccess()) {

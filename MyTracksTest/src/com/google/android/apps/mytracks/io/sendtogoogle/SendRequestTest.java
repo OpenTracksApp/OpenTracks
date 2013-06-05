@@ -29,8 +29,6 @@ public class SendRequestTest extends AndroidTestCase {
 
   private SendRequest sendRequest;
 
-  private static final String MAPS_SHARE_PACKAGE_NAME = "package";
-  private static final String MAPS_SHARE_CLASS_NAME = "class";
   private final static String ACCOUNTNAME = "testAccount1";
   private final static String ACCOUNTYPE = "testType1";
   private final static String DRIVE_SHARE_EMAILS = "foo@foo.com";
@@ -130,9 +128,6 @@ public class SendRequestTest extends AndroidTestCase {
     parcel.writeByte((byte) 1);
     parcel.writeByte((byte) 1);
     parcel.writeString(DRIVE_SHARE_EMAILS);
-    parcel.writeByte((byte) 1);
-    parcel.writeString("");
-    parcel.writeString("");
     Account account = new Account(ACCOUNTNAME, ACCOUNTYPE);
     parcel.writeParcelable(account, 0);
     parcel.writeByte((byte) 1);
@@ -149,9 +144,6 @@ public class SendRequestTest extends AndroidTestCase {
     assertTrue(sendRequest.isDriveEnableSync());
     assertTrue(sendRequest.isDriveShare());
     assertEquals(DRIVE_SHARE_EMAILS, sendRequest.getDriveShareEmails());
-    assertTrue(sendRequest.isMapsShare());
-    assertEquals("", sendRequest.getMapsSharePackageName());
-    assertEquals("", sendRequest.getMapsShareClassName());
     assertEquals(account, sendRequest.getAccount());
     assertTrue(sendRequest.isDriveSuccess());
     assertTrue(sendRequest.isMapsSuccess());
@@ -173,9 +165,6 @@ public class SendRequestTest extends AndroidTestCase {
     parcel.writeByte((byte) 0);
     parcel.writeByte((byte) 0);
     parcel.writeString(null);
-    parcel.writeByte((byte) 0);
-    parcel.writeString(null);
-    parcel.writeString(null);
     Account account = new Account(ACCOUNTNAME, ACCOUNTYPE);
     parcel.writeParcelable(account, 0);
     parcel.writeByte((byte) 0);
@@ -192,9 +181,6 @@ public class SendRequestTest extends AndroidTestCase {
     assertFalse(sendRequest.isDriveEnableSync());
     assertFalse(sendRequest.isDriveShare());
     assertNull(sendRequest.getDriveShareEmails());
-    assertFalse(sendRequest.isMapsShare());
-    assertNull(sendRequest.getMapsSharePackageName());
-    assertNull(sendRequest.getMapsShareClassName());
     assertEquals(account, sendRequest.getAccount());
     assertFalse(sendRequest.isDriveSuccess());
     assertFalse(sendRequest.isMapsSuccess());
@@ -219,9 +205,6 @@ public class SendRequestTest extends AndroidTestCase {
     boolean driveEnableSync = parcel.readByte() == 1;    
     boolean driveShare = parcel.readByte() == 1;
     String dirveShareEmails = parcel.readString();
-    boolean mapsShare = parcel.readByte() == 1;
-    String mapsSharePackageName = parcel.readString();
-    String mapsShareClassName = parcel.readString();
     Parcelable account = parcel.readParcelable(null);
     boolean driveSuccess = parcel.readByte() == 1;
     boolean mapsSuccess = parcel.readByte() == 1;
@@ -235,9 +218,6 @@ public class SendRequestTest extends AndroidTestCase {
     assertFalse(driveEnableSync);
     assertFalse(driveShare);
     assertNull(dirveShareEmails);
-    assertFalse(mapsShare);
-    assertNull(mapsSharePackageName);
-    assertNull(mapsShareClassName);
     assertNull(account);
     assertFalse(driveSuccess);
     assertFalse(mapsSuccess);
@@ -257,9 +237,6 @@ public class SendRequestTest extends AndroidTestCase {
     sendRequest.setDriveEnableSync(true);
     sendRequest.setDriveShare(true);
     sendRequest.setDriveShareEmails(DRIVE_SHARE_EMAILS);
-    sendRequest.setMapsShare(true);
-    sendRequest.setMapsSharePackageName(MAPS_SHARE_PACKAGE_NAME);
-    sendRequest.setMapsShareClassName(MAPS_SHARE_CLASS_NAME);
     Account accountNew = new Account(ACCOUNTNAME + "2", ACCOUNTYPE + "2");
     sendRequest.setAccount(accountNew);
     sendRequest.setMapsSuccess(true);
@@ -278,9 +255,6 @@ public class SendRequestTest extends AndroidTestCase {
     boolean driveEnableSync = parcel.readByte() == 1;
     boolean driveShare = parcel.readByte() == 1;
     String driveShareEmails = parcel.readString();
-    boolean mapsShare = parcel.readByte() == 1;
-    String mapsSharePackageName = parcel.readString();
-    String mapsShareClassName = parcel.readString();
     Parcelable account = parcel.readParcelable(null);
     boolean driveSuccess = parcel.readByte() == 1;
     boolean mapsSuccess = parcel.readByte() == 1;
@@ -294,9 +268,6 @@ public class SendRequestTest extends AndroidTestCase {
     assertTrue(driveEnableSync);
     assertTrue(driveShare);
     assertEquals(DRIVE_SHARE_EMAILS, driveShareEmails);
-    assertTrue(mapsShare);
-    assertEquals(MAPS_SHARE_PACKAGE_NAME, mapsSharePackageName);
-    assertEquals(MAPS_SHARE_CLASS_NAME, mapsShareClassName);
     assertEquals(accountNew, account);
     assertTrue(driveSuccess);
     assertTrue(mapsSuccess);
