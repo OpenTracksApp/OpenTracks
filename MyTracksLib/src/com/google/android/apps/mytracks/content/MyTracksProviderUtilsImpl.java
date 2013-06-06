@@ -82,8 +82,6 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     int elevationGainIndex = cursor.getColumnIndexOrThrow(TracksColumns.ELEVATIONGAIN);
     int minGradeIndex = cursor.getColumnIndexOrThrow(TracksColumns.MINGRADE);
     int maxGradeIndex = cursor.getColumnIndexOrThrow(TracksColumns.MAXGRADE);
-    int mapIdIndex = cursor.getColumnIndexOrThrow(TracksColumns.MAPID);
-    int tableIdIndex = cursor.getColumnIndexOrThrow(TracksColumns.TABLEID);
     int iconIndex = cursor.getColumnIndexOrThrow(TracksColumns.ICON);
     int driveIdIndex = cursor.getColumnIndexOrThrow(TracksColumns.DRIVEID);
     int modifiedTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.MODIFIEDTIME);
@@ -153,12 +151,6 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     }
     if (!cursor.isNull(maxGradeIndex)) {
       tripStatistics.setMaxGrade(cursor.getFloat(maxGradeIndex));
-    }
-    if (!cursor.isNull(mapIdIndex)) {
-      track.setMapId(cursor.getString(mapIdIndex));
-    }
-    if (!cursor.isNull(tableIdIndex)) {
-      track.setTableId(cursor.getString(tableIdIndex));
     }
     if (!cursor.isNull(iconIndex)) {
       track.setIcon(cursor.getString(iconIndex));
@@ -319,8 +311,6 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     values.put(TracksColumns.ELEVATIONGAIN, tripStatistics.getTotalElevationGain());
     values.put(TracksColumns.MINGRADE, tripStatistics.getMinGrade());
     values.put(TracksColumns.MAXGRADE, tripStatistics.getMaxGrade());
-    values.put(TracksColumns.MAPID, track.getMapId());
-    values.put(TracksColumns.TABLEID, track.getTableId());
     values.put(TracksColumns.ICON, track.getIcon());
     values.put(TracksColumns.DRIVEID, track.getDriveId());
     values.put(TracksColumns.MODIFIEDTIME, track.getModifiedTime());

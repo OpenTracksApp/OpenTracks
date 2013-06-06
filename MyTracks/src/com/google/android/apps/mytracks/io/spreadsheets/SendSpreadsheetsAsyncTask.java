@@ -18,8 +18,6 @@ package com.google.android.apps.mytracks.io.spreadsheets;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesUtils;
-import com.google.android.apps.mytracks.io.maps.SendMapsUtils;
 import com.google.android.apps.mytracks.io.sendtogoogle.AbstractSendAsyncTask;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
@@ -96,9 +94,6 @@ public class SendSpreadsheetsAsyncTask extends AbstractSendAsyncTask {
 
   @Override
   protected void closeConnection() {}
-
-  @Override
-  protected void saveResult() {}
 
   @Override
   protected boolean performTask() {
@@ -281,19 +276,7 @@ public class SendSpreadsheetsAsyncTask extends AbstractSendAsyncTask {
     row.getCustomElements().setValueLocal(
         "maxelevation", SendSpreadsheetsUtils.getElevation(tripStatistics.getMaxElevation(), metricUnits));
     row.getCustomElements().setValueLocal("elevationunit", elevationUnit);
-
-    String map = SendMapsUtils.getMapUrl(track);
-    if (map == null) {
-      map = context.getString(R.string.value_unknown);
-    }
-    row.getCustomElements().setValueLocal("map", map);
-
-    String fusionTable = SendFusionTablesUtils.getMapUrl(track);
-    if (fusionTable == null) {
-      fusionTable = context.getString(R.string.value_unknown);
-    }
-    row.getCustomElements().setValueLocal("fusiontable", fusionTable);
-
+    
     ListEntry result = spreadsheetService.insert(worksheetUrl, row);
     return result != null;
   }

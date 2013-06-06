@@ -15,7 +15,6 @@
  */
 package com.google.android.apps.mytracks.io.maps;
 
-import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsFeature;
 
 import android.location.Location;
@@ -30,31 +29,6 @@ import junit.framework.TestCase;
  * @author Jimmy Shih
  */
 public class SendMapsUtilsTest extends TestCase {
-
-  /**
-   * Tests {@link SendMapsUtils#getMapUrl(Track)} with null track.
-   */
-  public void testGetMapUrl_null_track() {
-    assertEquals(null, SendMapsUtils.getMapUrl(null));
-  }
-
-  /**
-   * Tests {@link SendMapsUtils#getMapUrl(Track)} with null map id.
-   */
-  public void testGetMapUrl_null_map_id() {
-    Track track = new Track();
-    track.setMapId(null);
-    assertEquals(null, SendMapsUtils.getMapUrl(track));
-  }
-
-  /**
-   * Tests {@link SendMapsUtils#getMapUrl(Track)} with a valid track.
-   */
-  public void testGetMapUrl_valid_track() {
-    Track track = new Track();
-    track.setMapId("123");
-    assertEquals("https://maps.google.com/maps/ms?msa=0&msid=123", SendMapsUtils.getMapUrl(track));
-  }
 
   /**
    * Test {@link SendMapsUtils#buildMapsMarkerFeature(String, String, String,

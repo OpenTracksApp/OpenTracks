@@ -90,23 +90,6 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
   }
 
   /**
-   * Tests the method {@link SendMapsAsyncTask#saveResult()}and makes sure the
-   * track is updated.
-   */
-  public void testSaveResult() {
-    Track track = TrackStubUtils.createTrack(1);
-    track.setMapId(null);
-    AndroidMock.expect(myTracksProviderUtilsMock.getTrack(TRACK_ID)).andReturn(track);
-    myTracksProviderUtilsMock.updateTrack(track);
-
-    AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock);
-    SendMapsAsyncTask sendMapsAsyncTask = new SendMapsAsyncTask(sendMapsActivityMock,
-        sendRequest.getTrackId(), sendRequest.getAccount(), myTracksProviderUtilsMock);
-    sendMapsAsyncTask.saveResult();
-    AndroidMock.verify(sendMapsActivityMock, myTracksProviderUtilsMock);
-  }
-
-  /**
    * Tests {@link SendMapsAsyncTask#fetchSendMapId(Track)} when chooseMapId is
    * null and makes sure it returns false.
    */

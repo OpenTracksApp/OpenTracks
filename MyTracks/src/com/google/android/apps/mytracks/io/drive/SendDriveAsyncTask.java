@@ -69,9 +69,6 @@ public class SendDriveAsyncTask extends AbstractSendAsyncTask {
   protected void closeConnection() {}
 
   @Override
-  protected void saveResult() {}
-
-  @Override
   protected boolean performTask() {
     try {
       GoogleAccountCredential credential = SendToGoogleUtils.getGoogleAccountCredential(

@@ -100,9 +100,6 @@ public abstract class AbstractSendAsyncTask extends AsyncTask<Void, Integer, Boo
   protected void onPostExecute(Boolean result) {
     success = result;
     completed = true;
-    if (success) {
-      saveResult();
-    }
     if (activity != null) {
       activity.onAsyncTaskCompleted(success, shareUrl);
     }
@@ -131,11 +128,6 @@ public abstract class AbstractSendAsyncTask extends AsyncTask<Void, Integer, Boo
    * Closes any AsyncTask connection.
    */
   protected abstract void closeConnection();
-
-  /**
-   * Saves any AsyncTask result.
-   */
-  protected abstract void saveResult();
 
   /**
    * Performs the AsyncTask.

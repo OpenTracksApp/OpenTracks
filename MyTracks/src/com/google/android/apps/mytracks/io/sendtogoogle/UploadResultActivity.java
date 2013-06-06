@@ -20,10 +20,7 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.fragments.ChooseActivityDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChooseActivityDialogFragment.ChooseActivityCaller;
-import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesUtils;
-import com.google.android.apps.mytracks.io.maps.SendMapsUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
-import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
 
@@ -73,19 +70,6 @@ public class UploadResultActivity extends FragmentActivity implements ChooseActi
       new ChooseActivityDialogFragment().show(
           getSupportFragmentManager(), ChooseActivityDialogFragment.CHOOSE_ACTIVITY_DIALOG_TAG);
       return;
-    }
-
-    if (sendRequest.isSendMaps() && sendRequest.isMapsSuccess()) {
-      shareUrl = SendMapsUtils.getMapUrl(track);
-    }
-    if (shareUrl == null && sendRequest.isSendFusionTables()
-        && sendRequest.isFusionTablesSuccess()) {
-      boolean defaultTablePublic = PreferencesUtils.getBoolean(this,
-          R.string.export_google_fusion_tables_public_key,
-          PreferencesUtils.EXPORT_GOOGLE_FUSION_TABLES_PUBLIC_DEFAULT);
-      if (defaultTablePublic) {
-        shareUrl = SendFusionTablesUtils.getMapUrl(track);
-      }
     }
     showDialog(DIALOG_RESULT_ID);
   }
@@ -177,7 +161,7 @@ public class UploadResultActivity extends FragmentActivity implements ChooseActi
         .setView(view);
 
     // Add a Share URL button if shareUrl exists
-    if (shareUrl != null) {
+    if (!hasError && shareUrl != null) {
       builder.setNegativeButton(
           R.string.share_track_share_url, new DialogInterface.OnClickListener() {
               @Override

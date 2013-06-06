@@ -35,19 +35,7 @@ public class SendFusionTablesUtilsTest extends TestCase {
    * Tests {@link SendFusionTablesUtils#getMapUrl(Track)} with null track.
    */
   public void testGetMapUrl_null_track() {
-    assertEquals(null, SendFusionTablesUtils.getMapUrl(null));
-  }
-
-  /**
-   * Tests {@link SendFusionTablesUtils#getMapUrl(Track)} with null table id.
-   */
-  public void testGetMapUrl_null_table_id() {
-    Track track = new Track();
-    TripStatistics stats = new TripStatistics();
-    stats.setBounds((int) 100.E6, (int) 10.E6, (int) 50.E6, (int) 5.E6);
-    track.setTripStatistics(stats);
-    track.setTableId(null);
-    assertEquals(null, SendFusionTablesUtils.getMapUrl(track));
+    assertEquals(null, SendFusionTablesUtils.getMapUrl(null, "123"));
   }
 
   /**
@@ -56,8 +44,7 @@ public class SendFusionTablesUtilsTest extends TestCase {
   public void testGetMapUrl_null_stats() {
     Track track = new Track();
     track.setTripStatistics(null);
-    track.setTableId("123");
-    assertEquals(null, SendFusionTablesUtils.getMapUrl(track));
+    assertEquals(null, SendFusionTablesUtils.getMapUrl(track, "123"));
   }
 
   /**
@@ -69,11 +56,10 @@ public class SendFusionTablesUtilsTest extends TestCase {
     TripStatistics stats = new TripStatistics();
     stats.setBounds((int) 100.E6, (int) 10.E6, (int) 50.E6, (int) 5.E6);
     track.setTripStatistics(stats);
-    track.setTableId("123");
     assertEquals(
         "https://www.google.com/fusiontables/embedviz?"
             + "viz=MAP&q=select+col0,+col1,+col2,+col3+from+123+&h=false&lat=7.500000&lng=75.000000"
-            + "&z=15&t=1&l=col2", SendFusionTablesUtils.getMapUrl(track));
+            + "&z=15&t=1&l=col2", SendFusionTablesUtils.getMapUrl(track, "123"));
   }
 
   /**
