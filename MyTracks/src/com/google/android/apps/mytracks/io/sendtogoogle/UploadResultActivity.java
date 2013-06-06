@@ -60,12 +60,18 @@ public class UploadResultActivity extends FragmentActivity implements ChooseActi
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     sendRequest = getIntent().getParcelableExtra(SendRequest.SEND_REQUEST_KEY);
-    shareUrl = null;
+    shareUrl = sendRequest.getShareUrl();
 
     Track track = MyTracksProviderUtils.Factory.get(this).getTrack(sendRequest.getTrackId());
     if (track == null) {
       Log.d(TAG, "No track for " + sendRequest.getTrackId());
       finish();
+      return;
+    }
+
+    if (sendRequest.isDriveSuccess() && shareUrl != null) {
+      new ChooseActivityDialogFragment().show(
+          getSupportFragmentManager(), ChooseActivityDialogFragment.CHOOSE_ACTIVITY_DIALOG_TAG);
       return;
     }
 

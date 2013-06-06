@@ -2000,25 +2000,28 @@ limitations under the License.
   </string>
 
   <!-- Share Track -->
-  <string name="share_track_add_emails_title"
-    translation_description="The dialog title for entering email addresses for sharing a track
-      with.">
-    Share track with
-  </string>
-  <string name="share_track_add_emails_hint"
-    translation_description="The hint in the auto complete text box for entering email addresses.">
-    Enter email addresses
-  </string>
-  <string name="share_track_drive_confirm_message"
+  <string name="share_track_confirm_message"
     translation_description="The confirmation message when sharing a track via Google Drive with
       friends.">
-    This will upload your track to Google Drive so you can share the file with friends. The file
-    will be private and only those you have shared with will have access.
+    This will upload your track to Google Drive so you can share the file with friends.
+  </string>
+  <string name="share_track_emails_hint"
+    translation_description="The hint for the auto complete text box for entering email addresses.">
+    Email addresses
+  </string>
+  <string name="share_track_emails_label"
+    translation_description="The label for the auto complete text box for entering email
+      addresses.">
+    Invite to view:
   </string>
   <string name="share_track_picker_title"
     translation_description="When sharing a track with friends, the title on the picker to ask the
       user to select an application.">
     Select an application
+  </string>
+  <string name="share_track_public"
+    translation_description="The checkbox to make a track public and share its url.">
+    Make public &amp; share URL
   </string>
   <string name="share_track_share_file"
     translation_description="After saving a track to the external storage, the button on the result
@@ -2046,9 +2049,18 @@ limitations under the License.
       %2$s: track description.">
     I think you might be interested in this track:\n\n%1$s\n\n%2$s
   </string>
+  <string name="share_track_share_url_title"
+    translation_description="The dialog title asking the user to select an application for sharing
+      an URL.">
+    Share URL using:
+  </string>
   <string name="share_track_subject"
     translation_description="When sharing a track with friends, the subject line.">
     I would like to share a track with you
+  </string>
+  <string name="share_track_title"
+    translation_description="The dialog title to share a track.">
+    Share track
   </string>
 
   <!-- Stats -->
