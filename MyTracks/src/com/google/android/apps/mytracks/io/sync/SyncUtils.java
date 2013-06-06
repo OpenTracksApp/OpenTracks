@@ -262,9 +262,9 @@ public class SyncUtils {
    * @param myTracksProviderUtils the myTracksProviderUtils
    * @param track the track
    * @param canRetry true if can retry
-   * @return the added drive file id or null.
+   * @return the added drive file or null.
    */
-  public static String insertDriveFile(Drive drive, String folderId, Context context,
+  public static File insertDriveFile(Drive drive, String folderId, Context context,
       MyTracksProviderUtils myTracksProviderUtils, Track track, boolean canRetry)
       throws IOException {
     java.io.File file = getFile(context, myTracksProviderUtils, track);
@@ -281,7 +281,7 @@ public class SyncUtils {
         return null;
       }
       SyncUtils.updateTrackWithDriveFileInfo(myTracksProviderUtils, track, uploadedFile);
-      return uploadedFile.getId();
+      return uploadedFile;
     } finally {
       file.delete();
     }

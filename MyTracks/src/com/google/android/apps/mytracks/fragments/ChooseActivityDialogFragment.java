@@ -124,7 +124,7 @@ public class ChooseActivityDialogFragment extends DialogFragment {
             caller.onChooseActivityDone(
                 activityInfo.applicationInfo.packageName, activityInfo.name);
           }
-        }).setTitle(R.string.share_track_picker_title).create();
+        }).setTitle(R.string.share_track_share_url_title).create();
   }
 
   @Override

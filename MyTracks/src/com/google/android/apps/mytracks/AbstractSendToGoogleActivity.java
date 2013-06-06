@@ -16,16 +16,15 @@
 
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.fragments.AddEmailsDialogFragment;
-import com.google.android.apps.mytracks.fragments.AddEmailsDialogFragment.AddEmailsCaller;
 import com.google.android.apps.mytracks.fragments.CheckPermissionFragment;
 import com.google.android.apps.mytracks.fragments.CheckPermissionFragment.CheckPermissionCaller;
 import com.google.android.apps.mytracks.fragments.ChooseAccountDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChooseAccountDialogFragment.ChooseAccountCaller;
-import com.google.android.apps.mytracks.fragments.ChooseActivityDialogFragment;
 import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment;
 import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment.ConfirmCaller;
 import com.google.android.apps.mytracks.fragments.InstallEarthDialogFragment;
+import com.google.android.apps.mytracks.fragments.ShareTrackDialogFragment;
+import com.google.android.apps.mytracks.fragments.ShareTrackDialogFragment.ShareTrackCaller;
 import com.google.android.apps.mytracks.io.drive.SendDriveActivity;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
@@ -66,7 +65,7 @@ import java.io.IOException;
  * @author Jimmy Shih
  */
 public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActivity implements
-    ChooseAccountCaller, CheckPermissionCaller, AddEmailsCaller, ConfirmCaller {
+    ChooseAccountCaller, CheckPermissionCaller, ShareTrackCaller, ConfirmCaller {
 
   private static final String TAG = AbstractMyTracksActivity.class.getSimpleName();
   private static final String SEND_REQUEST_KEY = "send_request_key";
@@ -182,13 +181,12 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
   }
 
   @Override
-  public void onAddEmailsDone(String emails) {
-    if (emails != null && !emails.equals("")) {
-      sendRequest.setDriveShareEmails(emails);
-      Intent intent = IntentUtils.newIntent(this, SendDriveActivity.class)
-          .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
-      startActivity(intent);
-    }
+  public void onShareTrackDone(String emails, boolean makePublic) {
+    sendRequest.setDriveShareEmails(emails);
+    sendRequest.setDriveSharePublic(makePublic);
+    Intent intent = IntentUtils.newIntent(this, SendDriveActivity.class)
+        .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
+    startActivity(intent);
   }
 
   private void onDrivePermissionSuccess() {
@@ -260,15 +258,11 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
    * <p>
    * isSendDrive and isDriveEnableSync -> enable sync
    * <p>
-   * isSendDrive and isDriveShare -> show {@link AddEmailsDialogFragment}
+   * isSendDrive and isDriveShare -> show {@link ShareTrackDialogFragment}
    * <p>
    * isSendDrive -> start {@link SendDriveActivity}
    * <p>
-   * isSendMaps and isMapShare -> show {@link ChooseActivityDialogFragment}
-   * <p>
-   * isSendMaps and isMapsExistingMap -> start {@link ChooseMapActivity}
-   * <p>
-   * isSendMaps and !isMapsExistingMap -> {@link SendMapsActivity}
+   * isSendMaps -> start {@link SendMapsActivity}
    * <p>
    * isSendFusionTables -> start {@link SendFusionTablesActivity}
    * <p>
@@ -292,8 +286,8 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
         SyncUtils.enableSync(sendRequest.getAccount());
         return;
       } else if (sendRequest.isDriveShare()) {
-        AddEmailsDialogFragment.newInstance(sendRequest.getTrackId())
-            .show(getSupportFragmentManager(), AddEmailsDialogFragment.ADD_EMAILS_DIALOG_TAG);
+        ShareTrackDialogFragment.newInstance(sendRequest.getTrackId())
+            .show(getSupportFragmentManager(), ShareTrackDialogFragment.SHARE_TRACK_DIALOG_TAG);
         return;
       } else {
         next = SendDriveActivity.class;
@@ -344,7 +338,7 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
   protected void confirmShare(long trackId) {
     ConfirmDialogFragment.newInstance(R.string.confirm_share_drive_key,
         PreferencesUtils.CONFIRM_SHARE_DRIVE_DEFAULT,
-        getString(R.string.share_track_drive_confirm_message), new long[] { trackId })
+        getString(R.string.share_track_confirm_message), new long[] { trackId })
         .show(getSupportFragmentManager(), ConfirmDialogFragment.CONFIRM_DIALOG_TAG);
   }
 

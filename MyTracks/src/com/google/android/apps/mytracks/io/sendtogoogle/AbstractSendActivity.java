@@ -90,7 +90,8 @@ public abstract class AbstractSendActivity extends Activity {
    *
    * @param success true if the AsyncTask is successful
    */
-  public void onAsyncTaskCompleted(boolean success) {
+  public void onAsyncTaskCompleted(boolean success, String shareUrl) {
+    sendRequest.setShareUrl(shareUrl);
     startNextActivity(success, false);
   }
 

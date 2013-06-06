@@ -30,64 +30,69 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.FilterQueryProvider;
 import android.widget.MultiAutoCompleteTextView;
 
 /**
- * A DialogFragment to add emails.
+ * A DialogFragment to share a track.
  * 
  * @author Jimmy Shih
  */
-public class AddEmailsDialogFragment extends DialogFragment {
+public class ShareTrackDialogFragment extends DialogFragment {
 
   /**
    * Interface for caller of this dialog fragment.
    * 
    * @author Jimmy Shih
    */
-  public interface AddEmailsCaller {
+  public interface ShareTrackCaller {
 
     /**
-     * Called when add emails is done.
+     * Called when share track is done.
      * 
      * @param emails the added emails
+     * @param makePublic true to make the track public
      */
-    public void onAddEmailsDone(String emails);
+    public void onShareTrackDone(String emails, boolean makePublic);
   }
 
-  public static final String ADD_EMAILS_DIALOG_TAG = "addEmailsDialog";
+  public static final String SHARE_TRACK_DIALOG_TAG = "shareTrackDialog";
 
   private static final String KEY_TRACK_ID = "trackId";
 
-  public static AddEmailsDialogFragment newInstance(long trackId) {
+  public static ShareTrackDialogFragment newInstance(long trackId) {
     Bundle bundle = new Bundle();
     bundle.putLong(KEY_TRACK_ID, trackId);
 
-    AddEmailsDialogFragment addPeopleDialogFragment = new AddEmailsDialogFragment();
-    addPeopleDialogFragment.setArguments(bundle);
-    return addPeopleDialogFragment;
+    ShareTrackDialogFragment shareleTrackDialogFragment = new ShareTrackDialogFragment();
+    shareleTrackDialogFragment.setArguments(bundle);
+    return shareleTrackDialogFragment;
   }
 
-  private AddEmailsCaller caller;
+  private ShareTrackCaller caller;
   private FragmentActivity fragmentActivity;
   private MultiAutoCompleteTextView multiAutoCompleteTextView;
-
+  private CheckBox checkBox;
+  
   @Override
   public void onAttach(Activity activity) {
     super.onAttach(activity);
     try {
-      caller = (AddEmailsCaller) activity;
+      caller = (ShareTrackCaller) activity;
     } catch (ClassCastException e) {
       throw new ClassCastException(
-          activity.toString() + " must implement " + AddEmailsCaller.class.getSimpleName());
+          activity.toString() + " must implement " + ShareTrackCaller.class.getSimpleName());
     }
   }
 
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     fragmentActivity = getActivity();
-    View view = fragmentActivity.getLayoutInflater().inflate(R.layout.add_emails, null);
-    multiAutoCompleteTextView = (MultiAutoCompleteTextView) view.findViewById(R.id.add_emails);
+    View view = fragmentActivity.getLayoutInflater().inflate(R.layout.share_track, null);
+   
+    multiAutoCompleteTextView = (MultiAutoCompleteTextView) view.findViewById(
+        R.id.share_track_emails);
     multiAutoCompleteTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 
     SimpleCursorAdapter adapter = new SimpleCursorAdapter(fragmentActivity,
@@ -109,15 +114,17 @@ public class AddEmailsDialogFragment extends DialogFragment {
     });
     multiAutoCompleteTextView.setAdapter(adapter);
 
+    checkBox = (CheckBox) view.findViewById(R.id.share_track_public);
+        
     return new AlertDialog.Builder(fragmentActivity).setNegativeButton(
         R.string.generic_cancel, null)
         .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
             @Override
           public void onClick(DialogInterface dialog, int which) {
             String acl = multiAutoCompleteTextView.getText().toString();
-            caller.onAddEmailsDone(acl);
+            caller.onShareTrackDone(acl, checkBox.isChecked());
           }
-        }).setTitle(R.string.share_track_add_emails_title).setView(view).create();
+        }).setTitle(R.string.share_track_title).setView(view).create();
   }
 
   /**

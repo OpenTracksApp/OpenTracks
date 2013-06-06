@@ -214,8 +214,9 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
     }
     Drive drive = SyncUtils.getDriveService(driveCredential);
     Permission permission = new Permission();
-    permission.setType("anyone");
     permission.setRole("reader");
+    permission.setType("anyone");
+    permission.setValue("");   
     drive.permissions().insert(tableId, permission).execute();
     return true;
   }

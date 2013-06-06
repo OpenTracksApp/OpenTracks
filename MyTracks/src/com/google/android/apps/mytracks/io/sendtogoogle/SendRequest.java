@@ -36,9 +36,10 @@ public class SendRequest implements Parcelable {
   private boolean sendFusionTables = false;
   private boolean sendSpreadsheets = false;
 
-  private boolean driveEnableSync = false;
-  private boolean driveShare = false;
-  private String driveShareEmails = null;
+  private boolean driveEnableSync = false; // to enable Drive sync
+  private boolean driveShare = false; // to enable Drive share
+  private String driveShareEmails = null; // share with emails
+  private boolean driveSharePublic = false; // share as public
 
   private Account account = null;
 
@@ -46,6 +47,7 @@ public class SendRequest implements Parcelable {
   private boolean mapsSuccess = false;
   private boolean spreadsheetsSuccess = false;
   private boolean fusionTablesSuccess = false;
+  private String shareUrl = null;
 
   /**
    * Creates a new send request.
@@ -116,6 +118,14 @@ public class SendRequest implements Parcelable {
     this.driveShareEmails = driveShareEmails;
   }
 
+  public boolean isDriveSharePublic() {
+    return driveSharePublic;
+  }
+
+  public void setDriveSharePublic(boolean driveSharePublic) {
+    this.driveSharePublic = driveSharePublic;
+  }
+
   public Account getAccount() {
     return account;
   }
@@ -156,6 +166,14 @@ public class SendRequest implements Parcelable {
     this.spreadsheetsSuccess = spreadsheetsSuccess;
   }
 
+  public String getShareUrl() {
+    return shareUrl;
+  }
+
+  public void setShareUrl(String shareUrl) {
+    this.shareUrl = shareUrl;
+  }
+
   private SendRequest(Parcel in) {
     trackId = in.readLong();
     sendDrive = in.readByte() == 1;
@@ -165,11 +183,13 @@ public class SendRequest implements Parcelable {
     driveEnableSync = in.readByte() == 1;
     driveShare = in.readByte() == 1;
     driveShareEmails = in.readString();
+    driveSharePublic = in.readByte() == 1;
     account = in.readParcelable(null);
     driveSuccess = in.readByte() == 1;
     mapsSuccess = in.readByte() == 1;
     fusionTablesSuccess = in.readByte() == 1;
     spreadsheetsSuccess = in.readByte() == 1;
+    shareUrl = in.readString();
   }
 
   @Override
@@ -184,14 +204,16 @@ public class SendRequest implements Parcelable {
     out.writeByte((byte) (sendMaps ? 1 : 0));
     out.writeByte((byte) (sendFusionTables ? 1 : 0));
     out.writeByte((byte) (sendSpreadsheets ? 1 : 0));
-    out.writeByte((byte) (driveEnableSync ? 1 : 0));    
+    out.writeByte((byte) (driveEnableSync ? 1 : 0));
     out.writeByte((byte) (driveShare ? 1 : 0));
     out.writeString(driveShareEmails);
+    out.writeByte((byte) (driveSharePublic ? 1 : 0));
     out.writeParcelable(account, 0);
     out.writeByte((byte) (driveSuccess ? 1 : 0));
     out.writeByte((byte) (mapsSuccess ? 1 : 0));
     out.writeByte((byte) (fusionTablesSuccess ? 1 : 0));
     out.writeByte((byte) (spreadsheetsSuccess ? 1 : 0));
+    out.writeString(shareUrl);
   }
 
   public static final Parcelable.Creator<SendRequest>
