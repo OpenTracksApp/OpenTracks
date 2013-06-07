@@ -77,8 +77,8 @@ public class RemoveTempFilesService extends Service {
         // Can't do anything
         return null;
       }
-      cleanTempDirectory(TrackFileFormat.GPX.getExtension());
       cleanTempDirectory(TrackFileFormat.KML.getExtension());
+      cleanTempDirectory(TrackFileFormat.GPX.getExtension());
       cleanTempDirectory(TrackFileFormat.CSV.getExtension());
       cleanTempDirectory(TrackFileFormat.TCX.getExtension());
       return null;

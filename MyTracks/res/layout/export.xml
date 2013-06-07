@@ -65,10 +65,10 @@ limitations under the License.
       android:id="@+id/export_external_storage_options"
       style="@style/ExportRadioGroup" >
       <RadioButton
-        android:id="@+id/export_external_storage_gpx"
+        android:id="@+id/export_external_storage_kml"
         style="@style/TextMedium" />
       <RadioButton
-        android:id="@+id/export_external_storage_kml"
+        android:id="@+id/export_external_storage_gpx"
         style="@style/TextMedium" />
       <RadioButton
         android:id="@+id/export_external_storage_csv"
