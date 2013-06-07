@@ -613,16 +613,49 @@ limitations under the License.
   </string>
 
   <!-- Export -->
+  <string name="export_all_option"
+    translation_description="When exporting all tracks to the external storage, the option to export
+      as a certain file format.
+
+      %1$s: file format. 'GPX', 'KML', 'CSV', or 'TCX'.">
+    Export all as %1$s
+  </string>
+  <string name="export_all_title"
+    translation_description="The dialog title to export all tracks to the external storage.">
+    Export to external storage
+  </string>
   <string name="export_external_storage"
-    translation_description="When exporting a track, the option to export to external storage.">
+    translation_description="When exporting a track, the option to export to the external storage.">
     External storage
   </string>
+  <string name="export_external_storage_error"
+    translation_description="When exporting tracks to the external storage, the error message
+      indicating that only some of the tracks are exported.
+
+      %1$d the number of tracks successfully exported. E.g., '1'.
+      %1$s the number of tracks to export. E.g., '2 tracks'.
+      %2$s the directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
+    Exported %1$d of %2$s to %3$s.
+  </string>
   <string name="export_external_storage_option"
-    translation_description="When exporting a track to external storage, the option to export as a
-      certain file format.
+    translation_description="When exporting a track to the external storage, the option to export as
+      a certain file format.
 
       %1$s: file format. 'GPX', 'KML', 'CSV', or 'TCX'.">
     as %1$s file
+  </string>
+  <string name="export_external_storage_progress_message"
+    translation_description="When exporting tracks to the external storage, the progress message.
+
+      %1$s: the directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
+    Exporting to %1$s&#8230;
+  </string>
+  <string name="export_external_storage_success"
+    translation_description="When exporting tracks to the external storage, the success message.
+
+      %1$s the number of tracks. E.g., '2 tracks'.
+      %2$s the directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
+    Exported %1$s to %2$s.
   </string>
   <string name="export_google_drive"
     translation_description="When exporting a track, the option to export to Google Drive.">
@@ -638,7 +671,7 @@ limitations under the License.
     as new private table
   </string>
   <string name="export_google_fusion_tables_public"
-    translation_description="When exporting a trck to Google Fusion Tables, the option to export as
+    translation_description="When exporting a track to Google Fusion Tables, the option to export as
       a new public table as opposed to a new private table.">
     as new public table
   </string>
@@ -652,7 +685,7 @@ limitations under the License.
     as new public map
   </string>
   <string name="export_google_maps_unlisted"
-    translation_description="When sending a track to Google Maps, the option to export as a new
+    translation_description="When exporting a track to Google Maps, the option to export as a new
       unlisted map as opposed to a new public map.">
     as new unlisted map
   </string>
@@ -660,7 +693,7 @@ limitations under the License.
     translation_description="When exporting a track, the option to export to Google Spreadsheets.">
     Google Spreadsheets
   </string>
-  <string name="export_dialog_title"
+  <string name="export_title"
     translation_description="The dialog title when exporting a track.">
     Export to&#8230;
   </string>
@@ -926,7 +959,7 @@ limitations under the License.
     Deselect all
   </string>
   <string name="list_item_selected"
-    translation_description="Title indictating the number of items selected in a list.
+    translation_description="Title indicating the number of items selected in a list.
       %1$d: an integer value. E.g., '2'.">
     %1$d selected
   </string>
@@ -1245,41 +1278,6 @@ limitations under the License.
     translation_description="The permission label the Google Play Store shows during app
       installation when the app wants to write data to My Tracks.">
     write data to Google My Tracks and start/stop Google My Tracks recording
-  </string>
-
-  <!-- Save -->
-  <string name="save_all_selection_option"
-    translation_description="When saving to external storage, the option to save all the tracks as a
-      certain file format.
-
-      %1$s: file format. 'GPX', 'KML', 'CSV', or 'TCX'.">
-    Save all as %1$s
-  </string>
-  <string name="save_error"
-    translation_description="When saving to the external storage, the error message indicating that
-      only some of the tracks are saved.
-
-      %1$d the number of tracks successfully saved. E.g., '1'.
-      %1$s the number of tracks to save. E.g., '2 tracks'.
-      %2$s the directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
-    Saved %1$d of %2$s to %3$s.
-  </string>
-  <string name="save_progress_message"
-    translation_description="When saving to the external storage, the progress message.
-
-      %1$s: the directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
-    Saving to %1$s&#8230;
-  </string>
-  <string name="save_selection_title"
-    translation_description="The dialog title to save to external storage.">
-    Save to external storage
-  </string>
-  <string name="save_success"
-    translation_description="When saving to the external storage, the success message.
-
-      %1$s the number of tracks. E.g., '2 tracks'.
-      %2$s the directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
-    Saved %1$s to %2$s.
   </string>
 
   <!-- Search -->

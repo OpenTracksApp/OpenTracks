@@ -133,7 +133,7 @@ public class SendToGoogleTest extends ActivityInstrumentationTestCase2<TrackList
    */
   private boolean sendToGoogle() {
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_export), true);
-    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.export_dialog_title));
+    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.export_title));
     instrumentation.waitForIdleSync();
     ArrayList<CheckBox> checkBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
     for (int i = 0; i < checkBoxs.size(); i++) {

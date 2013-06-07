@@ -159,7 +159,7 @@ public class ExportDialogFragment extends DialogFragment {
             }
             caller.onExportDone(type, format);
           }
-        }).setTitle(R.string.export_dialog_title).setView(view).create();
+        }).setTitle(R.string.export_title).setView(view).create();
   }
 
   /**
