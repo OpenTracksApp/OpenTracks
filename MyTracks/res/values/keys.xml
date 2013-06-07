@@ -37,6 +37,8 @@ limitations under the License.
   <string name="min_required_accuracy_key">minRequiredAccuracy</string>
   <string name="report_speed_key">reportSpeed</string>
   <string name="sensor_type_key">sensorType</string>
+  <string name="share_track_invite_key">shareTrackInvite</string>
+  <string name="share_track_public_key">shareTrackPublic</string>
   <string name="split_frequency_key">splitFrequency</string>
   <string name="stats_show_coordinate_key">statsShowCoordinate</string>
   <string name="stats_show_grade_elevation_key">statsShowGradeElevation</string>

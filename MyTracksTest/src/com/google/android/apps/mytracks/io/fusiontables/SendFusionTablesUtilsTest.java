@@ -32,14 +32,14 @@ import junit.framework.TestCase;
 public class SendFusionTablesUtilsTest extends TestCase {
 
   /**
-   * Tests {@link SendFusionTablesUtils#getMapUrl(Track)} with null track.
+   * Tests {@link SendFusionTablesUtils#getMapUrl(Track, String)} with null track.
    */
   public void testGetMapUrl_null_track() {
     assertEquals(null, SendFusionTablesUtils.getMapUrl(null, "123"));
   }
 
   /**
-   * Tests {@link SendFusionTablesUtils#getMapUrl(Track)} with null stats.
+   * Tests {@link SendFusionTablesUtils#getMapUrl(Track, String)} with null stats.
    */
   public void testGetMapUrl_null_stats() {
     Track track = new Track();
@@ -48,7 +48,7 @@ public class SendFusionTablesUtilsTest extends TestCase {
   }
 
   /**
-   * Tests {@link SendFusionTablesUtils#getMapUrl(Track)} with a valid track.
+   * Tests {@link SendFusionTablesUtils#getMapUrl(Track, String)} with a valid track.
    */
   public void testGetMapUrl_valid_track() {
     Track track = new Track();

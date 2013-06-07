@@ -2007,10 +2007,19 @@ limitations under the License.
     translation_description="The hint for the auto complete text box for entering email addresses.">
     Email addresses
   </string>
-  <string name="share_track_emails_label"
-    translation_description="The label for the auto complete text box for entering email
-      addresses.">
-    Invite to view:
+  <string name="share_track_invite"
+    translation_description="The checkbox to invite people to view a track.">
+    Invite people to view
+  </string>
+  <string name="share_track_no_emails"
+    translation_description="When sharing a track, error message indicating that no email addresses
+      is entered.">
+    No email addresses entered.
+  </string>  
+  <string name="share_track_no_selection"
+    translation_description="When sharing a track, error message indicating that no option is
+      selected.">
+    No option selected.
   </string>
   <string name="share_track_picker_title"
     translation_description="When sharing a track with friends, the title on the picker to ask the

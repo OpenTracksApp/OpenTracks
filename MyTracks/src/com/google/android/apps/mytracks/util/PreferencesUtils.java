@@ -48,6 +48,7 @@ public class PreferencesUtils {
   public static final int AUTO_RESUME_TRACK_TIMEOUT_NEVER = 0;
 
   public static final String BLUETOOTH_SENSOR_DEFAULT = "";
+  
   public static final boolean CHART_BY_DISTANCE_DEFAULT = true;
   public static final boolean CHART_SHOW_CADENCE_DEFAULT = true;
   public static final boolean CHART_SHOW_ELEVATION_DEFAULT = true;
@@ -59,6 +60,7 @@ public class PreferencesUtils {
   public static final boolean CONFIRM_SHARE_DRIVE_DEFAULT = true;
 
   public static final String DEFAULT_ACTIVITY_DEFAULT = "";
+  
   public static final String DRIVE_DELETED_LIST_DEFAULT = "";
   public static final long DRIVE_LARGEST_CHANGE_ID_DEFAULT = -1L;
   public static final boolean DRIVE_SYNC_DEFAULT = false;
@@ -72,9 +74,7 @@ public class PreferencesUtils {
   public static final int FREQUENCY_OFF = 0;
 
   public static final String GOOGLE_ACCOUNT_DEFAULT = "";
-
   public static final int MAP_TYPE_DEFAUlT = 1;
-
   public static final int MAX_RECORDING_DISTANCE_DEFAULT = 200;
   public static final boolean METRIC_UNITS_DEFAULT = true;
   public static final int MIN_RECORDING_DISTANCE_DEFAULT = 5;
@@ -93,16 +93,27 @@ public class PreferencesUtils {
   public static final boolean RECORDING_TRACK_PAUSED_DEFAULT = true;
   public static final boolean REPORT_SPEED_DEFAULT = true;
   public static final long SELECTED_TRACK_ID_DEFAULT = -1L;
-
   public static final String SENSOR_TYPE_DEFAULT = "NONE";
+
+  // Share track
+  public static final boolean SHARE_TRACK_INVITE_DEFAULT = false;
+  public static final boolean SHARE_TRACK_PUBLIC_DEFAULT = false;
+
   public static final int SPLIT_FREQUENCY_DEFAULT = 0;
+  
+  // Stats
   public static final boolean STATS_SHOW_COORDINATE_DEFAULT = false;
   public static final boolean STATS_SHOW_GRADE_ELEVATION_DEFAULT = false;
+  
+  // Track color
   public static final String TRACK_COLOR_MODE_DEFAULT = "SINGLE";
   public static final int TRACK_COLOR_MODE_MEDIUM_DEFAULT = 15;
   public static final int TRACK_COLOR_MODE_PERCENTAGE_DEFAULT = 25;
   public static final int TRACK_COLOR_MODE_SLOW_DEFAULT = 9;
+  
   public static final String TRACK_NAME_DEFAULT = "LOCATION";
+  
+  // Track widget
   public static final int TRACK_WIDGET_ITEM1_DEFAULT = 3; // moving time
   public static final int TRACK_WIDGET_ITEM2_DEFAULT = 0; // distance
   public static final int TRACK_WIDGET_ITEM3_DEFAULT = 1; // total time

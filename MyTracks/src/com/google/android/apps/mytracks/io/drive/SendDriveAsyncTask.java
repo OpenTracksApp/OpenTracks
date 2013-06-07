@@ -127,7 +127,7 @@ public class SendDriveAsyncTask extends AbstractSendAsyncTask {
    * Adds permission.
    * 
    * @param drive the drive
-   * @param driveId the drive id
+   * @param file the drive file
    */
   private void addPermission(Drive drive, File file) throws IOException {
     if (isPublic) {
