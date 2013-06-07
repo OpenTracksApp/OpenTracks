@@ -27,32 +27,32 @@ limitations under the License.
     android:showAsAction="ifRoom"
     android:title="@string/menu_start_gps"/>
   <item
-    android:icon="@drawable/menu_import"
-    android:id="@+id/track_list_import_all"
-    android:title="@string/menu_import_all">
-  </item>
+    android:icon="@drawable/menu_sync_now"
+    android:id="@+id/track_list_sync_now"
+    android:title="@string/menu_sync_now"/>
+  <item
+    android:icon="@drawable/menu_aggregated_statistics"
+    android:id="@+id/track_list_aggregated_statistics"
+    android:title="@string/menu_aggregated_statistics"/>
   <item
     android:icon="@drawable/menu_export"
     android:id="@+id/track_list_export_all"
     android:title="@string/menu_export_all">
   </item>
   <item
+    android:icon="@drawable/menu_import"
+    android:id="@+id/track_list_import_all"
+    android:title="@string/menu_import_all">
+  </item>
+  <item
     android:icon="@drawable/menu_delete"
     android:id="@+id/track_list_delete_all"
     android:title="@string/menu_delete_all"/>
   <item
-    android:icon="@drawable/menu_aggregated_statistics"
-    android:id="@+id/track_list_aggregated_statistics"
-    android:title="@string/menu_aggregated_statistics"/>
-  <item
-    android:icon="@drawable/menu_sync_now"
-    android:id="@+id/track_list_sync_now"
-    android:title="@string/menu_sync_now"/>  
-  <item
     android:icon="@drawable/menu_settings"
     android:id="@+id/track_list_settings"
     android:title="@string/menu_settings"/>
-  <item 
+  <item
     android:icon="@drawable/menu_feedback"
     android:id="@+id/track_list_feedback"
     android:title="@string/menu_feedback"/>
