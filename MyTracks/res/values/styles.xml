@@ -75,7 +75,8 @@ limitations under the License.
   <!-- export radio group -->
   <style name="ExportRadioGroup">
     <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_marginLeft">16dp</item>
+    <item name="android:layout_marginBottom">8dp</item>
+    <item name="android:layout_marginLeft">20dp</item>
     <item name="android:layout_width">match_parent</item>
   </style> 
   <!-- help answer -->

@@ -527,7 +527,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         return true;
       case R.id.track_list_export_all:
         FileTypeDialogFragment.newInstance(R.id.track_list_export_all,
-            R.string.save_selection_title, R.string.save_all_selection_option, 4)
+            R.string.export_all_title, R.string.export_all_option, 4)
             .show(getSupportFragmentManager(), FileTypeDialogFragment.FILE_TYPE_DIALOG_TAG);
         return true;
       case R.id.track_list_delete_all:

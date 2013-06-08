@@ -15,7 +15,6 @@
  */
 package com.google.android.apps.mytracks.io.maps;
 
-import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsClient;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsFeature;
@@ -45,22 +44,6 @@ public class SendMapsUtils {
   private static final String TAG = SendMapsUtils.class.getSimpleName();
 
   private SendMapsUtils() {}
-
-  /**
-   * Gets the Google Maps url for a track.
-   *
-   * @param track the track
-   * @return the url if available.
-   */
-  public static String getMapUrl(Track track) {
-    if (track == null 
-        || track.getMapId() == null 
-        || track.getMapId().length() == 0) {
-      Log.e(TAG, "Invalid track");
-      return null;
-    }
-    return MapsClient.buildMapUrl(track.getMapId());
-  }
 
   /**
    * Creates a new Google Map.

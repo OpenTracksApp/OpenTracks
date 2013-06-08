@@ -22,9 +22,6 @@ import com.google.android.maps.mytracks.R;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.KeyEvent;
-import android.view.View;
-
-import java.util.ArrayList;
 
 /**
  * Tests some menu items of MyTracks.
@@ -35,7 +32,6 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
 
   private Instrumentation instrumentation;
   private TrackListActivity activityMyTracks;
-  private final static String SHARE_ITEM_PARENT_VIEW_NAME = "RecycleListView";
 
   public MenuItemsTest() {
     super(TrackListActivity.class);
@@ -108,30 +104,6 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
    */
   private boolean isControllerShown() {
     return activityMyTracks.findViewById(R.id.track_controler_container).isShown();
-  }
-
-  /**
-   * Gets the view to click the share item by item index.
-   * 
-   * @param index of a share item
-   * @return null when no such item
-   */
-  private View findShareItem(int index) {
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_share), true);
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_yes));
-    ArrayList<View> views = EndToEndTestUtils.SOLO.getViews();
-    int i = 0;
-    for (View view : views) {
-      String name = view.getParent().getClass().getName();
-      // Each share item is a child of a "RecycleListView"
-      if (name.indexOf(SHARE_ITEM_PARENT_VIEW_NAME) > 0) {
-        if (index == i) {
-          return view;
-        }
-        i++;
-      }
-    }
-    return null;
   }
 
   /**

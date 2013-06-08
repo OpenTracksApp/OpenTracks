@@ -613,16 +613,49 @@ limitations under the License.
   </string>
 
   <!-- Export -->
+  <string name="export_all_option"
+    translation_description="When exporting all tracks to the external storage, the option to export
+      as a certain file format.
+
+      %1$s: file format. 'KML', 'GPX', 'CSV', or 'TCX'.">
+    Export all as %1$s
+  </string>
+  <string name="export_all_title"
+    translation_description="The dialog title to export all tracks to the external storage.">
+    Export to external storage
+  </string>
   <string name="export_external_storage"
-    translation_description="When exporting a track, the option to export to external storage.">
+    translation_description="When exporting a track, the option to export to the external storage.">
     External storage
   </string>
-  <string name="export_external_storage_option"
-    translation_description="When exporting a track to external storage, the option to export as a
-      certain file format.
+  <string name="export_external_storage_error"
+    translation_description="When exporting tracks to the external storage, the error message
+      indicating that only some of the tracks are exported.
 
-      %1$s: file format. 'GPX', 'KML', 'CSV', or 'TCX'.">
+      %1$d the number of tracks successfully exported. E.g., '1'.
+      %1$s the number of tracks to export. E.g., '2 tracks'.
+      %2$s the directory. E.g., '/storage/sdcard0/MyTracks/kml/'.">
+    Exported %1$d of %2$s to %3$s.
+  </string>
+  <string name="export_external_storage_option"
+    translation_description="When exporting a track to the external storage, the option to export as
+      a certain file format.
+
+      %1$s: file format. 'KML', 'GPX', 'CSV', or 'TCX'.">
     as %1$s file
+  </string>
+  <string name="export_external_storage_progress_message"
+    translation_description="When exporting tracks to the external storage, the progress message.
+
+      %1$s: the directory. E.g., '/storage/sdcard0/MyTracks/kml/'.">
+    Exporting to %1$s&#8230;
+  </string>
+  <string name="export_external_storage_success"
+    translation_description="When exporting tracks to the external storage, the success message.
+
+      %1$s the number of tracks. E.g., '2 tracks'.
+      %2$s the directory. E.g., '/storage/sdcard0/MyTracks/kml/'.">
+    Exported %1$s to %2$s.
   </string>
   <string name="export_google_drive"
     translation_description="When exporting a track, the option to export to Google Drive.">
@@ -638,7 +671,7 @@ limitations under the License.
     as new private table
   </string>
   <string name="export_google_fusion_tables_public"
-    translation_description="When exporting a trck to Google Fusion Tables, the option to export as
+    translation_description="When exporting a track to Google Fusion Tables, the option to export as
       a new public table as opposed to a new private table.">
     as new public table
   </string>
@@ -652,7 +685,7 @@ limitations under the License.
     as new public map
   </string>
   <string name="export_google_maps_unlisted"
-    translation_description="When sending a track to Google Maps, the option to export as a new
+    translation_description="When exporting a track to Google Maps, the option to export as a new
       unlisted map as opposed to a new public map.">
     as new unlisted map
   </string>
@@ -660,7 +693,7 @@ limitations under the License.
     translation_description="When exporting a track, the option to export to Google Spreadsheets.">
     Google Spreadsheets
   </string>
-  <string name="export_dialog_title"
+  <string name="export_title"
     translation_description="The dialog title when exporting a track.">
     Export to&#8230;
   </string>
@@ -885,27 +918,27 @@ limitations under the License.
 
       %1$d the number of files successfully imported. E.g., '2'.
       %2$s the number of files in the directory. E.g., '2 files'.
-      %3$s the directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
+      %3$s the directory. E.g., '/storage/sdcard0/MyTracks/kml/'.">
     Imported %1$d of %2$s from %3$s.
   </string>
   <string name="import_no_directory"
     translation_description="When importing from the external storage, the error message when the
       directory doesn't exist.
 
-      %1$s: the directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
+      %1$s: the directory. E.g., '/storage/sdcard0/MyTracks/kml/'.">
     %1$s does not exist.
   </string>
   <string name="import_progress_message"
     translation_description="When importing from the external storage, the progress message.
 
-      %1$s: the directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
+      %1$s: the directory. E.g., '/storage/sdcard0/MyTracks/kml/'.">
     Importing from %1$s&#8230;
   </string>
   <string name="import_selection_option"
     translation_description="When importing from external storage, the option to import all the
       files of a certain file format.
 
-      %1$s: file format. 'GPX', 'KML', 'CSV', or 'TCX'.">
+      %1$s: file format. 'KML', 'GPX', 'CSV', or 'TCX'.">
     Import all %1$s
   </string>
   <string name="import_selection_title"
@@ -916,7 +949,7 @@ limitations under the License.
     translation_description="When importing from the external storage, the success message.
 
       %1$s the number of files. E.g., '2 files'.
-      %2$s the directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
+      %2$s the directory. E.g., '/storage/sdcard0/MyTracks/kml/'.">
     Imported %1$s from %2$s.
   </string>
 
@@ -926,7 +959,7 @@ limitations under the License.
     Deselect all
   </string>
   <string name="list_item_selected"
-    translation_description="Title indictating the number of items selected in a list.
+    translation_description="Title indicating the number of items selected in a list.
       %1$d: an integer value. E.g., '2'.">
     %1$d selected
   </string>
@@ -1245,41 +1278,6 @@ limitations under the License.
     translation_description="The permission label the Google Play Store shows during app
       installation when the app wants to write data to My Tracks.">
     write data to Google My Tracks and start/stop Google My Tracks recording
-  </string>
-
-  <!-- Save -->
-  <string name="save_all_selection_option"
-    translation_description="When saving to external storage, the option to save all the tracks as a
-      certain file format.
-
-      %1$s: file format. 'GPX', 'KML', 'CSV', or 'TCX'.">
-    Save all as %1$s
-  </string>
-  <string name="save_error"
-    translation_description="When saving to the external storage, the error message indicating that
-      only some of the tracks are saved.
-
-      %1$d the number of tracks successfully saved. E.g., '1'.
-      %1$s the number of tracks to save. E.g., '2 tracks'.
-      %2$s the directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
-    Saved %1$d of %2$s to %3$s.
-  </string>
-  <string name="save_progress_message"
-    translation_description="When saving to the external storage, the progress message.
-
-      %1$s: the directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
-    Saving to %1$s&#8230;
-  </string>
-  <string name="save_selection_title"
-    translation_description="The dialog title to save to external storage.">
-    Save to external storage
-  </string>
-  <string name="save_success"
-    translation_description="When saving to the external storage, the success message.
-
-      %1$s the number of tracks. E.g., '2 tracks'.
-      %2$s the directory. E.g., '/storage/sdcard0/MyTracks/gpx/'.">
-    Saved %1$s to %2$s.
   </string>
 
   <!-- Search -->
@@ -2000,25 +1998,37 @@ limitations under the License.
   </string>
 
   <!-- Share Track -->
-  <string name="share_track_add_emails_title"
-    translation_description="The dialog title for entering email addresses for sharing a track
-      with.">
-    Share track with
-  </string>
-  <string name="share_track_add_emails_hint"
-    translation_description="The hint in the auto complete text box for entering email addresses.">
-    Enter email addresses
-  </string>
-  <string name="share_track_drive_confirm_message"
+  <string name="share_track_confirm_message"
     translation_description="The confirmation message when sharing a track via Google Drive with
       friends.">
-    This will upload your track to Google Drive so you can share the file with friends. The file
-    will be private and only those you have shared with will have access.
+    This will upload your track to Google Drive so you can share the file with friends.
+  </string>
+  <string name="share_track_emails_hint"
+    translation_description="The hint for the auto complete text box for entering email addresses.">
+    Email addresses
+  </string>
+  <string name="share_track_invite"
+    translation_description="The checkbox to invite people to view a track.">
+    Invite people to view
+  </string>
+  <string name="share_track_no_emails"
+    translation_description="When sharing a track, error message indicating that no email addresses
+      is entered.">
+    No email addresses entered.
+  </string>  
+  <string name="share_track_no_selection"
+    translation_description="When sharing a track, error message indicating that no option is
+      selected.">
+    No option selected.
   </string>
   <string name="share_track_picker_title"
     translation_description="When sharing a track with friends, the title on the picker to ask the
       user to select an application.">
     Select an application
+  </string>
+  <string name="share_track_public"
+    translation_description="The checkbox to make a track public and share its url.">
+    Make public &amp; share URL
   </string>
   <string name="share_track_share_file"
     translation_description="After saving a track to the external storage, the button on the result
@@ -2046,9 +2056,18 @@ limitations under the License.
       %2$s: track description.">
     I think you might be interested in this track:\n\n%1$s\n\n%2$s
   </string>
+  <string name="share_track_share_url_title"
+    translation_description="The dialog title asking the user to select an application for sharing
+      an URL.">
+    Share URL using:
+  </string>
   <string name="share_track_subject"
     translation_description="When sharing a track with friends, the subject line.">
     I would like to share a track with you
+  </string>
+  <string name="share_track_title"
+    translation_description="The dialog title to share a track.">
+    Share track
   </string>
 
   <!-- Stats -->

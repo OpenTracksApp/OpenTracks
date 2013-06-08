@@ -62,7 +62,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -146,6 +148,15 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
     RelativeLayout mapContainer = (RelativeLayout) layout.findViewById(R.id.map_container);
     mapContainer.addView(mapView, 0);
 
+    /*
+     * For Froyo (2.2) and Gingerbread (2.3), need a transparent FrameLayout on
+     * top for view pager to work correctly.
+     */
+    FrameLayout frameLayout = new FrameLayout(getActivity());
+    frameLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+    mapContainer.addView(frameLayout,
+        new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));  
+    
     myLocationImageButton = (ImageButton) layout.findViewById(R.id.map_my_location);
     myLocationImageButton.setOnClickListener(new View.OnClickListener() {
         @Override

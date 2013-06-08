@@ -89,9 +89,6 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
   protected void closeConnection() {}
 
   @Override
-  protected void saveResult() {}
-
-  @Override
   protected boolean performTask() {
     try {
       // Reset the per upload states
@@ -121,7 +118,7 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
       publishProgress(PROGRESS_SET_STYLE);
       setStyle(fusiontables, tableId);
       setTemplate(fusiontables, tableId);
-      if (!setPermission(tableId)) {
+      if (!setPermission(track, tableId)) {
         Log.d(TAG, "Cannot set permission for table " + tableId);
         return false;
       }
@@ -137,9 +134,6 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
       if (!uploadWaypoints(fusiontables, tableId)) {
         return false;
       }
-
-      track.setTableId(tableId);
-      myTracksProviderUtils.updateTrack(track);
 
       publishProgress(PROGRESS_COMPLETE);
       return true;
@@ -200,7 +194,7 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
     fusiontables.template().insert(tableId, template).execute();
   }
 
-  private boolean setPermission(String tableId) throws IOException, GoogleAuthException {
+  private boolean setPermission(Track track, String tableId) throws IOException, GoogleAuthException {
     boolean defaultTablePublic = PreferencesUtils.getBoolean(context,
         R.string.export_google_fusion_tables_public_key,
         PreferencesUtils.EXPORT_GOOGLE_FUSION_TABLES_PUBLIC_DEFAULT);
@@ -214,9 +208,12 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
     }
     Drive drive = SyncUtils.getDriveService(driveCredential);
     Permission permission = new Permission();
-    permission.setType("anyone");
     permission.setRole("reader");
+    permission.setType("anyone");
+    permission.setValue("");   
     drive.permissions().insert(tableId, permission).execute();
+    
+    shareUrl = SendFusionTablesUtils.getMapUrl(track, tableId);
     return true;
   }
   

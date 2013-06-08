@@ -20,7 +20,7 @@ import android.os.AsyncTask;
 
 /**
  * The abstract class for AsyncTasks sending a track to Google.
- *
+ * 
  * @author Jimmy Shih
  */
 public abstract class AbstractSendAsyncTask extends AsyncTask<Void, Integer, Boolean> {
@@ -36,6 +36,11 @@ public abstract class AbstractSendAsyncTask extends AsyncTask<Void, Integer, Boo
   private boolean success;
 
   /**
+   * The share url from the AsyncTask.
+   */
+  protected String shareUrl;
+
+  /**
    * True if the AsyncTask has completed.
    */
   private boolean completed;
@@ -47,25 +52,26 @@ public abstract class AbstractSendAsyncTask extends AsyncTask<Void, Integer, Boo
 
   /**
    * Creates an AsyncTask.
-   *
+   * 
    * @param activity the activity currently associated with this AsyncTask
    */
   public AbstractSendAsyncTask(AbstractSendActivity activity) {
     this.activity = activity;
     success = false;
+    shareUrl = null;
     completed = false;
     canRetry = true;
   }
 
   /**
    * Sets the current activity associated with this AyncTask.
-   *
+   * 
    * @param activity the current activity, can be null
    */
   public void setActivity(AbstractSendActivity activity) {
     this.activity = activity;
     if (completed && activity != null) {
-      activity.onAsyncTaskCompleted(success);
+      activity.onAsyncTaskCompleted(success, shareUrl);
     }
   }
 
@@ -94,18 +100,15 @@ public abstract class AbstractSendAsyncTask extends AsyncTask<Void, Integer, Boo
   protected void onPostExecute(Boolean result) {
     success = result;
     completed = true;
-    if (success) {
-      saveResult();
-    }
     if (activity != null) {
-      activity.onAsyncTaskCompleted(success);
+      activity.onAsyncTaskCompleted(success, shareUrl);
     }
   }
 
   /**
    * Retries the task. First, invalidates the auth token. If can retry, invokes
    * {@link #performTask()}. Returns false if cannot retry.
-   *
+   * 
    * @return the result of the retry.
    */
   protected boolean retryTask() {
@@ -127,13 +130,8 @@ public abstract class AbstractSendAsyncTask extends AsyncTask<Void, Integer, Boo
   protected abstract void closeConnection();
 
   /**
-   * Saves any AsyncTask result.
-   */
-  protected abstract void saveResult();
-
-  /**
    * Performs the AsyncTask.
-   *
+   * 
    * @return true if success
    */
   protected abstract boolean performTask();

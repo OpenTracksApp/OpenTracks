@@ -44,8 +44,6 @@ public class Track implements Parcelable {
    * not loaded)
    */
   private int numberOfPoints = 0;
-  private String mapId = "";
-  private String tableId = "";
   private String icon = "";
   private String driveId = "";
   private long modifiedTime = -1L;
@@ -67,8 +65,6 @@ public class Track implements Parcelable {
     startId = in.readLong();
     stopId = in.readLong();
     numberOfPoints = in.readInt();
-    mapId = in.readString();
-    tableId = in.readString();
     icon = in.readString();
     driveId = in.readString();
     modifiedTime = in.readLong();
@@ -98,8 +94,6 @@ public class Track implements Parcelable {
     dest.writeLong(startId);
     dest.writeLong(stopId);
     dest.writeInt(numberOfPoints);
-    dest.writeString(mapId);
-    dest.writeString(tableId);
     dest.writeString(icon);
     dest.writeString(driveId);
     dest.writeLong(modifiedTime);
@@ -178,22 +172,6 @@ public class Track implements Parcelable {
 
   public void setNumberOfPoints(int numberOfPoints) {
     this.numberOfPoints = numberOfPoints;
-  }
-
-  public String getMapId() {
-    return mapId;
-  }
-
-  public void setMapId(String mapId) {
-    this.mapId = mapId;
-  }
-
-  public String getTableId() {
-    return tableId;
-  }
-
-  public void setTableId(String tableId) {
-    this.tableId = tableId;
   }
 
   public String getIcon() {

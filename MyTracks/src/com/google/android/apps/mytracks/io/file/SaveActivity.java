@@ -111,8 +111,9 @@ public class SaveActivity extends Activity {
   protected Dialog onCreateDialog(int id) {
     switch (id) {
       case DIALOG_PROGRESS_ID:
-        progressDialog = DialogUtils.createHorizontalProgressDialog(
-            this, R.string.save_progress_message, new DialogInterface.OnCancelListener() {
+        progressDialog = DialogUtils.createHorizontalProgressDialog(this,
+            R.string.export_external_storage_progress_message,
+            new DialogInterface.OnCancelListener() {
                 @Override
               public void onCancel(DialogInterface dialog) {
                 saveAsyncTask.cancel(true);
@@ -128,10 +129,11 @@ public class SaveActivity extends Activity {
             .getQuantityString(R.plurals.tracks, totalCount, totalCount);
         if (successCount == totalCount && totalCount > 0) {
           success = true;
-          message = getString(R.string.save_success, totalTracks, directoryName);
+          message = getString(R.string.export_external_storage_success, totalTracks, directoryName);
         } else {
           success = false;
-          message = getString(R.string.save_error, successCount, totalTracks, directoryName);
+          message = getString(
+              R.string.export_external_storage_error, successCount, totalTracks, directoryName);
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(this).setCancelable(true).setIcon(
             success ? android.R.drawable.ic_dialog_info : android.R.drawable.ic_dialog_alert)

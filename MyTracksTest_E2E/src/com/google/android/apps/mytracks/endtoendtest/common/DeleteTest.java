@@ -73,13 +73,14 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
     // Export when there is no track.
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_export_all), true);
     EndToEndTestUtils.SOLO.clickOnText(String.format(
-        activityMyTracks.getString(R.string.save_all_selection_option),
+        activityMyTracks.getString(R.string.export_external_storage_option),
         EndToEndTestUtils.GPX.toUpperCase()));
     EndToEndTestUtils.getButtonOnScreen(
         EndToEndTestUtils.activityMytracks.getString(R.string.generic_ok), true, true);
     String totalTracks = activityMyTracks.getResources().getQuantityString(R.plurals.tracks, 0, 0);
     String directoryName = FileUtils.buildExternalDirectoryPath(EndToEndTestUtils.GPX);
-    String message = activityMyTracks.getString(R.string.save_error, 0, totalTracks, directoryName);
+    String message = activityMyTracks.getString(
+        R.string.export_external_storage_error, 0, totalTracks, directoryName);
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
         activityMyTracks.getString(R.string.external_storage_not_available), 1,
         EndToEndTestUtils.SHORT_WAIT_TIME)

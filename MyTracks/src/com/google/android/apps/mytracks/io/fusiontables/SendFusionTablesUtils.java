@@ -42,13 +42,11 @@ public class SendFusionTablesUtils {
    * Gets the url to visualize a fusion table on a map.
    *
    * @param track the track
+   * @param tableId the table id
    * @return the url.
    */
-  public static String getMapUrl(Track track) {
-    if (track == null 
-        || track.getTripStatistics() == null 
-        || track.getTableId() == null
-        || track.getTableId().length() == 0) {
+  public static String getMapUrl(Track track, String tableId) {
+    if (track == null || track.getTripStatistics() == null) {
       Log.e(TAG, "Invalid track");
       return null;
     }
@@ -57,7 +55,7 @@ public class SendFusionTablesUtils {
     int z;
     if (track.getNumberOfPoints() < 2) {
       // Use Google's latitude and longitude
-      latE6 = 37.423 * 1.E6; 
+      latE6 = 37.423 * 1.E6;
       lonE6 = -122.084 * 1.E6;
       z = 2;
     } else {
@@ -69,8 +67,7 @@ public class SendFusionTablesUtils {
     // We explicitly format with Locale.US because we need the latitude and
     // longitude to be formatted in a locale-independent manner. Specifically,
     // we need the decimal separator to be a period rather than a comma.
-    return String.format(
-        Locale.US, MAP_URL, track.getTableId(), latE6 / 1.E6, lonE6 / 1.E6, z);
+    return String.format(Locale.US, MAP_URL, tableId, latE6 / 1.E6, lonE6 / 1.E6, z);
   }
 
   /**

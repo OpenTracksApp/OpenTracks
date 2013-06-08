@@ -121,9 +121,9 @@ public class ExportDialogFragment extends DialogFragment {
             : R.id.export_google_fusion_tables_private);
 
     setExternalStorageOption(
-        (RadioButton) view.findViewById(R.id.export_external_storage_gpx), TrackFileFormat.GPX);
-    setExternalStorageOption(
         (RadioButton) view.findViewById(R.id.export_external_storage_kml), TrackFileFormat.KML);
+    setExternalStorageOption(
+        (RadioButton) view.findViewById(R.id.export_external_storage_gpx), TrackFileFormat.GPX);
     setExternalStorageOption(
         (RadioButton) view.findViewById(R.id.export_external_storage_csv), TrackFileFormat.CSV);
     setExternalStorageOption(
@@ -159,7 +159,7 @@ public class ExportDialogFragment extends DialogFragment {
             }
             caller.onExportDone(type, format);
           }
-        }).setTitle(R.string.export_dialog_title).setView(view).create();
+        }).setTitle(R.string.export_title).setView(view).create();
   }
 
   /**
@@ -179,10 +179,10 @@ public class ExportDialogFragment extends DialogFragment {
    */
   private int getExternalStorageFormatId(TrackFileFormat trackFileFormat) {
     switch (trackFileFormat) {
-      case GPX:
-        return R.id.export_external_storage_gpx;
       case KML:
         return R.id.export_external_storage_kml;
+      case GPX:
+        return R.id.export_external_storage_gpx;
       case CSV:
         return R.id.export_external_storage_csv;
       default:
@@ -197,10 +197,10 @@ public class ExportDialogFragment extends DialogFragment {
    */
   private TrackFileFormat getTrackFileFormat(int externalStorageFormatId) {
     switch (externalStorageFormatId) {
-      case R.id.export_external_storage_gpx:
-        return TrackFileFormat.GPX;
       case R.id.export_external_storage_kml:
         return TrackFileFormat.KML;
+      case R.id.export_external_storage_gpx:
+        return TrackFileFormat.GPX;
       case R.id.export_external_storage_csv:
         return TrackFileFormat.CSV;
       default:

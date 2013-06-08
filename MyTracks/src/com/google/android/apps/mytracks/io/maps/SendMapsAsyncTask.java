@@ -124,17 +124,6 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
   }
 
   @Override
-  protected void saveResult() {
-    Track track = myTracksProviderUtils.getTrack(trackId);
-    if (track == null) {
-      Log.d(TAG, "No track for " + trackId);
-      return;
-    }
-    track.setMapId(mapId);
-    myTracksProviderUtils.updateTrack(track);
-  }
-
-  @Override
   protected boolean performTask() {
     // Reset the per upload states
     mapsGDataConverter = null;
@@ -222,6 +211,7 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
           + context.getString(R.string.send_google_by_my_tracks, "", "");
       mapId = SendMapsUtils.createNewMap(
           track.getName(), description, defaultMapPublic, mapsClient, authToken);
+      shareUrl = MapsClient.buildMapUrl(mapId);      
     } catch (ParseException e) {
       Log.d(TAG, "Unable to create a new map", e);
       return false;

@@ -10,16 +10,16 @@ import java.util.Locale;
  * Definition of all possible track formats.
  */
 public enum TrackFileFormat implements Parcelable {
-  GPX {
-  @Override
-    TrackFormatWriter newFormatWriter(Context context) {
-      return new GpxTrackWriter(context);
-    }
-  },
   KML {
   @Override
     TrackFormatWriter newFormatWriter(Context context) {
       return new KmlTrackWriter(context);
+    }
+  },
+  GPX {
+  @Override
+    TrackFormatWriter newFormatWriter(Context context) {
+      return new GpxTrackWriter(context);
     }
   },
   CSV {

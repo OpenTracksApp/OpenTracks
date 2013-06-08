@@ -20,15 +20,31 @@ limitations under the License.
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:padding="8dp" >
+    android:paddingBottom="16dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingTop="8dp" >
+    <CheckBox
+      android:id="@+id/share_track_public"
+      android:layout_gravity="center_vertical"
+      android:text="@string/share_track_public"
+      style="@style/TextMedium" />
+    <CheckBox
+      android:id="@+id/share_track_invite"
+      android:layout_gravity="center_vertical"
+      android:layout_marginTop="16dp"
+      android:text="@string/share_track_invite"
+      style="@style/TextMedium" />
     <MultiAutoCompleteTextView
-      android:hint="@string/share_track_add_emails_hint"
       android:completionThreshold="1"
-      android:id="@+id/add_emails"
+      android:hint="@string/share_track_emails_hint"
+      android:id="@+id/share_track_emails"
       android:imeOptions="actionDone"
       android:layout_height="wrap_content"
+      android:layout_marginLeft="8dp"
       android:layout_width="match_parent"
-      android:singleLine="false" >
+      android:singleLine="false"
+      android:visibility="gone" >
     </MultiAutoCompleteTextView>
   </LinearLayout>
 </ScrollView>

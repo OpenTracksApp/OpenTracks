@@ -28,6 +28,7 @@ import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecovera
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.Permission;
+import com.google.api.services.drive.model.PermissionList;
 
 import android.accounts.Account;
 import android.content.Context;
@@ -44,10 +45,12 @@ public class SendDriveAsyncTask extends AbstractSendAsyncTask {
   private final long trackId;
   private final Account account;
   private final String[] acl;
+  private final boolean isPublic;
   private final Context context;
   private final MyTracksProviderUtils myTracksProviderUtils;
 
-  public SendDriveAsyncTask(SendDriveActivity activity, long trackId, Account account, String acl) {
+  public SendDriveAsyncTask(
+      SendDriveActivity activity, long trackId, Account account, String acl, boolean isPublic) {
     super(activity);
     this.trackId = trackId;
     this.account = account;
@@ -56,16 +59,14 @@ public class SendDriveAsyncTask extends AbstractSendAsyncTask {
     } else {
       this.acl = null;
     }
-
+    this.isPublic = isPublic;
+    
     context = activity.getApplicationContext();
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
   }
 
   @Override
   protected void closeConnection() {}
-
-  @Override
-  protected void saveResult() {}
 
   @Override
   protected boolean performTask() {
@@ -91,18 +92,18 @@ public class SendDriveAsyncTask extends AbstractSendAsyncTask {
         File driveFile = drive.files().get(driveId).execute();
         if (SyncUtils.isValid(driveFile, folderId) && SyncUtils.updateDriveFile(
             drive, driveFile, context, myTracksProviderUtils, track, false)) {
-          addPermission(drive, driveId);
+          addPermission(drive, driveFile);
           return true;
         }
         SyncUtils.updateTrackWithDriveFileInfo(myTracksProviderUtils, track, null);
       }
 
-      String id = SyncUtils.insertDriveFile(
+      File file = SyncUtils.insertDriveFile(
           drive, folderId, context, myTracksProviderUtils, track, false);
-      if (id == null) {
+      if (file == null) {
         return false;
       }
-      addPermission(drive, id);
+      addPermission(drive, file);
       return true;
     } catch (UserRecoverableAuthException e) {
       SendToGoogleUtils.sendNotification(
@@ -126,18 +127,40 @@ public class SendDriveAsyncTask extends AbstractSendAsyncTask {
    * Adds permission.
    * 
    * @param drive the drive
-   * @param driveId the drive id
+   * @param file the drive file
    */
-  private void addPermission(Drive drive, String driveId) throws IOException {
+  private void addPermission(Drive drive, File file) throws IOException {
+    if (isPublic) {
+      boolean hasPublic = false;
+      PermissionList permissionList = drive.permissions().list(file.getId()).execute();
+      for (Permission permission : permissionList.getItems()) {
+        String role = permission.getRole();
+        if (role.equals("reader") || role.equals("writer")) {
+          if (permission.getType().equals("anyone")) {
+            hasPublic = true;
+            break;
+          }
+        }
+      }
+      if (!hasPublic) {
+        Permission permission = new Permission();
+        permission.setRole("reader");
+        permission.setType("anyone");
+        permission.setValue("");
+        drive.permissions().insert(file.getId(), permission).execute();
+      }
+      shareUrl = file.getAlternateLink();
+    }
+
     if (acl != null) {
       for (String email : acl) {
         email = email.trim();
         if (!email.equals("")) {
           Permission permission = new Permission();
-          permission.setValue(email);
-          permission.setType("user");
           permission.setRole("reader");
-          drive.permissions().insert(driveId, permission).execute();
+          permission.setType("user");
+          permission.setValue(email);
+          drive.permissions().insert(file.getId(), permission).execute();
         }
       }
     }
