@@ -109,7 +109,7 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
     // Click to export tracks(At least one track) to Gpx files.
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_export_all), true);
     EndToEndTestUtils.SOLO.clickOnText(String.format(
-        activityMyTracks.getString(R.string.save_all_selection_option),
+        activityMyTracks.getString(R.string.export_all_option),
         EndToEndTestUtils.GPX.toUpperCase()));
     EndToEndTestUtils.getButtonOnScreen(
         EndToEndTestUtils.activityMytracks.getString(R.string.generic_ok), true, true);
@@ -210,7 +210,7 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
     // Click to export tracks(At least one track) to Gpx files.
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_export_all), true);
     EndToEndTestUtils.SOLO.clickOnText(String.format(
-        activityMyTracks.getString(R.string.save_all_selection_option),
+        activityMyTracks.getString(R.string.export_all_option),
         EndToEndTestUtils.GPX.toUpperCase()));
     EndToEndTestUtils.getButtonOnScreen(
         EndToEndTestUtils.activityMytracks.getString(R.string.generic_ok), true, true);
@@ -253,7 +253,7 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
     trackNumber = EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount();
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_export_all), true);
     EndToEndTestUtils.SOLO.clickOnText(String.format(
-        activityMyTracks.getString(R.string.save_all_selection_option),
+        activityMyTracks.getString(R.string.export_all_option),
         EndToEndTestUtils.KML.toUpperCase()));
     EndToEndTestUtils.getButtonOnScreen(
         EndToEndTestUtils.activityMytracks.getString(R.string.generic_ok), true, true);
@@ -302,7 +302,7 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
     String tracks = activityMyTracks.getResources().getQuantityString(R.plurals.tracks, count,
         count);
     String directoryName = FileUtils.buildExternalDirectoryPath(type);
-    return activityMyTracks.getString(R.string.save_success, tracks, directoryName);
+    return activityMyTracks.getString(R.string.export_external_storage_success, tracks, directoryName);
   }
 
   private String getImportSuccessMessage(int count, String type) {
