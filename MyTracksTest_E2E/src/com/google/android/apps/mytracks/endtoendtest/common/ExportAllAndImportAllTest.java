@@ -22,6 +22,7 @@ import com.google.android.maps.mytracks.R;
 
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
+import android.widget.ListView;
 
 import java.io.File;
 
@@ -46,7 +47,7 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
     instrumentation = getInstrumentation();
     activityMyTracks = getActivity();
     EndToEndTestUtils.setupForAllTest(instrumentation, activityMyTracks);
-    trackNumber = EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount();
+    trackNumber = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount();
     EndToEndTestUtils.createTrackIfEmpty(1, true);
   }
 
@@ -199,7 +200,7 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
     }
 
     // Get track number in current track list of MyTracks.
-    trackNumber = EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount();
+    trackNumber = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount();
 
     // No Gpx file to imported.
     importTracks(EndToEndTestUtils.GPX);
@@ -225,10 +226,10 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
 
     // Click to import Gpx track.
     gpxFilesNumber = EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX).length;
-    trackNumber = EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount();
+    trackNumber = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount();
 
     importTracks(EndToEndTestUtils.GPX);
-    EndToEndTestUtils.rotateAllActivities();
+    EndToEndTestUtils.rotateCurrentActivity();
 
     /*
      * Wait for the prefix of import success string is much faster than wait the
@@ -245,12 +246,12 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     instrumentation.waitForIdleSync();
     assertTrue(EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.trackName));
-    assertEquals(trackNumber + gpxFilesNumber, EndToEndTestUtils.SOLO.getCurrentListViews().get(0)
+    assertEquals(trackNumber + gpxFilesNumber, EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0)
         .getCount());
 
     // Click to export tracks(At least two tracks) to KML files.
     gpxFilesNumber = EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX).length;
-    trackNumber = EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount();
+    trackNumber = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount();
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_export_all), true);
     EndToEndTestUtils.SOLO.clickOnText(String.format(
         activityMyTracks.getString(R.string.export_all_option),
@@ -268,7 +269,7 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
     // Click to import KML track.
     int KMLFilesNumber = EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.KML).length;
     instrumentation.waitForIdleSync();
-    trackNumber = EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount();
+    trackNumber = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount();
 
     importTracks(EndToEndTestUtils.KML);
 
@@ -288,7 +289,7 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     instrumentation.waitForIdleSync();
-    assertEquals(trackNumber + KMLFilesNumber, EndToEndTestUtils.SOLO.getCurrentListViews().get(0)
+    assertEquals(trackNumber + KMLFilesNumber, EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0)
         .getCount());
   }
 

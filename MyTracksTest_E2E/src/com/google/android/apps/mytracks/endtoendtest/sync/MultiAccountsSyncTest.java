@@ -24,6 +24,7 @@ import com.google.api.services.drive.Drive;
 
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
+import android.widget.ListView;
 
 /**
  * Tests the situation when user use multiple account in MyTracks.
@@ -115,7 +116,7 @@ public class MultiAccountsSyncTest extends ActivityInstrumentationTestCase2<Trac
     EndToEndTestUtils.createSimpleTrack(0, true);
 
     // Delete one track.
-    EndToEndTestUtils.SOLO.clickOnView(EndToEndTestUtils.SOLO.getCurrentListViews().get(0)
+    EndToEndTestUtils.SOLO.clickOnView(EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0)
         .getChildAt(0));
     EndToEndTestUtils.instrumentation.waitForIdleSync();
     EndToEndTestUtils.SOLO.clickOnMenuItem(EndToEndTestUtils.activityMytracks
@@ -125,7 +126,7 @@ public class MultiAccountsSyncTest extends ActivityInstrumentationTestCase2<Trac
 
     // Switch account and delete another track.
     SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_2);
-    EndToEndTestUtils.SOLO.clickOnView(EndToEndTestUtils.SOLO.getCurrentListViews().get(0)
+    EndToEndTestUtils.SOLO.clickOnView(EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0)
         .getChildAt(0));
     EndToEndTestUtils.SOLO.clickOnMenuItem(EndToEndTestUtils.activityMytracks
         .getString(R.string.menu_delete));

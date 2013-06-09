@@ -26,15 +26,14 @@ import com.jayway.android.robotium.solo.Solo;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Instrumentation;
-import android.content.Context;
 import android.content.res.Configuration;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.io.File;
@@ -306,7 +305,7 @@ public class EndToEndTestUtils {
       }
     }
 
-    int trackNumber = SOLO.getCurrentListViews().get(0).getCount();
+    int trackNumber = SOLO.getCurrentViews(ListView.class).get(0).getCount();
     // Delete all tracks when there are two many tracks which may make some test
     // run slowly, such as sync test cases.
     if (trackNumber > 3) {
@@ -393,11 +392,11 @@ public class EndToEndTestUtils {
    */
   public static boolean isTrackListEmpty(boolean isClick) {
     instrumentation.waitForIdleSync();
-    int trackNumber = SOLO.getCurrentListViews().get(0).getCount();
+    int trackNumber = SOLO.getCurrentViews(ListView.class).get(0).getCount();
     if (trackNumber <= 0) {
       return true;
     }
-    View oneTrack = SOLO.getCurrentListViews().get(0).getChildAt(0);
+    View oneTrack = SOLO.getCurrentViews(ListView.class).get(0).getChildAt(0);
     View aa = oneTrack.findViewById(R.id.list_item_name);
     if (aa != null) {
       trackName = (String) ((TextView) oneTrack.findViewById(R.id.list_item_name)).getText();
@@ -587,7 +586,7 @@ public class EndToEndTestUtils {
 
     // Get all buttons and find.
     if (button == null) {
-      ArrayList<Button> currentButtons = SOLO.getCurrentButtons();
+      ArrayList<Button> currentButtons = SOLO.getCurrentViews(Button.class);
       for (Button oneButton : currentButtons) {
         String title = (String) oneButton.getText();
         if (title.equalsIgnoreCase(buttonName)) {
@@ -623,23 +622,10 @@ public class EndToEndTestUtils {
   }
 
   /**
-   * Rotates the current activity.
+   * Rotates all activities.
    */
   public static void rotateCurrentActivity() {
     rotateActivity(SOLO.getCurrentActivity());
-    instrumentation.waitForIdleSync();
-  }
-
-  /**
-   * Rotates all activities.
-   */
-  public static void rotateAllActivities() {
-    if (hasActionBar) {
-      ArrayList<Activity> allActivities = SOLO.getAllOpenedActivities();
-      for (Activity activity : allActivities) {
-        rotateActivity(activity);
-      }
-    }
     instrumentation.waitForIdleSync();
   }
 
@@ -774,7 +760,7 @@ public class EndToEndTestUtils {
    * @return the text view, null means can not find it
    */
   public static TextView findTextViewInView(String text, View parent) {
-    ArrayList<TextView> textViews = SOLO.getCurrentTextViews(parent);
+    ArrayList<TextView> textViews = SOLO.getCurrentViews(TextView.class, parent);
     for (TextView textView : textViews) {
       String textString = (String) textView.getText();
       if (textView.isShown() && textString.endsWith(text)) {
@@ -876,11 +862,9 @@ public class EndToEndTestUtils {
    * @param text to enter
    */
   public static void enterTextAvoidSoftKeyBoard(int editTextIndex, String text) {
-    InputMethodManager imm = (InputMethodManager) activityMytracks.getApplicationContext()
-        .getSystemService(Context.INPUT_METHOD_SERVICE);
     EditText editText = SOLO.getEditText(editTextIndex);
-    imm.hideSoftInputFromWindow(editText.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
     SOLO.enterText(editText, text);
+    SOLO.hideSoftKeyboard();
   }
 
   /**
@@ -961,7 +945,7 @@ public class EndToEndTestUtils {
     findMenuItem(activityMytracks.getString(R.string.menu_markers), true);
     if (markerNumber > 0 && hasGpsSingal) {
       SOLO.waitForText(WAYPOINT_NAME);
-      int actualMarkerNumber = SOLO.getCurrentListViews().get(0).getCount();
+      int actualMarkerNumber = SOLO.getCurrentViews(ListView.class).get(0).getCount();
       Assert.assertEquals(markerNumber, actualMarkerNumber);
     } else {
       Assert.assertTrue(SOLO.waitForText(activityMytracks
@@ -1004,7 +988,7 @@ public class EndToEndTestUtils {
     instrumentation.waitForIdleSync();
     // Find the My Location button in another if null.
     if (myLocation == null) {
-      ArrayList<ImageButton> aa = SOLO.getCurrentImageButtons();
+      ArrayList<ImageButton> aa = SOLO.getCurrentViews(ImageButton.class);
       for (ImageButton imageButton : aa) {
         if (imageButton.getContentDescription() != null
             && imageButton.getContentDescription().equals(

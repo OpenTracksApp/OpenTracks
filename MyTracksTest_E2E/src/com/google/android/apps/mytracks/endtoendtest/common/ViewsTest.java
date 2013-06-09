@@ -67,7 +67,7 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
     EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.trackName, 1, true);
 
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_chart_tab));
-    EndToEndTestUtils.rotateAllActivities();
+    EndToEndTestUtils.rotateCurrentActivity();
 
     assertTrue(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings),
         false));
@@ -81,7 +81,7 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
         false));
 
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_map_tab));
-    EndToEndTestUtils.rotateAllActivities();
+    EndToEndTestUtils.rotateCurrentActivity();
     assertTrue(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings),
         false));
     assertTrue(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_map_layer),
@@ -122,14 +122,14 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
    */
   public void testTrackControllerPostion() {
     checkTrackController();
-    EndToEndTestUtils.rotateAllActivities();
+    EndToEndTestUtils.rotateCurrentActivity();
     instrumentation.waitForIdleSync();
     checkTrackController();
 
     EndToEndTestUtils.startRecording();
     instrumentation.waitForIdleSync();
     checkTrackController();
-    EndToEndTestUtils.rotateAllActivities();
+    EndToEndTestUtils.rotateCurrentActivity();
     instrumentation.waitForIdleSync();
     checkTrackController();
 

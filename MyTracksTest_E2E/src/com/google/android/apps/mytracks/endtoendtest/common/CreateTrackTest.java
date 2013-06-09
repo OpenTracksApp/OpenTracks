@@ -22,6 +22,7 @@ import com.google.android.maps.mytracks.R;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.KeyEvent;
+import android.widget.ListView;
 
 /**
  * Tests creating a track with markers, and editing and sending send a track.
@@ -58,7 +59,7 @@ public class CreateTrackTest extends ActivityInstrumentationTestCase2<TrackListA
     String newDesc = "desc" + newTrackName;
 
     instrumentation.waitForIdleSync();
-    EndToEndTestUtils.rotateAllActivities();
+    EndToEndTestUtils.rotateCurrentActivity();
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.generic_save));
     sendKeys(KeyEvent.KEYCODE_DEL);
 
@@ -102,7 +103,7 @@ public class CreateTrackTest extends ActivityInstrumentationTestCase2<TrackListA
     // Back to tracks list.
     EndToEndTestUtils.SOLO.goBack();
     instrumentation.waitForIdleSync();
-    EndToEndTestUtils.rotateAllActivities();
+    EndToEndTestUtils.rotateCurrentActivity();
     EndToEndTestUtils.stopRecording(false);
     EndToEndTestUtils.trackName = EndToEndTestUtils.TRACK_NAME_PREFIX + System.currentTimeMillis();
     EndToEndTestUtils.SOLO.enterText(0, EndToEndTestUtils.trackName);
@@ -164,9 +165,9 @@ public class CreateTrackTest extends ActivityInstrumentationTestCase2<TrackListA
         true));
     instrumentation.waitForIdleSync();
     if (EndToEndTestUtils.hasGpsSingal) {
-      assertTrue(EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount() > 0);
+      assertTrue(EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount() > 0);
     } else {
-      assertTrue(EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount() == 0);
+      assertTrue(EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount() == 0);
     }
     EndToEndTestUtils.SOLO.goBack();
 

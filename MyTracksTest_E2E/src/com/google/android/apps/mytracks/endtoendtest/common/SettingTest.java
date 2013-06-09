@@ -26,6 +26,7 @@ import android.app.Instrumentation;
 import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.CheckBox;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 
@@ -68,10 +69,10 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     instrumentation.waitForIdleSync();
 
     // Rotate on a sub setting page.
-    EndToEndTestUtils.rotateAllActivities();
+    EndToEndTestUtils.rotateCurrentActivity();
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks
         .getString(R.string.settings_stats_units_title));
-    ArrayList<CheckBox> displayCheckBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
+    ArrayList<CheckBox> displayCheckBoxs = EndToEndTestUtils.SOLO.getCurrentViews(CheckBox.class);
     boolean useMetric = displayCheckBoxs.get(0).isChecked();
     EndToEndTestUtils.SOLO.clickOnCheckBox(0);
     instrumentation.waitForIdleSync();
@@ -82,7 +83,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
         activityMyTracks.getString(R.string.settings_sharing_allow_access), 1,
         EndToEndTestUtils.NORMAL_WAIT_TIME));
-    ArrayList<CheckBox> sharingCheckBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
+    ArrayList<CheckBox> sharingCheckBoxs = EndToEndTestUtils.SOLO.getCurrentViews(CheckBox.class);
     boolean newMapsPublic = sharingCheckBoxs.get(0).isChecked();
     EndToEndTestUtils.SOLO.clickOnCheckBox(0);
     instrumentation.waitForIdleSync();
@@ -91,7 +92,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
         EndToEndTestUtils.NORMAL_WAIT_TIME));
     EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_yes));
     instrumentation.waitForIdleSync();
-    assertEquals(!newMapsPublic, EndToEndTestUtils.SOLO.getCurrentCheckBoxes().get(0).isChecked());
+    assertEquals(!newMapsPublic, EndToEndTestUtils.SOLO.getCurrentViews(CheckBox.class).get(0).isChecked());
     EndToEndTestUtils.SOLO.goBack();
 
     // Reset all settings.
@@ -112,14 +113,14 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
         activityMyTracks.getString(R.string.settings_stats_units_title), 1,
         EndToEndTestUtils.LONG_WAIT_TIME));
-    displayCheckBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
+    displayCheckBoxs = EndToEndTestUtils.SOLO.getCurrentViews(CheckBox.class);
     assertEquals(useMetric, displayCheckBoxs.get(0).isChecked());
 
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_sharing));
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks
         .getString(R.string.settings_sharing_allow_access));
-    sharingCheckBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
+    sharingCheckBoxs = EndToEndTestUtils.SOLO.getCurrentViews(CheckBox.class);
     assertEquals(newMapsPublic, sharingCheckBoxs.get(0).isChecked());
   }
 
@@ -239,7 +240,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
 
     boolean isImperial = EndToEndTestUtils.findTextViewInView(activityMyTracks
         .getString(R.string.settings_stats_units_imperial), EndToEndTestUtils.SOLO
-        .getCurrentListViews().get(0)) != null;
+        .getCurrentViews(ListView.class).get(0)) != null;
 
     // Change preferred units.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
@@ -287,10 +288,10 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
 
     // Now there should be 2 backups.
     instrumentation.waitForIdleSync();
-    assertEquals(2, EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount());
+    assertEquals(2, EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount());
 
     // Click the first one.
-    EndToEndTestUtils.SOLO.clickOnView(EndToEndTestUtils.SOLO.getCurrentListViews().get(0)
+    EndToEndTestUtils.SOLO.clickOnView(EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0)
         .getChildAt(0));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
         activityMyTracks.getString(R.string.settings_backup_restore_success), 0,
@@ -308,7 +309,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     instrumentation.waitForIdleSync();
 
     // Click the second one.
-    EndToEndTestUtils.SOLO.clickOnView(EndToEndTestUtils.SOLO.getCurrentListViews().get(0)
+    EndToEndTestUtils.SOLO.clickOnView(EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0)
         .getChildAt(1));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
         activityMyTracks.getString(R.string.settings_backup_restore_success), 0,

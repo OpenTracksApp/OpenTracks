@@ -23,6 +23,7 @@ import com.google.android.maps.mytracks.R;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
+import android.widget.ListView;
 
 /**
  * Stress test of MyTracks.
@@ -76,7 +77,7 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
       EndToEndTestUtils.stopRecording(true);
       EndToEndTestUtils.SOLO.goBack();
       EndToEndTestUtils.instrumentation.waitForIdleSync();
-      numberOfTracks = EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount();
+      numberOfTracks = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount();
       if (numberOfTracks > MAX_TRACK_NUMBER) {
         EndToEndTestUtils.deleteAllTracks();
       }

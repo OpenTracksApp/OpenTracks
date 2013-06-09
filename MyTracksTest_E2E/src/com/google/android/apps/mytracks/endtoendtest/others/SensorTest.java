@@ -138,7 +138,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
     EndToEndTestUtils.SOLO.clickOnText(trackListActivity
         .getString(R.string.settings_sensor_bluetooth_sensor));
     instrumentation.waitForIdleSync();
-    ArrayList<ListView> allListViews = EndToEndTestUtils.SOLO.getCurrentListViews();
+    ArrayList<ListView> allListViews = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class);
     int number = allListViews.get(0).getCount();
     if (number > 0
         && EndToEndTestUtils.SOLO.waitForText(nameString, 1, EndToEndTestUtils.SHORT_WAIT_TIME)) {

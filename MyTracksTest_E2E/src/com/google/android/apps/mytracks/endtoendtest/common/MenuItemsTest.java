@@ -22,6 +22,7 @@ import com.google.android.maps.mytracks.R;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.KeyEvent;
+import android.widget.ListView;
 
 /**
  * Tests some menu items of MyTracks.
@@ -92,7 +93,7 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
     EndToEndTestUtils.enterTextAvoidSoftKeyBoard(0, EndToEndTestUtils.trackName);
     sendKeys(KeyEvent.KEYCODE_ENTER);
     instrumentation.waitForIdleSync();
-    assertEquals(1, EndToEndTestUtils.SOLO.getCurrentListViews().size());
+    assertEquals(1, EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).size());
     EndToEndTestUtils.SOLO.goBack();
     assertTrue(isControllerShown());
   }

@@ -55,20 +55,20 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
     EndToEndTestUtils.createTrackIfEmpty(1, true);
     instrumentation.waitForIdleSync();
     // There is at least one track.
-    ArrayList<ListView> trackListView = EndToEndTestUtils.SOLO.getCurrentListViews();
+    ArrayList<ListView> trackListView = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class);
     assertTrue(trackListView.size() > 0);
     assertTrue(trackListView.get(0).getCount() > 0);
 
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete_all), true);
     instrumentation.waitForIdleSync();
-    EndToEndTestUtils.rotateAllActivities();
+    EndToEndTestUtils.rotateCurrentActivity();
     EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_yes), true,
         true);
     instrumentation.waitForIdleSync();
     assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
         .getString(R.string.track_list_empty_message)));
     // There is no track now.
-    trackListView = EndToEndTestUtils.SOLO.getCurrentListViews();
+    trackListView = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class);
     assertEquals(0, trackListView.get(0).getCount());
     // Export when there is no track.
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_export_all), true);
@@ -96,7 +96,7 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
     EndToEndTestUtils.createTrackIfEmpty(1, true);
     instrumentation.waitForIdleSync();
     // Get the number of track( or tracks)
-    ArrayList<ListView> trackListView = EndToEndTestUtils.SOLO.getCurrentListViews();
+    ArrayList<ListView> trackListView = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class);
     int trackNumberOld = trackListView.get(0).getCount();
 
     EndToEndTestUtils.SOLO.clickOnView(trackListView.get(0).getChildAt(0));
@@ -105,7 +105,7 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
     EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_yes), true,
         true);
     instrumentation.waitForIdleSync();
-    trackListView = EndToEndTestUtils.SOLO.getCurrentListViews();
+    trackListView = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class);
     int trackNumberNew = trackListView.get(0).getCount();
     assertEquals(trackNumberOld - 1, trackNumberNew);
   }
@@ -119,7 +119,7 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
     }
 
     // Get the number of track( or tracks)
-    ArrayList<ListView> trackListView = EndToEndTestUtils.SOLO.getCurrentListViews();
+    ArrayList<ListView> trackListView = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class);
     int trackNumber = trackListView.get(0).getCount();
 
     if (trackNumber < 3) {
@@ -130,7 +130,7 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
     }
 
     // Get the number of track( or tracks)
-    trackListView = EndToEndTestUtils.SOLO.getCurrentListViews();
+    trackListView = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class);
     int trackNumberOld = trackListView.get(0).getCount();
 
     assertTrue(trackNumberOld > 2);
@@ -161,7 +161,7 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
     // Wait a few seconds for the delete.
     while (trackNumberNew != trackNumberOld - 2
         && (System.currentTimeMillis() - startTime) < EndToEndTestUtils.SHORT_WAIT_TIME) {
-      trackListView = EndToEndTestUtils.SOLO.getCurrentListViews();
+      trackListView = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class);
       trackNumberNew = trackListView.get(0).getCount();
       EndToEndTestUtils.sleep(EndToEndTestUtils.VERY_SHORT_WAIT_TIME);
     }

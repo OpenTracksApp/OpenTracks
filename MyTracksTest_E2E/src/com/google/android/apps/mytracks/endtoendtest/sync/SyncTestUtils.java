@@ -35,6 +35,7 @@ import android.app.Instrumentation;
 import android.content.Context;
 import android.util.Log;
 import android.widget.CheckBox;
+import android.widget.ListView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -199,7 +200,7 @@ public class SyncTestUtils {
 
     EndToEndTestUtils.SOLO.waitForDialogToClose(EndToEndTestUtils.SHORT_WAIT_TIME);
     EndToEndTestUtils.instrumentation.waitForIdleSync();
-    CheckBox syncCheckBox = EndToEndTestUtils.SOLO.getCurrentCheckBoxes().get(0);
+    CheckBox syncCheckBox = EndToEndTestUtils.SOLO.getCurrentViews(CheckBox.class).get(0);
     if (!syncCheckBox.isChecked()) {
       EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
           .getString(R.string.settings_google_drive_sync_title));
@@ -230,7 +231,7 @@ public class SyncTestUtils {
         EndToEndTestUtils.sleep(EndToEndTestUtils.SHORT_WAIT_TIME);
         EndToEndTestUtils.findMenuItem(
             EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
-        int trackNumber = EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount();
+        int trackNumber = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount();
         List<File> files = getDriveFiles(
             EndToEndTestUtils.activityMytracks.getApplicationContext(), drive);
         if (files.size() == trackNumber) {
@@ -251,7 +252,7 @@ public class SyncTestUtils {
   public static void checkTracksNumber(int number) {
     long startTime = System.currentTimeMillis();
     while (System.currentTimeMillis() - startTime < MAX_TIME_TO_WAIT_SYNC) {
-      int trackNumber = EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount();
+      int trackNumber = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount();
       if (trackNumber == number) {
         return;
       }
