@@ -497,12 +497,12 @@ limitations under the License.
     Moving time: %1$s
   </string>
   <string name="description_pace_imperial"
-    translation_description="Pace in imperial units, hours per mile.">
-    Pace (hr/mi)
+    translation_description="Pace in imperial units, minutes per mile.">
+    Pace (min/mi)
   </string>
   <string name="description_pace_metric"
-    translation_description="Pace in metric units, hours per kilometer.">
-    Pace (hr/km)
+    translation_description="Pace in metric units, minutes per kilometer.">
+    Pace (min/km)
   </string>
   <string name="description_recorded_time"
     translation_description="Recorded time description.
