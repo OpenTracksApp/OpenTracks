@@ -24,7 +24,6 @@ import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
 
 import android.content.Context;
-import android.util.Pair;
 
 import java.util.Vector;
 
@@ -117,25 +116,24 @@ public class DescriptionGeneratorImpl implements DescriptionGenerator {
     writeTime(stats.getMovingTime(), builder, R.string.description_moving_time, lineBreak);
 
     // Average speed
-    Pair<Double, Double> averageSpeed = writeSpeed(
-        stats.getAverageSpeed(), builder, R.string.description_average_speed, lineBreak);
+    writeSpeed(stats.getAverageSpeed(), builder, R.string.description_average_speed, lineBreak);
 
     // Average moving speed
-    Pair<Double, Double> averageMovingSpeed = writeSpeed(stats.getAverageMovingSpeed(), builder,
-        R.string.description_average_moving_speed, lineBreak);
+    writeSpeed(stats.getAverageMovingSpeed(), builder, R.string.description_average_moving_speed,
+        lineBreak);
 
     // Max speed
-    Pair<Double, Double> maxSpeed = writeSpeed(
-        stats.getMaxSpeed(), builder, R.string.description_max_speed, lineBreak);
+    writeSpeed(stats.getMaxSpeed(), builder, R.string.description_max_speed, lineBreak);
 
     // Average pace
-    writePace(averageSpeed, builder, R.string.description_average_pace, lineBreak);
+    writePace(stats.getAverageSpeed(), builder, R.string.description_average_pace, lineBreak);
 
     // Average moving pace
-    writePace(averageMovingSpeed, builder, R.string.description_average_moving_pace, lineBreak);
+    writePace(stats.getAverageMovingSpeed(), builder, R.string.description_average_moving_pace,
+        lineBreak);
 
     // Fastest pace
-    writePace(maxSpeed, builder, R.string.description_fastest_pace, lineBreak);
+    writePace(stats.getMaxSpeed(), builder, R.string.description_fastest_pace, lineBreak);
 
     // Max elevation
     writeElevation(stats.getMaxElevation(), builder, R.string.description_max_elevation, lineBreak);
@@ -199,34 +197,29 @@ public class DescriptionGeneratorImpl implements DescriptionGenerator {
    * @param builder StringBuilder to append speed
    * @param resId resource id of speed string
    * @param lineBreak line break string
-   * @return a pair of speed, first in kilometers per hour, second in miles per
-   *         hour.
    */
   @VisibleForTesting
-  Pair<Double, Double> writeSpeed(
+  void writeSpeed(
       double speed, StringBuilder builder, int resId, String lineBreak) {
     double speedInKmHr = speed * UnitConversions.MS_TO_KMH;
     double speedInMiHr = speedInKmHr * UnitConversions.KM_TO_MI;
     builder.append(context.getString(resId, speedInKmHr, speedInMiHr));
     builder.append(lineBreak);
-    return Pair.create(speedInKmHr, speedInMiHr);
   }
 
   /**
    * Writes pace.
-   *
-   * @param speed a pair of speed, first in kilometers per hour, second in miles
-   *          per hour
+   * 
+   * @param speed speed in meters per second
    * @param builder StringBuilder to append pace
    * @param resId resource id of pace string
    * @param lineBreak line break string
    */
   @VisibleForTesting
-  void writePace(
-      Pair<Double, Double> speed, StringBuilder builder, int resId, String lineBreak) {
-    double paceInMinKm = getPace(speed.first);
-    double paceInMinMi = getPace(speed.second);
-    builder.append(context.getString(resId, paceInMinKm, paceInMinMi));
+  void writePace(double speed, StringBuilder builder, int resId, String lineBreak) {
+    String[] paceInMetrics = StringUtils.getSpeedParts(context, speed, true, false);
+    String[] paceInImperial = StringUtils.getSpeedParts(context, speed, false, false);
+    builder.append(context.getString(resId, paceInMetrics[0], paceInImperial[0]));
     builder.append(lineBreak);
   }
 
@@ -261,15 +254,5 @@ public class DescriptionGeneratorImpl implements DescriptionGenerator {
         : Math.round(grade * 100);
     builder.append(context.getString(resId, gradeInPercent));
     builder.append(lineBreak);
-  }
-
-  /**
-   * Gets pace (in minutes) from speed.
-   *
-   * @param speed speed in hours
-   */
-  @VisibleForTesting
-  double getPace(double speed) {
-    return speed == 0 ? 0.0 : 60.0 / speed; // convert from hours to minutes
   }
 }

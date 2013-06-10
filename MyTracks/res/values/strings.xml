@@ -384,9 +384,9 @@ limitations under the License.
   <string name="description_average_moving_pace"
     translation_description="Average moving pace description.
 
-      %1$.2f pace in minutes per kilometer
-      %2$.1f pace in minutes per mile">
-    Average moving pace: %1$.2f min/km (%2$.1f min/mi)
+      %1$s pace in minutes per kilometer
+      %2$s pace in minutes per mile">
+    Average moving pace: %1$s min/km (%2$s min/mi)
   </string>
   <string name="description_average_moving_speed"
     translation_description="Average moving speed description.
@@ -398,9 +398,9 @@ limitations under the License.
   <string name="description_average_pace"
     translation_description="Average pace description.
 
-      %1$.2f pace in minutes per kilometer
-      %2$.1f pace in minutes per mile">
-    Average pace: %1$.2f min/km (%2$.1f min/mi)
+      %1$s pace in minutes per kilometer
+      %2$s pace in minutes per mile">
+    Average pace: %1$s min/km (%2$s min/mi)
   </string>
   <string name="description_average_speed"
     translation_description="Average speed description.
@@ -427,9 +427,9 @@ limitations under the License.
   <string name="description_fastest_pace"
     translation_description="Fastest pace description.
 
-      %1$.2f pace in minutes per kilometer
-      %2$.1f pace in minutes per mile">
-    Fastest pace: %1$.2f min/km (%2$.1f min/mi)
+      %1$s pace in minutes per kilometer
+      %2$s pace in minutes per mile">
+    Fastest pace: %1$s min/km (%2$s min/mi)
   </string>
   <string name="description_location_accuracy"
     translation_description="Label for location accuracy in meters.">
