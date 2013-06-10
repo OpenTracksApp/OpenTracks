@@ -68,9 +68,9 @@ public class DescriptionGeneratorImplTest extends AndroidTestCase {
       + "Average speed: 120.00 km/h (74.6 mi/h)<br>"
       + "Average moving speed: 240.00 km/h (149.1 mi/h)<br>"
       + "Max speed: 360.00 km/h (223.7 mi/h)<br>"
-      + "Average pace: 0.50 min/km (0.80 min/mi)<br>"
-      + "Average moving pace: 0.25 min/km (0.40 min/mi)<br>"
-      + "Fastest pace: 0.17 min/km (0.27 min/mi)<br>"
+      + "Average pace: 0:30 min/km (0:48 min/mi)<br>"
+      + "Average moving pace: 0:15 min/km (0:24 min/mi)<br>"
+      + "Fastest pace: 0:10 min/km (0:16 min/mi)<br>"
       + "Max elevation: 550 m (1804 ft)<br>"
       + "Min elevation: -500 m (-1640 ft)<br>"
       + "Elevation gain: 6000 m (19685 ft)<br>"
@@ -103,9 +103,9 @@ public class DescriptionGeneratorImplTest extends AndroidTestCase {
       + "Average speed: 120.00 km/h (74.6 mi/h)\n"
       + "Average moving speed: 240.00 km/h (149.1 mi/h)\n"
       + "Max speed: 360.00 km/h (223.7 mi/h)\n"
-      + "Average pace: 0.50 min/km (0.80 min/mi)\n"
-      + "Average moving pace: 0.25 min/km (0.40 min/mi)\n"
-      + "Fastest pace: 0.17 min/km (0.27 min/mi)\n"
+      + "Average pace: 0:30 min/km (0:48 min/mi)\n"
+      + "Average moving pace: 0:15 min/km (0:24 min/mi)\n"
+      + "Fastest pace: 0:10 min/km (0:16 min/mi)\n"
       + "Max elevation: 550 m (1804 ft)\n"
       + "Min elevation: -500 m (-1640 ft)\n"
       + "Elevation gain: 6000 m (19685 ft)\n"
@@ -163,7 +163,7 @@ public class DescriptionGeneratorImplTest extends AndroidTestCase {
   public void testWritePace() {
     StringBuilder builder = new StringBuilder();
     descriptionGenerator.writePace(1.1, builder, R.string.description_average_pace, "\n");
-    assertEquals("Average pace: 15.15 min/km (24.38 min/mi)\n", builder.toString());
+    assertEquals("Average pace: 15:09 min/km (24:23 min/mi)\n", builder.toString());
   }
 
   /**

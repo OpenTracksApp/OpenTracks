@@ -219,6 +219,15 @@ public class DescriptionGeneratorImpl implements DescriptionGenerator {
   void writePace(double speed, StringBuilder builder, int resId, String lineBreak) {
     String[] paceInMetrics = StringUtils.getSpeedParts(context, speed, true, false);
     String[] paceInImperial = StringUtils.getSpeedParts(context, speed, false, false);
+
+    if (paceInMetrics[0] == null) {
+      paceInMetrics[0] = context.getString(R.string.value_unknown);
+    }
+
+    if (paceInImperial[0] == null) {
+      paceInImperial[0] = context.getString(R.string.value_unknown);
+    }
+
     builder.append(context.getString(resId, paceInMetrics[0], paceInImperial[0]));
     builder.append(lineBreak);
   }

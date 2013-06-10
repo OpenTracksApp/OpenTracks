@@ -213,19 +213,18 @@ public class StringUtils {
       return result;
     }
     speed *= UnitConversions.MS_TO_KMH;
-    if (metricUnits) {
-      if (!reportSpeed) {
-        // convert from hours to minutes
-        speed = speed == 0 ? 0.0 : 60.0 / speed;
-      }
-    } else {
+    if (!metricUnits) {
       speed *= UnitConversions.KM_TO_MI;
-      if (!reportSpeed) {
-        // convert from hours to minutes
-        speed = speed == 0 ? 0.0 : 60.0 / speed;
-      }
     }
-    result[0] = String.format("%.2f", speed);
+    if (reportSpeed) {
+      result[0] = String.format("%.2f", speed);
+    } else {
+      // convert from hours to minutes
+      double pace = speed == 0 ? 0.0 : 60.0 / speed;
+      int minutes = (int) pace;
+      int seconds = (int) Math.round((pace - minutes) * 60.0);
+      result[0] = String.format("%d:%02d", minutes, seconds);  
+    }
     return result;
   }
 
