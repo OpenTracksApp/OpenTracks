@@ -237,7 +237,8 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
 
       int count = cursor.getCount();
       List<Location> locations = new ArrayList<Location>(MAX_POINTS_PER_UPLOAD);
-      Location lastLocation = null;
+      Location lastValidLocation = null;
+      boolean sentStartMarker = false;
 
       for (int i = 0; i < count; i++) {
         cursor.moveToPosition(i);
@@ -245,14 +246,15 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
         Location location = myTracksProviderUtils.createTrackPoint(cursor);
         locations.add(location);
 
-        if (i == 0) {
-          // Create a start marker
-          String name = context.getString(R.string.marker_label_start, track.getName());
-          createNewPoint(fusiontables, tableId, name, "", location, MARKER_TYPE_START);
+        if (LocationUtils.isValidLocation(location)) {
+          lastValidLocation = location;
         }
 
-        if (LocationUtils.isValidLocation(location)) {
-          lastLocation = location;
+        if (!sentStartMarker && lastValidLocation != null) {
+          // Create a start marker
+          String name = context.getString(R.string.marker_label_start, track.getName());
+          createNewPoint(fusiontables, tableId, name, "", lastValidLocation, MARKER_TYPE_START);
+          sentStartMarker = true;
         }
 
         // Upload periodically
@@ -274,11 +276,12 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
       }
 
       // Create an end marker
-      if (lastLocation != null) {        
+      if (lastValidLocation != null) {
         String name = context.getString(R.string.marker_label_end, track.getName());
         DescriptionGenerator descriptionGenerator = new DescriptionGeneratorImpl(context);
         String description = descriptionGenerator.generateTrackDescription(track, null, null, true);
-        createNewPoint(fusiontables, tableId, name, description, lastLocation, MARKER_TYPE_END);
+        createNewPoint(
+            fusiontables, tableId, name, description, lastValidLocation, MARKER_TYPE_END);
       }
       return true;
     } finally {

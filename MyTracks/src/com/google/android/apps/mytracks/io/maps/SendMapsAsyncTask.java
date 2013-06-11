@@ -244,7 +244,8 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
 
       int count = cursor.getCount();
       List<Location> locations = new ArrayList<Location>(MAX_POINTS_PER_UPLOAD);
-      Location lastLocation = null;
+      Location lastValidLocation = null;
+      boolean sentStartMarker = false;
 
       // For chart server, limit the number of elevation readings to 250.
       int elevationSamplingFrequency = Math.max(1, (int) (count / 250.0));
@@ -261,22 +262,24 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
         Location location = myTracksProviderUtils.createTrackPoint(cursor);
         locations.add(location);
 
-        if (i == 0) {
+        if (LocationUtils.isValidLocation(location)) {
+          lastValidLocation = location;
+        }
+
+        if (!sentStartMarker && lastValidLocation != null) {
           // Create a start marker
           if (!uploadMarker(context.getString(R.string.marker_label_start, track.getName()), "",
-              START_ICON_URL, location)) {
+              START_ICON_URL, lastValidLocation)) {
             Log.d(TAG, "Unable to create a start marker");
             return false;
           }
+          sentStartMarker = true;
         }
 
         tripStatisticsUpdater.addLocation(location, minRecordingDistance);
         if (i % elevationSamplingFrequency == 0) {
           distances.add(tripStatisticsUpdater.getTripStatistics().getTotalDistance());
           elevations.add(tripStatisticsUpdater.getSmoothedElevation());
-        }
-        if (LocationUtils.isValidLocation(location)) {
-          lastLocation = location;
         }
 
         // Upload periodically
@@ -298,14 +301,14 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
       }
 
       // Create an end marker
-      if (lastLocation != null) {
+      if (lastValidLocation != null) {
         distances.add(tripStatisticsUpdater.getTripStatistics().getTotalDistance());
         elevations.add(tripStatisticsUpdater.getSmoothedElevation());
         DescriptionGenerator descriptionGenerator = new DescriptionGeneratorImpl(context);
         track.setDescription(
             descriptionGenerator.generateTrackDescription(track, distances, elevations, true));
         if (!uploadMarker(context.getString(R.string.marker_label_end, track.getName()),
-            track.getDescription(), END_ICON_URL, lastLocation)) {
+            track.getDescription(), END_ICON_URL, lastValidLocation)) {
           Log.d(TAG, "Unable to create an end marker");
           return false;
         }
