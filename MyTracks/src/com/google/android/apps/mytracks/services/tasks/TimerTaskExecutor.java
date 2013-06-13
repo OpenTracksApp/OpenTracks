@@ -68,7 +68,7 @@ public class TimerTaskExecutor {
         periodicTask.run(trackRecordingService);
       }
     };
-    timer = new Timer();
+    timer = new Timer("TimerTaskExecutorTimer");
     long next = System.currentTimeMillis() + interval - (tripStatistics.getTotalTime() % interval);
     timer.scheduleAtFixedRate(timerTask, new Date(next), interval);
   }

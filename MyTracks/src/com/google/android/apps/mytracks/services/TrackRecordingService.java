@@ -133,8 +133,9 @@ public class TrackRecordingService extends Service {
   private Location lastLocation;
   private boolean currentSegmentHasLocation;
 
-  // Timer to periodically invoke checkLocationListener
-  private final Timer timer = new Timer();
+  // TimerTask to register location listener
+  private TimerTask timerTask;
+  private Timer timer;
 
   // Handler for the timer to post a runnable to the main thread
   private final Handler handler = new Handler();
@@ -247,15 +248,6 @@ public class TrackRecordingService extends Service {
     }
   };
 
-  private TimerTask checkLocationListener = new TimerTask() {
-      @Override
-    public void run() {
-      if (isRecording() && !isPaused()) {
-        registerLocationListener();
-      }
-    }
-  };
-
   private final ConnectionCallbacks activityRecognitionCallbacks = new ConnectionCallbacks() {
       @Override
     public void onDisconnected() {}
@@ -301,10 +293,19 @@ public class TrackRecordingService extends Service {
     // onSharedPreferenceChanged might not set recordingTrackId.
     recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
 
-    // Require announcementExecutor and splitExecutor to be created.
+    // Require voiceExecutor and splitExecutor to be created.
     sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
 
-    timer.schedule(checkLocationListener, 0, ONE_MINUTE);
+    timerTask = new TimerTask() {
+        @Override
+      public void run() {
+        if (isRecording() && !isPaused()) {
+          registerLocationListener();
+        }
+      }
+    };
+    timer = new Timer("TrackRecordingServiceTimer");
+    timer.schedule(timerTask, 0, ONE_MINUTE);
 
     /*
      * Try to restart the previous recording track in case the service has been
@@ -357,10 +358,15 @@ public class TrackRecordingService extends Service {
     showNotification(false);
 
     sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-    checkLocationListener.cancel();
-    checkLocationListener = null;
-    timer.cancel();
-    timer.purge();
+    if (timerTask != null) {
+      timerTask.cancel();
+      timerTask = null;
+    }
+    if (timer != null) {
+      timer.cancel();
+      timer.purge();
+      timer = null;
+    }
     unregisterLocationListener();
 
     try {

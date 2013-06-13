@@ -134,9 +134,10 @@ public class TrackDataHub implements DataSourceListener {
     started = false;
 
     dataSourceManager.unregisterAllListeners();
-    handlerThread.getLooper().quit();
-
-    handlerThread = null;
+    if (handlerThread != null) {
+      handlerThread.getLooper().quit();
+      handlerThread = null;
+    }
     handler = null;
     dataSource = null;
     dataSourceManager = null;

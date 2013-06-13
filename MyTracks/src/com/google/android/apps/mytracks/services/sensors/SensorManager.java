@@ -39,30 +39,8 @@ public abstract class SensorManager {
   private SensorState sensorState = SensorState.NONE;
   private long sensorStateTimestamp = System.currentTimeMillis();
 
-  /**
-   * A time task to check sensor connection.
-   */
-  private TimerTask checkSensorConnectionTimeTask = new TimerTask() {
-      @Override
-    public void run() {
-      switch (getSensorState()) {
-        case CONNECTING:
-          if (System.currentTimeMillis() - sensorStateTimestamp > MAX_SENSOR_STATE_AGE) {
-            Log.i(TAG, "Retry setUpChannel");
-            setUpChannel();
-          }
-          break;
-        case NONE:
-        case DISCONNECTED:
-          setUpChannel();
-          break;
-        default:
-          break;
-      }
-    }
-  };
-
-  private final Timer timer = new Timer();
+  private TimerTask timerTask;
+  private Timer timer;
 
   /**
    * Returns true if the sensor is enabled.
@@ -89,14 +67,43 @@ public abstract class SensorManager {
    */
   public void startSensor() {
     setUpChannel();
-    timer.schedule(checkSensorConnectionTimeTask, RETRY_PERIOD, RETRY_PERIOD);
+    timerTask = new TimerTask() {
+      @Override
+      public void run() {
+          switch (getSensorState()) {
+            case CONNECTING:
+              if (System.currentTimeMillis() - sensorStateTimestamp > MAX_SENSOR_STATE_AGE) {
+                Log.i(TAG, "Retry setUpChannel");
+                setUpChannel();
+              }
+              break;
+            case NONE:
+            case DISCONNECTED:
+              setUpChannel();
+              break;
+            default:
+              // CONNECTED or SENDING
+              break;
+          }
+      }
+    };    
+    timer = new Timer("SensorManagerTimer");
+    timer.schedule(timerTask, RETRY_PERIOD, RETRY_PERIOD);
   }
 
   /**
    * Stops the sensor.
    */
   public void stopSensor() {
-    timer.cancel();
+    if (timerTask != null) {
+      timerTask.cancel();
+      timerTask = null;
+    }
+    if (timer != null) {
+      timer.cancel();
+      timer.purge();
+      timer = null;
+    }
     tearDownChannel();
   }
 
