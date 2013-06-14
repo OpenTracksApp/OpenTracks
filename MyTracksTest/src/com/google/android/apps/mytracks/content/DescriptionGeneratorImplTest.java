@@ -21,7 +21,6 @@ import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.test.AndroidTestCase;
-import android.util.Pair;
 
 /**
  * Tests for {@link DescriptionGeneratorImpl}.
@@ -157,7 +156,7 @@ public class DescriptionGeneratorImplTest extends AndroidTestCase {
   }
 
   /**
-   * Tests {@link DescriptionGeneratorImpl#writePace(Pair, StringBuilder, int,
+   * Tests {@link DescriptionGeneratorImpl#writePace(double, StringBuilder, int,
    * String)}.
    */
   public void testWritePace() {

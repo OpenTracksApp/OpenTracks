@@ -19,14 +19,12 @@ import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.endtoendtest.EndToEndTestUtils;
 import com.google.android.apps.mytracks.endtoendtest.GoogleUtils;
 import com.google.android.apps.mytracks.endtoendtest.sync.SyncTestUtils;
-import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.CheckBox;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -53,9 +51,6 @@ public class ShareTest extends ActivityInstrumentationTestCase2<TrackListActivit
 
   /**
    * Tests quitting the share.
-   * 
-   * @throws GoogleAuthException
-   * @throws IOException
    */
   public void testQuitShare() {
     EndToEndTestUtils.resetAllSettings(activityMyTracks, false);
@@ -70,9 +65,6 @@ public class ShareTest extends ActivityInstrumentationTestCase2<TrackListActivit
 
   /**
    * Tests the share one track.
-   * 
-   * @throws GoogleAuthException
-   * @throws IOException
    */
   public void testShare() {
     EndToEndTestUtils.resetAllSettings(activityMyTracks, false);

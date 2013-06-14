@@ -83,13 +83,6 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     context = saveActivity.getApplicationContext();
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
 
-    // Get the wake lock if not recording or paused
-    if (PreferencesUtils.getLong(saveActivity, R.string.recording_track_id_key)
-        == PreferencesUtils.RECORDING_TRACK_ID_DEFAULT || PreferencesUtils.getBoolean(saveActivity,
-        R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT)) {
-      wakeLock = SystemUtils.acquireWakeLock(saveActivity, wakeLock);
-    }
-
     completed = false;
     successCount = 0;
     totalCount = 0;
@@ -118,6 +111,14 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   @Override
   protected Boolean doInBackground(Void... params) {
     try {
+      boolean isRecording = PreferencesUtils.getLong(saveActivity, R.string.recording_track_id_key)
+          != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+      boolean isPaused = PreferencesUtils.getBoolean(saveActivity,
+          R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+      // Get the wake lock if not recording or paused
+      if (!isRecording || isPaused) {
+        wakeLock = SystemUtils.acquireWakeLock(saveActivity, wakeLock);
+      }
       if (trackIds.length == 1 && trackIds[0] == -1L) {
         return saveAllTracks();
       } else {
@@ -138,7 +139,6 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         }
       }
     } finally {
-      // Release the wake lock if obtained
       if (wakeLock != null && wakeLock.isHeld()) {
         wakeLock.release();
       }

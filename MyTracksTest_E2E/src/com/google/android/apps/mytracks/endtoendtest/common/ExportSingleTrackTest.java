@@ -18,14 +18,12 @@ package com.google.android.apps.mytracks.endtoendtest.common;
 import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.endtoendtest.EndToEndTestUtils;
 import com.google.android.apps.mytracks.endtoendtest.GoogleUtils;
-import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.maps.mytracks.R;
 import com.google.api.services.drive.model.File;
 
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -56,9 +54,6 @@ public class ExportSingleTrackTest extends ActivityInstrumentationTestCase2<Trac
 
   /**
    * Checks all services and send to google.
-   * 
-   * @throws GoogleAuthException
-   * @throws IOException
    */
   public void testCreateAndSendTrack_send() {
     // Create a new track.
@@ -69,9 +64,6 @@ public class ExportSingleTrackTest extends ActivityInstrumentationTestCase2<Trac
 
   /**
    * Checks all services and send to google.
-   * 
-   * @throws GoogleAuthException
-   * @throws IOException
    */
   public void testCreateAndSendTrack_sendPausedTrack() {
     EndToEndTestUtils.deleteAllTracks();
@@ -109,9 +101,6 @@ public class ExportSingleTrackTest extends ActivityInstrumentationTestCase2<Trac
 
   /**
    * Checks the process of sending track to google.
-   * 
-   * @throws GoogleAuthException
-   * @throws IOException
    */
   private void checkSendTrackToGoogle() {
     if (!sendToGoogle(activityMyTracks.getString(R.string.export_google_maps))
@@ -185,9 +174,6 @@ public class ExportSingleTrackTest extends ActivityInstrumentationTestCase2<Trac
 
   /**
    * Sends a large track to Google.
-   * 
-   * @throws GoogleAuthException
-   * @throws IOException
    */
   public void testSendLargeTrackToGoogle() {
     EndToEndTestUtils.deleteAllTracks();

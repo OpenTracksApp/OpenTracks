@@ -74,14 +74,6 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     this.path = path;
     context = importActivity.getApplicationContext();
 
-    // Get the wake lock if not recording or paused
-    if (PreferencesUtils.getLong(importActivity, R.string.recording_track_id_key)
-        == PreferencesUtils.RECORDING_TRACK_ID_DEFAULT || PreferencesUtils.getBoolean(
-        importActivity, R.string.recording_track_paused_key,
-        PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT)) {
-      wakeLock = SystemUtils.acquireWakeLock(importActivity, wakeLock);
-    }
-
     completed = false;
     successCount = 0;
     totalCount = 0;
@@ -110,6 +102,16 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   @Override
   protected Boolean doInBackground(Void... params) {
     try {
+      // Get the wake lock if not recording or paused
+      boolean isRecording =
+          PreferencesUtils.getLong(importActivity, R.string.recording_track_id_key)
+          != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+      boolean isPaused = PreferencesUtils.getBoolean(importActivity,
+          R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+      if (!isRecording || isPaused) {
+        wakeLock = SystemUtils.acquireWakeLock(importActivity, wakeLock);
+      }
+
       List<File> files = getFiles();
       totalCount = files.size();
       if (totalCount == 0) {
@@ -128,7 +130,6 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
       }
       return true;
     } finally {
-      // Release the wake lock if obtained
       if (wakeLock != null && wakeLock.isHeld()) {
         wakeLock.release();
       }

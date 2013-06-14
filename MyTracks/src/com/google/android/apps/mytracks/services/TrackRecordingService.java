@@ -39,6 +39,7 @@ import com.google.android.apps.mytracks.stats.TripStatisticsUpdater;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.apps.mytracks.util.TrackNameUtils;
 import com.google.android.gms.common.ConnectionResult;
@@ -65,7 +66,6 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.Process;
 import android.support.v4.app.NotificationCompat;
@@ -718,7 +718,7 @@ public class TrackRecordingService extends Service {
    * Starts gps.
    */
   private void startGps() {
-    acquireWakeLock();
+    wakeLock = SystemUtils.acquireWakeLock(this, wakeLock);
     registerLocationListener();
     showNotification(true);
   }
@@ -1050,34 +1050,6 @@ public class TrackRecordingService extends Service {
       return;
     }
     myTracksLocationManager.removeLocationUpdates(locationListener);
-  }
-
-  /**
-   * Acquires the wake lock.
-   */
-  private void acquireWakeLock() {
-    try {
-      PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-      if (powerManager == null) {
-        Log.e(TAG, "powerManager is null.");
-        return;
-      }
-      if (wakeLock == null) {
-        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
-        if (wakeLock == null) {
-          Log.e(TAG, "wakeLock is null.");
-          return;
-        }
-      }
-      if (!wakeLock.isHeld()) {
-        wakeLock.acquire();
-        if (!wakeLock.isHeld()) {
-          Log.e(TAG, "Unable to hold wakeLock.");
-        }
-      }
-    } catch (RuntimeException e) {
-      Log.e(TAG, "Caught unexpected exception", e);
-    }
   }
 
   /**
