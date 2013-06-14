@@ -87,7 +87,7 @@ public abstract class SensorManager {
           }
       }
     };    
-    timer = new Timer("SensorManagerTimer");
+    timer = new Timer(SensorManager.class.getSimpleName());
     timer.schedule(timerTask, RETRY_PERIOD, RETRY_PERIOD);
   }
 
