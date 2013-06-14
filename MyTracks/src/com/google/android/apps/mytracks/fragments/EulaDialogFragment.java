@@ -27,7 +27,11 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.view.KeyEvent;
+import android.widget.TextView;
 
 import java.util.Locale;
 
@@ -89,8 +93,12 @@ public class EulaDialogFragment extends DialogFragment {
     fragmentActivity = getActivity();
 
     boolean hasAccepted = getArguments().getBoolean(KEY_HAS_ACCEPTED);
-    AlertDialog.Builder builder = new AlertDialog.Builder(fragmentActivity).setMessage(
-        getEulaText()).setTitle(R.string.eula_title);
+
+    SpannableString message = new SpannableString(getEulaText());
+    Linkify.addLinks(message, Linkify.WEB_URLS);
+
+    AlertDialog.Builder builder = new AlertDialog.Builder(fragmentActivity).setMessage(message)
+        .setTitle(R.string.eula_title);
 
     if (hasAccepted) {
       builder.setPositiveButton(R.string.generic_ok, null);
@@ -117,10 +125,17 @@ public class EulaDialogFragment extends DialogFragment {
           caller.onEulaDone();
         }
       });
-    }
+    }   
     return builder.create();
   }
 
+  @Override
+  public void onStart() {
+    super.onStart();   
+    TextView textView = (TextView) getDialog().findViewById(android.R.id.message);
+    textView.setMovementMethod(LinkMovementMethod.getInstance());
+  }
+  
   @Override
   public void onCancel(DialogInterface arg0) {
     caller.onEulaDone();

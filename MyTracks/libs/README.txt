@@ -7,7 +7,7 @@ Android Support Package:
 android-support-v4.jar (version 13)
 
 Ant+:
-antlib.jar - see http://www.thisisant.com/pages/developer-zone/android-api
+antlib.jar - from Android_ANT_SDK_20120625.zip
 
 Google APIs Client Library for Java:
 google-api-client-1.12.0-beta.jar

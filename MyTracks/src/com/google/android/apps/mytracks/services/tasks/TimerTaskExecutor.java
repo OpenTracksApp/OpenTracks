@@ -33,10 +33,7 @@ public class TimerTaskExecutor {
   private final PeriodicTask periodicTask;
   private final TrackRecordingService trackRecordingService;
 
-  /**
-   * A timer to schedule the announcements. This is non-null if the task is in
-   * started (scheduled) state.
-   */
+  private TimerTask timerTask;
   private Timer timer;
 
   public TimerTaskExecutor(PeriodicTask periodicTask, TrackRecordingService trackRecordingService) {
@@ -50,6 +47,10 @@ public class TimerTaskExecutor {
    * @param interval the interval in milliseconds
    */
   public void scheduleTask(long interval) {
+    if (interval <= 0) {
+      return;
+    }
+
     if (!trackRecordingService.isRecording() || trackRecordingService.isPaused()) {
       return;
     }
@@ -59,43 +60,32 @@ public class TimerTaskExecutor {
       return;
     }
 
-    if (timer != null) {
-      timer.cancel();
-      timer.purge();
-    } else {
-      // First start, or we were previously shut down.
-      periodicTask.start();
-    }
-
-    timer = new Timer();
-    if (interval <= 0) {
-      return;
-    }
-
+    shutdown();
+    periodicTask.start();
+    timerTask = new TimerTask() {
+        @Override
+      public void run() {
+        periodicTask.run(trackRecordingService);
+      }
+    };
+    timer = new Timer("TimerTaskExecutorTimer");
     long next = System.currentTimeMillis() + interval - (tripStatistics.getTotalTime() % interval);
-    timer.scheduleAtFixedRate(new PeriodicTimerTask(), new Date(next), interval);
+    timer.scheduleAtFixedRate(timerTask, new Date(next), interval);
   }
 
   /**
    * Shuts down.
    */
   public void shutdown() {
+    if (timerTask != null) {
+      timerTask.cancel();
+      timerTask = null;
+    }
     if (timer != null) {
       timer.cancel();
       timer.purge();
       timer = null;
-      periodicTask.shutdown();
     }
-  }
-
-  /**
-   * The timer task to announce the trip status.
-   */
-  private class PeriodicTimerTask extends TimerTask {
-
-    @Override
-    public void run() {
-      periodicTask.run(trackRecordingService);
-    }
+    periodicTask.shutdown();
   }
 }

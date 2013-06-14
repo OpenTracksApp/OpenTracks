@@ -367,7 +367,8 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         @Override
       public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
         return new CursorLoader(TrackListActivity.this, TracksColumns.CONTENT_URI, PROJECTION, null,
-            null, TracksColumns.SHAREDWITHME + " ASC, " + TracksColumns.STARTTIME + " DESC");
+            null, "IFNULL(" + TracksColumns.SHAREDWITHME + ",0) ASC, " + TracksColumns.STARTTIME
+                + " DESC");
       }
 
         @Override

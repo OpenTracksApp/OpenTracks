@@ -384,9 +384,9 @@ limitations under the License.
   <string name="description_average_moving_pace"
     translation_description="Average moving pace description.
 
-      %1$.2f pace in minutes per kilometer
-      %2$.1f pace in minutes per mile">
-    Average moving pace: %1$.2f min/km (%2$.1f min/mi)
+      %1$s pace in minutes per kilometer
+      %2$s pace in minutes per mile">
+    Average moving pace: %1$s min/km (%2$s min/mi)
   </string>
   <string name="description_average_moving_speed"
     translation_description="Average moving speed description.
@@ -398,9 +398,9 @@ limitations under the License.
   <string name="description_average_pace"
     translation_description="Average pace description.
 
-      %1$.2f pace in minutes per kilometer
-      %2$.1f pace in minutes per mile">
-    Average pace: %1$.2f min/km (%2$.1f min/mi)
+      %1$s pace in minutes per kilometer
+      %2$s pace in minutes per mile">
+    Average pace: %1$s min/km (%2$s min/mi)
   </string>
   <string name="description_average_speed"
     translation_description="Average speed description.
@@ -427,9 +427,9 @@ limitations under the License.
   <string name="description_fastest_pace"
     translation_description="Fastest pace description.
 
-      %1$.2f pace in minutes per kilometer
-      %2$.1f pace in minutes per mile">
-    Fastest pace: %1$.2f min/km (%2$.1f min/mi)
+      %1$s pace in minutes per kilometer
+      %2$s pace in minutes per mile">
+    Fastest pace: %1$s min/km (%2$s min/mi)
   </string>
   <string name="description_location_accuracy"
     translation_description="Label for location accuracy in meters.">
@@ -497,12 +497,12 @@ limitations under the License.
     Moving time: %1$s
   </string>
   <string name="description_pace_imperial"
-    translation_description="Pace in imperial units, hours per mile.">
-    Pace (hr/mi)
+    translation_description="Pace in imperial units, minutes per mile.">
+    Pace (min/mi)
   </string>
   <string name="description_pace_metric"
-    translation_description="Pace in metric units, hours per kilometer.">
-    Pace (hr/km)
+    translation_description="Pace in metric units, minutes per kilometer.">
+    Pace (min/km)
   </string>
   <string name="description_recorded_time"
     translation_description="Recorded time description.
@@ -1974,7 +1974,7 @@ limitations under the License.
   </string>
   <string name="settings_stats_rate_title"
     translation_description="In the 'Stats' settings, the option to change the preferred rate,
-      either speed (mi/hr) or pace (hr/mi).
+      either speed (mi/hr) or pace (min/mi).
 
       Character limit: ~23 (1 line)">
     Preferred rate
@@ -2131,7 +2131,7 @@ limitations under the License.
     Moving time
   </string>
   <string name="stats_pace"
-    translation_description="In the 'Stats' page, the pace like hours per mile.
+    translation_description="In the 'Stats' page, the pace like minutes per mile.
 
       Character limit: ~23 (1 line)">
     Pace

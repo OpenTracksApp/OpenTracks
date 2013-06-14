@@ -27,13 +27,11 @@ import com.google.android.maps.mytracks.R;
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.RemoteException;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.widget.TextView;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * An activity that displays information about sensors.
@@ -43,12 +41,14 @@ import java.util.TimerTask;
 public class SensorStateActivity extends AbstractMyTracksActivity {
 
   private static final String TAG = SensorStateActivity.class.getName();
-  private static final long REFRESH_PERIOD_MS = 250;
+  private static final long ONE_SECOND = 1000;
 
-  /**
-   * A Runnable to update the UI.
-   */
-  private final Runnable updateRunnable = new Runnable() {
+  private TrackRecordingServiceConnection trackRecordingServiceConnection;
+  private Handler handler;
+  private SensorManager tempSensorManager;
+
+  private final Runnable updateUiRunnable = new Runnable() {
+      @Override
     public void run() {
       ITrackRecordingService trackRecordingService = trackRecordingServiceConnection
           .getServiceIfBound();
@@ -69,30 +69,15 @@ public class SensorStateActivity extends AbstractMyTracksActivity {
         stopTempSensorManager();
         updateFromSystemSensorManager();
       }
+      handler.postDelayed(this, ONE_SECOND);
     }
   };
-
-  /**
-   * A TimeTask to update the UI.
-   */
-  private class UpdateTimerTask extends TimerTask {
-    @Override
-    public void run() {
-      if (isVisible) {
-        runOnUiThread(updateRunnable);
-      }
-    }
-  };
-
-  private TrackRecordingServiceConnection trackRecordingServiceConnection;
-  private boolean isVisible = false;
-  private Timer timer = null;
-  private SensorManager tempSensorManager = null;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
+    handler = new Handler();
   }
 
   @Override
@@ -104,18 +89,13 @@ public class SensorStateActivity extends AbstractMyTracksActivity {
   @Override
   protected void onResume() {
     super.onResume();
-    isVisible = true;
-    timer = new Timer();
-    timer.schedule(new UpdateTimerTask(), 0, REFRESH_PERIOD_MS);
+    handler.post(updateUiRunnable);
   }
 
   @Override
   protected void onPause() {
     super.onPause();
-    isVisible = false;
-    timer.cancel();
-    timer.purge();
-    timer = null;
+    handler.removeCallbacks(updateUiRunnable);
     stopTempSensorManager();
   }
 

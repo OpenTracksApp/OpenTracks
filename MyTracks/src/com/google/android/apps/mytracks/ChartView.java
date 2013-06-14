@@ -653,13 +653,14 @@ public class ChartView extends View {
     canvas.drawLine(x, y, x + effectiveWidth, y, axisPaint);
     String label = getXAxisLabel();
     Rect rect = getRect(axisPaint, label);
-    canvas.drawText(label, x + effectiveWidth + spacer, y + ((int) rect.height() / 2), axisPaint);
-    
+    int yOffset = (int) rect.height() / 2;
+    canvas.drawText(label, x + effectiveWidth + spacer, y + yOffset, axisPaint);
+
     double interval = getXAxisInterval();
     ArrayList<Double> markerPositions = getXAxisMarkerPositions(interval);
     NumberFormat numberFormat = interval < 1 ? X_FRACTION_FORMAT : X_NUMBER_FORMAT;
     for (int i = 0; i < markerPositions.size(); i++) {
-      drawXAxisMarker(canvas, markerPositions.get(i), numberFormat);
+      drawXAxisMarker(canvas, markerPositions.get(i), numberFormat, spacer + yOffset);
     }
   }
 
@@ -682,12 +683,14 @@ public class ChartView extends View {
    * @param canvas
    * @param value value
    * @param numberFormat the number format
+   * @param spacing the spacing between x axis and marker
    */
-  private void drawXAxisMarker(Canvas canvas, double value, NumberFormat numberFormat) {
+  private void drawXAxisMarker(
+      Canvas canvas, double value, NumberFormat numberFormat, int spacing) {
     String marker = chartByDistance ? numberFormat.format(value)
         : StringUtils.formatElapsedTime((long) value);
     Rect rect = getRect(xAxisMarkerPaint, marker);
-    canvas.drawText(marker, getX(value), topBorder + effectiveHeight + spacer + rect.height(),
+    canvas.drawText(marker, getX(value), topBorder + effectiveHeight + spacing + rect.height(),
         xAxisMarkerPaint);
   }
 
@@ -906,8 +909,11 @@ public class ChartView extends View {
     leftBorder = (int) (density * BORDER + markerLength);
     int[] titleDimensions = getTitleDimenions();
     topBorder = (int) (density * BORDER + titleDimensions[0] * (titleDimensions[1] + spacer));
-    bottomBorder = (int) (density * BORDER + getRect(xAxisMarkerPaint, "1").height() + spacer);
-    rightBorder = (int) (density * BORDER + getRect(axisPaint, getXAxisLabel()).width() + spacer);
+    Rect xAxisLabelRect = getRect(axisPaint, getXAxisLabel());
+    // border + x axis marker + spacer + .5 x axis label
+    bottomBorder = (int) (density * BORDER + getRect(xAxisMarkerPaint, "1").height() + spacer
+        + (int) (xAxisLabelRect.height() / 2));
+    rightBorder = (int) (density * BORDER + xAxisLabelRect.width() + spacer);
     updateEffectiveDimensions();
   }
 
