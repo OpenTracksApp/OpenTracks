@@ -51,8 +51,8 @@ public class MyTracksLocationManager {
    */
   private class GoogleSettingsObserver extends ContentObserver {
 
-    public GoogleSettingsObserver() {
-      super(new Handler());
+    public GoogleSettingsObserver(Handler handler) {
+      super(handler);
     }
 
     @Override
@@ -91,7 +91,8 @@ public class MyTracksLocationManager {
                 LocationRequest.PRIORITY_HIGH_ACCURACY).setInterval(requestLocationUpdatesTime)
                 .setFastestInterval(requestLocationUpdatesTime)
                 .setSmallestDisplacement(requestLocationUpdatesDistance);
-            locationClient.requestLocationUpdates(locationRequest, requestLocationUpdates, looper);
+            locationClient.requestLocationUpdates(
+                locationRequest, requestLocationUpdates, handler.getLooper());
           }
         }
       });
@@ -104,7 +105,6 @@ public class MyTracksLocationManager {
         public void onConnectionFailed(ConnectionResult connectionResult) {}
       };
 
-  private final Looper looper;
   private final Handler handler;
   private final LocationClient locationClient;
   private final LocationManager locationManager;
@@ -119,8 +119,7 @@ public class MyTracksLocationManager {
   private long requestLocationUpdatesTime;
 
   public MyTracksLocationManager(Context context, Looper looper, boolean enableLocaitonClient) {
-    this.looper = looper;
-    handler = new Handler(looper);
+    this.handler = new Handler(looper);
 
     if (enableLocaitonClient) {
       locationClient = new LocationClient(context, connectionCallbacks, onConnectionFailedListener);
@@ -131,7 +130,7 @@ public class MyTracksLocationManager {
 
     locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
     contentResolver = context.getContentResolver();
-    observer = new GoogleSettingsObserver();
+    observer = new GoogleSettingsObserver(handler);
 
     isAvailable = GoogleLocationUtils.isAvailable(context);
     isAllowed = isUseLocationForServicesOn();
