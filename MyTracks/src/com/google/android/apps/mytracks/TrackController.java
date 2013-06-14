@@ -48,17 +48,17 @@ public class TrackController {
   private final TextView totalTimeTextView;
   private final ImageButton recordImageButton;
   private final ImageButton stopImageButton;
-  private final boolean alwaysShow; 
-  
+  private final boolean alwaysShow;
+
   private boolean isRecording;
   private boolean isPaused;
   private long totalTime = 0;
-  
+
   // the timestamp for the toal time
   private long totalTimeTimestamp = 0;
 
   private boolean isResumed = false;
-  
+
   // A runnable to update the total time.
   private final Runnable updateTotalTimeRunnable = new Runnable() {
     public void run() {
@@ -92,10 +92,11 @@ public class TrackController {
     }
     isRecording = recording;
     isPaused = paused;
-    containerView.setVisibility(alwaysShow || isRecording ? View.VISIBLE : View.GONE);
+    boolean visible = alwaysShow || isRecording;
+    containerView.setVisibility(visible ? View.VISIBLE : View.GONE);
 
-    if (!alwaysShow && !isRecording) {
-      stopTimer();
+    if (!visible) {
+      handler.removeCallbacks(updateTotalTimeRunnable);
       return;
     }
 
@@ -109,12 +110,12 @@ public class TrackController {
 
     statusTextView.setVisibility(isRecording ? View.VISIBLE : View.INVISIBLE);
     if (isRecording) {
-      statusTextView.setTextColor(
-          activity.getResources().getColor(isPaused ? android.R.color.white : R.color.recording_text));
+      statusTextView.setTextColor(activity.getResources()
+          .getColor(isPaused ? android.R.color.white : R.color.recording_text));
       statusTextView.setText(isPaused ? R.string.generic_paused : R.string.generic_recording);
     }
 
-    stopTimer();
+    handler.removeCallbacks(updateTotalTimeRunnable);
     totalTime = isRecording ? getTotalTime() : 0L;
     totalTimeTextView.setText(StringUtils.formatElapsedTimeWithHour(totalTime));
     if (isRecording && !isPaused) {
@@ -127,25 +128,18 @@ public class TrackController {
     isResumed = true;
     update(recording, paused);
   }
-  
+
   public void onPause() {
     isResumed = false;
-    stopTimer();    
+    handler.removeCallbacks(updateTotalTimeRunnable);
   }
-  
+
   public void hide() {
     containerView.setVisibility(View.GONE);
   }
-  
+
   public void show() {
     containerView.setVisibility(View.VISIBLE);
-  }
-  
-  /**
-   * Stops the timer.
-   */
-  private void stopTimer() {
-    handler.removeCallbacks(updateTotalTimeRunnable);
   }
 
   /**
