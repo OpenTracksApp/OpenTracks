@@ -65,7 +65,6 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.Process;
@@ -73,8 +72,6 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -86,9 +83,6 @@ import java.util.concurrent.Executors;
  */
 public class TrackRecordingService extends Service {
 
-  private static final String TAG = TrackRecordingService.class.getSimpleName();
-  private static final long ACTIVITY_RECOGNITION_INTERVAL = 60000; // 1 minute
-
   /**
    * The name of extra intent property to indicate whether we want to resume a
    * previously recorded track.
@@ -98,23 +92,24 @@ public class TrackRecordingService extends Service {
 
   public static final double PAUSE_LATITUDE = 100.0;
   public static final double RESUME_LATITUDE = 200.0;
-
-  // One second in milliseconds
-  private static final long ONE_SECOND = 1000;
-  // One minute in milliseconds
-  private static final long ONE_MINUTE = 60 * ONE_SECOND;
+  
+  private static final String TAG = TrackRecordingService.class.getSimpleName();
+  private static final long ONE_SECOND = 1000; // in milliseconds
+  private static final long ONE_MINUTE = 60 * ONE_SECOND; // in milliseconds
+  
   @VisibleForTesting
   static final int MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS = 3;
 
   // The following variables are set in onCreate:
+  private ExecutorService executorService;
   private Context context;
   private MyTracksProviderUtils myTracksProviderUtils;
+  private Handler handler;
   private MyTracksLocationManager myTracksLocationManager;
-  private ActivityRecognitionClient activityRecognitionClient;
   private PendingIntent activityRecognitionPendingIntent;  
+  private ActivityRecognitionClient activityRecognitionClient;
   private PeriodicTaskExecutor voiceExecutor;
   private PeriodicTaskExecutor splitExecutor;
-  private ExecutorService executorService;
   private SharedPreferences sharedPreferences;
   private long recordingTrackId;
   private boolean recordingTrackPaused;
@@ -132,13 +127,6 @@ public class TrackRecordingService extends Service {
   private SensorManager sensorManager;
   private Location lastLocation;
   private boolean currentSegmentHasLocation;
-
-  // TimerTask to register location listener
-  private TimerTask timerTask;
-  private Timer timer;
-
-  // Handler for the timer to post a runnable to the main thread
-  private final Handler handler = new Handler();
 
   private ServiceBinder binder = new ServiceBinder(this);
 
@@ -255,7 +243,7 @@ public class TrackRecordingService extends Service {
       @Override
     public void onConnected(Bundle bundle) {
       activityRecognitionClient.requestActivityUpdates(
-          ACTIVITY_RECOGNITION_INTERVAL, activityRecognitionPendingIntent);
+          ONE_MINUTE, activityRecognitionPendingIntent);
     }
   };
 
@@ -265,6 +253,17 @@ public class TrackRecordingService extends Service {
           @Override
         public void onConnectionFailed(ConnectionResult connectionResult) {}
       };
+
+  private final Runnable registerLocationRunnable = new Runnable() {
+      @Override
+    public void run() {
+      if (isRecording() && !isPaused()) {
+        registerLocationListener();
+      }
+      handler.postDelayed(this, ONE_MINUTE);
+    }
+  };
+
   /*
    * Note that this service, through the AndroidManifest.xml, is configured to
    * allow both MyTracks and third party apps to invoke it. For the onCreate
@@ -275,9 +274,11 @@ public class TrackRecordingService extends Service {
   @Override
   public void onCreate() {
     super.onCreate();
+    executorService = Executors.newSingleThreadExecutor();
     context = this;
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
-    myTracksLocationManager = new MyTracksLocationManager(this, Looper.myLooper(), true);
+    handler = new Handler();
+    myTracksLocationManager = new MyTracksLocationManager(this, handler.getLooper(), true);
     activityRecognitionPendingIntent = PendingIntent.getService(context, 0,
         new Intent(context, ActivityRecognitionIntentService.class),
         PendingIntent.FLAG_UPDATE_CURRENT);
@@ -286,7 +287,6 @@ public class TrackRecordingService extends Service {
     activityRecognitionClient.connect();    
     voiceExecutor = new PeriodicTaskExecutor(this, new AnnouncementPeriodicTaskFactory());
     splitExecutor = new PeriodicTaskExecutor(this, new SplitPeriodicTaskFactory());
-    executorService = Executors.newSingleThreadExecutor();
     sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
@@ -295,18 +295,9 @@ public class TrackRecordingService extends Service {
 
     // Require voiceExecutor and splitExecutor to be created.
     sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
-
-    timerTask = new TimerTask() {
-        @Override
-      public void run() {
-        if (isRecording() && !isPaused()) {
-          registerLocationListener();
-        }
-      }
-    };
-    timer = new Timer("TrackRecordingServiceTimer");
-    timer.schedule(timerTask, 0, ONE_MINUTE);
-
+    
+    handler.post(registerLocationRunnable);
+    
     /*
      * Try to restart the previous recording track in case the service has been
      * restarted by the system, which can sometimes happen.
@@ -355,25 +346,19 @@ public class TrackRecordingService extends Service {
 
   @Override
   public void onDestroy() {
+    if (sensorManager != null) {
+      SensorManagerFactory.releaseSystemSensorManager();
+      sensorManager = null;
+    }
+    
+    // Reverse order from onCreate    
     showNotification(false);
 
-    sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-    if (timerTask != null) {
-      timerTask.cancel();
-      timerTask = null;
-    }
-    if (timer != null) {
-      timer.cancel();
-      timer.purge();
-      timer = null;
-    }
+    handler.removeCallbacks(registerLocationRunnable);
     unregisterLocationListener();
-
-    try {
-      voiceExecutor.shutdown();
-    } finally {
-      voiceExecutor = null;
-    }
+    
+    // unregister sharedPreferences before shutting down splitExecutor and voiceExecutor
+    sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
     try {
       splitExecutor.shutdown();
@@ -381,22 +366,22 @@ public class TrackRecordingService extends Service {
       splitExecutor = null;
     }
 
-    if (sensorManager != null) {
-      SensorManagerFactory.releaseSystemSensorManager();
-      sensorManager = null;
+    try {
+      voiceExecutor.shutdown();
+    } finally {
+      voiceExecutor = null;
     }
 
-    // Make sure we have no indirect references to this service.
-    myTracksProviderUtils = null;
-    myTracksLocationManager.close();
-    myTracksLocationManager = null;
-    
     if (activityRecognitionClient.isConnected()) {
       activityRecognitionClient.removeActivityUpdates(activityRecognitionPendingIntent);
     }
     activityRecognitionClient.disconnect();
     activityRecognitionPendingIntent.cancel();
     
+    myTracksLocationManager.close();
+    myTracksLocationManager = null;
+    myTracksProviderUtils = null;        
+
     binder.detachFromService();
     binder = null;
 
@@ -404,7 +389,7 @@ public class TrackRecordingService extends Service {
     releaseWakeLock();
 
     /*
-     * Shutdown the executor service last to avoid sending events to a dead
+     * Shutdown the executorService last to avoid sending events to a dead
      * executor.
      */
     executorService.shutdown();
@@ -1042,26 +1027,18 @@ public class TrackRecordingService extends Service {
    * Registers the location listener.
    */
   private void registerLocationListener() {
-    /*
-     * Use the handler so the requestLocationUpdaets locationListener will be
-     * invoked on the handler thread.
-     */
-    handler.post(new Runnable() {
-      public void run() {
-        if (myTracksLocationManager == null) {
-          Log.e(TAG, "locationManager is null.");
-          return;
-        }
-        try {
-          long interval = locationListenerPolicy.getDesiredPollingInterval();
-          myTracksLocationManager.requestLocationUpdates(
-              interval, locationListenerPolicy.getMinDistance(), locationListener);
-          currentRecordingInterval = interval;
-        } catch (RuntimeException e) {
-          Log.e(TAG, "Could not register location listener.", e);
-        }
-      }
-    });
+    if (myTracksLocationManager == null) {
+      Log.e(TAG, "locationManager is null.");
+      return;
+    }
+    try {
+      long interval = locationListenerPolicy.getDesiredPollingInterval();
+      myTracksLocationManager.requestLocationUpdates(
+          interval, locationListenerPolicy.getMinDistance(), locationListener);
+      currentRecordingInterval = interval;
+    } catch (RuntimeException e) {
+      Log.e(TAG, "Could not register location listener.", e);
+    }
   }
 
   /**
