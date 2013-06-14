@@ -193,6 +193,13 @@ public interface ApiAdapter {
   public boolean handleSearchKey(MenuItem menu);
   
   /**
+   * Returns true if Google Feedback is available.
+   * <p>
+   * Due to changes in ApI level 14.
+   */
+  public boolean isGoogleFeedbackAvailable();
+  
+  /**
    * Gets the app widget size.
    * <p>
    * Due to changes in API level 16.

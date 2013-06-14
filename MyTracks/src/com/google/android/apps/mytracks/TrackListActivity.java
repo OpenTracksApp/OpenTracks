@@ -462,7 +462,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     deleteAllMenuItem = menu.findItem(R.id.track_list_delete_all);
     syncNowMenuItem = menu.findItem(R.id.track_list_sync_now);
     feedbackMenuItem = menu.findItem(R.id.track_list_feedback);
-    feedbackMenuItem.setVisible(GoogleFeedbackUtils.isAvailable(this));
+    feedbackMenuItem.setVisible(ApiAdapterFactory.getApiAdapter().isGoogleFeedbackAvailable());
 
     ApiAdapterFactory.getApiAdapter().configureSearchWidget(this, searchMenuItem, trackController);
     boolean isGpsStarted = TrackRecordingServiceConnectionUtils.isRecordingServiceRunning(this);

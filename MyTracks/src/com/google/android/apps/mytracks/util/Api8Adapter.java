@@ -153,6 +153,11 @@ public class Api8Adapter implements ApiAdapter {
     // Return false and allow the framework to handle the search key.
     return false;
   }
+  
+  @Override
+  public boolean isGoogleFeedbackAvailable() {
+    return false;
+  }
 
   @Override
   public int getAppWidgetSize(AppWidgetManager appWidgetManager, int appWidgetId) {

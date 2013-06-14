@@ -20,15 +20,11 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.RemoteException;
 import android.util.Log;
-
-import java.util.List;
 
 /**
  * Utilities for Google Feedback.
@@ -37,35 +33,9 @@ import java.util.List;
  */
 public class GoogleFeedbackUtils {
 
-  private static final String GOOGLE_FEEDBACK_PACKAGE_NAME = "com.google.android.feedback";
   private static final String TAG = GoogleFeedbackUtils.class.getSimpleName();
 
-  private static Boolean available = null;
-
   private GoogleFeedbackUtils() {}
-
-  /**
-   * Returns true if the Google Feedback is available.
-   * 
-   * @param context the context
-   */
-  public static boolean isAvailable(Context context) {
-    if (available == null) {
-      List<ResolveInfo> infos = context.getPackageManager().queryIntentServices(
-          new Intent(Intent.ACTION_BUG_REPORT), PackageManager.MATCH_DEFAULT_ONLY);
-      for (ResolveInfo info : infos) {
-        if (info.serviceInfo != null && info.serviceInfo.packageName != null
-            && info.serviceInfo.packageName.equals(GOOGLE_FEEDBACK_PACKAGE_NAME)) {
-          available = true;
-          break;
-        }
-      }
-      if (available == null) {
-        available = false;
-      }
-    }
-    return available;
-  }
 
   /**
    * Binds the Google Feedback service.
