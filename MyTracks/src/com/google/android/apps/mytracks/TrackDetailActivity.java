@@ -310,7 +310,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
     exportMenuItem = menu.findItem(R.id.track_detail_export);
     voiceFrequencyMenuItem = menu.findItem(R.id.track_detail_voice_frequency);
     splitFrequencyMenuItem = menu.findItem(R.id.track_detail_split_frequency);
-    feedbackMenuItem = menu.findItem(R.id.track_detail_split_frequency);
+    feedbackMenuItem = menu.findItem(R.id.track_detail_feedback);
     feedbackMenuItem.setVisible(ApiAdapterFactory.getApiAdapter().isGoogleFeedbackAvailable());
 
     updateMenuItems(trackId == recordingTrackId, recordingTrackPaused);
