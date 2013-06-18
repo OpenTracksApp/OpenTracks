@@ -69,8 +69,12 @@ public class ListItemUtils {
     nameTextView.setText(name);
 
     TextView timeDistanceTextView = (TextView) view.findViewById(R.id.list_item_time_distance);
+    int color = isRecording ? context.getResources()
+        .getColor(isPaused ? android.R.color.white : R.color.recording_text)
+        : 0;
     setTextView(timeDistanceTextView,
-        getTimeDistance(isRecording, sharedOwner, totalTime, totalDistance), 0);
+        getTimeDistance(context, isRecording, isPaused, sharedOwner, totalTime, totalDistance),
+        color);
 
     String[] startTimeDisplay = getStartTime(isRecording, context, startTime);
     TextView dateTextView = (TextView) view.findViewById(R.id.list_item_date);
@@ -79,15 +83,6 @@ public class ListItemUtils {
     TextView timeTextView = (TextView) view.findViewById(R.id.list_item_time);
     setTextView(timeTextView, startTimeDisplay[1], 0);
 
-    TextView recordingTextView = (TextView) view.findViewById(R.id.list_item_recording);
-    String value = isRecording ? context.getString(
-        isPaused ? R.string.generic_paused : R.string.generic_recording)
-        : null;
-    int color = isRecording ? context.getResources()
-        .getColor(isPaused ? android.R.color.white : R.color.recording_text)
-        : 0;
-    setTextView(recordingTextView, value, color);
-
     TextView descriptionTextView = (TextView) view.findViewById(R.id.list_item_description);
     setTextView(descriptionTextView, getDescription(isRecording, category, description), 0);
   }
@@ -95,26 +90,28 @@ public class ListItemUtils {
   /**
    * Gets the time/distance text.
    * 
+   * @param context the context
    * @param isRecording true if recording
+   * @param isPaused true if paused
    * @param sharedOwner the shared owner
    * @param totalTime the total time
    * @param totalDistance the total distance
    */
-  private static String getTimeDistance(
-      boolean isRecording, String sharedOwner, String totalTime, String totalDistance) {
+  private static String getTimeDistance(Context context, boolean isRecording, boolean isPaused,
+      String sharedOwner, String totalTime, String totalDistance) {
     if (isRecording) {
-      return null;
+      return context.getString(isPaused ? R.string.generic_paused : R.string.generic_recording);
     }
     StringBuffer buffer = new StringBuffer();
     if (sharedOwner != null && sharedOwner.length() != 0) {
-      buffer.append(sharedOwner);      
+      buffer.append(sharedOwner);
     }
     if (totalTime != null && totalTime.length() != 0) {
       if (buffer.length() != 0) {
         buffer.append(" \u2027 ");
       }
       buffer.append(totalTime);
-    }    
+    }
     if (totalDistance != null && totalDistance.length() != 0) {
       if (buffer.length() != 0) {
         buffer.append(" ");
