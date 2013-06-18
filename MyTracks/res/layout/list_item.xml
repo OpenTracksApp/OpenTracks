@@ -57,7 +57,6 @@ limitations under the License.
           android:layout_gravity="bottom"
           android:layout_width="fill_parent"
           android:singleLine="true"
-          android:textColor="@android:color/primary_text_dark"
           style="@style/TextSmall" />
         <TextView
           android:id="@+id/list_item_time"
@@ -81,7 +80,6 @@ limitations under the License.
       android:id="@+id/list_item_description"
       android:layout_column="1"
       android:singleLine="false"
-      android:textColor="@android:color/secondary_text_dark"
       style="@style/TextSmall" />
   </TableRow>
 </TableLayout>

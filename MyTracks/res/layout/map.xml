@@ -27,7 +27,6 @@ limitations under the License.
     android:layout_width="match_parent"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:textColor="@android:color/primary_text_dark"
     android:visibility="gone"
     style="@style/TextMedium.WithIcon" />
   <ImageButton
