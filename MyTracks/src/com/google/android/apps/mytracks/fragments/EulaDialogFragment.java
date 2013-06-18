@@ -134,6 +134,7 @@ public class EulaDialogFragment extends DialogFragment {
     super.onStart();   
     TextView textView = (TextView) getDialog().findViewById(android.R.id.message);
     textView.setMovementMethod(LinkMovementMethod.getInstance());
+    textView.setTextAppearance(fragmentActivity, R.style.TextSmall);
   }
   
   @Override
