@@ -61,7 +61,7 @@ public class SyncDriveWithMyTracksTest extends ActivityInstrumentationTestCase2<
       return;
     }
     EndToEndTestUtils.findMenuItem(
-        EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
+        EndToEndTestUtils.activityMytracks.getString(R.string.menu_refresh), true);
     SyncTestUtils.checkFilesNumber(drive);
   }
 
@@ -80,7 +80,7 @@ public class SyncDriveWithMyTracksTest extends ActivityInstrumentationTestCase2<
     EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
         .getString(R.string.generic_yes));
     EndToEndTestUtils.findMenuItem(
-        EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
+        EndToEndTestUtils.activityMytracks.getString(R.string.menu_refresh), true);
     SyncTestUtils.checkFile(EndToEndTestUtils.trackName, false, drive);
   }
 
@@ -97,7 +97,7 @@ public class SyncDriveWithMyTracksTest extends ActivityInstrumentationTestCase2<
     EndToEndTestUtils.createSimpleTrack(0, true);
     EndToEndTestUtils.createSimpleTrack(3, true);
     EndToEndTestUtils.findMenuItem(
-        EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
+        EndToEndTestUtils.activityMytracks.getString(R.string.menu_refresh), true);
     SyncTestUtils.checkFilesNumber(drive);
   }
 
@@ -114,7 +114,7 @@ public class SyncDriveWithMyTracksTest extends ActivityInstrumentationTestCase2<
 
     // Sync this track.
     EndToEndTestUtils.findMenuItem(
-        EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
+        EndToEndTestUtils.activityMytracks.getString(R.string.menu_refresh), true);
     SyncTestUtils.checkFile(EndToEndTestUtils.trackName, true, drive);
     String oldTrack = SyncTestUtils.getContentOfFile(
         SyncTestUtils.getFile(EndToEndTestUtils.trackName, drive), drive);
@@ -140,7 +140,7 @@ public class SyncDriveWithMyTracksTest extends ActivityInstrumentationTestCase2<
 
     // Sync again.
     EndToEndTestUtils.findMenuItem(
-        EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
+        EndToEndTestUtils.activityMytracks.getString(R.string.menu_refresh), true);
 
     // Check.
     SyncTestUtils.checkFile(oldTrackName, false, drive);

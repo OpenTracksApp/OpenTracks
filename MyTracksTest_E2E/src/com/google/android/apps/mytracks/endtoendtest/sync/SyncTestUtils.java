@@ -230,7 +230,7 @@ public class SyncTestUtils {
       try {
         EndToEndTestUtils.sleep(EndToEndTestUtils.SHORT_WAIT_TIME);
         EndToEndTestUtils.findMenuItem(
-            EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
+            EndToEndTestUtils.activityMytracks.getString(R.string.menu_refresh), true);
         int trackNumber = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount();
         List<File> files = getDriveFiles(
             EndToEndTestUtils.activityMytracks.getApplicationContext(), drive);

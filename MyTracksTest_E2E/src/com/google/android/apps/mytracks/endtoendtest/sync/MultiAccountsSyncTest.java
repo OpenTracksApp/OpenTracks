@@ -78,14 +78,14 @@ public class MultiAccountsSyncTest extends ActivityInstrumentationTestCase2<Trac
 
     // Sync with Google Drive and then check it of the second account.
     EndToEndTestUtils.findMenuItem(
-        EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
+        EndToEndTestUtils.activityMytracks.getString(R.string.menu_refresh), true);
     drive = SyncTestUtils.getGoogleDrive(trackListActivity.getApplicationContext());
     SyncTestUtils.checkFilesNumber(drive);
 
     // Check Google Drive of the first account.
     SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_1);
     EndToEndTestUtils.findMenuItem(
-        EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
+        EndToEndTestUtils.activityMytracks.getString(R.string.menu_refresh), true);
     drive = SyncTestUtils.getGoogleDrive(trackListActivity.getApplicationContext());
     SyncTestUtils.checkFilesNumber(drive);
 
@@ -136,14 +136,14 @@ public class MultiAccountsSyncTest extends ActivityInstrumentationTestCase2<Trac
     // Check Google Drive of the first account.
     SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_1);
     EndToEndTestUtils.findMenuItem(
-        EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
+        EndToEndTestUtils.activityMytracks.getString(R.string.menu_refresh), true);
     drive = SyncTestUtils.getGoogleDrive(trackListActivity.getApplicationContext());
     SyncTestUtils.checkFilesNumber(drive);
 
     // Check Google Drive of the second account.
     SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_2);
     EndToEndTestUtils.findMenuItem(
-        EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
+        EndToEndTestUtils.activityMytracks.getString(R.string.menu_refresh), true);
     drive = SyncTestUtils.getGoogleDrive(trackListActivity.getApplicationContext());
     SyncTestUtils.checkFilesNumber(drive);
   }

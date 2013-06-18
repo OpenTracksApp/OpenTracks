@@ -284,7 +284,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   private MenuItem importAllMenuItem;
   private MenuItem exportAllMenuItem;
   private MenuItem deleteAllMenuItem;
-  private MenuItem syncNowMenuItem;
+  private MenuItem refreshMenuItem;
   private MenuItem feedbackMenuItem;
 
   private boolean startGps = false; // true to start gps
@@ -460,7 +460,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     importAllMenuItem = menu.findItem(R.id.track_list_import_all);
     exportAllMenuItem = menu.findItem(R.id.track_list_export_all);
     deleteAllMenuItem = menu.findItem(R.id.track_list_delete_all);
-    syncNowMenuItem = menu.findItem(R.id.track_list_sync_now);
+    refreshMenuItem = menu.findItem(R.id.track_list_refresh);
     feedbackMenuItem = menu.findItem(R.id.track_list_feedback);
     feedbackMenuItem.setVisible(ApiAdapterFactory.getApiAdapter().isGoogleFeedbackAvailable());
 
@@ -539,7 +539,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         intent = IntentUtils.newIntent(this, AggregatedStatsActivity.class);
         startActivity(intent);
         return true;
-      case R.id.track_list_sync_now:
+      case R.id.track_list_refresh:
         SyncUtils.syncNow(this);
         return true;
       case R.id.track_list_settings:
@@ -724,8 +724,8 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     if (deleteAllMenuItem != null) {
       deleteAllMenuItem.setVisible(!isRecording);
     }
-    if (syncNowMenuItem != null) {
-      syncNowMenuItem.setVisible(driveSync);
+    if (refreshMenuItem != null) {
+      refreshMenuItem.setVisible(driveSync);
     }
   }
   
