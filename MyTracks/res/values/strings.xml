@@ -560,14 +560,13 @@ limitations under the License.
   <string name="enable_sync_message"
     translation_description="The dialog message asking the user if he wants to enable sync with
       Google Drive.">
-    Do you want to sync your tracks with Google Drive? This will allow you to view your tracks in
-    Google Drive, share tracks via Google Drive, and view tracks shared with you. All tracks synced
-    to Google Drive will be private by default.
+    This will allow you to view all your tracks in Google Drive and view the tracks shared with you.
+    All the tracks synced to Google Drive will be private by default.
   </string>
   <string name="enable_sync_title"
     translation_description="The dialog title asking the user if he wants to enable sync with Google
       Drive.">
-    Sync with Google Drive
+    Sync with Google Drive?
   </string>
 
   <!-- Eula -->
@@ -1548,10 +1547,11 @@ limitations under the License.
 
   <!-- Settings Google -->
   <string name="settings_google"
-    translation_description="In the 'Settings' page, the option to change the Google settings.
+    translation_description="In the 'Settings' page, the option to change the accounts and sync
+      settings.
 
       Character limit: ~23 (1 line)">
-    Google
+    Accounts &amp; sync
   </string>
   <string name="settings_google_account_confirm_message"
     translation_description="In the 'Google' settings, the confirmation message when switching
