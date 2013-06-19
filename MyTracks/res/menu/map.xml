@@ -18,7 +18,6 @@ limitations under the License.
   <item
     android:icon="@drawable/menu_map_layer"
     android:orderInCategory="5"
-    android:showAsAction="ifRoom"
     android:title="@string/menu_map_layer">
     <menu>
       <group android:checkableBehavior="single" >
