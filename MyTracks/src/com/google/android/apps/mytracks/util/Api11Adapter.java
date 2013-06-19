@@ -21,6 +21,7 @@ import com.google.android.apps.mytracks.TrackController;
 import com.google.android.maps.mytracks.R;
 
 import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
@@ -58,7 +59,10 @@ public class Api11Adapter extends Api10Adapter {
 
   @Override
   public void configureActionBarHomeAsUp(Activity activity) {
-    activity.getActionBar().setDisplayHomeAsUpEnabled(true);
+    ActionBar actionBar = activity.getActionBar();
+    if (actionBar != null) {
+      actionBar.setDisplayHomeAsUpEnabled(true);
+    }
   }
 
   @Override

@@ -110,6 +110,10 @@ limitations under the License.
     <item name="android:paddingLeft">8dp</item>
     <item name="android:singleLine">true</item>
   </style>
+  <!-- My Tracks Dialog When Large Theme -->
+  <style name="MyTracksDialogWhenLargeTheme" parent="android:Theme" />
+  <!-- My Tracks Theme -->
+  <style name="MyTracksTheme" parent="android:Theme" />  
   <!-- scroll view -->
   <style name="ScrollView">
     <item name="android:layout_height">match_parent</item>
@@ -243,8 +247,6 @@ limitations under the License.
     <item name="android:layout_width">wrap_content</item>
     <item name="android:textSize">14sp</item>
   </style>
-  <!-- theme selector -->
-  <style name="ThemeSelector" parent="android:Theme" />
   <!-- track widget bounding box -->
   <style name="TrackWidgetBoundingBox">
     <item name="android:background">@drawable/track_widget_background</item>

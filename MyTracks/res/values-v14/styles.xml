@@ -35,6 +35,10 @@ limitations under the License.
     <item name="android:measureWithLargestChild">true</item>
     <item name="android:orientation">horizontal</item>
   </style>
+  <style name="MyTracksDialogWhenLargeTheme" parent="android:Theme.DeviceDefault.DialogWhenLarge">
+    <item name="android:actionBarStyle">@style/ActionBarStyle.MyTracks</item>
+    <item name="android:actionModeBackground">@drawable/action_mode_background_mytracks</item>
+  </style>
   <style name="StatsSmallLabel" parent="@style/TextSmall">
     <!-- same as StatsSmallLabel in values/styles.xml except adding textAllCaps -->
     <item name="android:gravity">right</item>

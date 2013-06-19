@@ -35,8 +35,10 @@ public class Api14Adapter extends Api11Adapter {
   @Override
   public void configureActionBarHomeAsUp(Activity activity) {
     ActionBar actionBar = activity.getActionBar();
-    actionBar.setHomeButtonEnabled(true);
-    actionBar.setDisplayHomeAsUpEnabled(true);
+    if (actionBar != null) {
+      actionBar.setHomeButtonEnabled(true);
+      actionBar.setDisplayHomeAsUpEnabled(true);
+    }
   }
 
   @Override
