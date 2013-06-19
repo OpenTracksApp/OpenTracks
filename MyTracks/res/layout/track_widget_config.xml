@@ -38,7 +38,8 @@ limitations under the License.
         style="@style/TrackWidgetConfigSpinner" />
     </LinearLayout>
   </ScrollView>
+  <View style="@style/BottomButtonDivider" />
   <LinearLayout style="@style/BottomButtonBar" >
-    <include layout="@layout/bottom_buttons" />
+    <include layout="@layout/track_widget_config_buttons" />
   </LinearLayout>
 </LinearLayout>

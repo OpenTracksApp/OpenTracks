@@ -80,7 +80,7 @@ public class TrackWidgetConfigActivity extends Activity {
     configSpinner(item4, list, PreferencesUtils.getInt(
         this, R.string.track_widget_item4, PreferencesUtils.TRACK_WIDGET_ITEM4_DEFAULT));
 
-    findViewById(R.id.bottom_buttons_add).setOnClickListener(new View.OnClickListener() {
+    findViewById(R.id.track_widget_config_add).setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
 
         // Push widget update to surface with newly set prefix
@@ -104,7 +104,7 @@ public class TrackWidgetConfigActivity extends Activity {
         finish();
       }
     });
-    findViewById(R.id.bottom_buttons_cancel).setOnClickListener(new View.OnClickListener() {
+    findViewById(R.id.track_widget_config_cancel).setOnClickListener(new View.OnClickListener() {
         @Override
       public void onClick(View v) {
         finish();

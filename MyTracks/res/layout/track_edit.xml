@@ -50,7 +50,7 @@ limitations under the License.
           android:layout_weight="1"
           android:layout_width="0dp"
           style="@style/EditCategory" />
-        <Spinner          
+        <Spinner
           android:id="@+id/track_edit_activity_type_icon"
           android:layout_gravity="bottom"
           android:layout_height="wrap_content"
@@ -66,6 +66,7 @@ limitations under the License.
         style="@style/EditDescription" />
     </LinearLayout>
   </ScrollView>
+  <View style="@style/BottomButtonDivider" />
   <LinearLayout style="@style/BottomButtonBar" >
     <include layout="@layout/track_edit_buttons" />
   </LinearLayout>

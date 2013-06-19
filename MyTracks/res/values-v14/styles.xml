@@ -17,18 +17,23 @@ limitations under the License.
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
   <!-- The style for choose activity text -->
   <style name="BottomButton" parent="@android:style/Widget.DeviceDefault.Button.Borderless">
-    <!-- Same as BottomButton in values/styles.xml except inheriting from a parent -->
+    <!--
+    Same as BottomButton in values/styles.xml except inheriting from 
+    Widget.DeviceDefault.Button.Borderless.
+    -->
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_weight">1</item>
     <item name="android:layout_width">0dp</item>
     <item name="android:maxLines">2</item>
   </style>
   <style name="BottomButtonBar" parent="@android:style/DeviceDefault.ButtonBar">
-    <!-- Same as BottomButtonBar in values/styles.xml except inheriting from a parent and adding measureWithLargestChild -->
+    <!--
+    Same as BottomButtonBar in values-11/styles.xml except inheriting from DeviceDefault.ButtonBar.
+    -->
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">match_parent</item>
-    <item name="android:orientation">horizontal</item>
     <item name="android:measureWithLargestChild">true</item>
+    <item name="android:orientation">horizontal</item>
   </style>
   <style name="StatsSmallLabel" parent="@style/TextSmall">
     <!-- same as StatsSmallLabel in values/styles.xml except adding textAllCaps -->

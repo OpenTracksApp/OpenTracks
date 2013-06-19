@@ -20,19 +20,29 @@ limitations under the License.
     <item name="android:background">@drawable/ab_transparent_dark_holo</item>
   </style>
   <style name="BottomButton" parent="@android:style/Widget.Holo.Button.Borderless">
-    <!-- Same as BottomButton in values/styles.xml except inheriting from a parent -->
+    <!-- Same as BottomButton in values/styles.xml except inheriting from Widget.Holo.Button.Borderles. -->
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_weight">1</item>
     <item name="android:layout_width">0dp</item>
     <item name="android:maxLines">2</item>
   </style>
   <style name="BottomButtonBar" parent="@android:style/Holo.ButtonBar">
-    <!-- Same as BottomButtonBar in values/styles.xml except inheriting from a parent -->
+    <!--
+    Same as BottomButtonBar in values/styles.xml except inheriting from Holo.ButtonBar and
+    adding measureWithLargestChild.
+    -->
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">match_parent</item>
-    <item name="android:orientation">horizontal</item>
     <item name="android:measureWithLargestChild">true</item>
+    <item name="android:orientation">horizontal</item>
   </style>
+  <style name="BottomButtonDivider">
+    <item name="android:background">?android:attr/dividerVertical</item>
+    <item name="android:layout_height">1dp</item>
+    <item name="android:layout_marginLeft">4dp</item>
+    <item name="android:layout_marginRight">4dp</item>
+    <item name="android:layout_width">match_parent</item>
+  </style>    
   <style name="ListItem">
     <item name="android:background">?android:attr/activatedBackgroundIndicator</item>
   </style>

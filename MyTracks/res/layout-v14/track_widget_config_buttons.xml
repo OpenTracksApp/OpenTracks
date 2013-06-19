@@ -15,13 +15,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <merge xmlns:android="http://schemas.android.com/apk/res/android" >
+  <!-- In v14, postive button on the right. -->
   <Button
-    android:id="@+id/bottom_buttons_cancel"
+    android:id="@+id/track_widget_config_cancel"
     android:layout_gravity="left"
     android:text="@string/generic_cancel"
     style="@style/BottomButton" />
   <Button
-    android:id="@+id/bottom_buttons_add"
+    android:id="@+id/track_widget_config_add"
     android:layout_gravity="right"
     android:text="@string/generic_add"
     style="@style/BottomButton" />

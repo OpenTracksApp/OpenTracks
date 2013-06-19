@@ -69,6 +69,7 @@ limitations under the License.
       </LinearLayout>
     </LinearLayout>
   </ScrollView>
+  <View style="@style/BottomButtonDivider" />
   <LinearLayout style="@style/BottomButtonBar" >
     <include layout="@layout/marker_edit_buttons" />
   </LinearLayout>
