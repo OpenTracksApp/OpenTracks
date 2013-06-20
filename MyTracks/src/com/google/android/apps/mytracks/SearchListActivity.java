@@ -134,30 +134,37 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
         }
           @Override
         public void onPrepare(Menu menu, int[] positions, long[] ids, boolean showSelectAll) {
-          boolean shareWithMe = true;
-          Long markerId = null;
-          if (positions.length == 1) {
+          boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+          boolean isSingleSelection = positions.length == 1;
+          boolean isSingleSelectionShareWithMe;
+          boolean isSingleSelectionTrack;
+          if (isSingleSelection) {
             Map<String, Object> item = arrayAdapter.getItem(positions[0]);
-            Long trackId = (Long) item.get(TRACK_ID_FIELD);            
+            Long trackId = (Long) item.get(TRACK_ID_FIELD);
             Track track = myTracksProviderUtils.getTrack(trackId);
-            shareWithMe = track.isSharedWithMe();
-            markerId = (Long) item.get(MARKER_ID_FIELD);
+
+            isSingleSelectionShareWithMe = track.isSharedWithMe();
+            isSingleSelectionTrack = item.get(MARKER_ID_FIELD) == null;
+          } else {
+            isSingleSelectionShareWithMe = false;
+            isSingleSelectionTrack = false;
           }
-          // Only one item, the item is a track
+          // Not recording, one item, item is a track
           menu.findItem(R.id.list_context_menu_play)
-              .setVisible(positions.length == 1 && markerId == null);
-          // Only one item, the item is a track, and the item is not a sharedWithMe track
-          menu.findItem(R.id.list_context_menu_share)
-              .setVisible(positions.length == 1 && markerId == null && !shareWithMe);
-          // Only one item, the item is a marker
+              .setVisible(!isRecording && isSingleSelection && isSingleSelectionTrack);
+          // Not recording, one item, item is a track, not shareWithMe item
+          menu.findItem(R.id.list_context_menu_share).setVisible(!isRecording && isSingleSelection
+              && isSingleSelectionTrack && !isSingleSelectionShareWithMe);
+          // One item, item is a marker
           menu.findItem(R.id.list_context_menu_show_on_map)
-              .setVisible(positions.length == 1 && markerId != null);
-          // Only one item, can be track or marker, but cannot be a sharedWithMe item
+              .setVisible(isSingleSelection && !isSingleSelectionTrack);
+          // One item, can be a track or a marker, cannot be a sharedWithMe item
           menu.findItem(R.id.list_context_menu_edit)
-              .setVisible(positions.length == 1 && !shareWithMe);
-          // Only one item. If marker, cannot be a shareWithMe item. If track, no restriction
-          menu.findItem(R.id.list_context_menu_delete)
-              .setVisible(positions.length == 1 && (markerId == null || !shareWithMe));
+              .setVisible(isSingleSelection && !isSingleSelectionShareWithMe);
+          // One item. If track, no restriction. If marker, cannot be a
+          // shareWithMe item
+          menu.findItem(R.id.list_context_menu_delete).setVisible(
+              isSingleSelection && (isSingleSelectionTrack || !isSingleSelectionShareWithMe));
           // Disable select all, no action is available for multiple selection
           menu.findItem(R.id.list_context_menu_select_all).setVisible(false);
         }

@@ -70,11 +70,18 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
       contextualActionModeCallback = new ContextualActionModeCallback() {
           @Override
         public void onPrepare(Menu menu, int[] positions, long[] ids, boolean showSelectAll) {
+          boolean isSingleSelection = ids.length == 1;
+
+          // Always disable
           menu.findItem(R.id.list_context_menu_play).setVisible(false);
+          // Always disable
           menu.findItem(R.id.list_context_menu_share).setVisible(false);
-          menu.findItem(R.id.list_context_menu_show_on_map).setVisible(ids.length == 1);
+          // One item
+          menu.findItem(R.id.list_context_menu_show_on_map).setVisible(isSingleSelection);
+          // One item, track not sharedWithMe
           menu.findItem(R.id.list_context_menu_edit)
-              .setVisible(ids.length == 1 && !track.isSharedWithMe());
+              .setVisible(isSingleSelection && !track.isSharedWithMe());
+          // Track not sharedWithMe
           menu.findItem(R.id.list_context_menu_delete).setVisible(!track.isSharedWithMe());
           /*
            * Set select all to the same visibility as delete since delete is the

@@ -212,15 +212,26 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
 
           @Override
         public void onPrepare(Menu menu, int[] positions, long[] ids, boolean showSelectAll) {
-          boolean shareWithMe = true;
-          if (ids.length == 1) {
+          boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+          boolean isSingleSelection = ids.length == 1;
+          boolean isSingleSelectionShareWithMe;
+          if (isSingleSelection) {
             Track track = myTracksProviderUtils.getTrack(ids[0]);
-            shareWithMe = track.isSharedWithMe();
+            isSingleSelectionShareWithMe = track.isSharedWithMe();
+          } else {
+            isSingleSelectionShareWithMe = false;
           }
-          // play is always enabled
-          menu.findItem(R.id.list_context_menu_share).setVisible(!shareWithMe);
+
+          // Not recording
+          menu.findItem(R.id.list_context_menu_play).setVisible(!isRecording);
+          // Not recording, one item, not sharedWithMe item
+          menu.findItem(R.id.list_context_menu_share)
+              .setVisible(!isRecording && isSingleSelection && !isSingleSelectionShareWithMe);
+          // Always disable
           menu.findItem(R.id.list_context_menu_show_on_map).setVisible(false);
-          menu.findItem(R.id.list_context_menu_edit).setVisible(!shareWithMe);
+          // One item, not sharedWithMe item
+          menu.findItem(R.id.list_context_menu_edit)
+              .setVisible(isSingleSelection && !isSingleSelectionShareWithMe);
           // delete is always enabled
           menu.findItem(R.id.list_context_menu_select_all).setVisible(showSelectAll);
         }
