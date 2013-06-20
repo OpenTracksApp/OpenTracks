@@ -133,7 +133,7 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
           return handleContextItem(itemId, positions);          
         }
           @Override
-        public void onPrepare(Menu menu, int[] positions, long[] ids) {
+        public void onPrepare(Menu menu, int[] positions, long[] ids, boolean showSelectAll) {
           boolean shareWithMe = true;
           Long markerId = null;
           if (positions.length == 1) {
@@ -158,6 +158,8 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
           // Only one item. If marker, cannot be a shareWithMe item. If track, no restriction
           menu.findItem(R.id.list_context_menu_delete)
               .setVisible(positions.length == 1 && (markerId == null || !shareWithMe));
+          // Disable select all, no action is available for multiple selection
+          menu.findItem(R.id.list_context_menu_select_all).setVisible(false);
         }
       };
 
@@ -296,7 +298,8 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
     getMenuInflater().inflate(R.menu.list_context_menu, menu);
 
     AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
-    contextualActionModeCallback.onPrepare(menu, new int[] {info.position}, new long[] {info.id});
+    contextualActionModeCallback.onPrepare(
+        menu, new int[] { info.position }, new long[] { info.id }, false);
   }
 
   @Override

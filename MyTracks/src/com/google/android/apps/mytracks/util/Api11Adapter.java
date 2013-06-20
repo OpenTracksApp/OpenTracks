@@ -30,16 +30,11 @@ import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView.MultiChoiceModeListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.Spinner;
 import android.widget.TabWidget;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,58 +69,6 @@ public class Api11Adapter extends Api10Adapter {
         @Override
       public boolean onCreateActionMode(ActionMode mode, Menu menu) {
         mode.getMenuInflater().inflate(R.menu.list_context_menu, menu);
-        final Spinner spinner = new Spinner(activity) {
-            @Override
-          public void setSelection(int position) {
-            super.setSelection(position);
-            // Fire event when selecting the same item
-            if (position == getSelectedItemPosition()) {
-              getOnItemSelectedListener()
-                  .onItemSelected(this, getSelectedView(), position, getSelectedItemId());
-            }
-          }
-        };
-        ArrayAdapter<StringBuilder> adapter = new ArrayAdapter<StringBuilder>(
-            activity, android.R.layout.simple_spinner_item,
-            new StringBuilder[] { new StringBuilder("") }) {
-            @Override
-          public View getDropDownView(int position, View convertView, ViewGroup parent) {
-            // Display select all/ deselect all
-            View view = super.getDropDownView(position, convertView, parent);
-            TextView textView = (TextView) view;
-            int messageId = listView.getCheckedItemCount() == listView.getCount()
-                ? R.string.list_deselect_all
-                : R.string.list_select_all;
-            textView.setText(messageId);
-            return view;
-          };
-        };
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        
-        // Use a post to prevent the spinner item from firing when first created
-        spinner.post(new Runnable() {
-            @Override
-          public void run() {
-            spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-                @Override
-              public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // Handle select all/ deselect all
-                int size = listView.getCount();
-                boolean allSelected = listView.getCheckedItemCount() == size;
-                for (int i = 0; i < size; i++) {
-                  listView.setItemChecked(i, !allSelected);
-                }
-              }
-
-                @Override
-              public void onNothingSelected(AdapterView<?> parent) {
-                // Do nothing
-              }
-            });
-          }
-        });
-        mode.setCustomView(spinner);
         setActionModeTitle(mode);
         return true;
       }
@@ -133,7 +76,7 @@ public class Api11Adapter extends Api10Adapter {
         @Override
       public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
         contextualActionModeCallback.onPrepare(
-            menu, getCheckedPositions(listView), listView.getCheckedItemIds());
+            menu, getCheckedPositions(listView), listView.getCheckedItemIds(), true);
         return true;
       }
 
@@ -142,18 +85,10 @@ public class Api11Adapter extends Api10Adapter {
         // Do nothing
       }
 
-        @SuppressWarnings("unchecked")
         @Override
       public void onItemCheckedStateChanged(
           ActionMode mode, int position, long id, boolean checked) {
         setActionModeTitle(mode);
-
-        // Update action mode title
-        Spinner spinner = (Spinner) mode.getCustomView();
-        ArrayAdapter<StringBuilder> adapter = (ArrayAdapter<StringBuilder>) spinner.getAdapter();
-        adapter.notifyDataSetChanged();
-
-        // Update contextual action mode items
         mode.invalidate();
       }
 
@@ -172,12 +107,8 @@ public class Api11Adapter extends Api10Adapter {
        * @param mode action mode
        */
       private void setActionModeTitle(ActionMode mode) {
-        Spinner spinner = (Spinner) mode.getCustomView();
-        StringBuilder stringBuilder = (StringBuilder) spinner.getSelectedItem();
-        stringBuilder.delete(0, stringBuilder.length());
-
         int count = listView.getCheckedItemCount();
-        stringBuilder.append(activity.getString(R.string.list_item_selected, count));
+        mode.setTitle(activity.getString(R.string.list_item_selected, count));
       }
       
       /**

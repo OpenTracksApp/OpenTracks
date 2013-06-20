@@ -40,4 +40,9 @@ limitations under the License.
     android:id="@+id/list_context_menu_delete"
     android:showAsAction="ifRoom"
     android:title="@string/menu_delete"/>
+  <item
+    android:icon="@drawable/menu_select_all"
+    android:id="@+id/list_context_menu_select_all"
+    android:showAsAction="ifRoom"
+    android:title="@string/menu_select_all"/>
 </menu>

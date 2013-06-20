@@ -31,8 +31,9 @@ public interface ContextualActionModeCallback {
    * @param menu the menu
    * @param positions the selected items' positions
    * @param ids the selected items' ids, if available
+   * @param showSelectAll true to show select all
    */
-  public void onPrepare(Menu menu, int[] positions, long[] ids);
+  public void onPrepare(Menu menu, int[] positions, long[] ids, boolean showSelectAll);
 
   /**
    * Invoked when items are selected.

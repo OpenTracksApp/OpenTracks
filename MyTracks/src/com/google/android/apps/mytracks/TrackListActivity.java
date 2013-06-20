@@ -211,16 +211,18 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
       contextualActionModeCallback = new ContextualActionModeCallback() {
 
           @Override
-        public void onPrepare(Menu menu, int[] positions, long[] ids) {
+        public void onPrepare(Menu menu, int[] positions, long[] ids, boolean showSelectAll) {
           boolean shareWithMe = true;
           if (ids.length == 1) {
             Track track = myTracksProviderUtils.getTrack(ids[0]);
             shareWithMe = track.isSharedWithMe();
           }
+          // play is always enabled
           menu.findItem(R.id.list_context_menu_share).setVisible(!shareWithMe);
           menu.findItem(R.id.list_context_menu_show_on_map).setVisible(false);
           menu.findItem(R.id.list_context_menu_edit).setVisible(!shareWithMe);
-          menu.findItem(R.id.list_context_menu_delete).setVisible(true);
+          // delete is always enabled
+          menu.findItem(R.id.list_context_menu_select_all).setVisible(showSelectAll);
         }
 
           @Override
@@ -565,7 +567,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
 
     AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
     contextualActionModeCallback.onPrepare(
-        menu, new int[] { info.position }, new long[] { info.id });
+        menu, new int[] { info.position }, new long[] { info.id }, false);
   }
 
   @Override
@@ -770,6 +772,12 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         DeleteTrackDialogFragment.newInstance(deleteAll, trackIds)
             .show(getSupportFragmentManager(), DeleteTrackDialogFragment.DELETE_TRACK_DIALOG_TAG);
         return true;
+      case R.id.list_context_menu_select_all:
+        int size = listView.getCount();
+        for (int i = 0; i < size; i++) {
+          listView.setItemChecked(i, true);
+        }
+        return false;
       default:
         return false;
     }
