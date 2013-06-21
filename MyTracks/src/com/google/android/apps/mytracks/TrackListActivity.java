@@ -166,9 +166,8 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
           @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
           if (key == null || key.equals(
-              PreferencesUtils.getKey(TrackListActivity.this, R.string.metric_units_key))) {
-            metricUnits = PreferencesUtils.getBoolean(TrackListActivity.this,
-                R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
+              PreferencesUtils.getKey(TrackListActivity.this, R.string.stats_units_key))) {
+            metricUnits = PreferencesUtils.isMetricUnits(TrackListActivity.this);
           }
           if (key == null || key.equals(
               PreferencesUtils.getKey(TrackListActivity.this, R.string.recording_track_id_key))) {
@@ -286,7 +285,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   private SectionResourceCursorAdapter sectionResourceCursorAdapter;
 
   // Preferences
-  private boolean metricUnits = PreferencesUtils.METRIC_UNITS_DEFAULT;
+  private boolean metricUnits = true;
   private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
   private boolean recordingTrackPaused = PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT;
   private boolean driveSync = PreferencesUtils.DRIVE_SYNC_DEFAULT;

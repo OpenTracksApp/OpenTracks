@@ -642,14 +642,15 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
 
   @MediumTest
   public void testWithProperties_metricUnitsDefault() throws Exception {
-    PreferencesUtils.setBoolean(
-        context, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
+    PreferencesUtils.setString(
+        context, R.string.stats_units_key, PreferencesUtils.STATS_UNITS_DEFAULT);
     fullRecordingSession();
   }
 
   @MediumTest
   public void testWithProperties_metricUnitsDisabled() throws Exception {
-    PreferencesUtils.setBoolean(context, R.string.metric_units_key, false);
+    PreferencesUtils.setString(
+        context, R.string.stats_units_key, context.getString(R.string.stats_units_imperial));
     fullRecordingSession();
   }
 

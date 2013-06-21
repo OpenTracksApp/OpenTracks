@@ -64,7 +64,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   private TripStatisticsUpdater tripStatisticsUpdater;
   private long startTime;
 
-  private boolean metricUnits = PreferencesUtils.METRIC_UNITS_DEFAULT;
+  private boolean metricUnits = true;
   private boolean reportSpeed = PreferencesUtils.REPORT_SPEED_DEFAULT;
   private int minRecordingDistance = PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT;
 

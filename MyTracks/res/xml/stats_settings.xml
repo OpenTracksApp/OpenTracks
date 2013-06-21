@@ -16,11 +16,9 @@ limitations under the License.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
   android:title="@string/track_detail_stats_tab" >
-  <CheckBoxPreference
-    android:defaultValue="true"
-    android:key="@string/metric_units_key"
-    android:summaryOff="@string/settings_stats_units_imperial"
-    android:summaryOn="@string/settings_stats_units_metric"
+  <ListPreference
+    android:defaultValue="@string/stats_units_metric"
+    android:key="@string/stats_units_key"
     android:title="@string/settings_stats_units_title" />
   <CheckBoxPreference
     android:defaultValue="true"

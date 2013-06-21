@@ -270,9 +270,8 @@ public class TrackDataHub implements DataSourceListener {
               PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
         }
         if (key == null
-            || key.equals(PreferencesUtils.getKey(context, R.string.metric_units_key))) {
-          metricUnits = PreferencesUtils.getBoolean(
-              context, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
+            || key.equals(PreferencesUtils.getKey(context, R.string.stats_units_key))) {
+          metricUnits = PreferencesUtils.isMetricUnits(context);
           if (key != null) {
             for (TrackDataListener trackDataListener :
                 trackDataManager.getListeners(TrackDataType.PREFERENCE)) {

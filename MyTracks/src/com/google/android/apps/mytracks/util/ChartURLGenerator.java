@@ -46,8 +46,7 @@ public class ChartURLGenerator {
    */
   public static String getChartUrl(
       Vector<Double> distances, Vector<Double> elevations, Track track, Context context) {
-    boolean metricUnits = PreferencesUtils.getBoolean(
-        context, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
+    boolean metricUnits = PreferencesUtils.isMetricUnits(context);
     return getChartUrl(
         distances, elevations, track, context.getString(R.string.stats_elevation), metricUnits);
   }

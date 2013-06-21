@@ -218,11 +218,10 @@ public class MapSettingsActivity extends AbstractSettingsActivity {
    * @param defaultValue the default value
    */
   private void updateSpeedSummary(Preference preference, int keyId, int defaultValue) {
-    boolean metric = PreferencesUtils.getBoolean(
-        this, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
+    boolean metricUnits = PreferencesUtils.isMetricUnits(this);
     int displayValue = getSpeedDisplayValue(keyId, defaultValue);
     preference.setSummary(getString(
-        metric ? R.string.value_integer_kilometer_hour : R.string.value_integer_mile_hour,
+        metricUnits ? R.string.value_integer_kilometer_hour : R.string.value_integer_mile_hour,
         displayValue));
   }
 
@@ -249,8 +248,7 @@ public class MapSettingsActivity extends AbstractSettingsActivity {
     int value;
     try {
       value = Integer.parseInt(displayValue);
-      if (!PreferencesUtils.getBoolean(
-          this, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT)) {
+      if (!PreferencesUtils.isMetricUnits(this)) {
         value = (int) (value * UnitConversions.MI_TO_KM);
       }
     } catch (NumberFormatException e) {
@@ -276,8 +274,7 @@ public class MapSettingsActivity extends AbstractSettingsActivity {
    */
   private int getSpeedDisplayValue(int keyId, int defaultValue) {
     int value = PreferencesUtils.getInt(this, keyId, defaultValue);
-    if (!PreferencesUtils.getBoolean(
-        this, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT)) {
+    if (!PreferencesUtils.isMetricUnits(this)) {
       value = (int) (value * UnitConversions.KM_TO_MI);
     }
     return value;

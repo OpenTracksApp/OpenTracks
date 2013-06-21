@@ -99,9 +99,8 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
           @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
           if (key == null || key.equals(
-              PreferencesUtils.getKey(SearchListActivity.this, R.string.metric_units_key))) {
-            metricUnits = PreferencesUtils.getBoolean(SearchListActivity.this,
-                R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
+              PreferencesUtils.getKey(SearchListActivity.this, R.string.stats_units_key))) {
+            metricUnits = PreferencesUtils.isMetricUnits(SearchListActivity.this);
           }
           if (key == null || key.equals(
               PreferencesUtils.getKey(SearchListActivity.this, R.string.recording_track_id_key))) {
@@ -177,7 +176,7 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
   private SearchRecentSuggestions searchRecentSuggestions;
   private ArrayAdapter<Map<String, Object>> arrayAdapter;
 
-  private boolean metricUnits = PreferencesUtils.METRIC_UNITS_DEFAULT;
+  private boolean metricUnits = true;
   private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
   private boolean recordingTrackPaused = PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT;
 

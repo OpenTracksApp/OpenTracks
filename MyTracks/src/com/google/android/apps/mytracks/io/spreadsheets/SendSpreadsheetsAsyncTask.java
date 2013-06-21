@@ -241,8 +241,7 @@ public class SendSpreadsheetsAsyncTask extends AbstractSendAsyncTask {
       return false;
     }
     TripStatistics tripStatistics = track.getTripStatistics();
-    boolean metricUnits = PreferencesUtils.getBoolean(
-        context, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
+    boolean metricUnits = PreferencesUtils.isMetricUnits(context);
     String distanceUnit = context.getString(
         metricUnits ? R.string.unit_kilometer : R.string.unit_mile);
     String speedUnit = context.getString(

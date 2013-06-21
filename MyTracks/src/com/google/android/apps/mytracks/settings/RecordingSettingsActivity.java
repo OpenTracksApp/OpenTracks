@@ -38,8 +38,7 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity {
     super.onCreate(bundle);
     addPreferencesFromResource(R.xml.recording_settings);
 
-    boolean metricUnits = PreferencesUtils.getBoolean(
-        this, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
+    boolean metricUnits = PreferencesUtils.isMetricUnits(this);
 
     configFrequencyPreference(R.string.voice_frequency_key,
         PreferencesUtils.VOICE_FREQUENCY_DEFAULT, R.array.frequency_values, metricUnits);

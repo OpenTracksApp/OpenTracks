@@ -20,6 +20,7 @@ import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.fragments.ExportDialogFragment.ExportType;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.gms.location.DetectedActivity;
+import com.google.android.maps.mytracks.R;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -76,7 +77,6 @@ public class PreferencesUtils {
   public static final String GOOGLE_ACCOUNT_DEFAULT = "";
   public static final int MAP_TYPE_DEFAUlT = 1;
   public static final int MAX_RECORDING_DISTANCE_DEFAULT = 200;
-  public static final boolean METRIC_UNITS_DEFAULT = true;
   public static final int MIN_RECORDING_DISTANCE_DEFAULT = 5;
 
   // Values for min_recording_interval_key
@@ -104,6 +104,7 @@ public class PreferencesUtils {
   // Stats
   public static final boolean STATS_SHOW_COORDINATE_DEFAULT = false;
   public static final boolean STATS_SHOW_GRADE_ELEVATION_DEFAULT = false;
+  public static final String STATS_UNITS_DEFAULT = "METRIC";
   
   // Track color
   public static final String TRACK_COLOR_MODE_DEFAULT = "SINGLE";
@@ -245,5 +246,15 @@ public class PreferencesUtils {
     Editor editor = sharedPreferences.edit();
     editor.putString(getKey(context, keyId), value);
     ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
+  }
+  
+  /**
+   * Returns true if metric units.
+   * 
+   * @param context the context
+   */
+  public static boolean isMetricUnits(Context context) {
+    return PreferencesUtils.STATS_UNITS_DEFAULT.equals(
+        getString(context, R.string.stats_units_key, PreferencesUtils.STATS_UNITS_DEFAULT));
   }
 }

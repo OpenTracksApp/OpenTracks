@@ -527,7 +527,8 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     // Register two listeners
     PreferencesUtils.setBoolean(context, R.string.report_speed_key, true);
-    PreferencesUtils.setBoolean(context, R.string.metric_units_key, true);
+    PreferencesUtils.setString(
+        context, R.string.stats_units_key, PreferencesUtils.STATS_UNITS_DEFAULT);
     PreferencesUtils.setInt(context, R.string.min_required_accuracy_key,
         PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT);
     PreferencesUtils.setInt(context, R.string.min_recording_distance_key,
@@ -571,9 +572,10 @@ public class TrackDataHubTest extends AndroidTestCase {
     expect(trackDataListener2.onMetricUnitsChanged(false)).andReturn(false);
     replay();
 
-    PreferencesUtils.setBoolean(context, R.string.metric_units_key, false);
+    String imperialUnits = context.getString(R.string.stats_units_imperial);
+    PreferencesUtils.setString(context, R.string.stats_units_key, imperialUnits);
     listener.onSharedPreferenceChanged(
-        sharedPreferences, PreferencesUtils.getKey(context, R.string.metric_units_key));
+        sharedPreferences, PreferencesUtils.getKey(context, R.string.stats_units_key));
     verifyAndReset();
   }
 
@@ -762,15 +764,17 @@ public class TrackDataHubTest extends AndroidTestCase {
    * the key is R.string.metric_units_key.
    */
   public void testNotifyPreferenceChanged_metricUnitsNoNotify() {
-    boolean value = false;
-    PreferencesUtils.setBoolean(context, R.string.metric_units_key, value);
-    trackDataHub.notifyPreferenceChanged(PreferencesUtils
-        .getKey(context, R.string.metric_units_key));
-    assertEquals(value, trackDataHub.isMetricUnits());
-    PreferencesUtils.setBoolean(context, R.string.metric_units_key, !value);
-    trackDataHub.notifyPreferenceChanged(PreferencesUtils
-        .getKey(context, R.string.metric_units_key));
-    assertEquals(!value, trackDataHub.isMetricUnits());
+    String imperialUnits = context.getString(R.string.stats_units_imperial);
+
+    PreferencesUtils.setString(context, R.string.stats_units_key, imperialUnits);
+    trackDataHub.notifyPreferenceChanged(
+        PreferencesUtils.getKey(context, R.string.stats_units_key));
+    assertEquals(false, trackDataHub.isMetricUnits());
+    PreferencesUtils.setString(
+        context, R.string.stats_units_key, PreferencesUtils.STATS_UNITS_DEFAULT);
+    trackDataHub.notifyPreferenceChanged(
+        PreferencesUtils.getKey(context, R.string.stats_units_key));
+    assertEquals(true, trackDataHub.isMetricUnits());
   }
   
   

@@ -49,8 +49,7 @@ public class StatsUtils {
    * @param isRecording true if recording
    */
   public static void setLocationValues(Activity activity, Location location, boolean isRecording) {
-    boolean metricUnits = PreferencesUtils.getBoolean(
-        activity, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
+    boolean metricUnits = PreferencesUtils.isMetricUnits(activity);
     boolean reportSpeed = PreferencesUtils.getBoolean(
         activity, R.string.report_speed_key, PreferencesUtils.REPORT_SPEED_DEFAULT);
 
@@ -109,8 +108,7 @@ public class StatsUtils {
    * @param tripStatistics the trip statistics
    */
   public static void setTripStatisticsValues(Activity activity, TripStatistics tripStatistics) {
-    boolean metricUnits = PreferencesUtils.getBoolean(
-        activity, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
+    boolean metricUnits = PreferencesUtils.isMetricUnits(activity);
     boolean reportSpeed = PreferencesUtils.getBoolean(
         activity, R.string.report_speed_key, PreferencesUtils.REPORT_SPEED_DEFAULT);
 
