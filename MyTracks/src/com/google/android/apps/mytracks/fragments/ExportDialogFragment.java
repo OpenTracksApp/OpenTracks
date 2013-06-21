@@ -171,7 +171,7 @@ public class ExportDialogFragment extends DialogFragment {
    */
   private void setExternalStorageOption(RadioButton radioButton, TrackFileFormat trackFileFormat) {
     radioButton.setText(getString(R.string.export_external_storage_option, trackFileFormat.name(),
-        FileUtils.getDisplayDirectory(trackFileFormat.getExtension())));
+        FileUtils.getDirectoryDisplayName(trackFileFormat.getExtension())));
   }
 
   /**

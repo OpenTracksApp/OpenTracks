@@ -59,7 +59,7 @@ public class ImportActivity extends Activity {
   private TrackFileFormat trackFileFormat;
 
   // the path on the external storage to import
-  private String path;
+  private String directoryDisplayName;
 
   // the number of files successfully imported
   private int successCount;
@@ -86,10 +86,14 @@ public class ImportActivity extends Activity {
       finish();
       return;
     }
+    String directoryPath;
     if (importAll) {
-      path = FileUtils.buildExternalDirectoryPath(trackFileFormat.getExtension());
-      if (!FileUtils.isDirectory(new File(path))) {
-        Toast.makeText(this, getString(R.string.import_no_directory, path), Toast.LENGTH_LONG)
+      directoryDisplayName = FileUtils.getDirectoryDisplayName(
+          trackFileFormat.getExtension());
+      directoryPath = FileUtils.getDirectoryPath(trackFileFormat.getExtension());
+      if (!FileUtils.isDirectory(new File(directoryPath))) {
+        Toast.makeText(
+            this, getString(R.string.import_no_directory, directoryDisplayName), Toast.LENGTH_LONG)
             .show();
         finish();
         return;
@@ -108,7 +112,8 @@ public class ImportActivity extends Activity {
         finish();
         return;
       }
-      path = data.getPath();
+      directoryDisplayName = data.getPath();
+      directoryPath = data.getPath();
     }
 
     Object retained = getLastNonConfigurationInstance();
@@ -116,7 +121,7 @@ public class ImportActivity extends Activity {
       importAsyncTask = (ImportAsyncTask) retained;
       importAsyncTask.setActivity(this);
     } else {
-      importAsyncTask = new ImportAsyncTask(this, importAll, trackFileFormat, path);
+      importAsyncTask = new ImportAsyncTask(this, importAll, trackFileFormat, directoryPath);
       importAsyncTask.execute();
     }
   }
@@ -139,7 +144,7 @@ public class ImportActivity extends Activity {
                 dialog.dismiss();
                 finish();
               }
-            }, path);
+            }, directoryDisplayName);
         return progressDialog;
       case DIALOG_RESULT_ID:
         final boolean success;
@@ -148,10 +153,10 @@ public class ImportActivity extends Activity {
             .getQuantityString(R.plurals.files, totalCount, totalCount);
         if (successCount == totalCount && totalCount > 0) {
           success = true;
-          message = getString(R.string.import_success, totalFiles, path);
+          message = getString(R.string.import_success, totalFiles, directoryDisplayName);
         } else {
           success = false;
-          message = getString(R.string.import_error, successCount, totalFiles, path);
+          message = getString(R.string.import_error, successCount, totalFiles, directoryDisplayName);
         }
         return new AlertDialog.Builder(this).setCancelable(true).setIcon(
             success ? android.R.drawable.ic_dialog_info : android.R.drawable.ic_dialog_alert)

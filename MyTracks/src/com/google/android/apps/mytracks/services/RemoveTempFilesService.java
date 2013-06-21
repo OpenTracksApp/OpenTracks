@@ -91,7 +91,7 @@ public class RemoveTempFilesService extends Service {
   }
 
   private void cleanTempDirectory(String name) {
-    cleanTempDirectory(new File(FileUtils.buildExternalDirectoryPath(name, FileUtils.TEMP_DIR)));
+    cleanTempDirectory(new File(FileUtils.getDirectoryPath(name, FileUtils.TEMP_DIR)));
   }
   
   /**

@@ -51,7 +51,7 @@ public class SaveActivity extends Activity {
   private TrackFileFormat trackFileFormat;
   private long[] trackIds;
   private boolean playTrack;
-  private String directoryName;
+  private String directoryDisplayName;
 
   private SaveAsyncTask saveAsyncTask;
   private ProgressDialog progressDialog;
@@ -80,11 +80,14 @@ public class SaveActivity extends Activity {
       return;
     }
 
-    directoryName = playTrack ? FileUtils.buildExternalDirectoryPath(
+    directoryDisplayName = playTrack ? FileUtils.getDirectoryDisplayName(
         trackFileFormat.getExtension(), FileUtils.TEMP_DIR)
-        : FileUtils.buildExternalDirectoryPath(trackFileFormat.getExtension());
+        : FileUtils.getDirectoryDisplayName(trackFileFormat.getExtension());
 
-    File directory = new File(directoryName);
+    String directoryPath = playTrack ? FileUtils.getDirectoryPath(
+        trackFileFormat.getExtension(), FileUtils.TEMP_DIR)
+        : FileUtils.getDirectoryPath(trackFileFormat.getExtension());
+    File directory = new File(directoryPath);
     if (!FileUtils.ensureDirectoryExists(directory)) {
       Toast.makeText(this, R.string.external_storage_not_writable, Toast.LENGTH_LONG).show();
       finish();
@@ -120,7 +123,7 @@ public class SaveActivity extends Activity {
                 dialog.dismiss();
                 finish();
               }
-            }, directoryName);
+            }, directoryDisplayName);
         return progressDialog;
       case DIALOG_RESULT_ID:
         boolean success;
@@ -129,11 +132,11 @@ public class SaveActivity extends Activity {
             .getQuantityString(R.plurals.tracks, totalCount, totalCount);
         if (successCount == totalCount && totalCount > 0) {
           success = true;
-          message = getString(R.string.export_external_storage_success, totalTracks, directoryName);
+          message = getString(R.string.export_external_storage_success, totalTracks, directoryDisplayName);
         } else {
           success = false;
           message = getString(
-              R.string.export_external_storage_error, successCount, totalTracks, directoryName);
+              R.string.export_external_storage_error, successCount, totalTracks, directoryDisplayName);
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(this).setCancelable(true).setIcon(
             success ? android.R.drawable.ic_dialog_info : android.R.drawable.ic_dialog_alert)

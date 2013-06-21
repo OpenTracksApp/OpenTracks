@@ -29,13 +29,13 @@ import junit.framework.TestCase;
 public class FileUtilsTest extends TestCase {
 
   /**
-   * Tests {@link FileUtils#buildExternalDirectoryPath(String...)}.
+   * Tests {@link FileUtils#getDirectoryPath(String...)}.
    */
   public void testBuildExternalDirectoryPath() {
     String expectedName = Environment.getExternalStorageDirectory() + File.separator
         + FileUtils.SDCARD_TOP_DIR + File.separator + "a" + File.separator + "b" + File.separator
         + "c";
-    String dirName = FileUtils.buildExternalDirectoryPath("a", "b", "c");
+    String dirName = FileUtils.getDirectoryPath("a", "b", "c");
     assertEquals(expectedName, dirName);
   }
 

@@ -86,8 +86,8 @@ class ExternalFileBackup {
    * @param create whether to try creating the directory if it doesn't exist
    */
   private File getBackupsDirectory(boolean create) {
-    String dirName = FileUtils.buildExternalDirectoryPath(BACKUPS_SUBDIR);
-    final File dir = new File(dirName);
+    String directoryPath = FileUtils.getDirectoryPath(BACKUPS_SUBDIR);
+    final File dir = new File(directoryPath);
     Log.d(Constants.TAG, "Dir: " + dir.getAbsolutePath());
     if (create) {
       // Try to create - if that fails, return null

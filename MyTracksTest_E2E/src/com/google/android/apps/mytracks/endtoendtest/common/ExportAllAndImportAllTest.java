@@ -300,22 +300,23 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
   }
 
   private String getSaveSuccessMessage(int count, String type) {
-    String tracks = activityMyTracks.getResources().getQuantityString(R.plurals.tracks, count,
-        count);
-    String directoryName = FileUtils.buildExternalDirectoryPath(type);
-    return activityMyTracks.getString(R.string.export_external_storage_success, tracks, directoryName);
+    String tracks = activityMyTracks.getResources()
+        .getQuantityString(R.plurals.tracks, count, count);
+    String directoryDisplayName = FileUtils.getDirectoryDisplayName(type);
+    return activityMyTracks.getString(
+        R.string.export_external_storage_success, tracks, directoryDisplayName);
   }
 
   private String getImportSuccessMessage(int count, String type) {
     String files = activityMyTracks.getResources().getQuantityString(R.plurals.files, count, count);
-    String directoryName = FileUtils.buildExternalDirectoryPath(type);
-    return activityMyTracks.getString(R.string.import_success, files, directoryName);
+    String directoryDisplayName = FileUtils.getDirectoryDisplayName(type);
+    return activityMyTracks.getString(R.string.import_success, files, directoryDisplayName);
   }
 
   private String getImportErrorMessage(int count, int total, String type) {
     String files = activityMyTracks.getResources().getQuantityString(R.plurals.files, total, total);
-    String directoryName = FileUtils.buildExternalDirectoryPath(type);
-    return activityMyTracks.getString(R.string.import_error, count, files, directoryName);
+    String directoryDisplayName = FileUtils.getDirectoryDisplayName(type);
+    return activityMyTracks.getString(R.string.import_error, count, files, directoryDisplayName);
   }
 
   /**

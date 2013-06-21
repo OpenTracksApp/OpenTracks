@@ -76,9 +76,9 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
     EndToEndTestUtils.getButtonOnScreen(
         EndToEndTestUtils.activityMytracks.getString(R.string.generic_ok), true, true);
     String totalTracks = activityMyTracks.getResources().getQuantityString(R.plurals.tracks, 0, 0);
-    String directoryName = FileUtils.buildExternalDirectoryPath(EndToEndTestUtils.GPX);
+    String directoryDisplayName = FileUtils.getDirectoryDisplayName(EndToEndTestUtils.GPX);
     String message = activityMyTracks.getString(R.string.export_external_storage_error, 0,
-        totalTracks, directoryName);
+        totalTracks, directoryDisplayName);
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
         activityMyTracks.getString(R.string.external_storage_not_available), 1,
         EndToEndTestUtils.SHORT_WAIT_TIME)
