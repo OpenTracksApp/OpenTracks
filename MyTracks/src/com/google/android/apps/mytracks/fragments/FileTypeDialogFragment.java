@@ -28,8 +28,6 @@ import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
-import java.util.Locale;
-
 /**
  * A DialogFragment to select a file type, gpx, kml, etc.
  * 
@@ -92,9 +90,9 @@ public class FileTypeDialogFragment extends DialogFragment {
     String[] choices = new String[size];
     TrackFileFormat[] trackFileFormats = TrackFileFormat.values();
     for (int i = 0; i < choices.length; i++) {
-      String format = trackFileFormats[i].name();
-      choices[i] = getString(
-          optionId, format, FileUtils.getDisplayDirectory(format.toLowerCase(Locale.US)));
+      TrackFileFormat trackFileFormat = trackFileFormats[i];
+      choices[i] = getString(optionId, trackFileFormat.name(),
+          FileUtils.getDisplayDirectory(trackFileFormat.getExtension()));
     }
     return new AlertDialog.Builder(getActivity()).setNegativeButton(R.string.generic_cancel, null)
         .setPositiveButton(R.string.generic_ok, new OnClickListener() {

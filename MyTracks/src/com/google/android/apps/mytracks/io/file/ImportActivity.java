@@ -87,8 +87,7 @@ public class ImportActivity extends Activity {
       return;
     }
     if (importAll) {
-      path = FileUtils.buildExternalDirectoryPath(
-          trackFileFormat == TrackFileFormat.KML ? "kml" : "gpx");
+      path = FileUtils.buildExternalDirectoryPath(trackFileFormat.getExtension());
       if (!FileUtils.isDirectory(new File(path))) {
         Toast.makeText(this, getString(R.string.import_no_directory, path), Toast.LENGTH_LONG)
             .show();

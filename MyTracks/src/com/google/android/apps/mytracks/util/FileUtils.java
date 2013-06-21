@@ -30,6 +30,8 @@ public class FileUtils {
 
   private FileUtils() {}
 
+  public static final String TEMP_DIR = "tmp";
+  
   /**
    * Name of the top-level directory inside the SD card where our files will be
    * read from/written to.

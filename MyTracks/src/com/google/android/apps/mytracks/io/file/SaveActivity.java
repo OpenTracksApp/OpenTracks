@@ -81,7 +81,7 @@ public class SaveActivity extends Activity {
     }
 
     directoryName = playTrack ? FileUtils.buildExternalDirectoryPath(
-        trackFileFormat.getExtension(), "tmp")
+        trackFileFormat.getExtension(), FileUtils.TEMP_DIR)
         : FileUtils.buildExternalDirectoryPath(trackFileFormat.getExtension());
 
     File directory = new File(directoryName);

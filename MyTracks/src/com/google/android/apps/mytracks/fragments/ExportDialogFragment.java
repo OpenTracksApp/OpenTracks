@@ -33,8 +33,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
-import java.util.Locale;
-
 /**
  * A DialogFragment to export a track.
  * 
@@ -172,9 +170,8 @@ public class ExportDialogFragment extends DialogFragment {
    * @param trackFileFormat the track file format
    */
   private void setExternalStorageOption(RadioButton radioButton, TrackFileFormat trackFileFormat) {
-    String format = trackFileFormat.name();
-    radioButton.setText(getString(R.string.export_external_storage_option, format,
-        FileUtils.getDisplayDirectory(format.toLowerCase(Locale.US))));
+    radioButton.setText(getString(R.string.export_external_storage_option, trackFileFormat.name(),
+        FileUtils.getDisplayDirectory(trackFileFormat.getExtension())));
   }
 
   /**
