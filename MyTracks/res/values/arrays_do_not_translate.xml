@@ -92,12 +92,6 @@ limitations under the License.
     <item>15</item>
     <item>-1</item>
   </string-array>
-  <string-array name="file_types">
-    <item>KML</item>
-    <item>GPX</item>
-    <item>CSV</item>
-    <item>TCX</item>
-  </string-array>
   <string-array name="frequency_values">
     <item>0</item>
     <item>1</item>

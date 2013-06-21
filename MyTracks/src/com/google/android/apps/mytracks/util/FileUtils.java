@@ -85,6 +85,20 @@ public class FileUtils {
   }
 
   /**
+   * Gets the display directory.
+   * @param components the components
+   */
+  public static String getDisplayDirectory(String... components) {
+    StringBuilder dirNameBuilder = new StringBuilder();
+    dirNameBuilder.append(File.separatorChar);
+    dirNameBuilder.append(SDCARD_TOP_DIR);
+    for (String component : components) {
+      dirNameBuilder.append(File.separatorChar);
+      dirNameBuilder.append(component);
+    }
+    return dirNameBuilder.toString();
+  }
+  /**
    * Builds a path inside the My Tracks directory in the SD card.
    *
    * @param components the path components inside the mytracks directory

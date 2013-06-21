@@ -17,6 +17,7 @@
 package com.google.android.apps.mytracks.fragments;
 
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
+import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -26,6 +27,8 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+
+import java.util.Locale;
 
 /**
  * A DialogFragment to select a file type, gpx, kml, etc.
@@ -82,14 +85,16 @@ public class FileTypeDialogFragment extends DialogFragment {
 
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
-    String fileTypes[] = getResources().getStringArray(R.array.file_types);
     int size = getArguments().getInt(KEY_SIZE);
     int optionId = getArguments().getInt(KEY_OPTION_ID);
     final int titleId = getArguments().getInt(KEY_TITLE_ID);
     final int menuId = getArguments().getInt(KEY_MENU_ID);
     String[] choices = new String[size];
+    TrackFileFormat[] trackFileFormats = TrackFileFormat.values();
     for (int i = 0; i < choices.length; i++) {
-      choices[i] = getString(optionId, fileTypes[i]);
+      String format = trackFileFormats[i].name();
+      choices[i] = getString(
+          optionId, format, FileUtils.getDisplayDirectory(format.toLowerCase(Locale.US)));
     }
     return new AlertDialog.Builder(getActivity()).setNegativeButton(R.string.generic_cancel, null)
         .setPositiveButton(R.string.generic_ok, new OnClickListener() {

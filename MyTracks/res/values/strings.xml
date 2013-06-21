@@ -616,8 +616,9 @@ limitations under the License.
     translation_description="When exporting all tracks to the external storage, the option to export
       as a certain file format.
 
-      %1$s: file format. 'KML', 'GPX', 'CSV', or 'TCX'.">
-    Export all as %1$s
+      %1$s: the file format. E.g., 'KML'.
+      %2$s: the directory. E.g., '/MyTracks/kml'.">
+    All as %1$s to %2$s
   </string>
   <string name="export_all_title"
     translation_description="The dialog title to export all tracks to the external storage.">
@@ -640,8 +641,9 @@ limitations under the License.
     translation_description="When exporting a track to the external storage, the option to export as
       a certain file format.
 
-      %1$s: file format. 'KML', 'GPX', 'CSV', or 'TCX'.">
-    as %1$s file
+      %1$s: the file format. E.g., 'KML'.
+      %2$s: the directory. E.g., '/MyTracks/kml'.">
+    as %1$s to %2$s
   </string>
   <string name="export_external_storage_progress_message"
     translation_description="When exporting tracks to the external storage, the progress message.
@@ -934,14 +936,15 @@ limitations under the License.
     Importing from %1$s&#8230;
   </string>
   <string name="import_selection_option"
-    translation_description="When importing from external storage, the option to import all the
+    translation_description="When importing all from external storage, the option to import all the
       files of a certain file format.
 
-      %1$s: file format. 'KML', 'GPX', 'CSV', or 'TCX'.">
-    Import all %1$s
+      %1$s: the file format. E.g., 'KML'.
+      %2$s: the directory. E.g., '/MyTracks/kml'.">
+    All %1$s from %2$s
   </string>
   <string name="import_selection_title"
-     translation_description="The dialog title to import from external storage.">
+     translation_description="The dialog title to import all from external storage.">
     Import from external storage
   </string>
   <string name="import_success"
