@@ -1580,22 +1580,23 @@ limitations under the License.
     Accounts &amp; sync
   </string>
   <string name="settings_google_account_confirm_message"
-    translation_description="In the 'Google' settings, the confirmation message when switching
-      account.
+    translation_description="In the 'Accounts and sync' settings, the confirmation message when
+      switching account.
 
       %1$s account name. E.g., 'foo@foo.com'.">
     This will remove any association between your tracks and %1$s Google Drive. Google Drive sync
     will be turned off. No tracks will be deleted on %1$s  Google Drive.
   </string>
   <string name="settings_google_account_title"
-    translation_description="In the 'Google' settings, the option to switch Google account.
+    translation_description="In the 'Accounts and sync' settings, the option to switch Google
+      account.
 
       Character limit: ~23 (1 line)">
     Switch account
   </string>
   <string name="settings_google_drive_sync_confirm_message"
-    translation_description="In the 'Google' settings, the confirmation message when checking the
-      'Sync Google Drive' checkbox.
+    translation_description="In the 'Accounts and sync' settings, the confirmation message when
+      checking the 'Sync to Google Drive' checkbox.
 
       %1$s account name. E.g., 'foo@foo.com'.
       %2$s folder name. E.g., 'My Tracks'.">
@@ -1603,19 +1604,19 @@ limitations under the License.
     not desired, move the files to a different folder beforehand.
   </string>
   <string name="settings_google_drive_sync_summary_on"
-    translation_description="In the 'Google' settings, the summary for the 'Sync Google Drive'
-      checkbox when it is checked explaining that all tracks will be synced to a Google Drive
-      account.
+    translation_description="In the 'Accounts and sync' settings, the summary for the 'Sync to
+      Google Drive' checkbox when it is checked explaining that all tracks will be synced to a
+      Google Drive account.
 
       %1$s account name. E.g., 'foo@foo.com'.">
     All tracks will be synced to %1$s Google Drive
   </string>
   <string name="settings_google_drive_sync_title"
-    translation_description="In the 'Google' settings, the checkbox to sync tracks with Google
-      Drive.
+    translation_description="In the 'Accounts and sync' settings, the checkbox to sync tracks with
+      Google Drive.
 
       Character limit: ~23 (1 line)">
-    Sync Google Drive
+    Sync to Google Drive
   </string>
 
   <!-- Settings Map -->
