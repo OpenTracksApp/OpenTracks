@@ -126,21 +126,30 @@ public class SaveActivity extends Activity {
             }, directoryDisplayName);
         return progressDialog;
       case DIALOG_RESULT_ID:
-        boolean success;
+        int iconId;
+        int titleId;
         String message;
         String totalTracks = getResources()
             .getQuantityString(R.plurals.tracks, totalCount, totalCount);
-        if (successCount == totalCount && totalCount > 0) {
-          success = true;
-          message = getString(R.string.export_external_storage_success, totalTracks, directoryDisplayName);
+        if (successCount == totalCount) {
+          iconId = android.R.drawable.ic_dialog_info;
+          if (totalCount == 0) {
+            titleId = R.string.export_external_storage_no_track_title;
+            message = getString(R.string.export_external_storage_no_track);
+          } else {
+            titleId = R.string.generic_success_title;
+            message = getString(
+                R.string.export_external_storage_success, totalTracks, directoryDisplayName);
+          }
         } else {
-          success = false;
-          message = getString(
-              R.string.export_external_storage_error, successCount, totalTracks, directoryDisplayName);
+          iconId = android.R.drawable.ic_dialog_alert;
+          titleId = R.string.generic_error_title;
+          message = getString(R.string.export_external_storage_error, successCount, totalTracks,
+              directoryDisplayName);
         }
-        AlertDialog.Builder builder = new AlertDialog.Builder(this).setCancelable(true).setIcon(
-            success ? android.R.drawable.ic_dialog_info : android.R.drawable.ic_dialog_alert)
-            .setMessage(message).setOnCancelListener(new DialogInterface.OnCancelListener() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this).setCancelable(true)
+            .setIcon(iconId).setMessage(message)
+            .setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
               public void onCancel(DialogInterface dialog) {
                 dialog.dismiss();
@@ -152,8 +161,8 @@ public class SaveActivity extends Activity {
                 dialog.dismiss();
                 finish();
               }
-            }).setTitle(success ? R.string.generic_success_title : R.string.generic_error_title);
-        if (!playTrack && trackIds.length == 1 && trackIds[0] != -1L && success
+            }).setTitle(titleId);
+        if (!playTrack && trackIds.length == 1 && trackIds[0] != -1L && successCount == totalCount
             && savedPath != null) {
           builder.setNegativeButton(
               R.string.share_track_share_file, new DialogInterface.OnClickListener() {
@@ -167,7 +176,6 @@ public class SaveActivity extends Activity {
                 }
               });
         }
-
         return builder.create();
       default:
         return null;

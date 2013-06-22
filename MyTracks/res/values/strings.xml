@@ -637,6 +637,16 @@ limitations under the License.
       %2$s the directory. E.g., '/MyTracks/kml'.">
     Exported %1$d of %2$s to %3$s.
   </string>
+  <string name="export_external_storage_no_track"
+    translation_description="When exporting tracks to the external storage, the messsage in the
+      result dialog when there is no tracks to export.">
+    There is no tracks to export.
+  </string>
+  <string name="export_external_storage_no_track_title"
+    translation_description="When exporting tracks to the external storage, the title in the result
+      dialog when there is no tracks to export.">
+    Export tracks
+  </string>
   <string name="export_external_storage_option"
     translation_description="When exporting a track to the external storage, the option to export as
       a certain file format.
@@ -928,6 +938,19 @@ limitations under the License.
 
       %1$s: the directory. E.g., '/MyTracks/kml'.">
     %1$s does not exist.
+  </string>
+  <string name="import_no_file"
+    translation_description="When importing from the external storage, the message in the result
+      dialog when there is no files to import.
+
+      %1$s: the directory. E.g., '/MyTracks/kml'.">
+    There were no files to import. Connect your device to your computer and place the files to
+    import in %1$s.
+  </string>
+  <string name="import_no_file_title"
+    translation_description="When importing from the external storage, the title in the result
+      dialog when there is no files to import.">
+    Import files
   </string>
   <string name="import_progress_message"
     translation_description="When importing from the external storage, the progress message.

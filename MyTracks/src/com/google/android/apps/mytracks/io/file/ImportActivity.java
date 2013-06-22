@@ -147,20 +147,28 @@ public class ImportActivity extends Activity {
             }, directoryDisplayName);
         return progressDialog;
       case DIALOG_RESULT_ID:
-        final boolean success;
+        int iconId;
+        int titleId;
         String message;
         String totalFiles = getResources()
             .getQuantityString(R.plurals.files, totalCount, totalCount);
-        if (successCount == totalCount && totalCount > 0) {
-          success = true;
-          message = getString(R.string.import_success, totalFiles, directoryDisplayName);
+        if (successCount == totalCount) {
+          iconId = android.R.drawable.ic_dialog_info;
+          if (totalCount == 0) {
+            titleId = R.string.import_no_file_title;
+            message = getString(R.string.import_no_file, directoryDisplayName);
+          } else {
+            titleId = R.string.generic_success_title;
+            message = getString(R.string.import_success, totalFiles, directoryDisplayName);
+          }
         } else {
-          success = false;
-          message = getString(R.string.import_error, successCount, totalFiles, directoryDisplayName);
+          iconId = android.R.drawable.ic_dialog_alert;
+          titleId = R.string.generic_error_title;
+          message = getString(
+              R.string.import_error, successCount, totalFiles, directoryDisplayName);
         }
-        return new AlertDialog.Builder(this).setCancelable(true).setIcon(
-            success ? android.R.drawable.ic_dialog_info : android.R.drawable.ic_dialog_alert)
-            .setMessage(message).setOnCancelListener(new DialogInterface.OnCancelListener() {
+        return new AlertDialog.Builder(this).setCancelable(true).setIcon(iconId).setMessage(message)
+            .setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
               public void onCancel(DialogInterface dialog) {
                 dialog.dismiss();
@@ -169,7 +177,7 @@ public class ImportActivity extends Activity {
             }).setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
                 @Override
               public void onClick(DialogInterface dialog, int which) {
-                if (success && !importAll && trackId != -1L) {
+                if (successCount == totalCount && !importAll && trackId != -1L) {
                   Intent intent = IntentUtils.newIntent(
                       ImportActivity.this, TrackDetailActivity.class)
                       .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);
@@ -180,8 +188,7 @@ public class ImportActivity extends Activity {
                 dialog.dismiss();
                 finish();
               }
-            }).setTitle(success ? R.string.generic_success_title : R.string.generic_error_title)
-            .create();
+            }).setTitle(titleId).create();
       default:
         return null;
     }
