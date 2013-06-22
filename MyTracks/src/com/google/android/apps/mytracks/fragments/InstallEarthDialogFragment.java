@@ -59,6 +59,6 @@ public class InstallEarthDialogFragment extends DialogFragment {
                   .show();
             }
           }
-        }).setTitle(R.string.generic_confirm_title).create();
+        }).setTitle(R.string.track_detail_install_earth_title).create();
   }
 }
