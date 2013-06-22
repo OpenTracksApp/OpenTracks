@@ -31,6 +31,7 @@ public class FileUtils {
   private FileUtils() {}
 
   public static final String TEMP_DIR = "tmp";
+  public static final String BACKUPS_DIR = "backups";
   
   /**
    * Name of the top-level directory inside the SD card where our files will be

@@ -64,14 +64,14 @@ public class RestoreChooserActivity extends Activity {
     }
 
     if (!externalFileBackup.isBackupsDirectoryAvailable(false)) {
-      Toast.makeText(this, R.string.settings_backup_restore_no_backup, Toast.LENGTH_LONG).show();
+      showNoBackupMessage();
       finish();
       return;
     }
 
     backupDates = externalFileBackup.getAvailableBackups();
     if (backupDates == null || backupDates.length == 0) {
-      Toast.makeText(this, R.string.settings_backup_restore_no_backup, Toast.LENGTH_LONG).show();
+      showNoBackupMessage();
       finish();
       return;
     }
@@ -117,5 +117,14 @@ public class RestoreChooserActivity extends Activity {
         })
         .setTitle(R.string.settings_backup_restore_select_title)
         .create();
+  }
+
+  /**
+   * Shows a no backup message.
+   */
+  private void showNoBackupMessage() {
+    String message = getString(R.string.settings_backup_restore_no_backup,
+        FileUtils.getDirectoryDisplayName(FileUtils.BACKUPS_DIR));
+    Toast.makeText(this, message, Toast.LENGTH_LONG).show();
   }
 }

@@ -59,7 +59,6 @@ class ExternalFileBackup {
     BACKUP_FILENAME_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
   }
 
-  private static final String BACKUPS_SUBDIR = "backups";
   private static final int BACKUP_FORMAT_VERSION = 1;
   private static final String ZIP_ENTRY_NAME =
       "backup.mytracks.v" + BACKUP_FORMAT_VERSION;
@@ -86,7 +85,7 @@ class ExternalFileBackup {
    * @param create whether to try creating the directory if it doesn't exist
    */
   private File getBackupsDirectory(boolean create) {
-    String directoryPath = FileUtils.getDirectoryPath(BACKUPS_SUBDIR);
+    String directoryPath = FileUtils.getDirectoryPath(FileUtils.BACKUPS_DIR);
     final File dir = new File(directoryPath);
     Log.d(Constants.TAG, "Dir: " + dir.getAbsolutePath());
     if (create) {

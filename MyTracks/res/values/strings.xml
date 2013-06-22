@@ -1527,8 +1527,10 @@ limitations under the License.
   <string name="settings_backup_restore_no_backup"
     translation_description="In the 'Backup and reset' settings, after pressing the 'Restore now'
       option, the message in the alert dialog informing the user that there is no backup to restore
-      from.">
-    No backup found.
+      from.
+      
+      %1$s the directory. E.g., '/MyTracks/backups'.">
+    No backups found in %1$s.
   </string>
   <string name="settings_backup_restore_progress_message"
     translation_description="In the 'Backup and reset' settings, after pressing the 'Restore now'
