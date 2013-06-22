@@ -347,7 +347,7 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
         confirmPlay(new long[] {trackId});
         return true;
       case R.id.list_context_menu_share:
-        confirmShare(trackId);
+        shareTrack(trackId);
         return true;
       case R.id.list_context_menu_show_on_map:
         intent = IntentUtils.newIntent(this, TrackDetailActivity.class)

@@ -50,20 +50,6 @@ public class ShareTest extends ActivityInstrumentationTestCase2<TrackListActivit
   }
 
   /**
-   * Tests quitting the share.
-   */
-  public void testQuitShare() {
-    EndToEndTestUtils.resetAllSettings(activityMyTracks, false);
-    EndToEndTestUtils.createTrackIfEmpty(0, false);
-
-    // Click share, check message and cancel the share.
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_share), true);
-    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.share_track_confirm_message)));
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_no));
-  }
-
-  /**
    * Tests the share one track.
    */
   public void testShare() {

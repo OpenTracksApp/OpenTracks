@@ -1528,7 +1528,7 @@ limitations under the License.
     translation_description="In the 'Backup and reset' settings, after pressing the 'Restore now'
       option, the message in the alert dialog informing the user that there is no backup to restore
       from.
-      
+
       %1$s the directory. E.g., '/MyTracks/backups'.">
     No backups found in %1$s.
   </string>
@@ -2024,14 +2024,13 @@ limitations under the License.
   </string>
 
   <!-- Share Track -->
-  <string name="share_track_confirm_message"
-    translation_description="The confirmation message when sharing a track via Google Drive with
-      friends.">
-    This will upload your track to Google Drive so you can share the file with friends.
-  </string>
   <string name="share_track_emails_hint"
     translation_description="The hint for the auto complete text box for entering email addresses.">
     Email addresses
+  </string>
+  <string name="share_track_footer"
+    translation_description="The dialog footer when sharing a track via Google Drive.">
+    This will updload your track to Google Drive.
   </string>
   <string name="share_track_invite"
     translation_description="The checkbox to invite people to view a track.">
@@ -2093,7 +2092,7 @@ limitations under the License.
   </string>
   <string name="share_track_title"
     translation_description="The dialog title to share a track.">
-    Share track
+    Share track via Google Drive
   </string>
 
   <!-- Stats -->

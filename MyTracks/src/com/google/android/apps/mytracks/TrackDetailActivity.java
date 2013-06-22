@@ -340,7 +340,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
         confirmPlay(new long[] {trackId});
         return true;
       case R.id.track_detail_share:
-        confirmShare(trackId);
+        shareTrack(trackId);
         return true;
       case R.id.track_detail_markers:
         intent = IntentUtils.newIntent(this, MarkerListActivity.class)

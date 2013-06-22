@@ -770,7 +770,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         confirmPlay(trackIds);
         return true;
       case R.id.list_context_menu_share:
-        confirmShare(trackIds[0]);
+        shareTrack(trackIds[0]);
         return true;
       case R.id.list_context_menu_edit:
         Intent intent = IntentUtils.newIntent(this, TrackEditActivity.class)

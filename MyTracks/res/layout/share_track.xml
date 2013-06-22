@@ -20,10 +20,7 @@ limitations under the License.
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="16dp"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp"
-    android:paddingTop="8dp" >
+    android:padding="8dp">
     <CheckBox
       android:id="@+id/share_track_public"
       android:layout_gravity="center_vertical"
@@ -46,5 +43,9 @@ limitations under the License.
       android:singleLine="false"
       android:visibility="gone" >
     </MultiAutoCompleteTextView>
+    <TextView 
+      android:text="@string/share_track_footer"
+      android:layout_marginTop="16dp"
+      style="@style/TextSmall" />
   </LinearLayout>
 </ScrollView>

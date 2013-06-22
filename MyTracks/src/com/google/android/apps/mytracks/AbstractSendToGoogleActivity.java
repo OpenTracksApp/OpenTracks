@@ -335,33 +335,25 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
    * 
    * @param trackId the track id
    */
-  protected void confirmShare(long trackId) {
-    ConfirmDialogFragment.newInstance(R.string.confirm_share_drive_key,
-        PreferencesUtils.CONFIRM_SHARE_DRIVE_DEFAULT,
-        getString(R.string.share_track_confirm_message), new long[] { trackId })
-        .show(getSupportFragmentManager(), ConfirmDialogFragment.CONFIRM_DIALOG_TAG);
+  protected void shareTrack(long trackId) {
+    AnalyticsUtils.sendPageViews(this, "/action/share_drive");
+    SendRequest newRequest;
+    newRequest = new SendRequest(trackId);
+    newRequest.setSendDrive(true);
+    newRequest.setDriveShare(true);
+    sendToGoogle(newRequest);
   }
 
   @Override
   public void onConfirmDone(int confirmId, long[] trackIds) {
-    Intent intent;
-    SendRequest newRequest;
-
     switch (confirmId) {
       case R.string.confirm_play_earth_key:
         AnalyticsUtils.sendPageViews(this, "/action/play");
-        intent = IntentUtils.newIntent(this, SaveActivity.class)
+        Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
             .putExtra(SaveActivity.EXTRA_TRACK_IDS, trackIds)
             .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.KML)
             .putExtra(SaveActivity.EXTRA_PLAY_TRACK, true);
         startActivity(intent);
-        break;
-      case R.string.confirm_share_drive_key:
-        AnalyticsUtils.sendPageViews(this, "/action/share_drive");
-        newRequest = new SendRequest(trackIds[0]);
-        newRequest.setSendDrive(true);
-        newRequest.setDriveShare(true);
-        sendToGoogle(newRequest);
         break;
       default:
     }
