@@ -273,7 +273,7 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
   private void onSpreadsheetsPermissionSuccess() {
     Class<?> next;
     if (sendRequest.isSendDrive()) {
-      if (sendRequest.isDriveEnableSync()) {
+      if (sendRequest.isDriveSync()) {
         PreferencesUtils.setBoolean(this, R.string.drive_sync_key, true);
 
         // Turn off everything

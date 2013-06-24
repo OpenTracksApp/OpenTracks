@@ -708,7 +708,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     if (enable) {
       SendRequest sendRequest = new SendRequest(-1L);
       sendRequest.setSendDrive(true);
-      sendRequest.setDriveEnableSync(true);
+      sendRequest.setDriveSync(true);
       sendToGoogle(sendRequest);
     }
   }

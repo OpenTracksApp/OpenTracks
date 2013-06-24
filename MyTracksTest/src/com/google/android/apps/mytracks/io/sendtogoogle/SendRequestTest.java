@@ -144,7 +144,7 @@ public class SendRequestTest extends AndroidTestCase {
     assertTrue(sendRequest.isSendMaps());
     assertTrue(sendRequest.isSendFusionTables());
     assertTrue(sendRequest.isSendSpreadsheets());
-    assertTrue(sendRequest.isDriveEnableSync());
+    assertTrue(sendRequest.isDriveSync());
     assertTrue(sendRequest.isDriveShare());
     assertEquals(DRIVE_SHARE_EMAILS, sendRequest.getDriveShareEmails());
     assertTrue(sendRequest.isDriveSharePublic());
@@ -185,7 +185,7 @@ public class SendRequestTest extends AndroidTestCase {
     assertFalse(sendRequest.isSendMaps());
     assertFalse(sendRequest.isSendFusionTables());
     assertFalse(sendRequest.isSendSpreadsheets());
-    assertFalse(sendRequest.isDriveEnableSync());
+    assertFalse(sendRequest.isDriveSync());
     assertFalse(sendRequest.isDriveShare());
     assertNull(sendRequest.getDriveShareEmails());
     assertFalse(sendRequest.isDriveSharePublic());
@@ -247,7 +247,7 @@ public class SendRequestTest extends AndroidTestCase {
     sendRequest.setSendMaps(true);
     sendRequest.setSendFusionTables(true);
     sendRequest.setSendSpreadsheets(true);
-    sendRequest.setDriveEnableSync(true);
+    sendRequest.setDriveSync(true);
     sendRequest.setDriveShare(true);
     sendRequest.setDriveShareEmails(DRIVE_SHARE_EMAILS);
     sendRequest.setDriveSharePublic(true);
