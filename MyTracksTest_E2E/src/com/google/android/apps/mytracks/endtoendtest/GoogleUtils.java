@@ -312,7 +312,7 @@ public class GoogleUtils {
       SpreadsheetService spreadsheetService = new SpreadsheetService(spreadsheetTitle);
       Credential credential = new Credential(BearerToken.authorizationHeaderAccessMethod());
       credential.setAccessToken(SendToGoogleUtils.getToken(activity.getApplicationContext(),
-          accountName, SendToGoogleUtils.SPREADSHEET_SCOPE));
+          accountName, SendToGoogleUtils.SPREADSHEETS_SCOPE));
       spreadsheetService.setOAuth2Credentials(credential);
 
       // Get work sheet.

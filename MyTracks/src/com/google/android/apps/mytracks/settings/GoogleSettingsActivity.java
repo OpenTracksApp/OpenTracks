@@ -57,7 +57,7 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
   private static final String ACCOUNT_NAME_KEY = "accountName";
   private static final int DIALOG_CONFIRM_SWITCH_ACCOUNT = 0;
   private static final int DIALOG_CONFIRM_DRIVE_SYNC_ON = 1;
-
+  private static final int DRIVE_REQUEST_CODE = 0;
   private ListPreference googleAccountPreference;
   private CheckBoxPreference driveSyncPreference;
 
@@ -122,7 +122,7 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     switch (requestCode) {
-      case SendToGoogleUtils.DRIVE_PERMISSION_REQUEST_CODE:
+      case DRIVE_REQUEST_CODE:
         SendToGoogleUtils.cancelNotification(this, SendToGoogleUtils.DRIVE_NOTIFICATION_ID);
         if (resultCode == Activity.RESULT_OK) {
           onDrivePermissionSuccess();
@@ -195,7 +195,7 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
           onDrivePermissionSuccess();
         } else {
           if (intent != null) {
-            startActivityForResult(intent, SendToGoogleUtils.DRIVE_PERMISSION_REQUEST_CODE);
+            startActivityForResult(intent, DRIVE_REQUEST_CODE);
           } else {
             onDrivePermissionFailure();
           }

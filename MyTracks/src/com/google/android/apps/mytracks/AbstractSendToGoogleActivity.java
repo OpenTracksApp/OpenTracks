@@ -71,7 +71,10 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
 
   private static final String TAG = AbstractMyTracksActivity.class.getSimpleName();
   private static final String SEND_REQUEST_KEY = "send_request_key";
-
+  private static final int DRIVE_REQUEST_CODE = 0;
+  private static final int FUSION_TABLES_REQUEST_CODE = 1;
+  private static final int SPREADSHEETS_REQUEST_CODE = 2;
+  
   private SendRequest sendRequest;
 
   @Override
@@ -169,11 +172,11 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
       if (intent != null) {
         int requestCode;
         if (scope.equals(SendToGoogleUtils.DRIVE_SCOPE)) {
-          requestCode = SendToGoogleUtils.DRIVE_PERMISSION_REQUEST_CODE;
+          requestCode = DRIVE_REQUEST_CODE;
         } else if (scope.equals(SendToGoogleUtils.FUSION_TABLES_SCOPE)) {
-          requestCode = SendToGoogleUtils.FUSION_TABLES_PERMISSION_REQUEST_CODE;
+          requestCode = FUSION_TABLES_REQUEST_CODE;
         } else {
-          requestCode = SendToGoogleUtils.SPREADSHEET_PERMISSION_REQUEST_CODE;
+          requestCode = SPREADSHEETS_REQUEST_CODE;
         }
         startActivityForResult(intent, requestCode);
       } else {
@@ -185,7 +188,7 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     switch (requestCode) {
-      case SendToGoogleUtils.DRIVE_PERMISSION_REQUEST_CODE:
+      case DRIVE_REQUEST_CODE:
         SendToGoogleUtils.cancelNotification(this, SendToGoogleUtils.DRIVE_NOTIFICATION_ID);
         if (resultCode == Activity.RESULT_OK) {
           onDrivePermissionSuccess();
@@ -193,7 +196,7 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
           onPermissionFailure();
         }
         break;
-      case SendToGoogleUtils.FUSION_TABLES_PERMISSION_REQUEST_CODE:
+      case FUSION_TABLES_REQUEST_CODE:
         SendToGoogleUtils.cancelNotification(this, SendToGoogleUtils.FUSION_TABLES_NOTIFICATION_ID);
         if (resultCode == Activity.RESULT_OK) {
           onFusionTablesSuccess();
@@ -201,8 +204,8 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
           onPermissionFailure();
         }
         break;
-      case SendToGoogleUtils.SPREADSHEET_PERMISSION_REQUEST_CODE:
-        SendToGoogleUtils.cancelNotification(this, SendToGoogleUtils.SPREADSHEET_NOTIFICATION_ID);
+      case SPREADSHEETS_REQUEST_CODE:
+        SendToGoogleUtils.cancelNotification(this, SendToGoogleUtils.SPREADSHEETS_NOTIFICATION_ID);
         if (resultCode == Activity.RESULT_OK) {
           onSpreadsheetsPermissionSuccess();
         } else {
@@ -270,7 +273,7 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
     // Check Spreadsheets permission
     if (sendRequest.isSendSpreadsheets()) {
       Fragment fragment = CheckPermissionFragment.newInstance(
-          sendRequest.getAccount().name, SendToGoogleUtils.SPREADSHEET_SCOPE);
+          sendRequest.getAccount().name, SendToGoogleUtils.SPREADSHEETS_SCOPE);
       getSupportFragmentManager()
           .beginTransaction().add(fragment, CheckPermissionFragment.CHECK_PERMISSION_TAG).commit();
     } else {

@@ -103,7 +103,7 @@ public class SendSpreadsheetsAsyncTask extends AbstractSendAsyncTask {
       Credential credential = new Credential(BearerToken.authorizationHeaderAccessMethod());
 
       credential.setAccessToken(
-          SendToGoogleUtils.getToken(context, account.name, SendToGoogleUtils.SPREADSHEET_SCOPE));
+          SendToGoogleUtils.getToken(context, account.name, SendToGoogleUtils.SPREADSHEETS_SCOPE));
       spreadsheetService.setOAuth2Credentials(credential);
 
       Track track = myTracksProviderUtils.getTrack(trackId);
@@ -141,14 +141,14 @@ public class SendSpreadsheetsAsyncTask extends AbstractSendAsyncTask {
       return true;
     } catch (UserRecoverableAuthException e) {
       SendToGoogleUtils.sendNotification(
-          context, account.name, e.getIntent(), SendToGoogleUtils.SPREADSHEET_NOTIFICATION_ID);
+          context, account.name, e.getIntent(), SendToGoogleUtils.SPREADSHEETS_NOTIFICATION_ID);
       return false;
     } catch (GoogleAuthException e) {
       Log.e(TAG, "GoogleaAuthException", e);
       return retryTask();
     } catch (UserRecoverableAuthIOException e) {
       SendToGoogleUtils.sendNotification(
-          context, account.name, e.getIntent(), SendToGoogleUtils.SPREADSHEET_NOTIFICATION_ID);
+          context, account.name, e.getIntent(), SendToGoogleUtils.SPREADSHEETS_NOTIFICATION_ID);
       return false;
     } catch (IOException e) {
       Log.e(TAG, "IOException", e);

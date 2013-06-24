@@ -47,20 +47,14 @@ public class SendToGoogleUtils {
 
   private static final String TAG = SendToGoogleUtils.class.getSimpleName();
 
-  // Request code to obtain Drive permission
-  public static final int DRIVE_PERMISSION_REQUEST_CODE = 1;
   public static final String DRIVE_SCOPE = DriveScopes.DRIVE;
   public static final int DRIVE_NOTIFICATION_ID = 1;
 
-  // Request code to obtain Fusion Tables permission
-  public static final int FUSION_TABLES_PERMISSION_REQUEST_CODE = 2;
   public static final String FUSION_TABLES_SCOPE = FusiontablesScopes.FUSIONTABLES;
   public static final int FUSION_TABLES_NOTIFICATION_ID = 2;
 
-  // Request code to obtain Spreadsheet permission
-  public static final int SPREADSHEET_PERMISSION_REQUEST_CODE = 3;
-  public static final String SPREADSHEET_SCOPE = "https://spreadsheets.google.com/feeds";
-  public static final int SPREADSHEET_NOTIFICATION_ID = 3;
+  public static final String SPREADSHEETS_SCOPE = "https://spreadsheets.google.com/feeds";
+  public static final int SPREADSHEETS_NOTIFICATION_ID = 3;
   
   private SendToGoogleUtils() {}
 
