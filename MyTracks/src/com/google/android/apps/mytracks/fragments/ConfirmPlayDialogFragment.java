@@ -31,89 +31,75 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 /**
- * A DialogFragment to confirm an action.
+ * A DialogFragment to confirm playing a track.
  * 
  * @author Jimmy Shih
  */
-public class ConfirmDialogFragment extends DialogFragment {
+public class ConfirmPlayDialogFragment extends DialogFragment {
 
   /**
    * Interface for caller of this dialog fragment.
    * 
    * @author Jimmy Shih
    */
-  public interface ConfirmCaller {
+  public interface ConfirmPlayCaller {
 
     /**
-     * Called when confirm is done.
+     * Called when confirm play is done.
      */
-    public void onConfirmDone(int confirmId, long[] trackIds);
+    public void onConfirmPlayDone(long[] trackIds);
   }
 
-  public static final String CONFIRM_DIALOG_TAG = "confirmDialog";
+  public static final String CONFIRM_PLAY_DIALOG_TAG = "confirmPlayDialog";
 
-  private static final String KEY_CONFIRM_ID = "confirmId";
-  private static final String KEY_DEFAULT_VALUE = "defaultValue";
-  private static final String KEY_MESSAGE = "message";
   private static final String KEY_TRACK_IDS = "trackIds";
 
   private CheckBox checkBox;
 
-  public static ConfirmDialogFragment newInstance(
-      int confirmId, boolean defaultValue, CharSequence message, long[] trackIds) {
+  public static ConfirmPlayDialogFragment newInstance(long[] trackIds) {
     Bundle bundle = new Bundle();
-    bundle.putInt(KEY_CONFIRM_ID, confirmId);
-    bundle.putBoolean(KEY_DEFAULT_VALUE, defaultValue);
-    bundle.putCharSequence(KEY_MESSAGE, message);
     bundle.putLongArray(KEY_TRACK_IDS, trackIds);
 
-    ConfirmDialogFragment confirmDialogFragment = new ConfirmDialogFragment();
+    ConfirmPlayDialogFragment confirmDialogFragment = new ConfirmPlayDialogFragment();
     confirmDialogFragment.setArguments(bundle);
     return confirmDialogFragment;
   }
 
-  private ConfirmCaller caller;
+  private ConfirmPlayCaller caller;
   private FragmentActivity fragmentActivity;
 
   @Override
   public void onAttach(Activity activity) {
     super.onAttach(activity);
     try {
-      caller = (ConfirmCaller) activity;
+      caller = (ConfirmPlayCaller) activity;
     } catch (ClassCastException e) {
       throw new ClassCastException(
-          activity.toString() + " must implement " + ConfirmCaller.class.getSimpleName());
+          activity.toString() + " must implement " + ConfirmPlayCaller.class.getSimpleName());
     }
   }
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    int confirmId = getArguments().getInt(KEY_CONFIRM_ID);
-    boolean defaultValue = getArguments().getBoolean(KEY_DEFAULT_VALUE);
     fragmentActivity = getActivity();
-    if (!PreferencesUtils.getBoolean(fragmentActivity, confirmId, defaultValue)) {
-      long[] trackIds = getArguments().getLongArray(KEY_TRACK_IDS);
-      dismiss();
-      caller.onConfirmDone(confirmId, trackIds);
-    }
   }
 
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     View view = fragmentActivity.getLayoutInflater().inflate(R.layout.confirm_dialog, null);
     TextView textView = (TextView) view.findViewById(R.id.confirm_dialog_message);
-    textView.setText(getArguments().getCharSequence(KEY_MESSAGE));
+    textView.setText(R.string.track_detail_play_confirm_message);
     checkBox = (CheckBox) view.findViewById(R.id.confirm_dialog_check_box);
 
     return new AlertDialog.Builder(fragmentActivity).setNegativeButton(R.string.generic_no, null)
         .setPositiveButton(R.string.generic_yes, new DialogInterface.OnClickListener() {
             @Override
           public void onClick(DialogInterface dialog, int which) {
-            int confirmId = getArguments().getInt(KEY_CONFIRM_ID);
             long[] trackIds = getArguments().getLongArray(KEY_TRACK_IDS);
-            PreferencesUtils.setBoolean(fragmentActivity, confirmId, !checkBox.isChecked());
-            caller.onConfirmDone(confirmId, trackIds);
+            PreferencesUtils.setBoolean(
+                fragmentActivity, R.string.confirm_play_earth_key, !checkBox.isChecked());
+            caller.onConfirmPlayDone(trackIds);
           }
         }).setTitle(R.string.generic_confirm_title).setView(view).create();
   }
