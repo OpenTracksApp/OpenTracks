@@ -19,10 +19,10 @@ package com.google.android.apps.mytracks;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
+import com.google.android.apps.mytracks.fragments.ConfirmSyncDialogFragment;
+import com.google.android.apps.mytracks.fragments.ConfirmSyncDialogFragment.ConfirmSyncCaller;
 import com.google.android.apps.mytracks.fragments.DeleteTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteTrackDialogFragment.DeleteTrackCaller;
-import com.google.android.apps.mytracks.fragments.EnableSyncDialogFragment;
-import com.google.android.apps.mytracks.fragments.EnableSyncDialogFragment.EnableSyncCaller;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment.EulaCaller;
 import com.google.android.apps.mytracks.fragments.FileTypeDialogFragment;
@@ -93,7 +93,7 @@ import java.util.Locale;
  * @author Leif Hendrik Wilden
  */
 public class TrackListActivity extends AbstractSendToGoogleActivity
-    implements EulaCaller, EnableSyncCaller, DeleteTrackCaller, FileTypeCaller {
+    implements EulaCaller, ConfirmSyncCaller, DeleteTrackCaller, FileTypeCaller {
 
   private static final String TAG = TrackListActivity.class.getSimpleName();
   private static final int GOOGLE_PLAY_SERVICES_REQUEST_CODE = 0;
@@ -693,16 +693,17 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   private void showEnableSync() {
     if (EulaUtils.getShowEnableSync(this)) {
       Fragment fragment = getSupportFragmentManager()
-          .findFragmentByTag(EnableSyncDialogFragment.ENABLE_SYNC_DIALOG_TAG);
+          .findFragmentByTag(ConfirmSyncDialogFragment.CONFIRM_SYNC_DIALOG_TAG);
       if (fragment == null) {
-        new EnableSyncDialogFragment().show(
-            getSupportFragmentManager(), EnableSyncDialogFragment.ENABLE_SYNC_DIALOG_TAG);
+        ConfirmSyncDialogFragment.newInstance(
+            R.string.sync_enable_title, getString(R.string.sync_enable_message))
+            .show(getSupportFragmentManager(), ConfirmSyncDialogFragment.CONFIRM_SYNC_DIALOG_TAG);
       }
     }
   }
 
   @Override
-  public void onEnableSyncDone(boolean enable) {
+  public void onConfirmSyncDone(boolean enable) {
     EulaUtils.setShowEnableSync(this);
     if (enable) {
       SendRequest sendRequest = new SendRequest(-1L);

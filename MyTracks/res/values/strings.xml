@@ -556,19 +556,6 @@ limitations under the License.
     Segment
   </string>
 
-  <!-- Enable Sync -->
-  <string name="enable_sync_message"
-    translation_description="The dialog message asking the user if he wants to enable sync with
-      Google Drive.">
-    This will allow you to view your tracks in Google Drive and view the tracks shared with you. All
-    tracks synced to Google Drive will be private by default.
-  </string>
-  <string name="enable_sync_title"
-    translation_description="The dialog title asking the user if he wants to enable sync with Google
-      Drive.">
-    Sync with Google Drive?
-  </string>
-
   <!-- Eula -->
   <string name="eula_accept"
     translation_description="In the 'Terms of Service' dialog, the button to accept.">
@@ -2176,7 +2163,20 @@ limitations under the License.
     translation_description="In the 'Stats' page, the total time.">
     Total time
   </string>
-
+  
+  <!-- Sync -->
+  <string name="sync_enable_message"
+    translation_description="The dialog message asking the user if he wants to enable sync with
+      Google Drive.">
+    This will allow you to view your tracks in Google Drive and view the tracks shared with you. All
+    tracks synced to Google Drive will be private by default.
+  </string>
+  <string name="sync_enable_title"
+    translation_description="The dialog title asking the user if he wants to enable sync with Google
+      Drive.">
+    Sync with Google Drive?
+  </string>
+  
   <!-- Track -->
   <string name="track_name_format"
     translation_description="When creating a new track, the string format to name the track.
