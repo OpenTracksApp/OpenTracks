@@ -36,44 +36,44 @@ public class DialogUtils {
 
   /**
    * Creates a confirmation dialog.
-   *
+   * 
    * @param context the context
    * @param messageId the message id
    * @param okListener the listener when OK is clicked
    */
   public static Dialog createConfirmationDialog(
       Context context, int messageId, DialogInterface.OnClickListener okListener) {
-    return createConfirmationDialog(context, messageId, null, okListener, null);
+    return createConfirmationDialog(
+        context, R.string.generic_confirm_title, messageId, null, okListener, null);
   }
 
   /**
    * Creates a confirmation dialog.
    * 
    * @param context the context
+   * @param titleId the titleId
    * @param messageId the messageId
    * @param view the view
    * @param okListener the listener when OK is clicked
    * @param cancelListener the listener when cancel is clicked
    */
-  public static Dialog createConfirmationDialog(
-      Context context, int messageId, View view, DialogInterface.OnClickListener okListener,
+  public static Dialog createConfirmationDialog(Context context, int titleId, int messageId,
+      View view, DialogInterface.OnClickListener okListener,
       DialogInterface.OnClickListener cancelListener) {
-    AlertDialog.Builder builder = new AlertDialog.Builder(context)
-        .setCancelable(true)
+    AlertDialog.Builder builder = new AlertDialog.Builder(context).setCancelable(true)
         .setIcon(android.R.drawable.ic_dialog_alert)
         .setNegativeButton(R.string.generic_no, cancelListener)
-        .setPositiveButton(R.string.generic_yes, okListener)
-        .setTitle(R.string.generic_confirm_title);
+        .setPositiveButton(R.string.generic_yes, okListener).setTitle(titleId);
     if (messageId != -1) {
       builder.setMessage(messageId);
     }
     if (view != null) {
       builder.setView(view);
     }
-    
+
     return builder.create();
   }
-
+  
   /**
    * Creates a spinner progress dialog.
    *

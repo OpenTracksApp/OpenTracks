@@ -29,38 +29,38 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 
 /**
- * A DialogFrament to confirm sync to Google Drive.
+ * A DialogFrament to enable sync to Google Drive.
  * 
  * @author Jimmy Shih
  */
-public class ConfirmSyncDialogFragment extends DialogFragment {
+public class EnableSyncDialogFragment extends DialogFragment {
 
   /**
    * Interface for caller of this dialog fragment.
    * 
    * @author Jimmy Shih
    */
-  public interface ConfirmSyncCaller {
+  public interface EnableSyncCaller {
 
     /**
-     * Called when confirm sync is done.
+     * Called when enable sync is done.
      */
-    public void onConfirmSyncDone(boolean enable);
+    public void onEnableSyncDone(boolean enable);
   }
 
-  public static final String CONFIRM_SYNC_DIALOG_TAG = "confirmSyncDialog";
+  public static final String ENABLE_SYNC_DIALOG_TAG = "enableSyncDialog";
 
-  private ConfirmSyncCaller caller;
+  private EnableSyncCaller caller;
   private FragmentActivity fragmentActivity;
 
   @Override
   public void onAttach(Activity activity) {
     super.onAttach(activity);
     try {
-      caller = (ConfirmSyncCaller) activity;
+      caller = (EnableSyncCaller) activity;
     } catch (ClassCastException e) {
       throw new ClassCastException(
-          activity.toString() + " must implement " + ConfirmSyncCaller.class.getSimpleName());
+          activity.toString() + " must implement " + EnableSyncCaller.class.getSimpleName());
     }
   }
 
@@ -71,33 +71,29 @@ public class ConfirmSyncDialogFragment extends DialogFragment {
     if (PreferencesUtils.getBoolean(
         fragmentActivity, R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT)) {
       dismiss();
-      caller.onConfirmSyncDone(false);
+      caller.onEnableSyncDone(false);
       return;
     }
   }
 
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
-    String googleAccount = PreferencesUtils.getString(
-        fragmentActivity, R.string.google_account_key, PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
-    String message = getString(
-        R.string.sync_drive_confirm_message, googleAccount, getString(R.string.my_tracks_app_name));
-    return new AlertDialog.Builder(fragmentActivity).setMessage(message)
+    return new AlertDialog.Builder(fragmentActivity).setMessage(R.string.sync_drive_enable_message)
         .setNegativeButton(R.string.generic_no, new OnClickListener() {
             @Override
           public void onClick(DialogInterface dialog, int which) {
-            caller.onConfirmSyncDone(false);
+            caller.onEnableSyncDone(false);
           }
         }).setPositiveButton(R.string.generic_yes, new OnClickListener() {
             @Override
           public void onClick(DialogInterface dialog, int which) {
-            caller.onConfirmSyncDone(true);
+            caller.onEnableSyncDone(true);
           }
         }).setTitle(R.string.sync_drive_title).create();
   }
 
   @Override
   public void onCancel(DialogInterface arg0) {
-    caller.onConfirmSyncDone(false);
+    caller.onEnableSyncDone(false);
   }
 }

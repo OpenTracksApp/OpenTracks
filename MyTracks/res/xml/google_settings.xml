@@ -23,5 +23,5 @@ limitations under the License.
   <CheckBoxPreference
     android:defaultValue="false"
     android:key="@string/drive_sync_key"
-    android:title="@string/settings_google_drive_sync_title" />
+    android:title="@string/menu_sync_drive" />
 </PreferenceScreen>

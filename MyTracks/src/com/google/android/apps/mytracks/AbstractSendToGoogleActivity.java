@@ -22,6 +22,8 @@ import com.google.android.apps.mytracks.fragments.ChooseAccountDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChooseAccountDialogFragment.ChooseAccountCaller;
 import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment;
 import com.google.android.apps.mytracks.fragments.ConfirmDialogFragment.ConfirmCaller;
+import com.google.android.apps.mytracks.fragments.ConfirmSyncDialogFragment;
+import com.google.android.apps.mytracks.fragments.ConfirmSyncDialogFragment.ConfirmSyncCaller;
 import com.google.android.apps.mytracks.fragments.InstallEarthDialogFragment;
 import com.google.android.apps.mytracks.fragments.ShareTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.ShareTrackDialogFragment.ShareTrackCaller;
@@ -65,7 +67,7 @@ import java.io.IOException;
  * @author Jimmy Shih
  */
 public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActivity implements
-    ChooseAccountCaller, CheckPermissionCaller, ShareTrackCaller, ConfirmCaller {
+    ChooseAccountCaller, ConfirmSyncCaller, CheckPermissionCaller, ShareTrackCaller, ConfirmCaller {
 
   private static final String TAG = AbstractMyTracksActivity.class.getSimpleName();
   private static final String SEND_REQUEST_KEY = "send_request_key";
@@ -132,27 +134,39 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
     }
     sendRequest.setAccount(new Account(googleAccount, Constants.ACCOUNT_TYPE));
 
-    // Check Drive permission
-    boolean needDrivePermission = sendRequest.isSendDrive();
-    if (!needDrivePermission && sendRequest.isSendFusionTables()) {
-      needDrivePermission = PreferencesUtils.getBoolean(this,
-          R.string.export_google_fusion_tables_public_key,
-          PreferencesUtils.EXPORT_GOOGLE_FUSION_TABLES_PUBLIC_DEFAULT);
-    }
-    if (!needDrivePermission) {
-      needDrivePermission = sendRequest.isSendSpreadsheets();
-    }
-
-    if (needDrivePermission) {
-      Fragment fragment = CheckPermissionFragment.newInstance(
-          sendRequest.getAccount().name, SendToGoogleUtils.DRIVE_SCOPE);
-      getSupportFragmentManager()
-          .beginTransaction().add(fragment, CheckPermissionFragment.CHECK_PERMISSION_TAG).commit();
+    if (sendRequest.isSendDrive() && sendRequest.isDriveSync() && sendRequest.isDriveSyncConfirm()) {
+      new ConfirmSyncDialogFragment().show(
+          getSupportFragmentManager(), ConfirmSyncDialogFragment.CONFIRM_SYNC_DIALOG_TAG);
     } else {
-      onDrivePermissionSuccess();
+      onConfirmSyncDone(true);
     }
   }
 
+  @Override
+  public void onConfirmSyncDone(boolean enable) {
+    if (enable) {
+      // Check Drive permission
+      boolean needDrivePermission = sendRequest.isSendDrive();
+      if (!needDrivePermission && sendRequest.isSendFusionTables()) {
+        needDrivePermission = PreferencesUtils.getBoolean(this,
+            R.string.export_google_fusion_tables_public_key,
+            PreferencesUtils.EXPORT_GOOGLE_FUSION_TABLES_PUBLIC_DEFAULT);
+      }
+      if (!needDrivePermission) {
+        needDrivePermission = sendRequest.isSendSpreadsheets();
+      }
+
+      if (needDrivePermission) {
+        Fragment fragment = CheckPermissionFragment.newInstance(
+            sendRequest.getAccount().name, SendToGoogleUtils.DRIVE_SCOPE);
+        getSupportFragmentManager().beginTransaction()
+            .add(fragment, CheckPermissionFragment.CHECK_PERMISSION_TAG).commit();
+      } else {
+        onDrivePermissionSuccess();
+      }
+    }
+  }
+  
   @Override
   public void onCheckPermissionDone(String scope, boolean success, Intent intent) {
     if (success) {

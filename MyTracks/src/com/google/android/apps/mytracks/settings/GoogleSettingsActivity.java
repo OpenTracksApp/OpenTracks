@@ -144,14 +144,12 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
             this, R.string.settings_google_account_confirm_message, null);
         break;
       case DIALOG_CONFIRM_DRIVE_SYNC_ON:
-        dialog = DialogUtils.createConfirmationDialog(this,
-            R.string.settings_google_drive_sync_confirm_message,
-            new DialogInterface.OnClickListener() {
+        dialog = DialogUtils.createConfirmationDialog(this, R.string.sync_drive_title,
+            R.string.sync_drive_confirm_message, null, new DialogInterface.OnClickListener() {
                 @Override
               public void onClick(DialogInterface d, int button) {
-                final String googleAccount = PreferencesUtils.getString(
-                    GoogleSettingsActivity.this, R.string.google_account_key,
-                    PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
+                final String googleAccount = PreferencesUtils.getString(GoogleSettingsActivity.this,
+                    R.string.google_account_key, PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
                 /*
                  * This class, a PreferenceActivity, needs to support api level
                  * 8+, thus cannot use CheckPermissionFragment because a
@@ -181,7 +179,7 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
                 });
                 thread.start();
               }
-            });
+            }, null);
         break;
       default:
         dialog = null;
@@ -237,8 +235,7 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
             });
         break;
       case DIALOG_CONFIRM_DRIVE_SYNC_ON:
-        alertDialog.setMessage(getString(
-            R.string.settings_google_drive_sync_confirm_message, googleAccount,
+        alertDialog.setMessage(getString(R.string.sync_drive_confirm_message, googleAccount,
             getString(R.string.my_tracks_app_name)));
         break;
       default:

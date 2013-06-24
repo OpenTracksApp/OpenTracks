@@ -1184,6 +1184,12 @@ limitations under the License.
       Character limit: ~20 (1 line)">
     Share
   </string>
+  <string name="menu_sync_drive"
+    translation_description="In the menu, to sync to Google Drive.
+
+      Character limit: ~20 (1 line)">
+    Sync to Google Drive
+  </string>
   <string name="menu_show_on_map"
     translation_description="In the menu, to show a track or a marker on the map.
 
@@ -1581,15 +1587,6 @@ limitations under the License.
       Character limit: ~23 (1 line)">
     Switch account
   </string>
-  <string name="settings_google_drive_sync_confirm_message"
-    translation_description="In the 'Accounts and sync' settings, the confirmation message when
-      checking the 'Sync to Google Drive' checkbox.
-
-      %1$s account name. E.g., 'foo@foo.com'.
-      %2$s folder name. E.g., 'My Tracks'.">
-    All files in the %1$s Google Drive &#8216;%2$s&#8217; folder will be imported as new tracks. If
-    not desired, move the files to a different folder beforehand.
-  </string>
   <string name="settings_google_drive_sync_summary_on"
     translation_description="In the 'Accounts and sync' settings, the summary for the 'Sync to
       Google Drive' checkbox when it is checked explaining that all tracks will be synced to a
@@ -1597,13 +1594,6 @@ limitations under the License.
 
       %1$s account name. E.g., 'foo@foo.com'.">
     All tracks will be synced to %1$s Google Drive
-  </string>
-  <string name="settings_google_drive_sync_title"
-    translation_description="In the 'Accounts and sync' settings, the checkbox to sync tracks with
-      Google Drive.
-
-      Character limit: ~23 (1 line)">
-    Sync to Google Drive
   </string>
 
   <!-- Settings Map -->
@@ -2163,20 +2153,26 @@ limitations under the License.
     translation_description="In the 'Stats' page, the total time.">
     Total time
   </string>
-  
-  <!-- Sync -->
-  <string name="sync_enable_message"
-    translation_description="The dialog message asking the user if he wants to enable sync with
-      Google Drive.">
+
+  <!-- Sync Drive -->
+  <string name="sync_drive_confirm_message"
+    translation_description="The dialog message to confirm sync to Google Drive.
+
+      %1$s account name. E.g., 'foo@foo.com'.
+      %2$s folder name. E.g., 'My Tracks'.">
+    All files in the %1$s Google Drive &#8216;%2$s&#8217; folder will be imported as new tracks. If
+    not desired, move the files to a different folder beforehand.
+  </string>
+  <string name="sync_drive_enable_message"
+    translation_description="The dialog message to enable sync to Google Drive.">
     This will allow you to view your tracks in Google Drive and view the tracks shared with you. All
     tracks synced to Google Drive will be private by default.
   </string>
-  <string name="sync_enable_title"
-    translation_description="The dialog title asking the user if he wants to enable sync with Google
-      Drive.">
+  <string name="sync_drive_title"
+    translation_description="The dialog title to sync to Google Drive.">
     Sync with Google Drive?
   </string>
-  
+
   <!-- Track -->
   <string name="track_name_format"
     translation_description="When creating a new track, the string format to name the track.

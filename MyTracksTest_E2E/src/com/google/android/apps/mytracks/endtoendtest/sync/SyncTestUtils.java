@@ -203,12 +203,10 @@ public class SyncTestUtils {
     CheckBox syncCheckBox = EndToEndTestUtils.SOLO.getCurrentViews(CheckBox.class).get(0);
     if (!syncCheckBox.isChecked()) {
       EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
-          .getString(R.string.settings_google_drive_sync_title));
+          .getString(R.string.menu_sync_drive));
 
-      EndToEndTestUtils.SOLO.waitForText(
-          EndToEndTestUtils.activityMytracks.getString(
-              R.string.settings_google_drive_sync_confirm_message).split("%")[0], 1,
-          EndToEndTestUtils.SHORT_WAIT_TIME);
+      EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.activityMytracks.getString(
+          R.string.sync_drive_confirm_message).split("%")[0], 1, EndToEndTestUtils.SHORT_WAIT_TIME);
       Assert.assertTrue(EndToEndTestUtils.SOLO.searchText(accountName, true));
       EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
           .getString(R.string.generic_yes));

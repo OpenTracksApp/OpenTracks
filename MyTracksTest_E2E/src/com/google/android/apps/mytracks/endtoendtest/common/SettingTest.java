@@ -428,27 +428,26 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
       EndToEndTestUtils.SOLO.clickOnText(GoogleUtils.ACCOUNT_NAME_1);
       instrumentation.waitForIdleSync();
       EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-          .getString(R.string.settings_google_drive_sync_title));
+          .getString(R.string.menu_sync_drive));
       assertTrue(EndToEndTestUtils.findTextView(
-          activityMyTracks.getString(R.string.settings_google_drive_sync_title)).isEnabled());
+          activityMyTracks.getString(R.string.menu_sync_drive)).isEnabled());
     } else {
       EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.value_none));
       instrumentation.waitForIdleSync();
       EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-          .getString(R.string.settings_google_drive_sync_title));
+          .getString(R.string.menu_sync_drive));
       assertFalse(EndToEndTestUtils.findTextView(
-          activityMyTracks.getString(R.string.settings_google_drive_sync_title)).isEnabled());
+          activityMyTracks.getString(R.string.menu_sync_drive)).isEnabled());
       return;
     }
 
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
-        .getString(R.string.settings_google_drive_sync_title));
+        .getString(R.string.menu_sync_drive));
 
     boolean isSyncChecked = false;
-    if (EndToEndTestUtils.SOLO
-        .waitForText(activityMyTracks
-            .getString(R.string.settings_google_drive_sync_confirm_message).split("%")[0], 1,
-            EndToEndTestUtils.SHORT_WAIT_TIME)) {
+    if (EndToEndTestUtils.SOLO.waitForText(
+        activityMyTracks.getString(R.string.sync_drive_confirm_message).split("%")[0], 1,
+        EndToEndTestUtils.SHORT_WAIT_TIME)) {
       isSyncChecked = true;
     } else {
       isSyncChecked = false;

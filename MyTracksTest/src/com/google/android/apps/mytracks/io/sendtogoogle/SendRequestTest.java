@@ -128,6 +128,7 @@ public class SendRequestTest extends AndroidTestCase {
     parcel.writeByte((byte) 1);
     parcel.writeByte((byte) 1);
     parcel.writeByte((byte) 1);
+    parcel.writeByte((byte) 1);
     parcel.writeString(DRIVE_SHARE_EMAILS);
     parcel.writeByte((byte) 1);
     Account account = new Account(ACCOUNTNAME, ACCOUNTYPE);
@@ -145,6 +146,7 @@ public class SendRequestTest extends AndroidTestCase {
     assertTrue(sendRequest.isSendFusionTables());
     assertTrue(sendRequest.isSendSpreadsheets());
     assertTrue(sendRequest.isDriveSync());
+    assertTrue(sendRequest.isDriveSyncConfirm());
     assertTrue(sendRequest.isDriveShare());
     assertEquals(DRIVE_SHARE_EMAILS, sendRequest.getDriveShareEmails());
     assertTrue(sendRequest.isDriveSharePublic());
@@ -169,6 +171,7 @@ public class SendRequestTest extends AndroidTestCase {
     parcel.writeByte((byte) 0);
     parcel.writeByte((byte) 0);
     parcel.writeByte((byte) 0);
+    parcel.writeByte((byte) 0);
     parcel.writeString(null);
     parcel.writeByte((byte) 0);
     Account account = new Account(ACCOUNTNAME, ACCOUNTYPE);
@@ -186,6 +189,7 @@ public class SendRequestTest extends AndroidTestCase {
     assertFalse(sendRequest.isSendFusionTables());
     assertFalse(sendRequest.isSendSpreadsheets());
     assertFalse(sendRequest.isDriveSync());
+    assertFalse(sendRequest.isDriveSyncConfirm());
     assertFalse(sendRequest.isDriveShare());
     assertNull(sendRequest.getDriveShareEmails());
     assertFalse(sendRequest.isDriveSharePublic());
@@ -211,7 +215,8 @@ public class SendRequestTest extends AndroidTestCase {
     boolean sendMaps = parcel.readByte() == 1;
     boolean sendFusionTables = parcel.readByte() == 1;
     boolean sendSpreadsheets = parcel.readByte() == 1;
-    boolean driveEnableSync = parcel.readByte() == 1;
+    boolean driveSync = parcel.readByte() == 1;
+    boolean driveSyncConfirm = parcel.readByte() == 1;
     boolean driveShare = parcel.readByte() == 1;
     String dirveShareEmails = parcel.readString();
     boolean driveSharePublic = parcel.readByte() == 1;
@@ -226,7 +231,8 @@ public class SendRequestTest extends AndroidTestCase {
     assertFalse(sendMaps);
     assertFalse(sendFusionTables);
     assertFalse(sendSpreadsheets);
-    assertFalse(driveEnableSync);
+    assertFalse(driveSync);
+    assertFalse(driveSyncConfirm);
     assertFalse(driveShare);
     assertNull(dirveShareEmails);
     assertFalse(driveSharePublic);
@@ -248,6 +254,7 @@ public class SendRequestTest extends AndroidTestCase {
     sendRequest.setSendFusionTables(true);
     sendRequest.setSendSpreadsheets(true);
     sendRequest.setDriveSync(true);
+    sendRequest.setDriveSyncConfirm(true);
     sendRequest.setDriveShare(true);
     sendRequest.setDriveShareEmails(DRIVE_SHARE_EMAILS);
     sendRequest.setDriveSharePublic(true);
@@ -267,7 +274,8 @@ public class SendRequestTest extends AndroidTestCase {
     boolean sendMaps = parcel.readByte() == 1;
     boolean sendFusionTables = parcel.readByte() == 1;
     boolean sendSpreadsheets = parcel.readByte() == 1;
-    boolean driveEnableSync = parcel.readByte() == 1;
+    boolean driveSync = parcel.readByte() == 1;
+    boolean driveSyncConfirm = parcel.readByte() == 1;
     boolean driveShare = parcel.readByte() == 1;
     String driveShareEmails = parcel.readString();
     boolean driveSharePublic = parcel.readByte() == 1;
@@ -282,7 +290,8 @@ public class SendRequestTest extends AndroidTestCase {
     assertTrue(sendMaps);
     assertTrue(sendFusionTables);
     assertTrue(sendSpreadsheets);
-    assertTrue(driveEnableSync);
+    assertTrue(driveSync);
+    assertTrue(driveSyncConfirm);
     assertTrue(driveShare);
     assertEquals(DRIVE_SHARE_EMAILS, driveShareEmails);
     assertTrue(driveSharePublic);

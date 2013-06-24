@@ -19,10 +19,10 @@ package com.google.android.apps.mytracks;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
-import com.google.android.apps.mytracks.fragments.ConfirmSyncDialogFragment;
-import com.google.android.apps.mytracks.fragments.ConfirmSyncDialogFragment.ConfirmSyncCaller;
 import com.google.android.apps.mytracks.fragments.DeleteTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteTrackDialogFragment.DeleteTrackCaller;
+import com.google.android.apps.mytracks.fragments.EnableSyncDialogFragment;
+import com.google.android.apps.mytracks.fragments.EnableSyncDialogFragment.EnableSyncCaller;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment.EulaCaller;
 import com.google.android.apps.mytracks.fragments.FileTypeDialogFragment;
@@ -93,7 +93,7 @@ import java.util.Locale;
  * @author Leif Hendrik Wilden
  */
 public class TrackListActivity extends AbstractSendToGoogleActivity
-    implements EulaCaller, ConfirmSyncCaller, DeleteTrackCaller, FileTypeCaller {
+    implements EulaCaller, EnableSyncCaller, DeleteTrackCaller, FileTypeCaller {
 
   private static final String TAG = TrackListActivity.class.getSimpleName();
   private static final int GOOGLE_PLAY_SERVICES_REQUEST_CODE = 0;
@@ -293,10 +293,10 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   // Menu items
   private MenuItem searchMenuItem;
   private MenuItem startGpsMenuItem;
-  private MenuItem importAllMenuItem;
-  private MenuItem exportAllMenuItem;
-  private MenuItem deleteAllMenuItem;
   private MenuItem refreshMenuItem;
+  private MenuItem exportAllMenuItem;
+  private MenuItem importAllMenuItem;
+  private MenuItem deleteAllMenuItem;
   private MenuItem feedbackMenuItem;
 
   private boolean startGps = false; // true to start gps
@@ -469,10 +469,10 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
 
     searchMenuItem = menu.findItem(R.id.track_list_search);
     startGpsMenuItem = menu.findItem(R.id.track_list_start_gps);
-    importAllMenuItem = menu.findItem(R.id.track_list_import_all);
-    exportAllMenuItem = menu.findItem(R.id.track_list_export_all);
-    deleteAllMenuItem = menu.findItem(R.id.track_list_delete_all);
     refreshMenuItem = menu.findItem(R.id.track_list_refresh);
+    exportAllMenuItem = menu.findItem(R.id.track_list_export_all);
+    importAllMenuItem = menu.findItem(R.id.track_list_import_all);
+    deleteAllMenuItem = menu.findItem(R.id.track_list_delete_all);
     feedbackMenuItem = menu.findItem(R.id.track_list_feedback);
     feedbackMenuItem.setVisible(ApiAdapterFactory.getApiAdapter().isGoogleFeedbackAvailable());
 
@@ -533,26 +533,36 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         }
         myTracksLocationManager.close();
         return true;
-      case R.id.track_list_import_all:
-        FileTypeDialogFragment.newInstance(R.id.track_list_import_all,
-            R.string.import_selection_title, R.string.import_selection_option, 2)
-            .show(getSupportFragmentManager(), FileTypeDialogFragment.FILE_TYPE_DIALOG_TAG);
+      case R.id.track_list_refresh:
+        if (driveSync) {
+          SyncUtils.syncNow(this);
+        } else {
+          PreferencesUtils.setString(
+              this, R.string.google_account_key, PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
+          SendRequest sendRequest = new SendRequest(-1L);
+          sendRequest.setSendDrive(true);
+          sendRequest.setDriveSync(true);
+          sendRequest.setDriveSyncConfirm(true);
+          sendToGoogle(sendRequest);         
+        }
+        return true;
+      case R.id.track_list_aggregated_statistics:
+        intent = IntentUtils.newIntent(this, AggregatedStatsActivity.class);
+        startActivity(intent);
         return true;
       case R.id.track_list_export_all:
         FileTypeDialogFragment.newInstance(R.id.track_list_export_all,
             R.string.export_all_title, R.string.export_all_option, 4)
             .show(getSupportFragmentManager(), FileTypeDialogFragment.FILE_TYPE_DIALOG_TAG);
         return true;
+      case R.id.track_list_import_all:
+        FileTypeDialogFragment.newInstance(R.id.track_list_import_all,
+            R.string.import_selection_title, R.string.import_selection_option, 2)
+            .show(getSupportFragmentManager(), FileTypeDialogFragment.FILE_TYPE_DIALOG_TAG);
+        return true;
       case R.id.track_list_delete_all:
         DeleteTrackDialogFragment.newInstance(true, new long[] {})
             .show(getSupportFragmentManager(), DeleteTrackDialogFragment.DELETE_TRACK_DIALOG_TAG);
-        return true;
-      case R.id.track_list_aggregated_statistics:
-        intent = IntentUtils.newIntent(this, AggregatedStatsActivity.class);
-        startActivity(intent);
-        return true;
-      case R.id.track_list_refresh:
-        SyncUtils.syncNow(this);
         return true;
       case R.id.track_list_settings:
         intent = IntentUtils.newIntent(this, SettingsActivity.class);
@@ -693,17 +703,16 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   private void showEnableSync() {
     if (EulaUtils.getShowEnableSync(this)) {
       Fragment fragment = getSupportFragmentManager()
-          .findFragmentByTag(ConfirmSyncDialogFragment.CONFIRM_SYNC_DIALOG_TAG);
+          .findFragmentByTag(EnableSyncDialogFragment.ENABLE_SYNC_DIALOG_TAG);
       if (fragment == null) {
-        ConfirmSyncDialogFragment.newInstance(
-            R.string.sync_enable_title, getString(R.string.sync_enable_message))
-            .show(getSupportFragmentManager(), ConfirmSyncDialogFragment.CONFIRM_SYNC_DIALOG_TAG);
+        new EnableSyncDialogFragment().show(
+            getSupportFragmentManager(), EnableSyncDialogFragment.ENABLE_SYNC_DIALOG_TAG);
       }
     }
   }
 
   @Override
-  public void onConfirmSyncDone(boolean enable) {
+  public void onEnableSyncDone(boolean enable) {
     EulaUtils.setShowEnableSync(this);
     if (enable) {
       SendRequest sendRequest = new SendRequest(-1L);
@@ -728,17 +737,17 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
             isGpsStarted ? R.drawable.menu_stop_gps : R.drawable.menu_start_gps);
       }
     }
-    if (importAllMenuItem != null) {
-      importAllMenuItem.setVisible(!isRecording);
+    if (refreshMenuItem != null) {
+      refreshMenuItem.setTitle(driveSync ? R.string.menu_refresh : R.string.menu_sync_drive);
     }
     if (exportAllMenuItem != null) {
       exportAllMenuItem.setVisible(!isRecording);
     }
+    if (importAllMenuItem != null) {
+      importAllMenuItem.setVisible(!isRecording);
+    }
     if (deleteAllMenuItem != null) {
       deleteAllMenuItem.setVisible(!isRecording);
-    }
-    if (refreshMenuItem != null) {
-      refreshMenuItem.setVisible(driveSync);
     }
   }
   
