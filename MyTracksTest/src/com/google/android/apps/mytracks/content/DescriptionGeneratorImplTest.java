@@ -161,7 +161,7 @@ public class DescriptionGeneratorImplTest extends AndroidTestCase {
    */
   public void testWritePace() {
     StringBuilder builder = new StringBuilder();
-    descriptionGenerator.writePace(1.1, builder, R.string.description_average_pace, "\n");
+    descriptionGenerator.writePace(1.1, builder, R.string.description_average_pace_in_minute, "\n");
     assertEquals("Average pace: 15:09 min/km (24:23 min/mi)\n", builder.toString());
   }
 

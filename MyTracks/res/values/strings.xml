@@ -381,7 +381,7 @@ limitations under the License.
       %1$s activity type. E.g., 'hiking'.">
     Activity type: %1$s
   </string>
-  <string name="description_average_moving_pace"
+  <string name="description_average_moving_pace_in_minute"
     translation_description="Average moving pace description.
 
       %1$s pace in minutes per kilometer
@@ -395,7 +395,7 @@ limitations under the License.
       %2$.1f speed in miles per hour">
     Average moving speed: %1$.2f km/h (%2$.1f mi/h)
   </string>
-  <string name="description_average_pace"
+  <string name="description_average_pace_in_minute"
     translation_description="Average pace description.
 
       %1$s pace in minutes per kilometer
@@ -424,7 +424,7 @@ limitations under the License.
     translation_description="Elevation in metric units, meters.">
     Elevation (m)
   </string>
-  <string name="description_fastest_pace"
+  <string name="description_fastest_pace_in_minute"
     translation_description="Fastest pace description.
 
       %1$s pace in minutes per kilometer
@@ -1517,9 +1517,9 @@ limitations under the License.
     translation_description="When restoring from backup, the error message.">
     Unable to restore from backup.
   </string>
-  <string name="settings_backup_restore_no_backup"
+  <string name="settings_backup_restore_no_backups"
     translation_description="In the 'Backup and reset' settings, after pressing the 'Restore now'
-      option, the message in the alert dialog informing the user that there is no backup to restore
+      option, the message in the alert dialog informing the user that there is no backups to restore
       from.
 
       %1$s the directory. E.g., '/MyTracks/backups'.">
