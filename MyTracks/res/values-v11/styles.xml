@@ -46,12 +46,4 @@ limitations under the License.
   <style name="ListItem">
     <item name="android:background">?android:attr/activatedBackgroundIndicator</item>
   </style>
-  <style name="MyTracksDialogWhenLargeTheme" parent="android:Theme.Holo.DialogWhenLarge">
-    <item name="android:actionBarStyle">@style/ActionBarStyle.MyTracks</item>
-    <item name="android:actionModeBackground">@drawable/action_mode_background_mytracks</item>
-  </style>
-  <style name="MyTracksTheme" parent="android:Theme.Holo">
-    <item name="android:actionBarStyle">@style/ActionBarStyle.MyTracks</item>
-    <item name="android:actionModeBackground">@drawable/action_mode_background_mytracks</item>
-  </style>
 </resources>

@@ -140,7 +140,7 @@ limitations under the License.
     android:hardwareAccelerated="true"
     android:icon="@drawable/my_tracks_icon"
     android:label="@string/my_tracks_app_name"
-    android:theme="@style/MyTracksTheme" >
+    android:theme="@style/MyTracks" >
     <!-- For data backup -->
     <meta-data
       android:name="com.google.android.backup.api_key"
@@ -172,7 +172,7 @@ limitations under the License.
     </activity>
     <activity
       android:name="com.google.android.apps.mytracks.MarkerEditActivity"
-      android:theme="@style/MyTracksDialogWhenLargeTheme" />
+      android:theme="@style/MyTracks.DialogWhenLarge" />
     <activity android:name="com.google.android.apps.mytracks.MarkerDetailActivity" />
     <activity android:name="com.google.android.apps.mytracks.MarkerListActivity" >
       <meta-data
@@ -201,7 +201,7 @@ limitations under the License.
     </activity>
     <activity
       android:name="com.google.android.apps.mytracks.TrackEditActivity"
-      android:theme="@style/MyTracksDialogWhenLargeTheme" />
+      android:theme="@style/MyTracks.DialogWhenLarge" />
     <activity android:name="com.google.android.apps.mytracks.TrackListActivity" >
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -232,7 +232,7 @@ limitations under the License.
     <activity
       android:label="@string/track_widget_config_title"
       android:name="com.google.android.apps.mytracks.widgets.TrackWidgetConfigActivity"
-      android:theme="@style/MyTracksDialogWhenLargeTheme" >
+      android:theme="@style/MyTracks.DialogWhenLarge" >
       <intent-filter>
         <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
       </intent-filter>
