@@ -634,7 +634,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         AnalyticsUtils.sendPageViews(
             this, "/action/save_all_" + trackFileFormat.name().toLowerCase(Locale.US));
         intent = IntentUtils.newIntent(this, SaveActivity.class)
-            .putExtra(SaveActivity.EXTRA_TRACK_IDS, new long[] { -1L })
+            .putExtra(SaveActivity.EXTRA_SAVE_ALL, true)   
             .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);
         startActivity(intent);
         break;

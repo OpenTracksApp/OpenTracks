@@ -46,6 +46,7 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
   private SaveActivity saveActivity;
   private final TrackFileFormat trackFileFormat;
+  private final boolean saveAll;
   private final long[] trackIds;
   private final File directory;
   private final Context context;
@@ -70,14 +71,16 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
    * Creates an AsyncTask.
    * 
    * @param saveActivity the activity currently associated with this task
-   * @track id the track id to save, -1L to save all tracks
    * @param trackFileFormat the track file format
+   * @param saveAll true to save all the tracks
+   * @param trackIds the track ids to save. null if saveAll if true
    * @param directory the directory to save to
    */
-  public SaveAsyncTask(
-      SaveActivity saveActivity, TrackFileFormat trackFileFormat, long[] trackIds, File directory) {
+  public SaveAsyncTask(SaveActivity saveActivity, TrackFileFormat trackFileFormat, boolean saveAll,
+      long[] trackIds, File directory) {
     this.saveActivity = saveActivity;
     this.trackFileFormat = trackFileFormat;
+    this.saveAll = saveAll;
     this.trackIds = trackIds;
     this.directory = directory;
     context = saveActivity.getApplicationContext();
@@ -119,10 +122,13 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
       if (!isRecording || isPaused) {
         wakeLock = SystemUtils.acquireWakeLock(saveActivity, wakeLock);
       }
-      if (trackIds.length == 1 && trackIds[0] == -1L) {
+      if (saveAll) {
         return saveAllTracks();
       } else {
         totalCount = 1;
+        if (trackIds == null) {
+          return false;
+        }
         Track[] tracks = new Track[trackIds.length];
         for (int i = 0; i < trackIds.length; i++) {
           tracks[i] = myTracksProviderUtils.getTrack(trackIds[i]);
@@ -193,7 +199,7 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
              * If only saving one track, update the progress dialog once every
              * 500 points
              */
-            if (trackIds.length == 1 && trackIds[0] != -1L && number % 500 == 0) {
+            if (trackIds != null && trackIds.length == 1 && number % 500 == 0) {
               publishProgress(number, max);
             }
           }
