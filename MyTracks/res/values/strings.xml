@@ -625,7 +625,7 @@ limitations under the License.
     Exported %1$d of %2$s to %3$s.
   </string>
   <string name="export_external_storage_no_track"
-    translation_description="When exporting tracks to the external storage, the messsage in the
+    translation_description="When exporting tracks to the external storage, the message in the
       result dialog when there is no tracks to export.">
     There is no tracks to export.
   </string>
@@ -2008,7 +2008,7 @@ limitations under the License.
   </string>
   <string name="share_track_footer"
     translation_description="The dialog footer when sharing a track via Google Drive.">
-    This will updload your track to Google Drive.
+    This will upload your track to Google Drive.
   </string>
   <string name="share_track_invite"
     translation_description="The checkbox to invite people to view a track.">
