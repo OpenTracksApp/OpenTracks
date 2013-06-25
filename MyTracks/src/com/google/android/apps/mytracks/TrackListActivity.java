@@ -191,12 +191,10 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
             runOnUiThread(new Runnable() {
                 @Override
               public void run() {
-                boolean isGpsStarted = TrackRecordingServiceConnectionUtils
-                    .isRecordingServiceRunning(TrackListActivity.this);
+                ApiAdapterFactory.getApiAdapter().invalidMenu(TrackListActivity.this);
+                sectionResourceCursorAdapter.notifyDataSetChanged();
                 boolean isRecording = recordingTrackId
                     != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
-                updateMenuItems(isGpsStarted, isRecording);
-                sectionResourceCursorAdapter.notifyDataSetChanged();
                 trackController.update(isRecording, recordingTrackPaused);
               }
             });
@@ -416,10 +414,9 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     super.onResume();
 
     // Update UI
-    boolean isGpsStarted = TrackRecordingServiceConnectionUtils.isRecordingServiceRunning(this);
-    boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
-    updateMenuItems(isGpsStarted, isRecording);
+    ApiAdapterFactory.getApiAdapter().invalidMenu(this);
     sectionResourceCursorAdapter.notifyDataSetChanged();
+    boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
     trackController.onResume(isRecording, recordingTrackPaused);
   }
 
@@ -498,14 +495,11 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
           intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
           startActivity(intent);
         } else {
-          boolean isGpsStarted = TrackRecordingServiceConnectionUtils.isRecordingServiceRunning(
+          startGps = !TrackRecordingServiceConnectionUtils.isRecordingServiceRunning(
               this);
-          boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
-          
-          startGps = !isGpsStarted;
 
           // Update menu
-          updateMenuItems(startGps, isRecording);
+          ApiAdapterFactory.getApiAdapter().invalidMenu(this);         
 
           // Show toast
           Toast toast = Toast.makeText(

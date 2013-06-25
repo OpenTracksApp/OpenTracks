@@ -137,8 +137,8 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity implements
             runOnUiThread(new Runnable() {
                 @Override
               public void run() {
+                ApiAdapterFactory.getApiAdapter().invalidMenu(TrackDetailActivity.this);
                 boolean isRecording = trackId == recordingTrackId;
-                updateMenuItems(isRecording, recordingTrackPaused);
                 trackController.update(isRecording, recordingTrackPaused);
               }
             });
@@ -237,8 +237,8 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity implements
     trackDataHub.loadTrack(trackId);
 
     // Update UI
+    ApiAdapterFactory.getApiAdapter().invalidMenu(this);
     boolean isRecording = trackId == recordingTrackId;
-    updateMenuItems(isRecording, recordingTrackPaused);
     trackController.onResume(isRecording, recordingTrackPaused);
   }
 

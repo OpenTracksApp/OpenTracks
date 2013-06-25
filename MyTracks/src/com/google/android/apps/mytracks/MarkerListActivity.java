@@ -121,7 +121,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
             runOnUiThread(new Runnable() {
                 @Override
               public void run() {
-                updateMenu();
+                ApiAdapterFactory.getApiAdapter().invalidMenu(MarkerListActivity.this);
               }
             });
           }
@@ -222,7 +222,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
   @Override
   protected void onResume() {
     super.onResume();
-    updateMenu();
+    ApiAdapterFactory.getApiAdapter().invalidMenu(this);
   }
 
   @Override
@@ -242,14 +242,10 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
     insertMarkerMenuItem = menu.findItem(R.id.marker_list_insert_marker);
     searchMenuItem = menu.findItem(R.id.marker_list_search);
     ApiAdapterFactory.getApiAdapter().configureSearchWidget(this, searchMenuItem, null);
-    updateMenu();
-    return true;
-  }
-
-  private void updateMenu() {
     if (insertMarkerMenuItem != null) {
       insertMarkerMenuItem.setVisible(track.getId() == recordingTrackId && !recordingTrackPaused);
     }
+    return true;
   }
 
   @Override
