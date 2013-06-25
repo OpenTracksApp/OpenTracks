@@ -20,6 +20,7 @@ import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.Color;
 import android.util.Pair;
 
@@ -165,7 +166,11 @@ public class TrackIconUtils {
    * @param source the source
    */
   public static Bitmap invertBitmap(Bitmap source) {
-    Bitmap output = Bitmap.createBitmap(source.getWidth(), source.getHeight(), source.getConfig());
+    Config config = source.getConfig();
+    if (config == null) {
+      config = Config.ARGB_8888;
+    }
+    Bitmap output = Bitmap.createBitmap(source.getWidth(), source.getHeight(), config);
     int height = source.getHeight();
     int width = source.getWidth();
     int pixelColor;
