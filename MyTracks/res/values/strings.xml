@@ -2202,6 +2202,10 @@ limitations under the License.
     The selected tracks and their markers will be permanently deleted from the device. If Google
     Drive sync is enabled, this will also delete the tracks on Google Drive.
   </string>
+  <string name="track_delete_progress_message"
+    translation_description="The progress message when deleting tracks.">
+    Deleting&#8230;
+  </string>
 
   <!-- Track Detail -->
   <string name="track_detail_chart_tab"

@@ -22,8 +22,7 @@ import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.fragments.ChartFragment;
-import com.google.android.apps.mytracks.fragments.DeleteTrackDialogFragment;
-import com.google.android.apps.mytracks.fragments.DeleteTrackDialogFragment.DeleteTrackCaller;
+import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment;
 import com.google.android.apps.mytracks.fragments.ExportDialogFragment;
 import com.google.android.apps.mytracks.fragments.ExportDialogFragment.ExportCaller;
 import com.google.android.apps.mytracks.fragments.ExportDialogFragment.ExportType;
@@ -67,8 +66,7 @@ import java.util.Locale;
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
-public class TrackDetailActivity extends AbstractSendToGoogleActivity
-    implements ExportCaller, DeleteTrackCaller {
+public class TrackDetailActivity extends AbstractSendToGoogleActivity implements ExportCaller {
 
   public static final String EXTRA_TRACK_ID = "track_id";
   public static final String EXTRA_MARKER_ID = "marker_id";
@@ -368,8 +366,8 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
         startActivity(intent);
         return true;
       case R.id.track_detail_delete:
-        DeleteTrackDialogFragment.newInstance(false, new long[] { trackId })
-            .show(getSupportFragmentManager(), DeleteTrackDialogFragment.DELETE_TRACK_DIALOG_TAG);
+        ConfirmDeleteDialogFragment.newInstance(new long[] { trackId })
+            .show(getSupportFragmentManager(), ConfirmDeleteDialogFragment.CONFIRM_DELETE_DIALOG_TAG);
         return true;
       case R.id.track_detail_sensor_state:
         intent = IntentUtils.newIntent(this, SensorStateActivity.class);
@@ -434,12 +432,12 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
   }
 
   @Override
-  public TrackRecordingServiceConnection getTrackRecordingServiceConnection() {
+  protected TrackRecordingServiceConnection getTrackRecordingServiceConnection() {
     return trackRecordingServiceConnection;
   }
 
   @Override
-  public void onDeleteTrackDone() {
+  protected void onDeleted() {
     runOnUiThread(new Runnable() {
         @Override
       public void run() {

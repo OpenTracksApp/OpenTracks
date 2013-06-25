@@ -153,6 +153,7 @@ limitations under the License.
     <activity
       android:label="@string/menu_aggregated_statistics"
       android:name="com.google.android.apps.mytracks.AggregatedStatsActivity" />
+    <activity android:name="com.google.android.apps.mytracks.DeleteActivity" />
     <activity
       android:label="@string/menu_help"
       android:name="com.google.android.apps.mytracks.HelpActivity" />

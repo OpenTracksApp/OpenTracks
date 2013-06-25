@@ -24,10 +24,9 @@ import com.google.android.apps.mytracks.content.SearchEngineProvider;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
+import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteMarkerDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
-import com.google.android.apps.mytracks.fragments.DeleteTrackDialogFragment;
-import com.google.android.apps.mytracks.fragments.DeleteTrackDialogFragment.DeleteTrackCaller;
 import com.google.android.apps.mytracks.services.MyTracksLocationManager;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.stats.TripStatistics;
@@ -75,8 +74,7 @@ import java.util.SortedSet;
  * 
  * @author Rodrigo Damazio
  */
-public class SearchListActivity extends AbstractSendToGoogleActivity
-    implements DeleteTrackCaller, DeleteMarkerCaller {
+public class SearchListActivity extends AbstractSendToGoogleActivity implements DeleteMarkerCaller {
 
   private static final String TAG = SearchListActivity.class.getSimpleName();
 
@@ -372,8 +370,8 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
           DeleteMarkerDialogFragment.newInstance(new long[] { markerId }).show(
               getSupportFragmentManager(), DeleteMarkerDialogFragment.DELETE_MARKER_DIALOG_TAG);
         } else {
-          DeleteTrackDialogFragment.newInstance(false, new long[] { trackId })
-              .show(getSupportFragmentManager(), DeleteTrackDialogFragment.DELETE_TRACK_DIALOG_TAG);
+          ConfirmDeleteDialogFragment.newInstance(new long[] { trackId })
+              .show(getSupportFragmentManager(), ConfirmDeleteDialogFragment.CONFIRM_DELETE_DIALOG_TAG);
         }
         return true;
       default:
@@ -528,12 +526,7 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
   }
 
   @Override
-  public TrackRecordingServiceConnection getTrackRecordingServiceConnection() {
-    return trackRecordingServiceConnection;
-  }
-
-  @Override
-  public void onDeleteTrackDone() {
+  public void onDeleteMarkerDone() {
     runOnUiThread(new Runnable() {
         @Override
       public void run() {
@@ -541,9 +534,14 @@ public class SearchListActivity extends AbstractSendToGoogleActivity
       }
     });
   }
+  
+  @Override
+  protected TrackRecordingServiceConnection getTrackRecordingServiceConnection() {
+    return trackRecordingServiceConnection;
+  }
 
   @Override
-  public void onDeleteMarkerDone() {
+  protected void onDeleted() {
     runOnUiThread(new Runnable() {
         @Override
       public void run() {

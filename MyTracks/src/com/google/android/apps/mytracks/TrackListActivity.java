@@ -19,8 +19,7 @@ package com.google.android.apps.mytracks;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
-import com.google.android.apps.mytracks.fragments.DeleteTrackDialogFragment;
-import com.google.android.apps.mytracks.fragments.DeleteTrackDialogFragment.DeleteTrackCaller;
+import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment;
 import com.google.android.apps.mytracks.fragments.EnableSyncDialogFragment;
 import com.google.android.apps.mytracks.fragments.EnableSyncDialogFragment.EnableSyncCaller;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment;
@@ -93,7 +92,7 @@ import java.util.Locale;
  * @author Leif Hendrik Wilden
  */
 public class TrackListActivity extends AbstractSendToGoogleActivity
-    implements EulaCaller, EnableSyncCaller, DeleteTrackCaller, FileTypeCaller {
+    implements EulaCaller, EnableSyncCaller, FileTypeCaller {
 
   private static final String TAG = TrackListActivity.class.getSimpleName();
   private static final int GOOGLE_PLAY_SERVICES_REQUEST_CODE = 0;
@@ -561,8 +560,8 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
             .show(getSupportFragmentManager(), FileTypeDialogFragment.FILE_TYPE_DIALOG_TAG);
         return true;
       case R.id.track_list_delete_all:
-        DeleteTrackDialogFragment.newInstance(true, new long[] {})
-            .show(getSupportFragmentManager(), DeleteTrackDialogFragment.DELETE_TRACK_DIALOG_TAG);
+        ConfirmDeleteDialogFragment.newInstance(new long[] {-1L})
+            .show(getSupportFragmentManager(), ConfirmDeleteDialogFragment.CONFIRM_DELETE_DIALOG_TAG);
         return true;
       case R.id.track_list_settings:
         intent = IntentUtils.newIntent(this, SettingsActivity.class);
@@ -617,12 +616,12 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   };
 
   @Override
-  public TrackRecordingServiceConnection getTrackRecordingServiceConnection() {
+  protected TrackRecordingServiceConnection getTrackRecordingServiceConnection() {
     return trackRecordingServiceConnection;
   }
 
   @Override
-  public void onDeleteTrackDone() {
+  protected void onDeleted() {
     // Do nothing
   }
 
@@ -634,7 +633,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         AnalyticsUtils.sendPageViews(
             this, "/action/save_all_" + trackFileFormat.name().toLowerCase(Locale.US));
         intent = IntentUtils.newIntent(this, SaveActivity.class)
-            .putExtra(SaveActivity.EXTRA_SAVE_ALL, true)   
+            .putExtra(SaveActivity.EXTRA_TRACK_IDS, new long[] {-1L})   
             .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);
         startActivity(intent);
         break;
@@ -788,9 +787,11 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         startActivity(intent);
         return true;
       case R.id.list_context_menu_delete:
-        boolean deleteAll = trackIds.length > 1 && trackIds.length == listView.getCount();
-        DeleteTrackDialogFragment.newInstance(deleteAll, trackIds)
-            .show(getSupportFragmentManager(), DeleteTrackDialogFragment.DELETE_TRACK_DIALOG_TAG);
+        if (trackIds.length > 1 && trackIds.length == listView.getCount()) {
+          trackIds = new long[] {-1L};
+        }
+        ConfirmDeleteDialogFragment.newInstance(trackIds)
+            .show(getSupportFragmentManager(), ConfirmDeleteDialogFragment.CONFIRM_DELETE_DIALOG_TAG);
         return true;
       case R.id.list_context_menu_select_all:
         int size = listView.getCount();

@@ -42,7 +42,6 @@ import java.io.File;
 public class SaveActivity extends Activity {
 
   public static final String EXTRA_TRACK_FILE_FORMAT = "track_file_format";
-  public static final String EXTRA_SAVE_ALL = "save_all";
   public static final String EXTRA_TRACK_IDS = "track_ids";
   public static final String EXTRA_PLAY_TRACK = "play_track";
 
@@ -72,7 +71,6 @@ public class SaveActivity extends Activity {
 
     Intent intent = getIntent();
     trackFileFormat = intent.getParcelableExtra(EXTRA_TRACK_FILE_FORMAT);
-    boolean saveAll = intent.getBooleanExtra(EXTRA_SAVE_ALL, false);
     trackIds = intent.getLongArrayExtra(EXTRA_TRACK_IDS);
     playTrack = intent.getBooleanExtra(EXTRA_PLAY_TRACK, false);
 
@@ -101,7 +99,7 @@ public class SaveActivity extends Activity {
       saveAsyncTask = (SaveAsyncTask) retained;
       saveAsyncTask.setActivity(this);
     } else {
-      saveAsyncTask = new SaveAsyncTask(this, trackFileFormat, saveAll, trackIds, directory);
+      saveAsyncTask = new SaveAsyncTask(this, trackFileFormat, trackIds, directory);
       saveAsyncTask.execute();
     }
   }
@@ -164,7 +162,7 @@ public class SaveActivity extends Activity {
                 finish();
               }
             }).setTitle(titleId);
-        if (!playTrack && trackIds != null && trackIds.length == 1 && successCount == totalCount
+        if (!playTrack && trackIds.length == 1 && trackIds[0] != -1L && successCount == totalCount
             && savedPath != null) {
           builder.setNegativeButton(
               R.string.share_track_share_file, new DialogInterface.OnClickListener() {

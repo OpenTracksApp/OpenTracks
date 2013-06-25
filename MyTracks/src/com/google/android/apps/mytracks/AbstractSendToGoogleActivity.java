@@ -20,6 +20,8 @@ import com.google.android.apps.mytracks.fragments.CheckPermissionFragment;
 import com.google.android.apps.mytracks.fragments.CheckPermissionFragment.CheckPermissionCaller;
 import com.google.android.apps.mytracks.fragments.ChooseAccountDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChooseAccountDialogFragment.ChooseAccountCaller;
+import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment;
+import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment.ConfirmDeleteCaller;
 import com.google.android.apps.mytracks.fragments.ConfirmPlayDialogFragment;
 import com.google.android.apps.mytracks.fragments.ConfirmPlayDialogFragment.ConfirmPlayCaller;
 import com.google.android.apps.mytracks.fragments.ConfirmSyncDialogFragment;
@@ -38,10 +40,12 @@ import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
 import com.google.android.apps.mytracks.io.sendtogoogle.UploadResultActivity;
 import com.google.android.apps.mytracks.io.spreadsheets.SendSpreadsheetsActivity;
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
+import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.util.AnalyticsUtils;
 import com.google.android.apps.mytracks.util.GoogleEarthUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.accounts.Account;
@@ -67,13 +71,15 @@ import java.io.IOException;
  * @author Jimmy Shih
  */
 public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActivity implements
-    ChooseAccountCaller, ConfirmSyncCaller, CheckPermissionCaller, ShareTrackCaller, ConfirmPlayCaller {
+    ChooseAccountCaller, ConfirmSyncCaller, CheckPermissionCaller, ShareTrackCaller, ConfirmPlayCaller,
+    ConfirmDeleteCaller {
 
   private static final String TAG = AbstractMyTracksActivity.class.getSimpleName();
   private static final String SEND_REQUEST_KEY = "send_request_key";
   private static final int DRIVE_REQUEST_CODE = 0;
   private static final int FUSION_TABLES_REQUEST_CODE = 1;
   private static final int SPREADSHEETS_REQUEST_CODE = 2;
+  private static final int DELETE_REQUEST_CODE = 3;
   
   private SendRequest sendRequest;
 
@@ -211,6 +217,9 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
         } else {
           onPermissionFailure();
         }
+        break;
+      case DELETE_REQUEST_CODE:
+        onDeleted();
         break;
       default:
         super.onActivityResult(requestCode, resultCode, data);
@@ -378,5 +387,37 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
             .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.KML)
             .putExtra(SaveActivity.EXTRA_PLAY_TRACK, true);
         startActivity(intent);    
+  }
+  
+  protected void deleteTrack(long[] trackIds) {
+    ConfirmDeleteDialogFragment.newInstance(trackIds)
+        .show(getSupportFragmentManager(), ConfirmDeleteDialogFragment.CONFIRM_DELETE_DIALOG_TAG);
+  }
+
+  abstract protected TrackRecordingServiceConnection getTrackRecordingServiceConnection();
+
+  abstract protected void onDeleted();
+
+  @Override
+  public void onConfirmDeleteDone(long[] trackIds) {
+    boolean stopRecording = false;
+    if (trackIds.length == 1 && trackIds[0] == -1L) {
+      stopRecording = true;
+    } else {
+      long recordingTrackId = PreferencesUtils.getLong(this, R.string.recording_track_id_key);
+      for (long trackId : trackIds) {
+        if (trackId == recordingTrackId) {
+          stopRecording = true;
+          break;
+        }
+      }
+    }
+    if (stopRecording) {
+      TrackRecordingServiceConnectionUtils.stopRecording(
+          this, getTrackRecordingServiceConnection(), false);
+    }
+    Intent intent = IntentUtils.newIntent(this, DeleteActivity.class);
+    intent.putExtra(DeleteActivity.EXTRA_TRACK_IDS, trackIds);
+    startActivityForResult(intent, DELETE_REQUEST_CODE);
   }
 }
