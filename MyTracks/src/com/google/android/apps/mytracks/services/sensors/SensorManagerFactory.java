@@ -98,17 +98,17 @@ public class SensorManagerFactory {
 
     if (sensorType.equals(context.getString(R.string.sensor_type_value_ant))) {
       if (sendPageViews) {
-        AnalyticsUtils.sendPageViews(context, "/sensor/ant");
+        AnalyticsUtils.sendPageViews(context, AnalyticsUtils.SENSOR_ANT);
       }
       return new AntSensorManager(context);
     } else if (sensorType.equals(context.getString(R.string.sensor_type_value_zephyr))) {
       if (sendPageViews) {
-        AnalyticsUtils.sendPageViews(context, "/sensor/zephyr");
+        AnalyticsUtils.sendPageViews(context, AnalyticsUtils.SENSOR_ZEPHYR);
       }
       return new ZephyrSensorManager(context);
     } else if (sensorType.equals(context.getString(R.string.sensor_type_value_polar))) {
       if (sendPageViews) {
-        AnalyticsUtils.sendPageViews(context, "/sensor/polar");
+        AnalyticsUtils.sendPageViews(context, AnalyticsUtils.SENSOR_POLAR);
       }
       return new PolarSensorManager(context);
     }
