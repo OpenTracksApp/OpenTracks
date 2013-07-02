@@ -270,7 +270,7 @@ limitations under the License.
   <style name="TrackWidgetButtonRecord" parent="@style/TrackWidgetButton">
     <item name="android:layout_height">63dp</item>
     <item name="android:layout_width">75dp</item>
-    <item name="android:src">@drawable/btn_record</item>
+    <item name="android:src">@drawable/record_button</item>
   </style>
   <!-- track widget button stop -->
   <style name="TrackWidgetButtonStop" parent="@style/TrackWidgetButton">
