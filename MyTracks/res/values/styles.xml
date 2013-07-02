@@ -254,6 +254,8 @@ limitations under the License.
   <style name="TrackWidgetButton">
     <item name="android:background">@android:color/transparent</item>
     <item name="android:layout_gravity">center_vertical</item>
+    <item name="android:layout_height">63dp</item>
+    <item name="android:layout_width">63dp</item>
     <item name="android:scaleType">fitXY</item>
   </style>
   <!-- track widget button container -->
@@ -265,18 +267,6 @@ limitations under the License.
     <item name="android:orientation">horizontal</item>
     <item name="android:paddingBottom">4dp</item>
     <item name="android:paddingTop">4dp</item>
-  </style>
-  <!-- track widget button record -->
-  <style name="TrackWidgetButtonRecord" parent="@style/TrackWidgetButton">
-    <item name="android:layout_height">63dp</item>
-    <item name="android:layout_width">75dp</item>
-    <item name="android:src">@drawable/record_button</item>
-  </style>
-  <!-- track widget button stop -->
-  <style name="TrackWidgetButtonStop" parent="@style/TrackWidgetButton">
-    <item name="android:layout_height">63dp</item>
-    <item name="android:layout_width">63dp</item>
-    <item name="android:src">@drawable/btn_stop_0</item>
   </style>
   <!-- track widget config spiner -->
   <style name="TrackWidgetConfigSpinner">
