@@ -433,7 +433,7 @@ public class TrackWidgetProvider extends AppWidgetProvider {
   private static void updateRecordButton(
       Context context, RemoteViews remoteViews, boolean isRecording, boolean recordingTrackPaused) {
     remoteViews.setImageViewResource(R.id.track_widget_record_button,
-        isRecording && !recordingTrackPaused ? R.drawable.btn_pause : R.drawable.btn_record);
+        isRecording && !recordingTrackPaused ? R.drawable.pause_button : R.drawable.record_button);
     int recordActionId;
     if (isRecording) {
       recordActionId = recordingTrackPaused ? R.string.track_action_resume
@@ -458,7 +458,7 @@ public class TrackWidgetProvider extends AppWidgetProvider {
   private static void updateStopButton(
       Context context, RemoteViews remoteViews, boolean isRecording) {
     remoteViews.setImageViewResource(
-        R.id.track_widget_stop_button, isRecording ? R.drawable.btn_stop_1 : R.drawable.btn_stop_0);
+        R.id.track_widget_stop_button, isRecording ? R.drawable.stop_1_button : R.drawable.btn_stop_0);
     remoteViews.setBoolean(R.id.track_widget_stop_button, "setEnabled", isRecording);
     if (isRecording) {
       Intent intent = new Intent(context, ControlRecordingService.class).setAction(

@@ -84,8 +84,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.Locale;
-
 /**
  * An activity displaying a list of tracks.
  * 
@@ -242,19 +240,19 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     public void onClick(View v) {
       if (recordingTrackId == PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
         // Not recording -> Recording
-        AnalyticsUtils.sendPageViews(TrackListActivity.this, "/action/record_track");
+        AnalyticsUtils.sendPageViews(TrackListActivity.this, AnalyticsUtils.ACTION_RECORD_TRACK);
         updateMenuItems(false, true);
         startRecording();
       } else {
         if (recordingTrackPaused) {
           // Paused -> Resume
-          AnalyticsUtils.sendPageViews(TrackListActivity.this, "/action/resume_track");
+          AnalyticsUtils.sendPageViews(TrackListActivity.this, AnalyticsUtils.ACTION_RESUME_TRACK);
           updateMenuItems(false, true);
           TrackRecordingServiceConnectionUtils.resumeTrack(trackRecordingServiceConnection);
           trackController.update(true, false);
         } else {
           // Recording -> Paused
-          AnalyticsUtils.sendPageViews(TrackListActivity.this, "/action/pause_track");
+          AnalyticsUtils.sendPageViews(TrackListActivity.this, AnalyticsUtils.ACTION_PAUSE_TRACK);
           updateMenuItems(false, true);
           TrackRecordingServiceConnectionUtils.pauseTrack(trackRecordingServiceConnection);
           trackController.update(true, true);
@@ -266,7 +264,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   private final OnClickListener stopListener = new OnClickListener() {
       @Override
     public void onClick(View v) {
-      AnalyticsUtils.sendPageViews(TrackListActivity.this, "/action/stop_recording");
+      AnalyticsUtils.sendPageViews(TrackListActivity.this, AnalyticsUtils.ACTION_STOP_RECORDING);
       updateMenuItems(false, false);
       TrackRecordingServiceConnectionUtils.stopRecording(
           TrackListActivity.this, trackRecordingServiceConnection, true);
@@ -406,7 +404,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     // Update track recording service connection
     TrackRecordingServiceConnectionUtils.startConnection(this, trackRecordingServiceConnection);
 
-    AnalyticsUtils.sendPageViews(this, "/page/track_list");
+    AnalyticsUtils.sendPageViews(this, AnalyticsUtils.PAGE_TRACK_LIST);
   }
 
   @Override
@@ -625,7 +623,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     switch (menuId) {
       case R.id.track_list_export_all:
         AnalyticsUtils.sendPageViews(
-            this, "/action/save_all_" + trackFileFormat.name().toLowerCase(Locale.US));
+            this, AnalyticsUtils.ACTION_EXPORT_ALL_PREFIX + trackFileFormat.getExtension());
         intent = IntentUtils.newIntent(this, SaveActivity.class)
             .putExtra(SaveActivity.EXTRA_TRACK_IDS, new long[] {-1L})   
             .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);
@@ -633,7 +631,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         break;
       case R.id.track_list_import_all:
         AnalyticsUtils.sendPageViews(
-            this, "/action/import_all_" + trackFileFormat.name().toLowerCase(Locale.US));
+            this, AnalyticsUtils.ACTION_IMPORT_ALL_PREFIX + trackFileFormat.getExtension());
         intent = IntentUtils.newIntent(this, ImportActivity.class)
             .putExtra(ImportActivity.EXTRA_IMPORT_ALL, true)
             .putExtra(ImportActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);

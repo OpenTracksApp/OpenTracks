@@ -140,7 +140,8 @@ limitations under the License.
       <ImageButton
         android:contentDescription="@string/icon_record_track"
         android:id="@+id/track_widget_record_button"
-        style="@style/TrackWidgetButtonRecord" />
+        android:src="@drawable/record_button"      
+        style="@style/TrackWidgetButton" />
       <TextView
         android:id="@+id/track_widget_record_status"
         android:layout_gravity="center_vertical"
@@ -152,7 +153,8 @@ limitations under the License.
       <ImageButton
         android:contentDescription="@string/icon_stop_recording"
         android:id="@+id/track_widget_stop_button"
-        style="@style/TrackWidgetButtonStop" />
+        android:src="@drawable/btn_stop_0"
+        style="@style/TrackWidgetButton" />
       <LinearLayout
         android:layout_weight="1"
         style="@style/TrackWidgetVerticalSpacer" />

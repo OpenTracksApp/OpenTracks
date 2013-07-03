@@ -103,7 +103,7 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
    * @param trackId the track id
    */
   protected void shareTrack(long trackId) {
-    AnalyticsUtils.sendPageViews(this, "/action/share_drive");
+    AnalyticsUtils.sendPageViews(this, AnalyticsUtils.ACTION_SHARE_DRIVE);
     SendRequest newRequest;
     newRequest = new SendRequest(trackId);
     newRequest.setSendDrive(true);
@@ -365,6 +365,7 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
    * @param trackIds the track ids
    */
   protected void confirmPlay(long[] trackIds) {
+    AnalyticsUtils.sendPageViews(this, AnalyticsUtils.ACTION_PLAY);
     if (GoogleEarthUtils.isEarthInstalled(this)) {
       if (PreferencesUtils.getBoolean(
           this, R.string.confirm_play_earth_key, PreferencesUtils.CONFIRM_PLAY_EARTH_DEFAULT)) {
@@ -381,12 +382,11 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
 
   @Override
   public void onConfirmPlayDone(long[] trackIds) {
-    AnalyticsUtils.sendPageViews(this, "/action/play");
-        Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
-            .putExtra(SaveActivity.EXTRA_TRACK_IDS, trackIds)
-            .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.KML)
-            .putExtra(SaveActivity.EXTRA_PLAY_TRACK, true);
-        startActivity(intent);    
+    Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
+        .putExtra(SaveActivity.EXTRA_TRACK_IDS, trackIds)
+        .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.KML)
+        .putExtra(SaveActivity.EXTRA_PLAY_TRACK, true);
+    startActivity(intent);
   }
   
   protected void deleteTrack(long[] trackIds) {

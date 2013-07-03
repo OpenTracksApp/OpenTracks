@@ -58,8 +58,6 @@ import android.view.View.OnClickListener;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
-import java.util.Locale;
-
 /**
  * An activity to show the track detail.
  * 
@@ -151,13 +149,13 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity implements
     public void onClick(View v) {
       if (recordingTrackPaused) {
         // Paused -> Resume
-        AnalyticsUtils.sendPageViews(TrackDetailActivity.this, "/action/resume_track");
+        AnalyticsUtils.sendPageViews(TrackDetailActivity.this, AnalyticsUtils.ACTION_RESUME_TRACK);
         updateMenuItems(true, false);
         TrackRecordingServiceConnectionUtils.resumeTrack(trackRecordingServiceConnection);
         trackController.update(true, false);
       } else {
         // Recording -> Paused
-        AnalyticsUtils.sendPageViews(TrackDetailActivity.this, "/action/pause_track");
+        AnalyticsUtils.sendPageViews(TrackDetailActivity.this, AnalyticsUtils.ACTION_PAUSE_TRACK);
         updateMenuItems(true, true);
         TrackRecordingServiceConnectionUtils.pauseTrack(trackRecordingServiceConnection);
         trackController.update(true, true);
@@ -168,7 +166,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity implements
   private final OnClickListener stopListener = new OnClickListener() {
       @Override
     public void onClick(View v) {
-      AnalyticsUtils.sendPageViews(TrackDetailActivity.this, "/action/stop_recording");
+      AnalyticsUtils.sendPageViews(TrackDetailActivity.this, AnalyticsUtils.ACTION_STOP_RECORDING);
       updateMenuItems(false, true);
       TrackRecordingServiceConnectionUtils.stopRecording(
           TrackDetailActivity.this, trackRecordingServiceConnection, true);
@@ -228,7 +226,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity implements
 
     TrackRecordingServiceConnectionUtils.startConnection(this, trackRecordingServiceConnection);
     trackDataHub.start();
-    AnalyticsUtils.sendPageViews(this, "/page/track_detail");
+    AnalyticsUtils.sendPageViews(this, AnalyticsUtils.PAGE_TRACK_DETAIL);
   }
 
   @Override
@@ -329,7 +327,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity implements
     Intent intent;
     switch (item.getItemId()) {
       case R.id.track_detail_insert_marker:
-        AnalyticsUtils.sendPageViews(this, "/action/insert_marker");
+        AnalyticsUtils.sendPageViews(this, AnalyticsUtils.ACTION_INSERT_MARKER);
         intent = IntentUtils.newIntent(this, MarkerEditActivity.class)
             .putExtra(MarkerEditActivity.EXTRA_TRACK_ID, trackId);
         startActivity(intent);
@@ -356,7 +354,6 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity implements
             .show(getSupportFragmentManager(), FrequencyDialogFragment.FREQUENCY_DIALOG_TAG);
         return true;
       case R.id.track_detail_export:
-        AnalyticsUtils.sendPageViews(this, "/export");
         new ExportDialogFragment().show(getSupportFragmentManager(),
             ExportDialogFragment.EXPORT_DIALOG_TAG);
         return true;
@@ -403,27 +400,27 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity implements
 
   @Override
   public void onExportDone(ExportType exportType, TrackFileFormat trackFileFormat) {
-    String pageView;
     if (exportType == ExportType.EXTERNAL_STORAGE) {
-      pageView = "/export/external_storage_" + trackFileFormat.name().toLowerCase(Locale.US);
-      AnalyticsUtils.sendPageViews(this, pageView);
+      AnalyticsUtils.sendPageViews(this,
+          AnalyticsUtils.ACTION_EXPORT_PREFIX + trackFileFormat.getExtension());
       Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
           .putExtra(SaveActivity.EXTRA_TRACK_IDS, new long[] { trackId })
           .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);
       startActivity(intent);
     } else {
       SendRequest sendRequest = new SendRequest(trackId);
+      String pageView;
       switch (exportType) {
         case GOOGLE_MAPS:
-          pageView = "/export/maps";
+          pageView = AnalyticsUtils.ACTION_EXPORT_MAPS;
           sendRequest.setSendMaps(true);
           break;
         case GOOGLE_FUSION_TABLES:
-          pageView = "/export/fusion_tables";
+          pageView = AnalyticsUtils.ACTION_EXPORT_FUSION_TABLES;
           sendRequest.setSendFusionTables(true);
           break;
         default:
-          pageView = "/export/spreadsheets";
+          pageView = AnalyticsUtils.ACTION_EXPORT_SPREADSHEETS;
           sendRequest.setSendSpreadsheets(true);
       }
       AnalyticsUtils.sendPageViews(this, pageView);
