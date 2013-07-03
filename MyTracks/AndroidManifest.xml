@@ -170,9 +170,7 @@ limitations under the License.
         <data android:scheme="file" />
       </intent-filter>
     </activity>
-    <activity
-      android:name="com.google.android.apps.mytracks.MarkerEditActivity"
-      android:theme="@style/MyTracks.DialogWhenLarge" />
+    <activity android:name="com.google.android.apps.mytracks.MarkerEditActivity" />
     <activity android:name="com.google.android.apps.mytracks.MarkerDetailActivity" />
     <activity android:name="com.google.android.apps.mytracks.MarkerListActivity" >
       <meta-data
@@ -199,9 +197,7 @@ limitations under the License.
         android:name="android.support.PARENT_ACTIVITY"
         android:value="com.google.android.apps.mytracks.TrackListActivity" />
     </activity>
-    <activity
-      android:name="com.google.android.apps.mytracks.TrackEditActivity"
-      android:theme="@style/MyTracks.DialogWhenLarge" />
+    <activity android:name="com.google.android.apps.mytracks.TrackEditActivity" />
     <activity android:name="com.google.android.apps.mytracks.TrackListActivity" >
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -231,8 +227,7 @@ limitations under the License.
     <activity android:name="com.google.android.apps.mytracks.settings.StatsSettingsActivity" />
     <activity
       android:label="@string/track_widget_config_title"
-      android:name="com.google.android.apps.mytracks.widgets.TrackWidgetConfigActivity"
-      android:theme="@style/MyTracks.DialogWhenLarge" >
+      android:name="com.google.android.apps.mytracks.widgets.TrackWidgetConfigActivity" >
       <intent-filter>
         <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
       </intent-filter>

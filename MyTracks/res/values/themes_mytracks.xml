@@ -25,5 +25,4 @@ limitations under the License.
     <item name="android:listViewWhiteStyle">@style/ListViewMyTracks.White</item>
     <item name="android:spinnerItemStyle">@style/SpinnerItemMyTracks</item>
   </style>
-  <style name="MyTracks.DialogWhenLarge" />
 </resources>
