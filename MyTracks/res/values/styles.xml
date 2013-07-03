@@ -353,6 +353,15 @@ limitations under the License.
     <item name="android:layout_height">30dp</item>
     <item name="android:layout_width">30dp</item>
   </style>
+  <!-- track widget record status -->
+  <style name="TrackWidgetRecordStatus" parent="@style/TextSmall">
+    <item name="android:layout_gravity">center_vertical</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginLeft">8dp</item>
+    <item name="android:layout_weight">2</item>
+    <item name="android:layout_width">0dp</item>
+    <item name="android:singleLine">true</item>
+  </style>  
   <!-- track widget stats container -->
   <style name="TrackWidgetStatsContainer">
     <item name="android:clickable">true</item>

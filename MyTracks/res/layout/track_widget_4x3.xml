@@ -144,12 +144,7 @@ limitations under the License.
         style="@style/TrackWidgetButton" />
       <TextView
         android:id="@+id/track_widget_record_status"
-        android:layout_gravity="center_vertical"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:layout_width="0dp"
-        android:singleLine="true"
-        style="@style/TextSmall" />
+        style="@style/TrackWidgetRecordStatus" />
       <ImageButton
         android:contentDescription="@string/icon_stop_recording"
         android:id="@+id/track_widget_stop_button"
