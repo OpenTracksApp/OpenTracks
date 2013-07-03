@@ -52,6 +52,7 @@ limitations under the License.
           style="@style/ListItemDate" />
       </TableRow>
       <TableRow>
+        <!-- Need to match the style set in ListItemUtils.setListItem -->
         <TextView
           android:id="@+id/list_item_time_distance"
           android:layout_gravity="bottom"

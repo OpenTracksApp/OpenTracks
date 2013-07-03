@@ -50,6 +50,7 @@ public class ListItemUtils {
    * @param totalDistance the total distance value
    * @param startTime the start time value
    * @param description the description value
+   * @param sharedOwner if shared with me track, the owner, else null
    */
   public static void setListItem(Context context, View view, boolean isRecording, boolean isPaused,
       int iconId, int iconContentDescriptionId, String name, String category, String totalTime,
@@ -69,22 +70,25 @@ public class ListItemUtils {
     nameTextView.setText(name);
 
     TextView timeDistanceTextView = (TextView) view.findViewById(R.id.list_item_time_distance);
-    int color = isRecording ? context.getResources()
-        .getColor(isPaused ? android.R.color.white : R.color.recording_text)
-        : 0;
+    if (isRecording) {
+      timeDistanceTextView.setTextColor(context.getResources()
+          .getColor(isPaused ? android.R.color.white : R.color.recording_text));
+    } else {
+      // Need to match the style set in list_item.xml
+      timeDistanceTextView.setTextAppearance(context, R.style.TextSmall);
+    }
     setTextView(timeDistanceTextView,
-        getTimeDistance(context, isRecording, isPaused, sharedOwner, totalTime, totalDistance),
-        color);
+        getTimeDistance(context, isRecording, isPaused, sharedOwner, totalTime, totalDistance));
 
     String[] startTimeDisplay = getStartTime(isRecording, context, startTime);
     TextView dateTextView = (TextView) view.findViewById(R.id.list_item_date);
-    setTextView(dateTextView, startTimeDisplay[0], 0);
+    setTextView(dateTextView, startTimeDisplay[0]);
 
     TextView timeTextView = (TextView) view.findViewById(R.id.list_item_time);
-    setTextView(timeTextView, startTimeDisplay[1], 0);
+    setTextView(timeTextView, startTimeDisplay[1]);
 
     TextView descriptionTextView = (TextView) view.findViewById(R.id.list_item_description);
-    setTextView(descriptionTextView, getDescription(isRecording, category, description), 0);
+    setTextView(descriptionTextView, getDescription(isRecording, category, description));
   }
 
   /**
@@ -190,15 +194,12 @@ public class ListItemUtils {
    * @param textView the text view
    * @param value the value for the text view
    */
-  private static void setTextView(TextView textView, String value, int color) {
+  private static void setTextView(TextView textView, String value) {
     if (value == null || value.length() == 0) {
       textView.setVisibility(View.GONE);
     } else {
       textView.setVisibility(View.VISIBLE);
       textView.setText(value);
-      if (color != 0) {
-        textView.setTextColor(color);
-      }
     }
   }
 }
