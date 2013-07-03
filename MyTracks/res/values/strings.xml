@@ -659,6 +659,13 @@ limitations under the License.
     translation_description="When exporting a track, the option to export to Google Drive.">
     Google Drive
   </string>
+  <string name="export_google_error"
+    translation_description="When exporting a track, the error message.
+
+      %1$s: service name. E.g, Google Maps.
+      %2$s: service url. E.g, maps.google.com.">
+    An error has occurred. Unable to export to %1$s (%2$s). Please try again.
+  </string>
   <string name="export_google_fusion_tables"
     translation_description="When exporting a track, the option to export to Google Fusion Tables.">
     Google Fusion Tables
@@ -690,6 +697,14 @@ limitations under the License.
   <string name="export_google_spreadsheets"
     translation_description="When exporting a track, the option to export to Google Spreadsheets.">
     Google Spreadsheets
+  </string>
+  <string name="export_google_success"
+    translation_description="When sending a track to Google, the additional comment on the bottom of
+      the result page.
+
+      %1$s: service name. E.g, Google Maps.
+      %2$s: service url. E.g, maps.google.com.">
+    Track exported to %1$s (%2$s). It may take a few minutes for it to appear.
   </string>
   <string name="export_title"
     translation_description="The dialog title when exporting a track.">
@@ -1334,11 +1349,6 @@ limitations under the License.
     translation_description="When sending to Google, the dialog title to choose a Google account.">
     Choose account
   </string>
-  <string name="send_google_error"
-    translation_description="When sending a track to Google, a message indicating that an error has
-      occurred and ask the user to try again.">
-    An error has occurred. Please try again.
-  </string>
   <string name="send_google_no_account_message"
     translation_description="When sending to Google, the dialog message when no Google account is
       found.">
@@ -1359,11 +1369,6 @@ limitations under the License.
 
       %1$s: service name. 'Google Maps', 'Google Fusion Tables', or 'Google Spreadsheets'.">
     Sending to %1$s&#8230;
-  </string>
-  <string name="send_google_success_footer"
-    translation_description="When sending a track to Google, the additional comment on the bottom of
-      the result page.">
-    It may take a few minutes before new tracks appear.
   </string>
   <string name="send_google_track_part_label"
     translation_description="When sending a track to Google, the label to name segments of a large

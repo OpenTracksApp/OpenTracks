@@ -32,9 +32,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 /**
  * A dialog to show the result of uploading to Google services.
@@ -79,89 +76,49 @@ public class UploadResultActivity extends FragmentActivity implements ChooseActi
     if (id != DIALOG_RESULT_ID) {
       return null;
     }
-    view = getLayoutInflater().inflate(R.layout.upload_result, null);
-
-    LinearLayout driveResult = (LinearLayout) view.findViewById(R.id.upload_result_drive_result);
-    LinearLayout mapsResult = (LinearLayout) view.findViewById(R.id.upload_result_maps_result);
-    LinearLayout fusionTablesResult = (LinearLayout) view.findViewById(
-        R.id.upload_result_fusion_tables_result);
-    LinearLayout spreadsheetsResult = (LinearLayout) view.findViewById(
-        R.id.upload_result_spreadsheets_result);
-
-    ImageView driveResultIcon = (ImageView) view.findViewById(R.id.upload_result_drive_result_icon);
-    ImageView mapsResultIcon = (ImageView) view.findViewById(R.id.upload_result_maps_result_icon);
-    ImageView fusionTablesResultIcon = (ImageView) view.findViewById(
-        R.id.upload_result_fusion_tables_result_icon);
-    ImageView spreadsheetsResultIcon = (ImageView) view.findViewById(
-        R.id.upload_result_spreadsheets_result_icon);
-
-    TextView successFooter = (TextView) view.findViewById(R.id.upload_result_success_footer);
-    TextView errorFooter = (TextView) view.findViewById(R.id.upload_result_error_footer);
-
-    boolean hasError = false;
-    if (!sendRequest.isSendDrive()) {
-      driveResult.setVisibility(View.GONE);
+    int serviceName;
+    int serviceUrl;
+    boolean success;
+    if (sendRequest.isSendDrive()) {
+      serviceName = R.string.export_google_drive;
+      serviceUrl = R.string.export_google_drive_url;
+      success = sendRequest.isDriveSuccess();
+    } else if (sendRequest.isSendMaps()) {
+      serviceName = R.string.export_google_maps;
+      serviceUrl = R.string.export_google_maps_url;
+      success = sendRequest.isMapsSuccess();
+    } else if (sendRequest.isSendFusionTables()) {
+      serviceName = R.string.export_google_fusion_tables;
+      serviceUrl = R.string.export_google_fusion_tables_url;
+      success = sendRequest.isFusionTablesSuccess();
     } else {
-      if (!sendRequest.isDriveSuccess()) {
-        driveResultIcon.setImageResource(R.drawable.failure);
-        driveResultIcon.setContentDescription(getString(R.string.generic_error_title));
-        hasError = true;
-      }
+      serviceName = R.string.export_google_spreadsheets;
+      serviceUrl = R.string.export_google_spreadsheets_url;
+      success = sendRequest.isSpreadsheetsSuccess();
     }
 
-    if (!sendRequest.isSendMaps()) {
-      mapsResult.setVisibility(View.GONE);
-    } else {
-      if (!sendRequest.isMapsSuccess()) {
-        mapsResultIcon.setImageResource(R.drawable.failure);
-        mapsResultIcon.setContentDescription(getString(R.string.generic_error_title));
-        hasError = true;
-      }
-    }
-
-    if (!sendRequest.isSendFusionTables()) {
-      fusionTablesResult.setVisibility(View.GONE);
-    } else {
-      if (!sendRequest.isFusionTablesSuccess()) {
-        fusionTablesResultIcon.setImageResource(R.drawable.failure);
-        fusionTablesResultIcon.setContentDescription(getString(R.string.generic_error_title));
-        hasError = true;
-      }
-    }
-
-    if (!sendRequest.isSendSpreadsheets()) {
-      spreadsheetsResult.setVisibility(View.GONE);
-    } else {
-      if (!sendRequest.isSpreadsheetsSuccess()) {
-        spreadsheetsResultIcon.setImageResource(R.drawable.failure);
-        spreadsheetsResultIcon.setContentDescription(getString(R.string.generic_error_title));
-        hasError = true;
-      }
-    }
-
-    if (hasError) {
-      successFooter.setVisibility(View.GONE);
-    } else {
-      errorFooter.setVisibility(View.GONE);
-    }
-
+    String message = getString(
+        success ? R.string.export_google_success : R.string.export_google_error,
+        getString(serviceName), getString(serviceUrl));
     AlertDialog.Builder builder = new AlertDialog.Builder(this).setCancelable(true)
-        .setIcon(hasError ? android.R.drawable.ic_dialog_alert : android.R.drawable.ic_dialog_info)
+        .setIcon(success ? android.R.drawable.ic_dialog_info : android.R.drawable.ic_dialog_alert)
+        .setMessage(message)
         .setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
           public void onCancel(DialogInterface dialog) {
             finish();
           }
-        }).setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
+        })
+        .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
             @Override
           public void onClick(DialogInterface dialog, int which) {
             finish();
           }
-        }).setTitle(hasError ? R.string.generic_error_title : R.string.generic_success_title)
-        .setView(view);
+        })
+        .setTitle(success ? R.string.generic_success_title : R.string.generic_error_title); 
 
     // Add a Share URL button if shareUrl exists
-    if (!hasError && shareUrl != null) {
+    if (success && shareUrl != null) {
       builder.setNegativeButton(
           R.string.share_track_share_url, new DialogInterface.OnClickListener() {
               @Override
