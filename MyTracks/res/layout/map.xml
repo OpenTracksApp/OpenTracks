@@ -21,7 +21,7 @@ limitations under the License.
   <TextView
     android:background="@color/warning_background"
     android:drawableLeft="@drawable/warning"
-    android:gravity="center"
+    android:gravity="left"
     android:id="@+id/map_message"
     android:layout_alignParentTop="true"
     android:layout_width="match_parent"
