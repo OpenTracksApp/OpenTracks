@@ -153,6 +153,8 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
 
     EndToEndTestUtils.waitTextToDisappear(activityMyTracks
         .getString(R.string.generic_progress_title));
+    EndToEndTestUtils.waitTextToDisappear(activityMyTracks
+        .getString(R.string.track_delete_progress_message));
     int trackNumberNew = trackNumberOld;
     long startTime = System.currentTimeMillis();
     // Wait a few seconds for the delete.

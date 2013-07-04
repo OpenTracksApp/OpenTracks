@@ -58,6 +58,13 @@ public class ShareTest extends ActivityInstrumentationTestCase2<TrackListActivit
 
     // Click share again and confirm the share.
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_share), true);
+    // Whether can found any account.
+    if (EndToEndTestUtils.SOLO.waitForText(
+        activityMyTracks.getString(R.string.send_google_no_account_title), 1,
+        EndToEndTestUtils.VERY_SHORT_WAIT_TIME)) {
+      EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));
+      return;
+    }
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));
 
     boolean isAccount2Bound = false;

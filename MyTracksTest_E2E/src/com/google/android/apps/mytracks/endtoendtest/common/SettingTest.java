@@ -25,6 +25,7 @@ import com.google.android.maps.mytracks.R;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
+import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.ListView;
 
@@ -98,10 +99,11 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
 
     // Reset all settings.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup_reset));
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_reset));
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_reset_summary));
     EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_yes), true,
         true);
-    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.settings_reset_done));
+    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.settings_reset_done), 1,
+        EndToEndTestUtils.SHORT_WAIT_TIME);
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.SOLO.goBack();
 
@@ -115,6 +117,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
         activityMyTracks.getString(R.string.settings_stats_units_title), 1,
         EndToEndTestUtils.LONG_WAIT_TIME));
     displayCheckBoxs = EndToEndTestUtils.SOLO.getCurrentViews(CheckBox.class);
+    Log.i(EndToEndTestUtils.LOG_TAG, "useMetric:" + useMetric);
     assertEquals(useMetric, displayCheckBoxs.get(0).isChecked());
 
     EndToEndTestUtils.SOLO.goBack();
@@ -172,7 +175,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
    * Stats tab.
    */
   public void testChangeStatsSettings_showExtraInfos() {
-    EndToEndTestUtils.resetAllSettings(activityMyTracks, true);
+    EndToEndTestUtils.resetAllSettings(activityMyTracks, false);
     ChangeStatsSettings(false, false, true, true);
     EndToEndTestUtils.startRecording();
     instrumentation.waitForIdleSync();
@@ -189,9 +192,8 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
         activityMyTracks.getString(R.string.stats_elevation), 1,
         EndToEndTestUtils.NORMAL_WAIT_TIME, true));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.stats_grade)));
-    assertFalse(EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.stats_latitude), 1,
-        EndToEndTestUtils.VERY_SHORT_WAIT_TIME));
+    assertFalse(EndToEndTestUtils.SOLO.searchText(activityMyTracks
+        .getString(R.string.stats_latitude)));
   }
 
   /**
