@@ -206,14 +206,17 @@ limitations under the License.
     <item name="android:layout_weight">1</item>
     <item name="android:layout_width">0dp</item>
   </style>
+ <style name="Text">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:textColor">@android:color/white</item>
+ </style>   
   <!-- text choose activity -->
   <style name="TextChooseActivity">
     <item name="android:textSize">18sp</item>
   </style>
   <!-- text large -->
-  <style name="TextLarge">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">wrap_content</item>
+  <style name="TextLarge" parent="@style/Text">
     <item name="android:textSize">22sp</item>
   </style>
   <!-- text large with top margin -->
@@ -221,9 +224,7 @@ limitations under the License.
     <item name="android:layout_marginTop">8dp</item>
   </style>
   <!-- text medium -->
-  <style name="TextMedium">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">wrap_content</item>
+  <style name="TextMedium" parent="@style/Text">
     <item name="android:textSize">18sp</item>
   </style>
   <!-- text medium with icon -->
@@ -232,15 +233,11 @@ limitations under the License.
     <item name="android:gravity">center_vertical</item>
   </style>
   <!-- text micro -->
-  <style name="TextMicro">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">wrap_content</item>
+  <style name="TextMicro" parent="@style/Text">
     <item name="android:textSize">12sp</item>
   </style>
   <!-- text small -->
-  <style name="TextSmall">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">wrap_content</item>
+  <style name="TextSmall" parent="@style/Text">
     <item name="android:textSize">14sp</item>
   </style>
   <!-- track widget bounding box -->
@@ -353,6 +350,15 @@ limitations under the License.
     <item name="android:layout_height">30dp</item>
     <item name="android:layout_width">30dp</item>
   </style>
+  <!-- track widget record status -->
+  <style name="TrackWidgetRecordStatus" parent="@style/TextSmall">
+    <item name="android:layout_gravity">center_vertical</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginLeft">8dp</item>
+    <item name="android:layout_weight">2</item>
+    <item name="android:layout_width">0dp</item>
+    <item name="android:singleLine">true</item>
+  </style>  
   <!-- track widget stats container -->
   <style name="TrackWidgetStatsContainer">
     <item name="android:clickable">true</item>

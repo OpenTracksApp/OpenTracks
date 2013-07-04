@@ -27,16 +27,4 @@ limitations under the License.
     <item name="android:actionBarStyle">@style/ActionBarStyle.MyTracks</item>
     <item name="android:actionModeBackground">@drawable/action_mode_background_mytracks</item>
   </style>
-  <style name="MyTracks.DialogWhenLarge" parent="android:Theme.Holo.DialogWhenLarge">
-    <!-- Auto generated -->
-    <item name="android:editTextBackground">@drawable/edit_text_holo_dark</item>
-    <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewMyTracks</item>
-    <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_holo_dark</item>
-    <item name="android:progressBarStyleHorizontal">@style/ProgressBarMyTracks</item>
-    <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_holo_dark</item>
-    <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo_dark</item>
-    <!-- Manually added -->
-    <item name="android:actionBarStyle">@style/ActionBarStyle.MyTracks</item>
-    <item name="android:actionModeBackground">@drawable/action_mode_background_mytracks</item>
-  </style>
 </resources>

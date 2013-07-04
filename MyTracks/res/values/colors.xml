@@ -33,6 +33,6 @@ limitations under the License.
   <color name="track_color_fast">#F7DF0101</color> <!-- red color -->
   <color name="track_color_normal">#F75858FA</color> <!-- blue color -->
   <color name="track_color_slow">#F774DF00</color> <!-- green color -->
-  <color name="track_controller_background">#FF272727</color> <!-- dark gray -->
+  <color name="track_controller_background">#FF0E0E0E</color> <!-- dark gray -->
   <color name="warning_background">#FFFF8800</color> <!-- orange dark -->
 </resources>
