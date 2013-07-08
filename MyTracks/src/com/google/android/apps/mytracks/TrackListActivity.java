@@ -84,6 +84,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.Locale;
+
 /**
  * An activity displaying a list of tracks.
  * 
@@ -645,7 +647,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
    * Shows start up dialogs.
    */
   public void showStartupDialogs() {
-    if (!EulaUtils.getAcceptEula(this)) {
+    if (!EulaUtils.hasAcceptEula(this)) {
       Fragment fragment = getSupportFragmentManager()
           .findFragmentByTag(EulaDialogFragment.EULA_DIALOG_TAG);
       if (fragment == null) {
@@ -653,19 +655,20 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
             .show(getSupportFragmentManager(), EulaDialogFragment.EULA_DIALOG_TAG);
       }
     } else {
-      /*
-       * Before the welcome sequence, the empty view is not visible so that it
-       * doesn't show through.
-       */
-      findViewById(R.id.track_list_empty_view).setVisibility(View.VISIBLE);
-
+      if (!EulaUtils.hasDefaultUnits(this)) {
+        String statsUnits = getString(
+            Locale.US.equals(Locale.getDefault()) ? R.string.stats_units_imperial
+                : R.string.stats_units_metric);
+        PreferencesUtils.setString(this, R.string.stats_units_key, statsUnits);        
+        EulaUtils.setDefaultUnits(this);
+      }
       checkGooglePlayServices();
     }
   }
 
   @Override
   public void onEulaDone() {
-    if (EulaUtils.getAcceptEula(this)) {
+    if (EulaUtils.hasAcceptEula(this)) {
       showStartupDialogs();
       return;
     }
@@ -692,7 +695,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   }
 
   private void showEnableSync() {
-    if (EulaUtils.getShowEnableSync(this)) {
+    if (EulaUtils.hasShowEnableSync(this)) {
       Fragment fragment = getSupportFragmentManager()
           .findFragmentByTag(EnableSyncDialogFragment.ENABLE_SYNC_DIALOG_TAG);
       if (fragment == null) {

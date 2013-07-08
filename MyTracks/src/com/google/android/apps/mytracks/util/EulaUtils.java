@@ -30,25 +30,63 @@ public class EulaUtils {
 
   // Accepting Google mobile terms of service
   private static final String ACCEPT_EULA_PREFERENCE_KEY = "eula.google_mobile_tos_accepted";
+  private static final String DEFAULT_UNITS_PREFERENCE_KEY = "defaultUnits";
   private static final String SHOW_ENABLE_SYNC_PREFERENCE_KEY = "showEnableSync";
   
   private EulaUtils() {}
 
-  public static boolean getAcceptEula(Context context) {
+  /**
+   * Returns true if eula is accepted.
+   * @param context the context
+   */
+  public static boolean hasAcceptEula(Context context) {
     return getValue(context, ACCEPT_EULA_PREFERENCE_KEY, false);
   }
 
+  /**
+   * Sets to true that eula is accepted.
+   * 
+   * @param context the context
+   */
   public static void setAcceptEula(Context context) {
     setValue(context, ACCEPT_EULA_PREFERENCE_KEY, true);
   }
-
-  public static boolean getShowEnableSync(Context context) {
+  
+  /**
+   * Returns true if the default units is initialized.
+   * 
+   * @param context the context
+   */
+  public static boolean hasDefaultUnits(Context context) {
+    return getValue(context, DEFAULT_UNITS_PREFERENCE_KEY, false);
+  }
+  
+  /**
+   * Sets to true that the default units is initialized.
+   * 
+   * @param context the context
+   */
+  public static void setDefaultUnits(Context context) {
+    setValue(context, DEFAULT_UNITS_PREFERENCE_KEY, true);
+  }
+  
+  /**
+   * Returns true if show enable sync is needed.
+   * 
+   * @param context the context 
+   */
+  public static boolean hasShowEnableSync(Context context) {
     return getValue(context, SHOW_ENABLE_SYNC_PREFERENCE_KEY, true);
   }
-
+  
+  /**
+   * Sets to false that show enable sync is needed.
+   * 
+   * @param context the context
+   */
   public static void setShowEnableSync(Context context) {
     setValue(context, SHOW_ENABLE_SYNC_PREFERENCE_KEY, false);
-  }
+  }  
   
   private static boolean getValue(Context context, String key, boolean defaultValue) {
     SharedPreferences sharedPreferences = context.getSharedPreferences(

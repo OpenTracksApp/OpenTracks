@@ -17,7 +17,6 @@
 package com.google.android.apps.mytracks.fragments;
 
 import com.google.android.apps.mytracks.util.EulaUtils;
-import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -32,8 +31,6 @@ import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
 import android.view.KeyEvent;
 import android.widget.TextView;
-
-import java.util.Locale;
 
 /**
  * A DialogFragment to show EULA.
@@ -120,10 +117,6 @@ public class EulaDialogFragment extends DialogFragment {
           @Override
         public void onClick(DialogInterface dialog, int which) {
           EulaUtils.setAcceptEula(fragmentActivity);
-          String statsUnits = fragmentActivity.getString(
-              Locale.US.equals(Locale.getDefault()) ? R.string.stats_units_imperial
-                  : R.string.stats_units_metric);
-          PreferencesUtils.setString(fragmentActivity, R.string.stats_units_key, statsUnits);
           caller.onEulaDone();
         }
       });
