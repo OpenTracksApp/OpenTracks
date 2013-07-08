@@ -132,11 +132,12 @@ public class SaveActivity extends Activity {
         String totalTracks = getResources()
             .getQuantityString(R.plurals.tracks, totalCount, totalCount);
         if (successCount == totalCount) {
-          iconId = android.R.drawable.ic_dialog_info;
           if (totalCount == 0) {
+            iconId = android.R.drawable.ic_dialog_info;
             titleId = R.string.export_external_storage_no_track_title;
             message = getString(R.string.export_external_storage_no_track);
           } else {
+            iconId = R.drawable.ic_dialog_success;
             titleId = R.string.generic_success_title;
             message = getString(
                 R.string.export_external_storage_success, totalTracks, directoryDisplayName);
