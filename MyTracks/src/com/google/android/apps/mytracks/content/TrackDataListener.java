@@ -117,10 +117,10 @@ public interface TrackDataListener {
   public boolean onRecordingGpsAccuracy(int recordingGpsAccuracy);
   
   /**
-   * Called when the min recording distance preference value is changed.
+   * Called when the recording distance interval preference value is changed.
    * 
-   * @param minRecordingDistance the new value
+   * @param recordingDistanceInterval the new value
    * @return true to reload all the data, false otherwise.
    */
-  public boolean onMinRecordingDistanceChanged(int minRecordingDistance);
+  public boolean onRecordingDistanceIntervalChanged(int recordingDistanceInterval);
 }

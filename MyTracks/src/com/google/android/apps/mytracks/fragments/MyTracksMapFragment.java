@@ -498,7 +498,7 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
   }
 
   @Override
-  public boolean onMinRecordingDistanceChanged(int minRecordingDistance) {
+  public boolean onRecordingDistanceIntervalChanged(int minRecordingDistance) {
     // We don't care.
     return false;
   }

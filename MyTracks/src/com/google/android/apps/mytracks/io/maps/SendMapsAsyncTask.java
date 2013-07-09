@@ -253,8 +253,9 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
       Vector<Double> elevations = new Vector<Double>();
       TripStatisticsUpdater tripStatisticsUpdater = new TripStatisticsUpdater(
           track.getTripStatistics().getStartTime());
-      int minRecordingDistance = PreferencesUtils.getInt(context,
-          R.string.min_recording_distance_key, PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT);
+      int recordingDistanceInterval = PreferencesUtils.getInt(context,
+          R.string.recording_distance_interval_key,
+          PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT);
 
       for (int i = 0; i < count; i++) {
         cursor.moveToPosition(i);
@@ -276,7 +277,7 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
           sentStartMarker = true;
         }
 
-        tripStatisticsUpdater.addLocation(location, minRecordingDistance);
+        tripStatisticsUpdater.addLocation(location, recordingDistanceInterval);
         if (i % elevationSamplingFrequency == 0) {
           distances.add(tripStatisticsUpdater.getTripStatistics().getTotalDistance());
           elevations.add(tripStatisticsUpdater.getSmoothedElevation());

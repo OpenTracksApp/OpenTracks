@@ -31,8 +31,8 @@ limitations under the License.
   <string name="export_type_key">exportType</string>
   <string name="map_type_key">mapType</string>
   <string name="max_recording_distance_key">maxRecordingDistance</string>
-  <string name="min_recording_distance_key">minRecordingDistance</string>
   <string name="min_recording_interval_key">minRecordingInterval</string>
+  <string name="recording_distance_interval_key">recordingDistanceInterval</string>
   <string name="recording_gps_accuracy_key">recordingGpsAccuracy</string>
   <string name="report_speed_key">reportSpeed</string>
   <string name="sensor_type_key">sensorType</string>

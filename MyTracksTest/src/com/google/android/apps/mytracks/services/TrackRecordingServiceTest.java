@@ -610,14 +610,14 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
 
   @MediumTest
   public void testWithProperties_minRecordingDistanceDefault() throws Exception {
-    PreferencesUtils.setInt(context, R.string.min_recording_distance_key,
-        PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT);
+    PreferencesUtils.setInt(context, R.string.recording_distance_interval_key,
+        PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT);
     fullRecordingSession();
   }
 
   @MediumTest
   public void testWithProperties_minRecordingDistance() throws Exception {
-    PreferencesUtils.setInt(context, R.string.min_recording_distance_key, 2);
+    PreferencesUtils.setInt(context, R.string.recording_distance_interval_key, 2);
     fullRecordingSession();
   }
 

@@ -49,9 +49,9 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity {
     configListPreference(R.string.min_recording_interval_key,
         PreferencesUtils.MIN_RECORDING_INTERVAL_DEFAULT, R.array.min_recording_interval_values,
         metricUnits);
-    configListPreference(R.string.min_recording_distance_key,
-        PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT, R.array.min_recording_distance_values,
-        metricUnits);
+    configListPreference(R.string.recording_distance_interval_key,
+        PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT,
+        R.array.recording_distance_interval_values, metricUnits);
     configListPreference(R.string.max_recording_distance_key,
         PreferencesUtils.MAX_RECORDING_DISTANCE_DEFAULT, R.array.max_recording_distance_values,
         metricUnits);
@@ -115,8 +115,8 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity {
       case R.string.min_recording_interval_key:
         setMinRecordingIntervalSummaryAndOptions(summary, options, values);
         break;
-      case R.string.min_recording_distance_key:
-        setMinRecordingDistanceSummaryAndOptions(summary, options, values, metricUnits);
+      case R.string.recording_distance_interval_key:
+        setRecordingDistanceIntervalSummaryAndOptions(summary, options, values, metricUnits);
         break;
       case R.string.max_recording_distance_key:
         setMaxRecordingDistanceSummaryAndOptions(summary, options, values, metricUnits);
@@ -167,14 +167,14 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity {
   }
 
   /**
-   * Sets the min recording distance summary and options.
+   * Sets the recording distance interval summary and options.
    * 
    * @param summary the summary
    * @param options the options
    * @param values the values
    * @param metricUnits true for metric units
    */
-  private void setMinRecordingDistanceSummaryAndOptions(
+  private void setRecordingDistanceIntervalSummaryAndOptions(
       String[] summary, String[] options, String[] values, boolean metricUnits) {
     for (int i = 0; i < values.length; i++) {
       int value = Integer.parseInt(values[i]);
@@ -182,7 +182,7 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity {
       if (metricUnits) {
         displayValue = getString(R.string.value_integer_meter, value);
         switch (value) {
-          case PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT:
+          case PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT:
             options[i] = getString(R.string.value_integer_meter_recommended, value);
             break;
           default:
@@ -192,7 +192,7 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity {
         int feet = (int) (value * UnitConversions.M_TO_FT);
         displayValue = getString(R.string.value_integer_feet, feet);
         switch (value) {
-          case PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT:
+          case PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT:
             options[i] = getString(R.string.value_integer_feet_recommended, feet);
             break;
           default:

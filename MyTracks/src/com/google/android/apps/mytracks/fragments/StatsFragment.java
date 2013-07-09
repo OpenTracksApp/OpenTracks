@@ -213,7 +213,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   }
 
   @Override
-  public boolean onMinRecordingDistanceChanged(int minRecordingDistance) {
+  public boolean onRecordingDistanceIntervalChanged(int minRecordingDistance) {
     // We don't care.
     return false;
   }

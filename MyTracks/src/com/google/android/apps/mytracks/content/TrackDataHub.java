@@ -65,7 +65,7 @@ public class TrackDataHub implements DataSourceListener {
   private boolean metricUnits;
   private boolean reportSpeed;
   private int recordingGpsAccuracy;
-  private int minRecordingDistance;
+  private int recordingDistanceInterval;
 
   // Track points sampling state
   private int numLoadedPoints;
@@ -307,15 +307,15 @@ public class TrackDataHub implements DataSourceListener {
             }
           }
         }
-        if (key == null
-            || key.equals(PreferencesUtils.getKey(context, R.string.min_recording_distance_key))) {
-          minRecordingDistance = PreferencesUtils.getInt(
-              context, R.string.min_recording_distance_key,
-              PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT);
+        if (key == null || key.equals(
+            PreferencesUtils.getKey(context, R.string.recording_distance_interval_key))) {
+          recordingDistanceInterval = PreferencesUtils.getInt(
+              context, R.string.recording_distance_interval_key,
+              PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT);
           if (key != null) {
             for (TrackDataListener trackDataListener :
                 trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
-              if (trackDataListener.onMinRecordingDistanceChanged(minRecordingDistance)) {
+              if (trackDataListener.onRecordingDistanceIntervalChanged(recordingDistanceInterval)) {
                 loadDataForListener(trackDataListener);
               }
             }
@@ -339,7 +339,7 @@ public class TrackDataHub implements DataSourceListener {
       trackDataListener.onMetricUnitsChanged(metricUnits);
       trackDataListener.onReportSpeedChanged(reportSpeed);
       trackDataListener.onRecordingGpsAccuracy(recordingGpsAccuracy);
-      trackDataListener.onMinRecordingDistanceChanged(minRecordingDistance);
+      trackDataListener.onRecordingDistanceIntervalChanged(recordingDistanceInterval);
     }
 
     notifyTracksTableUpdate(trackDataManager.getListeners(TrackDataType.TRACKS_TABLE));
@@ -367,7 +367,7 @@ public class TrackDataHub implements DataSourceListener {
       trackDataListener.onMetricUnitsChanged(metricUnits);
       trackDataListener.onReportSpeedChanged(reportSpeed);
       trackDataListener.onRecordingGpsAccuracy(recordingGpsAccuracy);
-      trackDataListener.onMinRecordingDistanceChanged(minRecordingDistance);
+      trackDataListener.onRecordingDistanceIntervalChanged(recordingDistanceInterval);
     }
 
     if (trackDataTypes.contains(TrackDataType.TRACKS_TABLE)) {
