@@ -16,13 +16,13 @@ limitations under the License.
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
   <item
-    android:icon="@drawable/menu_insert_marker"
+    android:icon="@drawable/ic_menu_insert_marker"
     android:id="@+id/marker_list_insert_marker"
     android:showAsAction="ifRoom"
     android:title="@string/menu_insert_marker"/>
   <item
     android:actionViewClass="android.widget.SearchView"
-    android:icon="@drawable/menu_search"
+    android:icon="@drawable/ic_menu_search"
     android:id="@+id/marker_list_search"
     android:showAsAction="ifRoom|collapseActionView"
     android:title="@string/menu_search"/>

@@ -728,7 +728,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
       if (!isRecording) {
         startGpsMenuItem.setTitle(isGpsStarted ? R.string.menu_stop_gps : R.string.menu_start_gps);
         startGpsMenuItem.setIcon(
-            isGpsStarted ? R.drawable.menu_stop_gps : R.drawable.menu_start_gps);
+            isGpsStarted ? R.drawable.ic_menu_stop_gps : R.drawable.ic_menu_start_gps);
       }
     }
     if (refreshMenuItem != null) {

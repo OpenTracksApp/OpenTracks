@@ -16,7 +16,7 @@ limitations under the License.
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
   <item
-    android:icon="@drawable/menu_map_layer"
+    android:icon="@drawable/ic_menu_map_layer"
     android:orderInCategory="5"
     android:showAsAction="ifRoom"
     android:title="@string/menu_map_layer">
