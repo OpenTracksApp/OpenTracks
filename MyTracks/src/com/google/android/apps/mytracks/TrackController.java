@@ -101,11 +101,12 @@ public class TrackController {
     }
 
     recordImageButton.setImageResource(
-        isRecording && !isPaused ? R.drawable.pause_button : R.drawable.record_button);
+        isRecording && !isPaused ? R.drawable.button_pause : R.drawable.button_record);
     recordImageButton.setContentDescription(activity.getString(
         isRecording && !isPaused ? R.string.icon_pause_recording : R.string.icon_record_track));
 
-    stopImageButton.setImageResource(isRecording ? R.drawable.stop_1_button : R.drawable.btn_stop_0);
+    stopImageButton.setImageResource(
+        isRecording ? R.drawable.button_stop : R.drawable.ic_button_stop_disabled);
     stopImageButton.setEnabled(isRecording);
 
     statusTextView.setVisibility(isRecording ? View.VISIBLE : View.INVISIBLE);

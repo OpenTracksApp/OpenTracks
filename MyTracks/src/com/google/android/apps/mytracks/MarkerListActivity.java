@@ -179,7 +179,8 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
 
         boolean statistics = WaypointType.values()[cursor.getInt(typeIndex)]
             == WaypointType.STATISTICS;
-        int iconId = statistics ? R.drawable.yellow_pushpin : R.drawable.blue_pushpin;
+        int iconId = statistics ? R.drawable.ic_marker_yellow_pushpin
+            : R.drawable.ic_marker_blue_pushpin;
         String category = statistics ? null : cursor.getString(categoryIndex);
         String description = statistics ? null : cursor.getString(descriptionIndex);
         ListItemUtils.setListItem(MarkerListActivity.this, view, false, true, iconId,

@@ -252,7 +252,7 @@ public class MapOverlay {
         if (cachedLocation.valid) {
           MarkerOptions markerOptions = new MarkerOptions().position(cachedLocation.getLatLng())
               .anchor(MARKER_X_ANCHOR, MARKER_Y_ANCHOR).draggable(false).visible(true)
-              .icon(BitmapDescriptorFactory.fromResource(R.drawable.red_dot));
+              .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_red_paddle));
           googleMap.addMarker(markerOptions);
           break;
         }
@@ -266,7 +266,7 @@ public class MapOverlay {
       if (cachedLocation.valid) {
         MarkerOptions markerOptions = new MarkerOptions().position(cachedLocation.getLatLng())
             .anchor(MARKER_X_ANCHOR, MARKER_Y_ANCHOR).draggable(false).visible(true)
-            .icon(BitmapDescriptorFactory.fromResource(R.drawable.green_dot));
+            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_green_paddle));
         googleMap.addMarker(markerOptions);
         hasStartMarker = true;
         break;
@@ -285,8 +285,8 @@ public class MapOverlay {
       for (Waypoint waypoint : waypoints) {
         Location location = waypoint.getLocation();
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        int drawableId = waypoint.getType() == WaypointType.STATISTICS ? R.drawable.yellow_pushpin
-            : R.drawable.blue_pushpin;
+        int drawableId = waypoint.getType() == WaypointType.STATISTICS 
+            ? R.drawable.ic_marker_yellow_pushpin : R.drawable.ic_marker_blue_pushpin;
         MarkerOptions markerOptions = new MarkerOptions().position(latLng)
             .anchor(WAYPOINT_X_ANCHOR, WAYPOINT_Y_ANCHOR).draggable(false).visible(true)
             .icon(BitmapDescriptorFactory.fromResource(drawableId))

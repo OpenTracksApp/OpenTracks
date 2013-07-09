@@ -15,6 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-  <item android:drawable="@drawable/my_location_pressed" android:state_pressed="true"/>
-  <item android:drawable="@drawable/my_location_normal"/>
+  <item android:drawable="@drawable/ic_my_location_pressed" android:state_pressed="true"/>
+  <item android:drawable="@drawable/ic_my_location"/>
 </selector>

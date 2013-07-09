@@ -33,7 +33,7 @@ limitations under the License.
         android:layout_width="match_parent"
         android:orientation="vertical" >
         <EditText
-          android:drawableLeft="@drawable/yellow_pushpin"
+          android:drawableLeft="@drawable/ic_marker_yellow_pushpin"
           android:hint="@string/generic_name"
           android:id="@+id/marker_edit_statistics_name"
           android:imeOptions="actionDone"
@@ -45,7 +45,7 @@ limitations under the License.
         android:layout_width="match_parent"
         android:orientation="vertical" >
         <EditText
-          android:drawableLeft="@drawable/blue_pushpin"
+          android:drawableLeft="@drawable/ic_marker_blue_pushpin"
           android:hint="@string/generic_name"
           android:id="@+id/marker_edit_waypoint_name"
           android:imeOptions="actionNext"
