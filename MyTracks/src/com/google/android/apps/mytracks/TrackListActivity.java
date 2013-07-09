@@ -294,7 +294,6 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   private MenuItem exportAllMenuItem;
   private MenuItem importAllMenuItem;
   private MenuItem deleteAllMenuItem;
-  private MenuItem feedbackMenuItem;
 
   private boolean startGps = false; // true to start gps
   private boolean startNewRecording = false; // true to start a new recording
@@ -412,7 +411,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   @Override
   protected void onResume() {
     super.onResume();
-
+    
     // Update UI
     ApiAdapterFactory.getApiAdapter().invalidMenu(this);
     sectionResourceCursorAdapter.notifyDataSetChanged();
@@ -463,22 +462,28 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.track_list, menu);
 
+    menu.findItem(R.id.track_list_feedback)
+        .setVisible(ApiAdapterFactory.getApiAdapter().isGoogleFeedbackAvailable());
+
     searchMenuItem = menu.findItem(R.id.track_list_search);
+    ApiAdapterFactory.getApiAdapter().configureSearchWidget(this, searchMenuItem, trackController);
+
     startGpsMenuItem = menu.findItem(R.id.track_list_start_gps);
     refreshMenuItem = menu.findItem(R.id.track_list_refresh);
     exportAllMenuItem = menu.findItem(R.id.track_list_export_all);
     importAllMenuItem = menu.findItem(R.id.track_list_import_all);
     deleteAllMenuItem = menu.findItem(R.id.track_list_delete_all);
-    feedbackMenuItem = menu.findItem(R.id.track_list_feedback);
-    feedbackMenuItem.setVisible(ApiAdapterFactory.getApiAdapter().isGoogleFeedbackAvailable());
-
-    ApiAdapterFactory.getApiAdapter().configureSearchWidget(this, searchMenuItem, trackController);
+    return true;
+  }
+  
+  @Override
+  public boolean onPrepareOptionsMenu(Menu menu) {
     boolean isGpsStarted = TrackRecordingServiceConnectionUtils.isRecordingServiceRunning(this);
     boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
     updateMenuItems(isGpsStarted, isRecording);
-    return true;
+    return super.onPrepareOptionsMenu(menu);
   }
-
+  
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     Intent intent;

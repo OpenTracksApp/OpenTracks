@@ -88,14 +88,15 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity implements
   // Preferences
   private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
   private boolean recordingTrackPaused = PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT;
-
+  private String sensorType = PreferencesUtils.SENSOR_TYPE_DEFAULT;
+  
   private MenuItem insertMarkerMenuItem;
   private MenuItem playMenuItem;
   private MenuItem shareMenuItem;
   private MenuItem exportMenuItem;
   private MenuItem voiceFrequencyMenuItem;
   private MenuItem splitFrequencyMenuItem;
-  private MenuItem feedbackMenuItem;
+  private MenuItem sensorStateMenuItem;
 
   private final Runnable bindChangedCallback = new Runnable() {
       @Override
@@ -130,6 +131,11 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity implements
             recordingTrackPaused = PreferencesUtils.getBoolean(TrackDetailActivity.this,
                 R.string.recording_track_paused_key,
                 PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+          }
+          if (key == null || key.equals(
+              PreferencesUtils.getKey(TrackDetailActivity.this, R.string.sensor_type_key))) {
+            sensorType = PreferencesUtils.getString(TrackDetailActivity.this,
+                R.string.sensor_type_key, PreferencesUtils.SENSOR_TYPE_DEFAULT);
           }
           if (key != null) {
             runOnUiThread(new Runnable() {
@@ -296,30 +302,29 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity implements
     getMenuInflater().inflate(R.menu.track_detail, menu);
 
     Track track = myTracksProviderUtils.getTrack(trackId);
-    boolean sharedWithMe = track != null ? track.isSharedWithMe() : true;
-    menu.findItem(R.id.track_detail_edit).setVisible(!sharedWithMe);
-    shareMenuItem = menu.findItem(R.id.track_detail_share);
-    shareMenuItem.setEnabled(!sharedWithMe);
-    shareMenuItem.setVisible(!sharedWithMe);
+    boolean isSharedWithMe = track != null ? track.isSharedWithMe() : true;
+
+    menu.findItem(R.id.track_detail_edit).setVisible(!isSharedWithMe);
+    menu.findItem(R.id.track_detail_feedback)
+        .setVisible(ApiAdapterFactory.getApiAdapter().isGoogleFeedbackAvailable());
 
     insertMarkerMenuItem = menu.findItem(R.id.track_detail_insert_marker);
     playMenuItem = menu.findItem(R.id.track_detail_play);
+
+    shareMenuItem = menu.findItem(R.id.track_detail_share);
+    shareMenuItem.setEnabled(!isSharedWithMe);
+    shareMenuItem.setVisible(!isSharedWithMe);
+
     exportMenuItem = menu.findItem(R.id.track_detail_export);
     voiceFrequencyMenuItem = menu.findItem(R.id.track_detail_voice_frequency);
     splitFrequencyMenuItem = menu.findItem(R.id.track_detail_split_frequency);
-    feedbackMenuItem = menu.findItem(R.id.track_detail_feedback);
-    feedbackMenuItem.setVisible(ApiAdapterFactory.getApiAdapter().isGoogleFeedbackAvailable());
-
-    updateMenuItems(trackId == recordingTrackId, recordingTrackPaused);
+    sensorStateMenuItem = menu.findItem(R.id.track_detail_sensor_state);
     return true;
   }
 
   @Override
   public boolean onPrepareOptionsMenu(Menu menu) {
-    boolean showSensorState = !PreferencesUtils.SENSOR_TYPE_DEFAULT.equals(
-        PreferencesUtils.getString(
-            this, R.string.sensor_type_key, PreferencesUtils.SENSOR_TYPE_DEFAULT));
-    menu.findItem(R.id.track_detail_sensor_state).setVisible(showSensorState);
+    updateMenuItems(trackId == recordingTrackId, recordingTrackPaused);
     return super.onPrepareOptionsMenu(menu);
   }
 
@@ -522,6 +527,9 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity implements
     }
     if (splitFrequencyMenuItem != null) {
       splitFrequencyMenuItem.setVisible(isRecording);
+    }    
+    if (sensorStateMenuItem != null) {
+      sensorStateMenuItem.setVisible(!PreferencesUtils.SENSOR_TYPE_DEFAULT.equals(sensorType));
     }
 
     String title;

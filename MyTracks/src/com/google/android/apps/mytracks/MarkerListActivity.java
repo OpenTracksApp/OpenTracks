@@ -243,12 +243,17 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
     insertMarkerMenuItem = menu.findItem(R.id.marker_list_insert_marker);
     searchMenuItem = menu.findItem(R.id.marker_list_search);
     ApiAdapterFactory.getApiAdapter().configureSearchWidget(this, searchMenuItem, null);
-    if (insertMarkerMenuItem != null) {
-      insertMarkerMenuItem.setVisible(track.getId() == recordingTrackId && !recordingTrackPaused);
-    }
     return true;
   }
 
+  @Override
+  public boolean onPrepareOptionsMenu(Menu menu) {
+    if (insertMarkerMenuItem != null) {
+      insertMarkerMenuItem.setVisible(track.getId() == recordingTrackId && !recordingTrackPaused);
+    }
+    return super.onPrepareOptionsMenu(menu);
+  }
+  
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {

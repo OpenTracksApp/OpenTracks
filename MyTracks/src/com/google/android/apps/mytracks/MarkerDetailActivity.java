@@ -105,8 +105,10 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity implements De
     getMenuInflater().inflate(R.menu.marker_detail, menu);
 
     Track track = myTracksProviderUtils.getTrack(waypoint.getTrackId());
-    menu.findItem(R.id.marker_detail_edit).setVisible(!track.isSharedWithMe());
-    menu.findItem(R.id.marker_detail_delete).setVisible(!track.isSharedWithMe());
+    boolean isSharedWithMe = track != null ? track.isSharedWithMe() : true;
+    
+    menu.findItem(R.id.marker_detail_edit).setVisible(!isSharedWithMe);
+    menu.findItem(R.id.marker_detail_delete).setVisible(!isSharedWithMe);
     return true;
   }
 
