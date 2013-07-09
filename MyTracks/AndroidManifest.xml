@@ -138,7 +138,7 @@ limitations under the License.
     android:allowBackup="true"
     android:backupAgent="com.google.android.apps.mytracks.io.backup.MyTracksBackupAgent"
     android:hardwareAccelerated="true"
-    android:icon="@drawable/my_tracks_icon"
+    android:icon="@drawable/ic_launcher_my_tracks"
     android:label="@string/my_tracks_app_name"
     android:theme="@style/MyTracks" >
     <!-- For data backup -->
