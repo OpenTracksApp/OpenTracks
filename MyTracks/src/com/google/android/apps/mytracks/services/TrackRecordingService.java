@@ -116,7 +116,7 @@ public class TrackRecordingService extends Service {
   private LocationListenerPolicy locationListenerPolicy;
   private int minRecordingDistance;
   private int maxRecordingDistance;
-  private int minRequiredAccuracy;
+  private int recordingGpsAccuracy;
   private int autoResumeTrackTimeout;
   private long currentRecordingInterval;
 
@@ -204,10 +204,11 @@ public class TrackRecordingService extends Service {
                 R.string.max_recording_distance_key,
                 PreferencesUtils.MAX_RECORDING_DISTANCE_DEFAULT);
           }
-          if (key == null
-              || key.equals(PreferencesUtils.getKey(context, R.string.min_required_accuracy_key))) {
-            minRequiredAccuracy = PreferencesUtils.getInt(context,
-                R.string.min_required_accuracy_key, PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT);
+          if (key == null || key.equals(
+              PreferencesUtils.getKey(context, R.string.recording_gps_accuracy_key))) {
+            recordingGpsAccuracy = PreferencesUtils.getInt(context,
+                R.string.recording_gps_accuracy_key,
+                PreferencesUtils.RECORDING_GPS_ACCURACY_DEFAULT);
           }
           if (key == null || key.equals(
               PreferencesUtils.getKey(context, R.string.auto_resume_track_timeout_key))) {
@@ -887,7 +888,7 @@ public class TrackRecordingService extends Service {
         return;
       }
 
-      if (location.getAccuracy() > minRequiredAccuracy) {
+      if (location.getAccuracy() > recordingGpsAccuracy) {
         Log.d(TAG, "Ignore onLocationChangedAsync. Poor accuracy.");
         return;
       }

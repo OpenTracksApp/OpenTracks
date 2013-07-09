@@ -33,7 +33,7 @@ limitations under the License.
   <string name="max_recording_distance_key">maxRecordingDistance</string>
   <string name="min_recording_distance_key">minRecordingDistance</string>
   <string name="min_recording_interval_key">minRecordingInterval</string>
-  <string name="min_required_accuracy_key">minRequiredAccuracy</string>
+  <string name="recording_gps_accuracy_key">recordingGpsAccuracy</string>
   <string name="report_speed_key">reportSpeed</string>
   <string name="sensor_type_key">sensorType</string>
   <string name="share_track_invite_key">shareTrackInvite</string>

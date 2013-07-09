@@ -55,8 +55,8 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity {
     configListPreference(R.string.max_recording_distance_key,
         PreferencesUtils.MAX_RECORDING_DISTANCE_DEFAULT, R.array.max_recording_distance_values,
         metricUnits);
-    configListPreference(R.string.min_required_accuracy_key,
-        PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT, R.array.min_required_accuracy_values,
+    configListPreference(R.string.recording_gps_accuracy_key,
+        PreferencesUtils.RECORDING_GPS_ACCURACY_DEFAULT, R.array.recording_gps_accuracy_values,
         metricUnits);
     configListPreference(R.string.auto_resume_track_timeout_key,
         PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_DEFAULT,
@@ -121,8 +121,8 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity {
       case R.string.max_recording_distance_key:
         setMaxRecordingDistanceSummaryAndOptions(summary, options, values, metricUnits);
         break;
-      case R.string.min_required_accuracy_key:
-        setMinRequiredAccuracySummaryAndOptions(summary, options, values, metricUnits);
+      case R.string.recording_gps_accuracy_key:
+        setRecordingGpsAccuracySummaryAndOptions(summary, options, values, metricUnits);
         break;
       case R.string.auto_resume_track_timeout_key:
         setAutoResumeTrackTimeoutSummaryAndOptions(summary, options, values);
@@ -248,14 +248,14 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity {
   }
 
   /**
-   * Sets the min required accuracy summary and options.
+   * Sets the recording gps accuracy summary and options.
    * 
    * @param summary the summary
    * @param options the options
    * @param values the values
    * @param metricUnits true for metric units
    */
-  private void setMinRequiredAccuracySummaryAndOptions(
+  private void setRecordingGpsAccuracySummaryAndOptions(
       String[] summary, String[] options, String[] values, boolean metricUnits) {
     for (int i = 0; i < values.length; i++) {
       int value = Integer.parseInt(values[i]);
@@ -263,13 +263,13 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity {
       if (metricUnits) {
         displayValue = getString(R.string.value_integer_meter, value);
         switch (value) {
-          case PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT:
+          case PreferencesUtils.RECORDING_GPS_ACCURACY_DEFAULT:
             options[i] = getString(R.string.value_integer_meter_recommended, value);
             break;
-          case PreferencesUtils.MIN_REQUIRED_ACCURACY_EXCELLENT:
+          case PreferencesUtils.RECORDING_GPS_ACCURACY_EXCELLENT:
             options[i] = getString(R.string.value_integer_meter_excellent_gps, value);
             break;
-          case PreferencesUtils.MIN_REQUIRED_ACCURACY_POOR:
+          case PreferencesUtils.RECORDING_GPS_ACCURACY_POOR:
             options[i] = getString(R.string.value_integer_meter_poor_gps, value);
             break;
           default:
@@ -280,10 +280,10 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity {
         if (feet < 2000) {
           displayValue = getString(R.string.value_integer_feet, feet);
           switch (value) {
-            case PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT:
+            case PreferencesUtils.RECORDING_GPS_ACCURACY_DEFAULT:
               options[i] = getString(R.string.value_integer_feet_recommended, feet);
               break;
-            case PreferencesUtils.MIN_REQUIRED_ACCURACY_EXCELLENT:
+            case PreferencesUtils.RECORDING_GPS_ACCURACY_EXCELLENT:
               options[i] = getString(R.string.value_integer_feet_excellent_gps, feet);
               break;
             default:
@@ -293,7 +293,7 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity {
           double mile = feet * UnitConversions.FT_TO_MI;
           displayValue = getString(R.string.value_float_mile, mile);
           switch (value) {
-            case PreferencesUtils.MIN_REQUIRED_ACCURACY_POOR:
+            case PreferencesUtils.RECORDING_GPS_ACCURACY_POOR:
               options[i] = getString(R.string.value_float_mile_poor_gps, mile);
               break;
             default:

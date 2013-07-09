@@ -283,7 +283,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   }
 
   @Override
-  public boolean onMinRequiredAccuracy(int minRequiredAccuracy) {
+  public boolean onRecordingGpsAccuracy(int minRequiredAccuracy) {
     // We don't care.
     return false;
   }
