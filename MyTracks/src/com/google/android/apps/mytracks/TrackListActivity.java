@@ -192,7 +192,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
                 @Override
               public void run() {
                 ApiAdapterFactory.getApiAdapter().invalidMenu(TrackListActivity.this);
-                sectionResourceCursorAdapter.notifyDataSetChanged();
+                getSupportLoaderManager().restartLoader(0, null, loaderCallbacks);
                 boolean isRecording = recordingTrackId
                     != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
                 trackController.update(isRecording, recordingTrackPaused);
@@ -273,6 +273,25 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     }
   };
 
+  private final LoaderCallbacks<Cursor> loaderCallbacks = new LoaderCallbacks<Cursor>() {
+      @Override
+    public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
+      return new CursorLoader(TrackListActivity.this, TracksColumns.CONTENT_URI, PROJECTION, null,
+          null,
+          "IFNULL(" + TracksColumns.SHAREDWITHME + ",0) ASC, " + TracksColumns.STARTTIME + " DESC");
+    }
+
+      @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+      sectionResourceCursorAdapter.swapCursor(cursor);
+    }
+
+      @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+      sectionResourceCursorAdapter.swapCursor(null);
+    }
+  };
+  
   // The following are set in onCreate
   private MyTracksProviderUtils myTracksProviderUtils;
   private SharedPreferences sharedPreferences;
@@ -371,24 +390,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     ApiAdapterFactory.getApiAdapter()
         .configureListViewContextualMenu(this, listView, contextualActionModeCallback);
 
-    getSupportLoaderManager().initLoader(0, null, new LoaderCallbacks<Cursor>() {
-        @Override
-      public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-        return new CursorLoader(TrackListActivity.this, TracksColumns.CONTENT_URI, PROJECTION, null,
-            null, "IFNULL(" + TracksColumns.SHAREDWITHME + ",0) ASC, " + TracksColumns.STARTTIME
-                + " DESC");
-      }
-
-        @Override
-      public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        sectionResourceCursorAdapter.swapCursor(cursor);
-      }
-
-        @Override
-      public void onLoaderReset(Loader<Cursor> loader) {
-        sectionResourceCursorAdapter.swapCursor(null);
-      }
-    });
+    getSupportLoaderManager().initLoader(0, null, loaderCallbacks);
     showStartupDialogs();
   }
 
@@ -414,7 +416,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     
     // Update UI
     ApiAdapterFactory.getApiAdapter().invalidMenu(this);
-    sectionResourceCursorAdapter.notifyDataSetChanged();
+    getSupportLoaderManager().restartLoader(0, null, loaderCallbacks);
     boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
     trackController.onResume(isRecording, recordingTrackPaused);
   }
