@@ -76,18 +76,19 @@ public class PreferencesUtils {
   public static final String GOOGLE_ACCOUNT_DEFAULT = "";
   public static final int MAP_TYPE_DEFAUlT = 1;
   public static final int MAX_RECORDING_DISTANCE_DEFAULT = 200;
-  public static final int MIN_RECORDING_DISTANCE_DEFAULT = 5;
-
+  
   // Values for min_recording_interval_key
   public static final int MIN_RECORDING_INTERVAL_ADAPT_ACCURACY = -1;
   public static final int MIN_RECORDING_INTERVAL_ADAPT_BATTERY_LIFE = -2;
   public static final int MIN_RECORDING_INTERVAL_DEFAULT = 0;
 
-  // Values for min_required_accuracy
-  public static final int MIN_REQUIRED_ACCURACY_DEFAULT = 200;
-  public static final int MIN_REQUIRED_ACCURACY_EXCELLENT = 10;
-  public static final int MIN_REQUIRED_ACCURACY_POOR = 5000;
-
+  public static final int RECORDING_DISTANCE_INTERVAL_DEFAULT = 10;
+  
+  // Values for recording_gps_accuracy
+  public static final int RECORDING_GPS_ACCURACY_DEFAULT = 50;
+  public static final int RECORDING_GPS_ACCURACY_EXCELLENT = 10;
+  public static final int RECORDING_GPS_ACCURACY_POOR = 2000;
+  
   public static final long RECORDING_TRACK_ID_DEFAULT = -1L;
   public static final boolean RECORDING_TRACK_PAUSED_DEFAULT = true;
   public static final boolean REPORT_SPEED_DEFAULT = true;

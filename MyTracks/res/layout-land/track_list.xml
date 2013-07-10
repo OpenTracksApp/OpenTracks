@@ -30,7 +30,6 @@ limitations under the License.
     android:layout_weight="1.0"
     android:layout_width="0dp"
     android:text="@string/track_list_empty_message"
-    android:visibility="gone"
     style="@style/ListEmptyTextView" >
   </TextView>
 </LinearLayout>

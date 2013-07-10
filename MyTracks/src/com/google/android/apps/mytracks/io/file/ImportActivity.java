@@ -153,11 +153,12 @@ public class ImportActivity extends Activity {
         String totalFiles = getResources()
             .getQuantityString(R.plurals.files, totalCount, totalCount);
         if (successCount == totalCount) {
-          iconId = android.R.drawable.ic_dialog_info;
           if (totalCount == 0) {
+            iconId = android.R.drawable.ic_dialog_info;
             titleId = R.string.import_no_file_title;
             message = getString(R.string.import_no_file, directoryDisplayName);
           } else {
+            iconId = R.drawable.ic_dialog_success;
             titleId = R.string.generic_success_title;
             message = getString(R.string.import_success, totalFiles, directoryDisplayName);
           }

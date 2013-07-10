@@ -64,8 +64,8 @@ public class TrackDataHub implements DataSourceListener {
   private boolean recordingTrackPaused;
   private boolean metricUnits;
   private boolean reportSpeed;
-  private int minRequiredAccuracy;
-  private int minRecordingDistance;
+  private int recordingGpsAccuracy;
+  private int recordingDistanceInterval;
 
   // Track points sampling state
   private int numLoadedPoints;
@@ -295,27 +295,27 @@ public class TrackDataHub implements DataSourceListener {
           }
         }
         if (key == null
-            || key.equals(PreferencesUtils.getKey(context, R.string.min_required_accuracy_key))) {
-          minRequiredAccuracy = PreferencesUtils.getInt(context, R.string.min_required_accuracy_key,
-              PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT);
+            || key.equals(PreferencesUtils.getKey(context, R.string.recording_gps_accuracy_key))) {
+          recordingGpsAccuracy = PreferencesUtils.getInt(context, R.string.recording_gps_accuracy_key,
+              PreferencesUtils.RECORDING_GPS_ACCURACY_DEFAULT);
           if (key != null) {
             for (TrackDataListener trackDataListener :
                 trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
-              if (trackDataListener.onMinRequiredAccuracy(minRequiredAccuracy)) {
+              if (trackDataListener.onRecordingGpsAccuracy(recordingGpsAccuracy)) {
                 loadDataForListener(trackDataListener);
               }
             }
           }
         }
-        if (key == null
-            || key.equals(PreferencesUtils.getKey(context, R.string.min_recording_distance_key))) {
-          minRecordingDistance = PreferencesUtils.getInt(
-              context, R.string.min_recording_distance_key,
-              PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT);
+        if (key == null || key.equals(
+            PreferencesUtils.getKey(context, R.string.recording_distance_interval_key))) {
+          recordingDistanceInterval = PreferencesUtils.getInt(
+              context, R.string.recording_distance_interval_key,
+              PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT);
           if (key != null) {
             for (TrackDataListener trackDataListener :
                 trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
-              if (trackDataListener.onMinRecordingDistanceChanged(minRecordingDistance)) {
+              if (trackDataListener.onRecordingDistanceIntervalChanged(recordingDistanceInterval)) {
                 loadDataForListener(trackDataListener);
               }
             }
@@ -338,8 +338,8 @@ public class TrackDataHub implements DataSourceListener {
         trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
       trackDataListener.onMetricUnitsChanged(metricUnits);
       trackDataListener.onReportSpeedChanged(reportSpeed);
-      trackDataListener.onMinRequiredAccuracy(minRequiredAccuracy);
-      trackDataListener.onMinRecordingDistanceChanged(minRecordingDistance);
+      trackDataListener.onRecordingGpsAccuracy(recordingGpsAccuracy);
+      trackDataListener.onRecordingDistanceIntervalChanged(recordingDistanceInterval);
     }
 
     notifyTracksTableUpdate(trackDataManager.getListeners(TrackDataType.TRACKS_TABLE));
@@ -366,8 +366,8 @@ public class TrackDataHub implements DataSourceListener {
     if (trackDataTypes.contains(TrackDataType.PREFERENCE)) {
       trackDataListener.onMetricUnitsChanged(metricUnits);
       trackDataListener.onReportSpeedChanged(reportSpeed);
-      trackDataListener.onMinRequiredAccuracy(minRequiredAccuracy);
-      trackDataListener.onMinRecordingDistanceChanged(minRecordingDistance);
+      trackDataListener.onRecordingGpsAccuracy(recordingGpsAccuracy);
+      trackDataListener.onRecordingDistanceIntervalChanged(recordingDistanceInterval);
     }
 
     if (trackDataTypes.contains(TrackDataType.TRACKS_TABLE)) {
@@ -580,13 +580,11 @@ public class TrackDataHub implements DataSourceListener {
   }
   
   /**
-   * Gets the minRequiredAccuracy.
-   * 
-   * @return the minRequiredAccuracy
+   * Gets the recordingGpsAccuracy.
    */
   @VisibleForTesting
-  int getMinRequiredAccuracy() {
-    return minRequiredAccuracy;
+  int getRecordingGpsAccuracy() {
+    return recordingGpsAccuracy;
   }
   
   /**

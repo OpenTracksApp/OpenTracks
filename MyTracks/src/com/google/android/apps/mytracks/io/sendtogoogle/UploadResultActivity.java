@@ -101,7 +101,7 @@ public class UploadResultActivity extends FragmentActivity implements ChooseActi
         success ? R.string.export_google_success : R.string.export_google_error,
         getString(serviceName), getString(serviceUrl));
     AlertDialog.Builder builder = new AlertDialog.Builder(this).setCancelable(true)
-        .setIcon(success ? android.R.drawable.ic_dialog_info : android.R.drawable.ic_dialog_alert)
+        .setIcon(success ? R.drawable.ic_dialog_success : android.R.drawable.ic_dialog_alert)
         .setMessage(message)
         .setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override

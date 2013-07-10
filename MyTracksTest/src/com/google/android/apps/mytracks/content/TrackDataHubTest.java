@@ -529,24 +529,26 @@ public class TrackDataHubTest extends AndroidTestCase {
     PreferencesUtils.setBoolean(context, R.string.report_speed_key, true);
     PreferencesUtils.setString(
         context, R.string.stats_units_key, PreferencesUtils.STATS_UNITS_DEFAULT);
-    PreferencesUtils.setInt(context, R.string.min_required_accuracy_key,
-        PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT);
-    PreferencesUtils.setInt(context, R.string.min_recording_distance_key,
-        PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT);
+    PreferencesUtils.setInt(context, R.string.recording_gps_accuracy_key,
+        PreferencesUtils.RECORDING_GPS_ACCURACY_DEFAULT);
+    PreferencesUtils.setInt(context, R.string.recording_distance_interval_key,
+        PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT);
 
     dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceChangeListenerCapture));
     expect(trackDataListener1.onMetricUnitsChanged(true)).andReturn(false);
     expect(trackDataListener1.onReportSpeedChanged(true)).andReturn(false);
-    expect(trackDataListener1.onMinRequiredAccuracy(PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT))
+    expect(
+        trackDataListener1.onRecordingGpsAccuracy(PreferencesUtils.RECORDING_GPS_ACCURACY_DEFAULT))
         .andReturn(false);
-    expect(trackDataListener1.onMinRecordingDistanceChanged(
-        PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT)).andReturn(false);
+    expect(trackDataListener1.onRecordingDistanceIntervalChanged(
+        PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT)).andReturn(false);
     expect(trackDataListener2.onMetricUnitsChanged(true)).andReturn(false);
     expect(trackDataListener2.onReportSpeedChanged(true)).andReturn(false);
-    expect(trackDataListener2.onMinRequiredAccuracy(PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT))
+    expect(
+        trackDataListener2.onRecordingGpsAccuracy(PreferencesUtils.RECORDING_GPS_ACCURACY_DEFAULT))
         .andReturn(false);
-    expect(trackDataListener2.onMinRecordingDistanceChanged(
-        PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT)).andReturn(false);
+    expect(trackDataListener2.onRecordingDistanceIntervalChanged(
+        PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT)).andReturn(false);
     replay();
 
     trackDataHub.start();
@@ -749,14 +751,14 @@ public class TrackDataHubTest extends AndroidTestCase {
    */
   public void testNotifyPreferenceChanged_minRequiredAccuracy() {
     int value = 1;
-    PreferencesUtils.setInt(context, R.string.min_required_accuracy_key, value);
+    PreferencesUtils.setInt(context, R.string.recording_gps_accuracy_key, value);
     trackDataHub.notifyPreferenceChanged(PreferencesUtils
-        .getKey(context, R.string.min_required_accuracy_key));
-    assertEquals(value, trackDataHub.getMinRequiredAccuracy());
-    PreferencesUtils.setInt(context, R.string.min_required_accuracy_key, value + 1);
+        .getKey(context, R.string.recording_gps_accuracy_key));
+    assertEquals(value, trackDataHub.getRecordingGpsAccuracy());
+    PreferencesUtils.setInt(context, R.string.recording_gps_accuracy_key, value + 1);
     trackDataHub.notifyPreferenceChanged(PreferencesUtils
-        .getKey(context, R.string.min_required_accuracy_key));
-    assertEquals(value + 1, trackDataHub.getMinRequiredAccuracy());
+        .getKey(context, R.string.recording_gps_accuracy_key));
+    assertEquals(value + 1, trackDataHub.getRecordingGpsAccuracy());
   }
   
   /**

@@ -104,7 +104,7 @@ abstract class AbstractImporter extends DefaultHandler {
   private final Context context;
   private final long importTrackId;
   private final MyTracksProviderUtils myTracksProviderUtils;
-  private final int minRecordingDistance;
+  private final int recordingDistanceInterval;
   private final List<Long> trackIds;
   private final List<Waypoint> waypoints;
 
@@ -143,8 +143,9 @@ abstract class AbstractImporter extends DefaultHandler {
     this.context = context;
     this.importTrackId = importTrackId;
     this.myTracksProviderUtils = myTracksProviderUtils;
-    this.minRecordingDistance = PreferencesUtils.getInt(context,
-        R.string.min_recording_distance_key, PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT);
+    this.recordingDistanceInterval = PreferencesUtils.getInt(context,
+        R.string.recording_distance_interval_key,
+        PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT);
     trackIds = new ArrayList<Long>();
     waypoints = new ArrayList<Waypoint>();
   }
@@ -248,8 +249,8 @@ abstract class AbstractImporter extends DefaultHandler {
             // No more track points. Ignore the rest of the waypoints.
             return;
           }
-          trackTripStatisticstrackUpdater.addLocation(trackPoint, minRecordingDistance);
-          markerTripStatisticsUpdater.addLocation(trackPoint, minRecordingDistance);
+          trackTripStatisticstrackUpdater.addLocation(trackPoint, recordingDistanceInterval);
+          markerTripStatisticsUpdater.addLocation(trackPoint, recordingDistanceInterval);
         }
         if (waypoint.getLocation().getTime() > trackPoint.getTime()) {
           trackPoint = null;
@@ -526,7 +527,7 @@ abstract class AbstractImporter extends DefaultHandler {
       trackData.tripStatisticsUpdater = new TripStatisticsUpdater(
           location.getTime() != -1L ? location.getTime() : trackData.importTime);
     }
-    trackData.tripStatisticsUpdater.addLocation(location, minRecordingDistance);
+    trackData.tripStatisticsUpdater.addLocation(location, recordingDistanceInterval);
 
     trackData.bufferedLocations[trackData.numBufferedLocations] = location;
     trackData.numBufferedLocations++;

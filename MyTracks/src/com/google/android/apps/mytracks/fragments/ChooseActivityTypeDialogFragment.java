@@ -82,7 +82,7 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
 
     Options options = new BitmapFactory.Options();
     options.inJustDecodeBounds = true;
-    BitmapFactory.decodeResource(getResources(), R.drawable.track_airplane, options);
+    BitmapFactory.decodeResource(getResources(), R.drawable.ic_track_airplane, options);
     int padding = 32;
     int width = options.outWidth + 2 * padding;
     int height = options.outHeight + 2 * padding;

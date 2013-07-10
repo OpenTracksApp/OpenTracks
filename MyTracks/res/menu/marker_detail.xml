@@ -16,17 +16,17 @@ limitations under the License.
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
   <item
-    android:icon="@drawable/menu_show_on_map"
+    android:icon="@drawable/ic_menu_show_on_map"
     android:id="@+id/marker_detail_show_on_map"
     android:showAsAction="ifRoom"
     android:title="@string/menu_show_on_map"/>
   <item
-    android:icon="@drawable/menu_edit"
+    android:icon="@drawable/ic_menu_edit"
     android:id="@+id/marker_detail_edit"
     android:showAsAction="ifRoom"
     android:title="@string/menu_edit"/>
   <item
-    android:icon="@drawable/menu_delete"
+    android:icon="@drawable/ic_menu_delete"
     android:id="@+id/marker_detail_delete"
     android:showAsAction="ifRoom"
     android:title="@string/menu_delete"/>

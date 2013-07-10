@@ -66,7 +66,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
 
   private boolean metricUnits = true;
   private boolean reportSpeed = PreferencesUtils.REPORT_SPEED_DEFAULT;
-  private int minRecordingDistance = PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT;
+  private int recordingDistanceInterval = PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT;
 
   // Modes of operation
   private boolean chartByDistance = true;
@@ -283,18 +283,18 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   }
 
   @Override
-  public boolean onMinRequiredAccuracy(int minRequiredAccuracy) {
+  public boolean onRecordingGpsAccuracy(int minRequiredAccuracy) {
     // We don't care.
     return false;
   }
   
   @Override
-  public boolean onMinRecordingDistanceChanged(int value) {
+  public boolean onRecordingDistanceIntervalChanged(int value) {
     if (isResumed()) {
-      if (minRecordingDistance == value) {
+      if (recordingDistanceInterval == value) {
         return false;
       }
-      minRecordingDistance = value;
+      recordingDistanceInterval = value;
       return true;
     }
     return false;
@@ -439,7 +439,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     double power = Double.NaN;
 
     if (tripStatisticsUpdater != null) {
-      tripStatisticsUpdater.addLocation(location, minRecordingDistance);
+      tripStatisticsUpdater.addLocation(location, recordingDistanceInterval);
       TripStatistics tripStatistics = tripStatisticsUpdater.getTripStatistics();
       if (chartByDistance) {
         double distance = tripStatistics.getTotalDistance() * UnitConversions.M_TO_KM;

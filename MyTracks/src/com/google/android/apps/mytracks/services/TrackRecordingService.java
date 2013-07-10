@@ -114,9 +114,9 @@ public class TrackRecordingService extends Service {
   private long recordingTrackId;
   private boolean recordingTrackPaused;
   private LocationListenerPolicy locationListenerPolicy;
-  private int minRecordingDistance;
+  private int recordingDistanceInterval;
   private int maxRecordingDistance;
-  private int minRequiredAccuracy;
+  private int recordingGpsAccuracy;
   private int autoResumeTrackTimeout;
   private long currentRecordingInterval;
 
@@ -193,10 +193,10 @@ public class TrackRecordingService extends Service {
             }
           }
           if (key == null || key.equals(
-              PreferencesUtils.getKey(context, R.string.min_recording_distance_key))) {
-            minRecordingDistance = PreferencesUtils.getInt(context,
-                R.string.min_recording_distance_key,
-                PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT);
+              PreferencesUtils.getKey(context, R.string.recording_distance_interval_key))) {
+            recordingDistanceInterval = PreferencesUtils.getInt(context,
+                R.string.recording_distance_interval_key,
+                PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT);
           }
           if (key == null || key.equals(
               PreferencesUtils.getKey(context, R.string.max_recording_distance_key))) {
@@ -204,10 +204,11 @@ public class TrackRecordingService extends Service {
                 R.string.max_recording_distance_key,
                 PreferencesUtils.MAX_RECORDING_DISTANCE_DEFAULT);
           }
-          if (key == null
-              || key.equals(PreferencesUtils.getKey(context, R.string.min_required_accuracy_key))) {
-            minRequiredAccuracy = PreferencesUtils.getInt(context,
-                R.string.min_required_accuracy_key, PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT);
+          if (key == null || key.equals(
+              PreferencesUtils.getKey(context, R.string.recording_gps_accuracy_key))) {
+            recordingGpsAccuracy = PreferencesUtils.getInt(context,
+                R.string.recording_gps_accuracy_key,
+                PreferencesUtils.RECORDING_GPS_ACCURACY_DEFAULT);
           }
           if (key == null || key.equals(
               PreferencesUtils.getKey(context, R.string.auto_resume_track_timeout_key))) {
@@ -510,7 +511,7 @@ public class TrackRecordingService extends Service {
     NotificationCompat.Builder builder = new NotificationCompat.Builder(this).setContentIntent(
         pendingIntent).setContentText(getString(messageId))
         .setContentTitle(getString(R.string.my_tracks_app_name)).setOngoing(true)
-        .setSmallIcon(R.drawable.my_tracks_notification_icon).setWhen(System.currentTimeMillis());
+        .setSmallIcon(R.drawable.ic_stat_notify_recording).setWhen(System.currentTimeMillis());
     startForeground(1, builder.build());
   }
 
@@ -648,9 +649,9 @@ public class TrackRecordingService extends Service {
         if (cursor.moveToLast()) {
           do {
             Location location = myTracksProviderUtils.createTrackPoint(cursor);
-            trackTripStatisticsUpdater.addLocation(location, minRecordingDistance);
+            trackTripStatisticsUpdater.addLocation(location, recordingDistanceInterval);
             if (location.getTime() > markerStartTime) {
-              markerTripStatisticsUpdater.addLocation(location, minRecordingDistance);
+              markerTripStatisticsUpdater.addLocation(location, recordingDistanceInterval);
             }
           } while (cursor.moveToPrevious());
         }
@@ -887,7 +888,7 @@ public class TrackRecordingService extends Service {
         return;
       }
 
-      if (location.getAccuracy() > minRequiredAccuracy) {
+      if (location.getAccuracy() > recordingGpsAccuracy) {
         Log.d(TAG, "Ignore onLocationChangedAsync. Poor accuracy.");
         return;
       }
@@ -931,8 +932,8 @@ public class TrackRecordingService extends Service {
       }
 
       double distanceToLastTrackLocation = location.distanceTo(lastValidTrackPoint);
-      if (distanceToLastTrackLocation < minRecordingDistance && sensorDataSet == null) {
-        Log.d(TAG, "Not recording location due to min recording distance.");
+      if (distanceToLastTrackLocation < recordingDistanceInterval && sensorDataSet == null) {
+        Log.d(TAG, "Not recording location due to recording distance interval.");
       } else if (distanceToLastTrackLocation > maxRecordingDistance) {
         insertLocation(track, lastLocation, lastValidTrackPoint);
         Location pause = new Location(LocationManager.GPS_PROVIDER);
@@ -981,8 +982,8 @@ public class TrackRecordingService extends Service {
     try {
       Uri uri = myTracksProviderUtils.insertTrackPoint(location, track.getId());
       long trackPointId = Long.parseLong(uri.getLastPathSegment());
-      trackTripStatisticsUpdater.addLocation(location, minRecordingDistance);
-      markerTripStatisticsUpdater.addLocation(location, minRecordingDistance);
+      trackTripStatisticsUpdater.addLocation(location, recordingDistanceInterval);
+      markerTripStatisticsUpdater.addLocation(location, recordingDistanceInterval);
       updateRecordingTrack(track, trackPointId, LocationUtils.isValidLocation(location));
     } catch (SQLiteException e) {
       /*

@@ -483,7 +483,8 @@ public class SearchListActivity extends AbstractSendToGoogleActivity implements 
 
     resultMap.put(IS_RECORDING_FIELD, false);
     resultMap.put(IS_PAUSED_FIELD, true);
-    resultMap.put(ICON_ID_FIELD, statistics ? R.drawable.yellow_pushpin : R.drawable.blue_pushpin);
+    resultMap.put(ICON_ID_FIELD,
+        statistics ? R.drawable.ic_marker_yellow_pushpin : R.drawable.ic_marker_blue_pushpin);
     resultMap.put(ICON_CONTENT_DESCRIPTION_ID_FIELD, R.string.icon_marker);
     resultMap.put(NAME_FIELD, waypoint.getName());
     resultMap.put(CATEGORY_FIELD, statistics ? null : waypoint.getCategory());

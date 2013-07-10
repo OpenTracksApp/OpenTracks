@@ -122,7 +122,7 @@ public class TrackEditActivity extends AbstractMyTracksActivity
     // Add a border around the icon
     Options options = new BitmapFactory.Options();
     options.inJustDecodeBounds = true;
-    BitmapFactory.decodeResource(getResources(), R.drawable.track_airplane, options);
+    BitmapFactory.decodeResource(getResources(), R.drawable.ic_track_airplane, options);
     final int padding = 4;
     final int width = options.outWidth + 2 * padding;
     final int height = options.outHeight + 2 * padding;

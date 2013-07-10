@@ -56,7 +56,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
   private Location lastLocation = null;
   private TripStatistics lastTripStatistics = null;
-  private int minRequiredAccuracy = PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT;
+  private int recordingGpsAccuracy = PreferencesUtils.RECORDING_GPS_ACCURACY_DEFAULT;
 
   // A runnable to update the total time field.
   private final Runnable updateTotalTime = new Runnable() {
@@ -148,7 +148,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
             if (lastLocation != null) {
               boolean hasFix = !LocationUtils.isLocationOld(lastLocation);
-              boolean hasGoodFix = lastLocation.getAccuracy() <= minRequiredAccuracy;
+              boolean hasGoodFix = lastLocation.getAccuracy() <= recordingGpsAccuracy;
 
               if (!hasFix || !hasGoodFix) {
                 lastLocation = null;
@@ -207,13 +207,13 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   }
 
   @Override
-  public boolean onMinRequiredAccuracy(int newValue) {
-    minRequiredAccuracy = newValue;
+  public boolean onRecordingGpsAccuracy(int newValue) {
+    recordingGpsAccuracy = newValue;
     return false;
   }
 
   @Override
-  public boolean onMinRecordingDistanceChanged(int minRecordingDistance) {
+  public boolean onRecordingDistanceIntervalChanged(int minRecordingDistance) {
     // We don't care.
     return false;
   }

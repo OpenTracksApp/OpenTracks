@@ -200,15 +200,15 @@ public class ChartView extends View {
     markerPaint.setColor(context.getResources().getColor(android.R.color.darker_gray));
     markerPaint.setAntiAlias(false);
 
-    pointer = context.getResources().getDrawable(R.drawable.arrow_180);
+    pointer = context.getResources().getDrawable(R.drawable.ic_arrow_180);
     pointer.setBounds(0, 0, pointer.getIntrinsicWidth(), pointer.getIntrinsicHeight());
 
-    statisticsMarker = getResources().getDrawable(R.drawable.yellow_pushpin);
+    statisticsMarker = getResources().getDrawable(R.drawable.ic_marker_yellow_pushpin);
     markerWidth = statisticsMarker.getIntrinsicWidth();
     markerHeight = statisticsMarker.getIntrinsicHeight();
     statisticsMarker.setBounds(0, 0, markerWidth, markerHeight);
 
-    waypointMarker = getResources().getDrawable(R.drawable.blue_pushpin);
+    waypointMarker = getResources().getDrawable(R.drawable.ic_marker_blue_pushpin);
     waypointMarker.setBounds(0, 0, markerWidth, markerHeight);
 
     scroller = new Scroller(context);

@@ -50,18 +50,22 @@ public class TrackIconUtils {
       new LinkedHashMap<String, Pair<Integer, Integer>>();
 
   static {
-    map.put(RUN, new Pair<Integer, Integer>(R.string.activity_type_running, R.drawable.track_run));
     map.put(
-        WALK, new Pair<Integer, Integer>(R.string.activity_type_walking, R.drawable.track_walk));
-    map.put(BIKE, new Pair<Integer, Integer>(R.string.activity_type_biking, R.drawable.track_bike));
+        RUN, new Pair<Integer, Integer>(R.string.activity_type_running, R.drawable.ic_track_run));
     map.put(
-        DRIVE, new Pair<Integer, Integer>(R.string.activity_type_driving, R.drawable.track_drive));
-    map.put(SKI, new Pair<Integer, Integer>(R.string.activity_type_skiing, R.drawable.track_ski));
+        WALK, new Pair<Integer, Integer>(R.string.activity_type_walking, R.drawable.ic_track_walk));
+    map.put(
+        BIKE, new Pair<Integer, Integer>(R.string.activity_type_biking, R.drawable.ic_track_bike));
+    map.put(DRIVE,
+        new Pair<Integer, Integer>(R.string.activity_type_driving, R.drawable.ic_track_drive));
+    map.put(
+        SKI, new Pair<Integer, Integer>(R.string.activity_type_skiing, R.drawable.ic_track_ski));
     map.put(SNOW_BOARDING, new Pair<Integer, Integer>(
-        R.string.activity_type_snow_boarding, R.drawable.track_snow_boarding));
+        R.string.activity_type_snow_boarding, R.drawable.ic_track_snow_boarding));
     map.put(AIRPLANE,
-        new Pair<Integer, Integer>(R.string.activity_type_airplane, R.drawable.track_airplane));
-    map.put(BOAT, new Pair<Integer, Integer>(R.string.activity_type_boat, R.drawable.track_boat));
+        new Pair<Integer, Integer>(R.string.activity_type_airplane, R.drawable.ic_track_airplane));
+    map.put(
+        BOAT, new Pair<Integer, Integer>(R.string.activity_type_boat, R.drawable.ic_track_boat));
   }
 
   private static int[] airplane = new int[] {
@@ -96,10 +100,10 @@ public class TrackIconUtils {
    */
   public static int getIconDrawable(String iconValue) {
     if (iconValue == null || iconValue.equals("")) {
-      return R.drawable.track_walk;
+      return R.drawable.ic_track_walk;
     }
     Pair<Integer, Integer> pair = map.get(iconValue);
-    return pair == null ? R.drawable.track_walk : pair.second;
+    return pair == null ? R.drawable.ic_track_walk : pair.second;
   }
 
   /**

@@ -179,7 +179,8 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
 
         boolean statistics = WaypointType.values()[cursor.getInt(typeIndex)]
             == WaypointType.STATISTICS;
-        int iconId = statistics ? R.drawable.yellow_pushpin : R.drawable.blue_pushpin;
+        int iconId = statistics ? R.drawable.ic_marker_yellow_pushpin
+            : R.drawable.ic_marker_blue_pushpin;
         String category = statistics ? null : cursor.getString(categoryIndex);
         String description = statistics ? null : cursor.getString(descriptionIndex);
         ListItemUtils.setListItem(MarkerListActivity.this, view, false, true, iconId,
@@ -242,12 +243,17 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
     insertMarkerMenuItem = menu.findItem(R.id.marker_list_insert_marker);
     searchMenuItem = menu.findItem(R.id.marker_list_search);
     ApiAdapterFactory.getApiAdapter().configureSearchWidget(this, searchMenuItem, null);
-    if (insertMarkerMenuItem != null) {
-      insertMarkerMenuItem.setVisible(track.getId() == recordingTrackId && !recordingTrackPaused);
-    }
     return true;
   }
 
+  @Override
+  public boolean onPrepareOptionsMenu(Menu menu) {
+    if (insertMarkerMenuItem != null) {
+      insertMarkerMenuItem.setVisible(track.getId() == recordingTrackId && !recordingTrackPaused);
+    }
+    return super.onPrepareOptionsMenu(menu);
+  }
+  
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {

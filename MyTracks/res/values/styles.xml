@@ -343,7 +343,7 @@ limitations under the License.
     <item name="android:layout_width">24dp</item>
     <item name="android:padding">4dp</item>
     <item name="android:scaleType">fitXY</item>
-    <item name="android:src">@drawable/my_tracks_icon</item>
+    <item name="android:src">@drawable/ic_launcher_my_tracks</item>
   </style>
   <!-- track widget logo 4x4 -->
   <style name="TrackWidgetLogo4x4" parent="@style/TrackWidgetLogo">

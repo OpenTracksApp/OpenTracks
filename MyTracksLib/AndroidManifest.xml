@@ -29,7 +29,7 @@ limitations under the License.
     android:targetSdkVersion="17" />
 
   <application
-    android:icon="@drawable/my_tracks_icon"
+    android:icon="@drawable/ic_launcher_my_tracks"
     android:label="@string/lib_name" >
   </application>
 

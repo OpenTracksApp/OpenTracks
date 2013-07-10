@@ -103,7 +103,7 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
   // Current location
   private Location currentLocation;
   private Location lastTrackPoint;
-  private int minRequiredAccuracy = PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT;
+  private int recordingGpsAccuracy = PreferencesUtils.RECORDING_GPS_ACCURACY_DEFAULT;
 
   /**
    * True to continue keeping the current location visible on the screen.
@@ -492,13 +492,13 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
   }
 
   @Override
-  public boolean onMinRequiredAccuracy(int newValue) {
-    minRequiredAccuracy = newValue;
+  public boolean onRecordingGpsAccuracy(int newValue) {
+    recordingGpsAccuracy = newValue;
     return false;
   }
 
   @Override
-  public boolean onMinRecordingDistanceChanged(int minRecordingDistance) {
+  public boolean onRecordingDistanceIntervalChanged(int minRecordingDistance) {
     // We don't care.
     return false;
   }
@@ -714,7 +714,7 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
           hasGoodFix = false;
         } else {
           hasFix = !LocationUtils.isLocationOld(currentLocation);
-          hasGoodFix = currentLocation.getAccuracy() <= minRequiredAccuracy;
+          hasGoodFix = currentLocation.getAccuracy() <= recordingGpsAccuracy;
         }
         if (!hasFix) {
           message = getString(R.string.gps_wait_for_signal);

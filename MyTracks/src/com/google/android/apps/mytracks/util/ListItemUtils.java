@@ -57,7 +57,7 @@ public class ListItemUtils {
       String totalDistance, long startTime, String description, String sharedOwner) {
 
     if (isRecording) {
-      iconId = isPaused ? R.drawable.track_paused : R.drawable.track_recording;
+      iconId = isPaused ? R.drawable.ic_track_paused : R.drawable.ic_track_recording;
       iconContentDescriptionId = isPaused ? R.string.icon_pause_recording
           : R.string.icon_record_track;
     }

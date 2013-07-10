@@ -116,15 +116,6 @@ limitations under the License.
     <item>1000</item>
     <item>5000</item>
   </string-array>
-  <string-array name="min_recording_distance_values">
-    <item>1</item>
-    <item>2</item>
-    <item>3</item>
-    <item>4</item>
-    <item>5</item>
-    <item>10</item>
-    <item>100</item>
-  </string-array>
   <string-array name="min_recording_interval_values">
     <item>-2</item>
     <item>-1</item>
@@ -143,16 +134,25 @@ limitations under the License.
     <item>900</item>
     <item>1800</item>
   </string-array>
-  <string-array name="min_required_accuracy_values">
+  <string-array name="recording_distance_interval_values">
+    <item>1</item>
+    <item>2</item>
+    <item>5</item>
     <item>10</item>
     <item>20</item>
+    <item>50</item>
+    <item>100</item>
+  </string-array>
+  <string-array name="recording_gps_accuracy_values">
+    <item>10</item>
+    <item>20</item>
+    <item>30</item>
     <item>50</item>
     <item>100</item>
     <item>200</item>
     <item>500</item>
     <item>1000</item>
     <item>2000</item>
-    <item>5000</item>
   </string-array>
   <string-array name="sensor_type_all_options">
     <item>@string/settings_sensor_type_polar</item>

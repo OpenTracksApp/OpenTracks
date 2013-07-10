@@ -61,7 +61,7 @@ limitations under the License.
       android:layout_height="0dp"
       android:layout_weight="10"
       android:layout_width="match_parent"
-      android:src="@drawable/btn_stop_0" />
+      android:src="@drawable/ic_button_stop_disabled" />
     <View
       android:layout_height="0dp"
       android:layout_weight="1"
