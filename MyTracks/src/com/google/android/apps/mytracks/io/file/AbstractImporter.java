@@ -96,8 +96,6 @@ abstract class AbstractImporter extends DefaultHandler {
     int numBufferedLocations = 0;
   }
 
-  protected static final String DEFAULT_ALTITUDE = "0";
-
   // The maximum number of buffered locations for bulk-insertion
   private static final int MAX_BUFFERED_LOCATIONS = 512;
 
@@ -465,24 +463,29 @@ abstract class AbstractImporter extends DefaultHandler {
    * Creates a location.
    */
   private Location createLocation() throws SAXException {
-    if (latitude == null || longitude == null || altitude == null) {
+    if (latitude == null || longitude == null) {
       return null;
     }
-    double longitudeValue;
     double latitudeValue;
-    double altitudeValue;
-
+    double longitudeValue;
     try {
-      longitudeValue = Double.parseDouble(longitude);
       latitudeValue = Double.parseDouble(latitude);
-      altitudeValue = Double.parseDouble(altitude);
+      longitudeValue = Double.parseDouble(longitude);
     } catch (NumberFormatException e) {
-      throw new SAXException(createErrorMessage(String.format(
-          "Unable to parse longitude latitude altitude: %s %s %s", longitude, latitude, altitude)),
-          e);
+      throw new SAXException(createErrorMessage(
+          String.format("Unable to parse latitude longitude: %s %s", latitude, longitude)), e);
     }
+    Double altitudeValue = null;
+    if (altitude != null) {
+      try {
+        altitudeValue = Double.parseDouble(altitude);
+      } catch (NumberFormatException e) {
+        throw new SAXException(
+            createErrorMessage(String.format("Unable to parse altitude: %s", altitude)), e);
+      }
+    }
+    
     long timeValue;
-
     if (time == null) {
       timeValue = trackData.importTime;
     } else {
@@ -505,11 +508,15 @@ abstract class AbstractImporter extends DefaultHandler {
    * @param timeValue the time value
    */
   private Location createLocation(
-      double latitudeValue, double longitudeValue, double altitudeValue, long timeValue) {
+      double latitudeValue, double longitudeValue, Double altitudeValue, long timeValue) {
     Location location = new Location(LocationManager.GPS_PROVIDER);
     location.setLatitude(latitudeValue);
     location.setLongitude(longitudeValue);
-    location.setAltitude(altitudeValue);
+    if (altitudeValue != null) {
+      location.setAltitude(altitudeValue);      
+    } else {
+      location.removeAltitude();
+    }
     location.setTime(timeValue);
     location.removeAccuracy();
     location.removeBearing();

@@ -148,7 +148,7 @@ public class KmlImporter extends AbstractImporter {
     category = null;
     latitude = null;
     longitude = null;
-    altitude = DEFAULT_ALTITUDE;
+    altitude = null;
     time = null;
     waypointType = null;
   }
@@ -181,9 +181,7 @@ public class KmlImporter extends AbstractImporter {
       }
       longitude = parts[0];
       latitude = parts[1];
-      if (parts.length == 3) {
-        altitude = parts[2];
-      }
+      altitude = parts.length == 3 ? parts[2] : null;      
     }
   }
 
@@ -240,12 +238,13 @@ public class KmlImporter extends AbstractImporter {
       return;
     }
     String parts[] = content.trim().split(" ");
-    if (parts.length != 3) {
+    if (parts.length != 2 && parts.length != 3) {
       return;
     }
     longitude = parts[0];
     latitude = parts[1];
-    altitude = parts[2];
+    altitude = parts.length == 3 ? parts[2] : null;
+
     Location location = getTrackPoint();
     if (location == null) {
       return;

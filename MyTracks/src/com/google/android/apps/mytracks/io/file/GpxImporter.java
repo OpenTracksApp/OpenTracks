@@ -47,7 +47,7 @@ public class GpxImporter extends AbstractImporter {
 
   private static final String ATTRIBUTE_LAT = "lat";
   private static final String ATTRIBUTE_LON = "lon";
-
+  
   /**
    * Constructor.
    * 
@@ -133,7 +133,7 @@ public class GpxImporter extends AbstractImporter {
   private void onTrackPointStart(Attributes attributes) {
     latitude = attributes.getValue(ATTRIBUTE_LAT);
     longitude = attributes.getValue(ATTRIBUTE_LON);
-    altitude = DEFAULT_ALTITUDE;
+    altitude = null;
     time = null;
   }
 
@@ -159,7 +159,7 @@ public class GpxImporter extends AbstractImporter {
     category = null;
     latitude = attributes.getValue(ATTRIBUTE_LAT);
     longitude = attributes.getValue(ATTRIBUTE_LON);
-    altitude = DEFAULT_ALTITUDE;
+    altitude = null;
     time = null;
     waypointType = null;
   }
