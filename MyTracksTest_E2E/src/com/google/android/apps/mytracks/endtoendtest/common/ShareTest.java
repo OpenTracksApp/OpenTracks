@@ -65,7 +65,6 @@ public class ShareTest extends ActivityInstrumentationTestCase2<TrackListActivit
       EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));
       return;
     }
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));
 
     boolean isAccount2Bound = false;
     // If Choose account dialog prompt, choose the first account.
