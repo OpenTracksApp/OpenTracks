@@ -229,8 +229,7 @@ public class KmlTrackWriter implements TrackFormatWriter {
     if (printWriter != null) {
       printWriter.println(
           "<when>" + StringUtils.formatDateTimeIso8601(location.getTime()) + "</when>");
-      printWriter.println("<gx:coord>" + location.getLongitude() + " " + location.getLatitude()
-          + " " + location.getAltitude() + "</gx:coord>");
+      printWriter.println("<gx:coord>" + getCoordinates(location, " ") + "</gx:coord>");
       if (location instanceof MyTracksLocation) {
         SensorDataSet sensorDataSet = ((MyTracksLocation) location).getSensorDataSet();
         int power = -1;
@@ -302,11 +301,19 @@ public class KmlTrackWriter implements TrackFormatWriter {
       printWriter.println("<styleUrl>#" + styleName + "</styleUrl>");
       writeCategory(category);
       printWriter.println("<Point>");
-      printWriter.println("<coordinates>" + location.getLongitude() + "," + location.getLatitude()
-          + "," + location.getAltitude() + "</coordinates>");
+      printWriter.println("<coordinates>" + getCoordinates(location, ",") + "</coordinates>");
       printWriter.println("</Point>");
       printWriter.println("</Placemark>");
     }
+  }
+  
+  private String getCoordinates(Location location, String separator) {
+    StringBuffer buffer = new StringBuffer();
+    buffer.append(location.getLongitude() + separator + location.getLatitude());
+    if (location.hasAltitude()) {
+      buffer.append(separator + location.getAltitude());
+    }
+    return buffer.toString();    
   }
 
   /**

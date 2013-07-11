@@ -123,10 +123,10 @@ public class CsvTrackWriter implements TrackFormatWriter {
         waypoint.getDescription(),
         Double.toString(location.getLatitude()),
         Double.toString(location.getLongitude()),
-        Double.toString(location.getAltitude()),
-        Double.toString(location.getBearing()),
-        SHORT_FORMAT.format(location.getAccuracy()),
-        SHORT_FORMAT.format(location.getSpeed()),
+        getAltitude(location),
+        getBearing(location),
+        getAccuracy(location),
+        getSpeed(location),
         StringUtils.formatDateTimeIso8601(location.getTime()));
   }
 
@@ -196,16 +196,32 @@ public class CsvTrackWriter implements TrackFormatWriter {
         Integer.toString(pointIndex),
         Double.toString(location.getLatitude()),
         Double.toString(location.getLongitude()),
-        Double.toString(location.getAltitude()),
-        Double.toString(location.getBearing()),
-        SHORT_FORMAT.format(location.getAccuracy()),
-        SHORT_FORMAT.format(location.getSpeed()),
+        getAltitude(location),
+        getBearing(location),
+        getAccuracy(location),
+        getSpeed(location),
         StringUtils.formatDateTimeIso8601(location.getTime()),
         power,
         cadence,
         heartRate);
   }
-
+  
+  private String getAltitude(Location location) {
+    return location.hasAltitude() ? Double.toString(location.getAltitude()) : null;
+  }
+  
+  private String getBearing(Location location) {
+    return location.hasBearing() ? Double.toString(location.getBearing()) : null;
+  }
+  
+  private String getAccuracy(Location location) {
+    return location.hasAccuracy() ? SHORT_FORMAT.format(location.getAccuracy()) : null;
+  }
+  
+  private String getSpeed(Location location) {
+    return location.hasSpeed() ? SHORT_FORMAT.format(location.getSpeed()) : null;
+  }
+  
   /**
    * Writes a single line of a CSV file.
    *

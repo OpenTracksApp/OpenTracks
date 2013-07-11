@@ -204,7 +204,9 @@ public class TcxTrackWriter implements TrackFormatWriter {
       printWriter.println("<LatitudeDegrees>" + location.getLatitude() + "</LatitudeDegrees>");
       printWriter.println("<LongitudeDegrees>" + location.getLongitude() + "</LongitudeDegrees>");
       printWriter.println("</Position>");
-      printWriter.println("<AltitudeMeters>" + location.getAltitude() + "</AltitudeMeters>");
+      if (location.hasAltitude()) {
+        printWriter.println("<AltitudeMeters>" + location.getAltitude() + "</AltitudeMeters>");
+      }
 
       if (location instanceof MyTracksLocation) {
         SensorDataSet sensorDataSet = ((MyTracksLocation) location).getSensorDataSet();
