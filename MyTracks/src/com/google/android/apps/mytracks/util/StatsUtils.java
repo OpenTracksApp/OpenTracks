@@ -54,7 +54,8 @@ public class StatsUtils {
         activity, R.string.report_speed_key, PreferencesUtils.REPORT_SPEED_DEFAULT);
 
     // Set speed/pace
-    double speed = !isRecording || location == null ? Double.NaN : location.getSpeed();
+    double speed = isRecording && location != null && location.hasSpeed() ? location.getSpeed()
+        : Double.NaN;
     setSpeed(activity, R.id.stats_speed, R.string.stats_speed, R.string.stats_pace, speed,
         metricUnits, reportSpeed);
 
@@ -65,7 +66,8 @@ public class StatsUtils {
     View elevation = activity.findViewById(R.id.stats_elevation);
 
     if (showGradeElevation && isRecording) {
-      double altitude = location == null ? Double.NaN : location.getAltitude();
+      double altitude = location != null && location.hasAltitude() ? location.getAltitude()
+          : Double.NaN;
       elevation.setVisibility(View.VISIBLE);
       setElevationValue(activity, R.id.stats_elevation, -1, altitude, metricUnits);
     } else {
@@ -79,8 +81,8 @@ public class StatsUtils {
     View coordinateContainer = activity.findViewById(R.id.stats_coordinate_container);
 
     if (showCoordinate && isRecording) {
-      double latitude = location == null ? Double.NaN : location.getLatitude();
-      double longitude = location == null ? Double.NaN : location.getLongitude();
+      double latitude = location != null ? location.getLatitude() : Double.NaN;
+      double longitude = location != null ? location.getLongitude() : Double.NaN;
       coordinateHorizontalLine.setVisibility(View.VISIBLE);
       coordinateContainer.setVisibility(View.VISIBLE);
       setCoordinateValue(activity, R.id.stats_latitude, R.string.stats_latitude, latitude);
