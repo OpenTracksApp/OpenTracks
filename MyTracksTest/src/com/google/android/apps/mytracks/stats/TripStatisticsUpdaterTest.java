@@ -101,14 +101,6 @@ public class TripStatisticsUpdaterTest extends TestCase {
    */
   public void testElevationGain() throws Exception {
     for (double i = 0; i < 1000; i++) {
-      double expectedGain;
-      if (i < TripStatisticsUpdater.ELEVATION_SMOOTHING_FACTOR - 1) {
-        expectedGain = 0;
-      } else if (i < TripStatisticsUpdater.ELEVATION_SMOOTHING_FACTOR) {
-        expectedGain = 0.5;
-      } else {
-        expectedGain = 1.0;
-      }
       tripStatisticsUpdater.updateElevation(i);
       assertEquals(i, tripStatisticsUpdater.getSmoothedElevation(),
           TripStatisticsUpdater.ELEVATION_SMOOTHING_FACTOR / 2);
