@@ -888,7 +888,7 @@ public class TrackRecordingService extends Service {
         return;
       }
 
-      if (location.getAccuracy() > recordingGpsAccuracy) {
+      if (!location.hasAccuracy() || location.getAccuracy() >= recordingGpsAccuracy) {
         Log.d(TAG, "Ignore onLocationChangedAsync. Poor accuracy.");
         return;
       }

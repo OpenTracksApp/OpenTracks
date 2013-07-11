@@ -148,7 +148,8 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
             if (lastLocation != null) {
               boolean hasFix = !LocationUtils.isLocationOld(lastLocation);
-              boolean hasGoodFix = lastLocation.getAccuracy() <= recordingGpsAccuracy;
+              boolean hasGoodFix = lastLocation.hasAccuracy()
+                  && lastLocation.getAccuracy() < recordingGpsAccuracy;
 
               if (!hasFix || !hasGoodFix) {
                 lastLocation = null;

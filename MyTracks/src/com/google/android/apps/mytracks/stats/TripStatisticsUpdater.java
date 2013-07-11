@@ -192,16 +192,18 @@ public class TripStatisticsUpdater {
     currentSegment.addMovingTime(movingTime);
 
     // Update grade
-    if (lastLocation.hasAltitude() && location.hasAltitude()) {
+    if (location.hasAltitude() && lastLocation.hasAltitude()) {
       float run = lastLocation.distanceTo(location);
       double rise = location.getAltitude() - lastLocation.getAltitude();
       updateGrade(run, rise);
     }
 
     // Update max speed
-    updateSpeed(
-        location.getTime(), location.getSpeed(), lastLocation.getTime(), lastLocation.getSpeed());
-
+    if (location.hasSpeed() && lastLocation.hasSpeed()) {
+      updateSpeed(
+          location.getTime(), location.getSpeed(), lastLocation.getTime(), lastLocation.getSpeed());
+    }
+    
     lastLocation = location;
     lastMovingLocation = location;
   }
