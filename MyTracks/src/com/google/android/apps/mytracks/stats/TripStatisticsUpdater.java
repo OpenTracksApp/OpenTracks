@@ -73,7 +73,7 @@ public class TripStatisticsUpdater {
 
   /**
    * Ignore any acceleration faster than this. Will ignore any speeds that imply
-   * accelaration greater than 2g's 2g = 19.6 m/s^2 = 0.0002 m/ms^2 = 0.02
+   * acceleration greater than 2g's 2g = 19.6 m/s^2 = 0.0002 m/ms^2 = 0.02
    * m/(m*ms)
    */
   private static final double MAX_ACCELERATION = 0.02;
