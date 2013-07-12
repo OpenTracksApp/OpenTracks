@@ -17,8 +17,9 @@
 package com.google.android.apps.mytracks.stats;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
+import static com.google.android.apps.mytracks.services.TrackRecordingService.MAX_NO_MOVEMENT_SPEED;
+import static com.google.android.apps.mytracks.services.TrackRecordingService.PAUSE_LATITUDE;
 
-import com.google.android.apps.mytracks.services.TrackRecordingService;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.common.annotations.VisibleForTesting;
 
@@ -65,11 +66,6 @@ public class TripStatisticsUpdater {
    */
   @VisibleForTesting
   static final int SPEED_SMOOTHING_FACTOR = 25;
-
-  /**
-   * Anything faster than that (in meters per second) will be considered moving.
-   */
-  private static final double MAX_NO_MOVEMENT_SPEED = 0.224;
 
   /**
    * Ignore any acceleration faster than this. Will ignore any speeds that imply
@@ -142,7 +138,7 @@ public class TripStatisticsUpdater {
 
     if (!LocationUtils.isValidLocation(location)) {
       // Either pause or resume marker
-      if (location.getLatitude() == TrackRecordingService.PAUSE_LATITUDE) {
+      if (location.getLatitude() == PAUSE_LATITUDE) {
         if (lastLocation != null && lastMovingLocation != null
             && lastLocation != lastMovingLocation) {
           currentSegment.addTotalDistance(lastMovingLocation.distanceTo(lastLocation));
@@ -173,11 +169,11 @@ public class TripStatisticsUpdater {
     }
 
     double movingDistance = lastMovingLocation.distanceTo(location);
-    if (movingDistance < minRecordingDistance) {
-      if (!location.hasSpeed() || location.getSpeed() < MAX_NO_MOVEMENT_SPEED) {
-        lastLocation = location;
-        return;
-      }
+    if (movingDistance < minRecordingDistance
+        && (!location.hasSpeed() || location.getSpeed() < MAX_NO_MOVEMENT_SPEED)) {
+      speedBuffer.reset();
+      lastLocation = location;
+      return;
     }
     long movingTime = location.getTime() - lastLocation.getTime();
     if (movingTime < 0) {
@@ -203,7 +199,7 @@ public class TripStatisticsUpdater {
       updateSpeed(
           location.getTime(), location.getSpeed(), lastLocation.getTime(), lastLocation.getSpeed());
     }
-    
+
     lastLocation = location;
     lastMovingLocation = location;
   }
@@ -231,13 +227,15 @@ public class TripStatisticsUpdater {
    */
   @VisibleForTesting
   void updateSpeed(long time, double speed, long lastLocationTime, double lastLocationSpeed) {
-    if (!isValidSpeed(time, speed, lastLocationTime, lastLocationSpeed)) {
+    if (speed < MAX_NO_MOVEMENT_SPEED) {
+      speedBuffer.reset();
+    } else if (isValidSpeed(time, speed, lastLocationTime, lastLocationSpeed)) {
+      speedBuffer.setNext(speed);
+      if (speed > currentSegment.getMaxSpeed()) {
+        currentSegment.setMaxSpeed(speed);
+      }
+    } else {
       Log.d(TAG, "Invalid speed. speed: " + speed + " lastLocationSpeed: " + lastLocationSpeed);
-      return;
-    }
-    speedBuffer.setNext(speed);
-    if (speed > currentSegment.getMaxSpeed()) {
-      currentSegment.setMaxSpeed(speed);
     }
   }
 

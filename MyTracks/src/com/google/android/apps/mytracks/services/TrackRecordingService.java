@@ -93,6 +93,11 @@ public class TrackRecordingService extends Service {
   public static final double PAUSE_LATITUDE = 100.0;
   public static final double RESUME_LATITUDE = 200.0;
   
+  /**
+   * Anything faster than that (in meters per second) will be considered moving.
+   */
+  public static final double MAX_NO_MOVEMENT_SPEED = 0.224;
+  
   private static final String TAG = TrackRecordingService.class.getSimpleName();
   private static final long ONE_SECOND = 1000; // in milliseconds
   private static final long ONE_MINUTE = 60 * ONE_SECOND; // in milliseconds
@@ -127,6 +132,7 @@ public class TrackRecordingService extends Service {
   private SensorManager sensorManager;
   private Location lastLocation;
   private boolean currentSegmentHasLocation;
+  private boolean isIdle; // true if idle
 
   private ServiceBinder binder = new ServiceBinder(this);
 
@@ -704,6 +710,7 @@ public class TrackRecordingService extends Service {
     sensorManager = SensorManagerFactory.getSystemSensorManager(this);
     lastLocation = null;
     currentSegmentHasLocation = false;
+    isIdle = false;
 
     startGps();
     sendTrackBroadcast(trackStarted ? R.string.track_started_broadcast_action
@@ -932,10 +939,9 @@ public class TrackRecordingService extends Service {
       }
 
       double distanceToLastTrackLocation = location.distanceTo(lastValidTrackPoint);
-      if (distanceToLastTrackLocation < recordingDistanceInterval && sensorDataSet == null) {
-        Log.d(TAG, "Not recording location due to recording distance interval.");
-      } else if (distanceToLastTrackLocation > maxRecordingDistance) {
+      if (distanceToLastTrackLocation > maxRecordingDistance) {
         insertLocation(track, lastLocation, lastValidTrackPoint);
+
         Location pause = new Location(LocationManager.GPS_PROVIDER);
         pause.setLongitude(0);
         pause.setLatitude(PAUSE_LATITUDE);
@@ -943,13 +949,22 @@ public class TrackRecordingService extends Service {
         insertLocation(track, pause, null);
 
         insertLocation(track, location, null);
-      } else {
-        /*
-         * (distanceToLastTrackLocation >= minRecordingDistance ||
-         * hasSensorData) && distanceToLastTrackLocation <= maxRecordingDistance
-         */
+        isIdle = false;
+      } else if (sensorDataSet != null
+          || distanceToLastTrackLocation >= recordingDistanceInterval) {
         insertLocation(track, lastLocation, lastValidTrackPoint);
         insertLocation(track, location, null);
+        isIdle = false;
+      } else if (!isIdle && location.hasSpeed() && location.getSpeed() < MAX_NO_MOVEMENT_SPEED) {
+        insertLocation(track, lastLocation, lastValidTrackPoint);
+        insertLocation(track, location, null);
+        isIdle = true;
+      } else if (isIdle && location.hasSpeed() && location.getSpeed() >= MAX_NO_MOVEMENT_SPEED) {
+        insertLocation(track, lastLocation, lastValidTrackPoint);
+        insertLocation(track, location, null);
+        isIdle = false;
+      } else {
+        Log.d(TAG, "Not recording location, idle");
       }
       lastLocation = location;
     } catch (Error e) {
