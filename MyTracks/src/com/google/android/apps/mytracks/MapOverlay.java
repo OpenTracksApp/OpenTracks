@@ -107,7 +107,9 @@ public class MapOverlay {
     public CachedLocation(Location location) {
       this.valid = LocationUtils.isValidLocation(location);
       this.latLng = valid ? new LatLng(location.getLatitude(), location.getLongitude()) : null;
-      this.speed = (int) Math.floor(location.getSpeed() * UnitConversions.MS_TO_KMH);
+      this.speed = location.hasSpeed() ? (int) Math.floor(
+          location.getSpeed() * UnitConversions.MS_TO_KMH)
+          : -1;
     }
 
     /**

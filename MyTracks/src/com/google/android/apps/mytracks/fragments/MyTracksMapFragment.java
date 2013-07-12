@@ -714,7 +714,8 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
           hasGoodFix = false;
         } else {
           hasFix = !LocationUtils.isLocationOld(currentLocation);
-          hasGoodFix = currentLocation.getAccuracy() <= recordingGpsAccuracy;
+          hasGoodFix = currentLocation.hasAccuracy()
+              && currentLocation.getAccuracy() < recordingGpsAccuracy;
         }
         if (!hasFix) {
           message = getString(R.string.gps_wait_for_signal);

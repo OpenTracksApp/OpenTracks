@@ -43,7 +43,7 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
   
   private final static String tracksName = "testTrackName1373523959524";
   private final static String maxAltitude = "33.3";
-  private final static String minAltitude = "33.3";
+  private final static String minAltitude = "22.2";
 
   public ExportAllAndImportAllTest() {
     super(TrackListActivity.class);
@@ -54,7 +54,7 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
     super.setUp();
     instrumentation = getInstrumentation();
     activityMyTracks = getActivity();
-    EndToEndTestUtils.setupForDebug(instrumentation, activityMyTracks);
+    EndToEndTestUtils.setupForAllTest(instrumentation, activityMyTracks);
     trackNumber = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount();
     EndToEndTestUtils.createTrackIfEmpty(1, true);
   }

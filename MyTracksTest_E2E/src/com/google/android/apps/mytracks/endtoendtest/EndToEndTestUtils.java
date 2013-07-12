@@ -56,7 +56,7 @@ import junit.framework.Assert;
  * @author Youtao Liu
  */
 public class EndToEndTestUtils {
-  public static int emulatorPort = 5556;
+  public static int emulatorPort = 5554;
   // usually 5554.
   private static final int ORIENTATION_PORTRAIT = 1;
   private static final int ORIENTATION_LANDSCAPE = 0;
