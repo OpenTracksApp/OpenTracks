@@ -357,7 +357,7 @@ public class TripStatistics implements Parcelable {
    * Gets the maximum speed in meters/second.
    */
   public double getMaxSpeed() {
-    return maxSpeed;
+    return Math.max(maxSpeed, getAverageMovingSpeed());
   }
 
   /**
