@@ -15,16 +15,20 @@
  */
 package com.google.android.apps.mytracks.endtoendtest.common;
 
+import com.google.android.apps.mytracks.TrackDetailActivity;
 import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.endtoendtest.EndToEndTestUtils;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
+import android.app.Activity;
 import android.app.Instrumentation;
+import android.location.Location;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -40,7 +44,7 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
   private Instrumentation instrumentation;
   private TrackListActivity activityMyTracks;
   private int trackNumber = 0;
-  
+
   private final static String tracksName = "testTrackName1373523959524";
   private final static String maxAltitude = "33.3";
   private final static String minAltitude = "22.2";
@@ -169,7 +173,7 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.SOLO.goBack();
 
-    // Create a empty track.
+    // Create an empty track.
     EndToEndTestUtils.createTrackWithPause(0);
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.SOLO.goBack();
@@ -245,6 +249,7 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
 
     importTracks(EndToEndTestUtils.KML);
     checkImport();
+    EndToEndTestUtils.SOLO.waitForActivity(TrackListActivity.class);
 
     assertEquals(trackNumber + KMLFilesNumber,
         EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount());
@@ -306,7 +311,7 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
   /**
    * Test export/import one track and checks the detail of this track.
    */
-  public void testExportImportCheckTrackDetails() {
+  public void testExportImport_checkTrackDetails() {
     EndToEndTestUtils.deleteAllTracks();
     EndToEndTestUtils.deleteExportedFiles(EndToEndTestUtils.GPX);
     EndToEndTestUtils.deleteExportedFiles(EndToEndTestUtils.KML);
@@ -316,7 +321,7 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
 
     importTracks(EndToEndTestUtils.GPX);
     checkImport();
-    checkSingleTrack(true);
+    checkSingleTrack();
     EndToEndTestUtils.deleteExportedFiles(EndToEndTestUtils.GPX);
 
     exportTracks(EndToEndTestUtils.KML);
@@ -327,11 +332,11 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
     EndToEndTestUtils.deleteAllTracks();
     importTracks(EndToEndTestUtils.GPX);
     checkImport();
-    checkSingleTrack(false);
+    checkSingleTrack();
     EndToEndTestUtils.deleteAllTracks();
     importTracks(EndToEndTestUtils.KML);
     checkImport();
-    checkSingleTrack(false);
+    checkSingleTrack();
   }
 
   /**
@@ -359,13 +364,8 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
   /**
    * Checks the detail of one track.
    */
-  private void checkSingleTrack(boolean isSettingStat) {
-    ListView listTracks = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0);
-    assertEquals(1, listTracks.getCount());
-    EndToEndTestUtils.SOLO.clickOnText(tracksName);
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
-
-    if (isSettingStat) {
+  private void checkSingleTrack() {
+    if (!PreferencesUtils.isMetricUnits(activityMyTracks)) {
       EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
       EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
           .getString(R.string.track_detail_stats_tab));
@@ -376,14 +376,54 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
       EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
           .getString(R.string.settings_stats_units_title));
       EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.unit_kilometer));
-      PreferencesUtils.setBoolean(activityMyTracks, R.string.stats_show_grade_elevation_key, true);
       EndToEndTestUtils.SOLO.goBack();
       EndToEndTestUtils.SOLO.goBack();
     }
+    PreferencesUtils.setBoolean(activityMyTracks, R.string.stats_show_grade_elevation_key, true);
 
-    assertTrue(EndToEndTestUtils.SOLO.searchText(maxAltitude));
-    assertTrue(EndToEndTestUtils.SOLO.searchText(minAltitude));
+    EndToEndTestUtils.SOLO.clickOnText(tracksName);
+    instrumentation.waitForIdleSync();
+    EndToEndTestUtils.SOLO.waitForActivity(TrackDetailActivity.class,
+        EndToEndTestUtils.LONG_WAIT_TIME);
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
+    instrumentation.waitForIdleSync();
 
+    float acceptDeviation = 0.1f;
+    Activity detailActivity = EndToEndTestUtils.SOLO.getCurrentActivity();
+    float minAltitudeActual = Float.parseFloat(((TextView) detailActivity.findViewById(
+        R.id.stats_elevation_min).findViewById(R.id.stats_value)).getText().toString());
+    float maxAltitudeActual = Float.parseFloat(((TextView) detailActivity.findViewById(
+        R.id.stats_elevation_max).findViewById(R.id.stats_value)).getText().toString());
+    float distanceActual = Float.parseFloat(((TextView) detailActivity.findViewById(
+        R.id.stats_distance).findViewById(R.id.stats_value)).getText().toString());
+    float averageSpeedActual = Float.parseFloat(((TextView) detailActivity.findViewById(
+        R.id.stats_average_speed).findViewById(R.id.stats_value)).getText().toString());
+    // Seconds.
+    int timeSpan = 9;
+
+    float distance = 0;
+    double initialLat = 39.30;
+    double initialLng = 116;
+    Location start = new Location("gps");
+    start.setLatitude(initialLat);
+    start.setLongitude(initialLng);
+    for (int i = 1; i < 10; i++) {
+      Location end = new Location("gps");
+      end.setLatitude(initialLat - 0.0005 * i);
+      end.setLongitude(initialLng + 0.0005 * i);
+      distance = distance + end.distanceTo(start) / 1000;
+      start = end;
+    }
+
+    // KM/H
+    float averageSpeed = distance * 3600 / timeSpan;
+    assertEquals(Float.parseFloat(minAltitude), minAltitudeActual);
+    assertEquals(Float.parseFloat(maxAltitude), maxAltitudeActual);
+    Log.i(EndToEndTestUtils.LOG_TAG, distance + ":" + distanceActual);
+    assertTrue((distance - distanceActual) / distance < acceptDeviation);
+    assertTrue((averageSpeed - averageSpeedActual) / averageSpeed < acceptDeviation);
+
+    EndToEndTestUtils.SOLO.goBack();
   }
 
   /**
@@ -405,35 +445,35 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
         + "<desc><![CDATA[testTrackDesc1373523959524]]></desc> "
         + "<type><![CDATA[TestActivity]]></type> "
         + "<extensions><topografix:color>c0c0c0</topografix:color></extensions> " + "<trkseg> "
-        + "<trkpt lat=\"39.299998\" lon=\"116\"> " + "<time>2013-07-10T08:00:00.000Z</time> <ele>"
+        + "<trkpt lat=\"39.30\" lon=\"116\"> " + "<time>2013-07-10T08:00:00.000Z</time> <ele>"
         + minAltitude
         + "</ele>"
         + "</trkpt> "
-        + "<trkpt lat=\"39.299498\" lon=\"116.000499\"> "
+        + "<trkpt lat=\"39.2995\" lon=\"116.0005\"> "
         + "<time>2013-07-10T08:00:01.000Z</time> "
         + "</trkpt> "
-        + "<trkpt lat=\"39.298998\" lon=\"116.001\"> "
+        + "<trkpt lat=\"39.299\" lon=\"116.001\"> "
         + "<time>2013-07-10T08:00:02.000Z</time> "
         + "</trkpt> "
-        + "<trkpt lat=\"39.298498\" lon=\"116.0015\"> "
+        + "<trkpt lat=\"39.2985\" lon=\"116.0015\"> "
         + "<time>2013-07-10T08:00:03.000Z</time> "
         + "</trkpt> "
-        + "<trkpt lat=\"39.297998\" lon=\"116.001999\"> "
+        + "<trkpt lat=\"39.298\" lon=\"116.002\"> "
         + "<time>2013-07-10T08:00:04.000Z</time> "
         + "</trkpt> "
-        + "<trkpt lat=\"39.297498\" lon=\"116.002499\"> "
+        + "<trkpt lat=\"39.2975\" lon=\"116.0025\"> "
         + "<time>2013-07-10T08:00:05.000Z</time> "
         + "</trkpt> "
-        + "<trkpt lat=\"39.296998\" lon=\"116.003\"> "
+        + "<trkpt lat=\"39.297\" lon=\"116.003\"> "
         + "<time>2013-07-10T08:00:06.000Z</time> "
         + "</trkpt> "
-        + "<trkpt lat=\"39.296498\" lon=\"116.0035\"> "
+        + "<trkpt lat=\"39.2965\" lon=\"116.0035\"> "
         + "<time>2013-07-10T08:00:07.000Z</time> "
         + "</trkpt> "
-        + "<trkpt lat=\"39.295998\" lon=\"116.004\"> "
+        + "<trkpt lat=\"39.296\" lon=\"116.004\"> "
         + "<time>2013-07-10T08:00:08.000Z</time> "
         + "</trkpt> "
-        + "<trkpt lat=\"39.295498\" lon=\"116.0045\"> "
+        + "<trkpt lat=\"39.2955\" lon=\"116.0045\"> "
         + "<time>2013-07-10T08:00:09.000Z</time> <ele>"
         + maxAltitude
         + "</ele>"
@@ -457,7 +497,5 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
     } catch (IOException e) {
       fail();
     }
-
   }
-
 }
