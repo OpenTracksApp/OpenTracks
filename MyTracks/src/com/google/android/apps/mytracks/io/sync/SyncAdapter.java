@@ -353,8 +353,12 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
             long[] trackIds = kmlImporter.importFile(inputStream);
             if (trackIds.length == 1) {
               Track track = myTracksProviderUtils.getTrack(trackIds[0]);
-              SyncUtils.updateTrackWithDriveFileInfo(myTracksProviderUtils, track, driveFile);
-              Log.d(TAG, "Add from Google Drive " + track.getName());
+              if (track == null) {
+                Log.e(TAG, "Unable to insert new drive file for " + driveFile.getId());
+              } else {
+                SyncUtils.updateTrackWithDriveFileInfo(myTracksProviderUtils, track, driveFile);
+                Log.d(TAG, "Add from Google Drive " + track.getName());
+              } 
             } else {
               // Clean up if imported more than one track
               for (int i = 0; i < trackIds.length; i++) {
@@ -495,8 +499,12 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
       long[] trackIds = kmlImporter.importFile(inputStream);
       if (trackIds.length == 1) {
         Track newTrack = myTracksProviderUtils.getTrack(trackIds[0]);
-        SyncUtils.updateTrackWithDriveFileInfo(myTracksProviderUtils, newTrack, driveFile);
-        return true;
+        if (newTrack == null) {
+          Log.e(TAG, "Unable to merge, imported track is null");
+        } else {
+          SyncUtils.updateTrackWithDriveFileInfo(myTracksProviderUtils, newTrack, driveFile);
+          return true;
+        }
       } else {
         Log.e(TAG, "Unable to merge, imported size is not 1");
       }

@@ -76,6 +76,16 @@ public class DeleteAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
 
     if (trackIds.length == 1 && trackIds[0] == -1L) {
+      try {
+        while (SyncUtils.isSyncActive(context)) {
+          if (isCancelled()) {
+            return false;
+          }
+          Thread.sleep(1000);
+        }
+      } catch (InterruptedException e) {
+        return false;
+      }
       PreferencesUtils.setBoolean(
           context, R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT);
       SyncUtils.disableSync(context);
@@ -84,9 +94,10 @@ public class DeleteAsyncTask extends AsyncTask<Void, Integer, Boolean> {
       return true;
     } else {
       for (long id : trackIds) {
-        if (!isCancelled()) {
-          myTracksProviderUtils.deleteTrack(id);
+        if (isCancelled()) {
+          return false;
         }
+        myTracksProviderUtils.deleteTrack(id);
       }
       return true;
     }

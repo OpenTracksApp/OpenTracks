@@ -128,6 +128,21 @@ public class SyncUtils {
   }
 
   /**
+   * Returns true if sync is active.
+   * 
+   * @param context the context
+   */
+  public static boolean isSyncActive(Context context) {
+    Account[] accounts = AccountManager.get(context).getAccountsByType(Constants.ACCOUNT_TYPE);
+    for (Account account : accounts) {
+      if (ContentResolver.isSyncActive(account, SYNC_AUTHORITY)) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  /**
    * Enables sync.
    * 
    * @param account the account
