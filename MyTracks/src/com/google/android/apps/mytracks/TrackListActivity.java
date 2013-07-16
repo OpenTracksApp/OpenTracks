@@ -502,10 +502,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
           startActivity(intent);
         } else {
           startGps = !TrackRecordingServiceConnectionUtils.isRecordingServiceRunning(
-              this);
-
-          // Update menu
-          ApiAdapterFactory.getApiAdapter().invalidMenu(this);         
+              this);      
 
           // Show toast
           Toast toast = Toast.makeText(
@@ -529,6 +526,9 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
             }
             trackRecordingServiceConnection.unbindAndStop();
           }
+          
+          // Update menu after starting or stopping gps
+          ApiAdapterFactory.getApiAdapter().invalidMenu(this);  
         }
         myTracksLocationManager.close();
         return true;
