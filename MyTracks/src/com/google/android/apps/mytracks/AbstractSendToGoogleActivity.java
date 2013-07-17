@@ -80,6 +80,7 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
   private static final int FUSION_TABLES_REQUEST_CODE = 1;
   private static final int SPREADSHEETS_REQUEST_CODE = 2;
   private static final int DELETE_REQUEST_CODE = 3;
+  protected static final int GOOGLE_PLAY_SERVICES_REQUEST_CODE = 4; 
   
   private SendRequest sendRequest;
 

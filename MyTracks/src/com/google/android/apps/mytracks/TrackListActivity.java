@@ -95,7 +95,6 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     implements EulaCaller, EnableSyncCaller, FileTypeCaller {
 
   private static final String TAG = TrackListActivity.class.getSimpleName();
-  private static final int GOOGLE_PLAY_SERVICES_REQUEST_CODE = 0;
   private static final String[] PROJECTION = new String[] { TracksColumns._ID, TracksColumns.NAME,
       TracksColumns.DESCRIPTION, TracksColumns.CATEGORY, TracksColumns.STARTTIME,
       TracksColumns.TOTALDISTANCE, TracksColumns.TOTALTIME, TracksColumns.ICON,
@@ -503,10 +502,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
           startActivity(intent);
         } else {
           startGps = !TrackRecordingServiceConnectionUtils.isRecordingServiceRunning(
-              this);
-
-          // Update menu
-          ApiAdapterFactory.getApiAdapter().invalidMenu(this);         
+              this);      
 
           // Show toast
           Toast toast = Toast.makeText(
@@ -530,6 +526,9 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
             }
             trackRecordingServiceConnection.unbindAndStop();
           }
+          
+          // Update menu after starting or stopping gps
+          ApiAdapterFactory.getApiAdapter().invalidMenu(this);  
         }
         myTracksLocationManager.close();
         return true;
