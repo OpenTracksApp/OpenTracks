@@ -231,7 +231,7 @@ public class TripStatisticsUpdater {
       speedBuffer.reset();
     } else if (isValidSpeed(time, speed, lastLocationTime, lastLocationSpeed)) {
       speedBuffer.setNext(speed);
-      if (speed > currentSegment.getMaxSpeed()) {
+      if (speedBuffer.isFull() && speed > currentSegment.getMaxSpeed()) {
         currentSegment.setMaxSpeed(speed);
       }
     } else {
@@ -246,13 +246,12 @@ public class TripStatisticsUpdater {
    */
   @VisibleForTesting
   void updateElevation(double elevation) {
-    currentSegment.updateElevationExtremities(elevation);
-
-    // update elevation gain
+    // Update elevation using the smoothed average after the buffer is full
     double oldAverage = elevationBuffer.getAverage();
     elevationBuffer.setNext(elevation);
     double newAverage = elevationBuffer.getAverage();
     if (elevationBuffer.isFull()) {
+      currentSegment.updateElevationExtremities(newAverage);
       double difference = newAverage - oldAverage;
       if (difference > 0) {
         currentSegment.addTotalElevationGain(difference);
@@ -337,11 +336,12 @@ public class TripStatisticsUpdater {
      * 10X the smoothed average and the speed difference doesn't imply 2g
      * acceleration.
      */
-    if (!speedBuffer.isFull()) {
+    if (speedBuffer.isFull()) {
+      double average = speedBuffer.getAverage();
+      double diff = Math.abs(average - speed);
+      return (speed < average * 10) && (diff < MAX_ACCELERATION * timeDifference);
+    } else {
       return true;
     }
-    double average = speedBuffer.getAverage();
-    double diff = Math.abs(average - speed);
-    return (speed < average * 10) && (diff < MAX_ACCELERATION * timeDifference);
   }
 }
