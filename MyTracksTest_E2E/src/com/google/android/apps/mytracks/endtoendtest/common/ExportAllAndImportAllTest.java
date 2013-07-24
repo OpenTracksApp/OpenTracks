@@ -182,133 +182,6 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
   }
 
   /**
-   * Tests export and import tracks.
-   * <ul>
-   * <li>Create two tracks, one of them is empty(Have no Gps data).</li>
-   * <li>Tests import when there is no track file.</li>
-   * <li>Tests export tracks to Gpx files.</li>
-   * <li>Tests import Gpx files to tracks.</li>
-   * <li>Tests export tracks to Kml files.</li>
-   * </ul>
-   */
-  private void checkExportAndImport() {
-    // Delete all exported gpx and kml tracks.
-    EndToEndTestUtils.deleteExportedFiles(EndToEndTestUtils.GPX);
-    EndToEndTestUtils.deleteExportedFiles(EndToEndTestUtils.KML);
-    int gpxFilesNumber = 0;
-    File[] allGpxFiles = EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX);
-
-    // For the first export, there is no MyTracks folder.
-    if (allGpxFiles != null) {
-      gpxFilesNumber = EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX).length;
-    }
-
-    // Get track number in current track list of MyTracks.
-    trackNumber = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount();
-
-    // No Gpx file to imported.
-    importTracks(EndToEndTestUtils.GPX);
-    EndToEndTestUtils.SOLO.waitForText(getImportErrorMessage(0, 0, EndToEndTestUtils.GPX));
-    EndToEndTestUtils
-        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
-
-    // Click to export tracks(At least one track) to Gpx files.
-    exportTracks(EndToEndTestUtils.GPX);
-
-    // Check export Gpx file.
-    assertEquals(gpxFilesNumber + trackNumber,
-        EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX).length);
-    instrumentation.waitForIdleSync();
-
-    // Click to import Gpx track.
-    gpxFilesNumber = EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX).length;
-    trackNumber = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount();
-
-    importTracks(EndToEndTestUtils.GPX);
-    EndToEndTestUtils.rotateCurrentActivity();
-    checkImport();
-
-    assertTrue(EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.trackName));
-    assertEquals(trackNumber + gpxFilesNumber,
-        EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount());
-
-    // Click to export tracks(At least two tracks) to KML files.
-    gpxFilesNumber = EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX).length;
-    trackNumber = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount();
-
-    exportTracks(EndToEndTestUtils.KML);
-
-    // Check export files.
-    assertEquals(gpxFilesNumber, EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX).length);
-    assertEquals(trackNumber, EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.KML).length);
-
-    // Click to import KML track.
-    int KMLFilesNumber = EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.KML).length;
-    instrumentation.waitForIdleSync();
-    trackNumber = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount();
-
-    importTracks(EndToEndTestUtils.KML);
-    checkImport();
-    EndToEndTestUtils.SOLO.waitForActivity(TrackListActivity.class);
-
-    assertEquals(trackNumber + KMLFilesNumber,
-        EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount());
-  }
-
-  @Override
-  protected void tearDown() throws Exception {
-    EndToEndTestUtils.SOLO.finishOpenedActivities();
-    super.tearDown();
-  }
-
-  private String getSaveSuccessMessage(int count, String type) {
-    String tracks = activityMyTracks.getResources().getQuantityString(R.plurals.tracks, count,
-        count);
-    String directoryDisplayName = FileUtils.getDirectoryDisplayName(type);
-    return activityMyTracks.getString(R.string.export_external_storage_success, tracks,
-        directoryDisplayName);
-  }
-
-  private String getImportSuccessMessage(int count, String type) {
-    String files = activityMyTracks.getResources().getQuantityString(R.plurals.files, count, count);
-    String directoryDisplayName = FileUtils.getDirectoryDisplayName(type);
-    return activityMyTracks.getString(R.string.import_success, files, directoryDisplayName);
-  }
-
-  private String getImportErrorMessage(int count, int total, String type) {
-    String files = activityMyTracks.getResources().getQuantityString(R.plurals.files, total, total);
-    String directoryDisplayName = FileUtils.getDirectoryDisplayName(type);
-    return activityMyTracks.getString(R.string.import_error, count, files, directoryDisplayName);
-  }
-
-  /**
-   * Imports tracks from external storage.
-   * 
-   * @param fileType the file type, can be GPX and KML currently
-   */
-  private void importTracks(String fileType) {
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_import_all), true);
-    EndToEndTestUtils.SOLO.clickOnText(fileType.toUpperCase());
-    EndToEndTestUtils.getButtonOnScreen(
-        EndToEndTestUtils.activityMytracks.getString(R.string.generic_ok), true, true);
-  }
-
-  /**
-   * Exports tracks to external storage.
-   * 
-   * @param fileType the file type, can be GPX/KML/TCX/CSV currently
-   */
-  private void exportTracks(String fileType) {
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_export_all), true);
-    EndToEndTestUtils.SOLO.clickOnText(fileType.toUpperCase());
-    EndToEndTestUtils.getButtonOnScreen(
-        EndToEndTestUtils.activityMytracks.getString(R.string.generic_ok), true, true);
-    EndToEndTestUtils.SOLO.waitForText(getSaveSuccessMessage(2, fileType));
-    EndToEndTestUtils
-        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
-  }
-
-  /**
    * Test export/import one track and checks the detail of this track.
    */
   public void testExportImport_checkTrackDetails() {
@@ -497,5 +370,132 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
     } catch (IOException e) {
       fail();
     }
+  }
+
+  /**
+   * Tests export and import tracks.
+   * <ul>
+   * <li>Create two tracks, one of them is empty(Have no Gps data).</li>
+   * <li>Tests import when there is no track file.</li>
+   * <li>Tests export tracks to Gpx files.</li>
+   * <li>Tests import Gpx files to tracks.</li>
+   * <li>Tests export tracks to Kml files.</li>
+   * </ul>
+   */
+  private void checkExportAndImport() {
+    // Delete all exported gpx and kml tracks.
+    EndToEndTestUtils.deleteExportedFiles(EndToEndTestUtils.GPX);
+    EndToEndTestUtils.deleteExportedFiles(EndToEndTestUtils.KML);
+    int gpxFilesNumber = 0;
+    File[] allGpxFiles = EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX);
+
+    // For the first export, there is no MyTracks folder.
+    if (allGpxFiles != null) {
+      gpxFilesNumber = EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX).length;
+    }
+
+    // Get track number in current track list of MyTracks.
+    trackNumber = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount();
+
+    // No Gpx file to imported.
+    importTracks(EndToEndTestUtils.GPX);
+    EndToEndTestUtils.SOLO.waitForText(getImportErrorMessage(0, 0, EndToEndTestUtils.GPX));
+    EndToEndTestUtils
+        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+
+    // Click to export tracks(At least one track) to Gpx files.
+    exportTracks(EndToEndTestUtils.GPX);
+
+    // Check export Gpx file.
+    assertEquals(gpxFilesNumber + trackNumber,
+        EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX).length);
+    instrumentation.waitForIdleSync();
+
+    // Click to import Gpx track.
+    gpxFilesNumber = EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX).length;
+    trackNumber = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount();
+
+    importTracks(EndToEndTestUtils.GPX);
+    EndToEndTestUtils.rotateCurrentActivity();
+    checkImport();
+
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.trackName));
+    assertEquals(trackNumber + gpxFilesNumber,
+        EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount());
+
+    // Click to export tracks(At least two tracks) to KML files.
+    gpxFilesNumber = EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX).length;
+    trackNumber = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount();
+
+    exportTracks(EndToEndTestUtils.KML);
+
+    // Check export files.
+    assertEquals(gpxFilesNumber, EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX).length);
+    assertEquals(trackNumber, EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.KML).length);
+
+    // Click to import KML track.
+    int KMLFilesNumber = EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.KML).length;
+    instrumentation.waitForIdleSync();
+    trackNumber = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount();
+
+    importTracks(EndToEndTestUtils.KML);
+    checkImport();
+    EndToEndTestUtils.SOLO.waitForActivity(TrackListActivity.class);
+
+    assertEquals(trackNumber + KMLFilesNumber,
+        EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount());
+  }
+
+  private String getSaveSuccessMessage(int count, String type) {
+    String tracks = activityMyTracks.getResources().getQuantityString(R.plurals.tracks, count,
+        count);
+    String directoryDisplayName = FileUtils.getDirectoryDisplayName(type);
+    return activityMyTracks.getString(R.string.export_external_storage_success, tracks,
+        directoryDisplayName);
+  }
+
+  private String getImportSuccessMessage(int count, String type) {
+    String files = activityMyTracks.getResources().getQuantityString(R.plurals.files, count, count);
+    String directoryDisplayName = FileUtils.getDirectoryDisplayName(type);
+    return activityMyTracks.getString(R.string.import_success, files, directoryDisplayName);
+  }
+
+  private String getImportErrorMessage(int count, int total, String type) {
+    String files = activityMyTracks.getResources().getQuantityString(R.plurals.files, total, total);
+    String directoryDisplayName = FileUtils.getDirectoryDisplayName(type);
+    return activityMyTracks.getString(R.string.import_error, count, files, directoryDisplayName);
+  }
+
+  /**
+   * Imports tracks from external storage.
+   * 
+   * @param fileType the file type, can be GPX and KML currently
+   */
+  private void importTracks(String fileType) {
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_import_all), true);
+    EndToEndTestUtils.SOLO.clickOnText(fileType.toUpperCase());
+    EndToEndTestUtils.getButtonOnScreen(
+        EndToEndTestUtils.activityMytracks.getString(R.string.generic_ok), true, true);
+  }
+
+  /**
+   * Exports tracks to external storage.
+   * 
+   * @param fileType the file type, can be GPX/KML/TCX/CSV currently
+   */
+  private void exportTracks(String fileType) {
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_export_all), true);
+    EndToEndTestUtils.SOLO.clickOnText(fileType.toUpperCase());
+    EndToEndTestUtils.getButtonOnScreen(
+        EndToEndTestUtils.activityMytracks.getString(R.string.generic_ok), true, true);
+    EndToEndTestUtils.SOLO.waitForText(getSaveSuccessMessage(2, fileType));
+    EndToEndTestUtils
+        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+  }
+
+  @Override
+  protected void tearDown() throws Exception {
+    EndToEndTestUtils.SOLO.finishOpenedActivities();
+    super.tearDown();
   }
 }
