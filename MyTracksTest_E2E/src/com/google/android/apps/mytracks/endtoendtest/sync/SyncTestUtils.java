@@ -55,7 +55,7 @@ public class SyncTestUtils {
 
   public static boolean isCheckedRunSyncTest = false;
   public static final String KML_FILE_POSTFIX = ".kml";
-  public static final long MAX_TIME_TO_WAIT_SYNC = 1000000;
+  public static final long MAX_TIME_TO_WAIT_SYNC = 100000;
 
   /**
    * Sets up sync tests.
@@ -73,15 +73,16 @@ public class SyncTestUtils {
       isCheckedRunSyncTest = true;
     }
     if (RunConfiguration.getInstance().runSyncTest) {
-      EndToEndTestUtils.deleteAllTracks();
       SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_1);
       Drive drive1 = SyncTestUtils.getGoogleDrive(EndToEndTestUtils.activityMytracks
           .getApplicationContext());
       removeKMLFiles(drive1);
+      EndToEndTestUtils.deleteAllTracks();
       SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_2);
       Drive drive2 = SyncTestUtils.getGoogleDrive(EndToEndTestUtils.activityMytracks
           .getApplicationContext());
       removeKMLFiles(drive2);
+      EndToEndTestUtils.deleteAllTracks();
       return drive2;
     }
     return null;
@@ -187,8 +188,7 @@ public class SyncTestUtils {
       EndToEndTestUtils.SOLO.clickOnText(accountName);
       EndToEndTestUtils.instrumentation.waitForIdleSync();
       if (EndToEndTestUtils.SOLO.waitForText(
-          EndToEndTestUtils.activityMytracks.getString(
-              R.string.generic_confirm_title), 1,
+          EndToEndTestUtils.activityMytracks.getString(R.string.generic_confirm_title), 1,
           EndToEndTestUtils.SHORT_WAIT_TIME)) {
         EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
             .getString(R.string.generic_yes));
@@ -205,12 +205,16 @@ public class SyncTestUtils {
       EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
           .getString(R.string.menu_sync_drive));
 
-      EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.activityMytracks.getString(
-          R.string.sync_drive_confirm_message).split("%")[0], 1, EndToEndTestUtils.SHORT_WAIT_TIME);
+      EndToEndTestUtils.SOLO.waitForText(
+          EndToEndTestUtils.activityMytracks.getString(R.string.sync_drive_confirm_message).split(
+              "%")[0], 1, EndToEndTestUtils.SHORT_WAIT_TIME);
       Assert.assertTrue(EndToEndTestUtils.SOLO.searchText(accountName, true));
       EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
           .getString(R.string.generic_yes));
     }
+
+    // Add this sleep to work around a exception after switch account.
+    EndToEndTestUtils.sleep(15000);
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.instrumentation.waitForIdleSync();
@@ -223,23 +227,26 @@ public class SyncTestUtils {
    * @throws IOException
    */
   public static void checkFilesNumber(Drive drive) throws IOException {
+    EndToEndTestUtils.instrumentation.waitForIdleSync();
     long startTime = System.currentTimeMillis();
+    int trackNumber = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount();
+    List<File> files = getDriveFiles(EndToEndTestUtils.activityMytracks.getApplicationContext(),
+        drive);
     while (System.currentTimeMillis() - startTime < MAX_TIME_TO_WAIT_SYNC) {
       try {
-        EndToEndTestUtils.sleep(EndToEndTestUtils.SHORT_WAIT_TIME);
-        EndToEndTestUtils.findMenuItem(
-            EndToEndTestUtils.activityMytracks.getString(R.string.menu_refresh), true);
-        int trackNumber = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount();
-        List<File> files = getDriveFiles(
-            EndToEndTestUtils.activityMytracks.getApplicationContext(), drive);
         if (files.size() == trackNumber) {
           return;
         }
+        trackNumber = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount();
+        files = getDriveFiles(EndToEndTestUtils.activityMytracks.getApplicationContext(), drive);
+        EndToEndTestUtils.sleep(EndToEndTestUtils.SHORT_WAIT_TIME);
+        EndToEndTestUtils.findMenuItem(
+            EndToEndTestUtils.activityMytracks.getString(R.string.menu_refresh), true);
       } catch (GoogleJsonResponseException e) {
         Log.i(EndToEndTestUtils.LOG_TAG, e.getMessage());
       }
     }
-    Assert.fail();
+    Assert.assertEquals(files.size(), trackNumber);
   }
 
   /**
@@ -249,13 +256,15 @@ public class SyncTestUtils {
    */
   public static void checkTracksNumber(int number) {
     long startTime = System.currentTimeMillis();
+    int trackNumber = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount();
     while (System.currentTimeMillis() - startTime < MAX_TIME_TO_WAIT_SYNC) {
-      int trackNumber = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount();
       if (trackNumber == number) {
         return;
       }
+      trackNumber = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount();
+      Log.i(EndToEndTestUtils.LOG_TAG, trackNumber + ":" + number);
     }
-    Assert.fail();
+    Assert.assertEquals(trackNumber, number);
   }
 
   /**
