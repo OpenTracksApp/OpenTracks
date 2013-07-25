@@ -80,7 +80,7 @@ public class TripStatisticsTest extends TestCase {
     assertEquals(1300L, statistics.getMovingTime());
     assertEquals(1100.0, statistics.getTotalDistance());
     assertEquals(900.0, statistics.getTotalElevationGain());
-    assertEquals(60.0, statistics.getMaxSpeed());
+    assertEquals(statistics.getTotalDistance()/ (statistics.getMovingTime() / 1000.0), statistics.getMaxSpeed());
     assertEquals(-10000, statistics.getLeft());
     assertEquals(30000, statistics.getRight());
     assertEquals(35000, statistics.getTop());

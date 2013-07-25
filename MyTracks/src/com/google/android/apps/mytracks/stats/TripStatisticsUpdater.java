@@ -50,12 +50,6 @@ public class TripStatisticsUpdater {
   static final int RUN_SMOOTHING_FACTOR = 25;
 
   /**
-   * The number of rise readings to smooth for calculating grade.
-   */
-  @VisibleForTesting
-  static final int RISE_SMOOTHING_FACTOR = 25;
-
-  /**
    * The number of grade readings to smooth to get a somewhat accurate signal.
    */
   @VisibleForTesting
@@ -91,9 +85,6 @@ public class TripStatisticsUpdater {
 
   // A buffer of the recent run readings (m) for calculating grade
   private final DoubleBuffer runBuffer = new DoubleBuffer(RUN_SMOOTHING_FACTOR);
-
-  // A buffer of the recent rise readings (m) for calculating grade
-  private final DoubleBuffer riseBuffer = new DoubleBuffer(RISE_SMOOTHING_FACTOR);
 
   // A buffer of the recent grade calculations (%)
   private final DoubleBuffer gradeBuffer = new DoubleBuffer(GRADE_SMOOTHING_FACTOR);
@@ -150,7 +141,6 @@ public class TripStatisticsUpdater {
       lastMovingLocation = null;
       elevationBuffer.reset();
       runBuffer.reset();
-      riseBuffer.reset();
       gradeBuffer.reset();
       speedBuffer.reset();
       return;
@@ -158,8 +148,9 @@ public class TripStatisticsUpdater {
     currentSegment.updateLatitudeExtremities(location.getLatitude());
     currentSegment.updateLongitudeExtremities(location.getLongitude());
 
+    Double elevationDifference = null;
     if (location.hasAltitude()) {
-      updateElevation(location.getAltitude());
+      elevationDifference = updateElevation(location.getAltitude());
     }
 
     if (lastLocation == null || lastMovingLocation == null) {
@@ -188,11 +179,8 @@ public class TripStatisticsUpdater {
     currentSegment.addMovingTime(movingTime);
 
     // Update grade
-    if (location.hasAltitude() && lastLocation.hasAltitude()) {
-      float run = lastLocation.distanceTo(location);
-      double rise = location.getAltitude() - lastLocation.getAltitude();
-      updateGrade(run, rise);
-    }
+    double run = lastLocation.distanceTo(location);
+    updateGrade(run, elevationDifference);    
 
     // Update max speed
     if (location.hasSpeed() && lastLocation.hasSpeed()) {
@@ -231,8 +219,8 @@ public class TripStatisticsUpdater {
       speedBuffer.reset();
     } else if (isValidSpeed(time, speed, lastLocationTime, lastLocationSpeed)) {
       speedBuffer.setNext(speed);
-      if (speed > currentSegment.getMaxSpeed()) {
-        currentSegment.setMaxSpeed(speed);
+      if (speedBuffer.isFull() && speedBuffer.getAverage() > currentSegment.getMaxSpeed()) {
+        currentSegment.setMaxSpeed(speedBuffer.getAverage());
       }
     } else {
       Log.d(TAG, "Invalid speed. speed: " + speed + " lastLocationSpeed: " + lastLocationSpeed);
@@ -240,24 +228,25 @@ public class TripStatisticsUpdater {
   }
 
   /**
-   * Updates an elevation reading.
+   * Updates an elevation reading. Returns the difference.
    * 
    * @param elevation the elevation
    */
   @VisibleForTesting
-  void updateElevation(double elevation) {
-    currentSegment.updateElevationExtremities(elevation);
-
-    // update elevation gain
+  Double updateElevation(double elevation) {
+    // Update elevation using the smoothed average after the buffer is full
     double oldAverage = elevationBuffer.getAverage();
     elevationBuffer.setNext(elevation);
     double newAverage = elevationBuffer.getAverage();
     if (elevationBuffer.isFull()) {
-      double difference = newAverage - oldAverage;
+      currentSegment.updateElevationExtremities(newAverage);
+      Double difference = newAverage - oldAverage;
       if (difference > 0) {
         currentSegment.addTotalElevationGain(difference);
       }
+      return difference;
     }
+    return null;
   }
 
   /**
@@ -267,11 +256,10 @@ public class TripStatisticsUpdater {
    * @param rise the rise
    */
   @VisibleForTesting
-  void updateGrade(double run, double rise) {
+  void updateGrade(double run, Double rise) {
     runBuffer.setNext(run);
-    riseBuffer.setNext(rise);
 
-    if (!runBuffer.isFull() || !riseBuffer.isFull()) {
+    if (!runBuffer.isFull() || rise == null) {
       return;
     }
 
@@ -284,8 +272,10 @@ public class TripStatisticsUpdater {
     if (smoothedRun < 5.0) {
       return;
     }
-    gradeBuffer.setNext(riseBuffer.getAverage() / smoothedRun);
-    currentSegment.updateGradeExtremities(gradeBuffer.getAverage());
+    gradeBuffer.setNext(rise / smoothedRun);
+    if (gradeBuffer.isFull()) {
+      currentSegment.updateGradeExtremities(gradeBuffer.getAverage());
+    }
   }
 
   private TripStatistics init(long time) {
@@ -337,11 +327,12 @@ public class TripStatisticsUpdater {
      * 10X the smoothed average and the speed difference doesn't imply 2g
      * acceleration.
      */
-    if (!speedBuffer.isFull()) {
+    if (speedBuffer.isFull()) {
+      double average = speedBuffer.getAverage();
+      double diff = Math.abs(average - speed);
+      return (speed < average * 10) && (diff < MAX_ACCELERATION * timeDifference);
+    } else {
       return true;
     }
-    double average = speedBuffer.getAverage();
-    double diff = Math.abs(average - speed);
-    return (speed < average * 10) && (diff < MAX_ACCELERATION * timeDifference);
   }
 }

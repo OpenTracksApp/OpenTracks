@@ -155,35 +155,18 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
     EndToEndTestUtils.findMenuItem(GPSStatus ? activityMyTracks.getString(R.string.menu_stop_gps)
         : activityMyTracks.getString(R.string.menu_start_gps), true);
     GPSStatus = !GPSStatus;
-    EndToEndTestUtils.SOLO.waitForText(
-        GPSStatus ? activityMyTracks.getString(R.string.menu_start_gps) : activityMyTracks
-            .getString(R.string.menu_stop_gps), 1, EndToEndTestUtils.SHORT_WAIT_TIME);
-    instrumentation.waitForIdleSync();
-
-    EndToEndTestUtils.sleep(EndToEndTestUtils.SHORT_WAIT_TIME);
-    if (GPSStatus != EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_stop_gps), false)) {
-      EndToEndTestUtils.sleep(EndToEndTestUtils.SHORT_WAIT_TIME);
-      // Retry once
-      assertEquals(GPSStatus,
-          EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_stop_gps), false));
-    }
+    EndToEndTestUtils.waitTextToDisappear(GPSStatus ? activityMyTracks
+        .getString(R.string.menu_start_gps) : activityMyTracks.getString(R.string.menu_stop_gps));
+    assertEquals(GPSStatus,
+        EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_stop_gps), false));
 
     EndToEndTestUtils.findMenuItem(GPSStatus ? activityMyTracks.getString(R.string.menu_stop_gps)
         : activityMyTracks.getString(R.string.menu_start_gps), true);
     GPSStatus = !GPSStatus;
-    EndToEndTestUtils.SOLO.waitForText(GPSStatus ? activityMyTracks
+    EndToEndTestUtils.waitTextToDisappear(GPSStatus ? activityMyTracks
         .getString(R.string.menu_start_gps) : activityMyTracks.getString(R.string.menu_stop_gps));
-
-    EndToEndTestUtils.sleep(EndToEndTestUtils.SHORT_WAIT_TIME);
-    if (GPSStatus != EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_stop_gps), false)) {
-      EndToEndTestUtils.sleep(EndToEndTestUtils.SHORT_WAIT_TIME);
-      // Retry once
-      assertEquals(GPSStatus,
-          EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_stop_gps), false));
-    }
-
+    assertEquals(GPSStatus,
+        EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_stop_gps), false));
   }
 
   @Override
