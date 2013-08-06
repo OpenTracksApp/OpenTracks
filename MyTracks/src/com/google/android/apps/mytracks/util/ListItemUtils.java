@@ -78,17 +78,18 @@ public class ListItemUtils {
       timeDistanceTextView.setTextAppearance(context, R.style.TextSmall);
     }
     setTextView(timeDistanceTextView,
-        getTimeDistance(context, isRecording, isPaused, sharedOwner, totalTime, totalDistance));
+        getTimeDistance(context, isRecording, isPaused, sharedOwner, totalTime, totalDistance),
+        View.INVISIBLE);
 
     String[] startTimeDisplay = getStartTime(isRecording, context, startTime);
     TextView dateTextView = (TextView) view.findViewById(R.id.list_item_date);
-    setTextView(dateTextView, startTimeDisplay[0]);
+    setTextView(dateTextView, startTimeDisplay[0], View.GONE);
 
     TextView timeTextView = (TextView) view.findViewById(R.id.list_item_time);
-    setTextView(timeTextView, startTimeDisplay[1]);
+    setTextView(timeTextView, startTimeDisplay[1], View.GONE);
 
     TextView descriptionTextView = (TextView) view.findViewById(R.id.list_item_description);
-    setTextView(descriptionTextView, getDescription(isRecording, category, description));
+    setTextView(descriptionTextView, getDescription(isRecording, category, description), View.GONE);
   }
 
   /**
@@ -193,10 +194,11 @@ public class ListItemUtils {
    * 
    * @param textView the text view
    * @param value the value for the text view
+   * @param visibility visibility when value is not available
    */
-  private static void setTextView(TextView textView, String value) {
+  private static void setTextView(TextView textView, String value, int visibility) {
     if (value == null || value.length() == 0) {
-      textView.setVisibility(View.GONE);
+      textView.setVisibility(visibility);
     } else {
       textView.setVisibility(View.VISIBLE);
       textView.setText(value);

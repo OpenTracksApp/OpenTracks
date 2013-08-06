@@ -73,7 +73,8 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity implements De
       finish();
       return;
     }
-
+    
+    // Set waypoint, needed in onCreateOptionsMenu
     waypoint = myTracksProviderUtils.getWaypoint(markerId);
     if (waypoint == null) {
       Log.d(TAG, "waypoint is null");
@@ -95,6 +96,14 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity implements De
   protected void onResume() {
     super.onResume();
 
+    // Update waypoint in case it changed from an edit
+    waypoint = myTracksProviderUtils.getWaypoint(markerId);
+    if (waypoint == null) {
+      Log.d(TAG, "waypoint is null");
+      finish();
+      return;
+    }
+    
     name.setText(getString(R.string.generic_name_line, waypoint.getName()));
     if (waypoint.getType() == WaypointType.WAYPOINT) {
       waypointSection.setVisibility(View.VISIBLE);
