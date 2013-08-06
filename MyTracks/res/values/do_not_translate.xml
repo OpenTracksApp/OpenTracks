@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<resources>
+  <!-- DO NOT TRANSLATE ANY STRINGS IN THIS FILE. -->
+  <string name="eula_korean">위치정보서비스 및 위치기반서비스 이용약관\n
+\n
+다음은 구글코리아 유한회사(이하 “Google”)가 Google의 제품에 대하여 제공하고 있는 위치기반서비스에 적용되는 이용조건입니다. 아래 이용조건은 이동통신사업자의 가입신청서에 포함된 위치정보 수집동의 및 모바일 단말기 이용조건과 함께 적용됩니다.\n
+\n
+1. 서비스의 요금\n
+\n
+Google은 별도의 특별한 정함이 없는 한, Google의 위치기반서비스를 이용자에게 추가 이용 요금 없이 제공합니다. 별도의 요금을 부과하고자 하는 경우, Google은 이용자에게 사전에 요금 및 이용조건을 고지하고 동의를 받습니다. Google의 위치기반서비스는 Wi-Fi 무선인터넷을 사용하지 않고, 가입하신 이동통신사의 무선인터넷(3G 또는 Wibro 등)에 연결하여 사용하는 경우 별도의 무선 데이터 통화료가 부과됩니다. 무선 인터넷 사용료에 대한 자세한 안내는 가입하신 이동통신사에 문의하시기 바랍니다. 제3자 개발자들에 의하여 제공되는 프로덕트나 서비스의 경우, 해당 제3자 개발자들의 이용약관에 따른 서비스 요금을 제3자 개발자들이 부과할 수 있습니다.\n
+\n
+2. 서비스의 내용\n
+\n
+위치기반서비스는 아래를 포함합니다.\n
+\n
+2.1 모바일 단말의 현재 위치를 중심으로 내 위치를 보여 주는 서비스 (My Location) 또는 이를 기반으로 제공되는 응용 서비스\n
+\n
+2.2 구글 맵스(Google Maps)를 이용한 위치 찾기 서비스 등 모바일 지도서비스\n
+\n
+2.3 이용자의 현재 위치를 이용하여 웹 검색의 결과를 보여주는 서비스인 내 위치를 이용한 웹 검색 서비스 (Web Search with My Location) 및 동 서비스의 기능 중의 하나로, 이용자의 검색 환경설정에 따라, 웹 검색 시 위치기반 검색어로 자동완성 해주는 서비스인 위치기반 검색어 자동완성 기능 (Location based Suggest), 및 지금 내 주변 + 로컬검색 서비스 (Near me now + Local search) 등을 비롯하여 웹 검색 관련 이용자의 위치를 중심으로 한 검색결과를 보여주는 서비스\n
+\n
+2.4 이용자의 현재 위치 주변의 특정 위치지점과 연결된 다른 이용자의 게시글을 보여주는 기능(Nearby - show the posts nearby me)과 이용자의 게시글과 게시 당시 위치를 이용자가 지정하는 자와 공유하는 기능(Check-in at place – show checked-in location in the post) 등을 구비한 구글플러스(Google+)를 포함하여, 이용자의 위치를 이용하는 소셜 네트워크 서비스\n
+\n
+2.5 Google 또는 외부 개발자들이 개발한 위치기반 기술관련 프로덕트 및 서비스.\n
+\n
+Google은 위치기반서비스의 세부적인 내용 및 종류에 대하여는 개별 이용약관을 정할 수 있으며, 이용자에게 해당 이용약관의 사본을 제공하고 해당 약관에 정한 바에 따라 동의를 받습니다. 외부개발자가 제공하는 프로덕트 및 서비스에 대하여는 해당 외부개발자의 이용약관을 따릅니다.\n
+\n
+3. 위치정보\n
+\n
+GPS기능이 탑재되었거나, Wi-Fi 기능이 탑재된 단말기 또는 Cell ID에 기반한 단말기 등을 비롯하여 위치정보수집기능이 부가된 Google 또는 제휴사의 제품은 주기적으로 이동통신 및 Wi-Fi 기지국에 대한 위치정보를 수집합니다. 이러한 정보는, 나중에 Google Account 또는 다른 개인정보와 결합되어 위치기반서비스에 이용되지 않는 한, 익명의 정보로 전화번호 등 이용자를 식별할 수 있는 정보를 포함하지 않습니다. 일부 서비스의 경우, 주기적으로 단말기를 통해 수집된 위치정보가 Google의 서버로 전송되어 Google의 위치정보의 정확도를 향상시키는데 사용됩니다.\n
+\n
+4. 이용자의 권리\n
+\n
+Google은 http://www.google.com/policies 에서 볼 수 있는 개인정보취급방침에 정해진 바에 따라 위치정보를 수집, 이용 및 공유합니다. 이용자는 직접 위치기반서비스의 설정을 변경하는 방식을 활용하여, 위치정보의 이용제공목적, 제공받는 자의 범위 및 위치기반서비스의 일부에 대하여 동의를 유보할 수 있습니다. 또한, 이용자는 직접 단말기의 환경설정을 변경하는 방식을 통하여 언제든지 위치정보 이용제공에 대한 동의의 전부 또는 일부를 철회할 수 있습니다.\n
+\n
+Google은 이용자의 동의 없이 위치정보를 제3자에게 제공하지 않습니다. 만약 위치정보의 보호 및 이용 등에 관한 법률(“위치정보법”) 또는 다른 한국의 법률에 의하여 위치정보를 제3자에게 제공하게 된다면, 한국의 관련 법률에 정한 바에 따라, 이용자에게 즉시 알려드립니다. 이용자는 위치정보법 또는 다른 한국의 법률에서 허용하는 바에 따라, 제3자에게 제공된 이유 및 내용에 대하여 열람, 고지, 오류 정정을 요구할 수 있습니다.\n
+\n
+Google Account에 로그인이 필요한 일부 위치기반서비스와 관련하여, 이용자가 본 이용약관에 동의함으로써, 이용자는 만 14세 이상이라는 점에 대하여 Google에 대하여 확인하여 주고 보증하는 것으로 봅니다.\n
+\n
+Google은 이용자가 요청하는 경우, 지체 없이 수집된 개인위치정보 및 그러한 개인위치정보와 연관된 관련 이용기록을 파기하기 위한 조치를 취합니다.\n
+\n
+5. 위치정보 이용∙제공사실 확인자료의 보유\n
+\n
+Google은 이용자에 대한 위치정보의 이용∙제공사실을 위치정보시스템에 자동으로 기록, 보존하며, 6개월 이상 보관합니다. 이용자가 개인위치정보의 이용 또는 제공에 대한 동의를 전부 또는 일부 철회한 경우에는 법률에 따라 보존해야 하는 경우를 제외하고 지체 없이 위치정보 이용∙제공과 관련한 데이터(동의의 일부 철회의 경우에는 철회와 관련된 부분)를 파기합니다.\n
+\n
+6. 법률준수\n
+\n
+이용자는 Google의 위치정보사업 및 위치기반서비스제공과 관련하여 위치정보법 제15조 내지 제26조의 규정을 위반한 행위로 손해를 입은 경우에 위치정보법 제27조에 따라 손해배상을 청구할 수 있습니다.\n
+\n
+7. 사업자 정보 및 위치정보관리책임자\n
+\n
+위치기반서비스와 관련하여 문제사항이 있을 경우에는 아래 구글코리아 유한회사로 연락주시기 바랍니다.\n
+\n
+구글코리아 유한회사\n
+대표자: 염동훈\n
+주소 : 서울 강남구 역삼동 737 강남파이낸스센터 22층\n
+전화번호 : (02) 531-9000\n</string>
+  <string name="export_google_drive_url">drive.google.com</string>
+  <string name="export_google_fusion_tables_url">google.com/fusiontables</string>
+  <string name="export_google_maps_url">maps.google.com</string>
+  <string name="export_google_spreadsheets_url">drive.google.com</string>
+  <string name="marker_statistics_icon_url">http://maps.google.com/mapfiles/ms/micons/ylw-pushpin.png</string>
+  <string name="marker_waypoint_icon_url">http://maps.google.com/mapfiles/ms/micons/blue-pushpin.png</string>
+  <string name="my_tracks_help_url">http://support.google.com/gmm/bin/topic.py?topic=2391064&amp;hl=%1$s</string>
+  <string name="my_tracks_privacy_url">www.google.com/policies/privacy/</string>
+  <string name="my_tracks_recording_service_name">My Tracks Recording Service</string>
+  <string name="my_tracks_support_url">groups.google.com/a/googleproductforums.com/forum/#!categories/maps/mytracks</string>
+  <string name="my_tracks_web_url">www.google.com/mobile/mytracks</string>
+  <string name="permission_notification_value">com.google.android.apps.mytracks.MYTRACKS_NOTIFICATIONS</string>
+  <string name="sensor_type_value_ant">ANT</string>
+  <string name="sensor_type_value_none">NONE</string>
+  <string name="sensor_type_value_polar">POLAR</string>
+  <string name="sensor_type_value_zephyr">ZEPHYR</string>
+  <string name="settings_map_track_color_mode_dynamic_value">DYNAMIC</string>
+  <string name="settings_map_track_color_mode_fixed_value">FIXED</string>
+  <string name="settings_map_track_color_mode_single_value">SINGLE</string>
+  <string name="settings_recording_track_name_date_iso_8601_value">DATE_ISO_8601</string>
+  <string name="settings_recording_track_name_date_local_value">DATE_LOCAL</string>
+  <string name="settings_recording_track_name_location_value">LOCATION</string>
+  <string name="settings_recording_track_name_number_value">NUMBER</string>
+  <string name="stats_units_imperial">IMPERIAL</string>
+  <string name="stats_units_metric">METRIC</string>
+  <string name="track_action_end">com.google.android.apps.mytracks.END_CURRENT_TRACK</string>
+  <string name="track_action_pause">com.google.android.apps.mytracks.PAUSE_CURRENT_TRACK</string>
+  <string name="track_action_resume">com.google.android.apps.mytracks.RESUME_CURRENT_TRACK</string>
+  <string name="track_action_start">com.google.android.apps.mytracks.START_NEW_TRACK</string>
+  <string name="value_unknown">-</string>
+</resources>
