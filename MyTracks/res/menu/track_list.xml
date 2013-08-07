@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2012 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+  <item
+    android:actionViewClass="android.widget.SearchView"
+    android:icon="@drawable/ic_menu_search"
+    android:id="@+id/track_list_search"
+    android:showAsAction="ifRoom|collapseActionView"
+    android:title="@string/menu_search"/>
+  <item
+    android:icon="@drawable/ic_menu_start_gps"
+    android:id="@+id/track_list_start_gps"
+    android:showAsAction="ifRoom"
+    android:title="@string/menu_start_gps"/>
+  <item
+    android:icon="@drawable/ic_menu_refresh"
+    android:id="@+id/track_list_refresh"
+    android:title="@string/menu_refresh"/>
+  <item
+    android:icon="@drawable/ic_menu_aggregated_statistics"
+    android:id="@+id/track_list_aggregated_statistics"
+    android:title="@string/menu_aggregated_statistics"/>
+  <item
+    android:icon="@drawable/ic_menu_export"
+    android:id="@+id/track_list_export_all"
+    android:title="@string/menu_export_all"/>
+  <item
+    android:icon="@drawable/ic_menu_import"
+    android:id="@+id/track_list_import_all"
+    android:title="@string/menu_import_all"/>
+  <item
+    android:icon="@drawable/ic_menu_delete"
+    android:id="@+id/track_list_delete_all"
+    android:title="@string/menu_delete_all"/>
+  <item
+    android:icon="@drawable/ic_menu_settings"
+    android:id="@+id/track_list_settings"
+    android:title="@string/menu_settings"/>
+  <item
+    android:icon="@drawable/ic_menu_feedback"
+    android:id="@+id/track_list_feedback"
+    android:title="@string/menu_feedback"/>
+  <item
+    android:icon="@drawable/ic_menu_help"
+    android:id="@+id/track_list_help"
+    android:title="@string/menu_help"/>
+</menu>
