@@ -18,8 +18,11 @@ package com.google.android.apps.mytracks.util;
 
 import com.google.android.maps.mytracks.R;
 
+import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
 import android.text.format.DateUtils;
+import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -38,23 +41,25 @@ public class ListItemUtils {
   /**
    * Sets a list item.
    * 
-   * @param context the context
+   * @param activity the activity
    * @param view the list item view
    * @param isRecording true if recording
    * @param isPaused true if paused
-   * @param name the name value
    * @param iconId the icon id
    * @param iconContentDescriptionId the icon content description id
-   * @param category the category value
+   * @param name the name value
+   * @param sharedOwner if shared with me track, the owner, else null
    * @param totalTime the total time value
    * @param totalDistance the total distance value
+   * @param photoUrl the photo url
    * @param startTime the start time value
+   * @param category the category value
    * @param description the description value
-   * @param sharedOwner if shared with me track, the owner, else null
    */
-  public static void setListItem(Context context, View view, boolean isRecording, boolean isPaused,
-      int iconId, int iconContentDescriptionId, String name, String category, String totalTime,
-      String totalDistance, long startTime, String description, String sharedOwner) {
+  public static void setListItem(Activity activity, View view, boolean isRecording,
+      boolean isPaused, int iconId, int iconContentDescriptionId, String name, String sharedOwner,
+      String totalTime, String totalDistance, String photoUrl, long startTime, String category,
+      String description) {
 
     if (isRecording) {
       iconId = isPaused ? R.drawable.ic_track_paused : R.drawable.ic_track_recording;
@@ -64,32 +69,47 @@ public class ListItemUtils {
 
     ImageView iconImageView = (ImageView) view.findViewById(R.id.list_item_icon);
     iconImageView.setImageResource(iconId);
-    iconImageView.setContentDescription(context.getString(iconContentDescriptionId));
+    iconImageView.setContentDescription(activity.getString(iconContentDescriptionId));
 
+    // Set name
     TextView nameTextView = (TextView) view.findViewById(R.id.list_item_name);
     nameTextView.setText(name);
 
+    // Set sharedOwner/totalTime/totalDistance
     TextView timeDistanceTextView = (TextView) view.findViewById(R.id.list_item_time_distance);
     if (isRecording) {
-      timeDistanceTextView.setTextColor(context.getResources()
+      timeDistanceTextView.setTextColor(activity.getResources()
           .getColor(isPaused ? android.R.color.white : R.color.recording_text));
     } else {
       // Need to match the style set in list_item.xml
-      timeDistanceTextView.setTextAppearance(context, R.style.TextSmall);
+      timeDistanceTextView.setTextAppearance(activity, R.style.TextSmall);
     }
     setTextView(timeDistanceTextView,
-        getTimeDistance(context, isRecording, isPaused, sharedOwner, totalTime, totalDistance),
-        View.INVISIBLE);
+        getTimeDistance(activity, isRecording, isPaused, sharedOwner, totalTime, totalDistance));
 
-    String[] startTimeDisplay = getStartTime(isRecording, context, startTime);
+    // Set photoUrl
+    ImageView photo = (ImageView) view.findViewById(R.id.list_item_photo);
+    if (photoUrl == null || photoUrl.equals("")) {
+      photo.setVisibility(View.GONE);
+    } else {
+      photo.setVisibility(View.VISIBLE);
+      Display defaultDisplay = activity.getWindowManager().getDefaultDisplay();
+      // Set the initial width to 35% of the display width
+      int width = (int) (defaultDisplay.getWidth() * .35);
+      PhotoUtils.setImageVew(photo, Uri.parse(photoUrl), width, 0, false);
+    }
+
+    // Set date/time
+    String[] startTimeDisplay = getStartTime(isRecording, activity, startTime);
     TextView dateTextView = (TextView) view.findViewById(R.id.list_item_date);
-    setTextView(dateTextView, startTimeDisplay[0], View.GONE);
+    setTextView(dateTextView, startTimeDisplay[0]);
 
     TextView timeTextView = (TextView) view.findViewById(R.id.list_item_time);
-    setTextView(timeTextView, startTimeDisplay[1], View.GONE);
+    setTextView(timeTextView, startTimeDisplay[1]);
 
+    // Set category/description
     TextView descriptionTextView = (TextView) view.findViewById(R.id.list_item_description);
-    setTextView(descriptionTextView, getDescription(isRecording, category, description), View.GONE);
+    setTextView(descriptionTextView, getDescription(isRecording, category, description));
   }
 
   /**
@@ -194,11 +214,10 @@ public class ListItemUtils {
    * 
    * @param textView the text view
    * @param value the value for the text view
-   * @param visibility visibility when value is not available
    */
-  private static void setTextView(TextView textView, String value, int visibility) {
+  private static void setTextView(TextView textView, String value) {
     if (value == null || value.length() == 0) {
-      textView.setVisibility(visibility);
+      textView.setVisibility(View.GONE);
     } else {
       textView.setVisibility(View.VISIBLE);
       textView.setText(value);

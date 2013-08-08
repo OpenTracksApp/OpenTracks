@@ -23,14 +23,12 @@ import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.fragments.DeleteMarkerDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
 import com.google.android.apps.mytracks.util.IntentUtils;
+import com.google.android.apps.mytracks.util.PhotoUtils;
 import com.google.android.apps.mytracks.util.StatsUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,8 +38,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.io.IOException;
 
 /**
  * An activity to display marker detail info.
@@ -73,7 +69,7 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity implements De
       finish();
       return;
     }
-    
+
     // Set waypoint, needed in onCreateOptionsMenu
     waypoint = myTracksProviderUtils.getWaypoint(markerId);
     if (waypoint == null) {
@@ -103,7 +99,7 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity implements De
       finish();
       return;
     }
-    
+
     name.setText(getString(R.string.generic_name_line, waypoint.getName()));
     if (waypoint.getType() == WaypointType.WAYPOINT) {
       waypointSection.setVisibility(View.VISIBLE);
@@ -120,7 +116,11 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity implements De
         imageView.setVisibility(View.GONE);
       } else {
         imageView.setVisibility(View.VISIBLE);
-        setImageVew(imageView, Uri.parse(photoUrl));
+        Display defaultDisplay = getWindowManager().getDefaultDisplay();
+        int displayWidth = defaultDisplay.getWidth();
+        int displayHeight = defaultDisplay.getHeight();
+        bitmap = PhotoUtils.setImageVew(
+            imageView, Uri.parse(photoUrl), displayWidth, displayHeight, true);
       }
     } else {
       waypointSection.setVisibility(View.GONE);
@@ -189,108 +189,5 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity implements De
         finish();
       }
     });
-  }
-
-  /**
-   * Sets an image view.
-   * 
-   * @param imageView the image view
-   * @param uri the image uri
-   */
-  private void setImageVew(ImageView imageView, Uri uri) {
-
-    // Get the image dimensions
-    BitmapFactory.Options options = new BitmapFactory.Options();
-
-    options.inJustDecodeBounds = true;
-    BitmapFactory.decodeFile(uri.getPath(), options);
-
-    // Set imageWidth and imageHeight based on image rotation
-    int rotation = getRotation(uri);
-    int imageWidth;
-    int imageHeight;
-
-    if (rotation == 0 || rotation == 180) {
-      imageWidth = options.outWidth;
-      imageHeight = options.outHeight;
-    } else {
-      imageWidth = options.outHeight;
-      imageHeight = options.outWidth;
-    }
-
-    // Get a scaled down version of the image
-    Display defaultDisplay = getWindowManager().getDefaultDisplay();
-    int displayWidth = defaultDisplay.getWidth();
-    int displayHeight = defaultDisplay.getHeight();
-
-    options.inJustDecodeBounds = false;
-    options.inSampleSize = getInSampleSize(imageWidth, imageHeight, displayWidth, displayHeight);
-    options.inPurgeable = true;
-
-    Bitmap scaledBitmap = BitmapFactory.decodeFile(uri.getPath(), options);
-
-    // Rotate the scaled down image
-    if (rotation == 0) {
-      bitmap = scaledBitmap;
-    } else {
-      Matrix matrix = new Matrix();
-      matrix.postRotate(rotation);
-      bitmap = Bitmap.createBitmap(
-          scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
-      scaledBitmap.recycle();
-    }
-    imageView.setImageBitmap(bitmap);
-  }
-
-  /**
-   * Gets the image rotation
-   * 
-   * @param uri the image uri
-   */
-  private int getRotation(Uri uri) {
-    try {
-      ExifInterface exifInterface = new ExifInterface(uri.getPath());
-      switch (exifInterface.getAttributeInt(
-          ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)) {
-        case ExifInterface.ORIENTATION_ROTATE_90:
-          return 90;
-        case ExifInterface.ORIENTATION_ROTATE_180:
-          return 180;
-        case ExifInterface.ORIENTATION_ROTATE_270:
-          return 270;
-        default:
-          return 0;
-      }
-    } catch (IOException e) {
-      Log.e(TAG, "Unable to get photo orientation", e);
-      return 0;
-    }
-  }
-
-  /**
-   * Gets the in sample size.
-   * 
-   * @param imageWidth the image width
-   * @param imageHeight the image height
-   * @param displayWidth the display width. Can be 0
-   * @param displayHeight the display height. Can be 0
-   */
-  private int getInSampleSize(
-      int imageWidth, int imageHeight, int displayWidth, int displayHeight) {
-    int widthRatio = 1;
-    if (displayWidth != 0 && imageWidth > displayWidth) {
-      widthRatio = Math.round((float) imageWidth / (float) displayWidth);
-    }
-
-    int heightRatio = 1;
-    if (displayHeight != 0 && imageHeight > displayHeight) {
-      heightRatio = Math.round((float) imageHeight / (float) displayHeight);
-    }
-
-    /*
-     * Return the larger sample ratio so the image will not be larger than the
-     * displayWidth and displayHeight.
-     */
-    return Math.max(widthRatio, heightRatio);
   }
 }

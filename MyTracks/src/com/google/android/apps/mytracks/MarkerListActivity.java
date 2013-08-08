@@ -63,7 +63,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
 
   private static final String[] PROJECTION = new String[] { WaypointsColumns._ID,
       WaypointsColumns.NAME, WaypointsColumns.DESCRIPTION, WaypointsColumns.CATEGORY,
-      WaypointsColumns.TYPE, WaypointsColumns.TIME };
+      WaypointsColumns.TYPE, WaypointsColumns.TIME, WaypointsColumns.PHOTOURL };
 
   // Callback when an item is selected in the contextual action mode
   private ContextualActionModeCallback
@@ -173,19 +173,25 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
       public void bindView(View view, Context context, Cursor cursor) {
         int typeIndex = cursor.getColumnIndex(WaypointsColumns.TYPE);
         int nameIndex = cursor.getColumnIndex(WaypointsColumns.NAME);
-        int categoryIndex = cursor.getColumnIndex(WaypointsColumns.CATEGORY);
+        int photoUrlIndex = cursor.getColumnIndex(WaypointsColumns.PHOTOURL);
         int timeIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.TIME);
+        int categoryIndex = cursor.getColumnIndex(WaypointsColumns.CATEGORY);
         int descriptionIndex = cursor.getColumnIndex(WaypointsColumns.DESCRIPTION);
 
         boolean statistics = WaypointType.values()[cursor.getInt(typeIndex)]
             == WaypointType.STATISTICS;
         int iconId = statistics ? R.drawable.ic_marker_yellow_pushpin
             : R.drawable.ic_marker_blue_pushpin;
+        String name = cursor.getString(nameIndex);
+        String sharedOwner = track.getSharedOwner();
+        String photoUrl = cursor.getString(photoUrlIndex);
+        long time = cursor.getLong(timeIndex);
         String category = statistics ? null : cursor.getString(categoryIndex);
         String description = statistics ? null : cursor.getString(descriptionIndex);
+
         ListItemUtils.setListItem(MarkerListActivity.this, view, false, true, iconId,
-            R.string.icon_marker, cursor.getString(nameIndex), category, null, null,
-            cursor.getLong(timeIndex), description, track.getSharedOwner());
+            R.string.icon_marker, name, sharedOwner, null, null, photoUrl, time, category,
+            description);
       }
     };
     listView.setAdapter(resourceCursorAdapter);
