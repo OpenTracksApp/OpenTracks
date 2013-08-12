@@ -46,7 +46,10 @@ public class MultiAccountsSyncTest extends ActivityInstrumentationTestCase2<Trac
     super.setUp();
     instrumentation = getInstrumentation();
     trackListActivity = getActivity();
-    drive = SyncTestUtils.setUpForSyncTest(instrumentation, trackListActivity);
+    SyncTestUtils.setUpForSyncTest(instrumentation, trackListActivity);
+    SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_1);
+    drive = SyncTestUtils
+        .getGoogleDrive(EndToEndTestUtils.activityMytracks.getApplicationContext());
   }
 
   /**
@@ -116,8 +119,8 @@ public class MultiAccountsSyncTest extends ActivityInstrumentationTestCase2<Trac
     EndToEndTestUtils.createSimpleTrack(0, true);
 
     // Delete one track.
-    EndToEndTestUtils.SOLO.clickOnView(EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0)
-        .getChildAt(0));
+    EndToEndTestUtils.SOLO.clickOnView(EndToEndTestUtils.SOLO.getCurrentViews(ListView.class)
+        .get(0).getChildAt(0));
     EndToEndTestUtils.instrumentation.waitForIdleSync();
     EndToEndTestUtils.SOLO.clickOnMenuItem(EndToEndTestUtils.activityMytracks
         .getString(R.string.menu_delete));
@@ -126,8 +129,8 @@ public class MultiAccountsSyncTest extends ActivityInstrumentationTestCase2<Trac
 
     // Switch account and delete another track.
     SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_2);
-    EndToEndTestUtils.SOLO.clickOnView(EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0)
-        .getChildAt(0));
+    EndToEndTestUtils.SOLO.clickOnView(EndToEndTestUtils.SOLO.getCurrentViews(ListView.class)
+        .get(0).getChildAt(0));
     EndToEndTestUtils.SOLO.clickOnMenuItem(EndToEndTestUtils.activityMytracks
         .getString(R.string.menu_delete));
     EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks

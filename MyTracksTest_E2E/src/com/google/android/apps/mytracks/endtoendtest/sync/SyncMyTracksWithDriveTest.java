@@ -17,6 +17,7 @@ package com.google.android.apps.mytracks.endtoendtest.sync;
 
 import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.endtoendtest.EndToEndTestUtils;
+import com.google.android.apps.mytracks.endtoendtest.GoogleUtils;
 import com.google.android.apps.mytracks.endtoendtest.RunConfiguration;
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.maps.mytracks.R;
@@ -48,7 +49,10 @@ public class SyncMyTracksWithDriveTest extends ActivityInstrumentationTestCase2<
     super.setUp();
     instrumentation = getInstrumentation();
     trackListActivity = getActivity();
-    drive = SyncTestUtils.setUpForSyncTest(instrumentation, trackListActivity);
+    SyncTestUtils.setUpForSyncTest(instrumentation, trackListActivity);
+    SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_1);
+    drive = SyncTestUtils
+        .getGoogleDrive(EndToEndTestUtils.activityMytracks.getApplicationContext());
   }
 
   /**
