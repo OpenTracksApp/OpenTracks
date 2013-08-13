@@ -17,13 +17,13 @@ package com.google.android.apps.mytracks.util;
 
 /**
  * Unit conversion constants.
- *
+ * 
  * @author Sandor Dornbush
  */
 public class UnitConversions {
 
   private UnitConversions() {}
-  
+
   // multiplication factor to convert kilometers to miles
   public static final double KM_TO_MI = 0.621371192;
 
@@ -50,4 +50,7 @@ public class UnitConversions {
 
   // multiplication factor to convert degrees to radians
   public static final double DEG_TO_RAD = Math.PI / 180.0;
+
+  // Ratio of change kcal to joule.
+  public static final double KCAL_TO_J = 4.184;
 }

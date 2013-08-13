@@ -22,28 +22,27 @@ import android.location.Location;
  * 
  * @author youtaol
  */
-public class CaloricExpenditureComputation {
+public class CalorieUtils {
 
   /**
    * Resting VO2 is constant for everyone and is equal to 3.5 milliliters per
    * kilogram of body weight per minute.
    */
-  private final static double RESTING_VO2 = 3.5;
+  private static final double RESTING_VO2 = 3.5;
 
   /**
    * Ratio of change vo2 to kcal/L
    */
-  private final static float VO2H_TO_KCAL = 5;
-
-  /**
-   * Ratio of change kcal to joule.
-   */
-  private final static double KCAL_TO_J = 4.184;
+  private static final double VO2H_TO_KCAL = 5;
 
   /**
    * Changes 4.5 miles per hour to meters per minutes.
    */
-  private final static double CRTICAL_SPEED_RUNNING = 4.5 * UnitConversions.MI_TO_KM * 1000 / 60;
+  private static final double CRTICAL_SPEED_RUNNING = 4.5 * UnitConversions.MI_TO_KM * 1000 / 60;
+
+  public enum ActivityType {
+    CYCLING, FOOT
+  }
 
   /**
    * Calculates the calorie expenditure of walking. This equation is appropriate
@@ -104,12 +103,12 @@ public class CaloricExpenditureComputation {
    * @param timeUsed how many times used in second
    * @return the power value watts(Joule/second)
    */
-  public static double calculateCyclingCalories(double speed, double grade, int weight,
+  private static double calculateCyclingCalories(double speed, double grade, int weight,
       double timeUsed) {
     // Get the Power.
     double power = 9.8 * weight * speed * (0.0053 + grade) + 0.185 * (speed * speed * speed);
     // Get the calories.
-    return power * timeUsed / KCAL_TO_J;
+    return power * timeUsed / UnitConversions.KCAL_TO_J;
   }
 
   /**
@@ -121,7 +120,7 @@ public class CaloricExpenditureComputation {
    * @param weight the weight of user
    * @return the calories expenditure between the start and stop location
    */
-  public static double calculateExpenditureCycling(Location start, Location stop, double grade,
+  private static double calculateExpenditureCycling(Location start, Location stop, double grade,
       int weight) {
     // Seconds.
     double time = (double) (stop.getTime() - start.getTime()) / 1000;
@@ -143,7 +142,7 @@ public class CaloricExpenditureComputation {
    * @param weight the weight of user
    * @return the calories expenditure between the start and stop location
    */
-  public static double calculateExpenditureFoot(Location start, Location stop, double grade,
+  private static double calculateExpenditureFoot(Location start, Location stop, double grade,
       int weight) {
     // Seconds.
     double time = (double) (stop.getTime() - start.getTime()) / 1000;
@@ -168,12 +167,31 @@ public class CaloricExpenditureComputation {
   }
 
   /**
+   * Calculates the calories expenditure between two locations.
+   * 
+   * @param start the start location
+   * @param stop the stop location
+   * @param grade the grade to calculate
+   * @param weight the weight of user
+   * @param activityType can be foot or cycling
+   * @return the calories expenditure between the start and stop location
+   */
+  public static double getCalories(Location start, Location stop, double grade, int weight,
+      ActivityType activityType) {
+    if (ActivityType.CYCLING == activityType) {
+      return calculateExpenditureCycling(start, stop, grade, weight);
+    } else {
+      return calculateExpenditureFoot(start, stop, grade, weight);
+    }
+  }
+
+  /**
    * Calculates the calorie expenditure of locations in Joule.
    * 
    * @param kcal
    * @return
    */
   public static double changeKcalToJ(double kcal) {
-    return kcal * KCAL_TO_J;
+    return kcal * UnitConversions.KCAL_TO_J;
   }
 }
