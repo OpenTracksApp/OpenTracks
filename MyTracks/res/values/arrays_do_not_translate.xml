@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<resources>
+
+  <!-- Do not translate any arrays in this file. -->
+  <string-array name="activity_types">
+    <item>@string/activity_type_airplane</item>
+    <item>@string/activity_type_atv</item>
+    <item>@string/activity_type_biking</item>
+    <item>@string/activity_type_blimp</item>
+    <item>@string/activity_type_boat</item>
+    <item>@string/activity_type_climbing</item>
+    <item>@string/activity_type_commercial_airplane</item>
+    <item>@string/activity_type_cross_country_skiing</item>
+    <item>@string/activity_type_cycling</item>
+    <item>@string/activity_type_dirt_bike</item>
+    <item>@string/activity_type_donkey_back_riding</item>
+    <item>@string/activity_type_driving</item>
+    <item>@string/activity_type_driving_bus</item>
+    <item>@string/activity_type_driving_car</item>
+    <item>@string/activity_type_ferry</item>
+    <item>@string/activity_type_frisbee</item>
+    <item>@string/activity_type_gliding</item>
+    <item>@string/activity_type_hang_gliding</item>
+    <item>@string/activity_type_helicopter</item>
+    <item>@string/activity_type_hiking</item>
+    <item>@string/activity_type_horse_back_riding</item>
+    <item>@string/activity_type_hot_air_balloon</item>
+    <item>@string/activity_type_ice_sailing</item>
+    <item>@string/activity_type_inline_skating</item>
+    <item>@string/activity_type_kayaking</item>
+    <item>@string/activity_type_kite_surfing</item>
+    <item>@string/activity_type_land_sailing</item>
+    <item>@string/activity_type_mixed_type</item>
+    <item>@string/activity_type_motor_bike</item>
+    <item>@string/activity_type_motor_boating</item>
+    <item>@string/activity_type_mountain_biking</item>
+    <item>@string/activity_type_off_trail_hiking</item>
+    <item>@string/activity_type_other</item>
+    <item>@string/activity_type_paddling</item>
+    <item>@string/activity_type_para_gliding</item>
+    <item>@string/activity_type_rc_airplane</item>
+    <item>@string/activity_type_rc_boat</item>
+    <item>@string/activity_type_rc_helicopter</item>
+    <item>@string/activity_type_riding</item>
+    <item>@string/activity_type_road_biking</item>
+    <item>@string/activity_type_roller_skiing</item>
+    <item>@string/activity_type_rowing</item>
+    <item>@string/activity_type_running</item>
+    <item>@string/activity_type_sailing</item>
+    <item>@string/activity_type_seaplane</item>
+    <item>@string/activity_type_skate_boarding</item>
+    <item>@string/activity_type_skating</item>
+    <item>@string/activity_type_skiing</item>
+    <item>@string/activity_type_sky_jumping</item>
+    <item>@string/activity_type_sled</item>
+    <item>@string/activity_type_snow_boarding</item>
+    <item>@string/activity_type_snow_shoeing</item>
+    <item>@string/activity_type_speed_walking</item>
+    <item>@string/activity_type_street_running</item>
+    <item>@string/activity_type_surfing</item>
+    <item>@string/activity_type_track_cycling</item>
+    <item>@string/activity_type_track_running</item>
+    <item>@string/activity_type_trail_hiking</item>
+    <item>@string/activity_type_trail_running</item>
+    <item>@string/activity_type_train</item>
+    <item>@string/activity_type_ultimate_frisbee</item>
+    <item>@string/activity_type_unknown</item>
+    <item>@string/activity_type_wakeboarding</item>
+    <item>@string/activity_type_walking</item>
+    <item>@string/activity_type_water_skiing</item>
+    <item>@string/activity_type_wind_surfing</item>
+  </string-array>
+  <string-array name="auto_resume_track_timeout_values">
+    <item>0</item>
+    <item>5</item>
+    <item>10</item>
+    <item>15</item>
+    <item>-1</item>
+  </string-array>
+  <string-array name="frequency_values">
+    <item>0</item>
+    <item>1</item>
+    <item>2</item>
+    <item>5</item>
+    <item>10</item>
+    <item>15</item>
+    <item>30</item>
+    <item>60</item>
+    <item>-1</item>
+    <item>-5</item>
+    <item>-10</item>
+    <item>-25</item>
+    <item>-50</item>
+    <item>-100</item>
+  </string-array>
+  <string-array name="max_recording_distance_values">
+    <item>50</item>
+    <item>100</item>
+    <item>200</item>
+    <item>500</item>
+    <item>1000</item>
+    <item>5000</item>
+  </string-array>
+  <string-array name="min_recording_interval_values">
+    <item>-2</item>
+    <item>-1</item>
+    <item>0</item>
+    <item>2</item>
+    <item>3</item>
+    <item>4</item>
+    <item>5</item>
+    <item>10</item>
+    <item>20</item>
+    <item>30</item>
+    <item>60</item>
+    <item>120</item>
+    <item>300</item>
+    <item>480</item>
+    <item>900</item>
+    <item>1800</item>
+  </string-array>
+  <string-array name="recording_distance_interval_values">
+    <item>1</item>
+    <item>2</item>
+    <item>5</item>
+    <item>10</item>
+    <item>20</item>
+    <item>50</item>
+    <item>100</item>
+  </string-array>
+  <string-array name="recording_gps_accuracy_values">
+    <item>10</item>
+    <item>20</item>
+    <item>30</item>
+    <item>50</item>
+    <item>100</item>
+    <item>200</item>
+    <item>500</item>
+    <item>1000</item>
+    <item>2000</item>
+  </string-array>
+  <string-array name="sensor_type_all_options">
+    <item>@string/settings_sensor_type_polar</item>
+    <item>@string/settings_sensor_type_zephyr</item>
+    <item>@string/settings_sensor_type_ant</item>
+    <item>@string/value_none</item>
+  </string-array>
+  <string-array name="sensor_type_all_values">
+    <item>@string/sensor_type_value_polar</item>
+    <item>@string/sensor_type_value_zephyr</item>
+    <item>@string/sensor_type_value_ant</item>
+    <item>@string/sensor_type_value_none</item>    
+  </string-array>
+  <string-array name="sensor_type_bluetooth_options">
+    <item>@string/settings_sensor_type_polar</item>
+    <item>@string/settings_sensor_type_zephyr</item>
+    <item>@string/value_none</item>
+  </string-array>
+  <string-array name="sensor_type_bluetooth_values">
+    <item>@string/sensor_type_value_polar</item>
+    <item>@string/sensor_type_value_zephyr</item>
+    <item>@string/sensor_type_value_none</item>
+  </string-array>
+  <string-array name="stats_units_options">
+    <item>@string/settings_stats_units_metric</item>
+    <item>@string/settings_stats_units_imperial</item>
+  </string-array>
+  <string-array name="stats_units_values">
+    <item>@string/stats_units_metric</item>
+    <item>@string/stats_units_imperial</item>
+  </string-array>  
+  <string-array name="track_color_mode_options">
+    <item>@string/settings_map_track_color_mode_single</item>
+    <item>@string/settings_map_track_color_mode_fixed</item>
+    <item>@string/settings_map_track_color_mode_dynamic</item>
+  </string-array>
+  <string-array name="track_color_mode_summary">
+    <item>@string/settings_map_track_color_mode_single</item>
+    <item>@string/settings_map_track_color_mode_fixed_summary</item>
+    <item>@string/settings_map_track_color_mode_dynamic_summary</item>
+  </string-array>
+  <string-array name="track_color_mode_values">
+    <item>@string/settings_map_track_color_mode_single_value</item>
+    <item>@string/settings_map_track_color_mode_fixed_value</item>
+    <item>@string/settings_map_track_color_mode_dynamic_value</item>
+  </string-array>
+  <string-array name="track_name_options">
+    <item>@string/settings_recording_track_name_location_option</item>
+    <item>@string/settings_recording_track_name_date_local_option</item>
+    <item>@string/settings_recording_track_name_date_iso_8601_option</item>
+    <item>@string/settings_recording_track_name_number_option</item>
+  </string-array>
+  <string-array name="track_name_values">
+    <item>@string/settings_recording_track_name_location_value</item>
+    <item>@string/settings_recording_track_name_date_local_value</item>
+    <item>@string/settings_recording_track_name_date_iso_8601_value</item>
+    <item>@string/settings_recording_track_name_number_value</item>
+  </string-array>
+  <string-array name="waypoint_types">
+    <item>@string/waypoint_type_atm</item>
+    <item>@string/waypoint_type_bank</item>
+    <item>@string/waypoint_type_bar</item>
+    <item>@string/waypoint_type_barbecue</item>
+    <item>@string/waypoint_type_building</item>
+    <item>@string/waypoint_type_bus_stop</item>
+    <item>@string/waypoint_type_cafe</item>
+    <item>@string/waypoint_type_campfire</item>
+    <item>@string/waypoint_type_campground</item>
+    <item>@string/waypoint_type_church</item>
+    <item>@string/waypoint_type_coffee_house</item>
+    <item>@string/waypoint_type_convenience_store</item>
+    <item>@string/waypoint_type_drinking_water</item>
+    <item>@string/waypoint_type_falling_rocks</item>
+    <item>@string/waypoint_type_ferry</item>
+    <item>@string/waypoint_type_fire_place</item>
+    <item>@string/waypoint_type_fire_station</item>
+    <item>@string/waypoint_type_fishing</item>
+    <item>@string/waypoint_type_gas_station</item>
+    <item>@string/waypoint_type_golf_course</item>
+    <item>@string/waypoint_type_grocery_store</item>
+    <item>@string/waypoint_type_hair_dresser</item>
+    <item>@string/waypoint_type_harbor</item>
+    <item>@string/waypoint_type_hiking_path</item>
+    <item>@string/waypoint_type_hotel</item>
+    <item>@string/waypoint_type_house</item>
+    <item>@string/waypoint_type_information</item>
+    <item>@string/waypoint_type_intersection</item>
+    <item>@string/waypoint_type_mail_box</item>
+    <item>@string/waypoint_type_market</item>
+    <item>@string/waypoint_type_meeting_point</item>
+    <item>@string/waypoint_type_opera</item>
+    <item>@string/waypoint_type_parking</item>
+    <item>@string/waypoint_type_police_station</item>
+    <item>@string/waypoint_type_post_office</item>
+    <item>@string/waypoint_type_pothole</item>
+    <item>@string/waypoint_type_railway_crossing</item>
+    <item>@string/waypoint_type_restaurant</item>
+    <item>@string/waypoint_type_shopping</item>
+    <item>@string/waypoint_type_sight</item>
+    <item>@string/waypoint_type_store</item>
+    <item>@string/waypoint_type_swimming_pool</item>
+    <item>@string/waypoint_type_telephone</item>
+    <item>@string/waypoint_type_theater</item>
+    <item>@string/waypoint_type_toilet</item>
+    <item>@string/waypoint_type_tourist_information</item>
+    <item>@string/waypoint_type_tree</item>
+    <item>@string/waypoint_type_tunnel</item>
+    <item>@string/waypoint_type_waterfall</item>
+    <item>@string/waypoint_type_water_fountain</item>
+    <item>@string/waypoint_type_waypoint</item>
+  </string-array>
+
+</resources>

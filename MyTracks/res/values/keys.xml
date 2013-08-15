@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<resources>
+  <!-- Keys for persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
+  <string name="allow_access_key">allowAccess</string>
+  <string name="auto_resume_track_timeout_key">autoResumeTrackTimeout</string>
+  <string name="chart_by_distance_key">chartByDistance</string>
+  <string name="chart_show_cadence_key">chartShowCadence</string>
+  <string name="chart_show_elevation_key">chartShowElevation</string>
+  <string name="chart_show_heart_rate_key">chartShowHeartRate</string>
+  <string name="chart_show_power_key">chartShowPower</string>
+  <string name="chart_show_speed_key">chartShowSpeed</string>
+  <string name="default_activity_key">defaultActivity</string>
+  <string name="export_external_storage_format_key">exportExternalStorageFormat</string>
+  <string name="export_google_fusion_tables_public_key">exportGoogleFusionTablesPublic</string>
+  <string name="export_google_maps_public_key">exportGoogleMapsPublic</string>  
+  <string name="export_type_key">exportType</string>
+  <string name="map_type_key">mapType</string>
+  <string name="max_recording_distance_key">maxRecordingDistance</string>
+  <string name="min_recording_interval_key">minRecordingInterval</string>
+  <string name="recording_distance_interval_key">recordingDistanceInterval</string>
+  <string name="recording_gps_accuracy_key">recordingGpsAccuracy</string>
+  <string name="report_speed_key">reportSpeed</string>
+  <string name="sensor_type_key">sensorType</string>
+  <string name="share_track_invite_key">shareTrackInvite</string>
+  <string name="share_track_public_key">shareTrackPublic</string>
+  <string name="split_frequency_key">splitFrequency</string>
+  <string name="stats_show_coordinate_key">statsShowCoordinate</string>
+  <string name="stats_show_grade_elevation_key">statsShowGradeElevation</string>
+  <string name="stats_units_key">statsdUnits</string>
+  <string name="track_color_mode_medium_key">trackColorModeMedium</string>
+  <string name="track_color_mode_percentage_key">trackColorModePercentage</string>
+  <string name="track_color_mode_slow_key">trackColorModeSlow</string>
+  <string name="track_color_mode_key">trackColorMode</string>
+  <string name="track_name_key">trackName</string>
+  <string name="track_widget_item1">trackWidgetItem1</string>
+  <string name="track_widget_item2">trackWidgetItem2</string>
+  <string name="track_widget_item3">trackWidgetItem3</string>
+  <string name="track_widget_item4">trackWidgetItem4</string>
+  <string name="voice_frequency_key">voiceFrequency</string>
+  <!-- Keys for persistend preferences. But they should not get backed up or restored. -->
+  <string name="activity_recognition_type_key">activityRecognitionType</string>
+  <string name="ant_bike_cadence_sensor_id_key">antBikeCadenceSensorId</string>
+  <string name="ant_combined_bike_sensor_id_key">antCombinedBikeSensorId</string>
+  <string name="ant_heart_rate_monitor_id_key">antHeartRateMonitorId</string>
+  <string name="ant_speed_distance_monitor_id_key">antSpeedDistanceMonitorId</string>
+  <string name="auto_resume_track_current_retry_key">autoResumeTrackCurrentRetry</string>
+  <string name="bluetooth_sensor_key">bluetoothSensor</string>
+  <string name="confirm_play_earth_key">confirmPlayEarth</string>
+  <string name="drive_deleted_list_key">driveDeletedList</string>
+  <string name="drive_largest_change_id_key">driveLargestChangeId</string>
+  <string name="drive_sync_key">driveSync</string>
+  <string name="google_account_key">googleAccount</string>
+  <string name="recording_track_id_key">recordingTrackId</string>
+  <string name="recording_track_paused_key">recordingTrackPaused</string>
+  <!-- Keys for non-persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
+  <string name="settings_backup_key">settingsBackup</string>
+  <string name="settings_backup_reset_key">settingsBackupReset</string>
+  <string name="settings_chart_key">settingsChart</string>
+  <string name="settings_google_key">settingsGoogle</string>
+  <string name="settings_map_key">settingsMap</string>
+  <string name="settings_map_medium_display_key">settingsMapMediumDisplay</string>
+  <string name="settings_map_percentage_display_key">settingsMapPercentageDisplay</string>
+  <string name="settings_map_slow_display_key">settingsMapSlowDisplay</string>
+  <string name="settings_recording_key">settingsRecording</string>
+  <string name="settings_reset_key">settingsReset</string>
+  <string name="settings_restore_key">settingsRestore</string>
+  <string name="settings_sensor_key">settingsSensor</string>
+  <string name="settings_sensor_ant_key">settingsSensorAnt</string>
+  <string name="settings_sensor_ant_reset_bike_cadence_sensor_key">settingsSensorAntResetBikeCadenceSensor</string>
+  <string name="settings_sensor_ant_reset_combined_bike_sensor_key">settingsSensorAntResetCombinedBikeSensor</string>
+  <string name="settings_sensor_ant_reset_heart_rate_monitor_key">settingsSensorAntResetHeartRateMonitor</string>
+  <string name="settings_sensor_ant_reset_speed_distance_monitor_key">settingsSensorAntResetSpeedDistanceMonitor</string>
+  <string name="settings_sensor_bluetooth_key">settingsSensorBluetooth</string>
+  <string name="settings_sensor_bluetooth_pairing_key">settingsSensorBluetoothPairing</string>
+  <string name="settings_sensor_root_key">settingsSensorRoot</string>
+  <string name="settings_sharing_key">settingsSharing</string>
+  <string name="settings_stats_key">settingsStats</string>
+</resources>
