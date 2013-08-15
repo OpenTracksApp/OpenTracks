@@ -24,6 +24,8 @@ import android.location.Location;
  */
 public class CalorieUtils {
 
+  private CalorieUtils() {}
+
   /**
    * Resting VO2 is constant for everyone and is equal to 3.5 milliliters per
    * kilogram of body weight per minute.
@@ -183,15 +185,5 @@ public class CalorieUtils {
     } else {
       return calculateExpenditureFoot(start, stop, grade, weight);
     }
-  }
-
-  /**
-   * Calculates the calorie expenditure of locations in Joule.
-   * 
-   * @param kcal
-   * @return
-   */
-  public static double changeKcalToJ(double kcal) {
-    return kcal * UnitConversions.KCAL_TO_J;
   }
 }
