@@ -499,9 +499,13 @@ public class TrackRecordingService extends Service {
       duration = 0L;
     }
 
+    String photoUrl = waypointCreationRequest.getPhotoUrl() != null ? waypointCreationRequest
+        .getPhotoUrl()
+        : "";
+
     // Insert waypoint
     Waypoint waypoint = new Waypoint(name, description, category, icon, recordingTrackId,
-        waypointType, length, duration, -1L, -1L, location, tripStatistics);
+        waypointType, length, duration, -1L, -1L, location, tripStatistics, photoUrl);
     Uri uri = myTracksProviderUtils.insertWaypoint(waypoint);
     return Long.parseLong(uri.getLastPathSegment());
   }

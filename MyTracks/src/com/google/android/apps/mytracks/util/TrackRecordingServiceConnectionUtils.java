@@ -170,7 +170,7 @@ public class TrackRecordingServiceConnectionUtils {
   /**
    * Adds a marker.
    */
-  public static void addMarker(Context context,
+  public static long addMarker(Context context,
       TrackRecordingServiceConnection trackRecordingServiceConnection,
       WaypointCreationRequest waypointCreationRequest) {
     ITrackRecordingService trackRecordingService = trackRecordingServiceConnection
@@ -179,9 +179,10 @@ public class TrackRecordingServiceConnectionUtils {
       Log.d(TAG, "Unable to add marker, no track recording service");
     } else {
       try {
-        if (trackRecordingService.insertWaypoint(waypointCreationRequest) != -1L) {
+        long markerId = trackRecordingService.insertWaypoint(waypointCreationRequest);
+        if (markerId != -1L) {
           Toast.makeText(context, R.string.marker_add_success, Toast.LENGTH_SHORT).show();
-          return;
+          return markerId;
         }
       } catch (RemoteException e) {
         Log.e(TAG, "Unable to add marker", e);
@@ -190,5 +191,6 @@ public class TrackRecordingServiceConnectionUtils {
       }
     }
     Toast.makeText(context, R.string.marker_add_error, Toast.LENGTH_LONG).show();
+    return -1L;
   }
 }

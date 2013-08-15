@@ -47,12 +47,13 @@ public final class Waypoint implements Parcelable {
   private long stopId = -1L;
   private Location location = null;
   private TripStatistics tripStatistics = null;
-
+  private String photoUrl = "";
+  
   public Waypoint() {}
   
   public Waypoint(String name, String description, String category, String icon, long trackId,
       WaypointType type, double length, long duration, long startId, long stopId, Location location,
-      TripStatistics tripStatistics) {
+      TripStatistics tripStatistics, String photoUrl) {
     this.name = name;
     this.description = description;
     this.category = category;
@@ -65,6 +66,7 @@ public final class Waypoint implements Parcelable {
     this.stopId = stopId;
     this.location = location;
     this.tripStatistics = tripStatistics;
+    this.photoUrl = photoUrl;
   }
 
   private Waypoint(Parcel source) {
@@ -89,6 +91,7 @@ public final class Waypoint implements Parcelable {
     if (hasStats > 0) {
       tripStatistics = source.readParcelable(classLoader);
     }
+    photoUrl = source.readString();
   }
 
   @Override
@@ -117,6 +120,7 @@ public final class Waypoint implements Parcelable {
     if (tripStatistics != null) {
       dest.writeParcelable(tripStatistics, 0);
     }
+    dest.writeString(photoUrl);
   }
 
   public static final Parcelable.Creator<Waypoint> CREATOR = new Parcelable.Creator<Waypoint>() {
@@ -233,5 +237,13 @@ public final class Waypoint implements Parcelable {
 
   public void setTripStatistics(TripStatistics tripStatistics) {
     this.tripStatistics = tripStatistics;
+  }  
+  
+  public String getPhotoUrl() {
+    return photoUrl;
+  }
+
+  public void setPhotoUrl(String photoUrl) {
+    this.photoUrl = photoUrl;
   }
 }

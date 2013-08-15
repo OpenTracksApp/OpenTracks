@@ -43,7 +43,7 @@ public class WaypointCreationRequestTest extends AndroidTestCase {
 
   public void testAllAttributesParceling() {
     WaypointCreationRequest original = new WaypointCreationRequest(
-        WaypointType.WAYPOINT, false, "name", "category", "description", "img.png");
+        WaypointType.WAYPOINT, false, "name", "category", "description", "img.png", null);
     Parcel p = Parcel.obtain();
     original.writeToParcel(p, 0);
     p.setDataPosition(0);

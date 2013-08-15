@@ -21,14 +21,19 @@ limitations under the License.
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:padding="8dp" >
-    <TextView
-      android:id="@+id/marker_detail_name"
-      style="@style/TextLarge" />
     <LinearLayout
       android:id="@+id/marker_detail_waypoint_section"
       android:layout_height="wrap_content"
       android:layout_width="match_parent"
       android:orientation="vertical" >
+      <ImageView
+        android:id="@+id/marker_detail_waypoint_photo"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:scaleType="centerInside" />
+      <TextView
+        android:id="@+id/marker_detail_waypoint_name"
+        style="@style/TextLarge.WithTopMargin" />
       <TextView
         android:id="@+id/marker_detail_waypoint_marker_type"
         style="@style/TextLarge.WithTopMargin" />
@@ -41,6 +46,9 @@ limitations under the License.
       android:layout_height="wrap_content"
       android:layout_width="match_parent"
       android:orientation="vertical" >
+      <TextView
+        android:id="@+id/marker_detail_statistics_name"
+        style="@style/TextLarge" />
       <TextView
         android:text="@string/marker_detail_statistics_title"
         style="@style/TextLarge.WithTopMargin" />

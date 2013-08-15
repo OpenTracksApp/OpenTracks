@@ -24,9 +24,9 @@ limitations under the License.
   android:shrinkColumns="1"
   android:stretchColumns="1"
   style="@style/ListItem" >
-  <TableRow
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent" >
+  <!-- First row -->
+  <TableRow>
+    <!-- First column -->
     <ImageView
       android:contentDescription="@string/icon_track"
       android:id="@+id/list_item_icon"
@@ -35,39 +35,67 @@ limitations under the License.
       android:layout_marginLeft="8dp"
       android:layout_marginRight="8dp"
       android:layout_width="wrap_content" />
-    <TableLayout
+    <!-- Second column -->
+    <LinearLayout
+      android:baselineAligned="false"
       android:layout_height="wrap_content"
-      android:layout_width="match_parent"
-      android:shrinkColumns="0"
-      android:stretchColumns="0" >
-      <TableRow>
-        <TextView
-          android:id="@+id/list_item_name"
-          android:layout_gravity="bottom"
-          android:layout_width="fill_parent"
-          android:singleLine="true"
-          style="@style/TextMedium" />
-        <TextView
-          android:id="@+id/list_item_date"
-          style="@style/ListItemDate" />
-      </TableRow>
-      <TableRow>
-        <!-- Need to match the style set in ListItemUtils.setListItem -->
-        <TextView
-          android:id="@+id/list_item_time_distance"
-          android:layout_gravity="bottom"
-          android:layout_width="fill_parent"
-          android:singleLine="true"
-          style="@style/TextSmall" />
-        <TextView
-          android:id="@+id/list_item_time"
-          style="@style/ListItemDate" />
-      </TableRow>
-    </TableLayout>
+      android:layout_width="match_parent" >
+      <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:layout_width="0dp" >
+        <TableLayout
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:layout_width="0dp"
+          android:shrinkColumns="*"
+          android:stretchColumns="*" >
+          <TableRow>
+            <TextView
+              android:ellipsize="end"
+              android:id="@+id/list_item_name"
+              android:singleLine="true"
+              style="@style/TextMedium" />
+          </TableRow>
+          <TableRow>
+            <!-- Need to match the style set in ListItemUtils.setListItem -->
+            <TextView
+              android:ellipsize="end"
+              android:id="@+id/list_item_time_distance"
+              android:singleLine="true"
+              style="@style/TextSmall" />
+          </TableRow>
+        </TableLayout>
+        <ImageView
+          android:id="@+id/list_item_photo"
+          android:layout_gravity="center"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="8dp"
+          android:layout_weight="1"
+          android:layout_width="0dp"
+          android:scaleType="centerCrop" />
+      </LinearLayout>
+      <TableLayout
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:shrinkColumns="*"
+        android:stretchColumns="*" >
+        <TableRow>
+          <TextView
+            android:id="@+id/list_item_date"
+            style="@style/ListItemDate" />
+        </TableRow>
+        <TableRow>
+          <TextView
+            android:id="@+id/list_item_time"
+            style="@style/ListItemDate" />
+        </TableRow>
+      </TableLayout>
+    </LinearLayout>
   </TableRow>
-  <TableRow
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent" >
+  <!-- Second row -->
+  <TableRow>
     <TextView
       android:id="@+id/list_item_description"
       android:layout_column="1"

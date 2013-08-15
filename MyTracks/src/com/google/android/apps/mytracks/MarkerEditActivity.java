@@ -169,6 +169,7 @@ public class MarkerEditActivity extends AbstractMyTracksActivity {
         waypointName.getText().toString(),
         waypointMarkerType.getText().toString(),
         waypointDescription.getText().toString(),
+        null,
         null);
     TrackRecordingServiceConnectionUtils.addMarker(
         this, trackRecordingServiceConnection, waypointCreationRequest);

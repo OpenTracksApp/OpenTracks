@@ -17,22 +17,22 @@
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
-import com.google.android.apps.mytracks.fragments.DeleteMarkerDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
+import com.google.android.apps.mytracks.fragments.MarkerDetailFragment;
 import com.google.android.apps.mytracks.util.IntentUtils;
-import com.google.android.apps.mytracks.util.StatsUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
+
+import java.util.ArrayList;
 
 /**
  * An activity to display marker detail info.
@@ -44,72 +44,59 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity implements De
   public static final String EXTRA_MARKER_ID = "marker_id";
   private static final String TAG = MarkerDetailActivity.class.getSimpleName();
 
-  private MyTracksProviderUtils myTracksProviderUtils;
-  private long markerId;
   private Waypoint waypoint;
-
-  private TextView name;
-  private View waypointSection;
-  private View statisticsSection;
+  private ArrayList<Long> markerIds;
 
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
 
-    myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
-    markerId = getIntent().getLongExtra(EXTRA_MARKER_ID, -1L);
+    long markerId = getIntent().getLongExtra(EXTRA_MARKER_ID, -1L);
     if (markerId == -1L) {
       Log.d(TAG, "invalid marker id");
       finish();
       return;
     }
-    name = (TextView) findViewById(R.id.marker_detail_name);
-    waypointSection = findViewById(R.id.marker_detail_waypoint_section);
-    statisticsSection = findViewById(R.id.marker_detail_statistics_section);
+
+    MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
+    waypoint = myTracksProviderUtils.getWaypoint(markerId);
+
+    markerIds = new ArrayList<Long>();
+    int markerIndex = -1;
+    Cursor cursor = null;
+
+    try {
+      cursor = myTracksProviderUtils.getWaypointCursor(waypoint.getTrackId(), -1L, -1);
+      if (cursor != null && cursor.moveToFirst()) {
+        /*
+         * Yes, this will skip the first waypoint and that is intentional as the
+         * first waypoint holds the stats for the track.
+         */
+        while (cursor.moveToNext()) {
+          Waypoint current = myTracksProviderUtils.createWaypoint(cursor);
+
+          markerIds.add(current.getId());
+          if (current.getId() == markerId) {
+            markerIndex = markerIds.size() - 1;
+          }
+        }
+      }
+    } finally {
+      if (cursor != null) {
+        cursor.close();
+      }
+    }
+
+    ViewPager viewPager = (ViewPager) findViewById(R.id.maker_detail_activity_view_pager);
+    viewPager.setAdapter(new MarkerDetailPagerAdapter(getSupportFragmentManager()));
+    if (markerIndex != -1) {
+      viewPager.setCurrentItem(markerIndex);
+    }
   }
 
   @Override
   protected int getLayoutResId() {
-    return R.layout.marker_detail;
-  }
-
-  @Override
-  protected void onResume() {
-    super.onResume();
-    waypoint = MyTracksProviderUtils.Factory.get(this).getWaypoint(markerId);
-    if (waypoint == null) {
-      Log.d(TAG, "waypoint is null");
-      finish();
-      return;
-    }
-    name.setText(getString(R.string.generic_name_line, waypoint.getName()));
-    if (waypoint.getType() == WaypointType.WAYPOINT) {
-      waypointSection.setVisibility(View.VISIBLE);
-      statisticsSection.setVisibility(View.GONE);
-
-      TextView markerType = (TextView) findViewById(R.id.marker_detail_waypoint_marker_type);
-      markerType.setText(
-          getString(R.string.marker_detail_waypoint_marker_type, waypoint.getCategory()));
-      TextView description = (TextView) findViewById(R.id.marker_detail_waypoint_description);
-      description.setText(getString(R.string.generic_description_line, waypoint.getDescription()));
-    } else {
-      waypointSection.setVisibility(View.GONE);
-      statisticsSection.setVisibility(View.VISIBLE);
-      StatsUtils.setTripStatisticsValues(this, waypoint.getTripStatistics());
-      StatsUtils.setLocationValues(this, waypoint.getLocation(), false);
-    }
-  }
-
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    getMenuInflater().inflate(R.menu.marker_detail, menu);
-
-    Track track = myTracksProviderUtils.getTrack(waypoint.getTrackId());
-    boolean isSharedWithMe = track != null ? track.isSharedWithMe() : true;
-    
-    menu.findItem(R.id.marker_detail_edit).setVisible(!isSharedWithMe);
-    menu.findItem(R.id.marker_detail_delete).setVisible(!isSharedWithMe);
-    return true;
+    return R.layout.marker_detail_activity;
   }
 
   @Override
@@ -121,29 +108,6 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity implements De
   }
 
   @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    Intent intent;
-    switch (item.getItemId()) {
-      case R.id.marker_detail_show_on_map:
-        intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
-            .putExtra(TrackDetailActivity.EXTRA_MARKER_ID, markerId);
-        startActivity(intent);
-        return true;
-      case R.id.marker_detail_edit:
-        intent = IntentUtils.newIntent(this, MarkerEditActivity.class)
-            .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, markerId);
-        startActivity(intent);
-        return true;
-      case R.id.marker_detail_delete:
-        DeleteMarkerDialogFragment.newInstance(new long[] { markerId })
-            .show(getSupportFragmentManager(), DeleteMarkerDialogFragment.DELETE_MARKER_DIALOG_TAG);
-        return true;
-      default:
-        return super.onOptionsItemSelected(item);
-    }
-  }
-
-  @Override
   public void onDeleteMarkerDone() {
     runOnUiThread(new Runnable() {
         @Override
@@ -151,5 +115,27 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity implements De
         finish();
       }
     });
+  }
+
+  /**
+   * Marker detail pager adapter.
+   * 
+   * @author Jimmy Shih
+   */
+  private class MarkerDetailPagerAdapter extends FragmentStatePagerAdapter {
+
+    public MarkerDetailPagerAdapter(FragmentManager fragmentManager) {
+      super(fragmentManager);
+    }
+
+    @Override
+    public Fragment getItem(int position) {
+      return MarkerDetailFragment.newInstance(markerIds.get(position));
+    }
+
+    @Override
+    public int getCount() {
+      return markerIds.size();
+    }
   }
 }

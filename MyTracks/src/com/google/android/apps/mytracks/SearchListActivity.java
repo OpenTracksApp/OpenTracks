@@ -83,12 +83,14 @@ public class SearchListActivity extends AbstractSendToGoogleActivity implements 
   private static final String ICON_ID_FIELD = "icon";
   private static final String ICON_CONTENT_DESCRIPTION_ID_FIELD = "iconContentDescription";
   private static final String NAME_FIELD = "name";
-  private static final String CATEGORY_FIELD = "category";
+  private static final String SHARED_OWNER_FIELD = "sharedOwner";
   private static final String TOTAL_TIME_FIELD = "totalTime";
   private static final String TOTAL_DISTANCE_FIELD = "totalDistance";
+  private static final String PHOTO_URL_FIELD = "photoUrl";
   private static final String START_TIME_FIELD = "startTime";
+  private static final String CATEGORY_FIELD = "category";
   private static final String DESCRIPTION_FIELD = "description";
-  private static final String SHARED_OWNER_FIELD = "sharedOwner";
+
   private static final String TRACK_ID_FIELD = "trackId";
   private static final String MARKER_ID_FIELD = "markerId";
 
@@ -228,15 +230,17 @@ public class SearchListActivity extends AbstractSendToGoogleActivity implements 
         int iconId = (Integer) resultMap.get(ICON_ID_FIELD);
         int iconContentDescriptionId = (Integer) resultMap.get(ICON_CONTENT_DESCRIPTION_ID_FIELD);
         String name = (String) resultMap.get(NAME_FIELD);
-        String category = (String) resultMap.get(CATEGORY_FIELD);
+        String sharedOwner = (String) resultMap.get(SHARED_OWNER_FIELD);
         String totalTime = (String) resultMap.get(TOTAL_TIME_FIELD);
         String totalDistance = (String) resultMap.get(TOTAL_DISTANCE_FIELD);
+        String photoUrl = (String) resultMap.get(PHOTO_URL_FIELD);
         Long startTime = (Long) resultMap.get(START_TIME_FIELD);
+        String category = (String) resultMap.get(CATEGORY_FIELD);
         String description = (String) resultMap.get(DESCRIPTION_FIELD);
-        String sharedOwner = (String) resultMap.get(SHARED_OWNER_FIELD);
+
         ListItemUtils.setListItem(SearchListActivity.this, view, isRecording, isPaused, iconId,
-            iconContentDescriptionId, name, category, totalTime, totalDistance, startTime,
-            description, sharedOwner);
+            iconContentDescriptionId, name, sharedOwner, totalTime, totalDistance, photoUrl,
+            startTime, category, description);
         return view;
       }
     };
@@ -487,14 +491,15 @@ public class SearchListActivity extends AbstractSendToGoogleActivity implements 
         statistics ? R.drawable.ic_marker_yellow_pushpin : R.drawable.ic_marker_blue_pushpin);
     resultMap.put(ICON_CONTENT_DESCRIPTION_ID_FIELD, R.string.icon_marker);
     resultMap.put(NAME_FIELD, waypoint.getName());
-    resultMap.put(CATEGORY_FIELD, statistics ? null : waypoint.getCategory());
+    resultMap.put(SHARED_OWNER_FIELD, sharedOwner);
     // Display the marker's track name in the total time field
     resultMap.put(TOTAL_TIME_FIELD, trackName == null ? null
         : getString(R.string.search_list_marker_track_location, trackName));
     resultMap.put(TOTAL_DISTANCE_FIELD, null);
+    resultMap.put(PHOTO_URL_FIELD, waypoint.getPhotoUrl());
     resultMap.put(START_TIME_FIELD, waypoint.getLocation().getTime());
+    resultMap.put(CATEGORY_FIELD, statistics ? null : waypoint.getCategory());
     resultMap.put(DESCRIPTION_FIELD, statistics ? null : waypoint.getDescription());
-    resultMap.put(SHARED_OWNER_FIELD, sharedOwner);
     resultMap.put(TRACK_ID_FIELD, waypoint.getTrackId());
     resultMap.put(MARKER_ID_FIELD, waypoint.getId());
   }
@@ -515,13 +520,14 @@ public class SearchListActivity extends AbstractSendToGoogleActivity implements 
     resultMap.put(ICON_ID_FIELD, TrackIconUtils.getIconDrawable(icon));
     resultMap.put(ICON_CONTENT_DESCRIPTION_ID_FIELD, R.string.icon_track);
     resultMap.put(NAME_FIELD, track.getName());
-    resultMap.put(CATEGORY_FIELD, category);
+    resultMap.put(SHARED_OWNER_FIELD, track.getSharedOwner());
     resultMap.put(TOTAL_TIME_FIELD, StringUtils.formatElapsedTime(tripStatitics.getTotalTime()));
     resultMap.put(TOTAL_DISTANCE_FIELD,
         StringUtils.formatDistance(this, tripStatitics.getTotalDistance(), metricUnits));
+    resultMap.put(PHOTO_URL_FIELD, null);
     resultMap.put(START_TIME_FIELD, tripStatitics.getStartTime());
+    resultMap.put(CATEGORY_FIELD, category);
     resultMap.put(DESCRIPTION_FIELD, track.getDescription());
-    resultMap.put(SHARED_OWNER_FIELD, track.getSharedOwner());
     resultMap.put(TRACK_ID_FIELD, track.getId());
     resultMap.put(MARKER_ID_FIELD, null);
   }

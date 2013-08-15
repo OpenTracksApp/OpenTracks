@@ -37,8 +37,7 @@ public class FileUtils {
    * Name of the top-level directory inside the SD card where our files will be
    * read from/written to.
    */
-  @VisibleForTesting
-  static final String SDCARD_TOP_DIR = "MyTracks";
+  public static final String SDCARD_TOP_DIR = "MyTracks";
 
   /**
    * The maximum FAT32 path length. See the FAT32 spec at

@@ -49,7 +49,7 @@ import java.util.ArrayList;
 public class MyTracksProvider extends ContentProvider {
 
   private static final String TAG = MyTracksProvider.class.getSimpleName();
-  private static final int DATABASE_VERSION = 21;
+  private static final int DATABASE_VERSION = 22;
 
   @VisibleForTesting
   static final String DATABASE_NAME = "mytracks.db";
@@ -122,6 +122,12 @@ public class MyTracksProvider extends ContentProvider {
               + TracksColumns.SHAREDWITHME + " INTEGER");
           Log.w(TAG, "Upgrade DB: Adding sharedowner column.");
           db.execSQL("ALTER TABLE " + TracksColumns.TABLE_NAME + " ADD " + TracksColumns.SHAREDOWNER
+              + " STRING");
+        }
+        
+        if (oldVersion <= 21) {
+          Log.w(TAG, "Upgrade DB: Adding photo url column.");
+          db.execSQL("ALTER TABLE " + WaypointsColumns.TABLE_NAME + " ADD " + WaypointsColumns.PHOTOURL
               + " STRING");
         }
       }

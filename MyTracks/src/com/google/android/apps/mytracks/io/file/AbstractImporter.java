@@ -282,7 +282,7 @@ abstract class AbstractImporter extends DefaultHandler {
             // Insert waypoint
             Waypoint newWaypoint = new Waypoint(waypoint.getName(), waypointDescription,
                 waypoint.getCategory(), icon, track.getId(), waypoint.getType(), length, duration,
-                -1L, -1L, trackPoint, tripStatistics);
+                -1L, -1L, trackPoint, tripStatistics, "");
             myTracksProviderUtils.insertWaypoint(newWaypoint);
           }
           waypoint = null;
@@ -584,7 +584,7 @@ abstract class AbstractImporter extends DefaultHandler {
     waypointLocation.setLongitude(180);
     Waypoint waypoint = new Waypoint(waypointName, waypointDescription, waypointCategory, icon,
         track.getId(), WaypointType.STATISTICS, length, duration, -1L, -1L, waypointLocation,
-        tripStatistics);
+        tripStatistics, "");
     myTracksProviderUtils.insertWaypoint(waypoint);
   }
 

@@ -70,6 +70,8 @@ public interface WaypointsColumns extends BaseColumns {
   public static final String ELEVATIONGAIN = "elevationgain"; // elevation gain
   public static final String MINGRADE = "mingrade"; // min grade
   public static final String MAXGRADE = "maxgrade"; // max grade
+
+  public static final String PHOTOURL = "photoUrl"; // url for the photo
   
   public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" 
       + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -101,7 +103,8 @@ public interface WaypointsColumns extends BaseColumns {
       + MAXELEVATION + " FLOAT, "
       + ELEVATIONGAIN + " FLOAT, "
       + MINGRADE + " FLOAT, "
-      + MAXGRADE + " FLOAT" 
+      + MAXGRADE + " FLOAT, "
+      + PHOTOURL + " STRING"
       + ");";
   
   public static final String[] COLUMNS = {
@@ -134,7 +137,8 @@ public interface WaypointsColumns extends BaseColumns {
       MAXELEVATION,
       ELEVATIONGAIN,
       MINGRADE,
-      MAXGRADE
+      MAXGRADE,
+      PHOTOURL
     };
     
   public static final byte[] COLUMN_TYPES = {
@@ -167,6 +171,7 @@ public interface WaypointsColumns extends BaseColumns {
       FLOAT_TYPE_ID, // max elevation
       FLOAT_TYPE_ID, // elevation gain
       FLOAT_TYPE_ID, // min grade
-      FLOAT_TYPE_ID // max grade
+      FLOAT_TYPE_ID, // max grade
+      STRING_TYPE_ID // photo url
     };
 }

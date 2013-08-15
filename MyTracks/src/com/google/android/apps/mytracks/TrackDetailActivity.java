@@ -20,6 +20,7 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.fragments.ChartFragment;
 import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment;
@@ -36,6 +37,7 @@ import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection
 import com.google.android.apps.mytracks.settings.SettingsActivity;
 import com.google.android.apps.mytracks.util.AnalyticsUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
+import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.GoogleFeedbackUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
@@ -46,10 +48,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Parcelable;
+import android.provider.MediaStore;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -57,6 +64,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
+import android.widget.Toast;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * An activity to show the track detail.
@@ -69,9 +82,15 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity implements
   public static final String EXTRA_TRACK_ID = "track_id";
   public static final String EXTRA_MARKER_ID = "marker_id";
 
+  private static final String TAG = TrackDetailActivity.class.getSimpleName();
   private static final String CURRENT_TAB_TAG_KEY = "current_tab_tag_key";
-
+  private static final String PHOTO_URI_KEY = "photo_uri_key";
+  private static final String HAS_PHOTO_KEY = "has_photo_key";
+  
   // The following are set in onCreate
+  private boolean hasCamera;
+  private Uri photoUri;
+  private boolean hasPhoto;
   private MyTracksProviderUtils myTracksProviderUtils;
   private SharedPreferences sharedPreferences;
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
@@ -91,6 +110,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity implements
   private String sensorType = PreferencesUtils.SENSOR_TYPE_DEFAULT;
   
   private MenuItem insertMarkerMenuItem;
+  private MenuItem insertPhotoMenuItem;
   private MenuItem playMenuItem;
   private MenuItem shareMenuItem;
   private MenuItem exportMenuItem;
@@ -107,6 +127,19 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity implements
           @Override
         public void run() {
           trackController.update(trackId == recordingTrackId, recordingTrackPaused);
+          if (hasPhoto && photoUri != null) {
+            WaypointCreationRequest waypointCreationRequest = new WaypointCreationRequest(
+                WaypointType.WAYPOINT, false, null, null, null, null, photoUri.toString());
+            long id = TrackRecordingServiceConnectionUtils.addMarker(
+                TrackDetailActivity.this, trackRecordingServiceConnection, waypointCreationRequest);
+            hasPhoto = false;
+
+            if (id != -1L) {
+              Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+              mediaScanIntent.setData(photoUri);
+              sendBroadcast(mediaScanIntent);
+            }
+          }
         }
       });
     }
@@ -182,6 +215,10 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity implements
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    hasCamera = getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
+    photoUri = savedInstanceState != null ? (Uri) savedInstanceState.getParcelable(PHOTO_URI_KEY) : null;
+    hasPhoto = savedInstanceState != null ? savedInstanceState.getBoolean(HAS_PHOTO_KEY, false) : false;
+       
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
     handleIntent(getIntent());
 
@@ -266,6 +303,19 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity implements
   protected void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
     outState.putString(CURRENT_TAB_TAG_KEY, tabHost.getCurrentTabTag());
+    if (photoUri != null) {
+      outState.putParcelable(PHOTO_URI_KEY, photoUri);
+    }
+    outState.putBoolean(HAS_PHOTO_KEY, hasPhoto);
+  }
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    if (requestCode == CAMERA_REQUEST_CODE) {      
+      hasPhoto = resultCode == RESULT_OK;
+    } else {
+      super.onActivityResult(requestCode, resultCode, data);
+    }
   }
 
   @Override
@@ -309,6 +359,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity implements
         .setVisible(ApiAdapterFactory.getApiAdapter().isGoogleFeedbackAvailable());
 
     insertMarkerMenuItem = menu.findItem(R.id.track_detail_insert_marker);
+    insertPhotoMenuItem = menu.findItem(R.id.track_detail_insert_photo);
     playMenuItem = menu.findItem(R.id.track_detail_play);
 
     shareMenuItem = menu.findItem(R.id.track_detail_share);
@@ -337,6 +388,36 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity implements
         intent = IntentUtils.newIntent(this, MarkerEditActivity.class)
             .putExtra(MarkerEditActivity.EXTRA_TRACK_ID, trackId);
         startActivity(intent);
+        return true;
+      case R.id.track_detail_insert_photo:
+        try {
+          if (!FileUtils.isExternalStorageWriteable()) {
+            Toast.makeText(this, R.string.external_storage_not_writable, Toast.LENGTH_LONG).show();
+            return false;
+          }
+
+          File dir = new File(
+              Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+              FileUtils.SDCARD_TOP_DIR);
+
+          FileUtils.ensureDirectoryExists(dir);
+
+          String fileName = SimpleDateFormat.getDateTimeInstance().format(new Date());
+          File file = new File(dir, FileUtils.buildUniqueFileName(dir, fileName, "jpeg"));
+
+          if (file.exists()) {
+            Toast.makeText(this, R.string.marker_insert_photo_error, Toast.LENGTH_LONG).show();
+            return false;
+          }
+          file.createNewFile();
+          photoUri = Uri.fromFile(file);
+          intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE).putExtra(
+              MediaStore.EXTRA_OUTPUT, photoUri);
+          startActivityForResult(intent, CAMERA_REQUEST_CODE);
+        } catch (IOException e) {
+          Log.e(TAG, "Unable to insert photo marker", e);
+          return false;
+        }
         return true;
       case R.id.track_detail_play:
         confirmPlay(new long[] {trackId});
@@ -512,6 +593,9 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity implements
   private void updateMenuItems(boolean isRecording, boolean isPaused) {
     if (insertMarkerMenuItem != null) {
       insertMarkerMenuItem.setVisible(isRecording && !isPaused);
+    }
+    if (insertPhotoMenuItem != null) {
+      insertPhotoMenuItem.setVisible(hasCamera && isRecording && !isPaused);
     }
     if (playMenuItem != null) {
       playMenuItem.setVisible(!isRecording);

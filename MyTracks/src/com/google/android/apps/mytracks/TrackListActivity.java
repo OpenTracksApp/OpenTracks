@@ -361,28 +361,28 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         int idIndex = cursor.getColumnIndex(TracksColumns._ID);
         int iconIndex = cursor.getColumnIndex(TracksColumns.ICON);
         int nameIndex = cursor.getColumnIndex(TracksColumns.NAME);
-        int categoryIndex = cursor.getColumnIndex(TracksColumns.CATEGORY);
+        int sharedOwnerIndex = cursor.getColumnIndex(TracksColumns.SHAREDOWNER);
         int totalTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALTIME);
         int totalDistanceIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALDISTANCE);
-        int startTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME);
+        int startTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME);        
+        int categoryIndex = cursor.getColumnIndex(TracksColumns.CATEGORY);
         int descriptionIndex = cursor.getColumnIndex(TracksColumns.DESCRIPTION);
-        int sharedOwnerIndex = cursor.getColumnIndex(TracksColumns.SHAREDOWNER);
 
         boolean isRecording = cursor.getLong(idIndex) == recordingTrackId;
         String icon = cursor.getString(iconIndex);
         int iconId = TrackIconUtils.getIconDrawable(icon);
         String name = cursor.getString(nameIndex);
-        String category = icon != null && !icon.equals("") ? null : cursor.getString(categoryIndex);
+        String sharedOwner = cursor.getString(sharedOwnerIndex);
         String totalTime = StringUtils.formatElapsedTime(cursor.getLong(totalTimeIndex));
         String totalDistance = StringUtils.formatDistance(
             TrackListActivity.this, cursor.getDouble(totalDistanceIndex), metricUnits);
-        long startTime = cursor.getLong(startTimeIndex);
+        long startTime = cursor.getLong(startTimeIndex);        
+        String category = icon != null && !icon.equals("") ? null : cursor.getString(categoryIndex);    
         String description = cursor.getString(descriptionIndex);
-        String sharedOwner = cursor.getString(sharedOwnerIndex);
 
         ListItemUtils.setListItem(TrackListActivity.this, view, isRecording, recordingTrackPaused,
-            iconId, R.string.icon_track, name, category, totalTime, totalDistance, startTime,
-            description, sharedOwner);
+            iconId, R.string.icon_track, name, sharedOwner, totalTime, totalDistance, null,
+            startTime, category, description);
       }
     };
     listView.setAdapter(sectionResourceCursorAdapter);

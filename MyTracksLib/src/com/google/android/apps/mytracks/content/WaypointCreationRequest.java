@@ -34,6 +34,7 @@ public class WaypointCreationRequest implements Parcelable {
   private String category;
   private String description;
   private String iconUrl;
+  private String photoUrl;
 
   public final static WaypointCreationRequest DEFAULT_WAYPOINT = new WaypointCreationRequest(
       WaypointType.WAYPOINT, false);
@@ -43,17 +44,18 @@ public class WaypointCreationRequest implements Parcelable {
       WaypointType.STATISTICS, true);
 
   private WaypointCreationRequest(WaypointType type, boolean isTrackStatistics) {
-    this(type, isTrackStatistics, null, null, null, null);
+    this(type, isTrackStatistics, null, null, null, null, null);
   }
 
   public WaypointCreationRequest(WaypointType type, boolean isTrackStatistics, String name,
-      String category, String description, String iconUrl) {
+      String category, String description, String iconUrl, String photoUrl) {
     this.type = type;
     this.isTrackStatistics = isTrackStatistics;
     this.name = name;
     this.category = category;
     this.description = description;
     this.iconUrl = iconUrl;
+    this.photoUrl = photoUrl;
   }
 
   public static class Creator implements Parcelable.Creator<WaypointCreationRequest> {
@@ -63,6 +65,7 @@ public class WaypointCreationRequest implements Parcelable {
       WaypointCreationRequest request = new WaypointCreationRequest(
           WaypointType.values()[source.readInt()],
           source.readByte() == 1,
+          source.readString(),
           source.readString(),
           source.readString(),
           source.readString(),
@@ -90,6 +93,7 @@ public class WaypointCreationRequest implements Parcelable {
     parcel.writeString(category);
     parcel.writeString(description);
     parcel.writeString(iconUrl);
+    parcel.writeString(photoUrl);
   }
 
   public WaypointType getType() {
@@ -114,5 +118,9 @@ public class WaypointCreationRequest implements Parcelable {
 
   public String getIconUrl() {
     return iconUrl;
+  }
+  
+  public String getPhotoUrl() {
+    return photoUrl;
   }
 }
