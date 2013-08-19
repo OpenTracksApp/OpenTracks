@@ -177,8 +177,8 @@ public class StatsUtils {
     }
     
     // Set calories
-    double calories = tripStatistics == null ? Double.NaN : tripStatistics.getCaloricExpenditure();
-    setCalories(activity, R.id.stats_calories, R.string.stats_calories, calories);
+    double calories = tripStatistics == null ? Double.NaN : tripStatistics.getCalorie();
+    setCalorie(activity, R.id.stats_calorie, R.string.stats_calorie, calories);
   }
 
   /**
@@ -322,18 +322,15 @@ public class StatsUtils {
   }
 
   /**
-   * Sets calories.
+   * Sets calorie.
    * 
    * @param activity the activity
    * @param itemId the item id
-   * @param speedLabelId the speed label id
-   * @param paceLabelId the pace label id
-   * @param speed the speed in meters per second
-   * @param metricUnits true if metric units
-   * @param reportSpeed true if report speed
+   * @param labelId the calorie label id
+   * @param calorie the value of calorie
    */
-  private static void setCalories(Activity activity, int itemId, int labelId, double calories) {
+  private static void setCalorie(Activity activity, int itemId, int labelId, double calorie) {
     setItem(activity, itemId, labelId,
-        String.format(Locale.getDefault(), CALORIES_FORMAT, calories), "");
+        String.format(Locale.getDefault(), CALORIES_FORMAT, calorie), null);
   }
 }

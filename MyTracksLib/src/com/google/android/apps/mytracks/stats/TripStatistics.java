@@ -63,7 +63,7 @@ public class TripStatistics implements Parcelable {
   private final ExtremityMonitor gradeExtremities = new ExtremityMonitor();
 
   // The calorie expenditure of current track.
-  private double caloricExpenditure = 0;
+  private double calorie = 0;
 
   /**
    * Default constructor.
@@ -89,7 +89,7 @@ public class TripStatistics implements Parcelable {
         other.elevationExtremities.getMin(), other.elevationExtremities.getMax());
     totalElevationGain = other.totalElevationGain;
     gradeExtremities.set(other.gradeExtremities.getMin(), other.gradeExtremities.getMax());
-    caloricExpenditure = other.caloricExpenditure;
+    calorie = other.calorie;
   }
 
   /**
@@ -122,7 +122,7 @@ public class TripStatistics implements Parcelable {
       gradeExtremities.update(other.gradeExtremities.getMin());
       gradeExtremities.update(other.gradeExtremities.getMax());
     }
-    caloricExpenditure += other.caloricExpenditure;
+    calorie += other.calorie;
   }
 
   /**
@@ -493,7 +493,8 @@ public class TripStatistics implements Parcelable {
         + "; Max Longitude: " + getRightDegrees() + "; Max Speed: " + getMaxSpeed()
         + "; Min Elevation: " + getMinElevation() + "; Max Elevation: " + getMaxElevation()
         + "; Elevation Gain: " + getTotalElevationGain() + "; Min Grade: " + getMinGrade()
-        + "; Max Grade: " + getMaxGrade() + "}";
+        + "; Max Grade: " + getMaxGrade() + "; Calorie expenditure: " + getCalorie()
+        + "}";
   }
 
   /**
@@ -529,6 +530,9 @@ public class TripStatistics implements Parcelable {
       double minGrade = source.readDouble();
       double maxGrade = source.readDouble();
       data.gradeExtremities.set(minGrade, maxGrade);
+      
+      double calorie = source.readDouble();
+      data.setCalorie(calorie);
 
       return data;
     }
@@ -566,28 +570,29 @@ public class TripStatistics implements Parcelable {
     dest.writeDouble(totalElevationGain);
     dest.writeDouble(gradeExtremities.getMin());
     dest.writeDouble(gradeExtremities.getMax());
+    dest.writeDouble(calorie);
   }
 
   /**
-   * Adds calories value.
+   * Adds calorie value.
    * 
-   * @param calories
+   * @param calorieAdded
    */
-  public void addCaloticExpenditure(double calories) {
-    caloricExpenditure = caloricExpenditure + calories;
+  public void addCalorie(double calorieAdded) {
+    this.calorie += calorieAdded;
   }
   
   /**
-   * Sets calories value.
+   * Sets calorie value.
    */
-  public void setCaloricExpenditure(double value) {
-    caloricExpenditure = value;
+  public void setCalorie(double newCalorie) {
+    calorie = newCalorie;
   }
 
   /**
    * Gets calories value.
    */
-  public double getCaloricExpenditure() {
-    return caloricExpenditure;
+  public double getCalorie() {
+    return calorie;
   }
 }

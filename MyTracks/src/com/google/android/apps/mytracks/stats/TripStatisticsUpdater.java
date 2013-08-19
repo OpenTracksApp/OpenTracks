@@ -193,9 +193,10 @@ public class TripStatisticsUpdater {
     // TODO 1: How to get the value of weight.
     // TODO 2: How to get the value of ActivityType.
     
-    double value = CalorieUtils.getCalories(lastMovingLocation, location,
+    // Update calorie
+    double calorie = CalorieUtils.getCalories(lastMovingLocation, location,
         gradeBuffer.getAverage(), 65, ActivityType.FOOT);
-    currentSegment.addCaloticExpenditure(value);
+    currentSegment.addCalorie(calorie);
 
     lastLocation = location;
     lastMovingLocation = location;

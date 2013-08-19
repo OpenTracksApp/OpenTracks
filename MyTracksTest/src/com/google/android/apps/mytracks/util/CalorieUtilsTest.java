@@ -29,14 +29,15 @@ public class CalorieUtilsTest extends TestCase {
 
   Location start = new Location(LocationManager.GPS_PROVIDER);
   Location stop = new Location(LocationManager.GPS_PROVIDER);
-  private double grade = 10;
+  private double grade = 10.0;
   private int weight = 20;
+  private final long TIME_INTERVAL = 1000l;
 
   @Override
   protected void setUp() throws Exception {
     super.setUp();
-    // Make the time interval is not 0.
-    stop.setTime(start.getTime() + 1000);
+    // Make the time interval is not 0
+    stop.setTime(start.getTime() + TIME_INTERVAL);
   }
 
   /**
@@ -53,9 +54,11 @@ public class CalorieUtilsTest extends TestCase {
    * Checks whether using foot calculation equation while grade is negative.
    */
   public void testGetCalories_footNegativeGrade() {
-    double actual = CalorieUtils.getCalories(start, stop, -5, weight,
+    double actualGrade = -5;
+    double expectGrade = 0;
+    double actual = CalorieUtils.getCalories(start, stop, actualGrade, weight,
         CalorieUtils.ActivityType.FOOT);
-    double expected = CalorieUtils.calculateExpenditureFoot(start, stop, 0, weight);
+    double expected = CalorieUtils.calculateExpenditureFoot(start, stop, expectGrade, weight);
     assertEquals(expected, actual);
   }
 
@@ -83,9 +86,11 @@ public class CalorieUtilsTest extends TestCase {
    * Checks using walking VO2 equation.
    */
   public void testGetVO2_walking() {
-    double actual = CalorieUtils.getVO2(CalorieUtils.CRTICAL_SPEED_RUNNING / 2, grade);
-    double expected = CalorieUtils.calculateWalkingVO2(CalorieUtils.CRTICAL_SPEED_RUNNING / 2,
-        grade);
+    // Test at half the critical speed
+    double footSpeed = CalorieUtils.CRTICAL_SPEED_RUNNING / 2.0;
+
+    double actual = CalorieUtils.getVO2(footSpeed, grade);
+    double expected = CalorieUtils.calculateWalkingVO2(footSpeed, grade);
     assertEquals(expected, actual);
   }
 

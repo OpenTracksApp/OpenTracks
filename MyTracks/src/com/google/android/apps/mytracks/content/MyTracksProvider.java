@@ -133,7 +133,7 @@ public class MyTracksProvider extends ContentProvider {
         
         if (oldVersion <= 22) {
           Log.w(TAG, "Upgrade DB: Adding track calories column.");
-          db.execSQL("ALTER TABLE " + TracksColumns.TABLE_NAME + " ADD " + TracksColumns.CALORIES
+          db.execSQL("ALTER TABLE " + TracksColumns.TABLE_NAME + " ADD " + TracksColumns.CALORIE
               + " INTEGER");
         }
       }

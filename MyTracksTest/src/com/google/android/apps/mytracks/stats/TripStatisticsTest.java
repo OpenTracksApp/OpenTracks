@@ -67,6 +67,7 @@ public class TripStatisticsTest extends TestCase {
     statistics.setMinGrade(-25.0);  // Resulting min grade
     statistics2.setMaxGrade(35.0);  // Resulting max grade
     statistics2.setMinGrade(0.0);
+    statistics2.setCalorie(50.0);
 
     // Resulting bounds: -10000, 35000, 30000, -40000
     statistics.setBounds(-10000, 20000, 30000, -40000);
@@ -89,6 +90,7 @@ public class TripStatisticsTest extends TestCase {
     assertEquals(3575.0, statistics.getMaxElevation());
     assertEquals(-25.0, statistics.getMinGrade());
     assertEquals(35.0, statistics.getMaxGrade());
+    assertEquals(50.0, statistics.getCalorie());
   }
 
   public void testGetAverageSpeed() {

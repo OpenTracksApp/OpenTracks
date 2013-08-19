@@ -66,7 +66,6 @@ public interface TracksColumns extends BaseColumns {
   public static final String MINLON = "minlon"; // minimum longitude
   public static final String MAXLON = "maxlon"; // maximum longitude
   public static final String AVGSPEED = "avgspeed"; // average speed
-  public static final String CALORIES = "calories"; // calories
 
   // average moving speed
   public static final String AVGMOVINGSPEED = "avgmovingspeed";
@@ -89,6 +88,9 @@ public interface TracksColumns extends BaseColumns {
 
   // The owner of the shared with me track
   public static final String SHAREDOWNER = "sharedOwner";
+  
+  // Calorie expenditure of the track
+  public static final String CALORIE = "calories";
 
   public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" // table
       + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " // id
@@ -122,7 +124,7 @@ public interface TracksColumns extends BaseColumns {
       + MODIFIEDTIME + " INTEGER, " // modified time
       + SHAREDWITHME + " INTEGER, " // shared with me
       + SHAREDOWNER + " STRING, " // shared owner
-      + CALORIES + " INTEGER);"; // calories
+      + CALORIE + " INTEGER);"; // calories
 
   public static final String[] COLUMNS = { _ID, // id
       NAME, // name
@@ -155,7 +157,7 @@ public interface TracksColumns extends BaseColumns {
       MODIFIEDTIME, // modified time
       SHAREDWITHME, // shared with me
       SHAREDOWNER,// shared owner
-      CALORIES }; // calories
+      CALORIE }; // calories
 
   public static final byte[] COLUMN_TYPES = { ContentTypeIds.LONG_TYPE_ID, // id
       ContentTypeIds.STRING_TYPE_ID, // name

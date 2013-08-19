@@ -39,11 +39,16 @@ public class CalorieUtils {
    */
   private static final double VO2H_TO_KCAL = 5;
 
+  private static final double MILLISECOND_TO_SECOND = 1000.0;
+  private static final double MILLILITER_TO_LITER = 1000.0;
+  private static final double SECOND_TO_MINUTE = 60.0;
+
   /**
    * Changes 4.5 miles per hour to meters per minutes.
    */
   @VisibleForTesting
-  static final double CRTICAL_SPEED_RUNNING = 4.5 * UnitConversions.MI_TO_KM * 1000 / 60;
+  static final double CRTICAL_SPEED_RUNNING = 4.5 * UnitConversions.MI_TO_KM * 1000
+      / SECOND_TO_MINUTE;
 
   public enum ActivityType {
     CYCLING, FOOT
@@ -56,7 +61,7 @@ public class CalorieUtils {
    * 
    * @param speed is calculated in meters per minute (m/min)
    * @param grade
-   * @return the VO2 value in ml/kg/min
+   * @return the VO2 value in ml/kg/min.
    */
   @VisibleForTesting
   static double calculateWalkingVO2(double speed, double grade) {
@@ -75,7 +80,7 @@ public class CalorieUtils {
    * 
    * @param speed is calculated in meters per minute (m/min)
    * @param grade
-   * @return the VO2 value in ml/kg/min
+   * @return the VO2 value in ml/kg/min.
    */
   @VisibleForTesting
   static double calculateRunningVO2(double speed, double grade) {
@@ -108,13 +113,13 @@ public class CalorieUtils {
    * @param grade the grade to calculate
    * @param weight of rider plus bike
    * @param timeUsed how many times used in second
-   * @return the power value watts(Joule/second)
+   * @return the power value watts(Joule/second).
    */
   @VisibleForTesting
   static double calculateCyclingCalories(double speed, double grade, int weight, double timeUsed) {
-    // Get the Power.
+    // Get the Power
     double power = 9.8 * weight * speed * (0.0053 + grade) + 0.185 * (speed * speed * speed);
-    // Get the calories.
+    // Get the calories
     return power * timeUsed / UnitConversions.KCAL_TO_J;
   }
 
@@ -125,16 +130,16 @@ public class CalorieUtils {
    * @param stop the stop location
    * @param grade the grade to calculate
    * @param weight the weight of user
-   * @return the calories expenditure between the start and stop location
+   * @return the calories expenditure between the start and stop location.
    */
   @VisibleForTesting
   static double calculateExpenditureCycling(Location start, Location stop, double grade, int weight) {
-    // Seconds.
-    double time = (double) (stop.getTime() - start.getTime()) / 1000;
-    // Meter per second.
-    double speed = (start.getSpeed() + stop.getSpeed()) / 2;
+    // Gets time in seconds
+    double time = (double) (stop.getTime() - start.getTime()) / MILLISECOND_TO_SECOND;
+    // Meters per second
+    double speed = (start.getSpeed() + stop.getSpeed()) / 2.0;
     if (grade < 0) {
-      grade = 0;
+      grade = 0.0;
     }
 
     return calculateCyclingCalories(speed, grade, weight, time);
@@ -147,45 +152,39 @@ public class CalorieUtils {
    * @param stop the stop location
    * @param grade the grade to calculate
    * @param weight the weight of user
-   * @return the calories expenditure between the start and stop location
+   * @return the calories expenditure between the start and stop location.
    */
   @VisibleForTesting
   static double calculateExpenditureFoot(Location start, Location stop, double grade, int weight) {
-    // Meter per minute.
-    double speed = (start.getSpeed() + stop.getSpeed()) * 60 / 2;
+    // Meters per minute
+    double averageSpeed = (start.getSpeed() + stop.getSpeed()) * SECOND_TO_MINUTE / 2.0;
     // Get VO2
-    double VO2 = getVO2(speed, grade);
-    // Seconds.
-    double time = (double) (stop.getTime() - start.getTime()) / 1000;
-    // Change mL/kg/min to mL/kg.
-    double VO2All = VO2 * time / 60;
-    // Change mL/kg to L/kg.
-    VO2All = VO2All / 1000;
-    // Get the calorie.
-    return VO2All * weight * VO2H_TO_KCAL;
+    double VO2 = getVO2(averageSpeed, grade);
+    // Seconds
+    double time = (double) (stop.getTime() - start.getTime()) / MILLISECOND_TO_SECOND;
+    // Change mL/kg/min to mL/kg
+    double VO2All_mL = VO2 * time / SECOND_TO_MINUTE;
+    // Change mL/kg to L/kg
+    double VO2All_L = VO2All_mL / MILLILITER_TO_LITER;
+    // Get the calorie
+    return VO2All_L * weight * VO2H_TO_KCAL;
   }
 
   /**
    * Gets the VO2 value.
    * 
-   * @param start the start location
-   * @param stop the stop location
+   * @param speed in meters per minute
    * @param grade the grade to calculate
-   * @return the VO2 value
+   * @return the VO2 value.
    */
   @VisibleForTesting
   static double getVO2(double speed, double grade) {
     if (grade < 0) {
-      grade = 0;
+      grade = 0.0;
     }
 
-    double VO2 = 0;
-    if (speed > CRTICAL_SPEED_RUNNING) {
-      VO2 = calculateRunningVO2(speed, grade);
-    } else {
-      VO2 = calculateWalkingVO2(speed, grade);
-    }
-    return VO2;
+    return speed > CRTICAL_SPEED_RUNNING ? calculateRunningVO2(speed, grade) : calculateWalkingVO2(
+        speed, grade);
   }
 
   /**
@@ -196,7 +195,7 @@ public class CalorieUtils {
    * @param grade the grade to calculate
    * @param weight the weight of user
    * @param activityType can be foot or cycling
-   * @return the calories expenditure between the start and stop location
+   * @return the calories expenditure between the start and stop location.
    */
   public static double getCalories(Location start, Location stop, double grade, int weight,
       ActivityType activityType) {

@@ -2111,9 +2111,11 @@ limitations under the License.
       Character limit: ~23 (1 line)">
     Elevation
   </string>
-  <string name="stats_calories"
-    translation_description="In the 'Stats' page, the calories expediture of track.">
-    Calories expediture
+  <string name="stats_calorie"
+    translation_description="In the 'Stats' page, the calorie expediture of track.
+    
+    Character limit: ~23 (1 line)">
+    Calorie expediture
   </string>
   <string name="stats_fastest_pace"
     translation_description="In the 'Stats' page, the fastest pace.">
