@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.io.file;
 import com.google.android.apps.mytracks.content.DescriptionGenerator;
 import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
 import com.google.android.apps.mytracks.content.MyTracksLocation;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.content.Sensor.SensorData;
 import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
@@ -30,7 +31,9 @@ import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.location.Location;
+import android.net.Uri;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -65,7 +68,8 @@ public class KmlTrackWriter implements TrackFormatWriter {
       TRACK_ICON = "http://earth.google.com/images/kml-icons/track-directional/track-0.png";
 
   private final Context context;
-  private final DescriptionGenerator descriptionGenerator;
+  private final DescriptionGenerator descriptionGenerator;  
+  private final MyTracksProviderUtils myTracksProviderUtils;
   private PrintWriter printWriter;
   private ArrayList<Integer> powerList = new ArrayList<Integer>();
   private ArrayList<Integer> cadenceList = new ArrayList<Integer>();
@@ -82,6 +86,7 @@ public class KmlTrackWriter implements TrackFormatWriter {
   KmlTrackWriter(Context context, DescriptionGenerator descriptionGenerator) {
     this.context = context;
     this.descriptionGenerator = descriptionGenerator;
+    this.myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
   }
 
   @Override
@@ -158,8 +163,15 @@ public class KmlTrackWriter implements TrackFormatWriter {
     if (printWriter != null) {
       String styleName = waypoint.getType() == WaypointType.STATISTICS ? STATISTICS_STYLE
           : WAYPOINT_STYLE;
-      writePlacemark(waypoint.getName(), waypoint.getCategory(), waypoint.getDescription(),
-          styleName, waypoint.getLocation());
+      String photoUrl = waypoint.getPhotoUrl();
+      if (photoUrl != null && !photoUrl.equals("")) {
+        float heading = getHeading(waypoint.getTrackId(), waypoint.getLocation());
+        writePhotoOverlay(waypoint.getName(), waypoint.getCategory(), waypoint.getDescription(),
+            styleName, waypoint.getLocation(), photoUrl, heading);
+      } else {
+        writePlacemark(waypoint.getName(), waypoint.getCategory(), waypoint.getDescription(),
+            styleName, waypoint.getLocation());
+      }
     }
   }
 
@@ -305,6 +317,76 @@ public class KmlTrackWriter implements TrackFormatWriter {
       printWriter.println("</Point>");
       printWriter.println("</Placemark>");
     }
+  }
+  
+  /**
+   * Writes a photo overlay.
+   * 
+   * @param name the name
+   * @param category the category
+   * @param description the description
+   * @param styleName the style name
+   * @param location the location
+   * @param photoUrl the photo url
+   * @param heading the heading
+   */
+  private void writePhotoOverlay(String name, String category, String description, String styleName,
+      Location location, String photoUrl, float heading) {
+    if (location != null) {
+      printWriter.println("<PhotoOverlay>");
+      printWriter.println("<name>" + StringUtils.formatCData(name) + "</name>");
+      printWriter.println("<description>"
+          + StringUtils.formatCData(StringUtils.getCategoryDescription(category, description))
+          + "</description>");
+      printWriter.print("<Camera>");
+      printWriter.print("<longitude>" + location.getLongitude() + "</longitude>");
+      printWriter.print("<latitude>" + location.getLatitude() + "</latitude>");
+      printWriter.print("<altitude>20</altitude>");
+      printWriter.print("<heading>" + heading + "</heading>");
+      printWriter.print("<tilt>90</tilt>");
+      printWriter.println("</Camera>");
+      printWriter.println("<styleUrl>#" + styleName + "</styleUrl>");
+      printWriter.println("<Icon><href>" + Uri.decode(photoUrl) + "</href></Icon>");
+      printWriter.print("<ViewVolume>");
+      printWriter.print("<near>10</near>");
+      printWriter.print("<leftFov>-60</leftFov>");
+      printWriter.print("<rightFov>60</rightFov>");
+      printWriter.print("<bottomFov>-45</bottomFov>");
+      printWriter.print("<topFov>45</topFov>");
+      printWriter.println("</ViewVolume>");
+      printWriter.println("<Point>");
+      printWriter.println("<coordinates>" + getCoordinates(location, ",") + "</coordinates>");
+      printWriter.println("</Point>");
+      printWriter.println("</PhotoOverlay>");
+    }
+  }
+
+  /**
+   * Gets the heading to a location.
+   * 
+   * @param trackId the track id containing the location
+   * @param location the location
+   */
+  private float getHeading(long trackId, Location location) {
+    long trackPointId = myTracksProviderUtils.getTrackPointId(trackId, location);
+    if (trackPointId == -1L) {
+      return location.getBearing();
+    }
+    Cursor cursor = null;
+    Location viewLocation;
+    try {
+      cursor = myTracksProviderUtils.getTrackPointCursor(trackId, trackPointId, 10, true);
+      if (cursor == null || cursor.getCount() == 0) {
+        return location.getBearing();
+      }
+      cursor.moveToPosition(cursor.getCount() - 1);
+      viewLocation = myTracksProviderUtils.createTrackPoint(cursor);
+    } finally {
+      if (cursor != null) {
+        cursor.close();
+      }
+    }  
+    return viewLocation.bearingTo(location);
   }
   
   private String getCoordinates(Location location, String separator) {

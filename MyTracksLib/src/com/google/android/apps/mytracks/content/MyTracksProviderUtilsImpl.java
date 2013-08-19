@@ -788,6 +788,31 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     }
     return -1L;
   }
+  
+  @Override
+  public long getTrackPointId(long trackId, Location location) {
+    if (trackId < 0) {
+      return -1L;
+    }
+    Cursor cursor = null;
+    try {
+      String selection = TrackPointsColumns._ID + "=(select max(" + TrackPointsColumns._ID
+          + ") from " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID
+          + "=? AND " + TrackPointsColumns.TIME + "=?)";
+      String[] selectionArgs = new String[] {
+          Long.toString(trackId), Long.toString(location.getTime()) };
+      cursor = getTrackPointCursor(new String[] { TrackPointsColumns._ID }, selection,
+          selectionArgs, TrackPointsColumns._ID);
+      if (cursor != null && cursor.moveToFirst()) {
+        return cursor.getLong(cursor.getColumnIndexOrThrow(TrackPointsColumns._ID));
+      }
+    } finally {
+      if (cursor != null) {
+        cursor.close();
+      }
+    }
+    return -1L;
+  }
 
   @Override
   public Location getFirstValidTrackPoint(long trackId) {

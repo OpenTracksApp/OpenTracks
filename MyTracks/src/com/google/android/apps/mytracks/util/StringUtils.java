@@ -229,6 +229,26 @@ public class StringUtils {
   }
 
   /**
+   * Gets a string for category and description.
+   * 
+   * @param category the category
+   * @param description the description
+   */
+  public static String getCategoryDescription(String category, String description) {
+    if (category == null || category.length() == 0) {
+      return description;
+    }
+
+    StringBuffer buffer = new StringBuffer();
+
+    buffer.append("[" + category + "]");
+    if (description != null && description.length() != 0) {
+      buffer.append(" " + description);
+    }
+    return buffer.toString();
+  }
+  
+  /**
    * Formats the given text as a XML CDATA element. This includes adding the
    * starting and ending CDATA tags. Please notice that this may result in
    * multiple consecutive CDATA tags.
