@@ -94,9 +94,10 @@ public class ListItemUtils {
     } else {
       photo.setVisibility(View.VISIBLE);
       Display defaultDisplay = activity.getWindowManager().getDefaultDisplay();
-      // Set the initial width to 35% of the display width
-      int width = (int) (defaultDisplay.getWidth() * .35);
-      PhotoUtils.setImageVew(photo, Uri.parse(photoUrl), width, 0);
+      // Set the initial width to 33% of the display width. 
+      int width = (int) (defaultDisplay.getWidth() * .33);
+      int height = 0;
+      PhotoUtils.setImageVew(photo, Uri.parse(photoUrl), width, height);
     }
 
     // Set date/time

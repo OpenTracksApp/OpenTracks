@@ -31,7 +31,7 @@ limitations under the License.
         android:id="@+id/marker_detail_waypoint_photo"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:scaleType="fitStart" />
+        android:scaleType="fitCenter" />
       <TextView
         android:id="@+id/marker_detail_waypoint_name"
         style="@style/TextLarge.WithTopMargin" />

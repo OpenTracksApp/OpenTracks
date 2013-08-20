@@ -73,7 +73,7 @@ limitations under the License.
           android:layout_marginLeft="8dp"
           android:layout_weight="1"
           android:layout_width="0dp"
-          android:scaleType="fitStart" />
+          android:scaleType="fitCenter" />
       </LinearLayout>
       <TableLayout
         android:layout_height="wrap_content"
