@@ -96,7 +96,7 @@ public class ListItemUtils {
       Display defaultDisplay = activity.getWindowManager().getDefaultDisplay();
       // Set the initial width to 35% of the display width
       int width = (int) (defaultDisplay.getWidth() * .35);
-      PhotoUtils.setImageVew(photo, Uri.parse(photoUrl), width, 0, false);
+      PhotoUtils.setImageVew(photo, Uri.parse(photoUrl), width, 0);
     }
 
     // Set date/time

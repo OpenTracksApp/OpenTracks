@@ -27,10 +27,11 @@ limitations under the License.
       android:layout_width="match_parent"
       android:orientation="vertical" >
       <ImageView
+        android:adjustViewBounds="true"
         android:id="@+id/marker_detail_waypoint_photo"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:scaleType="centerInside" />
+        android:scaleType="fitStart" />
       <TextView
         android:id="@+id/marker_detail_waypoint_name"
         style="@style/TextLarge.WithTopMargin" />

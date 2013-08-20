@@ -181,7 +181,7 @@ public class MarkerDetailFragment extends Fragment {
         @SuppressWarnings("deprecation")
         int displayHeight = defaultDisplay.getHeight();
         bitmap = PhotoUtils.setImageVew(
-            imageView, Uri.parse(photoUrl), displayWidth, displayHeight, true);
+            imageView, Uri.parse(photoUrl), displayWidth, displayHeight);
       }
 
       TextView name = (TextView) getView().findViewById(R.id.marker_detail_waypoint_name);

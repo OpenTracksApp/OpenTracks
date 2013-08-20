@@ -44,12 +44,10 @@ public class PhotoUtils {
    * @param uri the image uri
    * @param displayWidth the display width
    * @param displayHeight the display height
-   * @param fitWithIn true to fit within the display area. False to crop and fill
-   *          the display area.
    */
   public static Bitmap setImageVew(
-      ImageView imageView, Uri uri, int displayWidth, int displayHeight, boolean fitWithIn) {
-
+      ImageView imageView, Uri uri, int displayWidth, int displayHeight) {
+    
     // Get the image dimensions
     BitmapFactory.Options options = new BitmapFactory.Options();
 
@@ -61,7 +59,6 @@ public class PhotoUtils {
     int targetHeight = displayHeight;
     if (targetHeight == 0) {
       targetHeight = (int) (targetWidth * ((float) options.outHeight / (float) options.outWidth));
-      imageView.getLayoutParams().height = targetHeight;
     }
     
     // Set imageWidth and imageHeight based on image rotation
@@ -79,8 +76,7 @@ public class PhotoUtils {
 
     // Get a scaled down version of the image
     options.inJustDecodeBounds = false;
-    options.inSampleSize = getInSampleSize(
-        imageWidth, imageHeight, targetWidth, targetHeight, fitWithIn);
+    options.inSampleSize = getInSampleSize(imageWidth, imageHeight, targetWidth, targetHeight);
     options.inPurgeable = true;
 
     Bitmap scaledBitmap = BitmapFactory.decodeFile(uri.getPath(), options);
@@ -133,11 +129,9 @@ public class PhotoUtils {
    * @param imageHeight the image height
    * @param targetWidth the target width
    * @param targetHeight the target height
-   * @param fitWithin true to fit within the target area. False to crop and fill
-   *          all target area.
    */
   private static int getInSampleSize(
-      int imageWidth, int imageHeight, int targetWidth, int targetHeight, boolean fitWithin) {
+      int imageWidth, int imageHeight, int targetWidth, int targetHeight) {
     float widthRatio = 1;
     if (imageWidth > targetWidth) {
       widthRatio = (float) imageWidth / (float) targetWidth;
@@ -150,11 +144,9 @@ public class PhotoUtils {
 
     /*
      * To fit within the target area, return the larger sample ratio so the
-     * image will not be larger than the target dimensions. To crop and fill the
-     * target area, return the smaller sample ratio so the image will be greater
-     * than the target dimensions. Use Math.floor to not under sample.
+     * image will not be larger than the target dimensions. Use Math.floor to
+     * not under sample.
      */
-    return (int) Math.floor(
-        fitWithin ? Math.max(widthRatio, heightRatio) : Math.min(widthRatio, heightRatio));
+    return (int) Math.floor(Math.max(widthRatio, heightRatio));
   }
 }
