@@ -176,6 +176,18 @@ limitations under the License.
     <item>@string/sensor_type_value_zephyr</item>
     <item>@string/sensor_type_value_none</item>
   </string-array>
+  <string-array name="stats_rate_imperial_options">
+    <item>@string/description_speed_imperial</item>
+    <item>@string/description_pace_imperial</item>
+  </string-array>
+  <string-array name="stats_rate_metric_options">
+    <item>@string/description_speed_metric</item>
+    <item>@string/description_pace_metric</item>
+  </string-array>
+  <string-array name="stats_rate_values">
+    <item>@string/stats_rate_speed</item>
+    <item>@string/stats_rate_pace</item>
+  </string-array>  
   <string-array name="stats_units_options">
     <item>@string/settings_stats_units_metric</item>
     <item>@string/settings_stats_units_imperial</item>

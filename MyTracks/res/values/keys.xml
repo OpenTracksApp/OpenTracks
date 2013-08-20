@@ -34,14 +34,14 @@ limitations under the License.
   <string name="min_recording_interval_key">minRecordingInterval</string>
   <string name="recording_distance_interval_key">recordingDistanceInterval</string>
   <string name="recording_gps_accuracy_key">recordingGpsAccuracy</string>
-  <string name="report_speed_key">reportSpeed</string>
   <string name="sensor_type_key">sensorType</string>
   <string name="share_track_invite_key">shareTrackInvite</string>
   <string name="share_track_public_key">shareTrackPublic</string>
   <string name="split_frequency_key">splitFrequency</string>
+  <string name="stats_rate_key">statsRate</string>  
   <string name="stats_show_coordinate_key">statsShowCoordinate</string>
   <string name="stats_show_grade_elevation_key">statsShowGradeElevation</string>
-  <string name="stats_units_key">statsdUnits</string>
+  <string name="stats_units_key">statsUnits</string>
   <string name="track_color_mode_medium_key">trackColorModeMedium</string>
   <string name="track_color_mode_percentage_key">trackColorModePercentage</string>
   <string name="track_color_mode_slow_key">trackColorModeSlow</string>

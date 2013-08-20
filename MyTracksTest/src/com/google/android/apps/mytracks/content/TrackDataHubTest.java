@@ -526,7 +526,8 @@ public class TrackDataHubTest extends AndroidTestCase {
   public void testPreferencesChange() throws Exception {
 
     // Register two listeners
-    PreferencesUtils.setBoolean(context, R.string.report_speed_key, true);
+    PreferencesUtils.setString(
+        context, R.string.stats_rate_key, PreferencesUtils.STATS_RATE_DEFAULT);
     PreferencesUtils.setString(
         context, R.string.stats_units_key, PreferencesUtils.STATS_UNITS_DEFAULT);
     PreferencesUtils.setInt(context, R.string.recording_gps_accuracy_key,
@@ -563,10 +564,11 @@ public class TrackDataHubTest extends AndroidTestCase {
     expect(trackDataListener2.onReportSpeedChanged(false)).andReturn(false);
     replay();
 
-    PreferencesUtils.setBoolean(context, R.string.report_speed_key, false);
+    PreferencesUtils.setString(
+        context, R.string.stats_rate_key, context.getString(R.string.stats_rate_pace));
     OnSharedPreferenceChangeListener listener = preferenceChangeListenerCapture.getValue();
     listener.onSharedPreferenceChanged(
-        sharedPreferences, PreferencesUtils.getKey(context, R.string.report_speed_key));
+        sharedPreferences, PreferencesUtils.getKey(context, R.string.stats_rate_key));
     verifyAndReset();
 
     // Change metric units to false
@@ -785,14 +787,16 @@ public class TrackDataHubTest extends AndroidTestCase {
    * the key is R.string.metric_units_key.
    */
   public void testNotifyPreferenceChanged_reportSpeedNoNotify() {
-    boolean value = false;
-    PreferencesUtils.setBoolean(context, R.string.report_speed_key, value);
+    String value = context.getString(R.string.stats_rate_pace);
+    PreferencesUtils.setString(context, R.string.stats_rate_key, value);
     trackDataHub.notifyPreferenceChanged(PreferencesUtils
-        .getKey(context, R.string.report_speed_key));
-    assertEquals(value, trackDataHub.isReportSpeed());
-    PreferencesUtils.setBoolean(context, R.string.report_speed_key, !value);
+        .getKey(context, R.string.stats_rate_key));
+    assertEquals(false, trackDataHub.isReportSpeed());
+    
+    value = context.getString(R.string.stats_rate_speed);
+    PreferencesUtils.setString(context, R.string.stats_rate_key, value);
     trackDataHub.notifyPreferenceChanged(PreferencesUtils
-        .getKey(context, R.string.report_speed_key));
-    assertEquals(!value, trackDataHub.isReportSpeed());
+        .getKey(context, R.string.stats_rate_key));
+    assertEquals(true, trackDataHub.isReportSpeed());
   }
 }

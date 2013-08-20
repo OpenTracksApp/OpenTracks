@@ -196,8 +196,7 @@ public class TrackWidgetProvider extends AppWidgetProvider {
     boolean isPaused = PreferencesUtils.getBoolean(context, R.string.recording_track_paused_key,
         PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
     boolean metricUnits = PreferencesUtils.isMetricUnits(context);
-    boolean reportSpeed = PreferencesUtils.getBoolean(
-        context, R.string.report_speed_key, PreferencesUtils.REPORT_SPEED_DEFAULT);
+    boolean reportSpeed = PreferencesUtils.isReportSpeed(context);
     int item1 = PreferencesUtils.getInt(
         context, R.string.track_widget_item1, PreferencesUtils.TRACK_WIDGET_ITEM1_DEFAULT);
     int item2 = PreferencesUtils.getInt(

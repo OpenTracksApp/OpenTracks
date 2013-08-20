@@ -65,7 +65,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   private long startTime;
 
   private boolean metricUnits = true;
-  private boolean reportSpeed = PreferencesUtils.REPORT_SPEED_DEFAULT;
+  private boolean reportSpeed = true;
   private int recordingDistanceInterval = PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT;
 
   // Modes of operation

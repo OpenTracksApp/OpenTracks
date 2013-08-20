@@ -60,8 +60,7 @@ public class TrackWidgetConfigActivity extends Activity {
     item3 = (Spinner) findViewById(R.id.track_widget_config_item3);
     item4 = (Spinner) findViewById(R.id.track_widget_config_item4);
 
-    boolean reportSpeed = PreferencesUtils.getBoolean(
-        this, R.string.report_speed_key, PreferencesUtils.REPORT_SPEED_DEFAULT);
+    boolean reportSpeed = PreferencesUtils.isReportSpeed(this);
 
     List<CharSequence> list = new ArrayList<CharSequence>();
     addItem(list, R.string.stats_distance);

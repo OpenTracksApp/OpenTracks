@@ -20,9 +20,9 @@ limitations under the License.
     android:defaultValue="@string/stats_units_metric"
     android:key="@string/stats_units_key"
     android:title="@string/settings_stats_units_title" />
-  <CheckBoxPreference
-    android:defaultValue="true"
-    android:key="@string/report_speed_key"
+  <ListPreference
+    android:defaultValue="@string/stats_rate_speed"
+    android:key="@string/stats_rate_key"
     android:title="@string/settings_stats_rate_title" />
   <PreferenceCategory android:title="@string/settings_show" >
     <CheckBoxPreference

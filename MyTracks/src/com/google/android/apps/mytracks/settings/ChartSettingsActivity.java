@@ -46,8 +46,7 @@ public class ChartSettingsActivity extends AbstractSettingsActivity {
   private void updateUi() {
     CheckBoxPreference speedCheckBoxPreference = (CheckBoxPreference) findPreference(
         getString(R.string.chart_show_speed_key));
-    boolean reportSpeed = PreferencesUtils.getBoolean(
-        this, R.string.report_speed_key, PreferencesUtils.REPORT_SPEED_DEFAULT);
+    boolean reportSpeed = PreferencesUtils.isReportSpeed(this);
     speedCheckBoxPreference.setTitle(reportSpeed ? R.string.stats_speed
         : R.string.stats_pace);
   }
