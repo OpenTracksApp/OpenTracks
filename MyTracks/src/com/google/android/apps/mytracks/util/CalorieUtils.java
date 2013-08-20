@@ -35,36 +35,35 @@ public class CalorieUtils {
   private static final double RESTING_VO2 = 3.5;
 
   /**
-   * Ratio of change vo2 to kcal/L
+   * Ratio of change Liter to kcal. In kcal per Liter.
    */
-  private static final double VO2H_TO_KCAL = 5;
-
-  private static final double MILLISECOND_TO_SECOND = 1000.0;
-  private static final double MILLILITER_TO_LITER = 1000.0;
-  private static final double SECOND_TO_MINUTE = 60.0;
+  private static final double L_TO_KCAL = 5;
 
   /**
-   * Changes 4.5 miles per hour to meters per minutes.
+   * Critical speed running in meters per minute. Changes 4.5 miles per hour to
+   * meters per minute.
    */
   @VisibleForTesting
-  static final double CRTICAL_SPEED_RUNNING = 4.5 * UnitConversions.MI_TO_KM * 1000
-      / SECOND_TO_MINUTE;
+  static final double CRTICAL_SPEED_RUNNING = 4.5 * UnitConversions.MI_TO_KM
+      * UnitConversions.KM_TO_M * UnitConversions.MIN_TO_HR;
 
   public enum ActivityType {
     CYCLING, FOOT
   }
 
   /**
-   * Calculates the calorie expenditure of walking. This equation is appropriate
+   * Calculates the calorie of walking. This equation is appropriate
    * for fairly slow speed ranges—from 1.9 to approximately 4 miles per hour
    * (mph).
    * 
-   * @param speed is calculated in meters per minute (m/min)
+   * @param speed is calculated in meters per second (m/s)
    * @param grade
    * @return the VO2 value in ml/kg/min.
    */
   @VisibleForTesting
   static double calculateWalkingVO2(double speed, double grade) {
+    // Change meters per second to meters per minute
+    speed *= UnitConversions.MIN_TO_SECOND;
     /*
      * 0.1 means oxygen cost per meter of moving each kilogram (kg) of body
      * weight while walking (horizontally). 1.8 means oxygen cost per meter of
@@ -74,17 +73,18 @@ public class CalorieUtils {
   }
 
   /**
-   * Calculates the calorie expenditure of running. This equation is appropriate
+   * Calculates the calorie of running. This equation is appropriate
    * for speeds greater than 5.0 mph (or 3.0 mph or greater if the subject is
    * truly jogging).
    * 
-   * @param speed is calculated in meters per minute (m/min)
+   * @param speed is calculated in meters per second (m/s)
    * @param grade
    * @return the VO2 value in ml/kg/min.
    */
   @VisibleForTesting
   static double calculateRunningVO2(double speed, double grade) {
-
+    // Change meters per second to meters per minute
+    speed *= UnitConversions.MIN_TO_SECOND;
     /*
      * 0.2 means oxygen cost per meter of moving each kg of body weight while
      * running (horizontally). 0.9 means oxygen cost per meter of moving total
@@ -94,7 +94,7 @@ public class CalorieUtils {
   }
 
   /**
-   * Calculates the calorie expenditure of cycling. Use below equation: <br>
+   * Calculates the calorie of cycling. Use below equation: <br>
    * P = g * m * Vg * (K1 + s) + K2 * (Va)^2 * Vg
    * <ul>
    * <li>P - Power in watts(Joule/second)</li>
@@ -117,8 +117,17 @@ public class CalorieUtils {
    */
   @VisibleForTesting
   static double calculateCyclingCalories(double speed, double grade, int weight, double timeUsed) {
+    double earthGravity = 9.8;
+
+    // Lumped constant for all frictional losses (tires, bearings, chain)
+    double K1 = 0.0053;
+
+    // Lumped constant for aerodynamic drag
+    double K2 = 0.185;
+
     // Get the Power
-    double power = 9.8 * weight * speed * (0.0053 + grade) + 0.185 * (speed * speed * speed);
+    double power = earthGravity * weight * speed * (K1 + grade) + K2 * (speed * speed * speed);
+
     // Get the calories
     return power * timeUsed / UnitConversions.KCAL_TO_J;
   }
@@ -135,8 +144,8 @@ public class CalorieUtils {
   @VisibleForTesting
   static double calculateExpenditureCycling(Location start, Location stop, double grade, int weight) {
     // Gets time in seconds
-    double time = (double) (stop.getTime() - start.getTime()) / MILLISECOND_TO_SECOND;
-    // Meters per second
+    double time = (double) (stop.getTime() - start.getTime()) * UnitConversions.MS_TO_S;
+    // Get speed in meters per second
     double speed = (start.getSpeed() + stop.getSpeed()) / 2.0;
     if (grade < 0) {
       grade = 0.0;
@@ -156,24 +165,20 @@ public class CalorieUtils {
    */
   @VisibleForTesting
   static double calculateExpenditureFoot(Location start, Location stop, double grade, int weight) {
-    // Meters per minute
-    double averageSpeed = (start.getSpeed() + stop.getSpeed()) * SECOND_TO_MINUTE / 2.0;
-    // Get VO2
+    // Get speed in meters per second
+    double averageSpeed = (start.getSpeed() + stop.getSpeed()) / 2.0;
+    // Get VO2 in mL/kg/min
     double VO2 = getVO2(averageSpeed, grade);
-    // Seconds
-    double time = (double) (stop.getTime() - start.getTime()) / MILLISECOND_TO_SECOND;
-    // Change mL/kg/min to mL/kg
-    double VO2All_mL = VO2 * time / SECOND_TO_MINUTE;
-    // Change mL/kg to L/kg
-    double VO2All_L = VO2All_mL / MILLILITER_TO_LITER;
-    // Get the calorie
-    return VO2All_L * weight * VO2H_TO_KCAL;
+    // Minutes
+    double time = (double) (stop.getTime() - start.getTime()) * UnitConversions.MS_TO_S * UnitConversions.S_TO_MIN;
+    // Get the calorie. The unit of calorie is kcal which is came from mL/kg/min * min * L/mL * kg * kcal/L
+    return VO2 * time * UnitConversions.ML_TO_L * weight * L_TO_KCAL;
   }
 
   /**
    * Gets the VO2 value.
    * 
-   * @param speed in meters per minute
+   * @param speed in meters per second
    * @param grade the grade to calculate
    * @return the VO2 value.
    */

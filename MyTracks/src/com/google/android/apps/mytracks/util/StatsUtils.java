@@ -40,6 +40,9 @@ public class StatsUtils {
   private static final String GRADE_FORMAT = "%1$d";
   private static final String CALORIES_FORMAT = "%1$.0f";
   
+  private static final String CALORIES_UNIT = "Cal";
+
+  
   private StatsUtils() {}
 
   /**
@@ -331,6 +334,6 @@ public class StatsUtils {
    */
   private static void setCalorie(Activity activity, int itemId, int labelId, double calorie) {
     setItem(activity, itemId, labelId,
-        String.format(Locale.getDefault(), CALORIES_FORMAT, calorie), null);
+        String.format(Locale.getDefault(), CALORIES_FORMAT, calorie), CALORIES_UNIT);
   }
 }

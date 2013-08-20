@@ -89,8 +89,8 @@ public interface TracksColumns extends BaseColumns {
   // The owner of the shared with me track
   public static final String SHAREDOWNER = "sharedOwner";
   
-  // Calorie expenditure of the track
-  public static final String CALORIE = "calories";
+  // Calorie burned of the track
+  public static final String CALORIE = "calorie";
 
   public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" // table
       + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " // id
@@ -124,7 +124,7 @@ public interface TracksColumns extends BaseColumns {
       + MODIFIEDTIME + " INTEGER, " // modified time
       + SHAREDWITHME + " INTEGER, " // shared with me
       + SHAREDOWNER + " STRING, " // shared owner
-      + CALORIE + " INTEGER);"; // calories
+      + CALORIE + " INTEGER);"; // calorie
 
   public static final String[] COLUMNS = { _ID, // id
       NAME, // name
@@ -157,7 +157,7 @@ public interface TracksColumns extends BaseColumns {
       MODIFIEDTIME, // modified time
       SHAREDWITHME, // shared with me
       SHAREDOWNER,// shared owner
-      CALORIE }; // calories
+      CALORIE }; // calorie
 
   public static final byte[] COLUMN_TYPES = { ContentTypeIds.LONG_TYPE_ID, // id
       ContentTypeIds.STRING_TYPE_ID, // name
@@ -190,6 +190,6 @@ public interface TracksColumns extends BaseColumns {
       ContentTypeIds.LONG_TYPE_ID, // modified time
       ContentTypeIds.BOOLEAN_TYPE_ID, // shared with me
       ContentTypeIds.STRING_TYPE_ID, // shared owner
-      ContentTypeIds.INT_TYPE_ID // calories
+      ContentTypeIds.INT_TYPE_ID // calorie
   };
 }

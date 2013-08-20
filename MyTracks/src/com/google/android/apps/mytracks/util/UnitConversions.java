@@ -22,6 +22,21 @@ package com.google.android.apps.mytracks.util;
  */
 public class UnitConversions {
 
+  // Milliliter to liter
+  static final double ML_TO_L = 1 / 1000.0;
+
+  // Millisecond to second
+  static final double MS_TO_S = 1 / 1000.0;
+
+  // Minute to second
+  static final double MIN_TO_SECOND = 60.0;
+
+  // Second to minute
+  static final double S_TO_MIN = 1 / MIN_TO_SECOND;
+
+  // Minute to hour
+  static final double MIN_TO_HR = 1 / 60.0;
+
   private UnitConversions() {}
 
   // multiplication factor to convert kilometers to miles
@@ -38,6 +53,8 @@ public class UnitConversions {
 
   // multiplication factor to convert meters to kilometers
   public static final double M_TO_KM = 1 / 1000.0;
+
+  public static final double KM_TO_M = 1 / M_TO_KM;
 
   // multiplication factor to convert meters per second to kilometers per hour
   public static final double MS_TO_KMH = 3.6;

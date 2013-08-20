@@ -138,7 +138,7 @@ limitations under the License.
     android:id="@+id/stats_calorie_container"
     android:layout_height="wrap_content"
     android:layout_width="match_parent" >
-    <!-- Calories value -->
+    <!-- calorie value -->
     <include
       android:id="@+id/stats_calorie"
       layout="@layout/stats_small_item" />
