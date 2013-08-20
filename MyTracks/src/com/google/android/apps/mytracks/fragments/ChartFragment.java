@@ -305,8 +305,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
    */
   private void checkChartSettings() {
     boolean needUpdate = false;
-    if (chartByDistance != PreferencesUtils.getBoolean(getActivity(),
-        R.string.chart_by_distance_key, PreferencesUtils.CHART_BY_DISTANCE_DEFAULT)) {
+    if (chartByDistance != PreferencesUtils.isChartByDistance(getActivity())) {
       chartByDistance = !chartByDistance;
       chartView.setChartByDistance(chartByDistance);
       reloadTrackDataHub();

@@ -18,12 +18,12 @@ limitations under the License.
   <!-- Keys for persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
   <string name="allow_access_key">allowAccess</string>
   <string name="auto_resume_track_timeout_key">autoResumeTrackTimeout</string>
-  <string name="chart_by_distance_key">chartByDistance</string>
   <string name="chart_show_cadence_key">chartShowCadence</string>
   <string name="chart_show_elevation_key">chartShowElevation</string>
   <string name="chart_show_heart_rate_key">chartShowHeartRate</string>
   <string name="chart_show_power_key">chartShowPower</string>
   <string name="chart_show_speed_key">chartShowSpeed</string>
+  <string name="chart_x_axis_key">chartXAxis</string>
   <string name="default_activity_key">defaultActivity</string>
   <string name="export_external_storage_format_key">exportExternalStorageFormat</string>
   <string name="export_google_fusion_tables_public_key">exportGoogleFusionTablesPublic</string>
