@@ -2021,10 +2021,6 @@ limitations under the License.
     translation_description="The hint for the auto complete text box for entering email addresses.">
     Email addresses
   </string>
-  <string name="share_track_footer"
-    translation_description="The dialog footer when sharing a track via Google Drive.">
-    This will upload your track to Google Drive.
-  </string>
   <string name="share_track_invite"
     translation_description="The checkbox to invite people to view a track.">
     Invite people to view
