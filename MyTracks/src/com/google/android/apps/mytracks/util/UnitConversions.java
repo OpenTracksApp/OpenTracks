@@ -22,22 +22,25 @@ package com.google.android.apps.mytracks.util;
  */
 public class UnitConversions {
 
+  private UnitConversions() {}
+
   // Milliliter to liter
-  static final double ML_TO_L = 1 / 1000.0;
+  public static final double ML_TO_L = 1 / 1000.0;
 
   // Millisecond to second
-  static final double MS_TO_S = 1 / 1000.0;
+  public static final double MS_TO_S = 1 / 1000.0;
 
   // Minute to second
-  static final double MIN_TO_SECOND = 60.0;
+  public static final double MIN_TO_S = 60.0;
 
   // Second to minute
-  static final double S_TO_MIN = 1 / MIN_TO_SECOND;
+  public static final double S_TO_MIN = 1 / MIN_TO_S;
 
   // Minute to hour
-  static final double MIN_TO_HR = 1 / 60.0;
+  public static final double HR_TO_MIN = 60.0;
 
-  private UnitConversions() {}
+  // Minute to hour
+  public static final double MIN_TO_HR = 1 / HR_TO_MIN;
 
   // multiplication factor to convert kilometers to miles
   public static final double KM_TO_MI = 0.621371192;

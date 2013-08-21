@@ -76,8 +76,8 @@ public class CalorieUtilsTest extends TestCase {
    * Checks using running VO2 equation.
    */
   public void testGetVO2_running() {
-    double actual = CalorieUtils.getVO2(CalorieUtils.CRTICAL_SPEED_RUNNING * 2, grade);
-    double expected = CalorieUtils.calculateRunningVO2(CalorieUtils.CRTICAL_SPEED_RUNNING * 2,
+    double actual = CalorieUtils.getVo2(CalorieUtils.CRTICAL_SPEED_RUNNING * 2, grade);
+    double expected = CalorieUtils.calculateRunningVo2(CalorieUtils.CRTICAL_SPEED_RUNNING * 2,
         grade);
     assertEquals(expected, actual);
   }
@@ -89,8 +89,8 @@ public class CalorieUtilsTest extends TestCase {
     // Test at half the critical speed
     double footSpeed = CalorieUtils.CRTICAL_SPEED_RUNNING / 2.0;
 
-    double actual = CalorieUtils.getVO2(footSpeed, grade);
-    double expected = CalorieUtils.calculateWalkingVO2(footSpeed, grade);
+    double actual = CalorieUtils.getVo2(footSpeed, grade);
+    double expected = CalorieUtils.calculateWalkingVo2(footSpeed, grade);
     assertEquals(expected, actual);
   }
 

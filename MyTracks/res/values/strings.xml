@@ -2115,7 +2115,7 @@ limitations under the License.
     translation_description="In the 'Stats' page, the calorie burned.
     
       Character limit: ~23 (1 line)">
-    Calorie expediture
+    Calorie expenditure
   </string>
   <string name="stats_fastest_pace"
     translation_description="In the 'Stats' page, the fastest pace.">
@@ -2381,6 +2381,10 @@ limitations under the License.
   <string name="unit_minute_per_mile"
     translation_description="Abbreviation for minutes per mile. E.g., '5 min/mi'.">
     min/mi
+  </string>
+  <string name="unit_calorie"
+    translation_description="Abbreviation for calorie. E.g., '5 Cal'.">
+    Cal
   </string>
 
   <!-- Value -->

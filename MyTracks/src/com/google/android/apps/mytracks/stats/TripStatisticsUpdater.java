@@ -94,7 +94,7 @@ public class TripStatisticsUpdater {
   // A buffer of the recent speed readings (m/s) for calculating max speed
   private final DoubleBuffer speedBuffer = new DoubleBuffer(SPEED_SMOOTHING_FACTOR);
 
-  // Average weight.
+  // Default weight, in kilogram
   private int defaultWeight = 65;
   
   /**

@@ -49,7 +49,7 @@ import java.util.ArrayList;
 public class MyTracksProvider extends ContentProvider {
 
   private static final String TAG = MyTracksProvider.class.getSimpleName();
-  private static final int DATABASE_VERSION = 23;
+  private static final int DATABASE_VERSION = 22;
 
   @VisibleForTesting
   static final String DATABASE_NAME = "mytracks.db";
@@ -129,9 +129,6 @@ public class MyTracksProvider extends ContentProvider {
           Log.w(TAG, "Upgrade DB: Adding photo url column.");
           db.execSQL("ALTER TABLE " + WaypointsColumns.TABLE_NAME + " ADD " + WaypointsColumns.PHOTOURL
               + " STRING");
-        }
-        
-        if (oldVersion <= 22) {
           Log.w(TAG, "Upgrade DB: Adding track calorie column.");
           db.execSQL("ALTER TABLE " + TracksColumns.TABLE_NAME + " ADD " + TracksColumns.CALORIE
               + " INTEGER");

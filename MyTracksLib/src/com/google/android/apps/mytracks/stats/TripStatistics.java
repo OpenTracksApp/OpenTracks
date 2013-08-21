@@ -575,12 +575,13 @@ public class TripStatistics implements Parcelable {
   /**
    * Adds calorie value.
    * 
-   * @param calorieAdded add the value to the total calorie
+   * @param calorie add the value to the total calorie
    */
-  public void addCalorie(double calorieAdded) {
-    this.calorie += calorieAdded;
+  @SuppressWarnings("hiding")
+  public void addCalorie(double calorie) {
+    this.calorie += calorie;
   }
-  
+
   /**
    * Sets calorie value.
    * 
