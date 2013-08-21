@@ -64,7 +64,8 @@ public class SharingSettingsActivity extends AbstractSettingsActivity {
       return null;
     }
     return DialogUtils.createConfirmationDialog(this,
-        R.string.settings_sharing_allow_access_confirm_message,
+        R.string.settings_sharing_allow_access_confirm_title,
+        getString(R.string.settings_sharing_allow_access_confirm_message),
         new DialogInterface.OnClickListener() {
             @Override
           public void onClick(DialogInterface dialog, int button) {

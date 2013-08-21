@@ -187,11 +187,10 @@ public class SyncTestUtils {
     if (EndToEndTestUtils.SOLO.waitForText(accountName, 1, EndToEndTestUtils.SHORT_WAIT_TIME)) {
       EndToEndTestUtils.SOLO.clickOnText(accountName);
       EndToEndTestUtils.instrumentation.waitForIdleSync();
-      if (EndToEndTestUtils.SOLO.waitForText(
-          EndToEndTestUtils.activityMytracks.getString(R.string.generic_confirm_title), 1,
-          EndToEndTestUtils.SHORT_WAIT_TIME)) {
-        EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
-            .getString(R.string.generic_yes));
+      if (EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.activityMytracks.getString(
+          R.string.settings_google_account_confirm_title), 1, EndToEndTestUtils.SHORT_WAIT_TIME)) {
+        EndToEndTestUtils.SOLO.clickOnText(
+            EndToEndTestUtils.activityMytracks.getString(R.string.generic_yes));
       }
     } else {
       Assert.fail();

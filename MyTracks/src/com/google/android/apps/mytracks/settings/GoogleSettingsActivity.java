@@ -140,12 +140,13 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
     Dialog dialog;
     switch (id) {
       case DIALOG_CONFIRM_SWITCH_ACCOUNT:
-        dialog = DialogUtils.createConfirmationDialog(
-            this, R.string.settings_google_account_confirm_message, null);
+        dialog = DialogUtils.createConfirmationDialog(this,
+            R.string.settings_google_account_confirm_title,
+            getString(R.string.settings_google_account_confirm_message), null);
         break;
       case DIALOG_CONFIRM_DRIVE_SYNC_ON:
         dialog = DialogUtils.createConfirmationDialog(this, R.string.sync_drive_title,
-            R.string.sync_drive_confirm_message, null, new DialogInterface.OnClickListener() {
+            getString(R.string.sync_drive_confirm_message), new DialogInterface.OnClickListener() {
                 @Override
               public void onClick(DialogInterface d, int button) {
                 final String googleAccount = PreferencesUtils.getString(GoogleSettingsActivity.this,
@@ -179,7 +180,7 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
                 });
                 thread.start();
               }
-            }, null);
+            });
         break;
       default:
         dialog = null;

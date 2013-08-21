@@ -99,7 +99,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
 
     // Reset all settings.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup_reset));
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_reset_summary));
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_reset));
     EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_yes), true,
         true);
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.settings_reset_done), 1,
@@ -283,7 +283,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     // Write to SD card.
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup_reset));
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup_now));
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
         activityMyTracks.getString(R.string.settings_backup_now_success), 0,
         EndToEndTestUtils.SUPER_LONG_WAIT_TIME));
@@ -298,7 +298,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     // Read from SD card.
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup_reset));
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup_now));
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup));
     EndToEndTestUtils.SOLO
         .clickOnText(activityMyTracks.getString(R.string.settings_backup_restore));
     EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_yes), true,

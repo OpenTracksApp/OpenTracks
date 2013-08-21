@@ -21,6 +21,7 @@ import com.google.android.apps.mytracks.io.backup.BackupActivity;
 import com.google.android.apps.mytracks.io.backup.RestoreChooserActivity;
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.util.DialogUtils;
+import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
@@ -45,8 +46,9 @@ import android.widget.Toast;
 public class BackupResetSettingsActivity extends AbstractSettingsActivity {
 
   private static final String TAG = BackupResetSettingsActivity.class.getSimpleName();
-  private static final int DIALOG_CONFIRM_RESTORE_ID = 0;
-  private static final int DIALOG_CONFIRM_RESET_ID = 1;
+  private static final int DIALOG_CONFIRM_BACKUP_ID = 0;
+  private static final int DIALOG_CONFIRM_RESTORE_ID = 1;
+  private static final int DIALOG_CONFIRM_RESET_ID = 2;
 
   private SharedPreferences sharedPreferences;
   private Preference backupPreference;
@@ -88,10 +90,8 @@ public class BackupResetSettingsActivity extends AbstractSettingsActivity {
     backupPreference = findPreference(getString(R.string.settings_backup_key));
     backupPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
         @Override
-      public boolean onPreferenceClick(Preference preference) {
-        Intent intent = IntentUtils.newIntent(
-            BackupResetSettingsActivity.this, BackupActivity.class);
-        startActivity(intent);
+      public boolean onPreferenceClick(Preference preference) {        
+          showDialog(DIALOG_CONFIRM_BACKUP_ID);
         return true;
       }
     });
@@ -116,11 +116,26 @@ public class BackupResetSettingsActivity extends AbstractSettingsActivity {
 
   @Override
   protected Dialog onCreateDialog(int id) {
+    String message;
     Dialog dialog;
     switch (id) {
+      case DIALOG_CONFIRM_BACKUP_ID:
+        message = getString(R.string.settings_backup_confirm_message,
+            FileUtils.getDirectoryDisplayName(FileUtils.BACKUPS_DIR));
+        dialog = DialogUtils.createConfirmationDialog(this, R.string.settings_backup_confirm_title,
+            message, new DialogInterface.OnClickListener() {
+                @Override
+              public void onClick(DialogInterface d, int which) {
+                Intent intent = IntentUtils.newIntent(
+                    BackupResetSettingsActivity.this, BackupActivity.class);
+                startActivity(intent);
+              }
+            });
+        break;
       case DIALOG_CONFIRM_RESTORE_ID:
+        message = getString(R.string.settings_backup_restore_confirm_message);
         dialog = DialogUtils.createConfirmationDialog(this,
-            R.string.settings_backup_restore_confirm_message,
+            R.string.settings_backup_restore_confirm_title, message,
             new DialogInterface.OnClickListener() {
                 @Override
               public void onClick(DialogInterface d, int which) {
@@ -131,8 +146,9 @@ public class BackupResetSettingsActivity extends AbstractSettingsActivity {
             });
         break;
       case DIALOG_CONFIRM_RESET_ID:
-        dialog = DialogUtils.createConfirmationDialog(
-            this, R.string.settings_reset_confirm_message, new DialogInterface.OnClickListener() {
+        message = getString(R.string.settings_reset_confirm_message);
+        dialog = DialogUtils.createConfirmationDialog(this, R.string.settings_reset_confirm_title,
+            message, new DialogInterface.OnClickListener() {
                 @Override
               public void onClick(DialogInterface d, int button) {
                 onResetPreferencesConfirmed();
@@ -164,17 +180,13 @@ public class BackupResetSettingsActivity extends AbstractSettingsActivity {
    */
   private void updateUi() {
     boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+    String summary = isRecording ? getString(R.string.settings_not_while_recording) : "";
     backupPreference.setEnabled(!isRecording);
-    backupPreference.setSummary(
-        isRecording ? R.string.settings_not_while_recording : R.string.settings_backup_now_summary);
-
+    backupPreference.setSummary(summary);
     restoreNowPreference.setEnabled(!isRecording);
-    restoreNowPreference.setSummary(isRecording ? R.string.settings_not_while_recording
-        : R.string.settings_backup_restore_summary);
-
+    restoreNowPreference.setSummary(summary);
     resetPreference.setEnabled(!isRecording);
-    resetPreference.setSummary(
-        isRecording ? R.string.settings_not_while_recording : R.string.settings_reset_summary);
+    resetPreference.setSummary(summary);
   }
 
   /**

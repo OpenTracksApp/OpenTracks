@@ -843,7 +843,7 @@ public class EndToEndTestUtils {
     findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
     SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup_reset));
     Assert.assertTrue(SOLO.waitForText(activityMyTracks.getString(R.string.settings_reset)));
-    SOLO.clickOnText(activityMyTracks.getString(R.string.settings_reset_summary));
+    SOLO.clickOnText(activityMyTracks.getString(R.string.settings_reset));
     getButtonOnScreen(activityMytracks.getString(R.string.generic_yes), true, true);
     Assert.assertTrue(SOLO.waitForText(activityMyTracks.getString(R.string.settings_reset_done)));
     instrumentation.waitForIdleSync();

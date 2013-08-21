@@ -16,11 +16,11 @@
 
 package com.google.android.apps.mytracks.fragments;
 
+import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -92,8 +92,8 @@ public class ConfirmPlayDialogFragment extends DialogFragment {
     textView.setText(R.string.track_detail_play_confirm_message);
     checkBox = (CheckBox) view.findViewById(R.id.confirm_dialog_check_box);
 
-    return new AlertDialog.Builder(fragmentActivity).setNegativeButton(R.string.generic_no, null)
-        .setPositiveButton(R.string.generic_yes, new DialogInterface.OnClickListener() {
+    return DialogUtils.createConfirmationDialog(fragmentActivity,
+        R.string.track_detail_play_confirm_title, view, new DialogInterface.OnClickListener() {
             @Override
           public void onClick(DialogInterface dialog, int which) {
             long[] trackIds = getArguments().getLongArray(KEY_TRACK_IDS);
@@ -101,6 +101,6 @@ public class ConfirmPlayDialogFragment extends DialogFragment {
                 fragmentActivity, R.string.confirm_play_earth_key, !checkBox.isChecked());
             caller.onConfirmPlayDone(trackIds);
           }
-        }).setTitle(R.string.generic_confirm_title).setView(view).create();
+        });
   }
 }
