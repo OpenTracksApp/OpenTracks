@@ -28,7 +28,6 @@ import com.google.android.apps.mytracks.util.StatsUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -66,7 +65,6 @@ public class MarkerDetailFragment extends Fragment {
 
   private MyTracksProviderUtils myTracksProviderUtils;
   private Waypoint waypoint;
-  private Bitmap bitmap;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -95,13 +93,6 @@ public class MarkerDetailFragment extends Fragment {
     // Need to update the waypoint in case returning after an edit
     updateWaypoint(true);
     update();
-  }
-
-  public void onPause() {
-    super.onPause();
-    if (bitmap != null) {
-      bitmap.recycle();
-    }
   }
 
   @Override
@@ -180,8 +171,7 @@ public class MarkerDetailFragment extends Fragment {
         int displayWidth = defaultDisplay.getWidth();
         @SuppressWarnings("deprecation")
         int displayHeight = defaultDisplay.getHeight();
-        bitmap = PhotoUtils.setImageVew(
-            imageView, Uri.parse(photoUrl), displayWidth, displayHeight);
+        PhotoUtils.setImageVew(imageView, Uri.parse(photoUrl), displayWidth, displayHeight);
       }
 
       TextView name = (TextView) getView().findViewById(R.id.marker_detail_waypoint_name);

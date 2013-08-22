@@ -16,15 +16,12 @@
 
 package com.google.android.apps.mytracks.util;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.media.ExifInterface;
+import com.google.android.apps.mytracks.services.tasks.BitmapLoader;
+
 import android.net.Uri;
-import android.util.Log;
 import android.widget.ImageView;
 
-import java.io.IOException;
+import java.lang.ref.WeakReference;
 
 /**
  * Utilities for photos.
@@ -32,8 +29,6 @@ import java.io.IOException;
  * @author Jimmy Shih
  */
 public class PhotoUtils {
-
-  private static final String TAG = PhotoUtils.class.getSimpleName();
 
   private PhotoUtils() {}
 
@@ -45,108 +40,55 @@ public class PhotoUtils {
    * @param displayWidth the display width
    * @param displayHeight the display height
    */
-  public static Bitmap setImageVew(
+  public static void setImageVew(
       ImageView imageView, Uri uri, int displayWidth, int displayHeight) {
-    
-    // Get the image dimensions
-    BitmapFactory.Options options = new BitmapFactory.Options();
-
-    options.inJustDecodeBounds = true;
-    BitmapFactory.decodeFile(uri.getPath(), options);
-
-    // Set targetWidth and targetHeight
-    int targetWidth = displayWidth;
-    int targetHeight = displayHeight;
-    if (targetHeight == 0) {
-      targetHeight = (int) (targetWidth * ((float) options.outHeight / (float) options.outWidth));
+    if (cancelBitmapLoader(imageView, uri)) {
+      BitmapLoader bitmapLoader = new BitmapLoader(imageView, uri, displayWidth, displayHeight);
+      WeakReference<BitmapLoader> bitmapLoaderReference = new WeakReference<BitmapLoader>(
+          bitmapLoader);
+      imageView.setTag(bitmapLoaderReference);
+      bitmapLoader.execute();
     }
-    
-    // Set imageWidth and imageHeight based on image rotation
-    int rotation = getRotation(uri);
-    int imageWidth;
-    int imageHeight;
-
-    if (rotation == 0 || rotation == 180) {
-      imageWidth = options.outWidth;
-      imageHeight = options.outHeight;
-    } else {
-      imageWidth = options.outHeight;
-      imageHeight = options.outWidth;
-    }
-
-    // Get a scaled down version of the image
-    options.inJustDecodeBounds = false;
-    options.inSampleSize = getInSampleSize(imageWidth, imageHeight, targetWidth, targetHeight);
-    options.inPurgeable = true;
-
-    Bitmap scaledBitmap = BitmapFactory.decodeFile(uri.getPath(), options);
-
-    // Get the final bitmap after rotating the scaled down image
-    Bitmap bitmap;
-    if (rotation == 0) {
-      bitmap = scaledBitmap;
-    } else {
-      Matrix matrix = new Matrix();
-      matrix.postRotate(rotation);
-      bitmap = Bitmap.createBitmap(
-          scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
-      scaledBitmap.recycle();
-    }
-
-    imageView.setImageBitmap(bitmap);
-    return bitmap;
   }
 
   /**
-   * Gets the image rotation
+   * Gets the image view bitmap loader.
    * 
-   * @param uri the image uri
+   * @param imageView the image view
    */
-  private static int getRotation(Uri uri) {
-    try {
-      ExifInterface exifInterface = new ExifInterface(uri.getPath());
-      switch (exifInterface.getAttributeInt(
-          ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)) {
-        case ExifInterface.ORIENTATION_ROTATE_90:
-          return 90;
-        case ExifInterface.ORIENTATION_ROTATE_180:
-          return 180;
-        case ExifInterface.ORIENTATION_ROTATE_270:
-          return 270;
-        default:
-          return 0;
+  public static BitmapLoader getBitmapLoader(ImageView imageView) {
+    if (imageView != null) {
+      Object object = imageView.getTag();
+      if (object instanceof WeakReference<?>) {
+        @SuppressWarnings("unchecked")
+        WeakReference<BitmapLoader> bitmapLoaderReference = (WeakReference<BitmapLoader>) object;
+        return bitmapLoaderReference.get();
       }
-    } catch (IOException e) {
-      Log.e(TAG, "Unable to get photo orientation", e);
-      return 0;
     }
+    return null;
   }
 
   /**
-   * Gets the in sample size.
+   * Cancels the image view bitmap loader.
    * 
-   * @param imageWidth the image width
-   * @param imageHeight the image height
-   * @param targetWidth the target width
-   * @param targetHeight the target height
+   * @param imageView the image view
+   * @param uri the uri
+   * @return false if the bitmap loader shouldn't be canceled. True if there is
+   *         no bitmap loader or the bitmap loader is cancelled.
    */
-  private static int getInSampleSize(
-      int imageWidth, int imageHeight, int targetWidth, int targetHeight) {
-    float widthRatio = 1;
-    if (imageWidth > targetWidth) {
-      widthRatio = (float) imageWidth / (float) targetWidth;
-    }
+  private static boolean cancelBitmapLoader(ImageView imageView, Uri uri) {
+    BitmapLoader bitmapLoaderAsyncTask = getBitmapLoader(imageView);
 
-    float heightRatio = 1;
-    if (imageHeight > targetHeight) {
-      heightRatio = (float) imageHeight / (float) targetHeight;
+    if (bitmapLoaderAsyncTask != null) {
+      if (bitmapLoaderAsyncTask.getUri().equals(uri)) {
+        // same bitmap loader is already in progress, don't cancel
+        return false;
+      } else {
+        // cancel previous bitmap loader
+        bitmapLoaderAsyncTask.cancel(true);
+      }
     }
-
-    /*
-     * To fit within the target area, return the larger sample ratio so the
-     * image will not be larger than the target dimensions. Use Math.floor to
-     * not under sample.
-     */
-    return (int) Math.floor(Math.max(widthRatio, heightRatio));
+    // imageview has no bitmap loader, or an existing bitmap loader is cancelled
+    return true;
   }
 }
