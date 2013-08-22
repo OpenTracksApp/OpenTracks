@@ -39,6 +39,18 @@ public class CalorieUtils {
    */
   private static final double L_TO_KCAL = 5;
 
+  private static final double earthGravity = 9.8;
+
+  /**
+   * Lumped constant for all frictional losses (tires, bearings, chain)
+   */
+  private static final double K1 = 0.0053;
+
+  /**
+   * Lumped constant for aerodynamic drag
+   */
+  private static final double K2 = 0.185;
+
   /**
    * Critical speed running in meters per minute. Converts 4.5 miles per hour to
    * meters per minute. 4 miles per hour is regarded as the max speed of walking
@@ -87,7 +99,7 @@ public class CalorieUtils {
   @VisibleForTesting
   static double calculateRunningVo2(double speed, double grade) {
     // Change meters per second to meters per minute
-    speed *= UnitConversions.MIN_TO_S;
+    speed = speed / UnitConversions.S_TO_MIN;
     /*
      * 0.2 means oxygen cost per meter of moving each kg of body weight while
      * running (horizontally). 0.9 means oxygen cost per meter of moving total
@@ -120,14 +132,6 @@ public class CalorieUtils {
    */
   @VisibleForTesting
   static double calculateCyclingCalories(double speed, double grade, int weight, double timeUsed) {
-    double earthGravity = 9.8;
-
-    // Lumped constant for all frictional losses (tires, bearings, chain)
-    double K1 = 0.0053;
-
-    // Lumped constant for aerodynamic drag
-    double K2 = 0.185;
-
     // Get the Power, the unit is Watt (Joule/second)
     double power = earthGravity * weight * speed * (K1 + grade) + K2 * (speed * speed * speed);
 
@@ -146,15 +150,15 @@ public class CalorieUtils {
    */
   @VisibleForTesting
   static double calculateExpenditureCycling(Location start, Location stop, double grade, int weight) {
-    // Gets time in seconds
-    double time = (double) (stop.getTime() - start.getTime()) * UnitConversions.MS_TO_S;
+    // Gets duration in seconds
+    double duration = (double) (stop.getTime() - start.getTime()) * UnitConversions.MS_TO_S;
     // Get speed in meters per second
     double speed = (start.getSpeed() + stop.getSpeed()) / 2.0;
     if (grade < 0) {
       grade = 0.0;
     }
 
-    return calculateCyclingCalories(speed, grade, weight, time);
+    return calculateCyclingCalories(speed, grade, weight, duration);
   }
 
   /**
