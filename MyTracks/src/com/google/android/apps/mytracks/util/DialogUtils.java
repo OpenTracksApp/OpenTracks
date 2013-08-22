@@ -38,40 +38,26 @@ public class DialogUtils {
    * Creates a confirmation dialog.
    * 
    * @param context the context
-   * @param messageId the message id
+   * @param titleId the title
+   * @param message the message
    * @param okListener the listener when OK is clicked
    */
   public static Dialog createConfirmationDialog(
-      Context context, int messageId, DialogInterface.OnClickListener okListener) {
-    return createConfirmationDialog(
-        context, R.string.generic_confirm_title, messageId, null, okListener, null);
+      Context context, int titleId, String message, DialogInterface.OnClickListener okListener) {
+    return createConfirmationDialog(context, titleId, message, null, okListener);
   }
 
   /**
    * Creates a confirmation dialog.
    * 
    * @param context the context
-   * @param titleId the titleId
-   * @param messageId the messageId
+   * @param titleId the title
    * @param view the view
    * @param okListener the listener when OK is clicked
-   * @param cancelListener the listener when cancel is clicked
    */
-  public static Dialog createConfirmationDialog(Context context, int titleId, int messageId,
-      View view, DialogInterface.OnClickListener okListener,
-      DialogInterface.OnClickListener cancelListener) {
-    AlertDialog.Builder builder = new AlertDialog.Builder(context).setCancelable(true)
-        .setIcon(android.R.drawable.ic_dialog_alert)
-        .setNegativeButton(R.string.generic_no, cancelListener)
-        .setPositiveButton(R.string.generic_yes, okListener).setTitle(titleId);
-    if (messageId != -1) {
-      builder.setMessage(messageId);
-    }
-    if (view != null) {
-      builder.setView(view);
-    }
-
-    return builder.create();
+  public static Dialog createConfirmationDialog(
+      Context context, int titleId, View view, DialogInterface.OnClickListener okListener) {
+    return createConfirmationDialog(context, titleId, null, view, okListener);
   }
   
   /**
@@ -97,6 +83,21 @@ public class DialogUtils {
   public static ProgressDialog createHorizontalProgressDialog(Context context, int messageId,
       DialogInterface.OnCancelListener onCancelListener, Object... formatArgs) {
     return createProgressDialog(false, context, messageId, onCancelListener, formatArgs);
+  }
+
+  private static Dialog createConfirmationDialog(Context context, int titleId, String message,
+      View view, DialogInterface.OnClickListener okListener) {
+    AlertDialog.Builder builder = new AlertDialog.Builder(context).setCancelable(true)
+        .setIcon(android.R.drawable.ic_dialog_alert).setNegativeButton(R.string.generic_no, null)
+        .setPositiveButton(R.string.generic_yes, okListener).setTitle(titleId);
+    if (message != null) {
+      builder.setMessage(message);
+    }
+    if (view != null) {
+      builder.setView(view);
+    }
+  
+    return builder.create();
   }
 
   /**

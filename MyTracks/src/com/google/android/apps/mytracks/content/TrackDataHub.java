@@ -282,9 +282,8 @@ public class TrackDataHub implements DataSourceListener {
           }
         }
         if (key == null
-            || key.equals(PreferencesUtils.getKey(context, R.string.report_speed_key))) {
-          reportSpeed = PreferencesUtils.getBoolean(
-              context, R.string.report_speed_key, PreferencesUtils.REPORT_SPEED_DEFAULT);
+            || key.equals(PreferencesUtils.getKey(context, R.string.stats_rate_key))) {
+          reportSpeed = PreferencesUtils.isReportSpeed(context);
           if (key != null) {
             for (TrackDataListener trackDataListener :
                 trackDataManager.getListeners(TrackDataType.PREFERENCE)) {

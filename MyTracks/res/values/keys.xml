@@ -18,12 +18,12 @@ limitations under the License.
   <!-- Keys for persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
   <string name="allow_access_key">allowAccess</string>
   <string name="auto_resume_track_timeout_key">autoResumeTrackTimeout</string>
-  <string name="chart_by_distance_key">chartByDistance</string>
   <string name="chart_show_cadence_key">chartShowCadence</string>
   <string name="chart_show_elevation_key">chartShowElevation</string>
   <string name="chart_show_heart_rate_key">chartShowHeartRate</string>
   <string name="chart_show_power_key">chartShowPower</string>
   <string name="chart_show_speed_key">chartShowSpeed</string>
+  <string name="chart_x_axis_key">chartXAxis</string>
   <string name="default_activity_key">defaultActivity</string>
   <string name="export_external_storage_format_key">exportExternalStorageFormat</string>
   <string name="export_google_fusion_tables_public_key">exportGoogleFusionTablesPublic</string>
@@ -34,14 +34,14 @@ limitations under the License.
   <string name="min_recording_interval_key">minRecordingInterval</string>
   <string name="recording_distance_interval_key">recordingDistanceInterval</string>
   <string name="recording_gps_accuracy_key">recordingGpsAccuracy</string>
-  <string name="report_speed_key">reportSpeed</string>
   <string name="sensor_type_key">sensorType</string>
   <string name="share_track_invite_key">shareTrackInvite</string>
   <string name="share_track_public_key">shareTrackPublic</string>
   <string name="split_frequency_key">splitFrequency</string>
+  <string name="stats_rate_key">statsRate</string>  
   <string name="stats_show_coordinate_key">statsShowCoordinate</string>
   <string name="stats_show_grade_elevation_key">statsShowGradeElevation</string>
-  <string name="stats_units_key">statsdUnits</string>
+  <string name="stats_units_key">statsUnits</string>
   <string name="track_color_mode_medium_key">trackColorModeMedium</string>
   <string name="track_color_mode_percentage_key">trackColorModePercentage</string>
   <string name="track_color_mode_slow_key">trackColorModeSlow</string>

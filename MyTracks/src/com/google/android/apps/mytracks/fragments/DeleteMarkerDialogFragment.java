@@ -77,10 +77,12 @@ public class DeleteMarkerDialogFragment extends DialogFragment {
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     final FragmentActivity fragmentActivity = getActivity();
     final long[] markerIds = getArguments().getLongArray(KEY_MARKER_IDS);
+    int titleId = markerIds.length > 1 ? R.string.generic_delete_selected_confirm_title
+        : R.string.marker_delete_one_confirm_title;
     int messageId = markerIds.length > 1 ? R.string.marker_delete_multiple_confirm_message
         : R.string.marker_delete_one_confirm_message;
     return DialogUtils.createConfirmationDialog(
-        fragmentActivity, messageId, new DialogInterface.OnClickListener() {
+        fragmentActivity, titleId, getString(messageId), new DialogInterface.OnClickListener() {
             @Override
           public void onClick(DialogInterface dialog, int which) {
             new Thread(new Runnable() {

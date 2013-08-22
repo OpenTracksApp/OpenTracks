@@ -50,12 +50,12 @@ public class PreferencesUtils {
 
   public static final String BLUETOOTH_SENSOR_DEFAULT = "";
   
-  public static final boolean CHART_BY_DISTANCE_DEFAULT = true;
   public static final boolean CHART_SHOW_CADENCE_DEFAULT = true;
   public static final boolean CHART_SHOW_ELEVATION_DEFAULT = true;
   public static final boolean CHART_SHOW_HEART_RATE_DEFAULT = true;
   public static final boolean CHART_SHOW_POWER_DEFAULT = true;
   public static final boolean CHART_SHOW_SPEED_DEFAULT = true;
+  public static final String CHART_X_AXIS_DEFAULT = "DISTANCE";
 
   public static final boolean CONFIRM_PLAY_EARTH_DEFAULT = true;
 
@@ -91,7 +91,6 @@ public class PreferencesUtils {
   
   public static final long RECORDING_TRACK_ID_DEFAULT = -1L;
   public static final boolean RECORDING_TRACK_PAUSED_DEFAULT = true;
-  public static final boolean REPORT_SPEED_DEFAULT = true;
   public static final long SELECTED_TRACK_ID_DEFAULT = -1L;
   public static final String SENSOR_TYPE_DEFAULT = "NONE";
 
@@ -102,6 +101,7 @@ public class PreferencesUtils {
   public static final int SPLIT_FREQUENCY_DEFAULT = 0;
   
   // Stats
+  public static final String STATS_RATE_DEFAULT = "SPEED";
   public static final boolean STATS_SHOW_COORDINATE_DEFAULT = false;
   public static final boolean STATS_SHOW_GRADE_ELEVATION_DEFAULT = false;
   public static final String STATS_UNITS_DEFAULT = "METRIC";
@@ -256,5 +256,26 @@ public class PreferencesUtils {
   public static boolean isMetricUnits(Context context) {
     return PreferencesUtils.STATS_UNITS_DEFAULT.equals(
         getString(context, R.string.stats_units_key, PreferencesUtils.STATS_UNITS_DEFAULT));
+  }
+
+  /**
+   * Returns true if the preferred rate is speed, false if the preferred rate is
+   * pace.
+   * 
+   * @param context the context
+   */
+  public static boolean isReportSpeed(Context context) {
+    return PreferencesUtils.STATS_RATE_DEFAULT.equals(
+        getString(context, R.string.stats_rate_key, PreferencesUtils.STATS_RATE_DEFAULT));
+  }
+
+  /**
+   * Returns true if chart x axis is by distance, false if by time.
+   * 
+   * @param context the context
+   */
+  public static boolean isChartByDistance(Context context) {
+    return PreferencesUtils.CHART_X_AXIS_DEFAULT.equals(
+        getString(context, R.string.chart_x_axis_key, PreferencesUtils.CHART_X_AXIS_DEFAULT));
   }
 }

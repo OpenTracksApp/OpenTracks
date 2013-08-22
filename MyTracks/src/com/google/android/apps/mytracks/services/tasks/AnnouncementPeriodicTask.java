@@ -228,8 +228,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
   @VisibleForTesting
   protected String getAnnouncement(TripStatistics tripStatistics) {
     boolean metricUnits = PreferencesUtils.isMetricUnits(context);
-    boolean reportSpeed = PreferencesUtils.getBoolean(
-        context, R.string.report_speed_key, PreferencesUtils.REPORT_SPEED_DEFAULT);
+    boolean reportSpeed = PreferencesUtils.isReportSpeed(context);
     double distance = tripStatistics.getTotalDistance() * UnitConversions.M_TO_KM;
     double speed = tripStatistics.getAverageMovingSpeed() * UnitConversions.MS_TO_KMH;
 

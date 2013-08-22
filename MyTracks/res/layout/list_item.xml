@@ -68,12 +68,12 @@ limitations under the License.
         </TableLayout>
         <ImageView
           android:id="@+id/list_item_photo"
-          android:layout_gravity="center"
+          android:adjustViewBounds="true"
           android:layout_height="wrap_content"
           android:layout_marginLeft="8dp"
           android:layout_weight="1"
           android:layout_width="0dp"
-          android:scaleType="centerCrop" />
+          android:scaleType="fitCenter" />
       </LinearLayout>
       <TableLayout
         android:layout_height="wrap_content"

@@ -774,10 +774,10 @@ limitations under the License.
     translation_description="The text on a button to say cancel.">
     Cancel
   </string>
-  <string name="generic_confirm_title"
-    translation_description="The title on a confirmation dialog asking the user if he is sure?">
-    Are you sure?
-  </string>
+  <string name="generic_delete_selected_confirm_title"
+    translation_description="When deleting selected items, the title of the confirmation dialog.">
+    Delete selected?
+  </string>  
   <string name="generic_description"
     translation_description="The text label for entering a description.">
     Description
@@ -1000,6 +1000,10 @@ limitations under the License.
   <string name="marker_delete_one_confirm_message"
     translation_description="When deleting one marker, the confirmation message.">
     The marker will be permanently deleted from the device.
+  </string>
+  <string name="marker_delete_one_confirm_title"
+    translation_description="When deleting one marker, the title of the confirmation dialog.">
+    Delete marker?    
   </string>
   <string name="marker_delete_multiple_confirm_message"
     translation_description="When deleting multiple markers, the confirmation message.">
@@ -1484,28 +1488,38 @@ limitations under the License.
     Backup &amp; reset
   </string>
 
-  <!-- Settings Backup Now -->
-  <string name="settings_backup_now"
+  <!-- Settings Backup -->
+  <string name="settings_backup"
     translation_description="In the 'Backup and reset' settings, the option to backup to the
-      external storage now.
+      external storage.
 
       Character limit: ~26 (1 line)">
-    Backup now
+    Backup
+  </string>
+  <string name="settings_backup_confirm_message"
+    translation_description="In the 'Backup and reset' settings, after pressing the 'Backup' option,
+      the confirmation message.
+      
+      %1$s the directory. E.g., '/MyTracks/backups'.">
+    This will write a full copy of all your tracks and settings to &#8216;%1$s&#8217; on the
+    external storage.
+  </string>
+  <string name="settings_backup_confirm_title"
+    translation_description="In the 'Backup and reset' settings, after pressing the 'Backup' option,
+      the title of the confirmation dialog.
+
+      Character limit: ~26 (1 line)">
+    Backup now?
   </string>
   <string name="settings_backup_now_error"
     translation_description="When backing up to the external storage, the error message.">
     Unable to backup.
   </string>
   <string name="settings_backup_now_progress_message"
-    translation_description="In the 'Backup and reset' settings, after pressing the 'Backup now'
-      option, the progress message telling the user that it is writing all tracks and settings to
-      the external storage.">
+    translation_description="In the 'Backup and reset' settings, after pressing the 'Backup' option,
+      the progress message telling the user that it is writing all tracks and settings to the
+      external storage.">
     Writing all tracks and settings&#8230;
-  </string>
-  <string name="settings_backup_now_summary"
-    translation_description="In the 'Backup and reset' settings, the summary for the 'Backup now'
-      option explaining that all tracks and settings will be written to the external storage.">
-    Write a full copy of all your tracks and settings to the external storage
   </string>
   <string name="settings_backup_now_success"
     translation_description="When backing up to the external storage, the success message">
@@ -1518,22 +1532,26 @@ limitations under the License.
       external storage.
 
       Character limit: ~26 (1 line)">
-    Restore now
+    Restore
   </string>
   <string name="settings_backup_restore_confirm_message"
-    translation_description="In the 'Backup and reset' settings, after pressing the 'Restore now'
-      option, the message in the alert dialog asking the user to confirm that he wants to restore
-      from a backup.">
+    translation_description="In the 'Backup and reset' settings, after pressing the 'Restore'
+      option, the confirmation message.">
     Restoring a backup from external storage will delete all your tracks and settings, and update
     them with the backup copy. Google Drive sync will be turned off. No tracks will be deleted on
     Google Drive and on external storage.
+  </string>
+  <string name="settings_backup_restore_confirm_title"
+    translation_description="In the 'Backup and reset' settings, after pressing the 'Restore'
+      option, the title of the confirmation dialog.">
+    Restore now?
   </string>
   <string name="settings_backup_restore_error"
     translation_description="When restoring from backup, the error message.">
     Unable to restore from backup.
   </string>
   <string name="settings_backup_restore_no_backups"
-    translation_description="In the 'Backup and reset' settings, after pressing the 'Restore now'
+    translation_description="In the 'Backup and reset' settings, after pressing the 'Restore'
       option, the message in the alert dialog informing the user that there is no backups to restore
       from.
 
@@ -1541,20 +1559,15 @@ limitations under the License.
     No backups found in %1$s.
   </string>
   <string name="settings_backup_restore_progress_message"
-    translation_description="In the 'Backup and reset' settings, after pressing the 'Restore now'
+    translation_description="In the 'Backup and reset' settings, after pressing the 'Restore'
       option, the progress message informing that My Tracks is reading all tracks and settings from
       the backup on the external storage.">
     Reading all tracks and settings&#8230;
   </string>
   <string name="settings_backup_restore_select_title"
-    translation_description="In the 'Backup and reset' settings, after pressing the 'Restore now'
+    translation_description="In the 'Backup and reset' settings, after pressing the 'Restore'
       option, the title in the picker dialog asking the user to select a backup.">
     Select a backup to restore
-  </string>
-  <string name="settings_backup_restore_summary"
-    translation_description="In the 'Backup and reset' settings, the summary for the 'Restore now'
-      option explaining that it restores all tracks and settings from the external storage.">
-    Restore all tracks and settings from the external storage
   </string>
   <string name="settings_backup_restore_success"
     translation_description="When restoring from backup, the success message.">
@@ -1594,6 +1607,11 @@ limitations under the License.
       %1$s account name. E.g., 'foo@foo.com'.">
     This will remove any association between your tracks and %1$s Google Drive. Google Drive sync
     will be turned off. No tracks will be deleted on %1$s  Google Drive.
+  </string>
+  <string name="settings_google_account_confirm_title"
+    translation_description="In the 'Accounts and sync' settings, after pressing 'Switch account',
+      the title of the confirmation dialog.">
+    Switch account?
   </string>
   <string name="settings_google_account_title"
     translation_description="In the 'Accounts and sync' settings, the option to switch Google
@@ -1818,16 +1836,16 @@ limitations under the License.
     All settings will be reverted to the default values. This will not delete any tracks on the
     device or on Google Drive.
   </string>
+  <string name="settings_reset_confirm_title"
+    translation_description="In the 'Backup and reset' settings, after pressing the 'Reset' option,
+      the title of the confirmation dialog.">
+    Reset now?
+  </string>
   <string name="settings_reset_done"
     translation_description="In the 'Backup and reset' settings, after pressing the 'Reset' option,
       the confirmation dialog informing the user that all settings have been reverted to the default
       values.">
     All settings have been reverted to the default values.
-  </string>
-  <string name="settings_reset_summary"
-    translation_description="In the 'Backup and reset' settings, the summary for the 'Reset' option
-      explaining it will revert all settings to the default values.">
-    Revert all your settings to the default values
   </string>
 
   <!-- Settings Sensor -->
@@ -1964,6 +1982,11 @@ limitations under the License.
     Other apps, including future apps, will be able to control and access My Tracks data. There will
     be no further notification.
   </string>
+  <string name="settings_sharing_allow_access_confirm_title"
+    translation_description="In the 'Sharing' settings, after checking the 'Allow access' checkbox,
+      the title of the confirmation dialog.">
+    Allow access?
+  </string>
   <string name="settings_sharing_allow_access_summary_off"
     translation_description="In the 'Sharing' settings, the summary for the 'Allow access' checkbox
       option when it is unchecked explaining that other apps cannot read, write, start/stop
@@ -2020,10 +2043,6 @@ limitations under the License.
   <string name="share_track_emails_hint"
     translation_description="The hint for the auto complete text box for entering email addresses.">
     Email addresses
-  </string>
-  <string name="share_track_footer"
-    translation_description="The dialog footer when sharing a track via Google Drive.">
-    This will upload your track to Google Drive.
   </string>
   <string name="share_track_invite"
     translation_description="The checkbox to invite people to view a track.">
@@ -2213,10 +2232,18 @@ limitations under the License.
     All tracks and markers will be permanently deleted from the device. Google Drive sync will be
     turned off. No tracks will be deleted on Google Drive and on external storage.
   </string>
+  <string name="track_delete_all_confirm_title"
+    translation_description="When deleting all the tracks, the title of the confirmation dialog.">
+    Delete all?
+  </string>
   <string name="track_delete_one_confirm_message"
     translation_description="When deleting one track, the confirmation message.">
     The track and its markers will be permanently deleted from the device. If Google Drive sync is
     enabled, this will also delete the track on Google Drive.
+  </string>
+  <string name="track_delete_one_confirm_title"
+    translation_description="When deleting one track, the title of the confirmation dialog.">
+    Delete track?
   </string>
   <string name="track_delete_multiple_confirm_message"
     translation_description="When deleting multiple tracks, the confirmation message.">
@@ -2254,7 +2281,12 @@ limitations under the License.
   </string>
   <string name="track_detail_play_confirm_message"
     translation_description="The confirmation message when playing a track in Google Earth.">
-    Play in Google Earth will save your track to external storage.
+    This will save your track to external storage.
+  </string>
+  <string name="track_detail_play_confirm_title"
+    translation_description="When playing a track in Google Earth, the title of the confirmation
+      dialog.">
+    Play in Google Earth?
   </string>
   <string name="track_detail_stats_tab"
     translation_description="In the track detail page, the title of the tab showing the stats.">

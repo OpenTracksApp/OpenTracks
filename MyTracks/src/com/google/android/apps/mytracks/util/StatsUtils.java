@@ -51,8 +51,7 @@ public class StatsUtils {
    */
   public static void setLocationValues(Activity activity, Location location, boolean isRecording) {
     boolean metricUnits = PreferencesUtils.isMetricUnits(activity);
-    boolean reportSpeed = PreferencesUtils.getBoolean(
-        activity, R.string.report_speed_key, PreferencesUtils.REPORT_SPEED_DEFAULT);
+    boolean reportSpeed = PreferencesUtils.isReportSpeed(activity);
 
     // Set speed/pace
     double speed = isRecording && location != null && location.hasSpeed() ? location.getSpeed()
@@ -112,8 +111,7 @@ public class StatsUtils {
    */
   public static void setTripStatisticsValues(Activity activity, TripStatistics tripStatistics) {
     boolean metricUnits = PreferencesUtils.isMetricUnits(activity);
-    boolean reportSpeed = PreferencesUtils.getBoolean(
-        activity, R.string.report_speed_key, PreferencesUtils.REPORT_SPEED_DEFAULT);
+    boolean reportSpeed = PreferencesUtils.isReportSpeed(activity);
 
     // Set total distance
     double totalDistance = tripStatistics == null ? Double.NaN : tripStatistics.getTotalDistance();

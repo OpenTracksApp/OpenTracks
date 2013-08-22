@@ -21,6 +21,7 @@ import com.google.android.maps.mytracks.R;
 
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 
 /**
  * An activity for accessing chart settings.
@@ -34,6 +35,7 @@ public class ChartSettingsActivity extends AbstractSettingsActivity {
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
     addPreferencesFromResource(R.xml.chart_settings);
+    configXAxisListPreference();
   }
 
   @Override
@@ -46,9 +48,21 @@ public class ChartSettingsActivity extends AbstractSettingsActivity {
   private void updateUi() {
     CheckBoxPreference speedCheckBoxPreference = (CheckBoxPreference) findPreference(
         getString(R.string.chart_show_speed_key));
-    boolean reportSpeed = PreferencesUtils.getBoolean(
-        this, R.string.report_speed_key, PreferencesUtils.REPORT_SPEED_DEFAULT);
-    speedCheckBoxPreference.setTitle(reportSpeed ? R.string.stats_speed
-        : R.string.stats_pace);
+    speedCheckBoxPreference.setTitle(
+        PreferencesUtils.isReportSpeed(this) ? R.string.stats_speed : R.string.stats_pace);
+  }
+
+  /**
+   * Configures the x axis list preference.
+   */
+  private void configXAxisListPreference() {
+    @SuppressWarnings("deprecation")
+    ListPreference listPreference = (ListPreference) findPreference(
+        getString(R.string.chart_x_axis_key));
+    String value = PreferencesUtils.getString(
+        this, R.string.chart_x_axis_key, PreferencesUtils.CHART_X_AXIS_DEFAULT);
+    String[] values = getResources().getStringArray(R.array.chart_x_axis_values);
+    String[] options = getResources().getStringArray(R.array.chart_x_axis_options);
+    configureListPreference(listPreference, options, options, values, value, null);
   }
 }

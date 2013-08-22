@@ -19,7 +19,7 @@ limitations under the License.
   <Preference
     android:key="@string/settings_backup_key"
     android:persistent="false"
-    android:title="@string/settings_backup_now" />
+    android:title="@string/settings_backup" />
   <Preference
     android:key="@string/settings_restore_key"
     android:persistent="false"

@@ -94,9 +94,10 @@ public class ListItemUtils {
     } else {
       photo.setVisibility(View.VISIBLE);
       Display defaultDisplay = activity.getWindowManager().getDefaultDisplay();
-      // Set the initial width to 35% of the display width
-      int width = (int) (defaultDisplay.getWidth() * .35);
-      PhotoUtils.setImageVew(photo, Uri.parse(photoUrl), width, 0, false);
+      // Set the initial width to 33% of the display width. 
+      int width = (int) (defaultDisplay.getWidth() * .33);
+      int height = 0;
+      PhotoUtils.setImageVew(photo, Uri.parse(photoUrl), width, height);
     }
 
     // Set date/time
@@ -109,7 +110,8 @@ public class ListItemUtils {
 
     // Set category/description
     TextView descriptionTextView = (TextView) view.findViewById(R.id.list_item_description);
-    setTextView(descriptionTextView, getDescription(isRecording, category, description));
+    setTextView(descriptionTextView,
+        isRecording ? null : StringUtils.getCategoryDescription(category, description));
   }
 
   /**
@@ -142,30 +144,6 @@ public class ListItemUtils {
         buffer.append(" ");
       }
       buffer.append("(" + totalDistance + ")");
-    }
-    return buffer.toString();
-  }
-
-  /**
-   * Gets the description text.
-   * 
-   * @param isRecording true if recording
-   * @param category the category
-   * @param description the description
-   */
-  private static String getDescription(boolean isRecording, String category, String description) {
-    if (isRecording) {
-      return null;
-    }
-    if (category == null || category.length() == 0) {
-      return description;
-    }
-
-    StringBuffer buffer = new StringBuffer();
-
-    buffer.append("[" + category + "]");
-    if (description != null && description.length() != 0) {
-      buffer.append(" " + description);
     }
     return buffer.toString();
   }

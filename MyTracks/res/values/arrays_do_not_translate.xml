@@ -92,6 +92,14 @@ limitations under the License.
     <item>15</item>
     <item>-1</item>
   </string-array>
+  <string-array name="chart_x_axis_options">
+    <item>@string/settings_chart_by_distance</item>
+    <item>@string/settings_chart_by_time</item>
+  </string-array>
+  <string-array name="chart_x_axis_values">
+    <item>@string/chart_x_axis_distance</item>
+    <item>@string/chart_x_axis_time</item>
+  </string-array>
   <string-array name="frequency_values">
     <item>0</item>
     <item>1</item>
@@ -176,6 +184,18 @@ limitations under the License.
     <item>@string/sensor_type_value_zephyr</item>
     <item>@string/sensor_type_value_none</item>
   </string-array>
+  <string-array name="stats_rate_imperial_options">
+    <item>@string/description_speed_imperial</item>
+    <item>@string/description_pace_imperial</item>
+  </string-array>
+  <string-array name="stats_rate_metric_options">
+    <item>@string/description_speed_metric</item>
+    <item>@string/description_pace_metric</item>
+  </string-array>
+  <string-array name="stats_rate_values">
+    <item>@string/stats_rate_speed</item>
+    <item>@string/stats_rate_pace</item>
+  </string-array>  
   <string-array name="stats_units_options">
     <item>@string/settings_stats_units_metric</item>
     <item>@string/settings_stats_units_imperial</item>

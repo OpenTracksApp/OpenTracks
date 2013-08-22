@@ -16,6 +16,8 @@ limitations under the License.
 -->
 <resources>
   <!-- DO NOT TRANSLATE ANY STRINGS IN THIS FILE. -->
+  <string name="chart_x_axis_distance">DISTANCE</string>
+  <string name="chart_x_axis_time">TIME</string>
   <string name="eula_korean">위치정보서비스 및 위치기반서비스 이용약관\n
 \n
 다음은 구글코리아 유한회사(이하 “Google”)가 Google의 제품에 대하여 제공하고 있는 위치기반서비스에 적용되는 이용조건입니다. 아래 이용조건은 이동통신사업자의 가입신청서에 포함된 위치정보 수집동의 및 모바일 단말기 이용조건과 함께 적용됩니다.\n
@@ -93,6 +95,8 @@ Google은 이용자에 대한 위치정보의 이용∙제공사실을 위치정
   <string name="settings_recording_track_name_date_local_value">DATE_LOCAL</string>
   <string name="settings_recording_track_name_location_value">LOCATION</string>
   <string name="settings_recording_track_name_number_value">NUMBER</string>
+  <string name="stats_rate_pace">PACE</string>
+  <string name="stats_rate_speed">SPEED</string>
   <string name="stats_units_imperial">IMPERIAL</string>
   <string name="stats_units_metric">METRIC</string>
   <string name="track_action_end">com.google.android.apps.mytracks.END_CURRENT_TRACK</string>

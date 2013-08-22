@@ -82,15 +82,19 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     final long[] trackIds = getArguments().getLongArray(KEY_TRACK_IDS);
+    int titleId;
     int messageId;
     if (trackIds.length == 1 && trackIds[0] == -1L) {
+      titleId = R.string.track_delete_all_confirm_title;
       messageId = R.string.track_delete_all_confirm_message;
     } else {
+      titleId = trackIds.length > 1 ? R.string.generic_delete_selected_confirm_title
+          : R.string.track_delete_one_confirm_title;
       messageId = trackIds.length > 1 ? R.string.track_delete_multiple_confirm_message
           : R.string.track_delete_one_confirm_message;
     }
     return DialogUtils.createConfirmationDialog(
-        getActivity(), messageId, new DialogInterface.OnClickListener() {
+        getActivity(), titleId, getString(messageId), new DialogInterface.OnClickListener() {
             @Override
           public void onClick(DialogInterface dialog, int which) {
             caller.onConfirmDeleteDone(trackIds);
