@@ -37,6 +37,7 @@ import com.google.common.annotations.VisibleForTesting;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -172,7 +173,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
       tripStatisticsUpdater = startTime != -1L ? new TripStatisticsUpdater(startTime) : null;
       pendingPoints.clear();
       chartView.reset();
-      getActivity().runOnUiThread(new Runnable() {
+      runOnUiThread(new Runnable() {
           @Override
         public void run() {
           if (isResumed()) {
@@ -211,7 +212,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     if (isResumed()) {
       chartView.addDataPoints(pendingPoints);
       pendingPoints.clear();
-      getActivity().runOnUiThread(updateChart);
+      runOnUiThread(updateChart);
     }
   }
 
@@ -232,7 +233,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   @Override
   public void onNewWaypointsDone() {
     if (isResumed()) {
-      getActivity().runOnUiThread(updateChart);
+      runOnUiThread(updateChart);
     }
   }
 
@@ -244,7 +245,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
       }
       metricUnits = metric;
       chartView.setMetricUnits(metricUnits);
-      getActivity().runOnUiThread(new Runnable() {
+      runOnUiThread(new Runnable() {
           @Override
         public void run() {
           if (isResumed()) {
@@ -269,7 +270,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
           getActivity(), R.string.chart_show_speed_key, PreferencesUtils.CHART_SHOW_SPEED_DEFAULT);
       setSeriesEnabled(ChartView.SPEED_SERIES, chartShowSpeed && reportSpeed);
       setSeriesEnabled(ChartView.PACE_SERIES, chartShowSpeed && !reportSpeed);
-      getActivity().runOnUiThread(new Runnable() {
+      runOnUiThread(new Runnable() {
           @Override
         public void run() {
           if (isResumed()) {
@@ -412,6 +413,18 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     chartView.zoomOut();
     zoomControls.setIsZoomInEnabled(chartView.canZoomIn());
     zoomControls.setIsZoomOutEnabled(chartView.canZoomOut());
+  }
+
+  /**
+   * Runs a runnable on the UI thread if possible.
+   * 
+   * @param runnable the runnable
+   */
+  private void runOnUiThread(Runnable runnable) {
+    FragmentActivity fragmentActivity = getActivity();
+    if (fragmentActivity != null) {
+      fragmentActivity.runOnUiThread(runnable);
+    }
   }
 
   /**
