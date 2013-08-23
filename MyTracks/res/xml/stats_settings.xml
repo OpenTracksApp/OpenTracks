@@ -42,8 +42,6 @@ limitations under the License.
       android:inputType="number"
       android:key="@string/stats_weight_key"
       android:persistent="false"
-      android:title="@string/settings_stats_calorie_weight" 
-      android:summary="@string/settings_stats_calorie_weight_summary">
-    </EditTextPreference>
+      android:title="@string/settings_stats_calorie_weight" />
   </PreferenceCategory>
 </PreferenceScreen>

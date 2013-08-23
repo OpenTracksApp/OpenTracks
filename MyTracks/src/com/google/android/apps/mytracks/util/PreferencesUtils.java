@@ -106,7 +106,7 @@ public class PreferencesUtils {
   public static final boolean STATS_SHOW_GRADE_ELEVATION_DEFAULT = false;
   public static final String STATS_UNITS_DEFAULT = "METRIC";
   public static final boolean STATS_SHOW_CALORIE_DEFAULT = false;
-  public static final int STATS_WEIGHT_DEFAULT = 65; //in kilogram
+  public static final int STATS_WEIGHT_DEFAULT = 65; // in kilogram
   
   // Track color
   public static final String TRACK_COLOR_MODE_DEFAULT = "SINGLE";

@@ -45,6 +45,12 @@ public class UnitConversions {
   // multiplication factor to convert kilometers to miles
   public static final double KM_TO_MI = 0.621371192;
 
+  // multiplication factor to convert kilogram to pounds
+  public static final double KG_TO_LB = 2.2046;
+  
+  // multiplication factor to convert kilogram to pounds
+  public static final double LB_TO_KG = 1 / KG_TO_LB;
+
   // multiplication factor to convert miles to kilometers
   public static final double MI_TO_KM = 1 / KM_TO_MI;
 
