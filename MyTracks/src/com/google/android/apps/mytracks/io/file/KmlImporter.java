@@ -61,6 +61,7 @@ public class KmlImporter extends AbstractImporter {
 
   private static final String ATTRIBUTE_NAME = "name";
 
+  private boolean trackStarted = false;
   private String sensorName;
   private ArrayList<Location> locationList;
   private ArrayList<Integer> cadenceList;
@@ -88,8 +89,12 @@ public class KmlImporter extends AbstractImporter {
     if (tag.equals(TAG_PLACEMARK)) {
       onWaypointStart();
     } else if (tag.equals(TAG_GX_MULTI_TRACK)) {
+      trackStarted = true;
       onTrackStart();
     } else if (tag.equals(TAG_GX_TRACK)) {
+      if (!trackStarted) {
+        throw new SAXException("No " + TAG_GX_MULTI_TRACK);
+      }
       onTrackSegmentStart();
     } else if (tag.equals(TAG_GX_SIMPLE_ARRAY_DATA)) {
       onSensorDataStart(attributes);
