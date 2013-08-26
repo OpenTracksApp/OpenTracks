@@ -21,6 +21,7 @@ import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -45,6 +46,8 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
   private CheckBoxPreference caloriePreference;
   private EditTextPreference weightPreference;
 
+  private static final int WEIGHT_INPUT_DIALOG = 1;
+
   @SuppressWarnings("deprecation")
   @Override
   protected void onCreate(Bundle bundle) {
@@ -54,9 +57,8 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
     caloriePreference = (CheckBoxPreference) findPreference(getString(R.string.stats_show_calorie_key));
     weightPreference = (EditTextPreference) findPreference(getString(R.string.stats_weight_key));
 
-    configCaloriePreference(caloriePreference);
-    configWeightPreference(weightPreference, R.string.stats_weight_key,
-        PreferencesUtils.STATS_WEIGHT_DEFAULT, caloriePreference.isChecked());
+    configCaloriePreference();
+    configWeightPreference(R.string.stats_weight_key, PreferencesUtils.STATS_WEIGHT_DEFAULT);
     /*
      * Note configureUnitsListPreference will trigger
      * configureRateListPreference
@@ -115,9 +117,8 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
    * @param key of the preference
    * @param defaultValue default value of this preference
    */
-  private void configCaloriePreference(CheckBoxPreference preference) {
-    preference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-      @SuppressWarnings("hiding")
+  private void configCaloriePreference() {
+    caloriePreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
       @Override
       public boolean onPreferenceChange(Preference preference, Object newValue) {
         boolean value = (Boolean) newValue;
@@ -136,36 +137,51 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
    * Shows this dialog to input weight value while enable show calorie and the
    * value is not set yet.
    */
+  @SuppressWarnings("deprecation")
   private void showWeightInputPreferenceDialog() {
-    int value = PreferencesUtils.getInt(this, R.string.stats_weight_key, -1);
-    if (value == -1) {
-      final EditText weightInput = new EditText(this);
-      weightInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-      weightInput.setText(Integer.toString(PreferencesUtils.STATS_WEIGHT_DEFAULT));
-      weightInput.setSelectAllOnFocus(true);
-      AlertDialog.Builder inputDialogBuilder = new AlertDialog.Builder(this);
-      inputDialogBuilder
-          .setTitle(R.string.settings_stats_calorie_weight)
-          .setMessage(R.string.settings_stats_calorie_weight_description)
-          .setCancelable(false)
-          .setView(weightInput)
-          .setPositiveButton(getString(R.string.generic_ok), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-              storeWeightValue(R.string.stats_weight_key, PreferencesUtils.STATS_WEIGHT_DEFAULT,
-                  weightInput.getText().toString());
-              updateWeightSummary(weightPreference, R.string.stats_weight_key,
-                  PreferencesUtils.STATS_WEIGHT_DEFAULT);
-              dialog.cancel();
-            }
-          })
-          .setNegativeButton(getString(R.string.generic_cancel),
-              new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                  dialog.cancel();
-                }
-              });
-      inputDialogBuilder.create().show();
+    int value = PreferencesUtils.getInt(this, R.string.stats_weight_key,
+        PreferencesUtils.STATS_WEIGHT_DEFAULT_INVALID);
+    if (value == PreferencesUtils.STATS_WEIGHT_DEFAULT_INVALID) {
+      showDialog(WEIGHT_INPUT_DIALOG);
     }
+  }
+
+  @Override
+  @Deprecated
+  protected Dialog onCreateDialog(int id) {
+    Dialog dialog = null;
+    switch (id) {
+      case WEIGHT_INPUT_DIALOG:
+        final EditText weightInput = new EditText(this);
+        weightInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        weightInput.setText(Integer.toString(PreferencesUtils.STATS_WEIGHT_DEFAULT));
+        weightInput.setSelectAllOnFocus(true);
+        AlertDialog.Builder inputDialogBuilder = new AlertDialog.Builder(this);
+        inputDialogBuilder
+            .setTitle(R.string.settings_stats_calorie_weight)
+            .setMessage(R.string.settings_stats_calorie_weight_description)
+            .setCancelable(false)
+            .setView(weightInput)
+            .setPositiveButton(getString(R.string.generic_ok),
+                new DialogInterface.OnClickListener() {
+                  public void onClick(DialogInterface dialogInterface, int number) {
+                    storeWeightValue(R.string.stats_weight_key,
+                        PreferencesUtils.STATS_WEIGHT_DEFAULT, weightInput.getText().toString());
+                    updateWeightSummary(weightPreference, R.string.stats_weight_key,
+                        PreferencesUtils.STATS_WEIGHT_DEFAULT);
+                    dialogInterface.cancel();
+                  }
+                })
+            .setNegativeButton(getString(R.string.generic_cancel),
+                new DialogInterface.OnClickListener() {
+                  public void onClick(DialogInterface dialogInterface, int number) {
+                    dialogInterface.cancel();
+                  }
+                });
+        inputDialogBuilder.create().show();
+        break;
+    }
+    return dialog;
   }
 
   /**
@@ -176,17 +192,9 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
    * @param defaultValue default value of this preference
    * @param isEnable true means enable the weight preference
    */
-  private void configWeightPreference(EditTextPreference preference, final int key,
-      final int defaultValue, boolean isEnable) {
-    updateWeightSummary(preference, key, defaultValue);
-    if (isEnable) {
-      preference.setEnabled(true);
-    } else {
-      preference.setEnabled(false);
-    }
-
-    preference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-      @SuppressWarnings("hiding")
+  private void configWeightPreference(final int key, final int defaultValue) {
+    updateWeightSummary(weightPreference, key, defaultValue);
+    weightPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
       @Override
       public boolean onPreferenceChange(Preference preference, Object newValue) {
         storeWeightValue(key, defaultValue, (String) newValue);
@@ -195,7 +203,7 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
       }
     });
 
-    preference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+    weightPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
       @Override
       public boolean onPreferenceClick(Preference pref) {
         int value = getWeightDisplayValue(key, defaultValue,
@@ -243,7 +251,7 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
   private int getWeightDisplayValue(int keyId, int defaultValue, boolean metricUnits) {
     int value = PreferencesUtils.getInt(this, keyId, defaultValue);
     if (!metricUnits) {
-      value = (int) (value * UnitConversions.KG_TO_LB);
+      value = (int) Math.round(value * UnitConversions.KG_TO_LB);
     }
     return value;
   }
@@ -256,6 +264,10 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
    * @param displayValue the display value
    */
   private void storeWeightValue(int keyId, int defaultValue, String displayValue) {
+    /*
+     * TODO add a method to an abstract class or an utility class to avoid
+     * duplicating store preference logic in MapSettingsActivity.java.
+     */
     int value;
     try {
       value = Integer.parseInt(displayValue);

@@ -2011,7 +2011,7 @@ limitations under the License.
     translation_description="In the 'Stats settings, the option to show calorie value.
 
       Character limit: ~23 (1 line)">
-    Calorie
+    Calories
   </string>
   <string name="settings_stats_grade_elevation"
     translation_description="In the 'Stats settings, the option to show grade and elevation. Grade
@@ -2028,7 +2028,7 @@ limitations under the License.
   </string>
   <string name="settings_stats_calorie_weight_description"
     translation_description="In the 'Stats settings, the description message about weight setting item.">
-    This weight value is only used to calculate the calorie expenditure and would be private for yourself.
+    Please input your weight to calculate your calories expenditure.
   </string>
   <string name="settings_stats_rate_title"
     translation_description="In the 'Stats' settings, the option to change the preferred rate,
@@ -2040,12 +2040,12 @@ limitations under the License.
   <string name="settings_stats_units_imperial"
     translation_description="In the 'Stats' settings, the option to use imperial units, with
       examples.">
-    Imperial (mi, ft, lb)
+    Imperial (mi, ft)
   </string>
   <string name="settings_stats_units_metric"
     translation_description="In the 'Stats' settings, the option to use metric units, with
       examples.">
-    Metric (km, m, kg)
+    Metric (km, m)
   </string>
   <string name="settings_stats_units_title"
     translation_description="In the 'Stats' settings page, the option to change the preferred units,
@@ -2150,7 +2150,7 @@ limitations under the License.
     translation_description="In the 'Stats' page, the calorie burned.
     
       Character limit: ~23 (1 line)">
-    Calorie expenditure
+    Calories expenditure
   </string>
   <string name="stats_fastest_pace"
     translation_description="In the 'Stats' page, the fastest pace.">

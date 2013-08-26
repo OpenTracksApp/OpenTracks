@@ -107,6 +107,7 @@ public class PreferencesUtils {
   public static final String STATS_UNITS_DEFAULT = "METRIC";
   public static final boolean STATS_SHOW_CALORIE_DEFAULT = false;
   public static final int STATS_WEIGHT_DEFAULT = 65; // in kilogram
+  public static final int STATS_WEIGHT_DEFAULT_INVALID = -1;
   
   // Track color
   public static final String TRACK_COLOR_MODE_DEFAULT = "SINGLE";
