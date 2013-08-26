@@ -98,7 +98,14 @@ public class CheckPermissionFragment extends Fragment {
           SendToGoogleUtils.getGoogleAccountCredential(getActivity(), accountName, scope);
           finish(scope, true, null);
         } catch (UserRecoverableAuthException e) {
-          finish(scope, false, e.getIntent());
+          Intent intent = null;
+          try {
+            // HACK: UserRecoverableAuthException.getIntent can throw a null pointer exception. 
+            intent = e.getIntent();
+          } catch (Exception e1) {
+            Log.e(TAG, "Exception in getIntent", e1);
+          }
+          finish(scope, false, intent);
         } catch (GoogleAuthException e) {
           Log.e(TAG, "GoogleAuthException", e);
           finish(scope, false, null);
