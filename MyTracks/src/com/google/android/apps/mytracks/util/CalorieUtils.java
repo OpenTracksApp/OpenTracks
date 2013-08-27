@@ -20,7 +20,7 @@ import com.google.common.annotations.VisibleForTesting;
 import android.location.Location;
 
 /**
- * Utils to calculate caloric expenditure.
+ * Utils to calculate calories.
  * 
  * @author youtaol
  */
@@ -140,16 +140,16 @@ public class CalorieUtils {
   }
 
   /**
-   * Calculates the calories expenditure by cycling.
+   * Calculates the calories by cycling.
    * 
    * @param start the start location
    * @param stop the stop location
    * @param grade the grade to calculate
    * @param weight the weight of user, in kilogram
-   * @return the calories expenditure between the start and stop location.
+   * @return the calories between the start and stop location.
    */
   @VisibleForTesting
-  static double calculateExpenditureCycling(Location start, Location stop, double grade, int weight) {
+  static double calculateCaloriesCycling(Location start, Location stop, double grade, int weight) {
     // Gets duration in seconds
     double duration = (double) (stop.getTime() - start.getTime()) * UnitConversions.MS_TO_S;
     // Get speed in meters per second
@@ -162,17 +162,17 @@ public class CalorieUtils {
   }
 
   /**
-   * Calculates the calories expenditure by running or walking.
+   * Calculates the calories by running or walking.
    * 
    * @param start the start location
    * @param stop the stop location
    * @param grade the grade to calculate
    * @param weight the weight of user, in kilogram
-   * @return the calories expenditure between the start and stop location, in
+   * @return the calories between the start and stop location, in
    *         calories.
    */
   @VisibleForTesting
-  static double calculateExpenditureFoot(Location start, Location stop, double grade, int weight) {
+  static double calculateCaloriesFoot(Location start, Location stop, double grade, int weight) {
     // Get speed in meters per second
     double averageSpeed = (start.getSpeed() + stop.getSpeed()) / 2.0;
     // Get VO2 in mL/kg/min
@@ -203,21 +203,21 @@ public class CalorieUtils {
   }
 
   /**
-   * Calculates the calories expenditure between two locations.
+   * Calculates the calories between two locations.
    * 
    * @param start the start location
    * @param stop the stop location
    * @param grade the grade to calculate
    * @param weight the weight of user
    * @param activityType can be foot or cycling
-   * @return the calories expenditure between the start and stop location.
+   * @return the calories between the start and stop location.
    */
   public static double getCalories(Location start, Location stop, double grade, int weight,
       ActivityType activityType) {
     if (ActivityType.CYCLING == activityType) {
-      return calculateExpenditureCycling(start, stop, grade, weight);
+      return calculateCaloriesCycling(start, stop, grade, weight);
     } else {
-      return calculateExpenditureFoot(start, stop, grade, weight);
+      return calculateCaloriesFoot(start, stop, grade, weight);
     }
   }
 }

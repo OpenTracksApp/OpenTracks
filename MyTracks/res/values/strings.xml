@@ -2007,12 +2007,6 @@ limitations under the License.
       Character limit: ~23 (1 line)">
     Latitude/Longitude
   </string>
-  <string name="settings_stats_calorie"
-    translation_description="In the 'Stats settings, the option to show calorie value.
-
-      Character limit: ~23 (1 line)">
-    Calories
-  </string>
   <string name="settings_stats_grade_elevation"
     translation_description="In the 'Stats settings, the option to show grade and elevation. Grade
       is the amount of inclination to the horizontal, also known as slope or incline.
@@ -2028,7 +2022,7 @@ limitations under the License.
   </string>
   <string name="settings_stats_calorie_weight_description"
     translation_description="In the 'Stats settings, the description message about weight setting item.">
-    Please input your weight to calculate your calories expenditure.
+    Weight for calculating calories.
   </string>
   <string name="settings_stats_rate_title"
     translation_description="In the 'Stats' settings, the option to change the preferred rate,
@@ -2150,7 +2144,7 @@ limitations under the License.
     translation_description="In the 'Stats' page, the calorie burned.
     
       Character limit: ~23 (1 line)">
-    Calories expenditure
+    Calories
   </string>
   <string name="stats_fastest_pace"
     translation_description="In the 'Stats' page, the fastest pace.">

@@ -58,7 +58,7 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
     weightPreference = (EditTextPreference) findPreference(getString(R.string.stats_weight_key));
 
     configCaloriePreference();
-    configWeightPreference(R.string.stats_weight_key, PreferencesUtils.STATS_WEIGHT_DEFAULT);
+    configWeightPreference();
     /*
      * Note configureUnitsListPreference will trigger
      * configureRateListPreference
@@ -81,9 +81,7 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
          * It is necessary to change the weight summary as they are in the same
          * activity.
          */
-        updateWeightSummary(weightPreference, R.string.stats_weight_key,
-            PreferencesUtils.STATS_WEIGHT_DEFAULT,
-            PreferencesUtils.STATS_UNITS_DEFAULT.equals((String) newValue));
+        updateWeightSummary(PreferencesUtils.STATS_UNITS_DEFAULT.equals((String) newValue));
         return true;
       }
     };
@@ -139,11 +137,7 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
    */
   @SuppressWarnings("deprecation")
   private void showWeightInputPreferenceDialog() {
-    int value = PreferencesUtils.getInt(this, R.string.stats_weight_key,
-        PreferencesUtils.STATS_WEIGHT_DEFAULT_INVALID);
-    if (value == PreferencesUtils.STATS_WEIGHT_DEFAULT_INVALID) {
-      showDialog(WEIGHT_INPUT_DIALOG);
-    }
+    showDialog(WEIGHT_INPUT_DIALOG);
   }
 
   @Override
@@ -158,27 +152,19 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
         weightInput.setSelectAllOnFocus(true);
         AlertDialog.Builder inputDialogBuilder = new AlertDialog.Builder(this);
         inputDialogBuilder
-            .setTitle(R.string.settings_stats_calorie_weight)
             .setMessage(R.string.settings_stats_calorie_weight_description)
-            .setCancelable(false)
+            .setTitle(R.string.settings_stats_calorie_weight)
             .setView(weightInput)
             .setPositiveButton(getString(R.string.generic_ok),
                 new DialogInterface.OnClickListener() {
                   public void onClick(DialogInterface dialogInterface, int number) {
-                    storeWeightValue(R.string.stats_weight_key,
-                        PreferencesUtils.STATS_WEIGHT_DEFAULT, weightInput.getText().toString());
-                    updateWeightSummary(weightPreference, R.string.stats_weight_key,
-                        PreferencesUtils.STATS_WEIGHT_DEFAULT);
+                    storeWeightValue(weightInput.getText().toString());
+                    updateWeightSummary();
                     dialogInterface.cancel();
                   }
-                })
-            .setNegativeButton(getString(R.string.generic_cancel),
-                new DialogInterface.OnClickListener() {
-                  public void onClick(DialogInterface dialogInterface, int number) {
-                    dialogInterface.cancel();
-                  }
-                });
-        inputDialogBuilder.create().show();
+                }).setNegativeButton(getString(R.string.generic_cancel), null).create().show();
+        break;
+      default:
         break;
     }
     return dialog;
@@ -192,13 +178,13 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
    * @param defaultValue default value of this preference
    * @param isEnable true means enable the weight preference
    */
-  private void configWeightPreference(final int key, final int defaultValue) {
-    updateWeightSummary(weightPreference, key, defaultValue);
+  private void configWeightPreference() {
+    updateWeightSummary();
     weightPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
       @Override
       public boolean onPreferenceChange(Preference preference, Object newValue) {
-        storeWeightValue(key, defaultValue, (String) newValue);
-        updateWeightSummary(preference, key, defaultValue);
+        storeWeightValue((String) newValue);
+        updateWeightSummary();
         return true;
       }
     });
@@ -206,8 +192,7 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
     weightPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
       @Override
       public boolean onPreferenceClick(Preference pref) {
-        int value = getWeightDisplayValue(key, defaultValue,
-            PreferencesUtils.isMetricUnits(getApplicationContext()));
+        int value = getWeightDisplayValue(PreferencesUtils.isMetricUnits(getApplicationContext()));
         ((EditTextPreference) pref).getEditText().setText(String.valueOf(value));
         return true;
       }
@@ -221,9 +206,9 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
    * @param keyId the key id
    * @param defaultValue the default value
    */
-  private void updateWeightSummary(Preference preference, int keyId, int defaultValue) {
+  private void updateWeightSummary() {
     boolean metricUnits = PreferencesUtils.isMetricUnits(this);
-    updateWeightSummary(preference, keyId, defaultValue, metricUnits);
+    updateWeightSummary(metricUnits);
   }
 
   /**
@@ -234,10 +219,9 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
    * @param defaultValue the default value
    * @param metricUnits the status of metric units
    */
-  private void updateWeightSummary(Preference preference, int keyId, int defaultValue,
-      boolean metricUnits) {
-    int displayValue = getWeightDisplayValue(keyId, defaultValue, metricUnits);
-    preference.setSummary(getString(metricUnits ? R.string.value_integer_kilogram
+  private void updateWeightSummary(boolean metricUnits) {
+    int displayValue = getWeightDisplayValue(metricUnits);
+    weightPreference.setSummary(getString(metricUnits ? R.string.value_integer_kilogram
         : R.string.value_integer_pound, displayValue));
   }
 
@@ -248,8 +232,9 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
    * @param keyId the key id
    * @param defaultValue the default value
    */
-  private int getWeightDisplayValue(int keyId, int defaultValue, boolean metricUnits) {
-    int value = PreferencesUtils.getInt(this, keyId, defaultValue);
+  private int getWeightDisplayValue(boolean metricUnits) {
+    int value = PreferencesUtils.getInt(this, R.string.stats_weight_key,
+        PreferencesUtils.STATS_WEIGHT_DEFAULT);
     if (!metricUnits) {
       value = (int) Math.round(value * UnitConversions.KG_TO_LB);
     }
@@ -263,7 +248,7 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
    * @param defaultValue the default value
    * @param displayValue the display value
    */
-  private void storeWeightValue(int keyId, int defaultValue, String displayValue) {
+  private void storeWeightValue(String displayValue) {
     /*
      * TODO add a method to an abstract class or an utility class to avoid
      * duplicating store preference logic in MapSettingsActivity.java.
@@ -276,9 +261,9 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
       }
     } catch (NumberFormatException e) {
       Log.e(TAG, "invalid value " + displayValue);
-      value = defaultValue;
+      value = PreferencesUtils.STATS_WEIGHT_DEFAULT;
     }
 
-    PreferencesUtils.setInt(this, keyId, value);
+    PreferencesUtils.setInt(this, R.string.stats_weight_key, value);
   }
 }
