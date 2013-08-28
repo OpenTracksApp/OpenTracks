@@ -7,7 +7,7 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.Factory;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.io.file.TrackWriter.OnWriteListener;
+import com.google.android.apps.mytracks.io.file.TrackExporter.OnWriteListener;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceTest.MockContext;
 import com.google.android.apps.mytracks.testing.TestingProviderUtilsFactory;
 
@@ -25,11 +25,11 @@ import org.easymock.IArgumentMatcher;
 import org.easymock.IMocksControl;
 
 /**
- * Tests for {@link TrackWriter}.
+ * Tests for {@link TrackExporter}.
  * 
  * @author Rodrigo Damazio
  */
-public class TrackWriterTest extends AndroidTestCase {
+public class TrackExporterTest extends AndroidTestCase {
 
   private static final long TRACK_ID = 1234567L;
   private static final String TRACK_NAME = "Swimming across the pacific";
@@ -42,7 +42,7 @@ public class TrackWriterTest extends AndroidTestCase {
   private TrackFormatWriter trackFormatWriter;
   private Track track;
   private OutputStream outputStream;
-  private TrackWriter trackWriter;
+  private TrackExporter trackExporter;
 
   @Override
   protected void setUp() throws Exception {
@@ -76,7 +76,7 @@ public class TrackWriterTest extends AndroidTestCase {
 
       }
     };
-    trackWriter = new TrackWriter(myTracksProviderUtils, new Track[] {track}, trackFormatWriter, onWriteListener);
+    trackExporter = new TrackExporter(myTracksProviderUtils, new Track[] {track}, trackFormatWriter, onWriteListener);
   }
 
   @Override
@@ -99,9 +99,9 @@ public class TrackWriterTest extends AndroidTestCase {
     trackFormatWriter.close();
 
     mocksControl.replay();
-    trackWriter.writeTrack(outputStream);
+    trackExporter.writeTrack(outputStream);
 
-    assertTrue(trackWriter.wasSuccess());
+    assertTrue(trackExporter.wasSuccess());
     mocksControl.verify();
   }
 
@@ -131,9 +131,9 @@ public class TrackWriterTest extends AndroidTestCase {
     trackFormatWriter.close();
 
     mocksControl.replay();
-    trackWriter.writeTrack(outputStream);
+    trackExporter.writeTrack(outputStream);
 
-    assertTrue(trackWriter.wasSuccess());
+    assertTrue(trackExporter.wasSuccess());
     mocksControl.verify();
   }
 
@@ -196,9 +196,9 @@ public class TrackWriterTest extends AndroidTestCase {
     trackFormatWriter.close();
 
     mocksControl.replay();
-    trackWriter.writeTrack(outputStream);
+    trackExporter.writeTrack(outputStream);
 
-    assertTrue(trackWriter.wasSuccess());
+    assertTrue(trackExporter.wasSuccess());
     mocksControl.verify();
   }
 

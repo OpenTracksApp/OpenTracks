@@ -38,7 +38,7 @@ import java.io.OutputStream;
  * @author Sandor Dornbush
  * @author Rodrigo Damazio
  */
-public class TrackWriter {
+public class TrackExporter {
 
   /**
    * Listener for when a track location is written.
@@ -55,7 +55,7 @@ public class TrackWriter {
     public void onWrite(int number, int max);
   }
 
-  private final static String TAG = TrackWriter.class.getSimpleName();
+  private final static String TAG = TrackExporter.class.getSimpleName();
 
   private final MyTracksProviderUtils myTracksProviderUtils;
   private final Track[] tracks;
@@ -74,13 +74,13 @@ public class TrackWriter {
    * @param trackFileFormat the track file format
    * @param onWriteListener the on write listener
    */
-  public TrackWriter(Context context, MyTracksProviderUtils myTracksProviderUtils, Track[] tracks,
+  public TrackExporter(Context context, MyTracksProviderUtils myTracksProviderUtils, Track[] tracks,
       TrackFileFormat trackFileFormat, OnWriteListener onWriteListener) {
     this(myTracksProviderUtils, tracks, trackFileFormat.newFormatWriter(context), onWriteListener);
   }
 
   @VisibleForTesting
-  public TrackWriter(MyTracksProviderUtils myTracksProviderUtils, Track[] tracks,
+  public TrackExporter(MyTracksProviderUtils myTracksProviderUtils, Track[] tracks,
       TrackFormatWriter trackFormatWriter, OnWriteListener onWriteListener) {
     this.myTracksProviderUtils = myTracksProviderUtils;
     this.tracks = tracks;

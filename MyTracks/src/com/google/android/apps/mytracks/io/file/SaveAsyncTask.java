@@ -52,7 +52,7 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   private final MyTracksProviderUtils myTracksProviderUtils;
 
   private WakeLock wakeLock;
-  private TrackWriter trackWriter;
+  private TrackExporter trackExporter;
 
   // true if the AsyncTask has completed
   private boolean completed;
@@ -163,8 +163,8 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
   @Override
   protected void onCancelled() {
-    if (trackWriter != null) {
-      trackWriter.stopWriteTrack();
+    if (trackExporter != null) {
+      trackExporter.stopWriteTrack();
     }
   }
 
@@ -186,8 +186,8 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
       return false;
     }
 
-    trackWriter = new TrackWriter(
-        context, myTracksProviderUtils, tracks, trackFileFormat, new TrackWriter.OnWriteListener() {
+    trackExporter = new TrackExporter(
+        context, myTracksProviderUtils, tracks, trackFileFormat, new TrackExporter.OnWriteListener() {
             @Override
           public void onWrite(int number, int max) {
             /*
@@ -204,20 +204,20 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     try {
       file = new File(directory, fileName);
       OutputStream outputStream = new FileOutputStream(file);
-      trackWriter.writeTrack(outputStream);
+      trackExporter.writeTrack(outputStream);
     } catch (FileNotFoundException e) {
       Log.d(TAG, "File not found " + fileName, e);
       return false;
     }
 
-    if (trackWriter.wasSuccess()) {
+    if (trackExporter.wasSuccess()) {
       savedPath = file.getAbsolutePath();
     } else {
       if (!file.delete()) {
         Log.w(TAG, "Failed to delete file " + file.getAbsolutePath());
       }
     }
-    return trackWriter.wasSuccess();
+    return trackExporter.wasSuccess();
   }
 
   /**
