@@ -18,7 +18,7 @@ package com.google.android.apps.mytracks.io.sync;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.io.file.KmlImporter;
+import com.google.android.apps.mytracks.io.file.KmlFileTrackImporter;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.gms.auth.GoogleAuthException;
@@ -348,9 +348,9 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
       if (driveFile != null) {
         InputStream inputStream = downloadDriveFile(driveFile, true);
         if (inputStream != null) {
-          KmlImporter kmlImporter = new KmlImporter(context, -1L);
+          KmlFileTrackImporter kmlFileTrackImporter = new KmlFileTrackImporter(context, -1L);
           try {
-            long[] trackIds = kmlImporter.importFile(inputStream);
+            long[] trackIds = kmlFileTrackImporter.importFile(inputStream);
             if (trackIds.length == 1) {
               Track track = myTracksProviderUtils.getTrack(trackIds[0]);
               if (track == null) {
@@ -494,9 +494,9 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
       Log.e(TAG, "Unable to update track. Input stream is null for track " + track.getName());
       return false;
     }
-    KmlImporter kmlImporter = new KmlImporter(context, track.getId());
+    KmlFileTrackImporter kmlFileTrackImporter = new KmlFileTrackImporter(context, track.getId());
     try {
-      long[] trackIds = kmlImporter.importFile(inputStream);
+      long[] trackIds = kmlFileTrackImporter.importFile(inputStream);
       if (trackIds.length == 1) {
         Track newTrack = myTracksProviderUtils.getTrack(trackIds[0]);
         if (newTrack == null) {

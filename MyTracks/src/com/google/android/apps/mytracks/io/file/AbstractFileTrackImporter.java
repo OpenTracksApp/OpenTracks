@@ -54,12 +54,12 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * Abstract class for various importers like {@link GpxImporter} and
- * {@link KmlImporter}.
+ * Abstract class for various file track importers like {@link GpxFileTrackImporter} and
+ * {@link KmlFileTrackImporter}.
  * 
  * @author Jimmy Shih
  */
-abstract class AbstractImporter extends DefaultHandler {
+abstract class AbstractFileTrackImporter extends DefaultHandler implements TrackImporter {
 
   /**
    * Data for the current track.
@@ -131,12 +131,12 @@ abstract class AbstractImporter extends DefaultHandler {
    * @param importTrackId the track id to import to. -1L to import to a new
    *          track.
    */
-  protected AbstractImporter(Context context, long importTrackId) {
+  protected AbstractFileTrackImporter(Context context, long importTrackId) {
     this(context, importTrackId, MyTracksProviderUtils.Factory.get(context));
   }
 
   @VisibleForTesting
-  protected AbstractImporter(
+  protected AbstractFileTrackImporter(
       Context context, long importTrackId, MyTracksProviderUtils myTracksProviderUtils) {
     this.context = context;
     this.importTrackId = importTrackId;

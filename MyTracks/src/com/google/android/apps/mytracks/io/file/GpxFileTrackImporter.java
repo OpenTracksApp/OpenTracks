@@ -31,7 +31,7 @@ import org.xml.sax.SAXException;
  * 
  * @author Jimmy Shih
  */
-public class GpxImporter extends AbstractImporter {
+public class GpxFileTrackImporter extends AbstractFileTrackImporter {
 
   private static final String TAG_DESCRIPTION = "desc";
   private static final String TAG_COMMENT = "cmt";
@@ -54,12 +54,12 @@ public class GpxImporter extends AbstractImporter {
    * @param context the context
    * @param importTrackId track id to import to. -1L to import to a new track.
    */
-  public GpxImporter(Context context, long importTrackId) {
+  public GpxFileTrackImporter(Context context, long importTrackId) {
     super(context, importTrackId);
   }
 
   @VisibleForTesting
-  public GpxImporter(Context context, MyTracksProviderUtils myTracksProviderUtils) {
+  public GpxFileTrackImporter(Context context, MyTracksProviderUtils myTracksProviderUtils) {
     super(context, -1L, myTracksProviderUtils);
   }
 
