@@ -19,6 +19,7 @@ package com.google.android.apps.mytracks.io.file;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
+import com.google.android.apps.mytracks.io.file.TrackExporter.TrackExporterListener;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.SystemUtils;
@@ -52,7 +53,7 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   private final MyTracksProviderUtils myTracksProviderUtils;
 
   private WakeLock wakeLock;
-  private TrackExporter trackExporter;
+  private FileTrackExporter fileTrackExporter;
 
   // true if the AsyncTask has completed
   private boolean completed;
@@ -163,8 +164,8 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
   @Override
   protected void onCancelled() {
-    if (trackExporter != null) {
-      trackExporter.stopWriteTrack();
+    if (fileTrackExporter != null) {
+      fileTrackExporter.stopWriteTrack();
     }
   }
 
@@ -186,10 +187,11 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
       return false;
     }
 
-    trackExporter = new TrackExporter(
-        context, myTracksProviderUtils, tracks, trackFileFormat, new TrackExporter.OnWriteListener() {
+    fileTrackExporter = new FileTrackExporter(
+        context, myTracksProviderUtils, tracks, trackFileFormat, new TrackExporterListener() {
+
             @Override
-          public void onWrite(int number, int max) {
+          public void onProgressUpdate(int number, int max) {
             /*
              * If only saving one track, update the progress dialog once every
              * 500 points
@@ -204,20 +206,20 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     try {
       file = new File(directory, fileName);
       OutputStream outputStream = new FileOutputStream(file);
-      trackExporter.writeTrack(outputStream);
+      fileTrackExporter.writeTrack(outputStream);
     } catch (FileNotFoundException e) {
       Log.d(TAG, "File not found " + fileName, e);
       return false;
     }
 
-    if (trackExporter.wasSuccess()) {
+    if (fileTrackExporter.isSuccess()) {
       savedPath = file.getAbsolutePath();
     } else {
       if (!file.delete()) {
         Log.w(TAG, "Failed to delete file " + file.getAbsolutePath());
       }
     }
-    return trackExporter.wasSuccess();
+    return fileTrackExporter.isSuccess();
   }
 
   /**

@@ -20,8 +20,8 @@ import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
+import com.google.android.apps.mytracks.io.file.FileTrackExporter;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
-import com.google.android.apps.mytracks.io.file.TrackExporter;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
@@ -441,11 +441,11 @@ public class SyncUtils {
 
     java.io.File file = new java.io.File(directory,
         FileUtils.buildUniqueFileName(directory, track.getName(), trackFileFormat.getExtension()));
-    TrackExporter trackExporter = new TrackExporter(
+    FileTrackExporter fileTrackExporter = new FileTrackExporter(
         context, myTracksProviderUtils, new Track[] {track}, trackFileFormat, null);
 
-    trackExporter.writeTrack(new FileOutputStream(file));
-    if (trackExporter.wasSuccess()) {
+    fileTrackExporter.writeTrack(new FileOutputStream(file));
+    if (fileTrackExporter.isSuccess()) {
       return file;
     }
     Log.d(TAG, "Unable to get file for track " + track.getName());
