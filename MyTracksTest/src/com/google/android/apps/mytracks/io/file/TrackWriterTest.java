@@ -34,7 +34,7 @@ import org.xml.sax.SAXException;
  *
  * @author Rodrigo Damazio
  */
-public abstract class TrackFormatWriterTest extends AndroidTestCase {
+public abstract class TrackWriterTest extends AndroidTestCase {
 
   // All the user-provided strings have "]]>" to ensure that proper escaping is
   // being done.
@@ -110,29 +110,29 @@ public abstract class TrackFormatWriterTest extends AndroidTestCase {
    * Makes the right sequence of calls to the writer in order to write the fake
    * track in {@link #track}.
    *
-   * @param writer the writer to write to
+   * @param trackWriter the track writer
    * @return the written contents
    */
-  protected String writeTrack(TrackFormatWriter writer) throws Exception {
+  protected String writeTrack(TrackWriter trackWriter) throws Exception {
     OutputStream output = new ByteArrayOutputStream(BUFFER_SIZE);
-    writer.prepare(output);
-    writer.writeHeader(track);
-    writer.writeBeginWaypoints();
-    writer.writeWaypoint(wp1);
-    writer.writeWaypoint(wp2);
-    writer.writeEndWaypoints();
-    writer.writeBeginTrack(track, location1);
-    writer.writeOpenSegment();
-    writer.writeLocation(location1);
-    writer.writeLocation(location2);
-    writer.writeCloseSegment();
-    writer.writeOpenSegment();
-    writer.writeLocation(location3);
-    writer.writeLocation(location4);
-    writer.writeCloseSegment();
-    writer.writeEndTrack(track, location4);
-    writer.writeFooter();
-    writer.close();
+    trackWriter.prepare(output);
+    trackWriter.writeHeader(track);
+    trackWriter.writeBeginWaypoints();
+    trackWriter.writeWaypoint(wp1);
+    trackWriter.writeWaypoint(wp2);
+    trackWriter.writeEndWaypoints();
+    trackWriter.writeBeginTrack(track, location1);
+    trackWriter.writeOpenSegment();
+    trackWriter.writeLocation(location1);
+    trackWriter.writeLocation(location2);
+    trackWriter.writeCloseSegment();
+    trackWriter.writeOpenSegment();
+    trackWriter.writeLocation(location3);
+    trackWriter.writeLocation(location4);
+    trackWriter.writeCloseSegment();
+    trackWriter.writeEndTrack(track, location4);
+    trackWriter.writeFooter();
+    trackWriter.close();
     return output.toString();
   }
 

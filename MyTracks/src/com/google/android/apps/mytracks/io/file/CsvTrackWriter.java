@@ -48,7 +48,7 @@ import java.text.NumberFormat;
  *
  * @author Rodrigo Damazio
  */
-public class CsvTrackWriter implements TrackFormatWriter {
+public class CsvTrackWriter implements TrackWriter {
 
   private static final NumberFormat SHORT_FORMAT = NumberFormat.getInstance();
 

@@ -59,7 +59,7 @@ public class TrackExporter {
 
   private final MyTracksProviderUtils myTracksProviderUtils;
   private final Track[] tracks;
-  private final TrackFormatWriter trackFormatWriter;
+  private final TrackWriter trackWriter;
   private final OnWriteListener onWriteListener;
 
   private Thread writeThread;
@@ -76,15 +76,15 @@ public class TrackExporter {
    */
   public TrackExporter(Context context, MyTracksProviderUtils myTracksProviderUtils, Track[] tracks,
       TrackFileFormat trackFileFormat, OnWriteListener onWriteListener) {
-    this(myTracksProviderUtils, tracks, trackFileFormat.newFormatWriter(context), onWriteListener);
+    this(myTracksProviderUtils, tracks, trackFileFormat.newTrackWriter(context), onWriteListener);
   }
 
   @VisibleForTesting
   public TrackExporter(MyTracksProviderUtils myTracksProviderUtils, Track[] tracks,
-      TrackFormatWriter trackFormatWriter, OnWriteListener onWriteListener) {
+      TrackWriter trackWriter, OnWriteListener onWriteListener) {
     this.myTracksProviderUtils = myTracksProviderUtils;
     this.tracks = tracks;
-    this.trackFormatWriter = trackFormatWriter;
+    this.trackWriter = trackWriter;
     this.onWriteListener = onWriteListener;
   }
   
@@ -105,16 +105,16 @@ public class TrackExporter {
         @Override
       public void run() {
         try {
-          trackFormatWriter.prepare(outputStream);
-          trackFormatWriter.writeHeader(tracks[0]);
+          trackWriter.prepare(outputStream);
+          trackWriter.writeHeader(tracks[0]);
           long startTime = tracks[0].getTripStatistics().getStartTime();
           for (int i = 0; i < tracks.length; i++) {
             writeWaypoints(tracks[i]);
             long offset = tracks[i].getTripStatistics().getStartTime() - startTime;
             writeLocations(tracks[i], offset);
           }
-          trackFormatWriter.writeFooter();
-          trackFormatWriter.close();
+          trackWriter.writeFooter();
+          trackWriter.close();
           success = true;
         } catch (InterruptedException e) {
           success = false;
@@ -169,11 +169,11 @@ public class TrackExporter {
          */
         while (cursor.moveToNext()) {
           if (!hasWaypoints) {
-            trackFormatWriter.writeBeginWaypoints();
+            trackWriter.writeBeginWaypoints();
             hasWaypoints = true;
           }
           Waypoint waypoint = myTracksProviderUtils.createWaypoint(cursor);
-          trackFormatWriter.writeWaypoint(waypoint);
+          trackWriter.writeWaypoint(waypoint);
         }
       }
     } finally {
@@ -182,7 +182,7 @@ public class TrackExporter {
       }
     }
     if (hasWaypoints) {
-      trackFormatWriter.writeEndWaypoints();
+      trackWriter.writeEndWaypoints();
     }
   }
 
@@ -211,28 +211,28 @@ public class TrackExporter {
         boolean isSegmentValid = isLocationValid && isLastLocationValid;
         if (!wroteTrack && isSegmentValid) {
           // Found the first two consecutive locations that are valid          
-          trackFormatWriter.writeBeginTrack(track, locationFactory.lastLocation);
+          trackWriter.writeBeginTrack(track, locationFactory.lastLocation);
           wroteTrack = true;
         }
 
         if (isSegmentValid) {
           if (!wroteSegment) {
             // Start a segment
-            trackFormatWriter.writeOpenSegment();
+            trackWriter.writeOpenSegment();
             wroteSegment = true;
 
             // Write the previous location, which we had previously skipped
-            trackFormatWriter.writeLocation(locationFactory.lastLocation);
+            trackWriter.writeLocation(locationFactory.lastLocation);
           }
 
           // Write the current location
-          trackFormatWriter.writeLocation(location);
+          trackWriter.writeLocation(location);
           if (onWriteListener != null) {
             onWriteListener.onWrite(locationNumber, track.getNumberOfPoints());
           }
         } else {
           if (wroteSegment) {
-            trackFormatWriter.writeCloseSegment();
+            trackWriter.writeCloseSegment();
             wroteSegment = false;
           }
         }
@@ -241,17 +241,17 @@ public class TrackExporter {
       }
       
       if (wroteSegment) {
-        trackFormatWriter.writeCloseSegment();
+        trackWriter.writeCloseSegment();
         wroteSegment = false;
       }
       if (wroteTrack) {
         Location lastValidTrackPoint = myTracksProviderUtils.getLastValidTrackPoint(track.getId());
         setLocationTime(lastValidTrackPoint, offset);
-        trackFormatWriter.writeEndTrack(track, lastValidTrackPoint);
+        trackWriter.writeEndTrack(track, lastValidTrackPoint);
       } else {
         // Write an empty track
-        trackFormatWriter.writeBeginTrack(track, null);
-        trackFormatWriter.writeEndTrack(track, null);
+        trackWriter.writeBeginTrack(track, null);
+        trackWriter.writeEndTrack(track, null);
       }
     } finally {
       iterator.close();

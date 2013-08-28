@@ -29,11 +29,11 @@ import org.w3c.dom.Element;
  *
  * @author Sandor Dornbush
  */
-public class TcxTrackWriterTest extends TrackFormatWriterTest {
+public class TcxTrackWriterTest extends TrackWriterTest {
 
   public void testXmlOutput() throws Exception {
-    TrackFormatWriter writer = new TcxTrackWriter(getContext());
-    String result = writeTrack(writer);
+    TcxTrackWriter tcxTrackWriter = new TcxTrackWriter(getContext());
+    String result = writeTrack(tcxTrackWriter);
     Document doc = parseXmlDocument(result);
 
     Element root = getChildElement(doc, "TrainingCenterDatabase");

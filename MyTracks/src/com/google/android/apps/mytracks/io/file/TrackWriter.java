@@ -50,7 +50,7 @@ import java.io.OutputStream;
  *
  * @author Rodrigo Damazio
  */
-public interface TrackFormatWriter {
+public interface TrackWriter {
 
   /**
    * Gets the file extension (i.e. gpx, kml, ...)

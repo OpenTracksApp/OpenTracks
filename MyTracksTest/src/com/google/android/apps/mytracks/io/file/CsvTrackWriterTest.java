@@ -21,7 +21,7 @@ package com.google.android.apps.mytracks.io.file;
  *
  * @author Rodrigo Damazio
  */
-public class CsvTrackWriterTest extends TrackFormatWriterTest {
+public class CsvTrackWriterTest extends TrackWriterTest {
 
   private static final String BEGIN_TAG = "\"";
   private static final String END_TAG = "\"\n";
@@ -62,8 +62,8 @@ public class CsvTrackWriterTest extends TrackFormatWriterTest {
         + expectedMarkerHeader + expectedMarker1 + expectedMarker2 + "\n"
         + expectedPointHeader + expectedPoint1 + expectedPoint2 + expectedPoint3 + expectedPoint4;
 
-    CsvTrackWriter writer = new CsvTrackWriter(getContext());
-    assertEquals(expected, writeTrack(writer));
+    CsvTrackWriter csvTrackWriter = new CsvTrackWriter(getContext());
+    assertEquals(expected, writeTrack(csvTrackWriter));
   }
 
   /**

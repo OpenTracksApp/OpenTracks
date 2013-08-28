@@ -40,7 +40,7 @@ import java.util.Locale;
  * @author Sandor Dornbush
  * @author Dominik Rttsches
  */
-public class TcxTrackWriter implements TrackFormatWriter {
+public class TcxTrackWriter implements TrackWriter {
 
   /**
    * TCX sport type. See the TCX spec.

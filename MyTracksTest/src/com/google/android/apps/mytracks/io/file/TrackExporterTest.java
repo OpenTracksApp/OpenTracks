@@ -39,7 +39,7 @@ public class TrackExporterTest extends AndroidTestCase {
 
   private IMocksControl mocksControl;
 
-  private TrackFormatWriter trackFormatWriter;
+  private TrackWriter trackWriter;
   private Track track;
   private OutputStream outputStream;
   private TrackExporter trackExporter;
@@ -61,7 +61,7 @@ public class TrackExporterTest extends AndroidTestCase {
         myTracksProviderUtils);
 
     mocksControl = EasyMock.createStrictControl();
-    trackFormatWriter = mocksControl.createMock(TrackFormatWriter.class);
+    trackWriter = mocksControl.createMock(TrackWriter.class);
 
     track = new Track();
     track.setName(TRACK_NAME);
@@ -76,7 +76,7 @@ public class TrackExporterTest extends AndroidTestCase {
 
       }
     };
-    trackExporter = new TrackExporter(myTracksProviderUtils, new Track[] {track}, trackFormatWriter, onWriteListener);
+    trackExporter = new TrackExporter(myTracksProviderUtils, new Track[] {track}, trackWriter, onWriteListener);
   }
 
   @Override
@@ -91,12 +91,12 @@ public class TrackExporterTest extends AndroidTestCase {
   public void testWriteTrack_emptyTrack() throws Exception {
 
     // Set expected mock behavior
-    trackFormatWriter.prepare(outputStream);
-    trackFormatWriter.writeHeader(track);
-    trackFormatWriter.writeBeginTrack(track, null);
-    trackFormatWriter.writeEndTrack(track, null);
-    trackFormatWriter.writeFooter();
-    trackFormatWriter.close();
+    trackWriter.prepare(outputStream);
+    trackWriter.writeHeader(track);
+    trackWriter.writeBeginTrack(track, null);
+    trackWriter.writeEndTrack(track, null);
+    trackWriter.writeFooter();
+    trackWriter.close();
 
     mocksControl.replay();
     trackExporter.writeTrack(outputStream);
@@ -123,12 +123,12 @@ public class TrackExporterTest extends AndroidTestCase {
         myTracksProviderUtils.bulkInsertTrackPoint(locations, locations.length, TRACK_ID));
 
     // Set expected mock behavior
-    trackFormatWriter.prepare(outputStream);
-    trackFormatWriter.writeHeader(track);
-    trackFormatWriter.writeBeginTrack(track, null);
-    trackFormatWriter.writeEndTrack(track, null);
-    trackFormatWriter.writeFooter();
-    trackFormatWriter.close();
+    trackWriter.prepare(outputStream);
+    trackWriter.writeHeader(track);
+    trackWriter.writeBeginTrack(track, null);
+    trackWriter.writeEndTrack(track, null);
+    trackWriter.writeFooter();
+    trackWriter.close();
 
     mocksControl.replay();
     trackExporter.writeTrack(outputStream);
@@ -162,38 +162,38 @@ public class TrackExporterTest extends AndroidTestCase {
       waypoint.setId(i + 1);
     }
 
-    trackFormatWriter.prepare(outputStream);
-    trackFormatWriter.writeHeader(track);
+    trackWriter.prepare(outputStream);
+    trackWriter.writeHeader(track);
 
     // Expect reading/writing of the waypoints (except the first)
-    trackFormatWriter.writeBeginWaypoints();
-    trackFormatWriter.writeWaypoint(waypointEq(waypoints[1]));
-    trackFormatWriter.writeWaypoint(waypointEq(waypoints[2]));
-    trackFormatWriter.writeEndWaypoints();
+    trackWriter.writeBeginWaypoints();
+    trackWriter.writeWaypoint(waypointEq(waypoints[1]));
+    trackWriter.writeWaypoint(waypointEq(waypoints[2]));
+    trackWriter.writeEndWaypoints();
 
     // Begin the track
-    trackFormatWriter.writeBeginTrack(trackEq(track), locationEq(locations[0]));
+    trackWriter.writeBeginTrack(trackEq(track), locationEq(locations[0]));
 
     // Write locations 1-2
-    trackFormatWriter.writeOpenSegment();
-    trackFormatWriter.writeLocation(locationEq(locations[0]));
-    trackFormatWriter.writeLocation(locationEq(locations[1]));
-    trackFormatWriter.writeCloseSegment();
+    trackWriter.writeOpenSegment();
+    trackWriter.writeLocation(locationEq(locations[0]));
+    trackWriter.writeLocation(locationEq(locations[1]));
+    trackWriter.writeCloseSegment();
 
     // Location 3 is not written - it's invalid
 
     // Write locations 4-6
-    trackFormatWriter.writeOpenSegment();
-    trackFormatWriter.writeLocation(locationEq(locations[3]));
-    trackFormatWriter.writeLocation(locationEq(locations[4]));
-    trackFormatWriter.writeLocation(locationEq(locations[5]));
-    trackFormatWriter.writeCloseSegment();
+    trackWriter.writeOpenSegment();
+    trackWriter.writeLocation(locationEq(locations[3]));
+    trackWriter.writeLocation(locationEq(locations[4]));
+    trackWriter.writeLocation(locationEq(locations[5]));
+    trackWriter.writeCloseSegment();
 
     // End the track
-    trackFormatWriter.writeEndTrack(trackEq(track), locationEq(locations[5]));
+    trackWriter.writeEndTrack(trackEq(track), locationEq(locations[5]));
 
-    trackFormatWriter.writeFooter();
-    trackFormatWriter.close();
+    trackWriter.writeFooter();
+    trackWriter.close();
 
     mocksControl.replay();
     trackExporter.writeTrack(outputStream);

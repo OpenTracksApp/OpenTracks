@@ -44,7 +44,7 @@ import java.util.ArrayList;
  * 
  * @author Leif Hendrik Wilden
  */
-public class KmlTrackWriter implements TrackFormatWriter {
+public class KmlTrackWriter implements TrackWriter {
 
   private static final String WAYPOINT_STYLE = "waypoint";
   private static final String STATISTICS_STYLE = "statistics";

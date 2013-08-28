@@ -25,11 +25,11 @@ import org.w3c.dom.Element;
  *
  * @author Rodrigo Damazio
  */
-public class GpxTrackWriterTest extends TrackFormatWriterTest {
+public class GpxTrackWriterTest extends TrackWriterTest {
 
   public void testXmlOutput() throws Exception {
-    TrackFormatWriter writer = new GpxTrackWriter(getContext());
-    String result = writeTrack(writer);
+    GpxTrackWriter gpxTrackWriter = new GpxTrackWriter(getContext());
+    String result = writeTrack(gpxTrackWriter);
     Document doc = parseXmlDocument(result);
 
     Element gpxTag = getChildElement(doc, "gpx");
