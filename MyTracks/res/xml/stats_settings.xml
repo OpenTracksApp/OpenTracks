@@ -38,11 +38,11 @@ limitations under the License.
       android:key="@string/stats_show_calorie_key"
       android:title="@string/stats_calorie" />
     <EditTextPreference
-      android:enabled="false"
+      android:dependency="@string/stats_show_calorie_key"
       android:imeOptions="actionDone"
       android:inputType="number"
       android:key="@string/stats_weight_key"
       android:persistent="false"
       android:title="@string/settings_stats_calorie_weight" />
-</PreferenceCategory>
+  </PreferenceCategory>
 </PreferenceScreen>

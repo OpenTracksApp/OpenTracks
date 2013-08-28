@@ -44,9 +44,9 @@ public class CalorieUtilsTest extends TestCase {
    * Checks using foot calculation equation.
    */
   public void testGetCalories_foot() {
-    double actual = CalorieUtils.getCalories(start, stop, grade, weight,
+    double actual = CalorieUtils.getCalorie(start, stop, grade, weight,
         CalorieUtils.ActivityType.FOOT);
-    double expected = CalorieUtils.calculateCaloriesFoot(start, stop, grade, weight);
+    double expected = CalorieUtils.calculateCalorieFoot(start, stop, grade, weight);
     assertEquals(expected, actual);
   }
 
@@ -56,9 +56,9 @@ public class CalorieUtilsTest extends TestCase {
   public void testGetCalories_footNegativeGrade() {
     double actualGrade = -5;
     double expectGrade = 0;
-    double actual = CalorieUtils.getCalories(start, stop, actualGrade, weight,
+    double actual = CalorieUtils.getCalorie(start, stop, actualGrade, weight,
         CalorieUtils.ActivityType.FOOT);
-    double expected = CalorieUtils.calculateCaloriesFoot(start, stop, expectGrade, weight);
+    double expected = CalorieUtils.calculateCalorieFoot(start, stop, expectGrade, weight);
     assertEquals(expected, actual);
   }
 
@@ -66,9 +66,9 @@ public class CalorieUtilsTest extends TestCase {
    * Checks using cycling calculation equation.
    */
   public void testGetCalories_cycling() {
-    double actual = CalorieUtils.getCalories(start, stop, grade, weight,
+    double actual = CalorieUtils.getCalorie(start, stop, grade, weight,
         CalorieUtils.ActivityType.CYCLING);
-    double expected = CalorieUtils.calculateCaloriesCycling(start, stop, grade, weight);
+    double expected = CalorieUtils.calculateCalorieCycling(start, stop, grade, weight);
     assertEquals(expected, actual);
   }
 
@@ -76,8 +76,8 @@ public class CalorieUtilsTest extends TestCase {
    * Checks using running VO2 equation.
    */
   public void testGetVO2_running() {
-    double actual = CalorieUtils.getVo2(CalorieUtils.CRTICAL_SPEED_RUNNING * 2, grade);
-    double expected = CalorieUtils.calculateRunningVo2(CalorieUtils.CRTICAL_SPEED_RUNNING * 2,
+    double actual = CalorieUtils.getFootVo2(CalorieUtils.CRTICAL_SPEED_RUNNING * 2, grade);
+    double expected = CalorieUtils.getHighSpeedFootVo2(CalorieUtils.CRTICAL_SPEED_RUNNING * 2,
         grade);
     assertEquals(expected, actual);
   }
@@ -89,8 +89,8 @@ public class CalorieUtilsTest extends TestCase {
     // Test at half the critical speed
     double footSpeed = CalorieUtils.CRTICAL_SPEED_RUNNING / 2.0;
 
-    double actual = CalorieUtils.getVo2(footSpeed, grade);
-    double expected = CalorieUtils.calculateWalkingVo2(footSpeed, grade);
+    double actual = CalorieUtils.getFootVo2(footSpeed, grade);
+    double expected = CalorieUtils.getLowSpeedFootVo2(footSpeed, grade);
     assertEquals(expected, actual);
   }
 

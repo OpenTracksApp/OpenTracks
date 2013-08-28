@@ -59,6 +59,7 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
 
     configCaloriePreference();
     configWeightPreference();
+    updateWeightSummary();
     /*
      * Note configureUnitsListPreference will trigger
      * configureRateListPreference
@@ -117,27 +118,16 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
    */
   private void configCaloriePreference() {
     caloriePreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+      @SuppressWarnings("deprecation")
       @Override
       public boolean onPreferenceChange(Preference preference, Object newValue) {
         boolean value = (Boolean) newValue;
         if (value) {
-          weightPreference.setEnabled(true);
-          showWeightInputPreferenceDialog();
-        } else {
-          weightPreference.setEnabled(false);
+          showDialog(WEIGHT_INPUT_DIALOG);
         }
         return true;
       }
     });
-  }
-
-  /**
-   * Shows this dialog to input weight value while enable show calorie and the
-   * value is not set yet.
-   */
-  @SuppressWarnings("deprecation")
-  private void showWeightInputPreferenceDialog() {
-    showDialog(WEIGHT_INPUT_DIALOG);
   }
 
   @Override
@@ -150,11 +140,9 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
         weightInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         weightInput.setText(Integer.toString(PreferencesUtils.STATS_WEIGHT_DEFAULT));
         weightInput.setSelectAllOnFocus(true);
-        AlertDialog.Builder inputDialogBuilder = new AlertDialog.Builder(this);
-        inputDialogBuilder
+        dialog = (new AlertDialog.Builder(this))
             .setMessage(R.string.settings_stats_calorie_weight_description)
-            .setTitle(R.string.settings_stats_calorie_weight)
-            .setView(weightInput)
+            .setNegativeButton(getString(R.string.generic_cancel), null)
             .setPositiveButton(getString(R.string.generic_ok),
                 new DialogInterface.OnClickListener() {
                   public void onClick(DialogInterface dialogInterface, int number) {
@@ -162,7 +150,7 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
                     updateWeightSummary();
                     dialogInterface.cancel();
                   }
-                }).setNegativeButton(getString(R.string.generic_cancel), null).create().show();
+                }).setTitle(R.string.settings_stats_calorie_weight).setView(weightInput).create();
         break;
       default:
         break;
@@ -179,7 +167,6 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
    * @param isEnable true means enable the weight preference
    */
   private void configWeightPreference() {
-    updateWeightSummary();
     weightPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
       @Override
       public boolean onPreferenceChange(Preference preference, Object newValue) {
