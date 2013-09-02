@@ -142,8 +142,8 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
         weightInput.setSelectAllOnFocus(true);
         dialog = (new AlertDialog.Builder(this))
             .setMessage(R.string.settings_stats_calorie_weight_description)
-            .setNegativeButton(getString(R.string.generic_cancel), null)
-            .setPositiveButton(getString(R.string.generic_ok),
+            .setNegativeButton(R.string.generic_cancel, null)
+            .setPositiveButton(R.string.generic_ok,
                 new DialogInterface.OnClickListener() {
                   public void onClick(DialogInterface dialogInterface, int number) {
                     storeWeightValue(weightInput.getText().toString());

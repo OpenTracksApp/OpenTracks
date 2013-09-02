@@ -23,7 +23,6 @@ import static com.google.android.apps.mytracks.services.TrackRecordingService.PA
 import com.google.android.apps.mytracks.util.CalorieUtils;
 import com.google.android.apps.mytracks.util.CalorieUtils.ActivityType;
 import com.google.android.apps.mytracks.util.LocationUtils;
-import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.common.annotations.VisibleForTesting;
 
 import android.location.Location;
@@ -126,7 +125,7 @@ public class TripStatisticsUpdater {
    * @param location the location
    * @param minRecordingDistance the min recording distance
    */
-  public void addLocation(Location location, int minRecordingDistance) {
+  public void addLocation(Location location, int minRecordingDistance, int weight) {
     // Always update time
     updateTime(location.getTime());
 
@@ -196,7 +195,7 @@ public class TripStatisticsUpdater {
 
     // Update calorie
     double calorie = CalorieUtils.getCalorie(lastMovingLocation, location,
-        gradeBuffer.getAverage(), PreferencesUtils.STATS_WEIGHT_DEFAULT, ActivityType.FOOT);
+        gradeBuffer.getAverage(), weight, ActivityType.FOOT);
     currentSegment.addCalorie(calorie);
 
     lastLocation = location;

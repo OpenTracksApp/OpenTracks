@@ -659,9 +659,13 @@ public class TrackRecordingService extends Service {
         if (cursor.moveToLast()) {
           do {
             Location location = myTracksProviderUtils.createTrackPoint(cursor);
-            trackTripStatisticsUpdater.addLocation(location, recordingDistanceInterval);
+            trackTripStatisticsUpdater.addLocation(location, recordingDistanceInterval,
+                PreferencesUtils.getInt(context, R.string.stats_weight_key,
+                    PreferencesUtils.STATS_WEIGHT_DEFAULT));
             if (location.getTime() > markerStartTime) {
-              markerTripStatisticsUpdater.addLocation(location, recordingDistanceInterval);
+              markerTripStatisticsUpdater.addLocation(location, recordingDistanceInterval,
+                  PreferencesUtils.getInt(context, R.string.stats_weight_key,
+                      PreferencesUtils.STATS_WEIGHT_DEFAULT));
             }
           } while (cursor.moveToPrevious());
         }
@@ -1001,8 +1005,10 @@ public class TrackRecordingService extends Service {
     try {
       Uri uri = myTracksProviderUtils.insertTrackPoint(location, track.getId());
       long trackPointId = Long.parseLong(uri.getLastPathSegment());
-      trackTripStatisticsUpdater.addLocation(location, recordingDistanceInterval);
-      markerTripStatisticsUpdater.addLocation(location, recordingDistanceInterval);
+      trackTripStatisticsUpdater.addLocation(location, recordingDistanceInterval, PreferencesUtils
+          .getInt(context, R.string.stats_weight_key, PreferencesUtils.STATS_WEIGHT_DEFAULT));
+      markerTripStatisticsUpdater.addLocation(location, recordingDistanceInterval, PreferencesUtils
+          .getInt(context, R.string.stats_weight_key, PreferencesUtils.STATS_WEIGHT_DEFAULT));
       updateRecordingTrack(track, trackPointId, LocationUtils.isValidLocation(location));
     } catch (SQLiteException e) {
       /*
