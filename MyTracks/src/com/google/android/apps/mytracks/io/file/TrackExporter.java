@@ -26,23 +26,6 @@ import java.io.OutputStream;
 public interface TrackExporter {
 
   /**
-   * Listener for {@link TrackExporter} progress.
-   * 
-   * @author Jimmy Shih
-   */
-  interface TrackExporterListener {
-
-    /**
-     * Called to update progress.
-     * 
-     * @param number the number of locations written
-     * @param max the maximum number of locations in a track, for calculation of
-     *          completion percentage
-     */
-    void onProgressUpdate(int number, int max);
-  }
-
-  /**
    * Write track to an output stream
    * 
    * @param outputStream the output stream
