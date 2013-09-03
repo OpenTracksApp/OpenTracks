@@ -442,7 +442,7 @@ public class SyncUtils {
     java.io.File file = new java.io.File(directory,
         FileUtils.buildUniqueFileName(directory, track.getName(), trackFileFormat.getExtension()));
     FileTrackExporter fileTrackExporter = new FileTrackExporter(
-        context, myTracksProviderUtils, new Track[] {track}, trackFileFormat, null);
+        myTracksProviderUtils, new Track[] { track }, trackFileFormat, context, false, null);
 
     fileTrackExporter.writeTrack(new FileOutputStream(file));
     if (fileTrackExporter.isSuccess()) {

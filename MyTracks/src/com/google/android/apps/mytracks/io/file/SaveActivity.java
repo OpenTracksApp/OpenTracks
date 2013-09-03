@@ -99,7 +99,7 @@ public class SaveActivity extends Activity {
       saveAsyncTask = (SaveAsyncTask) retained;
       saveAsyncTask.setActivity(this);
     } else {
-      saveAsyncTask = new SaveAsyncTask(this, trackFileFormat, trackIds, directory);
+      saveAsyncTask = new SaveAsyncTask(this, trackFileFormat, trackIds, directory, playTrack);
       saveAsyncTask.execute();
     }
   }

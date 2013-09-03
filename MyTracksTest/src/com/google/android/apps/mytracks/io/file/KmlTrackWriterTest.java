@@ -54,7 +54,8 @@ public class KmlTrackWriterTest extends TrackWriterTest {
   }
 
   public void testXmlOutput() throws Exception {
-    KmlTrackWriter kmlTrackWriter = new KmlTrackWriter(getContext(), new FakeDescriptionGenerator());
+    KmlTrackWriter kmlTrackWriter = new KmlTrackWriter(
+        getContext(), false, new FakeDescriptionGenerator());
     String result = writeTrack(kmlTrackWriter);
     Document doc = parseXmlDocument(result);
 

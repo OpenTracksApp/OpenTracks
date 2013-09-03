@@ -34,7 +34,6 @@ import android.util.Log;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.OutputStream;
 
 /**
  * Async Task to save tracks to the external storage.
@@ -49,11 +48,12 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   private final TrackFileFormat trackFileFormat;
   private final long[] trackIds;
   private final File directory;
+  private final boolean playTrack;
   private final Context context;
   private final MyTracksProviderUtils myTracksProviderUtils;
 
   private WakeLock wakeLock;
-  private FileTrackExporter fileTrackExporter;
+  private TrackExporter trackExporter;
 
   // true if the AsyncTask has completed
   private boolean completed;
@@ -75,13 +75,15 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
    * @param trackIds the track ids to save. To save all, set to size 1 with
    *          trackIds[0] == -1L
    * @param directory the directory to save to
+   * @param playTrack true to play track
    */
-  public SaveAsyncTask(
-      SaveActivity saveActivity, TrackFileFormat trackFileFormat, long[] trackIds, File directory) {
+  public SaveAsyncTask(SaveActivity saveActivity, TrackFileFormat trackFileFormat, long[] trackIds,
+      File directory, boolean playTrack) {
     this.saveActivity = saveActivity;
     this.trackFileFormat = trackFileFormat;
     this.trackIds = trackIds;
     this.directory = directory;
+    this.playTrack = playTrack;
     context = saveActivity.getApplicationContext();
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
 
@@ -164,8 +166,8 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
   @Override
   protected void onCancelled() {
-    if (fileTrackExporter != null) {
-      fileTrackExporter.stopWriteTrack();
+    if (trackExporter != null) {
+      trackExporter.stopWriteTrack();
     }
   }
 
@@ -179,16 +181,18 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
       return false;
     }
     Track track = tracks[0];
+    boolean useKmz = !playTrack && trackFileFormat == TrackFileFormat.KML;
+    String extension = useKmz ? KmzTrackExporter.KMZ_EXTENSION : trackFileFormat.getExtension();
+    
     // Make sure the file doesn't exist yet (possibly by changing the filename)
-    String fileName = FileUtils.buildUniqueFileName(
-        directory, track.getName(), trackFileFormat.getExtension());
+    String fileName = FileUtils.buildUniqueFileName(directory, track.getName(), extension);
     if (fileName == null) {
       Log.d(TAG, "Unable to get a unique filename for " + track.getName());
       return false;
     }
 
-    fileTrackExporter = new FileTrackExporter(
-        context, myTracksProviderUtils, tracks, trackFileFormat, new TrackExporterListener() {
+    FileTrackExporter fileTrackExporter = new FileTrackExporter(myTracksProviderUtils, tracks,
+        trackFileFormat, context, useKmz, new TrackExporterListener() {
 
             @Override
           public void onProgressUpdate(int number, int max) {
@@ -202,24 +206,27 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
           }
         });
 
-    File file = null;
+    trackExporter = useKmz ? new KmzTrackExporter(myTracksProviderUtils, fileTrackExporter, tracks)
+        : fileTrackExporter;
+
+    File file = new File(directory, fileName);
+    FileOutputStream fileOutputStream;
     try {
-      file = new File(directory, fileName);
-      OutputStream outputStream = new FileOutputStream(file);
-      fileTrackExporter.writeTrack(outputStream);
+      fileOutputStream = new FileOutputStream(file);
     } catch (FileNotFoundException e) {
-      Log.d(TAG, "File not found " + fileName, e);
+      Log.e(TAG, "Unable to open file " + file.getName(), e);
       return false;
     }
+    trackExporter.writeTrack(fileOutputStream);
 
-    if (fileTrackExporter.isSuccess()) {
+    if (trackExporter.isSuccess()) {
       savedPath = file.getAbsolutePath();
     } else {
       if (!file.delete()) {
         Log.w(TAG, "Failed to delete file " + file.getAbsolutePath());
       }
     }
-    return fileTrackExporter.isSuccess();
+    return trackExporter.isSuccess();
   }
 
   /**

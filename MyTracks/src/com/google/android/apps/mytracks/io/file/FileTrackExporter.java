@@ -28,7 +28,6 @@ import com.google.common.annotations.VisibleForTesting;
 import android.content.Context;
 import android.database.Cursor;
 import android.location.Location;
-import android.util.Log;
 
 import java.io.OutputStream;
 
@@ -38,17 +37,12 @@ import java.io.OutputStream;
  * @author Sandor Dornbush
  * @author Rodrigo Damazio
  */
-public class FileTrackExporter implements TrackExporter {
-
-  private final static String TAG = FileTrackExporter.class.getSimpleName();
+public class FileTrackExporter extends AbstractTrackExporter {
 
   private final MyTracksProviderUtils myTracksProviderUtils;
   private final Track[] tracks;
   private final TrackWriter trackWriter;
   private final TrackExporterListener trackExporterListener;
-
-  private Thread writeThread;
-  private boolean success = false;
 
   /**
    * Constructor.
@@ -59,10 +53,10 @@ public class FileTrackExporter implements TrackExporter {
    * @param trackFileFormat the track file format
    * @param trackExporterListener the track export listener
    */
-  public FileTrackExporter(Context context, MyTracksProviderUtils myTracksProviderUtils,
-      Track[] tracks, TrackFileFormat trackFileFormat,
+  public FileTrackExporter(MyTracksProviderUtils myTracksProviderUtils,
+      Track[] tracks, TrackFileFormat trackFileFormat, Context context, boolean inZip,
       TrackExporterListener trackExporterListener) {
-    this(myTracksProviderUtils, tracks, trackFileFormat.newTrackWriter(context),
+    this(myTracksProviderUtils, tracks, trackFileFormat.newTrackWriter(context, inZip),
         trackExporterListener);
   }
 
@@ -76,55 +70,17 @@ public class FileTrackExporter implements TrackExporter {
   }
 
   @Override
-  public boolean isSuccess() {
-    return success;
-  }
-
-  @Override
-  public void writeTrack(final OutputStream outputStream) {
-    writeThread = new Thread() {
-        @Override
-      public void run() {
-        try {
-          trackWriter.prepare(outputStream);
-          trackWriter.writeHeader(tracks[0]);
-          long startTime = tracks[0].getTripStatistics().getStartTime();
-          for (int i = 0; i < tracks.length; i++) {
-            writeWaypoints(tracks[i]);
-            long offset = tracks[i].getTripStatistics().getStartTime() - startTime;
-            writeLocations(tracks[i], offset);
-          }
-          trackWriter.writeFooter();
-          trackWriter.close();
-          success = true;
-        } catch (InterruptedException e) {
-          success = false;
-        }
-      }
-    };
-    writeThread.start();
-    try {
-      writeThread.join();
-    } catch (InterruptedException e) {
-      Log.e(TAG, "Interrupted while waiting for write to complete", e);
-      success = false;
+  void performWrite(OutputStream outputStream) throws InterruptedException {
+    trackWriter.prepare(outputStream);
+    trackWriter.writeHeader(tracks[0]);
+    long startTime = tracks[0].getTripStatistics().getStartTime();
+    for (int i = 0; i < tracks.length; i++) {
+      writeWaypoints(tracks[i]);
+      long offset = tracks[i].getTripStatistics().getStartTime() - startTime;
+      writeLocations(tracks[i], offset);
     }
-  }
-
-  @Override
-  public void stopWriteTrack() {
-    if (writeThread != null && writeThread.isAlive()) {
-      Log.i(TAG, "Attempting to stop track write");
-      writeThread.interrupt();
-
-      try {
-        writeThread.join();
-        Log.i(TAG, "Track write stopped");
-      } catch (InterruptedException e) {
-        Log.e(TAG, "Interrupted while waiting for writer to stop", e);
-        success = false;
-      }
-    }
+    trackWriter.writeFooter();
+    trackWriter.close();
   }
 
   /**
