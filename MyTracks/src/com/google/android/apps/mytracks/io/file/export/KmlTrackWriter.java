@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks.io.file;
+package com.google.android.apps.mytracks.io.file.export;
 
 import com.google.android.apps.mytracks.content.DescriptionGenerator;
 import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
@@ -25,6 +25,7 @@ import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
+import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.util.GoogleEarthUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;

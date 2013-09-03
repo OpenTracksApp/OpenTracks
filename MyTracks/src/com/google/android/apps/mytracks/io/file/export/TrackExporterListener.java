@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks.io.file;
+package com.google.android.apps.mytracks.io.file.export;
 
 /**
  * Listener for {@link TrackExporter} progress.

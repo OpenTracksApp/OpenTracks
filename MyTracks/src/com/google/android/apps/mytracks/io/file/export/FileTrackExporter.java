@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.google.android.apps.mytracks.io.file;
+package com.google.android.apps.mytracks.io.file.export;
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.MyTracksLocation;
@@ -22,6 +22,7 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.common.annotations.VisibleForTesting;
 

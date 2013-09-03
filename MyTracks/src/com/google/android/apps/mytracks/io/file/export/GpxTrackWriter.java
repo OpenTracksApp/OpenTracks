@@ -14,10 +14,11 @@
  * the License.
  */
 
-package com.google.android.apps.mytracks.io.file;
+package com.google.android.apps.mytracks.io.file.export;
 
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 

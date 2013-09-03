@@ -14,8 +14,9 @@
  * the License.
  */
 
-package com.google.android.apps.mytracks.io.file;
+package com.google.android.apps.mytracks.io.file.export;
 
+import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.GoogleEarthUtils;

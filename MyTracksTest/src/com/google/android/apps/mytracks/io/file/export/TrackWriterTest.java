@@ -1,10 +1,11 @@
 // Copyright 2010 Google Inc. All Rights Reserved.
-package com.google.android.apps.mytracks.io.file;
+package com.google.android.apps.mytracks.io.file.export;
 
 import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.io.file.export.TrackWriter;
 
 import android.test.AndroidTestCase;
 

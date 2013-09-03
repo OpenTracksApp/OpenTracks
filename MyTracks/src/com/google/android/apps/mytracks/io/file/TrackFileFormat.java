@@ -1,5 +1,11 @@
 package com.google.android.apps.mytracks.io.file;
 
+import com.google.android.apps.mytracks.io.file.export.CsvTrackWriter;
+import com.google.android.apps.mytracks.io.file.export.GpxTrackWriter;
+import com.google.android.apps.mytracks.io.file.export.KmlTrackWriter;
+import com.google.android.apps.mytracks.io.file.export.TcxTrackWriter;
+import com.google.android.apps.mytracks.io.file.export.TrackWriter;
+
 import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -12,13 +18,13 @@ import java.util.Locale;
 public enum TrackFileFormat implements Parcelable {
   KML {
   @Override
-    TrackWriter newTrackWriter(Context context, boolean inZip) {
+    public TrackWriter newTrackWriter(Context context, boolean inZip) {
       return new KmlTrackWriter(context, inZip);
     }
   },
   GPX {
   @Override
-    TrackWriter newTrackWriter(Context context, boolean inZip) {
+    public TrackWriter newTrackWriter(Context context, boolean inZip) {
       return new GpxTrackWriter(context);
     }
   },
@@ -60,7 +66,7 @@ public enum TrackFileFormat implements Parcelable {
   /**
    * Creates a new track writer for the format.
    */
-  abstract TrackWriter newTrackWriter(Context context, boolean inZip);
+  public abstract TrackWriter newTrackWriter(Context context, boolean inZip);
 
   /**
    * Returns the mime type for each format.

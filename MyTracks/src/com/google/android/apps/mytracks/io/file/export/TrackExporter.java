@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.google.android.apps.mytracks.io.file;
+package com.google.android.apps.mytracks.io.file.export;
 
 import java.io.OutputStream;
 
