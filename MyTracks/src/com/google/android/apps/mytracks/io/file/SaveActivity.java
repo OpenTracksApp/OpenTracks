@@ -121,7 +121,6 @@ public class SaveActivity extends Activity {
               public void onCancel(DialogInterface dialog) {
                 saveAsyncTask.cancel(true);
                 dialog.dismiss();
-                finish();
               }
             }, directoryDisplayName);
         return progressDialog;

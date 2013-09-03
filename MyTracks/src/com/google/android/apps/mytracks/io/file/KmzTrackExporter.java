@@ -44,32 +44,26 @@ public class KmzTrackExporter extends AbstractTrackExporter {
   public static final String KML_FILE_NAME = "doc.kml";
 
   private final MyTracksProviderUtils myTracksProviderUtils;
-  private final TrackExporter trackExporter;
+  private final FileTrackExporter fileTrackExporter;
   private final Track[] tracks;
 
   /**
    * Constructor.
    * 
    * @param myTracksProviderUtils the my tracks provider utils
-   * @param trackExporter the track exporter
+   * @param fileTrackExporter the file track exporter
    * @param tracks the tracks to export
    */
-  public KmzTrackExporter(
-      MyTracksProviderUtils myTracksProviderUtils, TrackExporter trackExporter, Track[] tracks) {
+  public KmzTrackExporter(MyTracksProviderUtils myTracksProviderUtils,
+      FileTrackExporter fileTrackExporter, Track[] tracks) {
     this.myTracksProviderUtils = myTracksProviderUtils;
-    this.trackExporter = trackExporter;
+    this.fileTrackExporter = fileTrackExporter;
     this.tracks = tracks;
   }
 
   @Override
   public boolean isSuccess() {
-    return trackExporter.isSuccess() && super.isSuccess();
-  }
-
-  @Override
-  public void stopWriteTrack() {
-    trackExporter.stopWriteTrack();
-    super.stopWriteTrack();
+    return fileTrackExporter.isSuccess() && super.isSuccess();
   }
 
   @Override
@@ -83,9 +77,14 @@ public class KmzTrackExporter extends AbstractTrackExporter {
       zipOutputStream.putNextEntry(zipEntry);
 
       ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-      trackExporter.writeTrack(byteArrayOutputStream);
-      zipOutputStream.write(byteArrayOutputStream.toByteArray());
-      zipOutputStream.closeEntry();
+      fileTrackExporter.writeTrack(byteArrayOutputStream);
+      if (fileTrackExporter.isSuccess()) {
+        zipOutputStream.write(byteArrayOutputStream.toByteArray());
+        zipOutputStream.closeEntry();
+      } else {
+        zipOutputStream.closeEntry();
+        throw new IOException();
+      }
 
       // Add photos
       addImages(zipOutputStream);
@@ -96,7 +95,7 @@ public class KmzTrackExporter extends AbstractTrackExporter {
     }
   }
 
-  private void addImages(ZipOutputStream zipOutputStream) throws IOException {
+  private void addImages(ZipOutputStream zipOutputStream) throws InterruptedException, IOException {
     for (Track track : tracks) {
       Cursor cursor = null;
       try {
@@ -107,6 +106,9 @@ public class KmzTrackExporter extends AbstractTrackExporter {
            * the first waypoint holds the stats for the track.
            */
           while (cursor.moveToNext()) {
+            if (Thread.interrupted()) {
+              throw new InterruptedException();
+            }
             Waypoint waypoint = myTracksProviderUtils.createWaypoint(cursor);
             String photoUrl = waypoint.getPhotoUrl();
             if (photoUrl != null && !photoUrl.equals("")) {

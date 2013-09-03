@@ -60,21 +60,6 @@ abstract class AbstractTrackExporter implements TrackExporter {
   }
 
   @Override
-  public void stopWriteTrack() {
-    if (writeThread != null && writeThread.isAlive()) {
-      Log.i(TAG, "Attempting to stop write thread");
-      writeThread.interrupt();
-      try {
-        writeThread.join();
-        Log.i(TAG, "Write thread stopped");
-      } catch (InterruptedException e) {
-        Log.e(TAG, "Interrupted while waiting for write thread to stop", e);
-        success = false;
-      }
-    }
-  }
-
-  @Override
   public boolean isSuccess() {
     return success;
   }

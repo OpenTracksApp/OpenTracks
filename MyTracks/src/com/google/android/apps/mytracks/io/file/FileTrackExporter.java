@@ -86,7 +86,7 @@ public class FileTrackExporter extends AbstractTrackExporter {
   /**
    * Writes the waypoints.
    */
-  private void writeWaypoints(Track track) {
+  private void writeWaypoints(Track track) throws InterruptedException {
     /*
      * TODO: Stream through the waypoints in chunks. I am leaving the number of
      * waypoints very high which should not be a problem because we don't try to
@@ -103,6 +103,9 @@ public class FileTrackExporter extends AbstractTrackExporter {
          * first waypoint holds the stats for the track.
          */
         while (cursor.moveToNext()) {
+          if (Thread.interrupted()) {
+            throw new InterruptedException();
+          }
           if (!hasWaypoints) {
             trackWriter.writeBeginWaypoints();
             hasWaypoints = true;
@@ -135,11 +138,12 @@ public class FileTrackExporter extends AbstractTrackExporter {
     try {
       int locationNumber = 0;
       while (iterator.hasNext()) {
-        Location location = iterator.next();
-        setLocationTime(location, offset);
         if (Thread.interrupted()) {
           throw new InterruptedException();
         }
+        Location location = iterator.next();
+
+        setLocationTime(location, offset);
         locationNumber++;
 
         boolean isLocationValid = LocationUtils.isValidLocation(location);

@@ -165,8 +165,9 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
   @Override
   protected void onCancelled() {
-    if (trackExporter != null) {
-      trackExporter.stopWriteTrack();
+    completed = true;
+    if (saveActivity != null) {
+      saveActivity.onAsyncTaskCompleted(successCount, totalCount, null);
     }
   }
 
@@ -220,12 +221,13 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
     if (trackExporter.isSuccess()) {
       savedPath = file.getAbsolutePath();
+      return true;
     } else {
       if (!file.delete()) {
         Log.w(TAG, "Failed to delete file " + file.getAbsolutePath());
       }
+      return false;
     }
-    return trackExporter.isSuccess();
   }
 
   /**

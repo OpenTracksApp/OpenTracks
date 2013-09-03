@@ -447,9 +447,13 @@ public class SyncUtils {
     fileTrackExporter.writeTrack(new FileOutputStream(file));
     if (fileTrackExporter.isSuccess()) {
       return file;
+    } else {
+      if (!file.delete()) {
+        Log.d(TAG, "Unable to delete file for track " + track.getName());
+      }
+      Log.d(TAG, "Unable to get file for track " + track.getName());
+      return null;
     }
-    Log.d(TAG, "Unable to get file for track " + track.getName());
-    return null;
   }
   
   /**

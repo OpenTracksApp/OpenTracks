@@ -33,11 +33,6 @@ public interface TrackExporter {
   void writeTrack(OutputStream outputStream);
 
   /**
-   * Stops {@link #writeTrack(OutputStream)}.
-   */
-  void stopWriteTrack();
-
-  /**
    * Returns true if {@link #writeTrack(OutputStream)} completed successfully.
    */
   boolean isSuccess();
