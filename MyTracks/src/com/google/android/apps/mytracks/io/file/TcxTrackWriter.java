@@ -97,14 +97,6 @@ public class TcxTrackWriter implements TrackWriter {
   }
 
   @Override
-  public void close() {
-    if (printWriter != null) {
-      printWriter.close();
-      printWriter = null;
-    }
-  }
-
-  @Override
   public String getExtension() {
     return TrackFileFormat.TCX.getExtension();
   }

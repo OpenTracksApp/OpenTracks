@@ -33,6 +33,7 @@ import android.util.Log;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * Async Task to save tracks to the external storage.
@@ -210,23 +211,31 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         : fileTrackExporter;
 
     File file = new File(directory, fileName);
-    FileOutputStream fileOutputStream;
+    FileOutputStream fileOutputStream = null;
     try {
       fileOutputStream = new FileOutputStream(file);
+      trackExporter.writeTrack(fileOutputStream);
+
+      if (trackExporter.isSuccess()) {
+        savedPath = file.getAbsolutePath();
+        return true;
+      } else {
+        if (!file.delete()) {
+          Log.w(TAG, "Failed to delete file " + file.getAbsolutePath());
+        }
+        return false;
+      }
     } catch (FileNotFoundException e) {
       Log.e(TAG, "Unable to open file " + file.getName(), e);
       return false;
-    }
-    trackExporter.writeTrack(fileOutputStream);
-
-    if (trackExporter.isSuccess()) {
-      savedPath = file.getAbsolutePath();
-      return true;
-    } else {
-      if (!file.delete()) {
-        Log.w(TAG, "Failed to delete file " + file.getAbsolutePath());
+    } finally {
+      if (fileOutputStream != null) {
+        try {
+          fileOutputStream.close();
+        } catch (IOException e) {
+          Log.e(TAG, "Unable to close file output stream", e);
+        }
       }
-      return false;
     }
   }
 

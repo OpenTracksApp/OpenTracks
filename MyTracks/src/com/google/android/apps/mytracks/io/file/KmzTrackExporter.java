@@ -23,7 +23,6 @@ import com.google.android.apps.mytracks.content.Waypoint;
 import android.database.Cursor;
 import android.net.Uri;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -76,13 +75,9 @@ public class KmzTrackExporter extends AbstractTrackExporter {
       ZipEntry zipEntry = new ZipEntry(KML_FILE_NAME);
       zipOutputStream.putNextEntry(zipEntry);
 
-      ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-      fileTrackExporter.writeTrack(byteArrayOutputStream);
-      if (fileTrackExporter.isSuccess()) {
-        zipOutputStream.write(byteArrayOutputStream.toByteArray());
-        zipOutputStream.closeEntry();
-      } else {
-        zipOutputStream.closeEntry();
+      fileTrackExporter.writeTrack(zipOutputStream);
+      zipOutputStream.closeEntry();
+      if (!fileTrackExporter.isSuccess()) {
         throw new IOException();
       }
 

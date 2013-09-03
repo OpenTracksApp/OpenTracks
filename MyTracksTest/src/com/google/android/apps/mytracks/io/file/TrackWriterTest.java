@@ -132,7 +132,6 @@ public abstract class TrackWriterTest extends AndroidTestCase {
     trackWriter.writeCloseSegment();
     trackWriter.writeEndTrack(track, location4);
     trackWriter.writeFooter();
-    trackWriter.close();
     return output.toString();
   }
 

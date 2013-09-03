@@ -78,11 +78,6 @@ public class CsvTrackWriter implements TrackWriter {
   }
 
   @Override
-  public void close() {
-    printWriter.close();
-  }
-
-  @Override
   public void writeHeader(Track track) {
     writeCommaSeparatedLine(context.getString(R.string.generic_name),
         context.getString(R.string.track_edit_activity_type_hint),

@@ -444,16 +444,28 @@ public class SyncUtils {
     FileTrackExporter fileTrackExporter = new FileTrackExporter(
         myTracksProviderUtils, new Track[] { track }, trackFileFormat, context, false, null);
 
-    fileTrackExporter.writeTrack(new FileOutputStream(file));
-    if (fileTrackExporter.isSuccess()) {
-      return file;
-    } else {
-      if (!file.delete()) {
-        Log.d(TAG, "Unable to delete file for track " + track.getName());
+    FileOutputStream fileOutputStream = null;
+    try {
+      fileOutputStream = new FileOutputStream(file);
+      fileTrackExporter.writeTrack(fileOutputStream);
+      if (fileTrackExporter.isSuccess()) {
+        return file;
+      } else {
+        if (!file.delete()) {
+          Log.d(TAG, "Unable to delete file for track " + track.getName());
+        }
+        Log.d(TAG, "Unable to get file for track " + track.getName());
+        return null;
       }
-      Log.d(TAG, "Unable to get file for track " + track.getName());
-      return null;
-    }
+    } finally {
+      if (fileOutputStream != null) {
+        try {
+          fileOutputStream.close();
+        } catch (IOException e) {
+          Log.e(TAG, "Unable to close file output stream", e);
+        }
+      }
+    } 
   }
   
   /**

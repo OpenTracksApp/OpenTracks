@@ -96,8 +96,7 @@ public class FileTrackExporterTest extends AndroidTestCase {
     trackWriter.writeBeginTrack(track, null);
     trackWriter.writeEndTrack(track, null);
     trackWriter.writeFooter();
-    trackWriter.close();
-
+ 
     mocksControl.replay();
     fileTrackExporter.writeTrack(outputStream);
 
@@ -128,7 +127,6 @@ public class FileTrackExporterTest extends AndroidTestCase {
     trackWriter.writeBeginTrack(track, null);
     trackWriter.writeEndTrack(track, null);
     trackWriter.writeFooter();
-    trackWriter.close();
 
     mocksControl.replay();
     fileTrackExporter.writeTrack(outputStream);
@@ -193,7 +191,6 @@ public class FileTrackExporterTest extends AndroidTestCase {
     trackWriter.writeEndTrack(trackEq(track), locationEq(locations[5]));
 
     trackWriter.writeFooter();
-    trackWriter.close();
 
     mocksControl.replay();
     fileTrackExporter.writeTrack(outputStream);
