@@ -2014,6 +2014,16 @@ limitations under the License.
       Character limit: ~23 (1 line)">
     Grade/Elevation
   </string>
+  <string name="settings_stats_calorie_weight"
+    translation_description="In the 'Stats settings, the option to configure user's weight.
+
+      Character limit: ~23 (1 line)">
+    Weight
+  </string>
+  <string name="settings_stats_calorie_weight_description"
+    translation_description="In the 'Stats settings, the description message about weight setting item.">
+    Weight for calculating calories.
+  </string>
   <string name="settings_stats_rate_title"
     translation_description="In the 'Stats' settings, the option to change the preferred rate,
       either speed (mi/hr) or pace (min/mi).
@@ -2134,7 +2144,7 @@ limitations under the License.
     translation_description="In the 'Stats' page, the calorie burned.
     
       Character limit: ~23 (1 line)">
-    Calorie expenditure
+    Calories
   </string>
   <string name="stats_fastest_pace"
     translation_description="In the 'Stats' page, the fastest pace.">
@@ -2491,6 +2501,12 @@ limitations under the License.
       %1$d: an integer value. E.g., '2'.">
     %1$d km
   </string>
+  <string name="value_integer_kilogram"
+    translation_description="Display an integer value in kilogram (kg).
+
+      %1$d: an integer value. E.g., '2'.">
+    %1$d kg
+  </string>
   <string name="value_integer_kilometer_hour"
     translation_description="Display an integer value in kilometers per hour (km/h).
 
@@ -2551,6 +2567,12 @@ limitations under the License.
 
       %1$d: an integer value. E.g., '2'.">
     %1$d %%
+  </string>
+  <string name="value_integer_pound"
+    translation_description="Display an integer value in pound (lb).
+
+      %1$d: an integer value. E.g., '2'.">
+    %1$d lb
   </string>
   <string name="value_integer_second"
     translation_description="In a setting picker, the string format to display an integer value in

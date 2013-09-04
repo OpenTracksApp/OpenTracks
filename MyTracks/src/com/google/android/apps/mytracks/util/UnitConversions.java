@@ -24,26 +24,32 @@ public class UnitConversions {
 
   private UnitConversions() {}
 
-  // Milliliter to liter
+  // multiplication factor to convert milliliters to liters
   public static final double ML_TO_L = 1 / 1000.0;
 
-  // Millisecond to second
+  // multiplication factor to convert milliseconds to seconds
   public static final double MS_TO_S = 1 / 1000.0;
 
-  // Minute to second
+  // multiplication factor to convert minutes to seconds
   public static final double MIN_TO_S = 60.0;
 
-  // Second to minute
+  // multiplication factor to convert seconds to minutes
   public static final double S_TO_MIN = 1 / MIN_TO_S;
 
-  // Minute to hour
+  // multiplication factor to convert hours to minutes
   public static final double HR_TO_MIN = 60.0;
 
-  // Minute to hour
+  // multiplication factor to convert minutes to hours
   public static final double MIN_TO_HR = 1 / HR_TO_MIN;
 
   // multiplication factor to convert kilometers to miles
   public static final double KM_TO_MI = 0.621371192;
+
+  // multiplication factor to convert kilograms to pounds
+  public static final double KG_TO_LB = 2.2046;
+
+  // multiplication factor to convert pounds to kilograms
+  public static final double LB_TO_KG = 1 / KG_TO_LB;
 
   // multiplication factor to convert miles to kilometers
   public static final double MI_TO_KM = 1 / KM_TO_MI;
@@ -71,6 +77,6 @@ public class UnitConversions {
   // multiplication factor to convert degrees to radians
   public static final double DEG_TO_RAD = Math.PI / 180.0;
 
-  // Ratio of change kcal to joule.
+  // multiplication factor to convert Kcal to joules.
   public static final double KCAL_TO_J = 4.184;
 }

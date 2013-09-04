@@ -33,5 +33,16 @@ limitations under the License.
       android:defaultValue="false"
       android:key="@string/stats_show_coordinate_key"
       android:title="@string/settings_stats_coordinate" />
+    <CheckBoxPreference
+      android:defaultValue="false"
+      android:key="@string/stats_show_calorie_key"
+      android:title="@string/stats_calorie" />
+    <EditTextPreference
+      android:dependency="@string/stats_show_calorie_key"
+      android:imeOptions="actionDone"
+      android:inputType="number"
+      android:key="@string/stats_weight_key"
+      android:persistent="false"
+      android:title="@string/settings_stats_calorie_weight" />
   </PreferenceCategory>
 </PreferenceScreen>

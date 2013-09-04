@@ -41,6 +41,8 @@ limitations under the License.
   <string name="stats_rate_key">statsRate</string>  
   <string name="stats_show_coordinate_key">statsShowCoordinate</string>
   <string name="stats_show_grade_elevation_key">statsShowGradeElevation</string>
+  <string name="stats_show_calorie_key">statsShowCalorie</string>
+  <string name="stats_weight_key">statsWeight</string>
   <string name="stats_units_key">statsUnits</string>
   <string name="track_color_mode_medium_key">trackColorModeMedium</string>
   <string name="track_color_mode_percentage_key">trackColorModePercentage</string>

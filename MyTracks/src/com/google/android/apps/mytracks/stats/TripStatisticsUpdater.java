@@ -93,9 +93,6 @@ public class TripStatisticsUpdater {
 
   // A buffer of the recent speed readings (m/s) for calculating max speed
   private final DoubleBuffer speedBuffer = new DoubleBuffer(SPEED_SMOOTHING_FACTOR);
-
-  // Default weight, in kilogram
-  private int defaultWeight = 65;
   
   /**
    * Creates a new trip statistics updater.
@@ -128,7 +125,7 @@ public class TripStatisticsUpdater {
    * @param location the location
    * @param minRecordingDistance the min recording distance
    */
-  public void addLocation(Location location, int minRecordingDistance) {
+  public void addLocation(Location location, int minRecordingDistance, int weight) {
     // Always update time
     updateTime(location.getTime());
 
@@ -195,10 +192,10 @@ public class TripStatisticsUpdater {
 
     // TODO 1: How to get the value of weight.
     // TODO 2: How to get the value of ActivityType.
-    
+
     // Update calorie
-    double calorie = CalorieUtils.getCalories(lastMovingLocation, location,
-        gradeBuffer.getAverage(), defaultWeight, ActivityType.FOOT);
+    double calorie = CalorieUtils.getCalorie(lastMovingLocation, location,
+        gradeBuffer.getAverage(), weight, ActivityType.FOOT);
     currentSegment.addCalorie(calorie);
 
     lastLocation = location;

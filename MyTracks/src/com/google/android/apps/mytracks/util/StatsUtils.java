@@ -175,8 +175,20 @@ public class StatsUtils {
     }
     
     // Set calories
-    double calories = tripStatistics == null ? Double.NaN : tripStatistics.getCalorie();
-    setCalorie(activity, R.id.stats_calorie, R.string.stats_calorie, calories);
+    boolean showCalorie = PreferencesUtils.getBoolean(activity, R.string.stats_show_calorie_key,
+        PreferencesUtils.STATS_SHOW_CALORIE_DEFAULT);
+    View calorieHorizontalLine = activity.findViewById(R.id.stats_calorie_horizontal_line);
+    View calorieContainer = activity.findViewById(R.id.stats_calorie_container);
+
+    if (showCalorie) {
+      calorieHorizontalLine.setVisibility(View.VISIBLE);
+      calorieContainer.setVisibility(View.VISIBLE);
+      double calories = tripStatistics == null ? Double.NaN : tripStatistics.getCalorie();
+      setCalorie(activity, R.id.stats_calorie, R.string.stats_calorie, calories);
+    } else {
+      calorieHorizontalLine.setVisibility(View.GONE);
+      calorieContainer.setVisibility(View.GONE);
+    }  
   }
 
   /**
