@@ -42,11 +42,11 @@ import java.util.SimpleTimeZone;
 import org.easymock.Capture;
 
 /**
- * Abstract class for testing importer.
+ * Abstract class for testing file track importers.
  * 
  * @author Jimmy Shih.
  */
-public class AbstractTestImporter extends AndroidTestCase {
+public class AbstractTestFileTrackImporter extends AndroidTestCase {
 
   protected static final String TRACK_NAME_0 = "blablub";
   protected static final String TRACK_DESCRIPTION_0 = "s'Laebe isch koi Schlotzer";

@@ -158,10 +158,10 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
    */
   private boolean importFile(final File file) {
     try {
-      AbstractImporter importer = trackFileFormat == TrackFileFormat.KML ? new KmlImporter(
+      TrackImporter trackImporter = trackFileFormat == TrackFileFormat.KML ? new KmlFileTrackImporter(
           context, -1L)
-          : new GpxImporter(context, -1L);
-      long trackIds[] = importer.importFile(new FileInputStream(file));
+          : new GpxFileTrackImporter(context, -1L);
+      long trackIds[] = trackImporter.importFile(new FileInputStream(file));
       int length = trackIds.length;
       if (length > 0) {
         trackId = trackIds[length - 1];

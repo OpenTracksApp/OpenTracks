@@ -14,8 +14,9 @@
  * the License.
  */
 
-package com.google.android.apps.mytracks.io.file;
+package com.google.android.apps.mytracks.io.file.export;
 
+import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.GoogleEarthUtils;
@@ -99,7 +100,7 @@ public class SaveActivity extends Activity {
       saveAsyncTask = (SaveAsyncTask) retained;
       saveAsyncTask.setActivity(this);
     } else {
-      saveAsyncTask = new SaveAsyncTask(this, trackFileFormat, trackIds, directory);
+      saveAsyncTask = new SaveAsyncTask(this, trackFileFormat, trackIds, directory, playTrack);
       saveAsyncTask.execute();
     }
   }
@@ -121,7 +122,6 @@ public class SaveActivity extends Activity {
               public void onCancel(DialogInterface dialog) {
                 saveAsyncTask.cancel(true);
                 dialog.dismiss();
-                finish();
               }
             }, directoryDisplayName);
         return progressDialog;

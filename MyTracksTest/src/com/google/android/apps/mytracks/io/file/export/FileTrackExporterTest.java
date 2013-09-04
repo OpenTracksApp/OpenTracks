@@ -1,13 +1,15 @@
 // Copyright 2010 Google Inc. All Rights Reserved.
 
-package com.google.android.apps.mytracks.io.file;
+package com.google.android.apps.mytracks.io.file.export;
 
 import com.google.android.apps.mytracks.content.MyTracksProvider;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.Factory;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.io.file.TrackWriter.OnWriteListener;
+import com.google.android.apps.mytracks.io.file.export.FileTrackExporter;
+import com.google.android.apps.mytracks.io.file.export.TrackExporterListener;
+import com.google.android.apps.mytracks.io.file.export.TrackWriter;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceTest.MockContext;
 import com.google.android.apps.mytracks.testing.TestingProviderUtilsFactory;
 
@@ -25,11 +27,11 @@ import org.easymock.IArgumentMatcher;
 import org.easymock.IMocksControl;
 
 /**
- * Tests for {@link TrackWriter}.
+ * Tests for {@link FileTrackExporter}.
  * 
  * @author Rodrigo Damazio
  */
-public class TrackWriterTest extends AndroidTestCase {
+public class FileTrackExporterTest extends AndroidTestCase {
 
   private static final long TRACK_ID = 1234567L;
   private static final String TRACK_NAME = "Swimming across the pacific";
@@ -39,10 +41,10 @@ public class TrackWriterTest extends AndroidTestCase {
 
   private IMocksControl mocksControl;
 
-  private TrackFormatWriter trackFormatWriter;
+  private TrackWriter trackWriter;
   private Track track;
   private OutputStream outputStream;
-  private TrackWriter trackWriter;
+  private FileTrackExporter fileTrackExporter;
 
   @Override
   protected void setUp() throws Exception {
@@ -61,22 +63,23 @@ public class TrackWriterTest extends AndroidTestCase {
         myTracksProviderUtils);
 
     mocksControl = EasyMock.createStrictControl();
-    trackFormatWriter = mocksControl.createMock(TrackFormatWriter.class);
+    trackWriter = mocksControl.createMock(TrackWriter.class);
 
     track = new Track();
     track.setName(TRACK_NAME);
     track.setId(TRACK_ID);
 
     outputStream = new ByteArrayOutputStream();
-    OnWriteListener onWriteListener = new OnWriteListener() {
-
+    TrackExporterListener trackExporterListener = new TrackExporterListener() {
+      
         @Override
-      public void onWrite(int number, int max) {
+      public void onProgressUpdate(int number, int max) {
         // Safe to ignore
 
       }
     };
-    trackWriter = new TrackWriter(myTracksProviderUtils, new Track[] {track}, trackFormatWriter, onWriteListener);
+    fileTrackExporter = new FileTrackExporter(
+        myTracksProviderUtils, new Track[] { track }, trackWriter, trackExporterListener);
   }
 
   @Override
@@ -91,17 +94,16 @@ public class TrackWriterTest extends AndroidTestCase {
   public void testWriteTrack_emptyTrack() throws Exception {
 
     // Set expected mock behavior
-    trackFormatWriter.prepare(outputStream);
-    trackFormatWriter.writeHeader(track);
-    trackFormatWriter.writeBeginTrack(track, null);
-    trackFormatWriter.writeEndTrack(track, null);
-    trackFormatWriter.writeFooter();
-    trackFormatWriter.close();
-
+    trackWriter.prepare(outputStream);
+    trackWriter.writeHeader(track);
+    trackWriter.writeBeginTrack(track, null);
+    trackWriter.writeEndTrack(track, null);
+    trackWriter.writeFooter();
+ 
     mocksControl.replay();
-    trackWriter.writeTrack(outputStream);
+    fileTrackExporter.writeTrack(outputStream);
 
-    assertTrue(trackWriter.wasSuccess());
+    assertTrue(fileTrackExporter.isSuccess());
     mocksControl.verify();
   }
 
@@ -123,17 +125,16 @@ public class TrackWriterTest extends AndroidTestCase {
         myTracksProviderUtils.bulkInsertTrackPoint(locations, locations.length, TRACK_ID));
 
     // Set expected mock behavior
-    trackFormatWriter.prepare(outputStream);
-    trackFormatWriter.writeHeader(track);
-    trackFormatWriter.writeBeginTrack(track, null);
-    trackFormatWriter.writeEndTrack(track, null);
-    trackFormatWriter.writeFooter();
-    trackFormatWriter.close();
+    trackWriter.prepare(outputStream);
+    trackWriter.writeHeader(track);
+    trackWriter.writeBeginTrack(track, null);
+    trackWriter.writeEndTrack(track, null);
+    trackWriter.writeFooter();
 
     mocksControl.replay();
-    trackWriter.writeTrack(outputStream);
+    fileTrackExporter.writeTrack(outputStream);
 
-    assertTrue(trackWriter.wasSuccess());
+    assertTrue(fileTrackExporter.isSuccess());
     mocksControl.verify();
   }
 
@@ -162,43 +163,42 @@ public class TrackWriterTest extends AndroidTestCase {
       waypoint.setId(i + 1);
     }
 
-    trackFormatWriter.prepare(outputStream);
-    trackFormatWriter.writeHeader(track);
+    trackWriter.prepare(outputStream);
+    trackWriter.writeHeader(track);
 
     // Expect reading/writing of the waypoints (except the first)
-    trackFormatWriter.writeBeginWaypoints();
-    trackFormatWriter.writeWaypoint(waypointEq(waypoints[1]));
-    trackFormatWriter.writeWaypoint(waypointEq(waypoints[2]));
-    trackFormatWriter.writeEndWaypoints();
+    trackWriter.writeBeginWaypoints();
+    trackWriter.writeWaypoint(waypointEq(waypoints[1]));
+    trackWriter.writeWaypoint(waypointEq(waypoints[2]));
+    trackWriter.writeEndWaypoints();
 
     // Begin the track
-    trackFormatWriter.writeBeginTrack(trackEq(track), locationEq(locations[0]));
+    trackWriter.writeBeginTrack(trackEq(track), locationEq(locations[0]));
 
     // Write locations 1-2
-    trackFormatWriter.writeOpenSegment();
-    trackFormatWriter.writeLocation(locationEq(locations[0]));
-    trackFormatWriter.writeLocation(locationEq(locations[1]));
-    trackFormatWriter.writeCloseSegment();
+    trackWriter.writeOpenSegment();
+    trackWriter.writeLocation(locationEq(locations[0]));
+    trackWriter.writeLocation(locationEq(locations[1]));
+    trackWriter.writeCloseSegment();
 
     // Location 3 is not written - it's invalid
 
     // Write locations 4-6
-    trackFormatWriter.writeOpenSegment();
-    trackFormatWriter.writeLocation(locationEq(locations[3]));
-    trackFormatWriter.writeLocation(locationEq(locations[4]));
-    trackFormatWriter.writeLocation(locationEq(locations[5]));
-    trackFormatWriter.writeCloseSegment();
+    trackWriter.writeOpenSegment();
+    trackWriter.writeLocation(locationEq(locations[3]));
+    trackWriter.writeLocation(locationEq(locations[4]));
+    trackWriter.writeLocation(locationEq(locations[5]));
+    trackWriter.writeCloseSegment();
 
     // End the track
-    trackFormatWriter.writeEndTrack(trackEq(track), locationEq(locations[5]));
+    trackWriter.writeEndTrack(trackEq(track), locationEq(locations[5]));
 
-    trackFormatWriter.writeFooter();
-    trackFormatWriter.close();
+    trackWriter.writeFooter();
 
     mocksControl.replay();
-    trackWriter.writeTrack(outputStream);
+    fileTrackExporter.writeTrack(outputStream);
 
-    assertTrue(trackWriter.wasSuccess());
+    assertTrue(fileTrackExporter.isSuccess());
     mocksControl.verify();
   }
 

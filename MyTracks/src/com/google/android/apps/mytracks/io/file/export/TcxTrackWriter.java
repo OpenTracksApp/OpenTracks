@@ -13,13 +13,14 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks.io.file;
+package com.google.android.apps.mytracks.io.file.export;
 
 import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.maps.mytracks.R;
@@ -40,7 +41,7 @@ import java.util.Locale;
  * @author Sandor Dornbush
  * @author Dominik Rttsches
  */
-public class TcxTrackWriter implements TrackFormatWriter {
+public class TcxTrackWriter implements TrackWriter {
 
   /**
    * TCX sport type. See the TCX spec.
@@ -94,14 +95,6 @@ public class TcxTrackWriter implements TrackFormatWriter {
   @Override
   public void prepare(OutputStream out) {
     this.printWriter = new PrintWriter(out);
-  }
-
-  @Override
-  public void close() {
-    if (printWriter != null) {
-      printWriter.close();
-      printWriter = null;
-    }
   }
 
   @Override

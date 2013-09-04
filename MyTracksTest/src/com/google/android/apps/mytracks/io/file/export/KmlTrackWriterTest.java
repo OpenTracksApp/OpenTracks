@@ -13,10 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks.io.file;
+package com.google.android.apps.mytracks.io.file.export;
 
 import com.google.android.apps.mytracks.content.DescriptionGenerator;
 import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.io.file.export.KmlTrackWriter;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 
 import android.location.Location;
@@ -32,7 +33,7 @@ import org.w3c.dom.Element;
  *
  * @author Rodrigo Damazio
  */
-public class KmlTrackWriterTest extends TrackFormatWriterTest {
+public class KmlTrackWriterTest extends TrackWriterTest {
 
   private static final String FULL_TRACK_DESCRIPTION = "full track description";
 
@@ -54,8 +55,9 @@ public class KmlTrackWriterTest extends TrackFormatWriterTest {
   }
 
   public void testXmlOutput() throws Exception {
-    KmlTrackWriter writer = new KmlTrackWriter(getContext(), new FakeDescriptionGenerator());
-    String result = writeTrack(writer);
+    KmlTrackWriter kmlTrackWriter = new KmlTrackWriter(
+        getContext(), false, new FakeDescriptionGenerator());
+    String result = writeTrack(kmlTrackWriter);
     Document doc = parseXmlDocument(result);
 
     Element kmlTag = getChildElement(doc, "kml");

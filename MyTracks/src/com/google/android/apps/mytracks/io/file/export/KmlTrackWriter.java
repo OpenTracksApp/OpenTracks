@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks.io.file;
+package com.google.android.apps.mytracks.io.file.export;
 
 import com.google.android.apps.mytracks.content.DescriptionGenerator;
 import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
@@ -25,6 +25,7 @@ import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
+import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.util.GoogleEarthUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
@@ -35,6 +36,7 @@ import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
 
+import java.io.File;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -44,7 +46,7 @@ import java.util.ArrayList;
  * 
  * @author Leif Hendrik Wilden
  */
-public class KmlTrackWriter implements TrackFormatWriter {
+public class KmlTrackWriter implements TrackWriter {
 
   private static final String WAYPOINT_STYLE = "waypoint";
   private static final String STATISTICS_STYLE = "statistics";
@@ -68,8 +70,10 @@ public class KmlTrackWriter implements TrackFormatWriter {
       TRACK_ICON = "http://earth.google.com/images/kml-icons/track-directional/track-0.png";
 
   private final Context context;
+  private final boolean inKmz;
   private final DescriptionGenerator descriptionGenerator;  
   private final MyTracksProviderUtils myTracksProviderUtils;
+
   private PrintWriter printWriter;
   private ArrayList<Integer> powerList = new ArrayList<Integer>();
   private ArrayList<Integer> cadenceList = new ArrayList<Integer>();
@@ -78,13 +82,14 @@ public class KmlTrackWriter implements TrackFormatWriter {
   private boolean hasCadence;
   private boolean hasHeartRate;
 
-  public KmlTrackWriter(Context context) {
-    this(context, new DescriptionGeneratorImpl(context));
+  public KmlTrackWriter(Context context, boolean inKmz) {
+    this(context, inKmz, new DescriptionGeneratorImpl(context));
   }
 
   @VisibleForTesting
-  KmlTrackWriter(Context context, DescriptionGenerator descriptionGenerator) {
+  KmlTrackWriter(Context context, boolean inKmz, DescriptionGenerator descriptionGenerator) {
     this.context = context;
+    this.inKmz = inKmz;
     this.descriptionGenerator = descriptionGenerator;
     this.myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
   }
@@ -97,14 +102,6 @@ public class KmlTrackWriter implements TrackFormatWriter {
   @Override
   public void prepare(OutputStream outputStream) {
     this.printWriter = new PrintWriter(outputStream);
-  }
-
-  @Override
-  public void close() {
-    if (printWriter != null) {
-      printWriter.close();
-      printWriter = null;
-    }
   }
 
   @Override
@@ -335,9 +332,8 @@ public class KmlTrackWriter implements TrackFormatWriter {
     if (location != null) {
       printWriter.println("<PhotoOverlay>");
       printWriter.println("<name>" + StringUtils.formatCData(name) + "</name>");
-      printWriter.println("<description>"
-          + StringUtils.formatCData(StringUtils.getCategoryDescription(category, description))
-          + "</description>");
+      printWriter.println(
+          "<description>" + StringUtils.formatCData(description) + "</description>");
       printWriter.print("<Camera>");
       printWriter.print("<longitude>" + location.getLongitude() + "</longitude>");
       printWriter.print("<latitude>" + location.getLatitude() + "</latitude>");
@@ -345,8 +341,18 @@ public class KmlTrackWriter implements TrackFormatWriter {
       printWriter.print("<heading>" + heading + "</heading>");
       printWriter.print("<tilt>90</tilt>");
       printWriter.println("</Camera>");
+      printWriter.println("<TimeStamp><when>"
+          + StringUtils.formatDateTimeIso8601(location.getTime()) + "</when></TimeStamp>");
       printWriter.println("<styleUrl>#" + styleName + "</styleUrl>");
-      printWriter.println("<Icon><href>" + Uri.decode(photoUrl) + "</href></Icon>");
+      writeCategory(category);
+      if (inKmz) {
+        Uri uri = Uri.parse(photoUrl);
+        printWriter.println("<Icon><href>" + KmzTrackExporter.KMZ_IMAGES_DIR + File.separatorChar
+            + uri.getLastPathSegment() + "</href></Icon>");
+      } else {
+        printWriter.println("<Icon><href>" + Uri.decode(photoUrl) + "</href></Icon>");
+      }
+      
       printWriter.print("<ViewVolume>");
       printWriter.print("<near>10</near>");
       printWriter.print("<leftFov>-60</leftFov>");

@@ -14,10 +14,11 @@
  * the License.
  */
 
-package com.google.android.apps.mytracks.io.file;
+package com.google.android.apps.mytracks.io.file.export;
 
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -34,7 +35,7 @@ import java.util.Locale;
  * 
  * @author Sandor Dornbush
  */
-public class GpxTrackWriter implements TrackFormatWriter {
+public class GpxTrackWriter implements TrackWriter {
 
   private static final NumberFormat ELEVATION_FORMAT = NumberFormat.getInstance(Locale.US);
   private static final NumberFormat COORDINATE_FORMAT = NumberFormat.getInstance(Locale.US);
@@ -66,14 +67,6 @@ public class GpxTrackWriter implements TrackFormatWriter {
   @Override
   public void prepare(OutputStream outputStream) {
     this.printWriter = new PrintWriter(outputStream);
-  }
-
-  @Override
-  public void close() {
-    if (printWriter != null) {
-      printWriter.close();
-      printWriter = null;
-    }
   }
 
   @Override

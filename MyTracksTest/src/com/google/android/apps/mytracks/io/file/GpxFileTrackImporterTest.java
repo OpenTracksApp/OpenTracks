@@ -31,11 +31,11 @@ import org.easymock.Capture;
 import org.xml.sax.SAXException;
 
 /**
- * Tests for {@link GpxImporter}.
+ * Tests for {@link GpxFileTrackImporter}.
  * 
  * @author Steffen Horlacher
  */
-public class GpxImporterTest extends AbstractTestImporter {
+public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
 
   private static String getNameAndDescription(String name, String description) {
     return "<name><![CDATA[" + name + "]]></name>" + "<desc><![CDATA[" + description + "]]></desc>";
@@ -107,8 +107,9 @@ public class GpxImporterTest extends AbstractTestImporter {
     AndroidMock.replay(myTracksProviderUtils);
 
     InputStream inputStream = new ByteArrayInputStream(VALID_ONE_TRACK_ONE_SEGMENT_GPX.getBytes());
-    GpxImporter gpxImporter = new GpxImporter(getContext(), myTracksProviderUtils);
-    long[] trackIds = gpxImporter.importFile(inputStream);
+    GpxFileTrackImporter gpxFileTrackImporter = new GpxFileTrackImporter(
+        getContext(), myTracksProviderUtils);
+    long[] trackIds = gpxFileTrackImporter.importFile(inputStream);
     assertEquals(1, trackIds.length);
     assertEquals(TRACK_ID_0, trackIds[0]);
 
@@ -140,8 +141,9 @@ public class GpxImporterTest extends AbstractTestImporter {
     AndroidMock.replay(myTracksProviderUtils);
 
     InputStream inputStream = new ByteArrayInputStream(VALID_ONE_TRACK_TWO_SEGMENTS_GPX.getBytes());
-    GpxImporter gpxImporter = new GpxImporter(getContext(), myTracksProviderUtils);
-    long[] trackIds = gpxImporter.importFile(inputStream);
+    GpxFileTrackImporter gpxFileTrackImporter = new GpxFileTrackImporter(
+        getContext(), myTracksProviderUtils);
+    long[] trackIds = gpxFileTrackImporter.importFile(inputStream);
     assertEquals(1, trackIds.length);
     assertEquals(TRACK_ID_0, trackIds[0]);
 
@@ -177,8 +179,9 @@ public class GpxImporterTest extends AbstractTestImporter {
 
     InputStream inputStream = new ByteArrayInputStream(
         VALID_ONE_TRACK_TWO_SEGMENTS_NO_TIME_GPX.getBytes());
-    GpxImporter gpxImporter = new GpxImporter(getContext(), myTracksProviderUtils);
-    long[] trackIds = gpxImporter.importFile(inputStream);
+    GpxFileTrackImporter gpxFileTrackImporter = new GpxFileTrackImporter(
+        getContext(), myTracksProviderUtils);
+    long[] trackIds = gpxFileTrackImporter.importFile(inputStream);
     
     assertEquals(1, trackIds.length);
     assertEquals(TRACK_ID_0, trackIds[0]);
@@ -212,8 +215,9 @@ public class GpxImporterTest extends AbstractTestImporter {
     AndroidMock.replay(myTracksProviderUtils);
 
     InputStream inputStream = new ByteArrayInputStream(VALID_TWO_TRACKS_GPX.getBytes());
-    GpxImporter gpxImporter = new GpxImporter(getContext(), myTracksProviderUtils);
-    long[] trackIds = gpxImporter.importFile(inputStream);
+    GpxFileTrackImporter gpxFileTrackImporter = new GpxFileTrackImporter(
+        getContext(), myTracksProviderUtils);
+    long[] trackIds = gpxFileTrackImporter.importFile(inputStream);
     assertEquals(2, trackIds.length);
     assertEquals(TRACK_ID_0, trackIds[0]);
     assertEquals(TRACK_ID_1, trackIds[1]);
@@ -279,8 +283,9 @@ public class GpxImporterTest extends AbstractTestImporter {
 
     InputStream inputStream = new ByteArrayInputStream(xml.getBytes());
     try {
-      GpxImporter gpxImporter = new GpxImporter(getContext(), myTracksProviderUtils);
-      gpxImporter.importFile(inputStream);
+      GpxFileTrackImporter gpxFileTrackImporter = new GpxFileTrackImporter(
+          getContext(), myTracksProviderUtils);
+      gpxFileTrackImporter.importFile(inputStream);
     } catch (SAXException e) {
       // expected
     }

@@ -13,7 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks.io.file;
+package com.google.android.apps.mytracks.io.file.export;
+
+import com.google.android.apps.mytracks.io.file.export.GpxTrackWriter;
 
 import java.util.List;
 
@@ -25,11 +27,11 @@ import org.w3c.dom.Element;
  *
  * @author Rodrigo Damazio
  */
-public class GpxTrackWriterTest extends TrackFormatWriterTest {
+public class GpxTrackWriterTest extends TrackWriterTest {
 
   public void testXmlOutput() throws Exception {
-    TrackFormatWriter writer = new GpxTrackWriter(getContext());
-    String result = writeTrack(writer);
+    GpxTrackWriter gpxTrackWriter = new GpxTrackWriter(getContext());
+    String result = writeTrack(gpxTrackWriter);
     Document doc = parseXmlDocument(result);
 
     Element gpxTag = getChildElement(doc, "gpx");

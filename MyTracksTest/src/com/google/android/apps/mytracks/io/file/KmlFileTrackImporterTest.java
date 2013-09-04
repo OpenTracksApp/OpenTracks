@@ -30,11 +30,11 @@ import java.io.InputStream;
 import org.easymock.Capture;
 
 /**
- * Tests for {@link KmlImporter}.
+ * Tests for {@link KmlFileTrackImporter}.
  * 
  * @author Jimmy Shih
  */
-public class KmlImporterTest extends AbstractTestImporter {
+public class KmlFileTrackImporterTest extends AbstractTestFileTrackImporter {
 
   private static String getNameAndDescription(String name, String description) {
     return "<name><![CDATA[" + name + "]]></name><description><![CDATA[" + description
@@ -85,8 +85,9 @@ public class KmlImporterTest extends AbstractTestImporter {
     AndroidMock.replay(myTracksProviderUtils);
 
     InputStream inputStream = new ByteArrayInputStream(VALID_ONE_TRACK_ONE_SEGMENT_GPX.getBytes());
-    KmlImporter kmlImporter = new KmlImporter(getContext(), myTracksProviderUtils);
-    long[] trackIds = kmlImporter.importFile(inputStream);
+    KmlFileTrackImporter kmlFileTrackImporter = new KmlFileTrackImporter(
+        getContext(), myTracksProviderUtils);
+    long[] trackIds = kmlFileTrackImporter.importFile(inputStream);
     assertEquals(1, trackIds.length);
     assertEquals(TRACK_ID_0, trackIds[0]);
 
@@ -118,8 +119,9 @@ public class KmlImporterTest extends AbstractTestImporter {
     AndroidMock.replay(myTracksProviderUtils);
 
     InputStream inputStream = new ByteArrayInputStream(VALID_ONE_TRACK_TWO_SEGMENTS_GPX.getBytes());
-    KmlImporter kmlImporter = new KmlImporter(getContext(), myTracksProviderUtils);
-    long[] trackIds = kmlImporter.importFile(inputStream);
+    KmlFileTrackImporter kmlFileTrackImporter = new KmlFileTrackImporter(
+        getContext(), myTracksProviderUtils);
+    long[] trackIds = kmlFileTrackImporter.importFile(inputStream);
     assertEquals(1, trackIds.length);
     assertEquals(TRACK_ID_0, trackIds[0]);
 

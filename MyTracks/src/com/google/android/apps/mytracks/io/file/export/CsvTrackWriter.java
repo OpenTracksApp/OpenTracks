@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks.io.file;
+package com.google.android.apps.mytracks.io.file.export;
 
 import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.Sensor;
@@ -21,6 +21,7 @@ import com.google.android.apps.mytracks.content.Sensor.SensorData;
 import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -48,7 +49,7 @@ import java.text.NumberFormat;
  *
  * @author Rodrigo Damazio
  */
-public class CsvTrackWriter implements TrackFormatWriter {
+public class CsvTrackWriter implements TrackWriter {
 
   private static final NumberFormat SHORT_FORMAT = NumberFormat.getInstance();
 
@@ -75,11 +76,6 @@ public class CsvTrackWriter implements TrackFormatWriter {
     printWriter = new PrintWriter(out);
     segmentIndex = 0;
     pointIndex = 0;
-  }
-
-  @Override
-  public void close() {
-    printWriter.close();
   }
 
   @Override

@@ -13,10 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks.io.file;
+package com.google.android.apps.mytracks.io.file.export;
 
 import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.Sensor;
+import com.google.android.apps.mytracks.io.file.export.TcxTrackWriter;
 import com.google.android.apps.mytracks.util.StringUtils;
 
 import java.util.List;
@@ -29,11 +30,11 @@ import org.w3c.dom.Element;
  *
  * @author Sandor Dornbush
  */
-public class TcxTrackWriterTest extends TrackFormatWriterTest {
+public class TcxTrackWriterTest extends TrackWriterTest {
 
   public void testXmlOutput() throws Exception {
-    TrackFormatWriter writer = new TcxTrackWriter(getContext());
-    String result = writeTrack(writer);
+    TcxTrackWriter tcxTrackWriter = new TcxTrackWriter(getContext());
+    String result = writeTrack(tcxTrackWriter);
     Document doc = parseXmlDocument(result);
 
     Element root = getChildElement(doc, "TrainingCenterDatabase");

@@ -36,7 +36,7 @@ import org.xml.sax.SAXException;
  * 
  * @author Jimmy Shih
  */
-public class KmlImporter extends AbstractImporter {
+public class KmlFileTrackImporter extends AbstractFileTrackImporter {
 
   private static final String CADENCE = "cadence";
   private static final String HEART_RATE = "heart_rate";
@@ -61,6 +61,7 @@ public class KmlImporter extends AbstractImporter {
 
   private static final String ATTRIBUTE_NAME = "name";
 
+  private boolean trackStarted = false;
   private String sensorName;
   private ArrayList<Location> locationList;
   private ArrayList<Integer> cadenceList;
@@ -73,12 +74,12 @@ public class KmlImporter extends AbstractImporter {
    * @param context the context
    * @param importTrackId track id to import to. -1L to import to a new track.
    */
-  public KmlImporter(Context context, long importTrackId) {
+  public KmlFileTrackImporter(Context context, long importTrackId) {
     super(context, importTrackId);
   }
 
   @VisibleForTesting
-  public KmlImporter(Context context, MyTracksProviderUtils myTracksProviderUtils) {
+  public KmlFileTrackImporter(Context context, MyTracksProviderUtils myTracksProviderUtils) {
     super(context, -1L, myTracksProviderUtils);
   }
 
@@ -88,8 +89,12 @@ public class KmlImporter extends AbstractImporter {
     if (tag.equals(TAG_PLACEMARK)) {
       onWaypointStart();
     } else if (tag.equals(TAG_GX_MULTI_TRACK)) {
+      trackStarted = true;
       onTrackStart();
     } else if (tag.equals(TAG_GX_TRACK)) {
+      if (!trackStarted) {
+        throw new SAXException("No " + TAG_GX_MULTI_TRACK);
+      }
       onTrackSegmentStart();
     } else if (tag.equals(TAG_GX_SIMPLE_ARRAY_DATA)) {
       onSensorDataStart(attributes);

@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks.io.file;
+package com.google.android.apps.mytracks.io.file.export;
 
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
@@ -50,7 +50,7 @@ import java.io.OutputStream;
  *
  * @author Rodrigo Damazio
  */
-public interface TrackFormatWriter {
+public interface TrackWriter {
 
   /**
    * Gets the file extension (i.e. gpx, kml, ...)
@@ -63,11 +63,6 @@ public interface TrackFormatWriter {
    * @param outputStream the output stream for the file handler
    */
   public void prepare(OutputStream outputStream);
-
-  /**
-   * Closes the underlying file handler.
-   */
-  public void close();
 
   /**
    * Writes the header for a file

@@ -21,7 +21,7 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
-import com.google.android.apps.mytracks.io.file.TrackWriter;
+import com.google.android.apps.mytracks.io.file.export.FileTrackExporter;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
@@ -441,15 +441,31 @@ public class SyncUtils {
 
     java.io.File file = new java.io.File(directory,
         FileUtils.buildUniqueFileName(directory, track.getName(), trackFileFormat.getExtension()));
-    TrackWriter trackWriter = new TrackWriter(
-        context, myTracksProviderUtils, new Track[] {track}, trackFileFormat, null);
+    FileTrackExporter fileTrackExporter = new FileTrackExporter(
+        myTracksProviderUtils, new Track[] { track }, trackFileFormat, context, false, null);
 
-    trackWriter.writeTrack(new FileOutputStream(file));
-    if (trackWriter.wasSuccess()) {
-      return file;
-    }
-    Log.d(TAG, "Unable to get file for track " + track.getName());
-    return null;
+    FileOutputStream fileOutputStream = null;
+    try {
+      fileOutputStream = new FileOutputStream(file);
+      fileTrackExporter.writeTrack(fileOutputStream);
+      if (fileTrackExporter.isSuccess()) {
+        return file;
+      } else {
+        if (!file.delete()) {
+          Log.d(TAG, "Unable to delete file for track " + track.getName());
+        }
+        Log.d(TAG, "Unable to get file for track " + track.getName());
+        return null;
+      }
+    } finally {
+      if (fileOutputStream != null) {
+        try {
+          fileOutputStream.close();
+        } catch (IOException e) {
+          Log.e(TAG, "Unable to close file output stream", e);
+        }
+      }
+    } 
   }
   
   /**

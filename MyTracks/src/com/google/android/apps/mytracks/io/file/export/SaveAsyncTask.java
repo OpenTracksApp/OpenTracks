@@ -14,11 +14,12 @@
  * the License.
  */
 
-package com.google.android.apps.mytracks.io.file;
+package com.google.android.apps.mytracks.io.file.export;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
+import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.SystemUtils;
@@ -33,7 +34,7 @@ import android.util.Log;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.OutputStream;
+import java.io.IOException;
 
 /**
  * Async Task to save tracks to the external storage.
@@ -48,11 +49,12 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   private final TrackFileFormat trackFileFormat;
   private final long[] trackIds;
   private final File directory;
+  private final boolean playTrack;
   private final Context context;
   private final MyTracksProviderUtils myTracksProviderUtils;
 
   private WakeLock wakeLock;
-  private TrackWriter trackWriter;
+  private TrackExporter trackExporter;
 
   // true if the AsyncTask has completed
   private boolean completed;
@@ -74,13 +76,15 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
    * @param trackIds the track ids to save. To save all, set to size 1 with
    *          trackIds[0] == -1L
    * @param directory the directory to save to
+   * @param playTrack true to play track
    */
-  public SaveAsyncTask(
-      SaveActivity saveActivity, TrackFileFormat trackFileFormat, long[] trackIds, File directory) {
+  public SaveAsyncTask(SaveActivity saveActivity, TrackFileFormat trackFileFormat, long[] trackIds,
+      File directory, boolean playTrack) {
     this.saveActivity = saveActivity;
     this.trackFileFormat = trackFileFormat;
     this.trackIds = trackIds;
     this.directory = directory;
+    this.playTrack = playTrack;
     context = saveActivity.getApplicationContext();
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
 
@@ -163,8 +167,9 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
   @Override
   protected void onCancelled() {
-    if (trackWriter != null) {
-      trackWriter.stopWriteTrack();
+    completed = true;
+    if (saveActivity != null) {
+      saveActivity.onAsyncTaskCompleted(successCount, totalCount, null);
     }
   }
 
@@ -178,18 +183,21 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
       return false;
     }
     Track track = tracks[0];
+    boolean useKmz = !playTrack && trackFileFormat == TrackFileFormat.KML;
+    String extension = useKmz ? KmzTrackExporter.KMZ_EXTENSION : trackFileFormat.getExtension();
+    
     // Make sure the file doesn't exist yet (possibly by changing the filename)
-    String fileName = FileUtils.buildUniqueFileName(
-        directory, track.getName(), trackFileFormat.getExtension());
+    String fileName = FileUtils.buildUniqueFileName(directory, track.getName(), extension);
     if (fileName == null) {
       Log.d(TAG, "Unable to get a unique filename for " + track.getName());
       return false;
     }
 
-    trackWriter = new TrackWriter(
-        context, myTracksProviderUtils, tracks, trackFileFormat, new TrackWriter.OnWriteListener() {
+    FileTrackExporter fileTrackExporter = new FileTrackExporter(myTracksProviderUtils, tracks,
+        trackFileFormat, context, useKmz, new TrackExporterListener() {
+
             @Override
-          public void onWrite(int number, int max) {
+          public void onProgressUpdate(int number, int max) {
             /*
              * If only saving one track, update the progress dialog once every
              * 500 points
@@ -200,24 +208,36 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
           }
         });
 
-    File file = null;
-    try {
-      file = new File(directory, fileName);
-      OutputStream outputStream = new FileOutputStream(file);
-      trackWriter.writeTrack(outputStream);
-    } catch (FileNotFoundException e) {
-      Log.d(TAG, "File not found " + fileName, e);
-      return false;
-    }
+    trackExporter = useKmz ? new KmzTrackExporter(myTracksProviderUtils, fileTrackExporter, tracks)
+        : fileTrackExporter;
 
-    if (trackWriter.wasSuccess()) {
-      savedPath = file.getAbsolutePath();
-    } else {
-      if (!file.delete()) {
-        Log.w(TAG, "Failed to delete file " + file.getAbsolutePath());
+    File file = new File(directory, fileName);
+    FileOutputStream fileOutputStream = null;
+    try {
+      fileOutputStream = new FileOutputStream(file);
+      trackExporter.writeTrack(fileOutputStream);
+
+      if (trackExporter.isSuccess()) {
+        savedPath = file.getAbsolutePath();
+        return true;
+      } else {
+        if (!file.delete()) {
+          Log.w(TAG, "Failed to delete file " + file.getAbsolutePath());
+        }
+        return false;
+      }
+    } catch (FileNotFoundException e) {
+      Log.e(TAG, "Unable to open file " + file.getName(), e);
+      return false;
+    } finally {
+      if (fileOutputStream != null) {
+        try {
+          fileOutputStream.close();
+        } catch (IOException e) {
+          Log.e(TAG, "Unable to close file output stream", e);
+        }
       }
     }
-    return trackWriter.wasSuccess();
   }
 
   /**
