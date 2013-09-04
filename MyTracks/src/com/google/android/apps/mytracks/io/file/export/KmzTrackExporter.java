@@ -37,10 +37,10 @@ import java.util.zip.ZipOutputStream;
  */
 public class KmzTrackExporter extends AbstractTrackExporter {
 
-  public static final String KMZ_IMAGES_DIR = "images";
   public static final String KMZ_EXTENSION = "kmz";
-  public static final int BUFFER_SIZE = 4096;
-  public static final String KML_FILE_NAME = "doc.kml";
+  public static final String KMZ_IMAGES_DIR = "images";
+  public static final String KMZ_KML_FILE = "doc.kml";
+  private static final int BUFFER_SIZE = 4096;
 
   private final MyTracksProviderUtils myTracksProviderUtils;
   private final FileTrackExporter fileTrackExporter;
@@ -72,7 +72,7 @@ public class KmzTrackExporter extends AbstractTrackExporter {
       zipOutputStream = new ZipOutputStream(outputStream);
 
       // Add kml file
-      ZipEntry zipEntry = new ZipEntry(KML_FILE_NAME);
+      ZipEntry zipEntry = new ZipEntry(KMZ_KML_FILE);
       zipOutputStream.putNextEntry(zipEntry);
 
       fileTrackExporter.writeTrack(zipOutputStream);

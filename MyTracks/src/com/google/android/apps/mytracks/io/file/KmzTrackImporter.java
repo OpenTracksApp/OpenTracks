@@ -40,6 +40,8 @@ import org.xml.sax.SAXException;
  */
 public class KmzTrackImporter implements TrackImporter {
 
+  private static final int BUFFER_SIZE = 4096;
+  
   private final Context context;
   private final String photoPath;
 
@@ -51,18 +53,17 @@ public class KmzTrackImporter implements TrackImporter {
   @Override
   public long[] importFile(InputStream inputStream)
       throws IOException, ParserConfigurationException, SAXException {
-    long[] result = null;
     ZipInputStream zipInputStream = null;
     try {
-      zipInputStream = new ZipInputStream(inputStream);
+      long[] result = null;
       ZipEntry zipEntry;
+
+      zipInputStream = new ZipInputStream(inputStream);
+      
       while ((zipEntry = zipInputStream.getNextEntry()) != null) {
         String fileName = zipEntry.getName();
-        if (fileName.equals(KmzTrackExporter.KML_FILE_NAME)) {
-          KmlFileTrackImporter kmlFileTrackImporter = new KmlFileTrackImporter(
-              context, -1L, photoPath);
-          byte[] buffer = readKml(zipInputStream);
-          result = kmlFileTrackImporter.importFile(new ByteArrayInputStream(buffer));
+        if (fileName.equals(KmzTrackExporter.KMZ_KML_FILE)) {
+          result = parseKml(zipInputStream);
         } else {
           String prefix = KmzTrackExporter.KMZ_IMAGES_DIR + File.separatorChar;
           if (fileName.startsWith(prefix)) {
@@ -71,19 +72,33 @@ public class KmzTrackImporter implements TrackImporter {
         }
         zipInputStream.closeEntry();
       }
+      return result == null ? new long[0] : result;
     } finally {
       if (zipInputStream != null) {
         zipInputStream.close();
       }
     }
-    return result == null ? new long[0] : result;
   }
 
-  private byte[] readKml(ZipInputStream zipInputStream) throws IOException {
+  private long[] parseKml(ZipInputStream zipInputStream)
+      throws IOException, ParserConfigurationException, SAXException {
+    ByteArrayInputStream byteArrayInputStream = null;
+    try {
+      KmlFileTrackImporter kmlFileTrackImporter = new KmlFileTrackImporter(context, -1L, photoPath);
+      byteArrayInputStream = new ByteArrayInputStream(getKml(zipInputStream));
+      return kmlFileTrackImporter.importFile(byteArrayInputStream);
+    } finally {
+      if (byteArrayInputStream != null) {
+        byteArrayInputStream.close();
+      }
+    }
+  }
+ 
+  private byte[] getKml(ZipInputStream zipInputStream) throws IOException {
     ByteArrayOutputStream byteArrayOutputStream = null;
     try {
       byteArrayOutputStream = new ByteArrayOutputStream();
-      byte[] buffer = new byte[KmzTrackExporter.BUFFER_SIZE];
+      byte[] buffer = new byte[BUFFER_SIZE];
       int count;
       while ((count = zipInputStream.read(buffer)) != -1) {
         byteArrayOutputStream.write(buffer, 0, count);
@@ -100,7 +115,7 @@ public class KmzTrackImporter implements TrackImporter {
     FileOutputStream fileOutputStream = null;
     try {
       fileOutputStream = new FileOutputStream(photoPath + File.separatorChar + fileName);
-      byte[] buffer = new byte[KmzTrackExporter.BUFFER_SIZE];
+      byte[] buffer = new byte[BUFFER_SIZE];
       int count;
       while ((count = zipInputStream.read(buffer)) != -1) {
         fileOutputStream.write(buffer, 0, count);

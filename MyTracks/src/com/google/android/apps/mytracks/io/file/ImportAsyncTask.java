@@ -30,6 +30,7 @@ import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -132,6 +133,9 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         publishProgress(i + 1, totalCount);
       }
       return true;
+    } catch (IOException e) {
+      Log.e(TAG, "IOException", e);
+      return false;
     } finally {
       if (wakeLock != null && wakeLock.isHeld()) {
         wakeLock.release();
@@ -159,7 +163,8 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
    * 
    * @param file the file
    */
-  private boolean importFile(final File file) {
+  private boolean importFile(final File file) throws IOException {
+    FileInputStream fileInputStream = null;
     try {
       TrackImporter trackImporter;
       if (trackFileFormat == TrackFileFormat.KML) {
@@ -177,8 +182,9 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         }
       } else {
         trackImporter = new GpxFileTrackImporter(context);
-      }      
-      long trackIds[] = trackImporter.importFile(new FileInputStream(file));
+      }
+      fileInputStream = new FileInputStream(file);
+      long trackIds[] = trackImporter.importFile(fileInputStream);
       int length = trackIds.length;
       if (length > 0) {
         trackId = trackIds[length - 1];
@@ -187,6 +193,10 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     } catch (Exception e) {
       Log.d(TAG, "file: " + file.getAbsolutePath(), e);
       return false;
+    } finally {
+      if (fileInputStream != null) {
+        fileInputStream.close();        
+      }
     }
   }
 

@@ -111,10 +111,6 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
 
   /**
    * Configures the calorie preference.
-   * 
-   * @param reference to configure
-   * @param key of the preference
-   * @param defaultValue default value of this preference
    */
   private void configCaloriePreference() {
     caloriePreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
@@ -160,11 +156,6 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
 
   /**
    * Configures the weight preference.
-   * 
-   * @param preference to configure
-   * @param key of the preference
-   * @param defaultValue default value of this preference
-   * @param isEnable true means enable the weight preference
    */
   private void configWeightPreference() {
     weightPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
@@ -188,10 +179,6 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
 
   /**
    * Updates the weight summary.
-   * 
-   * @param preference the preference
-   * @param keyId the key id
-   * @param defaultValue the default value
    */
   private void updateWeightSummary() {
     boolean metricUnits = PreferencesUtils.isMetricUnits(this);
@@ -201,10 +188,7 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
   /**
    * Updates the weight summary.
    * 
-   * @param preference the preference
-   * @param keyId the key id
-   * @param defaultValue the default value
-   * @param metricUnits the status of metric units
+   * @param metricUnits true if metric units
    */
   private void updateWeightSummary(boolean metricUnits) {
     int displayValue = getWeightDisplayValue(metricUnits);
@@ -216,8 +200,7 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
    * Gets the weight display value in metric or imperial depending on the
    * preferred units.
    * 
-   * @param keyId the key id
-   * @param defaultValue the default value
+   * @param metricUnits true if metric units
    */
   private int getWeightDisplayValue(boolean metricUnits) {
     int value = PreferencesUtils.getInt(this, R.string.stats_weight_key,
@@ -231,8 +214,6 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
   /**
    * Stores the weight value, always in metric units.
    * 
-   * @param keyId the key id
-   * @param defaultValue the default value
    * @param displayValue the display value
    */
   private void storeWeightValue(String displayValue) {
