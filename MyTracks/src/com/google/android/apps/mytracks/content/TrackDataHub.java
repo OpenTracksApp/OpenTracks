@@ -579,8 +579,7 @@ public class TrackDataHub implements DataSourceListener {
    * 
    * @return the selectedTrackId
    */
-  @VisibleForTesting
-  long getSelectedTrackId() {
+  public long getSelectedTrackId() {
     return selectedTrackId;
   }
   

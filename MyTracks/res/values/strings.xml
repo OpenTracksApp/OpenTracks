@@ -2146,6 +2146,12 @@ limitations under the License.
       Character limit: ~23 (1 line)">
     Calories
   </string>
+  <string name="stats_calorie_invalid_type"
+    translation_description="In the 'Stats' page, the calorie value label while pending.
+    
+      Character limit: ~23 (1 line)">
+    Calories(Invalid type)
+  </string>
   <string name="stats_fastest_pace"
     translation_description="In the 'Stats' page, the fastest pace.">
     Fastest pace

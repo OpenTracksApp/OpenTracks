@@ -15,8 +15,13 @@
  */
 package com.google.android.apps.mytracks.util;
 
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
 
+import android.content.Context;
 import android.location.Location;
 
 /**
@@ -64,7 +69,7 @@ public class CalorieUtils {
       * UnitConversions.KM_TO_M / UnitConversions.HR_TO_MIN;
 
   public enum ActivityType {
-    CYCLING, FOOT
+    CYCLING, FOOT, INVALID
   }
 
   /**
@@ -213,7 +218,36 @@ public class CalorieUtils {
    */
   public static double getCalorie(Location start, Location stop, double grade, int weight,
       ActivityType activityType) {
+    if (activityType == ActivityType.INVALID) {
+      return TripStatistics.INVALID_CALORIE;
+    }
     return ActivityType.CYCLING == activityType ? calculateCalorieCycling(start, stop, grade,
         weight) : calculateCalorieFoot(start, stop, grade, weight);
+  }
+  
+  /**
+   * Gets the activity type for calculating calorie by the category of track.
+   * 
+   * @param context current context
+   * @param trackId the id of track
+   * @return activityType the activity type of track.
+   */
+  public static ActivityType getActivityType(Context context, long trackId) {
+    ActivityType activityType = ActivityType.INVALID;
+
+    Track track = MyTracksProviderUtils.Factory.get(context).getTrack(trackId);
+    if (track != null) {
+      String category = track.getCategory();
+
+      if (category.equals(context.getString(R.string.activity_type_walking))
+          || category.equals(context.getString(R.string.activity_type_running))) {
+        activityType = ActivityType.FOOT;
+      } else if (category.equals(context.getString(R.string.activity_type_cycling))
+          || category.equals(context.getString(R.string.activity_type_biking))) {
+        activityType = ActivityType.CYCLING;
+      }
+    }
+
+    return activityType;
   }
 }

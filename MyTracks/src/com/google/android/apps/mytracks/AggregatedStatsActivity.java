@@ -19,6 +19,7 @@ package com.google.android.apps.mytracks;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StatsUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -36,7 +37,8 @@ public class AggregatedStatsActivity extends AbstractMyTracksActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    StatsUtils.setTripStatisticsValues(this, getTripStatistics());
+    StatsUtils.setTripStatisticsValues(this, getTripStatistics(),
+        PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
     StatsUtils.setLocationValues(this, null, false);
   }
 

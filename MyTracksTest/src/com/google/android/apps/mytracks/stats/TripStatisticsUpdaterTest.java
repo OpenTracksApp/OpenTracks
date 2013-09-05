@@ -2,6 +2,7 @@
 
 package com.google.android.apps.mytracks.stats;
 
+import com.google.android.apps.mytracks.util.CalorieUtils.ActivityType;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 
 import android.location.Location;
@@ -224,7 +225,7 @@ public class TripStatisticsUpdaterTest extends TestCase {
       Location location = getLocation(i + locationOffset, (i + locationOffset) * .001, MOVING_SPEED,
           startTime + (timeOffset + i) * TEN_SECONDS);
       tripStatisticsUpdater.addLocation(location,
-          PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT,
+          PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT, ActivityType.FOOT,
           PreferencesUtils.STATS_WEIGHT_DEFAULT);
       tripStatistics = tripStatisticsUpdater.getTripStatistics();
 
@@ -271,7 +272,7 @@ public class TripStatisticsUpdaterTest extends TestCase {
       Location location = getLocation(
           locationOffset, locationOffset * .001, 0, startTime + (i + timeOffset) * TEN_SECONDS);
       tripStatisticsUpdater.addLocation(location,
-          PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT,
+          PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT, ActivityType.FOOT,
           PreferencesUtils.STATS_WEIGHT_DEFAULT);
 
       tripStatistics = tripStatisticsUpdater.getTripStatistics();
@@ -309,7 +310,7 @@ public class TripStatisticsUpdaterTest extends TestCase {
       Location location = getLocation(i + locationOffset, (i + locationOffset) * .001, 99999,
           startTime + (timeOffset + i) * TEN_SECONDS);
       tripStatisticsUpdater.addLocation(location,
-          PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT,
+          PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT, ActivityType.FOOT,
           PreferencesUtils.STATS_WEIGHT_DEFAULT);
       tripStatistics = tripStatisticsUpdater.getTripStatistics();
 

@@ -243,11 +243,8 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
             return;
           }
           trackTripStatisticstrackUpdater.addLocation(trackPoint, recordingDistanceInterval,
-              PreferencesUtils.getInt(context, R.string.stats_weight_key,
-                  PreferencesUtils.STATS_WEIGHT_DEFAULT));
-          markerTripStatisticsUpdater.addLocation(trackPoint, recordingDistanceInterval,
-              PreferencesUtils.getInt(context, R.string.stats_weight_key,
-                  PreferencesUtils.STATS_WEIGHT_DEFAULT));
+              context);
+          markerTripStatisticsUpdater.addLocation(trackPoint, recordingDistanceInterval, context);
         }
         if (waypoint.getLocation().getTime() > trackPoint.getTime()) {
           trackPoint = null;
@@ -537,9 +534,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
       trackData.tripStatisticsUpdater = new TripStatisticsUpdater(
           location.getTime() != -1L ? location.getTime() : trackData.importTime);
     }
-    trackData.tripStatisticsUpdater.addLocation(location, recordingDistanceInterval,
-        PreferencesUtils.getInt(context, R.string.stats_weight_key,
-            PreferencesUtils.STATS_WEIGHT_DEFAULT));
+    trackData.tripStatisticsUpdater.addLocation(location, recordingDistanceInterval, context);
 
     trackData.bufferedLocations[trackData.numBufferedLocations] = location;
     trackData.numBufferedLocations++;

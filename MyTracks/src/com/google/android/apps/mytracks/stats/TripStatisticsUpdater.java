@@ -23,8 +23,11 @@ import static com.google.android.apps.mytracks.services.TrackRecordingService.PA
 import com.google.android.apps.mytracks.util.CalorieUtils;
 import com.google.android.apps.mytracks.util.CalorieUtils.ActivityType;
 import com.google.android.apps.mytracks.util.LocationUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
 
+import android.content.Context;
 import android.location.Location;
 import android.util.Log;
 
@@ -118,14 +121,35 @@ public class TripStatisticsUpdater {
     stats.merge(currentSegment);
     return stats;
   }
+  
+  /**
+   * Adds a location.
+   * 
+   * @param location the location
+   * @param minRecordingDistance the min recording distance
+   * @param context the context to get the weight and track category
+   */
+  public void addLocation(Location location, int minRecordingDistance, Context context) {
+    int weight = PreferencesUtils.getInt(context, R.string.stats_weight_key,
+        PreferencesUtils.STATS_WEIGHT_DEFAULT);
+    addLocation(
+        location,
+        minRecordingDistance,
+        CalorieUtils.getActivityType(context,
+            PreferencesUtils.getLong(context, R.string.recording_track_id_key)), weight);
+  }
 
   /**
    * Adds a location. TODO: This assume location has a valid time.
    * 
    * @param location the location
    * @param minRecordingDistance the min recording distance
+   * @param activityType the activity type of current track
+   * @param weight the weight to calculate calorie
    */
-  public void addLocation(Location location, int minRecordingDistance, int weight) {
+  @VisibleForTesting
+  void addLocation(Location location, int minRecordingDistance, ActivityType activityType,
+      int weight) {
     // Always update time
     updateTime(location.getTime());
 
@@ -189,13 +213,10 @@ public class TripStatisticsUpdater {
       updateSpeed(
           location.getTime(), location.getSpeed(), lastLocation.getTime(), lastLocation.getSpeed());
     }
-
-    // TODO 1: How to get the value of weight.
-    // TODO 2: How to get the value of ActivityType.
-
+    
     // Update calorie
     double calorie = CalorieUtils.getCalorie(lastMovingLocation, location,
-        gradeBuffer.getAverage(), weight, ActivityType.FOOT);
+        gradeBuffer.getAverage(), weight, activityType);
     currentSegment.addCalorie(calorie);
 
     lastLocation = location;

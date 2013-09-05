@@ -259,7 +259,11 @@ public class StatsFragment extends Fragment implements TrackDataListener {
    * Updates the UI.
    */
   private void updateUi(FragmentActivity activity) {
-    StatsUtils.setTripStatisticsValues(activity, lastTripStatistics);
+    StatsUtils.setTripStatisticsValues(
+        activity,
+        lastTripStatistics,
+        trackDataHub == null ? PreferencesUtils.RECORDING_TRACK_ID_DEFAULT : trackDataHub
+            .getSelectedTrackId());
     StatsUtils.setLocationValues(activity, lastLocation, isSelectedTrackRecording());
   }
 }
