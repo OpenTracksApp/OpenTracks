@@ -18,7 +18,7 @@ package com.google.android.apps.mytracks.io.sync;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.io.file.KmlFileTrackImporter;
+import com.google.android.apps.mytracks.io.file.importer.KmlFileTrackImporter;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.gms.auth.GoogleAuthException;

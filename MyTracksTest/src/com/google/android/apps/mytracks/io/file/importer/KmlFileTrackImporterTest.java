@@ -14,12 +14,13 @@
  * the License.
  */
 
-package com.google.android.apps.mytracks.io.file;
+package com.google.android.apps.mytracks.io.file.importer;
 
 import static com.google.android.testing.mocking.AndroidMock.eq;
 import static com.google.android.testing.mocking.AndroidMock.expect;
 
 import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.io.file.importer.KmlFileTrackImporter;
 import com.google.android.testing.mocking.AndroidMock;
 
 import android.location.Location;
