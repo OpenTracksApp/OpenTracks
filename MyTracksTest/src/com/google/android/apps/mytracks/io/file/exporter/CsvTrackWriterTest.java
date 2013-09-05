@@ -13,9 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks.io.file.export;
+package com.google.android.apps.mytracks.io.file.exporter;
 
-import com.google.android.apps.mytracks.io.file.export.CsvTrackWriter;
+import com.google.android.apps.mytracks.io.file.exporter.CsvTrackWriter;
 
 
 /**

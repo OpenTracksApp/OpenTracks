@@ -1,10 +1,10 @@
 package com.google.android.apps.mytracks.io.file;
 
-import com.google.android.apps.mytracks.io.file.export.CsvTrackWriter;
-import com.google.android.apps.mytracks.io.file.export.GpxTrackWriter;
-import com.google.android.apps.mytracks.io.file.export.KmlTrackWriter;
-import com.google.android.apps.mytracks.io.file.export.TcxTrackWriter;
-import com.google.android.apps.mytracks.io.file.export.TrackWriter;
+import com.google.android.apps.mytracks.io.file.exporter.CsvTrackWriter;
+import com.google.android.apps.mytracks.io.file.exporter.GpxTrackWriter;
+import com.google.android.apps.mytracks.io.file.exporter.KmlTrackWriter;
+import com.google.android.apps.mytracks.io.file.exporter.TcxTrackWriter;
+import com.google.android.apps.mytracks.io.file.exporter.TrackWriter;
 
 import android.content.Context;
 import android.os.Parcel;

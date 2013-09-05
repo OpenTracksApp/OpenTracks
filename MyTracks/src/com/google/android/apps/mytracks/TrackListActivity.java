@@ -27,7 +27,7 @@ import com.google.android.apps.mytracks.fragments.EulaDialogFragment.EulaCaller;
 import com.google.android.apps.mytracks.fragments.FileTypeDialogFragment;
 import com.google.android.apps.mytracks.fragments.FileTypeDialogFragment.FileTypeCaller;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
-import com.google.android.apps.mytracks.io.file.export.SaveActivity;
+import com.google.android.apps.mytracks.io.file.exporter.SaveActivity;
 import com.google.android.apps.mytracks.io.file.importer.ImportActivity;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.io.sync.SyncUtils;

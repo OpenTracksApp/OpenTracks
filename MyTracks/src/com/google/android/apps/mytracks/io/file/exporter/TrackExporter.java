@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 Google Inc.
+ * Copyright 2011 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -13,21 +13,22 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks.io.file.export;
+
+package com.google.android.apps.mytracks.io.file.exporter;
+
+import java.io.OutputStream;
 
 /**
- * Listener for {@link TrackExporter} progress.
+ * Track exporting for exporting track to an {@link OutputStream}.
  * 
  * @author Jimmy Shih
  */
-public interface TrackExporterListener {
-
+public interface TrackExporter {
+ 
   /**
-   * Called to update progress.
+   * Write track to an output stream
    * 
-   * @param number the number of locations written
-   * @param max the maximum number of locations in a track, for calculation of
-   *          completion percentage
+   * @param outputStream the output stream
    */
-  public void onProgressUpdate(int number, int max);
+  boolean writeTrack(OutputStream outputStream);
 }

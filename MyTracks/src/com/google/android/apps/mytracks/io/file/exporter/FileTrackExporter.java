@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.google.android.apps.mytracks.io.file.export;
+package com.google.android.apps.mytracks.io.file.exporter;
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.MyTracksLocation;

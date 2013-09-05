@@ -31,7 +31,7 @@ import com.google.android.apps.mytracks.fragments.ShareTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.ShareTrackDialogFragment.ShareTrackCaller;
 import com.google.android.apps.mytracks.io.drive.SendDriveActivity;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
-import com.google.android.apps.mytracks.io.file.export.SaveActivity;
+import com.google.android.apps.mytracks.io.file.exporter.SaveActivity;
 import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesActivity;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsConstants;
 import com.google.android.apps.mytracks.io.maps.SendMapsActivity;

@@ -31,7 +31,7 @@ import com.google.android.apps.mytracks.fragments.FrequencyDialogFragment;
 import com.google.android.apps.mytracks.fragments.MyTracksMapFragment;
 import com.google.android.apps.mytracks.fragments.StatsFragment;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
-import com.google.android.apps.mytracks.io.file.export.SaveActivity;
+import com.google.android.apps.mytracks.io.file.exporter.SaveActivity;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.settings.SettingsActivity;

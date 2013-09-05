@@ -17,7 +17,7 @@
 package com.google.android.apps.mytracks.io.file.importer;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.io.file.export.KmzTrackExporter;
+import com.google.android.apps.mytracks.io.file.exporter.KmzTrackExporter;
 
 import android.content.Context;
 import android.util.Log;
