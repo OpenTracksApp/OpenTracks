@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+  style="@style/ScrollView" >
+  <RadioGroup
+    android:id="@+id/export_type_options"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:padding="8dp" >
+    <RadioButton
+      android:id="@+id/export_google_maps"
+      android:text="@string/export_google_maps"
+      style="@style/TextMedium" />
+    <RadioGroup
+      android:id="@+id/export_google_maps_options"
+      style="@style/ExportRadioGroup" >
+      <RadioButton
+        android:id="@+id/export_google_maps_public"
+        android:text="@string/export_google_maps_public"
+        style="@style/TextMedium" />
+      <RadioButton
+        android:id="@+id/export_google_maps_unlisted"
+        android:text="@string/export_google_maps_unlisted"
+        style="@style/TextMedium" />
+    </RadioGroup>
+    <RadioButton
+      android:id="@+id/export_google_fusion_tables"
+      android:text="@string/export_google_fusion_tables"
+      style="@style/TextMedium" />
+    <RadioGroup
+      android:id="@+id/export_google_fusion_tables_options"
+      style="@style/ExportRadioGroup" >
+      <RadioButton
+        android:id="@+id/export_google_fusion_tables_public"
+        android:text="@string/export_google_fusion_tables_public"
+        style="@style/TextMedium" />
+      <RadioButton
+        android:id="@+id/export_google_fusion_tables_private"
+        android:text="@string/export_google_fusion_tables_private"
+        style="@style/TextMedium" />
+    </RadioGroup>
+    <RadioButton
+      android:id="@+id/export_google_spreadsheets"
+      android:text="@string/export_google_spreadsheets"
+      style="@style/TextMedium" />
+    <RadioButton
+      android:id="@+id/export_external_storage"
+      android:text="@string/export_external_storage"
+      style="@style/TextMedium" />
+    <RadioGroup
+      android:id="@+id/export_external_storage_options"
+      style="@style/ExportRadioGroup" >
+      <RadioButton
+        android:id="@+id/export_external_storage_kml"
+        style="@style/TextMedium" />
+      <RadioButton
+        android:id="@+id/export_external_storage_gpx"
+        style="@style/TextMedium" />
+      <RadioButton
+        android:id="@+id/export_external_storage_csv"
+        style="@style/TextMedium" />
+      <RadioButton
+        android:id="@+id/export_external_storage_tcx"
+        style="@style/TextMedium" />
+    </RadioGroup>
+  </RadioGroup>
+</ScrollView>
