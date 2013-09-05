@@ -116,6 +116,7 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   @Override
   protected Boolean doInBackground(Void... params) {
     try {
+      Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
       boolean isRecording = PreferencesUtils.getLong(saveActivity, R.string.recording_track_id_key)
           != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
       boolean isPaused = PreferencesUtils.getBoolean(saveActivity,

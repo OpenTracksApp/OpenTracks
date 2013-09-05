@@ -108,6 +108,7 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   @Override
   protected Boolean doInBackground(Void... params) {
     try {
+      Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
       // Get the wake lock if not recording or paused
       boolean isRecording =
           PreferencesUtils.getLong(importActivity, R.string.recording_track_id_key)
