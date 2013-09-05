@@ -29,6 +29,7 @@ import com.google.common.annotations.VisibleForTesting;
 import android.content.Context;
 import android.database.Cursor;
 import android.location.Location;
+import android.util.Log;
 
 import java.io.OutputStream;
 
@@ -38,7 +39,9 @@ import java.io.OutputStream;
  * @author Sandor Dornbush
  * @author Rodrigo Damazio
  */
-public class FileTrackExporter extends AbstractTrackExporter {
+public class FileTrackExporter implements TrackExporter {
+
+  private static final String TAG = FileTrackExporter.class.getSimpleName();
 
   private final MyTracksProviderUtils myTracksProviderUtils;
   private final Track[] tracks;
@@ -71,17 +74,23 @@ public class FileTrackExporter extends AbstractTrackExporter {
   }
 
   @Override
-  void performWrite(OutputStream outputStream) throws InterruptedException {
-    trackWriter.prepare(outputStream);
-    trackWriter.writeHeader(tracks[0]);
-    long startTime = tracks[0].getTripStatistics().getStartTime();
-    for (int i = 0; i < tracks.length; i++) {
-      writeWaypoints(tracks[i]);
-      long offset = tracks[i].getTripStatistics().getStartTime() - startTime;
-      writeLocations(tracks[i], offset);
+  public boolean writeTrack(OutputStream outputStream) {
+    try {
+      trackWriter.prepare(outputStream);
+      trackWriter.writeHeader(tracks[0]);
+      long startTime = tracks[0].getTripStatistics().getStartTime();
+      for (int i = 0; i < tracks.length; i++) {
+        writeWaypoints(tracks[i]);
+        long offset = tracks[i].getTripStatistics().getStartTime() - startTime;
+        writeLocations(tracks[i], offset);
+      }
+      trackWriter.writeFooter();
+      trackWriter.close();
+      return true;
+    } catch (InterruptedException e) {
+      Log.e(TAG, "Thread interrupted", e);
+      return false;
     }
-    trackWriter.writeFooter();
-    trackWriter.close();
   }
 
   /**

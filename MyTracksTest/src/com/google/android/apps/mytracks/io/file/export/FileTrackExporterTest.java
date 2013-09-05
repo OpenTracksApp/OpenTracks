@@ -7,9 +7,6 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.Factory;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.io.file.export.FileTrackExporter;
-import com.google.android.apps.mytracks.io.file.export.TrackExporterListener;
-import com.google.android.apps.mytracks.io.file.export.TrackWriter;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceTest.MockContext;
 import com.google.android.apps.mytracks.testing.TestingProviderUtilsFactory;
 
@@ -101,9 +98,7 @@ public class FileTrackExporterTest extends AndroidTestCase {
     trackWriter.writeFooter();
  
     mocksControl.replay();
-    fileTrackExporter.writeTrack(outputStream);
-
-    assertTrue(fileTrackExporter.isSuccess());
+    assertTrue(fileTrackExporter.writeTrack(outputStream));
     mocksControl.verify();
   }
 
@@ -132,9 +127,8 @@ public class FileTrackExporterTest extends AndroidTestCase {
     trackWriter.writeFooter();
 
     mocksControl.replay();
-    fileTrackExporter.writeTrack(outputStream);
-
-    assertTrue(fileTrackExporter.isSuccess());
+    
+    assertTrue(fileTrackExporter.writeTrack(outputStream));
     mocksControl.verify();
   }
 
@@ -196,9 +190,8 @@ public class FileTrackExporterTest extends AndroidTestCase {
     trackWriter.writeFooter();
 
     mocksControl.replay();
-    fileTrackExporter.writeTrack(outputStream);
-
-    assertTrue(fileTrackExporter.isSuccess());
+    
+    assertTrue(fileTrackExporter.writeTrack(outputStream));
     mocksControl.verify();
   }
 

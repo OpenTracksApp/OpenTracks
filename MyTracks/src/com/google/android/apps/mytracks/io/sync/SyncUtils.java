@@ -447,8 +447,7 @@ public class SyncUtils {
     FileOutputStream fileOutputStream = null;
     try {
       fileOutputStream = new FileOutputStream(file);
-      fileTrackExporter.writeTrack(fileOutputStream);
-      if (fileTrackExporter.isSuccess()) {
+      if (fileTrackExporter.writeTrack(fileOutputStream)) {
         return file;
       } else {
         if (!file.delete()) {

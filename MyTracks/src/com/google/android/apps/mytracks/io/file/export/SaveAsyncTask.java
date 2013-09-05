@@ -215,15 +215,14 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     FileOutputStream fileOutputStream = null;
     try {
       fileOutputStream = new FileOutputStream(file);
-      trackExporter.writeTrack(fileOutputStream);
-
-      if (trackExporter.isSuccess()) {
+      if (trackExporter.writeTrack(fileOutputStream)) {
         savedPath = file.getAbsolutePath();
         return true;
       } else {
         if (!file.delete()) {
-          Log.w(TAG, "Failed to delete file " + file.getAbsolutePath());
+          Log.d(TAG, "Unable to delete file");
         }
+        Log.e(TAG, "Unable to export track");
         return false;
       }
     } catch (FileNotFoundException e) {

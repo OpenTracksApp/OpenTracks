@@ -22,6 +22,7 @@ import com.google.android.apps.mytracks.content.Waypoint;
 
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,11 +36,13 @@ import java.util.zip.ZipOutputStream;
  * 
  * @author Jimmy Shih
  */
-public class KmzTrackExporter extends AbstractTrackExporter {
-
+public class KmzTrackExporter implements TrackExporter {
+  
   public static final String KMZ_EXTENSION = "kmz";
   public static final String KMZ_IMAGES_DIR = "images";
   public static final String KMZ_KML_FILE = "doc.kml";
+
+  private static final String TAG = KmzTrackExporter.class.getSimpleName();
   private static final int BUFFER_SIZE = 4096;
 
   private final MyTracksProviderUtils myTracksProviderUtils;
@@ -61,12 +64,7 @@ public class KmzTrackExporter extends AbstractTrackExporter {
   }
 
   @Override
-  public boolean isSuccess() {
-    return fileTrackExporter.isSuccess() && super.isSuccess();
-  }
-
-  @Override
-  void performWrite(OutputStream outputStream) throws InterruptedException, IOException {
+  public boolean writeTrack(OutputStream outputStream) {
     ZipOutputStream zipOutputStream = null;
     try {
       zipOutputStream = new ZipOutputStream(outputStream);
@@ -75,17 +73,29 @@ public class KmzTrackExporter extends AbstractTrackExporter {
       ZipEntry zipEntry = new ZipEntry(KMZ_KML_FILE);
       zipOutputStream.putNextEntry(zipEntry);
 
-      fileTrackExporter.writeTrack(zipOutputStream);
+      boolean success = fileTrackExporter.writeTrack(zipOutputStream);
       zipOutputStream.closeEntry();
-      if (!fileTrackExporter.isSuccess()) {
-        throw new IOException();
+      if (!success) {
+        Log.e(TAG, "Unable to write kml in kmz");
+        return false;        
       }
 
       // Add photos
       addImages(zipOutputStream);
+      return true;
+    } catch (InterruptedException e) {
+      Log.e(TAG, "Unable to write track", e);
+      return false;
+    } catch (IOException e) {
+      Log.e(TAG, "Unable to write track", e);
+      return false;
     } finally {
       if (zipOutputStream != null) {
-        zipOutputStream.close();
+        try {
+          zipOutputStream.close();
+        } catch (IOException e) {
+          Log.e(TAG, "Unable to close zip input stream", e);;
+        }
       }
     }
   }

@@ -65,11 +65,6 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
       + getNameAndDescription(TRACK_NAME_0, TRACK_DESCRIPTION_0) + "<trkseg>"
       + getTrackPoint(0, null) + getTrackPoint(1, null) + "</trkseg><trkseg>"
       + getTrackPoint(2, null) + getTrackPoint(3, null) + "</trkseg></trk></gpx>";
-  private static final String VALID_TWO_TRACKS_GPX = "<gpx><trk>"
-      + getNameAndDescription(TRACK_NAME_0, TRACK_DESCRIPTION_0) + "<trkseg>"
-      + getTrackPoint(0, TRACK_TIME_0) + "</trkseg></trk><trk>"
-      + getNameAndDescription(TRACK_NAME_1, TRACK_DESCRIPTION_1) + "<trkseg>"
-      + getTrackPoint(1, TRACK_TIME_1) + "</trkseg></trk></gpx>";
 
   private static final String INVALID_XML_GPX = VALID_ONE_TRACK_ONE_SEGMENT_GPX.substring(
       0, VALID_ONE_TRACK_ONE_SEGMENT_GPX.length() - 50);

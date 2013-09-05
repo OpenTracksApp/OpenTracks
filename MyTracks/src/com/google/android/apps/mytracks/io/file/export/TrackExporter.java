@@ -24,17 +24,11 @@ import java.io.OutputStream;
  * @author Jimmy Shih
  */
 public interface TrackExporter {
-
+ 
   /**
    * Write track to an output stream
    * 
    * @param outputStream the output stream
    */
-  void writeTrack(OutputStream outputStream);
-
-  /**
-   * Returns true if {@link #writeTrack(OutputStream)} completed successfully.
-   */
-  boolean isSuccess();
-
+  boolean writeTrack(OutputStream outputStream);
 }
