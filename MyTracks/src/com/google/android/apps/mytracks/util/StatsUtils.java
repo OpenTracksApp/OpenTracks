@@ -17,7 +17,6 @@
 package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.apps.mytracks.util.CalorieUtils.ActivityType;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -111,8 +110,7 @@ public class StatsUtils {
    * @param tripStatistics the trip statistics
    * @param trackId the id of track
    */
-  public static void setTripStatisticsValues(Activity activity, TripStatistics tripStatistics,
-      long trackId) {
+  public static void setTripStatisticsValues(Activity activity, TripStatistics tripStatistics) {
     boolean metricUnits = PreferencesUtils.isMetricUnits(activity);
     boolean reportSpeed = PreferencesUtils.isReportSpeed(activity);
 
@@ -190,7 +188,7 @@ public class StatsUtils {
       if (tripStatistics != null) {
         calories = tripStatistics.getCalorie();
       }
-      setCalorie(activity, R.id.stats_calorie, calories, trackId);
+      setCalorie(activity, R.id.stats_calorie, calories);
     } else {
       calorieHorizontalLine.setVisibility(View.GONE);
       calorieContainer.setVisibility(View.GONE);
@@ -345,15 +343,13 @@ public class StatsUtils {
    * @param calorie the value of calorie
    * @param trackId the id of track
    */
-  private static void setCalorie(Activity activity, int itemId, double calorie, long trackId) {
-    int labelId = R.string.stats_calorie;
+  private static void setCalorie(Activity activity, int itemId, double calorie) {
+    String calorieString = String.format(Locale.getDefault(), CALORIES_FORMAT, calorie);
     // Current activity type is not supported.
-    if (trackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT
-        && CalorieUtils.getActivityType(activity, trackId) == ActivityType.INVALID) {
-      labelId = R.string.stats_calorie_invalid_type;
+    if (calorie == TripStatistics.INVALID_CALORIE) {
+      calorieString = activity.getString(R.string.value_unknown);
     }
-    setItem(activity, itemId, labelId,
-        String.format(Locale.getDefault(), CALORIES_FORMAT, calorie),
+    setItem(activity, itemId, R.string.stats_calorie, calorieString,
         activity.getString(R.string.unit_calorie));
   }
 }

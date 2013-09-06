@@ -586,6 +586,8 @@ public class TripStatistics implements Parcelable {
   public void addCalorie(double calorieAdded) {
     if (calorieAdded != INVALID_CALORIE) {
       this.calorie += calorieAdded;
+    } else {
+      this.calorie = INVALID_CALORIE;
     }
   }
 

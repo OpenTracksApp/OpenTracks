@@ -16,6 +16,7 @@
 package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.maps.mytracks.R;
@@ -224,9 +225,9 @@ public class CalorieUtils {
     return ActivityType.CYCLING == activityType ? calculateCalorieCycling(start, stop, grade,
         weight) : calculateCalorieFoot(start, stop, grade, weight);
   }
-  
+
   /**
-   * Gets the activity type for calculating calorie by the category of track.
+   * Gets the activity type for calculating calorie by the id of track.
    * 
    * @param context current context
    * @param trackId the id of track
@@ -249,5 +250,57 @@ public class CalorieUtils {
     }
 
     return activityType;
+  }
+
+  /**
+   * Gets the activity type for calculating calorie by the category of track.
+   * 
+   * @param context current context
+   * @param category the category of track
+   * @return activityType the activity type of track.
+   */
+  private static ActivityType getActivityType(Context context, String category) {
+    ActivityType activityType = ActivityType.INVALID;
+    if (category.equals(context.getString(R.string.activity_type_walking))
+        || category.equals(context.getString(R.string.activity_type_running))) {
+      activityType = ActivityType.FOOT;
+    } else if (category.equals(context.getString(R.string.activity_type_cycling))
+        || category.equals(context.getString(R.string.activity_type_biking))) {
+      activityType = ActivityType.CYCLING;
+    }
+
+    return activityType;
+  }
+
+  /**
+   * Calculates the calorie of track.
+   * 
+   * @param context the context
+   * @param track the track to calculate
+   * @param category the category of track
+   */
+  public static double calculateTrackCalorie(Context context, Track track, String category) {
+    ActivityType activityType = getActivityType(context, category);
+    if (activityType == ActivityType.INVALID) {
+      return TripStatistics.INVALID_CALORIE;
+    }
+
+    double calorie = 0;
+    MyTracksProviderUtils providerUtils = MyTracksProviderUtils.Factory.get(context);
+    long trackId = track.getId();
+    LocationIterator points = providerUtils.getTrackPointLocationIterator(trackId, -1, false,
+        MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
+    // TODO How get grade
+    double grade = 0;
+    if (points.hasNext()) {
+      Location start = points.next();
+      while (points.hasNext()) {
+        Location stop = points.next();
+        calorie += getCalorie(start, stop, grade, PreferencesUtils.getInt(context,
+            R.string.stats_weight_key, PreferencesUtils.STATS_WEIGHT_DEFAULT), activityType);
+        start = stop;
+      }
+    }
+    return calorie;
   }
 }

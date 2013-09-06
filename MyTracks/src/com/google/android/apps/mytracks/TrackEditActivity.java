@@ -21,6 +21,7 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
+import com.google.android.apps.mytracks.util.CalorieUtils;
 import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.apps.mytracks.util.TrackNameUtils;
 import com.google.android.maps.mytracks.R;
@@ -180,6 +181,10 @@ public class TrackEditActivity extends AbstractMyTracksActivity
       public void onClick(View v) {
         track.setName(name.getText().toString());
         String category = activityType.getText().toString();
+        if(!category.equals(track.getCategory())) {
+          double calorie = CalorieUtils.calculateTrackCalorie(getApplicationContext(), track, category);
+          track.getTripStatistics().setCalorie(calorie);
+        }
         track.setCategory(category);
         track.setIcon(TrackIconUtils.getIconValue(TrackEditActivity.this, category));
         track.setDescription(description.getText().toString());
