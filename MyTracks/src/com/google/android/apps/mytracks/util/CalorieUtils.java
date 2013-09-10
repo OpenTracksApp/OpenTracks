@@ -134,15 +134,15 @@ public class CalorieUtils {
    * @param grade the grade to calculate
    * @param weight of rider plus bike, in kilogram
    * @param timeUsed how many times used in second
-   * @return the power value watts(Joule/second).
+   * @return the calorie value in kcal.
    */
   @VisibleForTesting
   static double calculateCyclingCalorie(double speed, double grade, int weight, double timeUsed) {
     // Get the Power, the unit is Watt (Joule/second)
     double power = earthGravity * weight * speed * (K1 + grade) + K2 * (speed * speed * speed);
 
-    // Get the calories
-    return power * timeUsed / UnitConversions.KCAL_TO_J;
+    // Get the calories in kcal
+    return power * timeUsed / UnitConversions.KCAL_TO_J / 1000 ;
   }
 
   /**

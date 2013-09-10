@@ -62,15 +62,14 @@ public class TripStatistics implements Parcelable {
   // The min and max grade seen on this trip.
   private final ExtremityMonitor gradeExtremities = new ExtremityMonitor();
 
-  // The calorie of current track.
-  private double calorie;
-
-  
   /**
    * This value means the calorie value is invalid due to activity type is not
    * supported.
    */
   public static final double INVALID_CALORIE = -1.0;
+
+  // The calorie of current track.
+  private double calorie = INVALID_CALORIE;
 
   /**
    * Default constructor.
