@@ -181,8 +181,10 @@ public class TrackEditActivity extends AbstractMyTracksActivity
       public void onClick(View v) {
         track.setName(name.getText().toString());
         String category = activityType.getText().toString();
-        if(!category.equals(track.getCategory())) {
-          double calorie = CalorieUtils.calculateTrackCalorie(getApplicationContext(), track, category);
+        if (!category.equals(track.getCategory())) {
+          // TODO Is there no race condition when setCalorie is called.
+          double calorie = CalorieUtils.calculateTrackCalorie(getApplicationContext(), track,
+              category);
           track.getTripStatistics().setCalorie(calorie);
         }
         track.setCategory(category);

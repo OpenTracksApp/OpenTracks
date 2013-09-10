@@ -285,7 +285,7 @@ public class CalorieUtils {
       return TripStatistics.INVALID_CALORIE;
     }
 
-    double calorie = 0;
+    double calorie = 0.0;
     MyTracksProviderUtils providerUtils = MyTracksProviderUtils.Factory.get(context);
     long trackId = track.getId();
     LocationIterator points = providerUtils.getTrackPointLocationIterator(trackId, -1, false,
