@@ -788,11 +788,6 @@ limitations under the License.
       %1$s description. E.g., 'At the top'.">
     Description: %1$s
   </string>
-  <string name="generic_do_not_show_again"
-    translation_description="When showing a confirmation message, the message in the footer checkbox
-      to not show the message again.">
-    Do not show this again.
-  </string>
   <string name="generic_error_title"
     translation_description="The title on an alert dialog indicating error.">
     Error
@@ -2288,15 +2283,6 @@ limitations under the License.
   <string name="track_detail_map_tab"
     translation_description="In the track detail page, the title of the tab showing the map.">
     Map
-  </string>
-  <string name="track_detail_play_confirm_message"
-    translation_description="The confirmation message when playing a track in Google Earth.">
-    This will save your track to external storage.
-  </string>
-  <string name="track_detail_play_confirm_title"
-    translation_description="When playing a track in Google Earth, the title of the confirmation
-      dialog.">
-    Play in Google Earth?
   </string>
   <string name="track_detail_stats_tab"
     translation_description="In the track detail page, the title of the tab showing the stats.">

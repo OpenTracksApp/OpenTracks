@@ -62,7 +62,6 @@ limitations under the License.
   <string name="ant_speed_distance_monitor_id_key">antSpeedDistanceMonitorId</string>
   <string name="auto_resume_track_current_retry_key">autoResumeTrackCurrentRetry</string>
   <string name="bluetooth_sensor_key">bluetoothSensor</string>
-  <string name="confirm_play_earth_key">confirmPlayEarth</string>
   <string name="drive_deleted_list_key">driveDeletedList</string>
   <string name="drive_largest_change_id_key">driveLargestChangeId</string>
   <string name="drive_sync_key">driveSync</string>

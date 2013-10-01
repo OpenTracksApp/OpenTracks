@@ -22,8 +22,6 @@ import com.google.android.apps.mytracks.fragments.ChooseAccountDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChooseAccountDialogFragment.ChooseAccountCaller;
 import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment;
 import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment.ConfirmDeleteCaller;
-import com.google.android.apps.mytracks.fragments.ConfirmPlayDialogFragment;
-import com.google.android.apps.mytracks.fragments.ConfirmPlayDialogFragment.ConfirmPlayCaller;
 import com.google.android.apps.mytracks.fragments.ConfirmSyncDialogFragment;
 import com.google.android.apps.mytracks.fragments.ConfirmSyncDialogFragment.ConfirmSyncCaller;
 import com.google.android.apps.mytracks.fragments.InstallEarthDialogFragment;
@@ -71,7 +69,7 @@ import java.io.IOException;
  * @author Jimmy Shih
  */
 public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActivity implements
-    ChooseAccountCaller, ConfirmSyncCaller, CheckPermissionCaller, ShareTrackCaller, ConfirmPlayCaller,
+    ChooseAccountCaller, ConfirmSyncCaller, CheckPermissionCaller, ShareTrackCaller,
     ConfirmDeleteCaller {
 
   private static final String TAG = AbstractMyTracksActivity.class.getSimpleName();
@@ -362,35 +360,24 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
   }
 
   /**
-   * Confirm playing tracks in Google Earth.
+   * Play track in Google Earth.
    * 
    * @param trackIds the track ids
    */
-  protected void confirmPlay(long[] trackIds) {
+  protected void playTrack(long[] trackIds) {
     AnalyticsUtils.sendPageViews(this, AnalyticsUtils.ACTION_PLAY);
     if (GoogleEarthUtils.isEarthInstalled(this)) {
-      if (PreferencesUtils.getBoolean(
-          this, R.string.confirm_play_earth_key, PreferencesUtils.CONFIRM_PLAY_EARTH_DEFAULT)) {
-        ConfirmPlayDialogFragment.newInstance(trackIds)
-            .show(getSupportFragmentManager(), ConfirmPlayDialogFragment.CONFIRM_PLAY_DIALOG_TAG);
-      } else {
-        onConfirmPlayDone(trackIds);
-      }
+      Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
+          .putExtra(SaveActivity.EXTRA_TRACK_IDS, trackIds)
+          .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.KML)
+          .putExtra(SaveActivity.EXTRA_PLAY_TRACK, true);
+      startActivity(intent);
     } else {
       new InstallEarthDialogFragment().show(
           getSupportFragmentManager(), InstallEarthDialogFragment.INSTALL_EARTH_DIALOG_TAG);
     }
   }
 
-  @Override
-  public void onConfirmPlayDone(long[] trackIds) {
-    Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
-        .putExtra(SaveActivity.EXTRA_TRACK_IDS, trackIds)
-        .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.KML)
-        .putExtra(SaveActivity.EXTRA_PLAY_TRACK, true);
-    startActivity(intent);
-  }
-  
   protected void deleteTrack(long[] trackIds) {
     ConfirmDeleteDialogFragment.newInstance(trackIds)
         .show(getSupportFragmentManager(), ConfirmDeleteDialogFragment.CONFIRM_DELETE_DIALOG_TAG);

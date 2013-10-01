@@ -420,7 +420,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity implements
         }
         return true;
       case R.id.track_detail_play:
-        confirmPlay(new long[] {trackId});
+        playTrack(new long[] {trackId});
         return true;
       case R.id.track_detail_share:
         shareTrack(trackId);

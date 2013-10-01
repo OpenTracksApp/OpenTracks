@@ -346,7 +346,7 @@ public class SearchListActivity extends AbstractSendToGoogleActivity implements 
     Intent intent;
     switch (itemId) {
       case R.id.list_context_menu_play:
-        confirmPlay(new long[] {trackId});
+        playTrack(new long[] {trackId});
         return true;
       case R.id.list_context_menu_share:
         shareTrack(trackId);

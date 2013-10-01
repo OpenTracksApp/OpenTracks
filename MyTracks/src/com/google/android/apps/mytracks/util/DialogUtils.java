@@ -23,7 +23,6 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.view.View;
 
 /**
  * Utilities for creating dialogs.
@@ -44,22 +43,16 @@ public class DialogUtils {
    */
   public static Dialog createConfirmationDialog(
       Context context, int titleId, String message, DialogInterface.OnClickListener okListener) {
-    return createConfirmationDialog(context, titleId, message, null, okListener);
+    AlertDialog.Builder builder = new AlertDialog.Builder(context)
+        .setCancelable(true)
+        .setIcon(android.R.drawable.ic_dialog_alert)
+        .setMessage(message)
+        .setNegativeButton(R.string.generic_no, null)
+        .setPositiveButton(R.string.generic_yes, okListener)
+        .setTitle(titleId);
+    return builder.create();
   }
-
-  /**
-   * Creates a confirmation dialog.
-   * 
-   * @param context the context
-   * @param titleId the title
-   * @param view the view
-   * @param okListener the listener when OK is clicked
-   */
-  public static Dialog createConfirmationDialog(
-      Context context, int titleId, View view, DialogInterface.OnClickListener okListener) {
-    return createConfirmationDialog(context, titleId, null, view, okListener);
-  }
-  
+ 
   /**
    * Creates a spinner progress dialog.
    *
@@ -83,21 +76,6 @@ public class DialogUtils {
   public static ProgressDialog createHorizontalProgressDialog(Context context, int messageId,
       DialogInterface.OnCancelListener onCancelListener, Object... formatArgs) {
     return createProgressDialog(false, context, messageId, onCancelListener, formatArgs);
-  }
-
-  private static Dialog createConfirmationDialog(Context context, int titleId, String message,
-      View view, DialogInterface.OnClickListener okListener) {
-    AlertDialog.Builder builder = new AlertDialog.Builder(context).setCancelable(true)
-        .setIcon(android.R.drawable.ic_dialog_alert).setNegativeButton(R.string.generic_no, null)
-        .setPositiveButton(R.string.generic_yes, okListener).setTitle(titleId);
-    if (message != null) {
-      builder.setMessage(message);
-    }
-    if (view != null) {
-      builder.setView(view);
-    }
-  
-    return builder.create();
   }
 
   /**

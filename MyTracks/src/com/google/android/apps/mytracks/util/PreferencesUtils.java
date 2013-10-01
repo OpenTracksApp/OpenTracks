@@ -57,8 +57,6 @@ public class PreferencesUtils {
   public static final boolean CHART_SHOW_SPEED_DEFAULT = true;
   public static final String CHART_X_AXIS_DEFAULT = "DISTANCE";
 
-  public static final boolean CONFIRM_PLAY_EARTH_DEFAULT = true;
-
   public static final String DEFAULT_ACTIVITY_DEFAULT = "";
   
   public static final String DRIVE_DELETED_LIST_DEFAULT = "";

@@ -777,7 +777,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   private boolean handleContextItem(int itemId, long[] trackIds) {
     switch (itemId) {
       case R.id.list_context_menu_play:
-        confirmPlay(trackIds);
+        playTrack(trackIds);
         return true;
       case R.id.list_context_menu_share:
         shareTrack(trackIds[0]);

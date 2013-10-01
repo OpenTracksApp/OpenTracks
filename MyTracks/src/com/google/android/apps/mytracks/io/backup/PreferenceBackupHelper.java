@@ -51,7 +51,6 @@ public class PreferenceBackupHelper {
     doNotBackup.add(context.getString(R.string.ant_speed_distance_monitor_id_key));
     doNotBackup.add(context.getString(R.string.auto_resume_track_current_retry_key));
     doNotBackup.add(context.getString(R.string.bluetooth_sensor_key));
-    doNotBackup.add(context.getString(R.string.confirm_play_earth_key));
     doNotBackup.add(context.getString(R.string.drive_deleted_list_key));
     doNotBackup.add(context.getString(R.string.drive_largest_change_id_key));
     doNotBackup.add(context.getString(R.string.drive_sync_key));
