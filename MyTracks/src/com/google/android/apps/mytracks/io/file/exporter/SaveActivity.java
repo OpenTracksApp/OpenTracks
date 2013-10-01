@@ -81,26 +81,29 @@ public class SaveActivity extends Activity {
       return;
     }
 
-    directoryDisplayName = playTrack ? FileUtils.getDirectoryDisplayName(
-        trackFileFormat.getExtension(), FileUtils.TEMP_DIR)
-        : FileUtils.getDirectoryDisplayName(trackFileFormat.getExtension());
-
-    String directoryPath = playTrack ? FileUtils.getDirectoryPath(
-        trackFileFormat.getExtension(), FileUtils.TEMP_DIR)
-        : FileUtils.getDirectoryPath(trackFileFormat.getExtension());
-    File directory = new File(directoryPath);
+    File directory = playTrack ? getCacheDir()
+        : new File(FileUtils.getDirectoryPath(trackFileFormat.getExtension()));
     if (!FileUtils.ensureDirectoryExists(directory)) {
       Toast.makeText(this, R.string.external_storage_not_writable, Toast.LENGTH_LONG).show();
       finish();
       return;
     }
 
+    if (playTrack) {
+      for (File file : getCacheDir().listFiles()) {
+        file.delete();
+      }
+    }
+
+    directoryDisplayName = playTrack ? getCacheDir().getName()
+        : FileUtils.getDirectoryDisplayName(trackFileFormat.getExtension());
+
     Object retained = getLastNonConfigurationInstance();
     if (retained instanceof SaveAsyncTask) {
       saveAsyncTask = (SaveAsyncTask) retained;
       saveAsyncTask.setActivity(this);
     } else {
-      saveAsyncTask = new SaveAsyncTask(this, trackFileFormat, trackIds, directory, playTrack);
+      saveAsyncTask = new SaveAsyncTask(this, trackIds, trackFileFormat, playTrack, directory);
       saveAsyncTask.execute();
     }
   }

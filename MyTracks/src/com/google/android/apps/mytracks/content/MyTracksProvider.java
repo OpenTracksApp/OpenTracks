@@ -34,10 +34,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.os.Binder;
+import android.os.ParcelFileDescriptor;
 import android.os.Process;
 import android.text.TextUtils;
 import android.util.Log;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 /**
@@ -422,6 +425,22 @@ public class MyTracksProvider extends ContentProvider {
     return count;
   }
 
+  @Override
+  public ParcelFileDescriptor openFile(Uri uri, String mode) throws FileNotFoundException {
+    try {
+      File file = new File(uri.getPath());
+      if (file.exists()) {
+        return ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY);
+      }
+      throw new FileNotFoundException(uri.getPath());
+    } finally {
+      File[] files = getContext().getCacheDir().listFiles();
+      for (File file : files) {
+        file.delete();
+      }
+    }
+  }
+  
   /**
    * Returns true if the caller can access the content provider.
    */

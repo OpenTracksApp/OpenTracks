@@ -16,13 +16,18 @@
 
 package com.google.android.apps.mytracks.util;
 
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.util.Log;
 
-import java.io.File;
 import java.util.List;
 
 /**
@@ -32,14 +37,18 @@ import java.util.List;
  */
 public class GoogleEarthUtils {
 
+  private static final String TAG = GoogleEarthUtils.class.getSimpleName();
+
   private static final String GOOGLE_EARTH_CLASS = "com.google.earth.EarthActivity";
   private static final String GOOGLE_EARTH_KML_MIME_TYPE = "application/vnd.google-earth.kml+xml";
+  private static final int GOOGLE_EARTH_MIN_VERSION_CODE = 13246120;
   private static final String GOOGLE_EARTH_PACKAGE = "com.google.earth";
   private static final String
       GOOGLE_EARTH_TOUR_FEATURE_ID = "com.google.earth.EXTRA.tour_feature_id";
 
   public static final String GOOGLE_EARTH_MARKET_URL = "market://details?id="
       + GOOGLE_EARTH_PACKAGE;
+
   public static final String TOUR_FEATURE_ID_VALUE = "tour";
 
   private GoogleEarthUtils() {}
@@ -55,7 +64,14 @@ public class GoogleEarthUtils {
     for (ResolveInfo info : infos) {
       if (info.activityInfo != null && info.activityInfo.packageName != null
           && info.activityInfo.packageName.equals(GOOGLE_EARTH_PACKAGE)) {
-        return true;
+        try {
+          PackageInfo packageInfo = context.getPackageManager()
+              .getPackageInfo(info.activityInfo.packageName, 0);
+          return packageInfo.versionCode >= GOOGLE_EARTH_MIN_VERSION_CODE;
+        } catch (NameNotFoundException e) {
+          Log.e(TAG, "Unable to get google earth package info", e);
+          return false;
+        }
       }
     }
     return false;
@@ -67,9 +83,12 @@ public class GoogleEarthUtils {
    * @param kmlFilePath the kml file path
    */
   public static Intent getPlayInEarthIntent(String kmlFilePath) {
-    return new Intent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
+    Uri uri = new Uri.Builder().scheme(ContentResolver.SCHEME_CONTENT)
+        .authority(MyTracksProviderUtils.AUTHORITY).path(kmlFilePath).build();
+    return new Intent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK
+        | Intent.FLAG_GRANT_READ_URI_PERMISSION)
         .putExtra(GOOGLE_EARTH_TOUR_FEATURE_ID, TOUR_FEATURE_ID_VALUE)
         .setClassName(GOOGLE_EARTH_PACKAGE, GOOGLE_EARTH_CLASS)
-        .setDataAndType(Uri.fromFile(new File(kmlFilePath)), GOOGLE_EARTH_KML_MIME_TYPE);
+        .setDataAndType(uri, GOOGLE_EARTH_KML_MIME_TYPE);
   }
 }

@@ -283,6 +283,7 @@ limitations under the License.
     <provider
       android:authorities="com.google.android.maps.mytracks"
       android:exported="true"
+      android:grantUriPermissions="true"
       android:name="com.google.android.apps.mytracks.content.MyTracksProvider"
       android:readPermission="com.google.android.apps.mytracks.READ_TRACK_DATA"
       android:writePermission="com.google.android.apps.mytracks.WRITE_TRACK_DATA" />

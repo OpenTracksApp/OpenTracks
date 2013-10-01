@@ -46,10 +46,10 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   private static final String TAG = SaveAsyncTask.class.getSimpleName();
 
   private SaveActivity saveActivity;
-  private final TrackFileFormat trackFileFormat;
   private final long[] trackIds;
-  private final File directory;
+  private final TrackFileFormat trackFileFormat;
   private final boolean playTrack;
+  private final File directory;
   private final Context context;
   private final MyTracksProviderUtils myTracksProviderUtils;
 
@@ -72,19 +72,19 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
    * Creates an AsyncTask.
    * 
    * @param saveActivity the activity currently associated with this task
-   * @param trackFileFormat the track file format
    * @param trackIds the track ids to save. To save all, set to size 1 with
    *          trackIds[0] == -1L
-   * @param directory the directory to save to
+   * @param trackFileFormat the track file format
    * @param playTrack true to play track
+   * @param directory the directory to write the file
    */
-  public SaveAsyncTask(SaveActivity saveActivity, TrackFileFormat trackFileFormat, long[] trackIds,
-      File directory, boolean playTrack) {
+  public SaveAsyncTask(SaveActivity saveActivity, long[] trackIds, TrackFileFormat trackFileFormat,
+      boolean playTrack, File directory) {
     this.saveActivity = saveActivity;
-    this.trackFileFormat = trackFileFormat;
     this.trackIds = trackIds;
-    this.directory = directory;
+    this.trackFileFormat = trackFileFormat;
     this.playTrack = playTrack;
+    this.directory = directory;
     context = saveActivity.getApplicationContext();
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
 
@@ -186,7 +186,7 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     Track track = tracks[0];
     boolean useKmz = !playTrack && trackFileFormat == TrackFileFormat.KML;
     String extension = useKmz ? KmzTrackExporter.KMZ_EXTENSION : trackFileFormat.getExtension();
-    
+
     // Make sure the file doesn't exist yet (possibly by changing the filename)
     String fileName = FileUtils.buildUniqueFileName(directory, track.getName(), extension);
     if (fileName == null) {
