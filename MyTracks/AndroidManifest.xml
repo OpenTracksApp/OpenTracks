@@ -251,7 +251,6 @@ limitations under the License.
     <service
       android:exported="false"
       android:name="com.google.android.apps.mytracks.services.ControlRecordingService" />
-    <service android:name="com.google.android.apps.mytracks.services.RemoveTempFilesService" />
     <service
       android:enabled="true"
       android:exported="true"

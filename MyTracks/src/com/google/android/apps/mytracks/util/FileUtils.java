@@ -30,7 +30,6 @@ public class FileUtils {
 
   private FileUtils() {}
 
-  public static final String TEMP_DIR = "tmp";
   public static final String BACKUPS_DIR = "backups";
   
   /**

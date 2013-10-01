@@ -18,7 +18,6 @@ package com.google.android.apps.mytracks;
 import static android.content.Intent.ACTION_BOOT_COMPLETED;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
-import com.google.android.apps.mytracks.services.RemoveTempFilesService;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
 
 import android.content.BroadcastReceiver;
@@ -49,10 +48,7 @@ public class BootReceiver extends BroadcastReceiver {
     if (ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
       Intent startIntent = new Intent(context, TrackRecordingService.class)
           .putExtra(TrackRecordingService.RESUME_TRACK_EXTRA_NAME, true);
-      context.startService(startIntent);
-
-      Intent removeTempFilesIntent = new Intent(context, RemoveTempFilesService.class);
-      context.startService(removeTempFilesIntent);
+      context.startService(startIntent);     
     } else {
       Log.w(TAG, "BootReceiver: unsupported action");
     }
