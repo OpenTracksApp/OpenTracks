@@ -46,7 +46,7 @@ import java.text.NumberFormat;
  * "Segment","Point","Latitude (deg)","Longitude (deg)","Altitude (m)","Bearing
  * (deg)","Accuracy (m)","Speed (m/s)","Time","Power (W)","Cadence (rpm)","Heart
  * rate (bpm)","Battery level (%)"<br>
- *
+ * 
  * @author Rodrigo Damazio
  */
 public class CsvTrackWriter implements TrackWriter {
@@ -85,12 +85,13 @@ public class CsvTrackWriter implements TrackWriter {
       printWriter = null;
     }
   }
-  
+
   @Override
-  public void writeHeader(Track track) {
+  public void writeHeader(Track[] tracks) {
     writeCommaSeparatedLine(context.getString(R.string.generic_name),
         context.getString(R.string.track_edit_activity_type_hint),
         context.getString(R.string.generic_description));
+    Track track = tracks[0];
     writeCommaSeparatedLine(track.getName(), track.getCategory(), track.getDescription());
     writeCommaSeparatedLine();
   }
@@ -101,7 +102,7 @@ public class CsvTrackWriter implements TrackWriter {
   }
 
   @Override
-  public void writeBeginWaypoints() {
+  public void writeBeginWaypoints(Track track) {
     writeCommaSeparatedLine(context.getString(R.string.generic_name),
         context.getString(R.string.marker_edit_marker_type_hint),
         context.getString(R.string.generic_description),
@@ -122,20 +123,24 @@ public class CsvTrackWriter implements TrackWriter {
   @Override
   public void writeWaypoint(Waypoint waypoint) {
     Location location = waypoint.getLocation();
-    writeCommaSeparatedLine(waypoint.getName(),
-        waypoint.getCategory(),
-        waypoint.getDescription(),
-        Double.toString(location.getLatitude()),
-        Double.toString(location.getLongitude()),
-        getAltitude(location),
-        getBearing(location),
-        getAccuracy(location),
-        getSpeed(location),
+    writeCommaSeparatedLine(waypoint.getName(), waypoint.getCategory(), waypoint.getDescription(),
+        Double.toString(location.getLatitude()), Double.toString(location.getLongitude()),
+        getAltitude(location), getBearing(location), getAccuracy(location), getSpeed(location),
         StringUtils.formatDateTimeIso8601(location.getTime()));
   }
 
   @Override
-  public void writeBeginTrack(Track track, Location firstPoint) {
+  public void writeBeginTracks() {
+    // Do nothing
+  }
+
+  @Override
+  public void writeEndTracks() {
+    // Do nothing
+  }
+
+  @Override
+  public void writeBeginTrack(Track track, Location startLocation) {
     writeCommaSeparatedLine(context.getString(R.string.description_track_segment),
         context.getString(R.string.description_track_point),
         context.getString(R.string.description_location_latitude),
@@ -151,7 +156,7 @@ public class CsvTrackWriter implements TrackWriter {
   }
 
   @Override
-  public void writeEndTrack(Track track, Location lastPoint) {
+  public void writeEndTrack(Track track, Location endLocation) {
     // Do nothing
   }
 
@@ -196,39 +201,31 @@ public class CsvTrackWriter implements TrackWriter {
       }
     }
     pointIndex++;
-    writeCommaSeparatedLine(Integer.toString(segmentIndex),
-        Integer.toString(pointIndex),
-        Double.toString(location.getLatitude()),
-        Double.toString(location.getLongitude()),
-        getAltitude(location),
-        getBearing(location),
-        getAccuracy(location),
-        getSpeed(location),
-        StringUtils.formatDateTimeIso8601(location.getTime()),
-        power,
-        cadence,
-        heartRate);
+    writeCommaSeparatedLine(Integer.toString(segmentIndex), Integer.toString(pointIndex),
+        Double.toString(location.getLatitude()), Double.toString(location.getLongitude()),
+        getAltitude(location), getBearing(location), getAccuracy(location), getSpeed(location),
+        StringUtils.formatDateTimeIso8601(location.getTime()), power, cadence, heartRate);
   }
-  
+
   private String getAltitude(Location location) {
     return location.hasAltitude() ? Double.toString(location.getAltitude()) : null;
   }
-  
+
   private String getBearing(Location location) {
     return location.hasBearing() ? Double.toString(location.getBearing()) : null;
   }
-  
+
   private String getAccuracy(Location location) {
     return location.hasAccuracy() ? SHORT_FORMAT.format(location.getAccuracy()) : null;
   }
-  
+
   private String getSpeed(Location location) {
     return location.hasSpeed() ? SHORT_FORMAT.format(location.getSpeed()) : null;
   }
-  
+
   /**
    * Writes a single line of a CSV file.
-   *
+   * 
    * @param values the values to be written as CSV
    */
   private void writeCommaSeparatedLine(String... values) {

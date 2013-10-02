@@ -22,11 +22,8 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.util.LocationUtils;
-import com.google.common.annotations.VisibleForTesting;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.location.Location;
 import android.util.Log;
@@ -51,20 +48,11 @@ public class FileTrackExporter implements TrackExporter {
   /**
    * Constructor.
    * 
-   * @param context the context
    * @param myTracksProviderUtils the my tracks provider utils
    * @param tracks the tracks
-   * @param trackFileFormat the track file format
+   * @param trackWriter the track writer
    * @param trackExporterListener the track export listener
    */
-  public FileTrackExporter(MyTracksProviderUtils myTracksProviderUtils,
-      Track[] tracks, TrackFileFormat trackFileFormat, Context context, boolean inZip,
-      TrackExporterListener trackExporterListener) {
-    this(myTracksProviderUtils, tracks, trackFileFormat.newTrackWriter(context, inZip),
-        trackExporterListener);
-  }
-
-  @VisibleForTesting
   public FileTrackExporter(MyTracksProviderUtils myTracksProviderUtils, Track[] tracks,
       TrackWriter trackWriter, TrackExporterListener trackExporterListener) {
     this.myTracksProviderUtils = myTracksProviderUtils;
@@ -77,13 +65,17 @@ public class FileTrackExporter implements TrackExporter {
   public boolean writeTrack(OutputStream outputStream) {
     try {
       trackWriter.prepare(outputStream);
-      trackWriter.writeHeader(tracks[0]);
-      long startTime = tracks[0].getTripStatistics().getStartTime();
+      trackWriter.writeHeader(tracks);
       for (int i = 0; i < tracks.length; i++) {
         writeWaypoints(tracks[i]);
+      }
+      trackWriter.writeBeginTracks();
+      long startTime = tracks[0].getTripStatistics().getStartTime();
+      for (int i = 0; i < tracks.length; i++) {
         long offset = tracks[i].getTripStatistics().getStartTime() - startTime;
         writeLocations(tracks[i], offset);
       }
+      trackWriter.writeEndTracks();
       trackWriter.writeFooter();
       trackWriter.close();
       return true;
@@ -117,7 +109,7 @@ public class FileTrackExporter implements TrackExporter {
             throw new InterruptedException();
           }
           if (!hasWaypoints) {
-            trackWriter.writeBeginWaypoints();
+            trackWriter.writeBeginWaypoints(track);
             hasWaypoints = true;
           }
           Waypoint waypoint = myTracksProviderUtils.createWaypoint(cursor);

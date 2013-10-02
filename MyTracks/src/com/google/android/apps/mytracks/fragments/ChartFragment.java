@@ -34,6 +34,7 @@ import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
 
+import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -188,7 +189,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   public void onSampledInTrackPoint(Location location) {
     if (isResumed()) {
       double[] data = new double[ChartView.NUM_SERIES + 1];
-      fillDataPoint(location, data);
+      fillDataPoint(getActivity(), location, data);
       pendingPoints.add(data);
     }
   }
@@ -196,14 +197,14 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   @Override
   public void onSampledOutTrackPoint(Location location) {
     if (isResumed()) {
-      fillDataPoint(location, null);
+      fillDataPoint(getActivity(), location, null);
     }
   }
 
   @Override
   public void onSegmentSplit(Location location) {
     if (isResumed()) {
-      fillDataPoint(location, null);
+      fillDataPoint(getActivity(), location, null);
     }
   }
 
@@ -437,11 +438,12 @@ public class ChartFragment extends Fragment implements TrackDataListener {
    * data[5] = cadence <br>
    * data[6] = power <br>
    * 
+   * @param context the context
    * @param location the location
    * @param data the data point to fill in, can be null
    */
   @VisibleForTesting
-  void fillDataPoint(Location location, double data[]) {
+  void fillDataPoint(Context context, Location location, double data[]) {
     double timeOrDistance = Double.NaN;
     double elevation = Double.NaN;
     double speed = Double.NaN;
@@ -451,8 +453,9 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     double power = Double.NaN;
 
     if (tripStatisticsUpdater != null) {
-      tripStatisticsUpdater.addLocation(location, recordingDistanceInterval, PreferencesUtils
-          .getInt(getActivity(), R.string.stats_weight_key, PreferencesUtils.STATS_WEIGHT_DEFAULT));
+      int weight = PreferencesUtils.getInt(
+          context, R.string.stats_weight_key, PreferencesUtils.STATS_WEIGHT_DEFAULT);
+      tripStatisticsUpdater.addLocation(location, recordingDistanceInterval, weight);
       TripStatistics tripStatistics = tripStatisticsUpdater.getTripStatistics();
       if (chartByDistance) {
         double distance = tripStatistics.getTotalDistance() * UnitConversions.M_TO_KM;

@@ -23,58 +23,57 @@ import android.location.Location;
 import java.io.OutputStream;
 
 /**
- * Interface for writing tracks to a file.
- *
- * The expected sequence of calls is:
- * <ul>
- *   <li>{@link #prepare}</li>
- *   <li>{@link #writeHeader}</li>
- *   <li>For each track:</li>
- *   <ul>
- *     <li>{@link #writeBeginWaypoints}
- *     <li>For each waypoint: {@link #writeWaypoint}
- *     <li>{@link #writeEndWaypoints}
- *     <li>{@link #writeBeginTrack}
- *     <li>For each segment:
- *       <ul>
- *         <li>{@link #writeOpenSegment}</li>
- *         <li>For each location in the segment: {@link #writeLocation}</li>
- *         <li>{@link #writeCloseSegment}</li>
- *       </ul>
- *     </li>
- *     <li>{@link #writeEndTrack}</li>
- *   </ul>   
- *   <li>{@link #writeFooter}</li>
- *   <li>{@link #close}</li>
- * </ul>
- *
+ * Interface for writing tracks to a file. The expected sequence of calls is:
+ * 
+ * <pre>
+ * {@link #prepare(OutputStream)}
+ * {@link #writeHeader(Track[])}
+ * For each track:
+ *     {@link #writeBeginWaypoints(Track)}
+ *     For each waypoint:
+ *         {@link #writeWaypoint(Waypoint)}
+ *     {@link #writeEndWaypoints()}
+ * {@link #writeBeginTracks()}
+ * For each track:
+ *     {@link #writeBeginTrack(Track, Location)}
+ *     For each segment:
+ *         {@link #writeOpenSegment()}
+ *         For each location in the segment:
+ *             {@link #writeLocation(Location)}
+ *         {@link #writeCloseSegment()}
+ *     {@link #writeEndTrack(Track, Location)}
+ * {@link #writeEndTracks()}
+ * {@link #writeFooter()}
+ * {@link #close()}
+ * </pre>
+ * 
  * @author Rodrigo Damazio
  */
 public interface TrackWriter {
 
   /**
-   * Gets the file extension (i.e. gpx, kml, ...)
+   * Gets the file extension (e.g, gpx, kml, ...).
    */
   public String getExtension();
 
   /**
-   * Sets up the file handler.
-   *
-   * @param outputStream the output stream for the file handler
+   * Prepares the output stream.
+   * 
+   * @param outputStream the output stream
    */
   public void prepare(OutputStream outputStream);
 
   /**
-   * Closes the underlying file handler.
+   * Closes the output stream.
    */
   public void close();
 
   /**
-   * Writes the header for a file
+   * Writes the header
    * 
-   * @param track the track
+   * @param tracks the tracks
    */
-  public void writeHeader(Track track);
+  public void writeHeader(Track[] tracks);
 
   /**
    * Writes the footer.
@@ -83,50 +82,62 @@ public interface TrackWriter {
 
   /**
    * Writes the beginning of the waypoints.
+   * 
+   * @param track the track
    */
-  public void writeBeginWaypoints();
-  
+  public void writeBeginWaypoints(Track track);
+
   /**
    * Writes the end of the waypoints.
    */
   public void writeEndWaypoints();
-  
+
   /**
    * Writes a waypoint.
-   *
+   * 
    * @param waypoint the waypoint
    */
   public void writeWaypoint(Waypoint waypoint);
 
   /**
-   * Writes the beginning of the track.
-   * 
-   * @param track the track
-   * @param firstLocation the first location
+   * Writes the beginning of the tracks.
    */
-  public void writeBeginTrack(Track track, Location firstLocation);
+  public void writeBeginTracks();
 
   /**
-   * Writes the end of the track.
-   * 
-   * @param track the track
-   * @param lastLocation the last location
+   * Writes the end of the tracks,
    */
-  public void writeEndTrack(Track track, Location lastLocation);
+  public void writeEndTracks();
 
   /**
-   * Writes the statements necessary to open a new segment.
+   * Writes the beginning of a track.
+   * 
+   * @param track the track
+   * @param startLocation the start location
+   */
+  public void writeBeginTrack(Track track, Location startLocation);
+
+  /**
+   * Writes the end of a track.
+   * 
+   * @param track the track
+   * @param endLocation the end location
+   */
+  public void writeEndTrack(Track track, Location endLocation);
+
+  /**
+   * Writes open segment.
    */
   public void writeOpenSegment();
 
   /**
-   * Writes the statements necessary to close a segment.
+   * Writes close segment.
    */
   public void writeCloseSegment();
 
   /**
    * Writes a location.
-   *
+   * 
    * @param location the location
    */
   public void writeLocation(Location location);

@@ -111,7 +111,7 @@ public class TcxTrackWriter implements TrackWriter {
   }
 
   @Override
-  public void writeHeader(Track track) {
+  public void writeHeader(Track[] tracks) {
     if (printWriter != null) {
       printWriter.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
       printWriter.println("<TrainingCenterDatabase"
@@ -142,7 +142,32 @@ public class TcxTrackWriter implements TrackWriter {
   }
 
   @Override
-  public void writeBeginTrack(Track track, Location firstPoint) {
+  public void writeBeginWaypoints(Track track) {
+    // Do nothing
+  }
+
+  @Override
+  public void writeEndWaypoints() {
+    // Do nothing
+  }
+
+  @Override
+  public void writeWaypoint(Waypoint waypoint) {
+    // Do nothing
+  }
+
+  @Override
+  public void writeBeginTracks() {
+    // Do nothing
+  }
+
+  @Override
+  public void writeEndTracks() {
+    // Do nothing
+  }
+
+  @Override
+  public void writeBeginTrack(Track track, Location startLocation) {
     sportType = getSportType(track.getCategory());
     if (printWriter != null) {
       String startTime = StringUtils.formatDateTimeIso8601(
@@ -164,7 +189,7 @@ public class TcxTrackWriter implements TrackWriter {
   }
 
   @Override
-  public void writeEndTrack(Track track, Location lastPoint) {
+  public void writeEndTrack(Track track, Location endLocation) {
     if (printWriter != null) {
       printWriter.println("</Lap>");
       printWriter.println("<Notes>" + StringUtils.formatCData(track.getDescription()) + "</Notes>");
@@ -259,21 +284,6 @@ public class TcxTrackWriter implements TrackWriter {
       }
       printWriter.println("</Trackpoint>");
     }
-  }
-
-  @Override
-  public void writeBeginWaypoints() {
-    // Do nothing.
-  }
-
-  @Override
-  public void writeEndWaypoints() {
-    // Do nothing.
-  }
-
-  @Override
-  public void writeWaypoint(Waypoint waypoint) {
-    // Do nothing.
   }
 
   /**

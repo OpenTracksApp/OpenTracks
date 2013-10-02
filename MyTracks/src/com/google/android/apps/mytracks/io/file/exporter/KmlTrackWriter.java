@@ -70,7 +70,7 @@ public class KmlTrackWriter implements TrackWriter {
       TRACK_ICON = "http://earth.google.com/images/kml-icons/track-directional/track-0.png";
 
   private final Context context;
-  private final boolean inKmz;
+  private final boolean playTrack;
   private final DescriptionGenerator descriptionGenerator;  
   private final MyTracksProviderUtils myTracksProviderUtils;
 
@@ -82,14 +82,14 @@ public class KmlTrackWriter implements TrackWriter {
   private boolean hasCadence;
   private boolean hasHeartRate;
 
-  public KmlTrackWriter(Context context, boolean inKmz) {
-    this(context, inKmz, new DescriptionGeneratorImpl(context));
+  public KmlTrackWriter(Context context, boolean playTrack) {
+    this(context, playTrack, new DescriptionGeneratorImpl(context));
   }
 
   @VisibleForTesting
-  KmlTrackWriter(Context context, boolean inKmz, DescriptionGenerator descriptionGenerator) {
+  KmlTrackWriter(Context context, boolean playTrack, DescriptionGenerator descriptionGenerator) {
     this.context = context;
-    this.inKmz = inKmz;
+    this.playTrack = playTrack;
     this.descriptionGenerator = descriptionGenerator;
     this.myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
   }
@@ -113,7 +113,7 @@ public class KmlTrackWriter implements TrackWriter {
   }
 
   @Override
-  public void writeHeader(Track track) {
+  public void writeHeader(Track[] tracks) {
     if (printWriter != null) {
       printWriter.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
       printWriter.println("<kml xmlns=\"http://www.opengis.net/kml/2.2\"");
@@ -122,6 +122,7 @@ public class KmlTrackWriter implements TrackWriter {
       printWriter.println("<Document>");
       printWriter.println("<open>1</open>");
       printWriter.println("<visibility>1</visibility>");
+      Track track = tracks[0];
       printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
       printWriter.println("<atom:author><atom:name>"
           + StringUtils.formatCData(context.getString(R.string.send_google_by_my_tracks, "", ""))
@@ -148,10 +149,11 @@ public class KmlTrackWriter implements TrackWriter {
   }
 
   @Override
-  public void writeBeginWaypoints() {
+  public void writeBeginWaypoints(Track track) {
     if (printWriter != null) {
       printWriter.println("<Folder><name>"
-          + StringUtils.formatCData(context.getString(R.string.menu_markers)) + "</name>");
+          + StringUtils.formatCData(context.getString(R.string.track_markers, track.getName()))
+          + "</name>");
       printWriter.println("<open>1</open>");
     }
   }
@@ -181,11 +183,31 @@ public class KmlTrackWriter implements TrackWriter {
   }
 
   @Override
-  public void writeBeginTrack(Track track, Location firstLocation) {
+  public void writeBeginTracks() {
+    if (printWriter != null && playTrack) {
+      printWriter.println("<Folder id=\"" + GoogleEarthUtils.TOUR_FEATURE_ID_VALUE + "\">");
+      printWriter.println("<name>" + context.getString(R.string.generic_tracks) + "</name>");
+      printWriter.println("<open>1</open>");
+    }
+  }
+
+  @Override
+  public void writeEndTracks() {
+    if (printWriter != null && playTrack) {
+      printWriter.println("</Folder>");
+    }
+  }
+  
+  @Override
+  public void writeBeginTrack(Track track, Location startLocation) {
     if (printWriter != null) {
       String name = context.getString(R.string.marker_label_start, track.getName());
-      writePlacemark(name, "", "", START_STYLE, firstLocation);
-      printWriter.println("<Placemark id=\"" + GoogleEarthUtils.TOUR_FEATURE_ID_VALUE + "\">");
+      writePlacemark(name, "", "", START_STYLE, startLocation);
+      if (playTrack) {
+        printWriter.println("<Placemark>");
+      } else {
+        printWriter.println("<Placemark id=\"" + GoogleEarthUtils.TOUR_FEATURE_ID_VALUE + "\">");
+      }
       printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
       printWriter.println(
           "<description>" + StringUtils.formatCData(track.getDescription()) + "</description>");
@@ -198,13 +220,13 @@ public class KmlTrackWriter implements TrackWriter {
   }
 
   @Override
-  public void writeEndTrack(Track track, Location lastLocation) {
+  public void writeEndTrack(Track track, Location endLocation) {
     if (printWriter != null) {
       printWriter.println("</gx:MultiTrack>");
       printWriter.println("</Placemark>");
       String name = context.getString(R.string.marker_label_end, track.getName());
       String description = descriptionGenerator.generateTrackDescription(track, null, null, false);
-      writePlacemark(name, "", description, END_STYLE, lastLocation);
+      writePlacemark(name, "", description, END_STYLE, endLocation);
     }
   }
 
@@ -353,12 +375,12 @@ public class KmlTrackWriter implements TrackWriter {
           + StringUtils.formatDateTimeIso8601(location.getTime()) + "</when></TimeStamp>");
       printWriter.println("<styleUrl>#" + styleName + "</styleUrl>");
       writeCategory(category);
-      if (inKmz) {
+      if (playTrack) {
+        printWriter.println("<Icon><href>" + Uri.decode(photoUrl) + "</href></Icon>"); 
+      } else {
         Uri uri = Uri.parse(photoUrl);
         printWriter.println("<Icon><href>" + KmzTrackExporter.KMZ_IMAGES_DIR + File.separatorChar
-            + uri.getLastPathSegment() + "</href></Icon>");
-      } else {
-        printWriter.println("<Icon><href>" + Uri.decode(photoUrl) + "</href></Icon>");
+            + uri.getLastPathSegment() + "</href></Icon>");        
       }
       
       printWriter.print("<ViewVolume>");

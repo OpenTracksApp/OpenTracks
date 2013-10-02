@@ -78,7 +78,7 @@ public class GpxTrackWriter implements TrackWriter {
   }
 
   @Override
-  public void writeHeader(Track track) {
+  public void writeHeader(Track[] tracks) {
     if (printWriter != null) {
       printWriter.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
       printWriter.println("<gpx");
@@ -94,6 +94,7 @@ public class GpxTrackWriter implements TrackWriter {
           + " http://www.topografix.com/GPX/Private/TopoGrafix/0/1"
           + " http://www.topografix.com/GPX/Private/TopoGrafix/0/1/topografix.xsd\">");
       printWriter.println("<metadata>");
+      Track track = tracks[0];
       printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
       printWriter.println("<desc>" + StringUtils.formatCData(track.getDescription()) + "</desc>");
       printWriter.println("</metadata>");
@@ -108,48 +109,7 @@ public class GpxTrackWriter implements TrackWriter {
   }
 
   @Override
-  public void writeBeginTrack(Track track, Location firstLocation) {
-    if (printWriter != null) {
-      printWriter.println("<trk>");
-      printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
-      printWriter.println("<desc>" + StringUtils.formatCData(track.getDescription()) + "</desc>");
-      printWriter.println("<type>" + StringUtils.formatCData(track.getCategory()) + "</type>");
-      printWriter.println("<extensions><topografix:color>c0c0c0</topografix:color></extensions>");
-    }
-  }
-
-  @Override
-  public void writeEndTrack(Track track, Location lastLocation) {
-    if (printWriter != null) {
-      printWriter.println("</trk>");
-    }
-  }
-
-  @Override
-  public void writeOpenSegment() {
-    printWriter.println("<trkseg>");
-  }
-
-  @Override
-  public void writeCloseSegment() {
-    printWriter.println("</trkseg>");
-  }
-
-  @Override
-  public void writeLocation(Location location) {
-    if (printWriter != null) {
-      printWriter.println("<trkpt " + formatLocation(location) + ">");
-      if (location.hasAltitude()) {
-        printWriter.println("<ele>" + ELEVATION_FORMAT.format(location.getAltitude()) + "</ele>");
-      }
-      printWriter.println(
-          "<time>" + StringUtils.formatDateTimeIso8601(location.getTime()) + "</time>");
-      printWriter.println("</trkpt>");
-    }
-  }
-
-  @Override
-  public void writeBeginWaypoints() {
+  public void writeBeginWaypoints(Track track) {
     // Do nothing
   }
 
@@ -176,6 +136,57 @@ public class GpxTrackWriter implements TrackWriter {
         printWriter.println("<type>" + StringUtils.formatCData(waypoint.getCategory()) + "</type>");
         printWriter.println("</wpt>");
       }
+    }
+  }
+
+  @Override
+  public void writeBeginTracks() {
+    // Do nothing
+  }
+
+  @Override
+  public void writeEndTracks() {
+    // Do nothing
+  }
+  
+  @Override
+  public void writeBeginTrack(Track track, Location startLocation) {
+    if (printWriter != null) {
+      printWriter.println("<trk>");
+      printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
+      printWriter.println("<desc>" + StringUtils.formatCData(track.getDescription()) + "</desc>");
+      printWriter.println("<type>" + StringUtils.formatCData(track.getCategory()) + "</type>");
+      printWriter.println("<extensions><topografix:color>c0c0c0</topografix:color></extensions>");
+    }
+  }
+
+  @Override
+  public void writeEndTrack(Track track, Location endLocation) {
+    if (printWriter != null) {
+      printWriter.println("</trk>");
+    }
+  }
+
+  @Override
+  public void writeOpenSegment() {
+    printWriter.println("<trkseg>");
+  }
+
+  @Override
+  public void writeCloseSegment() {
+    printWriter.println("</trkseg>");
+  }
+
+  @Override
+  public void writeLocation(Location location) {
+    if (printWriter != null) {
+      printWriter.println("<trkpt " + formatLocation(location) + ">");
+      if (location.hasAltitude()) {
+        printWriter.println("<ele>" + ELEVATION_FORMAT.format(location.getAltitude()) + "</ele>");
+      }
+      printWriter.println(
+          "<time>" + StringUtils.formatDateTimeIso8601(location.getTime()) + "</time>");
+      printWriter.println("</trkpt>");
     }
   }
 

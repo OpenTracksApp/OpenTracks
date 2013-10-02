@@ -184,7 +184,7 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
       return false;
     }
     Track track = tracks[0];
-    boolean useKmz = !playTrack && trackFileFormat == TrackFileFormat.KML;
+    boolean useKmz = trackFileFormat == TrackFileFormat.KML && !playTrack;
     String extension = useKmz ? KmzTrackExporter.KMZ_EXTENSION : trackFileFormat.getExtension();
 
     // Make sure the file doesn't exist yet (possibly by changing the filename)
@@ -195,7 +195,7 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     }
 
     FileTrackExporter fileTrackExporter = new FileTrackExporter(myTracksProviderUtils, tracks,
-        trackFileFormat, context, useKmz, new TrackExporterListener() {
+        trackFileFormat.newTrackWriter(context, playTrack), new TrackExporterListener() {
 
             @Override
           public void onProgressUpdate(int number, int max) {

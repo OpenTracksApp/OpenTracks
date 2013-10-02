@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks.content;
 
 import com.google.android.apps.mytracks.content.MyTracksProvider.DatabaseHelper;
@@ -22,150 +23,202 @@ import android.net.Uri;
 import android.test.AndroidTestCase;
 
 /**
- * A unit test for {@link MyTracksProvider}.
+ * Tests {@link MyTracksProvider}.
  * 
  * @author Youtao Liu
  */
 public class MyTracksProviderTest extends AndroidTestCase {
 
+  private static final String DATABASE_NAME = "mytrackstest.db";
+
   private SQLiteDatabase db;
   private MyTracksProvider myTracksProvider;
-  private String DATABASE_NAME = "mytrackstest.db";
 
   @Override
   protected void setUp() throws Exception {
+    super.setUp();
     getContext().deleteDatabase(DATABASE_NAME);
     db = (new DatabaseHelper(getContext(), DATABASE_NAME)).getWritableDatabase();
-
     myTracksProvider = new MyTracksProvider();
-    super.setUp();
   }
 
   /**
-   * Tests the method {@link MyTracksProvider.DatabaseHelper#onCreate()}.
+   * Tests {@link MyTracksProvider.DatabaseHelper#onCreate(SQLiteDatabase)}.
    */
   public void testDatabaseHelper_OnCreate() {
-    assertTrue(checkTable(TrackPointsColumns.TABLE_NAME));
-    assertTrue(checkTable(TracksColumns.TABLE_NAME));
-    assertTrue(checkTable(WaypointsColumns.TABLE_NAME));
+    assertTrue(hasTable(TracksColumns.TABLE_NAME));
+    assertTrue(hasTable(TrackPointsColumns.TABLE_NAME));
+    assertTrue(hasTable(WaypointsColumns.TABLE_NAME));
   }
 
   /**
-   * Tests the method
-   * {@link MyTracksProvider.DatabaseHelper#onUpgrade(SQLiteDatabase, int, int)}
-   * when version is less than 17.
+   * Tests {@link MyTracksProvider.DatabaseHelper#onUpgrade(SQLiteDatabase, int,
+   * int)} when version is less than 17.
    */
   public void testDatabaseHelper_onUpgrade_Version16() {
-    DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
-    dropTable(TrackPointsColumns.TABLE_NAME);
     dropTable(TracksColumns.TABLE_NAME);
+    dropTable(TrackPointsColumns.TABLE_NAME);
     dropTable(WaypointsColumns.TABLE_NAME);
-    databaseHelper.onUpgrade(db, 16, 20);
-    assertTrue(checkTable(TrackPointsColumns.TABLE_NAME));
-    assertTrue(checkTable(TracksColumns.TABLE_NAME));
-    assertTrue(checkTable(WaypointsColumns.TABLE_NAME));
+
+    int oldVersion = 16;
+    DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
+    databaseHelper.onUpgrade(db, oldVersion, MyTracksProvider.DATABASE_VERSION);
+
+    assertTrue(hasTable(TracksColumns.TABLE_NAME));
+    assertTrue(hasTable(TrackPointsColumns.TABLE_NAME));
+    assertTrue(hasTable(WaypointsColumns.TABLE_NAME));
   }
 
   /**
-   * Tests the method
-   * {@link MyTracksProvider.DatabaseHelper#onUpgrade(SQLiteDatabase, int, int)}
-   * when version is 17.
+   * Tests {@link MyTracksProvider.DatabaseHelper#onUpgrade(SQLiteDatabase, int,
+   * int)} when version is 17.
    */
   public void testDatabaseHelper_onUpgrade_Version17() {
-    DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
+    setupUpgrade(17);
 
-    // Make two table is only contains one normal integer column.
-    dropTable(TrackPointsColumns.TABLE_NAME);
-    dropTable(TracksColumns.TABLE_NAME);
-    createEmptyTable(TrackPointsColumns.TABLE_NAME);
-    createEmptyTable(TracksColumns.TABLE_NAME);
-    databaseHelper.onUpgrade(db, 17, 20);
-    assertTrue(isColumnExisted(TrackPointsColumns.TABLE_NAME, TrackPointsColumns.SENSOR));
-    assertTrue(isColumnExisted(TracksColumns.TABLE_NAME, TracksColumns.TABLEID));
-    assertTrue(isColumnExisted(TracksColumns.TABLE_NAME, TracksColumns.ICON));
+    assertTrue(hasColumn(TrackPointsColumns.TABLE_NAME, TrackPointsColumns.SENSOR));
+    assertTrue(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.TABLEID));
+    assertTrue(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.ICON));
+    assertTrue(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.DRIVEID));
+    assertTrue(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.MODIFIEDTIME));
+    assertTrue(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.SHAREDWITHME));
+    assertTrue(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.SHAREDOWNER));
+    assertTrue(hasColumn(WaypointsColumns.TABLE_NAME, WaypointsColumns.PHOTOURL));
+    assertTrue(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.CALORIE));
   }
 
   /**
-   * Tests the method
-   * {@link MyTracksProvider.DatabaseHelper#onUpgrade(SQLiteDatabase, int, int)}
-   * when version is 18.
+   * Tests {@link MyTracksProvider.DatabaseHelper#onUpgrade(SQLiteDatabase, int,
+   * int)} when version is 18.
    */
   public void testDatabaseHelper_onUpgrade_Version18() {
-    DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
+    setupUpgrade(18);
 
-    // Make two table is only contains one normal integer column.
-    dropTable(TrackPointsColumns.TABLE_NAME);
-    dropTable(TracksColumns.TABLE_NAME);
-    createEmptyTable(TrackPointsColumns.TABLE_NAME);
-    createEmptyTable(TracksColumns.TABLE_NAME);
-    databaseHelper.onUpgrade(db, 18, 20);
-    assertFalse(isColumnExisted(TrackPointsColumns.TABLE_NAME, TrackPointsColumns.SENSOR));
-    assertTrue(isColumnExisted(TracksColumns.TABLE_NAME, TracksColumns.TABLEID));
-    assertTrue(isColumnExisted(TracksColumns.TABLE_NAME, TracksColumns.ICON));
+    assertFalse(hasColumn(TrackPointsColumns.TABLE_NAME, TrackPointsColumns.SENSOR));
+    assertTrue(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.TABLEID));
+    assertTrue(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.ICON));
+    assertTrue(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.DRIVEID));
+    assertTrue(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.MODIFIEDTIME));
+    assertTrue(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.SHAREDWITHME));
+    assertTrue(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.SHAREDOWNER));
+    assertTrue(hasColumn(WaypointsColumns.TABLE_NAME, WaypointsColumns.PHOTOURL));
+    assertTrue(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.CALORIE));
   }
 
   /**
-   * Tests the method
-   * {@link MyTracksProvider.DatabaseHelper#onUpgrade(SQLiteDatabase, int, int)}
-   * when version is 19.
+   * Tests {@link MyTracksProvider.DatabaseHelper#onUpgrade(SQLiteDatabase, int,
+   * int)} when version is 19.
    */
   public void testDatabaseHelper_onUpgrade_Version19() {
-    DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
+    setupUpgrade(19);
 
-    // Make two table is only contains one normal integer column.
-    dropTable(TrackPointsColumns.TABLE_NAME);
-    dropTable(TracksColumns.TABLE_NAME);
-    createEmptyTable(TrackPointsColumns.TABLE_NAME);
-    createEmptyTable(TracksColumns.TABLE_NAME);
-    databaseHelper.onUpgrade(db, 19, 20);
-    assertFalse(isColumnExisted(TrackPointsColumns.TABLE_NAME, TrackPointsColumns.SENSOR));
-    assertFalse(isColumnExisted(TracksColumns.TABLE_NAME, TracksColumns.TABLEID));
-    assertTrue(isColumnExisted(TracksColumns.TABLE_NAME, TracksColumns.ICON));
+    assertFalse(hasColumn(TrackPointsColumns.TABLE_NAME, TrackPointsColumns.SENSOR));
+    assertFalse(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.TABLEID));
+    assertTrue(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.ICON));
+    assertTrue(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.DRIVEID));
+    assertTrue(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.MODIFIEDTIME));
+    assertTrue(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.SHAREDWITHME));
+    assertTrue(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.SHAREDOWNER));
+    assertTrue(hasColumn(WaypointsColumns.TABLE_NAME, WaypointsColumns.PHOTOURL));
+    assertTrue(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.CALORIE));
   }
 
   /**
-   * Tests the method {@link MyTracksProvider#onCreate()}.
+   * Tests {@link MyTracksProvider.DatabaseHelper#onUpgrade(SQLiteDatabase, int,
+   * int)} when version is 20.
+   */
+  public void testDatabaseHelper_onUpgrade_Version20() {
+    setupUpgrade(20);
+
+    assertFalse(hasColumn(TrackPointsColumns.TABLE_NAME, TrackPointsColumns.SENSOR));
+    assertFalse(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.TABLEID));
+    assertFalse(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.ICON));
+    assertTrue(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.DRIVEID));
+    assertTrue(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.MODIFIEDTIME));
+    assertTrue(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.SHAREDWITHME));
+    assertTrue(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.SHAREDOWNER));
+    assertTrue(hasColumn(WaypointsColumns.TABLE_NAME, WaypointsColumns.PHOTOURL));
+    assertTrue(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.CALORIE));
+  }
+
+  /**
+   * Tests {@link MyTracksProvider.DatabaseHelper#onUpgrade(SQLiteDatabase, int,
+   * int)} when version is 21.
+   */
+  public void testDatabaseHelper_onUpgrade_Version21() {
+    setupUpgrade(21);
+
+    assertFalse(hasColumn(TrackPointsColumns.TABLE_NAME, TrackPointsColumns.SENSOR));
+    assertFalse(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.TABLEID));
+    assertFalse(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.ICON));
+    assertFalse(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.DRIVEID));
+    assertFalse(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.MODIFIEDTIME));
+    assertFalse(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.SHAREDWITHME));
+    assertFalse(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.SHAREDOWNER));
+    assertTrue(hasColumn(WaypointsColumns.TABLE_NAME, WaypointsColumns.PHOTOURL));
+    assertTrue(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.CALORIE));
+  }
+
+  /**
+   * Tests {@link MyTracksProvider.DatabaseHelper#onUpgrade(SQLiteDatabase, int,
+   * int)} when version is 22.
+   */
+  public void testDatabaseHelper_onUpgrade_Version22() {
+    setupUpgrade(22);
+
+    assertFalse(hasColumn(TrackPointsColumns.TABLE_NAME, TrackPointsColumns.SENSOR));
+    assertFalse(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.TABLEID));
+    assertFalse(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.ICON));
+    assertFalse(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.DRIVEID));
+    assertFalse(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.MODIFIEDTIME));
+    assertFalse(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.SHAREDWITHME));
+    assertFalse(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.SHAREDOWNER));
+    assertFalse(hasColumn(WaypointsColumns.TABLE_NAME, WaypointsColumns.PHOTOURL));
+    assertFalse(hasColumn(TracksColumns.TABLE_NAME, TracksColumns.CALORIE));
+  }
+
+  /**
+   * Tests {@link MyTracksProvider#onCreate(android.content.Context)}.
    */
   public void testOnCreate() {
     assertTrue(myTracksProvider.onCreate(getContext()));
   }
 
   /**
-   * Tests the method {@link MyTracksProvider#getType(Uri)}.
+   * Tests {@link MyTracksProvider#getType(Uri)}.
    */
   public void testGetType() {
-    assertEquals(TrackPointsColumns.CONTENT_TYPE,
-        myTracksProvider.getType(TrackPointsColumns.CONTENT_URI));
     assertEquals(TracksColumns.CONTENT_TYPE, myTracksProvider.getType(TracksColumns.CONTENT_URI));
-    assertEquals(WaypointsColumns.CONTENT_TYPE,
-        myTracksProvider.getType(WaypointsColumns.CONTENT_URI));
+    assertEquals(
+        TrackPointsColumns.CONTENT_TYPE, myTracksProvider.getType(TrackPointsColumns.CONTENT_URI));
+    assertEquals(
+        WaypointsColumns.CONTENT_TYPE, myTracksProvider.getType(WaypointsColumns.CONTENT_URI));
   }
 
   /**
-   * Creates an table only contains one column.
+   * Creates a table, containing one column.
    * 
-   * @param table the name of table
+   * @param table the table name
    */
-  private void createEmptyTable(String table) {
+  private void createTable(String table) {
     db.execSQL("CREATE TABLE " + table + " (test INTEGER)");
   }
 
   /**
    * Drops a table in database.
    * 
-   * @param table
+   * @param table the table name
    */
   private void dropTable(String table) {
     db.execSQL("Drop TABLE " + table);
   }
 
   /**
-   * Checks whether a table is existed.
+   * Returns true if the table exists.
    * 
-   * @param table the name of table
-   * @return true means the table has existed
+   * @param table the table name
    */
-  private boolean checkTable(String table) {
+  private boolean hasTable(String table) {
     try {
       db.rawQuery("select count(*) from " + table, null);
       return true;
@@ -175,14 +228,12 @@ public class MyTracksProviderTest extends AndroidTestCase {
   }
 
   /**
-   * Checks whether a column in a table is existed by whether can order by the
-   * column.
+   * Returns true if the column in the table exists.
    * 
-   * @param table the name of table
-   * @param column the name of column
-   * @return true means the column has existed
+   * @param table the table name
+   * @param column the column name
    */
-  private boolean isColumnExisted(String table, String column) {
+  private boolean hasColumn(String table, String column) {
     try {
       db.execSQL("SElECT count(*) from  " + table + " order by  " + column);
     } catch (Exception e) {
@@ -193,4 +244,20 @@ public class MyTracksProviderTest extends AndroidTestCase {
     return true;
   }
 
+  /**
+   * Sets up upgrade.
+   * 
+   * @param oldVersion thd old database version
+   */
+  private void setupUpgrade(int oldVersion) {
+    dropTable(TracksColumns.TABLE_NAME);
+    dropTable(TrackPointsColumns.TABLE_NAME);
+    dropTable(WaypointsColumns.TABLE_NAME);
+    createTable(TracksColumns.TABLE_NAME);
+    createTable(TrackPointsColumns.TABLE_NAME);
+    createTable(WaypointsColumns.TABLE_NAME);
+
+    DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
+    databaseHelper.onUpgrade(db, oldVersion, MyTracksProvider.DATABASE_VERSION);
+  }
 }

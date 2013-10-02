@@ -52,7 +52,8 @@ import java.util.ArrayList;
 public class MyTracksProvider extends ContentProvider {
 
   private static final String TAG = MyTracksProvider.class.getSimpleName();
-  private static final int DATABASE_VERSION = 22;
+  @VisibleForTesting
+  static final int DATABASE_VERSION = 22;
 
   @VisibleForTesting
   static final String DATABASE_NAME = "mytracks.db";

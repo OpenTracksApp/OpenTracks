@@ -5,7 +5,6 @@ import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.io.file.exporter.TrackWriter;
 
 import android.test.AndroidTestCase;
 
@@ -117,11 +116,12 @@ public abstract class TrackWriterTest extends AndroidTestCase {
   protected String writeTrack(TrackWriter trackWriter) throws Exception {
     OutputStream output = new ByteArrayOutputStream(BUFFER_SIZE);
     trackWriter.prepare(output);
-    trackWriter.writeHeader(track);
-    trackWriter.writeBeginWaypoints();
+    trackWriter.writeHeader(new Track[] {track});
+    trackWriter.writeBeginWaypoints(track);
     trackWriter.writeWaypoint(wp1);
     trackWriter.writeWaypoint(wp2);
     trackWriter.writeEndWaypoints();
+    trackWriter.writeBeginTracks();
     trackWriter.writeBeginTrack(track, location1);
     trackWriter.writeOpenSegment();
     trackWriter.writeLocation(location1);
@@ -132,7 +132,9 @@ public abstract class TrackWriterTest extends AndroidTestCase {
     trackWriter.writeLocation(location4);
     trackWriter.writeCloseSegment();
     trackWriter.writeEndTrack(track, location4);
+    trackWriter.writeEndTracks();
     trackWriter.writeFooter();
+    trackWriter.close();
     return output.toString();
   }
 
