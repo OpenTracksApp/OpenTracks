@@ -282,13 +282,15 @@ public class SyncUtils {
   public static File insertDriveFile(Drive drive, String folderId, Context context,
       MyTracksProviderUtils myTracksProviderUtils, Track track, boolean canRetry)
       throws IOException {
-    java.io.File file = getFile(context, myTracksProviderUtils, track);
-    if (file == null) {
-      Log.e(TAG, "Unable to add Drive file. File is null for track " + track.getName());
-      return null;
-    }
-
+    java.io.File file = null;
     try {
+      file = getFile(context, myTracksProviderUtils, track);
+
+      if (file == null) {
+        Log.e(TAG, "Unable to add Drive file. File is null for track " + track.getName());
+        return null;
+      }
+
       Log.d(TAG, "Add Drive file for track " + track.getName());
       File uploadedFile = insertDriveFile(drive, folderId, track.getName(), file, canRetry);
       if (uploadedFile == null) {
@@ -298,7 +300,9 @@ public class SyncUtils {
       SyncUtils.updateTrackWithDriveFileInfo(myTracksProviderUtils, track, uploadedFile);
       return uploadedFile;
     } finally {
-      file.delete();
+      if (file != null) {
+        file.delete();
+      }
     }
   }
 
@@ -354,37 +358,41 @@ public class SyncUtils {
       MyTracksProviderUtils myTracksProviderUtils, Track track, boolean canRetry)
       throws IOException {
     Log.d(TAG, "Update drive file for track " + track.getName());
-    java.io.File file = SyncUtils.getFile(context, myTracksProviderUtils, track);
+    java.io.File file = null;
 
-    if (file == null) {
-      Log.e(TAG, "Unable to update drive file. File is null for track " + track.getName());
-      return false;
-    } else {
-      try {
-        String title = track.getName() + "." + TrackFileFormat.KML.getExtension();
-        File updatedFile;
-        String digest = md5(file);
-        if (digest != null && digest.equals(driveFile.getMd5Checksum())) {
-          if (title.equals(driveFile.getTitle())) {
-            updatedFile = driveFile;
-          } else {
-            updatedFile = updateDriveFile(drive, driveFile, title, null, canRetry);
-          }
+    try {
+      file = SyncUtils.getFile(context, myTracksProviderUtils, track);
+
+      if (file == null) {
+        Log.e(TAG, "Unable to update drive file. File is null for track " + track.getName());
+        return false;
+      }
+
+      String title = track.getName() + "." + TrackFileFormat.KML.getExtension();
+      File updatedFile;
+      String digest = md5(file);
+      if (digest != null && digest.equals(driveFile.getMd5Checksum())) {
+        if (title.equals(driveFile.getTitle())) {
+          updatedFile = driveFile;
         } else {
-          updatedFile = updateDriveFile(drive, driveFile, title, file, canRetry);
+          updatedFile = updateDriveFile(drive, driveFile, title, null, canRetry);
         }
-        if (updatedFile == null) {
-          Log.e(TAG,
-              "Unable to update drive file. Updated file is null for track " + track.getName());
-          return false;
-        }
-        long modifiedTime = updatedFile.getModifiedDate().getValue();
-        if (track.getModifiedTime() != modifiedTime) {
-          track.setModifiedTime(modifiedTime);
-          myTracksProviderUtils.updateTrack(track);
-        }
-        return true;
-      } finally {
+      } else {
+        updatedFile = updateDriveFile(drive, driveFile, title, file, canRetry);
+      }
+      if (updatedFile == null) {
+        Log.e(
+            TAG, "Unable to update drive file. Updated file is null for track " + track.getName());
+        return false;
+      }
+      long modifiedTime = updatedFile.getModifiedDate().getValue();
+      if (track.getModifiedTime() != modifiedTime) {
+        track.setModifiedTime(modifiedTime);
+        myTracksProviderUtils.updateTrack(track);
+      }
+      return true;
+    } finally {
+      if (file != null) {
         file.delete();
       }
     }
