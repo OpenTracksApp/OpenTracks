@@ -1008,10 +1008,6 @@ limitations under the License.
     translation_description="When deleting multiple markers, the confirmation message.">
     All markers for this track will be permanently deleted from the device.
   </string>
-  <string name="marker_insert_photo_error"
-    translation_description="The error message when unable to insert a photo marker.">
-    Unable to insert a photo marker. Try again.
-  </string>
   <string name="marker_label_end"
     translation_description="When inserting a marker to indicate the end of a track, the marker's
       name. E.g., 'track_name (End)'.

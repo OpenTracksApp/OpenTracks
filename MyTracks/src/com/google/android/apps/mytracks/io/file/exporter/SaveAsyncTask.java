@@ -183,17 +183,10 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     if (tracks.length == 0) {
       return false;
     }
+    
     Track track = tracks[0];
     boolean useKmz = trackFileFormat == TrackFileFormat.KML && !playTrack;
     String extension = useKmz ? KmzTrackExporter.KMZ_EXTENSION : trackFileFormat.getExtension();
-
-    // Make sure the file doesn't exist yet (possibly by changing the filename)
-    String fileName = FileUtils.buildUniqueFileName(directory, track.getName(), extension);
-    if (fileName == null) {
-      Log.d(TAG, "Unable to get a unique filename for " + track.getName());
-      return false;
-    }
-
     FileTrackExporter fileTrackExporter = new FileTrackExporter(myTracksProviderUtils, tracks,
         trackFileFormat.newTrackWriter(context, playTrack), new TrackExporterListener() {
 
@@ -212,6 +205,7 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     trackExporter = useKmz ? new KmzTrackExporter(myTracksProviderUtils, fileTrackExporter, tracks)
         : fileTrackExporter;
 
+    String fileName = FileUtils.buildUniqueFileName(directory, track.getName(), extension);
     File file = new File(directory, fileName);
     FileOutputStream fileOutputStream = null;
     try {

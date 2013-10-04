@@ -55,7 +55,6 @@ import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -66,7 +65,6 @@ import android.widget.TabHost.TabSpec;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -391,32 +389,22 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity implements
         startActivity(intent);
         return true;
       case R.id.track_detail_insert_photo:
-        try {
-          if (!FileUtils.isExternalStorageWriteable()) {
-            Toast.makeText(this, R.string.external_storage_not_writable, Toast.LENGTH_LONG).show();
-            return false;
-          }
-
-          File dir = new File(
-              FileUtils.getDirectoryPath(FileUtils.PICTURES_DIR, Long.toString(trackId)));
-          FileUtils.ensureDirectoryExists(dir);
-
-          String fileName = SimpleDateFormat.getDateTimeInstance().format(new Date());
-          File file = new File(dir, FileUtils.buildUniqueFileName(dir, fileName, "jpeg"));
-
-          if (file.exists()) {
-            Toast.makeText(this, R.string.marker_insert_photo_error, Toast.LENGTH_LONG).show();
-            return false;
-          }
-          file.createNewFile();
-          photoUri = Uri.fromFile(file);
-          intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE).putExtra(
-              MediaStore.EXTRA_OUTPUT, photoUri);
-          startActivityForResult(intent, CAMERA_REQUEST_CODE);
-        } catch (IOException e) {
-          Log.e(TAG, "Unable to insert photo marker", e);
+        if (!FileUtils.isExternalStorageWriteable()) {
+          Toast.makeText(this, R.string.external_storage_not_writable, Toast.LENGTH_LONG).show();
           return false;
         }
+
+        File dir = new File(
+            FileUtils.getDirectoryPath(FileUtils.PICTURES_DIR, Long.toString(trackId)));
+        FileUtils.ensureDirectoryExists(dir);
+
+        String fileName = SimpleDateFormat.getDateTimeInstance().format(new Date());
+        File file = new File(dir, FileUtils.buildUniqueFileName(dir, fileName, "jpeg"));
+
+        photoUri = Uri.fromFile(file);
+        intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE).putExtra(
+            MediaStore.EXTRA_OUTPUT, photoUri);
+        startActivityForResult(intent, CAMERA_REQUEST_CODE);
         return true;
       case R.id.track_detail_play:
         playTrack(new long[] {trackId});
