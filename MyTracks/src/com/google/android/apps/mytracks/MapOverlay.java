@@ -16,6 +16,8 @@
 
 package com.google.android.apps.mytracks;
 
+import static com.google.android.apps.mytracks.content.TrackDataHub.TARGET_DISPLAYED_TRACK_POINTS;
+
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.maps.TrackPath;
@@ -138,8 +140,10 @@ public class MapOverlay {
     this.context = context;
     this.waypoints = new ArrayList<Waypoint>();
     this.locations = new ArrayList<CachedLocation>(INITIAL_LOCATIONS_SIZE);
+
+    // Set the number of points to be 2x the TARGET_DISPLAYED_TRACK_POINTS
     this.pendingLocations = new ArrayBlockingQueue<CachedLocation>(
-        Constants.MAX_DISPLAYED_TRACK_POINTS, true);
+        2 * TARGET_DISPLAYED_TRACK_POINTS, true);
 
     context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE)
         .registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);

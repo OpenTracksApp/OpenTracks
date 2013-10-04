@@ -16,10 +16,6 @@
 
 package com.google.android.apps.mytracks.content;
 
-import static com.google.android.apps.mytracks.Constants.MAX_DISPLAYED_WAYPOINTS_POINTS;
-import static com.google.android.apps.mytracks.Constants.TARGET_DISPLAYED_TRACK_POINTS;
-
-import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
@@ -47,6 +43,18 @@ public class TrackDataHub implements DataSourceListener {
 
   private static final String TAG = TrackDataHub.class.getSimpleName();
  
+  /**
+   * Maximum number of waypoints to displayed.
+   */
+  @VisibleForTesting
+  static final int MAX_DISPLAYED_WAYPOINTS = 128;
+  
+  /**
+   * Target number of track points displayed by the map overlay. We may display
+   * more than this number of points.
+   */
+  public static final int TARGET_DISPLAYED_TRACK_POINTS = 5000;
+  
   private final Context context;
   private final TrackDataManager trackDataManager;
   private final MyTracksProviderUtils myTracksProviderUtils;
@@ -415,8 +423,8 @@ public class TrackDataHub implements DataSourceListener {
 
   /**
    * Notifies waypoint table update. Currently, reloads all the waypoints up to
-   * {@link Constants#MAX_DISPLAYED_WAYPOINTS_POINTS}. To be run in the
-   * {@link #handler} thread.
+   * {@link #MAX_DISPLAYED_WAYPOINTS}. To be run in the {@link #handler}
+   * thread.
    * 
    * @param trackDataListeners the track data listeners to notify
    */
@@ -432,7 +440,7 @@ public class TrackDataHub implements DataSourceListener {
     Cursor cursor = null;
     try {
       cursor = myTracksProviderUtils.getWaypointCursor(
-          selectedTrackId, -1L, MAX_DISPLAYED_WAYPOINTS_POINTS);
+          selectedTrackId, -1L, MAX_DISPLAYED_WAYPOINTS);
       if (cursor != null && cursor.moveToFirst()) {
         do {
           Waypoint waypoint = myTracksProviderUtils.createWaypoint(cursor);

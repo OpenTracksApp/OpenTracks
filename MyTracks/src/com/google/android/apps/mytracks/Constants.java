@@ -31,17 +31,6 @@ public class Constants {
   public static final String ACCOUNT_TYPE = "com.google";
 
   /**
-   * Maximum number of track points displayed by the map overlay. Set to 2X of
-   * {@link Constants#TARGET_DISPLAYED_TRACK_POINTS}
-   */
-  public static final int MAX_DISPLAYED_TRACK_POINTS = 10000;
-
-  /**
-   * Maximum number of waypoints displayed by the map overlay.
-   */
-  public static final int MAX_DISPLAYED_WAYPOINTS_POINTS = 128;
-
-  /**
    * Maximum number of track points that will be loaded at one time. With
    * recording frequency of 2 seconds, 20000 corresponds to 11.1 hours.
    */
@@ -56,10 +45,4 @@ public class Constants {
    * The settings file name.
    */
   public static final String SETTINGS_NAME = "SettingsActivity";
-
-  /**
-   * Target number of track points displayed by the map overlay. We may display
-   * more than this number of points.
-   */
-  public static final int TARGET_DISPLAYED_TRACK_POINTS = 5000;
 }
