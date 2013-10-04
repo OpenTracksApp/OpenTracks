@@ -117,7 +117,7 @@ public class KmzTrackImporter implements TrackImporter {
     if (importTrackId != -1L) {
       File dir = new File(
           FileUtils.getPath(FileUtils.PICTURES_DIR, Long.toString(importTrackId)));
-      if (dir.exists() && dir.isDirectory()) {
+      if (FileUtils.isDirectory(dir)) {
         for (File file : dir.listFiles()) {
           file.delete();
         }

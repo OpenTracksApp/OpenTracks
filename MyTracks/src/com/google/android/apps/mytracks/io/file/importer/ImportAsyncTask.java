@@ -20,6 +20,7 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.io.file.exporter.KmzTrackExporter;
+import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.maps.mytracks.R;
@@ -219,7 +220,7 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
       File[] candidates = file.listFiles();
       if (candidates != null) {
         for (File candidate : candidates) {
-          if (!candidate.isDirectory()) {
+          if (!FileUtils.isDirectory(candidate)) {
             String name = candidate.getName();
             if (trackFileFormat == TrackFileFormat.KML && (
                 name.endsWith("." + TrackFileFormat.KML.getExtension())

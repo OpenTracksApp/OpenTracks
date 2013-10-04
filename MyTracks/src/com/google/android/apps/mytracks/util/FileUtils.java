@@ -23,7 +23,7 @@ import java.io.File;
 
 /**
  * Utilities for dealing with files.
- *
+ * 
  * @author Rodrigo Damazio
  */
 public class FileUtils {
@@ -31,22 +31,28 @@ public class FileUtils {
   private FileUtils() {}
 
   /**
-   * Name of the top-level directory inside the SD card where our files will be
-   * read from/written to.
+   * The backups directory under the My Tracks external storage directory.
    */
-  protected static final String SDCARD_TOP_DIR = "MyTracks";
-  
   public static final String BACKUPS_DIR = "backups";
-  
+
+  /**
+   * The pictures directory under the My Tracks external storage directory.
+   */
   public static final String PICTURES_DIR = "pictures";
-  
+
+  /**
+   * The My Tracks external storage directory.
+   */
+  @VisibleForTesting
+  static final String SDCARD_TOP_DIR = "MyTracks";
+
   /**
    * The maximum FAT32 path length. See the FAT32 spec at
    * http://msdn.microsoft.com/en-us/windows/hardware/gg463080
    */
   @VisibleForTesting
   static final int MAX_FAT32_PATH_LENGTH = 260;
-  
+
   /**
    * Returns true if the external storage is available.
    */
@@ -55,7 +61,7 @@ public class FileUtils {
     return Environment.MEDIA_MOUNTED.equals(state)
         || Environment.MEDIA_MOUNTED_READ_ONLY.equals(state);
   }
-  
+
   /**
    * Returns true if the external storage is writable.
    */
@@ -63,7 +69,7 @@ public class FileUtils {
     String state = Environment.getExternalStorageState();
     return Environment.MEDIA_MOUNTED.equals(state);
   }
-  
+
   /**
    * Returns true if the directory exists.
    * 
@@ -74,9 +80,8 @@ public class FileUtils {
   }
 
   /**
-   * Ensures the directory exists by creating it and its parents if
-   * necessary.
-   *
+   * Ensures the directory exists by creating it and its parents if necessary.
+   * 
    * @return whether the directory exists (either already existed or was
    *         successfully created)
    */
@@ -84,7 +89,7 @@ public class FileUtils {
     if (isDirectory(dir)) {
       return true;
     }
-    return dir.mkdirs();    
+    return dir.mkdirs();
   }
 
   /**
@@ -102,9 +107,10 @@ public class FileUtils {
     }
     return dirNameBuilder.toString();
   }
+
   /**
    * Gets a path on the external storage.
-   *
+   * 
    * @param components the components
    */
   public static String getPath(String... components) {
@@ -117,7 +123,7 @@ public class FileUtils {
   /**
    * Builds a filename with the given base name (prefix) and the given
    * extension, possibly adding a suffix to ensure the file doesn't exist.
-   *
+   * 
    * @param directory the directory the file will live in
    * @param fileBaseName the prefix for the file name
    * @param extension the file's extension
@@ -131,7 +137,7 @@ public class FileUtils {
   /**
    * Builds a filename with the given base and the given extension, possibly
    * adding a suffix to ensure the file doesn't exist.
-   *
+   * 
    * @param directory the directory the filename will be located in
    * @param base the base for the filename
    * @param extension the extension for the filename
@@ -161,7 +167,7 @@ public class FileUtils {
    * filename characters may be any combination of letters, digits, or
    * characters with code point values greater than 127. Replaces the invalid
    * characters with "_" and collapses multiple "_" together.
-   *
+   * 
    * @param name name
    */
   @VisibleForTesting
@@ -182,7 +188,7 @@ public class FileUtils {
 
   /**
    * Returns true if it is a special FAT32 character.
-   *
+   * 
    * @param character the character
    */
   private static boolean isSpecialFat32(char character) {
@@ -219,7 +225,7 @@ public class FileUtils {
   /**
    * Truncates the name if necessary so the filename path length (directory +
    * name + suffix) meets the Fat32 path limit.
-   *
+   * 
    * @param directory directory
    * @param name name
    * @param suffix suffix
