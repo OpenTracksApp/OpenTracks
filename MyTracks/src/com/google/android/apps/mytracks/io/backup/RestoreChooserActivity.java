@@ -124,7 +124,7 @@ public class RestoreChooserActivity extends Activity {
    */
   private void showNoBackupMessage() {
     String message = getString(R.string.settings_backup_restore_no_backups,
-        FileUtils.getDirectoryDisplayName(FileUtils.BACKUPS_DIR));
+        FileUtils.getPathDisplayName(FileUtils.BACKUPS_DIR));
     Toast.makeText(this, message, Toast.LENGTH_LONG).show();
   }
 }

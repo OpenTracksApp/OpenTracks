@@ -264,20 +264,20 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
   private String getSaveSuccessMessage(int count, String type) {
     String tracks = activityMyTracks.getResources().getQuantityString(R.plurals.tracks, count,
         count);
-    String directoryDisplayName = FileUtils.getDirectoryDisplayName(type);
+    String directoryDisplayName = FileUtils.getPathDisplayName(type);
     return activityMyTracks.getString(R.string.export_external_storage_success, tracks,
         directoryDisplayName);
   }
 
   private String getImportSuccessMessage(int count, String type) {
     String files = activityMyTracks.getResources().getQuantityString(R.plurals.files, count, count);
-    String directoryDisplayName = FileUtils.getDirectoryDisplayName(type);
+    String directoryDisplayName = FileUtils.getPathDisplayName(type);
     return activityMyTracks.getString(R.string.import_success, files, directoryDisplayName);
   }
 
   private String getImportErrorMessage(int count, int total, String type) {
     String files = activityMyTracks.getResources().getQuantityString(R.plurals.files, total, total);
-    String directoryDisplayName = FileUtils.getDirectoryDisplayName(type);
+    String directoryDisplayName = FileUtils.getPathDisplayName(type);
     return activityMyTracks.getString(R.string.import_error, count, files, directoryDisplayName);
   }
 
@@ -481,7 +481,7 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
         + "</trkseg> " + "</trk> " + "</gpx>";
 
     try {
-      File file = new File(FileUtils.getDirectoryPath(EndToEndTestUtils.GPX.toLowerCase())
+      File file = new File(FileUtils.getPath(EndToEndTestUtils.GPX.toLowerCase())
           + File.separator + fileName);
       FileOutputStream fop = new FileOutputStream(file);
       // if file doesnt exists, then create it

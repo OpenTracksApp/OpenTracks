@@ -501,7 +501,7 @@ public class EndToEndTestUtils {
    * @param trackKind the kind of track
    */
   public static void deleteExportedFiles(String trackKind) {
-    File[] allFiles = (new File(FileUtils.getDirectoryPath(trackKind.toLowerCase()))).listFiles();
+    File[] allFiles = (new File(FileUtils.getPath(trackKind.toLowerCase()))).listFiles();
     if (allFiles != null) {
       for (File oneFile : allFiles) {
         oneFile.delete();
@@ -528,7 +528,7 @@ public class EndToEndTestUtils {
    * @return files array of such kind of exported tracks
    */
   public static File[] getExportedFiles(final String trackKind) {
-    String directoryPath = FileUtils.getDirectoryPath(trackKind);
+    String directoryPath = FileUtils.getPath(trackKind);
     FileFilter filter = new FileFilter() {
       @Override
       public boolean accept(File pathname) {

@@ -92,7 +92,7 @@ public class FileTypeDialogFragment extends DialogFragment {
     for (int i = 0; i < choices.length; i++) {
       TrackFileFormat trackFileFormat = trackFileFormats[i];
       choices[i] = getString(optionId, trackFileFormat.name(),
-          FileUtils.getDirectoryDisplayName(trackFileFormat.getExtension()));
+          FileUtils.getPathDisplayName(trackFileFormat.getExtension()));
     }
     return new AlertDialog.Builder(getActivity()).setNegativeButton(R.string.generic_cancel, null)
         .setPositiveButton(R.string.generic_ok, new OnClickListener() {

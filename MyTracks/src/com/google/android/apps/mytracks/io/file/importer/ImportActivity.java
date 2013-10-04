@@ -89,9 +89,9 @@ public class ImportActivity extends Activity {
     }
     String directoryPath;
     if (importAll) {
-      directoryDisplayName = FileUtils.getDirectoryDisplayName(
+      directoryDisplayName = FileUtils.getPathDisplayName(
           trackFileFormat.getExtension());
-      directoryPath = FileUtils.getDirectoryPath(trackFileFormat.getExtension());
+      directoryPath = FileUtils.getPath(trackFileFormat.getExtension());
       if (!FileUtils.isDirectory(new File(directoryPath))) {
         Toast.makeText(
             this, getString(R.string.import_no_directory, directoryDisplayName), Toast.LENGTH_LONG)

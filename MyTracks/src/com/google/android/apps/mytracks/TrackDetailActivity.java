@@ -395,7 +395,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity implements
         }
 
         File dir = new File(
-            FileUtils.getDirectoryPath(FileUtils.PICTURES_DIR, Long.toString(trackId)));
+            FileUtils.getPath(FileUtils.PICTURES_DIR, Long.toString(trackId)));
         FileUtils.ensureDirectoryExists(dir);
 
         String fileName = SimpleDateFormat.getDateTimeInstance().format(new Date());

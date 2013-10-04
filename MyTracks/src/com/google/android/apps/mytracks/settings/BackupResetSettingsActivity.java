@@ -121,7 +121,7 @@ public class BackupResetSettingsActivity extends AbstractSettingsActivity {
     switch (id) {
       case DIALOG_CONFIRM_BACKUP_ID:
         message = getString(R.string.settings_backup_confirm_message,
-            FileUtils.getDirectoryDisplayName(FileUtils.BACKUPS_DIR));
+            FileUtils.getPathDisplayName(FileUtils.BACKUPS_DIR));
         dialog = DialogUtils.createConfirmationDialog(this, R.string.settings_backup_confirm_title,
             message, new DialogInterface.OnClickListener() {
                 @Override

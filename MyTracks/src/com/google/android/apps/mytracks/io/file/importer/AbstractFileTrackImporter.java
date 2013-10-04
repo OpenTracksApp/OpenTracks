@@ -470,7 +470,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
     if (importTrackId == -1L) {
       return null;
     }
-    return FileUtils.getDirectoryPath(
+    return FileUtils.getPath(
         FileUtils.PICTURES_DIR, Long.toString(importTrackId), fileName);
   }
 

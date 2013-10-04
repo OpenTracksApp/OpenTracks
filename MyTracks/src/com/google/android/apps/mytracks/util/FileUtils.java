@@ -88,11 +88,11 @@ public class FileUtils {
   }
 
   /**
-   * Gets the directory display name.
+   * Gets the display name for a path on the external storage.
    * 
    * @param components the components
    */
-  public static String getDirectoryDisplayName(String... components) {
+  public static String getPathDisplayName(String... components) {
     StringBuilder dirNameBuilder = new StringBuilder();
     dirNameBuilder.append(File.separatorChar);
     dirNameBuilder.append(SDCARD_TOP_DIR);
@@ -103,14 +103,14 @@ public class FileUtils {
     return dirNameBuilder.toString();
   }
   /**
-   * Gets the directory path.
+   * Gets a path on the external storage.
    *
    * @param components the components
    */
-  public static String getDirectoryPath(String... components) {
+  public static String getPath(String... components) {
     StringBuilder dirNameBuilder = new StringBuilder();
     dirNameBuilder.append(Environment.getExternalStorageDirectory());
-    dirNameBuilder.append(getDirectoryDisplayName(components));
+    dirNameBuilder.append(getPathDisplayName(components));
     return dirNameBuilder.toString();
   }
 
