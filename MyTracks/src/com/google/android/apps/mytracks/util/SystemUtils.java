@@ -16,8 +16,6 @@
 
 package com.google.android.apps.mytracks.util;
 
-import com.google.android.apps.mytracks.Constants;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -49,7 +47,7 @@ public class SystemUtils {
           .getPackageInfo("com.google.android.maps.mytracks", PackageManager.GET_META_DATA);
       return pi.versionName;
     } catch (NameNotFoundException e) {
-      Log.w(Constants.TAG, "Failed to get version info.", e);
+      Log.w(TAG, "Failed to get version info.", e);
       return "";
     }
   }
@@ -75,7 +73,7 @@ public class SystemUtils {
         return wakeLock;
       }
       if (wakeLock == null) {
-        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, Constants.TAG);
+        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
         if (wakeLock == null) {
           Log.e(TAG, "Cannot create a new wake lock.");
         }

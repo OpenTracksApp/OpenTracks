@@ -15,8 +15,6 @@
  */
 package com.google.android.apps.mytracks.io.backup;
 
-import static com.google.android.apps.mytracks.Constants.TAG;
-
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.TrackPointsColumns;
 import com.google.android.apps.mytracks.content.TracksColumns;
@@ -52,6 +50,9 @@ import java.util.zip.ZipOutputStream;
  * @author Rodrigo Damazio
  */
 class ExternalFileBackup {
+  
+  private static final String TAG = ExternalFileBackup.class.getSimpleName();
+  
   // Filename format - in UTC
   private static final SimpleDateFormat BACKUP_FILENAME_FORMAT = new SimpleDateFormat(
       "'backup-'yyyy-MM-dd_HH-mm-ss'.zip'", Locale.US);
@@ -87,7 +88,7 @@ class ExternalFileBackup {
   private File getBackupsDirectory(boolean create) {
     String directoryPath = FileUtils.getDirectoryPath(FileUtils.BACKUPS_DIR);
     final File dir = new File(directoryPath);
-    Log.d(Constants.TAG, "Dir: " + dir.getAbsolutePath());
+    Log.d(TAG, "Dir: " + dir.getAbsolutePath());
     if (create) {
       // Try to create - if that fails, return null
       return FileUtils.ensureDirectoryExists(dir) ? dir : null;
@@ -146,8 +147,7 @@ class ExternalFileBackup {
    * Synchronously writes a backup to the given file.
    */
   private void writeToFile(File outputFile) throws IOException {
-    Log.d(Constants.TAG,
-        "Writing backup to file " + outputFile.getAbsolutePath());
+    Log.d(TAG, "Writing backup to file " + outputFile.getAbsolutePath());
 
     // Create all the auxiliary classes that will do the writing
     PreferenceBackupHelper preferencesHelper = new PreferenceBackupHelper(context);
@@ -234,8 +234,7 @@ class ExternalFileBackup {
    * Synchronously restores the backup from the given file.
    */
   private void restoreFromFile(File inputFile) throws IOException {
-    Log.d(Constants.TAG,
-        "Restoring from file " + inputFile.getAbsolutePath());
+    Log.d(TAG, "Restoring from file " + inputFile.getAbsolutePath());
 
     PreferenceBackupHelper preferencesHelper = new PreferenceBackupHelper(context);
     ContentResolver resolver = context.getContentResolver();

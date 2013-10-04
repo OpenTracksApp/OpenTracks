@@ -16,8 +16,6 @@
 
 package com.google.android.apps.mytracks.content;
 
-import static com.google.android.apps.mytracks.Constants.TAG;
-
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.ContentObserver;
@@ -36,6 +34,8 @@ import java.util.Set;
  */
 public class DataSourceManager {
 
+  private static final String TAG = DataSourceManager.class.getSimpleName();
+  
   /**
    * Observer when the tracks table is updated.
    * 

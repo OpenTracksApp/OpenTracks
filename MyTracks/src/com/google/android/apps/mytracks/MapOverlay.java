@@ -16,8 +16,6 @@
 
 package com.google.android.apps.mytracks;
 
-import static com.google.android.apps.mytracks.Constants.TAG;
-
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.maps.TrackPath;
@@ -53,6 +51,8 @@ public class MapOverlay {
 
   public static final float WAYPOINT_X_ANCHOR = 13f / 48f;
 
+  private static final String TAG = MapOverlay.class.getSimpleName();
+  
   private static final float WAYPOINT_Y_ANCHOR = 43f / 48f;
   private static final float MARKER_X_ANCHOR = 50f / 96f;
   private static final float MARKER_Y_ANCHOR = 90f / 96f;

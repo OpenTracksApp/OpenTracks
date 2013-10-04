@@ -16,7 +16,6 @@
 
 package com.google.android.apps.mytracks.stats;
 
-import static com.google.android.apps.mytracks.Constants.TAG;
 import static com.google.android.apps.mytracks.services.TrackRecordingService.MAX_NO_MOVEMENT_SPEED;
 import static com.google.android.apps.mytracks.services.TrackRecordingService.PAUSE_LATITUDE;
 
@@ -38,6 +37,8 @@ import android.util.Log;
  */
 public class TripStatisticsUpdater {
 
+  private static final String TAG = TripStatisticsUpdater.class.getSimpleName();
+  
   /**
    * The number of elevation readings to smooth to get a somewhat accurate
    * signal.

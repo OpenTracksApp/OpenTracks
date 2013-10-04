@@ -16,8 +16,6 @@
 
 package com.google.android.apps.mytracks.content;
 
-import static com.google.android.apps.mytracks.Constants.TAG;
-
 import android.util.Log;
 
 import java.util.EnumMap;
@@ -35,6 +33,8 @@ import java.util.Set;
  */
 public class TrackDataManager {
 
+  private static final String TAG = TrackDataManager.class.getSimpleName();
+  
   // Map of listener to its track data types
   private final Map<TrackDataListener, EnumSet<TrackDataType>>
       listenerToTypesMap = new HashMap<TrackDataListener, EnumSet<TrackDataType>>();

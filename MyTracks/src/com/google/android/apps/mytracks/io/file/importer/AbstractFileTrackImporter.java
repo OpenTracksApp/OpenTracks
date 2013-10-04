@@ -16,7 +16,6 @@
 
 package com.google.android.apps.mytracks.io.file.importer;
 
-import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
@@ -173,7 +172,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
       long start = System.currentTimeMillis();
 
       saxParser.parse(inputStream, this);
-      Log.d(Constants.TAG, "Total import time: " + (System.currentTimeMillis() - start) + "ms");
+      Log.d(TAG, "Total import time: " + (System.currentTimeMillis() - start) + "ms");
       if (trackIds.size() != 1) {
         Log.d(TAG, trackIds.size() + " tracks imported");
         cleanImport();
@@ -406,7 +405,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
 
       // Check for negative time change
       if (timeDifference <= 0) {
-        Log.w(Constants.TAG, "Time difference not postive.");
+        Log.w(TAG, "Time difference not postive.");
       } else {
 
         /*

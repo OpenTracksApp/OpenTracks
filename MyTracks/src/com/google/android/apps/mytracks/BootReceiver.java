@@ -16,7 +16,6 @@
 package com.google.android.apps.mytracks;
 
 import static android.content.Intent.ACTION_BOOT_COMPLETED;
-import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.services.TrackRecordingService;
 
@@ -42,6 +41,8 @@ import android.util.Log;
  */
 public class BootReceiver extends BroadcastReceiver {
 
+  private static final String TAG = BootReceiver.class.getSimpleName();
+  
   @Override
   public void onReceive(Context context, Intent intent) {
     Log.d(TAG, "BootReceiver.onReceive: " + intent.getAction());

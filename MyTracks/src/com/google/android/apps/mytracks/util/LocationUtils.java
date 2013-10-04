@@ -15,7 +15,6 @@
  */
 package com.google.android.apps.mytracks.util;
 
-import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.Track;
 
 import android.location.Location;
@@ -31,6 +30,8 @@ import java.util.Stack;
  */
 public class LocationUtils {
 
+  private static final String TAG = LocationUtils.class.getSimpleName();
+  
   private static final long MAX_LOCATION_AGE_MS = 60 * 1000; // 1 minute
 
   private LocationUtils() {}
@@ -133,7 +134,7 @@ public class LocationUtils {
       }
       idx++;
     }
-    Log.d(Constants.TAG, "Decimating " + n + " points to " + i + " w/ tolerance = " + tolerance);
+    Log.d(TAG, "Decimating " + n + " points to " + i + " w/ tolerance = " + tolerance);
   }
 
   /**

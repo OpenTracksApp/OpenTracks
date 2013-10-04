@@ -35,17 +35,20 @@ import java.io.IOException;
  * @author Rodrigo Damazio
  */
 public class MyTracksBackupAgent extends BackupAgent {
+  
+  private static final String TAG = MyTracksBackupAgent.class.getSimpleName();
+  
   private static final String PREFERENCES_ENTITY = "prefs";
 
   @Override
   public void onBackup(ParcelFileDescriptor oldState, BackupDataOutput data,
       ParcelFileDescriptor newState) throws IOException {
-    Log.i(Constants.TAG, "Performing backup");
+    Log.i(TAG, "Performing backup");
     SharedPreferences preferences = this.getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
 
     backupPreferences(data, preferences);
-    Log.i(Constants.TAG, "Backup complete");
+    Log.i(TAG, "Backup complete");
   }
 
   private void backupPreferences(BackupDataOutput data,
@@ -63,18 +66,18 @@ public class MyTracksBackupAgent extends BackupAgent {
   @Override
   public void onRestore(BackupDataInput data, int appVersionCode,
       ParcelFileDescriptor newState) throws IOException {
-    Log.i(Constants.TAG, "Restoring from backup");
+    Log.i(TAG, "Restoring from backup");
     while (data.readNextHeader()) {
       String key = data.getKey();
-      Log.d(Constants.TAG, "Restoring entity " + key);
+      Log.d(TAG, "Restoring entity " + key);
       if (key.equals(PREFERENCES_ENTITY)) {
         restorePreferences(data);
       } else {
-        Log.e(Constants.TAG, "Found unknown backup entity: " + key);
+        Log.e(TAG, "Found unknown backup entity: " + key);
         data.skipEntityData();
       }
     }
-    Log.i(Constants.TAG, "Done restoring from backup");
+    Log.i(TAG, "Done restoring from backup");
   }
 
   /**

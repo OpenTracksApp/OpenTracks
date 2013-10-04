@@ -58,11 +58,6 @@ public class Constants {
   public static final String SETTINGS_NAME = "SettingsActivity";
 
   /**
-   * The log tag.
-   */
-  public static final String TAG = "MyTracks";
-
-  /**
    * Target number of track points displayed by the map overlay. We may display
    * more than this number of points.
    */
