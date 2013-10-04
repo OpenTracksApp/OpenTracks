@@ -27,7 +27,6 @@ import android.content.Context;
 import android.location.Location;
 import android.net.Uri;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import org.xml.sax.Attributes;
@@ -65,7 +64,6 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
 
   private static final String ATTRIBUTE_NAME = "name";
 
-  private final String photoPath;
   private boolean trackStarted = false;
   private String sensorName;
   private ArrayList<Location> locationList;
@@ -79,15 +77,14 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
    * @param context the context
    * @param importTrackId track id to import to. -1L to import to a new track.
    */
-  public KmlFileTrackImporter(Context context, long importTrackId, String photoPath) {
-    this(context, importTrackId, photoPath, MyTracksProviderUtils.Factory.get(context));
+  public KmlFileTrackImporter(Context context, long importTrackId) {
+    this(context, importTrackId, MyTracksProviderUtils.Factory.get(context));
   }
 
   @VisibleForTesting
-  public KmlFileTrackImporter(Context context, long importTrackId, String photoPath,
-      MyTracksProviderUtils myTracksProviderUtils) {
+  public KmlFileTrackImporter(
+      Context context, long importTrackId, MyTracksProviderUtils myTracksProviderUtils) {
     super(context, importTrackId, myTracksProviderUtils);
-    this.photoPath = photoPath;
   }
 
   @Override
@@ -184,9 +181,9 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
     if (type == null) {
       return;
     }
-    if (photoUrl != null && photoPath != null) {
+    if (photoUrl != null) {
       Uri uri = Uri.parse(photoUrl);
-      photoUrl = photoPath + File.separatorChar + uri.getLastPathSegment(); 
+      photoUrl = getPhotoUrl(uri.getLastPathSegment());
     }
     addWaypoint(type);
   }

@@ -30,14 +30,16 @@ public class FileUtils {
 
   private FileUtils() {}
 
-  public static final String BACKUPS_DIR = "backups";
-  
   /**
    * Name of the top-level directory inside the SD card where our files will be
    * read from/written to.
    */
-  public static final String SDCARD_TOP_DIR = "MyTracks";
-
+  protected static final String SDCARD_TOP_DIR = "MyTracks";
+  
+  public static final String BACKUPS_DIR = "backups";
+  
+  public static final String PICTURES_DIR = "pictures";
+  
   /**
    * The maximum FAT32 path length. See the FAT32 spec at
    * http://msdn.microsoft.com/en-us/windows/hardware/gg463080

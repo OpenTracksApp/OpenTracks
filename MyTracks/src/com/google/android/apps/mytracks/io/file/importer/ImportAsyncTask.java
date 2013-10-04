@@ -16,16 +16,17 @@
 
 package com.google.android.apps.mytracks.io.file.importer;
 
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.io.file.exporter.KmzTrackExporter;
-import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
 
@@ -179,14 +180,12 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         String name = file.getName();
         if (name.endsWith("." + TrackFileFormat.KML.getExtension())) {
           trackImporter = new KmlFileTrackImporter(context, -1L, null);
-        } else {
-          File dir = new File(
-              Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-              FileUtils.SDCARD_TOP_DIR);
-          FileUtils.ensureDirectoryExists(dir);
-          dir = new File(dir, name.substring(0, name.lastIndexOf('.')));
-          FileUtils.ensureDirectoryExists(dir);
-          trackImporter = new KmzTrackImporter(context, dir.getPath());
+        } else {         
+          MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
+          Uri uri = myTracksProviderUtils.insertTrack(new Track());
+          long newId = Long.parseLong(uri.getLastPathSegment());
+
+          trackImporter = new KmzTrackImporter(context, newId);
         }
       } else {
         trackImporter = new GpxFileTrackImporter(context);

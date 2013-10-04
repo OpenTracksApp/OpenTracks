@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.io.file.importer;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.io.file.exporter.KmzTrackExporter;
+import com.google.android.apps.mytracks.util.FileUtils;
 
 import android.content.Context;
 import android.util.Log;
@@ -42,17 +43,24 @@ public class KmzTrackImporter implements TrackImporter {
   private static final int BUFFER_SIZE = 4096;
 
   private final Context context;
-  private final String photoPath;
+  private final long importTrackId;
 
-  public KmzTrackImporter(Context context, String photoPath) {
+  /**
+   * Constructor.
+   * 
+   * @param context the context
+   * @param importTrackId track id to import to. This should not be -1L so that
+   *          images in the kmz file can be imported.
+   */
+  public KmzTrackImporter(Context context, long importTrackId) {
     this.context = context;
-    this.photoPath = photoPath;
+    this.importTrackId = importTrackId;
   }
 
   @Override
   public long importFile(InputStream inputStream) {
     ZipInputStream zipInputStream = null;
-    long importedTrackId = -1L;
+    long trackId = importTrackId;
     try {
       ZipEntry zipEntry;
 
@@ -60,15 +68,15 @@ public class KmzTrackImporter implements TrackImporter {
       while ((zipEntry = zipInputStream.getNextEntry()) != null) {
         if (Thread.interrupted()) {
           Log.d(TAG, "Thread interrupted");
-          cleanImport(importedTrackId);
+          cleanImport(trackId);
           return -1L;
         }
         String fileName = zipEntry.getName();
         if (fileName.equals(KmzTrackExporter.KMZ_KML_FILE)) {
-          importedTrackId = parseKml(zipInputStream);
-          if (importedTrackId == -1L) {
+          trackId = parseKml(zipInputStream);
+          if (trackId == -1L) {
             Log.d(TAG, "Unable to parse kml in kmz");
-            cleanImport(importedTrackId);
+            cleanImport(trackId);
             return -1L;
           }
         } else {
@@ -79,10 +87,10 @@ public class KmzTrackImporter implements TrackImporter {
         }
         zipInputStream.closeEntry();
       }
-      return importedTrackId;
+      return trackId;
     } catch (IOException e) {
       Log.e(TAG, "Unable to import file", e);
-      cleanImport(importedTrackId);
+      cleanImport(trackId);
       return -1L;
     } finally {
       if (zipInputStream != null) {
@@ -98,15 +106,17 @@ public class KmzTrackImporter implements TrackImporter {
   /**
    * Cleans up import.
    * 
-   * @param importedTrackId the imported track id
+   * @param trackId the trackId
    */
-  private void cleanImport(long importedTrackId) {
-    if (importedTrackId != -1L) {
+  private void cleanImport(long trackId) {
+    if (trackId != -1L) {
       MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
-      myTracksProviderUtils.deleteTrack(importedTrackId);
+      myTracksProviderUtils.deleteTrack(trackId);
     }
-    if (photoPath != null) {
-      File dir = new File(photoPath);
+
+    if (importTrackId != -1L) {
+      File dir = new File(
+          FileUtils.getDirectoryPath(FileUtils.PICTURES_DIR, Long.toString(importTrackId)));
       if (dir.exists() && dir.isDirectory()) {
         for (File file : dir.listFiles()) {
           file.delete();
@@ -125,7 +135,7 @@ public class KmzTrackImporter implements TrackImporter {
   private long parseKml(ZipInputStream zipInputStream) throws IOException {
     ByteArrayInputStream byteArrayInputStream = null;
     try {
-      KmlFileTrackImporter kmlFileTrackImporter = new KmlFileTrackImporter(context, -1L, photoPath);
+      KmlFileTrackImporter kmlFileTrackImporter = new KmlFileTrackImporter(context, importTrackId);
       byteArrayInputStream = new ByteArrayInputStream(getKml(zipInputStream));
       return kmlFileTrackImporter.importFile(byteArrayInputStream);
     } finally {
@@ -166,7 +176,14 @@ public class KmzTrackImporter implements TrackImporter {
   private void readImageFile(ZipInputStream zipInputStream, String fileName) throws IOException {
     FileOutputStream fileOutputStream = null;
     try {
-      fileOutputStream = new FileOutputStream(photoPath + File.separatorChar + fileName);
+      if (importTrackId == -1L) {
+        return;
+      }
+      File dir = new File(
+          FileUtils.getDirectoryPath(FileUtils.PICTURES_DIR, Long.toString(importTrackId)));
+      FileUtils.ensureDirectoryExists(dir);
+
+      fileOutputStream = new FileOutputStream(new File(dir, fileName));
       byte[] buffer = new byte[BUFFER_SIZE];
       int count;
       while ((count = zipInputStream.read(buffer)) != -1) {

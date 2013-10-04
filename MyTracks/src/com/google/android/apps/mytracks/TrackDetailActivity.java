@@ -51,7 +51,6 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.v4.app.TaskStackBuilder;
@@ -216,8 +215,10 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity implements
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     hasCamera = getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
-    photoUri = savedInstanceState != null ? (Uri) savedInstanceState.getParcelable(PHOTO_URI_KEY) : null;
-    hasPhoto = savedInstanceState != null ? savedInstanceState.getBoolean(HAS_PHOTO_KEY, false) : false;
+    photoUri = savedInstanceState != null ? (Uri) savedInstanceState.getParcelable(PHOTO_URI_KEY)
+        : null;
+    hasPhoto = savedInstanceState != null ? savedInstanceState.getBoolean(HAS_PHOTO_KEY, false)
+        : false;
        
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
     handleIntent(getIntent());
@@ -397,9 +398,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity implements
           }
 
           File dir = new File(
-              Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-              FileUtils.SDCARD_TOP_DIR);
-
+              FileUtils.getDirectoryPath(FileUtils.PICTURES_DIR, Long.toString(trackId)));
           FileUtils.ensureDirectoryExists(dir);
 
           String fileName = SimpleDateFormat.getDateTimeInstance().format(new Date());

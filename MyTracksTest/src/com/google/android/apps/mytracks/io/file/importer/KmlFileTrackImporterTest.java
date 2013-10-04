@@ -20,7 +20,6 @@ import static com.google.android.testing.mocking.AndroidMock.eq;
 import static com.google.android.testing.mocking.AndroidMock.expect;
 
 import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.io.file.importer.KmlFileTrackImporter;
 import com.google.android.testing.mocking.AndroidMock;
 
 import android.location.Location;
@@ -73,8 +72,7 @@ public class KmlFileTrackImporterTest extends AbstractTestFileTrackImporter {
     Location location0 = createLocation(0, DATE_FORMAT_0.parse(TRACK_TIME_0).getTime());
     Location location1 = createLocation(1, DATE_FORMAT_1.parse(TRACK_TIME_1).getTime());
 
-    expect(myTracksProviderUtils.insertTrack((Track) AndroidMock.anyObject()))
-        .andReturn(TRACK_ID_0_URI);
+    myTracksProviderUtils.clearTrack(TRACK_ID_0);
     expectFirstTrackPoint(location0, TRACK_ID_0, TRACK_POINT_ID_0);
 
     // A flush happens at the end
@@ -87,7 +85,7 @@ public class KmlFileTrackImporterTest extends AbstractTestFileTrackImporter {
 
     InputStream inputStream = new ByteArrayInputStream(VALID_ONE_TRACK_ONE_SEGMENT_GPX.getBytes());
     KmlFileTrackImporter kmlFileTrackImporter = new KmlFileTrackImporter(
-        getContext(), -1L, null, myTracksProviderUtils);
+        getContext(), TRACK_ID_0, myTracksProviderUtils);
     long trackId = kmlFileTrackImporter.importFile(inputStream);
     assertEquals(TRACK_ID_0, trackId);
 
@@ -106,8 +104,7 @@ public class KmlFileTrackImporterTest extends AbstractTestFileTrackImporter {
 
     Location location0 = createLocation(0, DATE_FORMAT_0.parse(TRACK_TIME_0).getTime());
 
-    expect(myTracksProviderUtils.insertTrack((Track) AndroidMock.anyObject()))
-        .andReturn(TRACK_ID_0_URI);
+    myTracksProviderUtils.clearTrack(TRACK_ID_0);
     expectFirstTrackPoint(location0, TRACK_ID_0, TRACK_POINT_ID_0);
 
     // A flush happens at the end
@@ -120,7 +117,7 @@ public class KmlFileTrackImporterTest extends AbstractTestFileTrackImporter {
 
     InputStream inputStream = new ByteArrayInputStream(VALID_ONE_TRACK_TWO_SEGMENTS_GPX.getBytes());
     KmlFileTrackImporter kmlFileTrackImporter = new KmlFileTrackImporter(
-        getContext(), -1L, null, myTracksProviderUtils);
+        getContext(), TRACK_ID_0, myTracksProviderUtils);
     long trackId = kmlFileTrackImporter.importFile(inputStream);
     assertEquals(TRACK_ID_0, trackId);
 

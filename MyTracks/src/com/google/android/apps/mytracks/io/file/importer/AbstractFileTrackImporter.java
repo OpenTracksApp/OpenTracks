@@ -25,6 +25,7 @@ import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.stats.TripStatisticsUpdater;
+import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
@@ -459,6 +460,19 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
   protected String createErrorMessage(String message) {
     return String.format(Locale.US, "Parsing error at line: %d column: %d. %s",
         locator.getLineNumber(), locator.getColumnNumber(), message);
+  }
+
+  /**
+   * Gets the photo url for a file.
+   * 
+   * @param fileName the file name
+   */
+  protected String getPhotoUrl(String fileName) {
+    if (importTrackId == -1L) {
+      return null;
+    }
+    return FileUtils.getDirectoryPath(
+        FileUtils.PICTURES_DIR, Long.toString(importTrackId), fileName);
   }
 
   /**
