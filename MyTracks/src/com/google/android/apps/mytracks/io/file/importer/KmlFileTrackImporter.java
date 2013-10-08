@@ -82,7 +82,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
   }
 
   @VisibleForTesting
-  public KmlFileTrackImporter(
+  KmlFileTrackImporter(
       Context context, long importTrackId, MyTracksProviderUtils myTracksProviderUtils) {
     super(context, importTrackId, myTracksProviderUtils);
   }

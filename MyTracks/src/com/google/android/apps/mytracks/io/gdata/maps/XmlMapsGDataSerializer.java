@@ -1,6 +1,7 @@
 // Copyright 2010 Google Inc. All Rights Reserved.
 package com.google.android.apps.mytracks.io.gdata.maps;
 
+import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.wireless.gdata.data.StringUtils;
 import com.google.wireless.gdata.parser.ParseException;
 import com.google.wireless.gdata.parser.xml.XmlGDataParser;
@@ -170,8 +171,7 @@ class XmlMapsGDataSerializer extends XmlEntryGDataSerializer {
     }
     serializer.startTag(null /* ns */, "content");
     if (content.contains("</Placemark>")) {
-      serializer.attribute(
-          null /* ns */, "type", "application/vnd.google-earth.kml+xml");
+      serializer.attribute(null /* ns */, "type", SyncUtils.KML_MIME_TYPE);
       serializer.flush();
       stream.write(content.getBytes());
     } else {

@@ -17,6 +17,7 @@
 package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.io.sync.SyncUtils;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -40,7 +41,6 @@ public class GoogleEarthUtils {
   private static final String TAG = GoogleEarthUtils.class.getSimpleName();
 
   private static final String GOOGLE_EARTH_CLASS = "com.google.earth.EarthActivity";
-  private static final String GOOGLE_EARTH_KML_MIME_TYPE = "application/vnd.google-earth.kml+xml";
   private static final int GOOGLE_EARTH_MIN_VERSION_CODE = 13246120;
   private static final String GOOGLE_EARTH_PACKAGE = "com.google.earth";
   private static final String
@@ -60,7 +60,7 @@ public class GoogleEarthUtils {
    */
   public static boolean isEarthInstalled(Context context) {
     List<ResolveInfo> infos = context.getPackageManager().queryIntentActivities(
-        new Intent().setType(GOOGLE_EARTH_KML_MIME_TYPE), PackageManager.MATCH_DEFAULT_ONLY);
+        new Intent().setType(SyncUtils.KMZ_MIME_TYPE), PackageManager.MATCH_DEFAULT_ONLY);
     for (ResolveInfo info : infos) {
       if (info.activityInfo != null && info.activityInfo.packageName != null
           && info.activityInfo.packageName.equals(GOOGLE_EARTH_PACKAGE)) {
@@ -89,6 +89,6 @@ public class GoogleEarthUtils {
         | Intent.FLAG_GRANT_READ_URI_PERMISSION)
         .putExtra(GOOGLE_EARTH_TOUR_FEATURE_ID, TOUR_FEATURE_ID_VALUE)
         .setClassName(GOOGLE_EARTH_PACKAGE, GOOGLE_EARTH_CLASS)
-        .setDataAndType(uri, GOOGLE_EARTH_KML_MIME_TYPE);
+        .setDataAndType(uri, SyncUtils.KMZ_MIME_TYPE);
   }
 }

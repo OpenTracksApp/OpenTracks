@@ -95,7 +95,7 @@ public class SendDriveAsyncTask extends AbstractSendAsyncTask {
           addPermission(drive, driveFile);
           return true;
         }
-        SyncUtils.updateTrackWithDriveFileInfo(myTracksProviderUtils, track, null);
+        SyncUtils.updateTrack(myTracksProviderUtils, track, null);
       }
 
       File file = SyncUtils.insertDriveFile(

@@ -22,6 +22,8 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.io.file.exporter.FileTrackExporter;
+import com.google.android.apps.mytracks.io.file.exporter.KmzTrackExporter;
+import com.google.android.apps.mytracks.io.file.exporter.TrackExporter;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
@@ -69,17 +71,24 @@ public class SyncUtils {
   // Get tracks without drive id
   public static final String NO_DRIVE_ID_TRACKS_QUERY = TracksColumns.DRIVEID + " IS NULL OR "
       + TracksColumns.DRIVEID + "=''";
-
+  
   // KML mime type
   public static final String KML_MIME_TYPE = "application/vnd.google-earth.kml+xml";
 
-  // Get My Tracks folder KML files
-  public static final String MY_TRACKS_FOLDER_FILES_QUERY = "'%s' in parents and mimeType = '"
-      + KML_MIME_TYPE + "' and trashed = false";
+  // KMZ mime type
+  public static final String KMZ_MIME_TYPE = "application/vnd.google-earth.kmz";
 
-  // Get shared with me KML files
-  public static final String SHARED_WITH_ME_FILES_QUERY = "sharedWithMe and mimeType = '"
-      + KML_MIME_TYPE + "' and trashed = false";
+  // KML and KMZ mime types
+  private static final String KML_KMZ_MINE_TYPES = "not (mimeType != '" + KML_MIME_TYPE
+      + "' and mimeType != '" + KMZ_MIME_TYPE + "')";
+
+  // Get KML/KMZ files in the My Tracks folder
+  public static final String MY_TRACKS_FOLDER_FILES_QUERY = "'%s' in parents and "
+      + KML_KMZ_MINE_TYPES + " and trashed = false";
+
+  // Get shared with me KML/KMZ files
+  public static final String SHARED_WITH_ME_FILES_QUERY = "sharedWithMe and " + KML_KMZ_MINE_TYPES
+      + " and trashed = false";
 
   // Folder mime type
   private static final String FOLDER_MIME_TYPE = "application/vnd.google-apps.folder";
@@ -155,7 +164,7 @@ public class SyncUtils {
 
   /**
    * Clears the sync state. Assumes sync is turned off. Do not want clearing the
-   * state to cause sync activities.
+   * sync state to cause sync activities.
    */
   public static void clearSyncState(Context context) {
     MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
@@ -168,7 +177,7 @@ public class SyncUtils {
           if (track.isSharedWithMe()) {
             myTracksProviderUtils.deleteTrack(track.getId());
           } else {
-            SyncUtils.updateTrackWithDriveFileInfo(myTracksProviderUtils, track, null);
+            SyncUtils.updateTrack(myTracksProviderUtils, track, null);
           }
         } while (cursor.moveToNext());
       }
@@ -218,7 +227,7 @@ public class SyncUtils {
   }
 
   /**
-   * Returns true if the drive file is a Shared with me KML file.
+   * Returns true if a drive file is a Shared with me KML or KMZ file.
    * 
    * @param driveFile the drive file
    */
@@ -226,14 +235,15 @@ public class SyncUtils {
     if (driveFile == null) {
       return false;
     }
-    if (!SyncUtils.KML_MIME_TYPE.equals(driveFile.getMimeType())) {
+    String mimeType = driveFile.getMimeType();
+    if (!SyncUtils.KML_MIME_TYPE.equals(mimeType) && !SyncUtils.KMZ_MIME_TYPE.equals(mimeType)) {
       return false;
     }
     return driveFile.getSharedWithMeDate() != null;
   }
 
   /**
-   * Returns true if the drive file is a valid KML file in the My Tracks folder
+   * Returns true if a drive file is a KML or KMZ file in the My Tracks folder
    * and not trashed.
    * 
    * @param driveFile the drive file
@@ -244,7 +254,7 @@ public class SyncUtils {
   }
 
   /**
-   * Returns true if the drive file is a KML file in the My Tracks folder.
+   * Returns true if a drive file is a KML or KMZ file in the My Tracks folder.
    * 
    * @param driveFile the drive file
    * @param folderId the My Tracks folder id
@@ -253,7 +263,8 @@ public class SyncUtils {
     if (driveFile == null) {
       return false;
     }
-    if (!SyncUtils.KML_MIME_TYPE.equals(driveFile.getMimeType())) {
+    String mimeType = driveFile.getMimeType();
+    if (!SyncUtils.KML_MIME_TYPE.equals(mimeType) && !SyncUtils.KMZ_MIME_TYPE.equals(mimeType)) {
       return false;
     }
     if (driveFile.getSharedWithMeDate() != null) {
@@ -269,7 +280,7 @@ public class SyncUtils {
   }
 
   /**
-   * Inserts a Drive file.
+   * Inserts a drive file using info from a track.
    * 
    * @param drive the drive
    * @param folderId the folder id
@@ -284,7 +295,7 @@ public class SyncUtils {
       throws IOException {
     java.io.File file = null;
     try {
-      file = getFile(context, myTracksProviderUtils, track);
+      file = getFile(context, myTracksProviderUtils, track, true);
 
       if (file == null) {
         Log.e(TAG, "Unable to add Drive file. File is null for track " + track.getName());
@@ -297,7 +308,7 @@ public class SyncUtils {
         Log.e(TAG, "Unable to add Drive file. Uploaded file is null for track " + track.getName());
         return null;
       }
-      SyncUtils.updateTrackWithDriveFileInfo(myTracksProviderUtils, track, uploadedFile);
+      SyncUtils.updateTrack(myTracksProviderUtils, track, uploadedFile);
       return uploadedFile;
     } finally {
       if (file != null) {
@@ -307,20 +318,18 @@ public class SyncUtils {
   }
 
   /**
-   * Inserts a Drive file.
+   * Inserts a drive file using info from a track file.
    * 
    * @param drive the drive
    * @param folderId the folder id
-   * @param name the track name
+   * @param trackName the track name
    * @param file the track file
    * @param canRetry true if can retry
    */
   private static File insertDriveFile(
-      Drive drive, String folderId, String name, java.io.File file, boolean canRetry)
+      Drive drive, String folderId, String trackName, java.io.File file, boolean canRetry)
       throws IOException {
     try {
-      FileContent fileContent = new FileContent(KML_MIME_TYPE, file);
-
       // file's parent
       ParentReference parentReference = new ParentReference();
       parentReference.setId(folderId);
@@ -329,23 +338,24 @@ public class SyncUtils {
 
       // file's metadata
       File newMetaData = new File();
-      newMetaData.setTitle(name + "." + TrackFileFormat.KML.getExtension());
-      newMetaData.setMimeType(KML_MIME_TYPE);
+      newMetaData.setTitle(trackName + "." + KmzTrackExporter.KMZ_EXTENSION);
+      newMetaData.setMimeType(KMZ_MIME_TYPE);
       newMetaData.setParents(parents);
 
+      FileContent fileContent = new FileContent(KMZ_MIME_TYPE, file);
       return drive.files().insert(newMetaData, fileContent).execute();
     } catch (UserRecoverableAuthIOException e) {
       throw e;
     } catch (IOException e) {
       if (canRetry) {
-        return insertDriveFile(drive, folderId, name, file, false);
+        return insertDriveFile(drive, folderId, trackName, file, false);
       }
       throw e;
     }
   }
 
   /**
-   * Updates a Drive file. Returns true if successful.
+   * Updates a drive file using info from a track. Returns true if successful.
    * 
    * @param drive the drive
    * @param driveFile the drive file
@@ -361,20 +371,21 @@ public class SyncUtils {
     java.io.File file = null;
 
     try {
-      file = SyncUtils.getFile(context, myTracksProviderUtils, track);
+      file = SyncUtils.getFile(context, myTracksProviderUtils, track, true);
 
       if (file == null) {
         Log.e(TAG, "Unable to update drive file. File is null for track " + track.getName());
         return false;
       }
 
-      String title = track.getName() + "." + TrackFileFormat.KML.getExtension();
+      String title = track.getName() + "." + KmzTrackExporter.KMZ_EXTENSION;
       File updatedFile;
       String digest = md5(file);
       if (digest != null && digest.equals(driveFile.getMd5Checksum())) {
         if (title.equals(driveFile.getTitle())) {
           updatedFile = driveFile;
         } else {
+          // Only update the title
           updatedFile = updateDriveFile(drive, driveFile, title, null, canRetry);
         }
       } else {
@@ -399,12 +410,12 @@ public class SyncUtils {
   }
 
   /**
-   * Updates a Drive file.
+   * Updates a drive file using a track file.
    * 
    * @param drive the drive
    * @param driveFile the drive file
    * @param driveTitle the drive title
-   * @param file the track file
+   * @param file the track file. If null, just update the driveFile meta data
    * @param canRetry true if can retry
    */
   private static File updateDriveFile(
@@ -412,9 +423,11 @@ public class SyncUtils {
       throws IOException {
     try {
       driveFile.setTitle(driveTitle);
+      driveFile.setMimeType(KMZ_MIME_TYPE);
+
       if (file != null) {
-        return drive.files()
-            .update(driveFile.getId(), driveFile, new FileContent(KML_MIME_TYPE, file)).execute();
+        FileContent fileContent = new FileContent(KMZ_MIME_TYPE, file);
+        return drive.files().update(driveFile.getId(), driveFile, fileContent).execute();
       } else {
         return drive.files().update(driveFile.getId(), driveFile).execute();
       }
@@ -432,30 +445,34 @@ public class SyncUtils {
    * Gets a file from a track.
    * 
    * @param context the context
-   * @param myTracksProviderUtils the myTracksProviderUtils
+   * @param myTracksProviderUtils the myMyTracksProviderUtils
    * @param track the track
+   * @param useKmz true to output kmz
    */
   public static java.io.File getFile(
-      Context context, MyTracksProviderUtils myTracksProviderUtils, Track track)
+      Context context, MyTracksProviderUtils myTracksProviderUtils, Track track, boolean useKmz)
       throws FileNotFoundException {
-    TrackFileFormat trackFileFormat = TrackFileFormat.KML;
-    java.io.File directory = new java.io.File(
-        context.getCacheDir(), trackFileFormat.getExtension());
+    String extension = useKmz ? KmzTrackExporter.KMZ_EXTENSION : TrackFileFormat.KML.getExtension();
+    java.io.File directory = new java.io.File(context.getCacheDir(), extension);
 
     if (!FileUtils.ensureDirectoryExists(directory)) {
       Log.d(TAG, "Unable to create " + directory.getAbsolutePath());
       return null;
     }
 
-    java.io.File file = new java.io.File(directory,
-        FileUtils.buildUniqueFileName(directory, track.getName(), trackFileFormat.getExtension()));
-    FileTrackExporter fileTrackExporter = new FileTrackExporter(myTracksProviderUtils,
-        new Track[] { track }, trackFileFormat.newTrackWriter(context, false), null);
+    Track[] tracks = new Track[] { track };
+    java.io.File file = new java.io.File(
+        directory, FileUtils.buildUniqueFileName(directory, track.getName(), extension));
+    FileTrackExporter fileTrackExporter = new FileTrackExporter(
+        myTracksProviderUtils, tracks, TrackFileFormat.KML.newTrackWriter(context, false), null);
+    TrackExporter trackExporter = useKmz ? new KmzTrackExporter(
+        myTracksProviderUtils, fileTrackExporter, tracks)
+        : fileTrackExporter;
 
     FileOutputStream fileOutputStream = null;
     try {
       fileOutputStream = new FileOutputStream(file);
-      if (fileTrackExporter.writeTrack(fileOutputStream)) {
+      if (trackExporter.writeTrack(fileOutputStream)) {
         return file;
       } else {
         if (!file.delete()) {
@@ -476,13 +493,13 @@ public class SyncUtils {
   }
   
   /**
-   * Updates track with drive file info.
+   * Updates a track with info from a drive file.
    * 
    * @param myTracksProviderUtils the myTracksProviderUtils
    * @param track the track
    * @param driveFile the drive file
    */
-  public static void updateTrackWithDriveFileInfo(
+  public static void updateTrack(
       MyTracksProviderUtils myTracksProviderUtils, Track track, File driveFile) {
     track.setDriveId(driveFile != null ? driveFile.getId() : "");
     track.setModifiedTime(driveFile != null ? driveFile.getModifiedDate().getValue() : -1L);
@@ -494,7 +511,7 @@ public class SyncUtils {
   }
 
   /**
-   * Gets the md5 digest for the file.
+   * Gets the md5 digest for a file.
    * 
    * @param file the file
    */

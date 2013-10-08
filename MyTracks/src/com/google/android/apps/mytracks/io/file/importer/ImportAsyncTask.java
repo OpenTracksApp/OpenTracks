@@ -180,7 +180,7 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
       if (trackFileFormat == TrackFileFormat.KML) {
         String name = file.getName();
         if (name.endsWith("." + TrackFileFormat.KML.getExtension())) {
-          trackImporter = new KmlFileTrackImporter(context, -1L, null);
+          trackImporter = new KmlFileTrackImporter(context, -1L);
         } else {         
           MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
           Uri uri = myTracksProviderUtils.insertTrack(new Track());
