@@ -81,7 +81,7 @@ public class SaveActivity extends Activity {
       return;
     }
 
-    File directory = playTrack ? getCacheDir()
+    File directory = playTrack ? new File(getCacheDir(), FileUtils.PLAY_TRACKS_DIR)
         : new File(FileUtils.getPath(trackFileFormat.getExtension()));
     if (!FileUtils.ensureDirectoryExists(directory)) {
       Toast.makeText(this, R.string.external_storage_not_writable, Toast.LENGTH_LONG).show();
@@ -90,12 +90,12 @@ public class SaveActivity extends Activity {
     }
 
     if (playTrack) {
-      for (File file : getCacheDir().listFiles()) {
+      for (File file : directory.listFiles()) {
         file.delete();
       }
     }
 
-    directoryDisplayName = playTrack ? getCacheDir().getName()
+    directoryDisplayName = playTrack ? directory.getName()
         : FileUtils.getPathDisplayName(trackFileFormat.getExtension());
 
     Object retained = getLastNonConfigurationInstance();

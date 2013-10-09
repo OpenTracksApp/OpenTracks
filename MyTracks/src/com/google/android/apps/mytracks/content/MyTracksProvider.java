@@ -17,6 +17,7 @@
 package com.google.android.apps.mytracks.content;
 
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
+import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
@@ -435,8 +436,8 @@ public class MyTracksProvider extends ContentProvider {
       }
       throw new FileNotFoundException(uri.getPath());
     } finally {
-      File[] files = getContext().getCacheDir().listFiles();
-      for (File file : files) {
+      File dir = new File(getContext().getCacheDir(), FileUtils.PLAY_TRACKS_DIR);
+      for (File file : dir.listFiles()) {
         file.delete();
       }
     }

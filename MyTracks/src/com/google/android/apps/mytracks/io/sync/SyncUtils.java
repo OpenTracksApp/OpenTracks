@@ -101,7 +101,6 @@ public class SyncUtils {
 
   private static final String TAG = SyncUtils.class.getSimpleName();
   private static final String SYNC_AUTHORITY = "com.google.android.maps.mytracks";
-  private static final String TEMP_DIR = "temp";
 
   private SyncUtils() {}
 
@@ -454,7 +453,7 @@ public class SyncUtils {
       Context context, MyTracksProviderUtils myTracksProviderUtils, Track track, boolean useKmz)
       throws FileNotFoundException {
     String extension = useKmz ? KmzTrackExporter.KMZ_EXTENSION : TrackFileFormat.KML.getExtension();
-    java.io.File directory = new java.io.File(context.getCacheDir(), TEMP_DIR);
+    java.io.File directory = new java.io.File(context.getCacheDir(), FileUtils.TEMP_FILES_DIR);
 
     if (!FileUtils.ensureDirectoryExists(directory)) {
       Log.d(TAG, "Unable to create " + directory.getAbsolutePath());

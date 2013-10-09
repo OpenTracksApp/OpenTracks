@@ -83,6 +83,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity implements
   private static final String CURRENT_TAB_TAG_KEY = "current_tab_tag_key";
   private static final String PHOTO_URI_KEY = "photo_uri_key";
   private static final String HAS_PHOTO_KEY = "has_photo_key";
+  private static final String JPEG_EXTENSION = "jpeg";
   
   // The following are set in onCreate
   private boolean hasCamera;
@@ -399,7 +400,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity implements
         FileUtils.ensureDirectoryExists(dir);
 
         String fileName = SimpleDateFormat.getDateTimeInstance().format(new Date());
-        File file = new File(dir, FileUtils.buildUniqueFileName(dir, fileName, "jpeg"));
+        File file = new File(dir, FileUtils.buildUniqueFileName(dir, fileName, JPEG_EXTENSION));
 
         photoUri = Uri.fromFile(file);
         intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE).putExtra(

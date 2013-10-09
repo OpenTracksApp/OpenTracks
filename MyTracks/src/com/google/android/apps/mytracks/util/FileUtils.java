@@ -54,6 +54,16 @@ public class FileUtils {
   static final int MAX_FAT32_PATH_LENGTH = 260;
 
   /**
+   * The play tracks directory under the My Tracks cache directory.
+   */
+  public static final String PLAY_TRACKS_DIR = "temp";
+  
+  /**
+   * The temp files directory under the My Tracks cache directory.
+   */
+  public static final String TEMP_FILES_DIR = "temp_files"; 
+  
+  /**
    * Returns true if the external storage is available.
    */
   public static boolean isExternalStorageAvailable() {
