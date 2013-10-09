@@ -26,6 +26,7 @@ import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.zip.ZipEntry;
@@ -142,7 +143,9 @@ public class KmzTrackExporter implements TrackExporter {
       int byteCount = 0;
       while ((byteCount = fileInputStream.read(buffer)) != -1) {
         zipOutputStream.write(buffer, 0, byteCount);
-      }
+      }      
+    } catch (FileNotFoundException e) {
+      Log.e(TAG, "Unable to add image", e);
     } finally {
       if (fileInputStream != null) {
         fileInputStream.close();

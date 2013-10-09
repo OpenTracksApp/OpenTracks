@@ -350,40 +350,15 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
       if (driveFile == null) {
         return;
       }
-
-      boolean useKmz = KmzTrackExporter.KMZ_EXTENSION.equals(driveFile.getFileExtension());
-      InputStream inputStream = null;
+      boolean success = false;
+      long trackId = -1L;
       try {
-        inputStream = downloadDriveFile(driveFile, true);
-        if (inputStream == null) {
-          continue;
-        }
-        
-        TrackImporter trackImporter;
-        if (useKmz) {
-          Uri uri = myTracksProviderUtils.insertTrack(new Track());
-          long newId = Long.parseLong(uri.getLastPathSegment());
-
-          trackImporter = new KmzTrackImporter(context, newId);
-        } else {
-          trackImporter = new KmlFileTrackImporter(context, -1L);
-        }        
-        
-        long trackId = trackImporter.importFile(inputStream);
-        if (trackId != -1L) {
-          Track track = myTracksProviderUtils.getTrack(trackId);
-          if (track == null) {
-            Log.e(TAG, "Unable to insert new drive file for " + driveFile.getId());
-            continue;
-          }
-          SyncUtils.updateTrack(myTracksProviderUtils, track, driveFile);
-          Log.d(TAG, "Add from Google Drive " + track.getName());
-        }
-      } catch (IOException e) {
-        Log.e(TAG, "Unable to insert new drive file for " + driveFile.getId(), e);
+        Uri uri = myTracksProviderUtils.insertTrack(new Track());
+        trackId = Long.parseLong(uri.getLastPathSegment());
+        success = updateTrack(trackId, driveFile);
       } finally {
-        if (inputStream != null) {
-          inputStream.close();
+        if (!success && trackId != -1L) {
+          myTracksProviderUtils.deleteTrack(trackId);
         }
       }
     }
@@ -472,7 +447,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     } else if (modifiedTime < driveModifiedTime) {
       Log.d(TAG, "Updating drive change for track " + track.getName() + " and drive file "
           + driveFile.getTitle());
-      if (!updateTrack(track, driveFile)) {
+      if (!updateTrack(track.getId(), driveFile)) {
         Log.e(TAG, "Unable to update drive change");
         track.setModifiedTime(driveModifiedTime);
         myTracksProviderUtils.updateTrack(track);
@@ -483,18 +458,18 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
   /**
    * Updates a track based on a drive file. Returns true if successful.
    * 
-   * @param track the track
+   * @param trackId the track id
    * @param driveFile the drive file
    */
-  private boolean updateTrack(Track track, File driveFile) throws IOException {
-    Track updatedTrack = importDriveFile(driveFile, track.getId());
-    if (updatedTrack == null) {
+  private boolean updateTrack(long trackId, File driveFile) throws IOException {
+    Track track = importDriveFile(trackId, driveFile);
+    if (track == null) {
       return false;
     }
     File updatedDriveFile;
     String trackName = FileUtils.getName(driveFile.getTitle());
-    if (!updatedTrack.getName().equals(trackName)) {
-      updatedTrack.setName(trackName);
+    if (!track.getName().equals(trackName)) {
+      track.setName(trackName);
 
       /*
        * The drive file title and the track name inside the drive file do not
@@ -502,7 +477,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
        */
       java.io.File file = null;
       try {
-        file = SyncUtils.getTempFile(context, myTracksProviderUtils, updatedTrack, true);
+        file = SyncUtils.getTempFile(context, myTracksProviderUtils, track, true);
         updatedDriveFile = SyncUtils.updateDriveFile(
             drive, driveFile, trackName + "." + KmzTrackExporter.KMZ_EXTENSION, file, true);
 
@@ -519,17 +494,17 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
       updatedDriveFile = driveFile;
     }
 
-    SyncUtils.updateTrack(myTracksProviderUtils, updatedTrack, updatedDriveFile);
+    SyncUtils.updateTrack(myTracksProviderUtils, track, updatedDriveFile);
     return true;
   }
 
   /**
    * Imports drive file to track.
    * 
-   * @param driveFile the drive file
    * @param trackId the track id
+   * @param driveFile the drive file
    */
-  private Track importDriveFile(File driveFile, long trackId) throws IOException {
+  private Track importDriveFile(long trackId, File driveFile) throws IOException {
     InputStream inputStream = null;
     try {
       inputStream = downloadDriveFile(driveFile, true);
