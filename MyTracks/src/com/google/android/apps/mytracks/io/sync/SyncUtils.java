@@ -101,6 +101,7 @@ public class SyncUtils {
 
   private static final String TAG = SyncUtils.class.getSimpleName();
   private static final String SYNC_AUTHORITY = "com.google.android.maps.mytracks";
+  private static final String TEMP_DIR = "temp";
 
   private SyncUtils() {}
 
@@ -295,7 +296,7 @@ public class SyncUtils {
       throws IOException {
     java.io.File file = null;
     try {
-      file = getFile(context, myTracksProviderUtils, track, true);
+      file = getTempFile(context, myTracksProviderUtils, track, true);
 
       if (file == null) {
         Log.e(TAG, "Unable to add Drive file. File is null for track " + track.getName());
@@ -371,7 +372,7 @@ public class SyncUtils {
     java.io.File file = null;
 
     try {
-      file = SyncUtils.getFile(context, myTracksProviderUtils, track, true);
+      file = SyncUtils.getTempFile(context, myTracksProviderUtils, track, true);
 
       if (file == null) {
         Log.e(TAG, "Unable to update drive file. File is null for track " + track.getName());
@@ -418,7 +419,7 @@ public class SyncUtils {
    * @param file the track file. If null, just update the driveFile meta data
    * @param canRetry true if can retry
    */
-  private static File updateDriveFile(
+  public static File updateDriveFile(
       Drive drive, File driveFile, String driveTitle, java.io.File file, boolean canRetry)
       throws IOException {
     try {
@@ -442,22 +443,26 @@ public class SyncUtils {
   }
 
   /**
-   * Gets a file from a track.
+   * Gets a temporary file for a track.
    * 
    * @param context the context
    * @param myTracksProviderUtils the myMyTracksProviderUtils
    * @param track the track
    * @param useKmz true to output kmz
    */
-  public static java.io.File getFile(
+  public static java.io.File getTempFile(
       Context context, MyTracksProviderUtils myTracksProviderUtils, Track track, boolean useKmz)
       throws FileNotFoundException {
     String extension = useKmz ? KmzTrackExporter.KMZ_EXTENSION : TrackFileFormat.KML.getExtension();
-    java.io.File directory = new java.io.File(context.getCacheDir(), extension);
+    java.io.File directory = new java.io.File(context.getCacheDir(), TEMP_DIR);
 
     if (!FileUtils.ensureDirectoryExists(directory)) {
       Log.d(TAG, "Unable to create " + directory.getAbsolutePath());
       return null;
+    }
+
+    for (java.io.File file : directory.listFiles()) {
+      file.delete();
     }
 
     Track[] tracks = new Track[] { track };

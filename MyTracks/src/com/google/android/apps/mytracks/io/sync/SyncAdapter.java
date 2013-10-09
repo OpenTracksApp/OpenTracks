@@ -301,7 +301,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         } while (cursor.moveToNext());
       }
 
-      // Handle new drive files
+      // Insert new tracks from new drive files
       insertNewTracks(changes.values());
       PreferencesUtils.setLong(context, R.string.drive_largest_change_id_key, largestChangeId);
     } finally {
@@ -486,56 +486,100 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
    * @param driveFile the drive file
    */
   private boolean updateTrack(Track track, File driveFile) throws IOException {
-    boolean useKmz = KmzTrackExporter.KMZ_EXTENSION.equals(driveFile.getFileExtension());
-    java.io.File file = null;
-    try {
-      file = SyncUtils.getFile(context, myTracksProviderUtils, track, useKmz);
-      String digest = SyncUtils.md5(file);
-      if (digest != null && digest.equals(driveFile.getMd5Checksum())) {
-        track.setModifiedTime(driveFile.getModifiedDate().getValue());
-        myTracksProviderUtils.updateTrack(track);
-        return true;
-      }
-    } finally {
-      if (file != null) {
-        file.delete();
-      }
+    Track updatedTrack = importDriveFile(driveFile, track.getId());
+    if (updatedTrack == null) {
+      return false;
     }
+    File updatedDriveFile;
+    String trackName = getTrackName(driveFile);
+    if (!updatedTrack.getName().equals(trackName)) {
+      updatedTrack.setName(trackName);
+
+      /*
+       * The drive file title and the track name inside the drive file do not
+       * match, update the drive file.
+       */
+      java.io.File file = null;
+      try {
+        file = SyncUtils.getTempFile(context, myTracksProviderUtils, updatedTrack, true);
+        updatedDriveFile = SyncUtils.updateDriveFile(
+            drive, driveFile, trackName + "." + KmzTrackExporter.KMZ_EXTENSION, file, true);
+
+        if (updatedDriveFile == null) {
+          Log.e(TAG, "Unable to update drive file");
+          return false;
+        }
+      } finally {
+        if (file != null) {
+          file.delete();
+        }
+      }
+    } else {
+      updatedDriveFile = driveFile;
+    }
+
+    SyncUtils.updateTrack(myTracksProviderUtils, updatedTrack, updatedDriveFile);
+    return true;
+  }
+
+  /**
+   * Imports drive file to track.
+   * 
+   * @param driveFile the drive file
+   * @param trackId the track id
+   */
+  private Track importDriveFile(File driveFile, long trackId) throws IOException {
     InputStream inputStream = null;
     try {
       inputStream = downloadDriveFile(driveFile, true);
       if (inputStream == null) {
-        Log.e(TAG, "Unable to update track. Input stream is null for track " + track.getName());
-        return false;
+        Log.e(TAG,
+            "Unable to import file. Input stream is null for drive file " + driveFile.getTitle());
+        return null;
       }
-            
+
       TrackImporter trackImporter;
+      boolean useKmz = KmzTrackExporter.KMZ_EXTENSION.equals(driveFile.getFileExtension());
       if (useKmz) {
-        trackImporter = new KmzTrackImporter(context, track.getId());
+        trackImporter = new KmzTrackImporter(context, trackId);
       } else {
-        trackImporter = new KmlFileTrackImporter(context, track.getId());
-      }        
-      
-      long trackId = trackImporter.importFile(inputStream);
-      if (trackId != -1L) {
-        Track newTrack = myTracksProviderUtils.getTrack(trackId);
-        if (newTrack == null) {
-          Log.e(TAG, "Unable to merge, imported track is null");
-        } else {
-          SyncUtils.updateTrack(myTracksProviderUtils, newTrack, driveFile);
-          return true;
-        }
+        trackImporter = new KmlFileTrackImporter(context, trackId);
+      }
+
+      long importedId = trackImporter.importFile(inputStream);
+      if (importedId == -1L) {
+        Log.e(TAG, "Unable to merge, imported id is -1L");
+        return null;
+      }
+      Track track = myTracksProviderUtils.getTrack(importedId);
+      if (track == null) {
+        Log.e(TAG, "Unable to merge, imported track is null");
+        return null;
       } else {
-        Log.e(TAG, "Unable to merge, track id is -1L");
+        return track;
       }
     } catch (IOException e) {
       Log.e(TAG, "Unable to merge", e);
+      return null;
     } finally {
       if (inputStream != null) {
         inputStream.close();
       }
     }
-    return false;
+  }
+
+  /**
+   * Gets the track name from the drive file title.
+   * 
+   * @param driveFile the drive file
+   */
+  private String getTrackName(File driveFile) {
+    String title = driveFile.getTitle();
+    int index = title.lastIndexOf('.');
+    if (index == -1) {
+      return title;
+    }
+    return title.substring(0, index);    
   }
 
   /**
