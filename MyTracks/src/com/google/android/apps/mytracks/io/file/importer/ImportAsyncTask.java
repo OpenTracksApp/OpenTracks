@@ -178,8 +178,8 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     try {
       TrackImporter trackImporter;
       if (trackFileFormat == TrackFileFormat.KML) {
-        String name = file.getName();
-        if (name.endsWith("." + TrackFileFormat.KML.getExtension())) {
+        String extension = FileUtils.getExtension(file.getName());
+        if (TrackFileFormat.KML.getExtension().equals(extension)) {
           trackImporter = new KmlFileTrackImporter(context, -1L);
         } else {         
           MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
@@ -221,15 +221,15 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
       if (candidates != null) {
         for (File candidate : candidates) {
           if (!FileUtils.isDirectory(candidate)) {
-            String name = candidate.getName();
+            String extension = FileUtils.getExtension(candidate.getName());
             if (trackFileFormat == TrackFileFormat.KML && (
-                name.endsWith("." + TrackFileFormat.KML.getExtension())
-                || name.endsWith("." + KmzTrackExporter.KMZ_EXTENSION))) {
+                TrackFileFormat.KML.getExtension().equals(extension)
+                || KmzTrackExporter.KMZ_EXTENSION.equals(extension))) {
               files.add(candidate);
             } else if (trackFileFormat == TrackFileFormat.GPX
-                && name.endsWith("." + TrackFileFormat.GPX.getExtension())) {
+                && TrackFileFormat.GPX.getExtension().equals(extension)) {
               files.add(candidate);
-            } 
+            }
           }         
         }
       }

@@ -452,7 +452,6 @@ public class SyncUtils {
   public static java.io.File getTempFile(
       Context context, MyTracksProviderUtils myTracksProviderUtils, Track track, boolean useKmz)
       throws FileNotFoundException {
-    String extension = useKmz ? KmzTrackExporter.KMZ_EXTENSION : TrackFileFormat.KML.getExtension();
     java.io.File directory = new java.io.File(context.getCacheDir(), FileUtils.TEMP_FILES_DIR);
 
     if (!FileUtils.ensureDirectoryExists(directory)) {
@@ -465,6 +464,7 @@ public class SyncUtils {
     }
 
     Track[] tracks = new Track[] { track };
+    String extension = useKmz ? KmzTrackExporter.KMZ_EXTENSION : TrackFileFormat.KML.getExtension();
     java.io.File file = new java.io.File(
         directory, FileUtils.buildUniqueFileName(directory, track.getName(), extension));
     FileTrackExporter fileTrackExporter = new FileTrackExporter(

@@ -23,6 +23,7 @@ import com.google.android.apps.mytracks.io.file.importer.KmlFileTrackImporter;
 import com.google.android.apps.mytracks.io.file.importer.KmzTrackImporter;
 import com.google.android.apps.mytracks.io.file.importer.TrackImporter;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
+import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.UserRecoverableAuthException;
@@ -491,7 +492,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
       return false;
     }
     File updatedDriveFile;
-    String trackName = getTrackName(driveFile);
+    String trackName = FileUtils.getName(driveFile.getTitle());
     if (!updatedTrack.getName().equals(trackName)) {
       updatedTrack.setName(trackName);
 
@@ -566,20 +567,6 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         inputStream.close();
       }
     }
-  }
-
-  /**
-   * Gets the track name from the drive file title.
-   * 
-   * @param driveFile the drive file
-   */
-  private String getTrackName(File driveFile) {
-    String title = driveFile.getTitle();
-    int index = title.lastIndexOf('.');
-    if (index == -1) {
-      return title;
-    }
-    return title.substring(0, index);    
   }
 
   /**
