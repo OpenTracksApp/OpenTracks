@@ -29,8 +29,8 @@ public class CalorieUtilsTest extends TestCase {
 
   Location start = new Location(LocationManager.GPS_PROVIDER);
   Location stop = new Location(LocationManager.GPS_PROVIDER);
-  private double grade = 10.0;
-  private int weight = 20;
+  private double grade = 0.07;
+  private int weight = 80;
   private final long TIME_INTERVAL = 1000l;
 
   @Override
@@ -94,4 +94,16 @@ public class CalorieUtilsTest extends TestCase {
     assertEquals(expected, actual);
   }
 
+  /**
+   * Checks calculating cycling calorie.
+   */
+  public void testCalculateCalorieCycling() {
+    grade = 0;
+    weight = 90;
+    start.setSpeed(9);
+    stop.setSpeed(9);
+    double expected = 175 / 1000 / UnitConversions.KCAL_TO_J;
+    double actual = CalorieUtils.calculateCalorieCycling(start, stop, grade, weight);
+    assertEquals(expected, actual);
+  }
 }
