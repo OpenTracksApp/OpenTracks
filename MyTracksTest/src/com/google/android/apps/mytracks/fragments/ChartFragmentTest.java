@@ -359,7 +359,7 @@ public class ChartFragmentTest extends AndroidTestCase {
    */
   private double[] fillDataPointTestHelper(Location location) {
     double[] point = new double[ChartView.NUM_SERIES + 1];
-    chartFragment.fillDataPoint(getContext(), location, point);
+    chartFragment.fillDataPoint(location, point);
     return point;
   }
 
