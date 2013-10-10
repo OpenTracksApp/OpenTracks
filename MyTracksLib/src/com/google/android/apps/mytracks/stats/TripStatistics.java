@@ -62,8 +62,14 @@ public class TripStatistics implements Parcelable {
   // The min and max grade seen on this trip.
   private final ExtremityMonitor gradeExtremities = new ExtremityMonitor();
 
+  /**
+   * This value means the calorie value is invalid due to activity type is not
+   * supported.
+   */
+  public static final double CALORIE_UNDEFINED = -1.0;
+
   // The calorie of current track.
-  private double calorie;
+  private double calorie = CALORIE_UNDEFINED;
 
   /**
    * Default constructor.
@@ -122,7 +128,9 @@ public class TripStatistics implements Parcelable {
       gradeExtremities.update(other.gradeExtremities.getMin());
       gradeExtremities.update(other.gradeExtremities.getMax());
     }
-    calorie += other.calorie;
+    if (other.calorie != CALORIE_UNDEFINED) {
+      calorie += other.calorie;
+    }
   }
 
   /**
@@ -532,7 +540,6 @@ public class TripStatistics implements Parcelable {
       data.gradeExtremities.set(minGrade, maxGrade);
       
       data.calorie = source.readDouble();
-
       return data;
     }
 
@@ -578,7 +585,11 @@ public class TripStatistics implements Parcelable {
    * @param calorieAdded add the value to the total calorie
    */
   public void addCalorie(double calorieAdded) {
-    this.calorie += calorieAdded;
+    if (calorieAdded != CALORIE_UNDEFINED) {
+      calorie = calorie == CALORIE_UNDEFINED ? calorieAdded : calorie + calorieAdded;
+    } else {
+      calorie = CALORIE_UNDEFINED;
+    }
   }
 
   /**
@@ -591,7 +602,7 @@ public class TripStatistics implements Parcelable {
   }
 
   /**
-   * Gets calories value.
+   * Gets calorie value.
    */
   public double getCalorie() {
     return calorie;

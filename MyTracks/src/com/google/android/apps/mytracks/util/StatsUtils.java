@@ -16,12 +16,16 @@
 
 package com.google.android.apps.mytracks.util;
 
+import com.google.android.apps.mytracks.TrackEditActivity;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.location.Location;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.Locale;
@@ -108,8 +112,9 @@ public class StatsUtils {
    * 
    * @param activity the activity
    * @param tripStatistics the trip statistics
+   * @param trackId the id of track
    */
-  public static void setTripStatisticsValues(Activity activity, TripStatistics tripStatistics) {
+  public static void setTripStatisticsValues(Activity activity, TripStatistics tripStatistics, long trackId) {
     boolean metricUnits = PreferencesUtils.isMetricUnits(activity);
     boolean reportSpeed = PreferencesUtils.isReportSpeed(activity);
 
@@ -183,12 +188,15 @@ public class StatsUtils {
     if (showCalorie) {
       calorieHorizontalLine.setVisibility(View.VISIBLE);
       calorieContainer.setVisibility(View.VISIBLE);
-      double calories = tripStatistics == null ? Double.NaN : tripStatistics.getCalorie();
-      setCalorie(activity, R.id.stats_calorie, R.string.stats_calorie, calories);
+      double calories = Double.NaN;
+      if (tripStatistics != null) {
+        calories = tripStatistics.getCalorie();
+      }
+      setCalorie(activity, R.id.stats_calorie, calories, trackId);
     } else {
       calorieHorizontalLine.setVisibility(View.GONE);
       calorieContainer.setVisibility(View.GONE);
-    }  
+    }
   }
 
   /**
@@ -336,11 +344,42 @@ public class StatsUtils {
    * 
    * @param activity the activity
    * @param itemId the item id
-   * @param labelId the calorie label id
    * @param calorie the value of calorie
+   * @param trackId the id of track which is used to start track edit activity
+   *          when user want to change the activity type
    */
-  private static void setCalorie(Activity activity, int itemId, int labelId, double calorie) {
-    setItem(activity, itemId, labelId,
-        String.format(Locale.getDefault(), CALORIES_FORMAT, calorie), activity.getString(R.string.unit_calorie));
+  private static void setCalorie(final Activity activity, int itemId, double calorie,
+      final long trackId) {
+    String calorieString;
+    View view = activity.findViewById(itemId);
+    Button button = (Button) activity.findViewById(R.id.stats_calorie_setup);
+    // Current activity type is not supported.
+    if (calorie == TripStatistics.CALORIE_UNDEFINED) {
+      button.setVisibility(View.VISIBLE);
+      view.setVisibility(View.GONE);
+
+      /*
+       * Return when it is not a valid track, which may be aggregated stats or
+       * marker.
+       */
+      if (trackId == PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
+        button.setVisibility(View.GONE);
+        return;
+      }
+      button.setOnClickListener(new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          Intent intent = IntentUtils.newIntent(activity, TrackEditActivity.class).putExtra(
+              TrackEditActivity.EXTRA_TRACK_ID, trackId);
+          activity.startActivity(intent);
+        }
+      });
+    } else {
+      button.setVisibility(View.GONE);
+      view.setVisibility(View.VISIBLE);
+      calorieString = String.format(Locale.getDefault(), CALORIES_FORMAT, calorie);
+      setItem(activity, itemId, R.string.stats_calorie, calorieString,
+          activity.getString(R.string.unit_calorie));
+    }
   }
 }

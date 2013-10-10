@@ -74,6 +74,7 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
     @SuppressWarnings("deprecation")
     ListPreference listPreference = (ListPreference) findPreference(getString(R.string.stats_units_key));
     OnPreferenceChangeListener listener = new OnPreferenceChangeListener() {
+      
       @Override
       public boolean onPreferenceChange(Preference pref, Object newValue) {
         configRateListPreference(PreferencesUtils.STATS_UNITS_DEFAULT.equals((String) newValue));
@@ -83,6 +84,10 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
          * activity.
          */
         updateWeightSummary(PreferencesUtils.STATS_UNITS_DEFAULT.equals((String) newValue));
+        // Recreate weight value dialog.
+        removeDialog(WEIGHT_INPUT_DIALOG);
+        onCreateDialog(WEIGHT_INPUT_DIALOG);
+        
         return true;
       }
     };
@@ -134,7 +139,8 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
       case WEIGHT_INPUT_DIALOG:
         final EditText weightInput = new EditText(this);
         weightInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        weightInput.setText(Integer.toString(PreferencesUtils.STATS_WEIGHT_DEFAULT));
+        weightInput.setText(Integer.toString(getWeightDisplayValue(PreferencesUtils
+            .isMetricUnits(getApplicationContext()))));
         weightInput.setSelectAllOnFocus(true);
         dialog = (new AlertDialog.Builder(this))
             .setMessage(R.string.settings_stats_calorie_weight_description)

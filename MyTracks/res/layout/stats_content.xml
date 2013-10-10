@@ -142,5 +142,12 @@ limitations under the License.
     <include
       android:id="@+id/stats_calorie"
       layout="@layout/stats_small_item" />
+    <!-- Setup activity type-->
+    <Button
+      android:id="@+id/stats_calorie_setup"
+      android:layout_gravity="right"
+      android:layout_height="wrap_content"
+      android:layout_width="match_parent"
+      android:text="@string/stats_calorie_setup" />
   </LinearLayout>
 </merge>

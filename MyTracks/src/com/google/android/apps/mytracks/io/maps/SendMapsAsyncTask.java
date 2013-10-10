@@ -277,8 +277,7 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
           sentStartMarker = true;
         }
 
-        tripStatisticsUpdater.addLocation(location, recordingDistanceInterval, PreferencesUtils
-            .getInt(context, R.string.stats_weight_key, PreferencesUtils.STATS_WEIGHT_DEFAULT));
+        tripStatisticsUpdater.addLocation(location, recordingDistanceInterval, context);
         if (i % elevationSamplingFrequency == 0) {
           distances.add(tripStatisticsUpdater.getTripStatistics().getTotalDistance());
           elevations.add(tripStatisticsUpdater.getSmoothedElevation());
