@@ -47,13 +47,9 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -372,25 +368,14 @@ public class SyncUtils {
 
     try {
       file = SyncUtils.getTempFile(context, myTracksProviderUtils, track, true);
-
       if (file == null) {
         Log.e(TAG, "Unable to update drive file. File is null for track " + track.getName());
         return false;
       }
 
       String title = track.getName() + "." + KmzTrackExporter.KMZ_EXTENSION;
-      File updatedFile;
-      String digest = md5(file);
-      if (digest != null && digest.equals(driveFile.getMd5Checksum())) {
-        if (title.equals(driveFile.getTitle())) {
-          updatedFile = driveFile;
-        } else {
-          // Only update the title
-          updatedFile = updateDriveFile(drive, driveFile, title, null, canRetry);
-        }
-      } else {
-        updatedFile = updateDriveFile(drive, driveFile, title, file, canRetry);
-      }
+      File updatedFile = updateDriveFile(drive, driveFile, title, file, canRetry);
+
       if (updatedFile == null) {
         Log.e(
             TAG, "Unable to update drive file. Updated file is null for track " + track.getName());
@@ -512,53 +497,5 @@ public class SyncUtils {
         && driveFile.getOwnerNames().size() > 0 ? driveFile.getOwnerNames().get(0)
         : "");
     myTracksProviderUtils.updateTrack(track);
-  }
-
-  /**
-   * Gets the md5 digest for a file.
-   * 
-   * @param file the file
-   */
-  public static String md5(java.io.File file) {
-    if (file == null) {
-      return null;
-    }
-    InputStream in = null;
-    byte[] digest;
-    try {
-      in = new FileInputStream(file);
-      MessageDigest digester = MessageDigest.getInstance("MD5");
-      byte[] bytes = new byte[8192];
-      int byteCount;
-      while ((byteCount = in.read(bytes)) > 0) {
-        digester.update(bytes, 0, byteCount);
-      }
-      digest = digester.digest();
-
-      StringBuilder builder = new StringBuilder(digest.length * 2);
-      for (byte b : digest) {
-        if ((b & 0xFF) < 0x10) {
-          builder.append("0");
-        }
-        builder.append(Integer.toHexString(b & 0xFF));
-      }
-      return builder.toString();
-
-    } catch (IOException e) {
-      Log.e(TAG, "IOException", e);
-      return null;
-    } catch (NoSuchAlgorithmException e) {
-      Log.e(TAG, "NoSuchAlgorithmException", e);
-      return null;
-    } finally {
-      if (in != null) {
-        try {
-          in.close();
-        } catch (IOException e) {
-          Log.e(TAG, "Unable to close inputstream", e);
-          return null;
-        }
-      }
-    }
   }
 }
