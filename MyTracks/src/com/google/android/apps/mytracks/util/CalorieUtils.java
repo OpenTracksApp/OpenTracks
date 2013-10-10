@@ -142,7 +142,7 @@ public class CalorieUtils {
     double power = earthGravity * weight * speed * (K1 + grade) + K2 * (speed * speed * speed);
 
     // Get the calories in kcal
-    return power * timeUsed / UnitConversions.KCAL_TO_J / 1000 ;
+    return power * timeUsed / UnitConversions.KCAL_TO_J;
   }
 
   /**
@@ -220,7 +220,7 @@ public class CalorieUtils {
   public static double getCalorie(Location start, Location stop, double grade, int weight,
       ActivityType activityType) {
     if (activityType == ActivityType.INVALID) {
-      return TripStatistics.INVALID_CALORIE;
+      return TripStatistics.CALORIE_UNDEFINED;
     }
     return ActivityType.CYCLING == activityType ? calculateCalorieCycling(start, stop, grade,
         weight) : calculateCalorieFoot(start, stop, grade, weight);
@@ -282,7 +282,7 @@ public class CalorieUtils {
   public static double calculateTrackCalorie(Context context, Track track, String category) {
     ActivityType activityType = getActivityType(context, category);
     if (activityType == ActivityType.INVALID) {
-      return TripStatistics.INVALID_CALORIE;
+      return TripStatistics.CALORIE_UNDEFINED;
     }
 
     double calorie = 0.0;

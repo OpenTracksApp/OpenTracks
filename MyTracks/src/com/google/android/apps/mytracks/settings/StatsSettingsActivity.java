@@ -74,7 +74,7 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
     @SuppressWarnings("deprecation")
     ListPreference listPreference = (ListPreference) findPreference(getString(R.string.stats_units_key));
     OnPreferenceChangeListener listener = new OnPreferenceChangeListener() {
-      @SuppressWarnings("deprecation")
+      
       @Override
       public boolean onPreferenceChange(Preference pref, Object newValue) {
         configRateListPreference(PreferencesUtils.STATS_UNITS_DEFAULT.equals((String) newValue));

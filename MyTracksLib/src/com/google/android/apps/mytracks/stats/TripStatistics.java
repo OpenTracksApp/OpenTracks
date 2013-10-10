@@ -66,10 +66,10 @@ public class TripStatistics implements Parcelable {
    * This value means the calorie value is invalid due to activity type is not
    * supported.
    */
-  public static final double INVALID_CALORIE = -1.0;
+  public static final double CALORIE_UNDEFINED = -1.0;
 
   // The calorie of current track.
-  private double calorie = INVALID_CALORIE;
+  private double calorie = CALORIE_UNDEFINED;
 
   /**
    * Default constructor.
@@ -128,7 +128,7 @@ public class TripStatistics implements Parcelable {
       gradeExtremities.update(other.gradeExtremities.getMin());
       gradeExtremities.update(other.gradeExtremities.getMax());
     }
-    if (other.calorie != INVALID_CALORIE) {
+    if (other.calorie != CALORIE_UNDEFINED) {
       calorie += other.calorie;
     }
   }
@@ -585,10 +585,10 @@ public class TripStatistics implements Parcelable {
    * @param calorieAdded add the value to the total calorie
    */
   public void addCalorie(double calorieAdded) {
-    if (calorieAdded != INVALID_CALORIE) {
-      calorie = calorie == INVALID_CALORIE ? calorieAdded : calorie + calorieAdded;
+    if (calorieAdded != CALORIE_UNDEFINED) {
+      calorie = calorie == CALORIE_UNDEFINED ? calorieAdded : calorie + calorieAdded;
     } else {
-      calorie = INVALID_CALORIE;
+      calorie = CALORIE_UNDEFINED;
     }
   }
 

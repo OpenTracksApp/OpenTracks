@@ -354,14 +354,18 @@ public class StatsUtils {
     View view = activity.findViewById(itemId);
     Button button = (Button) activity.findViewById(R.id.stats_calorie_setup);
     // Current activity type is not supported.
-    if (calorie == TripStatistics.INVALID_CALORIE) {
-      // Return when it is not a valid track, which may be aggregated stats or
-      // marker.
-      if (trackId == PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
-        return;
-      }
+    if (calorie == TripStatistics.CALORIE_UNDEFINED) {
       button.setVisibility(View.VISIBLE);
       view.setVisibility(View.GONE);
+
+      /*
+       * Return when it is not a valid track, which may be aggregated stats or
+       * marker.
+       */
+      if (trackId == PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
+        button.setVisibility(View.GONE);
+        return;
+      }
       button.setOnClickListener(new OnClickListener() {
         @Override
         public void onClick(View v) {
