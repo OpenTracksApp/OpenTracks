@@ -2141,6 +2141,12 @@ limitations under the License.
       Character limit: ~23 (1 line)">
     Calories
   </string>
+  <string name="stats_calorie_setup"
+    translation_description="In the 'Stats' page, the button to setup calorie.
+    
+      Character limit: ~23 (1 line)">
+    Setup Activity Type
+  </string>
   <string name="stats_fastest_pace"
     translation_description="In the 'Stats' page, the fastest pace.">
     Fastest pace

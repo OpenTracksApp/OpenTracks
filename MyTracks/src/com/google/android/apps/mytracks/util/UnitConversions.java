@@ -78,5 +78,8 @@ public class UnitConversions {
   public static final double DEG_TO_RAD = Math.PI / 180.0;
 
   // multiplication factor to convert Kcal to joules.
-  public static final double KCAL_TO_J = 4.184;
+  public static final double KCAL_TO_J = 4184;
+
+  // multiplication factor to convert joules to Kcal.
+  public static final double J_TO_KCAL = 1 / KCAL_TO_J;
 }

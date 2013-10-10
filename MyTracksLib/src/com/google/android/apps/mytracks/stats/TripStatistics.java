@@ -63,7 +63,7 @@ public class TripStatistics implements Parcelable {
   private final ExtremityMonitor gradeExtremities = new ExtremityMonitor();
 
   // The calorie of current track.
-  private double calorie;
+  private double calorie = 0.0;
 
   /**
    * Default constructor.
@@ -532,7 +532,6 @@ public class TripStatistics implements Parcelable {
       data.gradeExtremities.set(minGrade, maxGrade);
       
       data.calorie = source.readDouble();
-
       return data;
     }
 
@@ -578,7 +577,7 @@ public class TripStatistics implements Parcelable {
    * @param calorieAdded add the value to the total calorie
    */
   public void addCalorie(double calorieAdded) {
-    this.calorie += calorieAdded;
+    calorie += calorieAdded;
   }
 
   /**
@@ -591,7 +590,7 @@ public class TripStatistics implements Parcelable {
   }
 
   /**
-   * Gets calories value.
+   * Gets calorie value.
    */
   public double getCalorie() {
     return calorie;

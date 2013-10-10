@@ -20,9 +20,12 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller;
+import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
+import com.google.android.apps.mytracks.util.CalorieUtils;
 import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.apps.mytracks.util.TrackNameUtils;
+import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.graphics.Bitmap;
@@ -57,6 +60,7 @@ public class TrackEditActivity extends AbstractMyTracksActivity
   private static final String ICON_VALUE_KEY = "icon_value_key";
 
   private Long trackId;
+  private TrackRecordingServiceConnection trackRecordingServiceConnection;
   private MyTracksProviderUtils myTracksProviderUtils;
   private Track track;
   private String iconValue;
@@ -70,6 +74,7 @@ public class TrackEditActivity extends AbstractMyTracksActivity
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
 
+    trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
     trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1L);
     if (trackId == -1L) {
       Log.e(TAG, "invalid trackId");
@@ -180,6 +185,15 @@ public class TrackEditActivity extends AbstractMyTracksActivity
       public void onClick(View v) {
         track.setName(name.getText().toString());
         String category = activityType.getText().toString();
+        if (!category.equals(track.getCategory())) {
+          // TODO Is there no race condition when setCalorie is called.
+          double calorie = CalorieUtils.calculateTrackCalorie(getApplicationContext(), track,
+              category);
+
+          track.getTripStatistics().setCalorie(calorie);
+          TrackRecordingServiceConnectionUtils.updateCalorie(trackRecordingServiceConnection,
+              calorie);
+        }
         track.setCategory(category);
         track.setIcon(TrackIconUtils.getIconValue(TrackEditActivity.this, category));
         track.setDescription(description.getText().toString());
@@ -208,6 +222,18 @@ public class TrackEditActivity extends AbstractMyTracksActivity
       });
       cancel.setVisibility(View.VISIBLE);
     }
+  }
+  
+  @Override
+  protected void onStart() {
+    super.onStart();
+    TrackRecordingServiceConnectionUtils.startConnection(this, trackRecordingServiceConnection);
+  }
+  
+  @Override
+  protected void onStop() {
+    super.onStop();
+    trackRecordingServiceConnection.unbind();
   }
 
   @Override
