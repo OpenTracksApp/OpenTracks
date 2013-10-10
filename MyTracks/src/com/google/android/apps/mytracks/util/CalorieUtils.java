@@ -18,7 +18,6 @@ package com.google.android.apps.mytracks.util;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
 import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
 
@@ -220,7 +219,7 @@ public class CalorieUtils {
   public static double getCalorie(Location start, Location stop, double grade, int weight,
       ActivityType activityType) {
     if (activityType == ActivityType.INVALID) {
-      return TripStatistics.CALORIE_UNDEFINED;
+      return 0.0;
     }
     return ActivityType.CYCLING == activityType ? calculateCalorieCycling(start, stop, grade,
         weight) : calculateCalorieFoot(start, stop, grade, weight);
@@ -259,7 +258,7 @@ public class CalorieUtils {
    * @param category the category of track
    * @return activityType the activity type of track.
    */
-  private static ActivityType getActivityType(Context context, String category) {
+  public static ActivityType getActivityType(Context context, String category) {
     ActivityType activityType = ActivityType.INVALID;
     if (category.equals(context.getString(R.string.activity_type_walking))
         || category.equals(context.getString(R.string.activity_type_running))) {
@@ -282,7 +281,7 @@ public class CalorieUtils {
   public static double calculateTrackCalorie(Context context, Track track, String category) {
     ActivityType activityType = getActivityType(context, category);
     if (activityType == ActivityType.INVALID) {
-      return TripStatistics.CALORIE_UNDEFINED;
+      return 0.0;
     }
 
     double calorie = 0.0;
@@ -303,4 +302,5 @@ public class CalorieUtils {
     }
     return calorie;
   }
+  
 }

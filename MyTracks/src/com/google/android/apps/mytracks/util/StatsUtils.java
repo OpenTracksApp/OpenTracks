@@ -17,7 +17,9 @@
 package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.TrackEditActivity;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.CalorieUtils.ActivityType;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -186,6 +188,9 @@ public class StatsUtils {
     View calorieContainer = activity.findViewById(R.id.stats_calorie_container);
 
     if (showCalorie) {
+      if(trackId == PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
+        return;
+      }
       calorieHorizontalLine.setVisibility(View.VISIBLE);
       calorieContainer.setVisibility(View.VISIBLE);
       double calories = Double.NaN;
@@ -353,8 +358,11 @@ public class StatsUtils {
     String calorieString;
     View view = activity.findViewById(itemId);
     Button button = (Button) activity.findViewById(R.id.stats_calorie_setup);
+    MyTracksProviderUtils providerUtils = MyTracksProviderUtils.Factory.get(activity);
+    ActivityType activityType = CalorieUtils.getActivityType(activity,
+        providerUtils.getTrack(trackId).getCategory());
     // Current activity type is not supported.
-    if (calorie == TripStatistics.CALORIE_UNDEFINED) {
+    if (activityType == ActivityType.INVALID) {
       button.setVisibility(View.VISIBLE);
       view.setVisibility(View.GONE);
 

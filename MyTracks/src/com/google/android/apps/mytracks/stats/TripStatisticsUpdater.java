@@ -223,6 +223,15 @@ public class TripStatisticsUpdater {
     lastLocation = location;
     lastMovingLocation = location;
   }
+  
+  /**
+   * Updates the calorie value.
+   * 
+   * @param calorie new calorie value.
+   */
+  public void updateCalorie(double calorie) {
+    currentSegment.setCalorie(calorie);
+  }
 
   /**
    * Gets the smoothed elevation over several readings. The elevation readings

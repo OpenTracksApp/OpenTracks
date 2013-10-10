@@ -106,4 +106,11 @@ interface ITrackRecordingService {
    * return a Sensor.SensorState enum value.
    */
   int getSensorState();
+  
+  /**
+   * Updates the calorie value.
+   * 
+   * @param calorie new calorie value.
+   */
+  void updateCalorie(double calorie);
 }

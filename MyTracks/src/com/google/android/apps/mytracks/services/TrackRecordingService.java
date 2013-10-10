@@ -1333,5 +1333,34 @@ public class TrackRecordingService extends Service {
         deathRecipient.binderDied();
       }
     }
+
+    @Override
+    public void updateCalorie(double calorie) {
+      if (!canAccess()) {
+        return;
+      }
+      trackRecordingService.updateCalorie(calorie);
+    }
+  }
+  
+  /**
+   * Updates the calorie value.
+   * 
+   * @param calorie new calorie value.
+   */
+  public void updateCalorie(final double calorie) {
+    if (myTracksLocationManager == null || executorService == null
+        || !myTracksLocationManager.isAllowed() || executorService.isShutdown()
+        || executorService.isTerminated()) {
+      return;
+    }
+    executorService.submit(new Runnable() {
+        @Override
+      public void run() {
+          trackTripStatisticsUpdater.updateCalorie(calorie);
+      }
+    });
+    
+    
   }
 }
