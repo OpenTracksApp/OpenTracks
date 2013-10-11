@@ -132,7 +132,7 @@ public class SendDriveAsyncTask extends AbstractSendAsyncTask {
    */
   private boolean updateDriveFile(Drive drive, File driveFile, String folderId, Track track)
       throws IOException {
-    if (!SyncUtils.isValid(driveFile, folderId)) {
+    if (!SyncUtils.isInMyTracksAndValid(driveFile, folderId)) {
       return false;
     }
     long driveModifiedTime = driveFile.getModifiedDate().getValue();

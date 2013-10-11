@@ -223,39 +223,12 @@ public class SyncUtils {
   }
 
   /**
-   * Returns true if a drive file is a Shared with me KML or KMZ file.
-   * 
-   * @param driveFile the drive file
-   */
-  public static boolean isSharedWithMe(File driveFile) {
-    if (driveFile == null) {
-      return false;
-    }
-    String mimeType = driveFile.getMimeType();
-    if (!SyncUtils.KML_MIME_TYPE.equals(mimeType) && !SyncUtils.KMZ_MIME_TYPE.equals(mimeType)) {
-      return false;
-    }
-    return driveFile.getSharedWithMeDate() != null;
-  }
-
-  /**
-   * Returns true if a drive file is a KML or KMZ file in the My Tracks folder
-   * and not trashed.
-   * 
-   * @param driveFile the drive file
-   * @param folderId the My Tracks folder id
-   */
-  public static boolean isValid(File driveFile, String folderId) {
-    return isInFolder(driveFile, folderId) && !driveFile.getLabels().getTrashed();
-  }
-
-  /**
    * Returns true if a drive file is a KML or KMZ file in the My Tracks folder.
    * 
    * @param driveFile the drive file
    * @param folderId the My Tracks folder id
    */
-  public static boolean isInFolder(File driveFile, String folderId) {
+  public static boolean isInMyTracks(File driveFile, String folderId) {
     if (driveFile == null) {
       return false;
     }
@@ -273,6 +246,44 @@ public class SyncUtils {
       }
     }
     return false;
+  }
+
+  /**
+   * Returns true if a drive file is a KML or KMZ file in the My Tracks folder
+   * and not trashed.
+   * 
+   * @param driveFile the drive file
+   * @param folderId the My Tracks folder id
+   */
+  public static boolean isInMyTracksAndValid(File driveFile, String folderId) {
+    return isInMyTracks(driveFile, folderId) && !driveFile.getLabels().getTrashed();
+  }
+
+  /**
+   * Returns true if a drive file is a KML or KMZ file in the Shared with me
+   * directory.
+   * 
+   * @param driveFile the drive file
+   */
+  public static boolean isInSharedWithMe(File driveFile) {
+    if (driveFile == null) {
+      return false;
+    }
+    String mimeType = driveFile.getMimeType();
+    if (!SyncUtils.KML_MIME_TYPE.equals(mimeType) && !SyncUtils.KMZ_MIME_TYPE.equals(mimeType)) {
+      return false;
+    }
+    return driveFile.getSharedWithMeDate() != null;
+  }
+
+  /**
+   * Returns true if a drive file is a KML or KMZ file in the Shared with me
+   * directory and is not trashed.
+   * 
+   * @param driveFile the drive file
+   */
+  public static boolean isInSharedWithMeAndValid(File driveFile) {
+    return isInSharedWithMe(driveFile) && !driveFile.getLabels().getTrashed();
   }
 
   /**
