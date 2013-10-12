@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <style name="EditTextMyTracks" parent="android:Widget.EditText">
+	  <item name="android:background">@drawable/edit_text_holo_dark</item>
+	  <item name="android:textColor">#ffffff</item>
+  </style>
+
+  <style name="AutoCompleteTextViewMyTracks" parent="android:Widget.AutoCompleteTextView">
+      <item name="android:dropDownSelector">@drawable/list_selector_holo_dark</item>
+	  <item name="android:background">@drawable/edit_text_holo_dark</item>
+	  <item name="android:textColor">#ffffff</item>
+  </style>
+
+  <style name="CheckBoxMyTracks" parent="android:Widget.CompoundButton.CheckBox">
+      <item name="android:button">@drawable/btn_check_holo_dark</item>
+  </style>
+
+  <style name="ProgressBarMyTracks" parent="android:Widget.ProgressBar.Horizontal">
+      <item name="android:progressDrawable">@drawable/progress_horizontal_holo_dark</item>
+      <item name="android:indeterminateDrawable">@drawable/progress_indeterminate_horizontal_holo_dark</item>
+      <item name="android:minHeight">16dip</item>
+      <item name="android:maxHeight">16dip</item>
+  </style>
+
+  <style name="ListViewMyTracks" parent="android:Widget.ListView">
+      <item name="android:listSelector">@drawable/list_selector_holo_dark</item>
+  </style>
+
+  <style name="ListViewMyTracks.White" parent="android:Widget.ListView.White">
+      <item name="android:listSelector">@drawable/list_selector_holo_dark</item>
+  </style>
+
+  <style name="SpinnerItemMyTracks" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
+      <item name="android:textColor">#ffffff</item>
+  </style>
+
+</resources>
