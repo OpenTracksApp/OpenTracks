@@ -185,6 +185,9 @@ public class SyncUtils {
     PreferencesUtils.setLong(context, R.string.drive_largest_change_id_key,
         PreferencesUtils.DRIVE_LARGEST_CHANGE_ID_DEFAULT);
 
+    PreferencesUtils.setString(
+        context, R.string.drive_edited_list_key, PreferencesUtils.DRIVE_EDITED_LIST_DEFAULT);
+
     // Clear the drive_deleted_list_key last
     PreferencesUtils.setString(
         context, R.string.drive_deleted_list_key, PreferencesUtils.DRIVE_DELETED_LIST_DEFAULT);

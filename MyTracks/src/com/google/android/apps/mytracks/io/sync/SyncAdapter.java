@@ -251,6 +251,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
    */
   private void performIncrementalSync(String folderId, long largestChangeId) throws IOException {
 
+    // Handle deleted tracks
     String driveDeletedList = PreferencesUtils.getString(
         context, R.string.drive_deleted_list_key, PreferencesUtils.DRIVE_DELETED_LIST_DEFAULT);
     String deletedIds[] = TextUtils.split(driveDeletedList, ";");
@@ -260,9 +261,33 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     PreferencesUtils.setString(
         context, R.string.drive_deleted_list_key, PreferencesUtils.DRIVE_DELETED_LIST_DEFAULT);
 
+    // Handle edited tracks
+    String driveEditedList = PreferencesUtils.getString(
+        context, R.string.drive_edited_list_key, PreferencesUtils.DRIVE_EDITED_LIST_DEFAULT);
+    String editedIds[] = TextUtils.split(driveEditedList, ";");
+    for (String id : editedIds) {
+      Track track = myTracksProviderUtils.getTrack(Long.valueOf(id));
+      if (track == null) {
+        continue;
+      }
+      if (track.isSharedWithMe()) {
+        continue;
+      }
+      String driveId = track.getDriveId();
+      if (driveId == null || driveId.equals("")) {
+        continue;
+      }
+      File driveFile = drive.files().get(driveId).execute();
+      if (SyncUtils.isInMyTracksAndValid(driveFile, folderId)) {
+        merge(track, driveFile);
+      }
+    }
+    PreferencesUtils.setString(
+        context, R.string.drive_edited_list_key, PreferencesUtils.DRIVE_EDITED_LIST_DEFAULT);
+    
     Map<String, File> changes = new HashMap<String, File>();
     largestChangeId = getDriveChangesInfo(largestChangeId, changes);
-
+    
     Cursor cursor = null;
     try {
       // Get all the local tracks with drive file id
@@ -288,15 +313,6 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
               }
             }
             changes.remove(driveId);
-          } else {
-            if (!track.isSharedWithMe()) {
-
-              // Handle the case the track has changed
-              File driveFile = drive.files().get(driveId).execute();
-              if (SyncUtils.isInMyTracksAndValid(driveFile, folderId)) {
-                merge(track, driveFile);
-              }
-            }
           }
         } while (cursor.moveToNext());
       }

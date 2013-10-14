@@ -23,6 +23,7 @@ import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragme
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.CalorieUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.apps.mytracks.util.TrackNameUtils;
 import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
@@ -199,6 +200,12 @@ public class TrackEditActivity extends AbstractMyTracksActivity
         track.setDescription(description.getText().toString());
         track.setModifiedTime(System.currentTimeMillis());
         myTracksProviderUtils.updateTrack(track);
+        boolean driveSync = PreferencesUtils.getBoolean(
+            TrackEditActivity.this, R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT);
+        if (driveSync) {
+          PreferencesUtils.addToList(TrackEditActivity.this, R.string.drive_edited_list_key,
+              PreferencesUtils.DRIVE_EDITED_LIST_DEFAULT, String.valueOf(track.getId()));
+        }
         finish();
       }
     });
