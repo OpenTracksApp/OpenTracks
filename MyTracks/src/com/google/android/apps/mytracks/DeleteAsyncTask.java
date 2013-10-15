@@ -17,6 +17,7 @@ package com.google.android.apps.mytracks;
  */
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
@@ -97,7 +98,19 @@ public class DeleteAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         if (isCancelled()) {
           return false;
         }
+        Track track = myTracksProviderUtils.getTrack(id);
         myTracksProviderUtils.deleteTrack(id);
+        if (track != null) {
+          String driveId = track.getDriveId();
+          if (driveId != null && !driveId.equals("")) {
+            boolean driveSync = PreferencesUtils.getBoolean(
+                context, R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT);
+            if (driveSync) {
+              PreferencesUtils.addToList(context, R.string.drive_deleted_list_key,
+                  PreferencesUtils.DRIVE_DELETED_LIST_DEFAULT, driveId);
+            }
+          }
+        }
       }
       return true;
     }

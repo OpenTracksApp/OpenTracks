@@ -46,7 +46,7 @@ public class ChartFragmentTest extends AndroidTestCase {
 
   /**
    * Tests the logic to get the incorrect values of sensor in
-   * {@link ChartFragment#fillDataPoint(android.content.Context, Location, double[])}
+   * {@link ChartFragment#fillDataPoint(Location, double[])}
    */
   public void testFillDataPoint_sensorIncorrect() {
     MyTracksLocation myTracksLocation = TrackStubUtils.createMyTracksLocation();
@@ -83,7 +83,7 @@ public class ChartFragmentTest extends AndroidTestCase {
 
   /**
    * Tests the logic to get the correct values of sensor in
-   * {@link ChartFragment#fillDataPoint(android.content.Context, Location, double[])}.
+   * {@link ChartFragment#fillDataPoint(Location, double[])}.
    */
   public void testFillDataPoint_sensorCorrect() {
     MyTracksLocation myTracksLocation = TrackStubUtils.createMyTracksLocation();
@@ -118,7 +118,7 @@ public class ChartFragmentTest extends AndroidTestCase {
 
   /**
    * Tests the logic to get the value of metric Distance in
-   * {@link ChartFragment#fillDataPoint(android.content.Context, Location, double[])}.
+   * {@link ChartFragment#fillDataPoint(Location, double[])}.
    */
   public void testFillDataPoint_distanceMetric() {
     // By distance.
@@ -159,7 +159,7 @@ public class ChartFragmentTest extends AndroidTestCase {
 
   /**
    * Tests the logic to get the value of imperial Distance in
-   * {@link ChartFragment#fillDataPoint(android.content.Context, Location, double[])}.
+   * {@link ChartFragment#fillDataPoint(Location, double[])}.
    */
   public void testFillDataPoint_distanceImperial() {
     // By distance.
@@ -204,7 +204,7 @@ public class ChartFragmentTest extends AndroidTestCase {
 
   /**
    * Tests the logic to get the values of time in
-   * {@link ChartFragment#fillDataPoint(android.content.Context, Location, double[])}.
+   * {@link ChartFragment#fillDataPoint(Location, double[])}.
    */
   public void testFillDataPoint_time() {
     // By time
@@ -220,9 +220,9 @@ public class ChartFragmentTest extends AndroidTestCase {
   }
 
   /**
-   * Tests the logic to get the value of elevation in 
-   * {@link ChartFragment#fillDataPoint(android.content.Context,
-   * Location, double[])} by one and two points.
+   * Tests the logic to get the value of elevation in
+   * {@link ChartFragment#fillDataPoint(Location, double[])} by one and two
+   * points.
    */
   public void testFillDataPoint_elevation() {
     MyTracksLocation myTracksLocation1 = TrackStubUtils.createMyTracksLocation();
@@ -247,10 +247,9 @@ public class ChartFragmentTest extends AndroidTestCase {
 
   /**
    * Tests the logic to get the value of speed in
-   * {@link ChartFragment#fillDataPoint(android.content.Context, Location, double[])}. In this test,
-   * firstly remove all points in memory,
-   * and then fill in two points one by one. The speed values of these points
-   * are 129, 130.
+   * {@link ChartFragment#fillDataPoint(Location, double[])}. In this test,
+   * firstly remove all points in memory, and then fill in two points one by
+   * one. The speed values of these points are 129, 130.
    */
   public void testFillDataPoint_speed() {
     /*

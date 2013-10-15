@@ -79,7 +79,6 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity implements
   public static final String EXTRA_TRACK_ID = "track_id";
   public static final String EXTRA_MARKER_ID = "marker_id";
 
-  private static final String TAG = TrackDetailActivity.class.getSimpleName();
   private static final String CURRENT_TAB_TAG_KEY = "current_tab_tag_key";
   private static final String PHOTO_URI_KEY = "photo_uri_key";
   private static final String HAS_PHOTO_KEY = "has_photo_key";

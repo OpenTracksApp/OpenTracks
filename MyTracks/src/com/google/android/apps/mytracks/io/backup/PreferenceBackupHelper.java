@@ -19,6 +19,7 @@ import com.google.android.apps.mytracks.content.ContentTypeIds;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.maps.mytracks.R;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -118,6 +119,7 @@ public class PreferenceBackupHelper {
    * @param preferences the shared preferences to edit
    * @throws IOException if there are any errors while reading
    */
+  @SuppressLint("CommitPrefEdits")
   public void importPreferences(DataInputStream reader, SharedPreferences preferences)
       throws IOException {
     Editor editor = preferences.edit();

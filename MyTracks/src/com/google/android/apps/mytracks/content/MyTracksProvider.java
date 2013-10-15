@@ -16,7 +16,6 @@
 
 package com.google.android.apps.mytracks.content;
 
-import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
@@ -42,7 +41,6 @@ import android.util.Log;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 
 /**
  * A {@link ContentProvider} that handles access to track points, tracks, and
@@ -218,18 +216,6 @@ public class MyTracksProvider extends ContentProvider {
         throw new IllegalArgumentException("Unknown URL " + url);
     }
 
-    boolean driveSync = false;
-    String driveIds = "";
-    if (table.equals(TracksColumns.TABLE_NAME)) {
-      driveSync = PreferencesUtils.getBoolean(
-          getContext(), R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT);
-      if (driveSync) {
-        driveIds = where != null ? getDriveIds(null, where, selectionArgs)
-            : getDriveIds(
-                new String[] { TracksColumns.DRIVEID }, SyncUtils.DRIVE_ID_TRACKS_QUERY, null);
-      }
-    }
-
     Log.w(MyTracksProvider.TAG, "Deleting table " + table);
     int count;
     try {
@@ -240,17 +226,6 @@ public class MyTracksProvider extends ContentProvider {
       db.endTransaction();
     }
     getContext().getContentResolver().notifyChange(url, null, false);
-    
-    if (driveSync && table.equals(TracksColumns.TABLE_NAME)) {
-      String driveDeletedList = PreferencesUtils.getString(getContext(),
-          R.string.drive_deleted_list_key, PreferencesUtils.DRIVE_DELETED_LIST_DEFAULT);
-      if (driveDeletedList.equals(PreferencesUtils.DRIVE_DELETED_LIST_DEFAULT)) {
-        driveDeletedList = driveIds;
-      } else {
-        driveDeletedList += ";" + driveIds;
-      }
-      PreferencesUtils.setString(getContext(), R.string.drive_deleted_list_key, driveDeletedList);
-    }    
 
     if (shouldVacuum) {
       // If a potentially large amount of data was deleted, reclaim its space.
@@ -535,34 +510,5 @@ public class MyTracksProvider extends ContentProvider {
       return ContentUris.appendId(WaypointsColumns.CONTENT_URI.buildUpon(), rowId).build();
     }
     throw new SQLException("Failed to insert a waypoint " + url);
-  }
-
-  /**
-   * Gets a list of dirve ids.
-   * 
-   * @param projection the projection
-   * @param where where
-   * @param selectionArgs selection args
-   */
-  private String getDriveIds(String[] projection, String where, String[] selectionArgs) {
-    ArrayList<String> driveIds = new ArrayList<String>();
-    Cursor cursor = null;
-    try {
-      cursor = query(TracksColumns.CONTENT_URI, projection, where, selectionArgs, null);
-      if (cursor != null && cursor.moveToFirst()) {
-        int index = cursor.getColumnIndex(TracksColumns.DRIVEID);
-        do {
-          String driveId = cursor.getString(index);
-          if (driveId != null && !driveId.equals("")) {
-            driveIds.add(driveId);
-          }
-        } while (cursor.moveToNext());
-      }
-    } finally {
-      if (cursor != null) {
-        cursor.close();
-      }
-    }
-    return TextUtils.join(";", driveIds);
   }
 }
