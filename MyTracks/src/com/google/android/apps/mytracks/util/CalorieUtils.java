@@ -141,7 +141,7 @@ public class CalorieUtils {
     double power = earthGravity * weight * speed * (K1 + grade) + K2 * (speed * speed * speed);
 
     // Get the calories in kcal
-    return power * timeUsed / UnitConversions.KCAL_TO_J;
+    return power * timeUsed * UnitConversions.J_TO_KCAL;
   }
 
   /**

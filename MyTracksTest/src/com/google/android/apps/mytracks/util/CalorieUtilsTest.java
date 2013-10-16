@@ -95,15 +95,18 @@ public class CalorieUtilsTest extends TestCase {
   }
 
   /**
-   * Checks calculating cycling calorie.
+   * Checks calculating cycling calorie. 175 is the watt usage for a 90 kg bike
+   * + rider to go 9 m/s (20 mph or 32 km/h) on the flat. <a href=
+   * "http://www.ideafit.com/fitness-library/calculating-caloric-expenditure-0"
+   * >Reference</a>
    */
   public void testCalculateCalorieCycling() {
     grade = 0;
     weight = 90;
     start.setSpeed(9);
     stop.setSpeed(9);
-    double expected = 175 / 1000 / UnitConversions.KCAL_TO_J;
+    double expected = 175.0 * (TIME_INTERVAL / 1000) * UnitConversions.J_TO_KCAL;
     double actual = CalorieUtils.calculateCalorieCycling(start, stop, grade, weight);
-    assertEquals(expected, actual);
+    assertTrue((actual - expected) / expected < 0.02);
   }
 }
