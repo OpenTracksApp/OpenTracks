@@ -47,13 +47,9 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -189,6 +185,9 @@ public class SyncUtils {
     PreferencesUtils.setLong(context, R.string.drive_largest_change_id_key,
         PreferencesUtils.DRIVE_LARGEST_CHANGE_ID_DEFAULT);
 
+    PreferencesUtils.setString(
+        context, R.string.drive_edited_list_key, PreferencesUtils.DRIVE_EDITED_LIST_DEFAULT);
+
     // Clear the drive_deleted_list_key last
     PreferencesUtils.setString(
         context, R.string.drive_deleted_list_key, PreferencesUtils.DRIVE_DELETED_LIST_DEFAULT);
@@ -227,39 +226,12 @@ public class SyncUtils {
   }
 
   /**
-   * Returns true if a drive file is a Shared with me KML or KMZ file.
-   * 
-   * @param driveFile the drive file
-   */
-  public static boolean isSharedWithMe(File driveFile) {
-    if (driveFile == null) {
-      return false;
-    }
-    String mimeType = driveFile.getMimeType();
-    if (!SyncUtils.KML_MIME_TYPE.equals(mimeType) && !SyncUtils.KMZ_MIME_TYPE.equals(mimeType)) {
-      return false;
-    }
-    return driveFile.getSharedWithMeDate() != null;
-  }
-
-  /**
-   * Returns true if a drive file is a KML or KMZ file in the My Tracks folder
-   * and not trashed.
-   * 
-   * @param driveFile the drive file
-   * @param folderId the My Tracks folder id
-   */
-  public static boolean isValid(File driveFile, String folderId) {
-    return isInFolder(driveFile, folderId) && !driveFile.getLabels().getTrashed();
-  }
-
-  /**
    * Returns true if a drive file is a KML or KMZ file in the My Tracks folder.
    * 
    * @param driveFile the drive file
    * @param folderId the My Tracks folder id
    */
-  public static boolean isInFolder(File driveFile, String folderId) {
+  public static boolean isInMyTracks(File driveFile, String folderId) {
     if (driveFile == null) {
       return false;
     }
@@ -277,6 +249,44 @@ public class SyncUtils {
       }
     }
     return false;
+  }
+
+  /**
+   * Returns true if a drive file is a KML or KMZ file in the My Tracks folder
+   * and not trashed.
+   * 
+   * @param driveFile the drive file
+   * @param folderId the My Tracks folder id
+   */
+  public static boolean isInMyTracksAndValid(File driveFile, String folderId) {
+    return isInMyTracks(driveFile, folderId) && !driveFile.getLabels().getTrashed();
+  }
+
+  /**
+   * Returns true if a drive file is a KML or KMZ file in the Shared with me
+   * directory.
+   * 
+   * @param driveFile the drive file
+   */
+  public static boolean isInSharedWithMe(File driveFile) {
+    if (driveFile == null) {
+      return false;
+    }
+    String mimeType = driveFile.getMimeType();
+    if (!SyncUtils.KML_MIME_TYPE.equals(mimeType) && !SyncUtils.KMZ_MIME_TYPE.equals(mimeType)) {
+      return false;
+    }
+    return driveFile.getSharedWithMeDate() != null;
+  }
+
+  /**
+   * Returns true if a drive file is a KML or KMZ file in the Shared with me
+   * directory and is not trashed.
+   * 
+   * @param driveFile the drive file
+   */
+  public static boolean isInSharedWithMeAndValid(File driveFile) {
+    return isInSharedWithMe(driveFile) && !driveFile.getLabels().getTrashed();
   }
 
   /**
@@ -372,25 +382,14 @@ public class SyncUtils {
 
     try {
       file = SyncUtils.getTempFile(context, myTracksProviderUtils, track, true);
-
       if (file == null) {
         Log.e(TAG, "Unable to update drive file. File is null for track " + track.getName());
         return false;
       }
 
       String title = track.getName() + "." + KmzTrackExporter.KMZ_EXTENSION;
-      File updatedFile;
-      String digest = md5(file);
-      if (digest != null && digest.equals(driveFile.getMd5Checksum())) {
-        if (title.equals(driveFile.getTitle())) {
-          updatedFile = driveFile;
-        } else {
-          // Only update the title
-          updatedFile = updateDriveFile(drive, driveFile, title, null, canRetry);
-        }
-      } else {
-        updatedFile = updateDriveFile(drive, driveFile, title, file, canRetry);
-      }
+      File updatedFile = updateDriveFile(drive, driveFile, title, file, canRetry);
+
       if (updatedFile == null) {
         Log.e(
             TAG, "Unable to update drive file. Updated file is null for track " + track.getName());
@@ -512,53 +511,5 @@ public class SyncUtils {
         && driveFile.getOwnerNames().size() > 0 ? driveFile.getOwnerNames().get(0)
         : "");
     myTracksProviderUtils.updateTrack(track);
-  }
-
-  /**
-   * Gets the md5 digest for a file.
-   * 
-   * @param file the file
-   */
-  public static String md5(java.io.File file) {
-    if (file == null) {
-      return null;
-    }
-    InputStream in = null;
-    byte[] digest;
-    try {
-      in = new FileInputStream(file);
-      MessageDigest digester = MessageDigest.getInstance("MD5");
-      byte[] bytes = new byte[8192];
-      int byteCount;
-      while ((byteCount = in.read(bytes)) > 0) {
-        digester.update(bytes, 0, byteCount);
-      }
-      digest = digester.digest();
-
-      StringBuilder builder = new StringBuilder(digest.length * 2);
-      for (byte b : digest) {
-        if ((b & 0xFF) < 0x10) {
-          builder.append("0");
-        }
-        builder.append(Integer.toHexString(b & 0xFF));
-      }
-      return builder.toString();
-
-    } catch (IOException e) {
-      Log.e(TAG, "IOException", e);
-      return null;
-    } catch (NoSuchAlgorithmException e) {
-      Log.e(TAG, "NoSuchAlgorithmException", e);
-      return null;
-    } finally {
-      if (in != null) {
-        try {
-          in.close();
-        } catch (IOException e) {
-          Log.e(TAG, "Unable to close inputstream", e);
-          return null;
-        }
-      }
-    }
   }
 }

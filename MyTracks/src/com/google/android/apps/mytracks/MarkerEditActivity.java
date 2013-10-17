@@ -17,10 +17,12 @@
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -123,6 +125,17 @@ public class MarkerEditActivity extends AbstractMyTracksActivity {
         } else {
           saveMarker();
         }
+        boolean driveSync = PreferencesUtils.getBoolean(
+            MarkerEditActivity.this, R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT);
+        if (driveSync) {
+          MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(
+              MarkerEditActivity.this);
+          Track track = myTracksProviderUtils.getTrack(newMarker ? trackId : waypoint.getTrackId());
+          track.setModifiedTime(System.currentTimeMillis());
+          myTracksProviderUtils.updateTrack(track);
+          PreferencesUtils.addToList(MarkerEditActivity.this, R.string.drive_edited_list_key,
+              PreferencesUtils.DRIVE_EDITED_LIST_DEFAULT, String.valueOf(track.getId()));
+        }      
         finish();
       }
     });

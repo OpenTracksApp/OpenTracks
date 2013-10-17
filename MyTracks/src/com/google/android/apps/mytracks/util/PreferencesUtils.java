@@ -26,6 +26,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.text.TextUtils;
 
 /**
  * Utilities to access preferences stored in {@link SharedPreferences}.
@@ -60,6 +61,7 @@ public class PreferencesUtils {
   public static final String DEFAULT_ACTIVITY_DEFAULT = "";
   
   public static final String DRIVE_DELETED_LIST_DEFAULT = "";
+  public static final String DRIVE_EDITED_LIST_DEFAULT = "";
   public static final long DRIVE_LARGEST_CHANGE_ID_DEFAULT = -1L;
   public static final boolean DRIVE_SYNC_DEFAULT = false;
 
@@ -277,5 +279,28 @@ public class PreferencesUtils {
   public static boolean isChartByDistance(Context context) {
     return PreferencesUtils.CHART_X_AXIS_DEFAULT.equals(
         getString(context, R.string.chart_x_axis_key, PreferencesUtils.CHART_X_AXIS_DEFAULT));
+  }
+  
+  /**
+   * Adds a value to a list.
+   * 
+   * @param context the context
+   * @param keyId the key id
+   * @param defaultValue the default value
+   * @param value the value
+   */
+  public static void addToList(Context context, int keyId, String defaultValue, String value) {
+    String list = getString(context, keyId, defaultValue);
+    if (defaultValue.equals(list)) {
+      setString(context, keyId, value);
+      return;
+    }
+    String[] items = TextUtils.split(list, ";");
+    for (String item : items) {
+      if (value.equals(item)) {
+        return;
+      }
+    }
+    setString(context, keyId, list + ";" + value);
   }
 }

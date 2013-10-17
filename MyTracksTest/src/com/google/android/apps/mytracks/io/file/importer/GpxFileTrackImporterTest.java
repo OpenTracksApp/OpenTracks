@@ -20,7 +20,8 @@ import static com.google.android.testing.mocking.AndroidMock.eq;
 import static com.google.android.testing.mocking.AndroidMock.expect;
 
 import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.io.file.importer.GpxFileTrackImporter;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.maps.mytracks.R;
 import com.google.android.testing.mocking.AndroidMock;
 
 import android.location.Location;
@@ -97,7 +98,9 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
     expect(myTracksProviderUtils.bulkInsertTrackPoint(
         LocationsMatcher.eqLoc(location1), eq(1), eq(TRACK_ID_0))).andReturn(1);
     expect(myTracksProviderUtils.getLastTrackPointId(TRACK_ID_0)).andReturn(TRACK_POINT_ID_1);
-
+    expect(
+        myTracksProviderUtils.getTrack(PreferencesUtils.getLong(getContext(),
+            R.string.recording_track_id_key))).andStubReturn(null);
     expectUpdateTrack(track, true, TRACK_ID_0);
     AndroidMock.replay(myTracksProviderUtils);
 
@@ -125,12 +128,13 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
     expect(myTracksProviderUtils.insertTrack((Track) AndroidMock.anyObject()))
         .andReturn(TRACK_ID_0_URI);
     expectFirstTrackPoint(location0, TRACK_ID_0, TRACK_POINT_ID_0);
-
     // A flush happens at the end
     expect(myTracksProviderUtils.bulkInsertTrackPoint(
         (Location[]) AndroidMock.anyObject(), eq(5), eq(TRACK_ID_0))).andStubReturn(5);
     expect(myTracksProviderUtils.getLastTrackPointId(TRACK_ID_0)).andReturn(TRACK_POINT_ID_3);
-
+    expect(
+        myTracksProviderUtils.getTrack(PreferencesUtils.getLong(getContext(),
+            R.string.recording_track_id_key))).andStubReturn(null);
     expectUpdateTrack(track, true, TRACK_ID_0);
     AndroidMock.replay(myTracksProviderUtils);
 
@@ -166,7 +170,9 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
     expect(myTracksProviderUtils.bulkInsertTrackPoint(
         (Location[]) AndroidMock.anyObject(), eq(5), eq(TRACK_ID_0))).andStubReturn(5);
     expect(myTracksProviderUtils.getLastTrackPointId(TRACK_ID_0)).andReturn(TRACK_POINT_ID_3);
-
+    expect(
+        myTracksProviderUtils.getTrack(PreferencesUtils.getLong(getContext(),
+            R.string.recording_track_id_key))).andStubReturn(null);
     expectUpdateTrack(track, true, TRACK_ID_0);
     AndroidMock.replay(myTracksProviderUtils);
 
@@ -235,6 +241,9 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
         .andStubReturn(1);
     expect(myTracksProviderUtils.getFirstTrackPointId(TRACK_ID_0)).andStubReturn(TRACK_POINT_ID_0);
     expect(myTracksProviderUtils.getLastTrackPointId(TRACK_ID_0)).andStubReturn(TRACK_POINT_ID_0);
+    expect(
+        myTracksProviderUtils.getTrack(PreferencesUtils.getLong(getContext(),
+            R.string.recording_track_id_key))).andStubReturn(null);
     myTracksProviderUtils.deleteTrack(TRACK_ID_0);
     AndroidMock.replay(myTracksProviderUtils);
 

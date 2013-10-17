@@ -90,14 +90,16 @@ public class SendDriveAsyncTask extends AbstractSendAsyncTask {
       String driveId = track.getDriveId();
       if (driveId != null && !driveId.equals("")) {
         File driveFile = drive.files().get(driveId).execute();
-        if (SyncUtils.isValid(driveFile, folderId) && SyncUtils.updateDriveFile(
-            drive, driveFile, context, myTracksProviderUtils, track, false)) {
+        if (driveFile != null && updateDriveFile(drive, driveFile, folderId, track)) {
           addPermission(drive, driveFile);
           return true;
         }
+
+        // clear sync state
         SyncUtils.updateTrack(myTracksProviderUtils, track, null);
       }
 
+      // insert new drive file
       File file = SyncUtils.insertDriveFile(
           drive, folderId, context, myTracksProviderUtils, track, false);
       if (file == null) {
@@ -118,6 +120,29 @@ public class SendDriveAsyncTask extends AbstractSendAsyncTask {
     } catch (IOException e) {
       return retryTask();
     }
+  }
+  
+  /**
+   * Updates a drive file using info from a track. Returns true if successful.
+   * 
+   * @param drive the drive
+   * @param driveFile the drive file
+   * @param folderId the folder id of the drive file
+   * @param track the track
+   */
+  private boolean updateDriveFile(Drive drive, File driveFile, String folderId, Track track)
+      throws IOException {
+    if (!SyncUtils.isInMyTracksAndValid(driveFile, folderId)) {
+      return false;
+    }
+    long driveModifiedTime = driveFile.getModifiedDate().getValue();
+    long modifiedTime = track.getModifiedTime();
+
+    if (driveModifiedTime != modifiedTime) {
+      return SyncUtils.updateDriveFile(
+          drive, driveFile, context, myTracksProviderUtils, track, true);
+    }
+    return true;
   }
 
   @Override

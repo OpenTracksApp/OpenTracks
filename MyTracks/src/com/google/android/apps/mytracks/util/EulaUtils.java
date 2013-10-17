@@ -15,6 +15,7 @@
  */
 package com.google.android.apps.mytracks.util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -94,6 +95,7 @@ public class EulaUtils {
     return sharedPreferences.getBoolean(key, defaultValue);
   }
 
+  @SuppressLint("CommitPrefEdits")
   private static void setValue(Context context, String key, boolean value) {
     SharedPreferences sharedPreferences = context.getSharedPreferences(
         EULA_PREFERENCE_FILE, Context.MODE_PRIVATE);

@@ -19,6 +19,7 @@ import com.google.android.apps.mytracks.content.ContentTypeIds;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.maps.mytracks.R;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -52,6 +53,7 @@ public class PreferenceBackupHelper {
     doNotBackup.add(context.getString(R.string.auto_resume_track_current_retry_key));
     doNotBackup.add(context.getString(R.string.bluetooth_sensor_key));
     doNotBackup.add(context.getString(R.string.drive_deleted_list_key));
+    doNotBackup.add(context.getString(R.string.drive_edited_list_key));
     doNotBackup.add(context.getString(R.string.drive_largest_change_id_key));
     doNotBackup.add(context.getString(R.string.drive_sync_key));
     doNotBackup.add(context.getString(R.string.google_account_key));
@@ -117,6 +119,7 @@ public class PreferenceBackupHelper {
    * @param preferences the shared preferences to edit
    * @throws IOException if there are any errors while reading
    */
+  @SuppressLint("CommitPrefEdits")
   public void importPreferences(DataInputStream reader, SharedPreferences preferences)
       throws IOException {
     Editor editor = preferences.edit();
