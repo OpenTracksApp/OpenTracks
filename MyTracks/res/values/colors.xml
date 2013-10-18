@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<resources>
+  <color name="chart_cadence_border">#FFF128F3</color> <!-- pink -->
+  <color name="chart_cadence_fill">#40F128F3</color> <!-- transparent pink -->
+  <color name="chart_elevation_border">#FF339933</color> <!-- green -->
+  <color name="chart_elevation_fill">#40B3CFB3</color> <!-- transparent green -->
+  <color name="chart_heart_rate_border">#FFCC3300</color> <!-- red -->
+  <color name="chart_heart_rate_fill">#40E88A70</color> <!-- transparent red -->
+  <color name="chart_pace_border">#FF0066FF</color> <!-- blue -->
+  <color name="chart_pace_fill">#40C8E0FF</color> <!-- transparent blue -->
+  <color name="chart_power_border">#FF401465</color> <!-- purple -->
+  <color name="chart_power_fill">#40401465</color> <!-- transparent purple -->
+  <color name="chart_speed_border">#FF0066FF</color> <!-- blue -->
+  <color name="chart_speed_fill">#40C8E0FF</color> <!-- transparent blue -->
+  <color name="recording_text">#FFBE161B</color> <!-- red -->
+  <color name="stats_large_label">#FFFAAD2C</color> <!-- orange -->
+  <color name="stats_separator">#99999999</color> <!-- light gray -->
+  <color name="track_color_fast">#F7DF0101</color> <!-- red color -->
+  <color name="track_color_normal">#F75858FA</color> <!-- blue color -->
+  <color name="track_color_slow">#F774DF00</color> <!-- green color -->
+  <color name="track_controller_background">#FF0E0E0E</color> <!-- dark gray -->
+  <color name="warning_background">#FFFF8800</color> <!-- orange dark -->
+</resources>
