@@ -19,6 +19,7 @@ package com.google.android.apps.mytracks.content;
 import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import android.content.ContentResolver;
@@ -28,6 +29,7 @@ import android.location.Location;
 import android.net.Uri;
 import android.util.Log;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -180,6 +182,9 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     contentResolver.delete(WaypointsColumns.CONTENT_URI, null, null);
     // Delete tracks last since it triggers a database vaccum call
     contentResolver.delete(TracksColumns.CONTENT_URI, null, null);
+
+    File dir = new File(FileUtils.getPath(FileUtils.PICTURES_DIR));
+    deleteDirectoryRecurse(dir);
   }
 
   @Override
@@ -208,6 +213,26 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     }
     contentResolver.delete(WaypointsColumns.CONTENT_URI, WaypointsColumns.TRACKID + "=?",
         new String[] { Long.toString(trackId) });
+    
+    File dir = new File(
+        FileUtils.getPath(FileUtils.PICTURES_DIR, Long.toString(trackId)));
+    deleteDirectoryRecurse(dir);  
+  }
+
+  /**
+   * Delete the directory recursively.
+   * 
+   * @param dir the directory
+   */
+  private void deleteDirectoryRecurse(File dir) {
+    if (FileUtils.isDirectory(dir)) {
+      for (File child : dir.listFiles()) {
+        deleteDirectoryRecurse(child);
+      }
+    }
+    if (dir.exists()) {
+      dir.delete();
+    }
   }
 
   @Override
@@ -497,6 +522,20 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
         if (!updateWaypoint(nextWaypoint)) {
           Log.e(TAG, "Unable to update the next statistics marker after deleting one.");
         }
+      }
+    }
+    if (waypoint != null) {
+      String photoUrl = waypoint.getPhotoUrl();
+      if (photoUrl != null && !photoUrl.equals("")) {
+        Uri uri = Uri.parse(photoUrl);
+        File file = new File(uri.getPath());
+        if (file.exists()) {
+          File parent = file.getParentFile();
+          file.delete();
+          if (parent.listFiles().length == 0) {
+            parent.delete();
+          }
+        }                      
       }
     }
     contentResolver.delete(WaypointsColumns.CONTENT_URI, WaypointsColumns._ID + "=?",

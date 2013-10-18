@@ -15,8 +15,6 @@
  */
 package com.google.android.apps.mytracks.util;
 
-import com.google.common.annotations.VisibleForTesting;
-
 import android.os.Environment;
 
 import java.io.File;
@@ -43,14 +41,12 @@ public class FileUtils {
   /**
    * The My Tracks external storage directory.
    */
-  @VisibleForTesting
   static final String SDCARD_TOP_DIR = "MyTracks";
 
   /**
    * The maximum FAT32 path length. See the FAT32 spec at
    * http://msdn.microsoft.com/en-us/windows/hardware/gg463080
    */
-  @VisibleForTesting
   static final int MAX_FAT32_PATH_LENGTH = 260;
 
   /**
@@ -206,7 +202,6 @@ public class FileUtils {
    * 
    * @param name name
    */
-  @VisibleForTesting
   static String sanitizeFileName(String name) {
     StringBuffer buffer = new StringBuffer(name.length());
     for (int i = 0; i < name.length(); i++) {
@@ -266,7 +261,6 @@ public class FileUtils {
    * @param name name
    * @param suffix suffix
    */
-  @VisibleForTesting
   static String truncateFileName(File directory, String name, String suffix) {
     // 1 at the end accounts for the FAT32 filename trailing NUL character
     int requiredLength = directory.getPath().length() + suffix.length() + 1;

@@ -88,9 +88,11 @@ public class DeleteMarkerDialogFragment extends DialogFragment {
             new Thread(new Runnable() {
                 @Override
               public void run() {
+                MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(
+                    fragmentActivity);
                 for (long markerId : markerIds) {
-                  MyTracksProviderUtils.Factory.get(fragmentActivity)
-                      .deleteWaypoint(markerId, new DescriptionGeneratorImpl(fragmentActivity));
+                  myTracksProviderUtils.deleteWaypoint(
+                      markerId, new DescriptionGeneratorImpl(fragmentActivity));
                 }
                 caller.onDeleteMarkerDone();
               }
