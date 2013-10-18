@@ -489,41 +489,53 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
    * @param trackId the track id. -1L to insert a new track
    * @param driveFile the drive file
    */
-  private boolean updateTrack(long trackId, File driveFile) throws IOException {
-    Track track = importDriveFile(trackId, driveFile);
-    if (track == null) {
-      return false;
-    }
-    File updatedDriveFile;
-    String trackName = FileUtils.getName(driveFile.getTitle());
-    if (SyncUtils.isInMyTracks(driveFile, getFolderId()) && !track.getName().equals(trackName)) {
-      track.setName(trackName);
+  private boolean updateTrack(final long trackId, File driveFile) throws IOException {
+    Track track = null;
+    boolean success = false;
+    try {
+      track = importDriveFile(trackId, driveFile);
+      if (track == null) {
+        return false;
+      }
+      File updatedDriveFile;
+      String trackName = FileUtils.getName(driveFile.getTitle());
+      if (SyncUtils.isInMyTracks(driveFile, getFolderId()) && !track.getName().equals(trackName)) {
+        track.setName(trackName);
 
-      /*
-       * The drive file title and the track name inside the drive file do not
-       * match, update the drive file.
-       */
-      java.io.File file = null;
-      try {
-        file = SyncUtils.getTempFile(context, myTracksProviderUtils, track, true);
-        updatedDriveFile = SyncUtils.updateDriveFile(
-            drive, driveFile, trackName + "." + KmzTrackExporter.KMZ_EXTENSION, file, true);
+        /*
+         * The drive file title and the track name inside the drive file do not
+         * match, update the drive file.
+         */
+        java.io.File file = null;
+        try {
+          file = SyncUtils.getTempFile(context, myTracksProviderUtils, track, true);
+          updatedDriveFile = SyncUtils.updateDriveFile(
+              drive, driveFile, trackName + "." + KmzTrackExporter.KMZ_EXTENSION, file, true);
 
-        if (updatedDriveFile == null) {
-          Log.e(TAG, "Unable to update drive file");
-          return false;
+          if (updatedDriveFile == null) {
+            Log.e(TAG, "Unable to update drive file");
+            return false;
+          }
+        } finally {
+          if (file != null) {
+            file.delete();
+          }
         }
-      } finally {
-        if (file != null) {
-          file.delete();
+      } else {
+        updatedDriveFile = driveFile;
+      }
+
+      SyncUtils.updateTrack(myTracksProviderUtils, track, updatedDriveFile);
+      success = true;
+      return true;
+    } finally {
+      if (!success) {
+        // if the track is new, delete it
+        if (trackId == -1L && track != null) {
+          myTracksProviderUtils.deleteTrack(track.getId());
         }
       }
-    } else {
-      updatedDriveFile = driveFile;
     }
-
-    SyncUtils.updateTrack(myTracksProviderUtils, track, updatedDriveFile);
-    return true;
   }
 
   /**
