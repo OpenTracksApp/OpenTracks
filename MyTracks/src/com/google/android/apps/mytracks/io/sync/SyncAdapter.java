@@ -496,7 +496,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     }
     File updatedDriveFile;
     String trackName = FileUtils.getName(driveFile.getTitle());
-    if (!track.getName().equals(trackName)) {
+    if (SyncUtils.isInMyTracks(driveFile, getFolderId()) && !track.getName().equals(trackName)) {
       track.setName(trackName);
 
       /*
