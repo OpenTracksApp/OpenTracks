@@ -59,6 +59,7 @@ public class ListItemUtils {
    * @param category the category value
    * @param description the description value
    */
+  @SuppressWarnings("deprecation")
   public static void setListItem(Activity activity, View view, boolean isRecording,
       boolean isPaused, int iconId, int iconContentDescriptionId, String name, String sharedOwner,
       String totalTime, String totalDistance, String photoUrl, long startTime, String category,
