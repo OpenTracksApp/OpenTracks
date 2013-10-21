@@ -67,6 +67,10 @@ public class BitmapLoader extends AsyncTask<Void, Void, Bitmap> {
 
     options.inJustDecodeBounds = true;
     BitmapFactory.decodeFile(uri.getPath(), options);
+    
+    if (options.outWidth == 0 || options.outHeight == 0) {
+      return null;
+    }
 
     // Set imageWidth and imageHeight based on image rotation
     int rotation = getRotation();
@@ -87,7 +91,10 @@ public class BitmapLoader extends AsyncTask<Void, Void, Bitmap> {
     options.inPurgeable = true;
 
     Bitmap scaledBitmap = BitmapFactory.decodeFile(uri.getPath(), options);
-
+    if (scaledBitmap == null) {
+      return null;
+    }
+    
     // Get the final bitmap after rotating the scaled down image
     Bitmap bitmap;
     if (rotation == 0 && fitWithin) {
