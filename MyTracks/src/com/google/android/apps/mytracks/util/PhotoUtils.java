@@ -37,13 +37,17 @@ public class PhotoUtils {
    * 
    * @param imageView the image view
    * @param uri the image uri
-   * @param displayWidth the display width
-   * @param displayHeight the display height
+   * @param targetWidth the target width
+   * @param targetHeight the target height
+   * @param fitWithin true to fit within the target area in order to display the
+   *          entire image (no cropping). False to fill the entire target area.
+   *          (allow cropping).
    */
   public static void setImageVew(
-      ImageView imageView, Uri uri, int displayWidth, int displayHeight) {
+      ImageView imageView, Uri uri, int targetWidth, int targetHeight, boolean fitWithin) {
     if (cancelBitmapLoader(imageView, uri)) {
-      BitmapLoader bitmapLoader = new BitmapLoader(imageView, uri, displayWidth, displayHeight);
+      BitmapLoader bitmapLoader = new BitmapLoader(
+          imageView, uri, targetWidth, targetHeight, fitWithin);
       WeakReference<BitmapLoader> bitmapLoaderReference = new WeakReference<BitmapLoader>(
           bitmapLoader);
       imageView.setTag(bitmapLoaderReference);

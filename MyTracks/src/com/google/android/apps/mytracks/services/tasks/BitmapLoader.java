@@ -40,16 +40,19 @@ public class BitmapLoader extends AsyncTask<Void, Void, Bitmap> {
 
   private final WeakReference<ImageView> imageViewReference;
   private final Uri uri;
-  private final int displayWidth;
-  private final int displayHeight;
+  private final int targetWidth;
+  private final int targetHeight;
+  private final boolean fitWithin;
 
-  public BitmapLoader(ImageView imageView, Uri uri, int displayWidth, int displayHeight) {
+  public BitmapLoader(
+      ImageView imageView, Uri uri, int targetWidth, int targetHeight, boolean fitWithin) {
 
     // Use a WeakReference to ensure the ImageView can be garbage collected
     imageViewReference = new WeakReference<ImageView>(imageView);
     this.uri = uri;
-    this.displayWidth = displayWidth;
-    this.displayHeight = displayHeight;
+    this.targetWidth = targetWidth;
+    this.targetHeight = targetHeight;
+    this.fitWithin = fitWithin;
   }
 
   public Uri getUri() {
@@ -64,13 +67,6 @@ public class BitmapLoader extends AsyncTask<Void, Void, Bitmap> {
 
     options.inJustDecodeBounds = true;
     BitmapFactory.decodeFile(uri.getPath(), options);
-
-    // Set targetWidth and targetHeight
-    int targetWidth = displayWidth;
-    int targetHeight = displayHeight;
-    if (targetHeight == 0) {
-      targetHeight = (int) (targetWidth * ((float) options.outHeight / (float) options.outWidth));
-    }
 
     // Set imageWidth and imageHeight based on image rotation
     int rotation = getRotation();
@@ -87,20 +83,26 @@ public class BitmapLoader extends AsyncTask<Void, Void, Bitmap> {
 
     // Get a scaled down version of the image
     options.inJustDecodeBounds = false;
-    options.inSampleSize = getInSampleSize(imageWidth, imageHeight, targetWidth, targetHeight);
+    options.inSampleSize = getInSampleSize(imageWidth, imageHeight);
     options.inPurgeable = true;
 
     Bitmap scaledBitmap = BitmapFactory.decodeFile(uri.getPath(), options);
 
     // Get the final bitmap after rotating the scaled down image
     Bitmap bitmap;
-    if (rotation == 0) {
+    if (rotation == 0 && fitWithin) {
       bitmap = scaledBitmap;
     } else {
       Matrix matrix = new Matrix();
       matrix.postRotate(rotation);
+      int offset = 0;
+      int height = scaledBitmap.getHeight();
+      if (!fitWithin && height > targetHeight) {
+        offset = (height - targetHeight) / 2;
+        height = targetHeight;
+      }
       bitmap = Bitmap.createBitmap(
-          scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
+          scaledBitmap, 0, offset, scaledBitmap.getWidth(), height, matrix, true);
       scaledBitmap.recycle();
     }
     return bitmap;
@@ -148,10 +150,8 @@ public class BitmapLoader extends AsyncTask<Void, Void, Bitmap> {
    * 
    * @param imageWidth the image width
    * @param imageHeight the image height
-   * @param targetWidth the target width
-   * @param targetHeight the target height
    */
-  private int getInSampleSize(int imageWidth, int imageHeight, int targetWidth, int targetHeight) {
+  private int getInSampleSize(int imageWidth, int imageHeight) {
     float widthRatio = 1;
     if (imageWidth > targetWidth) {
       widthRatio = (float) imageWidth / (float) targetWidth;
@@ -162,11 +162,21 @@ public class BitmapLoader extends AsyncTask<Void, Void, Bitmap> {
       heightRatio = (float) imageHeight / (float) targetHeight;
     }
 
-    /*
-     * To fit within the target area, return the larger sample ratio so the
-     * image will not be larger than the target dimensions. Use Math.floor to
-     * not under sample.
-     */
-    return (int) Math.floor(Math.max(widthRatio, heightRatio));
+    double size;
+    if (fitWithin) {
+      /*
+       * To fit within the target area, return the larger sample ratio so the
+       * image will not be larger than the target dimensions.
+       */
+      size = Math.max(widthRatio, heightRatio);
+    } else {
+      /*
+       * To fill the target area, return the smaller ratio so the image will
+       * cover both dimensions.
+       */
+      size = Math.min(widthRatio, heightRatio);
+    }
+    // Use Math.floor to not under-sample.
+    return (int) Math.floor(size);
   }
 }

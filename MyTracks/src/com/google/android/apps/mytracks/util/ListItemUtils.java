@@ -20,6 +20,7 @@ import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.net.Uri;
 import android.text.format.DateUtils;
 import android.view.Display;
@@ -35,6 +36,8 @@ import java.util.Calendar;
  * @author Jimmy Shih
  */
 public class ListItemUtils {
+
+  private static final int LIST_PREFERRED_ITEM_HEIGHT_DEFAULT = 128;
 
   private ListItemUtils() {}
 
@@ -87,17 +90,14 @@ public class ListItemUtils {
     setTextView(timeDistanceTextView,
         getTimeDistance(activity, isRecording, isPaused, sharedOwner, totalTime, totalDistance));
 
-    // Set photoUrl
-    ImageView photo = (ImageView) view.findViewById(R.id.list_item_photo);
+    ImageView photo = (ImageView) view.findViewById(R.id.list_item_background);
     if (photoUrl == null || photoUrl.equals("")) {
       photo.setVisibility(View.GONE);
     } else {
       photo.setVisibility(View.VISIBLE);
       Display defaultDisplay = activity.getWindowManager().getDefaultDisplay();
-      // Set the initial width to 33% of the display width. 
-      int width = (int) (defaultDisplay.getWidth() * .33);
-      int height = 0;
-      PhotoUtils.setImageVew(photo, Uri.parse(photoUrl), width, height);
+      PhotoUtils.setImageVew(
+          photo, Uri.parse(photoUrl), defaultDisplay.getWidth(), getPhotoHeight(activity), false);
     }
 
     // Set date/time
@@ -107,6 +107,15 @@ public class ListItemUtils {
 
     TextView timeTextView = (TextView) view.findViewById(R.id.list_item_time);
     setTextView(timeTextView, startTimeDisplay[1]);
+
+    /*
+     * If column0 is GONE, change to INVISIBLE so column1 is placed at the
+     * correct position.
+     */
+    if (timeTextView.getVisibility() == View.VISIBLE
+        && timeDistanceTextView.getVisibility() == View.GONE) {
+      timeDistanceTextView.setVisibility(View.INVISIBLE);
+    }
 
     // Set category/description
     TextView descriptionTextView = (TextView) view.findViewById(R.id.list_item_description);
@@ -200,5 +209,18 @@ public class ListItemUtils {
       textView.setVisibility(View.VISIBLE);
       textView.setText(value);
     }
+  }
+
+  /**
+   * Gets the photo height.
+   * 
+   * @param context the context
+   */
+  private static int getPhotoHeight(Context context) {
+    int[] attrs = new int[] { android.R.attr.listPreferredItemHeight };
+    TypedArray typeArray = context.obtainStyledAttributes(attrs);
+    int height = typeArray.getDimensionPixelSize(0, LIST_PREFERRED_ITEM_HEIGHT_DEFAULT);
+    typeArray.recycle();
+    return 2 * height;
   }
 }
