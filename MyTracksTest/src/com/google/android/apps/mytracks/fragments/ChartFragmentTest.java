@@ -28,7 +28,7 @@ import android.test.AndroidTestCase;
 
 /**
  * Tests {@link ChartFragment}.
- *
+ * 
  * @author Youtao Liu
  */
 public class ChartFragmentTest extends AndroidTestCase {
@@ -45,12 +45,12 @@ public class ChartFragmentTest extends AndroidTestCase {
   }
 
   /**
-   * Tests the logic to get the incorrect values of sensor in
-   * {@link ChartFragment#fillDataPoint(Location, double[])}
+   * Tests the logic to get the incorrect values of sensor in {@link ChartFragment#fillDataPoint(Location,
+   * double[], android.content.Context)}
    */
   public void testFillDataPoint_sensorIncorrect() {
     MyTracksLocation myTracksLocation = TrackStubUtils.createMyTracksLocation();
-    
+
     // No input.
     double[] point = fillDataPointTestHelper(myTracksLocation);
     assertEquals(Double.NaN, point[ChartView.HEART_RATE_SERIES + 1]);
@@ -69,10 +69,7 @@ public class ChartFragmentTest extends AndroidTestCase {
     // Creates SensorDataSet.
     SensorDataSet sensorDataSet = myTracksLocation.getSensorDataSet();
     sensorDataSet = sensorDataSet.toBuilder()
-        .setHeartRate(heartRateData)
-        .setCadence(cadenceData)
-        .setPower(powerData)
-        .build();
+        .setHeartRate(heartRateData).setCadence(cadenceData).setPower(powerData).build();
     myTracksLocation.setSensorDataSet(sensorDataSet);
     // Test.
     point = fillDataPointTestHelper(myTracksLocation);
@@ -82,8 +79,8 @@ public class ChartFragmentTest extends AndroidTestCase {
   }
 
   /**
-   * Tests the logic to get the correct values of sensor in
-   * {@link ChartFragment#fillDataPoint(Location, double[])}.
+   * Tests the logic to get the correct values of sensor in {@link ChartFragment#fillDataPoint(Location,
+   * double[], android.content.Context)}.
    */
   public void testFillDataPoint_sensorCorrect() {
     MyTracksLocation myTracksLocation = TrackStubUtils.createMyTracksLocation();
@@ -100,14 +97,11 @@ public class ChartFragmentTest extends AndroidTestCase {
         .setValue(101).setState(Sensor.SensorState.SENDING);
     Sensor.SensorData.Builder powerData = Sensor.SensorData.newBuilder()
         .setValue(102).setState(Sensor.SensorState.SENDING);
-    
+
     // Creates SensorDataSet.
     SensorDataSet sensorDataSet = myTracksLocation.getSensorDataSet();
     sensorDataSet = sensorDataSet.toBuilder()
-        .setHeartRate(heartRateData)
-        .setCadence(cadenceData)
-        .setPower(powerData)
-        .build();
+        .setHeartRate(heartRateData).setCadence(cadenceData).setPower(powerData).build();
     myTracksLocation.setSensorDataSet(sensorDataSet);
     // Test.
     point = fillDataPointTestHelper(myTracksLocation);
@@ -117,8 +111,8 @@ public class ChartFragmentTest extends AndroidTestCase {
   }
 
   /**
-   * Tests the logic to get the value of metric Distance in
-   * {@link ChartFragment#fillDataPoint(Location, double[])}.
+   * Tests the logic to get the value of metric Distance in {@link ChartFragment#fillDataPoint(Location,
+   * double[], android.content.Context)}.
    */
   public void testFillDataPoint_distanceMetric() {
     // By distance.
@@ -137,7 +131,7 @@ public class ChartFragmentTest extends AndroidTestCase {
     MyTracksLocation myTracksLocation3 = TrackStubUtils.createMyTracksLocation();
     myTracksLocation3.setLatitude(23);
     point = fillDataPointTestHelper(myTracksLocation3);
-    
+
     // Computes the distance between Latitude 22 and 23.
     float[] results = new float[4];
     Location.distanceBetween(myTracksLocation2.getLatitude(), myTracksLocation2.getLongitude(),
@@ -149,7 +143,7 @@ public class ChartFragmentTest extends AndroidTestCase {
     MyTracksLocation myTracksLocation4 = TrackStubUtils.createMyTracksLocation();
     myTracksLocation4.setLatitude(24);
     point = fillDataPointTestHelper(myTracksLocation4);
-    
+
     // Computes the distance between Latitude 23 and 24.
     Location.distanceBetween(myTracksLocation3.getLatitude(), myTracksLocation3.getLongitude(),
         myTracksLocation4.getLatitude(), myTracksLocation4.getLongitude(), results);
@@ -158,8 +152,8 @@ public class ChartFragmentTest extends AndroidTestCase {
   }
 
   /**
-   * Tests the logic to get the value of imperial Distance in
-   * {@link ChartFragment#fillDataPoint(Location, double[])}.
+   * Tests the logic to get the value of imperial Distance in {@link ChartFragment#fillDataPoint(Location,
+   * double[], android.content.Context)}.
    */
   public void testFillDataPoint_distanceImperial() {
     // By distance.
@@ -203,8 +197,8 @@ public class ChartFragmentTest extends AndroidTestCase {
   }
 
   /**
-   * Tests the logic to get the values of time in
-   * {@link ChartFragment#fillDataPoint(Location, double[])}.
+   * Tests the logic to get the values of time in {@link ChartFragment#fillDataPoint(Location,
+   * double[], android.content.Context)}.
    */
   public void testFillDataPoint_time() {
     // By time
@@ -220,9 +214,8 @@ public class ChartFragmentTest extends AndroidTestCase {
   }
 
   /**
-   * Tests the logic to get the value of elevation in
-   * {@link ChartFragment#fillDataPoint(Location, double[])} by one and two
-   * points.
+   * Tests the logic to get the value of elevation in {@link ChartFragment#fillDataPoint(Location,
+   * double[], android.content.Context)} by one and two points.
    */
   public void testFillDataPoint_elevation() {
     MyTracksLocation myTracksLocation1 = TrackStubUtils.createMyTracksLocation();
@@ -246,10 +239,10 @@ public class ChartFragmentTest extends AndroidTestCase {
   }
 
   /**
-   * Tests the logic to get the value of speed in
-   * {@link ChartFragment#fillDataPoint(Location, double[])}. In this test,
-   * firstly remove all points in memory, and then fill in two points one by
-   * one. The speed values of these points are 129, 130.
+   * Tests the logic to get the value of speed in {@link ChartFragment#fillDataPoint(Location,
+   * double[], android.content.Context)}. In this test, firstly remove all
+   * points in memory, and then fill in two points one by one. The speed values
+   * of these points are 129, 130.
    */
   public void testFillDataPoint_speed() {
     /*
@@ -283,22 +276,19 @@ public class ChartFragmentTest extends AndroidTestCase {
   public void testFillDataPoint_speedImperial() {
     // Setups to use imperial.
     chartFragment.setMetricUnits(false);
-    
+
     // First data point is not added to the speed buffer
     MyTracksLocation myTracksLocation1 = TrackStubUtils.createMyTracksLocation();
     myTracksLocation1.setSpeed(100.0f);
     double[] point = fillDataPointTestHelper(myTracksLocation1);
     assertEquals(0.0, point[ChartView.SPEED_SERIES + 1]);
-    
+
     MyTracksLocation myTracksLocation2 = TrackStubUtils.createMyTracksLocation();
-    
+
     /*
-     * Add a time span here to make sure the second point is valid and the speed is valid.
-     * 
-     * Speed is valid if:
-     * speedDifference > Constants.MAX_ACCELERATION * timeDifference
-     * speedDifference = 102 -100
-     * timeDifference = 222
+     * Add a time span here to make sure the second point is valid and the speed
+     * is valid. Speed is valid if: speedDifference > Constants.MAX_ACCELERATION
+     * * timeDifference speedDifference = 102 -100 timeDifference = 222
      */
     myTracksLocation2.setTime(myTracksLocation2.getTime() + 222);
     myTracksLocation2.setSpeed(102);
@@ -313,22 +303,19 @@ public class ChartFragmentTest extends AndroidTestCase {
   public void testFillDataPoint_pace_nonZeroSpeed() {
     // Setups reportSpeed to false.
     chartFragment.setReportSpeed(false);
-    
+
     // First data point is not added to the speed buffer
     MyTracksLocation myTracksLocation1 = TrackStubUtils.createMyTracksLocation();
     myTracksLocation1.setSpeed(100.0f);
     double[] point = fillDataPointTestHelper(myTracksLocation1);
     assertEquals(0.0, point[ChartView.SPEED_SERIES + 1]);
-    
+
     MyTracksLocation myTracksLocation2 = TrackStubUtils.createMyTracksLocation();
 
     /*
-     * Add a time span here to make sure the second point is valid and the speed is valid.
-     * 
-     * Speed is valid if:
-     * speedDifference > Constants.MAX_ACCELERATION * timeDifference
-     * speedDifference = 102 -100
-     * timeDifference = 222
+     * Add a time span here to make sure the second point is valid and the speed
+     * is valid. Speed is valid if: speedDifference > Constants.MAX_ACCELERATION
+     * * timeDifference speedDifference = 102 -100 timeDifference = 222
      */
     myTracksLocation2.setTime(myTracksLocation2.getTime() + 222);
     myTracksLocation2.setSpeed(102);
@@ -352,7 +339,7 @@ public class ChartFragmentTest extends AndroidTestCase {
 
   /**
    * Helper method to test fillDataPoint.
-   *
+   * 
    * @param location location to fill
    * @return data of this location
    */

@@ -315,7 +315,6 @@ public class CalorieUtils {
    * @param gradeBuffer
    * @param distance
    * @param rise
-   * @return
    */
   private static double updateGrade(DoubleBuffer gradeBuffer, float distance, Double rise) {
     double grade = 0;
