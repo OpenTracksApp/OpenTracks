@@ -21,12 +21,12 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.zip.ZipEntry;
@@ -44,7 +44,7 @@ public class KmzTrackExporter implements TrackExporter {
   public static final String KMZ_KML_FILE = "doc.kml";
 
   private static final String TAG = KmzTrackExporter.class.getSimpleName();
-  private static final int BUFFER_SIZE = 4096;
+  private static final int MEGA_BYTE = 1000000;
 
   private final MyTracksProviderUtils myTracksProviderUtils;
   private final FileTrackExporter fileTrackExporter;
@@ -132,25 +132,29 @@ public class KmzTrackExporter implements TrackExporter {
 
   private void addImage(ZipOutputStream zipOutputStream, String photoUrl) throws IOException {
     Uri uri = Uri.parse(photoUrl);
+    File file = new File(uri.getPath());
+    if (!file.exists()) {
+      Log.e(TAG, "file not found " + photoUrl);
+      return;
+    }
+
     ZipEntry zipEntry = new ZipEntry(
         KMZ_IMAGES_DIR + File.separatorChar + uri.getLastPathSegment());
     zipOutputStream.putNextEntry(zipEntry);
 
-    FileInputStream fileInputStream = null;
-    try {
-      fileInputStream = new FileInputStream(new File(uri.getPath()));
-      byte[] buffer = new byte[BUFFER_SIZE];
-      int byteCount = 0;
-      while ((byteCount = fileInputStream.read(buffer)) != -1) {
-        zipOutputStream.write(buffer, 0, byteCount);
-      }      
-    } catch (FileNotFoundException e) {
-      Log.e(TAG, "Unable to add image", e);
-    } finally {
-      if (fileInputStream != null) {
-        fileInputStream.close();
-      }
+    long size = file.length();
+    int sampleSize = size > MEGA_BYTE ? (int) Math.ceil(size / MEGA_BYTE) : 1;
+    BitmapFactory.Options options = new BitmapFactory.Options();
+    options.inJustDecodeBounds = false;
+    options.inSampleSize = sampleSize;
+
+    Bitmap bitmap = BitmapFactory.decodeFile(uri.getPath(), options);
+    if (bitmap == null) {
+      return;
     }
+    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, zipOutputStream);
+    bitmap.recycle();
+    
     zipOutputStream.closeEntry();
   }
 }
