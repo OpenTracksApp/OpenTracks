@@ -36,6 +36,7 @@ import com.google.android.apps.mytracks.services.tasks.PeriodicTaskExecutor;
 import com.google.android.apps.mytracks.services.tasks.SplitPeriodicTaskFactory;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.stats.TripStatisticsUpdater;
+import com.google.android.apps.mytracks.util.CalorieUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
@@ -1001,7 +1002,8 @@ public class TrackRecordingService extends Service {
     try {
       Uri uri = myTracksProviderUtils.insertTrackPoint(location, track.getId());
       long trackPointId = Long.parseLong(uri.getLastPathSegment());
-      trackTripStatisticsUpdater.addLocation(location, recordingDistanceInterval, context);
+      trackTripStatisticsUpdater.addLocationCalorie(location, recordingDistanceInterval,
+          CalorieUtils.getActivityType(context, track.getId()), context);
       markerTripStatisticsUpdater.addLocation(location, recordingDistanceInterval, context);
       updateRecordingTrack(track, trackPointId, LocationUtils.isValidLocation(location));
     } catch (SQLiteException e) {
@@ -1335,21 +1337,21 @@ public class TrackRecordingService extends Service {
     }
 
     @Override
-    public void updateCalorie(double calorieTotal, double calorieCurrentSegment) {
+    public void updateTripStatistics(Track track) {
       if (!canAccess()) {
         return;
       }
-      trackRecordingService.updateCalorie(calorieTotal, calorieCurrentSegment);
+      trackRecordingService.updateTripStatistics(track);
     }
   }
-  
+
   /**
-   * Updates the calorie value.
+   * Updates the TripStatistics of current recording track after the current
+   * track is edited by user.
    * 
-   * @param calorieTotal the calorie value of entire track
-   * @param calorieCurrentSegment the calorie value of current segment
+   * @param track the current recording track
    */
-  public void updateCalorie(final double calorieTotal, final double calorieCurrentSegment) {
+  public void updateTripStatistics(final Track track) {
     if (myTracksLocationManager == null || executorService == null
         || !myTracksLocationManager.isAllowed() || executorService.isShutdown()
         || executorService.isTerminated()) {
@@ -1358,7 +1360,9 @@ public class TrackRecordingService extends Service {
     executorService.submit(new Runnable() {
       @Override
       public void run() {
-        trackTripStatisticsUpdater.updateCalorie(calorieTotal, calorieCurrentSegment);
+        trackTripStatisticsUpdater = CalorieUtils.updateTrackStatistics(getApplicationContext(),
+            track);
+        MyTracksProviderUtils.Factory.get(context).updateTrack(track);
       }
     });
   }

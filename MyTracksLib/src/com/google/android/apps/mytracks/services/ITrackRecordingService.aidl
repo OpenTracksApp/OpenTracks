@@ -16,6 +16,7 @@
 package com.google.android.apps.mytracks.services;
 
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
+import com.google.android.apps.mytracks.content.Track;
 
 /**
  * MyTracks service.
@@ -108,10 +109,9 @@ interface ITrackRecordingService {
   int getSensorState();
   
   /**
-   * Updates the calorie value.
+   * Updates the TripStatistics of current recording track.
    * 
-   * @param calorieTotal the calorie value of entire track
-   * @param calorieCurrentSegment the calorie value of current segment
+   * @param track the current recording track
    */
-  void updateCalorie(double calorieTotal, double calorieCurrentSegment);
+  void updateTripStatistics(in Track track);
 }

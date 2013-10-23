@@ -130,13 +130,27 @@ public class TripStatisticsUpdater {
    * @param context the context to get the weight and track category
    */
   public void addLocation(Location location, int minRecordingDistance, Context context) {
-    int weight = PreferencesUtils.getInt(context, R.string.stats_weight_key,
-        PreferencesUtils.STATS_WEIGHT_DEFAULT);
     addLocation(
         location,
         minRecordingDistance,
         CalorieUtils.getActivityType(context,
-            PreferencesUtils.getLong(context, R.string.recording_track_id_key)), weight);
+            PreferencesUtils.getLong(context, R.string.recording_track_id_key)), 0, false);
+  }
+  
+  /**
+   * Adds a location and calculate calorie. Only calculate calorie when add
+   * location to a recording track.
+   * 
+   * @param location the location
+   * @param minRecordingDistance the min recording distance
+   * @param activityType the activity type
+   * @param context the context to get the weight and track category
+   */
+  public void addLocationCalorie(Location location, int minRecordingDistance,
+      ActivityType activityType, Context context) {
+    int weight = PreferencesUtils.getInt(context, R.string.stats_weight_key,
+        PreferencesUtils.STATS_WEIGHT_DEFAULT);
+    addLocation(location, minRecordingDistance, activityType, weight, true);
   }
 
   /**
@@ -146,13 +160,13 @@ public class TripStatisticsUpdater {
    * @param minRecordingDistance the min recording distance
    * @param activityType the activity type of current track
    * @param weight the weight to calculate calorie
+   * @param isCalculateCalorie true means calculate calorie
    */
   @VisibleForTesting
   void addLocation(Location location, int minRecordingDistance, ActivityType activityType,
-      int weight) {
+      int weight, boolean isCalculateCalorie) {
     // Always update time
     updateTime(location.getTime());
-
     if (!LocationUtils.isValidLocation(location)) {
       // Either pause or resume marker
       if (location.getLatitude() == PAUSE_LATITUDE) {
@@ -214,26 +228,16 @@ public class TripStatisticsUpdater {
           location.getTime(), location.getSpeed(), lastLocation.getTime(), lastLocation.getSpeed());
     }
     
-    // Update calorie
-    double calorie = CalorieUtils.getCalorie(lastMovingLocation, location,
-        gradeBuffer.getAverage(), weight, activityType);
-    currentSegment.addCalorie(calorie);
-
+    if (isCalculateCalorie) {
+      // Update calorie
+      double calorie = CalorieUtils.getCalorie(lastMovingLocation, location,
+          gradeBuffer.getAverage(), weight, activityType);
+      currentSegment.addCalorie(calorie);
+    }
     lastLocation = location;
     lastMovingLocation = location;
   }
   
-  /**
-   * Updates the calorie value.
-   * 
-   * @param calorieTotal the calorie value of entire track
-   * @param calorieCurrentSegment the calorie value of current segment
-   */
-  public void updateCalorie(double calorieTotal, double calorieCurrentSegment) {
-    tripStatistics.setCalorie(calorieTotal);
-    currentSegment.setCalorie(calorieCurrentSegment);
-  }
-
   /**
    * Gets the smoothed elevation over several readings. The elevation readings
    * is noisy so the smoothed elevation is better than the raw elevation for

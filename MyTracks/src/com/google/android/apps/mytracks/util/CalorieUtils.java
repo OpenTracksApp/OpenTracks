@@ -18,8 +18,6 @@ package com.google.android.apps.mytracks.util;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
 import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.services.TrackRecordingService;
-import com.google.android.apps.mytracks.stats.DoubleBuffer;
 import com.google.android.apps.mytracks.stats.TripStatisticsUpdater;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
@@ -280,69 +278,30 @@ public class CalorieUtils {
    * @param context the context
    * @param track the track to calculate
    * @param category the category of track
-   * @return a double array of calorie value and the size of this array is 2.
-   *         The first value is the calorie of entire track and the second value
-   *         is the calorie of current segment
+   * @return the TripStatisticsUpdater of track
    */
-  public static double[] calculateTrackCalorie(Context context, Track track, String category) {
-    double[] calories = {0.0, 0.0};
-    ActivityType activityType = getActivityType(context, category);
-    if (activityType == ActivityType.INVALID) {
-      return calories;
-    }
+  public static TripStatisticsUpdater updateTrackStatistics(Context context, Track track) {
+    ActivityType activityType = getActivityType(context, track.getCategory());
 
-    double calorieTotal = 0.0;
-    double calorieCurrentSegment = 0.0;
     MyTracksProviderUtils providerUtils = MyTracksProviderUtils.Factory.get(context);
     long trackId = track.getId();
     LocationIterator points = providerUtils.getTrackPointLocationIterator(trackId, -1, false,
         MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
 
-    DoubleBuffer gradeBuffer = new DoubleBuffer(TripStatisticsUpdater.GRADE_SMOOTHING_FACTOR);
-
-    if (points.hasNext()) {
-      Location start = points.next();
-
-      while (points.hasNext()) {
-        Location stop = points.next();
-
-        if (stop.getLatitude() == TrackRecordingService.PAUSE_LATITUDE
-            || stop.getLatitude() == TrackRecordingService.RESUME_LATITUDE) {
-          calorieCurrentSegment = 0.0;
-          continue;
-        }
-
-        double grade = updateGrade(gradeBuffer, stop.distanceTo(start),
-            stop.getAltitude() - start.getAltitude());
-        double calorieAdded = getCalorie(start, stop, grade, PreferencesUtils.getInt(context,
-            R.string.stats_weight_key, PreferencesUtils.STATS_WEIGHT_DEFAULT), activityType);
-        calorieTotal += calorieAdded;
-        calorieCurrentSegment += calorieAdded;
-        start = stop;
+    TripStatisticsUpdater tripStatisticsUpdater = new TripStatisticsUpdater(track
+        .getTripStatistics().getStartTime());
+    while (points.hasNext()) {
+      if (activityType == ActivityType.INVALID) {
+        tripStatisticsUpdater.addLocation(points.next(), PreferencesUtils.getInt(context,
+            R.string.recording_distance_interval_key,
+            PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT), context);
+      } else {
+        tripStatisticsUpdater.addLocationCalorie(points.next(), PreferencesUtils.getInt(context,
+            R.string.recording_distance_interval_key,
+            PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT), activityType, context);
       }
     }
-    calories[0] = calorieTotal;
-    calories[1] = calorieCurrentSegment;
-    return calories;
+    track.setTripStatistics(tripStatisticsUpdater.getTripStatistics());
+    return tripStatisticsUpdater;
   }
-
-  /**
-   * Updates a grade reading.
-   * 
-   * @param gradeBuffer
-   * @param distance
-   * @param rise
-   * @return
-   */
-  private static double updateGrade(DoubleBuffer gradeBuffer, float distance, Double rise) {
-    double grade = 0;
-    if (rise > 0 && distance > 0) {
-      gradeBuffer.setNext(rise / distance);
-      grade = gradeBuffer.getAverage();
-    } else {
-      gradeBuffer.setNext(0);
-    }
-    return grade;
-  }
-
 }
