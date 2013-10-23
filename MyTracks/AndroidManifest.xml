@@ -219,6 +219,7 @@ limitations under the License.
     <activity android:name="com.google.android.apps.mytracks.io.maps.SendMapsActivity" />
     <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.UploadResultActivity" />
     <activity android:name="com.google.android.apps.mytracks.io.spreadsheets.SendSpreadsheetsActivity" />
+    <activity android:name="com.google.android.apps.mytracks.settings.AdvancedSettingsActivity" />
     <activity android:name="com.google.android.apps.mytracks.settings.BackupResetSettingsActivity" />
     <activity android:name="com.google.android.apps.mytracks.settings.ChartSettingsActivity" />
     <activity android:name="com.google.android.apps.mytracks.settings.GoogleSettingsActivity" />
@@ -226,7 +227,6 @@ limitations under the License.
     <activity android:name="com.google.android.apps.mytracks.settings.RecordingSettingsActivity" />
     <activity android:name="com.google.android.apps.mytracks.settings.SensorSettingsActivity" />
     <activity android:name="com.google.android.apps.mytracks.settings.SettingsActivity" />
-    <activity android:name="com.google.android.apps.mytracks.settings.SharingSettingsActivity" />
     <activity android:name="com.google.android.apps.mytracks.settings.StatsSettingsActivity" />
     <activity
       android:label="@string/track_widget_config_title"

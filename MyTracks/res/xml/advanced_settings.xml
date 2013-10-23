@@ -15,11 +15,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-  android:title="@string/settings_sharing" >
+  android:title="@string/settings_advanced" >
+  <com.google.android.apps.mytracks.IntegerListPreference
+    android:defaultValue="1024"
+    android:key="@string/photo_size_key"
+    android:title="@string/settings_advanced_photo_size_title" />
   <CheckBoxPreference
     android:defaultValue="false"
     android:key="@string/allow_access_key"
     android:summaryOff="@string/settings_sharing_allow_access_summary_off"
     android:summaryOn="@string/settings_sharing_allow_access_summary_on"
-    android:title="@string/settings_sharing_allow_access" />
+    android:title="@string/settings_sharing_allow_access" />  
 </PreferenceScreen>

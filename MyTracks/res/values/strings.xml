@@ -777,7 +777,7 @@ limitations under the License.
   <string name="generic_delete_selected_confirm_title"
     translation_description="When deleting selected items, the title of the confirmation dialog.">
     Delete selected?
-  </string>  
+  </string>
   <string name="generic_description"
     translation_description="The text label for entering a description.">
     Description
@@ -1002,7 +1002,7 @@ limitations under the License.
   </string>
   <string name="marker_delete_one_confirm_title"
     translation_description="When deleting one marker, the title of the confirmation dialog.">
-    Delete marker?    
+    Delete marker?
   </string>
   <string name="marker_delete_multiple_confirm_message"
     translation_description="When deleting multiple markers, the confirmation message.">
@@ -1475,6 +1475,29 @@ limitations under the License.
     Show
   </string>
 
+  <!-- Settings Advanced -->
+  <string name="settings_advanced"
+    translation_description="In the 'Settings' page, the 'Advanced' options.
+
+      Character limit: ~26 (1 line)">
+    Advanced
+  </string>
+  <string name="settings_advanced_photo_size_original"
+    translation_description="In the 'Advanced' settings, under the 'Photo size' option, the value to
+      use the original photo size.">
+    Original size
+  </string>
+  <string name="settings_advanced_photo_size_summary"
+    translation_description="In the 'Advanced' settings, the summary for the 'Photo size' option.
+
+      %1$s value. E.g., '1 MB'.">
+    Scale photo to %1$s for export.
+  </string>
+  <string name="settings_advanced_photo_size_title"
+    translation_description="In the 'Advanced' settings, the option to set the photo size.">
+    Photo size
+  </string>
+
   <!-- Settings Backup Reset -->
   <string name="settings_backup_reset"
     translation_description="In the 'Settings' page, the option backup and reset.
@@ -1494,7 +1517,7 @@ limitations under the License.
   <string name="settings_backup_confirm_message"
     translation_description="In the 'Backup and reset' settings, after pressing the 'Backup' option,
       the confirmation message.
-      
+
       %1$s the directory. E.g., '/MyTracks/backups'.">
     This will write a full copy of all your tracks and settings to &#8216;%1$s&#8217; on the
     external storage.
@@ -1955,13 +1978,6 @@ limitations under the License.
   </string>
 
   <!-- Settings Sharing -->
-  <string name="settings_sharing"
-    translation_description="In the 'Settings' page, the option to change the track sharing related
-      settings.
-
-      Character limit: ~26 (1 line)">
-    Sharing
-  </string>
   <string name="settings_sharing_allow_access"
     translation_description="In the 'Sharing' settings, the checkbox option to allow third party
       apps access to the My Tracks data.
@@ -2137,13 +2153,13 @@ limitations under the License.
   </string>
   <string name="stats_calorie"
     translation_description="In the 'Stats' page, the calorie burned.
-    
+
       Character limit: ~23 (1 line)">
     Calories
   </string>
   <string name="stats_calorie_setup"
     translation_description="In the 'Stats' page, the button to setup calorie.
-    
+
       Character limit: ~23 (1 line)">
     Setup Activity Type
   </string>
@@ -2238,11 +2254,11 @@ limitations under the License.
   </string>
   <string name="track_markers"
     translation_description="Title indicating a particular track's markers.
-      
+
       %1$s track name. E.g., 'Grand Canyon trail'.">
     %1$s Markers
   </string>
-  
+
   <!-- Track Delete -->
   <string name="track_delete_all_confirm_message"
     translation_description="When deleting all the tracks, the confirmation message.">
@@ -2492,12 +2508,11 @@ limitations under the License.
       %1$d an integer value. E.g., '2'.">
     %1$d ft (recommended)
   </string>
-  <string name="value_integer_kilometer"
-    translation_description="In a setting picker, the string format to display an integer value in
-      kilometers (km).
+  <string name="value_integer_kilobyte"
+    translation_description="Display an integer value in kilobyte (kB).
 
       %1$d an integer value. E.g., '2'.">
-    %1$d km
+    %1$d kB
   </string>
   <string name="value_integer_kilogram"
     translation_description="Display an integer value in kilogram (kg).
@@ -2505,11 +2520,24 @@ limitations under the License.
       %1$d an integer value. E.g., '2'.">
     %1$d kg
   </string>
+  <string name="value_integer_kilometer"
+    translation_description="In a setting picker, the string format to display an integer value in
+      kilometers (km).
+
+      %1$d an integer value. E.g., '2'.">
+    %1$d km
+  </string>
   <string name="value_integer_kilometer_hour"
     translation_description="Display an integer value in kilometers per hour (km/h).
 
       %1$d an integer value. E.g., '2'.">
     %1$d km/h
+  </string>
+  <string name="value_integer_megabyte"
+    translation_description="Display an integer value in megabyte (MB).
+
+      %1$d an integer value. E.g., '2'.">
+    %1$d MB
   </string>
   <string name="value_integer_meter"
     translation_description="In a setting picker, the string format to display an integer value in

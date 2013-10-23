@@ -27,18 +27,19 @@ limitations under the License.
   <string name="default_activity_key">defaultActivity</string>
   <string name="export_external_storage_format_key">exportExternalStorageFormat</string>
   <string name="export_google_fusion_tables_public_key">exportGoogleFusionTablesPublic</string>
-  <string name="export_google_maps_public_key">exportGoogleMapsPublic</string>  
+  <string name="export_google_maps_public_key">exportGoogleMapsPublic</string>
   <string name="export_type_key">exportType</string>
   <string name="map_type_key">mapType</string>
   <string name="max_recording_distance_key">maxRecordingDistance</string>
   <string name="min_recording_interval_key">minRecordingInterval</string>
+  <string name="photo_size_key">photoSize</string>
   <string name="recording_distance_interval_key">recordingDistanceInterval</string>
   <string name="recording_gps_accuracy_key">recordingGpsAccuracy</string>
   <string name="sensor_type_key">sensorType</string>
   <string name="share_track_invite_key">shareTrackInvite</string>
   <string name="share_track_public_key">shareTrackPublic</string>
   <string name="split_frequency_key">splitFrequency</string>
-  <string name="stats_rate_key">statsRate</string>  
+  <string name="stats_rate_key">statsRate</string>
   <string name="stats_show_coordinate_key">statsShowCoordinate</string>
   <string name="stats_show_grade_elevation_key">statsShowGradeElevation</string>
   <string name="stats_show_calorie_key">statsShowCalorie</string>
@@ -70,6 +71,7 @@ limitations under the License.
   <string name="recording_track_id_key">recordingTrackId</string>
   <string name="recording_track_paused_key">recordingTrackPaused</string>
   <!-- Keys for non-persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
+  <string name="settings_advanced_key">settingsAdvanced</string>
   <string name="settings_backup_key">settingsBackup</string>
   <string name="settings_backup_reset_key">settingsBackupReset</string>
   <string name="settings_chart_key">settingsChart</string>
@@ -90,6 +92,5 @@ limitations under the License.
   <string name="settings_sensor_bluetooth_key">settingsSensorBluetooth</string>
   <string name="settings_sensor_bluetooth_pairing_key">settingsSensorBluetoothPairing</string>
   <string name="settings_sensor_root_key">settingsSensorRoot</string>
-  <string name="settings_sharing_key">settingsSharing</string>
   <string name="settings_stats_key">settingsStats</string>
 </resources>
