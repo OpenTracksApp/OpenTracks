@@ -191,13 +191,18 @@ public class TrackEditActivity extends AbstractMyTracksActivity
         track.setModifiedTime(System.currentTimeMillis());
         if (!category.equals(track.getCategory())) {
           track.setCategory(category);
+
           // If edit recording track.
           if (track.getId() == PreferencesUtils.getLong(getApplicationContext(),
               R.string.recording_track_id_key)) {
-            TrackRecordingServiceConnectionUtils.updateCalorie(trackRecordingServiceConnection,
-                track);
+
+            // Update data without new calorie.
+            myTracksProviderUtils.updateTrack(track);
+            TrackRecordingServiceConnectionUtils.updateCalorie(trackRecordingServiceConnection);
           } else {
-            CalorieUtils.updateTrackStatistics(getApplicationContext(), track);
+            CalorieUtils.updateTrackStatistics(getApplicationContext(), -1, track);
+
+            // Update data with new calorie.
             myTracksProviderUtils.updateTrack(track);
           }
         }

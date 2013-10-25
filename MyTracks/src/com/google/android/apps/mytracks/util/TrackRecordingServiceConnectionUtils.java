@@ -17,7 +17,6 @@
 package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.TrackEditActivity;
-import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
@@ -199,16 +198,15 @@ public class TrackRecordingServiceConnectionUtils {
    * Updates the calorie of current recording track.
    * 
    * @param trackRecordingServiceConnection
-   * @param track the current recording track
    */
-  public static void updateCalorie(TrackRecordingServiceConnection trackRecordingServiceConnection, Track track) {
+  public static void updateCalorie(TrackRecordingServiceConnection trackRecordingServiceConnection) {
     ITrackRecordingService trackRecordingService = trackRecordingServiceConnection
         .getServiceIfBound();
     if (trackRecordingService == null) {
       Log.d(TAG, "Unable to update calorie, no track recording service");
     } else {
       try {
-        trackRecordingService.updateTripStatistics(track);
+        trackRecordingService.updateCalorie();
       } catch (RemoteException e) {
         Log.e(TAG, "Unable to update calorie", e);
       } catch (IllegalStateException e) {

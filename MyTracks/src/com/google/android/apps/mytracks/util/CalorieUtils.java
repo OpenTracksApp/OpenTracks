@@ -277,16 +277,17 @@ public class CalorieUtils {
    * 
    * @param context the context
    * @param track the track to calculate
-   * @param category the category of track
+   * @param startTrackPointId the starting track point id. -1L to ignore
    * @return the TripStatisticsUpdater of track
    */
-  public static TripStatisticsUpdater updateTrackStatistics(Context context, Track track) {
+  public static TripStatisticsUpdater updateTrackStatistics(Context context,
+      long startTrackPointId, Track track) {
     ActivityType activityType = getActivityType(context, track.getCategory());
 
     MyTracksProviderUtils providerUtils = MyTracksProviderUtils.Factory.get(context);
     long trackId = track.getId();
-    LocationIterator points = providerUtils.getTrackPointLocationIterator(trackId, -1, false,
-        MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
+    LocationIterator points = providerUtils.getTrackPointLocationIterator(trackId,
+        startTrackPointId, false, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
 
     TripStatisticsUpdater tripStatisticsUpdater = new TripStatisticsUpdater(track
         .getTripStatistics().getStartTime());
@@ -294,11 +295,15 @@ public class CalorieUtils {
       if (activityType == ActivityType.INVALID) {
         tripStatisticsUpdater.addLocation(points.next(), PreferencesUtils.getInt(context,
             R.string.recording_distance_interval_key,
-            PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT), context);
+            PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT), false, activityType,
+            PreferencesUtils.getInt(context, R.string.stats_weight_key,
+                PreferencesUtils.STATS_WEIGHT_DEFAULT));
       } else {
-        tripStatisticsUpdater.addLocationCalorie(points.next(), PreferencesUtils.getInt(context,
+        tripStatisticsUpdater.addLocation(points.next(), PreferencesUtils.getInt(context,
             R.string.recording_distance_interval_key,
-            PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT), activityType, context);
+            PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT), true, activityType,
+            PreferencesUtils.getInt(context, R.string.stats_weight_key,
+                PreferencesUtils.STATS_WEIGHT_DEFAULT));
       }
     }
     track.setTripStatistics(tripStatisticsUpdater.getTripStatistics());

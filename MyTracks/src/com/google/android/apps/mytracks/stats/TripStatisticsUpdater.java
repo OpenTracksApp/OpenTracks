@@ -22,11 +22,8 @@ import static com.google.android.apps.mytracks.services.TrackRecordingService.PA
 import com.google.android.apps.mytracks.util.CalorieUtils;
 import com.google.android.apps.mytracks.util.CalorieUtils.ActivityType;
 import com.google.android.apps.mytracks.util.LocationUtils;
-import com.google.android.apps.mytracks.util.PreferencesUtils;
-import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
 
-import android.content.Context;
 import android.location.Location;
 import android.util.Log;
 
@@ -123,48 +120,18 @@ public class TripStatisticsUpdater {
   }
   
   /**
-   * Adds a location.
-   * 
-   * @param location the location
-   * @param minRecordingDistance the min recording distance
-   * @param context the context to get the weight and track category
-   */
-  public void addLocation(Location location, int minRecordingDistance, Context context) {
-    addLocation(
-        location,
-        minRecordingDistance,
-        CalorieUtils.getActivityType(context,
-            PreferencesUtils.getLong(context, R.string.recording_track_id_key)), 0, false);
-  }
-  
-  /**
-   * Adds a location and calculate calorie. Only calculate calorie when add
-   * location to a recording track.
-   * 
-   * @param location the location
-   * @param minRecordingDistance the min recording distance
-   * @param activityType the activity type
-   * @param context the context to get the weight and track category
-   */
-  public void addLocationCalorie(Location location, int minRecordingDistance,
-      ActivityType activityType, Context context) {
-    int weight = PreferencesUtils.getInt(context, R.string.stats_weight_key,
-        PreferencesUtils.STATS_WEIGHT_DEFAULT);
-    addLocation(location, minRecordingDistance, activityType, weight, true);
-  }
-
-  /**
    * Adds a location. TODO: This assume location has a valid time.
    * 
    * @param location the location
    * @param minRecordingDistance the min recording distance
-   * @param activityType the activity type of current track
-   * @param weight the weight to calculate calorie
    * @param isCalculateCalorie true means calculate calorie
+   * @param activityType the activity type of current track which is used to
+   *          calculate calorie
+   * @param weight the weight to calculate calorie which is used to calculate
+   *          calorie
    */
-  @VisibleForTesting
-  void addLocation(Location location, int minRecordingDistance, ActivityType activityType,
-      int weight, boolean isCalculateCalorie) {
+  public void addLocation(Location location, int minRecordingDistance,
+      boolean isCalculateCalorie, ActivityType activityType, int weight) {
     // Always update time
     updateTime(location.getTime());
     if (!LocationUtils.isValidLocation(location)) {
@@ -380,5 +347,15 @@ public class TripStatisticsUpdater {
     } else {
       return true;
     }
+  }
+  
+  /**
+   * Updates the calorie value; 
+   * 
+   * @param calorie
+   */
+  public void updateCalorie(double calorie) {
+    tripStatistics.setCalorie(calorie);
+    currentSegment.setCalorie(0);
   }
 }
