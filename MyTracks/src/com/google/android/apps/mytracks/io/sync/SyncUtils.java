@@ -469,7 +469,7 @@ public class SyncUtils {
     FileTrackExporter fileTrackExporter = new FileTrackExporter(
         myTracksProviderUtils, tracks, TrackFileFormat.KML.newTrackWriter(context, false), null);
     TrackExporter trackExporter = useKmz ? new KmzTrackExporter(
-        myTracksProviderUtils, fileTrackExporter, tracks)
+        myTracksProviderUtils, fileTrackExporter, tracks, context)
         : fileTrackExporter;
 
     FileOutputStream fileOutputStream = null;

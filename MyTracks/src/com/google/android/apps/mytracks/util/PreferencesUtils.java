@@ -82,6 +82,7 @@ public class PreferencesUtils {
   public static final int MIN_RECORDING_INTERVAL_ADAPT_BATTERY_LIFE = -2;
   public static final int MIN_RECORDING_INTERVAL_DEFAULT = 0;
 
+  public static final int PHOTO_SIZE_DEFAULT = 1024; // 1024 kB
   public static final int RECORDING_DISTANCE_INTERVAL_DEFAULT = 10;
   
   // Values for recording_gps_accuracy

@@ -101,7 +101,7 @@ public class MarkerDetailFragment extends Fragment {
     inflater.inflate(R.menu.marker_detail, menu);
 
     updateWaypoint(false);
-    
+
     Track track = myTracksProviderUtils.getTrack(waypoint.getTrackId());
     boolean isSharedWithMe = track != null ? track.isSharedWithMe() : true;
 
@@ -114,7 +114,7 @@ public class MarkerDetailFragment extends Fragment {
     long markerId = getArguments().getLong(KEY_MARKER_ID);
     FragmentActivity fragmentActivity = getActivity();
     Intent intent;
-    
+
     switch (item.getItemId()) {
       case R.id.marker_detail_show_on_map:
         intent = IntentUtils.newIntent(fragmentActivity, TrackDetailActivity.class)
@@ -153,6 +153,7 @@ public class MarkerDetailFragment extends Fragment {
   /**
    * Updates the UI.
    */
+  @SuppressWarnings("deprecation")
   private void update() {
     View waypointSection = getView().findViewById(R.id.marker_detail_waypoint_section);
     View statisticsSection = getView().findViewById(R.id.marker_detail_statistics_section);
@@ -168,11 +169,8 @@ public class MarkerDetailFragment extends Fragment {
       } else {
         imageView.setVisibility(View.VISIBLE);
         Display defaultDisplay = getActivity().getWindowManager().getDefaultDisplay();
-        @SuppressWarnings("deprecation")
-        int displayWidth = defaultDisplay.getWidth();
-        @SuppressWarnings("deprecation")
-        int displayHeight = defaultDisplay.getHeight();
-        PhotoUtils.setImageVew(imageView, Uri.parse(photoUrl), displayWidth, displayHeight);
+        PhotoUtils.setImageVew(imageView, Uri.parse(photoUrl), defaultDisplay.getWidth(),
+            defaultDisplay.getHeight(), true);
       }
 
       TextView name = (TextView) getView().findViewById(R.id.marker_detail_waypoint_name);
@@ -193,8 +191,8 @@ public class MarkerDetailFragment extends Fragment {
       TextView name = (TextView) getView().findViewById(R.id.marker_detail_statistics_name);
       name.setText(getString(R.string.generic_name_line, waypoint.getName()));
 
-      StatsUtils.setTripStatisticsValues(getActivity(), waypoint.getTripStatistics(),
-          PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
+      StatsUtils.setTripStatisticsValues(
+          getActivity(), waypoint.getTripStatistics(), PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
       StatsUtils.setLocationValues(getActivity(), waypoint.getLocation(), false);
     }
   }

@@ -80,7 +80,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.SOLO.goBack();
 
     // Change a setting of sharing.
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_sharing));
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_advanced));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
         activityMyTracks.getString(R.string.settings_sharing_allow_access), 1,
         EndToEndTestUtils.NORMAL_WAIT_TIME));
@@ -121,7 +121,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     assertEquals(useMetric, displayCheckBoxs.get(0).isChecked());
 
     EndToEndTestUtils.SOLO.goBack();
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_sharing));
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_advanced));
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks
         .getString(R.string.settings_sharing_allow_access));
     sharingCheckBoxs = EndToEndTestUtils.SOLO.getCurrentViews(CheckBox.class);

@@ -19,14 +19,18 @@ package com.google.android.apps.mytracks.io.file.exporter;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.maps.mytracks.R;
 
+import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.zip.ZipEntry;
@@ -38,7 +42,7 @@ import java.util.zip.ZipOutputStream;
  * @author Jimmy Shih
  */
 public class KmzTrackExporter implements TrackExporter {
-  
+
   public static final String KMZ_EXTENSION = "kmz";
   public static final String KMZ_IMAGES_DIR = "images";
   public static final String KMZ_KML_FILE = "doc.kml";
@@ -49,6 +53,7 @@ public class KmzTrackExporter implements TrackExporter {
   private final MyTracksProviderUtils myTracksProviderUtils;
   private final FileTrackExporter fileTrackExporter;
   private final Track[] tracks;
+  private final long photoSize;
 
   /**
    * Constructor.
@@ -56,12 +61,15 @@ public class KmzTrackExporter implements TrackExporter {
    * @param myTracksProviderUtils the my tracks provider utils
    * @param fileTrackExporter the file track exporter
    * @param tracks the tracks to export
+   * @param context the context
    */
   public KmzTrackExporter(MyTracksProviderUtils myTracksProviderUtils,
-      FileTrackExporter fileTrackExporter, Track[] tracks) {
+      FileTrackExporter fileTrackExporter, Track[] tracks, Context context) {
     this.myTracksProviderUtils = myTracksProviderUtils;
     this.fileTrackExporter = fileTrackExporter;
     this.tracks = tracks;
+    this.photoSize = PreferencesUtils.getInt(
+        context, R.string.photo_size_key, PreferencesUtils.PHOTO_SIZE_DEFAULT);
   }
 
   @Override
@@ -78,7 +86,7 @@ public class KmzTrackExporter implements TrackExporter {
       zipOutputStream.closeEntry();
       if (!success) {
         Log.e(TAG, "Unable to write kml in kmz");
-        return false;        
+        return false;
       }
 
       // Add photos
@@ -95,7 +103,7 @@ public class KmzTrackExporter implements TrackExporter {
         try {
           zipOutputStream.close();
         } catch (IOException e) {
-          Log.e(TAG, "Unable to close zip input stream", e);;
+          Log.e(TAG, "Unable to close zip input stream", e);
         }
       }
     }
@@ -132,10 +140,47 @@ public class KmzTrackExporter implements TrackExporter {
 
   private void addImage(ZipOutputStream zipOutputStream, String photoUrl) throws IOException {
     Uri uri = Uri.parse(photoUrl);
+    File file = new File(uri.getPath());
+    if (!file.exists()) {
+      Log.e(TAG, "file not found " + photoUrl);
+      return;
+    }
+
     ZipEntry zipEntry = new ZipEntry(
         KMZ_IMAGES_DIR + File.separatorChar + uri.getLastPathSegment());
     zipOutputStream.putNextEntry(zipEntry);
 
+    int sampleSize;
+    if (photoSize == -1) {
+      sampleSize = 1;
+    } else {
+      long size = file.length();
+      // Convert from kilobytes to bytes.
+      long limit = photoSize * 1024;
+      sampleSize = size > limit ? (int) Math.ceil(size / limit) : 1;
+    }
+    if (sampleSize == 1) {
+      readFromFile(zipOutputStream, uri);
+    } else {
+      readFromScaledBitmap(zipOutputStream, uri, sampleSize);
+    }
+    zipOutputStream.closeEntry();
+  }
+
+  private void readFromScaledBitmap(ZipOutputStream zipOutputStream, Uri uri, int sampleSize) {
+    BitmapFactory.Options options = new BitmapFactory.Options();
+    options.inJustDecodeBounds = false;
+    options.inSampleSize = sampleSize;
+
+    Bitmap bitmap = BitmapFactory.decodeFile(uri.getPath(), options);
+    if (bitmap == null) {
+      return;
+    }
+    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, zipOutputStream);
+    bitmap.recycle();
+  }
+
+  private void readFromFile(ZipOutputStream zipOutputStream, Uri uri) throws IOException {
     FileInputStream fileInputStream = null;
     try {
       fileInputStream = new FileInputStream(new File(uri.getPath()));
@@ -143,14 +188,11 @@ public class KmzTrackExporter implements TrackExporter {
       int byteCount = 0;
       while ((byteCount = fileInputStream.read(buffer)) != -1) {
         zipOutputStream.write(buffer, 0, byteCount);
-      }      
-    } catch (FileNotFoundException e) {
-      Log.e(TAG, "Unable to add image", e);
+      }
     } finally {
       if (fileInputStream != null) {
         fileInputStream.close();
       }
     }
-    zipOutputStream.closeEntry();
   }
 }

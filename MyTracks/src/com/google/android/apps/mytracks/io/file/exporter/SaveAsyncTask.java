@@ -202,7 +202,8 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
           }
         });
 
-    trackExporter = useKmz ? new KmzTrackExporter(myTracksProviderUtils, fileTrackExporter, tracks)
+    trackExporter = useKmz ? new KmzTrackExporter(
+        myTracksProviderUtils, fileTrackExporter, tracks, context)
         : fileTrackExporter;
 
     String fileName = FileUtils.buildUniqueFileName(directory, track.getName(), extension);
