@@ -184,24 +184,30 @@ public class TrackEditActivity extends AbstractMyTracksActivity
     save.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        track.setName(name.getText().toString());
         String category = activityType.getText().toString();
-        if (!category.equals(track.getCategory())) {
-          // TODO Is there no race condition when setCalorie is called.
-          double calorie = CalorieUtils.calculateTrackCalorie(getApplicationContext(), track,
-              category);
-
-          track.getTripStatistics().setCalorie(calorie);
-          TrackRecordingServiceConnectionUtils.updateCalorie(trackRecordingServiceConnection,
-              calorie);
-        }
-        track.setCategory(category);
+        track.setName(name.getText().toString());
         track.setIcon(TrackIconUtils.getIconValue(TrackEditActivity.this, category));
         track.setDescription(description.getText().toString());
         track.setModifiedTime(System.currentTimeMillis());
-        myTracksProviderUtils.updateTrack(track);
-        boolean driveSync = PreferencesUtils.getBoolean(
-            TrackEditActivity.this, R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT);
+        if (!category.equals(track.getCategory())) {
+          track.setCategory(category);
+
+          // If edit recording track.
+          if (track.getId() == PreferencesUtils.getLong(getApplicationContext(),
+              R.string.recording_track_id_key)) {
+
+            // Update data without new calorie.
+            myTracksProviderUtils.updateTrack(track);
+            TrackRecordingServiceConnectionUtils.updateCalorie(trackRecordingServiceConnection);
+          } else {
+            CalorieUtils.updateTrackStatistics(getApplicationContext(), -1, track);
+
+            // Update data with new calorie.
+            myTracksProviderUtils.updateTrack(track);
+          }
+        }
+        boolean driveSync = PreferencesUtils.getBoolean(TrackEditActivity.this,
+            R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT);
         if (driveSync) {
           PreferencesUtils.addToList(TrackEditActivity.this, R.string.drive_edited_list_key,
               PreferencesUtils.DRIVE_EDITED_LIST_DEFAULT, String.valueOf(track.getId()));

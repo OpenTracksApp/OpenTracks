@@ -36,6 +36,7 @@ import com.google.android.apps.mytracks.services.tasks.PeriodicTaskExecutor;
 import com.google.android.apps.mytracks.services.tasks.SplitPeriodicTaskFactory;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.stats.TripStatisticsUpdater;
+import com.google.android.apps.mytracks.util.CalorieUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
@@ -659,9 +660,17 @@ public class TrackRecordingService extends Service {
         if (cursor.moveToLast()) {
           do {
             Location location = myTracksProviderUtils.createTrackPoint(cursor);
-            trackTripStatisticsUpdater.addLocation(location, recordingDistanceInterval, context);
+            trackTripStatisticsUpdater.addLocation(location, recordingDistanceInterval, false,
+                CalorieUtils.getActivityType(context,
+                    PreferencesUtils.getLong(context, R.string.recording_track_id_key)),
+                PreferencesUtils.getInt(context, R.string.stats_weight_key,
+                    PreferencesUtils.STATS_WEIGHT_DEFAULT));
             if (location.getTime() > markerStartTime) {
-              markerTripStatisticsUpdater.addLocation(location, recordingDistanceInterval, context);
+              markerTripStatisticsUpdater.addLocation(location, recordingDistanceInterval, false,
+                  CalorieUtils.getActivityType(context,
+                      PreferencesUtils.getLong(context, R.string.recording_track_id_key)),
+                  PreferencesUtils.getInt(context, R.string.stats_weight_key,
+                      PreferencesUtils.STATS_WEIGHT_DEFAULT));
             }
           } while (cursor.moveToPrevious());
         }
@@ -1001,8 +1010,13 @@ public class TrackRecordingService extends Service {
     try {
       Uri uri = myTracksProviderUtils.insertTrackPoint(location, track.getId());
       long trackPointId = Long.parseLong(uri.getLastPathSegment());
-      trackTripStatisticsUpdater.addLocation(location, recordingDistanceInterval, context);
-      markerTripStatisticsUpdater.addLocation(location, recordingDistanceInterval, context);
+      trackTripStatisticsUpdater.addLocation(location, recordingDistanceInterval, true,
+          CalorieUtils.getActivityType(context, track.getId()), PreferencesUtils.getInt(context,
+              R.string.stats_weight_key, PreferencesUtils.STATS_WEIGHT_DEFAULT));
+      markerTripStatisticsUpdater.addLocation(location, recordingDistanceInterval, false,
+          CalorieUtils.getActivityType(context,
+              PreferencesUtils.getLong(context, R.string.recording_track_id_key)), PreferencesUtils
+              .getInt(context, R.string.stats_weight_key, PreferencesUtils.STATS_WEIGHT_DEFAULT));
       updateRecordingTrack(track, trackPointId, LocationUtils.isValidLocation(location));
     } catch (SQLiteException e) {
       /*
@@ -1335,32 +1349,48 @@ public class TrackRecordingService extends Service {
     }
 
     @Override
-    public void updateCalorie(double calorie) {
+    public void updateCalorie() {
       if (!canAccess()) {
         return;
       }
-      trackRecordingService.updateCalorie(calorie);
+      trackRecordingService.updateCalorie();
     }
   }
-  
+
   /**
-   * Updates the calorie value.
-   * 
-   * @param calorie new calorie value.
+   * Updates the calorie of current recording track after the current
+   * track is edited by user.
    */
-  public void updateCalorie(final double calorie) {
+  public void updateCalorie() {
     if (myTracksLocationManager == null || executorService == null
         || !myTracksLocationManager.isAllowed() || executorService.isShutdown()
         || executorService.isTerminated()) {
       return;
     }
     executorService.submit(new Runnable() {
-        @Override
+      @Override
       public void run() {
-          trackTripStatisticsUpdater.updateCalorie(calorie);
+        // Update track statistics.
+        long trackId = PreferencesUtils.getLong(getApplicationContext(),
+            R.string.recording_track_id_key);
+        Track currentTrack = myTracksProviderUtils.getTrack(trackId);
+        CalorieUtils.updateTrackStatistics(getApplicationContext(), -1, currentTrack);
+        trackTripStatisticsUpdater.updateCalorie(currentTrack.getTripStatistics().getCalorie());
+
+        // Update to database.
+        MyTracksProviderUtils.Factory.get(context).updateTrack(currentTrack);
+
+        // Update marker statistics.
+        Waypoint lastWayPoint = myTracksProviderUtils.getLastWaypoint(trackId,
+            WaypointType.WAYPOINT);
+        long lastWayPoint_pointId = myTracksProviderUtils.getTrackPointId(trackId,
+            lastWayPoint.getLocation());
+        if (lastWayPoint_pointId > 0) {
+          CalorieUtils.updateTrackStatistics(getApplicationContext(), lastWayPoint_pointId,
+              currentTrack);
+        }
+        markerTripStatisticsUpdater.updateCalorie(currentTrack.getTripStatistics().getCalorie());
       }
     });
-    
-    
   }
 }

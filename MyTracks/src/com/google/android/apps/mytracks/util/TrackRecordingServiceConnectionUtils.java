@@ -196,16 +196,17 @@ public class TrackRecordingServiceConnectionUtils {
   
   /**
    * Updates the calorie of current recording track.
+   * 
+   * @param trackRecordingServiceConnection
    */
-  public static void updateCalorie(TrackRecordingServiceConnection trackRecordingServiceConnection,
-      double calorie) {
+  public static void updateCalorie(TrackRecordingServiceConnection trackRecordingServiceConnection) {
     ITrackRecordingService trackRecordingService = trackRecordingServiceConnection
         .getServiceIfBound();
     if (trackRecordingService == null) {
       Log.d(TAG, "Unable to update calorie, no track recording service");
     } else {
       try {
-        trackRecordingService.updateCalorie(calorie);
+        trackRecordingService.updateCalorie();
       } catch (RemoteException e) {
         Log.e(TAG, "Unable to update calorie", e);
       } catch (IllegalStateException e) {

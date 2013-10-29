@@ -76,7 +76,7 @@ public class PauseRecordingTest extends ActivityInstrumentationTestCase2<TrackLi
    * Tests the pause recording feature. Stops the recording after resume.
    */
   public void testPauseRecording_stopAfterResume() {
-    int gpsSignalNumber = 3;
+    int gpsSignalNumber = 0;
 
     EndToEndTestUtils.checkNotRecording();
     // Start recording

@@ -114,7 +114,9 @@ public class StatsUtils {
    * 
    * @param activity the activity
    * @param tripStatistics the trip statistics
-   * @param trackId the id of track
+   * @param trackId the id of track, which is used to set calorie value. Does
+   *          not handle the calorie If the value is
+   *          {@link PreferencesUtils#RECORDING_TRACK_ID_DEFAULT}
    */
   public static void setTripStatisticsValues(Activity activity, TripStatistics tripStatistics, long trackId) {
     boolean metricUnits = PreferencesUtils.isMetricUnits(activity);
@@ -181,26 +183,24 @@ public class StatsUtils {
       gradeElevationContainer.setVisibility(View.GONE);
     }
     
-    // Set calories
-    boolean showCalorie = PreferencesUtils.getBoolean(activity, R.string.stats_show_calorie_key,
-        PreferencesUtils.STATS_SHOW_CALORIE_DEFAULT);
-    View calorieHorizontalLine = activity.findViewById(R.id.stats_calorie_horizontal_line);
-    View calorieContainer = activity.findViewById(R.id.stats_calorie_container);
-
-    if (showCalorie) {
-      if(trackId == PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
-        return;
+    if (trackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
+      // Set calories
+      boolean showCalorie = PreferencesUtils.getBoolean(activity, R.string.stats_show_calorie_key,
+          PreferencesUtils.STATS_SHOW_CALORIE_DEFAULT);
+      View calorieHorizontalLine = activity.findViewById(R.id.stats_calorie_horizontal_line);
+      View calorieContainer = activity.findViewById(R.id.stats_calorie_container);
+      if (showCalorie) {
+        calorieHorizontalLine.setVisibility(View.VISIBLE);
+        calorieContainer.setVisibility(View.VISIBLE);
+        double calories = Double.NaN;
+        if (tripStatistics != null) {
+          calories = tripStatistics.getCalorie();
+        }
+        setCalorie(activity, R.id.stats_calorie, calories, trackId);
+      } else {
+        calorieHorizontalLine.setVisibility(View.GONE);
+        calorieContainer.setVisibility(View.GONE);
       }
-      calorieHorizontalLine.setVisibility(View.VISIBLE);
-      calorieContainer.setVisibility(View.VISIBLE);
-      double calories = Double.NaN;
-      if (tripStatistics != null) {
-        calories = tripStatistics.getCalorie();
-      }
-      setCalorie(activity, R.id.stats_calorie, calories, trackId);
-    } else {
-      calorieHorizontalLine.setVisibility(View.GONE);
-      calorieContainer.setVisibility(View.GONE);
     }
   }
 

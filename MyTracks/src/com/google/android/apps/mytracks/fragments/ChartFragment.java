@@ -28,6 +28,7 @@ import com.google.android.apps.mytracks.content.TrackDataType;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.stats.TripStatisticsUpdater;
+import com.google.android.apps.mytracks.util.CalorieUtils;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
@@ -453,7 +454,10 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     double power = Double.NaN;
 
     if (tripStatisticsUpdater != null) {
-      tripStatisticsUpdater.addLocation(location, recordingDistanceInterval, context);
+      tripStatisticsUpdater.addLocation(location, recordingDistanceInterval, false, CalorieUtils
+          .getActivityType(context,
+              PreferencesUtils.getLong(context, R.string.recording_track_id_key)), PreferencesUtils
+          .getInt(context, R.string.stats_weight_key, PreferencesUtils.STATS_WEIGHT_DEFAULT));
       TripStatistics tripStatistics = tripStatisticsUpdater.getTripStatistics();
       if (chartByDistance) {
         double distance = tripStatistics.getTotalDistance() * UnitConversions.M_TO_KM;

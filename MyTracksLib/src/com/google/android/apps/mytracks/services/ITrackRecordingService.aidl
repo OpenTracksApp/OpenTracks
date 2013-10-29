@@ -108,9 +108,7 @@ interface ITrackRecordingService {
   int getSensorState();
   
   /**
-   * Updates the calorie value.
-   * 
-   * @param calorie new calorie value.
+   * Updates the calorie of current recording track. 
    */
-  void updateCalorie(double calorie);
+  void updateCalorie();
 }

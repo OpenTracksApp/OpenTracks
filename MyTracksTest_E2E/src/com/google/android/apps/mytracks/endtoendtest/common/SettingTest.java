@@ -192,8 +192,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
         activityMyTracks.getString(R.string.stats_elevation), 1,
         EndToEndTestUtils.NORMAL_WAIT_TIME, true));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.stats_grade)));
-    assertFalse(EndToEndTestUtils.SOLO.searchText(activityMyTracks
-        .getString(R.string.stats_latitude)));
+    assertTrue(EndToEndTestUtils.findTextView(activityMyTracks.getString(R.string.stats_latitude)) == null);
   }
 
   /**
