@@ -23,6 +23,7 @@ limitations under the License.
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:scaleType="centerCrop" />
+  <!-- Table 1 -->
   <TableLayout
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
@@ -33,9 +34,9 @@ limitations under the License.
     android:shrinkColumns="1"
     android:stretchColumns="1"
     style="@style/ListItem" >
-    <!-- First row -->
+    <!-- Table 1: Row 1 -->
     <TableRow>
-      <!-- First column -->
+      <!-- Table 1: Row 1: Column 1: (icon) -->
       <ImageView
         android:contentDescription="@string/icon_track"
         android:id="@+id/list_item_icon"
@@ -44,44 +45,57 @@ limitations under the License.
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_width="wrap_content" />
-      <!-- Second column -->
+      <!-- Table 1: Row 1: Column 2: (Table 2) -->
       <TableLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:shrinkColumns="0"
         android:stretchColumns="0" >
         <TableRow>
+          <!-- Table 2: Row 1: Column 1: (name) -->
           <TextView
             android:ellipsize="end"
             android:id="@+id/list_item_name"
             android:layout_gravity="bottom"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:singleLine="true"
             style="@style/TextMedium" />
+          <!-- Table 2: Row 1: Column 2: (date) -->
           <TextView
             android:id="@+id/list_item_date"
             style="@style/ListItemDate" />
         </TableRow>
         <TableRow>
           <!-- Need to match the style set in ListItemUtils.setListItem -->
-          <TextView
-            android:ellipsize="end"
-            android:id="@+id/list_item_time_distance"
-            android:layout_gravity="bottom"
-            android:layout_width="fill_parent"
-            android:singleLine="true"
-            style="@style/TextSmall" />
+          <!-- Table 2: Row 2: Column 1: (shared owner, total time, total distance, and marker count) -->
+          <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent" >
+            <TextView
+              android:ellipsize="end"
+              android:id="@+id/list_item_owner_time_distance"
+              android:layout_gravity="bottom"
+              android:layout_width="wrap_content"
+              android:singleLine="true"
+              style="@style/TextSmall" />
+            <TextView
+              android:drawablePadding="4dp"
+              android:id="@+id/list_item_marker_count"
+              android:layout_gravity="bottom"
+              style="@style/TextSmall" />
+          </LinearLayout>
+          <!-- Table 2: Row 2: Column 2: (time) -->
           <TextView
             android:id="@+id/list_item_time"
             style="@style/ListItemDate" />
         </TableRow>
       </TableLayout>
     </TableRow>
-    <!-- Second row -->
     <TableRow>
+      <!-- Table 1: Row 2: (category and description) -->
       <TextView
         android:ellipsize="end"
-        android:id="@+id/list_item_description"
+        android:id="@+id/list_item_category_description"
         android:layout_column="1"
         android:maxLines="2"
         android:singleLine="false"

@@ -361,11 +361,12 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         int sharedOwnerIndex = cursor.getColumnIndex(TracksColumns.SHAREDOWNER);
         int totalTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALTIME);
         int totalDistanceIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALDISTANCE);
-        int startTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME);        
+        int startTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME);
         int categoryIndex = cursor.getColumnIndex(TracksColumns.CATEGORY);
         int descriptionIndex = cursor.getColumnIndex(TracksColumns.DESCRIPTION);
 
-        boolean isRecording = cursor.getLong(idIndex) == recordingTrackId;
+        long trackId = cursor.getLong(idIndex);
+        boolean isRecording = trackId == recordingTrackId;
         String icon = cursor.getString(iconIndex);
         int iconId = TrackIconUtils.getIconDrawable(icon);
         String name = cursor.getString(nameIndex);
@@ -373,13 +374,14 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         String totalTime = StringUtils.formatElapsedTime(cursor.getLong(totalTimeIndex));
         String totalDistance = StringUtils.formatDistance(
             TrackListActivity.this, cursor.getDouble(totalDistanceIndex), metricUnits);
-        long startTime = cursor.getLong(startTimeIndex);        
-        String category = icon != null && !icon.equals("") ? null : cursor.getString(categoryIndex);    
+        int markerCount = myTracksProviderUtils.getWaypointCount(trackId);
+        long startTime = cursor.getLong(startTimeIndex);
+        String category = icon != null && !icon.equals("") ? null : cursor.getString(categoryIndex);
         String description = cursor.getString(descriptionIndex);
 
         ListItemUtils.setListItem(TrackListActivity.this, view, isRecording, recordingTrackPaused,
-            iconId, R.string.icon_track, name, sharedOwner, totalTime, totalDistance, null,
-            startTime, category, description);
+            iconId, R.string.icon_track, name, sharedOwner, totalTime, totalDistance, markerCount,
+            startTime, category, description, null);
       }
     };
     listView.setAdapter(sectionResourceCursorAdapter);
