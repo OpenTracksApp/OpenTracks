@@ -21,11 +21,11 @@ import com.google.android.maps.mytracks.R;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.text.format.DateUtils;
 import android.view.Display;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -95,25 +95,29 @@ public class ListItemUtils {
       ownerTimeDistanceTextView.setTextAppearance(activity, R.style.TextSmall);
       ownerTimeDistance = getOwnerTimeDistance(sharedOwner, totalTime, totalDistance);
       if (markerCount > 0) {
-        ownerTimeDistance += " \u2027 ";
+        ownerTimeDistance += " \u2027";
       }
     }
     setTextView(ownerTimeDistanceTextView, ownerTimeDistance);
     
     // Set markerCount
+    ImageView markerCountIcon = (ImageView) view.findViewById(R.id.list_item_marker_count_icon);
     TextView markerCountTextView = (TextView) view.findViewById(R.id.list_item_marker_count);
     if (markerCount > 0) {
+      markerCountIcon.setVisibility(View.VISIBLE);
       markerCountTextView.setVisibility(View.VISIBLE);
-      Drawable markerDrawable = activity.getResources()
-          .getDrawable(R.drawable.ic_menu_insert_marker);
-      int size = markerCountTextView.getLineHeight();
-      markerDrawable.setBounds(0, 0, size, size);
-      markerCountTextView.setCompoundDrawables(markerDrawable, null, null, null);
-      markerCountTextView.setText(markerCount + "");
+
+      int lineHeight = markerCountTextView.getLineHeight();
+      LayoutParams layoutParams = markerCountIcon.getLayoutParams();
+      layoutParams.width = lineHeight;
+      layoutParams.height = lineHeight;
+
+      markerCountTextView.setText(String.valueOf(markerCount));
     } else {
+      markerCountIcon.setVisibility(View.GONE);
       markerCountTextView.setVisibility(View.GONE);
     }
-    
+
     // Set date/time
     String[] dateTime = getDateTime(isRecording, activity, startTime);
     TextView dateTextView = (TextView) view.findViewById(R.id.list_item_date);
