@@ -124,14 +124,14 @@ public class TripStatisticsUpdater {
    * 
    * @param location the location
    * @param minRecordingDistance the min recording distance
-   * @param isCalculateCalorie true means calculate calorie
+   * @param calculateCalorie true means calculate calorie
    * @param activityType the activity type of current track which is used to
    *          calculate calorie
    * @param weight the weight to calculate calorie which is used to calculate
    *          calorie
    */
   public void addLocation(Location location, int minRecordingDistance,
-      boolean isCalculateCalorie, ActivityType activityType, int weight) {
+      boolean calculateCalorie, ActivityType activityType, int weight) {
     // Always update time
     updateTime(location.getTime());
     if (!LocationUtils.isValidLocation(location)) {
@@ -195,7 +195,7 @@ public class TripStatisticsUpdater {
           location.getTime(), location.getSpeed(), lastLocation.getTime(), lastLocation.getSpeed());
     }
     
-    if (isCalculateCalorie) {
+    if (calculateCalorie) {
       // Update calorie
       double calorie = CalorieUtils.getCalorie(lastMovingLocation, location,
           gradeBuffer.getAverage(), weight, activityType);

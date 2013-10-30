@@ -200,7 +200,7 @@ public class TrackEditActivity extends AbstractMyTracksActivity
             myTracksProviderUtils.updateTrack(track);
             TrackRecordingServiceConnectionUtils.updateCalorie(trackRecordingServiceConnection);
           } else {
-            CalorieUtils.updateTrackStatistics(getApplicationContext(), -1, track);
+            CalorieUtils.updateCalorie(getApplicationContext(), -1, track);
 
             // Update data with new calorie.
             myTracksProviderUtils.updateTrack(track);

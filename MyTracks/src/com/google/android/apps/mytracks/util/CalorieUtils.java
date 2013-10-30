@@ -277,10 +277,11 @@ public class CalorieUtils {
    * 
    * @param context the context
    * @param track the track to calculate
-   * @param startTrackPointId the starting track point id. -1L to ignore
-   * @return the TripStatisticsUpdater of track
+   * @param startTrackPointId the starting track point id. Make this value less
+   *          than 1 to calculate the entire track
+   * @return the calorie value of track
    */
-  public static TripStatisticsUpdater updateTrackStatistics(Context context,
+  public static double updateCalorie(Context context,
       long startTrackPointId, Track track) {
     ActivityType activityType = getActivityType(context, track.getCategory());
 
@@ -307,6 +308,6 @@ public class CalorieUtils {
       }
     }
     track.setTripStatistics(tripStatisticsUpdater.getTripStatistics());
-    return tripStatisticsUpdater;
+    return tripStatisticsUpdater.getTripStatistics().getCalorie();
   }
 }

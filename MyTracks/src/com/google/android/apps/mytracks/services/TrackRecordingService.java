@@ -1358,13 +1358,11 @@ public class TrackRecordingService extends Service {
   }
 
   /**
-   * Updates the calorie of current recording track after the current
-   * track is edited by user.
+   * Updates the calorie of current recording track after the current track is
+   * edited by user.
    */
   public void updateCalorie() {
-    if (myTracksLocationManager == null || executorService == null
-        || !myTracksLocationManager.isAllowed() || executorService.isShutdown()
-        || executorService.isTerminated()) {
+    if (executorService == null || executorService.isShutdown() || executorService.isTerminated()) {
       return;
     }
     executorService.submit(new Runnable() {
@@ -1373,23 +1371,32 @@ public class TrackRecordingService extends Service {
         // Update track statistics.
         long trackId = PreferencesUtils.getLong(getApplicationContext(),
             R.string.recording_track_id_key);
+        if (trackId == PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
+          return;
+        }
         Track currentTrack = myTracksProviderUtils.getTrack(trackId);
-        CalorieUtils.updateTrackStatistics(getApplicationContext(), -1, currentTrack);
-        trackTripStatisticsUpdater.updateCalorie(currentTrack.getTripStatistics().getCalorie());
+        if (currentTrack == null) {
+          return;
+        }
+        double newCalorie = CalorieUtils.updateCalorie(getApplicationContext(), -1, currentTrack);
+        trackTripStatisticsUpdater.updateCalorie(newCalorie);
 
         // Update to database.
-        MyTracksProviderUtils.Factory.get(context).updateTrack(currentTrack);
+        myTracksProviderUtils.updateTrack(currentTrack);
 
         // Update marker statistics.
         Waypoint lastWayPoint = myTracksProviderUtils.getLastWaypoint(trackId,
             WaypointType.WAYPOINT);
+        if (lastWayPoint == null) {
+          return;
+        }
         long lastWayPoint_pointId = myTracksProviderUtils.getTrackPointId(trackId,
             lastWayPoint.getLocation());
         if (lastWayPoint_pointId > 0) {
-          CalorieUtils.updateTrackStatistics(getApplicationContext(), lastWayPoint_pointId,
+          newCalorie = CalorieUtils.updateCalorie(getApplicationContext(), lastWayPoint_pointId,
               currentTrack);
         }
-        markerTripStatisticsUpdater.updateCalorie(currentTrack.getTripStatistics().getCalorie());
+        markerTripStatisticsUpdater.updateCalorie(newCalorie);
       }
     });
   }
