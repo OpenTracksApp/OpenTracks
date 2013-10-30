@@ -658,6 +658,24 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   }
 
   @Override
+  public int getWaypointCount(long trackId) {
+    if (trackId < 0) {
+      return 0;
+    }
+
+    String[] projection = new String[] { "count(*) AS count" };
+    String selection = WaypointsColumns.TRACKID + "=?";
+    String[] selectionArgs = new String[] { Long.toString(trackId) };
+    Cursor cursor = contentResolver.query(
+        WaypointsColumns.CONTENT_URI, projection, selection, selectionArgs, WaypointsColumns._ID);
+
+    cursor.moveToFirst();
+    int count = cursor.getInt(0);
+    // not count the first waypoint
+    return count > 0 ? count - 1 : 0;
+  }
+
+  @Override
   public Uri insertWaypoint(Waypoint waypoint) {
     waypoint.setId(-1L);
     return contentResolver.insert(WaypointsColumns.CONTENT_URI, createContentValues(waypoint));

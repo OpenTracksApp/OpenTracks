@@ -179,6 +179,9 @@ public class KmzTrackImporter implements TrackImporter {
       if (importTrackId == -1L) {
         return;
       }
+      if (fileName.equals("")) {
+        return;
+      }
       File dir = new File(
           FileUtils.getPath(FileUtils.PICTURES_DIR, Long.toString(importTrackId)));
       FileUtils.ensureDirectoryExists(dir);

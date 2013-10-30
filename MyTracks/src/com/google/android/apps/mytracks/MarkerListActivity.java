@@ -173,10 +173,10 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
       public void bindView(View view, Context context, Cursor cursor) {
         int typeIndex = cursor.getColumnIndex(WaypointsColumns.TYPE);
         int nameIndex = cursor.getColumnIndex(WaypointsColumns.NAME);
-        int photoUrlIndex = cursor.getColumnIndex(WaypointsColumns.PHOTOURL);
         int timeIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.TIME);
         int categoryIndex = cursor.getColumnIndex(WaypointsColumns.CATEGORY);
         int descriptionIndex = cursor.getColumnIndex(WaypointsColumns.DESCRIPTION);
+        int photoUrlIndex = cursor.getColumnIndex(WaypointsColumns.PHOTOURL);
 
         boolean statistics = WaypointType.values()[cursor.getInt(typeIndex)]
             == WaypointType.STATISTICS;
@@ -184,14 +184,14 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
             : R.drawable.ic_marker_blue_pushpin;
         String name = cursor.getString(nameIndex);
         String sharedOwner = track.getSharedOwner();
-        String photoUrl = cursor.getString(photoUrlIndex);
         long time = cursor.getLong(timeIndex);
         String category = statistics ? null : cursor.getString(categoryIndex);
         String description = statistics ? null : cursor.getString(descriptionIndex);
+        String photoUrl = cursor.getString(photoUrlIndex);
 
         ListItemUtils.setListItem(MarkerListActivity.this, view, false, true, iconId,
-            R.string.icon_marker, name, sharedOwner, null, null, photoUrl, time, category,
-            description);
+            R.string.icon_marker, name, sharedOwner, null, null, 0, time, category, description,
+            photoUrl);
       }
     };
     listView.setAdapter(resourceCursorAdapter);

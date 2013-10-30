@@ -191,6 +191,13 @@ public interface MyTracksProviderUtils {
   public Cursor getWaypointCursor(long trackId, long minWaypointId, int maxWaypoints);
 
   /**
+   * Gets the number of waypoints for a track.
+   * 
+   * @param trackId the track id
+   */
+  public int getWaypointCount(long trackId);
+  
+  /**
    * Inserts a waypoint.
    * 
    * @param waypoint the waypoint

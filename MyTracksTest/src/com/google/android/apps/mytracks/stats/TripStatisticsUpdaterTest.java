@@ -225,8 +225,8 @@ public class TripStatisticsUpdaterTest extends TestCase {
       Location location = getLocation(i + locationOffset, (i + locationOffset) * .001, MOVING_SPEED,
           startTime + (timeOffset + i) * TEN_SECONDS);
       tripStatisticsUpdater.addLocation(location,
-          PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT, ActivityType.FOOT,
-          PreferencesUtils.STATS_WEIGHT_DEFAULT, true);
+          PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT, true, ActivityType.FOOT,
+          PreferencesUtils.STATS_WEIGHT_DEFAULT);
       tripStatistics = tripStatisticsUpdater.getTripStatistics();
 
       assertEquals((timeOffset + i) * TEN_SECONDS, tripStatistics.getTotalTime());
@@ -272,8 +272,8 @@ public class TripStatisticsUpdaterTest extends TestCase {
       Location location = getLocation(
           locationOffset, locationOffset * .001, 0, startTime + (i + timeOffset) * TEN_SECONDS);
       tripStatisticsUpdater.addLocation(location,
-          PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT, ActivityType.FOOT,
-          PreferencesUtils.STATS_WEIGHT_DEFAULT, false);
+          PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT, false, ActivityType.FOOT,
+          PreferencesUtils.STATS_WEIGHT_DEFAULT);
 
       tripStatistics = tripStatisticsUpdater.getTripStatistics();
       assertEquals((i + timeOffset) * TEN_SECONDS, tripStatistics.getTotalTime());
@@ -310,8 +310,8 @@ public class TripStatisticsUpdaterTest extends TestCase {
       Location location = getLocation(i + locationOffset, (i + locationOffset) * .001, 99999,
           startTime + (timeOffset + i) * TEN_SECONDS);
       tripStatisticsUpdater.addLocation(location,
-          PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT, ActivityType.FOOT,
-          PreferencesUtils.STATS_WEIGHT_DEFAULT, true);
+          PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT, true, ActivityType.FOOT,
+          PreferencesUtils.STATS_WEIGHT_DEFAULT);
       tripStatistics = tripStatisticsUpdater.getTripStatistics();
 
       assertTrue(tripStatistics.getMovingTime() <= tripStatistics.getTotalTime());

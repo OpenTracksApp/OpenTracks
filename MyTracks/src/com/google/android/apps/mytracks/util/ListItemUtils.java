@@ -21,6 +21,7 @@ import com.google.android.maps.mytracks.R;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.text.format.DateUtils;
 import android.view.Display;
@@ -54,16 +55,17 @@ public class ListItemUtils {
    * @param sharedOwner if shared with me track, the owner, else null
    * @param totalTime the total time value
    * @param totalDistance the total distance value
-   * @param photoUrl the photo url
+   * @param markerCount the marker count
    * @param startTime the start time value
    * @param category the category value
    * @param description the description value
+   * @param photoUrl the photo url
    */
   @SuppressWarnings("deprecation")
   public static void setListItem(Activity activity, View view, boolean isRecording,
       boolean isPaused, int iconId, int iconContentDescriptionId, String name, String sharedOwner,
-      String totalTime, String totalDistance, String photoUrl, long startTime, String category,
-      String description) {
+      String totalTime, String totalDistance, int markerCount, long startTime, String category,
+      String description, String photoUrl) {
 
     if (isRecording) {
       iconId = isPaused ? R.drawable.ic_track_paused : R.drawable.ic_track_recording;
@@ -80,16 +82,60 @@ public class ListItemUtils {
     nameTextView.setText(name);
 
     // Set sharedOwner/totalTime/totalDistance
-    TextView timeDistanceTextView = (TextView) view.findViewById(R.id.list_item_time_distance);
+    TextView ownerTimeDistanceTextView = (TextView) view.findViewById(
+        R.id.list_item_owner_time_distance);
+    String ownerTimeDistance;
     if (isRecording) {
-      timeDistanceTextView.setTextColor(activity.getResources()
+      ownerTimeDistanceTextView.setTextColor(activity.getResources()
           .getColor(isPaused ? android.R.color.white : R.color.recording_text));
+      ownerTimeDistance = activity.getString(
+          isPaused ? R.string.generic_paused : R.string.generic_recording);
     } else {
       // Need to match the style set in list_item.xml
-      timeDistanceTextView.setTextAppearance(activity, R.style.TextSmall);
+      ownerTimeDistanceTextView.setTextAppearance(activity, R.style.TextSmall);
+      ownerTimeDistance = getOwnerTimeDistance(sharedOwner, totalTime, totalDistance);
+      if (markerCount > 0) {
+        ownerTimeDistance += " \u2027 ";
+      }
     }
-    setTextView(timeDistanceTextView,
-        getTimeDistance(activity, isRecording, isPaused, sharedOwner, totalTime, totalDistance));
+    setTextView(ownerTimeDistanceTextView, ownerTimeDistance);
+    
+    // Set markerCount
+    TextView markerCountTextView = (TextView) view.findViewById(R.id.list_item_marker_count);
+    if (markerCount > 0) {
+      markerCountTextView.setVisibility(View.VISIBLE);
+      Drawable markerDrawable = activity.getResources()
+          .getDrawable(R.drawable.ic_menu_insert_marker);
+      int size = markerCountTextView.getLineHeight();
+      markerDrawable.setBounds(0, 0, size, size);
+      markerCountTextView.setCompoundDrawables(markerDrawable, null, null, null);
+      markerCountTextView.setText(markerCount + "");
+    } else {
+      markerCountTextView.setVisibility(View.GONE);
+    }
+    
+    // Set date/time
+    String[] dateTime = getDateTime(isRecording, activity, startTime);
+    TextView dateTextView = (TextView) view.findViewById(R.id.list_item_date);
+    setTextView(dateTextView, dateTime[0]);
+
+    TextView timeTextView = (TextView) view.findViewById(R.id.list_item_time);
+    setTextView(timeTextView, dateTime[1]);
+
+    /*
+     * If column0 is GONE, change to INVISIBLE so column1 is placed at the
+     * correct position.
+     */
+    if (timeTextView.getVisibility() == View.VISIBLE
+        && ownerTimeDistanceTextView.getVisibility() == View.GONE) {
+      ownerTimeDistanceTextView.setVisibility(View.INVISIBLE);
+    }
+
+    // Set category and description
+    TextView categoryDescription = (TextView) view.findViewById(
+        R.id.list_item_category_description);
+    setTextView(categoryDescription,
+        isRecording ? null : StringUtils.getCategoryDescription(category, description));
 
     ImageView photo = (ImageView) view.findViewById(R.id.list_item_background);
     if (photoUrl == null || photoUrl.equals("")) {
@@ -100,45 +146,17 @@ public class ListItemUtils {
       PhotoUtils.setImageVew(
           photo, Uri.parse(photoUrl), defaultDisplay.getWidth(), getPhotoHeight(activity), false);
     }
-
-    // Set date/time
-    String[] startTimeDisplay = getStartTime(isRecording, activity, startTime);
-    TextView dateTextView = (TextView) view.findViewById(R.id.list_item_date);
-    setTextView(dateTextView, startTimeDisplay[0]);
-
-    TextView timeTextView = (TextView) view.findViewById(R.id.list_item_time);
-    setTextView(timeTextView, startTimeDisplay[1]);
-
-    /*
-     * If column0 is GONE, change to INVISIBLE so column1 is placed at the
-     * correct position.
-     */
-    if (timeTextView.getVisibility() == View.VISIBLE
-        && timeDistanceTextView.getVisibility() == View.GONE) {
-      timeDistanceTextView.setVisibility(View.INVISIBLE);
-    }
-
-    // Set category/description
-    TextView descriptionTextView = (TextView) view.findViewById(R.id.list_item_description);
-    setTextView(descriptionTextView,
-        isRecording ? null : StringUtils.getCategoryDescription(category, description));
   }
-
+  
   /**
-   * Gets the time/distance text.
+   * Gets a string for share owner, total time, and total distance.
    * 
-   * @param context the context
-   * @param isRecording true if recording
-   * @param isPaused true if paused
-   * @param sharedOwner the shared owner
-   * @param totalTime the total time
-   * @param totalDistance the total distance
+   * @param sharedOwner the share owner. Can be null
+   * @param totalTime the total time. Can be null
+   * @param totalDistance the total distance. Can be null
    */
-  private static String getTimeDistance(Context context, boolean isRecording, boolean isPaused,
+  private static String getOwnerTimeDistance(
       String sharedOwner, String totalTime, String totalDistance) {
-    if (isRecording) {
-      return context.getString(isPaused ? R.string.generic_paused : R.string.generic_recording);
-    }
     StringBuffer buffer = new StringBuffer();
     if (sharedOwner != null && sharedOwner.length() != 0) {
       buffer.append(sharedOwner);
@@ -159,29 +177,28 @@ public class ListItemUtils {
   }
 
   /**
-   * Gets the start time text.
+   * Gets the date and time as an array of two strings.
    * 
    * @param isRecording true if recording
    * @param context the context
-   * @param startTime the start time
-   * @return array of two strings.
+   * @param time the start time
    */
-  private static String[] getStartTime(boolean isRecording, Context context, long startTime) {
-    if (isRecording || startTime == 0L) {
+  private static String[] getDateTime(boolean isRecording, Context context, long time) {
+    if (isRecording || time == 0L) {
       return new String[] { null, null };
     }
-    if (DateUtils.isToday(startTime)) {
+    if (DateUtils.isToday(time)) {
       return new String[] { DateUtils.getRelativeTimeSpanString(
-          startTime, System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS,
+          time, System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS,
           DateUtils.FORMAT_ABBREV_RELATIVE).toString(), null };
     }
-    int flags = DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL;
-    if (!isThisYear(startTime)) {
-      flags |= DateUtils.FORMAT_NUMERIC_DATE;
+    int dateFlags = DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL;
+    if (!isThisYear(time)) {
+      dateFlags |= DateUtils.FORMAT_NUMERIC_DATE;
     }
-    return new String[] { DateUtils.formatDateTime(context, startTime, flags),
-        DateUtils.formatDateTime(
-            context, startTime, DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_TIME) };
+    int timeFlags = DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_TIME;
+    return new String[] { DateUtils.formatDateTime(context, time, dateFlags),
+        DateUtils.formatDateTime(context, time, timeFlags) };
   }
 
   /**

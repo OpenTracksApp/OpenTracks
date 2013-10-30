@@ -102,14 +102,22 @@ public class BitmapLoader extends AsyncTask<Void, Void, Bitmap> {
     } else {
       Matrix matrix = new Matrix();
       matrix.postRotate(rotation);
-      int offset = 0;
+      int xOffset = 0;
+      int yOffset = 0;
+      int width = scaledBitmap.getWidth();
       int height = scaledBitmap.getHeight();
-      if (!fitWithin && height > targetHeight) {
-        offset = (height - targetHeight) / 2;
-        height = targetHeight;
+      if (rotation == 0 || rotation == 180) {
+        if (!fitWithin && height > targetHeight) {
+          xOffset = (height - targetHeight) / 2;
+          height = targetHeight;
+        }
+      } else {
+        if (!fitWithin && width > targetHeight) {
+          yOffset = (width - targetHeight) / 2;
+          width = targetHeight;
+        }
       }
-      bitmap = Bitmap.createBitmap(
-          scaledBitmap, 0, offset, scaledBitmap.getWidth(), height, matrix, true);
+      bitmap = Bitmap.createBitmap(scaledBitmap, yOffset, xOffset, width, height, matrix, true);
       scaledBitmap.recycle();
     }
     return bitmap;
