@@ -69,19 +69,30 @@ limitations under the License.
           <!-- Need to match the style set in ListItemUtils.setListItem -->
           <!-- Table 2: Row 2: Column 1: (shared owner, total time, total distance, and marker count) -->
           <LinearLayout
+            android:layout_gravity="bottom"
             android:layout_height="wrap_content"
             android:layout_width="match_parent" >
             <TextView
               android:ellipsize="end"
               android:id="@+id/list_item_owner_time_distance"
               android:layout_gravity="bottom"
-              android:layout_width="wrap_content"
               android:singleLine="true"
               style="@style/TextSmall" />
+            <ImageView
+              android:contentDescription="@string/icon_marker"
+              android:id="@+id/list_item_marker_count_icon"
+              android:layout_gravity="bottom"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="4dp"
+              android:layout_marginRight="2dp"
+              android:layout_width="wrap_content"
+              android:scaleType="centerInside"
+              android:src="@drawable/ic_menu_insert_marker" />
             <TextView
-              android:drawablePadding="4dp"
+              android:ellipsize="end"
               android:id="@+id/list_item_marker_count"
               android:layout_gravity="bottom"
+              android:singleLine="true"
               style="@style/TextSmall" />
           </LinearLayout>
           <!-- Table 2: Row 2: Column 2: (time) -->
