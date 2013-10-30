@@ -17,15 +17,24 @@ limitations under the License.
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_height="wrap_content"
   android:layout_width="match_parent" >
+  <!-- Photo -->
   <ImageView
     android:contentDescription="@string/icon_marker"
-    android:id="@+id/list_item_background"
+    android:id="@+id/list_item_photo"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:scaleType="centerCrop" />
+  <!-- A gradient on top of the photo -->
+  <ImageView
+    android:alpha=".6"
+    android:contentDescription="@string/icon_marker"
+    android:id="@+id/list_item_photo_gradient"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:src="@drawable/photo_gradient" />
   <!-- Table 1 -->
   <TableLayout
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:paddingBottom="12dp"

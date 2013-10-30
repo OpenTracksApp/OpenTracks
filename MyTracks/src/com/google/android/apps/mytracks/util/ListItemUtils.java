@@ -91,7 +91,7 @@ public class ListItemUtils {
       ownerTimeDistance = activity.getString(
           isPaused ? R.string.generic_paused : R.string.generic_recording);
     } else {
-      // Need to match the style set in list_item.xml
+      // Match list_item_owner_time_distance in list_item.xml
       ownerTimeDistanceTextView.setTextAppearance(activity, R.style.TextSmall);
       ownerTimeDistance = getOwnerTimeDistance(sharedOwner, totalTime, totalDistance);
       if (markerCount > 0) {
@@ -99,7 +99,7 @@ public class ListItemUtils {
       }
     }
     setTextView(ownerTimeDistanceTextView, ownerTimeDistance);
-    
+
     // Set markerCount
     ImageView markerCountIcon = (ImageView) view.findViewById(R.id.list_item_marker_count_icon);
     TextView markerCountTextView = (TextView) view.findViewById(R.id.list_item_marker_count);
@@ -126,26 +126,31 @@ public class ListItemUtils {
     TextView timeTextView = (TextView) view.findViewById(R.id.list_item_time);
     setTextView(timeTextView, dateTime[1]);
 
-    /*
-     * If column0 is GONE, change to INVISIBLE so column1 is placed at the
-     * correct position.
-     */
-    if (timeTextView.getVisibility() == View.VISIBLE
-        && ownerTimeDistanceTextView.getVisibility() == View.GONE) {
-      ownerTimeDistanceTextView.setVisibility(View.INVISIBLE);
+    // Set category and description
+    TextView categoryDescriptionTextView = (TextView) view.findViewById(
+        R.id.list_item_category_description);
+    String categoryDescription = isRecording ? null
+        : StringUtils.getCategoryDescription(category, description);
+    if (sharedOwner == null && totalTime == null && totalDistance == null && markerCount == 0) {
+      setTextView(categoryDescriptionTextView, null);
+      // Match list_item_category_description in list_item.xml
+      ownerTimeDistanceTextView.setSingleLine(false);
+      ownerTimeDistanceTextView.setMaxLines(2);
+      setTextView(ownerTimeDistanceTextView, categoryDescription);
+    } else {
+      // Match list_item_owner_time_distance in list_item.xml
+      ownerTimeDistanceTextView.setSingleLine(true);
+      setTextView(categoryDescriptionTextView, categoryDescription);
     }
 
-    // Set category and description
-    TextView categoryDescription = (TextView) view.findViewById(
-        R.id.list_item_category_description);
-    setTextView(categoryDescription,
-        isRecording ? null : StringUtils.getCategoryDescription(category, description));
-
-    ImageView photo = (ImageView) view.findViewById(R.id.list_item_background);
+    ImageView photo = (ImageView) view.findViewById(R.id.list_item_photo);
+    ImageView photoGradient = (ImageView) view.findViewById(R.id.list_item_photo_gradient);
     if (photoUrl == null || photoUrl.equals("")) {
       photo.setVisibility(View.GONE);
+      photoGradient.setVisibility(View.GONE);
     } else {
       photo.setVisibility(View.VISIBLE);
+      photoGradient.setVisibility(View.VISIBLE);
       Display defaultDisplay = activity.getWindowManager().getDefaultDisplay();
       PhotoUtils.setImageVew(
           photo, Uri.parse(photoUrl), defaultDisplay.getWidth(), getPhotoHeight(activity), false);

@@ -183,14 +183,13 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
         int iconId = statistics ? R.drawable.ic_marker_yellow_pushpin
             : R.drawable.ic_marker_blue_pushpin;
         String name = cursor.getString(nameIndex);
-        String sharedOwner = track.getSharedOwner();
         long time = cursor.getLong(timeIndex);
         String category = statistics ? null : cursor.getString(categoryIndex);
         String description = statistics ? null : cursor.getString(descriptionIndex);
         String photoUrl = cursor.getString(photoUrlIndex);
 
         ListItemUtils.setListItem(MarkerListActivity.this, view, false, true, iconId,
-            R.string.icon_marker, name, sharedOwner, null, null, 0, time, category, description,
+            R.string.icon_marker, name, null, null, null, 0, time, category, description,
             photoUrl);
       }
     };

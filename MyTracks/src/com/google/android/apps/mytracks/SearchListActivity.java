@@ -475,13 +475,11 @@ public class SearchListActivity extends AbstractSendToGoogleActivity implements 
      * the retrieval phase of the search.
      */
     String trackName = null;
-    String sharedOwner = null;
     long trackId = waypoint.getTrackId();
     if (trackId != -1L) {
       Track track = myTracksProviderUtils.getTrack(trackId);
       if (track != null) {
         trackName = track.getName();
-        sharedOwner = track.getSharedOwner();
       }
     }
 
@@ -493,7 +491,7 @@ public class SearchListActivity extends AbstractSendToGoogleActivity implements 
         statistics ? R.drawable.ic_marker_yellow_pushpin : R.drawable.ic_marker_blue_pushpin);
     resultMap.put(ICON_CONTENT_DESCRIPTION_ID_FIELD, R.string.icon_marker);
     resultMap.put(NAME_FIELD, waypoint.getName());
-    resultMap.put(SHARED_OWNER_FIELD, sharedOwner);
+    resultMap.put(SHARED_OWNER_FIELD, null);
     // Display the marker's track name in the total time field
     resultMap.put(TOTAL_TIME_FIELD, trackName == null ? null
         : getString(R.string.search_list_marker_track_location, trackName));
