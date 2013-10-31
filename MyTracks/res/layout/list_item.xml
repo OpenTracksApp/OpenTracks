@@ -92,8 +92,9 @@ limitations under the License.
               android:id="@+id/list_item_marker_count_icon"
               android:layout_gravity="bottom"
               android:layout_height="wrap_content"
-              android:layout_marginLeft="4dp"
+              android:layout_marginLeft="2dp"
               android:layout_marginRight="2dp"
+              android:layout_marginBottom="1dp"
               android:layout_width="wrap_content"
               android:scaleType="centerInside"
               android:src="@drawable/ic_menu_insert_marker" />

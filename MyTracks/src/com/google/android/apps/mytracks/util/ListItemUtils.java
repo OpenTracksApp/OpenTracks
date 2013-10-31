@@ -95,7 +95,7 @@ public class ListItemUtils {
       ownerTimeDistanceTextView.setTextAppearance(activity, R.style.TextSmall);
       ownerTimeDistance = getOwnerTimeDistance(sharedOwner, totalTime, totalDistance);
       if (markerCount > 0) {
-        ownerTimeDistance += " \u2027";
+        ownerTimeDistance += "  \u2027";
       }
     }
     setTextView(ownerTimeDistanceTextView, ownerTimeDistance);
