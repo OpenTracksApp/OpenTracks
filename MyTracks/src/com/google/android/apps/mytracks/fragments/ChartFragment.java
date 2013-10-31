@@ -28,14 +28,13 @@ import com.google.android.apps.mytracks.content.TrackDataType;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.stats.TripStatisticsUpdater;
-import com.google.android.apps.mytracks.util.CalorieUtils;
+import com.google.android.apps.mytracks.util.CalorieUtils.ActivityType;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
 
-import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -190,7 +189,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   public void onSampledInTrackPoint(Location location) {
     if (isResumed()) {
       double[] data = new double[ChartView.NUM_SERIES + 1];
-      fillDataPoint(location, data, getActivity());
+      fillDataPoint(location, data);
       pendingPoints.add(data);
     }
   }
@@ -198,14 +197,14 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   @Override
   public void onSampledOutTrackPoint(Location location) {
     if (isResumed()) {
-      fillDataPoint(location, null, getActivity());
+      fillDataPoint(location, null);
     }
   }
 
   @Override
   public void onSegmentSplit(Location location) {
     if (isResumed()) {
-      fillDataPoint(location, null, getActivity());
+      fillDataPoint(location, null);
     }
   }
 
@@ -441,10 +440,9 @@ public class ChartFragment extends Fragment implements TrackDataListener {
    * 
    * @param location the location
    * @param data the data point to fill in, can be null
-   * @param context the context
    */
   @VisibleForTesting
-  void fillDataPoint(Location location, double data[], Context context) {
+  void fillDataPoint(Location location, double data[]) {
     double timeOrDistance = Double.NaN;
     double elevation = Double.NaN;
     double speed = Double.NaN;
@@ -454,10 +452,8 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     double power = Double.NaN;
 
     if (tripStatisticsUpdater != null) {
-      tripStatisticsUpdater.addLocation(location, recordingDistanceInterval, false, CalorieUtils
-          .getActivityType(context,
-              PreferencesUtils.getLong(context, R.string.recording_track_id_key)), PreferencesUtils
-          .getInt(context, R.string.stats_weight_key, PreferencesUtils.STATS_WEIGHT_DEFAULT));
+      tripStatisticsUpdater.addLocation(location, recordingDistanceInterval, false,
+          ActivityType.INVALID, PreferencesUtils.STATS_WEIGHT_DEFAULT);
       TripStatistics tripStatistics = tripStatisticsUpdater.getTripStatistics();
       if (chartByDistance) {
         double distance = tripStatistics.getTotalDistance() * UnitConversions.M_TO_KM;

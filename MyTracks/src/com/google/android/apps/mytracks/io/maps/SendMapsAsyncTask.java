@@ -29,7 +29,7 @@ import com.google.android.apps.mytracks.io.gdata.maps.XmlMapsGDataParserFactory;
 import com.google.android.apps.mytracks.io.sendtogoogle.AbstractSendAsyncTask;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
 import com.google.android.apps.mytracks.stats.TripStatisticsUpdater;
-import com.google.android.apps.mytracks.util.CalorieUtils;
+import com.google.android.apps.mytracks.util.CalorieUtils.ActivityType;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.common.gdata.AndroidXmlParserFactory;
@@ -278,11 +278,8 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
           sentStartMarker = true;
         }
 
-        tripStatisticsUpdater.addLocation(location, recordingDistanceInterval, false, CalorieUtils
-            .getActivityType(context,
-                PreferencesUtils.getLong(context, R.string.recording_track_id_key)),
-            PreferencesUtils.getInt(context, R.string.stats_weight_key,
-                PreferencesUtils.STATS_WEIGHT_DEFAULT));
+        tripStatisticsUpdater.addLocation(location, recordingDistanceInterval, false,
+            ActivityType.INVALID, PreferencesUtils.STATS_WEIGHT_DEFAULT);
         if (i % elevationSamplingFrequency == 0) {
           distances.add(tripStatisticsUpdater.getTripStatistics().getTotalDistance());
           elevations.add(tripStatisticsUpdater.getSmoothedElevation());
