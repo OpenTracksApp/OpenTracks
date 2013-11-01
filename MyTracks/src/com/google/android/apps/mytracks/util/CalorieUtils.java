@@ -277,8 +277,8 @@ public class CalorieUtils {
    * 
    * @param context the context
    * @param track the track to calculate
-   * @param startTrackPointId the starting track point id. Make this value less
-   *          than 1 to calculate the entire track
+   * @param startTrackPointId the starting track point id. Make this value 1L to
+   *          calculate the entire track
    * @return the calorie value of track
    */
   public static double updateCalorie(Context context,
@@ -297,8 +297,7 @@ public class CalorieUtils {
         tripStatisticsUpdater.addLocation(points.next(), PreferencesUtils.getInt(context,
             R.string.recording_distance_interval_key,
             PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT), false, activityType,
-            PreferencesUtils.getInt(context, R.string.stats_weight_key,
-                PreferencesUtils.STATS_WEIGHT_DEFAULT));
+            PreferencesUtils.STATS_WEIGHT_DEFAULT);
       } else {
         tripStatisticsUpdater.addLocation(points.next(), PreferencesUtils.getInt(context,
             R.string.recording_distance_interval_key,

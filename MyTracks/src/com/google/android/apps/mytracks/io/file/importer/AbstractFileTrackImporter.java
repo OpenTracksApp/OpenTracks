@@ -24,7 +24,7 @@ import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.stats.TripStatisticsUpdater;
-import com.google.android.apps.mytracks.util.CalorieUtils;
+import com.google.android.apps.mytracks.util.CalorieUtils.ActivityType;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
@@ -243,15 +243,9 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
             return;
           }
           trackTripStatisticstrackUpdater.addLocation(trackPoint, recordingDistanceInterval, false,
-              CalorieUtils.getActivityType(context,
-                  PreferencesUtils.getLong(context, R.string.recording_track_id_key)),
-              PreferencesUtils.getInt(context, R.string.stats_weight_key,
-                  PreferencesUtils.STATS_WEIGHT_DEFAULT));
+              ActivityType.INVALID, PreferencesUtils.STATS_WEIGHT_DEFAULT);
           markerTripStatisticsUpdater.addLocation(trackPoint, recordingDistanceInterval, false,
-              CalorieUtils.getActivityType(context,
-                  PreferencesUtils.getLong(context, R.string.recording_track_id_key)),
-              PreferencesUtils.getInt(context, R.string.stats_weight_key,
-                  PreferencesUtils.STATS_WEIGHT_DEFAULT));
+              ActivityType.INVALID, PreferencesUtils.STATS_WEIGHT_DEFAULT);
         }
         if (waypoint.getLocation().getTime() > trackPoint.getTime()) {
           trackPoint = null;
@@ -555,9 +549,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
           location.getTime() != -1L ? location.getTime() : trackData.importTime);
     }
     trackData.tripStatisticsUpdater.addLocation(location, recordingDistanceInterval, false,
-        CalorieUtils.getActivityType(context,
-            PreferencesUtils.getLong(context, R.string.recording_track_id_key)), PreferencesUtils
-            .getInt(context, R.string.stats_weight_key, PreferencesUtils.STATS_WEIGHT_DEFAULT));
+        ActivityType.INVALID, PreferencesUtils.STATS_WEIGHT_DEFAULT);
 
     trackData.bufferedLocations[trackData.numBufferedLocations] = location;
     trackData.numBufferedLocations++;
