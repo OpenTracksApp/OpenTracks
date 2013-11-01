@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2012 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  style="@style/TrackWidgetBoundingBox" >
+  <LinearLayout
+    android:baselineAligned="false"
+    style="@style/TrackWidgetFrame" >
+    <LinearLayout
+      android:baselineAligned="false"
+      android:id="@+id/track_widget_stats_container"
+      android:layout_weight="1"
+      style="@style/TrackWidgetStatsContainer" >
+      <LinearLayout style="@style/TrackWidgetStatsSection" >
+        <!-- item1 -->
+        <LinearLayout style="@style/TrackWidgetItemContainer4x2" >
+          <TextView
+            android:id="@+id/track_widget_item1_label"
+            style="@style/TrackWidgetLabel" />
+          <LinearLayout style="@style/TrackWidgetValueContainer" >
+            <TextView
+              android:id="@+id/track_widget_item1_value"
+              style="@style/TrackWidgetValue" />
+            <TextView
+              android:id="@+id/track_widget_item1_unit"
+              style="@style/TrackWidgetUnit" />
+            <Chronometer
+              android:id="@+id/track_widget_item1_chronometer"
+              style="@style/TrackWidgetValue" />
+          </LinearLayout>
+        </LinearLayout>
+        <!-- vertical separator -->
+        <LinearLayout
+          android:baselineAligned="false"
+          style="@style/TrackWidgetVerticalSeparator" >
+          <LinearLayout
+            android:layout_weight="2"
+            style="@style/TrackWidgetVerticalSpacer" />
+          <LinearLayout
+            android:layout_weight="1"
+            style="@style/TrackWidgetVerticalLine" />
+        </LinearLayout>
+        <!-- item3 -->
+        <LinearLayout style="@style/TrackWidgetItemContainer4x2" >
+          <TextView
+            android:id="@+id/track_widget_item3_label"
+            style="@style/TrackWidgetLabel" />
+          <LinearLayout style="@style/TrackWidgetValueContainer" >
+            <TextView
+              android:id="@+id/track_widget_item3_value"
+              style="@style/TrackWidgetValue" />
+            <TextView
+              android:id="@+id/track_widget_item3_unit"
+              style="@style/TrackWidgetUnit" />
+            <Chronometer
+              android:id="@+id/track_widget_item3_chronometer"
+              style="@style/TrackWidgetValue" />
+          </LinearLayout>
+        </LinearLayout>
+      </LinearLayout>
+      <!-- horizontal separator -->
+      <LinearLayout
+        android:baselineAligned="false"
+        style="@style/TrackWidgetHorizontalSeparator" >
+        <LinearLayout
+          android:layout_weight="1"
+          style="@style/TrackWidgetHorizontalSpacer" />
+        <LinearLayout
+          android:layout_weight="38"
+          style="@style/TrackWidgetHorizontalLine" />
+        <LinearLayout
+          android:layout_weight="1"
+          style="@style/TrackWidgetHorizontalSpacer" />
+      </LinearLayout>
+      <LinearLayout style="@style/TrackWidgetStatsSection" >
+        <!-- item2 -->
+        <LinearLayout style="@style/TrackWidgetItemContainer4x2" >
+          <TextView
+            android:id="@+id/track_widget_item2_label"
+            style="@style/TrackWidgetLabel" />
+          <LinearLayout style="@style/TrackWidgetValueContainer" >
+            <TextView
+              android:id="@+id/track_widget_item2_value"
+              style="@style/TrackWidgetValue" />
+            <TextView
+              android:id="@+id/track_widget_item2_unit"
+              style="@style/TrackWidgetUnit" />
+            <Chronometer
+              android:id="@+id/track_widget_item2_chronometer"
+              style="@style/TrackWidgetValue" />
+          </LinearLayout>
+        </LinearLayout>
+        <!-- vertical separator -->
+        <LinearLayout
+          android:baselineAligned="false"
+          style="@style/TrackWidgetVerticalSeparator" >
+          <LinearLayout
+            android:layout_weight="1"
+            style="@style/TrackWidgetVerticalLine" />
+          <LinearLayout
+            android:layout_weight="2"
+            style="@style/TrackWidgetVerticalSpacer" />
+        </LinearLayout>
+        <!-- item4 -->
+        <LinearLayout style="@style/TrackWidgetItemContainer4x2" >
+          <TextView
+            android:id="@+id/track_widget_item4_label"
+            style="@style/TrackWidgetLabel" />
+          <LinearLayout style="@style/TrackWidgetValueContainer" >
+            <TextView
+              android:id="@+id/track_widget_item4_value"
+              style="@style/TrackWidgetValue" />
+            <TextView
+              android:id="@+id/track_widget_item4_unit"
+              style="@style/TrackWidgetUnit" />
+            <Chronometer
+              android:id="@+id/track_widget_item4_chronometer"
+              style="@style/TrackWidgetValue" />
+          </LinearLayout>
+        </LinearLayout>
+      </LinearLayout>
+    </LinearLayout>
+    <LinearLayout style="@style/TrackWidgetButtonContainer" >
+      <LinearLayout
+        android:layout_weight="1"
+        style="@style/TrackWidgetVerticalSpacer" />
+      <ImageButton
+        android:contentDescription="@string/icon_record_track"
+        android:id="@+id/track_widget_record_button"
+        android:src="@drawable/button_record"      
+        style="@style/TrackWidgetButton" />
+      <TextView
+        android:id="@+id/track_widget_record_status"
+        style="@style/TrackWidgetRecordStatus" />
+      <ImageButton
+        android:contentDescription="@string/icon_stop_recording"
+        android:id="@+id/track_widget_stop_button"
+        android:src="@drawable/ic_button_stop_disabled"
+        style="@style/TrackWidgetButton" />
+      <LinearLayout
+        android:layout_weight="1"
+        style="@style/TrackWidgetVerticalSpacer" />
+    </LinearLayout>
+  </LinearLayout>
+  <ImageView
+    android:contentDescription="@string/my_tracks_app_name"
+    style="@style/TrackWidgetLogo" />
+</RelativeLayout>
