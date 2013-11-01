@@ -252,9 +252,9 @@ public class MarkerDetailFragment extends Fragment {
       TextView name = (TextView) getView().findViewById(R.id.marker_detail_statistics_name);
       setTextView(name, waypoint.getName());
 
-      StatsUtils.setTripStatisticsValues(
-          getActivity(), waypoint.getTripStatistics(), PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
-      StatsUtils.setLocationValues(getActivity(), waypoint.getLocation(), false);
+      StatsUtils.setTripStatisticsValues(getActivity(), null, getView(),
+          waypoint.getTripStatistics(), PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
+      StatsUtils.setLocationValues(getActivity(), null, getView(), waypoint.getLocation(), false);
     }
   }
 
