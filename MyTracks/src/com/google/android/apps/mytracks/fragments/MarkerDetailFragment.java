@@ -179,6 +179,10 @@ public class MarkerDetailFragment extends Fragment {
 
     menu.findItem(R.id.marker_detail_edit).setVisible(!isSharedWithMe);
     menu.findItem(R.id.marker_detail_delete).setVisible(!isSharedWithMe);
+
+    String photoUrl = waypoint.getPhotoUrl();
+    boolean hasPhoto = photoUrl != null && !photoUrl.equals("");
+    menu.findItem(R.id.marker_detail_view_photo).setVisible(hasPhoto);
   }
 
   @Override
@@ -201,6 +205,12 @@ public class MarkerDetailFragment extends Fragment {
       case R.id.marker_detail_delete:
         DeleteMarkerDialogFragment.newInstance(new long[] { markerId })
             .show(getChildFragmentManager(), DeleteMarkerDialogFragment.DELETE_MARKER_DIALOG_TAG);
+        return true;
+      case R.id.marker_detail_view_photo:
+        intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setDataAndType(Uri.parse(waypoint.getPhotoUrl()), "image/*");
+        startActivity(intent);
         return true;
       default:
         return super.onOptionsItemSelected(item);

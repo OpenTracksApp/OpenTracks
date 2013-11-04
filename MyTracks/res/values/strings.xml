@@ -1240,6 +1240,12 @@ limitations under the License.
       Character limit: ~20 (1 line)">
     Terrain
   </string>
+  <string name="menu_view_photo"
+    translation_description="In the menu, to view a photo.
+
+      Character limit: ~20 (1 line)">
+    View photo
+  </string>
   <string name="menu_voice_frequency"
     translation_description="In the menu, to configure the voice frequency, how frequent to announce
       status.

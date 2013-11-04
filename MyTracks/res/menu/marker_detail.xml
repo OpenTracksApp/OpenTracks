@@ -30,4 +30,9 @@ limitations under the License.
     android:id="@+id/marker_detail_delete"
     android:showAsAction="ifRoom"
     android:title="@string/menu_delete"/>
+  <item
+    android:icon="@drawable/ic_menu_view_photo"
+    android:id="@+id/marker_detail_view_photo"
+    android:showAsAction="ifRoom"
+    android:title="@string/menu_view_photo"/>
 </menu>
