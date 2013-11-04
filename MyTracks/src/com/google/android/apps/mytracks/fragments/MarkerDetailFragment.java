@@ -37,14 +37,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -72,14 +70,14 @@ public class MarkerDetailFragment extends Fragment {
   private MyTracksProviderUtils myTracksProviderUtils;
   private Handler handler;
   private ImageView photo;
-  private ImageView photoGradient;
+  private ImageView textGradient;
   private LinearLayout waypointInfo;
   private Waypoint waypoint;
 
   private Runnable hideText = new Runnable() {
       @Override
     public void run() {
-      photoGradient.setVisibility(View.GONE);
+      textGradient.setVisibility(View.GONE);
       waypointInfo.setVisibility(View.GONE);
     }
   };
@@ -110,11 +108,11 @@ public class MarkerDetailFragment extends Fragment {
       public void onClick(View v) {
         handler.removeCallbacks(hideText);
         int visibility = waypointInfo.getVisibility() == View.GONE ? View.VISIBLE : View.GONE;
-        photoGradient.setVisibility(visibility);
+        textGradient.setVisibility(visibility);
         waypointInfo.setVisibility(visibility);
       }
     });
-    photoGradient = (ImageView) view.findViewById(R.id.marker_detail_waypoint_photo_gradient);
+    textGradient = (ImageView) view.findViewById(R.id.marker_detail_waypoint_text_gradient);
     waypointInfo = (LinearLayout) view.findViewById(R.id.marker_detail_waypoint_info);
 
     return view;
@@ -221,14 +219,12 @@ public class MarkerDetailFragment extends Fragment {
       String photoUrl = waypoint.getPhotoUrl();
       if (photoUrl == null || photoUrl.equals("")) {
         photo.setVisibility(View.GONE);
-        photoGradient.setVisibility(View.GONE);
+        textGradient.setVisibility(View.GONE);
         waypointInfo.setVisibility(View.VISIBLE);
-        setLayoutGravity(waypointInfo, Gravity.TOP);
       } else {
         photo.setVisibility(View.VISIBLE);
-        photoGradient.setVisibility(View.VISIBLE);
+        textGradient.setVisibility(View.VISIBLE);
         waypointInfo.setVisibility(View.VISIBLE);
-        setLayoutGravity(waypointInfo, Gravity.BOTTOM);
 
         Display defaultDisplay = getActivity().getWindowManager().getDefaultDisplay();
         PhotoUtils.setImageVew(photo, Uri.parse(photoUrl), defaultDisplay.getWidth(),
@@ -256,19 +252,6 @@ public class MarkerDetailFragment extends Fragment {
           waypoint.getTripStatistics(), PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
       StatsUtils.setLocationValues(getActivity(), null, getView(), waypoint.getLocation(), false);
     }
-  }
-
-  /**
-   * Sets the layout gravity. Assuming the parent is a framelayout.
-   * 
-   * @param linearLayout the linear layout
-   * @param gravity the gravity
-   */
-  private void setLayoutGravity(LinearLayout linearLayout, int gravity) {
-    FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) linearLayout
-        .getLayoutParams();
-    layoutParams.gravity = gravity;
-    linearLayout.setLayoutParams(layoutParams);
   }
 
   /**

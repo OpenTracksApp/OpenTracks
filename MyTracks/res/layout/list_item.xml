@@ -24,14 +24,14 @@ limitations under the License.
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:scaleType="centerCrop" />
-  <!-- A gradient on top of the photo -->
+  <!-- A gradient on top of the text -->
   <ImageView
     android:alpha=".6"
     android:contentDescription="@string/icon_marker"
-    android:id="@+id/list_item_photo_gradient"
+    android:id="@+id/list_item_text_gradient"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:src="@drawable/photo_gradient" />
+    android:src="@drawable/text_gradient" />
   <!-- Table 1 -->
   <TableLayout
     android:layout_height="match_parent"

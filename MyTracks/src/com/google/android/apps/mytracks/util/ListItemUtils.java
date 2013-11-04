@@ -144,13 +144,13 @@ public class ListItemUtils {
     }
 
     ImageView photo = (ImageView) view.findViewById(R.id.list_item_photo);
-    ImageView photoGradient = (ImageView) view.findViewById(R.id.list_item_photo_gradient);
+    ImageView textGradient = (ImageView) view.findViewById(R.id.list_item_text_gradient);
     if (photoUrl == null || photoUrl.equals("")) {
       photo.setVisibility(View.GONE);
-      photoGradient.setVisibility(View.GONE);
+      textGradient.setVisibility(View.GONE);
     } else {
       photo.setVisibility(View.VISIBLE);
-      photoGradient.setVisibility(View.VISIBLE);
+      textGradient.setVisibility(View.VISIBLE);
       Display defaultDisplay = activity.getWindowManager().getDefaultDisplay();
       PhotoUtils.setImageVew(
           photo, Uri.parse(photoUrl), defaultDisplay.getWidth(), getPhotoHeight(activity), false);
