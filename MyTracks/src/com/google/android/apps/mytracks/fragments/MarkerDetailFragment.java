@@ -43,6 +43,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -77,8 +80,23 @@ public class MarkerDetailFragment extends Fragment {
   private Runnable hideText = new Runnable() {
       @Override
     public void run() {
-      textGradient.setVisibility(View.GONE);
-      waypointInfo.setVisibility(View.GONE);
+      Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.fadeout);
+      animation.setAnimationListener(new AnimationListener() {
+
+          @Override
+        public void onAnimationStart(Animation anim) {}
+
+          @Override
+        public void onAnimationRepeat(Animation anim) {}
+
+          @Override
+        public void onAnimationEnd(Animation anim) {
+          textGradient.setVisibility(View.GONE);
+          waypointInfo.setVisibility(View.GONE);
+        }
+      });
+      textGradient.startAnimation(animation);
+      waypointInfo.startAnimation(animation);
     }
   };
 
@@ -222,6 +240,7 @@ public class MarkerDetailFragment extends Fragment {
         textGradient.setVisibility(View.GONE);
         waypointInfo.setVisibility(View.VISIBLE);
       } else {
+        handler.removeCallbacks(hideText);
         photo.setVisibility(View.VISIBLE);
         textGradient.setVisibility(View.VISIBLE);
         waypointInfo.setVisibility(View.VISIBLE);
