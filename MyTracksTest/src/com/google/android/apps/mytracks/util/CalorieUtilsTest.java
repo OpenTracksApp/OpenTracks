@@ -46,7 +46,7 @@ public class CalorieUtilsTest extends TestCase {
   public void testGetCalories_foot() {
     double actual = CalorieUtils.getCalorie(start, stop, grade, weight,
         CalorieUtils.ActivityType.FOOT);
-    double expected = CalorieUtils.calculateCalorieFoot(start, stop, grade, weight);
+    double expected = CalorieUtils.getFootCalorie(start, stop, grade, weight);
     assertEquals(expected, actual);
   }
 
@@ -58,7 +58,7 @@ public class CalorieUtilsTest extends TestCase {
     double expectGrade = 0;
     double actual = CalorieUtils.getCalorie(start, stop, actualGrade, weight,
         CalorieUtils.ActivityType.FOOT);
-    double expected = CalorieUtils.calculateCalorieFoot(start, stop, expectGrade, weight);
+    double expected = CalorieUtils.getFootCalorie(start, stop, expectGrade, weight);
     assertEquals(expected, actual);
   }
 
@@ -68,7 +68,7 @@ public class CalorieUtilsTest extends TestCase {
   public void testGetCalories_cycling() {
     double actual = CalorieUtils.getCalorie(start, stop, grade, weight,
         CalorieUtils.ActivityType.CYCLING);
-    double expected = CalorieUtils.calculateCalorieCycling(start, stop, grade, weight);
+    double expected = CalorieUtils.getCyclingCalorie(start, stop, grade, weight);
     assertEquals(expected, actual);
   }
 
@@ -106,7 +106,7 @@ public class CalorieUtilsTest extends TestCase {
     start.setSpeed(9);
     stop.setSpeed(9);
     double expected = 175.0 * (TIME_INTERVAL / 1000) * UnitConversions.J_TO_KCAL;
-    double actual = CalorieUtils.calculateCalorieCycling(start, stop, grade, weight);
+    double actual = CalorieUtils.getCyclingCalorie(start, stop, grade, weight);
     assertTrue((actual - expected) / expected < 0.02);
   }
 }

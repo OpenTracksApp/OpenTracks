@@ -39,7 +39,7 @@ public class TrackIconUtils {
   public static final String BIKE = "BIKE";
   private static final String BOAT = "BOAT";
   public static final String DRIVE = "DRIVE";
-  private static final String RUN = "RUN";
+  public static final String RUN = "RUN";
   private static final String SKI = "SKI";
   private static final String SNOW_BOARDING = "SNOW_BOARDING";
   public static final String WALK = "WALK";

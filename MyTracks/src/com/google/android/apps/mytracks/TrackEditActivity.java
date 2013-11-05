@@ -182,32 +182,34 @@ public class TrackEditActivity extends AbstractMyTracksActivity
 
     Button save = (Button) findViewById(R.id.track_edit_save);
     save.setOnClickListener(new View.OnClickListener() {
-      @Override
+        @Override
       public void onClick(View v) {
-        String category = activityType.getText().toString();
         track.setName(name.getText().toString());
+
+        String category = activityType.getText().toString();
+        boolean newCategory = !category.equals(track.getCategory());
+        boolean isRecording = trackId
+            == PreferencesUtils.getLong(TrackEditActivity.this, R.string.recording_track_id_key);
+
+        if (newCategory && !isRecording) {
+          // Update calorie
+          double calorie = CalorieUtils.getTrackCalorie(TrackEditActivity.this, track, -1L);
+          track.getTripStatistics().setCalorie(calorie);
+        }
+
+        track.setCategory(category);
         track.setIcon(TrackIconUtils.getIconValue(TrackEditActivity.this, category));
         track.setDescription(description.getText().toString());
         track.setModifiedTime(System.currentTimeMillis());
-        if (!category.equals(track.getCategory())) {
-          track.setCategory(category);
+        myTracksProviderUtils.updateTrack(track);
 
-          // If edit recording track.
-          if (track.getId() == PreferencesUtils.getLong(getApplicationContext(),
-              R.string.recording_track_id_key)) {
-
-            // Update data without new calorie.
-            myTracksProviderUtils.updateTrack(track);
-            TrackRecordingServiceConnectionUtils.updateCalorie(trackRecordingServiceConnection);
-          } else {
-            CalorieUtils.updateCalorie(getApplicationContext(), -1L, track);
-
-            // Update data with new calorie.
-            myTracksProviderUtils.updateTrack(track);
-          }
+        if (newCategory && isRecording) {
+          // Update calorie through track recording service
+          TrackRecordingServiceConnectionUtils.updateCalorie(trackRecordingServiceConnection);
         }
-        boolean driveSync = PreferencesUtils.getBoolean(TrackEditActivity.this,
-            R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT);
+
+        boolean driveSync = PreferencesUtils.getBoolean(
+            TrackEditActivity.this, R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT);
         if (driveSync) {
           PreferencesUtils.addToList(TrackEditActivity.this, R.string.drive_edited_list_key,
               PreferencesUtils.DRIVE_EDITED_LIST_DEFAULT, String.valueOf(track.getId()));
