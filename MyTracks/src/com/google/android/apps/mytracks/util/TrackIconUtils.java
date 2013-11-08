@@ -100,10 +100,10 @@ public class TrackIconUtils {
    */
   public static int getIconDrawable(String iconValue) {
     if (iconValue == null || iconValue.equals("")) {
-      return R.drawable.ic_track_walk;
+      return R.drawable.ic_track_generic;
     }
     Pair<Integer, Integer> pair = map.get(iconValue);
-    return pair == null ? R.drawable.ic_track_walk : pair.second;
+    return pair == null ? R.drawable.ic_track_generic : pair.second;
   }
 
   /**
