@@ -84,7 +84,7 @@ limitations under the License.
     <item name="android:layout_marginBottom">8dp</item>
     <item name="android:layout_marginLeft">20dp</item>
     <item name="android:layout_width">match_parent</item>
-  </style> 
+  </style>
   <!-- help answer -->
   <style name="HelpAnswer" parent="@style/TextSmall">
     <item name="android:autoLink">web</item>
@@ -173,7 +173,7 @@ limitations under the License.
   <!-- stats scroll view -->
   <style name="StatsScrollView" parent="@style/ScrollView">
     <item name="android:scrollbarStyle">outsideOverlay</item>
-  </style>  
+  </style>
   <!-- stats small item container -->
   <style name="StatsSmallItemContainer" parent="@style/StatsLargeItemContainer">
     <item name="android:paddingTop">12dp</item>
@@ -196,6 +196,8 @@ limitations under the License.
   <!-- stats unit -->
   <style name="StatsUnit" parent="@style/TextSmall">
     <item name="android:paddingLeft">4dp</item>
+    <!-- Add paddingTop to support unit with superscript -->
+    <item name="android:paddingTop">4dp</item>
     <item name="android:singleLine">true</item>
   </style>
   <!-- stats vertical spacer -->
@@ -204,11 +206,11 @@ limitations under the License.
     <item name="android:layout_weight">1</item>
     <item name="android:layout_width">0dp</item>
   </style>
- <style name="Text">
+  <style name="Text">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">wrap_content</item>
     <item name="android:textColor">@android:color/white</item>
- </style>   
+  </style>
   <!-- text choose activity -->
   <style name="TextChooseActivity">
     <item name="android:textSize">18sp</item>
@@ -352,7 +354,7 @@ limitations under the License.
     <item name="android:layout_weight">2</item>
     <item name="android:layout_width">0dp</item>
     <item name="android:singleLine">true</item>
-  </style>  
+  </style>
   <!-- track widget stats container -->
   <style name="TrackWidgetStatsContainer">
     <item name="android:clickable">true</item>
