@@ -40,9 +40,8 @@ public class StatsUtils {
   private static final String COORDINATE_DEGREE = "\u00B0";
   private static final String GRADE_PERCENTAGE = "%";
 
-  private static final String ELEVATION_FORMAT = "%1$.2f";
   private static final String GRADE_FORMAT = "%1$d";
-  private static final String CALORIES_FORMAT = "%1$.0f";
+  private static final String CALORIES_FORMAT = "%1$,.0f";
 
   private StatsUtils() {}
 
@@ -282,11 +281,11 @@ public class StatsUtils {
       unit = null;
     } else {
       if (metricUnits) {
-        value = String.format(Locale.getDefault(), ELEVATION_FORMAT, elevation);
+        value = StringUtils.formatDecimal(elevation);
         unit = context.getString(R.string.unit_meter);
       } else {
         elevation *= UnitConversions.M_TO_FT;
-        value = String.format(Locale.getDefault(), ELEVATION_FORMAT, elevation);
+        value = StringUtils.formatDecimal(elevation);
         unit = context.getString(R.string.unit_feet);
       }
     }

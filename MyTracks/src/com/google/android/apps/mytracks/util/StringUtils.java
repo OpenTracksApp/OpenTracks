@@ -148,6 +148,11 @@ public class StringUtils {
       }
     }
   }
+  
+  public static String formatDecimal(double value) {
+    String result = String.format(Locale.getDefault(), "%1$,.2f", value);
+    return result.endsWith(".00") ? result.substring(0, result.lastIndexOf('.')) : result;    
+  }
 
   /**
    * Gets the distance in an array of two strings. The first string is the
@@ -183,7 +188,7 @@ public class StringUtils {
         unitId = R.string.unit_feet;
       }
     }
-    result[0] = String.format("%.2f", distance);
+    result[0] = formatDecimal(distance);
     result[1] = context.getString(unitId);
     return result;
   }
@@ -217,13 +222,13 @@ public class StringUtils {
       speed *= UnitConversions.KM_TO_MI;
     }
     if (reportSpeed) {
-      result[0] = String.format("%.2f", speed);
+      result[0] = StringUtils.formatDecimal(speed);
     } else {
       // convert from hours to minutes
       double pace = speed == 0 ? 0.0 : 60.0 / speed;
       int minutes = (int) pace;
       int seconds = (int) Math.round((pace - minutes) * 60.0);
-      result[0] = String.format("%d:%02d", minutes, seconds);  
+      result[0] = String.format(Locale.US, "%d:%02d", minutes, seconds);  
     }
     return result;
   }

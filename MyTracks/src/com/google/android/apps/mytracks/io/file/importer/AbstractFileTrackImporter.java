@@ -486,8 +486,8 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
       latitudeValue = Double.parseDouble(latitude);
       longitudeValue = Double.parseDouble(longitude);
     } catch (NumberFormatException e) {
-      throw new SAXException(createErrorMessage(
-          String.format("Unable to parse latitude longitude: %s %s", latitude, longitude)), e);
+      throw new SAXException(createErrorMessage(String.format(
+          Locale.US, "Unable to parse latitude longitude: %s %s", latitude, longitude)), e);
     }
     Double altitudeValue = null;
     if (altitude != null) {
@@ -495,7 +495,8 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         altitudeValue = Double.parseDouble(altitude);
       } catch (NumberFormatException e) {
         throw new SAXException(
-            createErrorMessage(String.format("Unable to parse altitude: %s", altitude)), e);
+            createErrorMessage(String.format(Locale.US, "Unable to parse altitude: %s", altitude)),
+            e);
       }
     }
     
@@ -507,7 +508,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         timeValue = StringUtils.getTime(time);
       } catch (IllegalArgumentException e) {
         throw new SAXException(
-            createErrorMessage(String.format("Unable to parse time: %s", time)), e);
+            createErrorMessage(String.format(Locale.US, "Unable to parse time: %s", time)), e);
       }
     }
     return createLocation(latitudeValue, longitudeValue, altitudeValue, timeValue);
