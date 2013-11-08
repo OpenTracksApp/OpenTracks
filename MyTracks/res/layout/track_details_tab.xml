@@ -23,8 +23,7 @@ limitations under the License.
       android:id="@android:id/tabs"
       android:layout_height="wrap_content"
       android:layout_weight="0"
-      android:layout_width="match_parent"
-      android:orientation="horizontal" />
+      android:layout_width="match_parent" />
     <FrameLayout
       android:id="@android:id/tabcontent"
       android:layout_height="0dp"

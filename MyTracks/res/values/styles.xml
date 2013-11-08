@@ -30,7 +30,6 @@ limitations under the License.
   <style name="BottomButtonBar">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">match_parent</item>
-    <item name="android:orientation">horizontal</item>
   </style>
   <!-- bottom button divider -->
   <style name="BottomButtonDivider">
@@ -257,7 +256,6 @@ limitations under the License.
     <item name="android:layout_height">0dp</item>
     <item name="android:layout_weight">1</item>
     <item name="android:layout_width">match_parent</item>
-    <item name="android:orientation">horizontal</item>
     <item name="android:paddingBottom">4dp</item>
     <item name="android:paddingTop">4dp</item>
   </style>
@@ -290,7 +288,6 @@ limitations under the License.
   <style name="TrackWidgetHorizontalSeparator">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">match_parent</item>
-    <item name="android:orientation">horizontal</item>
   </style>
   <!-- track widget item container -->
   <style name="TrackWidgetItemContainer">
@@ -369,7 +366,6 @@ limitations under the License.
     <item name="android:layout_height">0dp</item>
     <item name="android:layout_weight">1</item>
     <item name="android:layout_width">match_parent</item>
-    <item name="android:orientation">horizontal</item>
   </style>
   <!-- track widget unit -->
   <style name="TrackWidgetUnit">
@@ -412,7 +408,6 @@ limitations under the License.
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_marginTop">-4dp</item>
     <item name="android:layout_width">wrap_content</item>
-    <item name="android:orientation">horizontal</item>
   </style>
   <!-- track widget value container 4x3 -->
   <style name="TrackWidgetValueContainer4x3" parent="@style/TrackWidgetValueContainer">

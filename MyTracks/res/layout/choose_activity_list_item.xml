@@ -19,7 +19,6 @@ limitations under the License.
   android:layout_height="wrap_content"
   android:layout_width="match_parent"
   android:minHeight="?android:attr/listPreferredItemHeight"
-  android:orientation="horizontal"
   android:paddingLeft="16dp"
   android:paddingRight="16dp" >
   <ImageView

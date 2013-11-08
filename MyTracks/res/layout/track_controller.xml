@@ -20,7 +20,6 @@ limitations under the License.
     android:id="@+id/track_controler_container"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:orientation="horizontal"
     android:paddingBottom="8dp"
     android:paddingTop="8dp" >
     <View
