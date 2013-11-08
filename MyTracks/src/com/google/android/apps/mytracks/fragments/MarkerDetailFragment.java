@@ -24,7 +24,6 @@ import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PhotoUtils;
-import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StatsUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
@@ -277,8 +276,8 @@ public class MarkerDetailFragment extends Fragment {
       TextView name = (TextView) getView().findViewById(R.id.marker_detail_statistics_name);
       setTextView(name, waypoint.getName());
 
-      StatsUtils.setTripStatisticsValues(getActivity(), null, getView(),
-          waypoint.getTripStatistics(), PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
+      StatsUtils.setTripStatisticsValues(
+          getActivity(), null, getView(), waypoint.getTripStatistics());
       StatsUtils.setLocationValues(getActivity(), null, getView(), waypoint.getLocation(), false);
     }
   }

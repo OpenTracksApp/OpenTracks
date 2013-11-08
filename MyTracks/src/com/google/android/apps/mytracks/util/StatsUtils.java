@@ -16,15 +16,15 @@
 
 package com.google.android.apps.mytracks.util;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.apps.mytracks.util.CalorieUtils.ActivityType;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
 import android.content.Context;
 import android.location.Location;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.SuperscriptSpan;
 import android.view.View;
 import android.widget.TextView;
 
@@ -63,10 +63,16 @@ public class StatsUtils {
     boolean reportSpeed = PreferencesUtils.isReportSpeed(context);
 
     // Set speed/pace
-    double speed = isRecording && location != null && location.hasSpeed() ? location.getSpeed()
-        : Double.NaN;
-    setSpeed(context, getView(activity, view, R.id.stats_speed), R.string.stats_speed,
-        R.string.stats_pace, speed, metricUnits, reportSpeed);
+    View speed = getView(activity, view, R.id.stats_speed);
+    if (isRecording) {
+      double value = isRecording && location != null && location.hasSpeed() ? location.getSpeed()
+          : Double.NaN;
+      speed.setVisibility(View.VISIBLE);
+      setSpeed(context, speed, R.string.stats_speed, R.string.stats_pace, value, metricUnits,
+          reportSpeed);
+    } else {
+      speed.setVisibility(View.INVISIBLE);
+    }
 
     // Set elevation
     boolean showGradeElevation = PreferencesUtils.getBoolean(context,
@@ -124,12 +130,9 @@ public class StatsUtils {
    * @param view the containing view for finding views. If null, the activity
    *          cannot be null
    * @param tripStatistics the trip statistics
-   * @param trackId the id of track, which is used to set calorie value. Does
-   *          not handle the calorie If the value is
-   *          {@link PreferencesUtils#RECORDING_TRACK_ID_DEFAULT}
    */
   public static void setTripStatisticsValues(
-      Context context, Activity activity, View view, TripStatistics tripStatistics, long trackId) {
+      Context context, Activity activity, View view, TripStatistics tripStatistics) {
     boolean metricUnits = PreferencesUtils.isMetricUnits(context);
     boolean reportSpeed = PreferencesUtils.isReportSpeed(context);
 
@@ -138,31 +141,35 @@ public class StatsUtils {
     setDistanceValue(
         context, getView(activity, view, R.id.stats_distance), totalDistance, metricUnits);
 
+    // Set calorie
+    double calorie = tripStatistics == null ? Double.NaN : tripStatistics.getCalorie();
+    setCalorie(context, getView(activity, view, R.id.stats_calorie), calorie);
+    
     // Set total time
     setTimeValue(context, getView(activity, view, R.id.stats_total_time), R.string.stats_total_time,
         tripStatistics != null ? tripStatistics.getTotalTime() : -1L);
-
+    
+    // Set moving time
+    setTimeValue(context, getView(activity, view, R.id.stats_moving_time),
+        R.string.stats_moving_time, tripStatistics != null ? tripStatistics.getMovingTime() : -1L);
+   
     // Set average speed/pace
     double averageSpeed = tripStatistics != null ? tripStatistics.getAverageSpeed() : Double.NaN;
     setSpeed(context, getView(activity, view, R.id.stats_average_speed),
         R.string.stats_average_speed, R.string.stats_average_pace, averageSpeed, metricUnits,
         reportSpeed);
 
-    // Set moving time
-    setTimeValue(context, getView(activity, view, R.id.stats_moving_time),
-        R.string.stats_moving_time, tripStatistics != null ? tripStatistics.getMovingTime() : -1L);
-
-    // Set average moving speed/pace
-    double averageMovingSpeed = tripStatistics != null ? tripStatistics.getAverageMovingSpeed()
-        : Double.NaN;
-    setSpeed(context, getView(activity, view, R.id.stats_average_moving_time),
-        R.string.stats_average_moving_speed, R.string.stats_average_moving_pace, averageMovingSpeed,
-        metricUnits, reportSpeed);
-
     // Set max speed/pace
     double maxSpeed = tripStatistics == null ? Double.NaN : tripStatistics.getMaxSpeed();
     setSpeed(context, getView(activity, view, R.id.stats_max_speed), R.string.stats_max_speed,
         R.string.stats_fastest_pace, maxSpeed, metricUnits, reportSpeed);
+    
+    // Set average moving speed/pace
+    double averageMovingSpeed = tripStatistics != null ? tripStatistics.getAverageMovingSpeed()
+        : Double.NaN;
+    setSpeed(context, getView(activity, view, R.id.stats_average_moving_speed),
+        R.string.stats_average_moving_speed, R.string.stats_average_moving_pace, averageMovingSpeed,
+        metricUnits, reportSpeed);
 
     // Set grade/elevation
     boolean showGradeElevation = PreferencesUtils.getBoolean(context,
@@ -198,30 +205,6 @@ public class StatsUtils {
       gradeElevationHorizontalLine.setVisibility(View.GONE);
       gradeElevationContainer.setVisibility(View.GONE);
     }
-
-    if (trackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
-      // Set calories
-      boolean showCalorie = PreferencesUtils.getBoolean(
-          context, R.string.stats_show_calorie_key, PreferencesUtils.STATS_SHOW_CALORIE_DEFAULT);
-      View calorieHorizontalLine = getView(activity, view, R.id.stats_calorie_horizontal_line);
-      View calorieContainer = getView(activity, view, R.id.stats_calorie_container);
-      if (showCalorie) {
-        calorieHorizontalLine.setVisibility(View.VISIBLE);
-        calorieContainer.setVisibility(View.VISIBLE);
-        double calories = Double.NaN;
-        if (tripStatistics != null) {
-          calories = tripStatistics.getCalorie();
-        }
-        MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
-        Track track = myTracksProviderUtils.getTrack(trackId);
-        ActivityType activityType = track == null ? ActivityType.INVALID
-            : CalorieUtils.getActivityType(context, track.getCategory());
-        setCalorie(context, getView(activity, view, R.id.stats_calorie), activityType, calories);
-      } else {
-        calorieHorizontalLine.setVisibility(View.GONE);
-        calorieContainer.setVisibility(View.GONE);
-      }
-    }
   }
 
   /**
@@ -239,6 +222,19 @@ public class StatsUtils {
       double speed, boolean metricUnits, boolean reportSpeed) {
     String parts[] = StringUtils.getSpeedParts(context, speed, metricUnits, reportSpeed);
     setItem(context, view, reportSpeed ? speedLabelId : paceLabelId, parts[0], parts[1]);
+  }
+
+  /**
+   * Sets calorie.
+   * 
+   * @param context the context
+   * @param view the containing view
+   * @param calorie the value of calorie
+   */
+  private static void setCalorie(Context context, View view, double calorie) {
+    String value = calorie == Double.NaN ? null
+        : String.format(Locale.getDefault(), CALORIES_FORMAT, calorie);
+    setItem(context, view, R.string.stats_calorie, value, context.getString(R.string.unit_calorie));
   }
 
   /**
@@ -322,28 +318,10 @@ public class StatsUtils {
   private static void setCoordinateValue(
       Context context, View view, int labelId, double coordinate) {
     String value = Double.isNaN(coordinate) || Double.isInfinite(coordinate) ? null
-        : Location.convert(coordinate, Location.FORMAT_DEGREES);
-    setItem(context, view, labelId, value, COORDINATE_DEGREE);
-  }
-
-  /**
-   * Sets calorie.
-   * 
-   * @param context the context
-   * @param view the containing view
-   * @param activityType the activity type
-   * @param calorie the value of calorie
-   */
-  private static void setCalorie(
-      Context context, View view, ActivityType activityType, double calorie) {
-    if (activityType == ActivityType.INVALID) {
-      view.setVisibility(View.GONE);
-    } else {
-      view.setVisibility(View.VISIBLE);
-      setItem(context, view, R.string.stats_calorie,
-          String.format(Locale.getDefault(), CALORIES_FORMAT, calorie),
-          context.getString(R.string.unit_calorie));
-    }
+        : Location.convert(coordinate, Location.FORMAT_DEGREES);  
+    SpannableStringBuilder unit = new SpannableStringBuilder(COORDINATE_DEGREE);
+    unit.setSpan(new SuperscriptSpan(), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+    setItem(context, view, labelId, value, unit);
   }
 
   /**
@@ -355,7 +333,8 @@ public class StatsUtils {
    * @param value the value, can be null
    * @param unit the unit. Null to hide the unit
    */
-  private static void setItem(Context context, View view, int labelId, String value, String unit) {
+  private static void setItem(
+      Context context, View view, int labelId, CharSequence value, CharSequence unit) {
     TextView labelTextView = (TextView) view.findViewById(R.id.stats_label);
     TextView valueTextView = (TextView) view.findViewById(R.id.stats_value);
     TextView unitTextView = (TextView) view.findViewById(R.id.stats_unit);

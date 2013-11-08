@@ -14,18 +14,28 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:id="@+id/stats_small_1line_id"
-  style="@style/StatsSmallValueContainer" >
-  <TextView
-    android:id="@+id/stats_value"
-    style="@style/StatsSmallValue" />
-  <TextView
-    android:id="@+id/stats_unit"
-    style="@style/StatsUnit" />
-  <TextView
-    android:id="@+id/stats_label"
-    android:layout_gravity="bottom"
-    android:paddingLeft="8dp"
-    style="@style/StatsSmallLabel" />
-</LinearLayout>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_height="wrap_content"
+  android:layout_width="wrap_content" >
+  <RelativeLayout
+    android:layout_gravity="right|bottom"
+    style="@style/StatsSmallValueContainer" >
+    <TextView
+      android:id="@+id/stats_value"
+      android:layout_alignParentBottom="true"
+      style="@style/StatsSmallValue" />
+    <TextView
+      android:id="@+id/stats_unit"
+      android:layout_alignParentBottom="true"
+      android:layout_toRightOf="@id/stats_value"
+      style="@style/StatsUnit" />
+  </RelativeLayout>
+  <LinearLayout
+    android:layout_gravity="left|bottom"
+    style="@style/StatsSmallValueContainer" >
+    <TextView
+      android:id="@+id/stats_label"
+      android:paddingLeft="8dp"
+      style="@style/StatsSmallLabel" />
+  </LinearLayout>
+</TableRow>
