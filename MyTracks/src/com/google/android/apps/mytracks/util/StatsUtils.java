@@ -63,49 +63,47 @@ public class StatsUtils {
 
     // Set speed/pace
     View speed = getView(activity, view, R.id.stats_speed);
+    speed.setVisibility(isRecording ? View.VISIBLE : View.INVISIBLE);
+
     if (isRecording) {
       double value = isRecording && location != null && location.hasSpeed() ? location.getSpeed()
           : Double.NaN;
-      speed.setVisibility(View.VISIBLE);
       setSpeed(context, speed, R.string.stats_speed, R.string.stats_pace, value, metricUnits,
           reportSpeed);
-    } else {
-      speed.setVisibility(View.INVISIBLE);
     }
 
     // Set elevation
-    boolean showGradeElevation = PreferencesUtils.getBoolean(context,
-        R.string.stats_show_grade_elevation_key,
-        PreferencesUtils.STATS_SHOW_GRADE_ELEVATION_DEFAULT);
+    boolean showGradeElevation = PreferencesUtils.getBoolean(
+        context, R.string.stats_show_grade_elevation_key,
+        PreferencesUtils.STATS_SHOW_GRADE_ELEVATION_DEFAULT) && isRecording;
     View elevation = getView(activity, view, R.id.stats_elevation);
+    elevation.setVisibility(showGradeElevation ? View.VISIBLE : View.GONE);
 
-    if (showGradeElevation && isRecording) {
+    if (showGradeElevation) {
       double altitude = location != null && location.hasAltitude() ? location.getAltitude()
           : Double.NaN;
-      elevation.setVisibility(View.VISIBLE);
       setElevationValue(context, elevation, -1, altitude, metricUnits);
-    } else {
-      elevation.setVisibility(View.GONE);
     }
 
     // Set coordinate
-    boolean showCoordinate = PreferencesUtils.getBoolean(context,
-        R.string.stats_show_coordinate_key, PreferencesUtils.STATS_SHOW_COORDINATE_DEFAULT);
-    View coordinateHorizontalLine = getView(activity, view, R.id.stats_coordinate_horizontal_line);
+    boolean showCoordinate = PreferencesUtils.getBoolean(
+        context, R.string.stats_show_coordinate_key, PreferencesUtils.STATS_SHOW_COORDINATE_DEFAULT)
+        && isRecording;
+    View coordinateSeparator = getView(activity, view, R.id.stats_coordinate_separator);
     View coordinateContainer = getView(activity, view, R.id.stats_coordinate_container);
 
-    if (showCoordinate && isRecording) {
+    if (coordinateSeparator != null) {
+      coordinateSeparator.setVisibility(showCoordinate ? View.VISIBLE : View.GONE);
+    }
+    coordinateContainer.setVisibility(showCoordinate ? View.VISIBLE : View.GONE);
+
+    if (showCoordinate) {
       double latitude = location != null ? location.getLatitude() : Double.NaN;
       double longitude = location != null ? location.getLongitude() : Double.NaN;
-      coordinateHorizontalLine.setVisibility(View.VISIBLE);
-      coordinateContainer.setVisibility(View.VISIBLE);
       setCoordinateValue(
           context, getView(activity, view, R.id.stats_latitude), R.string.stats_latitude, latitude);
       setCoordinateValue(context, getView(activity, view, R.id.stats_longitude),
           R.string.stats_longitude, longitude);
-    } else {
-      coordinateHorizontalLine.setVisibility(View.GONE);
-      coordinateContainer.setVisibility(View.GONE);
     }
   }
 
@@ -143,15 +141,15 @@ public class StatsUtils {
     // Set calorie
     double calorie = tripStatistics == null ? Double.NaN : tripStatistics.getCalorie();
     setCalorie(context, getView(activity, view, R.id.stats_calorie), calorie);
-    
+
     // Set total time
     setTimeValue(context, getView(activity, view, R.id.stats_total_time), R.string.stats_total_time,
         tripStatistics != null ? tripStatistics.getTotalTime() : -1L);
-    
+
     // Set moving time
     setTimeValue(context, getView(activity, view, R.id.stats_moving_time),
         R.string.stats_moving_time, tripStatistics != null ? tripStatistics.getMovingTime() : -1L);
-   
+
     // Set average speed/pace
     double averageSpeed = tripStatistics != null ? tripStatistics.getAverageSpeed() : Double.NaN;
     setSpeed(context, getView(activity, view, R.id.stats_average_speed),
@@ -162,7 +160,7 @@ public class StatsUtils {
     double maxSpeed = tripStatistics == null ? Double.NaN : tripStatistics.getMaxSpeed();
     setSpeed(context, getView(activity, view, R.id.stats_max_speed), R.string.stats_max_speed,
         R.string.stats_fastest_pace, maxSpeed, metricUnits, reportSpeed);
-    
+
     // Set average moving speed/pace
     double averageMovingSpeed = tripStatistics != null ? tripStatistics.getAverageMovingSpeed()
         : Double.NaN;
@@ -174,13 +172,13 @@ public class StatsUtils {
     boolean showGradeElevation = PreferencesUtils.getBoolean(context,
         R.string.stats_show_grade_elevation_key,
         PreferencesUtils.STATS_SHOW_GRADE_ELEVATION_DEFAULT);
-    View gradeElevationHorizontalLine = getView(
-        activity, view, R.id.stats_grade_elevation_horizontal_line);
+    View gradeElevationSeparator = getView(activity, view, R.id.stats_grade_elevation_separator);
     View gradeElevationContainer = getView(activity, view, R.id.stats_grade_elevation_container);
 
+    gradeElevationSeparator.setVisibility(showGradeElevation ? View.VISIBLE : View.GONE);
+    gradeElevationContainer.setVisibility(showGradeElevation ? View.VISIBLE : View.GONE);
+
     if (showGradeElevation) {
-      gradeElevationHorizontalLine.setVisibility(View.VISIBLE);
-      gradeElevationContainer.setVisibility(View.VISIBLE);
       // Set grade
       double minGrade = tripStatistics == null ? Double.NaN : tripStatistics.getMinGrade();
       double maxGrade = tripStatistics == null ? Double.NaN : tripStatistics.getMaxGrade();
@@ -200,9 +198,6 @@ public class StatsUtils {
           R.string.stats_min, minElevation, metricUnits);
       setElevationValue(context, getView(activity, view, R.id.stats_elevation_max),
           R.string.stats_max, maxElevation, metricUnits);
-    } else {
-      gradeElevationHorizontalLine.setVisibility(View.GONE);
-      gradeElevationContainer.setVisibility(View.GONE);
     }
   }
 
@@ -317,7 +312,7 @@ public class StatsUtils {
   private static void setCoordinateValue(
       Context context, View view, int labelId, double coordinate) {
     String value = Double.isNaN(coordinate) || Double.isInfinite(coordinate) ? null
-        : Location.convert(coordinate, Location.FORMAT_DEGREES);  
+        : Location.convert(coordinate, Location.FORMAT_DEGREES);
     SpannableStringBuilder unit = new SpannableStringBuilder(COORDINATE_DEGREE);
     unit.setSpan(new SuperscriptSpan(), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     setItem(context, view, labelId, value, unit);

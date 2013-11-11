@@ -81,13 +81,13 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
     handler = new Handler();
-    updateUi(getActivity());
   }
 
   @Override
   public void onResume() {
     super.onResume();
     resumeTrackDataHub();
+    updateUi(getActivity());
     if (isSelectedTrackRecording()) {
       handler.post(updateTotalTime);
     }

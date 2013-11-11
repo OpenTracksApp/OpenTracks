@@ -132,22 +132,23 @@ limitations under the License.
   <style name="StatsHorizontalLine">
     <item name="android:background">@color/stats_separator</item>
     <item name="android:layout_height">1dp</item>
+    <item name="android:layout_marginLeft">8dp</item>
+    <item name="android:layout_marginRight">8dp</item>
     <item name="android:layout_width">match_parent</item>
   </style>
   <!-- stats large item container -->
   <style name="StatsLargeItemContainer">
-    <item name="android:layout_gravity">top</item>
+    <item name="android:layout_gravity">center</item>
     <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_weight">10</item>
+    <item name="android:layout_weight">1</item>
     <item name="android:layout_width">0dp</item>
     <item name="android:orientation">vertical</item>
     <item name="android:paddingBottom">6dp</item>
-    <item name="android:paddingLeft">8dp</item>
-    <item name="android:paddingRight">8dp</item>
     <item name="android:paddingTop">6dp</item>
   </style>
   <!-- stats large label -->
   <style name="StatsLargeLabel" parent="@style/TextSmall">
+    <item name="android:gravity">center</item>
     <item name="android:layout_gravity">center</item>
     <item name="android:singleLine">false</item>
     <item name="android:textColor">@color/stats_large_label</item>
@@ -173,12 +174,18 @@ limitations under the License.
   <style name="StatsScrollView" parent="@style/ScrollView">
     <item name="android:scrollbarStyle">outsideOverlay</item>
   </style>
-  <!-- stats small item container -->
+  <!-- stats small group container -->
+  <style name="StatsSmallGroupContainer" parent="@style/StatsLargeItemContainer">
+    <item name="android:layout_gravity">top|center</item>
+    <item name="android:paddingTop">12dp</item>
+  </style>
+  <!-- stats small item container, for placing inside StatsSmallGroupContainer -->
   <style name="StatsSmallItemContainer" parent="@style/StatsLargeItemContainer">
     <item name="android:paddingTop">12dp</item>
   </style>
   <!-- stats small label -->
   <style name="StatsSmallLabel" parent="@style/TextSmall">
+    <item name="android:gravity">center</item>
     <item name="android:layout_gravity">center</item>
     <item name="android:singleLine">false</item>
     <item name="android:textStyle">bold</item>
@@ -198,12 +205,6 @@ limitations under the License.
     <!-- Add paddingTop to support unit with superscript -->
     <item name="android:paddingTop">4dp</item>
     <item name="android:singleLine">true</item>
-  </style>
-  <!-- stats vertical spacer -->
-  <style name="StatsVerticalSpacer">
-    <item name="android:layout_height">match_parent</item>
-    <item name="android:layout_weight">1</item>
-    <item name="android:layout_width">0dp</item>
   </style>
   <style name="Text">
     <item name="android:layout_height">wrap_content</item>
