@@ -21,8 +21,13 @@ import com.google.android.maps.mytracks.R;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.util.Pair;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -194,6 +199,35 @@ public class TrackIconUtils {
       }
     }
     return output;
+  }
+
+  public static void setIconSpinner(Spinner spinner, String iconValue) {
+    @SuppressWarnings("unchecked")
+    ArrayAdapter<StringBuilder> adapter = (ArrayAdapter<StringBuilder>) spinner.getAdapter();
+    StringBuilder stringBuilder = adapter.getItem(0);
+    stringBuilder.delete(0, stringBuilder.length());
+    stringBuilder.append(iconValue);
+    adapter.notifyDataSetChanged();
+  }
+  
+  public static ArrayAdapter<StringBuilder> getIconSpinnerAdapter(
+      final Context context, String iconValue) {
+    return new ArrayAdapter<StringBuilder>(context, android.R.layout.simple_spinner_item,
+        new StringBuilder[] { new StringBuilder(iconValue) }) {
+        @Override
+      public View getView(int position, View convertView, android.view.ViewGroup parent) {
+        ImageView imageView = convertView != null ? (ImageView) convertView
+            : new ImageView(getContext());
+        Bitmap source = BitmapFactory.decodeResource(
+            context.getResources(), TrackIconUtils.getIconDrawable(getItem(position).toString()));
+        if (ApiAdapterFactory.getApiAdapter().isSpinnerBackgroundLight()) {
+          source = TrackIconUtils.invertBitmap(source);
+        }
+        imageView.setImageBitmap(source);
+        imageView.setPadding(4, 4, -4, -4);
+        return imageView;
+      }
+    };
   }
 
   /**

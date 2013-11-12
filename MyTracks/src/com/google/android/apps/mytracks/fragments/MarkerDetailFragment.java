@@ -277,7 +277,7 @@ public class MarkerDetailFragment extends Fragment {
       setTextView(name, waypoint.getName());
 
       StatsUtils.setTripStatisticsValues(
-          getActivity(), null, getView(), waypoint.getTripStatistics());
+          getActivity(), null, getView(), waypoint.getTripStatistics(), null);
       StatsUtils.setLocationValues(getActivity(), null, getView(), waypoint.getLocation(), false);
     }
   }

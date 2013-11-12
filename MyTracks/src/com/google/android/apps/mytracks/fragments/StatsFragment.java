@@ -26,6 +26,7 @@ import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StatsUtils;
+import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.location.Location;
@@ -33,9 +34,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Spinner;
 
 import java.util.EnumSet;
 
@@ -56,6 +60,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
   private Location lastLocation = null;
   private TripStatistics lastTripStatistics = null;
+  private String category = "";
   private int recordingGpsAccuracy = PreferencesUtils.RECORDING_GPS_ACCURACY_DEFAULT;
 
   // A runnable to update the total time field.
@@ -81,6 +86,27 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
     handler = new Handler();
+   
+    Spinner activityTypeIcon = (Spinner) getView().findViewById(R.id.stats_activity_type_icon);
+    activityTypeIcon.setAdapter(TrackIconUtils.getIconSpinnerAdapter(getActivity(), ""));
+    activityTypeIcon.setOnTouchListener(new View.OnTouchListener() {
+        @Override
+      public boolean onTouch(View v, MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+          ((TrackDetailActivity) getActivity()).chooseActivityType();          
+        }
+        return true;
+      }
+    });
+    activityTypeIcon.setOnKeyListener(new View.OnKeyListener() {
+        @Override
+      public boolean onKey(View v, int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
+          ((TrackDetailActivity) getActivity()).chooseActivityType();
+        }
+        return true;
+      }
+    });
   }
 
   @Override
@@ -106,8 +132,9 @@ public class StatsFragment extends Fragment implements TrackDataListener {
       getActivity().runOnUiThread(new Runnable() {
           @Override
         public void run() {
-          if (isResumed()) {
+          if (isResumed()) {           
             lastTripStatistics = track != null ? track.getTripStatistics() : null;
+            category = track != null ? track.getCategory() : "";
             updateUi(getActivity());
           }
         }
@@ -260,7 +287,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
    * Updates the UI.
    */
   private void updateUi(FragmentActivity activity) {
-    StatsUtils.setTripStatisticsValues(activity, activity, null, lastTripStatistics);
+    StatsUtils.setTripStatisticsValues(activity, activity, null, lastTripStatistics, category);
     StatsUtils.setLocationValues(
         activity, activity, null, lastLocation, isSelectedTrackRecording());
   }

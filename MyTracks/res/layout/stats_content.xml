@@ -24,7 +24,7 @@ limitations under the License.
       layout="@layout/stats_large_item" />
     <include
       android:id="@+id/stats_calorie"
-      layout="@layout/stats_large_item" />
+      layout="@layout/stats_calorie" />
   </LinearLayout>
   <!-- Total time and moving time -->
   <LinearLayout

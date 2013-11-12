@@ -36,7 +36,7 @@ public class AggregatedStatsActivity extends AbstractMyTracksActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    StatsUtils.setTripStatisticsValues(this, this, null, getTripStatistics());
+    StatsUtils.setTripStatisticsValues(this, this, null, getTripStatistics(), null);
     StatsUtils.setLocationValues(this, this, null, null, false);
   }
 

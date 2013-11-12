@@ -23,6 +23,8 @@ import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.fragments.ChartFragment;
+import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment;
+import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller;
 import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment;
 import com.google.android.apps.mytracks.fragments.ExportDialogFragment;
 import com.google.android.apps.mytracks.fragments.ExportDialogFragment.ExportCaller;
@@ -37,11 +39,15 @@ import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection
 import com.google.android.apps.mytracks.settings.SettingsActivity;
 import com.google.android.apps.mytracks.util.AnalyticsUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
+import com.google.android.apps.mytracks.util.CalorieUtils;
+import com.google.android.apps.mytracks.util.CalorieUtils.ActivityType;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.GoogleFeedbackUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
+import com.google.android.apps.mytracks.util.TrackUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
@@ -74,7 +80,8 @@ import java.util.Date;
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
-public class TrackDetailActivity extends AbstractSendToGoogleActivity implements ExportCaller {
+public class TrackDetailActivity extends AbstractSendToGoogleActivity
+    implements ChooseActivityTypeCaller, ExportCaller {
 
   public static final String EXTRA_TRACK_ID = "track_id";
   public static final String EXTRA_MARKER_ID = "marker_id";
@@ -611,5 +618,24 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity implements
       title = track != null ? track.getName() : "";
     }
     setTitle(title);
+  }
+  
+  public void chooseActivityType() {
+    new ChooseActivityTypeDialogFragment().show(getSupportFragmentManager(),
+        ChooseActivityTypeDialogFragment.CHOOSE_ACTIVITY_TYPE_DIALOG_TAG);
+  }
+
+  @Override
+  public void onChooseActivityTypeDone(String iconValue) {
+    Track track = myTracksProviderUtils.getTrack(trackId);
+    String category = getString(TrackIconUtils.getIconActivityType(iconValue));
+    TrackUtils.updateTrack(
+        this, track, null, category, null, myTracksProviderUtils, trackRecordingServiceConnection);
+
+    // Add toast if cannot calculate calorie
+    if (CalorieUtils.getActivityType(this, category) == ActivityType.INVALID) {
+      String message = getString(R.string.stats_calorie_no_calculation, category);
+      Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
   }
 }

@@ -86,6 +86,9 @@ public class CalorieUtils {
    * @param activityType the activity type
    */
   public static ActivityType getActivityType(Context context, String activityType) {
+    if (activityType == null || activityType.equals("")) {
+      return ActivityType.INVALID;
+    }
     if (TrackIconUtils.getIconValue(context, activityType).equals(TrackIconUtils.WALK)
         || TrackIconUtils.getIconValue(context, activityType).equals(TrackIconUtils.RUN)) {
       return ActivityType.FOOT;

@@ -17,6 +17,7 @@
 package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.CalorieUtils.ActivityType;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -26,6 +27,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.SuperscriptSpan;
 import android.view.View;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.Locale;
@@ -129,7 +131,7 @@ public class StatsUtils {
    * @param tripStatistics the trip statistics
    */
   public static void setTripStatisticsValues(
-      Context context, Activity activity, View view, TripStatistics tripStatistics) {
+      Context context, Activity activity, View view, TripStatistics tripStatistics, String category) {
     boolean metricUnits = PreferencesUtils.isMetricUnits(context);
     boolean reportSpeed = PreferencesUtils.isReportSpeed(context);
 
@@ -139,8 +141,16 @@ public class StatsUtils {
         context, getView(activity, view, R.id.stats_distance), totalDistance, metricUnits);
 
     // Set calorie
-    double calorie = tripStatistics == null ? Double.NaN : tripStatistics.getCalorie();
+    ActivityType activityType = CalorieUtils.getActivityType(context, category);
+    double calorie = tripStatistics == null || activityType == ActivityType.INVALID ? Double.NaN
+        : tripStatistics.getCalorie();
     setCalorie(context, getView(activity, view, R.id.stats_calorie), calorie);
+
+    Spinner spinner = (Spinner) getView(activity, view, R.id.stats_activity_type_icon);
+    spinner.setVisibility(category != null ? View.VISIBLE : View.GONE);
+    if (category != null) {
+      TrackIconUtils.setIconSpinner(spinner, TrackIconUtils.getIconValue(context, category));
+    }
 
     // Set total time
     setTimeValue(context, getView(activity, view, R.id.stats_total_time), R.string.stats_total_time,
@@ -226,7 +236,7 @@ public class StatsUtils {
    * @param calorie the value of calorie
    */
   private static void setCalorie(Context context, View view, double calorie) {
-    String value = calorie == Double.NaN ? null
+    String value = Double.isNaN(calorie) ? null
         : String.format(Locale.getDefault(), CALORIES_FORMAT, calorie);
     setItem(context, view, R.string.stats_calorie, value, context.getString(R.string.unit_calorie));
   }
