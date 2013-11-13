@@ -20,7 +20,6 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIt
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatisticsUpdater;
 import com.google.android.maps.mytracks.R;
-import com.google.common.annotations.VisibleForTesting;
 
 import android.content.Context;
 import android.location.Location;
@@ -36,7 +35,7 @@ public class CalorieUtils {
    * Activity types.
    */
   public enum ActivityType {
-    CYCLING, FOOT, INVALID
+    CYCLING, RUNNING, WALKING, INVALID
   }
 
   private CalorieUtils() {}
@@ -48,14 +47,9 @@ public class CalorieUtils {
   private static final double RESTING_VO2 = 3.5;
 
   /**
-   * Ratio to convert liter to kcal.
-   */
-  private static final double L_TO_KCAL = 5.0;
-
-  /**
    * Standard gravity in meters per second squared (m/s^2).
    */
-  private static final double EARTH_GRAVITY = 9.80665;
+  private static final double EARTH_GRAVITY = 9.81;
 
   /**
    * Lumped constant for all frictional losses (tires, bearings, chain).
@@ -63,21 +57,9 @@ public class CalorieUtils {
   private static final double K1 = 0.0053;
 
   /**
-   * Lumped constant for aerodynamic drag.
+   * Lumped constant for aerodynamic drag (kg/m)
    */
   private static final double K2 = 0.185;
-
-  /**
-   * Critical speed running in meters per minute. Converts 4.5 miles per hour to
-   * meters per minute. 4 miles per hour is regarded as the max speed of walking
-   * and 5 miles per hour is regarded as the minimal speed of running, so we use
-   * 4.5 miles per hour as the critical speed. <a href=
-   * "http://www.ideafit.com/fitness-library/calculating-caloric-expenditure-0"
-   * >Reference</a>
-   */
-  @VisibleForTesting
-  static final double CRTICAL_SPEED_RUNNING = 4.5 * UnitConversions.MI_TO_KM
-      * UnitConversions.KM_TO_M / UnitConversions.HR_TO_MIN;
 
   /**
    * Gets the activity type.
@@ -89,9 +71,10 @@ public class CalorieUtils {
     if (activityType == null || activityType.equals("")) {
       return ActivityType.INVALID;
     }
-    if (TrackIconUtils.getIconValue(context, activityType).equals(TrackIconUtils.WALK)
-        || TrackIconUtils.getIconValue(context, activityType).equals(TrackIconUtils.RUN)) {
-      return ActivityType.FOOT;
+    if (TrackIconUtils.getIconValue(context, activityType).equals(TrackIconUtils.WALK)) {
+      return ActivityType.WALKING;
+    } else if (TrackIconUtils.getIconValue(context, activityType).equals(TrackIconUtils.RUN)) {
+      return ActivityType.RUNNING;
     } else if (TrackIconUtils.getIconValue(context, activityType).equals(TrackIconUtils.BIKE)) {
       return ActivityType.CYCLING;
     }
@@ -122,6 +105,7 @@ public class CalorieUtils {
         PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT);
     double weight = PreferencesUtils.getFloat(
         context, R.string.stats_weight_key, PreferencesUtils.STATS_WEIGHT_DEFAULT);
+
     while (iterator.hasNext()) {
       tripStatisticsUpdater.addLocation(
           iterator.next(), recordingDistanceInterval, true, activityType, weight);
@@ -144,137 +128,83 @@ public class CalorieUtils {
     if (activityType == ActivityType.INVALID) {
       return 0.0;
     }
-    return ActivityType.CYCLING == activityType ? getCyclingCalorie(start, stop, grade, weight)
-        : getFootCalorie(start, stop, grade, weight);
-  }
-
-  /**
-   * Gets the cycling calorie in kcal between two locations.
-   * 
-   * @param start the start location
-   * @param stop the stop location
-   * @param grade the grade
-   * @param weight the weight in kilogram of the rider plus bike
-   */
-  @VisibleForTesting
-  static double getCyclingCalorie(Location start, Location stop, double grade, double weight) {
-    // Gets duration in seconds
-    double duration = (double) (stop.getTime() - start.getTime()) * UnitConversions.MS_TO_S;
-    // Get speed in meters per second
-    double speed = (start.getSpeed() + stop.getSpeed()) / 2.0;
 
     if (grade < 0) {
       grade = 0.0;
     }
-    return getCyclingCalorie(speed, grade, weight, duration);
-  }
 
-  /**
-   * Gets the cycling calorie in kcal using the following equation: <br>
-   * P = g * m * Vg * (K1 + s) + K2 * (Va)^2 * Vg
-   * <ul>
-   * <li>P - Power in watt (Joule/second)</li>
-   * <li>g - gravity, using 9.80665 meter/second^2</li>
-   * <li>m - mass of the rider plus bike in kilogram</li>
-   * <li>s - surface grade</li>
-   * <li>Vg - ground relative speed in meter/second</li>
-   * <li>Va - air relative speed. We assume the air speed is zero, so Va is
-   * equal to Vg.</li>
-   * <li>K1 - a constant which represents frictional losses, using 0.0053.</li>
-   * <li>K2 - a constant representing aerodynamic drag, using 0.185.</li>
-   * <li></li>
-   * </ul>
-   * 
-   * @param speed the speed in meters per second
-   * @param grade the grade
-   * @param weight weight in kilogram of the rider plus bike
-   * @param duration the duration in seconds
-   */
-  @VisibleForTesting
-  static double getCyclingCalorie(double speed, double grade, double weight, double duration) {
-    // Get the power in watt (Joule/second)
-    double power = EARTH_GRAVITY * weight * speed * (K1 + grade) + K2 * (speed * speed * speed);
-
-    // Get the calories in kcal
-    return power * duration * UnitConversions.J_TO_KCAL;
-  }
-
-  /**
-   * Gets the foot calorie in kcal between two locations.
-   * 
-   * @param start the start location
-   * @param stop the stop location
-   * @param grade the grade
-   * @param weight the weight of the user in kilogram
-   */
-  @VisibleForTesting
-  static double getFootCalorie(Location start, Location stop, double grade, double weight) {
-    // Get speed in meters per second
-    double averageSpeed = (start.getSpeed() + stop.getSpeed()) / 2.0;
-    // Get VO2 in mL/kg/min
-    double vo2 = getFootVo2(averageSpeed, grade);
-    // Duration in minutes
+    // Speed in m/s
+    double speed = (start.getSpeed() + stop.getSpeed()) / 2.0;
+    // Duration in min
     double duration = (double) (stop.getTime() - start.getTime()) * UnitConversions.MS_TO_S
         * UnitConversions.S_TO_MIN;
-    /*
-     * Get the calorie. The unit of calorie is kcal which is came from
-     * (mL/kg/min * min * kg * L/mL * kcal/L)
-     */
-    return vo2 * duration * weight * UnitConversions.ML_TO_L * L_TO_KCAL;
-  }
 
-  /**
-   * Gets the foot VO2 value in ml/kg/min.
-   * 
-   * @param speed the speed in meters per second
-   * @param grade the grade
-   */
-  @VisibleForTesting
-  static double getFootVo2(double speed, double grade) {
-    if (grade < 0) {
-      grade = 0.0;
+    if (activityType == ActivityType.CYCLING) {
+      /*
+       * Power in watt (Joule/second). See
+       * http://en.wikipedia.org/wiki/Bicycle_performance.
+       */
+      double power = EARTH_GRAVITY * weight * speed * (K1 + grade) + K2 * (speed * speed * speed);
+
+      // WorkRate in kgm/min
+      double workRate = power * UnitConversions.W_TO_KGM;
+
+      /*
+       * VO2 in kgm/min/kg 1.8 = oxygen cost of producing 1 kgm/min of power
+       * output. 7 = oxygen cost of unloaded cycling plus resting oxygen
+       * consumption
+       */
+      double vo2 = (1.8 * workRate / weight) + 7;
+
+      // Calorie in kcal
+      return vo2 * duration * weight * UnitConversions.KGM_TO_KCAL;
+    } else {
+      double vo2 = activityType == ActivityType.RUNNING ? getRunningVo2(speed, grade)
+          : getWalkingVo2(speed, grade);
+
+      /*
+       * Calorie in kcal (mL/kg/min * min * kg * L/mL * kcal/L)
+       */
+      return vo2 * duration * weight * UnitConversions.ML_TO_L * UnitConversions.L_TO_KCAL;
     }
-    return speed > CRTICAL_SPEED_RUNNING ? getHighSpeedFootVo2(speed, grade)
-        : getLowSpeedFootVo2(speed, grade);
   }
 
   /**
-   * Gets the high speed foot VO2 in ml/kg/min. This equation is appropriate for
-   * speeds greater than 4.5 mph like running.
+   * Gets the running VO2 in ml/kg/min. This equation is appropriate for speeds
+   * greater than 5 mi/hr (or 3 mi/hr or greater if the subject is truly
+   * jogging).
    * 
-   * @param speed the speed in meters per second
+   * @param speed the speed in m/s
    * @param grade the grade
    */
-  @VisibleForTesting
-  static double getHighSpeedFootVo2(double speed, double grade) {
-    // Change from meters per second to meters per minute
+  private static double getRunningVo2(double speed, double grade) {
+    // Change from m/s to m/min
     speed = speed / UnitConversions.S_TO_MIN;
 
     /*
-     * 0.2 means oxygen cost per meter of moving each kilogram (kg) of body
-     * weight while running (horizontally). 0.9 means oxygen cost per meter of
-     * moving total body mass against gravity (vertically).
+     * 0.2 = oxygen cost per meter of moving each kg of body weight while
+     * running (horizontally). 0.9 = oxygen cost per meter of moving total body
+     * mass against gravity (vertically).
      */
-    return 0.2 * speed + 0.9 * speed * Math.abs(grade) + RESTING_VO2;
+    return 0.2 * speed + 0.9 * speed * grade + RESTING_VO2;
   }
 
   /**
-   * Gets the low speed foot VO2 in ml/kg/min. This equation is appropriate for
-   * speed less than 4.5 mph like walking.
+   * Gets the walking VO2 in ml/kg/min. This equation is appropriate for speed
+   * from 1.9 to 4 mi/hr.
    * 
-   * @param speed the speed in meters per second
+   * @param speed the speed in m/s
    * @param grade the grade
    */
-  @VisibleForTesting
-  static double getLowSpeedFootVo2(double speed, double grade) {
-    // Change from meters per second to meters per minute
+  private static double getWalkingVo2(double speed, double grade) {
+    // Change from m/s to m/min
     speed = speed / UnitConversions.S_TO_MIN;
 
     /*
-     * 0.1 means oxygen cost per meter of moving each kilogram (kg) of body
-     * weight while walking (horizontally). 1.8 means oxygen cost per meter of
-     * moving total body mass against gravity (vertically).
+     * 0.1 = oxygen cost per meter of moving each kilogram (kg) of body weight
+     * while walking (horizontally). 1.8 = oxygen cost per meter of moving total
+     * body mass against gravity (vertically).
      */
-    return 0.1 * speed + 1.8 * speed * Math.abs(grade) + RESTING_VO2;
+    return 0.1 * speed + 1.8 * speed * grade + RESTING_VO2;
   }
 }
