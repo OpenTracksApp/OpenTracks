@@ -23,6 +23,7 @@ import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.SystemUtils;
+import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
@@ -172,7 +173,8 @@ public class TcxTrackWriter implements TrackWriter {
     if (printWriter != null) {
       String startTime = StringUtils.formatDateTimeIso8601(
           track.getTripStatistics().getStartTime());
-      long totalTimeInSeconds = track.getTripStatistics().getTotalTime() / 1000;
+      long totalTimeInSeconds = (long) (track.getTripStatistics().getTotalTime()
+          * UnitConversions.MS_TO_S);
 
       printWriter.println("<Activities>");
       printWriter.println("<Activity Sport=\"" + sportType.getName() + "\">");

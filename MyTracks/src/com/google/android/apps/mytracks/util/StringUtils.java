@@ -81,7 +81,7 @@ public class StringUtils {
    */
   public static String formatElapsedTime(long time) {
     /*
-     * Temporary workaround for DateUtils.formatElapsedTime(time / 1000). In API
+     * Temporary workaround for DateUtils.formatElapsedTime(time * MS_TO_S). In API
      * level 17, it returns strings like "1:0:00" instead of "1:00:00", which
      * breaks several unit tests.
      */
@@ -91,7 +91,7 @@ public class StringUtils {
     long hours = 0;
     long minutes = 0;
     long seconds = 0;
-    long elapsedSeconds = time / 1000;
+    long elapsedSeconds = (long) (time * UnitConversions.MS_TO_S);
 
     if (elapsedSeconds >= 3600) {
       hours = elapsedSeconds / 3600;
@@ -314,7 +314,7 @@ public class StringUtils {
     if (fractional != null) {
       // Regex ensures fractional part is in (0,1)
       float fractionalSeconds = Float.parseFloat(fractional);
-      long fractionalMillis = (long) (fractionalSeconds * 1000.0f);
+      long fractionalMillis = (long) (fractionalSeconds * UnitConversions.S_TO_MS);
       time += fractionalMillis;
     }
 
@@ -363,7 +363,7 @@ public class StringUtils {
     }
     int[] parts = new int[3];
 
-    long seconds = time / 1000;
+    long seconds = (long) (time * UnitConversions.MS_TO_S);
     parts[0] = (int) (seconds % 60);
     int minutes = (int) (seconds / 60);
     parts[1] = minutes % 60;

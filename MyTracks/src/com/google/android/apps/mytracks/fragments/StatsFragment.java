@@ -27,6 +27,7 @@ import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StatsUtils;
 import com.google.android.apps.mytracks.util.TrackIconUtils;
+import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.location.Location;
@@ -53,7 +54,8 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
   public static final String STATS_FRAGMENT_TAG = "statsFragment";
 
-  private static final int ONE_SECOND = 1000;
+  // 1 second in milliseconds
+  private static final long ONE_SECOND = (long) UnitConversions.S_TO_MS;
 
   private TrackDataHub trackDataHub;
   private Handler handler;

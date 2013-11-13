@@ -360,7 +360,8 @@ public class SearchEngine {
     }
 
     // Score recent tracks higher.
-    long timeAgoHours = (query.currentTimestamp - timestamp) / (60L * 60L * 1000L);
+    long timeAgoHours = (long) ((query.currentTimestamp - timestamp) * UnitConversions.MS_TO_S
+        * UnitConversions.S_TO_MIN * UnitConversions.MIN_TO_HR);
     if (timeAgoHours > 0L) {
       return squash(timeAgoHours);
     } else {

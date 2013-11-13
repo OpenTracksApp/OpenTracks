@@ -30,6 +30,7 @@ import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.TrackIconUtils;
+import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
@@ -412,10 +413,10 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
          * last two points. GPS points tend to have some inherent imprecision,
          * speed and bearing will likely be off, so the statistics for things
          * like max speed will also be off.
-         */
-        float speed = trackData.lastLocationInCurrentSegment.distanceTo(location) * 1000.0f
-            / timeDifference;
-        location.setSpeed(speed);
+         */        
+        double duration = timeDifference * UnitConversions.MS_TO_S;
+        double speed = trackData.lastLocationInCurrentSegment.distanceTo(location) / duration;
+        location.setSpeed((float) speed);
       }
       location.setBearing(trackData.lastLocationInCurrentSegment.bearingTo(location));
     }

@@ -44,6 +44,7 @@ import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.apps.mytracks.util.TrackNameUtils;
+import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
 import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
@@ -101,9 +102,14 @@ public class TrackRecordingService extends Service {
   public static final double MAX_NO_MOVEMENT_SPEED = 0.224;
   
   private static final String TAG = TrackRecordingService.class.getSimpleName();
-  private static final long ONE_SECOND = 1000; // in milliseconds
-  private static final long ONE_MINUTE = 60 * ONE_SECOND; // in milliseconds
   
+  // 1 second in milliseconds
+  private static final long ONE_SECOND = (long) UnitConversions.S_TO_MS;
+  
+  // 1 minute in milliseconds
+  private static final long ONE_MINUTE = (long) (UnitConversions.MIN_TO_S
+      * UnitConversions.S_TO_MS);
+
   @VisibleForTesting
   static final int MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS = 3;
 

@@ -50,8 +50,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
   static final float TTS_SPEECH_RATE = 0.9f;
 
   private static final String TAG = AnnouncementPeriodicTask.class.getSimpleName();
-  private static final long HOUR_TO_MILLISECOND = 60 * 60 * 1000;
-
+  
   @VisibleForTesting
   static final HashMap<String, String> SPEECH_PARAMS = new HashMap<String, String>();
   static {
@@ -249,7 +248,9 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
     } else {
       speed = speed == 0 ? 0.0 : 1 / speed;
       int paceId = metricUnits ? R.string.voice_pace_per_kilometer : R.string.voice_pace_per_mile;
-      rate = context.getString(paceId, getAnnounceTime((long) (speed * HOUR_TO_MILLISECOND)));
+      long time = (long) (speed * UnitConversions.HR_TO_MIN * UnitConversions.MIN_TO_S
+          * UnitConversions.S_TO_MS);
+      rate = context.getString(paceId, getAnnounceTime(time));
     }
 
     int totalDistanceId = metricUnits ? R.plurals.voiceTotalDistanceKilometers
