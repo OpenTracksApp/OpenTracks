@@ -106,8 +106,7 @@ public class PreferencesUtils {
   public static final boolean STATS_SHOW_COORDINATE_DEFAULT = false;
   public static final boolean STATS_SHOW_GRADE_ELEVATION_DEFAULT = false;
   public static final String STATS_UNITS_DEFAULT = "METRIC";
-  public static final boolean STATS_SHOW_CALORIE_DEFAULT = false;
-  public static final int STATS_WEIGHT_DEFAULT = 65; // in kilogram
+  public static final float STATS_WEIGHT_DEFAULT = 65.0f; // in kilogram
   
   // Track color
   public static final String TRACK_COLOR_MODE_DEFAULT = "SINGLE";
@@ -191,6 +190,35 @@ public class PreferencesUtils {
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     Editor editor = sharedPreferences.edit();
     editor.putInt(getKey(context, keyId), value);
+    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
+  }
+
+  /**
+   * Gets a float preference value.
+   * 
+   * @param context the context
+   * @param keyId the key id
+   * @param defaultValue the default value
+   */
+  public static float getFloat(Context context, int keyId, float defaultValue) {
+    SharedPreferences sharedPreferences = context.getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    return sharedPreferences.getFloat(getKey(context, keyId), defaultValue);
+  }
+
+  /**
+   * Sets a float preference value.
+   * 
+   * @param context the context
+   * @param keyId the key id
+   * @param value the value
+   */
+  @SuppressLint("CommitPrefEdits")
+  public static void setFloat(Context context, int keyId, float value) {
+    SharedPreferences sharedPreferences = context.getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    Editor editor = sharedPreferences.edit();
+    editor.putFloat(getKey(context, keyId), value);
     ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
   }
 

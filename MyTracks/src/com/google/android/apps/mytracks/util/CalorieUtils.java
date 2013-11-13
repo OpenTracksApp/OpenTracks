@@ -120,11 +120,11 @@ public class CalorieUtils {
     int recordingDistanceInterval = PreferencesUtils.getInt(context,
         R.string.recording_distance_interval_key,
         PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT);
-    int statsWeight = PreferencesUtils.getInt(
+    double weight = PreferencesUtils.getFloat(
         context, R.string.stats_weight_key, PreferencesUtils.STATS_WEIGHT_DEFAULT);
     while (iterator.hasNext()) {
       tripStatisticsUpdater.addLocation(
-          iterator.next(), recordingDistanceInterval, true, activityType, statsWeight);
+          iterator.next(), recordingDistanceInterval, true, activityType, weight);
     }
     return tripStatisticsUpdater.getTripStatistics().getCalorie();
   }
@@ -140,7 +140,7 @@ public class CalorieUtils {
    * @param activityType the activity type
    */
   public static double getCalorie(
-      Location start, Location stop, double grade, int weight, ActivityType activityType) {
+      Location start, Location stop, double grade, double weight, ActivityType activityType) {
     if (activityType == ActivityType.INVALID) {
       return 0.0;
     }
@@ -157,7 +157,7 @@ public class CalorieUtils {
    * @param weight the weight in kilogram of the rider plus bike
    */
   @VisibleForTesting
-  static double getCyclingCalorie(Location start, Location stop, double grade, int weight) {
+  static double getCyclingCalorie(Location start, Location stop, double grade, double weight) {
     // Gets duration in seconds
     double duration = (double) (stop.getTime() - start.getTime()) * UnitConversions.MS_TO_S;
     // Get speed in meters per second
@@ -191,7 +191,7 @@ public class CalorieUtils {
    * @param duration the duration in seconds
    */
   @VisibleForTesting
-  static double getCyclingCalorie(double speed, double grade, int weight, double duration) {
+  static double getCyclingCalorie(double speed, double grade, double weight, double duration) {
     // Get the power in watt (Joule/second)
     double power = EARTH_GRAVITY * weight * speed * (K1 + grade) + K2 * (speed * speed * speed);
 
@@ -208,7 +208,7 @@ public class CalorieUtils {
    * @param weight the weight of the user in kilogram
    */
   @VisibleForTesting
-  static double getFootCalorie(Location start, Location stop, double grade, int weight) {
+  static double getFootCalorie(Location start, Location stop, double grade, double weight) {
     // Get speed in meters per second
     double averageSpeed = (start.getSpeed() + stop.getSpeed()) / 2.0;
     // Get VO2 in mL/kg/min

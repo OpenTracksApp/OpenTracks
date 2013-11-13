@@ -148,10 +148,18 @@ public class StringUtils {
       }
     }
   }
+
+  public static String formatWeight(double value) {
+    return formatDecimal(value, 1);
+  }
   
   public static String formatDecimal(double value) {
-    String result = String.format(Locale.getDefault(), "%1$,.2f", value);
-    return result.endsWith(".00") ? result.substring(0, result.lastIndexOf('.')) : result;    
+    return formatDecimal(value, 2);
+  }
+  
+  private static String formatDecimal(double value, int precision) {
+    String result = String.format(Locale.getDefault(), "%1$,." + precision + "f", value);
+    return value % 1 == 0 ? result.substring(0, result.lastIndexOf('.')) : result;
   }
 
   /**

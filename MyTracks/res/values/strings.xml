@@ -2025,15 +2025,11 @@ limitations under the License.
       Character limit: ~23 (1 line)">
     Grade/Elevation
   </string>
-  <string name="settings_stats_calorie_weight"
+  <string name="settings_stats_weight"
     translation_description="In the 'Stats settings, the option to configure user's weight.
 
       Character limit: ~23 (1 line)">
     Weight
-  </string>
-  <string name="settings_stats_calorie_weight_description"
-    translation_description="In the 'Stats settings, the description message about weight setting item.">
-    Weight for calculating calories.
   </string>
   <string name="settings_stats_rate_title"
     translation_description="In the 'Stats' settings, the option to change the preferred rate,
@@ -2487,6 +2483,12 @@ limitations under the License.
       %1$.1f a float number. E.g., '2.2'.">
     %1$.1f mi (poor GPS)
   </string>
+  <string name="value_kilogram"
+    translation_description="Display a value in kilogram (kg).
+
+      %1$s a value. E.g., '150.2'.">
+    %1$s kg
+  </string>
   <string name="value_integer_feet"
     translation_description="In a setting picker, the string format to display an integer value in
       feet (ft).
@@ -2513,12 +2515,6 @@ limitations under the License.
 
       %1$d an integer value. E.g., '2'.">
     %1$d kB
-  </string>
-  <string name="value_integer_kilogram"
-    translation_description="Display an integer value in kilogram (kg).
-
-      %1$d an integer value. E.g., '2'.">
-    %1$d kg
   </string>
   <string name="value_integer_kilometer"
     translation_description="In a setting picker, the string format to display an integer value in
@@ -2594,12 +2590,6 @@ limitations under the License.
       %1$d an integer value. E.g., '2'.">
     %1$d %%
   </string>
-  <string name="value_integer_pound"
-    translation_description="Display an integer value in pound (lb).
-
-      %1$d an integer value. E.g., '2'.">
-    %1$d lb
-  </string>
   <string name="value_integer_second"
     translation_description="In a setting picker, the string format to display an integer value in
       seconds (s).
@@ -2618,6 +2608,12 @@ limitations under the License.
   <string name="value_off"
     translation_description="In a setting picker, the value to turn off the feature.">
     Off
+  </string>
+  <string name="value_pound"
+    translation_description="Display a value in pound (lb).
+
+      %1$s a value. E.g., '155.2'.">
+    %1$s lb
   </string>
   <string name="value_smallest"
     translation_description="In a setting picker, the value to use the smallest value.">

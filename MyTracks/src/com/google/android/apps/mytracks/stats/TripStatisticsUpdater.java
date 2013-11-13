@@ -131,7 +131,7 @@ public class TripStatisticsUpdater {
    *          calorie
    */
   public void addLocation(Location location, int minRecordingDistance,
-      boolean calculateCalorie, ActivityType activityType, int weight) {
+      boolean calculateCalorie, ActivityType activityType, double weight) {
     // Always update time
     updateTime(location.getTime());
     if (!LocationUtils.isValidLocation(location)) {

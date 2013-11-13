@@ -1006,7 +1006,7 @@ public class TrackRecordingService extends Service {
       Uri uri = myTracksProviderUtils.insertTrackPoint(location, track.getId());
       long trackPointId = Long.parseLong(uri.getLastPathSegment());
       trackTripStatisticsUpdater.addLocation(location, recordingDistanceInterval, true,
-          CalorieUtils.getActivityType(context, track.getCategory()), PreferencesUtils.getInt(context,
+          CalorieUtils.getActivityType(context, track.getCategory()), PreferencesUtils.getFloat(context,
               R.string.stats_weight_key, PreferencesUtils.STATS_WEIGHT_DEFAULT));
       markerTripStatisticsUpdater.addLocation(location, recordingDistanceInterval, false,
           ActivityType.INVALID, PreferencesUtils.STATS_WEIGHT_DEFAULT);

@@ -24,6 +24,12 @@ limitations under the License.
     android:defaultValue="@string/stats_rate_speed"
     android:key="@string/stats_rate_key"
     android:title="@string/settings_stats_rate_title" />
+  <EditTextPreference
+    android:imeOptions="actionDone"
+    android:inputType="numberDecimal"
+    android:key="@string/settings_stats_weight_display_key"
+    android:persistent="false"
+    android:title="@string/settings_stats_weight" />
   <PreferenceCategory android:title="@string/settings_show" >
     <CheckBoxPreference
       android:defaultValue="false"
@@ -33,16 +39,5 @@ limitations under the License.
       android:defaultValue="false"
       android:key="@string/stats_show_coordinate_key"
       android:title="@string/settings_stats_coordinate" />
-    <CheckBoxPreference
-      android:defaultValue="false"
-      android:key="@string/stats_show_calorie_key"
-      android:title="@string/stats_calorie" />
-    <EditTextPreference
-      android:dependency="@string/stats_show_calorie_key"
-      android:imeOptions="actionDone"
-      android:inputType="number"
-      android:key="@string/stats_weight_key"
-      android:persistent="false"
-      android:title="@string/settings_stats_calorie_weight" />
   </PreferenceCategory>
 </PreferenceScreen>

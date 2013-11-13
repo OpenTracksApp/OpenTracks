@@ -42,7 +42,6 @@ limitations under the License.
   <string name="stats_rate_key">statsRate</string>
   <string name="stats_show_coordinate_key">statsShowCoordinate</string>
   <string name="stats_show_grade_elevation_key">statsShowGradeElevation</string>
-  <string name="stats_show_calorie_key">statsShowCalorie</string>
   <string name="stats_weight_key">statsWeight</string>
   <string name="stats_units_key">statsUnits</string>
   <string name="track_color_mode_medium_key">trackColorModeMedium</string>
@@ -93,4 +92,5 @@ limitations under the License.
   <string name="settings_sensor_bluetooth_pairing_key">settingsSensorBluetoothPairing</string>
   <string name="settings_sensor_root_key">settingsSensorRoot</string>
   <string name="settings_stats_key">settingsStats</string>
+  <string name="settings_stats_weight_display_key">settingsStatsWeightDisplay</string>
 </resources>
