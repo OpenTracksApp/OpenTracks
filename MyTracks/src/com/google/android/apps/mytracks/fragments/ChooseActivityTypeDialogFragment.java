@@ -91,9 +91,15 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
 
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
-    View view = getActivity().getLayoutInflater().inflate(R.layout.choose_activity_type, null);
+    View view = getActivity().getLayoutInflater().inflate(R.layout.choose_activity_type, null);   
     GridView gridView = (GridView) view.findViewById(R.id.choose_activity_type_grid_view);
     weightContainer = view.findViewById(R.id.choose_activity_type_weight_container);
+    
+    TextView weightLabel = (TextView) view.findViewById(R.id.choose_activity_type_weight_label);
+    weightLabel.setText(
+        PreferencesUtils.isMetricUnits(getActivity()) ? R.string.description_weight_metric
+            : R.string.description_weight_imperial);
+    
     weight = (TextView) view.findViewById(R.id.choose_activity_type_weight);
 
     List<Integer> imageIds = new ArrayList<Integer>();

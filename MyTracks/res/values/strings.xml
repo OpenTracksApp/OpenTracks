@@ -555,7 +555,15 @@ limitations under the License.
     translation_description="Label for a track segment">
     Segment
   </string>
-
+  <string name="description_weight_imperial"
+    translation_description="Label for weight in pounds.">
+    Weight (lb)
+  </string>
+  <string name="description_weight_metric"
+    translation_description="Label for weight in kilograms.">
+    Weight (kg)
+  </string>
+  
   <!-- Eula -->
   <string name="eula_accept"
     translation_description="In the 'Terms of Service' dialog, the button to accept.">
