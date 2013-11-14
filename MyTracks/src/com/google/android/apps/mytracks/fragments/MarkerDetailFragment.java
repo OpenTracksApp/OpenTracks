@@ -127,6 +127,9 @@ public class MarkerDetailFragment extends Fragment {
         int visibility = waypointInfo.getVisibility() == View.GONE ? View.VISIBLE : View.GONE;
         textGradient.setVisibility(visibility);
         waypointInfo.setVisibility(visibility);
+        if (visibility == View.VISIBLE) {
+          handler.postDelayed(hideText, HIDE_TEXT_DELAY);
+        }
       }
     });
     textGradient = (ImageView) view.findViewById(R.id.marker_detail_waypoint_text_gradient);

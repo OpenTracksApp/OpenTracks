@@ -24,103 +24,107 @@ limitations under the License.
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:scaleType="centerCrop" />
-  <!-- A gradient on top of the text -->
-  <ImageView
-    android:alpha=".6"
-    android:contentDescription="@string/icon_marker"
-    android:id="@+id/list_item_text_gradient"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:src="@drawable/text_gradient" />
-  <!-- Table 1 -->
-  <TableLayout
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:minHeight="?android:attr/listPreferredItemHeight"
-    android:paddingBottom="12dp"
-    android:paddingRight="12dp"
-    android:paddingTop="8dp"
-    android:shrinkColumns="1"
-    android:stretchColumns="1"
-    style="@style/ListItem" >
-    <!-- Table 1: Row 1 -->
-    <TableRow>
-      <!-- Table 1: Row 1: Column 1: (icon) -->
-      <ImageView
-        android:contentDescription="@string/icon_track"
-        android:id="@+id/list_item_icon"
-        android:layout_gravity="center_vertical"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_width="wrap_content" />
-      <!-- Table 1: Row 1: Column 2: (Table 2) -->
-      <TableLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:shrinkColumns="0"
-        android:stretchColumns="0" >
-        <TableRow>
-          <!-- Table 2: Row 1: Column 1: (name) -->
-          <TextView
-            android:ellipsize="end"
-            android:id="@+id/list_item_name"
-            android:layout_gravity="bottom"
-            android:layout_width="match_parent"
-            android:singleLine="true"
-            style="@style/TextMedium" />
-          <!-- Table 2: Row 1: Column 2: (date) -->
-          <TextView
-            android:id="@+id/list_item_date"
-            style="@style/ListItemDate" />
-        </TableRow>
-        <TableRow>
-          <!-- Need to match the style set in ListItemUtils.setListItem -->
-          <!-- Table 2: Row 2: Column 1: (shared owner, total time, total distance, and marker count) -->
-          <LinearLayout
-            android:layout_gravity="bottom"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent" >
+  <FrameLayout
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent" >
+    <!-- A gradient on top of the text -->
+    <ImageView
+      android:alpha=".6"
+      android:contentDescription="@string/icon_marker"
+      android:id="@+id/list_item_text_gradient"
+      android:layout_height="match_parent"
+      android:layout_width="match_parent"
+      android:src="@drawable/text_gradient" />
+    <!-- Table 1 -->
+    <TableLayout
+      android:layout_height="wrap_content"
+      android:layout_width="match_parent"
+      android:minHeight="?android:attr/listPreferredItemHeight"
+      android:paddingBottom="12dp"
+      android:paddingRight="12dp"
+      android:paddingTop="8dp"
+      android:shrinkColumns="1"
+      android:stretchColumns="1"
+      style="@style/ListItem" >
+      <!-- Table 1: Row 1 -->
+      <TableRow>
+        <!-- Table 1: Row 1: Column 1: (icon) -->
+        <ImageView
+          android:contentDescription="@string/icon_track"
+          android:id="@+id/list_item_icon"
+          android:layout_gravity="center_vertical"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="8dp"
+          android:layout_marginRight="8dp"
+          android:layout_width="wrap_content" />
+        <!-- Table 1: Row 1: Column 2: (Table 2) -->
+        <TableLayout
+          android:layout_height="wrap_content"
+          android:layout_width="match_parent"
+          android:shrinkColumns="0"
+          android:stretchColumns="0" >
+          <TableRow>
+            <!-- Table 2: Row 1: Column 1: (name) -->
             <TextView
               android:ellipsize="end"
-              android:id="@+id/list_item_owner_time_distance"
+              android:id="@+id/list_item_name"
               android:layout_gravity="bottom"
+              android:layout_width="match_parent"
               android:singleLine="true"
-              style="@style/TextSmall" />
-            <ImageView
-              android:contentDescription="@string/icon_marker"
-              android:id="@+id/list_item_marker_count_icon"
+              style="@style/TextMedium" />
+            <!-- Table 2: Row 1: Column 2: (date) -->
+            <TextView
+              android:id="@+id/list_item_date"
+              style="@style/ListItemDate" />
+          </TableRow>
+          <TableRow>
+            <!-- Need to match the style set in ListItemUtils.setListItem -->
+            <!-- Table 2: Row 2: Column 1: (shared owner, total time, total distance, and marker count) -->
+            <LinearLayout
               android:layout_gravity="bottom"
               android:layout_height="wrap_content"
-              android:layout_marginLeft="2dp"
-              android:layout_marginRight="2dp"
-              android:layout_marginBottom="1dp"
-              android:layout_width="wrap_content"
-              android:scaleType="centerInside"
-              android:src="@drawable/ic_menu_insert_marker" />
+              android:layout_width="match_parent" >
+              <TextView
+                android:ellipsize="end"
+                android:id="@+id/list_item_owner_time_distance"
+                android:layout_gravity="bottom"
+                android:singleLine="true"
+                style="@style/TextSmall" />
+              <ImageView
+                android:contentDescription="@string/icon_marker"
+                android:id="@+id/list_item_marker_count_icon"
+                android:layout_gravity="bottom"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="1dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_width="wrap_content"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_menu_insert_marker" />
+              <TextView
+                android:ellipsize="end"
+                android:id="@+id/list_item_marker_count"
+                android:layout_gravity="bottom"
+                android:singleLine="true"
+                style="@style/TextSmall" />
+            </LinearLayout>
+            <!-- Table 2: Row 2: Column 2: (time) -->
             <TextView
-              android:ellipsize="end"
-              android:id="@+id/list_item_marker_count"
-              android:layout_gravity="bottom"
-              android:singleLine="true"
-              style="@style/TextSmall" />
-          </LinearLayout>
-          <!-- Table 2: Row 2: Column 2: (time) -->
-          <TextView
-            android:id="@+id/list_item_time"
-            style="@style/ListItemDate" />
-        </TableRow>
-      </TableLayout>
-    </TableRow>
-    <TableRow>
-      <!-- Table 1: Row 2: (category and description) -->
-      <TextView
-        android:ellipsize="end"
-        android:id="@+id/list_item_category_description"
-        android:layout_column="1"
-        android:maxLines="2"
-        android:singleLine="false"
-        style="@style/TextSmall" />
-    </TableRow>
-  </TableLayout>
+              android:id="@+id/list_item_time"
+              style="@style/ListItemDate" />
+          </TableRow>
+        </TableLayout>
+      </TableRow>
+      <TableRow>
+        <!-- Table 1: Row 2: (category and description) -->
+        <TextView
+          android:ellipsize="end"
+          android:id="@+id/list_item_category_description"
+          android:layout_column="1"
+          android:maxLines="2"
+          android:singleLine="false"
+          style="@style/TextSmall" />
+      </TableRow>
+    </TableLayout>
+  </FrameLayout>
 </FrameLayout>
