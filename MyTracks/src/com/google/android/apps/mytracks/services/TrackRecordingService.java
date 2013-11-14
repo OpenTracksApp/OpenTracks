@@ -668,10 +668,10 @@ public class TrackRecordingService extends Service {
           do {
             Location location = myTracksProviderUtils.createTrackPoint(cursor);
             trackTripStatisticsUpdater.addLocation(location, recordingDistanceInterval, false,
-                ActivityType.INVALID, PreferencesUtils.STATS_WEIGHT_DEFAULT);
+                ActivityType.INVALID, PreferencesUtils.WEIGHT_DEFAULT);
             if (location.getTime() > markerStartTime) {
               markerTripStatisticsUpdater.addLocation(location, recordingDistanceInterval, false,
-                  ActivityType.INVALID, PreferencesUtils.STATS_WEIGHT_DEFAULT);
+                  ActivityType.INVALID, PreferencesUtils.WEIGHT_DEFAULT);
             }
           } while (cursor.moveToPrevious());
         }
@@ -1013,9 +1013,9 @@ public class TrackRecordingService extends Service {
       long trackPointId = Long.parseLong(uri.getLastPathSegment());
       trackTripStatisticsUpdater.addLocation(location, recordingDistanceInterval, true,
           CalorieUtils.getActivityType(context, track.getCategory()), PreferencesUtils.getFloat(context,
-              R.string.stats_weight_key, PreferencesUtils.STATS_WEIGHT_DEFAULT));
+              R.string.weight_key, PreferencesUtils.WEIGHT_DEFAULT));
       markerTripStatisticsUpdater.addLocation(location, recordingDistanceInterval, false,
-          ActivityType.INVALID, PreferencesUtils.STATS_WEIGHT_DEFAULT);
+          ActivityType.INVALID, PreferencesUtils.WEIGHT_DEFAULT);
       updateRecordingTrack(track, trackPointId, LocationUtils.isValidLocation(location));
     } catch (SQLiteException e) {
       /*

@@ -104,7 +104,7 @@ public class CalorieUtils {
         R.string.recording_distance_interval_key,
         PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT);
     double weight = PreferencesUtils.getFloat(
-        context, R.string.stats_weight_key, PreferencesUtils.STATS_WEIGHT_DEFAULT);
+        context, R.string.weight_key, PreferencesUtils.WEIGHT_DEFAULT);
 
     while (iterator.hasNext()) {
       tripStatisticsUpdater.addLocation(

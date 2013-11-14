@@ -210,9 +210,9 @@ public class TrackEditActivity extends AbstractMyTracksActivity
   }
 
   @Override
-  public void onChooseActivityTypeDone(String value, boolean newWeight) {
-    if (!this.newWeight) {
-      this.newWeight = newWeight;
+  public void onChooseActivityTypeDone(String value, boolean hasNewWeight) {
+    if (!newWeight) {
+      newWeight = hasNewWeight;
     }
     setActivityTypeIcon(value);
     activityType.setText(getString(TrackIconUtils.getIconActivityType(value)));

@@ -279,7 +279,7 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
         }
 
         tripStatisticsUpdater.addLocation(location, recordingDistanceInterval, false,
-            ActivityType.INVALID, PreferencesUtils.STATS_WEIGHT_DEFAULT);
+            ActivityType.INVALID, PreferencesUtils.WEIGHT_DEFAULT);
         if (i % elevationSamplingFrequency == 0) {
           distances.add(tripStatisticsUpdater.getTripStatistics().getTotalDistance());
           elevations.add(tripStatisticsUpdater.getSmoothedElevation());

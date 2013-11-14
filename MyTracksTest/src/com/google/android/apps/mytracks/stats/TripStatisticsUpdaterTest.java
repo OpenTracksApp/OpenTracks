@@ -226,7 +226,7 @@ public class TripStatisticsUpdaterTest extends TestCase {
           startTime + (timeOffset + i) * TEN_SECONDS);
       tripStatisticsUpdater.addLocation(location,
           PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT, true, ActivityType.WALKING,
-          PreferencesUtils.STATS_WEIGHT_DEFAULT);
+          PreferencesUtils.WEIGHT_DEFAULT);
       tripStatistics = tripStatisticsUpdater.getTripStatistics();
 
       assertEquals((timeOffset + i) * TEN_SECONDS, tripStatistics.getTotalTime());
@@ -273,7 +273,7 @@ public class TripStatisticsUpdaterTest extends TestCase {
           locationOffset, locationOffset * .001, 0, startTime + (i + timeOffset) * TEN_SECONDS);
       tripStatisticsUpdater.addLocation(location,
           PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT, false, ActivityType.WALKING,
-          PreferencesUtils.STATS_WEIGHT_DEFAULT);
+          PreferencesUtils.WEIGHT_DEFAULT);
 
       tripStatistics = tripStatisticsUpdater.getTripStatistics();
       assertEquals((i + timeOffset) * TEN_SECONDS, tripStatistics.getTotalTime());
@@ -311,7 +311,7 @@ public class TripStatisticsUpdaterTest extends TestCase {
           startTime + (timeOffset + i) * TEN_SECONDS);
       tripStatisticsUpdater.addLocation(location,
           PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT, true, ActivityType.WALKING,
-          PreferencesUtils.STATS_WEIGHT_DEFAULT);
+          PreferencesUtils.WEIGHT_DEFAULT);
       tripStatistics = tripStatisticsUpdater.getTripStatistics();
 
       assertTrue(tripStatistics.getMovingTime() <= tripStatistics.getTotalTime());

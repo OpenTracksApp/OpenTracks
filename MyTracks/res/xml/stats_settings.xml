@@ -24,12 +24,6 @@ limitations under the License.
     android:defaultValue="@string/stats_rate_speed"
     android:key="@string/stats_rate_key"
     android:title="@string/settings_stats_rate_title" />
-  <EditTextPreference
-    android:imeOptions="actionDone"
-    android:inputType="numberDecimal"
-    android:key="@string/settings_stats_weight_display_key"
-    android:persistent="false"
-    android:title="@string/settings_stats_weight" />
   <PreferenceCategory android:title="@string/settings_show" >
     <CheckBoxPreference
       android:defaultValue="false"

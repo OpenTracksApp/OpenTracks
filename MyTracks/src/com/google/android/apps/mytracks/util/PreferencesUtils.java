@@ -107,7 +107,6 @@ public class PreferencesUtils {
   public static final boolean STATS_SHOW_COORDINATE_DEFAULT = false;
   public static final boolean STATS_SHOW_GRADE_ELEVATION_DEFAULT = false;
   public static final String STATS_UNITS_DEFAULT = "METRIC";
-  public static final float STATS_WEIGHT_DEFAULT = 65.0f; // in kilogram
   
   // Track color
   public static final String TRACK_COLOR_MODE_DEFAULT = "SINGLE";
@@ -124,6 +123,8 @@ public class PreferencesUtils {
   public static final int TRACK_WIDGET_ITEM4_DEFAULT = 2; // average speed
   public static final int VOICE_FREQUENCY_DEFAULT = 0;
 
+  public static final float WEIGHT_DEFAULT = 65.0f; // in kilogram
+  
   private static final String TAG = PreferencesUtils.class.getSimpleName();
   
   private PreferencesUtils() {}
@@ -350,9 +351,9 @@ public class PreferencesUtils {
       }
     } catch (NumberFormatException e) {
       Log.e(TAG, "invalid value " + displayValue);
-      value = PreferencesUtils.STATS_WEIGHT_DEFAULT;
+      value = PreferencesUtils.WEIGHT_DEFAULT;
     }
-    PreferencesUtils.setFloat(context, R.string.stats_weight_key, (float) value);
+    PreferencesUtils.setFloat(context, R.string.weight_key, (float) value);
   }
   
   /**
@@ -361,19 +362,9 @@ public class PreferencesUtils {
    * @param context the context
    */
   public static double getWeightDisplayValue(Context context) {
-    return getWeightDisplayValue(context, PreferencesUtils.isMetricUnits(context));
-  }
-  
-  /**
-   * Gets the weight display value.
-   * 
-   * @param context the context
-   * @param metricUnits true to get display value in metric units
-   */
-  public static double getWeightDisplayValue(Context context, boolean metricUnits) {
     double value = PreferencesUtils.getFloat(
-        context, R.string.stats_weight_key, PreferencesUtils.STATS_WEIGHT_DEFAULT);
-    if (!metricUnits) {
+        context, R.string.weight_key, PreferencesUtils.WEIGHT_DEFAULT);
+    if (!PreferencesUtils.isMetricUnits(context)) {
       value = value * UnitConversions.KG_TO_LB;
     }
     return value;
