@@ -23,9 +23,6 @@ import com.google.android.maps.mytracks.R;
 import android.app.Activity;
 import android.content.Context;
 import android.location.Location;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.style.SuperscriptSpan;
 import android.view.View;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -322,10 +319,8 @@ public class StatsUtils {
   private static void setCoordinateValue(
       Context context, View view, int labelId, double coordinate) {
     String value = Double.isNaN(coordinate) || Double.isInfinite(coordinate) ? null
-        : Location.convert(coordinate, Location.FORMAT_DEGREES);
-    SpannableStringBuilder unit = new SpannableStringBuilder(COORDINATE_DEGREE);
-    unit.setSpan(new SuperscriptSpan(), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-    setItem(context, view, labelId, value, unit);
+        : Location.convert(coordinate, Location.FORMAT_DEGREES) + COORDINATE_DEGREE;
+    setItem(context, view, labelId, value, null);
   }
 
   /**

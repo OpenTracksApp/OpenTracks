@@ -202,8 +202,6 @@ limitations under the License.
   <!-- stats unit -->
   <style name="StatsUnit" parent="@style/TextSmall">
     <item name="android:paddingLeft">4dp</item>
-    <!-- Add paddingTop to support unit with superscript -->
-    <item name="android:paddingTop">4dp</item>
     <item name="android:singleLine">true</item>
   </style>
   <style name="Text">
