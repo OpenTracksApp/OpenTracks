@@ -64,6 +64,8 @@ public class TrackEditActivity extends AbstractMyTracksActivity
   private AutoCompleteTextView activityType;
   private Spinner activityTypeIcon;
   private EditText description;
+  
+  private boolean newWeight = false;
 
   @Override
   protected void onCreate(Bundle bundle) {
@@ -153,7 +155,7 @@ public class TrackEditActivity extends AbstractMyTracksActivity
       public void onClick(View v) {
         TrackUtils.updateTrack(TrackEditActivity.this, track, name.getText().toString(),
             activityType.getText().toString(), description.getText().toString(),
-            myTracksProviderUtils, trackRecordingServiceConnection);
+            myTracksProviderUtils, trackRecordingServiceConnection, newWeight);
         finish();
       }
     });
@@ -208,7 +210,10 @@ public class TrackEditActivity extends AbstractMyTracksActivity
   }
 
   @Override
-  public void onChooseActivityTypeDone(String value) {
+  public void onChooseActivityTypeDone(String value, boolean newWeight) {
+    if (!this.newWeight) {
+      this.newWeight = newWeight;
+    }
     setActivityTypeIcon(value);
     activityType.setText(getString(TrackIconUtils.getIconActivityType(value)));
   }

@@ -34,17 +34,17 @@ public class TrackUtils {
 
   public static void updateTrack(Context context, Track track, String name, String category,
       String description, MyTracksProviderUtils myTracksProviderUtils,
-      TrackRecordingServiceConnection trackRecordingServiceConnection) {
+      TrackRecordingServiceConnection trackRecordingServiceConnection, boolean newWeight) {
     if (name != null) {
       track.setName(name);
     }
-    boolean newCategory = false;
+    boolean updateCalorie = false;
     boolean isRecording = false;
     if (category != null) {
-      newCategory = !category.equals(track.getCategory());
+      updateCalorie = !category.equals(track.getCategory()) || newWeight;
       track.setCategory(category);
       track.setIcon(TrackIconUtils.getIconValue(context, category));
-      if (newCategory) {
+      if (updateCalorie) {
         isRecording = track.getId()
             == PreferencesUtils.getLong(context, R.string.recording_track_id_key);
         if (!isRecording) {
@@ -61,7 +61,7 @@ public class TrackUtils {
     track.setModifiedTime(System.currentTimeMillis());
     myTracksProviderUtils.updateTrack(track);
 
-    if (newCategory && isRecording) {
+    if (updateCalorie && isRecording) {
       // Update calorie through track recording service
       TrackRecordingServiceConnectionUtils.updateCalorie(trackRecordingServiceConnection);
     }

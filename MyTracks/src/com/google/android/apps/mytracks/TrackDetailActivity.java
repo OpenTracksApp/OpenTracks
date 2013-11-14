@@ -626,11 +626,11 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
   }
 
   @Override
-  public void onChooseActivityTypeDone(String iconValue) {
+  public void onChooseActivityTypeDone(String iconValue, boolean newWeight) {
     Track track = myTracksProviderUtils.getTrack(trackId);
     String category = getString(TrackIconUtils.getIconActivityType(iconValue));
     TrackUtils.updateTrack(
-        this, track, null, category, null, myTracksProviderUtils, trackRecordingServiceConnection);
+        this, track, null, category, null, myTracksProviderUtils, trackRecordingServiceConnection, newWeight);
 
     // Add toast if cannot calculate calorie
     if (CalorieUtils.getActivityType(this, category) == ActivityType.INVALID) {

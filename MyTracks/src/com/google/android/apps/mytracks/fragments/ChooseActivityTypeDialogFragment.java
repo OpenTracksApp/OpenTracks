@@ -55,7 +55,7 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
     /**
      * Called when choose activity type is done.
      */
-    public void onChooseActivityTypeDone(String iconValue);
+    public void onChooseActivityTypeDone(String iconValue, boolean newWeight);
   }
 
   public static final String CHOOSE_ACTIVITY_TYPE_DIALOG_TAG = "chooseActivityType";
@@ -67,6 +67,7 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
   private AlertDialog alertDialog;
   private View weightContainer;
   private TextView weight;
+  private String weightValue;
 
   public static ChooseActivityTypeDialogFragment newInstance(String category) {
     Bundle bundle = new Bundle();
@@ -127,11 +128,17 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
 
             @Override
           public void onClick(DialogInterface dialog, int which) {
+            boolean newWeight = false;
             if (weightContainer.getVisibility() == View.VISIBLE) {
-              PreferencesUtils.storeWeightValue(getActivity(), weight.getText().toString());
+              String newValue = weight.getText().toString();
+              if (!newValue.equals(weightValue)) {
+                newWeight = true;
+                PreferencesUtils.storeWeightValue(getActivity(), newValue);
+              }
             }
             int selected = imageAdapter.getSelected();
-            caller.onChooseActivityTypeDone(TrackIconUtils.getAllIconValues().get(selected));
+            caller.onChooseActivityTypeDone(
+                TrackIconUtils.getAllIconValues().get(selected), newWeight);
           }
         }).setTitle(R.string.track_edit_activity_type_hint).setView(view).create();
     alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
@@ -145,8 +152,9 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
           imageAdapter.notifyDataSetChanged();
         }
         updateWeightContainer(position);
-        double weightValue = PreferencesUtils.getWeightDisplayValue(getActivity());
-        weight.setText(StringUtils.formatWeight(weightValue));
+        double weightDisplayValue = PreferencesUtils.getWeightDisplayValue(getActivity());
+        weightValue = StringUtils.formatWeight(weightDisplayValue);
+        weight.setText(weightValue);
       }
     });
     return alertDialog;
