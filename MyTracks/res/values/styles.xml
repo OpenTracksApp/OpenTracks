@@ -156,6 +156,7 @@ limitations under the License.
   </style>
   <!-- stats large value -->
   <style name="StatsLargeValue">
+    <item name="android:layout_gravity">bottom</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">wrap_content</item>
     <item name="android:singleLine">true</item>
@@ -192,6 +193,7 @@ limitations under the License.
   </style>
   <!-- stats small value -->
   <style name="StatsSmallValue" parent="@style/TextLarge">
+    <item name="android:layout_gravity">bottom</item>
     <item name="android:singleLine">true</item>
     <item name="android:textColor">@android:color/white</item>
   </style>
@@ -201,6 +203,7 @@ limitations under the License.
   </style>
   <!-- stats unit -->
   <style name="StatsUnit" parent="@style/TextSmall">
+    <item name="android:layout_gravity">bottom</item>
     <item name="android:paddingLeft">4dp</item>
     <item name="android:singleLine">true</item>
   </style>

@@ -34,9 +34,13 @@ limitations under the License.
   <LinearLayout
     android:layout_gravity="left|bottom"
     style="@style/StatsSmallValueContainer" >
+    <TextView
+      android:visibility="invisible"
+      style="@style/StatsSmallValue" />
     <!-- Label -->
     <TextView
       android:id="@+id/stats_label"
+      android:layout_gravity="bottom"
       android:paddingLeft="8dp"
       style="@style/StatsSmallLabel" />
   </LinearLayout>
