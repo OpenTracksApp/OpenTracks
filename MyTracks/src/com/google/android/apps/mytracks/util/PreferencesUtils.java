@@ -27,6 +27,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.text.TextUtils;
+import android.util.Log;
 
 /**
  * Utilities to access preferences stored in {@link SharedPreferences}.
@@ -123,6 +124,8 @@ public class PreferencesUtils {
   public static final int TRACK_WIDGET_ITEM4_DEFAULT = 2; // average speed
   public static final int VOICE_FREQUENCY_DEFAULT = 0;
 
+  private static final String TAG = PreferencesUtils.class.getSimpleName();
+  
   private PreferencesUtils() {}
 
   /**
@@ -331,5 +334,48 @@ public class PreferencesUtils {
       }
     }
     setString(context, keyId, list + ";" + value);
+  }
+  
+  /**
+   * Stores the weight value, always in metric units.
+   * 
+   * @param displayValue the display value
+   */
+  public static void storeWeightValue(Context context, String displayValue) {
+    double value;
+    try {
+      value = Double.parseDouble(displayValue);
+      if (!PreferencesUtils.isMetricUnits(context)) {
+        value = value * UnitConversions.LB_TO_KG;
+      }
+    } catch (NumberFormatException e) {
+      Log.e(TAG, "invalid value " + displayValue);
+      value = PreferencesUtils.STATS_WEIGHT_DEFAULT;
+    }
+    PreferencesUtils.setFloat(context, R.string.stats_weight_key, (float) value);
+  }
+  
+  /**
+   * Gets the weight display value.
+   * 
+   * @param context the context
+   */
+  public static double getWeightDisplayValue(Context context) {
+    return getWeightDisplayValue(context, PreferencesUtils.isMetricUnits(context));
+  }
+  
+  /**
+   * Gets the weight display value.
+   * 
+   * @param context the context
+   * @param metricUnits true to get display value in metric units
+   */
+  public static double getWeightDisplayValue(Context context, boolean metricUnits) {
+    double value = PreferencesUtils.getFloat(
+        context, R.string.stats_weight_key, PreferencesUtils.STATS_WEIGHT_DEFAULT);
+    if (!metricUnits) {
+      value = value * UnitConversions.KG_TO_LB;
+    }
+    return value;
   }
 }

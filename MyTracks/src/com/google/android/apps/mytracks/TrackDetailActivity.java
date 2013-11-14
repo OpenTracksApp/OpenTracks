@@ -620,8 +620,8 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
     setTitle(title);
   }
   
-  public void chooseActivityType() {
-    new ChooseActivityTypeDialogFragment().show(getSupportFragmentManager(),
+  public void chooseActivityType(String category) {
+    ChooseActivityTypeDialogFragment.newInstance(category).show(getSupportFragmentManager(),
         ChooseActivityTypeDialogFragment.CHOOSE_ACTIVITY_TYPE_DIALOG_TAG);
   }
 

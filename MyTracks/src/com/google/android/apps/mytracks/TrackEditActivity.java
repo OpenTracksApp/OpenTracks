@@ -125,7 +125,8 @@ public class TrackEditActivity extends AbstractMyTracksActivity
         @Override
       public boolean onTouch(View v, MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_UP) {
-          new ChooseActivityTypeDialogFragment().show(getSupportFragmentManager(),
+          ChooseActivityTypeDialogFragment.newInstance(activityType.getText().toString()).show(
+              getSupportFragmentManager(),
               ChooseActivityTypeDialogFragment.CHOOSE_ACTIVITY_TYPE_DIALOG_TAG);
         }
         return true;
@@ -135,7 +136,8 @@ public class TrackEditActivity extends AbstractMyTracksActivity
         @Override
       public boolean onKey(View v, int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
-          new ChooseActivityTypeDialogFragment().show(getSupportFragmentManager(),
+          ChooseActivityTypeDialogFragment.newInstance(activityType.getText().toString()).show(
+              getSupportFragmentManager(),
               ChooseActivityTypeDialogFragment.CHOOSE_ACTIVITY_TYPE_DIALOG_TAG);
         }
         return true;

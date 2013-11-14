@@ -18,7 +18,6 @@ package com.google.android.apps.mytracks.settings;
 
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
-import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Dialog;
@@ -28,7 +27,6 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
@@ -39,8 +37,6 @@ import android.widget.TextView;
  * @author Jimmy Shih
  */
 public class StatsSettingsActivity extends AbstractSettingsActivity {
-
-  private static final String TAG = MapSettingsActivity.class.getSimpleName();
 
   private EditTextPreference weightPreference;
 
@@ -69,7 +65,7 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
     weightPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
         @Override
       public boolean onPreferenceChange(Preference preference, Object newValue) {
-        storeWeightValue((String) newValue);
+        PreferencesUtils.storeWeightValue(StatsSettingsActivity.this, (String) newValue);
         updateWeightSummary(PreferencesUtils.isMetricUnits(StatsSettingsActivity.this));
         return true;
       }
@@ -78,8 +74,7 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
     weightPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
         @Override
       public boolean onPreferenceClick(Preference pref) {
-        double value = getWeightDisplayValue(
-            PreferencesUtils.isMetricUnits(getApplicationContext()));
+        double value = PreferencesUtils.getWeightDisplayValue(StatsSettingsActivity.this);
         ((EditTextPreference) pref).getEditText().setText(StringUtils.formatWeight(value));
         return true;
       }
@@ -112,7 +107,6 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
         boolean metricUnits = PreferencesUtils.STATS_UNITS_DEFAULT.equals((String) newValue);
         configRateListPreference(metricUnits);
         updateWeightSummary(metricUnits);
-
         return true;
       }
     };
@@ -145,41 +139,7 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
    */
   private void updateWeightSummary(boolean metricUnits) {
     weightPreference.setSummary(getString(
-        metricUnits ? R.string.value_kilogram : R.string.value_pound,
-        StringUtils.formatWeight(getWeightDisplayValue(metricUnits))));
-  }
-
-  /**
-   * Gets the weight display value in metric or imperial depending on the
-   * preferred units.
-   * 
-   * @param metricUnits true if metric units
-   */
-  private double getWeightDisplayValue(boolean metricUnits) {
-    double value = PreferencesUtils.getFloat(
-        this, R.string.stats_weight_key, PreferencesUtils.STATS_WEIGHT_DEFAULT);
-    if (!metricUnits) {
-      value = value * UnitConversions.KG_TO_LB;
-    }
-    return value;
-  }
-
-  /**
-   * Stores the weight value, always in metric units.
-   * 
-   * @param displayValue the display value
-   */
-  private void storeWeightValue(String displayValue) {
-    double value;
-    try {
-      value = Double.parseDouble(displayValue);
-      if (!PreferencesUtils.isMetricUnits(this)) {
-        value = value * UnitConversions.LB_TO_KG;
-      }
-    } catch (NumberFormatException e) {
-      Log.e(TAG, "invalid value " + displayValue);
-      value = PreferencesUtils.STATS_WEIGHT_DEFAULT;
-    }
-    PreferencesUtils.setFloat(this, R.string.stats_weight_key, (float) value);
+        metricUnits ? R.string.value_kilogram : R.string.value_pound, StringUtils.formatWeight(
+            PreferencesUtils.getWeightDisplayValue(StatsSettingsActivity.this, metricUnits))));
   }
 }

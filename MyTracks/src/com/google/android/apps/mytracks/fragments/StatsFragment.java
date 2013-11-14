@@ -95,7 +95,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
         @Override
       public boolean onTouch(View v, MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_UP) {
-          ((TrackDetailActivity) getActivity()).chooseActivityType();          
+          ((TrackDetailActivity) getActivity()).chooseActivityType(category);          
         }
         return true;
       }
@@ -104,7 +104,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
         @Override
       public boolean onKey(View v, int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
-          ((TrackDetailActivity) getActivity()).chooseActivityType();
+          ((TrackDetailActivity) getActivity()).chooseActivityType(category);
         }
         return true;
       }

@@ -16,7 +16,10 @@
 
 package com.google.android.apps.mytracks.fragments;
 
+import com.google.android.maps.mytracks.R;
+
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -36,6 +39,7 @@ public class ChooseActivityTypeImageAdapter extends BaseAdapter {
   private final int width;
   private final int height;
   private final int padding;
+  private int selected = -1;
 
   public ChooseActivityTypeImageAdapter(
       Context context, List<Integer> imageIds, int width, int height, int padding) {
@@ -61,6 +65,14 @@ public class ChooseActivityTypeImageAdapter extends BaseAdapter {
     return 0;
   }
 
+  public int getSelected() {
+    return selected;
+  }
+
+  public void setSelected(int position) {
+    selected = position;
+  }
+
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
     ImageView imageView;
@@ -68,6 +80,11 @@ public class ChooseActivityTypeImageAdapter extends BaseAdapter {
       imageView = new ImageView(context);
     } else {
       imageView = (ImageView) convertView;
+    }
+    if (position == selected) {
+      imageView.setBackgroundResource(R.drawable.list_selector_background_transition_holo_dark);
+    } else {
+      imageView.setBackgroundColor(Color.TRANSPARENT);
     }
     imageView.setImageResource(imageIds.get(position));
     imageView.setMinimumHeight(height);
