@@ -40,6 +40,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.util.Log;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -470,8 +471,9 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
     if (importTrackId == -1L) {
       return null;
     }
-    return FileUtils.getPath(
+    String path = FileUtils.getPath(
         FileUtils.PICTURES_DIR, Long.toString(importTrackId), fileName);
+    return Uri.fromFile(new File(path)).toString();    
   }
 
   /**
