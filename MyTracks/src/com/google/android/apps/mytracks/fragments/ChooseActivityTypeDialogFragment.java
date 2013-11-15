@@ -19,6 +19,7 @@ package com.google.android.apps.mytracks.fragments;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.TrackIconUtils;
+import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -33,6 +34,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -101,7 +103,19 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
             : R.string.description_weight_imperial);
     
     weight = (TextView) view.findViewById(R.id.choose_activity_type_weight);
-
+    ImageButton imageButton = (ImageButton) view.findViewById(
+        R.id.choose_activity_type_weight_image_button);
+    imageButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+      public void onClick(View v) {
+        double weightDefault = PreferencesUtils.WEIGHT_DEFAULT;
+        if (!PreferencesUtils.isMetricUnits(getActivity())) {
+          weightDefault *= UnitConversions.KG_TO_LB;
+        }
+        weight.setText(StringUtils.formatWeight(weightDefault));
+      }
+    });
+    
     List<Integer> imageIds = new ArrayList<Integer>();
     for (String iconValue : TrackIconUtils.getAllIconValues()) {
       imageIds.add(TrackIconUtils.getIconDrawable(iconValue));

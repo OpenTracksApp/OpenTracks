@@ -39,16 +39,29 @@ limitations under the License.
       android:layout_marginTop="4dp"
       android:paddingLeft="12dp"
       style="@style/TextMedium" />
-    <EditText
-      android:id="@+id/choose_activity_type_weight"
-      android:inputType="numberDecimal"
-      android:layout_marginBottom="4dp"
-      android:layout_marginLeft="16dp"
-      android:layout_marginRight="16dp"
-      android:layout_marginTop="2dp"
-      android:layout_width="match_parent"
-      android:selectAllOnFocus="true"
-      android:singleLine="true"
-      style="@style/TextMedium" />
+    <FrameLayout
+      android:layout_height="wrap_content"
+      android:layout_width="fill_parent" >
+      <EditText
+        android:id="@+id/choose_activity_type_weight"
+        android:inputType="numberDecimal"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        style="@style/TextMedium" />
+      <ImageButton
+        android:background="@android:color/transparent"
+        android:id="@+id/choose_activity_type_weight_image_button"
+        android:layout_gravity="right|center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:layout_width="wrap_content"
+        android:paddingRight="12dp"
+        android:src="@android:drawable/ic_menu_close_clear_cancel" />
+    </FrameLayout>
   </LinearLayout>
 </LinearLayout>

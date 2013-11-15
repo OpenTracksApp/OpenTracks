@@ -159,7 +159,7 @@ public class StringUtils {
   
   private static String formatDecimal(double value, int precision) {
     String result = String.format(Locale.getDefault(), "%1$,." + precision + "f", value);
-    return value % 1 == 0 ? result.substring(0, result.lastIndexOf('.')) : result;
+    return result.replaceAll("[0]*$", "").replaceAll("\\.$", "");
   }
 
   /**
