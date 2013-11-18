@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.io.file.importer;
 
 import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
@@ -34,7 +35,6 @@ import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -211,20 +211,19 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
     if (track == null) {
       return;
     }
-    Cursor trackPointCursor = null;
+
+    int waypointPosition = -1;
+    Waypoint waypoint = null;
+    Location location = null;
+    TripStatisticsUpdater trackTripStatisticstrackUpdater = new TripStatisticsUpdater(
+        track.getTripStatistics().getStartTime());
+    TripStatisticsUpdater markerTripStatisticsUpdater = new TripStatisticsUpdater(
+        track.getTripStatistics().getStartTime());
+    LocationIterator locationIterator = null;
+
     try {
-      trackPointCursor = myTracksProviderUtils.getTrackPointCursor(track.getId(), -1L, -1, false);
-      if (trackPointCursor == null) {
-        return;
-      }
-      int waypointPosition = -1;
-      Waypoint waypoint = null;
-      int trackPointPosition = -1;
-      Location trackPoint = null;
-      TripStatisticsUpdater trackTripStatisticstrackUpdater = new TripStatisticsUpdater(
-          track.getTripStatistics().getStartTime());
-      TripStatisticsUpdater markerTripStatisticsUpdater = new TripStatisticsUpdater(
-          track.getTripStatistics().getStartTime());
+      locationIterator = myTracksProviderUtils.getTrackPointLocationIterator(
+          track.getId(), -1L, false, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
 
       while (true) {
         if (waypoint == null) {
@@ -235,28 +234,25 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
             return;
           }
         }
-        if (trackPoint == null) {
-          trackPointPosition++;
-          trackPoint = trackPointCursor.moveToPosition(trackPointPosition) ? myTracksProviderUtils
-              .createTrackPoint(trackPointCursor)
-              : null;
-          if (trackPoint == null) {
+        if (location == null) {
+          if (!locationIterator.hasNext()) {
             // No more track points. Ignore the rest of the waypoints.
             return;
           }
-          trackTripStatisticstrackUpdater.addLocation(trackPoint, recordingDistanceInterval, false,
+          location = locationIterator.next();
+          trackTripStatisticstrackUpdater.addLocation(location, recordingDistanceInterval, false,
               ActivityType.INVALID, PreferencesUtils.WEIGHT_DEFAULT);
-          markerTripStatisticsUpdater.addLocation(trackPoint, recordingDistanceInterval, false,
+          markerTripStatisticsUpdater.addLocation(location, recordingDistanceInterval, false,
               ActivityType.INVALID, PreferencesUtils.WEIGHT_DEFAULT);
         }
-        if (waypoint.getLocation().getTime() > trackPoint.getTime()) {
-          trackPoint = null;
-        } else if (waypoint.getLocation().getTime() < trackPoint.getTime()) {
+        if (waypoint.getLocation().getTime() > location.getTime()) {
+          location = null;
+        } else if (waypoint.getLocation().getTime() < location.getTime()) {
           waypoint = null;
         } else {
           // The waypoint location time matches the track point time
-          if (trackPoint.getLatitude() == waypoint.getLocation().getLatitude()
-              && trackPoint.getLongitude() == waypoint.getLocation().getLongitude()) {
+          if (location.getLatitude() == waypoint.getLocation().getLatitude()
+              && location.getLongitude() == waypoint.getLocation().getLongitude()) {
 
             // Get tripStatistics, description, and icon
             TripStatistics tripStatistics;
@@ -264,7 +260,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
             String icon;
             if (waypoint.getType() == WaypointType.STATISTICS) {
               tripStatistics = markerTripStatisticsUpdater.getTripStatistics();
-              markerTripStatisticsUpdater = new TripStatisticsUpdater(trackPoint.getTime());
+              markerTripStatisticsUpdater = new TripStatisticsUpdater(location.getTime());
               waypointDescription = new DescriptionGeneratorImpl(context)
                   .generateWaypointDescription(tripStatistics);
               icon = context.getString(R.string.marker_statistics_icon_url);
@@ -281,15 +277,15 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
             // Insert waypoint
             Waypoint newWaypoint = new Waypoint(waypoint.getName(), waypointDescription,
                 waypoint.getCategory(), icon, track.getId(), waypoint.getType(), length, duration,
-                -1L, -1L, trackPoint, tripStatistics, waypoint.getPhotoUrl());
+                -1L, -1L, location, tripStatistics, waypoint.getPhotoUrl());
             myTracksProviderUtils.insertWaypoint(newWaypoint);
           }
           waypoint = null;
         }
       }
     } finally {
-      if (trackPointCursor != null) {
-        trackPointCursor.close();
+      if (locationIterator != null) {
+        locationIterator.close();
       }
     }
   }

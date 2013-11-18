@@ -108,6 +108,7 @@ public class CalorieUtils {
     try {
       locationIterator = myTracksProviderUtils.getTrackPointLocationIterator(
           track.getId(), startTrackPointId, false, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
+
       while (locationIterator.hasNext()) {
         tripStatisticsUpdater.addLocation(
             locationIterator.next(), recordingDistanceInterval, true, activityType, weight);

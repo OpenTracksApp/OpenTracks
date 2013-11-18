@@ -667,6 +667,7 @@ public class TrackRecordingService extends Service {
     try {
       locationIterator = myTracksProviderUtils.getTrackPointLocationIterator(
           track.getId(), -1L, false, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
+      
       while (locationIterator.hasNext()) {
         Location location = locationIterator.next();
         trackTripStatisticsUpdater.addLocation(

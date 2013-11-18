@@ -19,6 +19,7 @@ import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.DescriptionGenerator;
 import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.gdata.GDataClientFactory;
@@ -235,33 +236,29 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
    */
   @VisibleForTesting
   boolean uploadAllTrackPoints(Track track) {
-    Cursor cursor = null;
+    int numberOfPoints = track.getNumberOfPoints();
+    List<Location> locations = new ArrayList<Location>(MAX_POINTS_PER_UPLOAD);
+    Location lastValidLocation = null;
+    boolean sentStartMarker = false;
+
+    // For chart server, limit the number of elevation readings to 250.
+    int elevationSamplingFrequency = Math.max(1, (int) (numberOfPoints / 250.0));
+    Vector<Double> distances = new Vector<Double>();
+    Vector<Double> elevations = new Vector<Double>();
+    TripStatisticsUpdater tripStatisticsUpdater = new TripStatisticsUpdater(
+        track.getTripStatistics().getStartTime());
+    int recordingDistanceInterval = PreferencesUtils.getInt(context,
+        R.string.recording_distance_interval_key,
+        PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT);
+    int readCount = 0;
+    LocationIterator locationIterator = null;
+
     try {
-      cursor = myTracksProviderUtils.getTrackPointCursor(trackId, -1L, -1, false);
-      if (cursor == null) {
-        Log.d(TAG, "Location cursor is null");
-        return false;
-      }
+      locationIterator = myTracksProviderUtils.getTrackPointLocationIterator(
+          trackId, -1L, false, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
 
-      int count = cursor.getCount();
-      List<Location> locations = new ArrayList<Location>(MAX_POINTS_PER_UPLOAD);
-      Location lastValidLocation = null;
-      boolean sentStartMarker = false;
-
-      // For chart server, limit the number of elevation readings to 250.
-      int elevationSamplingFrequency = Math.max(1, (int) (count / 250.0));
-      Vector<Double> distances = new Vector<Double>();
-      Vector<Double> elevations = new Vector<Double>();
-      TripStatisticsUpdater tripStatisticsUpdater = new TripStatisticsUpdater(
-          track.getTripStatistics().getStartTime());
-      int recordingDistanceInterval = PreferencesUtils.getInt(context,
-          R.string.recording_distance_interval_key,
-          PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT);
-
-      for (int i = 0; i < count; i++) {
-        cursor.moveToPosition(i);
-
-        Location location = myTracksProviderUtils.createTrackPoint(cursor);
+      while (locationIterator.hasNext()) {
+        Location location = locationIterator.next();
         locations.add(location);
 
         if (LocationUtils.isValidLocation(location)) {
@@ -280,19 +277,19 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
 
         tripStatisticsUpdater.addLocation(location, recordingDistanceInterval, false,
             ActivityType.INVALID, PreferencesUtils.WEIGHT_DEFAULT);
-        if (i % elevationSamplingFrequency == 0) {
+        if (readCount % elevationSamplingFrequency == 0) {
           distances.add(tripStatisticsUpdater.getTripStatistics().getTotalDistance());
           elevations.add(tripStatisticsUpdater.getSmoothedElevation());
         }
 
         // Upload periodically
-        int readCount = i + 1;
+        readCount++;
         if (readCount % MAX_POINTS_PER_UPLOAD == 0) {
           if (!prepareAndUploadPoints(track, locations, false)) {
             Log.d(TAG, "Unable to upload points");
             return false;
           }
-          updateProgress(readCount, count);
+          updateProgress(readCount, numberOfPoints);
           locations.clear();
         }
       }
@@ -318,8 +315,8 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
       }
       return true;
     } finally {
-      if (cursor != null) {
-        cursor.close();
+      if (locationIterator != null) {
+        locationIterator.close();
       }
     }
   }
