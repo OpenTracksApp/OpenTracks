@@ -96,8 +96,6 @@ public class CalorieUtils {
     }
 
     MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
-    LocationIterator iterator = myTracksProviderUtils.getTrackPointLocationIterator(
-        track.getId(), startTrackPointId, false, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
     TripStatisticsUpdater tripStatisticsUpdater = new TripStatisticsUpdater(
         track.getTripStatistics().getStartTime());
     int recordingDistanceInterval = PreferencesUtils.getInt(context,
@@ -105,10 +103,19 @@ public class CalorieUtils {
         PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT);
     double weight = PreferencesUtils.getFloat(
         context, R.string.weight_key, PreferencesUtils.WEIGHT_DEFAULT);
+    LocationIterator locationIterator = null;
 
-    while (iterator.hasNext()) {
-      tripStatisticsUpdater.addLocation(
-          iterator.next(), recordingDistanceInterval, true, activityType, weight);
+    try {
+      locationIterator = myTracksProviderUtils.getTrackPointLocationIterator(
+          track.getId(), startTrackPointId, false, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
+      while (locationIterator.hasNext()) {
+        tripStatisticsUpdater.addLocation(
+            locationIterator.next(), recordingDistanceInterval, true, activityType, weight);
+      }
+    } finally {
+      if (locationIterator != null) {
+        locationIterator.close();
+      }
     }
     return tripStatisticsUpdater.getTripStatistics().getCalorie();
   }

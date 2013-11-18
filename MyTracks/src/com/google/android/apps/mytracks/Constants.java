@@ -31,12 +31,6 @@ public class Constants {
   public static final String ACCOUNT_TYPE = "com.google";
 
   /**
-   * Maximum number of track points that will be loaded at one time. With
-   * recording frequency of 2 seconds, 20000 corresponds to 11.1 hours.
-   */
-  public static final int MAX_LOADED_TRACK_POINTS = 20000;
-
-  /**
    * Maximum number of waypoints that will be loaded at one time.
    */
   public static final int MAX_LOADED_WAYPOINTS_POINTS = 10000;

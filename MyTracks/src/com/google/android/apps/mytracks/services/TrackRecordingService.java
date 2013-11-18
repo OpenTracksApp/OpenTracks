@@ -23,6 +23,7 @@ import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
 import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.MyTracksProvider;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Track;
@@ -60,7 +61,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.location.Location;
 import android.location.LocationManager;
@@ -132,7 +132,8 @@ public class TrackRecordingService extends Service {
   private int recordingGpsAccuracy;
   private int autoResumeTrackTimeout;
   private long currentRecordingInterval;
-
+  private double weight;
+  
   // The following variables are set when recording:
   private TripStatisticsUpdater trackTripStatisticsUpdater;
   private TripStatisticsUpdater markerTripStatisticsUpdater;
@@ -229,6 +230,10 @@ public class TrackRecordingService extends Service {
             autoResumeTrackTimeout = PreferencesUtils.getInt(context,
                 R.string.auto_resume_track_timeout_key,
                 PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_DEFAULT);
+          }
+          if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.weight_key))) {
+            weight = PreferencesUtils.getFloat(
+                context, R.string.weight_key, PreferencesUtils.WEIGHT_DEFAULT);
           }
         }
       };
@@ -656,31 +661,26 @@ public class TrackRecordingService extends Service {
     }
     markerTripStatisticsUpdater = new TripStatisticsUpdater(markerStartTime);
 
-    Cursor cursor = null;
+    ActivityType activityType = CalorieUtils.getActivityType(context, track.getCategory());
+
+    LocationIterator locationIterator = null;
     try {
-      // TODO: how to handle very long track.
-      cursor = myTracksProviderUtils.getTrackPointCursor(
-          recordingTrackId, -1L, Constants.MAX_LOADED_TRACK_POINTS, true);
-      if (cursor == null) {
-        Log.e(TAG, "Cursor is null.");
-      } else {
-        if (cursor.moveToLast()) {
-          do {
-            Location location = myTracksProviderUtils.createTrackPoint(cursor);
-            trackTripStatisticsUpdater.addLocation(location, recordingDistanceInterval, false,
-                ActivityType.INVALID, PreferencesUtils.WEIGHT_DEFAULT);
-            if (location.getTime() > markerStartTime) {
-              markerTripStatisticsUpdater.addLocation(location, recordingDistanceInterval, false,
-                  ActivityType.INVALID, PreferencesUtils.WEIGHT_DEFAULT);
-            }
-          } while (cursor.moveToPrevious());
+      locationIterator = myTracksProviderUtils.getTrackPointLocationIterator(
+          track.getId(), -1L, false, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
+      while (locationIterator.hasNext()) {
+        Location location = locationIterator.next();
+        trackTripStatisticsUpdater.addLocation(
+            location, recordingDistanceInterval, true, activityType, weight);
+        if (location.getTime() > markerStartTime) {
+          markerTripStatisticsUpdater.addLocation(
+              location, recordingDistanceInterval, true, activityType, weight);
         }
       }
     } catch (RuntimeException e) {
       Log.e(TAG, "RuntimeException", e);
     } finally {
-      if (cursor != null) {
-        cursor.close();
+      if (locationIterator != null) {
+        locationIterator.close();
       }
     }
     startRecording(true);
@@ -1011,11 +1011,11 @@ public class TrackRecordingService extends Service {
     try {
       Uri uri = myTracksProviderUtils.insertTrackPoint(location, track.getId());
       long trackPointId = Long.parseLong(uri.getLastPathSegment());
-      trackTripStatisticsUpdater.addLocation(location, recordingDistanceInterval, true,
-          CalorieUtils.getActivityType(context, track.getCategory()), PreferencesUtils.getFloat(context,
-              R.string.weight_key, PreferencesUtils.WEIGHT_DEFAULT));
-      markerTripStatisticsUpdater.addLocation(location, recordingDistanceInterval, false,
-          ActivityType.INVALID, PreferencesUtils.WEIGHT_DEFAULT);
+      ActivityType activityType = CalorieUtils.getActivityType(context, track.getCategory());
+      trackTripStatisticsUpdater.addLocation(
+          location, recordingDistanceInterval, true, activityType, weight);
+      markerTripStatisticsUpdater.addLocation(
+          location, recordingDistanceInterval, true, activityType, weight);
       updateRecordingTrack(track, trackPointId, LocationUtils.isValidLocation(location));
     } catch (SQLiteException e) {
       /*

@@ -134,16 +134,16 @@ public class FileTrackExporter implements TrackExporter {
     boolean wroteSegment = false;
     boolean isLastLocationValid = false;
     TrackWriterLocationFactory locationFactory = new TrackWriterLocationFactory();
-    LocationIterator iterator = myTracksProviderUtils.getTrackPointLocationIterator(
+    LocationIterator locationIterator = myTracksProviderUtils.getTrackPointLocationIterator(
         track.getId(), -1L, false, locationFactory);
 
     try {
       int locationNumber = 0;
-      while (iterator.hasNext()) {
+      while (locationIterator.hasNext()) {
         if (Thread.interrupted()) {
           throw new InterruptedException();
         }
-        Location location = iterator.next();
+        Location location = locationIterator.next();
 
         setLocationTime(location, offset);
         locationNumber++;
@@ -195,7 +195,7 @@ public class FileTrackExporter implements TrackExporter {
         trackWriter.writeEndTrack(track, null);
       }
     } finally {
-      iterator.close();
+      locationIterator.close();
     }
   }
 
