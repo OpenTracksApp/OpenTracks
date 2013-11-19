@@ -91,50 +91,58 @@ public class MyTracksProvider extends ContentProvider {
       } else {
         // Incremental upgrades. One if statement per DB version.
 
-        // Add track points SENSOR column
+        // Add track point SENSOR column
         if (oldVersion <= 17) {
-          Log.w(TAG, "Upgrade DB: Adding sensor column.");
+          Log.w(TAG, "Upgrade DB: Adding track point sensor column.");
           db.execSQL("ALTER TABLE " + TrackPointsColumns.TABLE_NAME + " ADD "
               + TrackPointsColumns.SENSOR + " BLOB");
         }
 
-        // Add tracks TABLEID column
+        // Add track TABLEID column
         if (oldVersion <= 18) {
-          Log.w(TAG, "Upgrade DB: Adding tableid column.");
+          Log.w(TAG, "Upgrade DB: Adding track tableid column.");
           db.execSQL("ALTER TABLE " + TracksColumns.TABLE_NAME + " ADD " + TracksColumns.TABLEID
               + " STRING");
         }
 
-        // Add tracks ICON column
+        // Add track ICON column
         if (oldVersion <= 19) {
-          Log.w(TAG, "Upgrade DB: Adding icon column.");
+          Log.w(TAG, "Upgrade DB: Adding track icon column.");
           db.execSQL(
               "ALTER TABLE " + TracksColumns.TABLE_NAME + " ADD " + TracksColumns.ICON + " STRING");
         }
 
         // Add track DRIVEID, MODIFIEDTIME, and SHAREDWITHME columns
         if (oldVersion <= 20) {
-          Log.w(TAG, "Upgrade DB: Adding driveid column.");
+          Log.w(TAG, "Upgrade DB: Adding track driveid column.");
           db.execSQL("ALTER TABLE " + TracksColumns.TABLE_NAME + " ADD " + TracksColumns.DRIVEID
               + " STRING");
-          Log.w(TAG, "Upgrade DB: Adding modifiedtime column.");
+          Log.w(TAG, "Upgrade DB: Adding track modifiedtime column.");
           db.execSQL("ALTER TABLE " + TracksColumns.TABLE_NAME + " ADD "
               + TracksColumns.MODIFIEDTIME + " INTEGER");
-          Log.w(TAG, "Upgrade DB: Adding sharedwithme column.");
+
+          Log.w(TAG, "Upgrade DB: Adding track sharedwithme column.");
           db.execSQL("ALTER TABLE " + TracksColumns.TABLE_NAME + " ADD "
               + TracksColumns.SHAREDWITHME + " INTEGER");
-          Log.w(TAG, "Upgrade DB: Adding sharedowner column.");
+
+          Log.w(TAG, "Upgrade DB: Adding track sharedowner column.");
           db.execSQL("ALTER TABLE " + TracksColumns.TABLE_NAME + " ADD " + TracksColumns.SHAREDOWNER
               + " STRING");
         }
-        
+
+        // Add waypoint CALORIE and PHOTOURL columns. Add track CALORIE column.
         if (oldVersion <= 21) {
-          Log.w(TAG, "Upgrade DB: Adding photo url column.");
-          db.execSQL("ALTER TABLE " + WaypointsColumns.TABLE_NAME + " ADD " + WaypointsColumns.PHOTOURL
-              + " STRING");
+          Log.w(TAG, "Upgrade DB: Adding waypoint calorie column.");
+          db.execSQL("ALTER TABLE " + WaypointsColumns.TABLE_NAME + " ADD "
+              + WaypointsColumns.CALORIE + " FLOAT");
+
+          Log.w(TAG, "Upgrade DB: Adding waypoint photo url column.");
+          db.execSQL("ALTER TABLE " + WaypointsColumns.TABLE_NAME + " ADD "
+              + WaypointsColumns.PHOTOURL + " STRING");
+
           Log.w(TAG, "Upgrade DB: Adding track calorie column.");
           db.execSQL("ALTER TABLE " + TracksColumns.TABLE_NAME + " ADD " + TracksColumns.CALORIE
-              + " INTEGER");
+              + " FLOAT");
         }
       }
     }

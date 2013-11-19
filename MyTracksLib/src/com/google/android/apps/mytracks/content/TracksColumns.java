@@ -124,7 +124,7 @@ public interface TracksColumns extends BaseColumns {
       + MODIFIEDTIME + " INTEGER, " // modified time
       + SHAREDWITHME + " INTEGER, " // shared with me
       + SHAREDOWNER + " STRING, " // shared owner
-      + CALORIE + " INTEGER);"; // calorie
+      + CALORIE + " FLOAT);"; // calorie
 
   public static final String[] COLUMNS = { _ID, // id
       NAME, // name
@@ -190,6 +190,6 @@ public interface TracksColumns extends BaseColumns {
       ContentTypeIds.LONG_TYPE_ID, // modified time
       ContentTypeIds.BOOLEAN_TYPE_ID, // shared with me
       ContentTypeIds.STRING_TYPE_ID, // shared owner
-      ContentTypeIds.INT_TYPE_ID // calorie
+      ContentTypeIds.FLOAT_TYPE_ID // calorie
   };
 }

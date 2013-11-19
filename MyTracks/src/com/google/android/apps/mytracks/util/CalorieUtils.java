@@ -18,10 +18,13 @@ package com.google.android.apps.mytracks.util;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
 import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.stats.TripStatisticsUpdater;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.location.Location;
 
 /**
@@ -82,21 +85,25 @@ public class CalorieUtils {
   }
 
   /**
-   * Calculates the track calorie in kcal.
+   * Updates calories for a track and its waypoints.
    * 
    * @param context the context
    * @param track the track
-   * @param startTrackPointId the starting track point id. -1L to calculate the
-   *          entire track
+   * @return an array of two doubles, first is the track calorie, second is the
+   *         last statistics waypoint calorie
    */
-  public static double getTrackCalorie(Context context, Track track, long startTrackPointId) {
+  public static double[] updateTrackCalorie(Context context, Track track) {
+    MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
     ActivityType activityType = getActivityType(context, track.getCategory());
+
     if (activityType == ActivityType.INVALID) {
-      return 0.0;
+      clearCalorie(myTracksProviderUtils, track);
+      return new double[] { 0.0, 0.0 };
     }
 
-    MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
-    TripStatisticsUpdater tripStatisticsUpdater = new TripStatisticsUpdater(
+    TripStatisticsUpdater trackTripStatisticsUpdater = new TripStatisticsUpdater(
+        track.getTripStatistics().getStartTime());
+    TripStatisticsUpdater markerTripStatisticsUpdater = new TripStatisticsUpdater(
         track.getTripStatistics().getStartTime());
     int recordingDistanceInterval = PreferencesUtils.getInt(context,
         R.string.recording_distance_interval_key,
@@ -104,21 +111,53 @@ public class CalorieUtils {
     double weight = PreferencesUtils.getFloat(
         context, R.string.weight_key, PreferencesUtils.WEIGHT_DEFAULT);
     LocationIterator locationIterator = null;
+    Cursor cursor = null;
 
     try {
+      Waypoint waypoint = null;
+
       locationIterator = myTracksProviderUtils.getTrackPointLocationIterator(
-          track.getId(), startTrackPointId, false, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
+          track.getId(), -1L, false, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
+      cursor = myTracksProviderUtils.getWaypointCursor(track.getId(), -1L, -1);
+
+      if (cursor != null && cursor.moveToFirst()) {
+        /*
+         * Yes, this will skip the first waypoint and that is intentional as the
+         * first waypoint holds the stats for the track.
+         */
+        waypoint = getNextStatisticsWaypoint(myTracksProviderUtils, cursor);
+      }
 
       while (locationIterator.hasNext()) {
-        tripStatisticsUpdater.addLocation(
-            locationIterator.next(), recordingDistanceInterval, true, activityType, weight);
+        Location location = locationIterator.next();
+        trackTripStatisticsUpdater.addLocation(
+            location, recordingDistanceInterval, true, activityType, weight);
+        markerTripStatisticsUpdater.addLocation(
+            location, recordingDistanceInterval, true, activityType, weight);
+
+        if (waypoint != null && waypoint.getLocation().getTime() == location.getTime()
+            && waypoint.getLocation().getLatitude() == location.getLatitude()
+            && waypoint.getLocation().getLongitude() == location.getLongitude()) {
+          waypoint.getTripStatistics()
+              .setCalorie(markerTripStatisticsUpdater.getTripStatistics().getCalorie());
+          myTracksProviderUtils.updateWaypoint(waypoint);
+          markerTripStatisticsUpdater = new TripStatisticsUpdater(location.getTime());
+          waypoint = getNextStatisticsWaypoint(myTracksProviderUtils, cursor);
+        }
       }
     } finally {
       if (locationIterator != null) {
         locationIterator.close();
       }
+      if (cursor != null) {
+        cursor.close();
+      }
     }
-    return tripStatisticsUpdater.getTripStatistics().getCalorie();
+    double trackCalorie = trackTripStatisticsUpdater.getTripStatistics().getCalorie();
+    track.getTripStatistics().setCalorie(trackCalorie);
+    myTracksProviderUtils.updateTrack(track);
+    return new double[] {
+        trackCalorie, markerTripStatisticsUpdater.getTripStatistics().getCalorie() };
   }
 
   /**
@@ -175,6 +214,56 @@ public class CalorieUtils {
        */
       return vo2 * duration * weight * UnitConversions.ML_TO_L * UnitConversions.L_TO_KCAL;
     }
+  }
+
+  /**
+   * Clears calorie in the track and its waypoints.
+   * 
+   * @param myTracksProviderUtils the my tracks provider utils
+   * @param track the track
+   */
+  private static void clearCalorie(MyTracksProviderUtils myTracksProviderUtils, Track track) {
+    track.getTripStatistics().setCalorie(0);
+    myTracksProviderUtils.updateTrack(track);
+    Cursor cursor = null;
+    try {
+      cursor = myTracksProviderUtils.getWaypointCursor(track.getId(), -1L, -1);
+      if (cursor != null && cursor.moveToFirst()) {
+        /*
+         * Yes, this will skip the first waypoint and that is intentional as the
+         * first waypoint holds the stats for the track.
+         */
+        while (cursor.moveToNext()) {
+          Waypoint waypoint = myTracksProviderUtils.createWaypoint(cursor);
+          waypoint.getTripStatistics().setCalorie(0);
+          myTracksProviderUtils.updateWaypoint(waypoint);
+        }
+      }
+    } finally {
+      if (cursor != null) {
+        cursor.close();
+      }
+    }
+  }
+
+  /**
+   * Gets the next statistics waypoint from a cursor.
+   * 
+   * @param myTracksProviderUtils the my tracks provider utils
+   * @param cursor the cursor
+   */
+  private static Waypoint getNextStatisticsWaypoint(
+      MyTracksProviderUtils myTracksProviderUtils, Cursor cursor) {
+    if (cursor == null) {
+      return null;
+    }
+    while (cursor.moveToNext()) {
+      Waypoint waypoint = myTracksProviderUtils.createWaypoint(cursor);
+      if (waypoint.getType() == WaypointType.STATISTICS) {
+        return waypoint;
+      }
+    }
+    return null;
   }
 
   /**

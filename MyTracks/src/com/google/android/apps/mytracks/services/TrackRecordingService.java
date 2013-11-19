@@ -1379,23 +1379,14 @@ public class TrackRecordingService extends Service {
           return;
         }
 
-        double calorie = CalorieUtils.getTrackCalorie(context, track, -1L);
-
-        // Update to database
-        track.getTripStatistics().setCalorie(calorie);
-        myTracksProviderUtils.updateTrack(track);
-
+        
+        double[] calories = CalorieUtils.updateTrackCalorie(context, track);
+        
         // Update track statistics
-        trackTripStatisticsUpdater.updateCalorie(calorie);
+        trackTripStatisticsUpdater.updateCalorie(calories[0]);
 
-        // Update marker statistics
-        Waypoint wayPoint = myTracksProviderUtils.getLastWaypoint(
-            recordingTrackId, WaypointType.STATISTICS);
-        long trackPointId = wayPoint != null ? myTracksProviderUtils.getTrackPointId(
-            recordingTrackId, wayPoint.getLocation())
-            : -1L;
-        calorie = CalorieUtils.getTrackCalorie(context, track, trackPointId);
-        markerTripStatisticsUpdater.updateCalorie(calorie);
+        // Update marker statistics      
+        markerTripStatisticsUpdater.updateCalorie(calories[1]);
       }
     });
   }

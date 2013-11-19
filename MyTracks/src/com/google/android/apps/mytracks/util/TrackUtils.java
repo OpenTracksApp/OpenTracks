@@ -39,20 +39,10 @@ public class TrackUtils {
       track.setName(name);
     }
     boolean updateCalorie = false;
-    boolean isRecording = false;
     if (category != null) {
       updateCalorie = !category.equals(track.getCategory()) || newWeight;
       track.setCategory(category);
       track.setIcon(TrackIconUtils.getIconValue(context, category));
-      if (updateCalorie) {
-        isRecording = track.getId()
-            == PreferencesUtils.getLong(context, R.string.recording_track_id_key);
-        if (!isRecording) {
-          // Update calorie
-          double calorie = CalorieUtils.getTrackCalorie(context, track, -1L);
-          track.getTripStatistics().setCalorie(calorie);
-        }
-      }
     }
 
     if (description != null) {
@@ -61,9 +51,13 @@ public class TrackUtils {
     track.setModifiedTime(System.currentTimeMillis());
     myTracksProviderUtils.updateTrack(track);
 
-    if (updateCalorie && isRecording) {
-      // Update calorie through track recording service
-      TrackRecordingServiceConnectionUtils.updateCalorie(trackRecordingServiceConnection);
+    if (updateCalorie) {
+      if (track.getId() == PreferencesUtils.getLong(context, R.string.recording_track_id_key)) {
+        // Update calorie through track recording service
+        TrackRecordingServiceConnectionUtils.updateCalorie(trackRecordingServiceConnection);
+      } else {
+        CalorieUtils.updateTrackCalorie(context, track);
+      }
     }
 
     boolean driveSync = PreferencesUtils.getBoolean(

@@ -394,6 +394,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     int elevationGainIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.ELEVATIONGAIN);
     int minGradeIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.MINGRADE);
     int maxGradeIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.MAXGRADE);
+    int calorieIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.CALORIE);
     int photoUrlIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.PHOTOURL);
     
     Waypoint waypoint = new Waypoint();
@@ -496,7 +497,10 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
       tripStatistics.setMaxGrade(cursor.getFloat(maxGradeIndex));
       hasTripStatistics = true;
     }
-
+    if (!cursor.isNull(calorieIndex)) {
+      tripStatistics.setCalorie(cursor.getFloat(calorieIndex));
+      hasTripStatistics = true;
+    }
     if (hasTripStatistics) {
       waypoint.setTripStatistics(tripStatistics);
     }
@@ -739,6 +743,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
       values.put(WaypointsColumns.ELEVATIONGAIN, tripStatistics.getTotalElevationGain());
       values.put(WaypointsColumns.MINGRADE, tripStatistics.getMinGrade());
       values.put(WaypointsColumns.MAXGRADE, tripStatistics.getMaxGrade());
+      values.put(WaypointsColumns.CALORIE, tripStatistics.getCalorie());
     }
     
     values.put(WaypointsColumns.PHOTOURL, waypoint.getPhotoUrl());    
