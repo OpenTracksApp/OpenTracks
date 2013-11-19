@@ -91,6 +91,11 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
   public void startElement(String uri, String localName, String tag, Attributes attributes)
       throws SAXException {
     if (tag.equals(TAG_PLACEMARK) || tag.equals(TAG_PHOTO_OVERLAY)) {
+      /*
+       * Note that a track is contained in a Placemark, calling onWaypointStart
+       * will clear various track variables like name, category, and
+       * description.
+       */
       onWaypointStart();
     } else if (tag.equals(TAG_GX_MULTI_TRACK)) {
       trackStarted = true;
@@ -110,6 +115,10 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
     if (tag.equals(TAG_KML)) {
       onFileEnd();
     } else if (tag.equals(TAG_PLACEMARK) || tag.equals(TAG_PHOTO_OVERLAY)) {
+      /*
+       * Note that a track is contained in a Placemark, calling onWaypointend is
+       * save since waypointType is not set for a track.
+       */
       onWaypointEnd();
     } else if (localName.equals(TAG_COORDINATES)) {
       onWaypointLocationEnd();
@@ -159,12 +168,12 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
     name = null;
     description = null;
     category = null;
+    photoUrl = null;
     latitude = null;
     longitude = null;
     altitude = null;
     time = null;
     waypointType = null;
-    photoUrl = null;
   }
 
   /**

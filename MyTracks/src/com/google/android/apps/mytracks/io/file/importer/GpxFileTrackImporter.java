@@ -156,6 +156,7 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
     name = null;
     description = null;
     category = null;
+    photoUrl = null;
     latitude = attributes.getValue(ATTRIBUTE_LAT);
     longitude = attributes.getValue(ATTRIBUTE_LON);
     altitude = null;
