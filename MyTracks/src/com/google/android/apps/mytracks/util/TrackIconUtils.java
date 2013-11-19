@@ -142,6 +142,9 @@ public class TrackIconUtils {
    * @param activityType the activity type
    */
   public static String getIconValue(Context context, String activityType) {
+    if (activityType == null || activityType.equals("")) {
+      return "";
+    }
     if (inList(context, activityType, airplane)) {
       return AIRPLANE;
     }

@@ -126,9 +126,12 @@ public class StatsUtils {
    * @param view the containing view for finding views. If null, the activity
    *          cannot be null
    * @param tripStatistics the trip statistics
+   * @param activityType the activity type
+   * @param trackIconValue the track icon value or null to hide the track icon
+   *          spinner
    */
-  public static void setTripStatisticsValues(
-      Context context, Activity activity, View view, TripStatistics tripStatistics, String category) {
+  public static void setTripStatisticsValues(Context context, Activity activity, View view,
+      TripStatistics tripStatistics, ActivityType activityType, String trackIconValue) {
     boolean metricUnits = PreferencesUtils.isMetricUnits(context);
     boolean reportSpeed = PreferencesUtils.isReportSpeed(context);
 
@@ -138,15 +141,14 @@ public class StatsUtils {
         context, getView(activity, view, R.id.stats_distance), totalDistance, metricUnits);
 
     // Set calorie
-    ActivityType activityType = CalorieUtils.getActivityType(context, category);
     double calorie = tripStatistics == null || activityType == ActivityType.INVALID ? Double.NaN
         : tripStatistics.getCalorie();
     setCalorie(context, getView(activity, view, R.id.stats_calorie), calorie);
 
     Spinner spinner = (Spinner) getView(activity, view, R.id.stats_activity_type_icon);
-    spinner.setVisibility(category != null ? View.VISIBLE : View.GONE);
-    if (category != null) {
-      TrackIconUtils.setIconSpinner(spinner, TrackIconUtils.getIconValue(context, category));
+    spinner.setVisibility(trackIconValue != null ? View.VISIBLE : View.GONE);
+    if (trackIconValue != null) {
+      TrackIconUtils.setIconSpinner(spinner, trackIconValue);
     }
 
     // Set total time

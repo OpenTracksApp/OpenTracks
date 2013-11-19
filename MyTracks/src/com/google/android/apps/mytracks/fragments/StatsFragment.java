@@ -23,6 +23,8 @@ import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.TrackDataType;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.CalorieUtils;
+import com.google.android.apps.mytracks.util.CalorieUtils.ActivityType;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StatsUtils;
@@ -289,7 +291,10 @@ public class StatsFragment extends Fragment implements TrackDataListener {
    * Updates the UI.
    */
   private void updateUi(FragmentActivity activity) {
-    StatsUtils.setTripStatisticsValues(activity, activity, null, lastTripStatistics, category);
+    ActivityType activityType = CalorieUtils.getActivityType(activity, category);
+    String trackIconValue = TrackIconUtils.getIconValue(activity, category);
+    StatsUtils.setTripStatisticsValues(
+        activity, activity, null, lastTripStatistics, activityType, trackIconValue);
     StatsUtils.setLocationValues(
         activity, activity, null, lastLocation, isSelectedTrackRecording());
   }

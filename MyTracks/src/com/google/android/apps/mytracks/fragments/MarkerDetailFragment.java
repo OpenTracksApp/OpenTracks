@@ -22,6 +22,8 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
+import com.google.android.apps.mytracks.util.CalorieUtils;
+import com.google.android.apps.mytracks.util.CalorieUtils.ActivityType;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PhotoUtils;
 import com.google.android.apps.mytracks.util.StatsUtils;
@@ -279,8 +281,12 @@ public class MarkerDetailFragment extends Fragment {
       TextView name = (TextView) getView().findViewById(R.id.marker_detail_statistics_name);
       setTextView(name, waypoint.getName());
 
+      Track track = myTracksProviderUtils.getTrack(waypoint.getTrackId());
+      ActivityType activityType = track != null ? CalorieUtils.getActivityType(
+          getActivity(), track.getCategory())
+          : ActivityType.INVALID;
       StatsUtils.setTripStatisticsValues(
-          getActivity(), null, getView(), waypoint.getTripStatistics(), null);
+          getActivity(), null, getView(), waypoint.getTripStatistics(), activityType, null);
       StatsUtils.setLocationValues(getActivity(), null, getView(), waypoint.getLocation(), false);
     }
   }
