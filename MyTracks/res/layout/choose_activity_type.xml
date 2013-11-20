@@ -14,10 +14,54 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<GridView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_height="wrap_content"
   android:layout_width="match_parent"
-  android:numColumns="4"
-  android:padding="4dp"
-  android:stretchMode="spacingWidth"
-  android:verticalSpacing="4dp" />
+  android:orientation="vertical" >
+  <GridView
+    android:id="@+id/choose_activity_type_grid_view"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:numColumns="4"
+    android:padding="4dp"
+    android:stretchMode="spacingWidth"
+    android:verticalSpacing="4dp" />
+  <LinearLayout
+    android:id="@+id/choose_activity_type_weight_container"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="vertical" >
+    <TextView
+      android:id="@+id/choose_activity_type_weight_label"
+      android:layout_marginBottom="2dp"
+      android:layout_marginLeft="16dp"
+      android:layout_marginRight="16dp"
+      android:layout_marginTop="4dp"
+      android:paddingLeft="12dp"
+      style="@style/TextMedium" />
+    <FrameLayout
+      android:layout_height="wrap_content"
+      android:layout_width="fill_parent" >
+      <EditText
+        android:id="@+id/choose_activity_type_weight"
+        android:inputType="numberDecimal"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        style="@style/TextMedium" />
+      <ImageButton
+        android:background="@android:color/transparent"
+        android:id="@+id/choose_activity_type_weight_image_button"
+        android:layout_gravity="right|center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:layout_width="wrap_content"
+        android:paddingRight="12dp"
+        android:src="@android:drawable/ic_menu_close_clear_cancel" />
+    </FrameLayout>
+  </LinearLayout>
+</LinearLayout>

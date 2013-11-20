@@ -23,6 +23,7 @@ import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
 import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.MyTracksProvider;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Track;
@@ -44,6 +45,7 @@ import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.apps.mytracks.util.TrackNameUtils;
+import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
 import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
@@ -59,7 +61,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.location.Location;
 import android.location.LocationManager;
@@ -101,9 +102,14 @@ public class TrackRecordingService extends Service {
   public static final double MAX_NO_MOVEMENT_SPEED = 0.224;
   
   private static final String TAG = TrackRecordingService.class.getSimpleName();
-  private static final long ONE_SECOND = 1000; // in milliseconds
-  private static final long ONE_MINUTE = 60 * ONE_SECOND; // in milliseconds
   
+  // 1 second in milliseconds
+  private static final long ONE_SECOND = (long) UnitConversions.S_TO_MS;
+  
+  // 1 minute in milliseconds
+  private static final long ONE_MINUTE = (long) (UnitConversions.MIN_TO_S
+      * UnitConversions.S_TO_MS);
+
   @VisibleForTesting
   static final int MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS = 3;
 
@@ -126,7 +132,8 @@ public class TrackRecordingService extends Service {
   private int recordingGpsAccuracy;
   private int autoResumeTrackTimeout;
   private long currentRecordingInterval;
-
+  private double weight;
+  
   // The following variables are set when recording:
   private TripStatisticsUpdater trackTripStatisticsUpdater;
   private TripStatisticsUpdater markerTripStatisticsUpdater;
@@ -223,6 +230,10 @@ public class TrackRecordingService extends Service {
             autoResumeTrackTimeout = PreferencesUtils.getInt(context,
                 R.string.auto_resume_track_timeout_key,
                 PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_DEFAULT);
+          }
+          if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.weight_key))) {
+            weight = PreferencesUtils.getFloat(
+                context, R.string.weight_key, PreferencesUtils.WEIGHT_DEFAULT);
           }
         }
       };
@@ -650,31 +661,27 @@ public class TrackRecordingService extends Service {
     }
     markerTripStatisticsUpdater = new TripStatisticsUpdater(markerStartTime);
 
-    Cursor cursor = null;
+    ActivityType activityType = CalorieUtils.getActivityType(context, track.getCategory());
+
+    LocationIterator locationIterator = null;
     try {
-      // TODO: how to handle very long track.
-      cursor = myTracksProviderUtils.getTrackPointCursor(
-          recordingTrackId, -1L, Constants.MAX_LOADED_TRACK_POINTS, true);
-      if (cursor == null) {
-        Log.e(TAG, "Cursor is null.");
-      } else {
-        if (cursor.moveToLast()) {
-          do {
-            Location location = myTracksProviderUtils.createTrackPoint(cursor);
-            trackTripStatisticsUpdater.addLocation(location, recordingDistanceInterval, false,
-                ActivityType.INVALID, PreferencesUtils.STATS_WEIGHT_DEFAULT);
-            if (location.getTime() > markerStartTime) {
-              markerTripStatisticsUpdater.addLocation(location, recordingDistanceInterval, false,
-                  ActivityType.INVALID, PreferencesUtils.STATS_WEIGHT_DEFAULT);
-            }
-          } while (cursor.moveToPrevious());
+      locationIterator = myTracksProviderUtils.getTrackPointLocationIterator(
+          track.getId(), -1L, false, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
+      
+      while (locationIterator.hasNext()) {
+        Location location = locationIterator.next();
+        trackTripStatisticsUpdater.addLocation(
+            location, recordingDistanceInterval, true, activityType, weight);
+        if (location.getTime() > markerStartTime) {
+          markerTripStatisticsUpdater.addLocation(
+              location, recordingDistanceInterval, true, activityType, weight);
         }
       }
     } catch (RuntimeException e) {
       Log.e(TAG, "RuntimeException", e);
     } finally {
-      if (cursor != null) {
-        cursor.close();
+      if (locationIterator != null) {
+        locationIterator.close();
       }
     }
     startRecording(true);
@@ -1010,11 +1017,11 @@ public class TrackRecordingService extends Service {
     try {
       Uri uri = myTracksProviderUtils.insertTrackPoint(location, track.getId());
       long trackPointId = Long.parseLong(uri.getLastPathSegment());
-      trackTripStatisticsUpdater.addLocation(location, recordingDistanceInterval, true,
-          CalorieUtils.getActivityType(context, track.getCategory()), PreferencesUtils.getInt(context,
-              R.string.stats_weight_key, PreferencesUtils.STATS_WEIGHT_DEFAULT));
-      markerTripStatisticsUpdater.addLocation(location, recordingDistanceInterval, false,
-          ActivityType.INVALID, PreferencesUtils.STATS_WEIGHT_DEFAULT);
+      ActivityType activityType = CalorieUtils.getActivityType(context, track.getCategory());
+      trackTripStatisticsUpdater.addLocation(
+          location, recordingDistanceInterval, true, activityType, weight);
+      markerTripStatisticsUpdater.addLocation(
+          location, recordingDistanceInterval, true, activityType, weight);
       updateRecordingTrack(track, trackPointId, LocationUtils.isValidLocation(location));
     } catch (SQLiteException e) {
       /*
@@ -1377,23 +1384,14 @@ public class TrackRecordingService extends Service {
           return;
         }
 
-        double calorie = CalorieUtils.getTrackCalorie(context, track, -1L);
-
-        // Update to database
-        track.getTripStatistics().setCalorie(calorie);
-        myTracksProviderUtils.updateTrack(track);
-
+        
+        double[] calories = CalorieUtils.updateTrackCalorie(context, track);
+        
         // Update track statistics
-        trackTripStatisticsUpdater.updateCalorie(calorie);
+        trackTripStatisticsUpdater.updateCalorie(calories[0]);
 
-        // Update marker statistics
-        Waypoint wayPoint = myTracksProviderUtils.getLastWaypoint(
-            recordingTrackId, WaypointType.STATISTICS);
-        long trackPointId = wayPoint != null ? myTracksProviderUtils.getTrackPointId(
-            recordingTrackId, wayPoint.getLocation())
-            : -1L;
-        calorie = CalorieUtils.getTrackCalorie(context, track, trackPointId);
-        markerTripStatisticsUpdater.updateCalorie(calorie);
+        // Update marker statistics      
+        markerTripStatisticsUpdater.updateCalorie(calories[1]);
       }
     });
   }

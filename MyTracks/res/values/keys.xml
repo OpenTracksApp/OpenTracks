@@ -42,8 +42,6 @@ limitations under the License.
   <string name="stats_rate_key">statsRate</string>
   <string name="stats_show_coordinate_key">statsShowCoordinate</string>
   <string name="stats_show_grade_elevation_key">statsShowGradeElevation</string>
-  <string name="stats_show_calorie_key">statsShowCalorie</string>
-  <string name="stats_weight_key">statsWeight</string>
   <string name="stats_units_key">statsUnits</string>
   <string name="track_color_mode_medium_key">trackColorModeMedium</string>
   <string name="track_color_mode_percentage_key">trackColorModePercentage</string>
@@ -70,6 +68,7 @@ limitations under the License.
   <string name="google_account_key">googleAccount</string>
   <string name="recording_track_id_key">recordingTrackId</string>
   <string name="recording_track_paused_key">recordingTrackPaused</string>
+  <string name="weight_key">weight</string>
   <!-- Keys for non-persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
   <string name="settings_advanced_key">settingsAdvanced</string>
   <string name="settings_backup_key">settingsBackup</string>

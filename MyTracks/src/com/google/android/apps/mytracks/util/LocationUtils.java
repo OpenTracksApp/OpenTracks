@@ -32,7 +32,9 @@ public class LocationUtils {
 
   private static final String TAG = LocationUtils.class.getSimpleName();
   
-  private static final long MAX_LOCATION_AGE_MS = 60 * 1000; // 1 minute
+  // 1 minute in milliseconds
+  private static final long MAX_LOCATION_AGE_MS = (long) (UnitConversions.MIN_TO_S
+      * UnitConversions.S_TO_MS);
 
   private LocationUtils() {}
 

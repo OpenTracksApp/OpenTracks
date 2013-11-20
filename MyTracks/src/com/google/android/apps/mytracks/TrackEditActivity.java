@@ -21,17 +21,12 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
-import com.google.android.apps.mytracks.util.CalorieUtils;
-import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.apps.mytracks.util.TrackNameUtils;
 import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
+import com.google.android.apps.mytracks.util.TrackUtils;
 import com.google.android.maps.mytracks.R;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.BitmapFactory.Options;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -42,7 +37,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 
 /**
@@ -70,6 +64,8 @@ public class TrackEditActivity extends AbstractMyTracksActivity
   private AutoCompleteTextView activityType;
   private Spinner activityTypeIcon;
   private EditText description;
+  
+  private boolean newWeight = false;
 
   @Override
   protected void onCreate(Bundle bundle) {
@@ -101,14 +97,14 @@ public class TrackEditActivity extends AbstractMyTracksActivity
         this, R.array.activity_types, android.R.layout.simple_dropdown_item_1line);
     activityType.setAdapter(adapter);
     activityType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-      @Override
+        @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         setActivityTypeIcon(TrackIconUtils.getIconValue(
             TrackEditActivity.this, (String) activityType.getAdapter().getItem(position)));
       }
     });
     activityType.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-      @Override
+        @Override
       public void onFocusChange(View v, boolean hasFocus) {
         if (!hasFocus) {
           setActivityTypeIcon(TrackIconUtils.getIconValue(
@@ -125,55 +121,28 @@ public class TrackEditActivity extends AbstractMyTracksActivity
       iconValue = track.getIcon();
     }
 
-    // Add a border around the icon
-    Options options = new BitmapFactory.Options();
-    options.inJustDecodeBounds = true;
-    BitmapFactory.decodeResource(getResources(), R.drawable.ic_track_airplane, options);
-    final int padding = 4;
-    final int width = options.outWidth + 2 * padding;
-    final int height = options.outHeight + 2 * padding;
-
     activityTypeIcon = (Spinner) findViewById(R.id.track_edit_activity_type_icon);
-    ArrayAdapter<StringBuilder> activityTypeIconAdapter = new ArrayAdapter<StringBuilder>(
-        this, android.R.layout.simple_spinner_item,
-        new StringBuilder[] {new StringBuilder(iconValue)}) {
-      @Override
-      public View getView(int position, View convertView, android.view.ViewGroup parent) {
-        ImageView imageView =
-            convertView != null ? (ImageView) convertView : new ImageView(getContext());
-        Bitmap source = BitmapFactory.decodeResource(
-            getResources(), TrackIconUtils.getIconDrawable(getItem(position).toString()));
-        if (ApiAdapterFactory.getApiAdapter().isSpinnerBackgroundLight()) {
-          source = TrackIconUtils.invertBitmap(source);
-        }
-        imageView.setImageBitmap(source);
-        imageView.setMinimumHeight(height);
-        imageView.setMinimumWidth(width);
-        imageView.setPadding(padding, padding, padding, padding);
-        return imageView;
-      }
-    };
-    activityTypeIcon.setAdapter(activityTypeIconAdapter);
+    activityTypeIcon.setAdapter(TrackIconUtils.getIconSpinnerAdapter(this, iconValue));
     activityTypeIcon.setOnTouchListener(new View.OnTouchListener() {
-      @Override
+        @Override
       public boolean onTouch(View v, MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_UP) {
-          new ChooseActivityTypeDialogFragment().show(getSupportFragmentManager(),
+          ChooseActivityTypeDialogFragment.newInstance(activityType.getText().toString()).show(
+              getSupportFragmentManager(),
               ChooseActivityTypeDialogFragment.CHOOSE_ACTIVITY_TYPE_DIALOG_TAG);
         }
         return true;
       }
     });
     activityTypeIcon.setOnKeyListener(new View.OnKeyListener() {
-      @Override
+        @Override
       public boolean onKey(View v, int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
-          new ChooseActivityTypeDialogFragment().show(getSupportFragmentManager(),
+          ChooseActivityTypeDialogFragment.newInstance(activityType.getText().toString()).show(
+              getSupportFragmentManager(),
               ChooseActivityTypeDialogFragment.CHOOSE_ACTIVITY_TYPE_DIALOG_TAG);
-          return true;
-        } else {
-          return false;
         }
+        return true;
       }
     });
 
@@ -184,36 +153,9 @@ public class TrackEditActivity extends AbstractMyTracksActivity
     save.setOnClickListener(new View.OnClickListener() {
         @Override
       public void onClick(View v) {
-        track.setName(name.getText().toString());
-
-        String category = activityType.getText().toString();
-        boolean newCategory = !category.equals(track.getCategory());
-        boolean isRecording = trackId
-            == PreferencesUtils.getLong(TrackEditActivity.this, R.string.recording_track_id_key);
-
-        if (newCategory && !isRecording) {
-          // Update calorie
-          double calorie = CalorieUtils.getTrackCalorie(TrackEditActivity.this, track, -1L);
-          track.getTripStatistics().setCalorie(calorie);
-        }
-
-        track.setCategory(category);
-        track.setIcon(TrackIconUtils.getIconValue(TrackEditActivity.this, category));
-        track.setDescription(description.getText().toString());
-        track.setModifiedTime(System.currentTimeMillis());
-        myTracksProviderUtils.updateTrack(track);
-
-        if (newCategory && isRecording) {
-          // Update calorie through track recording service
-          TrackRecordingServiceConnectionUtils.updateCalorie(trackRecordingServiceConnection);
-        }
-
-        boolean driveSync = PreferencesUtils.getBoolean(
-            TrackEditActivity.this, R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT);
-        if (driveSync) {
-          PreferencesUtils.addToList(TrackEditActivity.this, R.string.drive_edited_list_key,
-              PreferencesUtils.DRIVE_EDITED_LIST_DEFAULT, String.valueOf(track.getId()));
-        }
+        TrackUtils.updateTrack(TrackEditActivity.this, track, name.getText().toString(),
+            activityType.getText().toString(), description.getText().toString(),
+            myTracksProviderUtils, trackRecordingServiceConnection, newWeight);
         finish();
       }
     });
@@ -261,26 +203,18 @@ public class TrackEditActivity extends AbstractMyTracksActivity
   protected int getLayoutResId() {
     return R.layout.track_edit;
   }
-
-  /**
-   * Sets the activity type icon.
-   *
-   * @param value the icon value
-   */
-  @SuppressWarnings("unchecked")
+  
   private void setActivityTypeIcon(String value) {
     iconValue = value;
-    ArrayAdapter<StringBuilder> adapter =
-        (ArrayAdapter<StringBuilder>) activityTypeIcon.getAdapter();
-    StringBuilder stringBuilder = adapter.getItem(0);
-    stringBuilder.delete(0, stringBuilder.length());
-    stringBuilder.append(value);
-    adapter.notifyDataSetChanged();
+    TrackIconUtils.setIconSpinner(activityTypeIcon, value);
   }
 
   @Override
-  public void onChooseActivityTypeDone(String value) {
-    activityType.setText(getString(TrackIconUtils.getIconActivityType(value)));
+  public void onChooseActivityTypeDone(String value, boolean hasNewWeight) {
+    if (!newWeight) {
+      newWeight = hasNewWeight;
+    }
     setActivityTypeIcon(value);
+    activityType.setText(getString(TrackIconUtils.getIconActivityType(value)));
   }
 }

@@ -23,9 +23,13 @@ import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.TrackDataType;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.CalorieUtils;
+import com.google.android.apps.mytracks.util.CalorieUtils.ActivityType;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StatsUtils;
+import com.google.android.apps.mytracks.util.TrackIconUtils;
+import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.location.Location;
@@ -33,9 +37,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Spinner;
 
 import java.util.EnumSet;
 
@@ -49,13 +56,15 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
   public static final String STATS_FRAGMENT_TAG = "statsFragment";
 
-  private static final int ONE_SECOND = 1000;
+  // 1 second in milliseconds
+  private static final long ONE_SECOND = (long) UnitConversions.S_TO_MS;
 
   private TrackDataHub trackDataHub;
   private Handler handler;
 
   private Location lastLocation = null;
   private TripStatistics lastTripStatistics = null;
+  private String category = "";
   private int recordingGpsAccuracy = PreferencesUtils.RECORDING_GPS_ACCURACY_DEFAULT;
 
   // A runnable to update the total time field.
@@ -81,13 +90,34 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
     handler = new Handler();
-    updateUi(getActivity());
+   
+    Spinner activityTypeIcon = (Spinner) getView().findViewById(R.id.stats_activity_type_icon);
+    activityTypeIcon.setAdapter(TrackIconUtils.getIconSpinnerAdapter(getActivity(), ""));
+    activityTypeIcon.setOnTouchListener(new View.OnTouchListener() {
+        @Override
+      public boolean onTouch(View v, MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+          ((TrackDetailActivity) getActivity()).chooseActivityType(category);          
+        }
+        return true;
+      }
+    });
+    activityTypeIcon.setOnKeyListener(new View.OnKeyListener() {
+        @Override
+      public boolean onKey(View v, int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
+          ((TrackDetailActivity) getActivity()).chooseActivityType(category);
+        }
+        return true;
+      }
+    });
   }
 
   @Override
   public void onResume() {
     super.onResume();
     resumeTrackDataHub();
+    updateUi(getActivity());
     if (isSelectedTrackRecording()) {
       handler.post(updateTotalTime);
     }
@@ -106,8 +136,9 @@ public class StatsFragment extends Fragment implements TrackDataListener {
       getActivity().runOnUiThread(new Runnable() {
           @Override
         public void run() {
-          if (isResumed()) {
+          if (isResumed()) {           
             lastTripStatistics = track != null ? track.getTripStatistics() : null;
+            category = track != null ? track.getCategory() : "";
             updateUi(getActivity());
           }
         }
@@ -260,9 +291,10 @@ public class StatsFragment extends Fragment implements TrackDataListener {
    * Updates the UI.
    */
   private void updateUi(FragmentActivity activity) {
-    StatsUtils.setTripStatisticsValues(activity, activity, null, lastTripStatistics,
-        trackDataHub == null ? PreferencesUtils.RECORDING_TRACK_ID_DEFAULT
-            : trackDataHub.getSelectedTrackId());
+    ActivityType activityType = CalorieUtils.getActivityType(activity, category);
+    String trackIconValue = TrackIconUtils.getIconValue(activity, category);
+    StatsUtils.setTripStatisticsValues(
+        activity, activity, null, lastTripStatistics, activityType, trackIconValue);
     StatsUtils.setLocationValues(
         activity, activity, null, lastLocation, isSelectedTrackRecording());
   }

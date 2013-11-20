@@ -19,6 +19,7 @@ package com.google.android.apps.mytracks.services.sensors;
 import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Sensor.SensorState;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.bluetooth.BluetoothAdapter;
@@ -39,6 +40,8 @@ import java.util.ArrayList;
  */
 public class BluetoothSensorManager extends SensorManager {
 
+  // 1 second in milliseconds
+  private static final long ONE_SECOND = (long) UnitConversions.S_TO_MS;
   private static final BluetoothAdapter bluetoothAdapter = getDefaultBluetoothAdapter();
   private static final String TAG = BluetoothConnectionManager.class.getSimpleName();
 
@@ -69,7 +72,7 @@ public class BluetoothSensorManager extends SensorManager {
     while (adapters.isEmpty()) {
       synchronized (mutex) {
         try {
-          mutex.wait(1000L);
+          mutex.wait(ONE_SECOND);
         } catch (InterruptedException e) {
           Log.e(TAG, "Interrupted while waiting for default bluetooth adapter", e);
         }

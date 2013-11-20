@@ -23,6 +23,7 @@ import com.google.android.apps.mytracks.services.sensors.SensorManager;
 import com.google.android.apps.mytracks.services.sensors.SensorManagerFactory;
 import com.google.android.apps.mytracks.services.sensors.SensorUtils;
 import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
+import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 import com.google.protobuf.InvalidProtocolBufferException;
 
@@ -41,7 +42,9 @@ import android.widget.TextView;
 public class SensorStateActivity extends AbstractMyTracksActivity {
 
   private static final String TAG = SensorStateActivity.class.getName();
-  private static final long ONE_SECOND = 1000;
+  
+  // 1 second in milliseconds
+  private static final long ONE_SECOND = (long) UnitConversions.S_TO_MS;
 
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
   private Handler handler;

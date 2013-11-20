@@ -27,6 +27,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.text.TextUtils;
+import android.util.Log;
 
 /**
  * Utilities to access preferences stored in {@link SharedPreferences}.
@@ -106,8 +107,6 @@ public class PreferencesUtils {
   public static final boolean STATS_SHOW_COORDINATE_DEFAULT = false;
   public static final boolean STATS_SHOW_GRADE_ELEVATION_DEFAULT = false;
   public static final String STATS_UNITS_DEFAULT = "METRIC";
-  public static final boolean STATS_SHOW_CALORIE_DEFAULT = false;
-  public static final int STATS_WEIGHT_DEFAULT = 65; // in kilogram
   
   // Track color
   public static final String TRACK_COLOR_MODE_DEFAULT = "SINGLE";
@@ -124,6 +123,10 @@ public class PreferencesUtils {
   public static final int TRACK_WIDGET_ITEM4_DEFAULT = 2; // average speed
   public static final int VOICE_FREQUENCY_DEFAULT = 0;
 
+  public static final float WEIGHT_DEFAULT = 65.0f; // in kilogram
+  
+  private static final String TAG = PreferencesUtils.class.getSimpleName();
+  
   private PreferencesUtils() {}
 
   /**
@@ -191,6 +194,35 @@ public class PreferencesUtils {
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     Editor editor = sharedPreferences.edit();
     editor.putInt(getKey(context, keyId), value);
+    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
+  }
+
+  /**
+   * Gets a float preference value.
+   * 
+   * @param context the context
+   * @param keyId the key id
+   * @param defaultValue the default value
+   */
+  public static float getFloat(Context context, int keyId, float defaultValue) {
+    SharedPreferences sharedPreferences = context.getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    return sharedPreferences.getFloat(getKey(context, keyId), defaultValue);
+  }
+
+  /**
+   * Sets a float preference value.
+   * 
+   * @param context the context
+   * @param keyId the key id
+   * @param value the value
+   */
+  @SuppressLint("CommitPrefEdits")
+  public static void setFloat(Context context, int keyId, float value) {
+    SharedPreferences sharedPreferences = context.getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    Editor editor = sharedPreferences.edit();
+    editor.putFloat(getKey(context, keyId), value);
     ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
   }
 
@@ -303,5 +335,38 @@ public class PreferencesUtils {
       }
     }
     setString(context, keyId, list + ";" + value);
+  }
+  
+  /**
+   * Stores the weight value, always in metric units.
+   * 
+   * @param displayValue the display value
+   */
+  public static void storeWeightValue(Context context, String displayValue) {
+    double value;
+    try {
+      value = Double.parseDouble(displayValue);
+      if (!PreferencesUtils.isMetricUnits(context)) {
+        value = value * UnitConversions.LB_TO_KG;
+      }
+    } catch (NumberFormatException e) {
+      Log.e(TAG, "invalid value " + displayValue);
+      value = PreferencesUtils.WEIGHT_DEFAULT;
+    }
+    PreferencesUtils.setFloat(context, R.string.weight_key, (float) value);
+  }
+  
+  /**
+   * Gets the weight display value.
+   * 
+   * @param context the context
+   */
+  public static double getWeightDisplayValue(Context context) {
+    double value = PreferencesUtils.getFloat(
+        context, R.string.weight_key, PreferencesUtils.WEIGHT_DEFAULT);
+    if (!PreferencesUtils.isMetricUnits(context)) {
+      value = value * UnitConversions.KG_TO_LB;
+    }
+    return value;
   }
 }

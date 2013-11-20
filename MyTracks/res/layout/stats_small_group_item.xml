@@ -14,21 +14,34 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  style="@style/StatsLargeItemContainer" >
-  <!-- Label -->
-  <TextView
-    android:id="@+id/stats_label"
-    style="@style/StatsLargeLabel" />
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_height="wrap_content"
+  android:layout_width="wrap_content" >
   <!-- Value container -->
-  <LinearLayout style="@style/StatsLargeValueContainer" >
+  <LinearLayout
+    android:layout_gravity="right|bottom"
+    style="@style/StatsSmallValueContainer" >
     <!-- Value -->
     <TextView
       android:id="@+id/stats_value"
-      style="@style/StatsLargeValue" />
+      style="@style/StatsSmallValue" />
     <!-- Unit -->
     <TextView
       android:id="@+id/stats_unit"
       style="@style/StatsUnit" />
   </LinearLayout>
-</LinearLayout>
+  <!-- Label container -->
+  <LinearLayout
+    android:layout_gravity="left|bottom"
+    style="@style/StatsSmallValueContainer" >
+    <TextView
+      android:visibility="invisible"
+      style="@style/StatsSmallValue" />
+    <!-- Label -->
+    <TextView
+      android:id="@+id/stats_label"
+      android:layout_gravity="bottom"
+      android:paddingLeft="8dp"
+      style="@style/StatsSmallLabel" />
+  </LinearLayout>
+</TableRow>

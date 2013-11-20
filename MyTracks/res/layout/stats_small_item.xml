@@ -15,16 +15,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:id="@+id/stats_small_item_id"
   style="@style/StatsSmallItemContainer" >
+  <!-- Label -->
   <TextView
     android:id="@+id/stats_label"
     style="@style/StatsSmallLabel" />
-  <!-- Distance value -->
+  <!-- Value container -->
   <LinearLayout style="@style/StatsSmallValueContainer" >
+    <!-- Value -->
     <TextView
       android:id="@+id/stats_value"
       style="@style/StatsSmallValue" />
+    <!-- Unit -->
     <TextView
       android:id="@+id/stats_unit"
       style="@style/StatsUnit" />

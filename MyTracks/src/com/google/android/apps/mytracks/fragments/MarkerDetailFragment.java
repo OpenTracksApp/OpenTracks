@@ -22,9 +22,10 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
+import com.google.android.apps.mytracks.util.CalorieUtils;
+import com.google.android.apps.mytracks.util.CalorieUtils.ActivityType;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PhotoUtils;
-import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StatsUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
@@ -128,6 +129,9 @@ public class MarkerDetailFragment extends Fragment {
         int visibility = waypointInfo.getVisibility() == View.GONE ? View.VISIBLE : View.GONE;
         textGradient.setVisibility(visibility);
         waypointInfo.setVisibility(visibility);
+        if (visibility == View.VISIBLE) {
+          handler.postDelayed(hideText, HIDE_TEXT_DELAY);
+        }
       }
     });
     textGradient = (ImageView) view.findViewById(R.id.marker_detail_waypoint_text_gradient);
@@ -277,8 +281,12 @@ public class MarkerDetailFragment extends Fragment {
       TextView name = (TextView) getView().findViewById(R.id.marker_detail_statistics_name);
       setTextView(name, waypoint.getName());
 
-      StatsUtils.setTripStatisticsValues(getActivity(), null, getView(),
-          waypoint.getTripStatistics(), PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
+      Track track = myTracksProviderUtils.getTrack(waypoint.getTrackId());
+      ActivityType activityType = track != null ? CalorieUtils.getActivityType(
+          getActivity(), track.getCategory())
+          : ActivityType.INVALID;
+      StatsUtils.setTripStatisticsValues(
+          getActivity(), null, getView(), waypoint.getTripStatistics(), activityType, null);
       StatsUtils.setLocationValues(getActivity(), null, getView(), waypoint.getLocation(), false);
     }
   }

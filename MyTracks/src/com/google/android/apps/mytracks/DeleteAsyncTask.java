@@ -20,6 +20,7 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
@@ -31,6 +32,9 @@ import android.os.AsyncTask;
  * @author Jimmy Shih
  */
 public class DeleteAsyncTask extends AsyncTask<Void, Integer, Boolean> {
+
+  // 1 second in milliseconds
+  private static final long ONE_SECOND = (long) UnitConversions.S_TO_MS;
 
   private DeleteActivity deleteActivity;
   private final long[] trackIds;
@@ -82,7 +86,7 @@ public class DeleteAsyncTask extends AsyncTask<Void, Integer, Boolean> {
           if (isCancelled()) {
             return false;
           }
-          Thread.sleep(1000);
+          Thread.sleep(ONE_SECOND);
         }
       } catch (InterruptedException e) {
         return false;

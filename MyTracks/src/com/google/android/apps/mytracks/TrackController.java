@@ -19,6 +19,7 @@ package com.google.android.apps.mytracks;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.util.StringUtils;
+import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -38,7 +39,9 @@ import android.widget.TextView;
 public class TrackController {
 
   private static final String TAG = TrackController.class.getSimpleName();
-  private static final int ONE_SECOND = 1000;
+  
+  // 1 second in milliseconds
+  private static final long ONE_SECOND = (long) UnitConversions.S_TO_MS;
 
   private final Activity activity;
   private final TrackRecordingServiceConnection trackRecordingServiceConnection;

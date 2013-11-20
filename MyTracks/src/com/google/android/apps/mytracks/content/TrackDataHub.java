@@ -492,52 +492,60 @@ public class TrackDataHub implements DataSourceListener {
 
     long lastTrackPointId = myTracksProviderUtils.getLastTrackPointId(selectedTrackId);
     int samplingFrequency = -1;
-    LocationIterator iterator = myTracksProviderUtils.getTrackPointLocationIterator(selectedTrackId,
-        localLastSeenLocationId + 1, false, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
     boolean includeNextPoint = false;
-    while (iterator.hasNext()) {
-      Location location = iterator.next();
-      long locationId = iterator.getLocationId();
+    LocationIterator locationIterator = null;
 
-      // Stop if past the last wanted point
-      if (maxPointId != -1L && locationId > maxPointId) {
-        break;
-      }
+    try {
+      locationIterator = myTracksProviderUtils.getTrackPointLocationIterator(selectedTrackId,
+          localLastSeenLocationId + 1, false, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
 
-      if (localFirstSeenLocationId == -1) {
-        localFirstSeenLocationId = locationId;
-      }
+      while (locationIterator.hasNext()) {
+        Location location = locationIterator.next();
+        long locationId = locationIterator.getLocationId();
 
-      if (samplingFrequency == -1) {
-        long numTotalPoints = Math.max(0L, lastTrackPointId - localFirstSeenLocationId);
-        samplingFrequency = 1 + (int) (numTotalPoints / targetNumPoints);
-      }
-
-      if (!LocationUtils.isValidLocation(location)) {
-        // TODO: also include the last valid point before a split
-        for (TrackDataListener trackDataListener : sampledInListeners) {
-          trackDataListener.onSegmentSplit(location);
-          includeNextPoint = true;
+        // Stop if past the last wanted point
+        if (maxPointId != -1L && locationId > maxPointId) {
+          break;
         }
-      } else {
-        // Also include the last point if the selected track is not recording.
-        if (includeNextPoint || (localNumLoadedPoints % samplingFrequency == 0)
-            || (locationId == lastTrackPointId && !isSelectedTrackRecording())) {
-          includeNextPoint = false;
+
+        if (localFirstSeenLocationId == -1) {
+          localFirstSeenLocationId = locationId;
+        }
+
+        if (samplingFrequency == -1) {
+          long numTotalPoints = Math.max(0L, lastTrackPointId - localFirstSeenLocationId);
+          samplingFrequency = 1 + (int) (numTotalPoints / targetNumPoints);
+        }
+
+        if (!LocationUtils.isValidLocation(location)) {
+          // TODO: also include the last valid point before a split
           for (TrackDataListener trackDataListener : sampledInListeners) {
-            trackDataListener.onSampledInTrackPoint(location);
+            trackDataListener.onSegmentSplit(location);
+            includeNextPoint = true;
           }
         } else {
-          for (TrackDataListener trackDataListener : sampledOutListeners) {
-            trackDataListener.onSampledOutTrackPoint(location);
+          // Also include the last point if the selected track is not recording.
+          if (includeNextPoint || (localNumLoadedPoints % samplingFrequency == 0)
+              || (locationId == lastTrackPointId && !isSelectedTrackRecording())) {
+            includeNextPoint = false;
+            for (TrackDataListener trackDataListener : sampledInListeners) {
+              trackDataListener.onSampledInTrackPoint(location);
+            }
+          } else {
+            for (TrackDataListener trackDataListener : sampledOutListeners) {
+              trackDataListener.onSampledOutTrackPoint(location);
+            }
           }
         }
-      }
 
-      localNumLoadedPoints++;
-      localLastSeenLocationId = locationId;
+        localNumLoadedPoints++;
+        localLastSeenLocationId = locationId;
+      }
+    } finally {
+      if (locationIterator != null) {
+        locationIterator.close();
+      }
     }
-    iterator.close();
 
     if (updateSamplingState) {
       numLoadedPoints = localNumLoadedPoints;

@@ -15,17 +15,28 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:id="@+id/stats_small_1line_id"
-  style="@style/StatsSmallValueContainer" >
-  <TextView
-    android:id="@+id/stats_value"
-    style="@style/StatsSmallValue" />
-  <TextView
-    android:id="@+id/stats_unit"
-    style="@style/StatsUnit" />
+  style="@style/StatsLargeItemContainer" >
+  <!-- Label -->
   <TextView
     android:id="@+id/stats_label"
-    android:layout_gravity="bottom"
-    android:paddingLeft="8dp"
-    style="@style/StatsSmallLabel" />
+    style="@style/StatsLargeLabel" />
+  <!-- Value container -->
+  <LinearLayout style="@style/StatsLargeValueContainer" >
+    <!-- Value -->
+    <TextView
+      android:id="@+id/stats_value"
+      style="@style/StatsLargeValue" />
+    <!-- Unit -->
+    <TextView
+      android:id="@+id/stats_unit"
+      style="@style/StatsUnit" />
+    <!-- Activity type -->
+    <Spinner
+      android:id="@+id/stats_activity_type_icon"
+      android:layout_gravity="bottom"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="4dp"
+      android:layout_marginTop="-6dp"
+      android:layout_width="wrap_content" />
+  </LinearLayout>
 </LinearLayout>

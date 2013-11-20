@@ -18,27 +18,30 @@ package com.google.android.apps.mytracks.io.file.importer;
 
 import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.stats.TripStatisticsUpdater;
+import com.google.android.apps.mytracks.util.CalorieUtils;
 import com.google.android.apps.mytracks.util.CalorieUtils.ActivityType;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.TrackIconUtils;
+import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.util.Log;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -105,6 +108,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
   private final long importTrackId;
   private final MyTracksProviderUtils myTracksProviderUtils;
   private final int recordingDistanceInterval;
+  private final double weight;
   private final List<Long> trackIds;
   private final List<Waypoint> waypoints;
 
@@ -142,6 +146,8 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
     this.recordingDistanceInterval = PreferencesUtils.getInt(context,
         R.string.recording_distance_interval_key,
         PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT);
+    this.weight = PreferencesUtils.getFloat(
+        context, R.string.weight_key, PreferencesUtils.WEIGHT_DEFAULT);
     trackIds = new ArrayList<Long>();
     waypoints = new ArrayList<Waypoint>();
   }
@@ -209,20 +215,20 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
     if (track == null) {
       return;
     }
-    Cursor trackPointCursor = null;
+
+    int waypointPosition = -1;
+    Waypoint waypoint = null;
+    Location location = null;
+    TripStatisticsUpdater trackTripStatisticstrackUpdater = new TripStatisticsUpdater(
+        track.getTripStatistics().getStartTime());
+    TripStatisticsUpdater markerTripStatisticsUpdater = new TripStatisticsUpdater(
+        track.getTripStatistics().getStartTime());
+    LocationIterator locationIterator = null;
+    ActivityType activityType = CalorieUtils.getActivityType(context, track.getCategory());
+    
     try {
-      trackPointCursor = myTracksProviderUtils.getTrackPointCursor(track.getId(), -1L, -1, false);
-      if (trackPointCursor == null) {
-        return;
-      }
-      int waypointPosition = -1;
-      Waypoint waypoint = null;
-      int trackPointPosition = -1;
-      Location trackPoint = null;
-      TripStatisticsUpdater trackTripStatisticstrackUpdater = new TripStatisticsUpdater(
-          track.getTripStatistics().getStartTime());
-      TripStatisticsUpdater markerTripStatisticsUpdater = new TripStatisticsUpdater(
-          track.getTripStatistics().getStartTime());
+      locationIterator = myTracksProviderUtils.getTrackPointLocationIterator(
+          track.getId(), -1L, false, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
 
       while (true) {
         if (waypoint == null) {
@@ -233,28 +239,25 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
             return;
           }
         }
-        if (trackPoint == null) {
-          trackPointPosition++;
-          trackPoint = trackPointCursor.moveToPosition(trackPointPosition) ? myTracksProviderUtils
-              .createTrackPoint(trackPointCursor)
-              : null;
-          if (trackPoint == null) {
+        if (location == null) {
+          if (!locationIterator.hasNext()) {
             // No more track points. Ignore the rest of the waypoints.
             return;
           }
-          trackTripStatisticstrackUpdater.addLocation(trackPoint, recordingDistanceInterval, false,
-              ActivityType.INVALID, PreferencesUtils.STATS_WEIGHT_DEFAULT);
-          markerTripStatisticsUpdater.addLocation(trackPoint, recordingDistanceInterval, false,
-              ActivityType.INVALID, PreferencesUtils.STATS_WEIGHT_DEFAULT);
+          location = locationIterator.next();
+          trackTripStatisticstrackUpdater.addLocation(location, recordingDistanceInterval, false,
+              ActivityType.INVALID, PreferencesUtils.WEIGHT_DEFAULT);
+          markerTripStatisticsUpdater.addLocation(
+              location, recordingDistanceInterval, true, activityType, weight);
         }
-        if (waypoint.getLocation().getTime() > trackPoint.getTime()) {
-          trackPoint = null;
-        } else if (waypoint.getLocation().getTime() < trackPoint.getTime()) {
+        if (waypoint.getLocation().getTime() > location.getTime()) {
+          location = null;
+        } else if (waypoint.getLocation().getTime() < location.getTime()) {
           waypoint = null;
         } else {
           // The waypoint location time matches the track point time
-          if (trackPoint.getLatitude() == waypoint.getLocation().getLatitude()
-              && trackPoint.getLongitude() == waypoint.getLocation().getLongitude()) {
+          if (location.getLatitude() == waypoint.getLocation().getLatitude()
+              && location.getLongitude() == waypoint.getLocation().getLongitude()) {
 
             // Get tripStatistics, description, and icon
             TripStatistics tripStatistics;
@@ -262,7 +265,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
             String icon;
             if (waypoint.getType() == WaypointType.STATISTICS) {
               tripStatistics = markerTripStatisticsUpdater.getTripStatistics();
-              markerTripStatisticsUpdater = new TripStatisticsUpdater(trackPoint.getTime());
+              markerTripStatisticsUpdater = new TripStatisticsUpdater(location.getTime());
               waypointDescription = new DescriptionGeneratorImpl(context)
                   .generateWaypointDescription(tripStatistics);
               icon = context.getString(R.string.marker_statistics_icon_url);
@@ -279,15 +282,15 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
             // Insert waypoint
             Waypoint newWaypoint = new Waypoint(waypoint.getName(), waypointDescription,
                 waypoint.getCategory(), icon, track.getId(), waypoint.getType(), length, duration,
-                -1L, -1L, trackPoint, tripStatistics, waypoint.getPhotoUrl());
+                -1L, -1L, location, tripStatistics, waypoint.getPhotoUrl());
             myTracksProviderUtils.insertWaypoint(newWaypoint);
           }
           waypoint = null;
         }
       }
     } finally {
-      if (trackPointCursor != null) {
-        trackPointCursor.close();
+      if (locationIterator != null) {
+        locationIterator.close();
       }
     }
   }
@@ -412,10 +415,10 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
          * last two points. GPS points tend to have some inherent imprecision,
          * speed and bearing will likely be off, so the statistics for things
          * like max speed will also be off.
-         */
-        float speed = trackData.lastLocationInCurrentSegment.distanceTo(location) * 1000.0f
-            / timeDifference;
-        location.setSpeed(speed);
+         */        
+        double duration = timeDifference * UnitConversions.MS_TO_S;
+        double speed = trackData.lastLocationInCurrentSegment.distanceTo(location) / duration;
+        location.setSpeed((float) speed);
       }
       location.setBearing(trackData.lastLocationInCurrentSegment.bearingTo(location));
     }
@@ -469,8 +472,9 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
     if (importTrackId == -1L) {
       return null;
     }
-    return FileUtils.getPath(
+    String path = FileUtils.getPath(
         FileUtils.PICTURES_DIR, Long.toString(importTrackId), fileName);
+    return Uri.fromFile(new File(path)).toString();    
   }
 
   /**
@@ -486,8 +490,8 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
       latitudeValue = Double.parseDouble(latitude);
       longitudeValue = Double.parseDouble(longitude);
     } catch (NumberFormatException e) {
-      throw new SAXException(createErrorMessage(
-          String.format("Unable to parse latitude longitude: %s %s", latitude, longitude)), e);
+      throw new SAXException(createErrorMessage(String.format(
+          Locale.US, "Unable to parse latitude longitude: %s %s", latitude, longitude)), e);
     }
     Double altitudeValue = null;
     if (altitude != null) {
@@ -495,7 +499,8 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         altitudeValue = Double.parseDouble(altitude);
       } catch (NumberFormatException e) {
         throw new SAXException(
-            createErrorMessage(String.format("Unable to parse altitude: %s", altitude)), e);
+            createErrorMessage(String.format(Locale.US, "Unable to parse altitude: %s", altitude)),
+            e);
       }
     }
     
@@ -507,7 +512,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         timeValue = StringUtils.getTime(time);
       } catch (IllegalArgumentException e) {
         throw new SAXException(
-            createErrorMessage(String.format("Unable to parse time: %s", time)), e);
+            createErrorMessage(String.format(Locale.US, "Unable to parse time: %s", time)), e);
       }
     }
     return createLocation(latitudeValue, longitudeValue, altitudeValue, timeValue);
@@ -548,8 +553,9 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
       trackData.tripStatisticsUpdater = new TripStatisticsUpdater(
           location.getTime() != -1L ? location.getTime() : trackData.importTime);
     }
-    trackData.tripStatisticsUpdater.addLocation(location, recordingDistanceInterval, false,
-        ActivityType.INVALID, PreferencesUtils.STATS_WEIGHT_DEFAULT);
+    ActivityType activityType = CalorieUtils.getActivityType(context, category);
+    trackData.tripStatisticsUpdater.addLocation(
+        location, recordingDistanceInterval, true, activityType, weight);
 
     trackData.bufferedLocations[trackData.numBufferedLocations] = location;
     trackData.numBufferedLocations++;

@@ -59,6 +59,7 @@ public class PreferenceBackupHelper {
     doNotBackup.add(context.getString(R.string.google_account_key));
     doNotBackup.add(context.getString(R.string.recording_track_id_key));
     doNotBackup.add(context.getString(R.string.recording_track_paused_key));
+    doNotBackup.add(context.getString(R.string.weight_key));
   }
 
   /**

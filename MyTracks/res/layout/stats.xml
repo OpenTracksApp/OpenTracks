@@ -19,9 +19,7 @@ limitations under the License.
   <LinearLayout
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp" >
+    android:orientation="vertical">
     <include layout="@layout/stats_content" />
   </LinearLayout>
 </ScrollView>

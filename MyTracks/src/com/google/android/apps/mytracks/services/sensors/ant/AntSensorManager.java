@@ -38,6 +38,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.lang.reflect.Field;
+import java.util.Locale;
 
 /**
  * Ant Sensor Manager.
@@ -396,7 +397,8 @@ public class AntSensorManager extends SensorManager {
       if (channelConfig[channel].isInitializing()) {
         if (message[AntMesg.MESG_DATA_OFFSET + 2] != 0) {
           // Error response
-          Log.e(TAG, String.format("Error code(%#02x) on message ID(%#02x) on channel %d",
+          Log.e(TAG, String.format(Locale.US,
+              "Error code(%#02x) on message ID(%#02x) on channel %d",
               message[AntMesg.MESG_DATA_OFFSET + 2], message[AntMesg.MESG_DATA_OFFSET + 1],
               channel));
         } else {

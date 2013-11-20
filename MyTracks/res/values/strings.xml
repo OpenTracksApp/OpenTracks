@@ -555,7 +555,15 @@ limitations under the License.
     translation_description="Label for a track segment">
     Segment
   </string>
-
+  <string name="description_weight_imperial"
+    translation_description="Label for weight in pounds.">
+    Weight (lb)
+  </string>
+  <string name="description_weight_metric"
+    translation_description="Label for weight in kilograms.">
+    Weight (kg)
+  </string>
+  
   <!-- Eula -->
   <string name="eula_accept"
     translation_description="In the 'Terms of Service' dialog, the button to accept.">
@@ -2025,16 +2033,6 @@ limitations under the License.
       Character limit: ~23 (1 line)">
     Grade/Elevation
   </string>
-  <string name="settings_stats_calorie_weight"
-    translation_description="In the 'Stats settings, the option to configure user's weight.
-
-      Character limit: ~23 (1 line)">
-    Weight
-  </string>
-  <string name="settings_stats_calorie_weight_description"
-    translation_description="In the 'Stats settings, the description message about weight setting item.">
-    Weight for calculating calories.
-  </string>
   <string name="settings_stats_rate_title"
     translation_description="In the 'Stats' settings, the option to change the preferred rate,
       either speed (mi/hr) or pace (min/mi).
@@ -2157,11 +2155,11 @@ limitations under the License.
       Character limit: ~23 (1 line)">
     Calories
   </string>
-  <string name="stats_calorie_setup"
-    translation_description="In the 'Stats' page, the button to setup calorie.
+  <string name="stats_calorie_no_calculation"
+    translation_description="In the 'Stats' page, the message when calories cannot be calculated.
 
-      Character limit: ~23 (1 line)">
-    Setup Activity Type
+      %1$s activity type. E.g., 'driving'.">
+    Calories can\'t be calculated with %1$s.
   </string>
   <string name="stats_fastest_pace"
     translation_description="In the 'Stats' page, the fastest pace.">
@@ -2514,12 +2512,6 @@ limitations under the License.
       %1$d an integer value. E.g., '2'.">
     %1$d kB
   </string>
-  <string name="value_integer_kilogram"
-    translation_description="Display an integer value in kilogram (kg).
-
-      %1$d an integer value. E.g., '2'.">
-    %1$d kg
-  </string>
   <string name="value_integer_kilometer"
     translation_description="In a setting picker, the string format to display an integer value in
       kilometers (km).
@@ -2593,12 +2585,6 @@ limitations under the License.
 
       %1$d an integer value. E.g., '2'.">
     %1$d %%
-  </string>
-  <string name="value_integer_pound"
-    translation_description="Display an integer value in pound (lb).
-
-      %1$d an integer value. E.g., '2'.">
-    %1$d lb
   </string>
   <string name="value_integer_second"
     translation_description="In a setting picker, the string format to display an integer value in
