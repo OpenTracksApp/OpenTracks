@@ -768,10 +768,10 @@ public class TrackRecordingService extends Service {
       // If not paused, add the last location
       if (!paused) {
         insertLocation(track, lastLocation, getLastValidTrackPointInCurrentSegment(trackId));
-      }
-
-      // Update the recording track time
-      updateRecordingTrack(track, myTracksProviderUtils.getLastTrackPointId(trackId), false);
+        
+        // Update the recording track time        
+        updateRecordingTrack(track, myTracksProviderUtils.getLastTrackPointId(trackId), false);
+      }      
 
       if (track.getCategory().equals(PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT)) {
         int activityRecognitionType = PreferencesUtils.getInt(this,
