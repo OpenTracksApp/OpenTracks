@@ -763,11 +763,17 @@ public class TrackRecordingService extends Service {
 
     // Update database
     Track track = myTracksProviderUtils.getTrack(trackId);
-    if (track != null && !paused) {
-      insertLocation(track, lastLocation, getLastValidTrackPointInCurrentSegment(trackId));
+    if (track != null) {
 
-      if (PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT.equals(track.getCategory())) {
-        // Category not set, use activity_recognition_type_key value
+      // If not paused, add the last location
+      if (!paused) {
+        insertLocation(track, lastLocation, getLastValidTrackPointInCurrentSegment(trackId));
+      }
+
+      // Update the recording track time
+      updateRecordingTrack(track, myTracksProviderUtils.getLastTrackPointId(trackId), false);
+
+      if (track.getCategory().equals(PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT)) {
         int activityRecognitionType = PreferencesUtils.getInt(this,
             R.string.activity_recognition_type_key,
             PreferencesUtils.ACTIVITY_RECOGNITION_TYPE_DEFAULT);
@@ -789,14 +795,12 @@ public class TrackRecordingService extends Service {
           if (iconValue != null) {
             track.setIcon(iconValue);
             track.setCategory(getString(TrackIconUtils.getIconActivityType(iconValue)));
-            double calorie = CalorieUtils.getTrackCalorie(this, track, -1L);
-            track.getTripStatistics().setCalorie(calorie);
+            myTracksProviderUtils.updateTrack(track);
+            CalorieUtils.updateTrackCalorie(context, track);
           }
         }
       }
-      updateRecordingTrack(track, myTracksProviderUtils.getLastTrackPointId(trackId), false);
     }
-
     endRecording(true, trackId);
   }
 
@@ -1036,15 +1040,23 @@ public class TrackRecordingService extends Service {
     sendTrackBroadcast(R.string.track_update_broadcast_action, track.getId());
   }
 
+  /**
+   * Updates the recording track time. Also updates the startId and the stopId.
+   * Increase the number of points if it is a new and valid track point.
+   * 
+   * @param track the track
+   * @param lastTrackPointId the last track point id
+   * @param increaseNumberOfPoints true to increase the number of points
+   */
   private void updateRecordingTrack(
-      Track track, long trackPointId, boolean isTrackPointNewAndValid) {
-    if (trackPointId >= 0) {
+      Track track, long lastTrackPointId, boolean increaseNumberOfPoints) {
+    if (lastTrackPointId >= 0) {
       if (track.getStartId() < 0) {
-        track.setStartId(trackPointId);
+        track.setStartId(lastTrackPointId);
       }
-      track.setStopId(trackPointId);
+      track.setStopId(lastTrackPointId);
     }
-    if (isTrackPointNewAndValid) {
+    if (increaseNumberOfPoints) {
       track.setNumberOfPoints(track.getNumberOfPoints() + 1);
     }
 
