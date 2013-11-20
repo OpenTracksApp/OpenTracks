@@ -233,10 +233,11 @@ public class CalorieUtils {
          * Yes, this will skip the first waypoint and that is intentional as the
          * first waypoint holds the stats for the track.
          */
-        while (cursor.moveToNext()) {
-          Waypoint waypoint = myTracksProviderUtils.createWaypoint(cursor);
+        Waypoint waypoint = getNextStatisticsWaypoint(myTracksProviderUtils, cursor);
+        while (waypoint != null) {
           waypoint.getTripStatistics().setCalorie(0);
           myTracksProviderUtils.updateWaypoint(waypoint);
+          waypoint = getNextStatisticsWaypoint(myTracksProviderUtils, cursor);
         }
       }
     } finally {
