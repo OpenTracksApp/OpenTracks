@@ -9,4 +9,8 @@
     <item name="android:progressDrawable">@drawable/progress_horizontal_holo_dark</item>
     <item name="android:indeterminateDrawable">@drawable/progress_indeterminate_horizontal_holo_dark</item>
   </style>
+  <style name="SpinnerMyTracks" parent="android:Widget.Holo.Spinner">
+    <item name="android:background">@drawable/spinner_background_holo_dark</item>
+    <item name="android:dropDownSelector">@drawable/list_selector_holo_dark</item>
+  </style>
 </resources>

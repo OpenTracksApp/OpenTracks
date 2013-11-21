@@ -28,7 +28,14 @@
   <style name="RadioButtonMyTracks" parent="android:Widget.CompoundButton.RadioButton">
     <item name="android:button">@drawable/btn_radio_holo_dark</item>
   </style>
+  <style name="SpinnerDropDownItemMyTracks" parent="android:Widget.DropDownItem.Spinner">
+    <item name="android:checkMark">@drawable/btn_radio_holo_dark</item>
+  </style>
   <style name="SpinnerItemMyTracks" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
     <item name="android:textColor">#ffffff</item>
+  </style>
+  <style name="SpinnerMyTracks" parent="android:Widget.Spinner">
+    <item name="android:background">@drawable/spinner_background_holo_dark</item>
+    <item name="android:dropDownSelector">@drawable/list_selector_holo_dark</item>
   </style>
 </resources>
