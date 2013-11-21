@@ -22,6 +22,7 @@ limitations under the License.
     <item name="android:editTextBackground">@drawable/edit_text_holo_dark</item>
     <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_holo_dark</item>
     <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_holo_dark</item>
+    <item name="android:listChoiceIndicatorSingle">@drawable/btn_radio_holo_dark</item>
     <item name="android:progressBarStyleHorizontal">@style/ProgressBarMyTracks</item>
     <!-- Manually added -->
     <item name="android:actionBarStyle">@style/ActionBarStyleMyTracks</item>
@@ -30,6 +31,7 @@ limitations under the License.
   </style>
   <style name="AlertDialogThemeMyTracks" parent="@android:style/Theme.Holo.Dialog">
     <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewMyTracks</item>
+    <item name="android:listChoiceIndicatorSingle">@drawable/btn_radio_holo_dark</item>
     <item name="android:textColor">@color/holo_orange_dark</item>
     <item name="android:windowBackground">@android:color/transparent</item>
     <item name="android:windowContentOverlay">@null</item>

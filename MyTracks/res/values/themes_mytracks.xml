@@ -23,6 +23,7 @@ limitations under the License.
     <item name="android:listViewStyle">@style/ListViewMyTracks</item>
     <item name="android:listViewWhiteStyle">@style/ListViewMyTracks.White</item>
     <item name="android:progressBarStyleHorizontal">@style/ProgressBarMyTracks</item>
+    <item name="android:radioButtonStyle">@style/RadioButtonMyTracks</item>
     <item name="android:spinnerItemStyle">@style/SpinnerItemMyTracks</item>
   </style>
 </resources>
