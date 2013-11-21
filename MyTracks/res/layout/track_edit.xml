@@ -40,11 +40,9 @@ limitations under the License.
         android:layout_height="wrap_content"
         android:layout_width="match_parent" >
         <AutoCompleteTextView
-          android:gravity="bottom"
           android:hint="@string/track_edit_activity_type_hint"
           android:id="@+id/track_edit_activity_type"
           android:imeOptions="actionNext"
-          android:layout_gravity="bottom"
           android:layout_height="match_parent"
           android:layout_weight="1"
           android:layout_width="0dp"

@@ -28,9 +28,8 @@ limitations under the License.
     android:defaultValue="@string/settings_recording_track_name_location_value"
     android:key="@string/track_name_key"
     android:title="@string/settings_recording_track_name_title" />
-  <com.google.android.apps.mytracks.AutoCompleteTextPreference
+  <com.google.android.apps.mytracks.ActivityTypePreference
     android:defaultValue=""
-    android:hint="@string/track_edit_activity_type_hint"
     android:key="@string/default_activity_key"
     android:title="@string/settings_recording_default_activity_title" />
   <com.google.android.apps.mytracks.IntegerListPreference

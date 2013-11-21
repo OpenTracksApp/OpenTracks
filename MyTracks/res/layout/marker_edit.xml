@@ -57,6 +57,7 @@ limitations under the License.
           android:hint="@string/marker_edit_marker_type_hint"
           android:id="@+id/marker_edit_waypoint_marker_type"
           android:imeOptions="actionNext"
+          android:layout_width="match_parent"
           style="@style/EditCategory" />
         <TextView
           android:text="@string/generic_description"

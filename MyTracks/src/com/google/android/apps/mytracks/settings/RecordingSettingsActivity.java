@@ -16,11 +16,15 @@
 
 package com.google.android.apps.mytracks.settings;
 
+import com.google.android.apps.mytracks.ActivityTypePreference;
+import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment;
+import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -30,7 +34,12 @@ import android.preference.Preference;
  * 
  * @author Jimmy Shih
  */
-public class RecordingSettingsActivity extends AbstractSettingsActivity {
+public class RecordingSettingsActivity extends AbstractSettingsActivity
+    implements ChooseActivityTypeCaller {
+
+  private static final int DIALOG_CHOOSE_ACTIVITY = 0;
+
+  private ActivityTypePreference activityTypePreference;
 
   @SuppressWarnings("deprecation")
   @Override
@@ -63,6 +72,17 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity {
         R.array.auto_resume_track_timeout_values, metricUnits);
   }
 
+  @Override
+  protected Dialog onCreateDialog(int id, Bundle bundle) {
+    if (id != DIALOG_CHOOSE_ACTIVITY) {
+      return null;
+    }
+    
+    String category = PreferencesUtils.getString(
+            this, R.string.default_activity_key, PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT);
+    return ChooseActivityTypeDialogFragment.getDialog(this, category, this);    
+  }
+
   @SuppressWarnings("deprecation")
   private void configFrequencyPreference(
       int key, int defaultValue, int valueArray, boolean metricUnits) {
@@ -85,22 +105,25 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity {
 
   @SuppressWarnings("deprecation")
   private void configDefaultActivity() {
-    Preference preference = findPreference(getString(R.string.default_activity_key));
-    String value = PreferencesUtils.getString(
+    activityTypePreference = (ActivityTypePreference) findPreference(
+        getString(R.string.default_activity_key));
+    String defaultActivity = PreferencesUtils.getString(
         this, R.string.default_activity_key, PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT);
-    preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-        @Override
-      public boolean onPreferenceChange(Preference pref, Object newValue) {
-        String stringValue = (String) newValue;
-        pref.setSummary(stringValue != null
-            && !stringValue.equals(PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT) ? stringValue
-            : getString(R.string.value_unknown));
-        return true;
-      }
-    });
-    preference.setSummary(
-        value != null && !value.equals(PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT) ? value
-            : getString(R.string.value_unknown));
+    activityTypePreference.setOnPreferenceChangeListener(
+        new Preference.OnPreferenceChangeListener() {
+            @Override
+          public boolean onPreferenceChange(Preference pref, Object newValue) {
+            String stringValue = (String) newValue;
+            pref.setSummary(stringValue != null
+                && !stringValue.equals(PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT) ? stringValue
+                : getString(R.string.value_unknown));
+            return true;
+          }
+        });
+    activityTypePreference.setSummary(defaultActivity != null
+        && !defaultActivity.equals(PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT) ? defaultActivity
+        : getString(R.string.value_unknown));
+    activityTypePreference.setRecordingSettingsActivity(this);
   }
 
   @SuppressWarnings("deprecation")
@@ -334,5 +357,14 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity {
               R.string.settings_recording_auto_resume_track_timeout_summary, options[i]);
       }
     }
+  }
+
+  public void showChooseActivityTypeDialog() {
+    showDialog(DIALOG_CHOOSE_ACTIVITY);
+  }
+
+  @Override
+  public void onChooseActivityTypeDone(String iconValue, boolean newWeight) {
+    activityTypePreference.updateValue(iconValue);
   }
 }
