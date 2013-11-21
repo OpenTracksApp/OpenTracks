@@ -15,16 +15,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-  <style name="MyTracks" parent="android:Theme.Holo">
+  <style name="ThemeMyTracks" parent="android:Theme.Holo">
     <!-- Auto generated -->
-    <item name="android:editTextBackground">@drawable/edit_text_holo_dark</item>
+    <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo_dark</item>
     <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewMyTracks</item>
+    <item name="android:editTextBackground">@drawable/edit_text_holo_dark</item>
+    <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_holo_dark</item>
     <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_holo_dark</item>
     <item name="android:progressBarStyleHorizontal">@style/ProgressBarMyTracks</item>
-    <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_holo_dark</item>
-    <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo_dark</item>
     <!-- Manually added -->
-    <item name="android:actionBarStyle">@style/ActionBarStyle.MyTracks</item>
+    <item name="android:actionBarStyle">@style/ActionBarStyleMyTracks</item>
     <item name="android:actionModeBackground">@drawable/action_mode_background_mytracks</item>
+    <item name="android:alertDialogTheme">@style/AlertDialogThemeMyTracks</item>
+  </style>
+  <style name="AlertDialogThemeMyTracks" parent="@android:style/Theme.Holo.Dialog">
+    <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewMyTracks</item>
+    <item name="android:textColor">@color/holo_orange_dark</item>
+    <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:windowContentOverlay">@null</item>
+    <item name="android:windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>
+    <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
   </style>
 </resources>

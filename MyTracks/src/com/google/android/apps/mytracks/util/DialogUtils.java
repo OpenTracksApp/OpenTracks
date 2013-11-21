@@ -89,7 +89,7 @@ public class DialogUtils {
    */
   private static ProgressDialog createProgressDialog(boolean spinner, Context context,
       int messageId, DialogInterface.OnCancelListener onCancelListener, Object... formatArgs) {
-    ProgressDialog progressDialog = new ProgressDialog(context, R.style.MyTracks);
+    ProgressDialog progressDialog = new ProgressDialog(context, R.style.ThemeMyTracks);
     progressDialog.setCancelable(true);
     progressDialog.setCanceledOnTouchOutside(false);
     progressDialog.setIcon(android.R.drawable.ic_dialog_info);

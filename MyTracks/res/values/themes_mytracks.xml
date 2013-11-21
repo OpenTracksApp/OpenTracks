@@ -15,14 +15,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-  <style name="MyTracks" parent="android:Theme.Black">
+  <style name="MyTracksTheme" parent="android:Theme.Black">
     <!-- Auto generated -->
-    <item name="android:editTextStyle">@style/EditTextMyTracks</item>
     <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewMyTracks</item>
+    <item name="android:editTextStyle">@style/EditTextMyTracks</item>
     <item name="android:checkboxStyle">@style/CheckBoxMyTracks</item>
-    <item name="android:progressBarStyleHorizontal">@style/ProgressBarMyTracks</item>
     <item name="android:listViewStyle">@style/ListViewMyTracks</item>
     <item name="android:listViewWhiteStyle">@style/ListViewMyTracks.White</item>
+    <item name="android:progressBarStyleHorizontal">@style/ProgressBarMyTracks</item>
     <item name="android:spinnerItemStyle">@style/SpinnerItemMyTracks</item>
   </style>
 </resources>

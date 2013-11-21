@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-  <style name="ActionBarStyle.MyTracks" parent="@android:style/Widget.Holo.ActionBar">
+  <style name="ActionBarStyleMyTracks" parent="@android:style/Widget.Holo.ActionBar">
     <!-- Same image as the source except using a grey line instead of a blue line -->
     <item name="android:background">@drawable/ab_transparent_dark_holo</item>
   </style>

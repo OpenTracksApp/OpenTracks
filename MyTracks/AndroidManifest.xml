@@ -143,7 +143,7 @@ limitations under the License.
     android:hardwareAccelerated="true"
     android:icon="@drawable/ic_launcher_my_tracks"
     android:label="@string/my_tracks_app_name"
-    android:theme="@style/MyTracks" >
+    android:theme="@style/ThemeMyTracks" >
     <!-- For data backup -->
     <meta-data
       android:name="com.google.android.backup.api_key"

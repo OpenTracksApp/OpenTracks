@@ -19,7 +19,7 @@ limitations under the License.
   android:layout_height="match_parent"
   android:layout_width="match_parent" >
   <TextView
-    android:background="@color/warning_background"
+    android:background="@color/holo_orange_dark"
     android:drawableLeft="@drawable/ic_warning"
     android:gravity="left|center_vertical"
     android:id="@+id/map_message"
