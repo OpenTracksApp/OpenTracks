@@ -20,9 +20,7 @@ import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.util.Pair;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -172,38 +170,6 @@ public class TrackIconUtils {
     return "";
   }
 
-  /**
-   * Inverts the colors in a bitmap.
-   *
-   * @param source the source
-   */
-  public static Bitmap invertBitmap(Bitmap source) {
-    Config config = source.getConfig();
-    if (config == null) {
-      config = Config.ARGB_8888;
-    }
-    Bitmap output = Bitmap.createBitmap(source.getWidth(), source.getHeight(), config);
-    int height = source.getHeight();
-    int width = source.getWidth();
-    int pixelColor;
-    int alpha;
-    int red;
-    int green;
-    int blue;
-
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        pixelColor = source.getPixel(x, y);
-        alpha = Color.alpha(pixelColor);
-        red = 255 - Color.red(pixelColor);
-        green = 255 - Color.green(pixelColor);
-        blue = 255 - Color.blue(pixelColor);
-        output.setPixel(x, y, Color.argb(alpha, red, green, blue));
-      }
-    }
-    return output;
-  }
-
   public static void setIconSpinner(Spinner spinner, String iconValue) {
     @SuppressWarnings("unchecked")
     ArrayAdapter<StringBuilder> adapter = (ArrayAdapter<StringBuilder>) spinner.getAdapter();
@@ -223,9 +189,6 @@ public class TrackIconUtils {
             : new ImageView(getContext());
         Bitmap source = BitmapFactory.decodeResource(
             context.getResources(), TrackIconUtils.getIconDrawable(getItem(position).toString()));
-        if (ApiAdapterFactory.getApiAdapter().isSpinnerBackgroundLight()) {
-          source = TrackIconUtils.invertBitmap(source);
-        }
         imageView.setImageBitmap(source);
         imageView.setPadding(4, 4, -4, -4);
         return imageView;

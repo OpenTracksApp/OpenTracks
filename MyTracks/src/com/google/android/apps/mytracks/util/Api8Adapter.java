@@ -138,11 +138,6 @@ public class Api8Adapter implements ApiAdapter {
   public void invalidMenu(Activity activity) {
     // Do nothing
   }
-
-  @Override
-  public boolean isSpinnerBackgroundLight() {
-    return true;    
-  }
   
   @Override
   public boolean showEditTextClearButton() {

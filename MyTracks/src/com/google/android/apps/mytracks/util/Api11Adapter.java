@@ -172,12 +172,7 @@ public class Api11Adapter extends Api10Adapter {
   public void invalidMenu(Activity activity) {
     activity.invalidateOptionsMenu();
   }
-  
-  @Override
-  public boolean isSpinnerBackgroundLight() {
-    return false;
-  }
-  
+
   @Override
   public boolean showEditTextClearButton() {
     return true;

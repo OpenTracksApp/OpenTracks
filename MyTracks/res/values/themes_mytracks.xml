@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-  <style name="MyTracksTheme" parent="android:Theme.Black">
+  <style name="ThemeMyTracks" parent="android:Theme.Black">
     <!-- Auto generated -->
     <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewMyTracks</item>
     <item name="android:editTextStyle">@style/EditTextMyTracks</item>
