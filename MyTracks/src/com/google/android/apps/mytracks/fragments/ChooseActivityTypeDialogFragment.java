@@ -16,6 +16,7 @@
 
 package com.google.android.apps.mytracks.fragments;
 
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.TrackIconUtils;
@@ -106,16 +107,21 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
 
     ImageButton imageButton = (ImageButton) view.findViewById(
         R.id.choose_activity_type_weight_image_button);
-    imageButton.setOnClickListener(new View.OnClickListener() {
-        @Override
-      public void onClick(View v) {
-        double weightDefault = PreferencesUtils.WEIGHT_DEFAULT;
-        if (!PreferencesUtils.isMetricUnits(activity)) {
-          weightDefault *= UnitConversions.KG_TO_LB;
+    if (ApiAdapterFactory.getApiAdapter().showEditTextClearButton()) {
+      imageButton.setVisibility(View.VISIBLE);
+      imageButton.setOnClickListener(new View.OnClickListener() {
+          @Override
+        public void onClick(View v) {
+          double weightDefault = PreferencesUtils.WEIGHT_DEFAULT;
+          if (!PreferencesUtils.isMetricUnits(activity)) {
+            weightDefault *= UnitConversions.KG_TO_LB;
+          }
+          weight.setText(StringUtils.formatWeight(weightDefault));
         }
-        weight.setText(StringUtils.formatWeight(weightDefault));
-      }
-    });
+      });
+    } else {
+      imageButton.setVisibility(View.GONE);
+    }
 
     List<Integer> imageIds = new ArrayList<Integer>();
     for (String iconValue : TrackIconUtils.getAllIconValues()) {

@@ -177,7 +177,16 @@ public interface ApiAdapter {
   public boolean isSpinnerBackgroundLight();  
   
   /**
+   * True to display a clear button on the right of the edit text.
+   * <p>
+   * Due to changes in API level 11.
+   */
+  public boolean showEditTextClearButton();
+  
+  /**
    * Sets the tab background.
+   * <p>
+   * Due to changes in API level 11.
    * 
    * @param tabWidget the tab widget
    */

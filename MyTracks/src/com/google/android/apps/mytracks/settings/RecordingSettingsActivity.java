@@ -359,7 +359,13 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity
     }
   }
 
+  @SuppressWarnings("deprecation")
   public void showChooseActivityTypeDialog() {
+    try {
+      removeDialog(DIALOG_CHOOSE_ACTIVITY);
+    } catch (Exception e) {
+      // Can safely ignore.
+    }
     showDialog(DIALOG_CHOOSE_ACTIVITY);
   }
 

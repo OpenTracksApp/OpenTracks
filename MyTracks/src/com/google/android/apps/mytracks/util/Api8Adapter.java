@@ -145,6 +145,11 @@ public class Api8Adapter implements ApiAdapter {
   }
   
   @Override
+  public boolean showEditTextClearButton() {
+    return false;
+  }
+  
+  @Override
   public void setTabBackground(TabWidget tabWidget) {
     // Do nothing    
   }

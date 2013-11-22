@@ -179,6 +179,11 @@ public class Api11Adapter extends Api10Adapter {
   }
   
   @Override
+  public boolean showEditTextClearButton() {
+    return true;
+  }
+  
+  @Override
   public void setTabBackground(TabWidget tabWidget) {
     for (int i = 0; i < tabWidget.getChildCount(); i++) {
       tabWidget.getChildAt(i).setBackgroundResource(R.drawable.tab_indicator_mytracks);
