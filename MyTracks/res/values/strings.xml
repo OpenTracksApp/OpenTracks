@@ -1004,6 +1004,10 @@ limitations under the License.
     translation_description="When adding a marker, the message indicating success.">
     A marker was inserted.
   </string>
+  <string name="marker_add_canceled"
+    translation_description="When adding a marker, the message indicating it is canceled.">
+    Canceled, no marker added.
+  </string>
   <string name="marker_delete_one_confirm_message"
     translation_description="When deleting one marker, the confirmation message.">
     The marker will be permanently deleted from the device.

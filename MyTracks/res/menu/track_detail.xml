@@ -43,7 +43,6 @@ limitations under the License.
     android:icon="@drawable/ic_menu_markers"
     android:id="@+id/track_detail_markers"
     android:orderInCategory="5"
-    android:showAsAction="ifRoom"
     android:title="@string/menu_markers"/>
   <!-- android:orderInCategory="6" is in map.xml -->
   <item

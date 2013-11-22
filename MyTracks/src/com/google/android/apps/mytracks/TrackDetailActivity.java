@@ -317,7 +317,10 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    if (requestCode == CAMERA_REQUEST_CODE) {      
+    if (requestCode == CAMERA_REQUEST_CODE) {
+      if (resultCode == RESULT_CANCELED) {
+        Toast.makeText(this, R.string.marker_add_canceled, Toast.LENGTH_LONG).show();
+      }
       hasPhoto = resultCode == RESULT_OK;
     } else {
       super.onActivityResult(requestCode, resultCode, data);
