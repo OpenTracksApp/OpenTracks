@@ -34,11 +34,6 @@ public class FileUtils {
   public static final String BACKUPS_DIR = "backups";
 
   /**
-   * The pictures directory under the My Tracks external storage directory.
-   */
-  public static final String PICTURES_DIR = "pictures";
-
-  /**
    * The My Tracks external storage directory.
    */
   static final String SDCARD_TOP_DIR = "MyTracks";
@@ -53,12 +48,17 @@ public class FileUtils {
    * The play tracks directory under the My Tracks cache directory.
    */
   public static final String PLAY_TRACKS_DIR = "temp";
-  
+
   /**
    * The temp files directory under the My Tracks cache directory.
    */
-  public static final String TEMP_FILES_DIR = "temp_files"; 
-  
+  public static final String TEMP_FILES_DIR = "temp_files";
+
+  /**
+   * The pictures directory under the My Tracks external storage directory.
+   */
+  private static final String PICTURES_DIR = "pictures";
+
   /**
    * Returns true if the external storage is available.
    */
@@ -96,6 +96,14 @@ public class FileUtils {
       return true;
     }
     return dir.mkdirs();
+  }
+
+  public static File getPhotoDir() {
+    return new File(getPath(PICTURES_DIR));
+  }
+
+  public static File getPhotoDir(long trackId) {
+    return new File(getPath(PICTURES_DIR, "MyTracks" + Long.toString(trackId)));
   }
 
   /**
@@ -150,9 +158,9 @@ public class FileUtils {
     if (index == -1) {
       return fileName;
     }
-    return fileName.substring(0, index);    
+    return fileName.substring(0, index);
   }
-  
+
   /**
    * Gets the extension from a file name. Returns null if there is no extension.
    * 
@@ -164,8 +172,8 @@ public class FileUtils {
       return null;
     }
     return fileName.substring(index + 1);
-  }  
- 
+  }
+
   /**
    * Builds a filename with the given base and the given extension, possibly
    * adding a suffix to ensure the file doesn't exist.

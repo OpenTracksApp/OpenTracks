@@ -183,7 +183,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     // Delete tracks last since it triggers a database vaccum call
     contentResolver.delete(TracksColumns.CONTENT_URI, null, null);
 
-    File dir = new File(FileUtils.getPath(FileUtils.PICTURES_DIR));
+    File dir = FileUtils.getPhotoDir();
     deleteDirectoryRecurse(dir);
   }
 
@@ -212,11 +212,8 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
       contentResolver.delete(TrackPointsColumns.CONTENT_URI, where, selectionArgs);
     }
     contentResolver.delete(WaypointsColumns.CONTENT_URI, WaypointsColumns.TRACKID + "=?",
-        new String[] { Long.toString(trackId) });
-    
-    File dir = new File(
-        FileUtils.getPath(FileUtils.PICTURES_DIR, Long.toString(trackId)));
-    deleteDirectoryRecurse(dir);  
+        new String[] { Long.toString(trackId) });    
+    deleteDirectoryRecurse(FileUtils.getPhotoDir(trackId));  
   }
 
   /**

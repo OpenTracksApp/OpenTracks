@@ -404,8 +404,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
           return false;
         }
 
-        File dir = new File(
-            FileUtils.getPath(FileUtils.PICTURES_DIR, Long.toString(trackId)));
+        File dir = FileUtils.getPhotoDir(trackId);
         FileUtils.ensureDirectoryExists(dir);
 
         String fileName = SimpleDateFormat.getDateTimeInstance().format(new Date());

@@ -115,8 +115,7 @@ public class KmzTrackImporter implements TrackImporter {
     }
 
     if (importTrackId != -1L) {
-      File dir = new File(
-          FileUtils.getPath(FileUtils.PICTURES_DIR, Long.toString(importTrackId)));
+      File dir = FileUtils.getPhotoDir(importTrackId);
       if (FileUtils.isDirectory(dir)) {
         for (File file : dir.listFiles()) {
           file.delete();
@@ -182,8 +181,7 @@ public class KmzTrackImporter implements TrackImporter {
       if (fileName.equals("")) {
         return;
       }
-      File dir = new File(
-          FileUtils.getPath(FileUtils.PICTURES_DIR, Long.toString(importTrackId)));
+      File dir = FileUtils.getPhotoDir(importTrackId);
       FileUtils.ensureDirectoryExists(dir);
 
       fileOutputStream = new FileOutputStream(new File(dir, fileName));
