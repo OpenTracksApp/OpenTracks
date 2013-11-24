@@ -1158,6 +1158,12 @@ limitations under the License.
       Character limit: ~20 (1 line)">
     Markers
   </string>
+  <string name="menu_merge"
+    translation_description="In the menu, to merge and play tracks.
+
+      Character limit: ~20 (1 line)">
+    Merge &amp; play
+  </string>
   <string name="menu_play"
     translation_description="In the menu, to play a track.
 

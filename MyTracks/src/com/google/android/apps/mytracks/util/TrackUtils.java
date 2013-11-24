@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.maps.mytracks.R;
 
@@ -31,6 +32,9 @@ import android.content.Context;
 public class TrackUtils {
 
   private TrackUtils() {}
+
+  public static String TRACK_SORT_ORDER = "IFNULL(" + TracksColumns.SHAREDWITHME + ",0) ASC, "
+      + TracksColumns.STARTTIME + " DESC";
 
   public static void updateTrack(Context context, Track track, String name, String category,
       String description, MyTracksProviderUtils myTracksProviderUtils,

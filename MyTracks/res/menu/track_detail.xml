@@ -44,50 +44,55 @@ limitations under the License.
     android:id="@+id/track_detail_markers"
     android:orderInCategory="5"
     android:title="@string/menu_markers"/>
-  <!-- android:orderInCategory="6" is in map.xml -->
+  <item
+    android:icon="@drawable/ic_menu_merge"
+    android:id="@+id/track_detail_merge"
+    android:orderInCategory="6"
+    android:title="@string/menu_merge"/>    
+  <!-- android:orderInCategory="7" is in map.xml -->
   <item
     android:icon="@drawable/ic_menu_export"
     android:id="@+id/track_detail_export"
-    android:orderInCategory="7"
+    android:orderInCategory="8"
     android:title="@string/menu_export"/>
   <item
     android:icon="@drawable/ic_menu_edit"
     android:id="@+id/track_detail_edit"
-    android:orderInCategory="8"
+    android:orderInCategory="9"
     android:title="@string/menu_edit"/>
   <item
     android:icon="@drawable/ic_menu_delete"
     android:id="@+id/track_detail_delete"
-    android:orderInCategory="9"
+    android:orderInCategory="10"
     android:title="@string/menu_delete"/>
   <item
     android:icon="@drawable/ic_menu_voice_frequency"
     android:id="@+id/track_detail_voice_frequency"
-    android:orderInCategory="10"
+    android:orderInCategory="11"
     android:title="@string/menu_voice_frequency"/>
   <item
     android:icon="@drawable/ic_menu_split_frequency"
     android:id="@+id/track_detail_split_frequency"
-    android:orderInCategory="11"
+    android:orderInCategory="12"
     android:title="@string/menu_split_frequency"/>
   <item
     android:icon="@drawable/ic_menu_sensor_state"
     android:id="@+id/track_detail_sensor_state"
-    android:orderInCategory="12"
+    android:orderInCategory="13"
     android:title="@string/menu_sensor_state"/>
   <item
     android:icon="@drawable/ic_menu_settings"
     android:id="@+id/track_detail_settings"
-    android:orderInCategory="13"
+    android:orderInCategory="14"
     android:title="@string/menu_settings"/>
   <item
     android:icon="@drawable/ic_menu_feedback"
     android:id="@+id/track_detail_feedback"
-    android:orderInCategory="14"
+    android:orderInCategory="15"
     android:title="@string/menu_feedback"/>
   <item
     android:icon="@drawable/ic_menu_help"
     android:id="@+id/track_detail_help"
-    android:orderInCategory="15"
+    android:orderInCategory="16"
     android:title="@string/menu_help"/>
 </menu>

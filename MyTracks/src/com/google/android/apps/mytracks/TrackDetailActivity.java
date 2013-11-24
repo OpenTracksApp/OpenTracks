@@ -30,6 +30,7 @@ import com.google.android.apps.mytracks.fragments.ExportDialogFragment;
 import com.google.android.apps.mytracks.fragments.ExportDialogFragment.ExportCaller;
 import com.google.android.apps.mytracks.fragments.ExportDialogFragment.ExportType;
 import com.google.android.apps.mytracks.fragments.FrequencyDialogFragment;
+import com.google.android.apps.mytracks.fragments.MergeDialogFragment;
 import com.google.android.apps.mytracks.fragments.MyTracksMapFragment;
 import com.google.android.apps.mytracks.fragments.StatsFragment;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
@@ -425,6 +426,10 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
         intent = IntentUtils.newIntent(this, MarkerListActivity.class)
             .putExtra(MarkerListActivity.EXTRA_TRACK_ID, trackId);
         startActivity(intent);
+        return true;
+      case R.id.track_detail_merge:
+        MergeDialogFragment.newInstance(trackId)
+            .show(getSupportFragmentManager(), MergeDialogFragment.MERGE_DIALOG_TAG);
         return true;
       case R.id.track_detail_voice_frequency:
         FrequencyDialogFragment.newInstance(R.string.voice_frequency_key,

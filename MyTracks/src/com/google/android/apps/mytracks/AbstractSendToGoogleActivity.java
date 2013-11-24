@@ -25,6 +25,7 @@ import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment.Co
 import com.google.android.apps.mytracks.fragments.ConfirmSyncDialogFragment;
 import com.google.android.apps.mytracks.fragments.ConfirmSyncDialogFragment.ConfirmSyncCaller;
 import com.google.android.apps.mytracks.fragments.InstallEarthDialogFragment;
+import com.google.android.apps.mytracks.fragments.MergeDialogFragment.MergeCaller;
 import com.google.android.apps.mytracks.fragments.ShareTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.ShareTrackDialogFragment.ShareTrackCaller;
 import com.google.android.apps.mytracks.io.drive.SendDriveActivity;
@@ -70,7 +71,7 @@ import java.io.IOException;
  */
 public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActivity implements
     ChooseAccountCaller, ConfirmSyncCaller, CheckPermissionCaller, ShareTrackCaller,
-    ConfirmDeleteCaller {
+    ConfirmDeleteCaller, MergeCaller {
 
   private static final String TAG = AbstractMyTracksActivity.class.getSimpleName();
   private static final String SEND_REQUEST_KEY = "send_request_key";
@@ -97,8 +98,43 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
     outState.putParcelable(SEND_REQUEST_KEY, sendRequest);
   }
 
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    switch (requestCode) {
+      case DRIVE_REQUEST_CODE:
+        SendToGoogleUtils.cancelNotification(this, SendToGoogleUtils.DRIVE_NOTIFICATION_ID);
+        if (resultCode == Activity.RESULT_OK) {
+          onDrivePermissionSuccess();
+        } else {
+          onPermissionFailure();
+        }
+        break;
+      case FUSION_TABLES_REQUEST_CODE:
+        SendToGoogleUtils.cancelNotification(this, SendToGoogleUtils.FUSION_TABLES_NOTIFICATION_ID);
+        if (resultCode == Activity.RESULT_OK) {
+          onFusionTablesSuccess();
+        } else {
+          onPermissionFailure();
+        }
+        break;
+      case SPREADSHEETS_REQUEST_CODE:
+        SendToGoogleUtils.cancelNotification(this, SendToGoogleUtils.SPREADSHEETS_NOTIFICATION_ID);
+        if (resultCode == Activity.RESULT_OK) {
+          onSpreadsheetsPermissionSuccess();
+        } else {
+          onPermissionFailure();
+        }
+        break;
+      case DELETE_REQUEST_CODE:
+        onDeleted();
+        break;
+      default:
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+  }
+
   /**
-   * Share a track.
+   * Shares a track.
    * 
    * @param trackId the track id
    */
@@ -131,7 +167,8 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
     }
     sendRequest.setAccount(new Account(googleAccount, Constants.ACCOUNT_TYPE));
   
-    if (sendRequest.isSendDrive() && sendRequest.isDriveSync() && sendRequest.isDriveSyncConfirm()) {
+    if (sendRequest.isSendDrive() && sendRequest.isDriveSync()
+        && sendRequest.isDriveSyncConfirm()) {
       new ConfirmSyncDialogFragment().show(
           getSupportFragmentManager(), ConfirmSyncDialogFragment.CONFIRM_SYNC_DIALOG_TAG);
     } else {
@@ -188,41 +225,6 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
       } else {
         onPermissionFailure();
       }
-    }
-  }
-
-  @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    switch (requestCode) {
-      case DRIVE_REQUEST_CODE:
-        SendToGoogleUtils.cancelNotification(this, SendToGoogleUtils.DRIVE_NOTIFICATION_ID);
-        if (resultCode == Activity.RESULT_OK) {
-          onDrivePermissionSuccess();
-        } else {
-          onPermissionFailure();
-        }
-        break;
-      case FUSION_TABLES_REQUEST_CODE:
-        SendToGoogleUtils.cancelNotification(this, SendToGoogleUtils.FUSION_TABLES_NOTIFICATION_ID);
-        if (resultCode == Activity.RESULT_OK) {
-          onFusionTablesSuccess();
-        } else {
-          onPermissionFailure();
-        }
-        break;
-      case SPREADSHEETS_REQUEST_CODE:
-        SendToGoogleUtils.cancelNotification(this, SendToGoogleUtils.SPREADSHEETS_NOTIFICATION_ID);
-        if (resultCode == Activity.RESULT_OK) {
-          onSpreadsheetsPermissionSuccess();
-        } else {
-          onPermissionFailure();
-        }
-        break;
-      case DELETE_REQUEST_CODE:
-        onDeleted();
-        break;
-      default:
-        super.onActivityResult(requestCode, resultCode, data);
     }
   }
 
@@ -349,7 +351,7 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
   private void onPermissionFailure() {
     Toast.makeText(this, R.string.send_google_no_account_permission, Toast.LENGTH_LONG).show();
   }
-
+  
   @Override
   public void onShareTrackDone(String emails, boolean makePublic) {
     sendRequest.setDriveShareEmails(emails);
@@ -359,34 +361,11 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
     startActivity(intent);
   }
 
-  /**
-   * Play track in Google Earth.
-   * 
-   * @param trackIds the track ids
-   */
-  protected void playTrack(long[] trackIds) {
-    AnalyticsUtils.sendPageViews(this, AnalyticsUtils.ACTION_PLAY);
-    if (GoogleEarthUtils.isEarthInstalled(this)) {
-      Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
-          .putExtra(SaveActivity.EXTRA_TRACK_IDS, trackIds)
-          .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.KML)
-          .putExtra(SaveActivity.EXTRA_PLAY_TRACK, true);
-      startActivity(intent);
-    } else {
-      new InstallEarthDialogFragment().show(
-          getSupportFragmentManager(), InstallEarthDialogFragment.INSTALL_EARTH_DIALOG_TAG);
-    }
-  }
-
   protected void deleteTrack(long[] trackIds) {
     ConfirmDeleteDialogFragment.newInstance(trackIds)
         .show(getSupportFragmentManager(), ConfirmDeleteDialogFragment.CONFIRM_DELETE_DIALOG_TAG);
   }
-
-  abstract protected TrackRecordingServiceConnection getTrackRecordingServiceConnection();
-
-  abstract protected void onDeleted();
-
+  
   @Override
   public void onConfirmDeleteDone(long[] trackIds) {
     boolean stopRecording = false;
@@ -408,5 +387,33 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
     Intent intent = IntentUtils.newIntent(this, DeleteActivity.class);
     intent.putExtra(DeleteActivity.EXTRA_TRACK_IDS, trackIds);
     startActivityForResult(intent, DELETE_REQUEST_CODE);
+  }
+
+  abstract protected TrackRecordingServiceConnection getTrackRecordingServiceConnection();
+
+  abstract protected void onDeleted();
+
+  /**
+   * Play track in Google Earth.
+   * 
+   * @param trackIds the track ids
+   */
+  protected void playTrack(long[] trackIds) {
+    AnalyticsUtils.sendPageViews(this, AnalyticsUtils.ACTION_PLAY);
+    if (GoogleEarthUtils.isEarthInstalled(this)) {
+      Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
+          .putExtra(SaveActivity.EXTRA_TRACK_IDS, trackIds)
+          .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.KML)
+          .putExtra(SaveActivity.EXTRA_PLAY_TRACK, true);
+      startActivity(intent);
+    } else {
+      new InstallEarthDialogFragment().show(
+          getSupportFragmentManager(), InstallEarthDialogFragment.INSTALL_EARTH_DIALOG_TAG);
+    }
+  }
+
+  @Override
+  public void onMergeDone(long[] trackIds) {
+    playTrack(trackIds);
   }
 }

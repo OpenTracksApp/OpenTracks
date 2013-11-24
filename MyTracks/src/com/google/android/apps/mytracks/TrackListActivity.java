@@ -26,6 +26,7 @@ import com.google.android.apps.mytracks.fragments.EulaDialogFragment;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment.EulaCaller;
 import com.google.android.apps.mytracks.fragments.FileTypeDialogFragment;
 import com.google.android.apps.mytracks.fragments.FileTypeDialogFragment.FileTypeCaller;
+import com.google.android.apps.mytracks.fragments.MergeDialogFragment;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.io.file.exporter.SaveActivity;
 import com.google.android.apps.mytracks.io.file.importer.ImportActivity;
@@ -46,6 +47,7 @@ import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
+import com.google.android.apps.mytracks.util.TrackUtils;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.maps.mytracks.BuildConfig;
@@ -275,8 +277,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
       @Override
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
       return new CursorLoader(TrackListActivity.this, TracksColumns.CONTENT_URI, PROJECTION, null,
-          null,
-          "IFNULL(" + TracksColumns.SHAREDWITHME + ",0) ASC, " + TracksColumns.STARTTIME + " DESC");
+          null, TrackUtils.TRACK_SORT_ORDER);
     }
 
       @Override
@@ -530,6 +531,10 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
           ApiAdapterFactory.getApiAdapter().invalidMenu(this);  
         }
         myTracksLocationManager.close();
+        return true;
+      case R.id.track_list_merge:
+        MergeDialogFragment.newInstance(-1L)
+            .show(getSupportFragmentManager(), MergeDialogFragment.MERGE_DIALOG_TAG);
         return true;
       case R.id.track_list_refresh:
         if (driveSync) {
