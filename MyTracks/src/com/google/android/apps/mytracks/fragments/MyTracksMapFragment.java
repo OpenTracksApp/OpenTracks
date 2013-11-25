@@ -33,6 +33,7 @@ import com.google.android.apps.mytracks.util.GoogleLocationUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -330,6 +331,7 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
   @Override
   public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflator) {
     menuInflator.inflate(R.menu.map, menu);
+    TrackIconUtils.setMenuIconColor(menu);
   }
 
   @Override

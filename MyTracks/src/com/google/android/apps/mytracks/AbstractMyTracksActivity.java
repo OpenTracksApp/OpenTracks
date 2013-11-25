@@ -17,10 +17,12 @@
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
+import com.google.android.apps.mytracks.util.TrackIconUtils;
 
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.app.FragmentActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 
 /**
@@ -74,6 +76,12 @@ public abstract class AbstractMyTracksActivity extends FragmentActivity {
     finish();
   }
 
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    TrackIconUtils.setMenuIconColor(menu);
+    return super.onCreateOptionsMenu(menu);
+  }
+  
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     if (item.getItemId() == android.R.id.home) {

@@ -69,4 +69,9 @@ public class Api9Adapter extends Api8Adapter {
   public boolean isGeoCoderPresent() {
     return Geocoder.isPresent();
   }
+  
+  @Override
+  public boolean revertMenuIconColor() {
+    return false;
+  }
 }

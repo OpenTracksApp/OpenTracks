@@ -87,6 +87,13 @@ public interface ApiAdapter {
   public boolean isGeoCoderPresent();
 
   /**
+   * Returns true to revert menu icon color.
+   * <p>
+   * Due to changes in API level 9.
+   */
+  public boolean revertMenuIconColor();
+  
+  /**
    * Gets a {@link BluetoothSocket}.
    * <p>
    * Due to changes in API level 10.

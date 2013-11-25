@@ -248,7 +248,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
     insertMarkerMenuItem = menu.findItem(R.id.marker_list_insert_marker);
     searchMenuItem = menu.findItem(R.id.marker_list_search);
     ApiAdapterFactory.getApiAdapter().configureSearchWidget(this, searchMenuItem, null);
-    return true;
+    return super.onCreateOptionsMenu(menu);
   }
 
   @Override

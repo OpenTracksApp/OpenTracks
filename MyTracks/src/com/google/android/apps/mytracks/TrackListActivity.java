@@ -474,7 +474,8 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     exportAllMenuItem = menu.findItem(R.id.track_list_export_all);
     importAllMenuItem = menu.findItem(R.id.track_list_import_all);
     deleteAllMenuItem = menu.findItem(R.id.track_list_delete_all);
-    return true;
+
+    return super.onCreateOptionsMenu(menu);
   }
   
   @Override
@@ -739,6 +740,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         startGpsMenuItem.setTitle(isGpsStarted ? R.string.menu_stop_gps : R.string.menu_start_gps);
         startGpsMenuItem.setIcon(
             isGpsStarted ? R.drawable.ic_menu_stop_gps : R.drawable.ic_menu_start_gps);
+        TrackIconUtils.setMenuIconColor(startGpsMenuItem);        
       }
     }
     if (refreshMenuItem != null) {

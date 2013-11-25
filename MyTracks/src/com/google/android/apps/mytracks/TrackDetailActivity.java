@@ -380,7 +380,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
     voiceFrequencyMenuItem = menu.findItem(R.id.track_detail_voice_frequency);
     splitFrequencyMenuItem = menu.findItem(R.id.track_detail_split_frequency);
     sensorStateMenuItem = menu.findItem(R.id.track_detail_sensor_state);
-    return true;
+    return super.onCreateOptionsMenu(menu);
   }
 
   @Override

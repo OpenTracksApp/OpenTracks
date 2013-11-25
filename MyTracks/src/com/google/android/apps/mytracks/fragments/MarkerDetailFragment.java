@@ -28,6 +28,7 @@ import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PhotoUtils;
 import com.google.android.apps.mytracks.util.StatsUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
+import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Intent;
@@ -113,12 +114,12 @@ public class MarkerDetailFragment extends Fragment {
     }
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(getActivity());
     handler = new Handler();
+    setHasOptionsMenu(true);
   }
 
   @Override
   public View onCreateView(
       LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    setHasOptionsMenu(true);
     View view = inflater.inflate(R.layout.marker_detail_fragment, container, false);
 
     photo = (ImageView) view.findViewById(R.id.marker_detail_waypoint_photo);
@@ -187,8 +188,10 @@ public class MarkerDetailFragment extends Fragment {
     String photoUrl = waypoint.getPhotoUrl();
     boolean hasPhoto = photoUrl != null && !photoUrl.equals("");
     menu.findItem(R.id.marker_detail_view_photo).setVisible(hasPhoto);
+    
+    TrackIconUtils.setMenuIconColor(menu);
   }
-
+  
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     long markerId = getArguments().getLong(KEY_MARKER_ID);

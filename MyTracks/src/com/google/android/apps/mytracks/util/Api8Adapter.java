@@ -79,6 +79,11 @@ public class Api8Adapter implements ApiAdapter {
   }
 
   @Override
+  public boolean revertMenuIconColor() {
+    return true;
+  }
+
+  @Override
   public BluetoothSocket getBluetoothSocket(BluetoothDevice bluetoothDevice) throws IOException {
     try {
       Class<? extends BluetoothDevice> c = bluetoothDevice.getClass();
