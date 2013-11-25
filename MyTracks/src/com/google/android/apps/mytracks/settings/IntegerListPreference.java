@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.google.android.apps.mytracks;
+package com.google.android.apps.mytracks.settings;
 
 import android.content.Context;
 import android.preference.ListPreference;

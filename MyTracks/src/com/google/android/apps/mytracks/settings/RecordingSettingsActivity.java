@@ -16,7 +16,6 @@
 
 package com.google.android.apps.mytracks.settings;
 
-import com.google.android.apps.mytracks.ActivityTypePreference;
 import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller;
 import com.google.android.apps.mytracks.util.PreferencesUtils;

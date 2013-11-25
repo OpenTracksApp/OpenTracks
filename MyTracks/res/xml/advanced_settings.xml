@@ -16,7 +16,7 @@ limitations under the License.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
   android:title="@string/settings_advanced" >
-  <com.google.android.apps.mytracks.IntegerListPreference
+  <com.google.android.apps.mytracks.settings.IntegerListPreference
     android:defaultValue="1024"
     android:key="@string/photo_size_key"
     android:title="@string/settings_advanced_photo_size_title" />

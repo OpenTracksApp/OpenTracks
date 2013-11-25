@@ -16,11 +16,11 @@ limitations under the License.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
   android:title="@string/settings_recording" >
-  <com.google.android.apps.mytracks.IntegerListPreference
+  <com.google.android.apps.mytracks.settings.IntegerListPreference
     android:defaultValue="0"
     android:key="@string/voice_frequency_key"
     android:title="@string/menu_voice_frequency" />
-  <com.google.android.apps.mytracks.IntegerListPreference
+  <com.google.android.apps.mytracks.settings.IntegerListPreference
     android:defaultValue="0"
     android:key="@string/split_frequency_key"
     android:title="@string/menu_split_frequency" />
@@ -28,27 +28,27 @@ limitations under the License.
     android:defaultValue="@string/settings_recording_track_name_location_value"
     android:key="@string/track_name_key"
     android:title="@string/settings_recording_track_name_title" />
-  <com.google.android.apps.mytracks.ActivityTypePreference
+  <com.google.android.apps.mytracks.settings.ActivityTypePreference
     android:defaultValue=""
     android:key="@string/default_activity_key"
     android:title="@string/settings_recording_default_activity_title" />
-  <com.google.android.apps.mytracks.IntegerListPreference
+  <com.google.android.apps.mytracks.settings.IntegerListPreference
     android:defaultValue="0"
     android:key="@string/min_recording_interval_key"
     android:title="@string/settings_recording_min_recording_interval_title" />
-  <com.google.android.apps.mytracks.IntegerListPreference
+  <com.google.android.apps.mytracks.settings.IntegerListPreference
     android:defaultValue="10"
     android:key="@string/recording_distance_interval_key"
     android:title="@string/settings_recording_min_recording_distance_title" />
-  <com.google.android.apps.mytracks.IntegerListPreference
+  <com.google.android.apps.mytracks.settings.IntegerListPreference
     android:defaultValue="200"
     android:key="@string/max_recording_distance_key"
     android:title="@string/settings_recording_max_recording_distance_title" />
-  <com.google.android.apps.mytracks.IntegerListPreference
+  <com.google.android.apps.mytracks.settings.IntegerListPreference
     android:defaultValue="50"
     android:key="@string/recording_gps_accuracy_key"
     android:title="@string/settings_recording_min_required_accuracy_title" />
-  <com.google.android.apps.mytracks.IntegerListPreference
+  <com.google.android.apps.mytracks.settings.IntegerListPreference
     android:defaultValue="10"
     android:key="@string/auto_resume_track_timeout_key"
     android:title="@string/settings_recording_auto_resume_track_timeout_title" />
