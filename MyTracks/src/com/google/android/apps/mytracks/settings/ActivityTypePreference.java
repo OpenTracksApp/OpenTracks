@@ -16,11 +16,13 @@
 
 package com.google.android.apps.mytracks.settings;
 
+import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
@@ -105,6 +107,12 @@ public class ActivityTypePreference extends DialogPreference {
       }
     });
     return view;
+  }
+
+  @Override
+  protected void showDialog(Bundle state) {
+    super.showDialog(state);
+    DialogUtils.setDialogTitleDivider(getContext(), getDialog());
   }
 
   @Override

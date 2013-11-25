@@ -173,7 +173,7 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
         }
         updateWeightContainer(weightContainer, position);
         weight.setText(weightValue);
-        DialogUtils.setTitleDivier(activity, alertDialog);
+        DialogUtils.setDialogTitleDivider(activity, alertDialog);
       }
     });
 

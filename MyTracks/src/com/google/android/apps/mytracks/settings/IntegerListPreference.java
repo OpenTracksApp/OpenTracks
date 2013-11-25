@@ -17,7 +17,6 @@
 package com.google.android.apps.mytracks.settings;
 
 import android.content.Context;
-import android.preference.ListPreference;
 import android.util.AttributeSet;
 
 /**
@@ -29,7 +28,7 @@ import android.util.AttributeSet;
  *
  * @author Rodrigo Damazio
  */
-public class IntegerListPreference extends ListPreference {
+public class IntegerListPreference extends MyTracksListPreference {
 
   public IntegerListPreference(Context context) {
     super(context);

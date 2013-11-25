@@ -16,11 +16,11 @@ limitations under the License.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
   android:title="@string/track_detail_stats_tab" >
-  <ListPreference
+  <com.google.android.apps.mytracks.settings.MyTracksListPreference
     android:defaultValue="@string/stats_units_metric"
     android:key="@string/stats_units_key"
     android:title="@string/settings_stats_units_title" />
-  <ListPreference
+  <com.google.android.apps.mytracks.settings.MyTracksListPreference
     android:defaultValue="@string/stats_rate_speed"
     android:key="@string/stats_rate_key"
     android:title="@string/settings_stats_rate_title" />

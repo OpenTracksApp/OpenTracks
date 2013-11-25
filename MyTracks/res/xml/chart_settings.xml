@@ -16,7 +16,7 @@ limitations under the License.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
   android:title="@string/track_detail_chart_tab" >
-  <ListPreference
+  <com.google.android.apps.mytracks.settings.MyTracksListPreference
     android:defaultValue="@string/chart_x_axis_distance"
     android:key="@string/chart_x_axis_key"
     android:title="@string/settings_chart_x_axis" />

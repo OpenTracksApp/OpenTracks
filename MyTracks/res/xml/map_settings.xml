@@ -16,33 +16,30 @@ limitations under the License.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
   android:title="@string/track_detail_map_tab" >
-  <ListPreference
+  <com.google.android.apps.mytracks.settings.MyTracksListPreference
     android:defaultValue="@string/settings_map_track_color_mode_single_value"
     android:key="@string/track_color_mode_key"
     android:title="@string/settings_map_track_color_mode" />
   <PreferenceCategory android:title="@string/settings_map_track_color_mode_fixed" >
-    <EditTextPreference
+    <com.google.android.apps.mytracks.settings.MyTracksEditTextPreference
       android:imeOptions="actionDone"
       android:inputType="number"
       android:key="@string/settings_map_slow_display_key"
       android:persistent="false"
-      android:title="@string/settings_map_slow" >
-    </EditTextPreference>
-    <EditTextPreference
+      android:title="@string/settings_map_slow" />
+    <com.google.android.apps.mytracks.settings.MyTracksEditTextPreference
       android:imeOptions="actionDone"
       android:inputType="number"
       android:key="@string/settings_map_medium_display_key"
       android:persistent="false"
-      android:title="@string/settings_map_medium" >
-    </EditTextPreference>
+      android:title="@string/settings_map_medium" />
   </PreferenceCategory>
   <PreferenceCategory android:title="@string/settings_map_track_color_mode_dynamic" >
-    <EditTextPreference
+    <com.google.android.apps.mytracks.settings.MyTracksEditTextPreference
       android:imeOptions="actionDone"
       android:inputType="number"
       android:key="@string/settings_map_percentage_display_key"
       android:persistent="false"
-      android:title="@string/settings_map_percentage" >
-    </EditTextPreference>
+      android:title="@string/settings_map_percentage" />
   </PreferenceCategory>
 </PreferenceScreen>

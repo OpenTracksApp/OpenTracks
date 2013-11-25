@@ -14,34 +14,33 @@
  * the License.
  */
 
-package com.google.android.apps.mytracks.fragments;
+package com.google.android.apps.mytracks.settings;
 
 import com.google.android.apps.mytracks.util.DialogUtils;
 
-import android.app.Dialog;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+import android.preference.ListPreference;
+import android.util.AttributeSet;
 
 /**
- * Abstract My Tracks DialogFragment.
+ * My Tracks list preference.
  * 
  * @author Jimmy Shih
  */
-public abstract class AbstractMyTracksDialogFragment extends DialogFragment {
+public class MyTracksListPreference extends ListPreference {
 
-  @Override
-  public Dialog onCreateDialog(Bundle savedInstanceState) {
-    final Dialog dialog = createDialog();
-    dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-
-        @Override
-      public void onShow(DialogInterface dialogInterface) {
-        DialogUtils.setDialogTitleDivider(getActivity(), dialog);
-      }
-    });
-    return dialog;
+  public MyTracksListPreference(Context context) {
+    super(context);
+  }
+  
+  public MyTracksListPreference(Context context, AttributeSet attrs) {
+    super(context, attrs);
   }
 
-  protected abstract Dialog createDialog();
+  @Override
+  protected void showDialog(Bundle state) {
+    super.showDialog(state);
+    DialogUtils.setDialogTitleDivider(getContext(), getDialog());
+  }
 }

@@ -16,7 +16,7 @@ limitations under the License.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
   android:title="@string/settings_google" >
-  <ListPreference
+  <com.google.android.apps.mytracks.settings.MyTracksListPreference
     android:defaultValue=""
     android:key="@string/google_account_key"
     android:title="@string/settings_google_account_title" />

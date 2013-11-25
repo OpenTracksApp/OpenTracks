@@ -24,7 +24,7 @@ limitations under the License.
     android:defaultValue="0"
     android:key="@string/split_frequency_key"
     android:title="@string/menu_split_frequency" />
-  <ListPreference
+  <com.google.android.apps.mytracks.settings.MyTracksListPreference
     android:defaultValue="@string/settings_recording_track_name_location_value"
     android:key="@string/track_name_key"
     android:title="@string/settings_recording_track_name_title" />
