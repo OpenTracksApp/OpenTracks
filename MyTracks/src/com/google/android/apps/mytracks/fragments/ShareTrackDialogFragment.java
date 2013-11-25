@@ -27,7 +27,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.View;
@@ -43,7 +42,7 @@ import android.widget.Toast;
  * 
  * @author Jimmy Shih
  */
-public class ShareTrackDialogFragment extends DialogFragment {
+public class ShareTrackDialogFragment extends AbstractMyTracksDialogFragment {
 
   /**
    * Interface for caller of this dialog fragment.
@@ -92,7 +91,7 @@ public class ShareTrackDialogFragment extends DialogFragment {
   }
 
   @Override
-  public Dialog onCreateDialog(Bundle savedInstanceState) {
+  protected Dialog createDialog() {
     fragmentActivity = getActivity();
     View view = fragmentActivity.getLayoutInflater().inflate(R.layout.share_track, null);
 

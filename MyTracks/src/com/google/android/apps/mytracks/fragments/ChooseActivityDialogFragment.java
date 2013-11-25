@@ -28,8 +28,6 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ShareCompat;
 import android.view.View;
@@ -48,7 +46,7 @@ import java.util.List;
  * 
  * @author Jimmy Shih
  */
-public class ChooseActivityDialogFragment extends DialogFragment {
+public class ChooseActivityDialogFragment extends AbstractMyTracksDialogFragment {
 
   /**
    * Interface for caller of this dialog fragment.
@@ -81,7 +79,7 @@ public class ChooseActivityDialogFragment extends DialogFragment {
   }
   
   @Override
-  public Dialog onCreateDialog(Bundle savedInstanceState) {
+  protected Dialog createDialog() {
     fragmentActivity = getActivity();
     packageManager = fragmentActivity.getPackageManager();
     List<DisplayInfo> displayInfos = getDisplayInfos();

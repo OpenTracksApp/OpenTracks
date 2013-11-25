@@ -23,14 +23,13 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 
 /**
  * A DialogFragment to confirm delete.
  * 
  * @author Jimmy Shih
  */
-public class ConfirmDeleteDialogFragment extends DialogFragment {
+public class ConfirmDeleteDialogFragment extends AbstractMyTracksDialogFragment {
 
   /**
    * Interface for caller of this dialog fragment.
@@ -80,7 +79,7 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
   }
 
   @Override
-  public Dialog onCreateDialog(Bundle savedInstanceState) {
+  protected Dialog createDialog() {
     final long[] trackIds = getArguments().getLongArray(KEY_TRACK_IDS);
     int titleId;
     int messageId;

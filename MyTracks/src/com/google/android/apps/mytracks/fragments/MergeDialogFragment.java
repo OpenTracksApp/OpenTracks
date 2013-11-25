@@ -27,7 +27,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.util.SparseBooleanArray;
 
 import java.util.ArrayList;
@@ -37,7 +36,7 @@ import java.util.ArrayList;
  * 
  * @author Jimmy Shih
  */
-public class MergeDialogFragment extends DialogFragment {
+public class MergeDialogFragment extends AbstractMyTracksDialogFragment {
 
   public static final String MERGE_DIALOG_TAG = "mergeDialog";
 
@@ -82,7 +81,7 @@ public class MergeDialogFragment extends DialogFragment {
   }
 
   @Override
-  public Dialog onCreateDialog(Bundle savedInstanceState) {
+  protected Dialog createDialog() {
     loadData();
     return new AlertDialog.Builder(getActivity()).setMultiChoiceItems(items, checkedItems, null)
         .setNegativeButton(R.string.generic_cancel, null)

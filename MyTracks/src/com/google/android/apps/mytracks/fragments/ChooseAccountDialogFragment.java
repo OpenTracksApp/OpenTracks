@@ -28,7 +28,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 
 /**
@@ -36,7 +35,7 @@ import android.support.v4.app.FragmentActivity;
  * 
  * @author Jimmy Shih
  */
-public class ChooseAccountDialogFragment extends DialogFragment {
+public class ChooseAccountDialogFragment extends AbstractMyTracksDialogFragment {
 
   /**
    * Interface for caller of this dialog fragment.
@@ -93,7 +92,7 @@ public class ChooseAccountDialogFragment extends DialogFragment {
   }
 
   @Override
-  public Dialog onCreateDialog(Bundle savedInstanceState) {
+  protected Dialog createDialog() {
     if (accounts.length == 0) {
       return new AlertDialog.Builder(fragmentActivity).setMessage(
           R.string.send_google_no_account_message).setTitle(R.string.send_google_no_account_title)

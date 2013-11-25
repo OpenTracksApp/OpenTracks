@@ -43,13 +43,13 @@ import java.util.List;
 
 /**
  * API level 8 specific implementation of the {@link ApiAdapter}.
- *
+ * 
  * @author Bartlomiej Niechwiej
  */
 public class Api8Adapter implements ApiAdapter {
 
   private static final String TAG = Api8Adapter.class.getSimpleName();
-  
+
   @Override
   public void applyPreferenceChanges(Editor editor) {
     editor.commit();
@@ -101,7 +101,8 @@ public class Api8Adapter implements ApiAdapter {
     } catch (InvocationTargetException e) {
       Log.d(TAG, "Unable to create insecure connection", e);
     }
-    return bluetoothDevice.createRfcommSocketToServiceRecord(BluetoothConnectionManager.MY_TRACKS_UUID);
+    return bluetoothDevice.createRfcommSocketToServiceRecord(
+        BluetoothConnectionManager.MY_TRACKS_UUID);
   }
 
   @Override
@@ -143,23 +144,28 @@ public class Api8Adapter implements ApiAdapter {
   public void invalidMenu(Activity activity) {
     // Do nothing
   }
-  
+
   @Override
   public boolean showEditTextClearButton() {
     return false;
   }
-  
+
   @Override
   public void setTabBackground(TabWidget tabWidget) {
-    // Do nothing    
+    // Do nothing
   }
-  
+
+  @Override
+  public boolean hasDialogTitleDivider() {
+    return false;
+  }
+
   @Override
   public boolean handleSearchKey(MenuItem menuItem) {
     // Return false and allow the framework to handle the search key.
     return false;
   }
-  
+
   @Override
   public boolean isGoogleFeedbackAvailable() {
     return false;
@@ -172,13 +178,13 @@ public class Api8Adapter implements ApiAdapter {
 
   @Override
   public void setAppWidgetSize(AppWidgetManager appWidgetManager, int appWidgetId, int size) {
-    // Do nothing    
+    // Do nothing
   }
 
   @SuppressWarnings("deprecation")
   @Override
   public void removeGlobalLayoutListener(
       ViewTreeObserver observer, OnGlobalLayoutListener listener) {
-    observer.removeGlobalOnLayoutListener(listener);    
+    observer.removeGlobalOnLayoutListener(listener);
   }
 }

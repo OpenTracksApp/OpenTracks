@@ -25,8 +25,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.RadioButton;
@@ -38,7 +36,7 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
  * 
  * @author Jimmy Shih
  */
-public class ExportDialogFragment extends DialogFragment {
+public class ExportDialogFragment extends AbstractMyTracksDialogFragment {
 
   /**
    * Export types.
@@ -82,7 +80,7 @@ public class ExportDialogFragment extends DialogFragment {
   }
 
   @Override
-  public Dialog onCreateDialog(Bundle savedInstanceState) {
+  protected Dialog createDialog() {
     FragmentActivity fragmentActivity = getActivity();
 
     View view = fragmentActivity.getLayoutInflater().inflate(R.layout.export, null);

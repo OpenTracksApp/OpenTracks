@@ -24,7 +24,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
@@ -37,7 +36,7 @@ import android.widget.TextView;
  * 
  * @author Jimmy Shih
  */
-public class EulaDialogFragment extends DialogFragment {
+public class EulaDialogFragment extends AbstractMyTracksDialogFragment {
 
   /**
    * Interface for caller of this dialog fragment.
@@ -86,7 +85,7 @@ public class EulaDialogFragment extends DialogFragment {
   }
 
   @Override
-  public Dialog onCreateDialog(Bundle savedInstanceState) {
+  protected Dialog createDialog() {
     fragmentActivity = getActivity();
 
     boolean hasAccepted = getArguments().getBoolean(KEY_HAS_ACCEPTED);

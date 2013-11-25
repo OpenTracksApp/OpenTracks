@@ -191,7 +191,14 @@ public interface ApiAdapter {
    * @param tabWidget the tab widget
    */
   public void setTabBackground(TabWidget tabWidget);
-  
+
+  /**
+   * Returns true if has dialog title divider.
+   * <p>
+   * Due to changes in API level 11.
+   */
+  public boolean hasDialogTitleDivider();
+
   /**
    * Handles the search key press. Returns true if handled.
    * <p>

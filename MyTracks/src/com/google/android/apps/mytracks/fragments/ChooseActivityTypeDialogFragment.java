@@ -17,6 +17,7 @@
 package com.google.android.apps.mytracks.fragments;
 
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
+import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.TrackIconUtils;
@@ -172,6 +173,7 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
         }
         updateWeightContainer(weightContainer, position);
         weight.setText(weightValue);
+        DialogUtils.setTitleDivier(activity, alertDialog);
       }
     });
 

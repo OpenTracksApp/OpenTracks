@@ -25,7 +25,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 
 /**
@@ -33,7 +32,7 @@ import android.support.v4.app.FragmentActivity;
  * 
  * @author Jimmy Shih
  */
-public class DeleteMarkerDialogFragment extends DialogFragment {
+public class DeleteMarkerDialogFragment extends AbstractMyTracksDialogFragment {
 
   /**
    * Interface for caller of this dialog fragment.
@@ -74,7 +73,7 @@ public class DeleteMarkerDialogFragment extends DialogFragment {
   }
 
   @Override
-  public Dialog onCreateDialog(Bundle savedInstanceState) {
+  protected Dialog createDialog() {
     final FragmentActivity fragmentActivity = getActivity();
     final long[] markerIds = getArguments().getLongArray(KEY_MARKER_IDS);
     int titleId = markerIds.length > 1 ? R.string.generic_delete_selected_confirm_title

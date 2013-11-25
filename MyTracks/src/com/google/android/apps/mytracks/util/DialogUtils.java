@@ -23,6 +23,10 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 /**
  * Utilities for creating dialogs.
@@ -100,5 +104,21 @@ public class DialogUtils {
         : ProgressDialog.STYLE_HORIZONTAL);
     progressDialog.setTitle(R.string.generic_progress_title);
     return progressDialog;
+  }
+  
+  public static void setTitleDivier(Context context, Dialog dialog) {
+    if (ApiAdapterFactory.getApiAdapter().hasDialogTitleDivider()) {
+      try {
+        ViewGroup decorView = (ViewGroup) dialog.getWindow().getDecorView();
+        FrameLayout windowContentView = (FrameLayout) decorView.getChildAt(0);
+        FrameLayout contentView = (FrameLayout) windowContentView.getChildAt(0);
+        LinearLayout parentPanel = (LinearLayout) contentView.getChildAt(0);
+        LinearLayout topPanel = (LinearLayout) parentPanel.getChildAt(0);
+        View titleDivider = topPanel.getChildAt(2);
+        titleDivider.setBackgroundColor(context.getResources().getColor(R.color.holo_orange_dark));
+      } catch (Exception e) {
+        // Can safely ignore
+      }
+    }
   }
 }

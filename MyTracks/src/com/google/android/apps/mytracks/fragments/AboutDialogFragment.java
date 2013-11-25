@@ -23,8 +23,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.TextView;
@@ -34,7 +32,7 @@ import android.widget.TextView;
  * 
  * @author Jimmy Shih
  */
-public class AboutDialogFragment extends DialogFragment {
+public class AboutDialogFragment extends AbstractMyTracksDialogFragment {
 
   /**
    * Interface for caller of this dialog fragment.
@@ -66,7 +64,7 @@ public class AboutDialogFragment extends DialogFragment {
   }
 
   @Override
-  public Dialog onCreateDialog(Bundle savedInstanceState) {
+  protected Dialog createDialog() {  
     fragmentActivity = getActivity();
     View view = fragmentActivity.getLayoutInflater().inflate(R.layout.about, null);
     TextView aboutVersion = (TextView) view.findViewById(R.id.about_version);

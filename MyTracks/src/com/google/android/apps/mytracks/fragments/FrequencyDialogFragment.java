@@ -24,7 +24,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 
 /**
@@ -32,7 +31,7 @@ import android.support.v4.app.FragmentActivity;
  * 
  * @author Jimmy Shih
  */
-public class FrequencyDialogFragment extends DialogFragment {
+public class FrequencyDialogFragment extends AbstractMyTracksDialogFragment {
 
   public static final String FREQUENCY_DIALOG_TAG = "frequencyDialog";
 
@@ -55,7 +54,7 @@ public class FrequencyDialogFragment extends DialogFragment {
   private FragmentActivity fragmentActivity; 
   
   @Override
-  public Dialog onCreateDialog(Bundle savedInstanceState) {
+  protected Dialog createDialog() {
     fragmentActivity = getActivity();
     
     final int preferenceId = getArguments().getInt(KEY_PREFERENCE_ID);

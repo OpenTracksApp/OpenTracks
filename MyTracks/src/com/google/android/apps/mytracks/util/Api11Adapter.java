@@ -184,4 +184,9 @@ public class Api11Adapter extends Api10Adapter {
       tabWidget.getChildAt(i).setBackgroundResource(R.drawable.tab_indicator_mytracks);
     }
   }
+  
+  @Override
+  public boolean hasDialogTitleDivider() {
+    return true;
+  }
 }

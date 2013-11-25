@@ -25,8 +25,6 @@ import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
 
@@ -35,14 +33,14 @@ import android.widget.Toast;
  * 
  * @author Jimmy Shih
  */
-public class InstallEarthDialogFragment extends DialogFragment {
+public class InstallEarthDialogFragment extends AbstractMyTracksDialogFragment {
 
   public static final String INSTALL_EARTH_DIALOG_TAG = "installEarthDialog";
 
   private FragmentActivity fragmentActivity;
 
   @Override
-  public Dialog onCreateDialog(Bundle savedInstanceState) {
+  protected Dialog createDialog() {
     fragmentActivity = getActivity();
     return new AlertDialog.Builder(fragmentActivity).setMessage(
         R.string.track_detail_install_earth_message).setNegativeButton(R.string.generic_no, null)

@@ -26,14 +26,13 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 
 /**
  * A DialogFragment to select a file type, gpx, kml, etc.
  * 
  * @author Jimmy Shih
  */
-public class FileTypeDialogFragment extends DialogFragment {
+public class FileTypeDialogFragment extends AbstractMyTracksDialogFragment {
 
   /**
    * Interface for caller of this dialog fragment.
@@ -82,7 +81,7 @@ public class FileTypeDialogFragment extends DialogFragment {
   }
 
   @Override
-  public Dialog onCreateDialog(Bundle savedInstanceState) {
+  protected Dialog createDialog() {
     int size = getArguments().getInt(KEY_SIZE);
     int optionId = getArguments().getInt(KEY_OPTION_ID);
     final int titleId = getArguments().getInt(KEY_TITLE_ID);

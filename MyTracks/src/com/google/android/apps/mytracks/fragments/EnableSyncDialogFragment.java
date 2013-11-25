@@ -25,7 +25,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 
 /**
@@ -33,7 +32,7 @@ import android.support.v4.app.FragmentActivity;
  * 
  * @author Jimmy Shih
  */
-public class EnableSyncDialogFragment extends DialogFragment {
+public class EnableSyncDialogFragment extends AbstractMyTracksDialogFragment {
 
   /**
    * Interface for caller of this dialog fragment.
@@ -77,7 +76,7 @@ public class EnableSyncDialogFragment extends DialogFragment {
   }
 
   @Override
-  public Dialog onCreateDialog(Bundle savedInstanceState) {
+  protected Dialog createDialog() {
     return new AlertDialog.Builder(fragmentActivity).setMessage(R.string.sync_drive_enable_message)
         .setNegativeButton(R.string.generic_no, new OnClickListener() {
             @Override
