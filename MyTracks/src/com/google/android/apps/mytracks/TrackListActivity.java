@@ -65,7 +65,6 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.os.Parcelable;
 import android.os.RemoteException;
-import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
@@ -496,10 +495,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         MyTracksLocationManager myTracksLocationManager = new MyTracksLocationManager(
             this, Looper.myLooper(), false);
         if (!myTracksLocationManager.isGpsProviderEnabled()) {
-          intent = GoogleLocationUtils.isAvailable(TrackListActivity.this) ? new Intent(
-              GoogleLocationUtils.ACTION_GOOGLE_LOCATION_SETTINGS)
-              : new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-          intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+          intent = GoogleLocationUtils.newLocationSettingsIntent(TrackListActivity.this);
           startActivity(intent);
         } else {
           startGps = !TrackRecordingServiceConnectionUtils.isRecordingServiceRunning(

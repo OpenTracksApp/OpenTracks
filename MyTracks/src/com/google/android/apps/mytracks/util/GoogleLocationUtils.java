@@ -16,10 +16,13 @@
 
 package com.google.android.apps.mytracks.util;
 
+import com.google.android.maps.mytracks.R;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.provider.Settings;
 
 /**
  * Utilities for Google location settings
@@ -28,7 +31,7 @@ import android.content.pm.ResolveInfo;
  */
 public class GoogleLocationUtils {
 
-  public static final String
+  private static final String
       ACTION_GOOGLE_LOCATION_SETTINGS = "com.google.android.gsf.GOOGLE_LOCATION_SETTINGS";
   private static final String
       ACTION_GOOGLE_APPS_LOCATION_SETTINGS = "com.google.android.gsf.GOOGLE_APPS_LOCATION_SETTINGS";
@@ -43,5 +46,28 @@ public class GoogleLocationUtils {
     ResolveInfo resolveInfo = context.getPackageManager()
         .resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
     return resolveInfo != null;
+  }
+
+  /**
+   * Gets the location settings name.
+   * 
+   * @param context the context
+   */
+  public static String getLocationSettingsName(Context context) {
+    return context.getString(isAvailable(context) ? R.string.gps_google_location_settings
+        : R.string.gps_location_access);
+  }
+
+  /**
+   * Creates a new location settings intent.
+   * 
+   * @param context the context
+   */
+  public static Intent newLocationSettingsIntent(Context context) {
+    Intent intent = isAvailable(context) ? new Intent(
+        GoogleLocationUtils.ACTION_GOOGLE_LOCATION_SETTINGS)
+        : new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    return intent;
   }
 }

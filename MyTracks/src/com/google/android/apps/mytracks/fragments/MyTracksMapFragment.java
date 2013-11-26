@@ -55,7 +55,6 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
-import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -165,12 +164,9 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
         final MyTracksLocationManager myTracksLocationManager = new MyTracksLocationManager(
             getActivity(), Looper.myLooper(), true);
         if (!myTracksLocationManager.isAllowed()) {
-          String setting = getString(
-              GoogleLocationUtils.isAvailable(getActivity()) ? R.string.gps_google_location_settings
-                  : R.string.gps_location_access);
-          Toast.makeText(
-              getActivity(), getString(R.string.my_location_no_gps, setting), Toast.LENGTH_LONG)
-              .show();
+          String message = getString(R.string.my_location_no_gps,
+              GoogleLocationUtils.getLocationSettingsName(getActivity()));
+          Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
           myTracksLocationManager.close();
         } else {
           myTracksLocationManager.requestLastLocation(new LocationListener() {
@@ -727,10 +723,8 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
           message = null;
         }
       } else {
-        String setting = getString(
-            GoogleLocationUtils.isAvailable(getActivity()) ? R.string.gps_google_location_settings
-                : R.string.gps_location_access);
-        message = getString(R.string.gps_disabled, setting);
+        message = getString(
+            R.string.gps_disabled, GoogleLocationUtils.getLocationSettingsName(getActivity()));
       }
     }
 
@@ -750,11 +744,7 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
 
           @Override
         public void onClick(View v) {
-          Intent intent = GoogleLocationUtils.isAvailable(getActivity()) ? new Intent(
-              GoogleLocationUtils.ACTION_GOOGLE_LOCATION_SETTINGS)
-              : new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-          intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-          startActivity(intent);
+          startActivity(GoogleLocationUtils.newLocationSettingsIntent(getActivity()));
         }
       });
     }
