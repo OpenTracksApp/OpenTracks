@@ -45,17 +45,13 @@ public class GoogleLocationUtils {
   private static final String
       ACTION_GOOGLE_APPS_LOCATION_SETTINGS = "com.google.android.gsf.GOOGLE_APPS_LOCATION_SETTINGS";
 
-  /**
-   * User has disagreed to use location for Google services.
-   */
+  // User has disagreed to use location for Google services
   private static final int USE_LOCATION_FOR_SERVICES_OFF = 0;
 
-  /**
-   * User has agreed to use location for Google services.
-   */
+  // User has agreed to use location for Google services
   public static final int USE_LOCATION_FOR_SERVICES_ON = 1;
 
-  /**
+  /*
    * The user has neither agreed nor disagreed to use location for Google
    * services yet.
    */
@@ -74,23 +70,25 @@ public class GoogleLocationUtils {
   private GoogleLocationUtils() {}
 
   /**
-   * Returns true if the Google location settings is enforceable.
-   */
-  public static boolean isEnforceable(Context context) {
-    Intent intent = new Intent(ACTION_GOOGLE_APPS_LOCATION_SETTINGS);
-    ResolveInfo resolveInfo = context.getPackageManager()
-        .resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
-    return resolveInfo != null;
-  }
-
-  /**
-   * Gets the location settings name.
+   * Gets the gps disabled message.
    * 
    * @param context the context
    */
-  public static String getLocationSettingsName(Context context) {
-    return context.getString(isEnforceable(context) ? R.string.gps_google_location_settings
-        : R.string.gps_location_access);
+  public static String getGpsDisabledMessage(Context context) {
+    int id = ApiAdapterFactory.getApiAdapter().hasLocationMode() ? R.string.gps_disabled_location_mode
+        : R.string.gps_disabled;
+    return context.getString(id, getLocationSettingsName(context));
+  }
+
+  /**
+   * Gets the gps disabled message when my location button is pressed.
+   * 
+   * @param context the context
+   */
+  public static String getGpsDisabledMyLocationMessage(Context context) {
+    int id = ApiAdapterFactory.getApiAdapter().hasLocationMode() ? R.string.gps_disabled_my_location_location_mode
+        : R.string.gps_disabled_my_location;
+    return context.getString(id, getLocationSettingsName(context));
   }
 
   /**
@@ -99,23 +97,68 @@ public class GoogleLocationUtils {
    * @param context the context
    */
   public static Intent newLocationSettingsIntent(Context context) {
-    Intent intent = isEnforceable(context) ? new Intent(
-        GoogleLocationUtils.ACTION_GOOGLE_LOCATION_SETTINGS)
-        : new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+    Intent intent = new Intent(useGoogleLocationSettings(context) ? ACTION_GOOGLE_LOCATION_SETTINGS
+        : Settings.ACTION_LOCATION_SOURCE_SETTINGS);
     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     return intent;
   }
 
   /**
-   * Returns true if location access is allowed.
+   * Returns true if there is no enforcement or google location settings allows
+   * access.
    * 
    * @param context the context
    */
-  public static boolean isLocationAccessAllowed(Context context) {
+  public static boolean isAllowed(Context context) {
     if (!isEnforceable(context)) {
       return true;
     }
-    return getUseLocationForServices(context) == USE_LOCATION_FOR_SERVICES_ON;
+    if (!ApiAdapterFactory.getApiAdapter().hasLocationMode()) {
+      // Before KitKat
+      return getUseLocationForServices(context) == USE_LOCATION_FOR_SERVICES_ON;
+    } else {
+      // KitKat+
+      return getUseLocationForServices(context) != USE_LOCATION_FOR_SERVICES_OFF;
+    }
+  }
+
+  /**
+   * Gets the location settings name.
+   * 
+   * @param context the context
+   */
+  private static String getLocationSettingsName(Context context) {
+    return context.getString(
+        useGoogleLocationSettings(context) ? R.string.gps_google_location_settings
+            : R.string.gps_location_access);
+  }
+
+  /**
+   * Returns true to use the google location settings.
+   * 
+   * @param context the context
+   */
+  private static boolean useGoogleLocationSettings(Context context) {
+    if (!isEnforceable(context)) {
+      return false;
+    }
+    if (!ApiAdapterFactory.getApiAdapter().hasLocationMode()) {
+      // Before KitKat
+      return true;
+    } else {
+      // KitKat+
+      return getUseLocationForServices(context) == USE_LOCATION_FOR_SERVICES_OFF;
+    }
+  }
+
+  /**
+   * Returns true if the Google location settings is enforceable.
+   */
+  private static boolean isEnforceable(Context context) {
+    Intent intent = new Intent(ACTION_GOOGLE_APPS_LOCATION_SETTINGS);
+    ResolveInfo resolveInfo = context.getPackageManager()
+        .resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
+    return resolveInfo != null;
   }
 
   /**

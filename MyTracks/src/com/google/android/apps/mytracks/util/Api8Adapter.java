@@ -187,4 +187,9 @@ public class Api8Adapter implements ApiAdapter {
       ViewTreeObserver observer, OnGlobalLayoutListener listener) {
     observer.removeGlobalOnLayoutListener(listener);
   }
+
+  @Override
+  public boolean hasLocationMode() {
+    return false;
+  }
 }

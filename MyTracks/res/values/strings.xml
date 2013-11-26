@@ -865,6 +865,29 @@ limitations under the License.
       %1$s location settings. E.g., 'Google location settings'.">
     GPS not enabled. Tap here to go to %1$s. Press the back button to return.
   </string>
+  <string name="gps_disabled_location_mode"
+    translation_description="In the main view, the message on the top asking the user to select the
+      high-accuracy location mode.
+
+      %1$s location settings. E.g., 'Google location settings'.">
+    Select high-accuracy location mode. Tap here to go to %1$s. Press the back button to return.
+  </string>
+  <string name="gps_disabled_my_location"
+    translation_description="When pressing the my location button, the message indicating that the
+      current location cannot be determined.
+
+      %1$s location settings. E.g., 'Google location settings'.">
+    Current location cannot be determined. Enable more location sources at %1$s &amp; make sure the
+    sky is visible. Try again later.
+  </string>
+  <string name="gps_disabled_my_location_location_mode"
+    translation_description="When pressing the my location button, the message indicating that the
+      current location cannot be determined.
+
+      %1$s location settings. E.g., 'Google location settings'.">
+    Current location cannot be determined. Select the high-accuracy location mode at %1$s &amp; make
+    sure the sky is visible. Try again later.
+  </string>    
   <string name="gps_not_found"
     translation_description="On application start, message when there is no GPS on the device.">
     No GPS is found on the device.
@@ -1270,16 +1293,6 @@ limitations under the License.
 
       Character limit: ~20 (1 line)">
     Voice frequency
-  </string>
-
-  <!-- My Location -->
-  <string name="my_location_no_gps"
-    translation_description="When displaying the user's current location, a status message
-      indicating that the current location cannot be determined.
-
-      %1$s location settings. E.g., 'Google location settings'.">
-    GPS is not available. Current location cannot be determined. Enable more location sources at
-    %1$s &amp; make sure the sky is visible. Try again later.
   </string>
 
   <!-- My Tracks -->

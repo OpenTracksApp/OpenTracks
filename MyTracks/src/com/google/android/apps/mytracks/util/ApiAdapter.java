@@ -245,5 +245,12 @@ public interface ApiAdapter {
    * @param listener the listener
    */
   public void removeGlobalLayoutListener(
-      ViewTreeObserver observer, ViewTreeObserver.OnGlobalLayoutListener listener);
+      ViewTreeObserver observer, ViewTreeObserver.OnGlobalLayoutListener listener);  
+  
+  /**
+   * Returns true if has location mode.
+   * <p>
+   * Due to changes in API level 19.
+   */
+  public boolean hasLocationMode();
 }

@@ -53,7 +53,7 @@ public class MyTracksLocationManager {
 
     @Override
     public void onChange(boolean selfChange) {
-      isAllowed = GoogleLocationUtils.isLocationAccessAllowed(context);
+      isAllowed = GoogleLocationUtils.isAllowed(context);
     }
   }
 
@@ -117,7 +117,7 @@ public class MyTracksLocationManager {
     contentResolver = context.getContentResolver();
     observer = new GoogleSettingsObserver(handler);
 
-    isAllowed = GoogleLocationUtils.isLocationAccessAllowed(context);
+    isAllowed = GoogleLocationUtils.isAllowed(context);
 
     contentResolver.registerContentObserver(
         GoogleLocationUtils.USE_LOCATION_FOR_SERVICES_URI, false, observer);
@@ -135,8 +135,8 @@ public class MyTracksLocationManager {
 
   /**
    * Returns true if allowed to access the location manager. Returns true if
-   * there is no Google location settings or the Google location settings allows
-   * access to location data.
+   * there is no enforcement or the Google location settings allows access to
+   * location data.
    */
   public boolean isAllowed() {
     return isAllowed;
@@ -146,7 +146,7 @@ public class MyTracksLocationManager {
    * Returns true if gps provider is enabled.
    */
   public boolean isGpsProviderEnabled() {
-    if (!isAllowed) {
+    if (!isAllowed()) {
       return false;
     }
     String provider = LocationManager.GPS_PROVIDER;
@@ -165,7 +165,7 @@ public class MyTracksLocationManager {
     handler.post(new Runnable() {
         @Override
       public void run() {
-        if (!isAllowed) {
+        if (!isAllowed()) {
           requestLastLocation = null;
           locationListener.onLocationChanged(null);
         } else {

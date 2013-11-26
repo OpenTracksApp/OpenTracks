@@ -163,9 +163,8 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
       public void onClick(View v) {
         final MyTracksLocationManager myTracksLocationManager = new MyTracksLocationManager(
             getActivity(), Looper.myLooper(), true);
-        if (!myTracksLocationManager.isAllowed()) {
-          String message = getString(R.string.my_location_no_gps,
-              GoogleLocationUtils.getLocationSettingsName(getActivity()));
+        if (!myTracksLocationManager.isGpsProviderEnabled()) {
+          String message = GoogleLocationUtils.getGpsDisabledMyLocationMessage(getActivity());
           Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
           myTracksLocationManager.close();
         } else {
@@ -723,8 +722,7 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
           message = null;
         }
       } else {
-        message = getString(
-            R.string.gps_disabled, GoogleLocationUtils.getLocationSettingsName(getActivity()));
+        message = GoogleLocationUtils.getGpsDisabledMessage(getActivity());
       }
     }
 
