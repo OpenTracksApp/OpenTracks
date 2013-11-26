@@ -23,18 +23,14 @@ import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailed
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
-import com.google.common.annotations.VisibleForTesting;
 
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.ContentObserver;
-import android.database.Cursor;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 
 /**
  * My Tracks Location Manager. Applies Google location settings before allowing
@@ -57,21 +53,9 @@ public class MyTracksLocationManager {
 
     @Override
     public void onChange(boolean selfChange) {
-      isAllowed = isUseLocationForServicesOn();
+      isAllowed = GoogleLocationUtils.isLocationAccessAllowed(context);
     }
   }
-
-  private static final String TAG = MyTracksLocationManager.class.getSimpleName();
-
-  private static final String GOOGLE_SETTINGS_CONTENT_URI = "content://com.google.settings/partner";
-  private static final String USE_LOCATION_FOR_SERVICES = "use_location_for_services";
-
-  // User has agreed to use location for Google services.
-  @VisibleForTesting
-  static final String USE_LOCATION_FOR_SERVICES_ON = "1";
-
-  private static final String NAME = "name";
-  private static final String VALUE = "value";
 
   private final ConnectionCallbacks connectionCallbacks = new ConnectionCallbacks() {
       @Override
@@ -105,13 +89,13 @@ public class MyTracksLocationManager {
         public void onConnectionFailed(ConnectionResult connectionResult) {}
       };
 
+  private final Context context;
   private final Handler handler;
   private final LocationClient locationClient;
   private final LocationManager locationManager;
   private final ContentResolver contentResolver;
   private final GoogleSettingsObserver observer;
 
-  private boolean isAvailable;
   private boolean isAllowed;
   private LocationListener requestLastLocation;
   private LocationListener requestLocationUpdates;
@@ -119,6 +103,7 @@ public class MyTracksLocationManager {
   private long requestLocationUpdatesTime;
 
   public MyTracksLocationManager(Context context, Looper looper, boolean enableLocaitonClient) {
+    this.context = context;
     this.handler = new Handler(looper);
 
     if (enableLocaitonClient) {
@@ -132,11 +117,10 @@ public class MyTracksLocationManager {
     contentResolver = context.getContentResolver();
     observer = new GoogleSettingsObserver(handler);
 
-    isAvailable = GoogleLocationUtils.isAvailable(context);
-    isAllowed = isUseLocationForServicesOn();
+    isAllowed = GoogleLocationUtils.isLocationAccessAllowed(context);
 
     contentResolver.registerContentObserver(
-        Uri.parse(GOOGLE_SETTINGS_CONTENT_URI + "/" + USE_LOCATION_FOR_SERVICES), false, observer);
+        GoogleLocationUtils.USE_LOCATION_FOR_SERVICES_URI, false, observer);
   }
 
   /**
@@ -228,30 +212,5 @@ public class MyTracksLocationManager {
         }
       }
     });
-  }
-
-  /**
-   * Returns true if the Google location settings for
-   * {@link #USE_LOCATION_FOR_SERVICES} is on.
-   */
-  private boolean isUseLocationForServicesOn() {
-    if (!isAvailable) {
-      return true;
-    }
-    Cursor cursor = null;
-    try {
-      cursor = contentResolver.query(Uri.parse(GOOGLE_SETTINGS_CONTENT_URI), new String[] { VALUE },
-          NAME + "=?", new String[] { USE_LOCATION_FOR_SERVICES }, null);
-      if (cursor != null && cursor.moveToNext()) {
-        return USE_LOCATION_FOR_SERVICES_ON.equals(cursor.getString(0));
-      }
-    } catch (RuntimeException e) {
-      Log.w(TAG, "Failed to read " + USE_LOCATION_FOR_SERVICES, e);
-    } finally {
-      if (cursor != null) {
-        cursor.close();
-      }
-    }
-    return false;
   }
 }

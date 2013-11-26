@@ -53,7 +53,7 @@ public class GoToMyLocationTest extends ActivityInstrumentationTestCase2<TrackLi
     EndToEndTestUtils.findAndClickMyLocation(activityMyTracks);
     if (EndToEndTestUtils.isEmulator) {
       String setting = activityMyTracks.getString(
-          GoogleLocationUtils.isAvailable(activityMyTracks) ? R.string.gps_google_location_settings
+          GoogleLocationUtils.isEnforceable(activityMyTracks) ? R.string.gps_google_location_settings
               : R.string.gps_location_access);
       EndToEndTestUtils.SOLO.waitForText(
           activityMyTracks.getString(R.string.my_location_no_gps, setting), 1,
