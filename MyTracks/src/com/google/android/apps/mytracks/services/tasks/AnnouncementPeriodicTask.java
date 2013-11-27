@@ -248,8 +248,8 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
     } else {
       speed = speed == 0 ? 0.0 : 1 / speed;
       int paceId = metricUnits ? R.string.voice_pace_per_kilometer : R.string.voice_pace_per_mile;
-      long time = (long) (speed * UnitConversions.HR_TO_MIN * UnitConversions.MIN_TO_S
-          * UnitConversions.S_TO_MS);
+      long time = Math.round(
+          speed * UnitConversions.HR_TO_MIN * UnitConversions.MIN_TO_S * UnitConversions.S_TO_MS);
       rate = context.getString(paceId, getAnnounceTime(time));
     }
 

@@ -314,7 +314,7 @@ public class StringUtils {
     if (fractional != null) {
       // Regex ensures fractional part is in (0,1)
       float fractionalSeconds = Float.parseFloat(fractional);
-      long fractionalMillis = (long) (fractionalSeconds * UnitConversions.S_TO_MS);
+      long fractionalMillis = Math.round(fractionalSeconds * UnitConversions.S_TO_MS);
       time += fractionalMillis;
     }
 
