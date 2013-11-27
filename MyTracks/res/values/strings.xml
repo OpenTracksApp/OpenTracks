@@ -674,6 +674,13 @@ limitations under the License.
       %2$s service url. E.g, maps.google.com.">
     An error has occurred. Unable to export to %1$s (%2$s). Please try again.
   </string>
+  <string name="export_google_error_public"
+    translation_description="The error message when not able to make a track public.
+
+      %1$s service name. E.g, Google Drive.
+      %2$s service url. E.g, drive.google.com.">
+    Unable to make track public in %1$s (%2$s).
+  </string>
   <string name="export_google_fusion_tables"
     translation_description="When exporting a track, the option to export to Google Fusion Tables.">
     Google Fusion Tables

@@ -97,9 +97,17 @@ public class UploadResultActivity extends FragmentActivity implements ChooseActi
       success = sendRequest.isSpreadsheetsSuccess();
     }
 
-    String message = getString(
-        success ? R.string.export_google_success : R.string.export_google_error,
-        getString(serviceName), getString(serviceUrl));
+    int messageId;
+    if (success) {
+      messageId = R.string.export_google_success;
+    } else {
+      if (sendRequest.isDriveSharePublic()) {
+        messageId = R.string.export_google_error_public;
+      } else {
+        messageId = R.string.export_google_error;
+      }
+    }
+    String message = getString(messageId, getString(serviceName), getString(serviceUrl));
     AlertDialog.Builder builder = new AlertDialog.Builder(this).setCancelable(true)
         .setIcon(success ? R.drawable.ic_dialog_success : android.R.drawable.ic_dialog_alert)
         .setMessage(message)
