@@ -27,9 +27,9 @@ limitations under the License.
     android:showAsAction="ifRoom"
     android:title="@string/menu_start_gps"/>
   <item
-    android:icon="@drawable/ic_menu_merge"
-    android:id="@+id/track_list_merge"
-    android:title="@string/menu_merge"/>
+    android:icon="@drawable/ic_menu_play_multiple"
+    android:id="@+id/track_list_play_mutliple"
+    android:title="@string/menu_play_multiple"/>
   <item
     android:icon="@drawable/ic_menu_refresh"
     android:id="@+id/track_list_refresh"

@@ -45,10 +45,10 @@ limitations under the License.
     android:orderInCategory="5"
     android:title="@string/menu_markers"/>
   <item
-    android:icon="@drawable/ic_menu_merge"
-    android:id="@+id/track_detail_merge"
+    android:icon="@drawable/ic_menu_play_multiple"
+    android:id="@+id/track_detail_play_multiple"
     android:orderInCategory="6"
-    android:title="@string/menu_merge"/>    
+    android:title="@string/menu_play_multiple"/>    
   <!-- android:orderInCategory="7" is in map.xml -->
   <item
     android:icon="@drawable/ic_menu_export"

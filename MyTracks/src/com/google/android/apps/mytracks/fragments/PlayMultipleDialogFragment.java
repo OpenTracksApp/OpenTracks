@@ -32,39 +32,39 @@ import android.util.SparseBooleanArray;
 import java.util.ArrayList;
 
 /**
- * A DialogFragment to merge and play tracks.
+ * A DialogFragment to play multiple tracks.
  * 
  * @author Jimmy Shih
  */
-public class MergeDialogFragment extends AbstractMyTracksDialogFragment {
+public class PlayMultipleDialogFragment extends AbstractMyTracksDialogFragment {
 
-  public static final String MERGE_DIALOG_TAG = "mergeDialog";
+  public static final String PLAY_MULTIPLE_DIALOG_TAG = "playMultipleDialog";
 
   /**
    * Interface for caller of this dialog fragment.
    * 
    * @author Jimmy Shih
    */
-  public interface MergeCaller {
+  public interface PlayMultipleCaller {
 
     /**
-     * Called when merge is done.
+     * Called when play multiple is done.
      */
-    public void onMergeDone(long[] trackIds);
+    public void onPlayMultipleDone(long[] trackIds);
   }
 
   private static final String KEY_TRACK_ID = "trackId";
 
-  public static MergeDialogFragment newInstance(long trackId) {
+  public static PlayMultipleDialogFragment newInstance(long trackId) {
     Bundle bundle = new Bundle();
     bundle.putLong(KEY_TRACK_ID, trackId);
 
-    MergeDialogFragment fragment = new MergeDialogFragment();
+    PlayMultipleDialogFragment fragment = new PlayMultipleDialogFragment();
     fragment.setArguments(bundle);
     return fragment;
   }
 
-  private MergeCaller caller;
+  private PlayMultipleCaller caller;
   private String[] items;
   private boolean[] checkedItems;
   private long[] trackIds;
@@ -73,10 +73,10 @@ public class MergeDialogFragment extends AbstractMyTracksDialogFragment {
   public void onAttach(Activity activity) {
     super.onAttach(activity);
     try {
-      caller = (MergeCaller) activity;
+      caller = (PlayMultipleCaller) activity;
     } catch (ClassCastException e) {
       throw new ClassCastException(
-          activity.toString() + " must implement " + MergeCaller.class.getSimpleName());
+          activity.toString() + " must implement " + PlayMultipleCaller.class.getSimpleName());
     }
   }
 
@@ -90,9 +90,9 @@ public class MergeDialogFragment extends AbstractMyTracksDialogFragment {
           public void onClick(DialogInterface dialog, int which) {
             SparseBooleanArray array = ((AlertDialog) dialog).getListView()
                 .getCheckedItemPositions();
-            caller.onMergeDone(getChecked(array));
+            caller.onPlayMultipleDone(getChecked(array));
           }
-        }).setTitle(R.string.menu_merge).create();
+        }).setTitle(R.string.menu_play_multiple).create();
   }
 
   private long[] getChecked(SparseBooleanArray array) {

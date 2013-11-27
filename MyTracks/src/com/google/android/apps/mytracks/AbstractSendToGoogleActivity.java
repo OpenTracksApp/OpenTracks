@@ -25,7 +25,7 @@ import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment.Co
 import com.google.android.apps.mytracks.fragments.ConfirmSyncDialogFragment;
 import com.google.android.apps.mytracks.fragments.ConfirmSyncDialogFragment.ConfirmSyncCaller;
 import com.google.android.apps.mytracks.fragments.InstallEarthDialogFragment;
-import com.google.android.apps.mytracks.fragments.MergeDialogFragment.MergeCaller;
+import com.google.android.apps.mytracks.fragments.PlayMultipleDialogFragment.PlayMultipleCaller;
 import com.google.android.apps.mytracks.fragments.ShareTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.ShareTrackDialogFragment.ShareTrackCaller;
 import com.google.android.apps.mytracks.io.drive.SendDriveActivity;
@@ -71,7 +71,7 @@ import java.io.IOException;
  */
 public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActivity implements
     ChooseAccountCaller, ConfirmSyncCaller, CheckPermissionCaller, ShareTrackCaller,
-    ConfirmDeleteCaller, MergeCaller {
+    ConfirmDeleteCaller, PlayMultipleCaller {
 
   private static final String TAG = AbstractMyTracksActivity.class.getSimpleName();
   private static final String SEND_REQUEST_KEY = "send_request_key";
@@ -413,7 +413,7 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
   }
 
   @Override
-  public void onMergeDone(long[] trackIds) {
+  public void onPlayMultipleDone(long[] trackIds) {
     playTrack(trackIds);
   }
 }

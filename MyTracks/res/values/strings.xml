@@ -563,7 +563,7 @@ limitations under the License.
     translation_description="Label for weight in kilograms.">
     Weight (kg)
   </string>
-  
+
   <!-- Eula -->
   <string name="eula_accept"
     translation_description="In the 'Terms of Service' dialog, the button to accept.">
@@ -887,7 +887,7 @@ limitations under the License.
       %1$s location settings. E.g., 'Google location settings'.">
     Current location cannot be determined. Select the high-accuracy location mode at %1$s &amp; make
     sure the sky is visible. Try again later.
-  </string>    
+  </string>
   <string name="gps_not_found"
     translation_description="On application start, message when there is no GPS on the device.">
     No GPS is found on the device.
@@ -1181,17 +1181,17 @@ limitations under the License.
       Character limit: ~20 (1 line)">
     Markers
   </string>
-  <string name="menu_merge"
-    translation_description="In the menu, to merge and play tracks.
-
-      Character limit: ~20 (1 line)">
-    Merge &amp; play
-  </string>
   <string name="menu_play"
     translation_description="In the menu, to play a track.
 
       Character limit: ~20 (1 line)">
     Play
+  </string>
+  <string name="menu_play_multiple"
+    translation_description="In the menu, to play multiple tracks together.
+
+      Character limit: ~20 (1 line)">
+    Play multiple
   </string>
   <string name="menu_refresh"
     translation_description="In the menu, to refresh with Google Drive.

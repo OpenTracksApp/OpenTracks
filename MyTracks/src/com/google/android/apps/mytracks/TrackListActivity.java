@@ -26,7 +26,7 @@ import com.google.android.apps.mytracks.fragments.EulaDialogFragment;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment.EulaCaller;
 import com.google.android.apps.mytracks.fragments.FileTypeDialogFragment;
 import com.google.android.apps.mytracks.fragments.FileTypeDialogFragment.FileTypeCaller;
-import com.google.android.apps.mytracks.fragments.MergeDialogFragment;
+import com.google.android.apps.mytracks.fragments.PlayMultipleDialogFragment;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.io.file.exporter.SaveActivity;
 import com.google.android.apps.mytracks.io.file.importer.ImportActivity;
@@ -529,9 +529,9 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         }
         myTracksLocationManager.close();
         return true;
-      case R.id.track_list_merge:
-        MergeDialogFragment.newInstance(-1L)
-            .show(getSupportFragmentManager(), MergeDialogFragment.MERGE_DIALOG_TAG);
+      case R.id.track_list_play_mutliple:
+        PlayMultipleDialogFragment.newInstance(-1L)
+            .show(getSupportFragmentManager(), PlayMultipleDialogFragment.PLAY_MULTIPLE_DIALOG_TAG);
         return true;
       case R.id.track_list_refresh:
         if (driveSync) {
