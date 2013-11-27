@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.RadioButton;
@@ -44,7 +45,7 @@ public class ExportDialogFragment extends AbstractMyTracksDialogFragment {
    * @author Jimmy Shih
    */
   public enum ExportType {
-    GOOGLE_MAPS, GOOGLE_FUSION_TABLES, GOOGLE_SPREADSHEET, EXTERNAL_STORAGE
+    GOOGLE_DRIVE, GOOGLE_MAPS, GOOGLE_FUSION_TABLES, GOOGLE_SPREADSHEET, EXTERNAL_STORAGE
   }
 
   /**
@@ -61,6 +62,17 @@ public class ExportDialogFragment extends AbstractMyTracksDialogFragment {
   }
 
   public static final String EXPORT_DIALOG_TAG = "export";
+
+  private static final String KEY_HIDE_DRIVE = "hideDrive";
+
+  public static ExportDialogFragment newInstance(boolean hideDrive) {
+    Bundle bundle = new Bundle();
+    bundle.putBoolean(KEY_HIDE_DRIVE, hideDrive);
+
+    ExportDialogFragment fragment = new ExportDialogFragment();
+    fragment.setArguments(bundle);
+    return fragment;
+  }
 
   private ExportCaller caller;
   private RadioGroup exportTypeOptions;
@@ -82,16 +94,25 @@ public class ExportDialogFragment extends AbstractMyTracksDialogFragment {
   @Override
   protected Dialog createDialog() {
     FragmentActivity fragmentActivity = getActivity();
+    boolean hideDrive = getArguments().getBoolean(KEY_HIDE_DRIVE);
+    ExportType exportType = ExportType.valueOf(PreferencesUtils.getString(
+        fragmentActivity, R.string.export_type_key, PreferencesUtils.EXPORT_TYPE_DEFAULT));
 
+    if (hideDrive && exportType == ExportType.GOOGLE_DRIVE) {
+      exportType = ExportType.GOOGLE_MAPS;
+    }
+
+    // Get views
     View view = fragmentActivity.getLayoutInflater().inflate(R.layout.export, null);
-
     exportTypeOptions = (RadioGroup) view.findViewById(R.id.export_type_options);
+    RadioButton exportGoogleDrive = (RadioButton) view.findViewById(R.id.export_google_drive);
     exportGoogleMapsOptions = (RadioGroup) view.findViewById(R.id.export_google_maps_options);
     exportGoogleFusionTablesOptions = (RadioGroup) view.findViewById(
         R.id.export_google_fusion_tables_options);
     exportExternalStorageOptions = (RadioGroup) view.findViewById(
         R.id.export_external_storage_options);
 
+    // exportTypeOptions
     exportTypeOptions.setOnCheckedChangeListener(new OnCheckedChangeListener() {
         @Override
       public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -103,15 +124,18 @@ public class ExportDialogFragment extends AbstractMyTracksDialogFragment {
             checkedId == R.id.export_external_storage ? View.VISIBLE : View.GONE);
       }
     });
-    ExportType exportType = ExportType.valueOf(PreferencesUtils.getString(
-        fragmentActivity, R.string.export_type_key, PreferencesUtils.EXPORT_TYPE_DEFAULT));
     exportTypeOptions.check(getExportTypeId(exportType));
 
+    // exportGoogleDrive
+    exportGoogleDrive.setVisibility(hideDrive ? View.GONE : View.VISIBLE);
+
+    // exportGoogleMapsOptions
     boolean exportGoogleMapsPublic = PreferencesUtils.getBoolean(fragmentActivity,
         R.string.export_google_maps_public_key, PreferencesUtils.EXPORT_GOOGLE_MAPS_PUBLIC_DEFAULT);
     exportGoogleMapsOptions.check(
         exportGoogleMapsPublic ? R.id.export_google_maps_public : R.id.export_google_maps_unlisted);
 
+    // exportGoogleFusionTablesOptions
     boolean exportGoogleFusionTablesPublic = PreferencesUtils.getBoolean(fragmentActivity,
         R.string.export_google_fusion_tables_public_key,
         PreferencesUtils.EXPORT_GOOGLE_FUSION_TABLES_PUBLIC_DEFAULT);
@@ -119,6 +143,7 @@ public class ExportDialogFragment extends AbstractMyTracksDialogFragment {
         exportGoogleFusionTablesPublic ? R.id.export_google_fusion_tables_public
             : R.id.export_google_fusion_tables_private);
 
+    // exportExternalStorageOptions
     setExternalStorageOption(
         (RadioButton) view.findViewById(R.id.export_external_storage_kml), TrackFileFormat.KML);
     setExternalStorageOption(
@@ -215,6 +240,8 @@ public class ExportDialogFragment extends AbstractMyTracksDialogFragment {
    */
   private int getExportTypeId(ExportType exportType) {
     switch (exportType) {
+      case GOOGLE_DRIVE:
+        return R.id.export_google_drive;
       case GOOGLE_MAPS:
         return R.id.export_google_maps;
       case GOOGLE_FUSION_TABLES:
@@ -233,6 +260,8 @@ public class ExportDialogFragment extends AbstractMyTracksDialogFragment {
    */
   private ExportType getExportType(int exportTypeId) {
     switch (exportTypeId) {
+      case R.id.export_google_drive:
+        return ExportType.GOOGLE_DRIVE;
       case R.id.export_google_maps:
         return ExportType.GOOGLE_MAPS;
       case R.id.export_google_fusion_tables:

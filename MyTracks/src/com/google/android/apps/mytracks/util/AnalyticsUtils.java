@@ -29,6 +29,7 @@ public class AnalyticsUtils {
 
   public static final String ACTION_EXPORT_ALL_PREFIX = "/action/export_all_";
   public static final String ACTION_EXPORT_PREFIX = "/action/export_";
+  public static final String ACTION_EXPORT_DRIVE = "/action/export_drive";
   public static final String ACTION_EXPORT_FUSION_TABLES = "/action/export_fusion_tables";
   public static final String ACTION_EXPORT_MAPS = "/action/export_maps";
   public static final String ACTION_EXPORT_SPREADSHEETS = "/action/export_spreadsheets";

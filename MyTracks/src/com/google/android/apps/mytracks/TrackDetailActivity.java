@@ -442,8 +442,10 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
             .show(getSupportFragmentManager(), FrequencyDialogFragment.FREQUENCY_DIALOG_TAG);
         return true;
       case R.id.track_detail_export:
-        new ExportDialogFragment().show(getSupportFragmentManager(),
-            ExportDialogFragment.EXPORT_DIALOG_TAG);
+        Track track = myTracksProviderUtils.getTrack(trackId);
+        boolean hideDrive = track != null ? track.isSharedWithMe() : true;
+        ExportDialogFragment.newInstance(hideDrive)
+            .show(getSupportFragmentManager(), ExportDialogFragment.EXPORT_DIALOG_TAG);
         return true;
       case R.id.track_detail_edit:
         intent = IntentUtils.newIntent(this, TrackEditActivity.class)
@@ -499,6 +501,10 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
       SendRequest sendRequest = new SendRequest(trackId);
       String pageView;
       switch (exportType) {
+        case GOOGLE_DRIVE:
+          pageView = AnalyticsUtils.ACTION_EXPORT_DRIVE;
+          sendRequest.setSendDrive(true);
+          break;
         case GOOGLE_MAPS:
           pageView = AnalyticsUtils.ACTION_EXPORT_MAPS;
           sendRequest.setSendMaps(true);

@@ -22,6 +22,10 @@ limitations under the License.
     android:layout_width="match_parent"
     android:padding="8dp" >
     <RadioButton
+      android:id="@+id/export_google_drive"
+      android:text="@string/export_google_drive"
+      style="@style/TextMedium" />
+    <RadioButton
       android:id="@+id/export_google_maps"
       android:text="@string/export_google_maps"
       style="@style/TextMedium" />
