@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.io.maps;
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.TrackStubUtils;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsGDataConverter;
@@ -106,17 +107,22 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
 
   /**
    * Tests the method {@link SendMapsAsyncTask#uploadAllTrackPoints(Track)} when
-   * cursor is null. And makes sure it returns false.
+   * the location iterator has no item. And makes sure it returns true.
    */
-  public void testUploadAllTrackPoints_nullCursor() {
+  public void testUploadAllTrackPoints_empptyLocationIterator() {
+    LocationIterator locationIterator = AndroidMock.createMock(LocationIterator.class);
+    AndroidMock.expect(locationIterator.hasNext()).andReturn(false);
+    locationIterator.close();
+
     Track track = TrackStubUtils.createTrack(1);
-    AndroidMock.expect(myTracksProviderUtilsMock.getTrackPointCursor(TRACK_ID, -1L, -1, false))
-        .andReturn(null);
-    AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock);
+    AndroidMock.expect(myTracksProviderUtilsMock.getTrackPointLocationIterator(
+        TRACK_ID, -1L, false, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY))
+        .andReturn(locationIterator);
+    AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock, locationIterator);
     SendMapsAsyncTask sendMapsAsyncTask = new SendMapsAsyncTask(sendMapsActivityMock,
         sendRequest.getTrackId(), sendRequest.getAccount(), myTracksProviderUtilsMock);
-    assertFalse(sendMapsAsyncTask.uploadAllTrackPoints(track));
-    AndroidMock.verify(sendMapsActivityMock, myTracksProviderUtilsMock);
+    assertTrue(sendMapsAsyncTask.uploadAllTrackPoints(track));
+    AndroidMock.verify(sendMapsActivityMock, myTracksProviderUtilsMock, locationIterator);
   }
 
   /**
@@ -126,22 +132,23 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
   @UsesMocks(Cursor.class)
   public void testUploadAllTrackPoints_uploadFirstMarkerFailed() {
     Track track = TrackStubUtils.createTrack(1);
-    Cursor cursorMock = AndroidMock.createMock(Cursor.class);
-    AndroidMock.expect(cursorMock.getCount()).andReturn(2);
-    AndroidMock.expect(cursorMock.moveToPosition(0)).andReturn(true);
-    cursorMock.close();
-    AndroidMock.expect(myTracksProviderUtilsMock.createTrackPoint(cursorMock)).andReturn(
-        new Location("1"));
-    AndroidMock.expect(myTracksProviderUtilsMock.getTrackPointCursor(TRACK_ID, -1L, -1, false))
-        .andReturn(cursorMock);
 
-    AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock, cursorMock);
+    LocationIterator locationIterator = AndroidMock.createMock(LocationIterator.class);
+    AndroidMock.expect(locationIterator.hasNext()).andReturn(true);
+    AndroidMock.expect(locationIterator.next()).andReturn(new Location("1"));
+    locationIterator.close();
+
+    AndroidMock.expect(myTracksProviderUtilsMock.getTrackPointLocationIterator(
+        TRACK_ID, -1L, false, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY))
+        .andReturn(locationIterator);
+
+    AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock, locationIterator);
     SendMapsAsyncTaskMock sendMapsAsyncTask = new SendMapsAsyncTaskMock(sendMapsActivityMock,
         sendRequest.getTrackId(), sendRequest.getAccount(), myTracksProviderUtilsMock);
     sendMapsAsyncTask.uploadMarkerResult[0] = false;
     assertFalse(sendMapsAsyncTask.uploadAllTrackPoints(track));
     assertEquals(1, uploadMarkerCounter);
-    AndroidMock.verify(sendMapsActivityMock, myTracksProviderUtilsMock, cursorMock);
+    AndroidMock.verify(sendMapsActivityMock, myTracksProviderUtilsMock, locationIterator);
   }
 
   /**
@@ -152,17 +159,18 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
   @UsesMocks(Cursor.class)
   public void testUploadAllTrackPoints_prepareAndUploadPointsFailed() {
     Track track = TrackStubUtils.createTrack(1);
-    Cursor cursorMock = AndroidMock.createMock(Cursor.class);
-    AndroidMock.expect(cursorMock.getCount()).andReturn(2);
-    AndroidMock.expect(cursorMock.moveToPosition(0)).andReturn(true);
-    AndroidMock.expect(cursorMock.moveToPosition(1)).andReturn(true);
-    cursorMock.close();
-    AndroidMock.expect(myTracksProviderUtilsMock.createTrackPoint(cursorMock))
-        .andReturn(new Location("1")).times(2);
-    AndroidMock.expect(myTracksProviderUtilsMock.getTrackPointCursor(TRACK_ID, -1L, -1, false))
-        .andReturn(cursorMock);
 
-    AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock, cursorMock);
+    LocationIterator locationIterator = AndroidMock.createMock(LocationIterator.class);
+    AndroidMock.expect(locationIterator.hasNext()).andReturn(true).times(2);
+    AndroidMock.expect(locationIterator.hasNext()).andReturn(false);
+    AndroidMock.expect(locationIterator.next()).andReturn(new Location("1")).times(2);
+    locationIterator.close();
+
+    AndroidMock.expect(myTracksProviderUtilsMock.getTrackPointLocationIterator(
+        TRACK_ID, -1L, false, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY))
+        .andReturn(locationIterator);
+
+    AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock, locationIterator);
     SendMapsAsyncTaskMock sendMapsAsyncTask = new SendMapsAsyncTaskMock(sendMapsActivityMock,
         sendRequest.getTrackId(), sendRequest.getAccount(), myTracksProviderUtilsMock);
     // For will be failed when run prepareAndUploadPoints, it no require to
@@ -172,7 +180,7 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
     assertFalse(sendMapsAsyncTask.uploadAllTrackPoints(track));
     assertEquals(1, uploadMarkerCounter);
     assertEquals(1, prepareAndUploadPointsCounter);
-    AndroidMock.verify(sendMapsActivityMock, myTracksProviderUtilsMock, cursorMock);
+    AndroidMock.verify(sendMapsActivityMock, myTracksProviderUtilsMock, locationIterator);
   }
 
   /**
@@ -182,17 +190,18 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
   @UsesMocks(Cursor.class)
   public void testUploadAllTrackPoints_uploadLastMarkerFailed() {
     Track track = TrackStubUtils.createTrack(1);
-    Cursor cursorMock = AndroidMock.createMock(Cursor.class);
-    AndroidMock.expect(cursorMock.getCount()).andReturn(2);
-    AndroidMock.expect(cursorMock.moveToPosition(0)).andReturn(true);
-    AndroidMock.expect(cursorMock.moveToPosition(1)).andReturn(true);
-    cursorMock.close();
-    AndroidMock.expect(myTracksProviderUtilsMock.createTrackPoint(cursorMock))
-        .andReturn(new Location("1")).times(2);
-    AndroidMock.expect(myTracksProviderUtilsMock.getTrackPointCursor(TRACK_ID, -1L, -1, false))
-        .andReturn(cursorMock);
 
-    AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock, cursorMock);
+    LocationIterator locationIterator = AndroidMock.createMock(LocationIterator.class);
+    AndroidMock.expect(locationIterator.hasNext()).andReturn(true).times(2);
+    AndroidMock.expect(locationIterator.hasNext()).andReturn(false);
+    AndroidMock.expect(locationIterator.next()).andReturn(new Location("1")).times(2);
+    locationIterator.close();
+
+    AndroidMock.expect(myTracksProviderUtilsMock.getTrackPointLocationIterator(
+        TRACK_ID, -1L, false, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY))
+        .andReturn(locationIterator);
+
+    AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock, locationIterator);
     SendMapsAsyncTaskMock sendMapsAsyncTask = new SendMapsAsyncTaskMock(sendMapsActivityMock,
         sendRequest.getTrackId(), sendRequest.getAccount(), myTracksProviderUtilsMock);
     sendMapsAsyncTask.uploadMarkerResult[0] = true;
@@ -201,27 +210,28 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
     assertFalse(sendMapsAsyncTask.uploadAllTrackPoints(track));
     assertEquals(2, uploadMarkerCounter);
     assertEquals(1, prepareAndUploadPointsCounter);
-    AndroidMock.verify(sendMapsActivityMock, myTracksProviderUtilsMock, cursorMock);
+    AndroidMock.verify(sendMapsActivityMock, myTracksProviderUtilsMock, locationIterator);
   }
 
   /**
    * Tests the method {@link SendMapsAsyncTask#uploadAllTrackPoints(Track)} when
-   * return true.
+   * return true.a
    */
   @UsesMocks(Cursor.class)
   public void testUploadAllTrackPoints_success() {
     Track track = TrackStubUtils.createTrack(1);
-    Cursor cursorMock = AndroidMock.createMock(Cursor.class);
-    AndroidMock.expect(cursorMock.getCount()).andReturn(2);
-    AndroidMock.expect(cursorMock.moveToPosition(0)).andReturn(true);
-    AndroidMock.expect(cursorMock.moveToPosition(1)).andReturn(true);
-    cursorMock.close();
-    AndroidMock.expect(myTracksProviderUtilsMock.createTrackPoint(cursorMock))
-        .andReturn(new Location("1")).times(2);
-    AndroidMock.expect(myTracksProviderUtilsMock.getTrackPointCursor(TRACK_ID, -1L, -1, false))
-        .andReturn(cursorMock);
 
-    AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock, cursorMock);
+    LocationIterator locationIterator = AndroidMock.createMock(LocationIterator.class);
+    AndroidMock.expect(locationIterator.hasNext()).andReturn(true).times(2);
+    AndroidMock.expect(locationIterator.hasNext()).andReturn(false);
+    AndroidMock.expect(locationIterator.next()).andReturn(new Location("1")).times(2);
+    locationIterator.close();
+
+    AndroidMock.expect(myTracksProviderUtilsMock.getTrackPointLocationIterator(
+        TRACK_ID, -1L, false, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY))
+        .andReturn(locationIterator);
+
+    AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock, locationIterator);
     SendMapsAsyncTaskMock sendMapsAsyncTask = new SendMapsAsyncTaskMock(sendMapsActivityMock,
         sendRequest.getTrackId(), sendRequest.getAccount(), myTracksProviderUtilsMock);
     sendMapsAsyncTask.uploadMarkerResult[0] = true;
@@ -230,7 +240,7 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
     assertTrue(sendMapsAsyncTask.uploadAllTrackPoints(track));
     assertEquals(2, uploadMarkerCounter);
     assertEquals(1, prepareAndUploadPointsCounter);
-    AndroidMock.verify(sendMapsActivityMock, myTracksProviderUtilsMock, cursorMock);
+    AndroidMock.verify(sendMapsActivityMock, myTracksProviderUtilsMock, locationIterator);
   }
 
   /**
@@ -239,9 +249,8 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
    */
   @UsesMocks(Cursor.class)
   public void testUploadWaypoints_nullCursor() {
-    AndroidMock.expect(
-        myTracksProviderUtilsMock.getWaypointCursor(TRACK_ID, -1L,
-            Constants.MAX_LOADED_WAYPOINTS_POINTS)).andReturn(null);
+    AndroidMock.expect(myTracksProviderUtilsMock.getWaypointCursor(
+        TRACK_ID, -1L, Constants.MAX_LOADED_WAYPOINTS_POINTS)).andReturn(null);
     AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock);
     SendMapsAsyncTask sendMapsAsyncTask = new SendMapsAsyncTask(sendMapsActivityMock,
         sendRequest.getTrackId(), sendRequest.getAccount(), myTracksProviderUtilsMock);
@@ -261,9 +270,8 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
     AndroidMock.expect(cursorMock.moveToNext()).andReturn(false);
     cursorMock.close();
 
-    AndroidMock.expect(
-        myTracksProviderUtilsMock.getWaypointCursor(TRACK_ID, -1L,
-            Constants.MAX_LOADED_WAYPOINTS_POINTS)).andReturn(cursorMock);
+    AndroidMock.expect(myTracksProviderUtilsMock.getWaypointCursor(
+        TRACK_ID, -1L, Constants.MAX_LOADED_WAYPOINTS_POINTS)).andReturn(cursorMock);
 
     AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock, cursorMock);
     SendMapsAsyncTask sendMapsAsyncTask = new SendMapsAsyncTask(sendMapsActivityMock,
@@ -274,8 +282,8 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
   }
 
   /**
-   * Tests the method {@link SendMapsAsyncTask#uploadWaypoints()}. Makes sure a cursor is created and
-   * a way point is created with such cursor.
+   * Tests the method {@link SendMapsAsyncTask#uploadWaypoints()}. Makes sure a
+   * cursor is created and a way point is created with such cursor.
    * 
    * @throws XmlPullParserException
    */
@@ -288,13 +296,12 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
     AndroidMock.expect(cursorMock.moveToNext()).andReturn(true);
     cursorMock.close();
 
-    AndroidMock.expect(
-        myTracksProviderUtilsMock.getWaypointCursor(TRACK_ID, -1L,
-            Constants.MAX_LOADED_WAYPOINTS_POINTS)).andReturn(cursorMock);
+    AndroidMock.expect(myTracksProviderUtilsMock.getWaypointCursor(
+        TRACK_ID, -1L, Constants.MAX_LOADED_WAYPOINTS_POINTS)).andReturn(cursorMock);
     Waypoint waypoint = new Waypoint();
     waypoint.setLocation(TrackStubUtils.createMyTracksLocation());
-    AndroidMock.expect(myTracksProviderUtilsMock.createWaypoint(cursorMock)).andReturn(waypoint)
-        .times(1);
+    AndroidMock.expect(myTracksProviderUtilsMock.createWaypoint(cursorMock))
+        .andReturn(waypoint).times(1);
 
     AndroidMock.replay(sendMapsActivityMock, myTracksProviderUtilsMock, cursorMock);
     SendMapsAsyncTask sendMapsAsyncTask = new SendMapsAsyncTask(sendMapsActivityMock,
@@ -310,13 +317,11 @@ public class SendMapsAsyncTaskTest extends AndroidTestCase {
    */
   public void testCountPercentage() {
     assertEquals(SendMapsAsyncTask.PROGRESS_UPLOAD_DATA_MIN, SendMapsAsyncTask.getPercentage(0, 5));
-    assertEquals(SendMapsAsyncTask.PROGRESS_UPLOAD_DATA_MAX,
-        SendMapsAsyncTask.getPercentage(50, 50));
     assertEquals(
-        (int) ((double) 5
-            / 11
-            * (SendMapsAsyncTask.PROGRESS_UPLOAD_DATA_MAX - SendMapsAsyncTask.PROGRESS_UPLOAD_DATA_MIN) + SendMapsAsyncTask.PROGRESS_UPLOAD_DATA_MIN),
-            SendMapsAsyncTask.getPercentage(5, 11));
+        SendMapsAsyncTask.PROGRESS_UPLOAD_DATA_MAX, SendMapsAsyncTask.getPercentage(50, 50));
+    assertEquals((int) ((double) 5 / 11
+        * (SendMapsAsyncTask.PROGRESS_UPLOAD_DATA_MAX - SendMapsAsyncTask.PROGRESS_UPLOAD_DATA_MIN)
+        + SendMapsAsyncTask.PROGRESS_UPLOAD_DATA_MIN), SendMapsAsyncTask.getPercentage(5, 11));
   }
 
 }
