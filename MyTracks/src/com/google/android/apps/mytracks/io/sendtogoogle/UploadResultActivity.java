@@ -20,6 +20,7 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.fragments.ChooseActivityDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChooseActivityDialogFragment.ChooseActivityCaller;
+import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
@@ -137,6 +138,13 @@ public class UploadResultActivity extends FragmentActivity implements ChooseActi
           });
     }
     resultDialog = builder.create();
+    resultDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+
+        @Override
+      public void onShow(DialogInterface dialog) {
+        DialogUtils.setDialogTitleDivider(UploadResultActivity.this, resultDialog);
+      }
+    });
     return resultDialog;
   }
 

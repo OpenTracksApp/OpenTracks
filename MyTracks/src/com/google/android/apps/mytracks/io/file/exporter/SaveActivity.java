@@ -180,7 +180,15 @@ public class SaveActivity extends Activity {
                 }
               });
         }
-        return builder.create();
+        final Dialog dialog = builder.create();
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+
+            @Override
+          public void onShow(DialogInterface dialogInterface) {
+            DialogUtils.setDialogTitleDivider(SaveActivity.this, dialog);
+          }
+        });
+        return dialog;
       default:
         return null;
     }

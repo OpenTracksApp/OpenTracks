@@ -168,8 +168,8 @@ public class ImportActivity extends Activity {
           message = getString(
               R.string.import_error, successCount, totalFiles, directoryDisplayName);
         }
-        return new AlertDialog.Builder(this).setCancelable(true).setIcon(iconId).setMessage(message)
-            .setOnCancelListener(new DialogInterface.OnCancelListener() {
+        final Dialog dialog = new AlertDialog.Builder(this).setCancelable(true).setIcon(iconId)
+            .setMessage(message).setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
               public void onCancel(DialogInterface dialog) {
                 dialog.dismiss();
@@ -190,6 +190,14 @@ public class ImportActivity extends Activity {
                 finish();
               }
             }).setTitle(titleId).create();
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+
+            @Override
+          public void onShow(DialogInterface dialogInterface) {
+            DialogUtils.setDialogTitleDivider(ImportActivity.this, dialog);
+          }
+        });
+        return dialog;
       default:
         return null;
     }

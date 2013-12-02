@@ -16,6 +16,7 @@
 
 package com.google.android.apps.mytracks.io.backup;
 
+import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
@@ -97,26 +98,30 @@ public class RestoreChooserActivity extends Activity {
     for (int i = 0; i < backupDates.length; i++) {
       items[i] = StringUtils.formatDateTime(this, backupDates[i].getTime());
     }
-    return new AlertDialog.Builder(this)
-        .setCancelable(true)
+    final Dialog dialog = new AlertDialog.Builder(this).setCancelable(true)
         .setItems(items, new DialogInterface.OnClickListener() {
-          @Override
-          public void onClick(DialogInterface dialog, int which) {
+            @Override
+          public void onClick(DialogInterface dialogInterface, int which) {
             Intent intent = IntentUtils.newIntent(
                 RestoreChooserActivity.this, RestoreActivity.class)
                 .putExtra(RestoreActivity.EXTRA_DATE, backupDates[which].getTime());
             startActivity(intent);
             finish();
           }
-        })
-        .setOnCancelListener(new DialogInterface.OnCancelListener() {
-          @Override
-          public void onCancel(DialogInterface dialog) {
+        }).setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+          public void onCancel(DialogInterface dialogInterface) {
             finish();
           }
-        })
-        .setTitle(R.string.settings_backup_restore_select_title)
-        .create();
+        }).setTitle(R.string.settings_backup_restore_select_title).create();
+    dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+
+        @Override
+      public void onShow(DialogInterface dialogInterface) {
+        DialogUtils.setDialogTitleDivider(RestoreChooserActivity.this, dialog);
+      }
+    });
+    return dialog;
   }
 
   /**
