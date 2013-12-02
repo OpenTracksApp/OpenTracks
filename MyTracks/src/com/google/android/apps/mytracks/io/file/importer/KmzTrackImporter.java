@@ -21,6 +21,7 @@ import com.google.android.apps.mytracks.io.file.exporter.KmzTrackExporter;
 import com.google.android.apps.mytracks.util.FileUtils;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 
 import java.io.ByteArrayInputStream;
@@ -184,12 +185,15 @@ public class KmzTrackImporter implements TrackImporter {
       File dir = FileUtils.getPhotoDir(importTrackId);
       FileUtils.ensureDirectoryExists(dir);
 
-      fileOutputStream = new FileOutputStream(new File(dir, fileName));
+      File file = new File(dir, fileName);
+      fileOutputStream = new FileOutputStream(file);
       byte[] buffer = new byte[BUFFER_SIZE];
       int count;
       while ((count = zipInputStream.read(buffer)) != -1) {
         fileOutputStream.write(buffer, 0, count);
       }
+      
+      FileUtils.updateMediaScanner(context, Uri.fromFile(file));     
     } finally {
       if (fileOutputStream != null) {
         fileOutputStream.close();

@@ -15,6 +15,9 @@
  */
 package com.google.android.apps.mytracks.util;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Environment;
 
 import java.io.File;
@@ -172,6 +175,12 @@ public class FileUtils {
       return null;
     }
     return fileName.substring(index + 1);
+  }
+  
+  public static void updateMediaScanner(Context context, Uri uri) {
+    Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+    mediaScanIntent.setData(uri);
+    context.sendBroadcast(mediaScanIntent);      
   }
 
   /**

@@ -30,8 +30,8 @@ import com.google.android.apps.mytracks.fragments.ExportDialogFragment;
 import com.google.android.apps.mytracks.fragments.ExportDialogFragment.ExportCaller;
 import com.google.android.apps.mytracks.fragments.ExportDialogFragment.ExportType;
 import com.google.android.apps.mytracks.fragments.FrequencyDialogFragment;
-import com.google.android.apps.mytracks.fragments.PlayMultipleDialogFragment;
 import com.google.android.apps.mytracks.fragments.MyTracksMapFragment;
+import com.google.android.apps.mytracks.fragments.PlayMultipleDialogFragment;
 import com.google.android.apps.mytracks.fragments.StatsFragment;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.io.file.exporter.SaveActivity;
@@ -140,9 +140,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
             hasPhoto = false;
 
             if (id != -1L) {
-              Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-              mediaScanIntent.setData(photoUri);
-              sendBroadcast(mediaScanIntent);
+              FileUtils.updateMediaScanner(TrackDetailActivity.this, photoUri);
             }
           }
         }
