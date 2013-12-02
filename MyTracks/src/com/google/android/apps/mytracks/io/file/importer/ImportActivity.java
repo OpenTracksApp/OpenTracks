@@ -171,13 +171,13 @@ public class ImportActivity extends Activity {
         final Dialog dialog = new AlertDialog.Builder(this).setCancelable(true).setIcon(iconId)
             .setMessage(message).setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
-              public void onCancel(DialogInterface dialog) {
-                dialog.dismiss();
+              public void onCancel(DialogInterface dialogInterface) {
+                dialogInterface.dismiss();
                 finish();
               }
             }).setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
                 @Override
-              public void onClick(DialogInterface dialog, int which) {
+              public void onClick(DialogInterface dialogInterface, int which) {
                 if (successCount == totalCount && !importAll && trackId != -1L) {
                   Intent intent = IntentUtils.newIntent(
                       ImportActivity.this, TrackDetailActivity.class)
@@ -186,7 +186,7 @@ public class ImportActivity extends Activity {
                       .addParentStack(TrackDetailActivity.class).addNextIntent(intent)
                       .startActivities();
                 }
-                dialog.dismiss();
+                dialogInterface.dismiss();
                 finish();
               }
             }).setTitle(titleId).create();

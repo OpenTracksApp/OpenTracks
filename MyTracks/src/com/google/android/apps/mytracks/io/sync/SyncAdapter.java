@@ -197,7 +197,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
           do {
             Track track = myTracksProviderUtils.createTrack(cursor);
             if (!syncedDriveIds.contains(track.getDriveId())) {
-              myTracksProviderUtils.deleteTrack(track.getId());
+              myTracksProviderUtils.deleteTrack(context, track.getId());
             }
           } while (cursor.moveToNext());
         }
@@ -314,7 +314,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
               File driveFile = changes.get(driveId);
               if (driveFile == null) {
                 Log.d(TAG, "Delete local track " + track.getName());
-                myTracksProviderUtils.deleteTrack(track.getId());
+                myTracksProviderUtils.deleteTrack(context, track.getId());
               } else {
                 if (SyncUtils.isInMyTracksAndValid(driveFile, getFolderId())
                     || SyncUtils.isInSharedWithMe(driveFile)) {
@@ -532,7 +532,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
       if (!success) {
         // if the track is new, delete it
         if (trackId == -1L && track != null) {
-          myTracksProviderUtils.deleteTrack(track.getId());
+          myTracksProviderUtils.deleteTrack(context, track.getId());
         }
       }
     }

@@ -74,7 +74,7 @@ public class KmlFileTrackImporterTest extends AbstractTestFileTrackImporter {
     Location location0 = createLocation(0, DATE_FORMAT_0.parse(TRACK_TIME_0).getTime());
     Location location1 = createLocation(1, DATE_FORMAT_1.parse(TRACK_TIME_1).getTime());
 
-    myTracksProviderUtils.clearTrack(TRACK_ID_0);
+    myTracksProviderUtils.clearTrack(getContext(), TRACK_ID_0);
     expectFirstTrackPoint(location0, TRACK_ID_0, TRACK_POINT_ID_0);
 
     // A flush happens at the end
@@ -108,7 +108,7 @@ public class KmlFileTrackImporterTest extends AbstractTestFileTrackImporter {
 
     Location location0 = createLocation(0, DATE_FORMAT_0.parse(TRACK_TIME_0).getTime());
 
-    myTracksProviderUtils.clearTrack(TRACK_ID_0);
+    myTracksProviderUtils.clearTrack(getContext(), TRACK_ID_0);
     expectFirstTrackPoint(location0, TRACK_ID_0, TRACK_POINT_ID_0);
 
     // A flush happens at the end

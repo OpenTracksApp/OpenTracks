@@ -244,7 +244,7 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
     expect(
         myTracksProviderUtils.getTrack(PreferencesUtils.getLong(getContext(),
             R.string.recording_track_id_key))).andStubReturn(null);
-    myTracksProviderUtils.deleteTrack(TRACK_ID_0);
+    myTracksProviderUtils.deleteTrack(getContext(), TRACK_ID_0);
     AndroidMock.replay(myTracksProviderUtils);
 
     InputStream inputStream = new ByteArrayInputStream(xml.getBytes());

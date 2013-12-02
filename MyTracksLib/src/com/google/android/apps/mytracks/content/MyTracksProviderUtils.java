@@ -45,7 +45,7 @@ public interface MyTracksProviderUtils {
    * 
    * @param trackId the track id
    */
-  public void clearTrack(long trackId);
+  public void clearTrack(Context context, long trackId);
 
   /**
    * Creates a {@link Track} from a cursor.
@@ -57,14 +57,14 @@ public interface MyTracksProviderUtils {
   /**
    * Deletes all tracks (including waypoints and track points).
    */
-  public void deleteAllTracks();
+  public void deleteAllTracks(Context context);
 
   /**
    * Deletes a track.
    * 
    * @param trackId the track id
    */
-  public void deleteTrack(long trackId);
+  public void deleteTrack(Context context, long trackId);
 
   /**
    * Gets all the tracks. If no track exists, an empty list is returned.
@@ -132,7 +132,7 @@ public interface MyTracksProviderUtils {
    * @param descriptionGenerator the description generator. Can be null for
    *          waypoint marker
    */
-  public void deleteWaypoint(long waypointId, DescriptionGenerator descriptionGenerator);
+  public void deleteWaypoint(Context context, long waypointId, DescriptionGenerator descriptionGenerator);
 
   /**
    * Gets the first waypoint id for a track. The first waypoint is special as it

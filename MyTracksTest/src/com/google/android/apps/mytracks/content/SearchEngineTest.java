@@ -66,7 +66,7 @@ public class SearchEngineTest extends AndroidTestCase {
 
   @Override
   protected void tearDown() throws Exception {
-    providerUtils.deleteAllTracks();
+    providerUtils.deleteAllTracks(getContext());
 
     super.tearDown();
   }

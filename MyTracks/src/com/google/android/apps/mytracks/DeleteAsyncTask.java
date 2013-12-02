@@ -95,7 +95,7 @@ public class DeleteAsyncTask extends AsyncTask<Void, Integer, Boolean> {
           context, R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT);
       SyncUtils.disableSync(context);
       SyncUtils.clearSyncState(context);
-      myTracksProviderUtils.deleteAllTracks();
+      myTracksProviderUtils.deleteAllTracks(context);
       return true;
     } else {
       for (long id : trackIds) {
@@ -103,7 +103,7 @@ public class DeleteAsyncTask extends AsyncTask<Void, Integer, Boolean> {
           return false;
         }
         Track track = myTracksProviderUtils.getTrack(id);
-        myTracksProviderUtils.deleteTrack(id);
+        myTracksProviderUtils.deleteTrack(context, id);
         if (track != null) {
           String driveId = track.getDriveId();
           if (driveId != null && !driveId.equals("")) {

@@ -90,7 +90,7 @@ public class DeleteMarkerDialogFragment extends AbstractMyTracksDialogFragment {
                 MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(
                     fragmentActivity);
                 for (long markerId : markerIds) {
-                  myTracksProviderUtils.deleteWaypoint(
+                  myTracksProviderUtils.deleteWaypoint(fragmentActivity,
                       markerId, new DescriptionGeneratorImpl(fragmentActivity));
                 }
                 caller.onDeleteMarkerDone();

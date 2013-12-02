@@ -24,6 +24,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
@@ -53,8 +54,8 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   }
 
   @Override
-  public void clearTrack(long trackId) {
-    deleteTrackPointsAndWaypoints(trackId);
+  public void clearTrack(Context context, long trackId) {
+    deleteTrackPointsAndWaypoints(context, trackId);
     Track track = new Track();
     track.setId(trackId);
     updateTrack(track);
@@ -177,19 +178,19 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   }
 
   @Override
-  public void deleteAllTracks() {
+  public void deleteAllTracks(Context context) {
     contentResolver.delete(TrackPointsColumns.CONTENT_URI, null, null);
     contentResolver.delete(WaypointsColumns.CONTENT_URI, null, null);
     // Delete tracks last since it triggers a database vaccum call
     contentResolver.delete(TracksColumns.CONTENT_URI, null, null);
 
     File dir = FileUtils.getPhotoDir();
-    deleteDirectoryRecurse(dir);
+    deleteDirectoryRecurse(context, dir);
   }
 
   @Override
-  public void deleteTrack(long trackId) {
-    deleteTrackPointsAndWaypoints(trackId);
+  public void deleteTrack(Context context, long trackId) {
+    deleteTrackPointsAndWaypoints(context, trackId);
 
     // Delete track last since it triggers a database vaccum call
     contentResolver.delete(TracksColumns.CONTENT_URI, TracksColumns._ID + "=?",
@@ -203,7 +204,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
    * 
    * @param trackId the track id
    */
-  private void deleteTrackPointsAndWaypoints(long trackId) {
+  private void deleteTrackPointsAndWaypoints(Context context, long trackId) {
     Track track = getTrack(trackId);
     if (track != null) {
       String where = TrackPointsColumns._ID + ">=? AND " + TrackPointsColumns._ID + "<=?";
@@ -213,7 +214,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     }
     contentResolver.delete(WaypointsColumns.CONTENT_URI, WaypointsColumns.TRACKID + "=?",
         new String[] { Long.toString(trackId) });    
-    deleteDirectoryRecurse(FileUtils.getPhotoDir(trackId));  
+    deleteDirectoryRecurse(context, FileUtils.getPhotoDir(trackId));  
   }
 
   /**
@@ -221,14 +222,15 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
    * 
    * @param dir the directory
    */
-  private void deleteDirectoryRecurse(File dir) {
+  private void deleteDirectoryRecurse(Context context, File dir) {
     if (FileUtils.isDirectory(dir)) {
       for (File child : dir.listFiles()) {
-        deleteDirectoryRecurse(child);
+        deleteDirectoryRecurse(context, child);
       }
     }
     if (dir.exists()) {
       dir.delete();
+      FileUtils.updateMediaScanner(context, Uri.fromFile(dir));
     }
   }
 
@@ -509,7 +511,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   }
 
   @Override
-  public void deleteWaypoint(long waypointId, DescriptionGenerator descriptionGenerator) {
+  public void deleteWaypoint(Context context, long waypointId, DescriptionGenerator descriptionGenerator) {
     final Waypoint waypoint = getWaypoint(waypointId);
     if (waypoint != null && waypoint.getType() == WaypointType.STATISTICS
         && descriptionGenerator != null) {
@@ -533,6 +535,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
         if (file.exists()) {
           File parent = file.getParentFile();
           file.delete();
+          FileUtils.updateMediaScanner(context, uri);
           if (parent.listFiles().length == 0) {
             parent.delete();
           }

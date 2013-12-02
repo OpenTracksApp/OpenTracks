@@ -171,7 +171,7 @@ public class SyncUtils {
         do {
           Track track = myTracksProviderUtils.createTrack(cursor);
           if (track.isSharedWithMe()) {
-            myTracksProviderUtils.deleteTrack(track.getId());
+            myTracksProviderUtils.deleteTrack(context, track.getId());
           } else {
             SyncUtils.updateTrack(myTracksProviderUtils, track, null);
           }

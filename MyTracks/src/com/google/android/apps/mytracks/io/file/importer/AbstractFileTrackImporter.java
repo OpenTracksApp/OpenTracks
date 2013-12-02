@@ -310,7 +310,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
             "Cannot import more than one track to an existing track " + importTrackId));
       }
       trackId = importTrackId;
-      myTracksProviderUtils.clearTrack(trackId);
+      myTracksProviderUtils.clearTrack(context, trackId);
     }
     trackIds.add(trackId);
     trackData.track.setId(trackId);
@@ -614,7 +614,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
    */
   private void cleanImport() {
     for (long trackId : trackIds) {
-      myTracksProviderUtils.deleteTrack(trackId);
+      myTracksProviderUtils.deleteTrack(context, trackId);
     }
   }
 }

@@ -112,7 +112,7 @@ public class KmzTrackImporter implements TrackImporter {
   private void cleanImport(long trackId) {
     if (trackId != -1L) {
       MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
-      myTracksProviderUtils.deleteTrack(trackId);
+      myTracksProviderUtils.deleteTrack(context, trackId);
     }
 
     if (importTrackId != -1L) {

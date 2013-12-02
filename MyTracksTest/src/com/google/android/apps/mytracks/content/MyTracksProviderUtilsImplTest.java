@@ -69,7 +69,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     setContext(context);
 
     providerUtils = MyTracksProviderUtils.Factory.get(context);
-    providerUtils.deleteAllTracks();
+    providerUtils.deleteAllTracks(context);
   }
 
   public void testLocationIterator_noPoints() {
@@ -220,7 +220,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
   }
 
   /**
-   * Tests the method {@link MyTracksProviderUtilsImpl#deleteAllTracks()}
+   * Tests the method {@link MyTracksProviderUtilsImpl#deleteAllTracks(Context)}
    */
   public void testDeleteAllTracks() {
     // Insert track, points and waypoint at first.
@@ -240,7 +240,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
         null, WaypointsColumns._ID);
     assertEquals(1, waypointCursor.getCount());
     // Delete all.
-    providerUtils.deleteAllTracks();
+    providerUtils.deleteAllTracks(context);
     // Check whether all have been deleted. 
     tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null,
         TracksColumns._ID);
@@ -254,7 +254,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
   }
 
   /**
-   * Tests the method {@link MyTracksProviderUtilsImpl#deleteTrack(long)}.
+   * Tests the method {@link MyTracksProviderUtilsImpl#deleteTrack(Context, long)}.
    */
   public void testDeleteTrack() {
     // Insert three tracks, points of two tracks and way point of one track.
@@ -280,7 +280,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
         null, WaypointsColumns._ID);
     assertEquals(1, waypointCursor.getCount());
     // Delete one track.
-    providerUtils.deleteTrack(trackId);
+    providerUtils.deleteTrack(context, trackId);
     // Check whether all data of a track has been deleted. 
     tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null,
         TracksColumns._ID);
@@ -431,7 +431,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
 
   /**
    * Tests the method
-   * {@link MyTracksProviderUtilsImpl#deleteWaypoint(long, DescriptionGenerator)}
+   * {@link MyTracksProviderUtilsImpl#deleteWaypoint(Context, long, DescriptionGenerator)}
    * when there is only one waypoint in the track.
    */
   public void testDeleteWaypoint_onlyOneWayPoint() {
@@ -460,14 +460,14 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
         return null;
       }
     };
-    providerUtils.deleteWaypoint(1, descriptionGenerator);
+    providerUtils.deleteWaypoint(context, 1, descriptionGenerator);
   
     assertNull(providerUtils.getWaypoint(1));
   }
 
   /**
    * Tests the method
-   * {@link MyTracksProviderUtilsImpl#deleteWaypoint(long, DescriptionGenerator)}
+   * {@link MyTracksProviderUtilsImpl#deleteWaypoint(Context, long, DescriptionGenerator)}
    * when there is more than one waypoint in the track.
    */
   public void testDeleteWaypoint_hasNextWayPoint() {
@@ -515,7 +515,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
         return null;
       }
     };
-    providerUtils.deleteWaypoint(1, descriptionGenerator);
+    providerUtils.deleteWaypoint(context, 1, descriptionGenerator);
   
     assertNull(providerUtils.getWaypoint(1));
     assertEquals(MyTracksProviderUtilsImplTest.MOCK_DESC, providerUtils.getWaypoint(2)
