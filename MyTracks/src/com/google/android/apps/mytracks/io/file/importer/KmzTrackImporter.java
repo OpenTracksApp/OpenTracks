@@ -122,6 +122,7 @@ public class KmzTrackImporter implements TrackImporter {
           file.delete();
         }
         dir.delete();
+        FileUtils.updateMediaScanner(context, Uri.fromFile(dir));
       }
     }
   }
