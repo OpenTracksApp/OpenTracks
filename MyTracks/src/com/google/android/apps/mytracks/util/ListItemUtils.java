@@ -65,7 +65,23 @@ public class ListItemUtils {
       boolean isPaused, int iconId, int iconContentDescriptionId, String name, String sharedOwner,
       String totalTime, String totalDistance, int markerCount, long startTime,
       boolean useRelativeTime, String category, String description, String photoUrl) {
-
+    
+    // Set photo
+    ImageView photo = (ImageView) view.findViewById(R.id.list_item_photo);
+    ImageView textGradient = (ImageView) view.findViewById(R.id.list_item_text_gradient);
+    boolean hasPhoto = photoUrl != null && !photoUrl.equals("");
+    
+    photo.setVisibility(hasPhoto ? View.VISIBLE : View.GONE);
+    textGradient.setVisibility(hasPhoto ? View.VISIBLE : View.GONE);
+        
+    if (hasPhoto) {
+      photo.setImageResource(android.R.color.transparent);
+      Display defaultDisplay = activity.getWindowManager().getDefaultDisplay();
+      PhotoUtils.setImageVew(
+          photo, Uri.parse(photoUrl), defaultDisplay.getWidth(), getPhotoHeight(activity), false);
+    }
+    
+    // Set icon
     if (isRecording) {
       iconId = isPaused ? R.drawable.ic_track_paused : R.drawable.ic_track_recording;
       iconContentDescriptionId = isPaused ? R.string.icon_pause_recording
@@ -78,7 +94,7 @@ public class ListItemUtils {
 
     // Set name
     TextView nameTextView = (TextView) view.findViewById(R.id.list_item_name);
-    nameTextView.setText(name);
+    setTextView(activity, nameTextView, name, hasPhoto);
 
     // Set sharedOwner/totalTime/totalDistance
     TextView ownerTimeDistanceTextView = (TextView) view.findViewById(
@@ -97,33 +113,30 @@ public class ListItemUtils {
         ownerTimeDistance += "  \u2027";
       }
     }
-    setTextView(ownerTimeDistanceTextView, ownerTimeDistance);
+    setTextView(activity, ownerTimeDistanceTextView, ownerTimeDistance, hasPhoto);
 
     // Set markerCount
     ImageView markerCountIcon = (ImageView) view.findViewById(R.id.list_item_marker_count_icon);
     TextView markerCountTextView = (TextView) view.findViewById(R.id.list_item_marker_count);
-    if (markerCount > 0) {
-      markerCountIcon.setVisibility(View.VISIBLE);
-      markerCountTextView.setVisibility(View.VISIBLE);
-
+    boolean hasMarker = markerCount > 0;
+    markerCountIcon.setVisibility(hasMarker ? View.VISIBLE : View.GONE);
+    String markerCountValue = hasMarker ? String.valueOf(markerCount) : null;
+    if (hasMarker) {
+      // Scale markerCountIcon
       int lineHeight = markerCountTextView.getLineHeight();
       LayoutParams layoutParams = markerCountIcon.getLayoutParams();
       layoutParams.width = lineHeight;
       layoutParams.height = lineHeight;
-
-      markerCountTextView.setText(String.valueOf(markerCount));
-    } else {
-      markerCountIcon.setVisibility(View.GONE);
-      markerCountTextView.setVisibility(View.GONE);
     }
+    setTextView(activity, markerCountTextView, markerCountValue, hasPhoto);
 
     // Set date/time
     String[] dateTime = getDateTime(isRecording, activity, startTime, useRelativeTime);
     TextView dateTextView = (TextView) view.findViewById(R.id.list_item_date);
-    setTextView(dateTextView, dateTime[0]);
+    setTextView(activity, dateTextView, dateTime[0], hasPhoto);
 
     TextView timeTextView = (TextView) view.findViewById(R.id.list_item_time);
-    setTextView(timeTextView, dateTime[1]);
+    setTextView(activity, timeTextView, dateTime[1], hasPhoto);
 
     // Set category and description
     TextView categoryDescriptionTextView = (TextView) view.findViewById(
@@ -131,29 +144,15 @@ public class ListItemUtils {
     String categoryDescription = isRecording ? null
         : StringUtils.getCategoryDescription(category, description);
     if (sharedOwner == null && totalTime == null && totalDistance == null && markerCount == 0) {
-      setTextView(categoryDescriptionTextView, null);
+      setTextView(activity, categoryDescriptionTextView, null, hasPhoto);
       // Match list_item_category_description in list_item.xml
       ownerTimeDistanceTextView.setSingleLine(false);
       ownerTimeDistanceTextView.setMaxLines(2);
-      setTextView(ownerTimeDistanceTextView, categoryDescription);
+      setTextView(activity, ownerTimeDistanceTextView, categoryDescription, hasPhoto);
     } else {
       // Match list_item_owner_time_distance in list_item.xml
       ownerTimeDistanceTextView.setSingleLine(true);
-      setTextView(categoryDescriptionTextView, categoryDescription);
-    }
-
-    ImageView photo = (ImageView) view.findViewById(R.id.list_item_photo);
-    ImageView textGradient = (ImageView) view.findViewById(R.id.list_item_text_gradient);
-    if (photoUrl == null || photoUrl.equals("")) {
-      photo.setVisibility(View.GONE);
-      textGradient.setVisibility(View.GONE);
-    } else {
-      photo.setImageResource(android.R.color.transparent);
-      photo.setVisibility(View.VISIBLE);
-      textGradient.setVisibility(View.VISIBLE);
-      Display defaultDisplay = activity.getWindowManager().getDefaultDisplay();
-      PhotoUtils.setImageVew(
-          photo, Uri.parse(photoUrl), defaultDisplay.getWidth(), getPhotoHeight(activity), false);
+      setTextView(activity, categoryDescriptionTextView, categoryDescription, hasPhoto);
     }
   }
   
@@ -218,15 +217,23 @@ public class ListItemUtils {
   /**
    * Sets a text view.
    * 
+   * @param context the context
    * @param textView the text view
    * @param value the value for the text view
+   * @param addShadow true to add shadow
    */
-  private static void setTextView(TextView textView, String value) {
+  private static void setTextView(
+      Context context, TextView textView, String value, boolean addShadow) {
     if (value == null || value.length() == 0) {
       textView.setVisibility(View.GONE);
     } else {
       textView.setVisibility(View.VISIBLE);
       textView.setText(value);
+      if (addShadow) {
+        textView.setShadowLayer(8, 0, 10, context.getResources().getColor(R.color.shadow_color));
+      } else {
+        textView.setShadowLayer(0, 0, 0, 0);
+      }
     }
   }
 

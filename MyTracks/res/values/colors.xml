@@ -29,8 +29,9 @@ limitations under the License.
   <color name="chart_speed_fill">#40C8E0FF</color> <!-- transparent blue -->
   <color name="holo_orange_dark">#FFFF8800</color>
   <color name="recording_text">#FFBE161B</color> <!-- red -->
+  <color name="shadow_color">#B2000000</color> <!-- black 70% opacity -->
   <color name="stats_large_label">#FFFAAD2C</color> <!-- orange -->
-  <color name="stats_separator">#99999999</color> <!-- light gray -->  
+  <color name="stats_separator">#99999999</color> <!-- light gray -->
   <color name="text_gradient_center">#B2000000</color> <!-- black 70% opacity -->
   <color name="text_gradient_end">#00000000</color> <!-- black 0% opacity -->
   <color name="text_gradient_start">#FF000000</color> <!-- black 100% opacity -->
@@ -38,5 +39,4 @@ limitations under the License.
   <color name="track_color_normal">#F75858FA</color> <!-- blue color -->
   <color name="track_color_slow">#F774DF00</color> <!-- green color -->
   <color name="track_controller_background">#FF0E0E0E</color> <!-- dark gray -->
-
 </resources>
