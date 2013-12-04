@@ -148,6 +148,7 @@ public class ListItemUtils {
       photo.setVisibility(View.GONE);
       textGradient.setVisibility(View.GONE);
     } else {
+      photo.setImageResource(android.R.color.transparent);
       photo.setVisibility(View.VISIBLE);
       textGradient.setVisibility(View.VISIBLE);
       Display defaultDisplay = activity.getWindowManager().getDefaultDisplay();
