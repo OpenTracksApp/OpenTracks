@@ -381,7 +381,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
 
         ListItemUtils.setListItem(TrackListActivity.this, view, isRecording, recordingTrackPaused,
             iconId, R.string.icon_track, name, sharedOwner, totalTime, totalDistance, markerCount,
-            startTime, category, description, null);
+            startTime, true, category, description, null);
       }
     };
     listView.setAdapter(sectionResourceCursorAdapter);

@@ -242,7 +242,7 @@ public class SearchListActivity extends AbstractSendToGoogleActivity implements 
         
         ListItemUtils.setListItem(SearchListActivity.this, view, isRecording, isPaused, iconId,
             iconContentDescriptionId, name, sharedOwner, totalTime, totalDistance, markerCount,
-            startTime, category, description, photoUrl);
+            startTime, false, category, description, photoUrl);
         return view;
       }
     };

@@ -29,8 +29,6 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.Calendar;
-
 /**
  * Utilities to display a list item.
  * 
@@ -57,6 +55,7 @@ public class ListItemUtils {
    * @param totalDistance the total distance value
    * @param markerCount the marker count
    * @param startTime the start time value
+   * @param useRelativeTime true to display relative time if appropriate
    * @param category the category value
    * @param description the description value
    * @param photoUrl the photo url
@@ -64,8 +63,8 @@ public class ListItemUtils {
   @SuppressWarnings("deprecation")
   public static void setListItem(Activity activity, View view, boolean isRecording,
       boolean isPaused, int iconId, int iconContentDescriptionId, String name, String sharedOwner,
-      String totalTime, String totalDistance, int markerCount, long startTime, String category,
-      String description, String photoUrl) {
+      String totalTime, String totalDistance, int markerCount, long startTime,
+      boolean useRelativeTime, String category, String description, String photoUrl) {
 
     if (isRecording) {
       iconId = isPaused ? R.drawable.ic_track_paused : R.drawable.ic_track_recording;
@@ -119,7 +118,7 @@ public class ListItemUtils {
     }
 
     // Set date/time
-    String[] dateTime = getDateTime(isRecording, activity, startTime);
+    String[] dateTime = getDateTime(isRecording, activity, startTime, useRelativeTime);
     TextView dateTextView = (TextView) view.findViewById(R.id.list_item_date);
     setTextView(dateTextView, dateTime[0]);
 
@@ -192,35 +191,27 @@ public class ListItemUtils {
    * @param context the context
    * @param time the start time
    */
-  private static String[] getDateTime(boolean isRecording, Context context, long time) {
+  private static String[] getDateTime(
+      boolean isRecording, Context context, long time, boolean useRelativeTime) {
     if (isRecording || time == 0L) {
       return new String[] { null, null };
     }
-    if (DateUtils.isToday(time)) {
-      return new String[] { DateUtils.getRelativeTimeSpanString(
-          time, System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS,
-          DateUtils.FORMAT_ABBREV_RELATIVE).toString(), null };
-    }
-    int dateFlags = DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL;
-    if (!isThisYear(time)) {
-      dateFlags |= DateUtils.FORMAT_NUMERIC_DATE;
-    }
-    int timeFlags = DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_TIME;
-    return new String[] { DateUtils.formatDateTime(context, time, dateFlags),
-        DateUtils.formatDateTime(context, time, timeFlags) };
-  }
+    boolean isToday = DateUtils.isToday(time);
+    int timeFlags = DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL;
 
-  /**
-   * True if the time is this year.
-   * 
-   * @param time the time
-   */
-  private static boolean isThisYear(long time) {
-    Calendar now = Calendar.getInstance();
-    Calendar calendar = Calendar.getInstance();
-    now.setTimeInMillis(System.currentTimeMillis());
-    calendar.setTimeInMillis(time);
-    return now.get(Calendar.YEAR) == calendar.get(Calendar.YEAR);
+    if (isToday) {
+      if (useRelativeTime) {
+        return new String[] { DateUtils.getRelativeTimeSpanString(
+            time, System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS,
+            DateUtils.FORMAT_ABBREV_RELATIVE).toString(), null };
+      } else {
+        return new String[] { DateUtils.formatDateTime(context, time, timeFlags), null };
+      }
+    }
+
+    return new String[] { DateUtils.formatDateTime(
+        context, time, DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL),
+        DateUtils.formatDateTime(context, time, timeFlags) };
   }
 
   /**
