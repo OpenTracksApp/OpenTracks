@@ -23,6 +23,7 @@ limitations under the License.
     android:id="@+id/list_item_photo"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:paddingBottom="4dp"
     android:scaleType="centerCrop" />
   <FrameLayout
     android:layout_height="wrap_content"
