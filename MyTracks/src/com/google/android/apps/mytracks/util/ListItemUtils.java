@@ -222,7 +222,7 @@ public class ListItemUtils {
    * @param value the value for the text view
    * @param addShadow true to add shadow
    */
-  private static void setTextView(
+  public static void setTextView(
       Context context, TextView textView, String value, boolean addShadow) {
     if (value == null || value.length() == 0) {
       textView.setVisibility(View.GONE);
@@ -230,7 +230,7 @@ public class ListItemUtils {
       textView.setVisibility(View.VISIBLE);
       textView.setText(value);
       if (addShadow) {
-        textView.setShadowLayer(8, 0, 10, context.getResources().getColor(R.color.shadow_color));
+        textView.setShadowLayer(5, 0, 2, context.getResources().getColor(android.R.color.black));
       } else {
         textView.setShadowLayer(0, 0, 0, 0);
       }

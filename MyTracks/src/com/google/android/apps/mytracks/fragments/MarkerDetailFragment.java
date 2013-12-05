@@ -25,6 +25,7 @@ import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.util.CalorieUtils;
 import com.google.android.apps.mytracks.util.CalorieUtils.ActivityType;
 import com.google.android.apps.mytracks.util.IntentUtils;
+import com.google.android.apps.mytracks.util.ListItemUtils;
 import com.google.android.apps.mytracks.util.PhotoUtils;
 import com.google.android.apps.mytracks.util.StatsUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
@@ -247,21 +248,19 @@ public class MarkerDetailFragment extends Fragment {
     View waypointView = getView().findViewById(R.id.marker_detail_waypoint);
     View statisticsView = getView().findViewById(R.id.marker_detail_statistics);
 
-    if (waypoint.getType() == WaypointType.WAYPOINT) {
-      waypointView.setVisibility(View.VISIBLE);
-      statisticsView.setVisibility(View.GONE);
+    boolean isWaypoint = waypoint.getType() == WaypointType.WAYPOINT;
+    waypointView.setVisibility(isWaypoint ? View.VISIBLE : View.GONE);
+    statisticsView.setVisibility(isWaypoint ? View.GONE : View.VISIBLE);
 
+    if (isWaypoint) {
       String photoUrl = waypoint.getPhotoUrl();
-      if (photoUrl == null || photoUrl.equals("")) {
-        photo.setVisibility(View.GONE);
-        textGradient.setVisibility(View.GONE);
-        waypointInfo.setVisibility(View.VISIBLE);
-      } else {
-        handler.removeCallbacks(hideText);
-        photo.setVisibility(View.VISIBLE);
-        textGradient.setVisibility(View.VISIBLE);
-        waypointInfo.setVisibility(View.VISIBLE);
+      boolean hasPhoto = photoUrl != null && !photoUrl.equals("");
+      photo.setVisibility(hasPhoto ? View.VISIBLE : View.GONE);
+      textGradient.setVisibility(hasPhoto ? View.VISIBLE : View.GONE);
+      waypointInfo.setVisibility(View.VISIBLE);
 
+      if (hasPhoto) {
+        handler.removeCallbacks(hideText);
         Display defaultDisplay = getActivity().getWindowManager().getDefaultDisplay();
         PhotoUtils.setImageVew(photo, Uri.parse(photoUrl), defaultDisplay.getWidth(),
             defaultDisplay.getHeight(), true);
@@ -269,20 +268,18 @@ public class MarkerDetailFragment extends Fragment {
       }
 
       TextView name = (TextView) getView().findViewById(R.id.marker_detail_waypoint_name);
-      setTextView(name, waypoint.getName());
+      ListItemUtils.setTextView(getActivity(), name, waypoint.getName(), hasPhoto);
 
       TextView category = (TextView) getView().findViewById(R.id.marker_detail_waypoint_category);
-      setTextView(category, StringUtils.getCategory(waypoint.getCategory()));
+      ListItemUtils.setTextView(
+          getActivity(), category, StringUtils.getCategory(waypoint.getCategory()), hasPhoto);
 
       TextView description = (TextView) getView()
           .findViewById(R.id.marker_detail_waypoint_description);
-      setTextView(description, waypoint.getDescription());
+      ListItemUtils.setTextView(getActivity(), description, waypoint.getDescription(), hasPhoto);
     } else {
-      waypointView.setVisibility(View.GONE);
-      statisticsView.setVisibility(View.VISIBLE);
-
       TextView name = (TextView) getView().findViewById(R.id.marker_detail_statistics_name);
-      setTextView(name, waypoint.getName());
+      ListItemUtils.setTextView(getActivity(), name, waypoint.getName(), false);
 
       Track track = myTracksProviderUtils.getTrack(waypoint.getTrackId());
       ActivityType activityType = track != null ? CalorieUtils.getActivityType(
@@ -291,21 +288,6 @@ public class MarkerDetailFragment extends Fragment {
       StatsUtils.setTripStatisticsValues(
           getActivity(), null, getView(), waypoint.getTripStatistics(), activityType, null);
       StatsUtils.setLocationValues(getActivity(), null, getView(), waypoint.getLocation(), false);
-    }
-  }
-
-  /**
-   * Sets a text view.
-   * 
-   * @param textView the text view
-   * @param value the value for the text view
-   */
-  private void setTextView(TextView textView, String value) {
-    if (value == null || value.length() == 0) {
-      textView.setVisibility(View.GONE);
-    } else {
-      textView.setVisibility(View.VISIBLE);
-      textView.setText(value);
     }
   }
 }

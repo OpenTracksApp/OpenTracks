@@ -71,8 +71,8 @@ limitations under the License.
         android:paddingTop="8dp"
         style="@style/TextMedium" />
       <TextView
-        android:paddingBottom="4dp"
-        android:paddingTop="8dp"
+        android:paddingBottom="6dp"
+        android:paddingTop="4dp"
         android:text="@string/marker_detail_statistics_title"
         style="@style/TextSmall" />
       <include layout="@layout/stats_content" />
