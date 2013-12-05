@@ -233,7 +233,7 @@ public class TrackRecordingService extends Service {
           }
           if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.weight_key))) {
             weight = PreferencesUtils.getFloat(
-                context, R.string.weight_key, PreferencesUtils.WEIGHT_DEFAULT);
+                context, R.string.weight_key, PreferencesUtils.getDefaultWeight(context));
           }
         }
       };

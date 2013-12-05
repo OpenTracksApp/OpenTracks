@@ -452,8 +452,8 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     double power = Double.NaN;
 
     if (tripStatisticsUpdater != null) {
-      tripStatisticsUpdater.addLocation(location, recordingDistanceInterval, false,
-          ActivityType.INVALID, PreferencesUtils.WEIGHT_DEFAULT);
+      tripStatisticsUpdater.addLocation(
+          location, recordingDistanceInterval, false, ActivityType.INVALID, 0.0);
       TripStatistics tripStatistics = tripStatisticsUpdater.getTripStatistics();
       if (chartByDistance) {
         double distance = tripStatistics.getTotalDistance() * UnitConversions.M_TO_KM;

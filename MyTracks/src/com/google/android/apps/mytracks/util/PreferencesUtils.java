@@ -122,8 +122,6 @@ public class PreferencesUtils {
   public static final int TRACK_WIDGET_ITEM3_DEFAULT = 1; // total time
   public static final int TRACK_WIDGET_ITEM4_DEFAULT = 2; // average speed
   public static final int VOICE_FREQUENCY_DEFAULT = 0;
-
-  public static final float WEIGHT_DEFAULT = 65.0f; // in kilogram
   
   private static final String TAG = PreferencesUtils.class.getSimpleName();
   
@@ -289,8 +287,8 @@ public class PreferencesUtils {
    * @param context the context
    */
   public static boolean isMetricUnits(Context context) {
-    return PreferencesUtils.STATS_UNITS_DEFAULT.equals(
-        getString(context, R.string.stats_units_key, PreferencesUtils.STATS_UNITS_DEFAULT));
+    return STATS_UNITS_DEFAULT.equals(
+        getString(context, R.string.stats_units_key, STATS_UNITS_DEFAULT));
   }
 
   /**
@@ -300,8 +298,8 @@ public class PreferencesUtils {
    * @param context the context
    */
   public static boolean isReportSpeed(Context context) {
-    return PreferencesUtils.STATS_RATE_DEFAULT.equals(
-        getString(context, R.string.stats_rate_key, PreferencesUtils.STATS_RATE_DEFAULT));
+    return STATS_RATE_DEFAULT.equals(
+        getString(context, R.string.stats_rate_key, STATS_RATE_DEFAULT));
   }
 
   /**
@@ -310,8 +308,8 @@ public class PreferencesUtils {
    * @param context the context
    */
   public static boolean isChartByDistance(Context context) {
-    return PreferencesUtils.CHART_X_AXIS_DEFAULT.equals(
-        getString(context, R.string.chart_x_axis_key, PreferencesUtils.CHART_X_AXIS_DEFAULT));
+    return CHART_X_AXIS_DEFAULT.equals(
+        getString(context, R.string.chart_x_axis_key, CHART_X_AXIS_DEFAULT));
   }
   
   /**
@@ -338,6 +336,18 @@ public class PreferencesUtils {
   }
   
   /**
+   * Gets the default weight.
+   * 
+   * @param context the context
+   */
+  public static float getDefaultWeight(Context context) {
+    if (isMetricUnits(context)) {
+      return 65.0f; // in kg
+    } else {
+      return 68.0389f; // 150 lb in kg
+    }
+  }
+  /**
    * Stores the weight value, always in metric units.
    * 
    * @param displayValue the display value
@@ -346,14 +356,14 @@ public class PreferencesUtils {
     double value;
     try {
       value = Double.parseDouble(displayValue);
-      if (!PreferencesUtils.isMetricUnits(context)) {
+      if (!isMetricUnits(context)) {
         value = value * UnitConversions.LB_TO_KG;
       }
     } catch (NumberFormatException e) {
       Log.e(TAG, "invalid value " + displayValue);
-      value = PreferencesUtils.WEIGHT_DEFAULT;
+      value = getDefaultWeight(context);
     }
-    PreferencesUtils.setFloat(context, R.string.weight_key, (float) value);
+    setFloat(context, R.string.weight_key, (float) value);
   }
   
   /**
@@ -362,11 +372,10 @@ public class PreferencesUtils {
    * @param context the context
    */
   public static double getWeightDisplayValue(Context context) {
-    double value = PreferencesUtils.getFloat(
-        context, R.string.weight_key, PreferencesUtils.WEIGHT_DEFAULT);
-    if (!PreferencesUtils.isMetricUnits(context)) {
+    double value = getFloat(context, R.string.weight_key, getDefaultWeight(context));
+    if (!isMetricUnits(context)) {
       value = value * UnitConversions.KG_TO_LB;
     }
     return value;
-  }
+  }  
 }

@@ -147,7 +147,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         R.string.recording_distance_interval_key,
         PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT);
     this.weight = PreferencesUtils.getFloat(
-        context, R.string.weight_key, PreferencesUtils.WEIGHT_DEFAULT);
+        context, R.string.weight_key, PreferencesUtils.getDefaultWeight(context));
     trackIds = new ArrayList<Long>();
     waypoints = new ArrayList<Waypoint>();
   }
@@ -245,8 +245,8 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
             return;
           }
           location = locationIterator.next();
-          trackTripStatisticstrackUpdater.addLocation(location, recordingDistanceInterval, false,
-              ActivityType.INVALID, PreferencesUtils.WEIGHT_DEFAULT);
+          trackTripStatisticstrackUpdater.addLocation(
+              location, recordingDistanceInterval, false, ActivityType.INVALID, 0.0);
           markerTripStatisticsUpdater.addLocation(
               location, recordingDistanceInterval, true, activityType, weight);
         }
