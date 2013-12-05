@@ -24,9 +24,11 @@ import android.content.res.TypedArray;
 import android.net.Uri;
 import android.text.format.DateUtils;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
@@ -65,22 +67,22 @@ public class ListItemUtils {
       boolean isPaused, int iconId, int iconContentDescriptionId, String name, String sharedOwner,
       String totalTime, String totalDistance, int markerCount, long startTime,
       boolean useRelativeTime, String category, String description, String photoUrl) {
-    
+
     // Set photo
     ImageView photo = (ImageView) view.findViewById(R.id.list_item_photo);
     ImageView textGradient = (ImageView) view.findViewById(R.id.list_item_text_gradient);
     boolean hasPhoto = photoUrl != null && !photoUrl.equals("");
-    
+
     photo.setVisibility(hasPhoto ? View.VISIBLE : View.GONE);
     textGradient.setVisibility(hasPhoto ? View.VISIBLE : View.GONE);
-        
+
     if (hasPhoto) {
       photo.setImageResource(android.R.color.transparent);
       Display defaultDisplay = activity.getWindowManager().getDefaultDisplay();
       PhotoUtils.setImageVew(
           photo, Uri.parse(photoUrl), defaultDisplay.getWidth(), getPhotoHeight(activity), false);
     }
-    
+
     // Set icon
     if (isRecording) {
       iconId = isPaused ? R.drawable.ic_track_paused : R.drawable.ic_track_recording;
@@ -143,7 +145,13 @@ public class ListItemUtils {
         R.id.list_item_category_description);
     String categoryDescription = isRecording ? null
         : StringUtils.getCategoryDescription(category, description);
-    if (sharedOwner == null && totalTime == null && totalDistance == null && markerCount == 0) {
+
+    /*
+     * Place categoryDescription in either ownerTimeDistanceTextView or
+     * categoryDescriptionTextView
+     */
+    if (ownerTimeDistanceTextView.getVisibility() == View.GONE
+        && markerCountIcon.getVisibility() == View.GONE) {
       setTextView(activity, categoryDescriptionTextView, null, hasPhoto);
       // Match list_item_category_description in list_item.xml
       ownerTimeDistanceTextView.setSingleLine(false);
@@ -154,6 +162,11 @@ public class ListItemUtils {
       ownerTimeDistanceTextView.setSingleLine(true);
       setTextView(activity, categoryDescriptionTextView, categoryDescription, hasPhoto);
     }
+
+    // Adjust iconImageView layout gravity
+    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) iconImageView.getLayoutParams();
+    params.gravity = ownerTimeDistanceTextView.getVisibility() == View.GONE
+        && markerCountIcon.getVisibility() == View.GONE ? Gravity.TOP : Gravity.CENTER_VERTICAL;
   }
   
   /**
