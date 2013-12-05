@@ -98,8 +98,9 @@ public class PlayMultipleDialogFragment extends AbstractMyTracksDialogFragment {
   private long[] getChecked(SparseBooleanArray array) {
     ArrayList<Long> checked = new ArrayList<Long>();
     for (int i = 0; i < array.size(); i++) {
-      if (array.valueAt(i)) {
-        checked.add(trackIds[i]);
+      int key = array.keyAt(i);
+      if (array.get(key)) {
+        checked.add(trackIds[key]);
       }
     }
     long[] result = new long[checked.size()];
