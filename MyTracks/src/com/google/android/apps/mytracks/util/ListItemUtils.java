@@ -77,12 +77,14 @@ public class ListItemUtils {
     textGradient.setVisibility(hasPhoto ? View.VISIBLE : View.GONE);
 
     if (hasPhoto) {
+      int photoHeight = getPhotoHeight(activity);
+      photo.getLayoutParams().height = photoHeight;
       photo.setImageResource(android.R.color.transparent);
       Display defaultDisplay = activity.getWindowManager().getDefaultDisplay();
       PhotoUtils.setImageVew(
-          photo, Uri.parse(photoUrl), defaultDisplay.getWidth(), getPhotoHeight(activity), false);
+          photo, Uri.parse(photoUrl), defaultDisplay.getWidth(), photoHeight, false);
     }
-
+    
     // Set icon
     if (isRecording) {
       iconId = isPaused ? R.drawable.ic_track_paused : R.drawable.ic_track_recording;
