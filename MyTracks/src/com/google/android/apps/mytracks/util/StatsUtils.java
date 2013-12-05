@@ -36,9 +36,7 @@ import java.util.Locale;
  */
 public class StatsUtils {
 
-  private static final String COORDINATE_DEGREE = "\u00B0";
   private static final String GRADE_PERCENTAGE = "%";
-
   private static final String GRADE_FORMAT = "%1$d";
   private static final String CALORIES_FORMAT = "%1$,.0f";
 
@@ -321,7 +319,7 @@ public class StatsUtils {
   private static void setCoordinateValue(
       Context context, View view, int labelId, double coordinate) {
     String value = Double.isNaN(coordinate) || Double.isInfinite(coordinate) ? null
-        : Location.convert(coordinate, Location.FORMAT_DEGREES) + COORDINATE_DEGREE;
+        : StringUtils.formatCoordinate(coordinate);
     setItem(context, view, labelId, value, null);
   }
 

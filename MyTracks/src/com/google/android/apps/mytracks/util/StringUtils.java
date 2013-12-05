@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.util;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
+import android.location.Location;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -39,6 +40,7 @@ import java.util.regex.Pattern;
  */
 public class StringUtils {
 
+  private static final String COORDINATE_DEGREE = "\u00B0";
   private static final SimpleDateFormat ISO_8601_DATE_TIME_FORMAT = new SimpleDateFormat(
       "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
   private static final SimpleDateFormat ISO_8601_BASE = new SimpleDateFormat(
@@ -162,6 +164,15 @@ public class StringUtils {
     return result.replaceAll("[0]*$", "").replaceAll("\\.$", "");
   }
 
+  /**
+   * Formats a coordinate
+   * 
+   * @param coordinate the coordinate
+   */
+  public static String formatCoordinate(double coordinate) {
+    return Location.convert(coordinate, Location.FORMAT_DEGREES) + COORDINATE_DEGREE;
+  }
+  
   /**
    * Gets the distance in an array of two strings. The first string is the
    * distance. The second string is the unit. The first string is null if the

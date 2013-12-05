@@ -33,6 +33,7 @@ import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Intent;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -267,8 +268,7 @@ public class MarkerDetailFragment extends Fragment {
         handler.postDelayed(hideText, HIDE_TEXT_DELAY);
       }
 
-      TextView name = (TextView) getView().findViewById(R.id.marker_detail_waypoint_name);
-      ListItemUtils.setTextView(getActivity(), name, waypoint.getName(), hasPhoto);
+      setName(R.id.marker_detail_waypoint_name, hasPhoto);
 
       TextView category = (TextView) getView().findViewById(R.id.marker_detail_waypoint_category);
       ListItemUtils.setTextView(
@@ -277,9 +277,12 @@ public class MarkerDetailFragment extends Fragment {
       TextView description = (TextView) getView()
           .findViewById(R.id.marker_detail_waypoint_description);
       ListItemUtils.setTextView(getActivity(), description, waypoint.getDescription(), hasPhoto);
+
+      setLocation(R.id.marker_detail_waypoint_location, hasPhoto);
     } else {
-      TextView name = (TextView) getView().findViewById(R.id.marker_detail_statistics_name);
-      ListItemUtils.setTextView(getActivity(), name, waypoint.getName(), false);
+      setName(R.id.marker_detail_statistics_name, false);
+
+      setLocation(R.id.marker_detail_statistics_location, false);
 
       Track track = myTracksProviderUtils.getTrack(waypoint.getTrackId());
       ActivityType activityType = track != null ? CalorieUtils.getActivityType(
@@ -289,5 +292,25 @@ public class MarkerDetailFragment extends Fragment {
           getActivity(), null, getView(), waypoint.getTripStatistics(), activityType, null);
       StatsUtils.setLocationValues(getActivity(), null, getView(), waypoint.getLocation(), false);
     }
+  }
+
+  private void setName(int resId, boolean addShadow) {
+    TextView textView = (TextView) getView().findViewById(resId);
+    ListItemUtils.setTextView(getActivity(), textView, waypoint.getName(), addShadow);
+  }
+
+  private void setLocation(int resId, boolean addShadow) {
+    TextView textView = (TextView) getView().findViewById(resId);
+    Location location = waypoint.getLocation();
+    String value;
+    if (location == null) {
+      value = null;
+    } else {
+      value = "[" + getString(R.string.stats_latitude) + " "
+          + StringUtils.formatCoordinate(location.getLatitude()) + ", "
+          + getString(R.string.stats_longitude) + " "
+          + StringUtils.formatCoordinate(location.getLongitude()) + "]";
+    }
+    ListItemUtils.setTextView(getActivity(), textView, value, addShadow);
   }
 }

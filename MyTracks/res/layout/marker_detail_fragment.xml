@@ -55,6 +55,9 @@ limitations under the License.
         <TextView
           android:id="@+id/marker_detail_waypoint_description"
           style="@style/TextSmall" />
+        <TextView
+          android:id="@+id/marker_detail_waypoint_location"
+          style="@style/TextSmall" />
       </LinearLayout>
     </FrameLayout>
   </FrameLayout>
@@ -70,6 +73,9 @@ limitations under the License.
         android:id="@+id/marker_detail_statistics_name"
         android:paddingTop="8dp"
         style="@style/TextMedium" />
+      <TextView
+        android:id="@+id/marker_detail_statistics_location"
+        style="@style/TextSmall" />
       <TextView
         android:paddingBottom="6dp"
         android:paddingTop="4dp"
