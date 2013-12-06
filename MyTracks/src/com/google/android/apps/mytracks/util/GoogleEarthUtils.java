@@ -82,9 +82,10 @@ public class GoogleEarthUtils {
    * 
    * @param kmlFilePath the kml file path
    */
-  public static Intent getPlayInEarthIntent(String kmlFilePath) {
+  public static Intent getPlayInEarthIntent(Context context, String kmlFilePath) {    
     Uri uri = new Uri.Builder().scheme(ContentResolver.SCHEME_CONTENT)
         .authority(MyTracksProviderUtils.AUTHORITY).path(kmlFilePath).build();
+    context.grantUriPermission(GOOGLE_EARTH_PACKAGE, uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
     return new Intent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK
         | Intent.FLAG_GRANT_READ_URI_PERMISSION)
         .putExtra(GOOGLE_EARTH_TOUR_FEATURE_ID, TOUR_FEATURE_ID_VALUE)

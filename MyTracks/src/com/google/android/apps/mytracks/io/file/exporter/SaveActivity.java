@@ -207,7 +207,7 @@ public class SaveActivity extends Activity {
     savedPath = aSavedPath;
     removeDialog(DIALOG_PROGRESS_ID);
     if (playTrack && successCount == 1 && totalCount == 1 && savedPath != null) {
-      startActivity(GoogleEarthUtils.getPlayInEarthIntent(savedPath));
+      startActivity(GoogleEarthUtils.getPlayInEarthIntent(this, savedPath));
       finish();
     } else {
       showDialog(DIALOG_RESULT_ID);

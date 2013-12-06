@@ -25,6 +25,7 @@ import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -423,6 +424,7 @@ public class MyTracksProvider extends ContentProvider {
       for (File file : dir.listFiles()) {
         file.delete();
       }
+      getContext().revokeUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
     }
   }
   
