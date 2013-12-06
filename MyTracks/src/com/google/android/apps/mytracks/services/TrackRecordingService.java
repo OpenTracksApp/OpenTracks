@@ -771,7 +771,14 @@ public class TrackRecordingService extends Service {
         
         // Update the recording track time        
         updateRecordingTrack(track, myTracksProviderUtils.getLastTrackPointId(trackId), false);
-      }      
+      }
+      
+      String trackName = TrackNameUtils.getTrackName(
+          this, -1L, -1L, myTracksProviderUtils.getFirstValidTrackPoint(trackId));
+      if (trackName != null) {
+        track.setName(trackName);
+        myTracksProviderUtils.updateTrack(track);
+      }
 
       if (track.getCategory().equals(PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT)) {
         int activityRecognitionType = PreferencesUtils.getInt(this,

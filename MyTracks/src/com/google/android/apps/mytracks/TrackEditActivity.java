@@ -22,7 +22,6 @@ import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragme
 import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.util.TrackIconUtils;
-import com.google.android.apps.mytracks.util.TrackNameUtils;
 import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
 import com.google.android.apps.mytracks.util.TrackUtils;
 import com.google.android.maps.mytracks.R;
@@ -162,11 +161,6 @@ public class TrackEditActivity extends AbstractMyTracksActivity
 
     Button cancel = (Button) findViewById(R.id.track_edit_cancel);
     if (getIntent().getBooleanExtra(EXTRA_NEW_TRACK, false)) {
-      String trackName = TrackNameUtils.getTrackName(
-          this, -1L, -1L, myTracksProviderUtils.getFirstValidTrackPoint(trackId));
-      if (trackName != null) {
-        name.setText(trackName);
-      }
       setTitle(R.string.track_edit_new_track_title);
       cancel.setVisibility(View.GONE);
     } else {
