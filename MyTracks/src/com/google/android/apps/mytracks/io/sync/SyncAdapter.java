@@ -79,7 +79,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
   private Drive drive;
   private String driveAccountName; // the account name associated with the drive
   private String folderId;
-  
+
   public SyncAdapter(Context context) {
     super(context, true);
     this.context = context;
@@ -119,6 +119,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         drive = SyncUtils.getDriveService(credential);
         driveAccountName = account.name;
       }
+      folderId = getFolderId();
 
       long largestChangeId = PreferencesUtils.getLong(
           context, R.string.drive_largest_change_id_key);
@@ -145,17 +146,15 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
    * Gets the folder id..
    */
   private String getFolderId() throws IOException {
-    if (folderId == null) {
-      File folder = SyncUtils.getMyTracksFolder(context, drive);
-      if (folder == null) {
-        throw new IOException("folder is null");
-      }
-      folderId = folder.getId();
-      if (folderId == null) {
-        throw new IOException("folder id is null");
-      }
+    File folder = SyncUtils.getMyTracksFolder(context, drive);
+    if (folder == null) {
+      throw new IOException("folder is null");
     }
-    return folderId;
+    String id = folder.getId();
+    if (id == null) {
+      throw new IOException("folder id is null");
+    }
+    return id;
   }
 
   /**
@@ -168,8 +167,8 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     long largestChangeId = about.getLargestChangeId();
 
     // Get all the KML/KMZ files in the "My Drive:/My Tracks" folder
-    Files.List myTracksFolderRequest = drive.files().list()
-        .setQ(String.format(Locale.US, SyncUtils.MY_TRACKS_FOLDER_FILES_QUERY, getFolderId()));
+    Files.List myTracksFolderRequest = drive.files()
+        .list().setQ(String.format(Locale.US, SyncUtils.MY_TRACKS_FOLDER_FILES_QUERY, folderId));
     Map<String, File> myTracksFolderMap = getFiles(myTracksFolderRequest, true);
 
     // Handle tracks that are already uploaded to Google Drive
@@ -227,7 +226,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
           if (driveId != null && !driveId.equals("")) {
             if (!track.isSharedWithMe()) {
               File driveFile = drive.files().get(driveId).execute();
-              if (SyncUtils.isInMyTracksAndValid(driveFile, getFolderId())) {
+              if (SyncUtils.isInMyTracksAndValid(driveFile, folderId)) {
                 merge(track, driveFile);
                 result.add(driveId);
               } else {
@@ -287,14 +286,14 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
           continue;
         }
         File driveFile = drive.files().get(driveId).execute();
-        if (SyncUtils.isInMyTracksAndValid(driveFile, getFolderId())) {
+        if (SyncUtils.isInMyTracksAndValid(driveFile, folderId)) {
           merge(track, driveFile);
         }
       }
       PreferencesUtils.setString(
           context, R.string.drive_edited_list_key, PreferencesUtils.DRIVE_EDITED_LIST_DEFAULT);
     }
-    
+
     // Handle changes from Google Drive
     Map<String, File> changes = new HashMap<String, File>();
     long newLargestChangeId = getDriveChangesInfo(largestChangeId, changes);
@@ -316,7 +315,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                 Log.d(TAG, "Delete local track " + track.getName());
                 myTracksProviderUtils.deleteTrack(context, track.getId());
               } else {
-                if (SyncUtils.isInMyTracksAndValid(driveFile, getFolderId())
+                if (SyncUtils.isInMyTracksAndValid(driveFile, folderId)
                     || SyncUtils.isInSharedWithMe(driveFile)) {
                   merge(track, driveFile);
                 } else {
@@ -334,7 +333,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         while (iterator.hasNext()) {
           String driveId = iterator.next();
           File file = changes.get(driveId);
-          if (!SyncUtils.isInMyTracksAndValid(file, getFolderId())
+          if (!SyncUtils.isInMyTracksAndValid(file, folderId)
               && !SyncUtils.isInSharedWithMeAndValid(file)) {
             iterator.remove();
           }
@@ -366,8 +365,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
             continue;
           }
           // If not successful, the next sync will retry again
-          SyncUtils.insertDriveFile(
-              drive, getFolderId(), context, myTracksProviderUtils, track, true);
+          SyncUtils.insertDriveFile(drive, folderId, context, myTracksProviderUtils, track, true);
         } while (cursor.moveToNext());
       }
     } finally {
@@ -416,14 +414,14 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
   }
 
   /**
-   * Gets the drive changes info in the My Tracks folder, including deleted files.
+   * Gets the drive changes info in the My Tracks folder, including deleted
+   * files.
    * 
    * @param changeId the largest change id
    * @param changes a map of drive id to file for the changes
    * @return an updated largest change id
    */
-  private long getDriveChangesInfo(long changeId, Map<String, File> changes)
-      throws IOException {
+  private long getDriveChangesInfo(long changeId, Map<String, File> changes) throws IOException {
     Changes.List request = drive.changes().list().setStartChangeId(changeId + 1);
     do {
       ChangeList changeList = request.execute();
@@ -499,7 +497,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
       }
       File updatedDriveFile;
       String trackName = FileUtils.getName(driveFile.getTitle());
-      if (SyncUtils.isInMyTracks(driveFile, getFolderId()) && !track.getName().equals(trackName)) {
+      if (SyncUtils.isInMyTracks(driveFile, folderId) && !track.getName().equals(trackName)) {
         track.setName(trackName);
 
         /*
@@ -558,7 +556,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
       if (useKmz) {
         if (trackId == -1L) {
           Uri uri = myTracksProviderUtils.insertTrack(new Track());
-          trackId = Long.parseLong(uri.getLastPathSegment());          
+          trackId = Long.parseLong(uri.getLastPathSegment());
         }
         trackImporter = new KmzTrackImporter(context, trackId);
       } else {
@@ -592,13 +590,12 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
    * 
    * @param driveId the drive id
    * @param canRetry true if can retry the request
-   * @throws IOException 
+   * @throws IOException
    */
-  private void deleteDriveFile(String driveId, boolean canRetry)
-      throws IOException {
+  private void deleteDriveFile(String driveId, boolean canRetry) throws IOException {
     try {
       File driveFile = drive.files().get(driveId).execute();
-      if (SyncUtils.isInMyTracks(driveFile, getFolderId())) {
+      if (SyncUtils.isInMyTracks(driveFile, folderId)) {
         if (!driveFile.getLabels().getTrashed()) {
           drive.files().trash(driveId).execute();
         }
