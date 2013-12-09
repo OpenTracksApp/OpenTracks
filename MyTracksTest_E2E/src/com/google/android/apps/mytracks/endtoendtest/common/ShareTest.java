@@ -113,7 +113,7 @@ public class ShareTest extends ActivityInstrumentationTestCase2<TrackListActivit
       EndToEndTestUtils.SOLO.goBack();
       SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_2);
       EndToEndTestUtils.findMenuItem(
-          EndToEndTestUtils.activityMytracks.getString(R.string.menu_refresh), true);
+          EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
 
       assertTrue(EndToEndTestUtils.SOLO.waitForText(
           activityMyTracks.getString(R.string.track_list_shared_with_me), 1,

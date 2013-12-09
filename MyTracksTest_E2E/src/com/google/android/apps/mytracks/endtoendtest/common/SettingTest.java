@@ -470,7 +470,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.SOLO.goBack();
     assertEquals(isSyncChecked,
-        EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_refresh), false));
+        EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_sync_now), false));
   }
 
   @Override

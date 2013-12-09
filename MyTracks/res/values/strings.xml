@@ -1200,12 +1200,6 @@ limitations under the License.
       Character limit: ~20 (1 line)">
     Play multiple
   </string>
-  <string name="menu_refresh"
-    translation_description="In the menu, to refresh with Google Drive.
-
-      Character limit: ~20 (1 line)">
-    Refresh
-  </string>
   <string name="menu_satellite"
     translation_description="In the menu, under the map layer option, the submenu to display
       satellite.
@@ -1255,6 +1249,12 @@ limitations under the License.
 
       Character limit: ~20 (1 line)">
     Sync to Google Drive
+  </string>
+  <string name="menu_sync_now"
+    translation_description="In the menu, to sync now with Google Drive.
+
+      Character limit: ~20 (1 line)">
+    Sync now
   </string>
   <string name="menu_show_on_map"
     translation_description="In the menu, to show a track or a marker on the map.

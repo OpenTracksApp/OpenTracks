@@ -307,7 +307,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   // Menu items
   private MenuItem searchMenuItem;
   private MenuItem startGpsMenuItem;
-  private MenuItem refreshMenuItem;
+  private MenuItem syncNowMenuItem;
   private MenuItem exportAllMenuItem;
   private MenuItem importAllMenuItem;
   private MenuItem deleteAllMenuItem;
@@ -469,7 +469,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     ApiAdapterFactory.getApiAdapter().configureSearchWidget(this, searchMenuItem, trackController);
 
     startGpsMenuItem = menu.findItem(R.id.track_list_start_gps);
-    refreshMenuItem = menu.findItem(R.id.track_list_refresh);
+    syncNowMenuItem = menu.findItem(R.id.track_list_sync_now);
     exportAllMenuItem = menu.findItem(R.id.track_list_export_all);
     importAllMenuItem = menu.findItem(R.id.track_list_import_all);
     deleteAllMenuItem = menu.findItem(R.id.track_list_delete_all);
@@ -533,7 +533,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         PlayMultipleDialogFragment.newInstance(-1L)
             .show(getSupportFragmentManager(), PlayMultipleDialogFragment.PLAY_MULTIPLE_DIALOG_TAG);
         return true;
-      case R.id.track_list_refresh:
+      case R.id.track_list_sync_now:
         if (driveSync) {
           SyncUtils.syncNow(this);
         } else {
@@ -739,8 +739,8 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         TrackIconUtils.setMenuIconColor(startGpsMenuItem);        
       }
     }
-    if (refreshMenuItem != null) {
-      refreshMenuItem.setTitle(driveSync ? R.string.menu_refresh : R.string.menu_sync_drive);
+    if (syncNowMenuItem != null) {
+      syncNowMenuItem.setTitle(driveSync ? R.string.menu_sync_now : R.string.menu_sync_drive);
     }
     if (exportAllMenuItem != null) {
       exportAllMenuItem.setVisible(!isRecording);

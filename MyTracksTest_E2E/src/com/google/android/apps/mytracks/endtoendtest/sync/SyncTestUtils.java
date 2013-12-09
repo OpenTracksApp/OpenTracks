@@ -241,7 +241,7 @@ public class SyncTestUtils {
         files = getDriveFiles(EndToEndTestUtils.activityMytracks.getApplicationContext(), drive);
         EndToEndTestUtils.sleep(EndToEndTestUtils.SHORT_WAIT_TIME);
         EndToEndTestUtils.findMenuItem(
-            EndToEndTestUtils.activityMytracks.getString(R.string.menu_refresh), true);
+            EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
       } catch (GoogleJsonResponseException e) {
         Log.i(EndToEndTestUtils.LOG_TAG, e.getMessage());
       }

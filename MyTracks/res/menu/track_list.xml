@@ -31,9 +31,9 @@ limitations under the License.
     android:id="@+id/track_list_play_mutliple"
     android:title="@string/menu_play_multiple"/>
   <item
-    android:icon="@drawable/ic_menu_refresh"
-    android:id="@+id/track_list_refresh"
-    android:title="@string/menu_refresh"/>
+    android:icon="@drawable/ic_menu_sync_now"
+    android:id="@+id/track_list_sync_now"
+    android:title="@string/menu_sync_now"/>
   <item
     android:icon="@drawable/ic_menu_aggregated_statistics"
     android:id="@+id/track_list_aggregated_statistics"

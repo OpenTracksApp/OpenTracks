@@ -66,12 +66,12 @@ public class SyncMyTracksWithDriveTest extends ActivityInstrumentationTestCase2<
     }
     EndToEndTestUtils.createTrackIfEmpty(0, true);
     EndToEndTestUtils.findMenuItem(
-        EndToEndTestUtils.activityMytracks.getString(R.string.menu_refresh), true);
+        EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
     SyncTestUtils.checkFilesNumber(drive);
 
     SyncTestUtils.removeKMLFiles(drive);
     EndToEndTestUtils.findMenuItem(
-        EndToEndTestUtils.activityMytracks.getString(R.string.menu_refresh), true);
+        EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
     SyncTestUtils.checkTracksNumber(0);
   }
 
@@ -88,14 +88,14 @@ public class SyncMyTracksWithDriveTest extends ActivityInstrumentationTestCase2<
     EndToEndTestUtils.createSimpleTrack(0, true);
     EndToEndTestUtils.createSimpleTrack(0, true);
     EndToEndTestUtils.findMenuItem(
-        EndToEndTestUtils.activityMytracks.getString(R.string.menu_refresh), true);
+        EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
     SyncTestUtils.checkFilesNumber(drive);
 
     // Remove one track from Google Drive
     File file = SyncTestUtils.getFile(EndToEndTestUtils.trackName, drive);
     SyncTestUtils.removeFile(file, drive);
     EndToEndTestUtils.findMenuItem(
-        EndToEndTestUtils.activityMytracks.getString(R.string.menu_refresh), true);
+        EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
     SyncTestUtils.checkFilesNumber(drive);
     SyncTestUtils.checkTracksNumber(1);
   }
@@ -113,7 +113,7 @@ public class SyncMyTracksWithDriveTest extends ActivityInstrumentationTestCase2<
     EndToEndTestUtils.createSimpleTrack(0, true);
     EndToEndTestUtils.createSimpleTrack(0, true);
     EndToEndTestUtils.findMenuItem(
-        EndToEndTestUtils.activityMytracks.getString(R.string.menu_refresh), true);
+        EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
     instrumentation.waitForIdleSync();
     SyncTestUtils.checkFilesNumber(drive);
     File folder = SyncUtils.getMyTracksFolder(trackListActivity.getApplicationContext(), drive);
@@ -121,7 +121,7 @@ public class SyncMyTracksWithDriveTest extends ActivityInstrumentationTestCase2<
 
     SyncTestUtils.removeFile(folder, drive);
     EndToEndTestUtils.findMenuItem(
-        EndToEndTestUtils.activityMytracks.getString(R.string.menu_refresh), true);
+        EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
     SyncTestUtils.checkFilesNumber(drive);
   }
 }
