@@ -16,8 +16,6 @@
 
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.fragments.CheckPermissionFragment;
-import com.google.android.apps.mytracks.fragments.CheckPermissionFragment.CheckPermissionCaller;
 import com.google.android.apps.mytracks.fragments.ChooseAccountDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChooseAccountDialogFragment.ChooseAccountCaller;
 import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment;
@@ -40,6 +38,7 @@ import com.google.android.apps.mytracks.io.sendtogoogle.UploadResultActivity;
 import com.google.android.apps.mytracks.io.spreadsheets.SendSpreadsheetsActivity;
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
+import com.google.android.apps.mytracks.services.tasks.CheckPermissionAsyncTask;
 import com.google.android.apps.mytracks.util.AnalyticsUtils;
 import com.google.android.apps.mytracks.util.GoogleEarthUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
@@ -58,7 +57,6 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -70,8 +68,8 @@ import java.io.IOException;
  * @author Jimmy Shih
  */
 public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActivity implements
-    ChooseAccountCaller, ConfirmSyncCaller, CheckPermissionCaller, ShareTrackCaller,
-    ConfirmDeleteCaller, PlayMultipleCaller {
+    ChooseAccountCaller, ConfirmSyncCaller, ShareTrackCaller, ConfirmDeleteCaller,
+    PlayMultipleCaller {
 
   private static final String TAG = AbstractMyTracksActivity.class.getSimpleName();
   private static final String SEND_REQUEST_KEY = "send_request_key";
@@ -83,6 +81,7 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
   protected static final int CAMERA_REQUEST_CODE = 5;
 
   private SendRequest sendRequest;
+  private CheckPermissionAsyncTask asyncTask;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +89,19 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
     if (savedInstanceState != null) {
       sendRequest = savedInstanceState.getParcelable(SEND_REQUEST_KEY);
     }
+    Object retained = getLastCustomNonConfigurationInstance();
+    if (retained instanceof CheckPermissionAsyncTask) {
+      asyncTask = (CheckPermissionAsyncTask) retained;
+      asyncTask.setActivity(this);
+    }
+  }
+
+  @Override
+  public Object onRetainCustomNonConfigurationInstance() {
+    if (asyncTask != null) {
+      asyncTask.setActivity(null);
+    }
+    return asyncTask;
   }
 
   @Override
@@ -191,18 +203,20 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
       }
   
       if (needDrivePermission) {
-        Fragment fragment = CheckPermissionFragment.newInstance(
-            sendRequest.getAccount().name, SendToGoogleUtils.DRIVE_SCOPE);
-        getSupportFragmentManager().beginTransaction()
-            .add(fragment, CheckPermissionFragment.CHECK_PERMISSION_TAG).commit();
+        startCheckPermission(SendToGoogleUtils.DRIVE_SCOPE);
       } else {
         onDrivePermissionSuccess();
       }
     }
   }
 
-  @Override
-  public void onCheckPermissionDone(String scope, boolean success, Intent intent) {
+  private void startCheckPermission(String scope) {
+    asyncTask = new CheckPermissionAsyncTask(this, sendRequest.getAccount().name, scope);
+    asyncTask.execute();
+  }
+  
+  public void onCheckPermissionDone(String scope, boolean success, Intent userRecoverableIntent) {
+    asyncTask = null;
     if (success) {
       if (scope.equals(SendToGoogleUtils.DRIVE_SCOPE)) {
         onDrivePermissionSuccess();
@@ -212,7 +226,7 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
         onSpreadsheetsPermissionSuccess();
       }
     } else {
-      if (intent != null) {
+      if (userRecoverableIntent != null) {
         int requestCode;
         if (scope.equals(SendToGoogleUtils.DRIVE_SCOPE)) {
           requestCode = DRIVE_REQUEST_CODE;
@@ -221,7 +235,7 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
         } else {
           requestCode = SPREADSHEETS_REQUEST_CODE;
         }
-        startActivityForResult(intent, requestCode);
+        startActivityForResult(userRecoverableIntent, requestCode);
       } else {
         onPermissionFailure();
       }
@@ -271,10 +285,7 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
   private void onMapsPermissionSuccess() {
     // Check Fusion Tables permission
     if (sendRequest.isSendFusionTables()) {
-      Fragment fragment = CheckPermissionFragment.newInstance(
-          sendRequest.getAccount().name, SendToGoogleUtils.FUSION_TABLES_SCOPE);
-      getSupportFragmentManager()
-          .beginTransaction().add(fragment, CheckPermissionFragment.CHECK_PERMISSION_TAG).commit();
+      startCheckPermission(SendToGoogleUtils.FUSION_TABLES_SCOPE);
     } else {
       onFusionTablesSuccess();
     }
@@ -283,10 +294,7 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
   private void onFusionTablesSuccess() {
     // Check Spreadsheets permission
     if (sendRequest.isSendSpreadsheets()) {
-      Fragment fragment = CheckPermissionFragment.newInstance(
-          sendRequest.getAccount().name, SendToGoogleUtils.SPREADSHEETS_SCOPE);
-      getSupportFragmentManager()
-          .beginTransaction().add(fragment, CheckPermissionFragment.CHECK_PERMISSION_TAG).commit();
+      startCheckPermission(SendToGoogleUtils.SPREADSHEETS_SCOPE);
     } else {
       onSpreadsheetsPermissionSuccess();
     }
