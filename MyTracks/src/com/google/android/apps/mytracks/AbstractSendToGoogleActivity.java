@@ -39,6 +39,7 @@ import com.google.android.apps.mytracks.io.spreadsheets.SendSpreadsheetsActivity
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.services.tasks.CheckPermissionAsyncTask;
+import com.google.android.apps.mytracks.services.tasks.CheckPermissionAsyncTask.CheckPermissionCaller;
 import com.google.android.apps.mytracks.util.AnalyticsUtils;
 import com.google.android.apps.mytracks.util.GoogleEarthUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
@@ -68,8 +69,8 @@ import java.io.IOException;
  * @author Jimmy Shih
  */
 public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActivity implements
-    ChooseAccountCaller, ConfirmSyncCaller, ShareTrackCaller, ConfirmDeleteCaller,
-    PlayMultipleCaller {
+    ChooseAccountCaller, ConfirmSyncCaller, CheckPermissionCaller, ShareTrackCaller,
+    ConfirmDeleteCaller, PlayMultipleCaller {
 
   private static final String TAG = AbstractMyTracksActivity.class.getSimpleName();
   private static final String SEND_REQUEST_KEY = "send_request_key";
@@ -215,6 +216,7 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
     asyncTask.execute();
   }
   
+  @Override
   public void onCheckPermissionDone(String scope, boolean success, Intent userRecoverableIntent) {
     asyncTask = null;
     if (success) {

@@ -16,12 +16,12 @@
 
 package com.google.android.apps.mytracks.services.tasks;
 
-import com.google.android.apps.mytracks.AbstractSendToGoogleActivity;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -35,9 +35,13 @@ import java.io.IOException;
  */
 public class CheckPermissionAsyncTask extends AsyncTask<Void, Void, Boolean> {
 
+  public interface CheckPermissionCaller {
+    public void onCheckPermissionDone(String scope, boolean success, Intent userRecoverableIntent);
+  }
+
   private static final String TAG = CheckPermissionAsyncTask.class.getSimpleName();
 
-  private AbstractSendToGoogleActivity activity;
+  private Activity activity;
   private final String accountName;
   private final String scope;
 
@@ -61,8 +65,7 @@ public class CheckPermissionAsyncTask extends AsyncTask<Void, Void, Boolean> {
    */
   private boolean canRetry;
 
-  public CheckPermissionAsyncTask(
-      AbstractSendToGoogleActivity activity, String accountName, String scope) {
+  public CheckPermissionAsyncTask(Activity activity, String accountName, String scope) {
     this.activity = activity;
     this.accountName = accountName;
     this.scope = scope;
@@ -72,10 +75,11 @@ public class CheckPermissionAsyncTask extends AsyncTask<Void, Void, Boolean> {
     canRetry = true;
   }
 
-  public void setActivity(AbstractSendToGoogleActivity activity) {
+  public void setActivity(Activity activity) {
     this.activity = activity;
     if (completed && activity != null) {
-      activity.onCheckPermissionDone(scope, success, userRecoverableIntent);
+      ((CheckPermissionCaller) activity).onCheckPermissionDone(
+          scope, success, userRecoverableIntent);
     }
   }
 
@@ -89,7 +93,8 @@ public class CheckPermissionAsyncTask extends AsyncTask<Void, Void, Boolean> {
     success = result;
     completed = true;
     if (activity != null) {
-      activity.onCheckPermissionDone(scope, success, userRecoverableIntent);
+      ((CheckPermissionCaller) activity).onCheckPermissionDone(
+          scope, success, userRecoverableIntent);
     }
   }
 

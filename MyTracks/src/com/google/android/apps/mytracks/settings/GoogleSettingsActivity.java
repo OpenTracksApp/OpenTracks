@@ -19,12 +19,11 @@ package com.google.android.apps.mytracks.settings;
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
+import com.google.android.apps.mytracks.services.tasks.CheckPermissionAsyncTask;
+import com.google.android.apps.mytracks.services.tasks.CheckPermissionAsyncTask.CheckPermissionCaller;
 import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
-import com.google.android.gms.auth.GoogleAuthException;
-import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.maps.mytracks.R;
-import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -39,10 +38,8 @@ import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
-import android.util.Log;
 import android.widget.Toast;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,9 +48,9 @@ import java.util.List;
  * 
  * @author Jimmy Shih
  */
-public class GoogleSettingsActivity extends AbstractSettingsActivity {
+public class GoogleSettingsActivity extends AbstractSettingsActivity
+    implements CheckPermissionCaller {
 
-  private static final String TAG = GoogleSettingsActivity.class.getSimpleName();
   private static final String ACCOUNT_NAME_KEY = "accountName";
   private static final int DIALOG_CONFIRM_SWITCH_ACCOUNT = 0;
   private static final int DIALOG_CONFIRM_DRIVE_SYNC_ON = 1;
@@ -61,10 +58,19 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
   private ListPreference googleAccountPreference;
   private CheckBoxPreference driveSyncPreference;
 
+  private CheckPermissionAsyncTask asyncTask;
+  
   @SuppressWarnings("deprecation")
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
+    
+    Object retained = getLastNonConfigurationInstance();
+    if (retained instanceof CheckPermissionAsyncTask) {
+      asyncTask = (CheckPermissionAsyncTask) retained;
+      asyncTask.setActivity(this);
+    }
+    
     addPreferencesFromResource(R.xml.google_settings);
 
     googleAccountPreference = (ListPreference) findPreference(
@@ -119,6 +125,14 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
         this, R.string.google_account_key, PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT));
   }
 
+  @Deprecated
+  public Object onRetainNonConfigurationInstance() {
+    if (asyncTask != null) {
+      asyncTask.setActivity(null);
+    }
+    return asyncTask;
+  }
+  
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     switch (requestCode) {
@@ -149,36 +163,14 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
             getString(R.string.sync_drive_confirm_message), new DialogInterface.OnClickListener() {
                 @Override
               public void onClick(DialogInterface d, int button) {
-                final String googleAccount = PreferencesUtils.getString(GoogleSettingsActivity.this,
-                    R.string.google_account_key, PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
-                /*
-                 * This class, a PreferenceActivity, needs to support api level
-                 * 8+, thus cannot use CheckPermissionFragment because a
-                 * Fragment is only available for api level 11+ and there is no
-                 * support library for PreferenceActivity.
-                 */
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                  public void run() {
-                    try {
-                      SendToGoogleUtils.getGoogleAccountCredential(
-                          GoogleSettingsActivity.this, googleAccount,
-                          SendToGoogleUtils.DRIVE_SCOPE);
-                      handleDriveAccess(true, null);
-                    } catch (UserRecoverableAuthException e) {
-                      handleDriveAccess(false, e.getIntent());
-                    } catch (GoogleAuthException e) {
-                      Log.e(TAG, "GoogleAuthException", e);
-                      handleDriveAccess(false, null);
-                    } catch (UserRecoverableAuthIOException e) {
-                      handleDriveAccess(false, e.getIntent());
-                    } catch (IOException e) {
-                      Log.e(TAG, "IOException", e);
-                      handleDriveAccess(false, null);
-                    }
-                  }
-                });
-                thread.start();
+                if (asyncTask == null) {
+                  final String googleAccount = PreferencesUtils.getString(
+                      GoogleSettingsActivity.this, R.string.google_account_key,
+                      PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
+                  asyncTask = new CheckPermissionAsyncTask(
+                      GoogleSettingsActivity.this, googleAccount, SendToGoogleUtils.DRIVE_SCOPE);
+                  asyncTask.execute();
+                }
               }
             });
         break;
@@ -188,21 +180,18 @@ public class GoogleSettingsActivity extends AbstractSettingsActivity {
     return dialog;
   }
 
-  private void handleDriveAccess(final boolean success, final Intent intent) {
-    runOnUiThread(new Runnable() {
-        @Override
-      public void run() {
-        if (success) {
-          onDrivePermissionSuccess();
-        } else {
-          if (intent != null) {
-            startActivityForResult(intent, DRIVE_REQUEST_CODE);
-          } else {
-            onDrivePermissionFailure();
-          }
-        }
+  @Override
+  public void onCheckPermissionDone(String scope, boolean success, Intent userRecoverableIntent) {
+    asyncTask = null;
+    if (success) {
+      onDrivePermissionSuccess();
+    } else {
+      if (userRecoverableIntent != null) {
+        startActivityForResult(userRecoverableIntent, DRIVE_REQUEST_CODE);
+      } else {
+        onDrivePermissionFailure();
       }
-    });
+    }
   }
 
   private void onDrivePermissionSuccess() {
