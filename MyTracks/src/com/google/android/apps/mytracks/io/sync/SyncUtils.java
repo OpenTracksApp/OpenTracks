@@ -466,8 +466,8 @@ public class SyncUtils {
     String extension = useKmz ? KmzTrackExporter.KMZ_EXTENSION : TrackFileFormat.KML.getExtension();
     java.io.File file = new java.io.File(
         directory, FileUtils.buildUniqueFileName(directory, track.getName(), extension));
-    FileTrackExporter fileTrackExporter = new FileTrackExporter(
-        myTracksProviderUtils, tracks, TrackFileFormat.KML.newTrackWriter(context, false), null);
+    FileTrackExporter fileTrackExporter = new FileTrackExporter(myTracksProviderUtils, tracks,
+        TrackFileFormat.KML.newTrackWriter(context, false, false), null);
     TrackExporter trackExporter = useKmz ? new KmzTrackExporter(
         myTracksProviderUtils, fileTrackExporter, tracks, context)
         : fileTrackExporter;

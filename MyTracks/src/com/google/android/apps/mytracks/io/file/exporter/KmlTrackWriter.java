@@ -70,6 +70,7 @@ public class KmlTrackWriter implements TrackWriter {
       TRACK_ICON = "http://earth.google.com/images/kml-icons/track-directional/track-0.png";
 
   private final Context context;
+  private final boolean multiple;
   private final boolean playTrack;
   private final DescriptionGenerator descriptionGenerator;  
   private final MyTracksProviderUtils myTracksProviderUtils;
@@ -82,13 +83,15 @@ public class KmlTrackWriter implements TrackWriter {
   private boolean hasCadence;
   private boolean hasHeartRate;
 
-  public KmlTrackWriter(Context context, boolean playTrack) {
-    this(context, playTrack, new DescriptionGeneratorImpl(context));
+  public KmlTrackWriter(Context context, boolean multiple, boolean playTrack) {
+    this(context, multiple, playTrack, new DescriptionGeneratorImpl(context));
   }
 
   @VisibleForTesting
-  KmlTrackWriter(Context context, boolean playTrack, DescriptionGenerator descriptionGenerator) {
+  KmlTrackWriter(Context context, boolean multiple, boolean playTrack,
+      DescriptionGenerator descriptionGenerator) {
     this.context = context;
+    this.multiple = multiple;
     this.playTrack = playTrack;
     this.descriptionGenerator = descriptionGenerator;
     this.myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
@@ -184,7 +187,7 @@ public class KmlTrackWriter implements TrackWriter {
 
   @Override
   public void writeBeginTracks() {
-    if (printWriter != null && playTrack) {
+    if (printWriter != null && multiple) {
       printWriter.println("<Folder id=\"" + GoogleEarthUtils.TOUR_FEATURE_ID_VALUE + "\">");
       printWriter.println("<name>" + context.getString(R.string.generic_tracks) + "</name>");
       printWriter.println("<open>1</open>");
@@ -193,7 +196,7 @@ public class KmlTrackWriter implements TrackWriter {
 
   @Override
   public void writeEndTracks() {
-    if (printWriter != null && playTrack) {
+    if (printWriter != null && multiple) {
       printWriter.println("</Folder>");
     }
   }
@@ -203,7 +206,8 @@ public class KmlTrackWriter implements TrackWriter {
     if (printWriter != null) {
       String name = context.getString(R.string.marker_label_start, track.getName());
       writePlacemark(name, "", "", START_STYLE, startLocation);
-      if (playTrack) {
+      if (multiple) {
+        // No need to add TOUR_FEATURE_ID_VALUE
         printWriter.println("<Placemark>");
       } else {
         printWriter.println("<Placemark id=\"" + GoogleEarthUtils.TOUR_FEATURE_ID_VALUE + "\">");

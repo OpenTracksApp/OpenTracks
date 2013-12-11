@@ -18,25 +18,25 @@ import java.util.Locale;
 public enum TrackFileFormat implements Parcelable {
   KML {
   @Override
-    public TrackWriter newTrackWriter(Context context, boolean playTrack) {
-      return new KmlTrackWriter(context, playTrack);
+    public TrackWriter newTrackWriter(Context context, boolean multiple, boolean playTrack) {
+      return new KmlTrackWriter(context, multiple, playTrack);
     }
   },
   GPX {
   @Override
-    public TrackWriter newTrackWriter(Context context, boolean playTrack) {
+    public TrackWriter newTrackWriter(Context context, boolean multiple, boolean playTrack) {
       return new GpxTrackWriter(context);
     }
   },
   CSV {
   @Override
-    public TrackWriter newTrackWriter(Context context, boolean playTrack) {
+    public TrackWriter newTrackWriter(Context context, boolean multiple, boolean playTrack) {
       return new CsvTrackWriter(context);
     }
   },
   TCX {
   @Override
-    public TrackWriter newTrackWriter(Context context, boolean playTrack) {
+    public TrackWriter newTrackWriter(Context context, boolean multiple, boolean playTrack) {
       return new TcxTrackWriter(context);
     }
   };
@@ -65,8 +65,12 @@ public enum TrackFileFormat implements Parcelable {
 
   /**
    * Creates a new track writer for the format.
+   * 
+   * @param context the context
+   * @param multiple true for writing multiple tracks
+   * @param playTrack true to play track
    */
-  public abstract TrackWriter newTrackWriter(Context context, boolean playTrack);
+  public abstract TrackWriter newTrackWriter(Context context, boolean multiple, boolean playTrack);
 
   /**
    * Returns the mime type for each format.
