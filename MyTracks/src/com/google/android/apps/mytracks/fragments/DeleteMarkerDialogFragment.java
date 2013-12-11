@@ -76,10 +76,17 @@ public class DeleteMarkerDialogFragment extends AbstractMyTracksDialogFragment {
   protected Dialog createDialog() {
     final FragmentActivity fragmentActivity = getActivity();
     final long[] markerIds = getArguments().getLongArray(KEY_MARKER_IDS);
-    int titleId = markerIds.length > 1 ? R.string.generic_delete_selected_confirm_title
-        : R.string.marker_delete_one_confirm_title;
-    int messageId = markerIds.length > 1 ? R.string.marker_delete_multiple_confirm_message
-        : R.string.marker_delete_one_confirm_message;
+    int titleId;
+    int messageId;
+    if (markerIds.length == 1 && markerIds[0] == -1L) {
+      titleId = R.string.generic_delete_all_confirm_title;
+      messageId = R.string.marker_delete_all_confirm_message;
+    } else {
+      titleId = markerIds.length > 1 ? R.string.generic_delete_selected_confirm_title
+          : R.string.marker_delete_one_confirm_title;
+      messageId = markerIds.length > 1 ? R.string.marker_delete_multiple_confirm_message
+          : R.string.marker_delete_one_confirm_message;
+    }
     return DialogUtils.createConfirmationDialog(
         fragmentActivity, titleId, getString(messageId), new DialogInterface.OnClickListener() {
             @Override

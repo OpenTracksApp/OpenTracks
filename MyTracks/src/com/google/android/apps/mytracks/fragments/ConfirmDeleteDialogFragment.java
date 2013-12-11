@@ -84,7 +84,7 @@ public class ConfirmDeleteDialogFragment extends AbstractMyTracksDialogFragment 
     int titleId;
     int messageId;
     if (trackIds.length == 1 && trackIds[0] == -1L) {
-      titleId = R.string.track_delete_all_confirm_title;
+      titleId = R.string.generic_delete_all_confirm_title;
       messageId = R.string.track_delete_all_confirm_message;
     } else {
       titleId = trackIds.length > 1 ? R.string.generic_delete_selected_confirm_title

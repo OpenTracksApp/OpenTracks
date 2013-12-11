@@ -318,6 +318,9 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
         }
         return true;
       case R.id.list_context_menu_delete:
+        if (markerIds.length > 1 && markerIds.length == listView.getCount()) {
+          markerIds = new long[] { -1L };
+        }
         DeleteMarkerDialogFragment.newInstance(markerIds)
             .show(getSupportFragmentManager(), DeleteMarkerDialogFragment.DELETE_MARKER_DIALOG_TAG);
         return true;

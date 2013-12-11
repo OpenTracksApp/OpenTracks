@@ -789,8 +789,12 @@ limitations under the License.
     translation_description="The text on a button to say cancel.">
     Cancel
   </string>
+  <string name="generic_delete_all_confirm_title"
+    translation_description="When deleting all the items, the title on the confirmation dialog.">
+    Delete all?
+  </string>
   <string name="generic_delete_selected_confirm_title"
-    translation_description="When deleting selected items, the title of the confirmation dialog.">
+    translation_description="When deleting selected items, the title on the confirmation dialog.">
     Delete selected?
   </string>
   <string name="generic_description"
@@ -1038,6 +1042,10 @@ limitations under the License.
     translation_description="When adding a marker, the message indicating it is canceled.">
     Canceled, no marker added.
   </string>
+  <string name="marker_delete_all_confirm_message"
+    translation_description="When deleting all markers, the confirmation message.">
+    All markers for this track will be permanently deleted from the device.    
+  </string>
   <string name="marker_delete_one_confirm_message"
     translation_description="When deleting one marker, the confirmation message.">
     The marker will be permanently deleted from the device.
@@ -1048,7 +1056,7 @@ limitations under the License.
   </string>
   <string name="marker_delete_multiple_confirm_message"
     translation_description="When deleting multiple markers, the confirmation message.">
-    All markers for this track will be permanently deleted from the device.
+    The selected markers will be permanently deleted from the device.    
   </string>
   <string name="marker_label_end"
     translation_description="When inserting a marker to indicate the end of a track, the marker's
@@ -2292,10 +2300,6 @@ limitations under the License.
     translation_description="When deleting all the tracks, the confirmation message.">
     All tracks and markers will be permanently deleted from the device. Google Drive sync will be
     turned off. No tracks will be deleted on Google Drive and on external storage.
-  </string>
-  <string name="track_delete_all_confirm_title"
-    translation_description="When deleting all the tracks, the title of the confirmation dialog.">
-    Delete all?
   </string>
   <string name="track_delete_one_confirm_message"
     translation_description="When deleting one track, the confirmation message.">
