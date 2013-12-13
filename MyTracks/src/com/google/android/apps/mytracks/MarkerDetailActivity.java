@@ -130,7 +130,8 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity implements De
 
     @Override
     public Fragment getItem(int position) {
-      return MarkerDetailFragment.newInstance(markerIds.get(position));
+      String title = getString(R.string.marker_title, position + 1, getCount());
+      return MarkerDetailFragment.newInstance(markerIds.get(position), title);
     }
 
     @Override

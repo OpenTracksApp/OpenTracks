@@ -1084,7 +1084,14 @@ limitations under the License.
       %1$d number. E.g., '1'.">
     Split %1$d
   </string>
+  <string name="marker_title"
+    translation_description="The title of the marker detail page.
 
+      %1$d position. E.g., '1'.
+      %1$d totalt. E.g., '5'.">
+    %1$d of %2$d
+  </string>
+  
   <!-- Marker Detail -->
   <string name="marker_detail_statistics_title"
     translation_description="In the marker detail page, the title for the statistics section

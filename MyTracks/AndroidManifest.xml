@@ -175,7 +175,9 @@ limitations under the License.
     </activity>
     <activity android:name="com.google.android.apps.mytracks.MarkerEditActivity" />
     <activity android:name="com.google.android.apps.mytracks.MarkerDetailActivity" />
-    <activity android:name="com.google.android.apps.mytracks.MarkerListActivity" >
+    <activity
+      android:label="@string/menu_markers"
+      android:name="com.google.android.apps.mytracks.MarkerListActivity" >
       <meta-data
         android:name="android.app.default_searchable"
         android:value="com.google.android.apps.mytracks.SearchListActivity" />

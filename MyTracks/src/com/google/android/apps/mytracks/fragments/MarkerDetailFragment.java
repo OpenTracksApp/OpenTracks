@@ -61,9 +61,10 @@ import android.widget.TextView;
  */
 public class MarkerDetailFragment extends Fragment {
 
-  public static MarkerDetailFragment newInstance(long markerId) {
+  public static MarkerDetailFragment newInstance(long markerId, String title) {
     Bundle bundle = new Bundle();
     bundle.putLong(KEY_MARKER_ID, markerId);
+    bundle.putString(KEY_TITLE, title);
 
     MarkerDetailFragment fragment = new MarkerDetailFragment();
     fragment.setArguments(bundle);
@@ -72,6 +73,7 @@ public class MarkerDetailFragment extends Fragment {
 
   private static final String TAG = MarkerDetailFragment.class.getSimpleName();
   private static final String KEY_MARKER_ID = "markerId";
+  private static final String KEY_TITLE = "title";
   private static final long HIDE_TEXT_DELAY = 4000L; // 4 seconds
 
   private MyTracksProviderUtils myTracksProviderUtils;
@@ -159,6 +161,14 @@ public class MarkerDetailFragment extends Fragment {
   }
 
   @Override
+  public void setUserVisibleHint(boolean isVisibleToUser) {
+    super.setUserVisibleHint(isVisibleToUser);
+    if (isVisibleToUser) {
+      getActivity().setTitle(getArguments().getString(KEY_TITLE));
+    }
+  }
+
+  @Override
   public void setMenuVisibility(boolean menuVisible) {
     super.setMenuVisibility(menuVisible);
     /*
@@ -190,10 +200,10 @@ public class MarkerDetailFragment extends Fragment {
     String photoUrl = waypoint.getPhotoUrl();
     boolean hasPhoto = photoUrl != null && !photoUrl.equals("");
     menu.findItem(R.id.marker_detail_view_photo).setVisible(hasPhoto);
-    
+
     TrackIconUtils.setMenuIconColor(menu);
   }
-  
+
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     long markerId = getArguments().getLong(KEY_MARKER_ID);
