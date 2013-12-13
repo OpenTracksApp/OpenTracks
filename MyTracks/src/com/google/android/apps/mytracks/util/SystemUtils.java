@@ -76,8 +76,8 @@ public class SystemUtils {
         wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
         if (wakeLock == null) {
           Log.e(TAG, "Cannot create a new wake lock.");
+          return null;
         }
-        return wakeLock;
       }
       if (!wakeLock.isHeld()) {
         wakeLock.acquire();
