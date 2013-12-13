@@ -256,6 +256,14 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
           waypoint = null;
         } else {
           // The waypoint location time matches the track point time
+
+          if (!LocationUtils.isValidLocation(location)) {
+            // Invalid location, load the next location
+            location = null;
+            continue;
+          }
+
+          // Valid location
           if (location.getLatitude() == waypoint.getLocation().getLatitude()
               && location.getLongitude() == waypoint.getLocation().getLongitude()) {
 
@@ -285,6 +293,8 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
                 -1L, -1L, location, tripStatistics, waypoint.getPhotoUrl());
             myTracksProviderUtils.insertWaypoint(newWaypoint);
           }
+
+          // Load the next waypoint
           waypoint = null;
         }
       }
