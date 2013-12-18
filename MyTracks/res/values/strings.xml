@@ -1544,7 +1544,7 @@ limitations under the License.
     translation_description="In the 'Advanced' settings, the summary for the 'Photo size' option.
 
       %1$s value. E.g., '1 MB'.">
-    Scale photo to %1$s for export.
+    Scale photo to %1$s for export
   </string>
   <string name="settings_advanced_photo_size_title"
     translation_description="In the 'Advanced' settings, the option to set the photo size.">
@@ -2051,17 +2051,10 @@ limitations under the License.
       the title of the confirmation dialog.">
     Allow access?
   </string>
-  <string name="settings_sharing_allow_access_summary_off"
+  <string name="settings_sharing_allow_access_summary"
     translation_description="In the 'Sharing' settings, the summary for the 'Allow access' checkbox
-      option when it is unchecked explaining that other apps cannot read, write, start/stop
-      recording My Tracks data.">
-    Other apps cannot read, write, start/stop recording My Tracks data.
-  </string>
-  <string name="settings_sharing_allow_access_summary_on"
-    translation_description="In the 'Sharing' settings, the summary for the 'Allow access' checkbox
-      option when it is checked explaining that other apps can read, write, start/stop recording My
-      Tracks data.">
-    Other apps can read, write, start/stop recording My Tracks data.
+      option.">
+    Let other apps read, write, start/stop recording My Tracks data
   </string>
 
   <!-- Settings Stats -->
