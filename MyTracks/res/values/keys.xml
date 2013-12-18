@@ -71,8 +71,6 @@ limitations under the License.
   <string name="weight_key">weight</string>
   <!-- Keys for non-persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
   <string name="settings_advanced_key">settingsAdvanced</string>
-  <string name="settings_backup_key">settingsBackup</string>
-  <string name="settings_backup_reset_key">settingsBackupReset</string>
   <string name="settings_chart_key">settingsChart</string>
   <string name="settings_google_key">settingsGoogle</string>
   <string name="settings_map_key">settingsMap</string>
@@ -81,7 +79,6 @@ limitations under the License.
   <string name="settings_map_slow_display_key">settingsMapSlowDisplay</string>
   <string name="settings_recording_key">settingsRecording</string>
   <string name="settings_reset_key">settingsReset</string>
-  <string name="settings_restore_key">settingsRestore</string>
   <string name="settings_sensor_key">settingsSensor</string>
   <string name="settings_sensor_ant_key">settingsSensorAnt</string>
   <string name="settings_sensor_ant_reset_bike_cadence_sensor_key">settingsSensorAntResetBikeCadenceSensor</string>

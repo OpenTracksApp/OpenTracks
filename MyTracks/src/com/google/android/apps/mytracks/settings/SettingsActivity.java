@@ -44,7 +44,6 @@ public class SettingsActivity extends AbstractSettingsActivity {
     configPreference(R.string.settings_stats_key, StatsSettingsActivity.class);
     configPreference(R.string.settings_recording_key, RecordingSettingsActivity.class);
     configPreference(R.string.settings_sensor_key, SensorSettingsActivity.class);
-    configPreference(R.string.settings_backup_reset_key, BackupResetSettingsActivity.class);
     configPreference(R.string.settings_advanced_key, AdvancedSettingsActivity.class);
   }
 

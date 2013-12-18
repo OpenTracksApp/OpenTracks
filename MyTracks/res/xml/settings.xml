@@ -41,10 +41,6 @@ limitations under the License.
     android:persistent="false"
     android:title="@string/settings_sensor" />
   <Preference
-    android:key="@string/settings_backup_reset_key"
-    android:persistent="false"
-    android:title="@string/settings_backup_reset" />
-  <Preference
     android:key="@string/settings_advanced_key"
     android:persistent="false"
     android:title="@string/settings_advanced" />

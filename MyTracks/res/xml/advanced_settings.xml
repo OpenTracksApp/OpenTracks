@@ -26,4 +26,8 @@ limitations under the License.
     android:summaryOff="@string/settings_sharing_allow_access_summary"
     android:summaryOn="@string/settings_sharing_allow_access_summary"
     android:title="@string/settings_sharing_allow_access" />  
+  <Preference
+    android:key="@string/settings_reset_key"
+    android:persistent="false"
+    android:title="@string/settings_reset" />
 </PreferenceScreen>
