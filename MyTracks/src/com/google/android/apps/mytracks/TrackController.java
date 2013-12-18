@@ -120,11 +120,14 @@ public class TrackController {
     }
 
     handler.removeCallbacks(updateTotalTimeRunnable);
-    totalTime = isRecording ? getTotalTime() : 0L;
-    totalTimeTextView.setText(StringUtils.formatElapsedTimeWithHour(totalTime));
-    if (isRecording && !isPaused) {
-      totalTimeTimestamp = System.currentTimeMillis();
-      handler.postDelayed(updateTotalTimeRunnable, ONE_SECOND);
+    totalTimeTextView.setVisibility(isRecording ? View.VISIBLE : View.INVISIBLE);
+    if (isRecording) {
+      totalTime = getTotalTime();
+      totalTimeTextView.setText(StringUtils.formatElapsedTimeWithHour(totalTime));
+      if (!isPaused) {
+        totalTimeTimestamp = System.currentTimeMillis();
+        handler.postDelayed(updateTotalTimeRunnable, ONE_SECOND);
+      }
     }
   }
 
