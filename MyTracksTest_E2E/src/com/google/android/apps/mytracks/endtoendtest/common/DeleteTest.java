@@ -133,19 +133,11 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
 
     // Select 3 tracks.
     EndToEndTestUtils.SOLO.clickLongOnView(trackListView.get(0).getChildAt(0));
-    assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks.getString(
-        R.string.list_item_selected, 1)));
     EndToEndTestUtils.SOLO.clickOnView(trackListView.get(0).getChildAt(1));
-    assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks.getString(
-        R.string.list_item_selected, 2)));
     EndToEndTestUtils.SOLO.clickOnView(trackListView.get(0).getChildAt(2));
-    assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks.getString(
-        R.string.list_item_selected, 3)));
 
     // Deselect the first one.
     EndToEndTestUtils.SOLO.clickOnView(trackListView.get(0).getChildAt(0));
-    assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks.getString(
-        R.string.list_item_selected, 2)));
 
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete), true);
     EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_yes), true,

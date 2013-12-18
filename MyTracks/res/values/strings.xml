@@ -1021,13 +1021,6 @@ limitations under the License.
     Imported %1$s from %2$s.
   </string>
 
-  <!-- List item -->
-  <string name="list_item_selected"
-    translation_description="Title indicating the number of items selected in a list.
-      %1$d an integer value. E.g., '2'.">
-    %1$d selected
-  </string>
-
   <!-- Marker -->
   <string name="marker_add_error"
     translation_description="When adding a marker, the message indicating error due to no GPS

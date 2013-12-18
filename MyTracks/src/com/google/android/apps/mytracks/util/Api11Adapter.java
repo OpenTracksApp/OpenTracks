@@ -69,7 +69,6 @@ public class Api11Adapter extends Api10Adapter {
         @Override
       public boolean onCreateActionMode(ActionMode mode, Menu menu) {
         mode.getMenuInflater().inflate(R.menu.list_context_menu, menu);
-        setActionModeTitle(mode);
         return true;
       }
 
@@ -88,7 +87,6 @@ public class Api11Adapter extends Api10Adapter {
         @Override
       public void onItemCheckedStateChanged(
           ActionMode mode, int position, long id, boolean checked) {
-        setActionModeTitle(mode);
         mode.invalidate();
       }
 
@@ -99,18 +97,8 @@ public class Api11Adapter extends Api10Adapter {
           mode.finish();
         }
         return true;
-      }
-        
-      /**
-       * Sets the action mode title
-       * 
-       * @param mode action mode
-       */
-      private void setActionModeTitle(ActionMode mode) {
-        int count = listView.getCheckedItemCount();
-        mode.setTitle(activity.getString(R.string.list_item_selected, count));
-      }
-      
+      }       
+     
       /**
        * Gets the checked positions in a list view.
        * 
