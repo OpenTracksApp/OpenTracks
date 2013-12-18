@@ -20,10 +20,8 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
 import com.google.android.apps.mytracks.fragments.MarkerDetailFragment;
-import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.maps.mytracks.R;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -97,14 +95,6 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity implements De
   @Override
   protected int getLayoutResId() {
     return R.layout.marker_detail_activity;
-  }
-
-  @Override
-  protected void onHomeSelected() {
-    Intent intent = IntentUtils.newIntent(this, MarkerListActivity.class)
-        .putExtra(MarkerListActivity.EXTRA_TRACK_ID, waypoint.getTrackId());
-    startActivity(intent);
-    finish();
   }
 
   @Override
