@@ -35,6 +35,8 @@ public abstract class AbstractMyTracksActivity extends FragmentActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
+    // Set volume control stream for text to speech
     setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
 
     // Hide title must be before setContentView
@@ -51,16 +53,16 @@ public abstract class AbstractMyTracksActivity extends FragmentActivity {
   }
 
   /**
-   * Gets the layout resource id.
-   */
-  protected abstract int getLayoutResId();
-
-  /**
    * Returns true to hide the title. Be default, do not hide the title.
    */
   protected boolean hideTitle() {
     return false;
   }
+
+  /**
+   * Gets the layout resource id.
+   */
+  protected abstract int getLayoutResId();
 
   /**
    * Returns true to configure the action bar home button as the up button.
@@ -69,25 +71,31 @@ public abstract class AbstractMyTracksActivity extends FragmentActivity {
     return true;
   }
 
-  /**
-   * Callback when the home menu item is selected.
-   */
-  protected void onHomeSelected() {
-    finish();
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+
+    // Set menu icon color
+    TrackIconUtils.setMenuIconColor(menu);
+
+    return super.onCreateOptionsMenu(menu);
   }
 
   @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    TrackIconUtils.setMenuIconColor(menu);
-    return super.onCreateOptionsMenu(menu);
-  }
-  
-  @Override
   public boolean onOptionsItemSelected(MenuItem item) {
+
+    // Handle home menu item, up navigation
     if (item.getItemId() == android.R.id.home) {
       onHomeSelected();
       return true;
     }
     return super.onOptionsItemSelected(item);
+  }
+
+  /**
+   * Callback when the home menu item is selected. E.g., setup the back stack
+   * when home is selected.
+   */
+  protected void onHomeSelected() {
+    finish();
   }
 }

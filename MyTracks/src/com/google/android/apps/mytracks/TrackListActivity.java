@@ -19,7 +19,6 @@ package com.google.android.apps.mytracks;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
-import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment;
 import com.google.android.apps.mytracks.fragments.EnableSyncDialogFragment;
 import com.google.android.apps.mytracks.fragments.EnableSyncDialogFragment.EnableSyncCaller;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment;
@@ -27,6 +26,7 @@ import com.google.android.apps.mytracks.fragments.EulaDialogFragment.EulaCaller;
 import com.google.android.apps.mytracks.fragments.FileTypeDialogFragment;
 import com.google.android.apps.mytracks.fragments.FileTypeDialogFragment.FileTypeCaller;
 import com.google.android.apps.mytracks.fragments.PlayMultipleDialogFragment;
+import com.google.android.apps.mytracks.fragments.PlayMultipleDialogFragment.PlayMultipleCaller;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.io.file.exporter.SaveActivity;
 import com.google.android.apps.mytracks.io.file.importer.ImportActivity;
@@ -92,7 +92,7 @@ import java.util.Locale;
  * @author Leif Hendrik Wilden
  */
 public class TrackListActivity extends AbstractSendToGoogleActivity
-    implements EulaCaller, EnableSyncCaller, FileTypeCaller {
+    implements EulaCaller, EnableSyncCaller, FileTypeCaller, PlayMultipleCaller {
 
   private static final String TAG = TrackListActivity.class.getSimpleName();
   private static final String[] PROJECTION = new String[] { TracksColumns._ID, TracksColumns.NAME,
@@ -565,8 +565,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
             .show(getSupportFragmentManager(), FileTypeDialogFragment.FILE_TYPE_DIALOG_TAG);
         return true;
       case R.id.track_list_delete_all:
-        ConfirmDeleteDialogFragment.newInstance(new long[] {-1L})
-            .show(getSupportFragmentManager(), ConfirmDeleteDialogFragment.CONFIRM_DELETE_DIALOG_TAG);
+        deleteTracks(new long[] {-1L});
         return true;
       case R.id.track_list_settings:
         intent = IntentUtils.newIntent(this, SettingsActivity.class);
@@ -790,7 +789,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   private boolean handleContextItem(int itemId, long[] trackIds) {
     switch (itemId) {
       case R.id.list_context_menu_play:
-        playTrack(trackIds);
+        playTracks(trackIds);
         return true;
       case R.id.list_context_menu_share:
         shareTrack(trackIds[0]);
@@ -804,8 +803,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         if (trackIds.length > 1 && trackIds.length == listView.getCount()) {
           trackIds = new long[] {-1L};
         }
-        ConfirmDeleteDialogFragment.newInstance(trackIds)
-            .show(getSupportFragmentManager(), ConfirmDeleteDialogFragment.CONFIRM_DELETE_DIALOG_TAG);
+        deleteTracks(trackIds);
         return true;
       case R.id.list_context_menu_select_all:
         int size = listView.getCount();
@@ -816,5 +814,10 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
       default:
         return false;
     }
+  }
+  
+  @Override
+  public void onPlayMultipleDone(long[] trackIds) {
+    playTracks(trackIds);
   }
 }

@@ -25,13 +25,13 @@ import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.fragments.ChartFragment;
 import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller;
-import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment;
 import com.google.android.apps.mytracks.fragments.ExportDialogFragment;
 import com.google.android.apps.mytracks.fragments.ExportDialogFragment.ExportCaller;
 import com.google.android.apps.mytracks.fragments.ExportDialogFragment.ExportType;
 import com.google.android.apps.mytracks.fragments.FrequencyDialogFragment;
 import com.google.android.apps.mytracks.fragments.MyTracksMapFragment;
 import com.google.android.apps.mytracks.fragments.PlayMultipleDialogFragment;
+import com.google.android.apps.mytracks.fragments.PlayMultipleDialogFragment.PlayMultipleCaller;
 import com.google.android.apps.mytracks.fragments.StatsFragment;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.io.file.exporter.SaveActivity;
@@ -82,7 +82,7 @@ import java.util.Date;
  * @author Rodrigo Damazio
  */
 public class TrackDetailActivity extends AbstractSendToGoogleActivity
-    implements ChooseActivityTypeCaller, ExportCaller {
+    implements ChooseActivityTypeCaller, ExportCaller, PlayMultipleCaller {
 
   public static final String EXTRA_TRACK_ID = "track_id";
   public static final String EXTRA_MARKER_ID = "marker_id";
@@ -415,7 +415,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
         startActivityForResult(intent, CAMERA_REQUEST_CODE);
         return true;
       case R.id.track_detail_play:
-        playTrack(new long[] {trackId});
+        playTracks(new long[] {trackId});
         return true;
       case R.id.track_detail_share:
         shareTrack(trackId);
@@ -451,8 +451,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
         startActivity(intent);
         return true;
       case R.id.track_detail_delete:
-        ConfirmDeleteDialogFragment.newInstance(new long[] { trackId })
-            .show(getSupportFragmentManager(), ConfirmDeleteDialogFragment.CONFIRM_DELETE_DIALOG_TAG);
+        deleteTracks(new long[] { trackId });
         return true;
       case R.id.track_detail_sensor_state:
         intent = IntentUtils.newIntent(this, SensorStateActivity.class);
@@ -648,5 +647,10 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
       String message = getString(R.string.stats_calorie_no_calculation, category);
       Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
+  }
+  
+  @Override
+  public void onPlayMultipleDone(long[] trackIds) {
+    playTracks(trackIds);
   }
 }

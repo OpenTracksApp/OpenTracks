@@ -23,7 +23,6 @@ import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment.Co
 import com.google.android.apps.mytracks.fragments.ConfirmSyncDialogFragment;
 import com.google.android.apps.mytracks.fragments.ConfirmSyncDialogFragment.ConfirmSyncCaller;
 import com.google.android.apps.mytracks.fragments.InstallEarthDialogFragment;
-import com.google.android.apps.mytracks.fragments.PlayMultipleDialogFragment.PlayMultipleCaller;
 import com.google.android.apps.mytracks.fragments.ShareTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.ShareTrackDialogFragment.ShareTrackCaller;
 import com.google.android.apps.mytracks.io.drive.SendDriveActivity;
@@ -64,13 +63,19 @@ import android.widget.Toast;
 import java.io.IOException;
 
 /**
- * An abstract class for sending a track to Google services.
+ * An abstract class for the following common tasks across
+ * {@link TrackListActivity}, {@link TrackDetailActivity}, and
+ * {@link SearchListActivity}:
+ * <p>
+ * - share track <br>
+ * - delete track <br>
+ * - play track <br>
  * 
  * @author Jimmy Shih
  */
 public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActivity implements
     ChooseAccountCaller, ConfirmSyncCaller, CheckPermissionCaller, ShareTrackCaller,
-    ConfirmDeleteCaller, PlayMultipleCaller {
+    ConfirmDeleteCaller {
 
   private static final String TAG = AbstractMyTracksActivity.class.getSimpleName();
   private static final String SEND_REQUEST_KEY = "send_request_key";
@@ -371,7 +376,12 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
     startActivity(intent);
   }
 
-  protected void deleteTrack(long[] trackIds) {
+  /**
+   * Delete tracks.
+   * 
+   * @param trackIds the track ids
+   */
+  protected void deleteTracks(long[] trackIds) {
     ConfirmDeleteDialogFragment.newInstance(trackIds)
         .show(getSupportFragmentManager(), ConfirmDeleteDialogFragment.CONFIRM_DELETE_DIALOG_TAG);
   }
@@ -399,16 +409,23 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
     startActivityForResult(intent, DELETE_REQUEST_CODE);
   }
 
+  /**
+   * Gets the track recording service connection. For stopping the current
+   * recording if need to delete the current recording track.
+   */
   abstract protected TrackRecordingServiceConnection getTrackRecordingServiceConnection();
 
+  /**
+   * Called after {@link DeleteActivity} returns its result.
+   */
   abstract protected void onDeleted();
 
   /**
-   * Play track in Google Earth.
+   * Play tracks in Google Earth.
    * 
    * @param trackIds the track ids
    */
-  protected void playTrack(long[] trackIds) {
+  protected void playTracks(long[] trackIds) {
     AnalyticsUtils.sendPageViews(this, AnalyticsUtils.ACTION_PLAY);
     if (GoogleEarthUtils.isEarthInstalled(this)) {
       Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
@@ -420,10 +437,5 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
       new InstallEarthDialogFragment().show(
           getSupportFragmentManager(), InstallEarthDialogFragment.INSTALL_EARTH_DIALOG_TAG);
     }
-  }
-
-  @Override
-  public void onPlayMultipleDone(long[] trackIds) {
-    playTrack(trackIds);
   }
 }

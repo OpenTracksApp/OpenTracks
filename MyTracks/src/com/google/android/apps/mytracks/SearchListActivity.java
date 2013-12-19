@@ -24,7 +24,6 @@ import com.google.android.apps.mytracks.content.SearchEngineProvider;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
-import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteMarkerDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
 import com.google.android.apps.mytracks.services.MyTracksLocationManager;
@@ -348,7 +347,7 @@ public class SearchListActivity extends AbstractSendToGoogleActivity implements 
     Intent intent;
     switch (itemId) {
       case R.id.list_context_menu_play:
-        playTrack(new long[] {trackId});
+        playTracks(new long[] {trackId});
         return true;
       case R.id.list_context_menu_share:
         shareTrack(trackId);
@@ -376,8 +375,7 @@ public class SearchListActivity extends AbstractSendToGoogleActivity implements 
           DeleteMarkerDialogFragment.newInstance(new long[] { markerId }).show(
               getSupportFragmentManager(), DeleteMarkerDialogFragment.DELETE_MARKER_DIALOG_TAG);
         } else {
-          ConfirmDeleteDialogFragment.newInstance(new long[] { trackId })
-              .show(getSupportFragmentManager(), ConfirmDeleteDialogFragment.CONFIRM_DELETE_DIALOG_TAG);
+          deleteTracks(new long[] { trackId });
         }
         return true;
       default:
