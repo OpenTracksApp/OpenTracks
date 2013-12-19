@@ -307,7 +307,9 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   // Menu items
   private MenuItem searchMenuItem;
   private MenuItem startGpsMenuItem;
+  private MenuItem playMultipleItem;
   private MenuItem syncNowMenuItem;
+  private MenuItem aggregatedStatisticsMenuItem;
   private MenuItem exportAllMenuItem;
   private MenuItem importAllMenuItem;
   private MenuItem deleteAllMenuItem;
@@ -469,7 +471,9 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     ApiAdapterFactory.getApiAdapter().configureSearchWidget(this, searchMenuItem, trackController);
 
     startGpsMenuItem = menu.findItem(R.id.track_list_start_gps);
+    playMultipleItem = menu.findItem(R.id.track_list_play_mutliple);
     syncNowMenuItem = menu.findItem(R.id.track_list_sync_now);
+    aggregatedStatisticsMenuItem = menu.findItem(R.id.track_list_aggregated_statistics);
     exportAllMenuItem = menu.findItem(R.id.track_list_export_all);
     importAllMenuItem = menu.findItem(R.id.track_list_import_all);
     deleteAllMenuItem = menu.findItem(R.id.track_list_delete_all);
@@ -730,6 +734,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
    * @param isRecording true if recording
    */
   private void updateMenuItems(boolean isGpsStarted, boolean isRecording) {
+    boolean hasTrack = listView != null && listView.getCount() != 0;
     if (startGpsMenuItem != null) {
       startGpsMenuItem.setVisible(!isRecording);
       if (!isRecording) {
@@ -739,17 +744,23 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         TrackIconUtils.setMenuIconColor(startGpsMenuItem);        
       }
     }
+    if (playMultipleItem != null) {
+      playMultipleItem.setVisible(hasTrack);
+    }
     if (syncNowMenuItem != null) {
       syncNowMenuItem.setTitle(driveSync ? R.string.menu_sync_now : R.string.menu_sync_drive);
     }
+    if (aggregatedStatisticsMenuItem != null) {
+      aggregatedStatisticsMenuItem.setVisible(hasTrack);
+    }
     if (exportAllMenuItem != null) {
-      exportAllMenuItem.setVisible(!isRecording);
+      exportAllMenuItem.setVisible(hasTrack && !isRecording);
     }
     if (importAllMenuItem != null) {
       importAllMenuItem.setVisible(!isRecording);
     }
     if (deleteAllMenuItem != null) {
-      deleteAllMenuItem.setVisible(!isRecording);
+      deleteAllMenuItem.setVisible(hasTrack && !isRecording);
     }
   }
   

@@ -632,16 +632,6 @@ limitations under the License.
       %2$s the directory. E.g., '/MyTracks/kml'.">
     Exported %1$d of %2$s to %3$s.
   </string>
-  <string name="export_external_storage_no_track"
-    translation_description="When exporting tracks to the external storage, the message in the
-      result dialog when there is no tracks to export.">
-    There is no tracks to export.
-  </string>
-  <string name="export_external_storage_no_track_title"
-    translation_description="When exporting tracks to the external storage, the title in the result
-      dialog when there is no tracks to export.">
-    Export tracks
-  </string>
   <string name="export_external_storage_option"
     translation_description="When exporting a track to the external storage, the option to export as
       a certain file format.

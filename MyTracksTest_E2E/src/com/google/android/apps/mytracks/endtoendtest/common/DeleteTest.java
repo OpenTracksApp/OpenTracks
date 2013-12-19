@@ -71,17 +71,6 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
     // There is no track now.
     trackListView = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class);
     assertEquals(0, trackListView.get(0).getCount());
-    // Export when there is no track.
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_export_all), true);
-    EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.GPX.toUpperCase());
-    EndToEndTestUtils
-        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
-    EndToEndTestUtils.waitTextToDisappear(activityMyTracks
-        .getString(R.string.generic_progress_title));
-    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.export_external_storage_no_track)));
-    EndToEndTestUtils
-        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
   }
 
   /**
