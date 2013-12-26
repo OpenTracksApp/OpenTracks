@@ -68,6 +68,7 @@ limitations under the License.
   <string name="google_account_key">googleAccount</string>
   <string name="recording_track_id_key">recordingTrackId</string>
   <string name="recording_track_paused_key">recordingTrackPaused</string>
+  <string name="share_track_account_key">shareTrackAccountKey</string>
   <string name="weight_key">weight</string>
   <!-- Keys for non-persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
   <string name="settings_advanced_key">settingsAdvanced</string>

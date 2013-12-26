@@ -365,7 +365,8 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
             continue;
           }
           // If not successful, the next sync will retry again
-          SyncUtils.insertDriveFile(drive, folderId, context, myTracksProviderUtils, track, true);
+          SyncUtils.insertDriveFile(
+              drive, folderId, context, myTracksProviderUtils, track, true, true);
         } while (cursor.moveToNext());
       }
     } finally {

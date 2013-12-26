@@ -97,6 +97,7 @@ public class PreferencesUtils {
   public static final String SENSOR_TYPE_DEFAULT = "NONE";
 
   // Share track
+  public static final String SHARE_TRACK_ACCOUNT_DEFAULT = "";
   public static final boolean SHARE_TRACK_INVITE_DEFAULT = false;
   public static final boolean SHARE_TRACK_PUBLIC_DEFAULT = false;
 

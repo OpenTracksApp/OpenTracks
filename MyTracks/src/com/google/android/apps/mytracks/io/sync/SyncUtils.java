@@ -298,10 +298,11 @@ public class SyncUtils {
    * @param myTracksProviderUtils the myTracksProviderUtils
    * @param track the track
    * @param canRetry true if can retry
+   * @param updateTrack true to update track
    * @return the added drive file or null.
    */
   public static File insertDriveFile(Drive drive, String folderId, Context context,
-      MyTracksProviderUtils myTracksProviderUtils, Track track, boolean canRetry)
+      MyTracksProviderUtils myTracksProviderUtils, Track track, boolean canRetry, boolean updateTrack)
       throws IOException {
     java.io.File file = null;
     try {
@@ -318,7 +319,9 @@ public class SyncUtils {
         Log.e(TAG, "Unable to add Drive file. Uploaded file is null for track " + track.getName());
         return null;
       }
-      SyncUtils.updateTrack(myTracksProviderUtils, track, uploadedFile);
+      if (updateTrack) {
+        SyncUtils.updateTrack(myTracksProviderUtils, track, uploadedFile);
+      }
       return uploadedFile;
     } finally {
       if (file != null) {

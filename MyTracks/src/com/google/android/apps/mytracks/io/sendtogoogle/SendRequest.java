@@ -38,9 +38,8 @@ public class SendRequest implements Parcelable {
 
   private boolean driveSync = false; // to enable Drive sync 
   private boolean driveSyncConfirm = false;
-  private boolean driveShare = false; // to enable Drive share
-  private String driveShareEmails = null; // for driveShare, emails to share
   private boolean driveSharePublic = false; // for driveShare, share as public
+  private String driveShareEmails = null; // for driveShare, emails to share
 
   private Account account = null;
 
@@ -111,28 +110,20 @@ public class SendRequest implements Parcelable {
     this.driveSyncConfirm = driveSyncConfirm;
   }
 
-  public boolean isDriveShare() {
-    return driveShare;
-  }
-
-  public void setDriveShare(boolean driveShare) {
-    this.driveShare = driveShare;
-  }
-
-  public String getDriveShareEmails() {
-    return driveShareEmails;
-  }
-
-  public void setDriveShareEmails(String driveShareEmails) {
-    this.driveShareEmails = driveShareEmails;
-  }
-
   public boolean isDriveSharePublic() {
     return driveSharePublic;
   }
 
   public void setDriveSharePublic(boolean driveSharePublic) {
     this.driveSharePublic = driveSharePublic;
+  }
+  
+  public String getDriveShareEmails() {
+    return driveShareEmails;
+  }
+
+  public void setDriveShareEmails(String driveShareEmails) {
+    this.driveShareEmails = driveShareEmails;
   }
 
   public Account getAccount() {
@@ -191,9 +182,8 @@ public class SendRequest implements Parcelable {
     sendSpreadsheets = in.readByte() == 1;
     driveSync = in.readByte() == 1;
     driveSyncConfirm = in.readByte() == 1;
-    driveShare = in.readByte() == 1;
-    driveShareEmails = in.readString();
     driveSharePublic = in.readByte() == 1;
+    driveShareEmails = in.readString();
     account = in.readParcelable(null);
     driveSuccess = in.readByte() == 1;
     mapsSuccess = in.readByte() == 1;
@@ -216,9 +206,8 @@ public class SendRequest implements Parcelable {
     out.writeByte((byte) (sendSpreadsheets ? 1 : 0));
     out.writeByte((byte) (driveSync ? 1 : 0));
     out.writeByte((byte) (driveSyncConfirm ? 1 : 0));
-    out.writeByte((byte) (driveShare ? 1 : 0));
-    out.writeString(driveShareEmails);
     out.writeByte((byte) (driveSharePublic ? 1 : 0));
+    out.writeString(driveShareEmails);
     out.writeParcelable(account, 0);
     out.writeByte((byte) (driveSuccess ? 1 : 0));
     out.writeByte((byte) (mapsSuccess ? 1 : 0));

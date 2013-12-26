@@ -158,11 +158,18 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
    */
   protected void shareTrack(long trackId) {
     AnalyticsUtils.sendPageViews(this, AnalyticsUtils.ACTION_SHARE_DRIVE);
-    SendRequest newRequest;
-    newRequest = new SendRequest(trackId);
-    newRequest.setSendDrive(true);
-    newRequest.setDriveShare(true);
-    sendToGoogle(newRequest);
+    sendRequest = new SendRequest(trackId);
+    sendRequest.setSendDrive(true);
+    ShareTrackDialogFragment.newInstance(sendRequest.getTrackId())
+        .show(getSupportFragmentManager(), ShareTrackDialogFragment.SHARE_TRACK_DIALOG_TAG);
+  }
+
+  @Override
+  public void onShareTrackDone(boolean makePublic, String emails, Account account) {
+    sendRequest.setDriveSharePublic(makePublic);
+    sendRequest.setDriveShareEmails(emails);
+    sendRequest.setAccount(account);
+    onConfirmSyncDone(true);
   }
 
   /**
@@ -312,8 +319,6 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
    * <p>
    * isSendDrive and isDriveEnableSync -> enable sync
    * <p>
-   * isSendDrive and isDriveShare -> show {@link ShareTrackDialogFragment}
-   * <p>
    * isSendDrive -> start {@link SendDriveActivity}
    * <p>
    * isSendMaps -> start {@link SendMapsActivity}
@@ -339,10 +344,6 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
         // Enable sync for account
         SyncUtils.enableSync(sendRequest.getAccount());
         return;
-      } else if (sendRequest.isDriveShare()) {
-        ShareTrackDialogFragment.newInstance(sendRequest.getTrackId())
-            .show(getSupportFragmentManager(), ShareTrackDialogFragment.SHARE_TRACK_DIALOG_TAG);
-        return;
       } else {
         next = SendDriveActivity.class;
       }
@@ -367,15 +368,6 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
     Toast.makeText(this, R.string.send_google_no_account_permission, Toast.LENGTH_LONG).show();
   }
   
-  @Override
-  public void onShareTrackDone(String emails, boolean makePublic) {
-    sendRequest.setDriveShareEmails(emails);
-    sendRequest.setDriveSharePublic(makePublic);
-    Intent intent = IntentUtils.newIntent(this, SendDriveActivity.class)
-        .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
-    startActivity(intent);
-  }
-
   /**
    * Delete tracks.
    * 

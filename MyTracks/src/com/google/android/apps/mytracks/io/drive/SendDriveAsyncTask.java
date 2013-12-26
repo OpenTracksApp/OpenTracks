@@ -21,8 +21,10 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.io.sendtogoogle.AbstractSendAsyncTask;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.UserRecoverableAuthException;
+import com.google.android.maps.mytracks.R;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.services.drive.Drive;
@@ -88,7 +90,10 @@ public class SendDriveAsyncTask extends AbstractSendAsyncTask {
 
       Track track = myTracksProviderUtils.getTrack(trackId);
       String driveId = track.getDriveId();
-      if (driveId != null && !driveId.equals("")) {
+      String syncAccount = PreferencesUtils.getString(
+          context, R.string.google_account_key, PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
+      boolean sameAccount = account.name.equals(syncAccount);
+      if (sameAccount && driveId != null && !driveId.equals("")) {
         File driveFile = drive.files().get(driveId).execute();
         if (driveFile != null && updateDriveFile(drive, driveFile, folderId, track)) {
           addPermission(drive, driveFile);
@@ -101,7 +106,7 @@ public class SendDriveAsyncTask extends AbstractSendAsyncTask {
 
       // insert new drive file
       File file = SyncUtils.insertDriveFile(
-          drive, folderId, context, myTracksProviderUtils, track, false);
+          drive, folderId, context, myTracksProviderUtils, track, false, sameAccount);
       if (file == null) {
         return false;
       }
