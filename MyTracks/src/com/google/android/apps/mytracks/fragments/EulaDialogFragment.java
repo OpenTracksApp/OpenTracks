@@ -24,7 +24,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
@@ -71,7 +70,6 @@ public class EulaDialogFragment extends AbstractMyTracksDialogFragment {
   }
 
   private EulaCaller caller;
-  private FragmentActivity fragmentActivity;
 
   @Override
   public void onAttach(Activity activity) {
@@ -86,14 +84,12 @@ public class EulaDialogFragment extends AbstractMyTracksDialogFragment {
 
   @Override
   protected Dialog createDialog() {
-    fragmentActivity = getActivity();
-
     boolean hasAccepted = getArguments().getBoolean(KEY_HAS_ACCEPTED);
 
     SpannableString message = new SpannableString(getEulaText());
     Linkify.addLinks(message, Linkify.WEB_URLS);
 
-    AlertDialog.Builder builder = new AlertDialog.Builder(fragmentActivity).setMessage(message)
+    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()).setMessage(message)
         .setTitle(R.string.eula_title);
 
     if (hasAccepted) {
@@ -115,7 +111,7 @@ public class EulaDialogFragment extends AbstractMyTracksDialogFragment {
       }).setPositiveButton(R.string.eula_accept, new DialogInterface.OnClickListener() {
           @Override
         public void onClick(DialogInterface dialog, int which) {
-          EulaUtils.setAcceptEula(fragmentActivity);
+          EulaUtils.setAcceptEula(getActivity());
           caller.onEulaDone();
         }
       });
@@ -128,7 +124,7 @@ public class EulaDialogFragment extends AbstractMyTracksDialogFragment {
     super.onStart();   
     TextView textView = (TextView) getDialog().findViewById(android.R.id.message);
     textView.setMovementMethod(LinkMovementMethod.getInstance());
-    textView.setTextAppearance(fragmentActivity, R.style.TextSmall);
+    textView.setTextAppearance(getActivity(), R.style.TextSmall);
   }
   
   @Override

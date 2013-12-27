@@ -53,7 +53,6 @@ public class ChooseAccountDialogFragment extends AbstractMyTracksDialogFragment 
   public static final String CHOOSE_ACCOUNT_DIALOG_TAG = "chooseAccount";
 
   private ChooseAccountCaller caller;
-  private FragmentActivity fragmentActivity;
   private Account[] accounts;
 
   @Override
@@ -70,7 +69,7 @@ public class ChooseAccountDialogFragment extends AbstractMyTracksDialogFragment 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    fragmentActivity = getActivity();
+    FragmentActivity fragmentActivity = getActivity();
     accounts = AccountManager.get(fragmentActivity).getAccountsByType(Constants.ACCOUNT_TYPE);
 
     if (accounts.length == 1) {
@@ -94,7 +93,7 @@ public class ChooseAccountDialogFragment extends AbstractMyTracksDialogFragment 
   @Override
   protected Dialog createDialog() {
     if (accounts.length == 0) {
-      return new AlertDialog.Builder(fragmentActivity).setMessage(
+      return new AlertDialog.Builder(getActivity()).setMessage(
           R.string.send_google_no_account_message).setTitle(R.string.send_google_no_account_title)
           .setPositiveButton(R.string.generic_ok, null).create();
     }
@@ -102,14 +101,14 @@ public class ChooseAccountDialogFragment extends AbstractMyTracksDialogFragment 
     for (int i = 0; i < accounts.length; i++) {
       choices[i] = accounts[i].name;
     }
-    return new AlertDialog.Builder(fragmentActivity).setNegativeButton(
+    return new AlertDialog.Builder(getActivity()).setNegativeButton(
         R.string.generic_cancel, null)
         .setPositiveButton(R.string.generic_ok, new OnClickListener() {
             @Override
           public void onClick(DialogInterface dialog, int which) {
             int position = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
             PreferencesUtils.setString(
-                fragmentActivity, R.string.google_account_key, accounts[position].name);
+                getActivity(), R.string.google_account_key, accounts[position].name);
             caller.onChooseAccountDone();
           }
         }).setSingleChoiceItems(choices, 0, null)

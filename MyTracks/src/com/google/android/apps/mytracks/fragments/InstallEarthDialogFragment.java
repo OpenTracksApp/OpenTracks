@@ -25,7 +25,6 @@ import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
 
 /**
@@ -37,12 +36,9 @@ public class InstallEarthDialogFragment extends AbstractMyTracksDialogFragment {
 
   public static final String INSTALL_EARTH_DIALOG_TAG = "installEarthDialog";
 
-  private FragmentActivity fragmentActivity;
-
   @Override
   protected Dialog createDialog() {
-    fragmentActivity = getActivity();
-    return new AlertDialog.Builder(fragmentActivity).setMessage(
+    return new AlertDialog.Builder(getActivity()).setMessage(
         R.string.track_detail_install_earth_message).setNegativeButton(R.string.generic_no, null)
         .setPositiveButton(R.string.generic_yes, new DialogInterface.OnClickListener() {
             @Override
@@ -53,7 +49,7 @@ public class InstallEarthDialogFragment extends AbstractMyTracksDialogFragment {
               startActivity(intent);
             } catch (ActivityNotFoundException e) {
               Toast.makeText(
-                  fragmentActivity, R.string.track_detail_install_earth_error, Toast.LENGTH_LONG)
+                  getActivity(), R.string.track_detail_install_earth_error, Toast.LENGTH_LONG)
                   .show();
             }
           }

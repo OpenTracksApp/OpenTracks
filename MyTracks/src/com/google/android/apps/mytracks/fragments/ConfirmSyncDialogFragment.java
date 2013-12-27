@@ -50,7 +50,6 @@ public class ConfirmSyncDialogFragment extends AbstractMyTracksDialogFragment {
   public static final String CONFIRM_SYNC_DIALOG_TAG = "confirmSyncDialog";
 
   private ConfirmSyncCaller caller;
-  private FragmentActivity fragmentActivity;
 
   @Override
   public void onAttach(Activity activity) {
@@ -66,9 +65,8 @@ public class ConfirmSyncDialogFragment extends AbstractMyTracksDialogFragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    fragmentActivity = getActivity();
     if (PreferencesUtils.getBoolean(
-        fragmentActivity, R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT)) {
+        getActivity(), R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT)) {
       dismiss();
       caller.onConfirmSyncDone(false);
       return;
@@ -77,6 +75,7 @@ public class ConfirmSyncDialogFragment extends AbstractMyTracksDialogFragment {
 
   @Override
   protected Dialog createDialog() {
+    FragmentActivity fragmentActivity = getActivity();
     String googleAccount = PreferencesUtils.getString(
         fragmentActivity, R.string.google_account_key, PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
     String message = getString(

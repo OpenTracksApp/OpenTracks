@@ -50,7 +50,6 @@ public class EnableSyncDialogFragment extends AbstractMyTracksDialogFragment {
   public static final String ENABLE_SYNC_DIALOG_TAG = "enableSyncDialog";
 
   private EnableSyncCaller caller;
-  private FragmentActivity fragmentActivity;
 
   @Override
   public void onAttach(Activity activity) {
@@ -66,9 +65,8 @@ public class EnableSyncDialogFragment extends AbstractMyTracksDialogFragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    fragmentActivity = getActivity();
     if (PreferencesUtils.getBoolean(
-        fragmentActivity, R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT)) {
+        getActivity(), R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT)) {
       dismiss();
       caller.onEnableSyncDone(false);
       return;
@@ -77,7 +75,7 @@ public class EnableSyncDialogFragment extends AbstractMyTracksDialogFragment {
 
   @Override
   protected Dialog createDialog() {
-    return new AlertDialog.Builder(fragmentActivity).setMessage(R.string.sync_drive_enable_message)
+    return new AlertDialog.Builder(getActivity()).setMessage(R.string.sync_drive_enable_message)
         .setNegativeButton(R.string.generic_no, new OnClickListener() {
             @Override
           public void onClick(DialogInterface dialog, int which) {

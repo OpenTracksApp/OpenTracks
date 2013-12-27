@@ -50,7 +50,6 @@ public class AboutDialogFragment extends AbstractMyTracksDialogFragment {
   public static final String ABOUT_DIALOG_TAG = "aboutDialog";
 
   private AboutCaller caller;
-  private FragmentActivity fragmentActivity;
 
   @Override
   public void onAttach(Activity activity) {
@@ -65,7 +64,7 @@ public class AboutDialogFragment extends AbstractMyTracksDialogFragment {
 
   @Override
   protected Dialog createDialog() {  
-    fragmentActivity = getActivity();
+    FragmentActivity fragmentActivity = getActivity();
     View view = fragmentActivity.getLayoutInflater().inflate(R.layout.about, null);
     TextView aboutVersion = (TextView) view.findViewById(R.id.about_version);
     aboutVersion.setText(SystemUtils.getMyTracksVersion(fragmentActivity));

@@ -50,35 +50,32 @@ public class FrequencyDialogFragment extends AbstractMyTracksDialogFragment {
     frequencyDialogFragment.setArguments(bundle);
     return frequencyDialogFragment;
   }
-
-  private FragmentActivity fragmentActivity; 
   
   @Override
   protected Dialog createDialog() {
-    fragmentActivity = getActivity();
+    FragmentActivity fragmentActivity = getActivity();
     
     final int preferenceId = getArguments().getInt(KEY_PREFERENCE_ID);
     int defaultValue = getArguments().getInt(KEY_DEFAULT_VALUE);
     int titleId = getArguments().getInt(KEY_TITLE_ID);
     int frequencyValue = PreferencesUtils.getInt(fragmentActivity, preferenceId, defaultValue);
 
-    return new AlertDialog.Builder(fragmentActivity)
-        .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
-          @Override
+    return new AlertDialog.Builder(fragmentActivity).setPositiveButton(
+        R.string.generic_ok, new DialogInterface.OnClickListener() {
+            @Override
           public void onClick(DialogInterface dialog, int which) {
             int listIndex = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-            PreferencesUtils.setInt(fragmentActivity, preferenceId, getFrequencyValue(listIndex));
+            PreferencesUtils.setInt(getActivity(), preferenceId, getFrequencyValue(listIndex));
           }
-        })
-        .setSingleChoiceItems(getFrequencyDisplayOptions(), getListIndex(frequencyValue), null)
-        .setTitle(titleId)
-        .create();
+        }).setSingleChoiceItems(
+        getFrequencyDisplayOptions(fragmentActivity), getListIndex(frequencyValue), null)
+        .setTitle(titleId).create();
   }
 
   /**
    * Gets the frequency display options.
    */
-  private String[] getFrequencyDisplayOptions() {
+  private String[] getFrequencyDisplayOptions(FragmentActivity fragmentActivity) {
     boolean metricUnits = PreferencesUtils.isMetricUnits(fragmentActivity);
     return StringUtils.getFrequencyOptions(fragmentActivity, metricUnits);
   }

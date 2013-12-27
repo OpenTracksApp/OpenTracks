@@ -64,7 +64,6 @@ public class ChooseActivityDialogFragment extends AbstractMyTracksDialogFragment
   public static final String CHOOSE_ACTIVITY_DIALOG_TAG = "chooseActivityDialog";
 
   private ChooseActivityCaller caller;
-  private FragmentActivity fragmentActivity;
   private PackageManager packageManager;
   
   @Override
@@ -80,9 +79,9 @@ public class ChooseActivityDialogFragment extends AbstractMyTracksDialogFragment
   
   @Override
   protected Dialog createDialog() {
-    fragmentActivity = getActivity();
+    FragmentActivity fragmentActivity = getActivity();
     packageManager = fragmentActivity.getPackageManager();
-    List<DisplayInfo> displayInfos = getDisplayInfos();
+    List<DisplayInfo> displayInfos = getDisplayInfos(fragmentActivity);
 
     ArrayAdapter<DisplayInfo> arrayAdapter = new ArrayAdapter<DisplayInfo>(fragmentActivity,
         R.layout.choose_activity_list_item, R.id.choose_activity_list_item_text1, displayInfos) {
@@ -90,7 +89,7 @@ public class ChooseActivityDialogFragment extends AbstractMyTracksDialogFragment
       public View getView(int position, View convertView, ViewGroup parent) {
         View view;
         if (convertView == null) {
-          view = fragmentActivity.getLayoutInflater()
+          view = getActivity().getLayoutInflater()
               .inflate(R.layout.choose_activity_list_item, parent, false);
         } else {
           view = convertView;
@@ -134,7 +133,7 @@ public class ChooseActivityDialogFragment extends AbstractMyTracksDialogFragment
   /**
    * Gets the display info.
    */
-  private List<DisplayInfo> getDisplayInfos() {
+  private List<DisplayInfo> getDisplayInfos(FragmentActivity fragmentActivity) {
     List<DisplayInfo> displayInfos = new ArrayList<DisplayInfo>();
     Intent intent = ShareCompat.IntentBuilder.from(fragmentActivity)
         .setType(IntentUtils.TEXT_PLAIN_TYPE).getIntent();
