@@ -22,6 +22,7 @@ import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment;
 import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment.ConfirmDeleteCaller;
 import com.google.android.apps.mytracks.fragments.ConfirmSyncDialogFragment;
 import com.google.android.apps.mytracks.fragments.ConfirmSyncDialogFragment.ConfirmSyncCaller;
+import com.google.android.apps.mytracks.fragments.ExportDialogFragment.ExportType;
 import com.google.android.apps.mytracks.fragments.InstallEarthDialogFragment;
 import com.google.android.apps.mytracks.fragments.ShareTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.ShareTrackDialogFragment.ShareTrackCaller;
@@ -158,16 +159,41 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
    */
   protected void shareTrack(long trackId) {
     AnalyticsUtils.sendPageViews(this, AnalyticsUtils.ACTION_SHARE_DRIVE);
-    sendRequest = new SendRequest(trackId);
-    sendRequest.setSendDrive(true);
-    ShareTrackDialogFragment.newInstance(sendRequest.getTrackId())
+    ShareTrackDialogFragment.newInstance(trackId)
         .show(getSupportFragmentManager(), ShareTrackDialogFragment.SHARE_TRACK_DIALOG_TAG);
   }
 
   @Override
-  public void onShareTrackDone(boolean makePublic, String emails, Account account) {
+  public void onShareTrackDone(long trackId, boolean makePublic, String emails, Account account) {
+    sendRequest = new SendRequest(trackId);
+    sendRequest.setSendDrive(true);
     sendRequest.setDriveSharePublic(makePublic);
     sendRequest.setDriveShareEmails(emails);
+    sendRequest.setAccount(account);
+    onConfirmSyncDone(true);
+  }
+
+  protected void exportTrackToGoogle(long trackId, ExportType exportType, Account account) {
+    sendRequest = new SendRequest(trackId);
+    String pageView;
+    switch (exportType) {
+      case GOOGLE_DRIVE:
+        pageView = AnalyticsUtils.ACTION_EXPORT_DRIVE;
+        sendRequest.setSendDrive(true);
+        break;
+      case GOOGLE_MAPS:
+        pageView = AnalyticsUtils.ACTION_EXPORT_MAPS;
+        sendRequest.setSendMaps(true);
+        break;
+      case GOOGLE_FUSION_TABLES:
+        pageView = AnalyticsUtils.ACTION_EXPORT_FUSION_TABLES;
+        sendRequest.setSendFusionTables(true);
+        break;
+      default:
+        pageView = AnalyticsUtils.ACTION_EXPORT_SPREADSHEETS;
+        sendRequest.setSendSpreadsheets(true);
+    }
+    AnalyticsUtils.sendPageViews(this, pageView);
     sendRequest.setAccount(account);
     onConfirmSyncDone(true);
   }

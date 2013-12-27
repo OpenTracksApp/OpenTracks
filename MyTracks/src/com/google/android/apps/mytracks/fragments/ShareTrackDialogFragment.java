@@ -17,6 +17,7 @@
 package com.google.android.apps.mytracks.fragments;
 
 import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.util.AccountUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -33,7 +34,6 @@ import android.provider.ContactsContract;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -59,11 +59,12 @@ public class ShareTrackDialogFragment extends AbstractMyTracksDialogFragment {
     /**
      * Called when share track is done.
      * 
+     * @param trackId the track id
      * @param makePublic true to make the track public
      * @param emails the emails to share the track with
      * @param account the google drive account
      */
-    public void onShareTrackDone(boolean makePublic, String emails, Account account);
+    public void onShareTrackDone(long trackId, boolean makePublic, String emails, Account account);
   }
 
   public static final String SHARE_TRACK_DIALOG_TAG = "shareTrackDialog";
@@ -80,7 +81,6 @@ public class ShareTrackDialogFragment extends AbstractMyTracksDialogFragment {
   }
 
   private ShareTrackCaller caller;
-  private FragmentActivity fragmentActivity;
   private Account[] accounts;
 
   // UI elements
@@ -102,7 +102,7 @@ public class ShareTrackDialogFragment extends AbstractMyTracksDialogFragment {
 
   @Override
   protected Dialog createDialog() {
-    fragmentActivity = getActivity();
+    FragmentActivity fragmentActivity = getActivity();
     accounts = AccountManager.get(fragmentActivity).getAccountsByType(Constants.ACCOUNT_TYPE);
 
     if (accounts.length == 0) {
@@ -137,7 +137,7 @@ public class ShareTrackDialogFragment extends AbstractMyTracksDialogFragment {
     multiAutoCompleteTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 
     SimpleCursorAdapter adapter = new SimpleCursorAdapter(fragmentActivity,
-        R.layout.add_emails_item, getAutoCompleteCursor(null), new String[] {
+        R.layout.add_emails_item, getAutoCompleteCursor(fragmentActivity, null), new String[] {
             ContactsContract.Contacts.DISPLAY_NAME, ContactsContract.CommonDataKinds.Email.DATA },
         new int[] { android.R.id.text1, android.R.id.text2 }, 0);
     adapter.setCursorToStringConverter(new SimpleCursorAdapter.CursorToStringConverter() {
@@ -150,41 +150,41 @@ public class ShareTrackDialogFragment extends AbstractMyTracksDialogFragment {
     adapter.setFilterQueryProvider(new FilterQueryProvider() {
         @Override
       public Cursor runQuery(CharSequence constraint) {
-        return getAutoCompleteCursor(constraint);
+        return getAutoCompleteCursor(getActivity(), constraint);
       }
     });
     multiAutoCompleteTextView.setAdapter(adapter);
 
     // Setup accountSpinner
     accountSpinner = (Spinner) view.findViewById(R.id.share_track_account);
-    setupAccountSpinner(accountSpinner);
-
+    accountSpinner.setVisibility(accounts.length > 1 ? View.VISIBLE : View.GONE);
+    AccountUtils.setupAccountSpinner(fragmentActivity, accountSpinner, accounts);
+    
     return new AlertDialog.Builder(fragmentActivity).setNegativeButton(
         R.string.generic_cancel, null)
         .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
             @Override
           public void onClick(DialogInterface dialog, int which) {
+            FragmentActivity context = getActivity();
             if (!publicCheckBox.isChecked() && !inviteCheckBox.isChecked()) {
-              Toast.makeText(fragmentActivity, R.string.share_track_no_selection, Toast.LENGTH_LONG)
-                  .show();
+              Toast.makeText(context, R.string.share_track_no_selection, Toast.LENGTH_LONG).show();
               return;
             }
             String acl = multiAutoCompleteTextView.getText().toString().trim();
             if (!publicCheckBox.isChecked() && acl.equals("")) {
-              Toast.makeText(fragmentActivity, R.string.share_track_no_emails, Toast.LENGTH_LONG)
-                  .show();
+              Toast.makeText(context, R.string.share_track_no_emails, Toast.LENGTH_LONG).show();
               return;
             }
+            PreferencesUtils.setBoolean(
+                context, R.string.share_track_public_key, publicCheckBox.isChecked());
+            PreferencesUtils.setBoolean(
+                context, R.string.share_track_invite_key, inviteCheckBox.isChecked());
             Account account = accounts.length > 1 ? accounts[accountSpinner
                 .getSelectedItemPosition()]
                 : accounts[0];
-            PreferencesUtils.setBoolean(
-                fragmentActivity, R.string.share_track_public_key, publicCheckBox.isChecked());
-            PreferencesUtils.setBoolean(
-                fragmentActivity, R.string.share_track_invite_key, inviteCheckBox.isChecked());
-            PreferencesUtils.setString(
-                fragmentActivity, R.string.share_track_account_key, account.name);
-            caller.onShareTrackDone(publicCheckBox.isChecked(), acl, account);
+            AccountUtils.updateShareTrackAccountPreference(context, account);
+            caller.onShareTrackDone(
+                getArguments().getLong(KEY_TRACK_ID), publicCheckBox.isChecked(), acl, account);
           }
         }).setTitle(R.string.share_track_title).setView(view).create();
   }
@@ -194,7 +194,7 @@ public class ShareTrackDialogFragment extends AbstractMyTracksDialogFragment {
    * 
    * @param constraint the constraint
    */
-  private Cursor getAutoCompleteCursor(CharSequence constraint) {
+  private Cursor getAutoCompleteCursor(FragmentActivity fragmentActivity, CharSequence constraint) {
     String order = ContactsContract.Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC";
     String selection = ContactsContract.Contacts.IN_VISIBLE_GROUP + " = '1'";
     if (constraint != null) {
@@ -206,27 +206,5 @@ public class ShareTrackDialogFragment extends AbstractMyTracksDialogFragment {
         ContactsContract.Contacts.DISPLAY_NAME, ContactsContract.CommonDataKinds.Email.DATA };
     Uri uri = ContactsContract.CommonDataKinds.Email.CONTENT_URI;
     return fragmentActivity.getContentResolver().query(uri, projection, selection, null, order);
-  }
-
-  private void setupAccountSpinner(Spinner spinner) {
-    boolean hasMultiple = accounts.length > 1;
-    spinner.setVisibility(hasMultiple ? View.VISIBLE : View.GONE);
-    if (hasMultiple) {
-      String shareTrackAccount = PreferencesUtils.getString(fragmentActivity,
-          R.string.share_track_account_key, PreferencesUtils.SHARE_TRACK_ACCOUNT_DEFAULT);
-      ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
-          fragmentActivity, R.layout.account_spinner_item);
-      int selection = 0;
-      for (int i = 0; i < accounts.length; i++) {
-        String name = accounts[i].name;
-        adapter.add(name);
-        if (name.equals(shareTrackAccount)) {
-          selection = i;
-        }
-      }
-      adapter.setDropDownViewResource(R.layout.account_spinner_dropdown_item);
-      spinner.setAdapter(adapter);
-      spinner.setSelection(selection);
-    }
   }
 }
