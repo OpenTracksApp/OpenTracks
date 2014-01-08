@@ -197,7 +197,7 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
     sendRequest.setAccount(account);
     onConfirmSyncDone(true);
   }
-
+ 
   /**
    * Sends a request to Google.
    * 
@@ -210,7 +210,7 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
   }
 
   @Override
-  public void onChooseAccountDone() {
+  public void onChooseAccountDone(String account) {
     String googleAccount = PreferencesUtils.getString(
         this, R.string.google_account_key, PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
     if (googleAccount == null || googleAccount.equals(PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT)) {

@@ -46,8 +46,10 @@ public class ChooseAccountDialogFragment extends AbstractMyTracksDialogFragment 
 
     /**
      * Called when choose account is done.
+     * 
+     * @param account the account chosen
      */
-    public void onChooseAccountDone();
+    public void onChooseAccountDone(String account);
   }
 
   public static final String CHOOSE_ACCOUNT_DIALOG_TAG = "chooseAccount";
@@ -73,20 +75,9 @@ public class ChooseAccountDialogFragment extends AbstractMyTracksDialogFragment 
     accounts = AccountManager.get(fragmentActivity).getAccountsByType(Constants.ACCOUNT_TYPE);
 
     if (accounts.length == 1) {
-      PreferencesUtils.setString(fragmentActivity, R.string.google_account_key, accounts[0].name);
       dismiss();
-      caller.onChooseAccountDone();
+      caller.onChooseAccountDone(accounts[0].name);
       return;
-    }
-
-    String googleAccount = PreferencesUtils.getString(
-        fragmentActivity, R.string.google_account_key, PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
-    for (int i = 0; i < accounts.length; i++) {
-      if (accounts[i].name.equals(googleAccount)) {
-        dismiss();
-        caller.onChooseAccountDone();
-        return;
-      }
     }
   }
 
@@ -95,23 +86,38 @@ public class ChooseAccountDialogFragment extends AbstractMyTracksDialogFragment 
     if (accounts.length == 0) {
       return new AlertDialog.Builder(getActivity()).setMessage(
           R.string.send_google_no_account_message).setTitle(R.string.send_google_no_account_title)
-          .setPositiveButton(R.string.generic_ok, null).create();
+          .setPositiveButton(R.string.generic_ok, new OnClickListener() {
+
+              @Override
+            public void onClick(DialogInterface dialog, int which) {
+              caller.onChooseAccountDone(PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
+            }
+          }).create();
     }
     String[] choices = new String[accounts.length];
     for (int i = 0; i < accounts.length; i++) {
       choices[i] = accounts[i].name;
     }
     return new AlertDialog.Builder(getActivity()).setNegativeButton(
-        R.string.generic_cancel, null)
-        .setPositiveButton(R.string.generic_ok, new OnClickListener() {
+        R.string.generic_cancel, new OnClickListener() {
+
             @Override
           public void onClick(DialogInterface dialog, int which) {
-            int position = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-            PreferencesUtils.setString(
-                getActivity(), R.string.google_account_key, accounts[position].name);
-            caller.onChooseAccountDone();
+            caller.onChooseAccountDone(PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
+
           }
-        }).setSingleChoiceItems(choices, 0, null)
-        .setTitle(R.string.send_google_choose_account_title).create();
+        }).setPositiveButton(R.string.generic_ok, new OnClickListener() {
+        @Override
+      public void onClick(DialogInterface dialog, int which) {
+        int position = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+        caller.onChooseAccountDone(accounts[position].name);
+      }
+    }).setSingleChoiceItems(choices, 0, null).setTitle(R.string.send_google_choose_account_title)
+        .create();
+  }
+
+  @Override
+  public void onCancel(DialogInterface dialog) {
+    caller.onChooseAccountDone(PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
   }
 }

@@ -2129,12 +2129,13 @@ limitations under the License.
   </string>
   <string name="sync_drive_enable_message"
     translation_description="The dialog message to enable sync to Google Drive.">
-    This will allow you to view your tracks in Google Drive and view the tracks shared with you. All
-    tracks synced to Google Drive will be private by default.
+    Do you want to sync your tracks to Google Drive? This will allow you to view your tracks in
+    Google Drive and view the tracks shared with you. All tracks synced to Google Drive will be
+    private by default.
   </string>
   <string name="sync_drive_title"
     translation_description="The dialog title to sync to Google Drive.">
-    Sync with Google Drive?
+    Track Saved
   </string>
 
   <!-- Track -->

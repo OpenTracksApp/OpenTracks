@@ -16,7 +16,6 @@
 
 package com.google.android.apps.mytracks.fragments;
 
-import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -24,7 +23,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-import android.os.Bundle;
 
 /**
  * A DialogFrament to enable sync to Google Drive.
@@ -58,17 +56,6 @@ public class EnableSyncDialogFragment extends AbstractMyTracksDialogFragment {
     } catch (ClassCastException e) {
       throw new ClassCastException(
           activity.toString() + " must implement " + EnableSyncCaller.class.getSimpleName());
-    }
-  }
-
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    if (PreferencesUtils.getBoolean(
-        getActivity(), R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT)) {
-      dismiss();
-      caller.onEnableSyncDone(false);
-      return;
     }
   }
 

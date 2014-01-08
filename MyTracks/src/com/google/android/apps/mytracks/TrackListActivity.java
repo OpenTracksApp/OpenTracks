@@ -19,8 +19,6 @@ package com.google.android.apps.mytracks;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
-import com.google.android.apps.mytracks.fragments.EnableSyncDialogFragment;
-import com.google.android.apps.mytracks.fragments.EnableSyncDialogFragment.EnableSyncCaller;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment.EulaCaller;
 import com.google.android.apps.mytracks.fragments.FileTypeDialogFragment;
@@ -92,7 +90,7 @@ import java.util.Locale;
  * @author Leif Hendrik Wilden
  */
 public class TrackListActivity extends AbstractSendToGoogleActivity
-    implements EulaCaller, EnableSyncCaller, FileTypeCaller, PlayMultipleCaller {
+    implements EulaCaller, FileTypeCaller, PlayMultipleCaller {
 
   private static final String TAG = TrackListActivity.class.getSimpleName();
   private static final String[] PROJECTION = new String[] { TracksColumns._ID, TracksColumns.NAME,
@@ -700,29 +698,6 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         dialog.show();
         return;
       }
-    }
-    showEnableSync();
-  }
-
-  private void showEnableSync() {
-    if (EulaUtils.hasShowEnableSync(this)) {
-      Fragment fragment = getSupportFragmentManager()
-          .findFragmentByTag(EnableSyncDialogFragment.ENABLE_SYNC_DIALOG_TAG);
-      if (fragment == null) {
-        new EnableSyncDialogFragment().show(
-            getSupportFragmentManager(), EnableSyncDialogFragment.ENABLE_SYNC_DIALOG_TAG);
-      }
-    }
-  }
-
-  @Override
-  public void onEnableSyncDone(boolean enable) {
-    EulaUtils.setShowEnableSync(this);
-    if (enable) {
-      SendRequest sendRequest = new SendRequest(-1L);
-      sendRequest.setSendDrive(true);
-      sendRequest.setDriveSync(true);
-      sendToGoogle(sendRequest);
     }
   }
 
