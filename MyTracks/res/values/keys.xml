@@ -73,7 +73,6 @@ limitations under the License.
   <!-- Keys for non-persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
   <string name="settings_advanced_key">settingsAdvanced</string>
   <string name="settings_chart_key">settingsChart</string>
-  <string name="settings_google_key">settingsGoogle</string>
   <string name="settings_map_key">settingsMap</string>
   <string name="settings_map_medium_display_key">settingsMapMediumDisplay</string>
   <string name="settings_map_percentage_display_key">settingsMapPercentageDisplay</string>

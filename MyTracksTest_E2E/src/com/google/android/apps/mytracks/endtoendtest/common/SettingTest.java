@@ -18,7 +18,6 @@ package com.google.android.apps.mytracks.endtoendtest.common;
 import com.google.android.apps.mytracks.ChartView;
 import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.endtoendtest.EndToEndTestUtils;
-import com.google.android.apps.mytracks.endtoendtest.GoogleUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -363,48 +362,48 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
         PreferencesUtils.getString(context, R.string.track_color_mode_key, errorString));
   }
 
-  /**
-   * Tests the setting and menu item of sync.
-   */
-  public void testSyncNowMenu() {
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_google));
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
-        .getString(R.string.settings_google_account_title));
-
-    // Whether test account is bound.
-    if (EndToEndTestUtils.SOLO.waitForText(GoogleUtils.ACCOUNT_NAME_1, 1,
-        EndToEndTestUtils.TINY_WAIT_TIME)) {
-      EndToEndTestUtils.SOLO.clickOnText(GoogleUtils.ACCOUNT_NAME_1);
-      instrumentation.waitForIdleSync();
-      EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.menu_sync_drive));
-      assertTrue(EndToEndTestUtils.findTextView(
-          activityMyTracks.getString(R.string.menu_sync_drive)).isEnabled());
-    } else {
-      EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.value_none));
-      instrumentation.waitForIdleSync();
-      EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.menu_sync_drive));
-      assertFalse(EndToEndTestUtils.findTextView(
-          activityMyTracks.getString(R.string.menu_sync_drive)).isEnabled());
-      return;
-    }
-
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.menu_sync_drive));
-
-    boolean isSyncChecked = false;
-    if (EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.sync_drive_confirm_message).split("%")[0], 1,
-        EndToEndTestUtils.SHORT_WAIT_TIME)) {
-      isSyncChecked = true;
-    } else {
-      isSyncChecked = false;
-    }
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_yes));
-    EndToEndTestUtils.SOLO.goBack();
-    EndToEndTestUtils.SOLO.goBack();
-    assertEquals(isSyncChecked,
-        EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_sync_now), false));
-  }
+//  /**
+//   * Tests the setting and menu item of sync.
+//   */
+//  public void testSyncNowMenu() {
+//    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
+//    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_google));
+//    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
+//        .getString(R.string.settings_google_account_title));
+//
+//    // Whether test account is bound.
+//    if (EndToEndTestUtils.SOLO.waitForText(GoogleUtils.ACCOUNT_NAME_1, 1,
+//        EndToEndTestUtils.TINY_WAIT_TIME)) {
+//      EndToEndTestUtils.SOLO.clickOnText(GoogleUtils.ACCOUNT_NAME_1);
+//      instrumentation.waitForIdleSync();
+//      EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.menu_sync_drive));
+//      assertTrue(EndToEndTestUtils.findTextView(
+//          activityMyTracks.getString(R.string.menu_sync_drive)).isEnabled());
+//    } else {
+//      EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.value_none));
+//      instrumentation.waitForIdleSync();
+//      EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.menu_sync_drive));
+//      assertFalse(EndToEndTestUtils.findTextView(
+//          activityMyTracks.getString(R.string.menu_sync_drive)).isEnabled());
+//      return;
+//    }
+//
+//    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.menu_sync_drive));
+//
+//    boolean isSyncChecked = false;
+//    if (EndToEndTestUtils.SOLO.waitForText(
+//        activityMyTracks.getString(R.string.sync_drive_confirm_message).split("%")[0], 1,
+//        EndToEndTestUtils.SHORT_WAIT_TIME)) {
+//      isSyncChecked = true;
+//    } else {
+//      isSyncChecked = false;
+//    }
+//    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_yes));
+//    EndToEndTestUtils.SOLO.goBack();
+//    EndToEndTestUtils.SOLO.goBack();
+//    assertEquals(isSyncChecked,
+//        EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_sync_now), false));
+//  }
 
   @Override
   protected void tearDown() throws Exception {

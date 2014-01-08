@@ -15,7 +15,6 @@
  */
 package com.google.android.apps.mytracks.endtoendtest;
 
-import com.google.android.maps.mytracks.R;
 
 /**
  * Places all the test configuration in this class.
@@ -51,20 +50,21 @@ public class RunConfiguration {
    * @return true means can run sync tests in this device
    */
   public static boolean canRunSyncTest() {
-    EndToEndTestUtils.findMenuItem(
-        EndToEndTestUtils.activityMytracks.getString(R.string.menu_settings), true);
-    EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
-        .getString(R.string.settings_google));
-    EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
-        .getString(R.string.settings_google_account_title));
-    boolean canRunSyncE2ETest = EndToEndTestUtils.SOLO.waitForText(GoogleUtils.ACCOUNT_NAME_1, 1,
-        EndToEndTestUtils.SHORT_WAIT_TIME)
-        && EndToEndTestUtils.SOLO.waitForText(GoogleUtils.ACCOUNT_NAME_2, 1,
-            EndToEndTestUtils.TINY_WAIT_TIME);
-    EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
-        .getString(R.string.generic_cancel));
-    EndToEndTestUtils.SOLO.goBack();
-    EndToEndTestUtils.SOLO.goBack();
-    return canRunSyncE2ETest;
+    return true;
+//    EndToEndTestUtils.findMenuItem(
+//        EndToEndTestUtils.activityMytracks.getString(R.string.menu_settings), true);
+//    EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
+//        .getString(R.string.settings_google));
+//    EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
+//        .getString(R.string.settings_google_account_title));
+//    boolean canRunSyncE2ETest = EndToEndTestUtils.SOLO.waitForText(GoogleUtils.ACCOUNT_NAME_1, 1,
+//        EndToEndTestUtils.SHORT_WAIT_TIME)
+//        && EndToEndTestUtils.SOLO.waitForText(GoogleUtils.ACCOUNT_NAME_2, 1,
+//            EndToEndTestUtils.TINY_WAIT_TIME);
+//    EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
+//        .getString(R.string.generic_cancel));
+//    EndToEndTestUtils.SOLO.goBack();
+//    EndToEndTestUtils.SOLO.goBack();
+//    return canRunSyncE2ETest;
   }
 }

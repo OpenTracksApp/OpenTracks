@@ -34,7 +34,6 @@ import com.google.api.services.drive.model.File;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.util.Log;
-import android.widget.CheckBox;
 import android.widget.ListView;
 
 import java.io.BufferedReader;
@@ -174,50 +173,50 @@ public class SyncTestUtils {
    * @param accountName the account which is used to sync with
    */
   public static void enableSync(String accountName) {
-    EndToEndTestUtils.instrumentation.waitForIdleSync();
-    EndToEndTestUtils.findMenuItem(
-        EndToEndTestUtils.activityMytracks.getString(R.string.menu_settings), true);
-    EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
-        .getString(R.string.settings_google));
-    EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
-        .getString(R.string.settings_google_account_title));
-    EndToEndTestUtils.instrumentation.waitForIdleSync();
-
-    // Whether test account is bound.
-    if (EndToEndTestUtils.SOLO.waitForText(accountName, 1, EndToEndTestUtils.SHORT_WAIT_TIME)) {
-      EndToEndTestUtils.SOLO.clickOnText(accountName);
-      EndToEndTestUtils.instrumentation.waitForIdleSync();
-      
-      if (EndToEndTestUtils.findTextView(EndToEndTestUtils.activityMytracks
-          .getString(R.string.settings_google_account_confirm_title)) != null) {
-        EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
-            .getString(R.string.generic_yes));
-      }
-    } else {
-      Assert.fail();
-      return;
-    }
-
-    EndToEndTestUtils.SOLO.waitForDialogToClose(EndToEndTestUtils.SHORT_WAIT_TIME);
-    EndToEndTestUtils.instrumentation.waitForIdleSync();
-    CheckBox syncCheckBox = EndToEndTestUtils.SOLO.getCurrentViews(CheckBox.class).get(0);
-    if (!syncCheckBox.isChecked()) {
-      EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
-          .getString(R.string.menu_sync_drive));
-
-      EndToEndTestUtils.SOLO.waitForText(
-          EndToEndTestUtils.activityMytracks.getString(R.string.sync_drive_confirm_message).split(
-              "%")[0], 1, EndToEndTestUtils.SHORT_WAIT_TIME);
-      Assert.assertTrue(EndToEndTestUtils.SOLO.searchText(accountName, true));
-      EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
-          .getString(R.string.generic_yes));
-    }
-
-    // Add this sleep to work around a exception after switch account.
-    EndToEndTestUtils.sleep(15000);
-    EndToEndTestUtils.SOLO.goBack();
-    EndToEndTestUtils.SOLO.goBack();
-    EndToEndTestUtils.instrumentation.waitForIdleSync();
+//    EndToEndTestUtils.instrumentation.waitForIdleSync();
+//    EndToEndTestUtils.findMenuItem(
+//        EndToEndTestUtils.activityMytracks.getString(R.string.menu_settings), true);
+//    EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
+//        .getString(R.string.settings_google));
+//    EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
+//        .getString(R.string.settings_google_account_title));
+//    EndToEndTestUtils.instrumentation.waitForIdleSync();
+//
+//    // Whether test account is bound.
+//    if (EndToEndTestUtils.SOLO.waitForText(accountName, 1, EndToEndTestUtils.SHORT_WAIT_TIME)) {
+//      EndToEndTestUtils.SOLO.clickOnText(accountName);
+//      EndToEndTestUtils.instrumentation.waitForIdleSync();
+//      
+//      if (EndToEndTestUtils.findTextView(EndToEndTestUtils.activityMytracks
+//          .getString(R.string.settings_google_account_confirm_title)) != null) {
+//        EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
+//            .getString(R.string.generic_yes));
+//      }
+//    } else {
+//      Assert.fail();
+//      return;
+//    }
+//
+//    EndToEndTestUtils.SOLO.waitForDialogToClose(EndToEndTestUtils.SHORT_WAIT_TIME);
+//    EndToEndTestUtils.instrumentation.waitForIdleSync();
+//    CheckBox syncCheckBox = EndToEndTestUtils.SOLO.getCurrentViews(CheckBox.class).get(0);
+//    if (!syncCheckBox.isChecked()) {
+//      EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
+//          .getString(R.string.menu_sync_drive));
+//
+//      EndToEndTestUtils.SOLO.waitForText(
+//          EndToEndTestUtils.activityMytracks.getString(R.string.sync_drive_confirm_message).split(
+//              "%")[0], 1, EndToEndTestUtils.SHORT_WAIT_TIME);
+//      Assert.assertTrue(EndToEndTestUtils.SOLO.searchText(accountName, true));
+//      EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
+//          .getString(R.string.generic_yes));
+//    }
+//
+//    // Add this sleep to work around a exception after switch account.
+//    EndToEndTestUtils.sleep(15000);
+//    EndToEndTestUtils.SOLO.goBack();
+//    EndToEndTestUtils.SOLO.goBack();
+//    EndToEndTestUtils.instrumentation.waitForIdleSync();
   }
 
   /**
