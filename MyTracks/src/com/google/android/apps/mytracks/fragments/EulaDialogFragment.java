@@ -90,7 +90,7 @@ public class EulaDialogFragment extends AbstractMyTracksDialogFragment {
     Linkify.addLinks(message, Linkify.WEB_URLS);
 
     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()).setMessage(message)
-        .setTitle(R.string.eula_title);
+        .setTitle(R.string.menu_help_eula);
 
     if (hasAccepted) {
       builder.setPositiveButton(R.string.generic_ok, null);

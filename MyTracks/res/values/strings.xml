@@ -16,32 +16,6 @@ limitations under the License.
 -->
 <resources>
 
-  <!-- About -->
-  <string name="about_copyright_notice"
-    translation_description="In the 'About My Tracks' page, the copyright notice.">
-    Copyright 2013 Google Inc.
-  </string>
-  <string name="about_license"
-    translation_description="In the 'About My Tracks' page, the button on the bottom to open the
-      'Terms of service' dialog.">
-    License
-  </string>
-  <string name="about_privacy"
-    translation_description="In the 'About My Tracks' page, label for the privacy link. E.g.,
-      'Privacy: m.google.com/privacy'.">
-    Privacy:
-  </string>
-  <string name="about_support"
-    translation_description="In the 'About My Tracks' page, label for the support link. E.g.,
-      'Support: mytracks.appspot.com'.">
-    Support:
-  </string>
-  <string name="about_version"
-    translation_description="In the 'About My Tracks' page, label for the version number. E.g.,
-      'Version: 1.1.11'.">
-    Version:
-  </string>
-
   <!-- Activity Type -->
   <string name="activity_type_airplane"
     translation_description="When entering an 'Activity type', in the auto-complete text box, the
@@ -601,10 +575,6 @@ limitations under the License.
     Any required attribution or notice for the third party content may be found at
     %1$s/legalnotices.
   </string>
-  <string name="eula_title"
-    translation_description="The title for the 'Terms of Service' dialog.">
-    Terms of Service
-  </string>
 
   <!-- Export -->
   <string name="export_all_option"
@@ -1027,7 +997,7 @@ limitations under the License.
   </string>
   <string name="marker_delete_all_confirm_message"
     translation_description="When deleting all markers, the confirmation message.">
-    All markers for this track will be permanently deleted from the device.    
+    All markers for this track will be permanently deleted from the device.
   </string>
   <string name="marker_delete_one_confirm_message"
     translation_description="When deleting one marker, the confirmation message.">
@@ -1039,7 +1009,7 @@ limitations under the License.
   </string>
   <string name="marker_delete_multiple_confirm_message"
     translation_description="When deleting multiple markers, the confirmation message.">
-    The selected markers will be permanently deleted from the device.    
+    The selected markers will be permanently deleted from the device.
   </string>
   <string name="marker_label_end"
     translation_description="When inserting a marker to indicate the end of a track, the marker's
@@ -1074,7 +1044,7 @@ limitations under the License.
       %1$d totalt. E.g., '5'.">
     %1$d of %2$d
   </string>
-  
+
   <!-- Marker Detail -->
   <string name="marker_detail_statistics_title"
     translation_description="In the marker detail page, the title for the statistics section
@@ -1137,17 +1107,41 @@ limitations under the License.
       Character limit: ~20 (1 line)">
     Export all
   </string>
+  <string name="menu_feedback"
+    translation_description="In the menu, to enter feedback.
+
+      Character limit: ~20 (1 line)">
+    Feedback
+  </string>
   <string name="menu_help"
     translation_description="In the menu, to go to the help page.
 
       Character limit: ~20 (1 line)">
     Help
   </string>
+  <string name="menu_help_eula"
+    translation_description="In the menu, to go to the terms of service page.
+
+      Character limit: ~20 (1 line)">
+    Terms of service
+  </string>
   <string name="menu_help_feedback"
     translation_description="In the menu, to go to the help and feedback page.
 
       Character limit: ~20 (1 line)">
     Help &amp; feedback
+  </string>
+  <string name="menu_help_forum"
+    translation_description="In the menu, to go to the help forum.
+
+      Character limit: ~20 (1 line)">
+    Help forum
+  </string>
+  <string name="menu_help_play_store"
+    translation_description="In the menu, to go to the My Tracks Google Play Store page.
+
+      Character limit: ~20 (1 line)">
+    View in Google Play Store
   </string>
   <string name="menu_import_all"
     translation_description="In the menu, to import all the tracks from the external storage.

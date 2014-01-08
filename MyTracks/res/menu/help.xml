@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Copyright 2012 Google Inc.
+Copyright 2014 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,15 +14,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<merge xmlns:android="http://schemas.android.com/apk/res/android" >
-  <Button
-    android:id="@+id/help_ok"
-    android:layout_gravity="left"
-    android:text="@string/generic_ok"
-    style="@style/BottomButton" />
-  <Button
-    android:id="@+id/help_about"
-    android:layout_gravity="right"
-    android:text="@string/help_about"
-    style="@style/BottomButton" />
-</merge>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+  <!-- android:icon="@drawable/ic_menu_feedback" -->
+  <item
+    android:id="@+id/help_play_store"
+    android:title="@string/menu_help_play_store"/>
+  <item
+    android:id="@+id/help_eula"
+    android:title="@string/menu_help_eula"/>
+  <item
+    android:id="@+id/help_forum"
+    android:title="@string/menu_help_forum"/>
+</menu>

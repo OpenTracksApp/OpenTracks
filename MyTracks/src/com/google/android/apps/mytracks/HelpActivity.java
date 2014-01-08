@@ -16,17 +16,19 @@
 
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.fragments.AboutDialogFragment;
-import com.google.android.apps.mytracks.fragments.AboutDialogFragment.AboutCaller;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment.EulaCaller;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
+import com.google.android.apps.mytracks.util.GoogleFeedbackUtils;
 import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.maps.mytracks.R;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -37,7 +39,7 @@ import java.util.Locale;
  * 
  * @author Sandor Dornbush
  */
-public class HelpActivity extends AbstractMyTracksActivity implements AboutCaller, EulaCaller {
+public class HelpActivity extends AbstractMyTracksActivity implements EulaCaller {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +49,7 @@ public class HelpActivity extends AbstractMyTracksActivity implements AboutCalle
         + SystemUtils.getMyTracksVersion(this);
     ApiAdapterFactory.getApiAdapter()
         .setTitleAndSubtitle(this, getString(R.string.menu_help), subtitle);
-    
+
     WebView webView = (WebView) findViewById(R.id.help_webview);
     String language = Locale.getDefault().getLanguage();
     if (language == null || language.equals("")) {
@@ -57,15 +59,11 @@ public class HelpActivity extends AbstractMyTracksActivity implements AboutCalle
     webView.getSettings().setJavaScriptEnabled(true);
     webView.setWebViewClient(new WebViewClient());
 
-    findViewById(R.id.help_ok).setOnClickListener(new OnClickListener() {
+    findViewById(R.id.help_feedback).setOnClickListener(new View.OnClickListener() {
+
+        @Override
       public void onClick(View v) {
-        finish();
-      }
-    });
-    findViewById(R.id.help_about).setOnClickListener(new OnClickListener() {
-      public void onClick(View v) {
-        new AboutDialogFragment().show(
-            getSupportFragmentManager(), AboutDialogFragment.ABOUT_DIALOG_TAG);
+          GoogleFeedbackUtils.bindFeedback(HelpActivity.this);
       }
     });
   }
@@ -76,9 +74,33 @@ public class HelpActivity extends AbstractMyTracksActivity implements AboutCalle
   }
 
   @Override
-  public void onAboutLicense() {
-    EulaDialogFragment.newInstance(true)
-        .show(getSupportFragmentManager(), EulaDialogFragment.EULA_DIALOG_TAG);
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.help, menu);
+    return super.onCreateOptionsMenu(menu);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    Intent intent;
+    switch (item.getItemId()) {
+      case R.id.help_play_store:
+        intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("market://details?id=com.google.android.maps.mytracks"));
+        startActivity(intent);
+        return true;
+      case R.id.help_eula:
+        EulaDialogFragment.newInstance(true)
+            .show(getSupportFragmentManager(), EulaDialogFragment.EULA_DIALOG_TAG);
+        return true;
+      case R.id.help_forum:
+        intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(
+            "http://groups.google.com/a/googleproductforums.com/forum/#!categories/maps/mytracks/"));
+        startActivity(intent);
+        return true;
+      default:
+        return super.onOptionsItemSelected(item);
+    }
   }
 
   @Override
