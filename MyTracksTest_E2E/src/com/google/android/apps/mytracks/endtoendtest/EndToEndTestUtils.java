@@ -343,7 +343,7 @@ public class EndToEndTestUtils {
     if ((getButtonOnScreen(activityMytracks.getString(R.string.eula_accept), false, false) != null)) {
       getButtonOnScreen(activityMytracks.getString(R.string.eula_accept), true, true);
     }
-    if (SOLO.waitForText(activityMytracks.getString(R.string.sync_drive_title))) {
+    if (SOLO.waitForText(activityMytracks.getString(R.string.sync_drive_confirm_title))) {
       // Click for Sync with Google Drive(Don't enable sync as default).
       getButtonOnScreen(activityMytracks.getString(R.string.generic_no), true, true);
       instrumentation.waitForIdleSync();

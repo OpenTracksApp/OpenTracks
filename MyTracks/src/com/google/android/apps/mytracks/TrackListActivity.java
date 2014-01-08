@@ -19,6 +19,10 @@ package com.google.android.apps.mytracks;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
+import com.google.android.apps.mytracks.fragments.ChooseAccountDialogFragment;
+import com.google.android.apps.mytracks.fragments.ChooseAccountDialogFragment.ChooseAccountCaller;
+import com.google.android.apps.mytracks.fragments.ConfirmSyncDialogFragment;
+import com.google.android.apps.mytracks.fragments.ConfirmSyncDialogFragment.ConfirmSyncCaller;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment.EulaCaller;
 import com.google.android.apps.mytracks.fragments.FileTypeDialogFragment;
@@ -28,7 +32,6 @@ import com.google.android.apps.mytracks.fragments.PlayMultipleDialogFragment.Pla
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.io.file.exporter.SaveActivity;
 import com.google.android.apps.mytracks.io.file.importer.ImportActivity;
-import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.MyTracksLocationManager;
@@ -51,6 +54,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.maps.mytracks.BuildConfig;
 import com.google.android.maps.mytracks.R;
 
+import android.accounts.Account;
 import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
@@ -90,7 +94,7 @@ import java.util.Locale;
  * @author Leif Hendrik Wilden
  */
 public class TrackListActivity extends AbstractSendToGoogleActivity
-    implements EulaCaller, FileTypeCaller, PlayMultipleCaller {
+    implements EulaCaller, FileTypeCaller, PlayMultipleCaller, ChooseAccountCaller, ConfirmSyncCaller {
 
   private static final String TAG = TrackListActivity.class.getSimpleName();
   private static final String[] PROJECTION = new String[] { TracksColumns._ID, TracksColumns.NAME,
@@ -539,13 +543,8 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         if (driveSync) {
           SyncUtils.syncNow(this);
         } else {
-          PreferencesUtils.setString(
-              this, R.string.google_account_key, PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
-          SendRequest sendRequest = new SendRequest(-1L);
-          sendRequest.setSendDrive(true);
-          sendRequest.setDriveSync(true);
-          sendRequest.setDriveSyncConfirm(true);
-          sendToGoogle(sendRequest);         
+          new ChooseAccountDialogFragment().show(
+              getSupportFragmentManager(), ChooseAccountDialogFragment.CHOOSE_ACCOUNT_DIALOG_TAG);
         }
         return true;
       case R.id.track_list_aggregated_statistics:
@@ -794,5 +793,25 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   @Override
   public void onPlayMultipleDone(long[] trackIds) {
     playTracks(trackIds);
+  }
+  
+  @Override
+  public void onChooseAccountDone(String account) {
+    PreferencesUtils.setString(this, R.string.google_account_key, account);
+    if (PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT.equals(account)) {
+      return;
+    } else {
+      new ConfirmSyncDialogFragment().show(
+          getSupportFragmentManager(), ConfirmSyncDialogFragment.CONFIRM_SYNC_DIALOG_TAG);
+    }
+  }
+  
+  @Override
+  public void onConfirmSyncDone(boolean enable) {
+    if (enable) {
+      String googleAccount = PreferencesUtils.getString(
+          this, R.string.google_account_key, PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
+      enableSync(new Account(googleAccount, Constants.ACCOUNT_TYPE));
+    }
   }
 }

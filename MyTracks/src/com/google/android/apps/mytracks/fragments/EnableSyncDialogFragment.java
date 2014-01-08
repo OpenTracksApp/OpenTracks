@@ -25,7 +25,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 
 /**
- * A DialogFrament to enable sync to Google Drive.
+ * A DialogFrament to prompt user to sync to Google Drive after saving first track.
  * 
  * @author Jimmy Shih
  */
@@ -72,7 +72,7 @@ public class EnableSyncDialogFragment extends AbstractMyTracksDialogFragment {
           public void onClick(DialogInterface dialog, int which) {
             caller.onEnableSyncDone(true);
           }
-        }).setTitle(R.string.sync_drive_title).create();
+        }).setTitle(R.string.sync_drive_enable_title).create();
   }
 
   @Override

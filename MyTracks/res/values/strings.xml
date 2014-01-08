@@ -2127,14 +2127,18 @@ limitations under the License.
     All files in the %1$s Google Drive &#8216;%2$s&#8217; folder will be imported as new tracks. If
     not desired, move the files to a different folder beforehand.
   </string>
+  <string name="sync_drive_confirm_title"
+    translation_description="The dialog title to confirm sync to Google Drive.">
+    Sync with Google Drive?
+  </string>
   <string name="sync_drive_enable_message"
     translation_description="The dialog message to enable sync to Google Drive.">
     Do you want to sync your tracks to Google Drive? This will allow you to view your tracks in
     Google Drive and view the tracks shared with you. All tracks synced to Google Drive will be
     private by default.
   </string>
-  <string name="sync_drive_title"
-    translation_description="The dialog title to sync to Google Drive.">
+  <string name="sync_drive_enable_title"
+    translation_description="The dialog title after the track is saved.">
     Track Saved
   </string>
 

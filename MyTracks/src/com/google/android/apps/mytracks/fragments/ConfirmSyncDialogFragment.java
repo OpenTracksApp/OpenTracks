@@ -24,7 +24,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 /**
@@ -63,17 +62,6 @@ public class ConfirmSyncDialogFragment extends AbstractMyTracksDialogFragment {
   }
 
   @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    if (PreferencesUtils.getBoolean(
-        getActivity(), R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT)) {
-      dismiss();
-      caller.onConfirmSyncDone(false);
-      return;
-    }
-  }
-
-  @Override
   protected Dialog createDialog() {
     FragmentActivity fragmentActivity = getActivity();
     String googleAccount = PreferencesUtils.getString(
@@ -91,7 +79,7 @@ public class ConfirmSyncDialogFragment extends AbstractMyTracksDialogFragment {
           public void onClick(DialogInterface dialog, int which) {
             caller.onConfirmSyncDone(true);
           }
-        }).setTitle(R.string.sync_drive_title).create();
+        }).setTitle(R.string.sync_drive_confirm_title).create();
   }
 
   @Override

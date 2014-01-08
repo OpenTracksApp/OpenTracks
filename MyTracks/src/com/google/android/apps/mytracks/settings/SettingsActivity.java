@@ -162,7 +162,7 @@ public class SettingsActivity extends AbstractSettingsActivity implements CheckP
         });
         break;
       case DIALOG_CONFIRM_DRIVE_SYNC_ON:
-        dialog = DialogUtils.createConfirmationDialog(this, R.string.sync_drive_title,
+        dialog = DialogUtils.createConfirmationDialog(this, R.string.sync_drive_confirm_title,
             getString(R.string.sync_drive_confirm_message), new DialogInterface.OnClickListener() {
                 @Override
               public void onClick(DialogInterface d, int button) {
