@@ -1397,7 +1397,7 @@ limitations under the License.
   <string name="send_google_no_account_message"
     translation_description="When sending to Google, the dialog message when no Google account is
       found.">
-    No account found to upload tracks to.
+    Add account at &#8216;Settings&#8217; &#45;&#62; &#8216;Add account&#8217;
   </string>
   <string name="send_google_no_account_title"
     translation_description="When sending to Google, the dialog title when no Google account is
@@ -1553,11 +1553,6 @@ limitations under the License.
   </string>
 
   <!-- Settings Google -->
-  <string name="settings_google_drive_sync_no_account"
-    translation_description="In the 'Sync to Google Drive' setting, the message when no account is
-      found to sync to Google Drive.">
-    No account found to sync to Google Drive
-  </string>
   <string name="settings_google_drive_sync_summary_on"
     translation_description="In the 'Sync to Google Drive' setting, the summary explaining that all
       tracks will be synced to a Google Drive account.

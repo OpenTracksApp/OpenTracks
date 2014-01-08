@@ -121,8 +121,7 @@ public class SettingsActivity extends AbstractSettingsActivity implements CheckP
     final Dialog dialog;
     switch (id) {
       case DIALOG_NO_ACCOUNT:
-        dialog = new AlertDialog.Builder(this).setMessage(
-            R.string.settings_google_drive_sync_no_account)
+        dialog = new AlertDialog.Builder(this).setMessage(R.string.send_google_no_account_message)
             .setTitle(R.string.send_google_no_account_title)
             .setPositiveButton(R.string.generic_ok, null).create();
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
@@ -232,7 +231,7 @@ public class SettingsActivity extends AbstractSettingsActivity implements CheckP
 
   private void onDrivePermissionFailure() {
     Toast.makeText(
-        SettingsActivity.this, R.string.settings_google_drive_sync_no_account, Toast.LENGTH_LONG)
+        SettingsActivity.this, R.string.send_google_no_account_permission, Toast.LENGTH_LONG)
         .show();
   }
 
