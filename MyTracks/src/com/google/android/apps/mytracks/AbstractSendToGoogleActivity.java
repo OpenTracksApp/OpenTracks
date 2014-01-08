@@ -50,7 +50,6 @@ import android.accounts.AccountManagerFuture;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -343,16 +342,7 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
     Class<?> next;
     if (sendRequest.isSendDrive()) {
       if (sendRequest.isDriveSync()) {
-        PreferencesUtils.setBoolean(this, R.string.drive_sync_key, true);
-
-        // Turn off everything
-        SyncUtils.disableSync(this);
-
-        // Turn on sync
-        ContentResolver.setMasterSyncAutomatically(true);
-
-        // Enable sync for account
-        SyncUtils.enableSync(sendRequest.getAccount());
+        SyncUtils.enableSync(this);       
         return;
       } else {
         next = SendDriveActivity.class;

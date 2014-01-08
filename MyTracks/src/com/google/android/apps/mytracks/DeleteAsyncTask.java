@@ -91,10 +91,7 @@ public class DeleteAsyncTask extends AsyncTask<Void, Integer, Boolean> {
       } catch (InterruptedException e) {
         return false;
       }
-      PreferencesUtils.setBoolean(
-          context, R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT);
       SyncUtils.disableSync(context);
-      SyncUtils.clearSyncState(context);
       myTracksProviderUtils.deleteAllTracks(context);
       return true;
     } else {

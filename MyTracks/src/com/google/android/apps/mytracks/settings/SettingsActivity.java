@@ -31,7 +31,6 @@ import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -244,26 +243,10 @@ public class SettingsActivity extends AbstractSettingsActivity implements CheckP
     syncDrivePreference.setChecked(value);
     updateSyncDriveSummary();
 
-    // Turn off everything
-    SyncUtils.disableSync(this);
-
     if (value) {
-
-      // Turn on sync
-      ContentResolver.setMasterSyncAutomatically(true);
-
-      // Enable sync for account
-      String googleAccount = PreferencesUtils.getString(
-          this, R.string.google_account_key, PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
-      Account[] accounts = AccountManager.get(this).getAccountsByType(Constants.ACCOUNT_TYPE);
-      for (Account account : accounts) {
-        if (account.name.equals(googleAccount)) {
-          SyncUtils.enableSync(account);
-          break;
-        }
-      }
-    } else {
-      SyncUtils.clearSyncState(this);
+      SyncUtils.enableSync(this);     
+    } else {     
+      SyncUtils.disableSync(this);
     }
   }
 

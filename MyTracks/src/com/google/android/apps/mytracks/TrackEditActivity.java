@@ -36,9 +36,7 @@ import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtil
 import com.google.android.apps.mytracks.util.TrackUtils;
 import com.google.android.maps.mytracks.R;
 
-import android.accounts.Account;
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -307,19 +305,7 @@ public class TrackEditActivity extends AbstractMyTracksActivity implements Choos
   }
 
   private void onDrivePermissionSuccess() {
-    PreferencesUtils.setBoolean(this, R.string.drive_sync_key, true);
-
-    // Turn off everything
-    SyncUtils.disableSync(this);
-
-    // Turn on sync
-    ContentResolver.setMasterSyncAutomatically(true);
-
-    // Enable sync for account
-    String googleAccount = PreferencesUtils.getString(
-        this, R.string.google_account_key, PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
-    Account account = new Account(googleAccount, Constants.ACCOUNT_TYPE);
-    SyncUtils.enableSync(account);
+    SyncUtils.enableSync(this);
     finish();
   }
 

@@ -54,7 +54,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 /**
- * Utilites for Google Drive sync.
+ * Utilities for Google Drive sync.
  * 
  * @author Jimmy Shih
  */
@@ -124,6 +124,23 @@ public class SyncUtils {
    * @param context the context
    */
   public static void disableSync(Context context) {
+    // Set preference
+    PreferencesUtils.setBoolean(
+        context, R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT);
+
+    // Disable sync for all accounts
+    disableSyncForAll(context);
+
+    // Clear sync state
+    clearSyncState(context);
+  }
+
+  /**
+   * Disables sync for all accounts.
+   * 
+   * @param context the context
+   */
+  private static void disableSyncForAll(Context context) {
     Account[] accounts = AccountManager.get(context).getAccountsByType(Constants.ACCOUNT_TYPE);
     for (Account account : accounts) {
       ContentResolver.cancelSync(account, SYNC_AUTHORITY);
@@ -131,7 +148,7 @@ public class SyncUtils {
       ContentResolver.setSyncAutomatically(account, SYNC_AUTHORITY, false);
     }
   }
-
+  
   /**
    * Returns true if sync is active.
    * 
@@ -146,13 +163,35 @@ public class SyncUtils {
     }
     return false;
   }
-  
+
   /**
    * Enables sync.
    * 
+   * @param context the context
+   */
+  public static void enableSync(Context context) {
+    // Set preference
+    PreferencesUtils.setBoolean(context, R.string.drive_sync_key, true);
+
+    // Disable sync for all accounts
+    disableSyncForAll(context);
+
+    // Turn on sync
+    ContentResolver.setMasterSyncAutomatically(true);
+
+    // Enable sync for account
+    String googleAccount = PreferencesUtils.getString(
+        context, R.string.google_account_key, PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
+    enableSyncForAccount(new Account(googleAccount, Constants.ACCOUNT_TYPE));
+   
+  }
+  
+  /**
+   * Enables sync for an account.
+   * 
    * @param account the account
    */
-  public static void enableSync(Account account) {
+  private static void enableSyncForAccount(Account account) {
     ContentResolver.setIsSyncable(account, SYNC_AUTHORITY, 1);
     ContentResolver.setSyncAutomatically(account, SYNC_AUTHORITY, true);
     ContentResolver.requestSync(account, SYNC_AUTHORITY, new Bundle());
@@ -162,7 +201,7 @@ public class SyncUtils {
    * Clears the sync state. Assumes sync is turned off. Do not want clearing the
    * sync state to cause sync activities.
    */
-  public static void clearSyncState(Context context) {
+  private static void clearSyncState(Context context) {
     MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
     Cursor cursor = null;
     try {

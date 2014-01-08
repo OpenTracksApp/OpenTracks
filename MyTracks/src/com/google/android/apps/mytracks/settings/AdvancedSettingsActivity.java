@@ -199,7 +199,6 @@ public class AdvancedSettingsActivity extends AbstractSettingsActivity {
         sharedPreferences.edit().clear().commit();
 
         SyncUtils.disableSync(AdvancedSettingsActivity.this);
-        SyncUtils.clearSyncState(AdvancedSettingsActivity.this);
 
         // Give UI feedback in the UI thread
         runOnUiThread(new Runnable() {
