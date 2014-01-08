@@ -172,4 +172,11 @@ public class Api11Adapter extends Api10Adapter {
   public boolean hasDialogTitleDivider() {
     return true;
   }
+  
+  @Override
+  public void setTitleAndSubtitle(Activity activity, String title, String subtitle) {
+    ActionBar actionBar = activity.getActionBar();
+    actionBar.setTitle(title);
+    actionBar.setSubtitle(subtitle);
+  }  
 }

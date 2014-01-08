@@ -40,7 +40,6 @@ import com.google.android.apps.mytracks.settings.SettingsActivity;
 import com.google.android.apps.mytracks.util.AnalyticsUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.EulaUtils;
-import com.google.android.apps.mytracks.util.GoogleFeedbackUtils;
 import com.google.android.apps.mytracks.util.GoogleLocationUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.ListItemUtils;
@@ -466,8 +465,9 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.track_list, menu);
 
-    menu.findItem(R.id.track_list_feedback)
-        .setVisible(ApiAdapterFactory.getApiAdapter().isGoogleFeedbackAvailable());
+    menu.findItem(R.id.track_list_help_feedback).setTitle(
+        ApiAdapterFactory.getApiAdapter().isGoogleFeedbackAvailable() ? R.string.menu_help_feedback
+            : R.string.menu_help);
 
     searchMenuItem = menu.findItem(R.id.track_list_search);
     ApiAdapterFactory.getApiAdapter().configureSearchWidget(this, searchMenuItem, trackController);
@@ -568,10 +568,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         intent = IntentUtils.newIntent(this, SettingsActivity.class);
         startActivity(intent);
         return true;
-      case R.id.track_list_feedback:
-        GoogleFeedbackUtils.bindFeedback(this);
-        return true;
-      case R.id.track_list_help:
+      case R.id.track_list_help_feedback:
         intent = IntentUtils.newIntent(this, HelpActivity.class);
         startActivity(intent);
         return true;

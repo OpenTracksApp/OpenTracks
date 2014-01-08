@@ -42,7 +42,6 @@ import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.CalorieUtils;
 import com.google.android.apps.mytracks.util.CalorieUtils.ActivityType;
 import com.google.android.apps.mytracks.util.FileUtils;
-import com.google.android.apps.mytracks.util.GoogleFeedbackUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.TrackIconUtils;
@@ -362,9 +361,10 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
     Track track = myTracksProviderUtils.getTrack(trackId);
     boolean isSharedWithMe = track != null ? track.isSharedWithMe() : true;
 
-    menu.findItem(R.id.track_detail_edit).setVisible(!isSharedWithMe);
-    menu.findItem(R.id.track_detail_feedback)
-        .setVisible(ApiAdapterFactory.getApiAdapter().isGoogleFeedbackAvailable());
+    menu.findItem(R.id.track_detail_edit).setVisible(!isSharedWithMe);  
+    menu.findItem(R.id.track_detail_help_feedback).setTitle(
+        ApiAdapterFactory.getApiAdapter().isGoogleFeedbackAvailable() ? R.string.menu_help_feedback
+            : R.string.menu_help);
 
     insertMarkerMenuItem = menu.findItem(R.id.track_detail_insert_marker);
     insertPhotoMenuItem = menu.findItem(R.id.track_detail_insert_photo);
@@ -461,10 +461,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
         intent = IntentUtils.newIntent(this, SettingsActivity.class);
         startActivity(intent);
         return true;
-      case R.id.track_detail_feedback:
-        GoogleFeedbackUtils.bindFeedback(this);
-        return true;
-      case R.id.track_detail_help:
+      case R.id.track_detail_help_feedback:
         intent = IntentUtils.newIntent(this, HelpActivity.class);
         startActivity(intent);
         return true;

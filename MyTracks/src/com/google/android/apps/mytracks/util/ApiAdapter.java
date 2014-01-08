@@ -193,6 +193,13 @@ public interface ApiAdapter {
   public boolean hasDialogTitleDivider();
 
   /**
+   * Sets title and subtitle.
+   * <p>
+   * Due to changes in API level 11;
+   */
+  public void setTitleAndSubtitle(Activity activity, String title, String subtitle);
+  
+  /**
    * Handles the search key press. Returns true if handled.
    * <p>
    * Due to changes in API level 14.

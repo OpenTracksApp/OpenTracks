@@ -156,6 +156,11 @@ public class Api8Adapter implements ApiAdapter {
   }
 
   @Override
+  public void setTitleAndSubtitle(Activity activity, String title, String subtitle) {
+    activity.setTitle(title + " " + subtitle);
+  }
+
+  @Override
   public boolean handleSearchKey(MenuItem menuItem) {
     // Return false and allow the framework to handle the search key.
     return false;

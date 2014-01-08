@@ -20,6 +20,8 @@ import com.google.android.apps.mytracks.fragments.AboutDialogFragment;
 import com.google.android.apps.mytracks.fragments.AboutDialogFragment.AboutCaller;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment.EulaCaller;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
+import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.os.Bundle;
@@ -41,6 +43,11 @@ public class HelpActivity extends AbstractMyTracksActivity implements AboutCalle
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
+    String subtitle = getString(R.string.my_tracks_app_name) + " v"
+        + SystemUtils.getMyTracksVersion(this);
+    ApiAdapterFactory.getApiAdapter()
+        .setTitleAndSubtitle(this, getString(R.string.menu_help), subtitle);
+    
     WebView webView = (WebView) findViewById(R.id.help_webview);
     String language = Locale.getDefault().getLanguage();
     if (language == null || language.equals("")) {

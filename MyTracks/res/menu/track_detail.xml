@@ -86,13 +86,8 @@ limitations under the License.
     android:orderInCategory="14"
     android:title="@string/menu_settings"/>
   <item
-    android:icon="@drawable/ic_menu_feedback"
-    android:id="@+id/track_detail_feedback"
+    android:icon="@drawable/ic_menu_help_feedback"
+    android:id="@+id/track_detail_help_feedback"
     android:orderInCategory="15"
-    android:title="@string/menu_feedback"/>
-  <item
-    android:icon="@drawable/ic_menu_help"
-    android:id="@+id/track_detail_help"
-    android:orderInCategory="16"
-    android:title="@string/menu_help"/>
+    android:title="@string/menu_help_feedback"/>
 </menu>
