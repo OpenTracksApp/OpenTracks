@@ -2152,7 +2152,7 @@ limitations under the License.
   <string name="track_delete_all_confirm_message"
     translation_description="When deleting all the tracks, the confirmation message.">
     All tracks and markers will be permanently deleted from the device. Google Drive sync will be
-    turned off. No tracks will be deleted on Google Drive and on external storage.
+    turned off. No tracks will be deleted on Google Drive.
   </string>
   <string name="track_delete_one_confirm_message"
     translation_description="When deleting one track, the confirmation message.">
