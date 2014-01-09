@@ -556,7 +556,7 @@ limitations under the License.
   <string name="eula_copyright_year"
     translation_description="The copyright year in the 'Terms of Service'. See
       http://m.google.com/toscountry. \u00A9 is the unicode value for the copyright symbol.">
-    \u00A92013
+    \u00A92014
   </string>
   <string name="eula_date"
     translation_description="The date in the 'Terms of Service'. See
@@ -600,7 +600,7 @@ limitations under the License.
       %1$d the number of tracks successfully exported. E.g., '1'.
       %1$s the number of tracks to export. E.g., '2 tracks'.
       %2$s the directory. E.g., '/MyTracks/kml'.">
-    Exported %1$d of %2$s to %3$s.
+    Exported %1$d of %2$s to %3$s
   </string>
   <string name="export_external_storage_option"
     translation_description="When exporting a track to the external storage, the option to export as
@@ -621,7 +621,7 @@ limitations under the License.
 
       %1$s the number of tracks. E.g., '2 tracks'.
       %2$s the directory. E.g., '/MyTracks/kml'.">
-    Exported %1$s to %2$s.
+    Exported %1$s to %2$s
   </string>
   <string name="export_google_drive"
     translation_description="When exporting a track, the option to export to Google Drive.">
@@ -639,7 +639,7 @@ limitations under the License.
 
       %1$s service name. E.g, Google Drive.
       %2$s service url. E.g, drive.google.com.">
-    Unable to make track public in %1$s (%2$s).
+    Unable to make track public in %1$s (%2$s)
   </string>
   <string name="export_google_fusion_tables"
     translation_description="When exporting a track, the option to export to Google Fusion Tables.">
@@ -689,11 +689,11 @@ limitations under the License.
   <!-- External Storage -->
   <string name="external_storage_not_available"
     translation_description="Error message when the external storage is not available.">
-    External storage not available.
+    External storage not available
   </string>
   <string name="external_storage_not_writable"
     translation_description="Error message when the external storage is not writable.">
-    External storage not writable.
+    External storage not writable
   </string>
 
   <!-- Files -->
@@ -861,36 +861,29 @@ limitations under the License.
   </string>
   <string name="gps_not_found"
     translation_description="On application start, message when there is no GPS on the device.">
-    No GPS is found on the device.
+    No GPS is found on the device
   </string>
   <string name="gps_starting"
     translation_description="The message when starting GPS.">
-    Starting GPS.
+    Starting GPS
   </string>
   <string name="gps_starting_error"
     translation_description="The message when unable to start GPS.">
-    Unable to start GPS.
+    Unable to start GPS
   </string>
   <string name="gps_stopping"
     translation_description="The message when stopping GPS.">
-    Stopping GPS.
+    Stopping GPS
   </string>
   <string name="gps_wait_for_better_signal"
     translation_description="In the main view, the message on the top indicating My Tracks is
       waiting for a better GPS signal.">
-    Waiting for a better GPS signal.
+    Waiting for a better GPS signal
   </string>
   <string name="gps_wait_for_signal"
     translation_description="In the main view, the message on the top indicating My Tracks is
       waiting for GPS signal.">
-    Waiting for GPS signal.
-  </string>
-
-  <!-- Help -->
-  <string name="help_about"
-    translation_description="In the 'Help' page, the button on the bottom to open the 'About My
-      Tracks' dialog.">
-    About My Tracks
+    Waiting for GPS signal
   </string>
 
   <!-- Icon -->
@@ -933,14 +926,14 @@ limitations under the License.
       %1$d the number of files successfully imported. E.g., '2'.
       %2$s the number of files in the directory. E.g., '2 files'.
       %3$s the directory. E.g., '/MyTracks/kml'.">
-    Imported %1$d of %2$s from %3$s.
+    Imported %1$d of %2$s from %3$s
   </string>
   <string name="import_no_directory"
     translation_description="When importing from the external storage, the error message when the
       directory doesn't exist.
 
       %1$s the directory. E.g., '/MyTracks/kml'.">
-    %1$s does not exist.
+    %1$s does not exist
   </string>
   <string name="import_no_file"
     translation_description="When importing from the external storage, the message in the result
@@ -978,7 +971,7 @@ limitations under the License.
 
       %1$s the number of files. E.g., '2 files'.
       %2$s the directory. E.g., '/MyTracks/kml'.">
-    Imported %1$s from %2$s.
+    Imported %1$s from %2$s
   </string>
 
   <!-- Marker -->
@@ -989,19 +982,19 @@ limitations under the License.
   </string>
   <string name="marker_add_success"
     translation_description="When adding a marker, the message indicating success.">
-    A marker was inserted.
+    A marker was inserted
   </string>
   <string name="marker_add_canceled"
     translation_description="When adding a marker, the message indicating it is canceled.">
-    Canceled, no marker added.
+    Canceled, no marker added
   </string>
   <string name="marker_delete_all_confirm_message"
     translation_description="When deleting all markers, the confirmation message.">
-    All markers for this track will be permanently deleted from the device.
+    All markers for this track will be permanently deleted from the device
   </string>
   <string name="marker_delete_one_confirm_message"
     translation_description="When deleting one marker, the confirmation message.">
-    The marker will be permanently deleted from the device.
+    The marker will be permanently deleted from the device
   </string>
   <string name="marker_delete_one_confirm_title"
     translation_description="When deleting one marker, the title of the confirmation dialog.">
@@ -1009,7 +1002,7 @@ limitations under the License.
   </string>
   <string name="marker_delete_multiple_confirm_message"
     translation_description="When deleting multiple markers, the confirmation message.">
-    The selected markers will be permanently deleted from the device.
+    The selected markers will be permanently deleted from the device
   </string>
   <string name="marker_label_end"
     translation_description="When inserting a marker to indicate the end of a track, the marker's
@@ -1067,7 +1060,7 @@ limitations under the License.
   <!-- Marker List -->
   <string name="marker_list_empty_message"
     translation_description="The message when the marker list is empty.">
-    You don\'t have any markers.
+    You don\'t have any markers
   </string>
 
   <!-- Menu -->
@@ -1358,7 +1351,7 @@ limitations under the License.
   </string>
   <string name="search_list_empty_message"
     translation_description="Message when the search result is empty.">
-    No tracks or markers matched your search.
+    No tracks or markers matched your search
   </string>
   <string name="search_list_marker_track_location"
     translation_description="For a marker returned in the search result, the text field indicating
@@ -1370,7 +1363,7 @@ limitations under the License.
   <string name="search_voice_prompt"
     translation_description="Prompt shown when the user activates voice search, asking him to speak
       what will be searched for.">
-    Speak the name of a track or marker.
+    Speak the name of a track or marker
   </string>
 
   <!-- Send Google -->
@@ -1382,7 +1375,7 @@ limitations under the License.
       'Google My Tracks'.
       %2$s the html anchor closing tag. Place this placeholder after the app name,
       'Google My Tracks'.">
-    Created by %1$sGoogle My Tracks%2$s on Android.
+    Created by %1$sGoogle My Tracks%2$s on Android
   </string>
   <string name="send_google_choose_account_title"
     translation_description="When sending to Google, the dialog title to choose a Google account.">
@@ -1771,7 +1764,7 @@ limitations under the License.
     translation_description="In the 'Backup and reset' settings, after pressing the 'Reset' option,
       the confirmation dialog informing the user that all settings have been reverted to the default
       values.">
-    All settings have been reverted to the default values.
+    All settings have been reverted to the default values
   </string>
 
   <!-- Settings Sensor -->
@@ -1963,12 +1956,12 @@ limitations under the License.
   <string name="share_track_no_emails"
     translation_description="When sharing a track, error message indicating that no email addresses
       is entered.">
-    No email addresses entered.
+    No email addresses entered
   </string>
   <string name="share_track_no_selection"
     translation_description="When sharing a track, error message indicating that no option is
       selected.">
-    No option selected.
+    No option selected
   </string>
   <string name="share_track_picker_title"
     translation_description="When sharing a track with friends, the title on the picker to ask the
@@ -2052,7 +2045,7 @@ limitations under the License.
     translation_description="In the 'Stats' page, the message when calories cannot be calculated.
 
       %1$s activity type. E.g., 'driving'.">
-    Calories can\'t be calculated with %1$s.
+    Calories can\'t be calculated with %1$s
   </string>
   <string name="stats_fastest_pace"
     translation_description="In the 'Stats' page, the fastest pace.">
@@ -2188,7 +2181,7 @@ limitations under the License.
   <string name="track_detail_install_earth_message"
     translation_description="When playing a track, the message informing the user that he needs
       Google Earth to play the track.">
-    You need Google Earth to play the track.
+    You need Google Earth to play the track
   </string>
   <string name="track_detail_install_earth_title"
     translation_description="When playing a track, the title asking the user if he wants to install
@@ -2198,7 +2191,7 @@ limitations under the License.
   <string name="track_detail_install_earth_error"
     translation_description="Message informing the user not able to install Google Earth from the
       Play Store.">
-    Unable to install Google Earth from the Play Store.
+    Unable to install Google Earth from the Play Store
   </string>
   <string name="track_detail_map_tab"
     translation_description="In the track detail page, the title of the tab showing the map.">
@@ -2229,7 +2222,7 @@ limitations under the License.
   <string name="track_list_empty_message"
     translation_description="When the track list is empty, the message informing the user to click
       on the record button to start a new recording">
-    Click on the record button to start recording your next adventure.
+    Click on the record button to start recording your next adventure
   </string>
   <string name="track_list_record_error"
     translation_description="When starting a new track recording, the error message informing the
@@ -2239,7 +2232,7 @@ limitations under the License.
   <string name="track_list_record_success"
     translation_description="When starting a new track recording, a status message indicating
       success.">
-    Now recording a new track.
+    Now recording a new track
   </string>
   <string name="track_list_shared_with_me"
     translation_description="The section header for &#8216;Shared with me&#8217; tracks from Google
@@ -2686,7 +2679,7 @@ limitations under the License.
       %2$s time string. E.g., '20 minutes 1 second'.
       %3$s speed/pace string. E.g., '2.2 miles per hour' for speed and
       '30 minutes 1 second per kilometer' for pace.">
-    My Tracks %1$s in %2$s at %3$s.
+    My Tracks %1$s in %2$s at %3$s
   </string>
   <string name="voice_total_distance_kilometers_few"
     translation_description="For voice announcement, to say total distance 'few' kilometers.
