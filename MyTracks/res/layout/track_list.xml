@@ -23,13 +23,53 @@ limitations under the License.
     android:layout_height="0dp"
     android:layout_weight="1.0"
     android:layout_width="match_parent" />
-  <TextView
+  <RelativeLayout
     android:id="@+id/track_list_empty_view"
     android:layout_height="0dp"
     android:layout_weight="1.0"
-    android:layout_width="match_parent"
-    android:text="@string/track_list_empty_message"
-    style="@style/ListEmptyTextView" >
-  </TextView>
+    android:layout_width="match_parent" >
+    <LinearLayout
+      android:id="@+id/track_list_arrow_long"
+      android:layout_alignParentBottom="true"
+      android:layout_height="wrap_content"
+      android:layout_width="match_parent"
+      android:paddingBottom="12dp"
+      android:paddingTop="16dp" >
+      <View
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_width="0dp" />
+      <ImageView
+        android:layout_height="wrap_content"
+        android:layout_weight="10"
+        android:layout_width="0dp"
+        android:src="@drawable/ic_arrow_long" />
+      <View
+        android:layout_height="match_parent"
+        android:layout_weight="17"
+        android:layout_width="0dp" />
+    </LinearLayout>
+    <LinearLayout
+      android:layout_above="@id/track_list_arrow_long"
+      android:layout_height="wrap_content"
+      android:layout_width="match_parent" >
+      <View
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        android:layout_width="0dp" />
+      <TextView
+        android:gravity="left"
+        android:layout_height="wrap_content"
+        android:layout_weight="22"
+        android:layout_width="0dp"
+        android:text="@string/track_list_empty_message"
+        style="@style/TextLarge" >
+      </TextView>
+      <View
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_width="0dp" />
+    </LinearLayout>
+  </RelativeLayout>
   <include layout="@layout/track_controller" />
 </LinearLayout>

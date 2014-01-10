@@ -23,12 +23,51 @@ limitations under the License.
     android:layout_height="match_parent"
     android:layout_weight="1.0"
     android:layout_width="0dp" />
-  <TextView
+  <RelativeLayout
     android:id="@+id/track_list_empty_view"
     android:layout_height="match_parent"
     android:layout_weight="1.0"
-    android:layout_width="0dp"
-    android:text="@string/track_list_empty_message"
-    style="@style/ListEmptyTextView" >
-  </TextView>
+    android:layout_width="0dp" >
+    <LinearLayout
+      android:id="@+id/track_list_arrow_long"
+      android:layout_alignParentLeft="true"
+      android:layout_height="match_parent"
+      android:layout_width="wrap_content"
+      android:orientation="vertical"
+      android:paddingLeft="12dp"
+      android:paddingRight="16dp" >
+      <View
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_width="match_parent" />
+      <ImageView
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:layout_width="wrap_content"
+        android:src="@drawable/ic_arrow_long" />
+      <View
+        android:layout_height="0dp"
+        android:layout_weight="17"
+        android:layout_width="match_parent" />
+    </LinearLayout>
+    <LinearLayout
+      android:layout_height="match_parent"
+      android:paddingRight="20dp"
+      android:layout_toRightOf="@id/track_list_arrow_long"
+      android:layout_width="wrap_content"
+      android:orientation="vertical" >
+      <View
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:layout_width="match_parent" />
+      <TextView
+        android:gravity="left"
+        android:layout_height="0dp"
+        android:layout_weight="24"
+        android:layout_width="wrap_content"
+        android:text="@string/track_list_empty_message"
+        style="@style/TextLarge" >
+      </TextView>
+    </LinearLayout>
+  </RelativeLayout>
 </LinearLayout>
