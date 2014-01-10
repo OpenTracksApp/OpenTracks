@@ -31,7 +31,6 @@ public class EulaUtils {
 
   // Accepting Google mobile terms of service
   private static final String ACCEPT_EULA_PREFERENCE_KEY = "eula.google_mobile_tos_accepted";
-  private static final String DEFAULT_UNITS_PREFERENCE_KEY = "defaultUnits";
   private static final String SHOW_ENABLE_SYNC_PREFERENCE_KEY = "showEnableSync";
   
   private EulaUtils() {}
@@ -51,24 +50,6 @@ public class EulaUtils {
    */
   public static void setAcceptEula(Context context) {
     setValue(context, ACCEPT_EULA_PREFERENCE_KEY, true);
-  }
-  
-  /**
-   * Returns true if the default units is initialized.
-   * 
-   * @param context the context
-   */
-  public static boolean hasDefaultUnits(Context context) {
-    return getValue(context, DEFAULT_UNITS_PREFERENCE_KEY, false);
-  }
-  
-  /**
-   * Sets to true that the default units is initialized.
-   * 
-   * @param context the context
-   */
-  public static void setDefaultUnits(Context context) {
-    setValue(context, DEFAULT_UNITS_PREFERENCE_KEY, true);
   }
   
   /**

@@ -659,12 +659,12 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
             .show(getSupportFragmentManager(), EulaDialogFragment.EULA_DIALOG_TAG);
       }
     } else {
-      if (!EulaUtils.hasDefaultUnits(this)) {
+      // If stats_units_key is undefined, set it
+      if (PreferencesUtils.getString(this,  R.string.stats_units_key, "").equals("")) {
         String statsUnits = getString(
             Locale.US.equals(Locale.getDefault()) ? R.string.stats_units_imperial
                 : R.string.stats_units_metric);
         PreferencesUtils.setString(this, R.string.stats_units_key, statsUnits);        
-        EulaUtils.setDefaultUnits(this);
       }
       checkGooglePlayServices();
     }
