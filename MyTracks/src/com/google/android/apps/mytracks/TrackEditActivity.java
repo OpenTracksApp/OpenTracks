@@ -179,7 +179,7 @@ public class TrackEditActivity extends AbstractMyTracksActivity implements Choos
             activityType.getText().toString(), description.getText().toString(),
             myTracksProviderUtils, trackRecordingServiceConnection, newWeight);
 
-        if (EulaUtils.hasShowEnableSync(TrackEditActivity.this)) {
+        if (EulaUtils.showEnableSync(TrackEditActivity.this)) {
           EulaUtils.setShowEnableSync(TrackEditActivity.this);
           if (PreferencesUtils.getBoolean(TrackEditActivity.this, R.string.drive_sync_key,
               PreferencesUtils.DRIVE_SYNC_DEFAULT)) {

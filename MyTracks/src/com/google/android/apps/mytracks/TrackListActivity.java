@@ -651,7 +651,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
    * Shows start up dialogs.
    */
   public void showStartupDialogs() {
-    if (!EulaUtils.hasAcceptEula(this)) {
+    if (!EulaUtils.hasAcceptedEula(this)) {
       Fragment fragment = getSupportFragmentManager()
           .findFragmentByTag(EulaDialogFragment.EULA_DIALOG_TAG);
       if (fragment == null) {
@@ -672,7 +672,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
 
   @Override
   public void onEulaDone() {
-    if (EulaUtils.hasAcceptEula(this)) {
+    if (EulaUtils.hasAcceptedEula(this)) {
       showStartupDialogs();
       return;
     }

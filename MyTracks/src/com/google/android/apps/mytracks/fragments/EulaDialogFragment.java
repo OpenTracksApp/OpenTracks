@@ -111,7 +111,7 @@ public class EulaDialogFragment extends AbstractMyTracksDialogFragment {
       }).setPositiveButton(R.string.eula_accept, new DialogInterface.OnClickListener() {
           @Override
         public void onClick(DialogInterface dialog, int which) {
-          EulaUtils.setAcceptEula(getActivity());
+          EulaUtils.setAcceptedEula(getActivity());
           caller.onEulaDone();
         }
       });

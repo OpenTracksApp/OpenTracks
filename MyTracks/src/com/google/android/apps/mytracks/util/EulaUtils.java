@@ -30,46 +30,47 @@ public class EulaUtils {
   private static final String EULA_PREFERENCE_FILE = "eula";
 
   // Accepting Google mobile terms of service
-  private static final String ACCEPT_EULA_PREFERENCE_KEY = "eula.google_mobile_tos_accepted";
+  private static final String ACCEPTED_EULA_PREFERENCE_KEY = "eula.google_mobile_tos_accepted";
   private static final String SHOW_ENABLE_SYNC_PREFERENCE_KEY = "showEnableSync";
-  
+
   private EulaUtils() {}
 
   /**
-   * Returns true if eula is accepted.
+   * Returns true if has accepted eula.
+   * 
    * @param context the context
    */
-  public static boolean hasAcceptEula(Context context) {
-    return getValue(context, ACCEPT_EULA_PREFERENCE_KEY, false);
+  public static boolean hasAcceptedEula(Context context) {
+    return getValue(context, ACCEPTED_EULA_PREFERENCE_KEY, false);
   }
 
   /**
-   * Sets to true that eula is accepted.
+   * Sets to true accepted eula.
    * 
    * @param context the context
    */
-  public static void setAcceptEula(Context context) {
-    setValue(context, ACCEPT_EULA_PREFERENCE_KEY, true);
+  public static void setAcceptedEula(Context context) {
+    setValue(context, ACCEPTED_EULA_PREFERENCE_KEY, true);
   }
-  
+
   /**
-   * Returns true if show enable sync is needed.
+   * Returns true if should show enable sync.
    * 
-   * @param context the context 
+   * @param context the context
    */
-  public static boolean hasShowEnableSync(Context context) {
+  public static boolean showEnableSync(Context context) {
     return getValue(context, SHOW_ENABLE_SYNC_PREFERENCE_KEY, true);
   }
-  
+
   /**
-   * Sets to false that show enable sync is needed.
+   * Sets to false show enable sync.
    * 
    * @param context the context
    */
   public static void setShowEnableSync(Context context) {
     setValue(context, SHOW_ENABLE_SYNC_PREFERENCE_KEY, false);
-  }  
-  
+  }
+
   private static boolean getValue(Context context, String key, boolean defaultValue) {
     SharedPreferences sharedPreferences = context.getSharedPreferences(
         EULA_PREFERENCE_FILE, Context.MODE_PRIVATE);
