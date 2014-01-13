@@ -1705,6 +1705,14 @@ limitations under the License.
       Character limit: ~23 (1 line)">
     GPS accuracy
   </string>
+  <string name="settings_recording_track_name_date_iso_8601_location_option"
+    translation_description="In the 'Recording' settings, the option in the 'Default track name'
+      setting to use the track starting time in the ISO-8601 format and the track starting location
+      as the default track name.
+
+      Character limit: ~20 (1 line)">
+    Date (ISO 8601) + Location
+  </string>
   <string name="settings_recording_track_name_date_iso_8601_option"
     translation_description="In the 'Recording' settings, the option in the 'Default track name'
       setting to use the track starting time in the ISO-8601 format as the default track name.

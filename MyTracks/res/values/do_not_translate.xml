@@ -90,6 +90,7 @@ Google은 이용자에 대한 위치정보의 이용∙제공사실을 위치정
   <string name="settings_map_track_color_mode_fixed_value">FIXED</string>
   <string name="settings_map_track_color_mode_single_value">SINGLE</string>
   <string name="settings_recording_track_name_date_iso_8601_value">DATE_ISO_8601</string>
+  <string name="settings_recording_track_name_date_iso_8601_location_value">DATE_ISO_8601_LOCATION</string>
   <string name="settings_recording_track_name_date_local_value">DATE_LOCAL</string>
   <string name="settings_recording_track_name_location_value">LOCATION</string>
   <string name="settings_recording_track_name_number_value">NUMBER</string>

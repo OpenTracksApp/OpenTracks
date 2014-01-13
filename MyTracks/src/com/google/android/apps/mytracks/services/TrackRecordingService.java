@@ -773,9 +773,10 @@ public class TrackRecordingService extends Service {
         updateRecordingTrack(track, myTracksProviderUtils.getLastTrackPointId(trackId), false);
       }
       
-      String trackName = TrackNameUtils.getTrackName(
-          this, -1L, -1L, myTracksProviderUtils.getFirstValidTrackPoint(trackId));
-      if (trackName != null) {
+      String trackName = TrackNameUtils.getTrackName(this, trackId,
+          track.getTripStatistics().getStartTime(),
+          myTracksProviderUtils.getFirstValidTrackPoint(trackId));
+      if (trackName != null && !trackName.equals(track.getName())) {
         track.setName(trackName);
         myTracksProviderUtils.updateTrack(track);
       }
