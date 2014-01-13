@@ -15,6 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:baselineAligned="false"
   android:layout_height="match_parent"
   android:layout_width="match_parent" >
   <include layout="@layout/track_controller" />
@@ -41,6 +42,7 @@ limitations under the License.
         android:layout_weight="1"
         android:layout_width="match_parent" />
       <ImageView
+        android:contentDescription="@string/image_arrow"
         android:layout_height="0dp"
         android:layout_weight="10"
         android:layout_width="wrap_content"
@@ -52,10 +54,10 @@ limitations under the License.
     </LinearLayout>
     <LinearLayout
       android:layout_height="match_parent"
-      android:paddingRight="20dp"
       android:layout_toRightOf="@id/track_list_arrow_long"
       android:layout_width="wrap_content"
-      android:orientation="vertical" >
+      android:orientation="vertical"
+      android:paddingRight="20dp" >
       <View
         android:layout_height="0dp"
         android:layout_weight="4"

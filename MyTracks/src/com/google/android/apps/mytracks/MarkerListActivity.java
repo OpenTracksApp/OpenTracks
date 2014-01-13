@@ -189,7 +189,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
         String photoUrl = cursor.getString(photoUrlIndex);
 
         ListItemUtils.setListItem(MarkerListActivity.this, view, false, true, iconId,
-            R.string.icon_marker, name, null, null, null, 0, time, false, category, description,
+            R.string.image_marker, name, null, null, null, 0, time, false, category, description,
             photoUrl);
       }
     };

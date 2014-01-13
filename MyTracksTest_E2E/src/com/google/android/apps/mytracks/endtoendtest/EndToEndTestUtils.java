@@ -894,7 +894,7 @@ public class EndToEndTestUtils {
    */
   public static void checkNotRecording() {
     instrumentation.waitForIdleSync();
-    Assert.assertEquals(activityMytracks.getString(R.string.icon_record_track), (String) SOLO
+    Assert.assertEquals(activityMytracks.getString(R.string.image_record), (String) SOLO
         .getCurrentActivity().findViewById(R.id.track_controller_record).getContentDescription());
     Assert.assertFalse(SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop)
         .isEnabled());
@@ -910,7 +910,7 @@ public class EndToEndTestUtils {
    */
   public static void checkUnderRecording() {
     instrumentation.waitForIdleSync();
-    Assert.assertEquals(activityMytracks.getString(R.string.icon_pause_recording), (String) SOLO
+    Assert.assertEquals(activityMytracks.getString(R.string.image_pause), (String) SOLO
         .getCurrentActivity().findViewById(R.id.track_controller_record).getContentDescription());
     Assert.assertTrue(SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop)
         .isEnabled());
@@ -930,7 +930,7 @@ public class EndToEndTestUtils {
    */
   public static void checkUnderPaused() {
     instrumentation.waitForIdleSync();
-    Assert.assertEquals(activityMytracks.getString(R.string.icon_record_track), (String) SOLO
+    Assert.assertEquals(activityMytracks.getString(R.string.image_record), (String) SOLO
         .getCurrentActivity().findViewById(R.id.track_controller_record).getContentDescription());
     Assert.assertTrue(SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop)
         .isEnabled());
@@ -1001,7 +1001,7 @@ public class EndToEndTestUtils {
       for (ImageButton imageButton : aa) {
         if (imageButton.getContentDescription() != null
             && imageButton.getContentDescription().equals(
-                activity.getString(R.string.icon_my_location))) {
+                activity.getString(R.string.image_my_location))) {
           myLocation = imageButton;
           break;
         }

@@ -383,7 +383,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         String description = cursor.getString(descriptionIndex);
 
         ListItemUtils.setListItem(TrackListActivity.this, view, isRecording, recordingTrackPaused,
-            iconId, R.string.icon_track, name, sharedOwner, totalTime, totalDistance, markerCount,
+            iconId, R.string.image_track, name, sharedOwner, totalTime, totalDistance, markerCount,
             startTime, true, category, description, null);
       }
     };

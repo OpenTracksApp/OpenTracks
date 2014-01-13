@@ -29,7 +29,7 @@ limitations under the License.
       android:layout_width="match_parent" />
     <ImageButton
       android:background="@android:color/transparent"
-      android:contentDescription="@string/icon_record_track"
+      android:contentDescription="@string/image_record"
       android:id="@+id/track_controller_record"
       android:layout_height="0dp"
       android:layout_weight="10"
@@ -56,7 +56,7 @@ limitations under the License.
     </RelativeLayout>
     <ImageButton
       android:background="@android:color/transparent"
-      android:contentDescription="@string/icon_stop_recording"
+      android:contentDescription="@string/image_stop"
       android:id="@+id/track_controller_stop"
       android:layout_height="0dp"
       android:layout_weight="10"

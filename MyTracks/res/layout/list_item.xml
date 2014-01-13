@@ -19,7 +19,7 @@ limitations under the License.
   android:layout_width="match_parent" >
   <!-- Photo -->
   <ImageView
-    android:contentDescription="@string/icon_marker"
+    android:contentDescription="@string/image_photo_marker"
     android:id="@+id/list_item_photo"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
@@ -31,7 +31,7 @@ limitations under the License.
     <!-- A gradient on top of the text -->
     <ImageView
       android:alpha=".6"
-      android:contentDescription="@string/icon_marker"
+      android:contentDescription="@string/image_photo_marker"
       android:id="@+id/list_item_text_gradient"
       android:layout_height="match_parent"
       android:layout_width="match_parent"
@@ -50,7 +50,7 @@ limitations under the License.
       <TableRow>
         <!-- Table 1: Row 1: Column 1: (icon) -->
         <ImageView
-          android:contentDescription="@string/icon_track"
+          android:contentDescription="@string/image_track"
           android:id="@+id/list_item_icon"
           android:layout_gravity="center_vertical"
           android:layout_height="wrap_content"
@@ -91,7 +91,7 @@ limitations under the License.
                 android:singleLine="true"
                 style="@style/TextSmall" />
               <ImageView
-                android:contentDescription="@string/icon_marker"
+                android:contentDescription="@string/image_marker_count"
                 android:id="@+id/list_item_marker_count_icon"
                 android:layout_gravity="bottom"
                 android:layout_height="wrap_content"

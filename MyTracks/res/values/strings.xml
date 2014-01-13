@@ -886,37 +886,53 @@ limitations under the License.
     Waiting for GPS signal
   </string>
 
-  <!-- Icon -->
-  <string name="icon_application"
-    translation_description="When sharing a track, we display a list of Android applications on the
-      device that can be used. This is the generic accessibility description for any application
-      icon.">
+  <!-- Image -->
+  <string name="image_application"
+    translation_description="The accessibility description for a generic application icon.">
     Application
   </string>
-  <string name="icon_marker"
-    translation_description="The accessibility description for the 'Marker' icon.">
+  <string name="image_arrow"
+    translation_description="The accessibility description for an arrow image.">
+    Arrow
+  </string>
+  <string name="image_marker"
+    translation_description="The accessibility description for a marker icon, as opposed to a track
+      icon.">
     Marker
   </string>
-  <string name="icon_my_location"
-    translation_description="The accessibility description for the 'My Location' icon.">
+  <string name="image_marker_count"
+    translation_description="The accessibility description for the marker count icon.">
+    Marker count
+  </string>
+  <string name="image_my_location"
+    translation_description="The accessibility description for the 'My Location' button.">
     My Location
   </string>
-  <string name="icon_pause_recording"
-    translation_description="The accessibility description for the pause recording icon.">
-    Pause recording
+  <string name="image_my_tracks_logo"
+    translation_description="The accessibility description for the 'My Tracks' logo.">
+    My Tracks logo
   </string>
-  <string name="icon_record_track"
-    translation_description="The accessibility description for the record track icon.">
-    Record track
+  <string name="image_pause"
+    translation_description="The accessibility description for the pause button.">
+    Pause
   </string>
-  <string name="icon_stop_recording"
-    translation_description="The accessibility description for the stop recording icon.">
-    Stop recording
+  <string name="image_photo_marker"
+    translation_description="The accessibility description for a photo marker">
+    Photo marker
   </string>
-  <string name="icon_track"
-    translation_description="The accessibility description for the 'Track' icon.">
+  <string name="image_record"
+    translation_description="The accessibility description for the record button.">
+    Record
+  </string>
+  <string name="image_stop"
+    translation_description="The accessibility description for the stop button.">
+    Stop
+  </string>
+  <string name="image_track"
+    translation_description="The accessibility description for a track icon, as opposed to a marker
+      icon.">
     Track
-  </string>
+  </string>      
 
   <!-- Import -->
   <string name="import_error"

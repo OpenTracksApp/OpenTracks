@@ -106,7 +106,7 @@ public class TrackController {
     recordImageButton.setImageResource(
         isRecording && !isPaused ? R.drawable.button_pause : R.drawable.button_record);
     recordImageButton.setContentDescription(activity.getString(
-        isRecording && !isPaused ? R.string.icon_pause_recording : R.string.icon_record_track));
+        isRecording && !isPaused ? R.string.image_pause : R.string.image_record));
 
     stopImageButton.setImageResource(
         isRecording ? R.drawable.button_stop : R.drawable.ic_button_stop_disabled);

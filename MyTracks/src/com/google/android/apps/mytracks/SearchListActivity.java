@@ -487,7 +487,7 @@ public class SearchListActivity extends AbstractSendToGoogleActivity implements 
     resultMap.put(IS_PAUSED_FIELD, true);
     resultMap.put(ICON_ID_FIELD,
         statistics ? R.drawable.ic_marker_yellow_pushpin : R.drawable.ic_marker_blue_pushpin);
-    resultMap.put(ICON_CONTENT_DESCRIPTION_ID_FIELD, R.string.icon_marker);
+    resultMap.put(ICON_CONTENT_DESCRIPTION_ID_FIELD, R.string.image_marker);
     resultMap.put(NAME_FIELD, waypoint.getName());
     resultMap.put(SHARED_OWNER_FIELD, null);
     // Display the marker's track name in the total time field
@@ -517,7 +517,7 @@ public class SearchListActivity extends AbstractSendToGoogleActivity implements 
     resultMap.put(IS_RECORDING_FIELD, track.getId() == recordingTrackId);
     resultMap.put(IS_PAUSED_FIELD, recordingTrackPaused);
     resultMap.put(ICON_ID_FIELD, TrackIconUtils.getIconDrawable(icon));
-    resultMap.put(ICON_CONTENT_DESCRIPTION_ID_FIELD, R.string.icon_track);
+    resultMap.put(ICON_CONTENT_DESCRIPTION_ID_FIELD, R.string.image_track);
     resultMap.put(NAME_FIELD, track.getName());
     resultMap.put(SHARED_OWNER_FIELD, track.getSharedOwner());
     resultMap.put(TOTAL_TIME_FIELD, StringUtils.formatElapsedTime(tripStatitics.getTotalTime()));

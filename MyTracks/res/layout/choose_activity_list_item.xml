@@ -22,7 +22,7 @@ limitations under the License.
   android:paddingLeft="16dp"
   android:paddingRight="16dp" >
   <ImageView
-    android:contentDescription="@string/icon_application"
+    android:contentDescription="@string/image_application"
     android:id="@+id/choose_activity_list_item_icon"
     android:layout_height="@android:dimen/app_icon_size"
     android:layout_width="@android:dimen/app_icon_size"

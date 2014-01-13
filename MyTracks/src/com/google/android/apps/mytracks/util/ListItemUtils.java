@@ -88,8 +88,7 @@ public class ListItemUtils {
     // Set icon
     if (isRecording) {
       iconId = isPaused ? R.drawable.ic_track_paused : R.drawable.ic_track_recording;
-      iconContentDescriptionId = isPaused ? R.string.icon_pause_recording
-          : R.string.icon_record_track;
+      iconContentDescriptionId = isPaused ? R.string.image_pause : R.string.image_record;
     }
 
     ImageView iconImageView = (ImageView) view.findViewById(R.id.list_item_icon);

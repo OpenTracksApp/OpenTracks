@@ -35,7 +35,7 @@ public class MultiColorTrackPathTest extends AndroidTestCase {
   }
 
   /**
-   * Tests the {@link MultiColorTrackPath#getColor(int)} when use dynamic speed
+   * Tests the {@link MultiColorTrackPath#getColor(double)} when use dynamic speed
    * track path descriptor.
    */
   public void testGetColor_DynamicSpeedTrackPathDescriptor() {
