@@ -1328,8 +1328,8 @@ limitations under the License.
     for account %1$s
   </string>
   <string name="permission_request_title"
-    translation_description="The title when requesting permission.">
-    Request permission
+    translation_description="The title when the 'My Tracks' app is requesting permission.">
+    My Tracks requesting permission
   </string>
   <string name="permission_write_description"
     translation_description="The permission description the Google Play Store shows during app
