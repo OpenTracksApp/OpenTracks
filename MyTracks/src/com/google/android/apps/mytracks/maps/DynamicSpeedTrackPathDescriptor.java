@@ -47,8 +47,8 @@ public class DynamicSpeedTrackPathDescriptor implements TrackPathDescriptor {
 
   private final Context context;
   private int speedMargin;
-  private int slowSpeed;
-  private int normalSpeed;
+  private double slowSpeed;
+  private double normalSpeed;
   private double averageMovingSpeed;
 
   @VisibleForTesting
@@ -62,14 +62,14 @@ public class DynamicSpeedTrackPathDescriptor implements TrackPathDescriptor {
   }
 
   @Override
-  public int getSlowSpeed() {
-    slowSpeed = (int) (averageMovingSpeed - (averageMovingSpeed * speedMargin / 100.0));
+  public double getSlowSpeed() {
+    slowSpeed = averageMovingSpeed - (averageMovingSpeed * speedMargin / 100.0);
     return slowSpeed;
   }
 
   @Override
-  public int getNormalSpeed() {
-    normalSpeed = (int) (averageMovingSpeed + (averageMovingSpeed * speedMargin / 100.0));
+  public double getNormalSpeed() {
+    normalSpeed = averageMovingSpeed + (averageMovingSpeed * speedMargin / 100.0);
     return normalSpeed;
   }
 

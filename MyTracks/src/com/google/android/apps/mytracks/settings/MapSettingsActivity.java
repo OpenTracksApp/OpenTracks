@@ -17,7 +17,6 @@
 package com.google.android.apps.mytracks.settings;
 
 import com.google.android.apps.mytracks.util.PreferencesUtils;
-import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Dialog;
@@ -247,10 +246,7 @@ public class MapSettingsActivity extends AbstractSettingsActivity {
       int keyId, int minValue, int maxValue, int defaultValue, String displayValue) {
     int value;
     try {
-      value = Integer.parseInt(displayValue);
-      if (!PreferencesUtils.isMetricUnits(this)) {
-        value = (int) (value * UnitConversions.MI_TO_KM);
-      }
+      value = Integer.parseInt(displayValue);     
     } catch (NumberFormatException e) {
       Log.e(TAG, "invalid value " + displayValue);
       value = defaultValue;
@@ -273,10 +269,6 @@ public class MapSettingsActivity extends AbstractSettingsActivity {
    * @param defaultValue the default value
    */
   private int getSpeedDisplayValue(int keyId, int defaultValue) {
-    int value = PreferencesUtils.getInt(this, keyId, defaultValue);
-    if (!PreferencesUtils.isMetricUnits(this)) {
-      value = (int) (value * UnitConversions.KM_TO_MI);
-    }
-    return value;
+    return PreferencesUtils.getInt(this, keyId, defaultValue);
   }
 }

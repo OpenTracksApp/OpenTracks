@@ -105,7 +105,7 @@ public class MultiColorTrackPath implements TrackPath {
   }
 
   @VisibleForTesting
-  protected int getColor(int speed) {
+  protected int getColor(double speed) {
     if (speed <= trackPathDescriptor.getSlowSpeed()) {
       return slowColor;
     } else if (speed <= trackPathDescriptor.getNormalSpeed()) {

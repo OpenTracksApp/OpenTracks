@@ -92,7 +92,7 @@ public class MapOverlay {
 
     private final boolean valid;
     private final LatLng latLng;
-    private final int speed;
+    private final double speed;
 
     /**
      * Constructor for an invalid cached location.
@@ -100,7 +100,7 @@ public class MapOverlay {
     public CachedLocation() {
       this.valid = false;
       this.latLng = null;
-      this.speed = -1;
+      this.speed = -1.0;
     }
 
     /**
@@ -109,9 +109,7 @@ public class MapOverlay {
     public CachedLocation(Location location) {
       this.valid = LocationUtils.isValidLocation(location);
       this.latLng = valid ? new LatLng(location.getLatitude(), location.getLongitude()) : null;
-      this.speed = location.hasSpeed() ? (int) Math.floor(
-          location.getSpeed() * UnitConversions.MS_TO_KMH)
-          : -1;
+      this.speed = location.hasSpeed() ? location.getSpeed() * UnitConversions.MS_TO_KMH : -1.0;
     }
 
     /**
@@ -124,7 +122,7 @@ public class MapOverlay {
     /**
      * Gets the speed in kilometers per hour.
      */
-    public int getSpeed() {
+    public double getSpeed() {
       return speed;
     }
 

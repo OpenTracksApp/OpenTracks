@@ -50,8 +50,9 @@ public class FixedSpeedTrackPathDescriptorTest extends AndroidTestCase {
           context, R.string.track_color_mode_medium_key, normalSpeedExpectations[i]);
       FixedSpeedTrackPathDescriptor fixedSpeedTrackPathDescriptor = new FixedSpeedTrackPathDescriptor(
           context);
-      assertEquals(slowSpeedExpectations[i], fixedSpeedTrackPathDescriptor.getSlowSpeed());
-      assertEquals(normalSpeedExpectations[i], fixedSpeedTrackPathDescriptor.getNormalSpeed());
+      assertEquals(slowSpeedExpectations[i], (int) fixedSpeedTrackPathDescriptor.getSlowSpeed());
+      assertEquals(
+          normalSpeedExpectations[i], (int) fixedSpeedTrackPathDescriptor.getNormalSpeed());
     }
   }
 
@@ -62,11 +63,11 @@ public class FixedSpeedTrackPathDescriptorTest extends AndroidTestCase {
   public void testGetSpeed() {
     FixedSpeedTrackPathDescriptor fixedSpeedTrackPathDescriptor = new FixedSpeedTrackPathDescriptor(
         context);
-    int slowSpeed = fixedSpeedTrackPathDescriptor.getSlowSpeed();
-    int normalSpeed = fixedSpeedTrackPathDescriptor.getNormalSpeed();
+    double slowSpeed = fixedSpeedTrackPathDescriptor.getSlowSpeed();
+    double normalSpeed = fixedSpeedTrackPathDescriptor.getNormalSpeed();
     // Change value in shared preferences
-    PreferencesUtils.setInt(context, R.string.track_color_mode_slow_key, slowSpeed + 2);
-    PreferencesUtils.setInt(context, R.string.track_color_mode_medium_key, normalSpeed + 2);
+    PreferencesUtils.setInt(context, R.string.track_color_mode_slow_key, (int) (slowSpeed + 2));
+    PreferencesUtils.setInt(context, R.string.track_color_mode_medium_key, (int) (normalSpeed + 2));
     assertEquals(slowSpeed, fixedSpeedTrackPathDescriptor.getSlowSpeed());
     assertEquals(normalSpeed, fixedSpeedTrackPathDescriptor.getNormalSpeed());
   }

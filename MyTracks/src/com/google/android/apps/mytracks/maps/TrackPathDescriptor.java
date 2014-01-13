@@ -28,12 +28,12 @@ public interface TrackPathDescriptor {
   /**
    * Gets the maximum speed which is considered slow.
    */
-  public int getSlowSpeed();
+  public double getSlowSpeed();
 
   /**
    * Gets the maximum speed which is considered normal.
    */
-  public int getNormalSpeed();
+  public double getNormalSpeed();
 
   /**
    * Updates state.

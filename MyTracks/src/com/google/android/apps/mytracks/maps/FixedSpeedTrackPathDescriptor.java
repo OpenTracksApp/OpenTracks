@@ -19,6 +19,7 @@ package com.google.android.apps.mytracks.maps;
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
@@ -40,18 +41,24 @@ public class FixedSpeedTrackPathDescriptor implements TrackPathDescriptor {
               || key.equals(PreferencesUtils.getKey(context, R.string.track_color_mode_slow_key))) {
             slowSpeed = PreferencesUtils.getInt(context, R.string.track_color_mode_slow_key,
                 PreferencesUtils.TRACK_COLOR_MODE_SLOW_DEFAULT);
+            if (!PreferencesUtils.isMetricUnits(context)) {
+              slowSpeed = slowSpeed * UnitConversions.MI_TO_KM;
+            }
           }
           if (key == null || key.equals(
               PreferencesUtils.getKey(context, R.string.track_color_mode_medium_key))) {
             normalSpeed = PreferencesUtils.getInt(context, R.string.track_color_mode_medium_key,
                 PreferencesUtils.TRACK_COLOR_MODE_MEDIUM_DEFAULT);
+            if (!PreferencesUtils.isMetricUnits(context)) {
+              normalSpeed = normalSpeed * UnitConversions.MI_TO_KM;
+            }
           }
         }
       };
 
   private final Context context;
-  private int slowSpeed;
-  private int normalSpeed;
+  private double slowSpeed;
+  private double normalSpeed;
 
   public FixedSpeedTrackPathDescriptor(Context context) {
     this.context = context;
@@ -62,12 +69,12 @@ public class FixedSpeedTrackPathDescriptor implements TrackPathDescriptor {
   }
 
   @Override
-  public int getSlowSpeed() {
+  public double getSlowSpeed() {
     return slowSpeed;
   }
 
   @Override
-  public int getNormalSpeed() {
+  public double getNormalSpeed() {
     return normalSpeed;
   }
 
