@@ -37,16 +37,33 @@ public class FixedSpeedTrackPathDescriptor implements TrackPathDescriptor {
       sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
           @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+          boolean updateSlowSpeed = false;
+          boolean updateNormalSpeed = false;
           if (key == null
               || key.equals(PreferencesUtils.getKey(context, R.string.track_color_mode_slow_key))) {
+            updateSlowSpeed = true;
+
+          }
+          if (key == null || key.equals(
+              PreferencesUtils.getKey(context, R.string.track_color_mode_medium_key))) {
+            updateNormalSpeed = true;
+
+          }
+          if (key == null
+              || key.equals(PreferencesUtils.getKey(context, R.string.stats_units_key))) {
+            updateSlowSpeed = true;
+            updateNormalSpeed = true;
+          }
+
+          if (updateSlowSpeed) {
             slowSpeed = PreferencesUtils.getInt(context, R.string.track_color_mode_slow_key,
                 PreferencesUtils.TRACK_COLOR_MODE_SLOW_DEFAULT);
             if (!PreferencesUtils.isMetricUnits(context)) {
               slowSpeed = slowSpeed * UnitConversions.MI_TO_KM;
             }
           }
-          if (key == null || key.equals(
-              PreferencesUtils.getKey(context, R.string.track_color_mode_medium_key))) {
+
+          if (updateNormalSpeed) {
             normalSpeed = PreferencesUtils.getInt(context, R.string.track_color_mode_medium_key,
                 PreferencesUtils.TRACK_COLOR_MODE_MEDIUM_DEFAULT);
             if (!PreferencesUtils.isMetricUnits(context)) {
@@ -62,7 +79,6 @@ public class FixedSpeedTrackPathDescriptor implements TrackPathDescriptor {
 
   public FixedSpeedTrackPathDescriptor(Context context) {
     this.context = context;
-
     context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE)
         .registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);

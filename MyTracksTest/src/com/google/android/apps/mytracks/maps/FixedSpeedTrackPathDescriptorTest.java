@@ -16,59 +16,77 @@
 package com.google.android.apps.mytracks.maps;
 
 import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
 import android.test.AndroidTestCase;
 
 /**
- * Tests for the {@link DynamicSpeedTrackPathDescriptor}.
+ * Tests for the {@link FixedSpeedTrackPathDescriptor}.
  * 
  * @author Youtao Liu
  */
 public class FixedSpeedTrackPathDescriptorTest extends AndroidTestCase {
 
-  private Context context;
-
   @Override
-  protected void setUp() throws Exception {
-    super.setUp();
-    context = getContext();
+  protected void tearDown() throws Exception {
+    Context context = getContext();
+    PreferencesUtils.setString(
+        context, R.string.stats_units_key, PreferencesUtils.STATS_UNITS_DEFAULT);
+    PreferencesUtils.setInt(context, R.string.track_color_mode_slow_key,
+        PreferencesUtils.TRACK_COLOR_MODE_SLOW_DEFAULT);
+    PreferencesUtils.setInt(context, R.string.track_color_mode_medium_key,
+        PreferencesUtils.TRACK_COLOR_MODE_MEDIUM_DEFAULT);
+    super.tearDown();
   }
 
   /**
-   * Tests the initialization of slowSpeed and normalSpeed in {@link DynamicSpeedTrackPathDescriptor#DynamicSpeedTrackPathDescriptor(Context)}
-   * .
+   * Tests when the slow speed and the normal speed are both zero.
    */
-  public void testConstructor() {
-    int[] slowSpeedExpectations = { 0, 1, 99, PreferencesUtils.TRACK_COLOR_MODE_SLOW_DEFAULT };
-    int[] normalSpeedExpectations = { 0, 1, 99, PreferencesUtils.TRACK_COLOR_MODE_MEDIUM_DEFAULT };
-    for (int i = 0; i < slowSpeedExpectations.length; i++) {
-      PreferencesUtils.setInt(
-          context, R.string.track_color_mode_slow_key, slowSpeedExpectations[i]);
-      PreferencesUtils.setInt(
-          context, R.string.track_color_mode_medium_key, normalSpeedExpectations[i]);
-      FixedSpeedTrackPathDescriptor fixedSpeedTrackPathDescriptor = new FixedSpeedTrackPathDescriptor(
-          context);
-      assertEquals(slowSpeedExpectations[i], (int) fixedSpeedTrackPathDescriptor.getSlowSpeed());
-      assertEquals(
-          normalSpeedExpectations[i], (int) fixedSpeedTrackPathDescriptor.getNormalSpeed());
-    }
+  public void testGetSpeed_zero() {
+    testSpeed(0, 0);
   }
 
   /**
-   * Tests {@link FixedSpeedTrackPathDescriptor#getSlowSpeed()} and
-   * {@link FixedSpeedTrackPathDescriptor#getNormalSpeed()}.
+   * Tests when the slow speed and the normal speed are both one.
    */
-  public void testGetSpeed() {
+  public void testGetSpeed_one() {
+    testSpeed(1, 1);
+  }
+
+  /**
+   * Tests when the slow speed and the normal speed are both large number. E.g.,
+   * 99 and 100.
+   */
+  public void testGetSpeed_large() {
+    testSpeed(99, 100);
+  }
+
+  /**
+   * Tests when the slow speed and the normal speed are both the default value.
+   */
+  public void testGetSpeed_default() {
+    testSpeed(PreferencesUtils.TRACK_COLOR_MODE_SLOW_DEFAULT,
+        PreferencesUtils.TRACK_COLOR_MODE_MEDIUM_DEFAULT);
+  }
+
+  private void testSpeed(int slowSpeed, int normalSpeed) {
+    testSpeed(slowSpeed, normalSpeed, true);
+    testSpeed(slowSpeed, normalSpeed, false);
+  }
+
+  private void testSpeed(int slowSpeed, int normalSpeed, boolean metric) {
+    Context context = getContext();
+    PreferencesUtils.setString(context, R.string.stats_units_key,
+        context.getString(metric ? R.string.stats_units_metric : R.string.stats_units_imperial));
+    PreferencesUtils.setInt(context, R.string.track_color_mode_slow_key, slowSpeed);
+    PreferencesUtils.setInt(context, R.string.track_color_mode_medium_key, normalSpeed);
     FixedSpeedTrackPathDescriptor fixedSpeedTrackPathDescriptor = new FixedSpeedTrackPathDescriptor(
         context);
-    double slowSpeed = fixedSpeedTrackPathDescriptor.getSlowSpeed();
-    double normalSpeed = fixedSpeedTrackPathDescriptor.getNormalSpeed();
-    // Change value in shared preferences
-    PreferencesUtils.setInt(context, R.string.track_color_mode_slow_key, (int) (slowSpeed + 2));
-    PreferencesUtils.setInt(context, R.string.track_color_mode_medium_key, (int) (normalSpeed + 2));
-    assertEquals(slowSpeed, fixedSpeedTrackPathDescriptor.getSlowSpeed());
-    assertEquals(normalSpeed, fixedSpeedTrackPathDescriptor.getNormalSpeed());
+    double expectedSlowSpeed = metric ? slowSpeed : slowSpeed * UnitConversions.MI_TO_KM;
+    double expectedNormalSpeed = metric ? normalSpeed : normalSpeed * UnitConversions.MI_TO_KM;
+    assertEquals(expectedSlowSpeed, fixedSpeedTrackPathDescriptor.getSlowSpeed());
+    assertEquals(expectedNormalSpeed, fixedSpeedTrackPathDescriptor.getNormalSpeed());
   }
 }
