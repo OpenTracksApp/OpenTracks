@@ -127,6 +127,9 @@ public class MarkerDetailFragment extends Fragment {
     View view = inflater.inflate(R.layout.marker_detail_fragment, container, false);
 
     photo = (ImageView) view.findViewById(R.id.marker_detail_waypoint_photo);
+    textGradient = (ImageView) view.findViewById(R.id.marker_detail_waypoint_text_gradient);
+    waypointInfo = (LinearLayout) view.findViewById(R.id.marker_detail_waypoint_info);
+    
     photo.setOnClickListener(new View.OnClickListener() {
         @Override
       public void onClick(View v) {
@@ -139,9 +142,6 @@ public class MarkerDetailFragment extends Fragment {
         }
       }
     });
-    textGradient = (ImageView) view.findViewById(R.id.marker_detail_waypoint_text_gradient);
-    waypointInfo = (LinearLayout) view.findViewById(R.id.marker_detail_waypoint_info);
-
     return view;
   };
 

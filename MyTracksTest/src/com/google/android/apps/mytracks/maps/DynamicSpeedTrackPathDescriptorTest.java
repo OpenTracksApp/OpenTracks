@@ -62,7 +62,7 @@ public class DynamicSpeedTrackPathDescriptorTest extends AndroidTestCase {
     dynamicSpeedTrackPathDescriptor.setAverageMovingSpeed(50);
     dynamicSpeedTrackPathDescriptor.setSpeedMargin(10);
     assertEquals(50.0, dynamicSpeedTrackPathDescriptor.getAverageMovingSpeed());
-    assertEquals(45, dynamicSpeedTrackPathDescriptor.getSlowSpeed());
+    assertEquals(45.0, dynamicSpeedTrackPathDescriptor.getSlowSpeed());
   }
 
   /**
@@ -74,7 +74,7 @@ public class DynamicSpeedTrackPathDescriptorTest extends AndroidTestCase {
     dynamicSpeedTrackPathDescriptor.setAverageMovingSpeed(50);
     dynamicSpeedTrackPathDescriptor.setSpeedMargin(10);
     assertEquals(50.0, dynamicSpeedTrackPathDescriptor.getAverageMovingSpeed());
-    assertEquals(55, dynamicSpeedTrackPathDescriptor.getNormalSpeed());
+    assertEquals(55.0, dynamicSpeedTrackPathDescriptor.getNormalSpeed());
   }
 
   /**

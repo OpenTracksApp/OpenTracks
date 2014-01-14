@@ -932,7 +932,7 @@ limitations under the License.
     translation_description="The accessibility description for a track icon, as opposed to a marker
       icon.">
     Track
-  </string>      
+  </string>
 
   <!-- Import -->
   <string name="import_error"
@@ -1050,7 +1050,7 @@ limitations under the License.
     translation_description="The title of the marker detail page.
 
       %1$d position. E.g., '1'.
-      %1$d totalt. E.g., '5'.">
+      %1$d total. E.g., '5'.">
     %1$d of %2$d
   </string>
 

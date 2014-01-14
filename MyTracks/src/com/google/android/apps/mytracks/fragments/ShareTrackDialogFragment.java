@@ -111,16 +111,20 @@ public class ShareTrackDialogFragment extends AbstractMyTracksDialogFragment {
           .setPositiveButton(R.string.generic_ok, null).create();
     }
 
+    // Get all the views
     View view = fragmentActivity.getLayoutInflater().inflate(R.layout.share_track, null);
-
-    // Setup publicCheckBox
     publicCheckBox = (CheckBox) view.findViewById(R.id.share_track_public);
+    inviteCheckBox = (CheckBox) view.findViewById(R.id.share_track_invite);
+    multiAutoCompleteTextView = (MultiAutoCompleteTextView) view.findViewById(
+        R.id.share_track_emails);
+    accountSpinner = (Spinner) view.findViewById(R.id.share_track_account);
+    
+    // Setup publicCheckBox
     publicCheckBox.setChecked(PreferencesUtils.getBoolean(
         fragmentActivity, R.string.share_track_public_key,
         PreferencesUtils.SHARE_TRACK_PUBLIC_DEFAULT));
 
     // Setup inviteCheckBox
-    inviteCheckBox = (CheckBox) view.findViewById(R.id.share_track_invite);
     inviteCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
         @Override
       public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -132,10 +136,7 @@ public class ShareTrackDialogFragment extends AbstractMyTracksDialogFragment {
         PreferencesUtils.SHARE_TRACK_INVITE_DEFAULT));
 
     // Setup multiAutoCompleteTextView
-    multiAutoCompleteTextView = (MultiAutoCompleteTextView) view.findViewById(
-        R.id.share_track_emails);
     multiAutoCompleteTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-
     SimpleCursorAdapter adapter = new SimpleCursorAdapter(fragmentActivity,
         R.layout.add_emails_item, getAutoCompleteCursor(fragmentActivity, null), new String[] {
             ContactsContract.Contacts.DISPLAY_NAME, ContactsContract.CommonDataKinds.Email.DATA },
@@ -156,7 +157,6 @@ public class ShareTrackDialogFragment extends AbstractMyTracksDialogFragment {
     multiAutoCompleteTextView.setAdapter(adapter);
 
     // Setup accountSpinner
-    accountSpinner = (Spinner) view.findViewById(R.id.share_track_account);
     accountSpinner.setVisibility(accounts.length > 1 ? View.VISIBLE : View.GONE);
     AccountUtils.setupAccountSpinner(fragmentActivity, accountSpinner, accounts);
     
