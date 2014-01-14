@@ -55,21 +55,29 @@ limitations under the License.
     <LinearLayout
       android:layout_height="match_parent"
       android:layout_toRightOf="@id/track_list_arrow_long"
-      android:layout_width="wrap_content"
-      android:orientation="vertical"
-      android:paddingRight="20dp" >
+      android:layout_width="match_parent"
+      android:orientation="vertical" >
       <View
         android:layout_height="0dp"
         android:layout_weight="4"
         android:layout_width="match_parent" />
-      <TextView
-        android:gravity="left"
+      <LinearLayout
         android:layout_height="0dp"
         android:layout_weight="24"
-        android:layout_width="wrap_content"
-        android:text="@string/track_list_empty_message"
-        style="@style/TextLarge" >
-      </TextView>
+        android:layout_width="match_parent" >
+        <TextView
+          android:layout_height="wrap_content"
+          android:layout_weight=".7"
+          android:layout_width="0dp"
+          android:text="@string/track_list_empty_message"
+          android:textColor="@color/list_empty_text"
+          style="@style/TextLarge" >
+        </TextView>
+        <View
+          android:layout_height="match_parent"
+          android:layout_weight=".3"
+          android:layout_width="0dp" />
+      </LinearLayout>
     </LinearLayout>
   </RelativeLayout>
 </LinearLayout>

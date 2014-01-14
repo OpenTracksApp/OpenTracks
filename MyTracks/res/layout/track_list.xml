@@ -64,6 +64,7 @@ limitations under the License.
         android:layout_weight="22"
         android:layout_width="0dp"
         android:text="@string/track_list_empty_message"
+        android:textColor="@color/list_empty_text"
         style="@style/TextLarge" >
       </TextView>
       <View

@@ -28,6 +28,7 @@ limitations under the License.
   <color name="chart_speed_border">#FF0066FF</color> <!-- blue -->
   <color name="chart_speed_fill">#40C8E0FF</color> <!-- transparent blue -->
   <color name="holo_orange_dark">#FFFF8800</color>
+  <color name="list_empty_text">#FFCCCCCC</color>
   <color name="recording_text">#FFBE161B</color> <!-- red -->
   <color name="stats_large_label">#FFFAAD2C</color> <!-- orange -->
   <color name="stats_separator">#99999999</color> <!-- light gray -->
