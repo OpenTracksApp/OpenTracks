@@ -23,6 +23,7 @@ import com.google.android.apps.mytracks.util.GoogleFeedbackUtils;
 import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.maps.mytracks.R;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -41,6 +42,9 @@ import java.util.Locale;
  */
 public class HelpActivity extends AbstractMyTracksActivity implements EulaCaller {
 
+  WebView webView;
+
+  @SuppressLint("SetJavaScriptEnabled")
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -50,22 +54,35 @@ public class HelpActivity extends AbstractMyTracksActivity implements EulaCaller
     ApiAdapterFactory.getApiAdapter()
         .setTitleAndSubtitle(this, getString(R.string.menu_help), subtitle);
 
-    WebView webView = (WebView) findViewById(R.id.help_webview);
-    String language = Locale.getDefault().getLanguage();
-    if (language == null || language.equals("")) {
-      language = "en";
-    }
-    webView.loadUrl(getString(R.string.my_tracks_help_url, language));
+    webView = (WebView) findViewById(R.id.help_webview);
     webView.getSettings().setJavaScriptEnabled(true);
     webView.setWebViewClient(new WebViewClient());
+
+    if (savedInstanceState == null) {
+      String language = Locale.getDefault().getLanguage();
+      if (language == null || language.equals("")) {
+        language = "en";
+      }
+      webView.loadUrl(getString(R.string.my_tracks_help_url, language));
+    } else {
+      webView.restoreState(savedInstanceState);
+    }
 
     findViewById(R.id.help_feedback).setOnClickListener(new View.OnClickListener() {
 
         @Override
       public void onClick(View v) {
-          GoogleFeedbackUtils.bindFeedback(HelpActivity.this);
+        GoogleFeedbackUtils.bindFeedback(HelpActivity.this);
       }
     });
+  }
+
+  @Override
+  protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    if (webView != null) {
+      webView.saveState(outState);
+    }
   }
 
   @Override
