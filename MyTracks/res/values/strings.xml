@@ -2173,10 +2173,17 @@ limitations under the License.
   </string>
 
   <!-- Track Delete -->
-  <string name="track_delete_all_confirm_message"
-    translation_description="When deleting all the tracks, the confirmation message.">
+  <string name="track_delete_all_confirm_message_sync_off"
+    translation_description="When deleting all the tracks, the confirmation message when sync to
+      Google Drive is off.">
+    All tracks and markers will be permanently deleted from the device. Exported tracks on Google
+    Drive and external storage will not be deleted.
+  </string>
+  <string name="track_delete_all_confirm_message_sync_on"
+    translation_description="When deleting all the tracks, the confirmation message when sync to
+      Google Drive is on.">
     All tracks and markers will be permanently deleted from the device. Google Drive sync will be
-    turned off. No tracks will be deleted on Google Drive.
+    turned off. Exported tracks on Google Drive and external storage will not be deleted.
   </string>
   <string name="track_delete_one_confirm_message"
     translation_description="When deleting one track, the confirmation message.">

@@ -17,6 +17,7 @@
 package com.google.android.apps.mytracks.fragments;
 
 import com.google.android.apps.mytracks.util.DialogUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -84,8 +85,11 @@ public class ConfirmDeleteDialogFragment extends AbstractMyTracksDialogFragment 
     int titleId;
     int messageId;
     if (trackIds.length == 1 && trackIds[0] == -1L) {
+      boolean driveSync = PreferencesUtils.getBoolean(
+          getActivity(), R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT);
       titleId = R.string.generic_delete_all_confirm_title;
-      messageId = R.string.track_delete_all_confirm_message;
+      messageId = driveSync ? R.string.track_delete_all_confirm_message_sync_on
+          : R.string.track_delete_all_confirm_message_sync_off;
     } else {
       titleId = trackIds.length > 1 ? R.string.generic_delete_selected_confirm_title
           : R.string.track_delete_one_confirm_title;
