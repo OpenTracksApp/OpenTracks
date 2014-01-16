@@ -32,6 +32,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 
 import java.util.Locale;
 
@@ -68,13 +69,17 @@ public class HelpActivity extends AbstractMyTracksActivity implements EulaCaller
       webView.restoreState(savedInstanceState);
     }
 
-    findViewById(R.id.help_feedback).setOnClickListener(new View.OnClickListener() {
-
-        @Override
-      public void onClick(View v) {
-        GoogleFeedbackUtils.bindFeedback(HelpActivity.this);
-      }
-    });
+    Button feedback = (Button) findViewById(R.id.help_feedback);
+    boolean showFeedback = ApiAdapterFactory.getApiAdapter().isGoogleFeedbackAvailable();
+    feedback.setVisibility(showFeedback ? View.VISIBLE : View.GONE);
+    if (showFeedback) {
+      feedback.setOnClickListener(new View.OnClickListener() {
+          @Override
+        public void onClick(View v) {
+          GoogleFeedbackUtils.bindFeedback(HelpActivity.this);
+        }
+      });
+    }
   }
 
   @Override
