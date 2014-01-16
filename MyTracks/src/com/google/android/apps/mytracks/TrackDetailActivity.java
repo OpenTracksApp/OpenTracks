@@ -133,11 +133,11 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
         public void run() {
           trackController.update(trackId == recordingTrackId, recordingTrackPaused);
           if (hasPhoto && photoUri != null) {
+            hasPhoto = false;
             WaypointCreationRequest waypointCreationRequest = new WaypointCreationRequest(
                 WaypointType.WAYPOINT, false, null, null, null, null, photoUri.toString());
             long id = TrackRecordingServiceConnectionUtils.addMarker(
                 TrackDetailActivity.this, trackRecordingServiceConnection, waypointCreationRequest);
-            hasPhoto = false;
 
             if (id != -1L) {
               FileUtils.updateMediaScanner(TrackDetailActivity.this, photoUri);
