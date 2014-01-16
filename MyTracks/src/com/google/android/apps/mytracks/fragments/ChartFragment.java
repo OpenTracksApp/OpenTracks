@@ -301,6 +301,12 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     }
     return false;
   }
+  
+  @Override
+  public boolean onMapTypeChanged(int mapType) {
+    // We don't care.
+    return false;
+  }
 
   /**
    * Checks the chart settings.

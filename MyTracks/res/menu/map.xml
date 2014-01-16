@@ -17,24 +17,9 @@ limitations under the License.
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
   <item
     android:icon="@drawable/ic_menu_map_layer"
+    android:id="@+id/menu_map_layer"
     android:orderInCategory="7"
     android:showAsAction="ifRoom"
     android:title="@string/menu_map_layer">
-    <menu>
-      <group android:checkableBehavior="single" >
-        <item
-          android:id="@+id/menu_map"
-          android:title="@string/menu_map"/>
-        <item
-          android:id="@+id/menu_satellite"
-          android:title="@string/menu_satellite"/>
-        <item
-          android:id="@+id/menu_satellite_with_streets"
-          android:title="@string/menu_satellite_with_streets"/>
-        <item
-          android:id="@+id/menu_terrain"
-          android:title="@string/menu_terrain"/>
-      </group>
-    </menu>
   </item>
 </menu>

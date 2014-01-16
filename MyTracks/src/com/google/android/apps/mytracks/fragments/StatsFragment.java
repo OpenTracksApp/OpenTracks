@@ -251,6 +251,12 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     return false;
   }
 
+  @Override
+  public boolean onMapTypeChanged(int mapType) {
+    // We don't care
+    return false;
+  }
+
   /**
    * Resumes the trackDataHub. Needs to be synchronized because trackDataHub can
    * be accessed by multiple threads.

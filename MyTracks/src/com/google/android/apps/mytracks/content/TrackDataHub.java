@@ -74,6 +74,7 @@ public class TrackDataHub implements DataSourceListener {
   private boolean reportSpeed;
   private int recordingGpsAccuracy;
   private int recordingDistanceInterval;
+  private int mapType;
 
   // Track points sampling state
   private int numLoadedPoints;
@@ -334,6 +335,18 @@ public class TrackDataHub implements DataSourceListener {
             }
           }
         }
+        if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.map_type_key))) {
+          mapType = PreferencesUtils.getInt(
+              context, R.string.map_type_key, PreferencesUtils.MAP_TYPE_DEFAUlT);
+          if (key != null) {
+            for (TrackDataListener trackDataListener :
+                trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
+              if (trackDataListener.onMapTypeChanged(mapType)) {
+                loadDataForListener(trackDataListener);
+              }
+            }
+          }
+        }
       }
     });
   }
@@ -353,6 +366,7 @@ public class TrackDataHub implements DataSourceListener {
       trackDataListener.onReportSpeedChanged(reportSpeed);
       trackDataListener.onRecordingGpsAccuracy(recordingGpsAccuracy);
       trackDataListener.onRecordingDistanceIntervalChanged(recordingDistanceInterval);
+      trackDataListener.onMapTypeChanged(mapType);
     }
 
     notifyTracksTableUpdate(trackDataManager.getListeners(TrackDataType.TRACKS_TABLE));
@@ -381,6 +395,7 @@ public class TrackDataHub implements DataSourceListener {
       trackDataListener.onReportSpeedChanged(reportSpeed);
       trackDataListener.onRecordingGpsAccuracy(recordingGpsAccuracy);
       trackDataListener.onRecordingDistanceIntervalChanged(recordingDistanceInterval);
+      trackDataListener.onMapTypeChanged(mapType);
     }
 
     if (trackDataTypes.contains(TrackDataType.TRACKS_TABLE)) {

@@ -123,4 +123,12 @@ public interface TrackDataListener {
    * @return true to reload all the data, false otherwise.
    */
   public boolean onRecordingDistanceIntervalChanged(int recordingDistanceInterval);
+  
+  /**
+   * Called when the map type preference value is changed.
+   * 
+   * @param mapType the new value
+   * @return true to reload all the data, false otherwise.
+   */
+  public boolean onMapTypeChanged(int mapType);
 }

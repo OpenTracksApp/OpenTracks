@@ -276,12 +276,6 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
 
     if (googleMap != null) {
 
-      // Update map type
-      int mapType = PreferencesUtils.getInt(
-          getActivity(), R.string.map_type_key, PreferencesUtils.MAP_TYPE_DEFAUlT);
-      googleMap.setMapType(mapType);
-      ApiAdapterFactory.getApiAdapter().invalidMenu(getActivity());
-
       // Disable my location if gps is disabled
       googleMap.setMyLocationEnabled(isGpsProviderEnabled);
     }
@@ -330,58 +324,12 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
   }
 
   @Override
-  public void onPrepareOptionsMenu(Menu menu) {
-    if (googleMap != null) {
-      int id;
-      switch (googleMap.getMapType()) {
-        case GoogleMap.MAP_TYPE_NORMAL:
-          id = R.id.menu_map;
-          break;
-        case GoogleMap.MAP_TYPE_SATELLITE:
-          id = R.id.menu_satellite;
-          break;
-        case GoogleMap.MAP_TYPE_HYBRID:
-          id = R.id.menu_satellite_with_streets;
-          break;
-        case GoogleMap.MAP_TYPE_TERRAIN:
-          id = R.id.menu_terrain;
-          break;
-        default:
-          id = R.id.menu_map;
-      }
-      MenuItem menuItem = menu.findItem(id);
-      if (menuItem != null) {
-        menuItem.setChecked(true);
-      }
-    }
-    super.onPrepareOptionsMenu(menu);
-  }
-
-  @Override
   public boolean onOptionsItemSelected(MenuItem menuItem) {
-    int type = GoogleMap.MAP_TYPE_NORMAL;
-    switch (menuItem.getItemId()) {
-      case R.id.menu_map:
-        type = GoogleMap.MAP_TYPE_NORMAL;
-        break;
-      case R.id.menu_satellite:
-        type = GoogleMap.MAP_TYPE_SATELLITE;
-        break;
-      case R.id.menu_satellite_with_streets:
-        type = GoogleMap.MAP_TYPE_HYBRID;
-        break;
-      case R.id.menu_terrain:
-        type = GoogleMap.MAP_TYPE_TERRAIN;
-        break;
-      default:
-        return super.onOptionsItemSelected(menuItem);
+    if (menuItem.getItemId() == R.id.menu_map_layer) {
+      ((TrackDetailActivity) getActivity()).showMapLayerDialog();
+      return true;
     }
-    if (googleMap != null) {
-      googleMap.setMapType(type);
-      menuItem.setChecked(true);
-      PreferencesUtils.setInt(getActivity(), R.string.map_type_key, type);
-    }
-    return true;
+    return super.onOptionsItemSelected(menuItem);
   }
 
   @Override
@@ -497,6 +445,20 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
   @Override
   public boolean onRecordingDistanceIntervalChanged(int minRecordingDistance) {
     // We don't care.
+    return false;
+  }
+  
+  @Override
+  public boolean onMapTypeChanged(final int mapType) {
+    if (isResumed()) {
+      getActivity().runOnUiThread(new Runnable() {
+        public void run() {
+          if (isResumed() && googleMap != null) {
+            googleMap.setMapType(mapType);
+          }
+        }
+      });
+    }
     return false;
   }
 

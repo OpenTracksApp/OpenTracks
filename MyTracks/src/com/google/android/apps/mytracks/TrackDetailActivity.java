@@ -29,6 +29,7 @@ import com.google.android.apps.mytracks.fragments.ExportDialogFragment;
 import com.google.android.apps.mytracks.fragments.ExportDialogFragment.ExportCaller;
 import com.google.android.apps.mytracks.fragments.ExportDialogFragment.ExportType;
 import com.google.android.apps.mytracks.fragments.FrequencyDialogFragment;
+import com.google.android.apps.mytracks.fragments.MapLayerDialogFragment;
 import com.google.android.apps.mytracks.fragments.MyTracksMapFragment;
 import com.google.android.apps.mytracks.fragments.PlayMultipleDialogFragment;
 import com.google.android.apps.mytracks.fragments.PlayMultipleDialogFragment.PlayMultipleCaller;
@@ -630,5 +631,13 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
   @Override
   public void onPlayMultipleDone(long[] trackIds) {
     playTracks(trackIds);
+  }
+  
+  /**
+   * Shows the map layer dialog.
+   */
+  public void showMapLayerDialog() {
+    new MapLayerDialogFragment().show(
+        getSupportFragmentManager(), MapLayerDialogFragment.MAP_LAYER_DIALOG_TAG);
   }
 }
