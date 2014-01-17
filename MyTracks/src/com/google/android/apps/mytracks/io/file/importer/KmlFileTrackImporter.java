@@ -293,20 +293,25 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
    * On sensor value end. gx:value end tag.
    */
   private void onSensorValueEnd() throws SAXException {
-    if (content != null) {
-      int value;
-      try {
-        value = Integer.parseInt(content.trim());
-      } catch (NumberFormatException e) {
-        throw new SAXException(createErrorMessage("Unable to parse gx:value:" + content), e);
-      }
-      if (POWER.equals(sensorName)) {
-        powerList.add(value);
-      } else if (HEART_RATE.equals(sensorName)) {
-        heartRateList.add(value);
-      } else if (CADENCE.equals(sensorName)) {
-        cadenceList.add(value);
-      }
+    if (content == null) {
+      return;
+    }
+    content = content.trim();
+    if (content.equals("")) {
+      return;
+    }
+    int value;
+    try {
+      value = Integer.parseInt(content);
+    } catch (NumberFormatException e) {
+      throw new SAXException(createErrorMessage("Unable to parse gx:value:" + content), e);
+    }
+    if (POWER.equals(sensorName)) {
+      powerList.add(value);
+    } else if (HEART_RATE.equals(sensorName)) {
+      heartRateList.add(value);
+    } else if (CADENCE.equals(sensorName)) {
+      cadenceList.add(value);
     }
   }
 }
