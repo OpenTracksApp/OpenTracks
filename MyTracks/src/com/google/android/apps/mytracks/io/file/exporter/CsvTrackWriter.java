@@ -31,6 +31,7 @@ import android.location.Location;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.NumberFormat;
+import java.util.Locale;
 
 /**
  * Write track as CSV to a file. See RFC 4180 for info on CSV. Output three
@@ -51,7 +52,7 @@ import java.text.NumberFormat;
  */
 public class CsvTrackWriter implements TrackWriter {
 
-  private static final NumberFormat SHORT_FORMAT = NumberFormat.getInstance();
+  private static final NumberFormat SHORT_FORMAT = NumberFormat.getInstance(Locale.US);
 
   static {
     SHORT_FORMAT.setMaximumFractionDigits(4);
