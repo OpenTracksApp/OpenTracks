@@ -61,6 +61,12 @@ public class ChooseActivityDialogFragment extends AbstractMyTracksDialogFragment
     public void onChooseActivityDone(String packageName, String className);
   }
   
+  private static class ViewHolder {
+    TextView text1;
+    TextView text2;
+    ImageView icon;
+  }
+
   public static final String CHOOSE_ACTIVITY_DIALOG_TAG = "chooseActivityDialog";
 
   private ChooseActivityCaller caller;
@@ -88,24 +94,29 @@ public class ChooseActivityDialogFragment extends AbstractMyTracksDialogFragment
         @Override
       public View getView(int position, View convertView, ViewGroup parent) {
         View view;
+        ViewHolder viewHolder;
         if (convertView == null) {
           view = getActivity().getLayoutInflater()
               .inflate(R.layout.choose_activity_list_item, parent, false);
+          viewHolder = new ViewHolder();
+          viewHolder.text1 = (TextView) view.findViewById(R.id.choose_activity_list_item_text1);
+          viewHolder.text2 = (TextView) view.findViewById(R.id.choose_activity_list_item_text2);
+          viewHolder.icon = (ImageView) view.findViewById(R.id.choose_activity_list_item_icon);
+          view.setTag(viewHolder);
         } else {
           view = convertView;
+          viewHolder = (ViewHolder) view.getTag();
         }
         DisplayInfo displayInfo = getItem(position);
-        TextView text1 = (TextView) view.findViewById(R.id.choose_activity_list_item_text1);
-        TextView text2 = (TextView) view.findViewById(R.id.choose_activity_list_item_text2);
-        ImageView icon = (ImageView) view.findViewById(R.id.choose_activity_list_item_icon);
-        text1.setText(displayInfo.primaryLabel);
-        if (displayInfo.secondaryLabel != null) {
-          text2.setVisibility(View.VISIBLE);
-          text2.setText(displayInfo.secondaryLabel);
-        } else {
-          text2.setVisibility(View.GONE);
+
+        viewHolder.text1.setText(displayInfo.primaryLabel);
+
+        boolean hasSecondaryLabel = displayInfo.secondaryLabel != null;
+        viewHolder.text2.setVisibility(hasSecondaryLabel ? View.VISIBLE : View.GONE);
+        if (hasSecondaryLabel) {
+          viewHolder.text2.setText(displayInfo.secondaryLabel);
         }
-        icon.setImageDrawable(displayInfo.icon);
+        viewHolder.icon.setImageDrawable(displayInfo.icon);
         return view;
       }
     };
