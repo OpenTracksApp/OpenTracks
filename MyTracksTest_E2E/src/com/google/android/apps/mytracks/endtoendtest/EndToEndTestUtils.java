@@ -21,7 +21,7 @@ import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
-import com.jayway.android.robotium.solo.Solo;
+import com.robotium.solo.Solo;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -107,26 +107,26 @@ public class EndToEndTestUtils {
   public static String trackDesc;
 
   static {
-    RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("es", "mins ago");
+    RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("en", "mins ago");
     RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("de", "Minuten");
     RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("fr", "minute");
     RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("ar", "دقيقة");
     RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("zh", "分钟前");
 
-    KM_MULTILINGUAL.put("es", "km");
+    KM_MULTILINGUAL.put("en", "km");
     KM_MULTILINGUAL.put("de", "km");
     KM_MULTILINGUAL.put("fr", "km");
     KM_MULTILINGUAL.put("ar", "كم");
     KM_MULTILINGUAL.put("zh", "公里");
 
-    MILE_MULTILINGUAL.put("es", "mi");
+    MILE_MULTILINGUAL.put("en", "mi");
     MILE_MULTILINGUAL.put("de", "mi");
     MILE_MULTILINGUAL.put("fr", "mile");
     MILE_MULTILINGUAL.put("ar", "ميل");
     MILE_MULTILINGUAL.put("zh", "英里");
   }
 
-  public static Solo SOLO;
+  public static com.robotium.solo.Solo SOLO;
   public static Instrumentation instrumentation;
   public static TrackListActivity activityMytracks;
 
@@ -342,11 +342,6 @@ public class EndToEndTestUtils {
   private static void verifyFirstLaunch() {
     if ((getButtonOnScreen(activityMytracks.getString(R.string.eula_accept), false, false) != null)) {
       getButtonOnScreen(activityMytracks.getString(R.string.eula_accept), true, true);
-    }
-    if (SOLO.waitForText(activityMytracks.getString(R.string.sync_drive_confirm_title))) {
-      // Click for Sync with Google Drive(Don't enable sync as default).
-      getButtonOnScreen(activityMytracks.getString(R.string.generic_no), true, true);
-      instrumentation.waitForIdleSync();
     }
   }
 
@@ -844,7 +839,7 @@ public class EndToEndTestUtils {
    */
   public static void resetAllSettings(Activity activityMyTracks, boolean keepInSettingList) {
     findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
-    SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup_reset));
+    SOLO.clickOnText(activityMyTracks.getString(R.string.settings_advanced));
     Assert.assertTrue(SOLO.waitForText(activityMyTracks.getString(R.string.settings_reset)));
     SOLO.clickOnText(activityMyTracks.getString(R.string.settings_reset));
     getButtonOnScreen(activityMytracks.getString(R.string.generic_yes), true, true);

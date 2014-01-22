@@ -28,9 +28,9 @@ public class RunConfiguration {
    * Set to false as default. True to run the test. Default to false since this
    * test can take a long time.
    */
-  public static boolean runStressTest = true;
-  public static boolean runResourceUsageTest = true;
-  public static boolean runSensorTest = true;
+  public static boolean runStressTest = false;
+  public static boolean runResourceUsageTest = false;
+  public static boolean runSensorTest = false;
   public boolean runSyncTest = false;
 
   private RunConfiguration() {
@@ -50,7 +50,7 @@ public class RunConfiguration {
    * @return true means can run sync tests in this device
    */
   public static boolean canRunSyncTest() {
-    return true;
+    return false;
 //    EndToEndTestUtils.findMenuItem(
 //        EndToEndTestUtils.activityMytracks.getString(R.string.menu_settings), true);
 //    EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
