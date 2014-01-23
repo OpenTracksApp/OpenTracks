@@ -217,6 +217,11 @@ public class ChartView extends View {
     updateDimensions();
   }
 
+  @Override
+  public boolean canScrollHorizontally(int direction) {
+    return true;
+  }
+  
   /**
    * Sets the enabled value for a chart value series.
    * 
