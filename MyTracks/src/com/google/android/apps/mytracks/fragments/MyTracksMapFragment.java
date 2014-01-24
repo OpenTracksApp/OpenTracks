@@ -523,7 +523,10 @@ public class MyTracksMapFragment extends SupportMapFragment implements TrackData
         onLocationChangedListener.onLocationChanged(currentLocation);
         if (forceZoom || (keepCurrentLocationVisible && !isLocationVisible(currentLocation))) {
           LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-          googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, DEFAULT_ZOOM_LEVEL));
+          CameraUpdate cameraUpdate = forceZoom ? CameraUpdateFactory.newLatLngZoom(
+              latLng, DEFAULT_ZOOM_LEVEL)
+              : CameraUpdateFactory.newLatLng(latLng);
+          googleMap.animateCamera(cameraUpdate);
         }
       };
     });
