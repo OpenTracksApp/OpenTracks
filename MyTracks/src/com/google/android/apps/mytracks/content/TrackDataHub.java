@@ -184,8 +184,8 @@ public class TrackDataHub implements DataSourceListener {
     runInHanderThread(new Runnable() {
         @Override
       public void run() {
+        trackDataManager.registerListener(trackDataListener, trackDataTypes);
         if (dataSourceManager != null) {
-          trackDataManager.registerListener(trackDataListener, trackDataTypes);
           dataSourceManager.updateListeners(trackDataManager.getRegisteredTrackDataTypes());
           loadDataForListener(trackDataListener);
         }
@@ -202,8 +202,8 @@ public class TrackDataHub implements DataSourceListener {
     runInHanderThread(new Runnable() {
         @Override
       public void run() {
+        trackDataManager.unregisterListener(trackDataListener);
         if (dataSourceManager != null) {
-          trackDataManager.unregisterListener(trackDataListener);
           dataSourceManager.updateListeners(trackDataManager.getRegisteredTrackDataTypes());
         }
       }
