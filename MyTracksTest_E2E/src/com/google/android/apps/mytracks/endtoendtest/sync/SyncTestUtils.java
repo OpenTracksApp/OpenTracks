@@ -72,12 +72,12 @@ public class SyncTestUtils {
       isCheckedRunSyncTest = true;
     }
     if (RunConfiguration.getInstance().getRunSyncTest()) {
-      SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_1);
+      SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_1);
       Drive drive1 = SyncTestUtils.getGoogleDrive(EndToEndTestUtils.activityMytracks
           .getApplicationContext());
       removeKMLFiles(drive1);
       EndToEndTestUtils.deleteAllTracks();
-      SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_2);
+      SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_2);
       Drive drive2 = SyncTestUtils.getGoogleDrive(EndToEndTestUtils.activityMytracks
           .getApplicationContext());
       removeKMLFiles(drive2);

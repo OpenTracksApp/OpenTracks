@@ -47,7 +47,7 @@ public class MultiAccountsSyncTest extends ActivityInstrumentationTestCase2<Trac
     instrumentation = getInstrumentation();
     trackListActivity = getActivity();
     SyncTestUtils.setUpForSyncTest(instrumentation, trackListActivity);
-    SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_1);
+    SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_1);
     drive = SyncTestUtils
         .getGoogleDrive(EndToEndTestUtils.activityMytracks.getApplicationContext());
   }
@@ -71,12 +71,12 @@ public class MultiAccountsSyncTest extends ActivityInstrumentationTestCase2<Trac
     if (!RunConfiguration.getInstance().getRunSyncTest()) {
       return;
     }
-    SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_1);
+    SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_1);
     // Create tracks with first track.
     EndToEndTestUtils.createSimpleTrack(0, true);
 
     // Create tracks with second track.
-    SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_2);
+    SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_2);
     EndToEndTestUtils.createSimpleTrack(0, true);
 
     // Sync with Google Drive and then check it of the second account.
@@ -86,14 +86,14 @@ public class MultiAccountsSyncTest extends ActivityInstrumentationTestCase2<Trac
     SyncTestUtils.checkFilesNumber(drive);
 
     // Check Google Drive of the first account.
-    SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_1);
+    SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_1);
     EndToEndTestUtils.findMenuItem(
         EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
     drive = SyncTestUtils.getGoogleDrive(trackListActivity.getApplicationContext());
     SyncTestUtils.checkFilesNumber(drive);
 
     // Back to account1 change check that files are still existed.
-    SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_2);
+    SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_2);
     drive = SyncTestUtils.getGoogleDrive(trackListActivity.getApplicationContext());
     SyncTestUtils.checkFilesNumber(drive);
   }
@@ -128,7 +128,7 @@ public class MultiAccountsSyncTest extends ActivityInstrumentationTestCase2<Trac
         .getString(R.string.generic_yes));
 
     // Switch account and delete another track.
-    SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_2);
+    SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_2);
     EndToEndTestUtils.SOLO.clickOnView(EndToEndTestUtils.SOLO.getCurrentViews(ListView.class)
         .get(0).getChildAt(0));
     EndToEndTestUtils.SOLO.clickOnMenuItem(EndToEndTestUtils.activityMytracks
@@ -137,14 +137,14 @@ public class MultiAccountsSyncTest extends ActivityInstrumentationTestCase2<Trac
         .getString(R.string.generic_yes));
 
     // Check Google Drive of the first account.
-    SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_1);
+    SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_1);
     EndToEndTestUtils.findMenuItem(
         EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
     drive = SyncTestUtils.getGoogleDrive(trackListActivity.getApplicationContext());
     SyncTestUtils.checkFilesNumber(drive);
 
     // Check Google Drive of the second account.
-    SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_2);
+    SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_2);
     EndToEndTestUtils.findMenuItem(
         EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
     drive = SyncTestUtils.getGoogleDrive(trackListActivity.getApplicationContext());

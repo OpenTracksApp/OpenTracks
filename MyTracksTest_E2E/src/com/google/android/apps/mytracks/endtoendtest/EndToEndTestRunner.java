@@ -43,7 +43,7 @@ public class EndToEndTestRunner extends InstrumentationTestRunner {
         EndToEndTestUtils.emulatorPort = Integer.parseInt(port);
       } catch (Exception e) {
         Log.e(EndToEndTestUtils.LOG_TAG,
-            "Unable to get emulator port parameter, use the default value", e);
+            "Unable to get emulator port parameter, use the default value.", e);
       }
     }
     Log.i(EndToEndTestUtils.LOG_TAG, "Emulator port: " + EndToEndTestUtils.emulatorPort);

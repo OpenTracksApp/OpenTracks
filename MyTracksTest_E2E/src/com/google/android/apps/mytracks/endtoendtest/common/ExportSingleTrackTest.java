@@ -47,8 +47,9 @@ public class ExportSingleTrackTest extends ActivityInstrumentationTestCase2<Trac
     instrumentation = getInstrumentation();
     activityMyTracks = getActivity();
 
-    GoogleUtils.deleteTracksOnGoogleMaps(activityMyTracks);
-    GoogleUtils.deleteTestTracksOnGoogleDrive(activityMyTracks, GoogleUtils.ACCOUNT_NAME_1);
+    GoogleUtils.deleteAllMaps(activityMyTracks.getApplicationContext(), GoogleUtils.ACCOUNT_1);
+    GoogleUtils.deleteDriveTestFiles(
+        activityMyTracks.getApplicationContext(), GoogleUtils.ACCOUNT_1);
     EndToEndTestUtils.setupForAllTest(instrumentation, activityMyTracks);
   }
 
@@ -79,8 +80,8 @@ public class ExportSingleTrackTest extends ActivityInstrumentationTestCase2<Trac
   public void testSendTwoTracksWithSameActivity() {
     String testActivity = "(TestActivity)";
     EndToEndTestUtils.activityType = testActivity;
-    GoogleUtils.deleteSpreadsheetByTitle("My Tracks-" + EndToEndTestUtils.activityType,
-        EndToEndTestUtils.activityMytracks, GoogleUtils.ACCOUNT_NAME_1);
+    GoogleUtils.deleteSpreadsheets(
+        EndToEndTestUtils.activityMytracks.getApplicationContext(), GoogleUtils.ACCOUNT_1);
     EndToEndTestUtils.createSimpleTrack(1, false);
     boolean result = sendToGoogle(activityMyTracks.getString(R.string.export_google_maps))
         && sendToGoogle(activityMyTracks.getString(R.string.export_google_fusion_tables))
@@ -92,9 +93,8 @@ public class ExportSingleTrackTest extends ActivityInstrumentationTestCase2<Trac
     // Result is true mean has account bound with this device and send
     // successful.
     if (result) {
-      List<File> fileList = GoogleUtils.searchAllSpreadsheetByTitle(
-          GoogleUtils.DOCUMENT_NAME_PREFIX + "-" + EndToEndTestUtils.activityType,
-          activityMyTracks, GoogleUtils.ACCOUNT_NAME_1);
+      List<File> fileList = GoogleUtils.searchSpreadsheets(
+          activityMyTracks.getApplicationContext(), GoogleUtils.ACCOUNT_1);
       assertEquals(1, fileList.size());
     }
   }
@@ -112,11 +112,15 @@ public class ExportSingleTrackTest extends ActivityInstrumentationTestCase2<Trac
     // Spreadsheet.
     // assertTrue(SyncTestUtils.checkFile(EndToEndTestUtils.trackName, true,
     // SyncTestUtils.getGoogleDrive(activityMyTracks.getApplicationContext())));
-    assertTrue(GoogleUtils.deleteMap(EndToEndTestUtils.trackName, activityMyTracks));
-    assertTrue(GoogleUtils.searchFusionTableByTitle(EndToEndTestUtils.trackName, activityMyTracks,
-        GoogleUtils.ACCOUNT_NAME_1, true));
-    assertTrue(GoogleUtils.deleteTrackInSpreadSheet(EndToEndTestUtils.trackName, activityMyTracks,
-        GoogleUtils.ACCOUNT_NAME_1));
+    assertTrue(GoogleUtils.deleteMaps(
+        activityMyTracks.getApplicationContext(), GoogleUtils.ACCOUNT_1,
+        EndToEndTestUtils.trackName));
+    assertTrue(GoogleUtils.deleteFusionTables(
+        activityMyTracks.getApplicationContext(), GoogleUtils.ACCOUNT_1,
+        EndToEndTestUtils.trackName));
+    assertTrue(GoogleUtils.deleteSpreadsheetsRow(
+        activityMyTracks.getApplicationContext(), GoogleUtils.ACCOUNT_1,
+        EndToEndTestUtils.trackName));
   }
 
   /**

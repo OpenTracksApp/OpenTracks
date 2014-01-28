@@ -72,13 +72,13 @@ public class ShareTest extends ActivityInstrumentationTestCase2<TrackListActivit
         activityMyTracks.getString(R.string.send_google_choose_account_title), 1,
         EndToEndTestUtils.SHORT_WAIT_TIME)) {
       // Whether can found account2.
-      if (EndToEndTestUtils.SOLO.waitForText(GoogleUtils.ACCOUNT_NAME_2, 1,
-          EndToEndTestUtils.VERY_SHORT_WAIT_TIME)) {
+      if (EndToEndTestUtils.SOLO.waitForText(
+          GoogleUtils.ACCOUNT_2, 1, EndToEndTestUtils.VERY_SHORT_WAIT_TIME)) {
         isAccount2Bound = true;
       }
-      EndToEndTestUtils.SOLO.clickOnText(GoogleUtils.ACCOUNT_NAME_1);
-      EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true,
-          true);
+      EndToEndTestUtils.SOLO.clickOnText(GoogleUtils.ACCOUNT_1);
+      EndToEndTestUtils.getButtonOnScreen(
+          activityMyTracks.getString(R.string.generic_ok), true, true);
     }
 
     // Check all check boxes.
@@ -95,7 +95,7 @@ public class ShareTest extends ActivityInstrumentationTestCase2<TrackListActivit
     // Input account to share and click OK button.
     assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
         .getString(R.string.share_track_emails_hint)));
-    EndToEndTestUtils.enterTextAvoidSoftKeyBoard(0, GoogleUtils.ACCOUNT_NAME_2);
+    EndToEndTestUtils.enterTextAvoidSoftKeyBoard(0, GoogleUtils.ACCOUNT_2);
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
 
@@ -111,7 +111,7 @@ public class ShareTest extends ActivityInstrumentationTestCase2<TrackListActivit
     // Make more checks if the second account is also bound with this device.
     if (isAccount2Bound) {
       EndToEndTestUtils.SOLO.goBack();
-      SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_2);
+      SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_2);
       EndToEndTestUtils.findMenuItem(
           EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
 

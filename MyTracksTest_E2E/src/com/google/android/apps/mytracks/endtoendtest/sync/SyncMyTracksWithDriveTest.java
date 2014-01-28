@@ -50,7 +50,7 @@ public class SyncMyTracksWithDriveTest extends ActivityInstrumentationTestCase2<
     instrumentation = getInstrumentation();
     trackListActivity = getActivity();
     SyncTestUtils.setUpForSyncTest(instrumentation, trackListActivity);
-    SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_1);
+    SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_1);
     drive = SyncTestUtils
         .getGoogleDrive(EndToEndTestUtils.activityMytracks.getApplicationContext());
   }
