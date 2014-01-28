@@ -68,7 +68,7 @@ public class MultiAccountsSyncTest extends ActivityInstrumentationTestCase2<Trac
    * </ul>
    */
   public void testSyncTracksWithMultiAccounts() throws Exception {
-    if (!RunConfiguration.getInstance().runSyncTest) {
+    if (!RunConfiguration.getInstance().getRunSyncTest()) {
       return;
     }
     SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_1);
@@ -111,7 +111,7 @@ public class MultiAccountsSyncTest extends ActivityInstrumentationTestCase2<Trac
    * </ul>
    */
   public void testDeleteTracksWithMultiAccounts() throws Exception {
-    if (!RunConfiguration.getInstance().runSyncTest) {
+    if (!RunConfiguration.getInstance().getRunSyncTest()) {
       return;
     }
     EndToEndTestUtils.createSimpleTrack(0, true);

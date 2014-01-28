@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks.endtoendtest;
 
 import android.os.Bundle;
@@ -20,38 +21,45 @@ import android.test.InstrumentationTestRunner;
 import android.util.Log;
 
 /**
- * A test runner can be used to run end-to-end test.
+ * End-to-end test test runner.
  * 
  * @author Youtao Liu
  */
 public class EndToEndTestRunner extends InstrumentationTestRunner {
 
-  /**
-   * Gets the parameter port which is used to fix GPS signal to emulators.
-   */
+  private static final String PORT_KEY = "port";
+  private static final String RESOURCE_KEY = "resource";
+  private static final String SENSOR_KEY = "sensor";
+  private static final String STRESS_KEY = "stress";
+  private static final String TRUE_VALUE = "true";
+
   @Override
-  public void onCreate(Bundle arguments) {
-    String portNumber = arguments.getString("port");
-    if (portNumber != null) {
+  public void onCreate(Bundle bundle) {
+
+    // Get the emulator port parameter for GPS signals
+    String port = bundle.getString(PORT_KEY);
+    if (port != null) {
       try {
-        EndToEndTestUtils.emulatorPort = Integer.parseInt(portNumber);
+        EndToEndTestUtils.emulatorPort = Integer.parseInt(port);
       } catch (Exception e) {
-        Log.e(EndToEndTestUtils.LOG_TAG, "Unable to get port parameter, use default value."
-            + EndToEndTestUtils.emulatorPort, e);
+        Log.e(EndToEndTestUtils.LOG_TAG,
+            "Unable to get emulator port parameter, use the default value", e);
       }
     }
+    Log.i(EndToEndTestUtils.LOG_TAG, "Emulator port: " + EndToEndTestUtils.emulatorPort);
 
-    RunConfiguration.runStressTest = "true".equalsIgnoreCase(arguments.getString("stress"));
-    RunConfiguration.runSensorTest = "true".equalsIgnoreCase(arguments.getString("sensor"));
-    RunConfiguration.runResourceUsageTest = "true"
-        .equalsIgnoreCase(arguments.getString("resource"));
+    RunConfiguration runConfiguration = RunConfiguration.getInstance();
 
-    Log.d(EndToEndTestUtils.LOG_TAG, "Use port number when run test on emulator:"
-        + EndToEndTestUtils.emulatorPort);
-    Log.i(EndToEndTestUtils.LOG_TAG, "Run stress test:" + RunConfiguration.runStressTest);
-    Log.i(EndToEndTestUtils.LOG_TAG, "Run sensor test:" + RunConfiguration.runSensorTest);
+    runConfiguration.setRunResourceTest(
+        TRUE_VALUE.equalsIgnoreCase(bundle.getString(RESOURCE_KEY)));
+    Log.i(EndToEndTestUtils.LOG_TAG, "Run resource test: " + runConfiguration.getRunResourceTest());
 
-    super.onCreate(arguments);
+    runConfiguration.setRunSensorTest(TRUE_VALUE.equalsIgnoreCase(bundle.getString(SENSOR_KEY)));
+    Log.i(EndToEndTestUtils.LOG_TAG, "Run sensor test: " + runConfiguration.getRunSensorTest());
+
+    runConfiguration.setRunStressTest(TRUE_VALUE.equalsIgnoreCase(bundle.getString(STRESS_KEY)));
+    Log.i(EndToEndTestUtils.LOG_TAG, "Run stress test: " + runConfiguration.getRunStressTest());
+
+    super.onCreate(bundle);
   }
-
 }

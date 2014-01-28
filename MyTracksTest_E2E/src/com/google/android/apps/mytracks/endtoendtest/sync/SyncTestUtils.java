@@ -65,13 +65,13 @@ public class SyncTestUtils {
    */
   public static Drive setUpForSyncTest(Instrumentation instrumentation,
       TrackListActivity trackListActivity) throws IOException, GoogleAuthException {
-    if (!isCheckedRunSyncTest || RunConfiguration.getInstance().runSyncTest) {
+    if (!isCheckedRunSyncTest || RunConfiguration.getInstance().getRunSyncTest()) {
       EndToEndTestUtils.setupForAllTest(instrumentation, trackListActivity);
     }
     if (!isCheckedRunSyncTest) {
       isCheckedRunSyncTest = true;
     }
-    if (RunConfiguration.getInstance().runSyncTest) {
+    if (RunConfiguration.getInstance().getRunSyncTest()) {
       SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_NAME_1);
       Drive drive1 = SyncTestUtils.getGoogleDrive(EndToEndTestUtils.activityMytracks
           .getApplicationContext());

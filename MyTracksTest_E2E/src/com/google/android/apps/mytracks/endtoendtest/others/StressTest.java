@@ -48,7 +48,7 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
 
   @Override
   protected void setUp() throws Exception {
-    runTest = RunConfiguration.runStressTest;
+    runTest = RunConfiguration.getInstance().getRunStressTest();
     super.setUp();
     if (!runTest) {
       return;

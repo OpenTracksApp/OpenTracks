@@ -13,30 +13,23 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks.endtoendtest;
 
+import com.google.android.maps.mytracks.R;
 
 /**
- * Places all the test configuration in this class.
+ * Run configuration for various tests.
  * 
  * @author Youtao Liu
  */
 public class RunConfiguration {
-  private static RunConfiguration instance = null;
-  
+
+  private static RunConfiguration instance;
+
   /**
-   * Set to false as default. True to run the test. Default to false since this
-   * test can take a long time.
+   * Gets an instance of {@link RunConfiguration}.
    */
-  public static boolean runStressTest = false;
-  public static boolean runResourceUsageTest = false;
-  public static boolean runSensorTest = false;
-  public boolean runSyncTest = false;
-
-  private RunConfiguration() {
-    runSyncTest = canRunSyncTest();
-  }
-
   public static RunConfiguration getInstance() {
     if (instance == null) {
       instance = new RunConfiguration();
@@ -44,27 +37,97 @@ public class RunConfiguration {
     return instance;
   }
 
-  /**
-   * Runs sync tests when both test accounts are bound with the devices.
-   * 
-   * @return true means can run sync tests in this device
+  /*
+   * Set to false as default. True to run the test. Default to false since these
+   * tests can take a long time.
    */
-  public static boolean canRunSyncTest() {
-    return false;
-//    EndToEndTestUtils.findMenuItem(
-//        EndToEndTestUtils.activityMytracks.getString(R.string.menu_settings), true);
-//    EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
-//        .getString(R.string.settings_google));
-//    EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
-//        .getString(R.string.settings_google_account_title));
-//    boolean canRunSyncE2ETest = EndToEndTestUtils.SOLO.waitForText(GoogleUtils.ACCOUNT_NAME_1, 1,
-//        EndToEndTestUtils.SHORT_WAIT_TIME)
-//        && EndToEndTestUtils.SOLO.waitForText(GoogleUtils.ACCOUNT_NAME_2, 1,
-//            EndToEndTestUtils.TINY_WAIT_TIME);
-//    EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.activityMytracks
-//        .getString(R.string.generic_cancel));
-//    EndToEndTestUtils.SOLO.goBack();
-//    EndToEndTestUtils.SOLO.goBack();
-//    return canRunSyncE2ETest;
+  private boolean runResourceTest = false;
+  private boolean runSensorTest = false;
+  private boolean runStressTest = false;
+  private boolean runSyncTest = false;
+
+  private RunConfiguration() {
+    // Sets run sync test in run-time
+    setRunSyncTest(canRunSyncTest());
+  }
+
+  /**
+   * Returns true to run the resource test.
+   */
+  public boolean getRunResourceTest() {
+    return runResourceTest;
+  }
+
+  /**
+   * Sets run resource test.
+   * 
+   * @param run true to run
+   */
+  public void setRunResourceTest(boolean run) {
+    runResourceTest = run;
+  }
+
+  /**
+   * Returns true to run the sensor test.
+   */
+  public boolean getRunSensorTest() {
+    return runSensorTest;
+  }
+
+  /**
+   * Sets run sensor test.
+   * 
+   * @param run true to run
+   */
+  public void setRunSensorTest(boolean run) {
+    runSensorTest = run;
+  }
+
+  /**
+   * Returns true to run the stress test.
+   */
+  public boolean getRunStressTest() {
+    return runStressTest;
+  }
+
+  /**
+   * Sets run stress test.
+   * 
+   * @param run true to run
+   */
+  public void setRunStressTest(boolean run) {
+    runStressTest = run;
+  }
+
+  /**
+   * Returns true to run the sync test.
+   */
+  public boolean getRunSyncTest() {
+    return runSyncTest;
+  }
+
+  /**
+   * Sets run sync test.
+   * 
+   * @param run true to run
+   */
+  public void setRunSyncTest(boolean run) {
+    runSyncTest = run;
+  }
+
+  /**
+   * Returns true if can run the sync test. Needs two specific test accounts on
+   * the device.
+   */
+  private boolean canRunSyncTest() {
+    EndToEndTestUtils.findMenuItem(
+        EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_drive), true);
+    boolean canRun = EndToEndTestUtils.SOLO.waitForText(
+        GoogleUtils.ACCOUNT_NAME_1, 1, EndToEndTestUtils.SHORT_WAIT_TIME)
+        && EndToEndTestUtils.SOLO.waitForText(
+            GoogleUtils.ACCOUNT_NAME_2, 1, EndToEndTestUtils.TINY_WAIT_TIME);
+    EndToEndTestUtils.SOLO.clickOnText(
+        EndToEndTestUtils.activityMytracks.getString(R.string.generic_cancel));
+    return canRun;
   }
 }

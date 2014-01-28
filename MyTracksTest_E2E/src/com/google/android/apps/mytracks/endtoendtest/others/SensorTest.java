@@ -47,7 +47,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
 
   @Override
   protected void setUp() throws Exception {
-    runTest = RunConfiguration.runSensorTest;
+    runTest = RunConfiguration.getInstance().getRunSensorTest();
     super.setUp();
     if (!runTest) {
       return;

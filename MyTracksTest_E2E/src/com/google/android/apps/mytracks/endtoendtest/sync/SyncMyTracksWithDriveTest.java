@@ -61,7 +61,7 @@ public class SyncMyTracksWithDriveTest extends ActivityInstrumentationTestCase2<
    * @throws IOException
    */
   public void testDeleteAllTracksOnDrive() throws IOException {
-    if (!RunConfiguration.getInstance().runSyncTest) {
+    if (!RunConfiguration.getInstance().getRunSyncTest()) {
       return;
     }
     EndToEndTestUtils.createTrackIfEmpty(0, true);
@@ -81,7 +81,7 @@ public class SyncMyTracksWithDriveTest extends ActivityInstrumentationTestCase2<
    * @throws IOException
    */
   public void testDeleteOneFileOnDrive() throws IOException {
-    if (!RunConfiguration.getInstance().runSyncTest) {
+    if (!RunConfiguration.getInstance().getRunSyncTest()) {
       return;
     }
     instrumentation.waitForIdleSync();
@@ -106,7 +106,7 @@ public class SyncMyTracksWithDriveTest extends ActivityInstrumentationTestCase2<
    * @throws IOException
    */
   public void testCreateMyTracksOnDrive() throws IOException {
-    if (!RunConfiguration.getInstance().runSyncTest) {
+    if (!RunConfiguration.getInstance().getRunSyncTest()) {
       return;
     }
     instrumentation.waitForIdleSync();

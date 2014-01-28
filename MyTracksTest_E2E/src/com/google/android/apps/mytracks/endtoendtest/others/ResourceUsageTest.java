@@ -55,7 +55,7 @@ public class ResourceUsageTest extends ActivityInstrumentationTestCase2<TrackLis
   @Override
   protected void setUp() throws Exception {
     super.setUp();
-    runTest = RunConfiguration.runResourceUsageTest;
+    runTest = RunConfiguration.getInstance().getRunResourceTest();
     if (!runTest) {
       return;
     }

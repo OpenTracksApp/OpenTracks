@@ -61,7 +61,7 @@ public class SyncDriveWithMyTracksTest extends ActivityInstrumentationTestCase2<
    * @throws IOException
    */
   public void testDeleteAllTracksInMyTracks() throws IOException {
-    if (!RunConfiguration.getInstance().runSyncTest) {
+    if (!RunConfiguration.getInstance().getRunSyncTest()) {
       return;
     }
     EndToEndTestUtils.findMenuItem(
@@ -75,7 +75,7 @@ public class SyncDriveWithMyTracksTest extends ActivityInstrumentationTestCase2<
    * @throws IOException
    */
   public void testDeleteOneTracksInMyTracks() throws IOException {
-    if (!RunConfiguration.getInstance().runSyncTest) {
+    if (!RunConfiguration.getInstance().getRunSyncTest()) {
       return;
     }
     EndToEndTestUtils.createTrackIfEmpty(2, false);
@@ -95,7 +95,7 @@ public class SyncDriveWithMyTracksTest extends ActivityInstrumentationTestCase2<
    * @throws IOException
    */
   public void testCreateTracksInMyTracks() throws IOException {
-    if (!RunConfiguration.getInstance().runSyncTest) {
+    if (!RunConfiguration.getInstance().getRunSyncTest()) {
       return;
     }
     EndToEndTestUtils.createSimpleTrack(0, true);
@@ -111,7 +111,7 @@ public class SyncDriveWithMyTracksTest extends ActivityInstrumentationTestCase2<
    * @throws IOException
    */
   public void testEditTrackInMyTracks() throws IOException {
-    if (!RunConfiguration.getInstance().runSyncTest) {
+    if (!RunConfiguration.getInstance().getRunSyncTest()) {
       return;
     }
     EndToEndTestUtils.createTrackIfEmpty(3, true);
