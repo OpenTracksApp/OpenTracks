@@ -121,13 +121,13 @@ public class RunConfiguration {
    */
   private boolean canRunSyncTest() {
     EndToEndTestUtils.findMenuItem(
-        EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_drive), true);
+        EndToEndTestUtils.trackListActivity.getString(R.string.menu_sync_drive), true);
     boolean canRun = EndToEndTestUtils.SOLO.waitForText(
         GoogleUtils.ACCOUNT_1, 1, EndToEndTestUtils.SHORT_WAIT_TIME)
         && EndToEndTestUtils.SOLO.waitForText(
             GoogleUtils.ACCOUNT_2, 1, EndToEndTestUtils.TINY_WAIT_TIME);
     EndToEndTestUtils.SOLO.clickOnText(
-        EndToEndTestUtils.activityMytracks.getString(R.string.generic_cancel));
+        EndToEndTestUtils.trackListActivity.getString(R.string.generic_cancel));
     return canRun;
   }
 }

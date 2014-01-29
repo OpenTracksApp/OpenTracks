@@ -52,6 +52,7 @@ import junit.framework.Assert;
  */
 public class SyncTestUtils {
 
+  private static final String TAG = SyncTestUtils.class.getSimpleName();
   public static boolean isCheckedRunSyncTest = false;
   public static final String KML_FILE_POSTFIX = ".kml";
   public static final long MAX_TIME_TO_WAIT_SYNC = 100000;
@@ -72,14 +73,12 @@ public class SyncTestUtils {
       isCheckedRunSyncTest = true;
     }
     if (RunConfiguration.getInstance().getRunSyncTest()) {
-      SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_1);
-      Drive drive1 = SyncTestUtils.getGoogleDrive(EndToEndTestUtils.activityMytracks
-          .getApplicationContext());
+      enableSync(GoogleUtils.ACCOUNT_1);
+      Drive drive1 = getGoogleDrive(EndToEndTestUtils.trackListActivity.getApplicationContext());
       removeKMLFiles(drive1);
       EndToEndTestUtils.deleteAllTracks();
-      SyncTestUtils.enableSync(GoogleUtils.ACCOUNT_2);
-      Drive drive2 = SyncTestUtils.getGoogleDrive(EndToEndTestUtils.activityMytracks
-          .getApplicationContext());
+      enableSync(GoogleUtils.ACCOUNT_2);
+      Drive drive2 = getGoogleDrive(EndToEndTestUtils.trackListActivity.getApplicationContext());
       removeKMLFiles(drive2);
       EndToEndTestUtils.deleteAllTracks();
       return drive2;
@@ -129,7 +128,7 @@ public class SyncTestUtils {
    * @throws IOException
    */
   public static File getFile(String trackName, Drive drive) throws IOException {
-    List<File> files = getDriveFiles(EndToEndTestUtils.activityMytracks.getApplicationContext(),
+    List<File> files = getDriveFiles(EndToEndTestUtils.trackListActivity.getApplicationContext(),
         drive);
     for (int i = 0; i < files.size(); i++) {
       File file = files.get(i);
@@ -148,8 +147,8 @@ public class SyncTestUtils {
    * @throws IOException
    */
   public static void removeKMLFiles(Drive drive) throws IOException {
-    List<File> files = SyncTestUtils.getDriveFiles(
-        EndToEndTestUtils.activityMytracks.getApplicationContext(), drive);
+    List<File> files = getDriveFiles(
+        EndToEndTestUtils.trackListActivity.getApplicationContext(), drive);
     for (int i = 0; i < files.size(); i++) {
       File file = files.get(i);
       removeFile(file, drive);
@@ -229,7 +228,7 @@ public class SyncTestUtils {
     EndToEndTestUtils.instrumentation.waitForIdleSync();
     long startTime = System.currentTimeMillis();
     int trackNumber = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount();
-    List<File> files = getDriveFiles(EndToEndTestUtils.activityMytracks.getApplicationContext(),
+    List<File> files = getDriveFiles(EndToEndTestUtils.trackListActivity.getApplicationContext(),
         drive);
     while (System.currentTimeMillis() - startTime < MAX_TIME_TO_WAIT_SYNC) {
       try {
@@ -237,12 +236,12 @@ public class SyncTestUtils {
           return;
         }
         trackNumber = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount();
-        files = getDriveFiles(EndToEndTestUtils.activityMytracks.getApplicationContext(), drive);
+        files = getDriveFiles(EndToEndTestUtils.trackListActivity.getApplicationContext(), drive);
         EndToEndTestUtils.sleep(EndToEndTestUtils.SHORT_WAIT_TIME);
         EndToEndTestUtils.findMenuItem(
-            EndToEndTestUtils.activityMytracks.getString(R.string.menu_sync_now), true);
+            EndToEndTestUtils.trackListActivity.getString(R.string.menu_sync_now), true);
       } catch (GoogleJsonResponseException e) {
-        Log.i(EndToEndTestUtils.LOG_TAG, e.getMessage());
+        Log.e(TAG, e.getMessage(), e);
       }
     }
     Assert.assertEquals(files.size(), trackNumber);
@@ -261,7 +260,7 @@ public class SyncTestUtils {
         return;
       }
       trackNumber = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount();
-      Log.i(EndToEndTestUtils.LOG_TAG, trackNumber + ":" + number);
+      Log.d(TAG, trackNumber + ":" + number);
     }
     Assert.assertEquals(trackNumber, number);
   }

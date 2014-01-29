@@ -27,6 +27,7 @@ import android.util.Log;
  */
 public class EndToEndTestRunner extends InstrumentationTestRunner {
 
+  private static final String TAG = EndToEndTestRunner.class.getSimpleName();
   private static final String PORT_KEY = "port";
   private static final String RESOURCE_KEY = "resource";
   private static final String SENSOR_KEY = "sensor";
@@ -42,23 +43,22 @@ public class EndToEndTestRunner extends InstrumentationTestRunner {
       try {
         EndToEndTestUtils.emulatorPort = Integer.parseInt(port);
       } catch (Exception e) {
-        Log.e(EndToEndTestUtils.LOG_TAG,
-            "Unable to get emulator port parameter, use the default value.", e);
+        Log.e(TAG, "Unable to get emulator port parameter, use the default value.", e);
       }
     }
-    Log.i(EndToEndTestUtils.LOG_TAG, "Emulator port: " + EndToEndTestUtils.emulatorPort);
+    Log.d(TAG, "Emulator port: " + EndToEndTestUtils.emulatorPort);
 
     RunConfiguration runConfiguration = RunConfiguration.getInstance();
 
     runConfiguration.setRunResourceTest(
         TRUE_VALUE.equalsIgnoreCase(bundle.getString(RESOURCE_KEY)));
-    Log.i(EndToEndTestUtils.LOG_TAG, "Run resource test: " + runConfiguration.getRunResourceTest());
+    Log.d(TAG, "Run resource test: " + runConfiguration.getRunResourceTest());
 
     runConfiguration.setRunSensorTest(TRUE_VALUE.equalsIgnoreCase(bundle.getString(SENSOR_KEY)));
-    Log.i(EndToEndTestUtils.LOG_TAG, "Run sensor test: " + runConfiguration.getRunSensorTest());
+    Log.d(TAG, "Run sensor test: " + runConfiguration.getRunSensorTest());
 
     runConfiguration.setRunStressTest(TRUE_VALUE.equalsIgnoreCase(bundle.getString(STRESS_KEY)));
-    Log.i(EndToEndTestUtils.LOG_TAG, "Run stress test: " + runConfiguration.getRunStressTest());
+    Log.d(TAG, "Run stress test: " + runConfiguration.getRunStressTest());
 
     super.onCreate(bundle);
   }

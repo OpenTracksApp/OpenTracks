@@ -33,6 +33,7 @@ import android.widget.TextView;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Locale;
 
 /**
  * Tests the import and export of MyTracks.
@@ -45,9 +46,10 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
   private TrackListActivity activityMyTracks;
   private int trackNumber = 0;
 
-  private final static String tracksName = "testTrackName1373523959524";
-  private final static String maxAltitude = "33.3";
-  private final static String minAltitude = "22.2";
+  private static final String TAG = ExportAllAndImportAllTest.class.getSimpleName(); 
+  private static final String TRACK_NAME = "testTrackName1373523959524";
+  private static final String MAX_ALTITUDE = "33.3";
+  private static final String MIN_ALTITUDE = "22.2";
 
   public ExportAllAndImportAllTest() {
     super(TrackListActivity.class);
@@ -143,7 +145,7 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
     instrumentation.waitForIdleSync();
     assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.trackName));
     assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.activityType));
-    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.trackDesc));
+    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.trackDescription));
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_cancel));
 
     if (EndToEndTestUtils.hasGpsSingal) {
@@ -153,12 +155,12 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
       // The first marker.
       assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.WAYPOINT_NAME + 1));
       assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.WAYPOINT_TYPE + 1));
-      assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.WAYPOINT_DESC + 1));
+      assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.WAYPOINT_DESCRIPTION + 1));
 
       // The second marker.
       assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.WAYPOINT_NAME + 2));
       assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.WAYPOINT_TYPE + 2));
-      assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.WAYPOINT_DESC + 2));
+      assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.WAYPOINT_DESCRIPTION + 2));
     }
   }
 
@@ -288,9 +290,9 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
    */
   private void importTracks(String fileType) {
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_import_all), true);
-    EndToEndTestUtils.SOLO.clickOnText(fileType.toUpperCase());
+    EndToEndTestUtils.SOLO.clickOnText(fileType.toUpperCase(Locale.US));
     EndToEndTestUtils.getButtonOnScreen(
-        EndToEndTestUtils.activityMytracks.getString(R.string.generic_ok), true, true);
+        EndToEndTestUtils.trackListActivity.getString(R.string.generic_ok), true, true);
   }
 
   /**
@@ -300,9 +302,9 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
    */
   private void exportTracks(String fileType) {
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_export_all), true);
-    EndToEndTestUtils.SOLO.clickOnText(fileType.toUpperCase());
+    EndToEndTestUtils.SOLO.clickOnText(fileType.toUpperCase(Locale.US));
     EndToEndTestUtils.getButtonOnScreen(
-        EndToEndTestUtils.activityMytracks.getString(R.string.generic_ok), true, true);
+        EndToEndTestUtils.trackListActivity.getString(R.string.generic_ok), true, true);
     EndToEndTestUtils.SOLO.waitForText(getSaveSuccessMessage(2, fileType));
     EndToEndTestUtils
         .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
@@ -381,7 +383,7 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
     }
     PreferencesUtils.setBoolean(activityMyTracks, R.string.stats_show_grade_elevation_key, true);
 
-    EndToEndTestUtils.SOLO.clickOnText(tracksName);
+    EndToEndTestUtils.SOLO.clickOnText(TRACK_NAME);
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.SOLO.waitForActivity(TrackDetailActivity.class,
         EndToEndTestUtils.LONG_WAIT_TIME);
@@ -417,9 +419,9 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
 
     // KM/H
     float averageSpeed = distance * 3600 / timeSpan;
-    assertEquals(Float.parseFloat(minAltitude), minAltitudeActual);
-    assertEquals(Float.parseFloat(maxAltitude), maxAltitudeActual);
-    Log.i(EndToEndTestUtils.LOG_TAG, distance + ":" + distanceActual);
+    assertEquals(Float.parseFloat(MIN_ALTITUDE), minAltitudeActual);
+    assertEquals(Float.parseFloat(MAX_ALTITUDE), maxAltitudeActual);
+    Log.d(TAG, distance + ":" + distanceActual);
     assertTrue((distance - distanceActual) / distance < acceptDeviation);
     assertTrue((averageSpeed - averageSpeedActual) / averageSpeed < acceptDeviation);
 
@@ -430,7 +432,7 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
    * Writes a GPX track file to MyTracks folder.
    */
   private void writeGPXTrackFile() {
-    String fileName = tracksName + ".gpx";
+    String fileName = TRACK_NAME + ".gpx";
     String fileContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?> "
         + "<gpx "
         + "version=\"1.1\" "
@@ -446,7 +448,7 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
         + "<type><![CDATA[TestActivity]]></type> "
         + "<extensions><topografix:color>c0c0c0</topografix:color></extensions> " + "<trkseg> "
         + "<trkpt lat=\"39.30\" lon=\"116\"> " + "<time>2013-07-10T08:00:00.000Z</time> <ele>"
-        + minAltitude
+        + MIN_ALTITUDE
         + "</ele>"
         + "</trkpt> "
         + "<trkpt lat=\"39.2995\" lon=\"116.0005\"> "
@@ -475,13 +477,13 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
         + "</trkpt> "
         + "<trkpt lat=\"39.2955\" lon=\"116.0045\"> "
         + "<time>2013-07-10T08:00:09.000Z</time> <ele>"
-        + maxAltitude
+        + MAX_ALTITUDE
         + "</ele>"
         + "</trkpt> "
         + "</trkseg> " + "</trk> " + "</gpx>";
 
     try {
-      File file = new File(FileUtils.getPath(EndToEndTestUtils.GPX.toLowerCase()) + File.separator
+      File file = new File(FileUtils.getPath(EndToEndTestUtils.GPX) + File.separator
           + fileName);
       FileOutputStream fop = new FileOutputStream(file);
       // if file doesnt exists, then create it
@@ -493,7 +495,7 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
       fop.write(contentInBytes);
       fop.flush();
       fop.close();
-      Log.i(EndToEndTestUtils.LOG_TAG, file.getAbsolutePath());
+      Log.d(TAG, file.getAbsolutePath());
     } catch (IOException e) {
       fail();
     }

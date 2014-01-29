@@ -37,6 +37,8 @@ import android.util.Log;
  */
 public class ResourceUsageTest extends ActivityInstrumentationTestCase2<TrackListActivity> {
 
+  private static final String TAG = ResourceUsageTest.class.getSimpleName();
+  
   public ResourceUsageTest() {
     super(TrackListActivity.class);
   }
@@ -102,7 +104,7 @@ public class ResourceUsageTest extends ActivityInstrumentationTestCase2<TrackLis
         }
       });
     } catch (Throwable e) {
-      Log.i(EndToEndTestUtils.LOG_TAG, "Meet error when create confirm dialog.");
+      Log.e(TAG, "Meet error when create confirm dialog.", e);
     }
     // Waiting user confirm the testing
     while (!isUserConfirmed) {
@@ -148,7 +150,7 @@ public class ResourceUsageTest extends ActivityInstrumentationTestCase2<TrackLis
    */
   public void recordingLongTrack(boolean isShowTracksList, int tabNameId) {
     if (!runTest) {
-      Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
+      Log.d(TAG, BigTestUtils.DISABLE_MESSAGE);
       return;
     }
 

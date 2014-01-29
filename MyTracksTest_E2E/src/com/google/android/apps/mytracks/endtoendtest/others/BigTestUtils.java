@@ -18,6 +18,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import junit.framework.Assert;
 
@@ -34,6 +35,8 @@ public class BigTestUtils {
   public static final String MYTRACKS_PROCESS_NAME = "com.google.android.maps.mytracks";
   public static final String MYTRACKS_TEST_INFO_FILE = "MyTracksTestInfo.txt";
 
+  private static final String TAG = BigTestUtils.class.getSimpleName();
+  
   /**
    * Gets the memory usage of MyTracks process. This method would get the Pss
    * memory. Pss is the amount of memory shared with other processes, accounted
@@ -62,7 +65,7 @@ public class BigTestUtils {
     int pids[] = { MyTracksProcessId };
     android.os.Debug.MemoryInfo[] memoryInfoArray = activityManager.getProcessMemoryInfo(pids);
     int memoryUsage = memoryInfoArray[0].getTotalPss();
-    return String.format(" MyTracks TotalPss Memory: %d (kB) ", memoryUsage);
+    return String.format(Locale.US, " MyTracks TotalPss Memory: %d (kB) ", memoryUsage);
   }
 
   /**
@@ -100,7 +103,7 @@ public class BigTestUtils {
         osw.close();
       }
     } catch (Exception e) {
-      Log.i(EndToEndTestUtils.LOG_TAG, "Meet error when write test info to file.");
+      Log.e(TAG, "Meet error when write test info to file.", e);
     }
     return;
   }
@@ -123,7 +126,7 @@ public class BigTestUtils {
           String.format("{%1$tm/%1$td/%1$tY %1$tH:%1$tM:%1$tS", new Date()), memoryUsageString,
           batteryUsageString);
       writeToFile(oneInfo, true);
-      Log.i(EndToEndTestUtils.LOG_TAG, oneInfo);
+      Log.d(TAG, oneInfo);
       EndToEndTestUtils.sleep(interval);
     }
   }
@@ -145,8 +148,7 @@ public class BigTestUtils {
       });
 
     } catch (Exception e) {
-      Log.i(EndToEndTestUtils.LOG_TAG,
-          "Meet error when unlock device screen, may the device is not locked.");
+      Log.e(TAG, "Meet error when unlock device screen, may the device is not locked.", e);
     }
   }
 

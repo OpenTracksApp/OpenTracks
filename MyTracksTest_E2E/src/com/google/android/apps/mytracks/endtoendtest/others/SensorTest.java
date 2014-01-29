@@ -35,6 +35,10 @@ import java.util.ArrayList;
  */
 public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivity> {
 
+  private static final String TAG = SensorTest.class.getSimpleName();
+  private static final String ZEPHYR_NAME = "HXM";
+  private static final String POLAR_NAME = "Polar";
+  
   public SensorTest() {
     super(TrackListActivity.class);
   }
@@ -42,8 +46,6 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
   private Instrumentation instrumentation;
   private TrackListActivity trackListActivity;
   private boolean runTest = false;
-  private static final String ZEPHYR_NAME = "HXM";
-  private static final String POLAR_NAME = "Polar";
 
   @Override
   protected void setUp() throws Exception {
@@ -63,7 +65,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
    */
   public void testConnectZephyrBluetoothSensor_notRecording() {
     if (!runTest) {
-      Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
+      Log.d(TAG, BigTestUtils.DISABLE_MESSAGE);
       return;
     }
     bluetoothSensorTest(R.string.settings_sensor_type_zephyr, ZEPHYR_NAME, false);
@@ -75,7 +77,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
    */
   public void testConnectZephyrBluetoothSensor_underRecording() {
     if (!runTest) {
-      Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
+      Log.d(TAG, BigTestUtils.DISABLE_MESSAGE);
       return;
     }
     bluetoothSensorTest(R.string.settings_sensor_type_zephyr, ZEPHYR_NAME, true);
@@ -87,7 +89,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
    */
   public void testConnectPolarBluetoothSensor_notRecording() {
     if (!runTest) {
-      Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
+      Log.d(TAG, BigTestUtils.DISABLE_MESSAGE);
       return;
     }
     bluetoothSensorTest(R.string.settings_sensor_type_polar, POLAR_NAME, false);
@@ -99,7 +101,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
    */
   public void testConnectPolarBluetoothSensor_underRecording() {
     if (!runTest) {
-      Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
+      Log.d(TAG, BigTestUtils.DISABLE_MESSAGE);
       return;
     }
     bluetoothSensorTest(R.string.settings_sensor_type_polar, POLAR_NAME, true);
@@ -145,7 +147,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
       return;
     }
 
-    Log.i(EndToEndTestUtils.LOG_TAG, "No sensor is paried");
+    Log.d(TAG, "No sensor is paried");
     fail("No bluetooth sensor is paired. Please pair at Settings->Bluetooth before running the test.");
   }
 
@@ -154,7 +156,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
    */
   public void testConnectANTSensor_Cadence() {
     if (!runTest) {
-      Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
+      Log.d(TAG, BigTestUtils.DISABLE_MESSAGE);
       return;
     }
     useANTSeonsor();
@@ -167,7 +169,7 @@ public class SensorTest extends ActivityInstrumentationTestCase2<TrackListActivi
    */
   public void testConnectTwoANTSensors() {
     if (!runTest) {
-      Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
+      Log.d(TAG, BigTestUtils.DISABLE_MESSAGE);
       return;
     }
     useANTSeonsor();

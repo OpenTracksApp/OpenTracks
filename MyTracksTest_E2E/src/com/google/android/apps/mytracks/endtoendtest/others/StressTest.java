@@ -32,6 +32,7 @@ import android.widget.ListView;
  */
 public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivity> {
 
+  private static final String TAG = StressTest.class.getSimpleName();
   private static final int TEST_DURATION_IN_MILLISECONDS = 30 * 60 * 1000;
   private static final int MAX_TRACK_NUMBER = 30;
   private boolean runTest = false;
@@ -67,7 +68,7 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
    */
   public void testRecordAndDeleteTracks() {
     if (!runTest) {
-      Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
+      Log.d(TAG, BigTestUtils.DISABLE_MESSAGE);
       return;
     }
     for (int i = 0; (System.currentTimeMillis() - startTime) < TEST_DURATION_IN_MILLISECONDS; i++) {
@@ -91,14 +92,14 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
    */
   public void testRotateMapViewInTrackDetailActivity() {
     if (!runTest) {
-      Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
+      Log.d(TAG, BigTestUtils.DISABLE_MESSAGE);
       return;
     }
     EndToEndTestUtils.startRecording();
     for (int i = 0; (System.currentTimeMillis() - startTime) < TEST_DURATION_IN_MILLISECONDS; i++) {
       EndToEndTestUtils.sendGps(10, i * 10);
       EndToEndTestUtils.rotateCurrentActivity();
-      Log.i(EndToEndTestUtils.LOG_TAG, String.format("Totate %d times in %d minutes!", i,
+      Log.d(TAG, String.format("Totate %d times in %d minutes!", i,
           (System.currentTimeMillis() - startTime) / 1000 / 60));
     }
   }
@@ -108,7 +109,7 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
    */
   public void testSwitchTabs() {
     if (!runTest) {
-      Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
+      Log.d(TAG, BigTestUtils.DISABLE_MESSAGE);
       return;
     }
     EndToEndTestUtils.startRecording();
@@ -133,7 +134,7 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
    */
   public void testRecordLongTrack() {
     if (!runTest) {
-      Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
+      Log.d(TAG, BigTestUtils.DISABLE_MESSAGE);
       return;
     }
     EndToEndTestUtils.startRecording();
@@ -150,7 +151,7 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
    */
   public void testSwitchTabs_wayPoints() {
     if (!runTest) {
-      Log.i(EndToEndTestUtils.LOG_TAG, BigTestUtils.DISABLE_MESSAGE);
+      Log.d(TAG, BigTestUtils.DISABLE_MESSAGE);
       return;
     }
     EndToEndTestUtils.startRecording();
@@ -186,9 +187,11 @@ public class StressTest extends ActivityInstrumentationTestCase2<TrackListActivi
    * @param times the number of times this test has been run
    */
   private void logStatus(int times) {
-    int minutes = (int) (TEST_DURATION_IN_MILLISECONDS - (System.currentTimeMillis() - startTime)) / 60 / 1000;
-    Log.i(EndToEndTestUtils.LOG_TAG, String.format(
+    int minutes =
+        (int) (TEST_DURATION_IN_MILLISECONDS - (System.currentTimeMillis() - startTime)) / 60
+        / 1000;
+    Log.d(TAG, String.format(
         "This test has run %d times and will be finished in %d minutes!", times, minutes));
-    Log.i(EndToEndTestUtils.LOG_TAG, String.format("There are %d tracks!", numberOfTracks));
+    Log.d(TAG, String.format("There are %d tracks!", numberOfTracks));
   }
 }

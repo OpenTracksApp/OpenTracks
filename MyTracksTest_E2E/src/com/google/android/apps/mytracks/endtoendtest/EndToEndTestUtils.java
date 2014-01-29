@@ -56,6 +56,8 @@ import junit.framework.Assert;
  * @author Youtao Liu
  */
 public class EndToEndTestUtils {
+  
+  private static final String TAG = EndToEndTestUtils.class.getSimpleName();
   public static int emulatorPort = 5554;
   // usually 5554.
   private static final int ORIENTATION_PORTRAIT = 1;
@@ -63,7 +65,7 @@ public class EndToEndTestUtils {
 
   private static final String ANDROID_LOCAL_IP = "10.0.2.2";
   private static final String NO_GPS_MESSAGE_PREFIX = "GPS is not available";
-  private static final String MOREOPTION_CLASSNAME = "com.android.internal.view.menu.ActionMenuPresenter$OverflowMenuButton";
+  private static final String MORE_OPTION_CLASSNAME = "com.android.internal.view.menu.ActionMenuPresenter$OverflowMenuButton";
   private static final String MENUITEM_CLASSNAME = "com.android.internal.view.menu.IconMenuItemView";
 
   // Pause 200ms between each send.
@@ -73,21 +75,18 @@ public class EndToEndTestUtils {
   public static final double DELTA_LADITUDE = 0.0005f;
   public static final String WAYPOINT_NAME = "testWaypoint";
   public static final String WAYPOINT_TYPE = "testWaypoinType";
-  public static final String WAYPOINT_DESC = "testWaypointDesc";
-  public static final String DEFAULTACTIVITYTYPE = "TestActivity";
+  public static final String WAYPOINT_DESCRIPTION = "testWaypointDesc";
+  public static final String DEFAULT_ACTIVITY_TYPE = "TestActivity";
   public static final String TRACK_NAME_PREFIX = "testTrackName";
-  public static final String TRACK_DESC_PREFIX = "testTrackDesc";
+  private static final String TRACK_DESCRIPTION_PREFIX = "testTrackDesc";
   public static final String GPX = "gpx";
   public static final String KML = "kml";
   public static final String KMZ = "kmz";
   public static final String CSV = "csv";
   public static final String TCX = "tcx";
-  public static final String BACKUPS = "backups";
-  public static final String MENU_MORE = "More";
-  public static final String LOG_TAG = "MyTracksTest";
 
   // Following is some check strings in English and Chinese
-  private static final HashMap<String, String> RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL = new HashMap<String, String>();
+  private static final HashMap<String, String> RELATIVE_START_TIME_POSTFIX_MULTILINGUAL = new HashMap<String, String>();
   private static final HashMap<String, String> KM_MULTILINGUAL = new HashMap<String, String>();
   private static final HashMap<String, String> MILE_MULTILINGUAL = new HashMap<String, String>();
 
@@ -98,20 +97,19 @@ public class EndToEndTestUtils {
   public static final int LONG_WAIT_TIME = 15000;
   public static final int SUPER_LONG_WAIT_TIME = 100000;
 
-  public static String activityType = DEFAULTACTIVITYTYPE;
-  public static String RELATIVE_STARTTIME_POSTFIX = "";
+  public static String activityType = DEFAULT_ACTIVITY_TYPE;
+  public static String RELATIVE_START_TIME_POSTFIX = "";
   public static String KM = "";
   public static String MILE = "";
-  public static String deviceLanguage = "";
   public static String trackName;
-  public static String trackDesc;
+  public static String trackDescription;
 
   static {
-    RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("en", "mins ago");
-    RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("de", "Minuten");
-    RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("fr", "minute");
-    RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("ar", "دقيقة");
-    RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("zh", "分钟前");
+    RELATIVE_START_TIME_POSTFIX_MULTILINGUAL.put("en", "mins ago");
+    RELATIVE_START_TIME_POSTFIX_MULTILINGUAL.put("de", "Minuten");
+    RELATIVE_START_TIME_POSTFIX_MULTILINGUAL.put("fr", "minute");
+    RELATIVE_START_TIME_POSTFIX_MULTILINGUAL.put("ar", "دقيقة");
+    RELATIVE_START_TIME_POSTFIX_MULTILINGUAL.put("zh", "分钟前");
 
     KM_MULTILINGUAL.put("en", "km");
     KM_MULTILINGUAL.put("de", "km");
@@ -128,7 +126,7 @@ public class EndToEndTestUtils {
 
   public static com.robotium.solo.Solo SOLO;
   public static Instrumentation instrumentation;
-  public static TrackListActivity activityMytracks;
+  public static TrackListActivity trackListActivity;
 
   /*
    * Check whether the UI has an action bar which is related with the version of
@@ -137,8 +135,8 @@ public class EndToEndTestUtils {
   public static boolean hasActionBar = false;
   public static boolean isEmulator = true;
   public static boolean hasGpsSingal = true;
-  public static boolean isCheckedFirstLaunch = false;
-  public static boolean isGooglePlayServicesLatest = true;
+  private static boolean isCheckedFirstLaunch = false;
+  private static boolean isGooglePlayServicesLatest = true;
 
   private EndToEndTestUtils() {};
 
@@ -146,23 +144,23 @@ public class EndToEndTestUtils {
    * Checks the language, then sets the fields with right string.
    */
   private static void checkLanguage() {
-    Locale locale = null;
-    Configuration config = null;
-    config = activityMytracks.getBaseContext().getResources().getConfiguration();
-    locale = new Locale("en");
+    Locale locale = new Locale("en");
     Locale.setDefault(locale);
-    config.locale = locale;
 
-    deviceLanguage = instrumentation.getContext().getResources().getConfiguration().locale
+    Configuration configuration = trackListActivity.getBaseContext()
+        .getResources().getConfiguration();
+    configuration.locale = locale;
+
+    String language = instrumentation.getContext().getResources().getConfiguration().locale
         .getLanguage();
-    if (RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.get(deviceLanguage) != null) {
-      RELATIVE_STARTTIME_POSTFIX = RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.get(deviceLanguage);
-      KM = KM_MULTILINGUAL.get(deviceLanguage);
-      MILE = MILE_MULTILINGUAL.get(deviceLanguage);
+    if (RELATIVE_START_TIME_POSTFIX_MULTILINGUAL.get(language) != null) {
+      RELATIVE_START_TIME_POSTFIX = RELATIVE_START_TIME_POSTFIX_MULTILINGUAL.get(language);
+      KM = KM_MULTILINGUAL.get(language);
+      MILE = MILE_MULTILINGUAL.get(language);
     } else {
-      RELATIVE_STARTTIME_POSTFIX = RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.get("es");
-      KM = KM_MULTILINGUAL.get("es");
-      MILE = MILE_MULTILINGUAL.get("es");
+      RELATIVE_START_TIME_POSTFIX = RELATIVE_START_TIME_POSTFIX_MULTILINGUAL.get("en");
+      KM = KM_MULTILINGUAL.get("en");
+      MILE = MILE_MULTILINGUAL.get("en");
     }
   }
 
@@ -252,14 +250,13 @@ public class EndToEndTestUtils {
   /**
    * A setup for debugging end-to-end tests.
    * 
-   * @param instrumentation the instrumentation is used for test
-   * @param activityMyTracks the startup activity
+   * @param inst the instrumentation
+   * @param activity the track list activity
    */
-  public static void setupForDebug(Instrumentation instrumentation,
-      TrackListActivity activityMyTracks) {
-    EndToEndTestUtils.instrumentation = instrumentation;
-    EndToEndTestUtils.activityMytracks = activityMyTracks;
-    SOLO = new Solo(EndToEndTestUtils.instrumentation, EndToEndTestUtils.activityMytracks);
+  public static void setupForDebug(Instrumentation inst, TrackListActivity activity) {
+    instrumentation = inst;
+    trackListActivity = activity;
+    SOLO = new Solo(instrumentation, trackListActivity);
     setIsEmulator();
     hasActionBar = setHasActionBar();
     checkLanguage();
@@ -268,19 +265,18 @@ public class EndToEndTestUtils {
   /**
    * A setup for all end-to-end tests.
    * 
-   * @param instrumentation the instrumentation is used for test
-   * @param activityMyTracks the startup activity
+   * @param inst the instrumentation
+   * @param activity the track list activity
    */
-  public static void setupForAllTest(Instrumentation instrumentation,
-      TrackListActivity activityMyTracks) {
-    EndToEndTestUtils.instrumentation = instrumentation;
-    EndToEndTestUtils.activityMytracks = activityMyTracks;
-    SOLO = new Solo(EndToEndTestUtils.instrumentation, EndToEndTestUtils.activityMytracks);
+  public static void setupForAllTest(Instrumentation inst, TrackListActivity activity) {
+    instrumentation = inst;
+    trackListActivity = activity;
+    SOLO = new Solo(instrumentation, trackListActivity);
 
     if (!isGooglePlayServicesLatest) {
       SOLO.finishOpenedActivities();
       Assert.fail();
-      Log.e(LOG_TAG, "Need update Google Play Services");
+      Log.e(TAG, "Need update Google Play Services");
     }
 
     // Check if open MyTracks first time after install. If so, there would be a
@@ -290,7 +286,7 @@ public class EndToEndTestUtils {
       if (!isGooglePlayServicesLatest) {
         SOLO.finishOpenedActivities();
         Assert.fail();
-        Log.e(LOG_TAG, "Need update Google Play Services");
+        Log.e(TAG, "Need update Google Play Services");
       }
       setIsEmulator();
 
@@ -299,10 +295,10 @@ public class EndToEndTestUtils {
       checkLanguage();
       isCheckedFirstLaunch = true;
 
-      instrumentation.waitForIdleSync();
+      inst.waitForIdleSync();
       // Check the status of real phone. For emulator, we would fix GPS signal.
       if (!isEmulator) {
-        findAndClickMyLocation(activityMyTracks);
+        findAndClickMyLocation(activity);
         hasGpsSingal = !SOLO.waitForText(NO_GPS_MESSAGE_PREFIX, 1, SHORT_WAIT_TIME);
         SOLO.goBack();
       }
@@ -321,8 +317,8 @@ public class EndToEndTestUtils {
       stopRecording(true);
     }
 
-    resetAllSettings(activityMyTracks, false);
-    instrumentation.waitForIdleSync();
+    resetAllSettings(activity, false);
+    inst.waitForIdleSync();
   }
 
   /**
@@ -340,8 +336,8 @@ public class EndToEndTestUtils {
    * Accepts terms and configures units.
    */
   private static void verifyFirstLaunch() {
-    if ((getButtonOnScreen(activityMytracks.getString(R.string.eula_accept), false, false) != null)) {
-      getButtonOnScreen(activityMytracks.getString(R.string.eula_accept), true, true);
+    if ((getButtonOnScreen(trackListActivity.getString(R.string.eula_accept), false, false) != null)) {
+      getButtonOnScreen(trackListActivity.getString(R.string.eula_accept), true, true);
     }
   }
 
@@ -403,7 +399,7 @@ public class EndToEndTestUtils {
     if (isClick) {
       SOLO.scrollUp();
       SOLO.clickOnView(oneTrack);
-      SOLO.waitForText(activityMytracks.getString(R.string.track_detail_chart_tab));
+      SOLO.waitForText(trackListActivity.getString(R.string.track_detail_chart_tab));
     }
     return false;
   }
@@ -475,17 +471,17 @@ public class EndToEndTestUtils {
     if (stopButton != null && stopButton.isShown()) {
       SOLO.clickOnView(stopButton);
       if (isSave) {
-        SOLO.waitForText(activityMytracks.getString(R.string.generic_save), 1, 5000);
+        SOLO.waitForText(trackListActivity.getString(R.string.generic_save), 1, 5000);
         // Make every track name is unique to make sure every check can be
         // trusted.
         long currentMillis = System.currentTimeMillis();
         trackName = TRACK_NAME_PREFIX + currentMillis;
-        trackDesc = TRACK_DESC_PREFIX + currentMillis;
+        trackDescription = TRACK_DESCRIPTION_PREFIX + currentMillis;
         SOLO.sendKey(KeyEvent.KEYCODE_DEL);
         enterTextAvoidSoftKeyBoard(0, trackName);
         enterTextAvoidSoftKeyBoard(1, activityType);
-        enterTextAvoidSoftKeyBoard(2, trackDesc);
-        SOLO.clickOnText(activityMytracks.getString(R.string.generic_save));
+        enterTextAvoidSoftKeyBoard(2, trackDescription);
+        SOLO.clickOnText(trackListActivity.getString(R.string.generic_save));
         instrumentation.waitForIdleSync();
       }
     }
@@ -497,7 +493,7 @@ public class EndToEndTestUtils {
    * @param trackKind the kind of track
    */
   public static void deleteExportedFiles(String trackKind) {
-    File[] allFiles = (new File(FileUtils.getPath(trackKind.toLowerCase()))).listFiles();
+    File[] allFiles = (new File(FileUtils.getPath(trackKind))).listFiles();
     if (allFiles != null) {
       for (File oneFile : allFiles) {
         oneFile.delete();
@@ -511,9 +507,9 @@ public class EndToEndTestUtils {
    */
   public static void deleteAllTracks() {
     if (!isTrackListEmpty(false)) {
-      findMenuItem(activityMytracks.getString(R.string.menu_delete_all), true);
-      getButtonOnScreen(activityMytracks.getString(R.string.generic_yes), true, true);
-      waitTextToDisappear(activityMytracks.getString(R.string.generic_progress_title));
+      findMenuItem(trackListActivity.getString(R.string.menu_delete_all), true);
+      getButtonOnScreen(trackListActivity.getString(R.string.generic_yes), true, true);
+      waitTextToDisappear(trackListActivity.getString(R.string.generic_progress_title));
     }
   }
 
@@ -528,8 +524,7 @@ public class EndToEndTestUtils {
     FileFilter filter = new FileFilter() {
       @Override
       public boolean accept(File pathname) {
-        String postFix = trackKind.equalsIgnoreCase(EndToEndTestUtils.KML) ? EndToEndTestUtils.KMZ
-            : trackKind;
+        String postFix = trackKind.equalsIgnoreCase(KML) ? KMZ : trackKind;
         return pathname.getName().indexOf("." + postFix) > 0;
       }
     };
@@ -544,11 +539,11 @@ public class EndToEndTestUtils {
   public static void saveAllTrackToSdCard(String trackKind) {
     deleteExportedFiles(trackKind);
     instrumentation.waitForIdleSync();
-    findMenuItem(activityMytracks.getString(R.string.menu_export_all), true);
+    findMenuItem(trackListActivity.getString(R.string.menu_export_all), true);
     instrumentation.waitForIdleSync();
-    SOLO.clickOnText(trackKind.toUpperCase());
-    getButtonOnScreen(activityMytracks.getString(R.string.generic_ok), true, true);
-    SOLO.waitForText(activityMytracks.getString(R.string.generic_success_title));
+    SOLO.clickOnText(trackKind.toUpperCase(Locale.US));
+    getButtonOnScreen(trackListActivity.getString(R.string.generic_ok), true, true);
+    SOLO.waitForText(trackListActivity.getString(R.string.generic_success_title));
   }
 
   /**
@@ -598,7 +593,7 @@ public class EndToEndTestUtils {
     }
 
     if (button == null && isClick) {
-      Log.d(LOG_TAG, "Don't find the button " + buttonName);
+      Log.d(TAG, "Don't find the button " + buttonName);
     }
 
     return button;
@@ -612,7 +607,7 @@ public class EndToEndTestUtils {
   @SuppressLint("NewApi")
   private static boolean setHasActionBar() {
     try {
-      return activityMytracks.getActionBar() == null ? false : true;
+      return trackListActivity.getActionBar() == null ? false : true;
     } catch (Throwable e) {
       // For in Android which does not has action bar, here will meet a error.
       return false;
@@ -723,7 +718,7 @@ public class EndToEndTestUtils {
    * Finds the more option menu. It should match following conditions:
    * <ul>
    * <li>The view extends ImageButton.</li>
-   * <li>The view name equals {@link #MOREOPTION_CLASSNAME}.</li>
+   * <li>The view name equals {@link #MORE_OPTION_CLASSNAME}.</li>
    * </ul>
    * 
    * @return the more option view. Null means can not find it.
@@ -733,7 +728,7 @@ public class EndToEndTestUtils {
     if (hasActionBar) {
       ArrayList<View> allViews = SOLO.getViews();
       for (View view : allViews) {
-        if (view instanceof ImageButton && view.getClass().getName().equals(MOREOPTION_CLASSNAME)) {
+        if (view instanceof ImageButton && view.getClass().getName().equals(MORE_OPTION_CLASSNAME)) {
           viewResult = view;
           break;
         }
@@ -842,7 +837,7 @@ public class EndToEndTestUtils {
     SOLO.clickOnText(activityMyTracks.getString(R.string.settings_advanced));
     Assert.assertTrue(SOLO.waitForText(activityMyTracks.getString(R.string.settings_reset)));
     SOLO.clickOnText(activityMyTracks.getString(R.string.settings_reset));
-    getButtonOnScreen(activityMytracks.getString(R.string.generic_yes), true, true);
+    getButtonOnScreen(trackListActivity.getString(R.string.generic_yes), true, true);
     Assert.assertTrue(SOLO.waitForText(activityMyTracks.getString(R.string.settings_reset_done)));
     instrumentation.waitForIdleSync();
     SOLO.goBack();
@@ -866,7 +861,7 @@ public class EndToEndTestUtils {
 
     // Above line does not work every time. And it is should be a Robotium
     // issue.
-    InputMethodManager imm = (InputMethodManager) activityMytracks.getApplicationContext()
+    InputMethodManager imm = (InputMethodManager) trackListActivity.getApplicationContext()
         .getSystemService(Context.INPUT_METHOD_SERVICE);
     imm.hideSoftInputFromWindow(editText.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
   }
@@ -880,7 +875,7 @@ public class EndToEndTestUtils {
     try {
       Thread.sleep(milliseconds);
     } catch (InterruptedException e) {
-      Log.e(LOG_TAG, "Unable to sleep " + milliseconds, e);
+      Log.e(TAG, "Unable to sleep " + milliseconds, e);
     }
   }
 
@@ -889,12 +884,12 @@ public class EndToEndTestUtils {
    */
   public static void checkNotRecording() {
     instrumentation.waitForIdleSync();
-    Assert.assertEquals(activityMytracks.getString(R.string.image_record), (String) SOLO
+    Assert.assertEquals(trackListActivity.getString(R.string.image_record), (String) SOLO
         .getCurrentActivity().findViewById(R.id.track_controller_record).getContentDescription());
     Assert.assertFalse(SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop)
         .isEnabled());
-    Assert.assertNull(findTextView(activityMytracks.getString(R.string.generic_recording)));
-    Assert.assertNull(findTextView(activityMytracks.getString(R.string.generic_paused)));
+    Assert.assertNull(findTextView(trackListActivity.getString(R.string.generic_recording)));
+    Assert.assertNull(findTextView(trackListActivity.getString(R.string.generic_paused)));
     TextView totalTime = (TextView) SOLO.getCurrentActivity().findViewById(
         R.id.track_controller_total_time);
     Assert.assertEquals(StringUtils.formatElapsedTimeWithHour(0), totalTime.getText().toString());
@@ -905,12 +900,12 @@ public class EndToEndTestUtils {
    */
   public static void checkUnderRecording() {
     instrumentation.waitForIdleSync();
-    Assert.assertEquals(activityMytracks.getString(R.string.image_pause), (String) SOLO
+    Assert.assertEquals(trackListActivity.getString(R.string.image_pause), (String) SOLO
         .getCurrentActivity().findViewById(R.id.track_controller_record).getContentDescription());
     Assert.assertTrue(SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop)
         .isEnabled());
-    Assert.assertNotNull(findTextView(activityMytracks.getString(R.string.generic_recording)));
-    Assert.assertNull(findTextView(activityMytracks.getString(R.string.generic_paused)));
+    Assert.assertNotNull(findTextView(trackListActivity.getString(R.string.generic_recording)));
+    Assert.assertNull(findTextView(trackListActivity.getString(R.string.generic_paused)));
 
     String totalTimeOld = ((TextView) SOLO.getCurrentActivity().findViewById(
         R.id.track_controller_total_time)).getText().toString();
@@ -925,12 +920,12 @@ public class EndToEndTestUtils {
    */
   public static void checkUnderPaused() {
     instrumentation.waitForIdleSync();
-    Assert.assertEquals(activityMytracks.getString(R.string.image_record), (String) SOLO
+    Assert.assertEquals(trackListActivity.getString(R.string.image_record), (String) SOLO
         .getCurrentActivity().findViewById(R.id.track_controller_record).getContentDescription());
     Assert.assertTrue(SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop)
         .isEnabled());
-    Assert.assertNull(findTextView(activityMytracks.getString(R.string.generic_recording)));
-    Assert.assertNotNull(findTextView(activityMytracks.getString(R.string.generic_paused)));
+    Assert.assertNull(findTextView(trackListActivity.getString(R.string.generic_recording)));
+    Assert.assertNotNull(findTextView(trackListActivity.getString(R.string.generic_paused)));
 
     String totalTimeOld = ((TextView) SOLO.getCurrentActivity().findViewById(
         R.id.track_controller_total_time)).getText().toString();
@@ -946,20 +941,20 @@ public class EndToEndTestUtils {
    * @param markerNumber of number of previous markers
    */
   public static void createWaypoint(int markerNumber) {
-    findMenuItem(activityMytracks.getString(R.string.menu_markers), true);
+    findMenuItem(trackListActivity.getString(R.string.menu_markers), true);
     if (markerNumber > 0 && hasGpsSingal) {
       SOLO.waitForText(WAYPOINT_NAME);
       int actualMarkerNumber = SOLO.getCurrentViews(ListView.class).get(0).getCount();
       Assert.assertEquals(markerNumber, actualMarkerNumber);
     } else {
-      Assert.assertTrue(SOLO.waitForText(activityMytracks
+      Assert.assertTrue(SOLO.waitForText(trackListActivity
           .getString(R.string.marker_list_empty_message)));
     }
-    findMenuItem(activityMytracks.getString(R.string.menu_insert_marker), true);
+    findMenuItem(trackListActivity.getString(R.string.menu_insert_marker), true);
     enterTextAvoidSoftKeyBoard(0, WAYPOINT_NAME + (markerNumber + 1));
     enterTextAvoidSoftKeyBoard(1, WAYPOINT_TYPE + (markerNumber + 1));
-    enterTextAvoidSoftKeyBoard(2, WAYPOINT_DESC + (markerNumber + 1));
-    SOLO.clickOnButton(activityMytracks.getString(R.string.generic_add));
+    enterTextAvoidSoftKeyBoard(2, WAYPOINT_DESCRIPTION + (markerNumber + 1));
+    SOLO.clickOnButton(trackListActivity.getString(R.string.generic_add));
     instrumentation.waitForIdleSync();
     if (hasGpsSingal) {
       Assert.assertTrue(SOLO.waitForText(WAYPOINT_NAME, 1, LONG_WAIT_TIME, true));

@@ -81,7 +81,7 @@ public class ExportSingleTrackTest extends ActivityInstrumentationTestCase2<Trac
     String testActivity = "(TestActivity)";
     EndToEndTestUtils.activityType = testActivity;
     GoogleUtils.deleteSpreadsheets(
-        EndToEndTestUtils.activityMytracks.getApplicationContext(), GoogleUtils.ACCOUNT_1);
+        EndToEndTestUtils.trackListActivity.getApplicationContext(), GoogleUtils.ACCOUNT_1);
     EndToEndTestUtils.createSimpleTrack(1, false);
     boolean result = sendToGoogle(activityMyTracks.getString(R.string.export_google_maps))
         && sendToGoogle(activityMyTracks.getString(R.string.export_google_fusion_tables))
@@ -188,7 +188,7 @@ public class ExportSingleTrackTest extends ActivityInstrumentationTestCase2<Trac
 
   @Override
   protected void tearDown() throws Exception {
-    EndToEndTestUtils.activityType = EndToEndTestUtils.DEFAULTACTIVITYTYPE;
+    EndToEndTestUtils.activityType = EndToEndTestUtils.DEFAULT_ACTIVITY_TYPE;
     EndToEndTestUtils.SOLO.finishOpenedActivities();
     super.tearDown();
   }

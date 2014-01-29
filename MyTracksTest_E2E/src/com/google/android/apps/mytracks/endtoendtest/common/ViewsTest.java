@@ -20,6 +20,7 @@ import com.google.android.apps.mytracks.endtoendtest.EndToEndTestUtils;
 import com.google.android.apps.mytracks.fragments.MyTracksMapFragment;
 import com.google.android.maps.mytracks.R;
 
+import android.annotation.SuppressLint;
 import android.app.Instrumentation;
 import android.graphics.Point;
 import android.os.Build;
@@ -38,6 +39,7 @@ import junit.framework.Assert;
  */
 public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivity> {
 
+  private static final String TAG = ViewsTest.class.getSimpleName();
   private Instrumentation instrumentation;
   private TrackListActivity activityMyTracks;
 
@@ -140,6 +142,7 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
    * Checks the position of track controller in landscape view and portrait
    * view.
    */
+  @SuppressLint("NewApi")
   @SuppressWarnings("deprecation")
   private void checkTrackController() {
     View controller = EndToEndTestUtils.SOLO.getCurrentActivity().findViewById(
@@ -157,7 +160,7 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
     int width = size.x;
     int height = size.y;
 
-    Log.i(EndToEndTestUtils.LOG_TAG, width + ":" + height);
+    Log.d(TAG, width + ":" + height);
 
     // In landscape view
     if (width > height) {
@@ -169,7 +172,7 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
     // In portrait view
     else {
       Assert.assertTrue(controller.getWidth() > controller.getHeight());
-      Log.i(EndToEndTestUtils.LOG_TAG, controller.getTop() + ":" + controller.getRight());
+      Log.d(TAG, controller.getTop() + ":" + controller.getRight());
 
       Assert.assertTrue(controller.getTop() > height / 2);
       Assert.assertTrue(controller.getRight() > width / 2);

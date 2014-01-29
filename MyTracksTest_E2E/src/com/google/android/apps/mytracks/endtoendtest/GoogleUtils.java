@@ -68,10 +68,10 @@ public class GoogleUtils {
   public static final String ACCOUNT_1 = "mytrackstest@gmail.com";
   public static final String ACCOUNT_2 = "mytrackstest2@gmail.com";
 
+  private static final String TAG = GoogleUtils.class.getSimpleName();
   private static final String MY_TRACKS_PREFIX = "My Tracks";
   private static final String SPREADSHEETS_NAME = MY_TRACKS_PREFIX + "-"
       + EndToEndTestUtils.activityType;
-
   private static final String SPREADSHEETS_WORKSHEET_NAME = "Log";
   private static final String SPREADSHEETS_TRANCK_NAME_COLUMN = "Name";
   private static final String DRIVE_TEST_FILES_QUERY = "'root' in parents and title contains '"
@@ -101,7 +101,7 @@ public class GoogleUtils {
         drive.files().delete(file.getId()).execute();
       }
     } catch (Exception e) {
-      Log.e(EndToEndTestUtils.LOG_TAG, "Unable to delete Google Drive test files.", e);
+      Log.e(TAG, "Unable to delete Google Drive test files.", e);
     }
   }
 
@@ -129,7 +129,7 @@ public class GoogleUtils {
               .blockingGetAuthToken(account, MapsConstants.SERVICE_NAME, false));
           return true;
         } catch (Exception e) {
-          Log.e(EndToEndTestUtils.LOG_TAG, "Unable to delete maps.", e);
+          Log.e(TAG, "Unable to delete maps.", e);
           return false;
         }
       }
@@ -146,7 +146,7 @@ public class GoogleUtils {
   public static void deleteAllMaps(Context context, String accountName) {
     Account account = getGoogleAccount(context, accountName);
     if (account == null) {
-      Log.e(EndToEndTestUtils.LOG_TAG, "Unable to get account.");
+      Log.e(TAG, "Unable to get account.");
       return;
     }
     MapsClient mapsClient = new MapsClient(GDataClientFactory.getGDataClient(context),
@@ -157,7 +157,7 @@ public class GoogleUtils {
         mapsClient.deleteEntry(oneData.getGDataEditUri(), AccountManager.get(context)
             .blockingGetAuthToken(account, MapsConstants.SERVICE_NAME, false));
       } catch (Exception e) {
-        Log.e(EndToEndTestUtils.LOG_TAG, "Unable to delete maps.", e);
+        Log.e(TAG, "Unable to delete maps.", e);
       }
     }
   }
@@ -190,7 +190,7 @@ public class GoogleUtils {
         }
       }
     } catch (Exception e) {
-      Log.e(EndToEndTestUtils.LOG_TAG, "Unable to search fusion tables.", e);
+      Log.e(TAG, "Unable to search fusion tables.", e);
     }
     return false;
   }
@@ -216,7 +216,7 @@ public class GoogleUtils {
           Locale.US, SendSpreadsheetsAsyncTask.GET_SPREADSHEET_QUERY, SPREADSHEETS_NAME));
       return list.execute().getItems();
     } catch (Exception e) {
-      Log.e(EndToEndTestUtils.LOG_TAG, "Unable to search spreadsheets.", e);
+      Log.e(TAG, "Unable to search spreadsheets.", e);
     }
     return null;
   }
@@ -247,7 +247,7 @@ public class GoogleUtils {
       }
       return true;
     } catch (Exception e) {
-      Log.e(EndToEndTestUtils.LOG_TAG, "Unable to delete spreadsheets.", e);
+      Log.e(TAG, "Unable to delete spreadsheets.", e);
     }
     return false;
   }
@@ -301,7 +301,7 @@ public class GoogleUtils {
         }
       }
     } catch (Exception e) {
-      Log.e(EndToEndTestUtils.LOG_TAG, "Unable to delete spreadsheets row.", e);
+      Log.e(TAG, "Unable to delete spreadsheets row.", e);
     }
     return false;
   }
@@ -312,25 +312,25 @@ public class GoogleUtils {
   public static boolean isAccountAvailable() {
     // Check the no account dialog
     if (EndToEndTestUtils.SOLO.waitForText(
-        EndToEndTestUtils.activityMytracks.getString(R.string.send_google_no_account_title), 1,
+        EndToEndTestUtils.trackListActivity.getString(R.string.send_google_no_account_title), 1,
         EndToEndTestUtils.SHORT_WAIT_TIME)) {
       EndToEndTestUtils.getButtonOnScreen(
-          EndToEndTestUtils.activityMytracks.getString(R.string.generic_ok), false, true);
+          EndToEndTestUtils.trackListActivity.getString(R.string.generic_ok), false, true);
       return false;
     }
 
     // Check the choose account dialog
     if (EndToEndTestUtils.SOLO.waitForText(
-        EndToEndTestUtils.activityMytracks.getString(R.string.send_google_choose_account_title), 1,
+        EndToEndTestUtils.trackListActivity.getString(R.string.send_google_choose_account_title), 1,
         EndToEndTestUtils.SHORT_WAIT_TIME)) {
       EndToEndTestUtils.SOLO.clickOnText(ACCOUNT_1);
       EndToEndTestUtils.getButtonOnScreen(
-          EndToEndTestUtils.activityMytracks.getString(R.string.generic_ok), false, true);
+          EndToEndTestUtils.trackListActivity.getString(R.string.generic_ok), false, true);
     }
 
     // Check the no account permission dialog
     if (EndToEndTestUtils.SOLO.waitForText(
-        EndToEndTestUtils.activityMytracks.getString(R.string.send_google_no_account_permission), 1,
+        EndToEndTestUtils.trackListActivity.getString(R.string.send_google_no_account_permission), 1,
         EndToEndTestUtils.SHORT_WAIT_TIME)) {
       return false;
     }
@@ -372,7 +372,7 @@ public class GoogleUtils {
       authToken = AccountManager.get(context)
           .blockingGetAuthToken(account, MapsConstants.SERVICE_NAME, false);
     } catch (Exception e) {
-      Log.e(EndToEndTestUtils.LOG_TAG, "Unable to get auth token.", e);
+      Log.e(TAG, "Unable to get auth token.", e);
       return mapMetadata;
     }
 
@@ -387,7 +387,7 @@ public class GoogleUtils {
         mapMetadata.add(MapsGDataConverter.getMapMetadataForEntry(entry));
       }
     } catch (Exception e) {
-      Log.e(EndToEndTestUtils.LOG_TAG, "Unable to get maps.", e);
+      Log.e(TAG, "Unable to get maps.", e);
     } finally {
       if (gDataParser != null) {
         gDataParser.close();

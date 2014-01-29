@@ -178,7 +178,7 @@ public class CreateTrackTest extends ActivityInstrumentationTestCase2<TrackListA
     instrumentation.waitForIdleSync();
     
     // Make sure "mins ago" is displayed
-    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.RELATIVE_STARTTIME_POSTFIX, 1,
+    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.RELATIVE_START_TIME_POSTFIX, 1,
         false, true));
   }
 

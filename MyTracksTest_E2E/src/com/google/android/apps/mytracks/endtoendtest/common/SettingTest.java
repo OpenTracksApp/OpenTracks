@@ -37,6 +37,8 @@ import java.util.ArrayList;
  */
 public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActivity> {
 
+  private static final String TAG = SettingTest.class.getSimpleName();
+  
   private Instrumentation instrumentation;
   private TrackListActivity activityMyTracks;
 
@@ -116,7 +118,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
         activityMyTracks.getString(R.string.settings_stats_units_title), 1,
         EndToEndTestUtils.LONG_WAIT_TIME));
     displayCheckBoxs = EndToEndTestUtils.SOLO.getCurrentViews(CheckBox.class);
-    Log.i(EndToEndTestUtils.LOG_TAG, "useMetric:" + useMetric);
+    Log.d(TAG, "useMetric:" + useMetric);
     assertEquals(useMetric, displayCheckBoxs.get(0).isChecked());
 
     EndToEndTestUtils.SOLO.goBack();
