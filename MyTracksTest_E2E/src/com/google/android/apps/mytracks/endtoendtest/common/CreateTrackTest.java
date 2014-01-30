@@ -204,7 +204,7 @@ public class CreateTrackTest extends ActivityInstrumentationTestCase2<TrackListA
     assertTrue(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_markers),
         true));
     instrumentation.waitForIdleSync();
-    if (EndToEndTestUtils.hasGpsSingal) {
+    if (EndToEndTestUtils.hasGpsSignal) {
       assertTrue(EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount() > 0);
     } else {
       assertTrue(EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount() == 0);
