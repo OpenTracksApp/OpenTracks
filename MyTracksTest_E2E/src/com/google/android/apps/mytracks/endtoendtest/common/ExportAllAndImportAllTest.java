@@ -213,7 +213,7 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
    * @param trackFileFormat the track file format
    */
   private void testExportImportOne(TrackFileFormat trackFileFormat) {
-    changeToMetricUnits();
+    EndToEndTestUtils.changeToMetricUnits();
     showGradeElevation();
 
     addTrackFromGpxFile();
@@ -617,24 +617,6 @@ public class ExportAllAndImportAllTest extends ActivityInstrumentationTestCase2<
     for (File file : files) {
       file.delete();
     }
-  }
-
-  /**
-   * Changes to metric units.
-   */
-  private void changeToMetricUnits() {
-    EndToEndTestUtils.findMenuItem(trackListActivity.getString(R.string.menu_settings), true);
-    EndToEndTestUtils.SOLO.clickOnText(
-        trackListActivity.getString(R.string.track_detail_stats_tab));
-    assertTrue(EndToEndTestUtils.SOLO.waitForText(
-        trackListActivity.getString(R.string.settings_stats_units_title)));
-
-    // Change the preferred units
-    EndToEndTestUtils.SOLO.clickOnText(
-        trackListActivity.getString(R.string.settings_stats_units_title));
-    EndToEndTestUtils.SOLO.clickOnText(trackListActivity.getString(R.string.unit_kilometer));
-    EndToEndTestUtils.SOLO.goBack();
-    EndToEndTestUtils.SOLO.goBack();
   }
 
   /**

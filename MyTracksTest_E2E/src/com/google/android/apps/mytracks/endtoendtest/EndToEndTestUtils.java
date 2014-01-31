@@ -84,35 +84,19 @@ public class EndToEndTestUtils {
   private static final String MENUITEM_CLASSNAME = "com.android.internal.view.menu.IconMenuItemView";
 
   // Following is some check strings in English and Chinese
-  private static final HashMap<String, String> RELATIVE_START_TIME_POSTFIX_MULTILINGUAL = new HashMap<String, String>();
-  private static final HashMap<String, String> KM_MULTILINGUAL = new HashMap<String, String>();
-  private static final HashMap<String, String> MILE_MULTILINGUAL = new HashMap<String, String>();
+  private static final HashMap<String, String>
+      RELATIVE_START_TIME_SUFFIX_MULTILINGUAL = new HashMap<String, String>();
 
   static {
-    RELATIVE_START_TIME_POSTFIX_MULTILINGUAL.put("en", "mins ago");
-    RELATIVE_START_TIME_POSTFIX_MULTILINGUAL.put("de", "Minuten");
-    RELATIVE_START_TIME_POSTFIX_MULTILINGUAL.put("fr", "minute");
-    RELATIVE_START_TIME_POSTFIX_MULTILINGUAL.put("ar", "دقيقة");
-    RELATIVE_START_TIME_POSTFIX_MULTILINGUAL.put("zh", "分钟前");
-
-    KM_MULTILINGUAL.put("en", "km");
-    KM_MULTILINGUAL.put("de", "km");
-    KM_MULTILINGUAL.put("fr", "km");
-    KM_MULTILINGUAL.put("ar", "كم");
-    KM_MULTILINGUAL.put("zh", "公里");
-
-    MILE_MULTILINGUAL.put("en", "mi");
-    MILE_MULTILINGUAL.put("de", "mi");
-    MILE_MULTILINGUAL.put("fr", "mile");
-    MILE_MULTILINGUAL.put("ar", "ميل");
-    MILE_MULTILINGUAL.put("zh", "英里");
+    RELATIVE_START_TIME_SUFFIX_MULTILINGUAL.put("en", "mins ago");
+    RELATIVE_START_TIME_SUFFIX_MULTILINGUAL.put("de", "Minuten");
+    RELATIVE_START_TIME_SUFFIX_MULTILINGUAL.put("fr", "minute");
+    RELATIVE_START_TIME_SUFFIX_MULTILINGUAL.put("ar", "دقيقة");
+    RELATIVE_START_TIME_SUFFIX_MULTILINGUAL.put("zh", "分钟前");
   }
   
   public static int emulatorPort = 5554; // usually 5554.
   public static String activityType = DEFAULT_ACTIVITY_TYPE;
-  public static String RELATIVE_START_TIME_POSTFIX = "";
-  public static String KM = "";
-  public static String MILE = "";
   public static String trackName;
   public static String trackDescription;
   public static com.robotium.solo.Solo SOLO;
@@ -129,7 +113,8 @@ public class EndToEndTestUtils {
 
   private static boolean isCheckedFirstLaunch = false;
   private static boolean isGooglePlayServicesLatest = true;
-
+  private static String language;
+  
   private EndToEndTestUtils() {};
 
   /**
@@ -143,17 +128,7 @@ public class EndToEndTestUtils {
         .getResources().getConfiguration();
     configuration.locale = locale;
 
-    String language = instrumentation.getContext().getResources().getConfiguration().locale
-        .getLanguage();
-    if (RELATIVE_START_TIME_POSTFIX_MULTILINGUAL.get(language) != null) {
-      RELATIVE_START_TIME_POSTFIX = RELATIVE_START_TIME_POSTFIX_MULTILINGUAL.get(language);
-      KM = KM_MULTILINGUAL.get(language);
-      MILE = MILE_MULTILINGUAL.get(language);
-    } else {
-      RELATIVE_START_TIME_POSTFIX = RELATIVE_START_TIME_POSTFIX_MULTILINGUAL.get("en");
-      KM = KM_MULTILINGUAL.get("en");
-      MILE = MILE_MULTILINGUAL.get("en");
-    }
+    language = instrumentation.getContext().getResources().getConfiguration().locale.getLanguage();
   }
 
   /**
@@ -347,11 +322,10 @@ public class EndToEndTestUtils {
     instrumentation.waitForIdleSync();
     stopRecording(true);
 
-    instrumentation.waitForIdleSync();
     if (showTrackList) {
       SOLO.goBack();
+      instrumentation.waitForIdleSync();
     }
-    instrumentation.waitForIdleSync();
   }
 
   /**
@@ -476,6 +450,8 @@ public class EndToEndTestUtils {
         enterTextAvoidSoftKeyBoard(1, activityType);
         enterTextAvoidSoftKeyBoard(2, trackDescription);
         SOLO.clickOnText(trackListActivity.getString(R.string.generic_save));
+        instrumentation.waitForIdleSync();
+      } else {
         instrumentation.waitForIdleSync();
       }
     }
@@ -928,7 +904,7 @@ public class EndToEndTestUtils {
    * 
    * @param activity
    */
-  public static void findAndClickMyLocation(Activity activity) {
+  private static void findAndClickMyLocation(Activity activity) {
     createTrackIfEmpty(1, false);
     sendGps(30);
 
@@ -947,5 +923,31 @@ public class EndToEndTestUtils {
       }
     }
     SOLO.clickOnView(myLocation);
+  }
+  
+  /**
+   * Gets the relative start time suffix.
+   */
+  public static String getRelativeStartTimeSuffix() {
+    String value = RELATIVE_START_TIME_SUFFIX_MULTILINGUAL.get(language);
+    return value != null ? value : RELATIVE_START_TIME_SUFFIX_MULTILINGUAL.get("en");
+  }
+  
+  /**
+   * Changes to metric units.
+   */
+  public static void changeToMetricUnits() {
+    EndToEndTestUtils.findMenuItem(trackListActivity.getString(R.string.menu_settings), true);
+    EndToEndTestUtils.SOLO.clickOnText(
+        trackListActivity.getString(R.string.track_detail_stats_tab));
+    Assert.assertTrue(EndToEndTestUtils.SOLO.waitForText(
+        trackListActivity.getString(R.string.settings_stats_units_title)));
+
+    // Change the preferred units
+    EndToEndTestUtils.SOLO.clickOnText(
+        trackListActivity.getString(R.string.settings_stats_units_title));
+    EndToEndTestUtils.SOLO.clickOnText(trackListActivity.getString(R.string.unit_kilometer));
+    EndToEndTestUtils.SOLO.goBack();
+    EndToEndTestUtils.SOLO.goBack();
   }
 }

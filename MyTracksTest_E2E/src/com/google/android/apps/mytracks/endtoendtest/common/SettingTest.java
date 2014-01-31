@@ -298,7 +298,6 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.startRecording();
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.stopRecording(false);
-    instrumentation.waitForIdleSync();
     assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks.getString(
         R.string.track_name_format).split(" ")[0]));
     assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.activityType));

@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks.endtoendtest.common;
 
 import com.google.android.apps.mytracks.TrackListActivity;
@@ -21,18 +22,17 @@ import com.google.android.maps.mytracks.R;
 
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
-import android.view.KeyEvent;
 import android.widget.ListView;
 
 /**
- * Tests creating a track with markers, and editing and sending send a track.
+ * Tests creating new tracks.
  * 
  * @author Youtao Liu
  */
 public class CreateTrackTest extends ActivityInstrumentationTestCase2<TrackListActivity> {
 
   private Instrumentation instrumentation;
-  private TrackListActivity activityMyTracks;
+  private TrackListActivity trackListActivity;
 
   public CreateTrackTest() {
     super(TrackListActivity.class);
@@ -42,181 +42,131 @@ public class CreateTrackTest extends ActivityInstrumentationTestCase2<TrackListA
   protected void setUp() throws Exception {
     super.setUp();
     instrumentation = getInstrumentation();
-    activityMyTracks = getActivity();
-    EndToEndTestUtils.setupForAllTest(instrumentation, activityMyTracks);
-  }
+    trackListActivity = getActivity();
+    EndToEndTestUtils.setupForAllTest(instrumentation, trackListActivity);
 
-  /**
-   * Tests editing a track.
-   */
-  public void testEditTrack() {
-    // Create a track and open in TrackEditActivitiy
-    EndToEndTestUtils.createTrackIfEmpty(1, false);
-    instrumentation.waitForIdleSync();
-
-    // Click on the Edit menu item
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_edit), true);
-    instrumentation.waitForIdleSync();
-
-    // Rotate phone
-    EndToEndTestUtils.rotateCurrentActivity();
-    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.generic_save));
-
-    String newName = EndToEndTestUtils.TRACK_NAME_PREFIX + "_new" + System.currentTimeMillis();
-    String newActivityType = EndToEndTestUtils.activityType;
-    String newDescription = "new_description_" + newName;
-
-    // Clear name field
-    sendKeys(KeyEvent.KEYCODE_DEL);
-    // Enter new name
-    EndToEndTestUtils.enterTextAvoidSoftKeyBoard(0, newName);
-    // Enter new activity type
-    EndToEndTestUtils.SOLO.clearEditText(1);
-    EndToEndTestUtils.enterTextAvoidSoftKeyBoard(1, newActivityType);
-    // Enter new description
-    EndToEndTestUtils.SOLO.clearEditText(2);
-    EndToEndTestUtils.enterTextAvoidSoftKeyBoard(2, newDescription);
-
-    // Change activity type using the activity picker
-    assertTrue(EndToEndTestUtils.SOLO.searchText(newActivityType));
-    EndToEndTestUtils.SOLO.clickOnView(EndToEndTestUtils.SOLO.getCurrentActivity()
-        .findViewById(R.id.track_edit_activity_type_icon));
-    EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.track_edit_activity_type_hint));
-    int walkingActivityTypeIndex = 1;
-    EndToEndTestUtils.SOLO.clickOnView(EndToEndTestUtils.SOLO.getImage(walkingActivityTypeIndex));
-    EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_ok));
-    // The activity type should be replaced by the walking activity type
-    assertFalse(EndToEndTestUtils.SOLO.searchText(newActivityType));
-    assertTrue(EndToEndTestUtils.SOLO.searchText(
-        activityMyTracks.getString(R.string.activity_type_walking)));
-
-    // Save
-    EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_save));
-    instrumentation.waitForIdleSync();
-
-    // Go back to the TrackListActivity
-    EndToEndTestUtils.SOLO.goBack();
-    instrumentation.waitForIdleSync();
-    assertTrue(EndToEndTestUtils.SOLO.searchText(newName));
-    assertTrue(EndToEndTestUtils.SOLO.searchText(newDescription));
-  }
-
-  /**
-   * Creates a track with one marker.
-   */
-  public void testCreateTrackWithMarker() {
-    
-    // Start recording
-    EndToEndTestUtils.startRecording();
-    instrumentation.waitForIdleSync();
-
-    // Send GPS points
-    EndToEndTestUtils.sendGps(2);
-    if (EndToEndTestUtils.hasActionBar) {
-      // Check the title is Recording...
-      assertTrue(EndToEndTestUtils.SOLO.searchText(
-          activityMyTracks.getString(R.string.generic_recording)));
-    }
-
-    // Create marker
-    EndToEndTestUtils.createWaypoint(0);
-    EndToEndTestUtils.sendGps(2, 2);
-
-    // Go back to the TrackListActivity
-    EndToEndTestUtils.SOLO.goBack();
-    instrumentation.waitForIdleSync();
-
-    // Rotate phone
-    EndToEndTestUtils.rotateCurrentActivity();
-
-    // Stops recording
-    EndToEndTestUtils.stopRecording(false);
-
-    // Update Edit page and Save
-    String name = EndToEndTestUtils.TRACK_NAME_PREFIX + System.currentTimeMillis();
-    EndToEndTestUtils.SOLO.enterText(0, name);
-    EndToEndTestUtils.SOLO.enterText(1, EndToEndTestUtils.activityType);
-    EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_save));
-    instrumentation.waitForIdleSync();
-
-    // Check the new track name in TrackListActivity
-    EndToEndTestUtils.SOLO.scrollUp();
-    assertTrue(EndToEndTestUtils.SOLO.waitForText(
-        name, 1, EndToEndTestUtils.NORMAL_WAIT_TIME, true, false));
-  }
-
-  /**
-   * Tests displaying relative time like "mins ago" for a new track.
-   */
-  public void testNewTrackRelativeTime() {
-    
-    // Delete all tracks
     EndToEndTestUtils.deleteAllTracks();
-    
-    // Reset all settings
-    EndToEndTestUtils.resetAllSettings(activityMyTracks, false);
-
-    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.track_list_empty_message)));
-    
-    // Start a new recording
-    EndToEndTestUtils.startRecording();
-    instrumentation.waitForIdleSync();
-    
-    // Stops the recording
-    EndToEndTestUtils.stopRecording(false);
-    instrumentation.waitForIdleSync();
-    
-    // Save the track
-    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_save), true,
-        true);
-    instrumentation.waitForIdleSync();
-    
-    // Go back to the TrackListActivity
-    EndToEndTestUtils.SOLO.goBack();
-    instrumentation.waitForIdleSync();
-    
-    // Make sure "mins ago" is displayed
-    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.RELATIVE_START_TIME_POSTFIX, 1,
-        false, true));
-  }
-
-  /**
-   * Tests whether the split marker is created as setting.
-   */
-  public void testSplitSetting() {
-    EndToEndTestUtils.startRecording();
-
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_split_frequency), true);
-    boolean isFoundKM = EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.KM);
-    if (isFoundKM) {
-      EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.KM, 0);
-    } else {
-      EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.MILE, 0);
-    }
-
-    EndToEndTestUtils
-        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
-    
-    // Send Gps to give a distance more than one kilometer or one mile.
-    EndToEndTestUtils.sendGps(50);
-    assertTrue(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_markers),
-        true));
-    instrumentation.waitForIdleSync();
-    if (EndToEndTestUtils.hasGpsSignal) {
-      assertTrue(EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount() > 0);
-    } else {
-      assertTrue(EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount() == 0);
-    }
-    EndToEndTestUtils.SOLO.goBack();
-
-    EndToEndTestUtils.stopRecording(true);
   }
 
   @Override
   protected void tearDown() throws Exception {
     EndToEndTestUtils.SOLO.finishOpenedActivities();
     super.tearDown();
+  }
+
+  /**
+   * Tests creating a new track and checks the relative time in
+   * {@link TrackListActivity}.
+   */
+  public void testNewTrack() {
+    // Start a recording
+    EndToEndTestUtils.startRecording();
+    checkRecording();
+
+    // Stop the recording
+    EndToEndTestUtils.stopRecording(false);
+
+    // Save the track
+    EndToEndTestUtils.getButtonOnScreen(
+        trackListActivity.getString(R.string.generic_save), true, true);
+    instrumentation.waitForIdleSync();
+
+    // Go back to the TrackListActivity
+    EndToEndTestUtils.SOLO.goBack();
+    instrumentation.waitForIdleSync();
+
+    // Make sure "mins ago" is displayed
+    assertTrue(EndToEndTestUtils.SOLO.searchText(
+        EndToEndTestUtils.getRelativeStartTimeSuffix(), 1, false, true));
+  }
+
+  /**
+   * Tests creating a new track with two markers.
+   */
+  public void testNewTrackWithMarker() {
+    // Start a recording
+    EndToEndTestUtils.startRecording();
+    checkRecording();
+
+    // Create a marker
+    EndToEndTestUtils.sendGps(2);
+    EndToEndTestUtils.createWaypoint(0);
+
+    // Send more gps points
+    EndToEndTestUtils.sendGps(2, 2);
+    EndToEndTestUtils.createWaypoint(1);
+
+    // Go back to the TrackListActivity
+    EndToEndTestUtils.SOLO.goBack();
+    instrumentation.waitForIdleSync();
+
+    // Rotate the phone
+    EndToEndTestUtils.rotateCurrentActivity();
+
+    // Stop the recording
+    EndToEndTestUtils.stopRecording(false);
+
+    // Update edit page and save
+    String trackName = EndToEndTestUtils.TRACK_NAME_PREFIX + System.currentTimeMillis();
+    EndToEndTestUtils.SOLO.enterText(0, trackName);
+    EndToEndTestUtils.SOLO.enterText(1, EndToEndTestUtils.activityType);
+    EndToEndTestUtils.SOLO.clickOnButton(trackListActivity.getString(R.string.generic_save));
+    instrumentation.waitForIdleSync();
+
+    // Check the track name in the TrackListActivity
+    EndToEndTestUtils.SOLO.scrollUp();
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(
+        trackName, 1, EndToEndTestUtils.NORMAL_WAIT_TIME, true, false));
+
+    // Go to the TrackDetailActivity
+    EndToEndTestUtils.SOLO.clickOnText(trackName);
+    instrumentation.waitForIdleSync();
+
+    // Go to Markers
+    EndToEndTestUtils.findMenuItem(trackListActivity.getString(R.string.menu_markers), true);
+    instrumentation.waitForIdleSync();
+
+    // Make sure there are two markers
+    assertTrue(EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount() == 2);
+  }
+
+  /**
+   * Tests creating a new track with split markers.
+   */
+  public void testNewTrackWithSplit() {
+    EndToEndTestUtils.changeToMetricUnits();
+
+    EndToEndTestUtils.startRecording();
+    checkRecording();
+
+    EndToEndTestUtils.findMenuItem(
+        trackListActivity.getString(R.string.menu_split_frequency), true);
+    EndToEndTestUtils.SOLO.clickOnText(trackListActivity.getString(R.string.unit_kilometer), 0);
+    EndToEndTestUtils.getButtonOnScreen(
+        trackListActivity.getString(R.string.generic_ok), true, true);
+
+    // Send gps to give a distance more than one kilometer
+    EndToEndTestUtils.sendGps(50);
+    assertTrue(
+        EndToEndTestUtils.findMenuItem(trackListActivity.getString(R.string.menu_markers), true));
+    instrumentation.waitForIdleSync();
+    if (EndToEndTestUtils.isEmulator) {
+      assertTrue(EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount() > 0);
+    }
+    EndToEndTestUtils.SOLO.goBack();
+    instrumentation.waitForIdleSync();
+
+    EndToEndTestUtils.stopRecording(true);
+  }
+
+  /**
+   * Checks recording.
+   */
+  private void checkRecording() {
+    if (EndToEndTestUtils.hasActionBar) {
+      // Check the title is Recording...
+      assertTrue(EndToEndTestUtils.SOLO.searchText(
+          trackListActivity.getString(R.string.generic_recording)));
+    }
   }
 }
