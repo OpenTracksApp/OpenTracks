@@ -18,7 +18,6 @@ package com.google.android.apps.mytracks.endtoendtest;
 
 import com.google.android.apps.mytracks.ChartView;
 import com.google.android.apps.mytracks.TrackListActivity;
-import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 import com.robotium.solo.Solo;
 
@@ -807,15 +806,15 @@ public class EndToEndTestUtils {
    */
   public static void checkNotRecording() {
     instrumentation.waitForIdleSync();
-    Assert.assertEquals(trackListActivity.getString(R.string.image_record), (String) SOLO
-        .getCurrentActivity().findViewById(R.id.track_controller_record).getContentDescription());
-    Assert.assertFalse(SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop)
-        .isEnabled());
+    Assert.assertEquals(trackListActivity.getString(R.string.image_record),
+        (String) SOLO.getCurrentActivity()
+            .findViewById(R.id.track_controller_record).getContentDescription());
+    Assert.assertFalse(
+        SOLO.getCurrentActivity().findViewById(R.id.track_controller_stop).isEnabled());
     Assert.assertNull(findTextView(trackListActivity.getString(R.string.generic_recording)));
     Assert.assertNull(findTextView(trackListActivity.getString(R.string.generic_paused)));
-    TextView totalTime = (TextView) SOLO.getCurrentActivity().findViewById(
-        R.id.track_controller_total_time);
-    Assert.assertEquals(StringUtils.formatElapsedTimeWithHour(0), totalTime.getText().toString());
+    Assert.assertFalse(
+        SOLO.getCurrentActivity().findViewById(R.id.track_controller_total_time).isShown());
   }
 
   /**
