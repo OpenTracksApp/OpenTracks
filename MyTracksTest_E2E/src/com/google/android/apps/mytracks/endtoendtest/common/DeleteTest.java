@@ -23,17 +23,15 @@ import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-
 /**
- * Tests the delete of MyTracks.
+ * Tests delete tracks.
  * 
  * @author Youtao Liu
  */
 public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivity> {
 
   private Instrumentation instrumentation;
-  private TrackListActivity activityMyTracks;
+  private TrackListActivity trackListActivity;
 
   public DeleteTest() {
     super(TrackListActivity.class);
@@ -43,125 +41,8 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
   protected void setUp() throws Exception {
     super.setUp();
     instrumentation = getInstrumentation();
-    activityMyTracks = getActivity();
-    EndToEndTestUtils.setupForAllTest(instrumentation, activityMyTracks);
-  }
-
-  /**
-   * Deletes all tracks.
-   */
-  public void testDeleteAllTracks() {
-    EndToEndTestUtils.createTrackIfEmpty(1, true);
-    instrumentation.waitForIdleSync();
-    // There is at least one track.
-    ArrayList<ListView> trackListView = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class);
-    assertTrue(trackListView.size() > 0);
-    assertTrue(trackListView.get(0).getCount() > 0);
-
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete_all), true);
-    instrumentation.waitForIdleSync();
-    EndToEndTestUtils.rotateCurrentActivity();
-    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_yes), true,
-        true);
-    EndToEndTestUtils.waitTextToDisappear(activityMyTracks
-        .getString(R.string.generic_progress_title));
-    instrumentation.waitForIdleSync();
-    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.track_list_empty_message)));
-    // There is no track now.
-    trackListView = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class);
-    assertEquals(0, trackListView.get(0).getCount());
-  }
-
-  /**
-   * Deletes only one track.
-   */
-  public void testDeleteSingleTrack() {
-    EndToEndTestUtils.createTrackIfEmpty(1, true);
-    instrumentation.waitForIdleSync();
-    // Get the number of track( or tracks)
-    ArrayList<ListView> trackListView = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class);
-    int trackNumberOld = trackListView.get(0).getCount();
-
-    EndToEndTestUtils.SOLO.clickOnView(trackListView.get(0).getChildAt(0));
-    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.track_detail_chart_tab));
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete), true);
-    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_yes), true,
-        true);
-    EndToEndTestUtils.waitTextToDisappear(activityMyTracks
-        .getString(R.string.generic_progress_title));
-    trackListView = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class);
-    int trackNumberNew = trackListView.get(0).getCount();
-    assertEquals(trackNumberOld - 1, trackNumberNew);
-  }
-
-  /**
-   * Deletes multiple tracks in {@link TrackListActivity}.
-   */
-  public void testMultipleDeleteInTrackList() {
-    if (!EndToEndTestUtils.hasActionBar) {
-      return;
-    }
-
-    // Get the number of track( or tracks)
-    ArrayList<ListView> trackListView = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class);
-    int trackNumber = trackListView.get(0).getCount();
-
-    if (trackNumber < 3) {
-      for (int i = 0; i < 3 - trackNumber; i++) {
-        EndToEndTestUtils.createSimpleTrack(0, true);
-
-      }
-    }
-
-    // Get the number of track( or tracks)
-    trackListView = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class);
-    int trackNumberOld = trackListView.get(0).getCount();
-
-    assertTrue(trackNumberOld > 2);
-
-    // Select 3 tracks.
-    EndToEndTestUtils.SOLO.clickLongOnView(trackListView.get(0).getChildAt(0));
-    EndToEndTestUtils.SOLO.clickOnView(trackListView.get(0).getChildAt(1));
-    EndToEndTestUtils.SOLO.clickOnView(trackListView.get(0).getChildAt(2));
-
-    // Deselect the first one.
-    EndToEndTestUtils.SOLO.clickOnView(trackListView.get(0).getChildAt(0));
-
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete), true);
-    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_yes), true,
-        true);
-
-    EndToEndTestUtils.waitTextToDisappear(activityMyTracks
-        .getString(R.string.generic_progress_title));
-    EndToEndTestUtils.waitTextToDisappear(activityMyTracks
-        .getString(R.string.track_delete_progress_message));
-    int trackNumberNew = trackNumberOld;
-    long startTime = System.currentTimeMillis();
-    // Wait a few seconds for the delete.
-    while (trackNumberNew != trackNumberOld - 2
-        && (System.currentTimeMillis() - startTime) < EndToEndTestUtils.SHORT_WAIT_TIME) {
-      trackListView = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class);
-      trackNumberNew = trackListView.get(0).getCount();
-      EndToEndTestUtils.sleep(EndToEndTestUtils.VERY_SHORT_WAIT_TIME);
-    }
-    assertEquals(trackNumberOld - 2, trackNumberNew);
-  }
-
-  /**
-   * Deletes a track which is under recording.
-   */
-  public void testDeleteOneTrackUnderRecording() {
-    EndToEndTestUtils.startRecording();
-    instrumentation.waitForIdleSync();
-    EndToEndTestUtils.checkUnderRecording();
-    instrumentation.waitForIdleSync();
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete), true);
-    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_yes), true,
-        true);
-    EndToEndTestUtils.waitTextToDisappear(activityMyTracks
-        .getString(R.string.generic_progress_title));
-    EndToEndTestUtils.checkNotRecording();
+    trackListActivity = getActivity();
+    EndToEndTestUtils.setupForAllTest(instrumentation, trackListActivity);
   }
 
   @Override
@@ -170,4 +51,94 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
     super.tearDown();
   }
 
+  /**
+   * Deletes all tracks.
+   */
+  public void testDeleteAllTracks() {
+    EndToEndTestUtils.createSimpleTrack(1, true);
+
+    assertTrue(EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount() > 0);
+
+    EndToEndTestUtils.findMenuItem(trackListActivity.getString(R.string.menu_delete_all), true);
+    instrumentation.waitForIdleSync();
+    EndToEndTestUtils.rotateCurrentActivity();
+    EndToEndTestUtils.getButtonOnScreen(
+        trackListActivity.getString(R.string.generic_yes), true, true);
+    EndToEndTestUtils.waitTextToDisappear(
+        trackListActivity.getString(R.string.generic_progress_title));
+    instrumentation.waitForIdleSync();
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(
+        trackListActivity.getString(R.string.track_list_empty_message)));
+    assertEquals(0, EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount());
+  }
+
+  /**
+   * Deletes one track.
+   */
+  public void testDeleteOneTrack() {
+    EndToEndTestUtils.createSimpleTrack(1, true);
+
+    ListView listView = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0);
+    int trackCount = listView.getCount();
+    assertTrue(trackCount > 0);
+
+    EndToEndTestUtils.SOLO.clickOnView(listView.getChildAt(0));
+    EndToEndTestUtils.SOLO.waitForText(
+        trackListActivity.getString(R.string.track_detail_chart_tab));
+    EndToEndTestUtils.findMenuItem(trackListActivity.getString(R.string.menu_delete), true);
+    EndToEndTestUtils.getButtonOnScreen(
+        trackListActivity.getString(R.string.generic_yes), true, true);
+    EndToEndTestUtils.waitTextToDisappear(
+        trackListActivity.getString(R.string.generic_progress_title));
+    assertEquals(
+        trackCount - 1, EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount());
+  }
+
+  /**
+   * Deletes multiple tracks in {@link TrackListActivity}.
+   */
+  public void testDeleteMultiple() {
+    if (!EndToEndTestUtils.hasActionBar) {
+      return;
+    }
+
+    // Create 3 tracks
+    for (int i = 0; i < 3; i++) {
+      EndToEndTestUtils.createSimpleTrack(0, true);
+    }
+
+    ListView listView = EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0);
+    int trackCount = listView.getCount();
+    assertTrue(trackCount > 2);
+
+    // Select 3 tracks
+    EndToEndTestUtils.SOLO.clickLongOnView(listView.getChildAt(0));
+    EndToEndTestUtils.SOLO.clickOnView(listView.getChildAt(1));
+    EndToEndTestUtils.SOLO.clickOnView(listView.getChildAt(2));
+
+    // Deselect the first one
+    EndToEndTestUtils.SOLO.clickOnView(listView.getChildAt(0));
+
+    EndToEndTestUtils.findMenuItem(trackListActivity.getString(R.string.menu_delete), true);
+    EndToEndTestUtils.getButtonOnScreen(
+        trackListActivity.getString(R.string.generic_yes), true, true);
+    EndToEndTestUtils.waitTextToDisappear(
+        trackListActivity.getString(R.string.generic_progress_title));
+    assertEquals(
+        trackCount - 2, EndToEndTestUtils.SOLO.getCurrentViews(ListView.class).get(0).getCount());
+  }
+
+  /**
+   * Deletes a recording track.
+   */
+  public void testDeleteRecordingTrack() {
+    EndToEndTestUtils.startRecording();
+    EndToEndTestUtils.checkUnderRecording();
+    EndToEndTestUtils.findMenuItem(trackListActivity.getString(R.string.menu_delete), true);
+    EndToEndTestUtils.getButtonOnScreen(
+        trackListActivity.getString(R.string.generic_yes), true, true);
+    EndToEndTestUtils.waitTextToDisappear(
+        trackListActivity.getString(R.string.generic_progress_title));
+    EndToEndTestUtils.checkNotRecording();
+  }
 }
