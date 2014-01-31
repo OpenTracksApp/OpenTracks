@@ -16,7 +16,6 @@ package com.google.android.apps.mytracks.endtoendtest;
  * the License.
  */
 
-import com.google.android.apps.mytracks.ChartView;
 import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.maps.mytracks.R;
 import com.robotium.solo.Solo;
@@ -728,21 +727,6 @@ public class EndToEndTestUtils {
             number++;
           }
         }
-      }
-    }
-    return null;
-  }
-
-  /**
-   * Gets the ChartView.
-   * 
-   * @return the ChartView or null if not find
-   */
-  public static ChartView getChartView() {
-    ArrayList<View> views = SOLO.getViews();
-    for (View view : views) {
-      if (view instanceof ChartView) {
-        return (ChartView) view;
       }
     }
     return null;
