@@ -21,7 +21,7 @@ import android.content.Context;
 /**
  * A Polar heart rate sensor manager.
  * 
- * @author Jimmy Shih
+ * @author John R. Gerthoffer
  */
 public class PolarSensorManager extends BluetoothSensorManager {
   public PolarSensorManager(Context context) {
