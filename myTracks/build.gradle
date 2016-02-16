@@ -1,0 +1,53 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 17
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        applicationId "com.google.android.maps.mytracks"
+        minSdkVersion 9
+        targetSdkVersion 19
+
+        testApplicationId "com.google.android.maps.mytracks.test"
+        testInstrumentationRunner "android.test.InstrumentationTestRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles 'proguard.cfg', 'proguard-google-api-client.txt'
+        }
+    }
+}
+
+dependencies {
+    compile project(':myTracksLib')
+    compile files('libs/android-support-v4.jar')
+    compile files('libs/antlib.jar')
+    compile files('libs/gdata-client-1.0.jar')
+    compile files('libs/gdata-client-meta-1.0.jar')
+    compile files('libs/gdata-core-1.0.jar')
+    compile files('libs/gdata-spreadsheet-3.0.jar')
+    compile files('libs/gdata-spreadsheet-meta-3.0.jar')
+    compile files('libs/google-api-client-1.12.0-beta.jar')
+    compile files('libs/google-api-client-android-1.12.0-beta.jar')
+    compile files('libs/google-api-services-drive-v2-rev30-1.12.0-beta.jar')
+    compile files('libs/google-api-services-fusiontables-v1-rev16-1.12.0-beta.jar')
+    compile files('libs/google-common.jar')
+    compile files('libs/google-http-client-1.12.0-beta.jar')
+    compile files('libs/google-http-client-android-1.12.0-beta.jar')
+    compile files('libs/google-http-client-gson-1.12.0-beta.jar')
+    compile files('libs/google-http-client-jackson-1.12.0-beta.jar')
+    compile files('libs/google-http-client-jackson2-1.12.0-beta.jar')
+    compile files('libs/google-oauth-client-1.12.0-beta.jar')
+	compile files('libs/google-play-services.jar')
+    compile files('libs/gson-2.1.jar')
+    compile files('libs/guava-jdk5-13.0.jar')
+    compile files('libs/jackson-core-2.0.5.jar')
+    compile files('libs/jackson-core-asl-1.9.9.jar')
+    compile files('libs/jsr305.jar')
+    compile files('libs/libGoogleAnalytics.jar')
+    androidTestCompile files('libs/AndroidMockGenerator.jar')
+    androidTestCompile files('libs/robotium-solo-3.3.jar')
+}
