@@ -1,0 +1,3 @@
+include ':myTracksLib'
+include ':googleplayservices_lib'
+include ':myTracks'
