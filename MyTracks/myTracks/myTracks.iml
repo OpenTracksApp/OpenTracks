@@ -81,12 +81,13 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 17 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="google-api-services-fusiontables-v1-rev16-1.12.0-beta" level="project" />
     <orderEntry type="library" exported="" name="google-oauth-client-1.12.0-beta" level="project" />
+    <orderEntry type="library" exported="" name="google-api-services-fusiontables-v1-rev16-1.12.0-beta" level="project" />
     <orderEntry type="library" exported="" name="android-support-v4" level="project" />
     <orderEntry type="library" exported="" name="google-api-client-android-1.12.0-beta" level="project" />
     <orderEntry type="library" exported="" name="gdata-core-1.0" level="project" />
     <orderEntry type="library" exported="" name="google-http-client-gson-1.12.0-beta" level="project" />
+    <orderEntry type="library" exported="" name="google-play-services" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="robotium-solo-3.3" level="project" />
     <orderEntry type="library" exported="" name="libGoogleAnalytics" level="project" />
     <orderEntry type="library" exported="" name="gdata-spreadsheet-3.0" level="project" />
@@ -108,7 +109,6 @@
     <orderEntry type="library" exported="" name="guava-jdk5-13.0" level="project" />
     <orderEntry type="library" exported="" name="gdata-spreadsheet-meta-3.0" level="project" />
     <orderEntry type="module" module-name="myTracksLib" exported="" />
-    <orderEntry type="module" module-name="googleplayservices_lib" exported="" />
     <orderEntry type="library" exported="" name="android-android-17" level="project" />
   </component>
 </module>
