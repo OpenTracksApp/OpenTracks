@@ -1,7 +1,12 @@
+.project
+
 .gradle
+local.properties
+
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/gradle.xml
 .idea/libraries
+import-summary.txt
+
 build/
-/import-summary.txt
