@@ -149,7 +149,7 @@ limitations under the License.
     <!-- For data backup -->
     <meta-data
       android:name="com.google.android.backup.api_key"
-      android:value="AEdPqrEAAAAIi-_QiwoRSc9_bAC9cmuNXTQyU8ajJmGtKdhskQ" />
+      android:value="@string/backup_api_key" />
     <!-- For map view v2 -->
     <meta-data
       android:name="com.google.android.maps.v2.API_KEY"
