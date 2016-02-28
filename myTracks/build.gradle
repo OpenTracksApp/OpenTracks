@@ -49,5 +49,5 @@ dependencies {
     compile files('libs/jsr305.jar')
     compile files('libs/libGoogleAnalytics.jar')
     androidTestCompile files('libs/AndroidMockGenerator.jar')
-    androidTestCompile files('libs/robotium-solo-3.3.jar')
+    androidTestCompile files('libs/robotium-solo-5.0.1.jar')
 }
