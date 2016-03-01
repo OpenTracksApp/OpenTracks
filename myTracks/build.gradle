@@ -1,14 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 17
     buildToolsVersion "23.0.2"
-    useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
         applicationId "com.google.android.maps.mytracks"
-        minSdkVersion 17
-        targetSdkVersion 23
+        minSdkVersion 9
+        targetSdkVersion 19
 
         testApplicationId "com.google.android.maps.mytracks.test"
         testInstrumentationRunner "android.test.InstrumentationTestRunner"
