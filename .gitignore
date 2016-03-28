@@ -10,3 +10,4 @@ local.properties
 import-summary.txt
 
 build/
+*.apk
