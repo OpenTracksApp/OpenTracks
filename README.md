@@ -24,7 +24,28 @@ Releases since **2.0.5** :
 
 ----
 
-More information about **MyTracks**:
+More information about **Google MyTracks**:
 - [Wikipedia page](https://en.wikipedia.org/wiki/MyTracks)
 - [Google code archive](https://code.google.com/archive/p/mytracks/)
 - [Release history on AppBrain](http://www.appbrain.com/app/my-tracks/com.google.android.maps.mytracks)
+
+#How to build
+Two Google API keys are needed to build this project:
+- Google Map API key
+- Google Backup API key
+
+Those keys can be obtained using the [Google API console](https://console.developers.google.com/apis/).
+
+As keys are not meant to be shared, they are located in their own value file: `/myTracks/src/main/res/values/apikeys.xml`, which is *git-ignored*. This means you have to **create it in your local project** to be able to build. Here is how it should look:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="backup_api_key">xxxxxx</string>
+  <string name="maps_api_key">yyyyyy</string>
+</resources>
+```
+
+Once you have added this file, the project should be able to find and use your keys.
+
+Note: you can use any other file if you prefer than `apikeys.xml`, but in that case be careful to not commit it.
