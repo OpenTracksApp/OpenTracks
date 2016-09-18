@@ -153,7 +153,7 @@ limitations under the License.
     <!-- For map view v2 -->
     <meta-data
       android:name="com.google.android.maps.v2.API_KEY"
-      android:value="@string/maps_apikey" />
+      android:value="@string/maps_api_key" />
     <!-- Activities -->
     <activity
       android:label="@string/menu_aggregated_statistics"
