@@ -7,6 +7,7 @@ local.properties
 .idea/tasks.xml
 .idea/gradle.xml
 .idea/libraries
+*.iml
 import-summary.txt
 
 build/
