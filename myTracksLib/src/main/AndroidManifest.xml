@@ -24,9 +24,6 @@ limitations under the License.
      See http://developer.android.com/guide/developing/eclipse-adt.html#libraryProject
      for details on what should go here vs in the application project.
   -->
-  <uses-sdk
-    android:minSdkVersion="8"
-    android:targetSdkVersion="17" />
 
   <application
     android:icon="@drawable/ic_launcher_my_tracks"
