@@ -39,6 +39,7 @@ import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtil
 import com.google.android.gms.location.LocationListener;
 import com.google.android.maps.mytracks.R;
 
+import android.accounts.Account;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -555,5 +556,10 @@ public class SearchListActivity extends AbstractSendToGoogleActivity implements 
         handleIntent(getIntent());
       }
     });
+  }
+
+  @Override
+  public void onShareTrackDone(long trackId, boolean makePublic, String emails, Account account) {
+
   }
 }

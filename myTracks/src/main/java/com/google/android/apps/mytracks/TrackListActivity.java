@@ -802,13 +802,18 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
           getSupportFragmentManager(), ConfirmSyncDialogFragment.CONFIRM_SYNC_DIALOG_TAG);
     }
   }
-  
+
   @Override
   public void onConfirmSyncDone(boolean enable) {
     if (enable) {
       String googleAccount = PreferencesUtils.getString(
           this, R.string.google_account_key, PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
-      enableSync(new Account(googleAccount, Constants.ACCOUNT_TYPE));
+      //enableSync(new Account(googleAccount, Constants.ACCOUNT_TYPE));
     }
+  }
+
+  @Override
+  public void onShareTrackDone(long trackId, boolean makePublic, String emails, Account account) {
+
   }
 }

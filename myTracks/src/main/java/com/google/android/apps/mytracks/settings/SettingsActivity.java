@@ -17,7 +17,6 @@
 package com.google.android.apps.mytracks.settings;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.services.tasks.CheckPermissionAsyncTask;
 import com.google.android.apps.mytracks.services.tasks.CheckPermissionAsyncTask.CheckPermissionCaller;
@@ -131,50 +130,6 @@ public class SettingsActivity extends AbstractSettingsActivity implements CheckP
           }
         });
         break;
-      case DIALOG_CHOOSE_ACCOUNT:
-        Account[] accounts = AccountManager.get(SettingsActivity.this)
-            .getAccountsByType(Constants.ACCOUNT_TYPE);
-        final String[] choices = new String[accounts.length];
-        for (int i = 0; i < accounts.length; i++) {
-          choices[i] = accounts[i].name;
-        }
-        dialog = new AlertDialog.Builder(this).setNegativeButton(R.string.generic_cancel, null)
-            .setPositiveButton(R.string.generic_ok, new OnClickListener() {
-                @SuppressWarnings("deprecation")
-                @Override
-              public void onClick(DialogInterface dialogInterface, int which) {
-                int position = ((AlertDialog) dialogInterface).getListView()
-                    .getCheckedItemPosition();
-                PreferencesUtils.setString(
-                    SettingsActivity.this, R.string.google_account_key, choices[position]);
-                dismissDialog(DIALOG_CHOOSE_ACCOUNT);
-                showDialog(DIALOG_CONFIRM_DRIVE_SYNC_ON);
-              }
-            }).setSingleChoiceItems(choices, 0, null)
-            .setTitle(R.string.send_google_choose_account_title).create();
-        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-
-            @Override
-          public void onShow(DialogInterface dialogInterface) {
-            DialogUtils.setDialogTitleDivider(SettingsActivity.this, dialog);
-          }
-        });
-        break;
-      case DIALOG_CONFIRM_DRIVE_SYNC_ON:
-        dialog = DialogUtils.createConfirmationDialog(this, R.string.sync_drive_confirm_title,
-            getString(R.string.sync_drive_confirm_message), new DialogInterface.OnClickListener() {
-                @Override
-              public void onClick(DialogInterface d, int button) {
-                if (syncDriveAsyncTask == null) {
-                  String googleAccount = PreferencesUtils.getString(SettingsActivity.this,
-                      R.string.google_account_key, PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
-                  syncDriveAsyncTask = new CheckPermissionAsyncTask(
-                      SettingsActivity.this, googleAccount, SendToGoogleUtils.DRIVE_SCOPE);
-                  syncDriveAsyncTask.execute();
-                }
-              }
-            });
-        break;
       default:
         dialog = null;
     }
@@ -205,22 +160,6 @@ public class SettingsActivity extends AbstractSettingsActivity implements CheckP
       } else {
         onDrivePermissionFailure();
       }
-    }
-  }
-
-  @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    switch (requestCode) {
-      case DRIVE_REQUEST_CODE:
-        SendToGoogleUtils.cancelNotification(this, SendToGoogleUtils.DRIVE_NOTIFICATION_ID);
-        if (resultCode == Activity.RESULT_OK) {
-          onDrivePermissionSuccess();
-        } else {
-          onDrivePermissionFailure();
-        }
-        break;
-      default:
-        super.onActivityResult(requestCode, resultCode, data);
     }
   }
 

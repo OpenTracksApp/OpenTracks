@@ -22,7 +22,6 @@ import com.google.android.apps.mytracks.io.file.exporter.KmzTrackExporter;
 import com.google.android.apps.mytracks.io.file.importer.KmlFileTrackImporter;
 import com.google.android.apps.mytracks.io.file.importer.KmzTrackImporter;
 import com.google.android.apps.mytracks.io.file.importer.TrackImporter;
-import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.gms.auth.GoogleAuthException;
@@ -96,49 +95,6 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
     if (account == null) {
       return;
-    }
-
-    String googleAccount = PreferencesUtils.getString(
-        context, R.string.google_account_key, PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
-    if (googleAccount == null || googleAccount.equals(PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT)) {
-      return;
-    }
-
-    if (!googleAccount.equals(account.name)) {
-      return;
-    }
-
-    try {
-      GoogleAccountCredential credential = SendToGoogleUtils.getGoogleAccountCredential(
-          context, account.name, SendToGoogleUtils.DRIVE_SCOPE);
-      if (credential == null) {
-        return;
-      }
-
-      if (drive == null || !driveAccountName.equals(account.name)) {
-        drive = SyncUtils.getDriveService(credential);
-        driveAccountName = account.name;
-      }
-      folderId = getFolderId();
-
-      long largestChangeId = PreferencesUtils.getLong(
-          context, R.string.drive_largest_change_id_key);
-      if (largestChangeId == PreferencesUtils.DRIVE_LARGEST_CHANGE_ID_DEFAULT) {
-        performInitialSync();
-      } else {
-        performIncrementalSync(largestChangeId);
-      }
-      insertNewDriveFiles();
-    } catch (UserRecoverableAuthException e) {
-      SendToGoogleUtils.sendNotification(
-          context, account.name, e.getIntent(), SendToGoogleUtils.DRIVE_NOTIFICATION_ID);
-    } catch (GoogleAuthException e) {
-      Log.e(TAG, "GoogleAuthException", e);
-    } catch (UserRecoverableAuthIOException e) {
-      SendToGoogleUtils.sendNotification(
-          context, account.name, e.getIntent(), SendToGoogleUtils.DRIVE_NOTIFICATION_ID);
-    } catch (IOException e) {
-      Log.e(TAG, "IOException", e);
     }
   }
 

@@ -22,16 +22,8 @@ import com.google.android.apps.mytracks.fragments.ExportDialogFragment.ExportTyp
 import com.google.android.apps.mytracks.fragments.InstallEarthDialogFragment;
 import com.google.android.apps.mytracks.fragments.ShareTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.ShareTrackDialogFragment.ShareTrackCaller;
-import com.google.android.apps.mytracks.io.drive.SendDriveActivity;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.io.file.exporter.SaveActivity;
-import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesActivity;
-import com.google.android.apps.mytracks.io.gdata.maps.MapsConstants;
-import com.google.android.apps.mytracks.io.maps.SendMapsActivity;
-import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
-import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
-import com.google.android.apps.mytracks.io.sendtogoogle.UploadResultActivity;
-import com.google.android.apps.mytracks.io.spreadsheets.SendSpreadsheetsActivity;
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.services.tasks.CheckPermissionAsyncTask;
@@ -72,7 +64,7 @@ import java.io.IOException;
  * @author Jimmy Shih
  */
 public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActivity
-    implements CheckPermissionCaller, ShareTrackCaller, ConfirmDeleteCaller {
+    implements ShareTrackCaller, ConfirmDeleteCaller {
 
   private static final String TAG = AbstractMyTracksActivity.class.getSimpleName();
   private static final String SEND_REQUEST_KEY = "send_request_key";
@@ -83,14 +75,13 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
   protected static final int GOOGLE_PLAY_SERVICES_REQUEST_CODE = 4;
   protected static final int CAMERA_REQUEST_CODE = 5;
 
-  private SendRequest sendRequest;
   private CheckPermissionAsyncTask asyncTask;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     if (savedInstanceState != null) {
-      sendRequest = savedInstanceState.getParcelable(SEND_REQUEST_KEY);
+      //sendRequest = savedInstanceState.getParcelable(SEND_REQUEST_KEY);
     }
     Object retained = getLastCustomNonConfigurationInstance();
     if (retained instanceof CheckPermissionAsyncTask) {
@@ -108,38 +99,8 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
   }
 
   @Override
-  protected void onSaveInstanceState(Bundle outState) {
-    super.onSaveInstanceState(outState);
-    outState.putParcelable(SEND_REQUEST_KEY, sendRequest);
-  }
-
-  @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     switch (requestCode) {
-      case DRIVE_REQUEST_CODE:
-        SendToGoogleUtils.cancelNotification(this, SendToGoogleUtils.DRIVE_NOTIFICATION_ID);
-        if (resultCode == Activity.RESULT_OK) {
-          onDrivePermissionSuccess();
-        } else {
-          onPermissionFailure();
-        }
-        break;
-      case FUSION_TABLES_REQUEST_CODE:
-        SendToGoogleUtils.cancelNotification(this, SendToGoogleUtils.FUSION_TABLES_NOTIFICATION_ID);
-        if (resultCode == Activity.RESULT_OK) {
-          onFusionTablesSuccess();
-        } else {
-          onPermissionFailure();
-        }
-        break;
-      case SPREADSHEETS_REQUEST_CODE:
-        SendToGoogleUtils.cancelNotification(this, SendToGoogleUtils.SPREADSHEETS_NOTIFICATION_ID);
-        if (resultCode == Activity.RESULT_OK) {
-          onSpreadsheetsPermissionSuccess();
-        } else {
-          onPermissionFailure();
-        }
-        break;
       case DELETE_REQUEST_CODE:
         onDeleted();
         break;
@@ -157,208 +118,6 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
     AnalyticsUtils.sendPageViews(this, AnalyticsUtils.ACTION_SHARE_DRIVE);
     ShareTrackDialogFragment.newInstance(trackId)
         .show(getSupportFragmentManager(), ShareTrackDialogFragment.SHARE_TRACK_DIALOG_TAG);
-  }
-
-  @Override
-  public void onShareTrackDone(long trackId, boolean makePublic, String emails, Account account) {
-    sendRequest = new SendRequest(trackId);
-    sendRequest.setSendDrive(true);
-    sendRequest.setDriveSharePublic(makePublic);
-    sendRequest.setDriveShareEmails(emails);
-    sendRequest.setAccount(account);
-    checkPermissions();
-  }
-
-  protected void exportTrackToGoogle(long trackId, ExportType exportType, Account account) {
-    sendRequest = new SendRequest(trackId);
-    String pageView;
-    switch (exportType) {
-      case GOOGLE_DRIVE:
-        pageView = AnalyticsUtils.ACTION_EXPORT_DRIVE;
-        sendRequest.setSendDrive(true);
-        break;
-      case GOOGLE_MAPS:
-        pageView = AnalyticsUtils.ACTION_EXPORT_MAPS;
-        sendRequest.setSendMaps(true);
-        break;
-      case GOOGLE_FUSION_TABLES:
-        pageView = AnalyticsUtils.ACTION_EXPORT_FUSION_TABLES;
-        sendRequest.setSendFusionTables(true);
-        break;
-      default:
-        pageView = AnalyticsUtils.ACTION_EXPORT_SPREADSHEETS;
-        sendRequest.setSendSpreadsheets(true);
-    }
-    AnalyticsUtils.sendPageViews(this, pageView);
-    sendRequest.setAccount(account);
-    checkPermissions();
-  }
- 
-  /**
-   * Enables Google Drive sync.
-   */
-  protected void enableSync(Account account) {
-    sendRequest = new SendRequest(-1L);
-    sendRequest.setSendDrive(true);
-    sendRequest.setDriveSync(true);
-    sendRequest.setAccount(account);
-    checkPermissions();
-  }
-  
-  /**
-   * Checks permissions to needed Google services.
-   */
-  private void checkPermissions() {
-    // Check Drive permission
-    boolean needDrivePermission = sendRequest.isSendDrive();
-    if (!needDrivePermission && sendRequest.isSendFusionTables()) {
-      needDrivePermission = PreferencesUtils.getBoolean(this,
-          R.string.export_google_fusion_tables_public_key,
-          PreferencesUtils.EXPORT_GOOGLE_FUSION_TABLES_PUBLIC_DEFAULT);
-    }
-    if (!needDrivePermission) {
-      needDrivePermission = sendRequest.isSendSpreadsheets();
-    }
-
-    if (needDrivePermission) {
-      startCheckPermission(SendToGoogleUtils.DRIVE_SCOPE);
-    } else {
-      onDrivePermissionSuccess();
-    }
-  }
-
-  /**
-   * Starts checking permission for a Google service.
-   * 
-   * @param scope the service scope
-   */
-  private void startCheckPermission(String scope) {
-    asyncTask = new CheckPermissionAsyncTask(this, sendRequest.getAccount().name, scope);
-    asyncTask.execute();
-  }
-  
-  @Override
-  public void onCheckPermissionDone(String scope, boolean success, Intent userRecoverableIntent) {
-    asyncTask = null;
-    if (success) {
-      if (scope.equals(SendToGoogleUtils.DRIVE_SCOPE)) {
-        onDrivePermissionSuccess();
-      } else if (scope.equals(SendToGoogleUtils.FUSION_TABLES_SCOPE)) {
-        onFusionTablesSuccess();
-      } else {
-        onSpreadsheetsPermissionSuccess();
-      }
-    } else {
-      if (userRecoverableIntent != null) {
-        int requestCode;
-        if (scope.equals(SendToGoogleUtils.DRIVE_SCOPE)) {
-          requestCode = DRIVE_REQUEST_CODE;
-        } else if (scope.equals(SendToGoogleUtils.FUSION_TABLES_SCOPE)) {
-          requestCode = FUSION_TABLES_REQUEST_CODE;
-        } else {
-          requestCode = SPREADSHEETS_REQUEST_CODE;
-        }
-        startActivityForResult(userRecoverableIntent, requestCode);
-      } else {
-        onPermissionFailure();
-      }
-    }
-  }
-
-  private void onDrivePermissionSuccess() {
-    // Check Maps permission
-    if (sendRequest.isSendMaps()) {
-      AccountManager.get(this).getAuthToken(
-          sendRequest.getAccount(), MapsConstants.SERVICE_NAME, null, this,
-          new AccountManagerCallback<Bundle>() {
-              @Override
-            public void run(AccountManagerFuture<Bundle> future) {
-              try {
-                if (future.getResult().getString(AccountManager.KEY_AUTHTOKEN) != null) {
-                  runOnUiThread(new Runnable() {
-                      @Override
-                    public void run() {
-                      onMapsPermissionSuccess();
-                    }
-                  });
-                  return;
-                } else {
-                  Log.d(TAG, "auth token is null");
-                }
-              } catch (OperationCanceledException e) {
-                Log.d(TAG, "Unable to get auth token", e);
-              } catch (AuthenticatorException e) {
-                Log.d(TAG, "Unable to get auth token", e);
-              } catch (IOException e) {
-                Log.d(TAG, "Unable to get auth token", e);
-              }
-              runOnUiThread(new Runnable() {
-                  @Override
-                public void run() {
-                  onPermissionFailure();
-                }
-              });
-            }
-          }, null);
-    } else {
-      onMapsPermissionSuccess();
-    }
-  }
-
-  private void onMapsPermissionSuccess() {
-    // Check Fusion Tables permission
-    if (sendRequest.isSendFusionTables()) {
-      startCheckPermission(SendToGoogleUtils.FUSION_TABLES_SCOPE);
-    } else {
-      onFusionTablesSuccess();
-    }
-  }
-
-  private void onFusionTablesSuccess() {
-    // Check Spreadsheets permission
-    if (sendRequest.isSendSpreadsheets()) {
-      startCheckPermission(SendToGoogleUtils.SPREADSHEETS_SCOPE);
-    } else {
-      onSpreadsheetsPermissionSuccess();
-    }
-  }
-
-  /**
-   * On spreadsheets permission success. If
-   * <p>
-   * isSendDrive and isDriveEnableSync -> enable sync
-   * <p>
-   * isSendDrive -> start {@link SendDriveActivity}
-   * <p>
-   * isSendMaps -> start {@link SendMapsActivity}
-   * <p>
-   * isSendFusionTables -> start {@link SendFusionTablesActivity}
-   * <p>
-   * isSendSpreadsheets -> start {@link SendSpreadsheetsActivity}
-   * <p>
-   * else -> start {@link UploadResultActivity}
-   */
-  private void onSpreadsheetsPermissionSuccess() {
-    Class<?> next;
-    if (sendRequest.isSendDrive()) {
-      if (sendRequest.isDriveSync()) {
-        SyncUtils.enableSync(this);       
-        return;
-      } else {
-        next = SendDriveActivity.class;
-      }
-    } else if (sendRequest.isSendMaps()) {
-      next = SendMapsActivity.class;
-    } else if (sendRequest.isSendFusionTables()) {
-      next = SendFusionTablesActivity.class;
-    } else if (sendRequest.isSendSpreadsheets()) {
-      next = SendSpreadsheetsActivity.class;
-    } else {
-      next = UploadResultActivity.class;
-    }
-    Intent intent = IntentUtils.newIntent(this, next)
-        .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
-    startActivity(intent);
   }
 
   /**

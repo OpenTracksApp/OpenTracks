@@ -24,7 +24,6 @@ import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragme
 import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller;
 import com.google.android.apps.mytracks.fragments.EnableSyncDialogFragment;
 import com.google.android.apps.mytracks.fragments.EnableSyncDialogFragment.EnableSyncCaller;
-import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
 import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.services.tasks.CheckPermissionAsyncTask;
@@ -219,20 +218,6 @@ public class TrackEditActivity extends AbstractMyTracksActivity implements Choos
   }
 
   @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    if (requestCode == DRIVE_REQUEST_CODE) {
-      SendToGoogleUtils.cancelNotification(this, SendToGoogleUtils.DRIVE_NOTIFICATION_ID);
-      if (resultCode == Activity.RESULT_OK) {
-        onDrivePermissionSuccess();
-      } else {
-        onPermissionFailure();
-      }
-    } else {
-      super.onActivityResult(requestCode, resultCode, data);
-    }
-  }
-
-  @Override
   protected void onStart() {
     super.onStart();
     TrackRecordingServiceConnectionUtils.startConnection(this, trackRecordingServiceConnection);
@@ -281,36 +266,11 @@ public class TrackEditActivity extends AbstractMyTracksActivity implements Choos
 
   @Override
   public void onChooseAccountDone(String account) {
-    PreferencesUtils.setString(this, R.string.google_account_key, account);
-    if (PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT.equals(account)) {
-      finish();
-    } else {
-      syncDriveAsyncTask = new CheckPermissionAsyncTask(this, account, SendToGoogleUtils.DRIVE_SCOPE);
-      syncDriveAsyncTask.execute();
-    }
+
   }
 
   @Override
   public void onCheckPermissionDone(String scope, boolean success, Intent userRecoverableIntent) {
-    syncDriveAsyncTask = null;
-    if (success) {
-      onDrivePermissionSuccess();
-    } else {
-      if (userRecoverableIntent != null) {
-        startActivityForResult(userRecoverableIntent, DRIVE_REQUEST_CODE);
-      } else {
-        onPermissionFailure();
-      }
-    }
-  }
 
-  private void onDrivePermissionSuccess() {
-    SyncUtils.enableSync(this);
-    finish();
-  }
-
-  private void onPermissionFailure() {
-    Toast.makeText(this, R.string.send_google_no_account_permission, Toast.LENGTH_LONG).show();
-    finish();
   }
 }

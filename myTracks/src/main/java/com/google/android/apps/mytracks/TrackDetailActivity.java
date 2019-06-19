@@ -493,8 +493,6 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
           .putExtra(SaveActivity.EXTRA_TRACK_IDS, new long[] { trackId })
           .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);
       startActivity(intent);
-    } else {
-      exportTrackToGoogle(trackId, exportType, account);
     }
   }
 
@@ -640,4 +638,9 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
     new MapLayerDialogFragment().show(
         getSupportFragmentManager(), MapLayerDialogFragment.MAP_LAYER_DIALOG_TAG);
   }
+
+    @Override
+    public void onShareTrackDone(long trackId, boolean makePublic, String emails, Account account) {
+
+    }
 }

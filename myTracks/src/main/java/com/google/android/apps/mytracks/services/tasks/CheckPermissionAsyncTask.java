@@ -16,7 +16,6 @@
 
 package com.google.android.apps.mytracks.services.tasks;
 
-import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
@@ -85,7 +84,7 @@ public class CheckPermissionAsyncTask extends AsyncTask<Void, Void, Boolean> {
 
   @Override
   protected Boolean doInBackground(Void... params) {
-    return performTask();
+    return null;
   }
 
   @Override
@@ -96,44 +95,5 @@ public class CheckPermissionAsyncTask extends AsyncTask<Void, Void, Boolean> {
       ((CheckPermissionCaller) activity).onCheckPermissionDone(
           scope, success, userRecoverableIntent);
     }
-  }
-
-  private boolean performTask() {
-    try {
-      SendToGoogleUtils.getGoogleAccountCredential(activity, accountName, scope);
-      return true;
-    } catch (UserRecoverableAuthException e) {
-      try {
-        // HACK: UserRecoverableAuthException.getIntent can throw a null pointer
-        // exception.
-        userRecoverableIntent = e.getIntent();
-        return false;
-      } catch (Exception e1) {
-        Log.e(TAG, "Exception in getIntent", e1);
-        userRecoverableIntent = null;
-        return retryTask();
-      }
-    } catch (GoogleAuthException e) {
-      Log.e(TAG, "GoogleAuthException", e);
-      return retryTask();
-    } catch (UserRecoverableAuthIOException e) {
-      userRecoverableIntent = e.getIntent();
-      return false;
-    } catch (IOException e) {
-      Log.e(TAG, "IOException", e);
-      return retryTask();
-    }
-  }
-
-  private boolean retryTask() {
-    if (isCancelled()) {
-      return false;
-    }
-
-    if (canRetry) {
-      canRetry = false;
-      return performTask();
-    }
-    return false;
   }
 }
