@@ -16,42 +16,6 @@
 
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.content.TracksColumns;
-import com.google.android.apps.mytracks.fragments.ChooseAccountDialogFragment;
-import com.google.android.apps.mytracks.fragments.ChooseAccountDialogFragment.ChooseAccountCaller;
-import com.google.android.apps.mytracks.fragments.ConfirmSyncDialogFragment;
-import com.google.android.apps.mytracks.fragments.ConfirmSyncDialogFragment.ConfirmSyncCaller;
-import com.google.android.apps.mytracks.fragments.EulaDialogFragment;
-import com.google.android.apps.mytracks.fragments.EulaDialogFragment.EulaCaller;
-import com.google.android.apps.mytracks.fragments.FileTypeDialogFragment;
-import com.google.android.apps.mytracks.fragments.FileTypeDialogFragment.FileTypeCaller;
-import com.google.android.apps.mytracks.fragments.PlayMultipleDialogFragment;
-import com.google.android.apps.mytracks.fragments.PlayMultipleDialogFragment.PlayMultipleCaller;
-import com.google.android.apps.mytracks.io.file.TrackFileFormat;
-import com.google.android.apps.mytracks.io.file.exporter.SaveActivity;
-import com.google.android.apps.mytracks.io.file.importer.ImportActivity;
-import com.google.android.apps.mytracks.io.sync.SyncUtils;
-import com.google.android.apps.mytracks.services.ITrackRecordingService;
-import com.google.android.apps.mytracks.services.MyTracksLocationManager;
-import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
-import com.google.android.apps.mytracks.settings.SettingsActivity;
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
-import com.google.android.apps.mytracks.util.EulaUtils;
-import com.google.android.apps.mytracks.util.GoogleLocationUtils;
-import com.google.android.apps.mytracks.util.IntentUtils;
-import com.google.android.apps.mytracks.util.ListItemUtils;
-import com.google.android.apps.mytracks.util.PreferencesUtils;
-import com.google.android.apps.mytracks.util.StringUtils;
-import com.google.android.apps.mytracks.util.TrackIconUtils;
-import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
-import com.google.android.apps.mytracks.util.TrackUtils;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.maps.mytracks.BuildConfig;
-import com.google.android.maps.mytracks.R;
-
 import android.accounts.Account;
 import android.app.Dialog;
 import android.app.SearchManager;
@@ -65,7 +29,6 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.os.Parcelable;
 import android.os.RemoteException;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -84,6 +47,32 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.content.TracksColumns;
+import com.google.android.apps.mytracks.fragments.FileTypeDialogFragment;
+import com.google.android.apps.mytracks.fragments.FileTypeDialogFragment.FileTypeCaller;
+import com.google.android.apps.mytracks.io.file.TrackFileFormat;
+import com.google.android.apps.mytracks.io.file.exporter.SaveActivity;
+import com.google.android.apps.mytracks.io.file.importer.ImportActivity;
+import com.google.android.apps.mytracks.services.ITrackRecordingService;
+import com.google.android.apps.mytracks.services.MyTracksLocationManager;
+import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
+import com.google.android.apps.mytracks.settings.SettingsActivity;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
+import com.google.android.apps.mytracks.util.GoogleLocationUtils;
+import com.google.android.apps.mytracks.util.IntentUtils;
+import com.google.android.apps.mytracks.util.ListItemUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.apps.mytracks.util.StringUtils;
+import com.google.android.apps.mytracks.util.TrackIconUtils;
+import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
+import com.google.android.apps.mytracks.util.TrackUtils;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.maps.mytracks.BuildConfig;
+import com.google.android.maps.mytracks.R;
+
 import java.util.Locale;
 
 /**
@@ -91,8 +80,7 @@ import java.util.Locale;
  * 
  * @author Leif Hendrik Wilden
  */
-public class TrackListActivity extends AbstractSendToGoogleActivity
-    implements EulaCaller, FileTypeCaller, PlayMultipleCaller, ChooseAccountCaller, ConfirmSyncCaller {
+public class TrackListActivity extends AbstractSendToGoogleActivity implements FileTypeCaller {
 
   private static final String TAG = TrackListActivity.class.getSimpleName();
   private static final String[] PROJECTION = new String[] { TracksColumns._ID, TracksColumns.NAME,
@@ -181,11 +169,6 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
                 R.string.recording_track_paused_key,
                 PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
           }
-          if (key == null || key.equals(
-              PreferencesUtils.getKey(TrackListActivity.this, R.string.drive_sync_key))) {
-            driveSync = PreferencesUtils.getBoolean(TrackListActivity.this, R.string.drive_sync_key,
-                PreferencesUtils.DRIVE_SYNC_DEFAULT);
-          }
           if (key != null) {
             runOnUiThread(new Runnable() {
                 @Override
@@ -217,8 +200,6 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
             isSingleSelectionShareWithMe = false;
           }
 
-          // Not recording
-          menu.findItem(R.id.list_context_menu_play).setVisible(!isRecording);
           // Not recording, one item, not sharedWithMe item
           menu.findItem(R.id.list_context_menu_share)
               .setVisible(!isRecording && isSingleSelection && !isSingleSelectionShareWithMe);
@@ -298,13 +279,10 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   private boolean metricUnits = true;
   private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
   private boolean recordingTrackPaused = PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT;
-  private boolean driveSync = PreferencesUtils.DRIVE_SYNC_DEFAULT;
 
   // Menu items
   private MenuItem searchMenuItem;
   private MenuItem startGpsMenuItem;
-  private MenuItem playMultipleItem;
-  private MenuItem syncNowMenuItem;
   private MenuItem aggregatedStatisticsMenuItem;
   private MenuItem exportAllMenuItem;
   private MenuItem importAllMenuItem;
@@ -456,16 +434,10 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.track_list, menu);
 
-    menu.findItem(R.id.track_list_help_feedback).setTitle(
-        ApiAdapterFactory.getApiAdapter().isGoogleFeedbackAvailable() ? R.string.menu_help_feedback
-            : R.string.menu_help);
-
     searchMenuItem = menu.findItem(R.id.track_list_search);
     ApiAdapterFactory.getApiAdapter().configureSearchWidget(this, searchMenuItem, trackController);
 
     startGpsMenuItem = menu.findItem(R.id.track_list_start_gps);
-    playMultipleItem = menu.findItem(R.id.track_list_play_mutliple);
-    syncNowMenuItem = menu.findItem(R.id.track_list_sync_now);
     aggregatedStatisticsMenuItem = menu.findItem(R.id.track_list_aggregated_statistics);
     exportAllMenuItem = menu.findItem(R.id.track_list_export_all);
     importAllMenuItem = menu.findItem(R.id.track_list_import_all);
@@ -526,18 +498,6 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         }
         myTracksLocationManager.close();
         return true;
-      case R.id.track_list_play_mutliple:
-        PlayMultipleDialogFragment.newInstance(-1L)
-            .show(getSupportFragmentManager(), PlayMultipleDialogFragment.PLAY_MULTIPLE_DIALOG_TAG);
-        return true;
-      case R.id.track_list_sync_now:
-        if (driveSync) {
-          SyncUtils.syncNow(this);
-        } else {
-          new ChooseAccountDialogFragment().show(
-              getSupportFragmentManager(), ChooseAccountDialogFragment.CHOOSE_ACCOUNT_DIALOG_TAG);
-        }
-        return true;
       case R.id.track_list_aggregated_statistics:
         intent = IntentUtils.newIntent(this, AggregatedStatsActivity.class);
         startActivity(intent);
@@ -557,10 +517,6 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
         return true;
       case R.id.track_list_settings:
         intent = IntentUtils.newIntent(this, SettingsActivity.class);
-        startActivity(intent);
-        return true;
-      case R.id.track_list_help_feedback:
-        intent = IntentUtils.newIntent(this, HelpActivity.class);
         startActivity(intent);
         return true;
       default:
@@ -638,14 +594,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
    * Shows start up dialogs.
    */
   public void showStartupDialogs() {
-    if (!EulaUtils.hasAcceptedEula(this)) {
-      Fragment fragment = getSupportFragmentManager()
-          .findFragmentByTag(EulaDialogFragment.EULA_DIALOG_TAG);
-      if (fragment == null) {
-        EulaDialogFragment.newInstance(false)
-            .show(getSupportFragmentManager(), EulaDialogFragment.EULA_DIALOG_TAG);
-      }
-    } else {
+    {
       // If stats_units_key is undefined, set it
       if (PreferencesUtils.getString(this,  R.string.stats_units_key, "").equals("")) {
         String statsUnits = getString(
@@ -655,15 +604,6 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
       }
       checkGooglePlayServices();
     }
-  }
-
-  @Override
-  public void onEulaDone() {
-    if (EulaUtils.hasAcceptedEula(this)) {
-      showStartupDialogs();
-      return;
-    }
-    finish();
   }
 
   private void checkGooglePlayServices() {
@@ -700,12 +640,6 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
             isGpsStarted ? R.drawable.ic_menu_stop_gps : R.drawable.ic_menu_start_gps);
         TrackIconUtils.setMenuIconColor(startGpsMenuItem);        
       }
-    }
-    if (playMultipleItem != null) {
-      playMultipleItem.setVisible(hasTrack);
-    }
-    if (syncNowMenuItem != null) {
-      syncNowMenuItem.setTitle(driveSync ? R.string.menu_sync_now : R.string.menu_sync_drive);
     }
     if (aggregatedStatisticsMenuItem != null) {
       aggregatedStatisticsMenuItem.setVisible(hasTrack);
@@ -746,11 +680,9 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
    */
   private boolean handleContextItem(int itemId, long[] trackIds) {
     switch (itemId) {
-      case R.id.list_context_menu_play:
-        playTracks(trackIds);
-        return true;
       case R.id.list_context_menu_share:
-        shareTrack(trackIds[0]);
+        //TODO
+        Log.e(TAG, "Not implemented");
         return true;
       case R.id.list_context_menu_edit:
         Intent intent = IntentUtils.newIntent(this, TrackEditActivity.class)
@@ -769,38 +701,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
           listView.setItemChecked(i, true);
         }
         return false;
-      default:
-        return false;
     }
-  }
-  
-  @Override
-  public void onPlayMultipleDone(long[] trackIds) {
-    playTracks(trackIds);
-  }
-  
-  @Override
-  public void onChooseAccountDone(String account) {
-    PreferencesUtils.setString(this, R.string.google_account_key, account);
-    if (PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT.equals(account)) {
-      return;
-    } else {
-      new ConfirmSyncDialogFragment().show(
-          getSupportFragmentManager(), ConfirmSyncDialogFragment.CONFIRM_SYNC_DIALOG_TAG);
-    }
-  }
-
-  @Override
-  public void onConfirmSyncDone(boolean enable) {
-    if (enable) {
-      String googleAccount = PreferencesUtils.getString(
-          this, R.string.google_account_key, PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
-      //enableSync(new Account(googleAccount, Constants.ACCOUNT_TYPE));
-    }
-  }
-
-  @Override
-  public void onShareTrackDone(long trackId, boolean makePublic, String emails, Account account) {
-
+    return false;
   }
 }

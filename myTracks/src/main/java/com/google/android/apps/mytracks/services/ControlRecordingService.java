@@ -16,17 +16,17 @@
 
 package com.google.android.apps.mytracks.services;
 
-import com.google.android.apps.mytracks.widgets.TrackWidgetProvider;
-import com.google.android.maps.mytracks.R;
-import com.google.common.annotations.VisibleForTesting;
-
 import android.app.IntentService;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.support.annotation.VisibleForTesting;
 import android.util.Log;
+
+import com.google.android.apps.mytracks.widgets.TrackWidgetProvider;
+import com.google.android.maps.mytracks.R;
 
 /**
  * A service to control starting and stopping of a recording. This service,

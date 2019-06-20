@@ -21,11 +21,11 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
-import com.google.common.annotations.VisibleForTesting;
 
 import android.content.Context;
 import android.location.Location;
 import android.net.Uri;
+import android.support.annotation.VisibleForTesting;
 
 import java.util.ArrayList;
 

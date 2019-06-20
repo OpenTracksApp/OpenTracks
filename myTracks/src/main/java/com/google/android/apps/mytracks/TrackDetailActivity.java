@@ -29,9 +29,6 @@ import com.google.android.apps.mytracks.fragments.ExportDialogFragment;
 import com.google.android.apps.mytracks.fragments.ExportDialogFragment.ExportCaller;
 import com.google.android.apps.mytracks.fragments.ExportDialogFragment.ExportType;
 import com.google.android.apps.mytracks.fragments.FrequencyDialogFragment;
-import com.google.android.apps.mytracks.fragments.MapLayerDialogFragment;
-import com.google.android.apps.mytracks.fragments.PlayMultipleDialogFragment;
-import com.google.android.apps.mytracks.fragments.PlayMultipleDialogFragment.PlayMultipleCaller;
 import com.google.android.apps.mytracks.fragments.StatsFragment;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.io.file.exporter.SaveActivity;
@@ -80,7 +77,7 @@ import java.util.Date;
  * @author Rodrigo Damazio
  */
 public class TrackDetailActivity extends AbstractSendToGoogleActivity
-    implements ChooseActivityTypeCaller, ExportCaller, PlayMultipleCaller {
+    implements ChooseActivityTypeCaller, ExportCaller {
 
   public static final String EXTRA_TRACK_ID = "track_id";
   public static final String EXTRA_MARKER_ID = "marker_id";
@@ -114,7 +111,6 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
   
   private MenuItem insertMarkerMenuItem;
   private MenuItem insertPhotoMenuItem;
-  private MenuItem playMenuItem;
   private MenuItem shareMenuItem;
   private MenuItem exportMenuItem;
   private MenuItem voiceFrequencyMenuItem;
@@ -357,7 +353,6 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
 
     insertMarkerMenuItem = menu.findItem(R.id.track_detail_insert_marker);
     insertPhotoMenuItem = menu.findItem(R.id.track_detail_insert_photo);
-    playMenuItem = menu.findItem(R.id.track_detail_play);
 
     shareMenuItem = menu.findItem(R.id.track_detail_share);
     shareMenuItem.setEnabled(!isSharedWithMe);
@@ -402,20 +397,10 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
             MediaStore.EXTRA_OUTPUT, photoUri);
         startActivityForResult(intent, CAMERA_REQUEST_CODE);
         return true;
-      case R.id.track_detail_play:
-        playTracks(new long[] {trackId});
-        return true;
-      case R.id.track_detail_share:
-        shareTrack(trackId);
-        return true;
       case R.id.track_detail_markers:
         intent = IntentUtils.newIntent(this, MarkerListActivity.class)
             .putExtra(MarkerListActivity.EXTRA_TRACK_ID, trackId);
         startActivity(intent);
-        return true;
-      case R.id.track_detail_play_multiple:
-        PlayMultipleDialogFragment.newInstance(trackId)
-            .show(getSupportFragmentManager(), PlayMultipleDialogFragment.PLAY_MULTIPLE_DIALOG_TAG);
         return true;
       case R.id.track_detail_voice_frequency:
         FrequencyDialogFragment.newInstance(R.string.voice_frequency_key,
@@ -449,10 +434,6 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
         intent = IntentUtils.newIntent(this, SettingsActivity.class);
         startActivity(intent);
         return true;
-      case R.id.track_detail_help_feedback:
-        intent = IntentUtils.newIntent(this, HelpActivity.class);
-        startActivity(intent);
-        return true;
       default:
         return super.onOptionsItemSelected(item);
     }
@@ -470,7 +451,6 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
     return super.onTrackballEvent(event);
   }
 
-  @Override
   public void onExportDone(
       ExportType exportType, TrackFileFormat trackFileFormat, Account account) {
     if (exportType == ExportType.EXTERNAL_STORAGE) {
@@ -563,9 +543,6 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
     if (insertPhotoMenuItem != null) {
       insertPhotoMenuItem.setVisible(hasCamera && isRecording && !isPaused);
     }
-    if (playMenuItem != null) {
-      playMenuItem.setVisible(!isRecording);
-    }
     if (shareMenuItem != null && shareMenuItem.isEnabled()) {
       shareMenuItem.setVisible(!isRecording);
     }
@@ -610,22 +587,9 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
       Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
   }
-  
+
   @Override
-  public void onPlayMultipleDone(long[] trackIds) {
-    playTracks(trackIds);
+  public void onExportDone(ExportType exportType, TrackFileFormat trackFileFormat) {
+    //TODO
   }
-  
-  /**
-   * Shows the map layer dialog.
-   */
-  public void showMapLayerDialog() {
-    new MapLayerDialogFragment().show(
-        getSupportFragmentManager(), MapLayerDialogFragment.MAP_LAYER_DIALOG_TAG);
-  }
-
-    @Override
-    public void onShareTrackDone(long trackId, boolean makePublic, String emails, Account account) {
-
-    }
 }

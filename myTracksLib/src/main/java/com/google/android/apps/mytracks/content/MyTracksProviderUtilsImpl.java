@@ -162,9 +162,6 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     if (!cursor.isNull(iconIndex)) {
       track.setIcon(cursor.getString(iconIndex));
     }
-    if (!cursor.isNull(driveIdIndex)) {
-      track.setDriveId(cursor.getString(driveIdIndex));
-    }
     if (!cursor.isNull(modifiedTimeIndex)) {
       track.setModifiedTime(cursor.getLong(modifiedTimeIndex));
     }
@@ -340,7 +337,6 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     values.put(TracksColumns.MINGRADE, tripStatistics.getMinGrade());
     values.put(TracksColumns.MAXGRADE, tripStatistics.getMaxGrade());
     values.put(TracksColumns.ICON, track.getIcon());
-    values.put(TracksColumns.DRIVEID, track.getDriveId());
     values.put(TracksColumns.MODIFIEDTIME, track.getModifiedTime());
     values.put(TracksColumns.SHAREDWITHME, track.isSharedWithMe());
     values.put(TracksColumns.SHAREDOWNER, track.getSharedOwner());

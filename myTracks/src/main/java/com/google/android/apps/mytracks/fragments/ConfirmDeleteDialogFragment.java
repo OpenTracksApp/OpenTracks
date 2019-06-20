@@ -84,18 +84,10 @@ public class ConfirmDeleteDialogFragment extends AbstractMyTracksDialogFragment 
     final long[] trackIds = getArguments().getLongArray(KEY_TRACK_IDS);
     int titleId;
     int messageId;
-    if (trackIds.length == 1 && trackIds[0] == -1L) {
-      boolean driveSync = PreferencesUtils.getBoolean(
-          getActivity(), R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT);
-      titleId = R.string.generic_delete_all_confirm_title;
-      messageId = driveSync ? R.string.track_delete_all_confirm_message_sync_on
-          : R.string.track_delete_all_confirm_message_sync_off;
-    } else {
-      titleId = trackIds.length > 1 ? R.string.generic_delete_selected_confirm_title
-          : R.string.track_delete_one_confirm_title;
-      messageId = trackIds.length > 1 ? R.string.track_delete_multiple_confirm_message
-          : R.string.track_delete_one_confirm_message;
-    }
+    titleId = trackIds.length > 1 ? R.string.generic_delete_selected_confirm_title
+        : R.string.track_delete_one_confirm_title;
+    messageId = trackIds.length > 1 ? R.string.track_delete_multiple_confirm_message
+        : R.string.track_delete_one_confirm_message;
     return DialogUtils.createConfirmationDialog(
         getActivity(), titleId, getString(messageId), new DialogInterface.OnClickListener() {
             @Override

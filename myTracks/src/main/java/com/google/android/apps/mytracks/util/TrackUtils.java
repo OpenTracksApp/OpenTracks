@@ -63,12 +63,5 @@ public class TrackUtils {
         CalorieUtils.updateTrackCalorie(context, track);
       }
     }
-
-    boolean driveSync = PreferencesUtils.getBoolean(
-        context, R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT);
-    if (driveSync) {
-      PreferencesUtils.addToList(context, R.string.drive_edited_list_key,
-          PreferencesUtils.DRIVE_EDITED_LIST_DEFAULT, String.valueOf(track.getId()));
-    }
   }
 }

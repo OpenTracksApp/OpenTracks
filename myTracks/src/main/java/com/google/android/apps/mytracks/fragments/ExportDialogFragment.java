@@ -18,7 +18,6 @@ package com.google.android.apps.mytracks.fragments;
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
-import com.google.android.apps.mytracks.util.AccountUtils;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
@@ -53,10 +52,6 @@ public class ExportDialogFragment extends AbstractMyTracksDialogFragment {
    * @author Jimmy Shih
    */
   public enum ExportType {
-    GOOGLE_DRIVE(R.string.export_google_drive),
-    GOOGLE_MAPS(R.string.export_google_maps),
-    GOOGLE_FUSION_TABLES(R.string.export_google_fusion_tables),
-    GOOGLE_SPREADSHEET(R.string.export_google_spreadsheets),
     EXTERNAL_STORAGE(R.string.export_external_storage);
     final int resId;
 
@@ -77,35 +72,24 @@ public class ExportDialogFragment extends AbstractMyTracksDialogFragment {
      * 
      * @param exportType the export type
      * @param trackFileFormat the track file format
-     * @param account the account
      */
     public void onExportDone(
-        ExportType exportType, TrackFileFormat trackFileFormat, Account account);
+        ExportType exportType, TrackFileFormat trackFileFormat);
   }
 
   public static final String EXPORT_DIALOG_TAG = "export";
 
-  private static final String KEY_HIDE_DRIVE = "hideDrive";
-
   public static ExportDialogFragment newInstance(boolean hideDrive) {
-    Bundle bundle = new Bundle();
-    bundle.putBoolean(KEY_HIDE_DRIVE, hideDrive);
-
-    ExportDialogFragment fragment = new ExportDialogFragment();
-    fragment.setArguments(bundle);
-    return fragment;
+    //TODO REMOVE
+    return new ExportDialogFragment();
   }
 
   private ExportCaller caller;
-  private Account[] accounts;
   private ArrayList<ExportType> exportTypeOptionsList;
   
   // UI elements
   private Spinner exportTypeOptions;
-  private RadioGroup exportGoogleMapsOptions;
-  private RadioGroup exportGoogleFusionTablesOptions;
   private RadioGroup exportExternalStorageOptions;
-  private Spinner accountSpinner;
 
   @Override
   public void onAttach(Activity activity) {
@@ -121,34 +105,10 @@ public class ExportDialogFragment extends AbstractMyTracksDialogFragment {
   @Override
   protected Dialog createDialog() {
     FragmentActivity fragmentActivity = getActivity();
-    accounts = AccountManager.get(fragmentActivity).getAccountsByType(Constants.ACCOUNT_TYPE);
 
     // Get views
     View view = fragmentActivity.getLayoutInflater().inflate(R.layout.export, null);
     exportTypeOptions = (Spinner) view.findViewById(R.id.export_type_options);
-    exportGoogleMapsOptions = (RadioGroup) view.findViewById(R.id.export_google_maps_options);
-    exportGoogleFusionTablesOptions = (RadioGroup) view.findViewById(
-        R.id.export_google_fusion_tables_options);
-    exportExternalStorageOptions = (RadioGroup) view.findViewById(
-        R.id.export_external_storage_options);
-    accountSpinner = (Spinner) view.findViewById(R.id.export_account);
-    
-    // Setup exportTypeOptions
-    setupExportTypeOptions(fragmentActivity);
-
-    // Setup exportGoogleMapsOptions
-    boolean exportGoogleMapsPublic = PreferencesUtils.getBoolean(fragmentActivity,
-        R.string.export_google_maps_public_key, PreferencesUtils.EXPORT_GOOGLE_MAPS_PUBLIC_DEFAULT);
-    exportGoogleMapsOptions.check(
-        exportGoogleMapsPublic ? R.id.export_google_maps_public : R.id.export_google_maps_unlisted);
-
-    // Setup exportGoogleFusionTablesOptions
-    boolean exportGoogleFusionTablesPublic = PreferencesUtils.getBoolean(fragmentActivity,
-        R.string.export_google_fusion_tables_public_key,
-        PreferencesUtils.EXPORT_GOOGLE_FUSION_TABLES_PUBLIC_DEFAULT);
-    exportGoogleFusionTablesOptions.check(
-        exportGoogleFusionTablesPublic ? R.id.export_google_fusion_tables_public
-            : R.id.export_google_fusion_tables_private);
 
     // Setup exportExternalStorageOptions
     setExternalStorageOption(
@@ -164,100 +124,26 @@ public class ExportDialogFragment extends AbstractMyTracksDialogFragment {
         PreferencesUtils.EXPORT_EXTERNAL_STORAGE_FORMAT_DEFAULT));
     exportExternalStorageOptions.check(getExternalStorageFormatId(trackFileFormat));
 
-    // Setup accountSpinner
-    AccountUtils.setupAccountSpinner(fragmentActivity, accountSpinner, accounts);
-    
-    return new AlertDialog.Builder(fragmentActivity).setNegativeButton(
-        R.string.generic_cancel, null)
-        .setPositiveButton(R.string.menu_export, new DialogInterface.OnClickListener() {
-            @Override
-          public void onClick(DialogInterface dialog, int which) {
-            FragmentActivity context = getActivity();
-            ExportType type = exportTypeOptionsList.get(
-                exportTypeOptions.getSelectedItemPosition());
-            TrackFileFormat format = null;
+    return new AlertDialog.Builder(fragmentActivity)
+            .setNegativeButton(R.string.generic_cancel, null)
+            .setPositiveButton(R.string.menu_export, new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick(DialogInterface dialog, int which) {
+                FragmentActivity context = getActivity();
+                ExportType type = exportTypeOptionsList.get(
+                        exportTypeOptions.getSelectedItemPosition());
+                TrackFileFormat format = null;
 
-            PreferencesUtils.setString(context, R.string.export_type_key, type.name());
-            if (type == ExportType.GOOGLE_MAPS) {
-              PreferencesUtils.setBoolean(context, R.string.export_google_maps_public_key,
-                  exportGoogleMapsOptions.getCheckedRadioButtonId()
-                  == R.id.export_google_maps_public);
-            } else if (type == ExportType.GOOGLE_FUSION_TABLES) {
-              PreferencesUtils.setBoolean(context, R.string.export_google_fusion_tables_public_key,
-                  exportGoogleFusionTablesOptions.getCheckedRadioButtonId()
-                  == R.id.export_google_fusion_tables_public);
-            } else if (type == ExportType.EXTERNAL_STORAGE) {
-              format = getTrackFileFormat(exportExternalStorageOptions.getCheckedRadioButtonId());
-              PreferencesUtils.setString(
-                  context, R.string.export_external_storage_format_key, format.name());
-            }
-            Account account;
-            if (accounts.length == 0) {
-              account = null;
-            } else if (accounts.length == 1) {
-              account = accounts[0];
-            } else {
-              account = accounts[accountSpinner.getSelectedItemPosition()];
-            }
-            AccountUtils.updateShareTrackAccountPreference(context, account);
-            caller.onExportDone(type, format, account);
-          }
-        }).setTitle(R.string.export_title).setView(view).create();
-  }
-
-  private void setupExportTypeOptions(FragmentActivity fragmentActivity) {
-    boolean hideDrive = getArguments().getBoolean(KEY_HIDE_DRIVE);
-    ExportType exportType = ExportType.valueOf(PreferencesUtils.getString(
-        fragmentActivity, R.string.export_type_key, PreferencesUtils.EXPORT_TYPE_DEFAULT));
-
-    if (hideDrive && exportType == ExportType.GOOGLE_DRIVE) {
-      exportType = ExportType.GOOGLE_MAPS;
-    }
-
-    exportTypeOptionsList = new ArrayList<ExportDialogFragment.ExportType>();
-    ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
-        getActivity(), android.R.layout.simple_spinner_item);
-    if (accounts.length > 0) {
-      if (!hideDrive) {
-        exportTypeOptionsList.add(ExportType.GOOGLE_DRIVE);
-      }
-      exportTypeOptionsList.add(ExportType.GOOGLE_MAPS);
-      exportTypeOptionsList.add(ExportType.GOOGLE_FUSION_TABLES);
-      exportTypeOptionsList.add(ExportType.GOOGLE_SPREADSHEET);
-    }
-    exportTypeOptionsList.add(ExportType.EXTERNAL_STORAGE);
-
-    int selection = 0;
-    for (int i = 0; i < exportTypeOptionsList.size(); i++) {
-      ExportType type = exportTypeOptionsList.get(i);
-      adapter.add(getString(type.resId));
-      if (type == exportType) {
-        selection = i;
-      }
-    }
-    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    exportTypeOptions.setAdapter(adapter);
-    exportTypeOptions.setSelection(selection);
-    exportTypeOptions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-        @Override
-      public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        ExportType type = exportTypeOptionsList.get(position);
-        exportGoogleMapsOptions.setVisibility(
-            type == ExportType.GOOGLE_MAPS ? View.VISIBLE : View.GONE);
-        exportGoogleFusionTablesOptions.setVisibility(
-            type == ExportType.GOOGLE_FUSION_TABLES ? View.VISIBLE : View.GONE);
-        exportExternalStorageOptions.setVisibility(
-            type == ExportType.EXTERNAL_STORAGE ? View.VISIBLE : View.GONE);
-        accountSpinner.setVisibility(
-            accounts.length > 1 && type != ExportType.EXTERNAL_STORAGE ? View.VISIBLE : View.GONE);
-      }
-
-        @Override
-      public void onNothingSelected(AdapterView<?> parent) {
-        // Safely ignore
-      }
-    });
+                PreferencesUtils.setString(context, R.string.export_type_key, type.name());
+                if (type == ExportType.EXTERNAL_STORAGE) {
+                  format = getTrackFileFormat(exportExternalStorageOptions.getCheckedRadioButtonId());
+                  PreferencesUtils.setString(
+                          context, R.string.export_external_storage_format_key, format.name());
+                }
+                caller.onExportDone(type, format);
+              }
+            })
+            .setTitle(R.string.export_title).setView(view).create();
   }
 
   /**

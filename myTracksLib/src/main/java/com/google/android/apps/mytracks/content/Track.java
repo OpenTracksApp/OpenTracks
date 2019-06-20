@@ -45,7 +45,6 @@ public class Track implements Parcelable {
    */
   private int numberOfPoints = 0;
   private String icon = "";
-  private String driveId = "";
   private long modifiedTime = -1L;
   private boolean sharedWithMe = false;
   private String sharedOwner = "";
@@ -66,7 +65,6 @@ public class Track implements Parcelable {
     stopId = in.readLong();
     numberOfPoints = in.readInt();
     icon = in.readString();
-    driveId = in.readString();
     modifiedTime = in.readLong();
     sharedWithMe = in.readByte() == 1;
     sharedOwner = in.readString();
@@ -95,7 +93,6 @@ public class Track implements Parcelable {
     dest.writeLong(stopId);
     dest.writeInt(numberOfPoints);
     dest.writeString(icon);
-    dest.writeString(driveId);
     dest.writeLong(modifiedTime);
     dest.writeByte((byte) (sharedWithMe ? 1 : 0));
     dest.writeString(sharedOwner);
@@ -180,14 +177,6 @@ public class Track implements Parcelable {
 
   public void setIcon(String icon) {
     this.icon = icon;
-  }
-
-  public String getDriveId() {
-    return driveId;
-  }
-
-  public void setDriveId(String driveId) {
-    this.driveId = driveId;
   }
 
   public long getModifiedTime() {

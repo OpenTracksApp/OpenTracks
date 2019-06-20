@@ -27,14 +27,6 @@ limitations under the License.
     android:showAsAction="ifRoom"
     android:title="@string/menu_start_gps"/>
   <item
-    android:icon="@drawable/ic_menu_play_multiple"
-    android:id="@+id/track_list_play_mutliple"
-    android:title="@string/menu_play_multiple"/>
-  <item
-    android:icon="@drawable/ic_menu_sync_now"
-    android:id="@+id/track_list_sync_now"
-    android:title="@string/menu_sync_now"/>
-  <item
     android:icon="@drawable/ic_menu_aggregated_statistics"
     android:id="@+id/track_list_aggregated_statistics"
     android:title="@string/menu_aggregated_statistics"/>
@@ -54,8 +46,4 @@ limitations under the License.
     android:icon="@drawable/ic_menu_settings"
     android:id="@+id/track_list_settings"
     android:title="@string/menu_settings"/>
-  <item
-    android:icon="@drawable/ic_menu_help_feedback"
-    android:id="@+id/track_list_help_feedback"
-    android:title="@string/menu_help_feedback"/>
 </menu>

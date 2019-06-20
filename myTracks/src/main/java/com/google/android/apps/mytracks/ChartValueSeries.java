@@ -16,15 +16,15 @@
 
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.stats.ExtremityMonitor;
-import com.google.common.annotations.VisibleForTesting;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
+import android.support.annotation.VisibleForTesting;
+
+import com.google.android.apps.mytracks.stats.ExtremityMonitor;
 
 import java.text.NumberFormat;
 

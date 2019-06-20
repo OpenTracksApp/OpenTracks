@@ -16,11 +16,6 @@
 
 package com.google.android.apps.mytracks.content;
 
-import com.google.android.apps.mytracks.util.FileUtils;
-import com.google.android.apps.mytracks.util.PreferencesUtils;
-import com.google.android.maps.mytracks.R;
-import com.google.common.annotations.VisibleForTesting;
-
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -37,8 +32,13 @@ import android.net.Uri;
 import android.os.Binder;
 import android.os.ParcelFileDescriptor;
 import android.os.Process;
+import android.support.annotation.VisibleForTesting;
 import android.text.TextUtils;
 import android.util.Log;
+
+import com.google.android.apps.mytracks.util.FileUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.maps.mytracks.R;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -52,6 +52,7 @@ import java.io.FileNotFoundException;
 public class MyTracksProvider extends ContentProvider {
 
   private static final String TAG = MyTracksProvider.class.getSimpleName();
+
   @VisibleForTesting
   static final int DATABASE_VERSION = 22;
 

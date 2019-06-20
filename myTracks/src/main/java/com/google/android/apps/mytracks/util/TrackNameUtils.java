@@ -16,13 +16,13 @@
 
 package com.google.android.apps.mytracks.util;
 
-import com.google.android.maps.mytracks.R;
-import com.google.common.annotations.VisibleForTesting;
-
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.support.annotation.VisibleForTesting;
+
+import com.google.android.maps.mytracks.R;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;

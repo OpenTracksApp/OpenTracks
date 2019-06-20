@@ -18,22 +18,13 @@ package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment;
 import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment.ConfirmDeleteCaller;
-import com.google.android.apps.mytracks.fragments.InstallEarthDialogFragment;
-import com.google.android.apps.mytracks.fragments.ShareTrackDialogFragment;
-import com.google.android.apps.mytracks.fragments.ShareTrackDialogFragment.ShareTrackCaller;
-import com.google.android.apps.mytracks.io.file.TrackFileFormat;
-import com.google.android.apps.mytracks.io.file.exporter.SaveActivity;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
-import com.google.android.apps.mytracks.services.tasks.CheckPermissionAsyncTask;
-import com.google.android.apps.mytracks.util.GoogleEarthUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.Parcelable;
 import android.widget.Toast;
 
 /**
@@ -42,47 +33,15 @@ import android.widget.Toast;
  * {@link SearchListActivity}:
  * <p>
  * - share track <br>
- * - export track to Google services<br>
- * - enable sync to Google Drive <br>
  * - delete tracks <br>
- * - play tracks
- * 
+ *
  * @author Jimmy Shih
  */
-public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActivity
-    implements ShareTrackCaller, ConfirmDeleteCaller {
+public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActivity implements ConfirmDeleteCaller {
 
-  private static final String TAG = AbstractMyTracksActivity.class.getSimpleName();
-  private static final String SEND_REQUEST_KEY = "send_request_key";
-  private static final int DRIVE_REQUEST_CODE = 0;
-  private static final int FUSION_TABLES_REQUEST_CODE = 1;
-  private static final int SPREADSHEETS_REQUEST_CODE = 2;
   private static final int DELETE_REQUEST_CODE = 3;
   protected static final int GOOGLE_PLAY_SERVICES_REQUEST_CODE = 4;
   protected static final int CAMERA_REQUEST_CODE = 5;
-
-  private CheckPermissionAsyncTask asyncTask;
-
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    if (savedInstanceState != null) {
-      //sendRequest = savedInstanceState.getParcelable(SEND_REQUEST_KEY);
-    }
-    Object retained = getLastCustomNonConfigurationInstance();
-    if (retained instanceof CheckPermissionAsyncTask) {
-      asyncTask = (CheckPermissionAsyncTask) retained;
-      asyncTask.setActivity(this);
-    }
-  }
-
-  @Override
-  public Object onRetainCustomNonConfigurationInstance() {
-    if (asyncTask != null) {
-      asyncTask.setActivity(null);
-    }
-    return asyncTask;
-  }
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -93,16 +52,6 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
       default:
         super.onActivityResult(requestCode, resultCode, data);
     }
-  }
-
-  /**
-   * Shares a track.
-   * 
-   * @param trackId the track id
-   */
-  protected void shareTrack(long trackId) {
-    ShareTrackDialogFragment.newInstance(trackId)
-        .show(getSupportFragmentManager(), ShareTrackDialogFragment.SHARE_TRACK_DIALOG_TAG);
   }
 
   /**
@@ -155,22 +104,4 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
    * Called after {@link DeleteActivity} returns its result.
    */
   abstract protected void onDeleted();
-
-  /**
-   * Play tracks in Google Earth.
-   * 
-   * @param trackIds the track ids
-   */
-  protected void playTracks(long[] trackIds) {
-    if (GoogleEarthUtils.isEarthInstalled(this)) {
-      Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
-          .putExtra(SaveActivity.EXTRA_TRACK_IDS, trackIds)
-          .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.KML)
-          .putExtra(SaveActivity.EXTRA_PLAY_TRACK, true);
-      startActivity(intent);
-    } else {
-      new InstallEarthDialogFragment().show(
-          getSupportFragmentManager(), InstallEarthDialogFragment.INSTALL_EARTH_DIALOG_TAG);
-    }
-  }
 }

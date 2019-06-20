@@ -16,12 +16,12 @@
 
 package com.google.android.apps.mytracks.io.file.importer;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
-import com.google.common.annotations.VisibleForTesting;
-
 import android.content.Context;
 import android.location.Location;
+import android.support.annotation.VisibleForTesting;
+
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;

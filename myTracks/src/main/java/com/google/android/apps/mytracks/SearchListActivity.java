@@ -149,9 +149,6 @@ public class SearchListActivity extends AbstractSendToGoogleActivity implements 
             isSingleSelectionShareWithMe = false;
             isSingleSelectionTrack = false;
           }
-          // Not recording, one item, item is a track
-          menu.findItem(R.id.list_context_menu_play)
-              .setVisible(!isRecording && isSingleSelection && isSingleSelectionTrack);
           // Not recording, one item, item is a track, not shareWithMe item
           menu.findItem(R.id.list_context_menu_share).setVisible(!isRecording && isSingleSelection
               && isSingleSelectionTrack && !isSingleSelectionShareWithMe);
@@ -347,11 +344,9 @@ public class SearchListActivity extends AbstractSendToGoogleActivity implements 
     Long markerId = (Long) item.get(MARKER_ID_FIELD);
     Intent intent;
     switch (itemId) {
-      case R.id.list_context_menu_play:
-        playTracks(new long[] {trackId});
-        return true;
       case R.id.list_context_menu_share:
-        shareTrack(trackId);
+        //TODO
+        Log.e(TAG, "Not implemented");
         return true;
       case R.id.list_context_menu_show_on_map:
         intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
@@ -556,10 +551,5 @@ public class SearchListActivity extends AbstractSendToGoogleActivity implements 
         handleIntent(getIntent());
       }
     });
-  }
-
-  @Override
-  public void onShareTrackDone(long trackId, boolean makePublic, String emails, Account account) {
-
   }
 }

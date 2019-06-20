@@ -156,10 +156,7 @@ limitations under the License.
       android:label="@string/menu_aggregated_statistics"
       android:name="com.google.android.apps.mytracks.AggregatedStatsActivity" />
     <activity android:name="com.google.android.apps.mytracks.DeleteActivity" />
-    <activity
-      android:label="@string/menu_help"
-      android:name="com.google.android.apps.mytracks.HelpActivity" />
-    <activity android:name="com.google.android.apps.mytracks.io.file.importer.ImportActivity" >
+      <activity android:name="com.google.android.apps.mytracks.io.file.importer.ImportActivity" >
       <intent-filter>
         <action android:name="android.intent.action.ATTACH_DATA" />
         <action android:name="android.intent.action.VIEW" />
@@ -231,17 +228,6 @@ limitations under the License.
         <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
       </intent-filter>
     </activity>
-    <!-- Services -->
-    <service
-      android:exported="true"
-      android:name="com.google.android.apps.mytracks.io.sync.SyncService" >
-      <intent-filter>
-        <action android:name="android.content.SyncAdapter" />
-      </intent-filter>
-      <meta-data
-        android:name="android.content.SyncAdapter"
-        android:resource="@xml/sync_adapter" />
-    </service>
     <service
       android:name="com.google.android.apps.mytracks.services.ActivityRecognitionIntentService" />
     <service

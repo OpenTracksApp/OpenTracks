@@ -17,7 +17,6 @@
 package com.google.android.apps.mytracks.settings;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
@@ -197,8 +196,6 @@ public class AdvancedSettingsActivity extends AbstractSettingsActivity {
 
         // Actually wipe preferences and save synchronously
         sharedPreferences.edit().clear().commit();
-
-        SyncUtils.disableSync(AdvancedSettingsActivity.this);
 
         // Give UI feedback in the UI thread
         runOnUiThread(new Runnable() {

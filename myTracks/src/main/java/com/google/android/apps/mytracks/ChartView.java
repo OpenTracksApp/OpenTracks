@@ -16,15 +16,6 @@
 
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
-import com.google.android.apps.mytracks.stats.ExtremityMonitor;
-import com.google.android.apps.mytracks.util.IntentUtils;
-import com.google.android.apps.mytracks.util.StringUtils;
-import com.google.android.apps.mytracks.util.UnitConversions;
-import com.google.android.maps.mytracks.R;
-import com.google.common.annotations.VisibleForTesting;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
@@ -36,11 +27,20 @@ import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.VisibleForTesting;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.Scroller;
+
+import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
+import com.google.android.apps.mytracks.stats.ExtremityMonitor;
+import com.google.android.apps.mytracks.util.IntentUtils;
+import com.google.android.apps.mytracks.util.StringUtils;
+import com.google.android.apps.mytracks.util.UnitConversions;
+import com.google.android.maps.mytracks.R;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;

@@ -73,8 +73,6 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
           boolean isSingleSelection = ids.length == 1;
 
           // Always disable
-          menu.findItem(R.id.list_context_menu_play).setVisible(false);
-          // Always disable
           menu.findItem(R.id.list_context_menu_share).setVisible(false);
           // One item
           menu.findItem(R.id.list_context_menu_show_on_map).setVisible(isSingleSelection);

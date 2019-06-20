@@ -125,18 +125,6 @@ public class MarkerEditActivity extends AbstractMyTracksActivity {
         } else {
           saveMarker();
         }
-        boolean driveSync = PreferencesUtils.getBoolean(
-            MarkerEditActivity.this, R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT);
-        if (driveSync) {
-          MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(
-              MarkerEditActivity.this);
-          Track track = myTracksProviderUtils.getTrack(newMarker ? trackId : waypoint.getTrackId());
-          track.setModifiedTime(System.currentTimeMillis());
-          myTracksProviderUtils.updateTrack(track);
-          PreferencesUtils.addToList(MarkerEditActivity.this, R.string.drive_edited_list_key,
-              PreferencesUtils.DRIVE_EDITED_LIST_DEFAULT, String.valueOf(track.getId()));
-        }      
-        finish();
       }
     });
   

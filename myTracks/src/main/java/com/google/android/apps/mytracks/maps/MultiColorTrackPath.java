@@ -15,15 +15,15 @@
  */
 package com.google.android.apps.mytracks.maps;
 
+import android.content.Context;
+import android.support.annotation.VisibleForTesting;
+
 import com.google.android.apps.mytracks.MapOverlay.CachedLocation;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.maps.mytracks.R;
-import com.google.common.annotations.VisibleForTesting;
-
-import android.content.Context;
 
 import java.util.ArrayList;
 import java.util.List;

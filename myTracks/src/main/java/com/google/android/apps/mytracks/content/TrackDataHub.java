@@ -16,18 +16,18 @@
 
 package com.google.android.apps.mytracks.content;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
-import com.google.android.apps.mytracks.util.LocationUtils;
-import com.google.android.apps.mytracks.util.PreferencesUtils;
-import com.google.android.maps.mytracks.R;
-import com.google.common.annotations.VisibleForTesting;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.location.Location;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.support.annotation.VisibleForTesting;
 import android.util.Log;
+
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
+import com.google.android.apps.mytracks.util.LocationUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.maps.mytracks.R;
 
 import java.util.Collections;
 import java.util.EnumSet;

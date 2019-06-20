@@ -16,16 +16,16 @@
 
 package com.google.android.apps.mytracks.stats;
 
-import static com.google.android.apps.mytracks.services.TrackRecordingService.MAX_NO_MOVEMENT_SPEED;
-import static com.google.android.apps.mytracks.services.TrackRecordingService.PAUSE_LATITUDE;
+import android.location.Location;
+import android.support.annotation.VisibleForTesting;
+import android.util.Log;
 
 import com.google.android.apps.mytracks.util.CalorieUtils;
 import com.google.android.apps.mytracks.util.CalorieUtils.ActivityType;
 import com.google.android.apps.mytracks.util.LocationUtils;
-import com.google.common.annotations.VisibleForTesting;
 
-import android.location.Location;
-import android.util.Log;
+import static com.google.android.apps.mytracks.services.TrackRecordingService.MAX_NO_MOVEMENT_SPEED;
+import static com.google.android.apps.mytracks.services.TrackRecordingService.PAUSE_LATITUDE;
 
 /**
  * Updater for {@link TripStatistics}. For updating track trip statistics as new

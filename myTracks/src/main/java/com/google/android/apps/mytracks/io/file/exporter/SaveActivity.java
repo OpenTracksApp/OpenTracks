@@ -19,7 +19,6 @@ package com.google.android.apps.mytracks.io.file.exporter;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.FileUtils;
-import com.google.android.apps.mytracks.util.GoogleEarthUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -200,12 +199,7 @@ public class SaveActivity extends Activity {
     totalCount = aTotalCount;
     savedPath = aSavedPath;
     removeDialog(DIALOG_PROGRESS_ID);
-    if (playTrack && successCount == 1 && totalCount == 1 && savedPath != null) {
-      startActivity(GoogleEarthUtils.getPlayInEarthIntent(this, savedPath));
-      finish();
-    } else {
-      showDialog(DIALOG_RESULT_ID);
-    }
+    showDialog(DIALOG_RESULT_ID);
   }
 
   /**

@@ -28,12 +28,6 @@ limitations under the License.
     android:showAsAction="ifRoom"
     android:title="@string/menu_insert_photo"/>
   <item
-    android:icon="@drawable/ic_menu_play"
-    android:id="@+id/track_detail_play"
-    android:orderInCategory="3"
-    android:showAsAction="ifRoom"
-    android:title="@string/menu_play"/>
-  <item
     android:icon="@drawable/ic_menu_share"
     android:id="@+id/track_detail_share"
     android:orderInCategory="4"
@@ -44,12 +38,6 @@ limitations under the License.
     android:id="@+id/track_detail_markers"
     android:orderInCategory="5"
     android:title="@string/menu_markers"/>
-  <item
-    android:icon="@drawable/ic_menu_play_multiple"
-    android:id="@+id/track_detail_play_multiple"
-    android:orderInCategory="6"
-    android:title="@string/menu_play_multiple"/>    
-  <!-- android:orderInCategory="7" is in map.xml -->
   <item
     android:icon="@drawable/ic_menu_export"
     android:id="@+id/track_detail_export"

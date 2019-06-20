@@ -18,24 +18,14 @@ package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.fragments.ChooseAccountDialogFragment;
-import com.google.android.apps.mytracks.fragments.ChooseAccountDialogFragment.ChooseAccountCaller;
 import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller;
-import com.google.android.apps.mytracks.fragments.EnableSyncDialogFragment;
-import com.google.android.apps.mytracks.fragments.EnableSyncDialogFragment.EnableSyncCaller;
-import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
-import com.google.android.apps.mytracks.services.tasks.CheckPermissionAsyncTask;
-import com.google.android.apps.mytracks.services.tasks.CheckPermissionAsyncTask.CheckPermissionCaller;
-import com.google.android.apps.mytracks.util.EulaUtils;
-import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
 import com.google.android.apps.mytracks.util.TrackUtils;
 import com.google.android.maps.mytracks.R;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -48,7 +38,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 /**
  * An activity that let's the user see and edit the user editable track meta
@@ -56,8 +45,7 @@ import android.widget.Toast;
  * 
  * @author Leif Hendrik Wilden
  */
-public class TrackEditActivity extends AbstractMyTracksActivity implements ChooseActivityTypeCaller,
-    EnableSyncCaller, ChooseAccountCaller, CheckPermissionCaller {
+public class TrackEditActivity extends AbstractMyTracksActivity implements ChooseActivityTypeCaller {
 
   public static final String EXTRA_TRACK_ID = "track_id";
   public static final String EXTRA_NEW_TRACK = "new_track";
@@ -80,17 +68,9 @@ public class TrackEditActivity extends AbstractMyTracksActivity implements Choos
 
   private boolean newWeight = false;
 
-  private CheckPermissionAsyncTask syncDriveAsyncTask;
-
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
-
-    Object retained = getLastCustomNonConfigurationInstance();
-    if (retained instanceof CheckPermissionAsyncTask) {
-      syncDriveAsyncTask = (CheckPermissionAsyncTask) retained;
-      syncDriveAsyncTask.setActivity(this);
-    }
 
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
     trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1L);
@@ -177,19 +157,6 @@ public class TrackEditActivity extends AbstractMyTracksActivity implements Choos
         TrackUtils.updateTrack(TrackEditActivity.this, track, name.getText().toString(),
             activityType.getText().toString(), description.getText().toString(),
             myTracksProviderUtils, trackRecordingServiceConnection, newWeight);
-
-        if (EulaUtils.showEnableSync(TrackEditActivity.this)) {
-          EulaUtils.setShowEnableSync(TrackEditActivity.this);
-          if (PreferencesUtils.getBoolean(TrackEditActivity.this, R.string.drive_sync_key,
-              PreferencesUtils.DRIVE_SYNC_DEFAULT)) {
-            finish();
-          } else {
-            new EnableSyncDialogFragment().show(
-                getSupportFragmentManager(), EnableSyncDialogFragment.ENABLE_SYNC_DIALOG_TAG);
-          }
-        } else {
-          finish();
-        }
       }
     });
 
@@ -209,13 +176,6 @@ public class TrackEditActivity extends AbstractMyTracksActivity implements Choos
     }
   }
 
-  @Override
-  public Object onRetainCustomNonConfigurationInstance() {
-    if (syncDriveAsyncTask != null) {
-      syncDriveAsyncTask.setActivity(null);
-    }
-    return syncDriveAsyncTask;
-  }
 
   @Override
   protected void onStart() {
@@ -252,25 +212,5 @@ public class TrackEditActivity extends AbstractMyTracksActivity implements Choos
     }
     setActivityTypeIcon(value);
     activityType.setText(getString(TrackIconUtils.getIconActivityType(value)));
-  }
-
-  @Override
-  public void onEnableSyncDone(boolean enable) {
-    if (enable) {
-      new ChooseAccountDialogFragment().show(
-          getSupportFragmentManager(), ChooseAccountDialogFragment.CHOOSE_ACCOUNT_DIALOG_TAG);
-    } else {
-      finish();
-    }
-  }
-
-  @Override
-  public void onChooseAccountDone(String account) {
-
-  }
-
-  @Override
-  public void onCheckPermissionDone(String scope, boolean success, Intent userRecoverableIntent) {
-
   }
 }

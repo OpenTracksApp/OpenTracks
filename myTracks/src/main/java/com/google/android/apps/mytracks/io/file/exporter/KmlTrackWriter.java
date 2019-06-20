@@ -15,6 +15,12 @@
  */
 package com.google.android.apps.mytracks.io.file.exporter;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.location.Location;
+import android.net.Uri;
+import android.support.annotation.VisibleForTesting;
+
 import com.google.android.apps.mytracks.content.DescriptionGenerator;
 import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
 import com.google.android.apps.mytracks.content.MyTracksLocation;
@@ -26,15 +32,8 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
-import com.google.android.apps.mytracks.util.GoogleEarthUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
-import com.google.common.annotations.VisibleForTesting;
-
-import android.content.Context;
-import android.database.Cursor;
-import android.location.Location;
-import android.net.Uri;
 
 import java.io.File;
 import java.io.OutputStream;
@@ -188,7 +187,7 @@ public class KmlTrackWriter implements TrackWriter {
   @Override
   public void writeBeginTracks() {
     if (printWriter != null && multiple) {
-      printWriter.println("<Folder id=\"" + GoogleEarthUtils.TOUR_FEATURE_ID_VALUE + "\">");
+      printWriter.println("<Folder id=tour>");
       printWriter.println("<name>" + context.getString(R.string.generic_tracks) + "</name>");
       printWriter.println("<open>1</open>");
     }
@@ -206,12 +205,7 @@ public class KmlTrackWriter implements TrackWriter {
     if (printWriter != null) {
       String name = context.getString(R.string.marker_label_start, track.getName());
       writePlacemark(name, "", "", START_STYLE, startLocation);
-      if (multiple) {
-        // No need to add TOUR_FEATURE_ID_VALUE
-        printWriter.println("<Placemark>");
-      } else {
-        printWriter.println("<Placemark id=\"" + GoogleEarthUtils.TOUR_FEATURE_ID_VALUE + "\">");
-      }
+      printWriter.println("<Placemark>");
       printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
       printWriter.println(
           "<description>" + StringUtils.formatCData(track.getDescription()) + "</description>");

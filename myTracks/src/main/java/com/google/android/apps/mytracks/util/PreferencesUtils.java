@@ -61,20 +61,11 @@ public class PreferencesUtils {
 
   public static final String DEFAULT_ACTIVITY_DEFAULT = "";
   
-  public static final String DRIVE_DELETED_LIST_DEFAULT = "";
-  public static final String DRIVE_EDITED_LIST_DEFAULT = "";
-  public static final long DRIVE_LARGEST_CHANGE_ID_DEFAULT = -1L;
-  public static final boolean DRIVE_SYNC_DEFAULT = false;
-
   public static final String EXPORT_EXTERNAL_STORAGE_FORMAT_DEFAULT = TrackFileFormat.KML.name();
-  public static final boolean EXPORT_GOOGLE_FUSION_TABLES_PUBLIC_DEFAULT = false;
-  public static final boolean EXPORT_GOOGLE_MAPS_PUBLIC_DEFAULT = false;
-  public static final String EXPORT_TYPE_DEFAULT = ExportType.GOOGLE_DRIVE.name();
-  
+
   // Value for split_frequency_key and voice_frequency_key
   public static final int FREQUENCY_OFF = 0;
 
-  public static final String GOOGLE_ACCOUNT_DEFAULT = "";
   public static final int MAP_TYPE_DEFAUlT = 1;
   public static final int MAX_RECORDING_DISTANCE_DEFAULT = 200;
   
@@ -93,13 +84,7 @@ public class PreferencesUtils {
   
   public static final long RECORDING_TRACK_ID_DEFAULT = -1L;
   public static final boolean RECORDING_TRACK_PAUSED_DEFAULT = true;
-  public static final long SELECTED_TRACK_ID_DEFAULT = -1L;
   public static final String SENSOR_TYPE_DEFAULT = "NONE";
-
-  // Share track
-  public static final String SHARE_TRACK_ACCOUNT_DEFAULT = "";
-  public static final boolean SHARE_TRACK_INVITE_DEFAULT = false;
-  public static final boolean SHARE_TRACK_PUBLIC_DEFAULT = false;
 
   public static final int SPLIT_FREQUENCY_DEFAULT = 0;
   

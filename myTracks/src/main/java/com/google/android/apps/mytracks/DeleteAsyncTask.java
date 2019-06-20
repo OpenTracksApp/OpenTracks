@@ -16,15 +16,12 @@ package com.google.android.apps.mytracks;
  * the License.
  */
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.io.sync.SyncUtils;
-import com.google.android.apps.mytracks.util.PreferencesUtils;
-import com.google.android.apps.mytracks.util.UnitConversions;
-import com.google.android.maps.mytracks.R;
-
 import android.content.Context;
 import android.os.AsyncTask;
+
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.util.UnitConversions;
 
 /**
  * Async Task to delete tracks.
@@ -81,40 +78,16 @@ public class DeleteAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
 
     if (trackIds.length == 1 && trackIds[0] == -1L) {
-      try {
-        while (SyncUtils.isSyncActive(context)) {
-          if (isCancelled()) {
-            return false;
-          }
-          Thread.sleep(ONE_SECOND);
-        }
-      } catch (InterruptedException e) {
-        return false;
-      }
-      SyncUtils.disableSync(context);
       myTracksProviderUtils.deleteAllTracks(context);
-      return true;
     } else {
       for (long id : trackIds) {
         if (isCancelled()) {
           return false;
         }
-        Track track = myTracksProviderUtils.getTrack(id);
         myTracksProviderUtils.deleteTrack(context, id);
-        if (track != null) {
-          String driveId = track.getDriveId();
-          if (driveId != null && !driveId.equals("")) {
-            boolean driveSync = PreferencesUtils.getBoolean(
-                context, R.string.drive_sync_key, PreferencesUtils.DRIVE_SYNC_DEFAULT);
-            if (driveSync) {
-              PreferencesUtils.addToList(context, R.string.drive_deleted_list_key,
-                  PreferencesUtils.DRIVE_DELETED_LIST_DEFAULT, driveId);
-            }
-          }
-        }
       }
-      return true;
     }
+    return true;
   }
 
   @Override
