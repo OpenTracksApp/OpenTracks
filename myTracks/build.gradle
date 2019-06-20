@@ -5,7 +5,7 @@ android {
 
     defaultConfig {
         applicationId "com.google.android.maps.mytracks"
-        minSdkVersion 14
+        minSdkVersion 21
         targetSdkVersion 26
 
         testApplicationId "com.google.android.maps.mytracks.test"
@@ -22,33 +22,38 @@ android {
 
 dependencies {
     compile project(':myTracksLib')
-    compile files('libs/android-support-v4.jar')
+    //compile files('libs/android-support-v4.jar')
     compile files('libs/antlib.jar')
-    compile files('libs/gdata-client-1.0.jar')
-    compile files('libs/gdata-client-meta-1.0.jar')
-    compile files('libs/gdata-core-1.0.jar')
-    compile files('libs/gdata-spreadsheet-3.0.jar')
-    compile files('libs/gdata-spreadsheet-meta-3.0.jar')
+    //compile files('libs/gdata-client-1.0.jar')
+    //compile files('libs/gdata-client-meta-1.0.jar')
+    //compile files('libs/gdata-core-1.0.jar')
+    //compile files('libs/gdata-spreadsheet-3.0.jar')
+    //compile files('libs/gdata-spreadsheet-meta-3.0.jar')
     compile files('libs/google-api-client-1.12.0-beta.jar')
     compile files('libs/google-api-client-android-1.12.0-beta.jar')
     compile files('libs/google-api-services-drive-v2-rev30-1.12.0-beta.jar')
-    compile files('libs/google-api-services-fusiontables-v1-rev16-1.12.0-beta.jar')
-    compile files('libs/google-common.jar')
+    //compile files('libs/google-api-services-fusiontables-v1-rev16-1.12.0-beta.jar')
+    //compile files('libs/google-common.jar')
     compile files('libs/google-http-client-1.12.0-beta.jar')
     compile files('libs/google-http-client-android-1.12.0-beta.jar')
     compile files('libs/google-http-client-gson-1.12.0-beta.jar')
-    compile files('libs/google-http-client-jackson-1.12.0-beta.jar')
-    compile files('libs/google-http-client-jackson2-1.12.0-beta.jar')
-    compile files('libs/google-oauth-client-1.12.0-beta.jar')
-	compile files('libs/google-play-services.jar')
-    compile files('libs/gson-2.1.jar')
-    compile files('libs/guava-jdk5-13.0.jar')
-    compile files('libs/jackson-core-2.0.5.jar')
-    compile files('libs/jackson-core-asl-1.9.9.jar')
-    compile files('libs/jsr305.jar')
-    compile files('libs/libGoogleAnalytics.jar')
+    //compile files('libs/google-http-client-jackson-1.12.0-beta.jar')
+    //compile files('libs/google-http-client-jackson2-1.12.0-beta.jar')
+    //compile files('libs/google-oauth-client-1.12.0-beta.jar')
+	//compile files('libs/google-play-services.jar')
+    //compile files('libs/gson-2.1.jar')
+    compile files('libs/guava-jdk5-13.0.jar') //@visiblefortesting
+    //compile files('libs/jackson-core-2.0.5.jar')
+    //compile files('libs/jackson-core-asl-1.9.9.jar')
+    //compile files('libs/jsr305.jar')
+    //compile files('libs/libGoogleAnalytics.jar')
     androidTestCompile files('libs/AndroidMockGenerator.jar')
     androidTestCompile files('libs/robotium-solo-5.0.1.jar')
 
     implementation 'com.google.android.gms:play-services-location:11.8.0'
+    implementation 'com.google.android.gms:play-services:11.8.0'
+    implementation 'com.google.android.gms:play-services-auth:11.8.0'
+//    compile 'com.google.firebase:firebase-core:9.2.0'
+//    compile 'com.google.firebase:firebase-auth:9.2.0'
+//    compile 'com.google.firebase:firebase-messaging:11.8.0'
 }

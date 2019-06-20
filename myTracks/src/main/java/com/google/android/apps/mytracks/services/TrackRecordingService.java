@@ -16,6 +16,27 @@
 
 package com.google.android.apps.mytracks.services;
 
+import android.app.PendingIntent;
+import android.app.Service;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.database.sqlite.SQLiteException;
+import android.location.Location;
+import android.location.LocationManager;
+import android.net.Uri;
+import android.os.Binder;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.PowerManager.WakeLock;
+import android.os.Process;
+import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
+import android.util.Log;
+
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.TrackDetailActivity;
 import com.google.android.apps.mytracks.TrackListActivity;
@@ -47,33 +68,14 @@ import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.apps.mytracks.util.TrackNameUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
-import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.location.ActivityRecognitionClient;
 import com.google.android.gms.location.DetectedActivity;
-import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
-
-import android.app.PendingIntent;
-import android.app.Service;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.database.sqlite.SQLiteException;
-import android.location.Location;
-import android.location.LocationManager;
-import android.net.Uri;
-import android.os.Binder;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.IBinder;
-import android.os.PowerManager.WakeLock;
-import android.os.Process;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
-import android.util.Log;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -119,8 +121,6 @@ public class TrackRecordingService extends Service {
   private MyTracksProviderUtils myTracksProviderUtils;
   private Handler handler;
   private MyTracksLocationManager myTracksLocationManager;
-  private PendingIntent activityRecognitionPendingIntent;  
-  private ActivityRecognitionClient activityRecognitionClient;
   private PeriodicTaskExecutor voiceExecutor;
   private PeriodicTaskExecutor splitExecutor;
   private SharedPreferences sharedPreferences;
@@ -238,43 +238,25 @@ public class TrackRecordingService extends Service {
         }
       };
 
-  private LocationListener locationListener = new LocationListener() {
-      @Override
-    public void onLocationChanged(final Location location) {
-      if (myTracksLocationManager == null || executorService == null
-          || !myTracksLocationManager.isAllowed() || executorService.isShutdown()
-          || executorService.isTerminated()) {
-        return;
+  private LocationCallback locationListener = new LocationCallback() {
+
+      public void onLocationResult(final LocationResult locationResult) {
+          if (myTracksLocationManager == null || executorService == null
+                  || !myTracksLocationManager.isAllowed() || executorService.isShutdown()
+                  || executorService.isTerminated()) {
+              return;
+          }
+          executorService.submit(new Runnable() {
+              @Override
+              public void run() {
+                  onLocationChangedAsync(locationResult.getLastLocation());
+              }
+          });
       }
-      executorService.submit(new Runnable() {
-          @Override
-        public void run() {
-          onLocationChangedAsync(location);
-        }
-      });
-    }
   };
-
-  private final ConnectionCallbacks activityRecognitionCallbacks = new ConnectionCallbacks() {
-      @Override
-    public void onDisconnected() {}
-
-      @Override
-    public void onConnected(Bundle bundle) {
-      activityRecognitionClient.requestActivityUpdates(
-          ONE_MINUTE, activityRecognitionPendingIntent);
-    }
-  };
-
-  private final OnConnectionFailedListener
-      activityRecognitionFailedListener = new OnConnectionFailedListener() {
-
-          @Override
-        public void onConnectionFailed(ConnectionResult connectionResult) {}
-      };
 
   private final Runnable registerLocationRunnable = new Runnable() {
-      @Override
+    @Override
     public void run() {
       if (isRecording() && !isPaused()) {
         registerLocationListener();
@@ -298,12 +280,6 @@ public class TrackRecordingService extends Service {
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
     handler = new Handler();
     myTracksLocationManager = new MyTracksLocationManager(this, handler.getLooper(), true);
-    activityRecognitionPendingIntent = PendingIntent.getService(context, 0,
-        new Intent(context, ActivityRecognitionIntentService.class),
-        PendingIntent.FLAG_UPDATE_CURRENT);
-    activityRecognitionClient = new ActivityRecognitionClient(
-        context, activityRecognitionCallbacks, activityRecognitionFailedListener);
-    activityRecognitionClient.connect();    
     voiceExecutor = new PeriodicTaskExecutor(this, new AnnouncementPeriodicTaskFactory());
     splitExecutor = new PeriodicTaskExecutor(this, new SplitPeriodicTaskFactory());
     sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
@@ -390,12 +366,6 @@ public class TrackRecordingService extends Service {
     } finally {
       voiceExecutor = null;
     }
-
-    if (activityRecognitionClient.isConnected()) {
-      activityRecognitionClient.removeActivityUpdates(activityRecognitionPendingIntent);
-    }
-    activityRecognitionClient.disconnect();
-    activityRecognitionPendingIntent.cancel();
     
     myTracksLocationManager.close();
     myTracksLocationManager = null;
@@ -621,8 +591,6 @@ public class TrackRecordingService extends Service {
     // Update shared preferences
     updateRecordingState(trackId, false);
     PreferencesUtils.setInt(this, R.string.auto_resume_track_current_retry_key, 0);
-    PreferencesUtils.setInt(this, R.string.activity_recognition_type_key,
-        PreferencesUtils.ACTIVITY_RECOGNITION_TYPE_DEFAULT);
 
     // Update database
     track.setId(trackId);
@@ -1311,7 +1279,7 @@ public class TrackRecordingService extends Service {
       if (!canAccess()) {
         return;
       }
-      trackRecordingService.locationListener.onLocationChanged(location);
+      //TODO trackRecordingService.locationListener.onLocationChanged(location);
     }
 
     @Override

@@ -30,7 +30,6 @@ import com.google.android.apps.mytracks.fragments.ExportDialogFragment.ExportCal
 import com.google.android.apps.mytracks.fragments.ExportDialogFragment.ExportType;
 import com.google.android.apps.mytracks.fragments.FrequencyDialogFragment;
 import com.google.android.apps.mytracks.fragments.MapLayerDialogFragment;
-import com.google.android.apps.mytracks.fragments.MyTracksMapFragment;
 import com.google.android.apps.mytracks.fragments.PlayMultipleDialogFragment;
 import com.google.android.apps.mytracks.fragments.PlayMultipleDialogFragment.PlayMultipleCaller;
 import com.google.android.apps.mytracks.fragments.StatsFragment;
@@ -235,11 +234,6 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
     viewPager = (ViewPager) findViewById(R.id.pager);
 
     tabsAdapter = new TabsAdapter(this, tabHost, viewPager);
-
-    TabSpec mapTabSpec = tabHost.newTabSpec(MyTracksMapFragment.MAP_FRAGMENT_TAG).setIndicator(
-        getString(R.string.track_detail_map_tab),
-        getResources().getDrawable(R.drawable.ic_tab_map));
-    tabsAdapter.addTab(mapTabSpec, MyTracksMapFragment.class, null);
 
     TabSpec chartTabSpec = tabHost.newTabSpec(ChartFragment.CHART_FRAGMENT_TAG).setIndicator(
         getString(R.string.track_detail_chart_tab),
