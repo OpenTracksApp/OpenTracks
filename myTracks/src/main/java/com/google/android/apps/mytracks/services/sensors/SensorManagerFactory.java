@@ -17,7 +17,6 @@
 package com.google.android.apps.mytracks.services.sensors;
 
 import com.google.android.apps.mytracks.services.sensors.ant.AntSensorManager;
-import com.google.android.apps.mytracks.util.AnalyticsUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -43,7 +42,7 @@ public class SensorManagerFactory {
   public static SensorManager getSystemSensorManager(Context context) {
     releaseTempSensorManager();
     releaseSystemSensorManager();
-    systemSensorManager = getSensorManager(context, true);
+    systemSensorManager = getSensorManager(context);
     if (systemSensorManager != null) {
       systemSensorManager.startSensor();
     }
@@ -70,7 +69,7 @@ public class SensorManagerFactory {
     if (systemSensorManager != null) {
       return null;
     }
-    tempSensorManager = getSensorManager(context, false);
+    tempSensorManager = getSensorManager(context);
     if (tempSensorManager != null) {
       tempSensorManager.startSensor();
     }
@@ -92,26 +91,15 @@ public class SensorManagerFactory {
    *
    * @param context the context
    */
-  private static SensorManager getSensorManager(Context context, boolean sendPageViews) {
+  private static SensorManager getSensorManager(Context context) {
     String sensorType = PreferencesUtils.getString(
         context, R.string.sensor_type_key, PreferencesUtils.SENSOR_TYPE_DEFAULT);
 
-    if (sensorType.equals(context.getString(R.string.sensor_type_value_ant))) {
-      if (sendPageViews) {
-        AnalyticsUtils.sendPageViews(context, AnalyticsUtils.SENSOR_ANT);
-      }
-      return new AntSensorManager(context);
-    } else if (sensorType.equals(context.getString(R.string.sensor_type_value_zephyr))) {
-      if (sendPageViews) {
-        AnalyticsUtils.sendPageViews(context, AnalyticsUtils.SENSOR_ZEPHYR);
-      }
-      return new ZephyrSensorManager(context);
-    } else if (sensorType.equals(context.getString(R.string.sensor_type_value_polar))) {
-      if (sendPageViews) {
-        AnalyticsUtils.sendPageViews(context, AnalyticsUtils.SENSOR_POLAR);
-      }
-      return new PolarSensorManager(context);
+    switch (sensorType) {
+      case "ANT": return new AntSensorManager(context);
+      case "ZEPHYR": return new ZephyrSensorManager(context);
+      case "POLAR": return new PolarSensorManager(context);
     }
     return null;
-  }
+   }
 }

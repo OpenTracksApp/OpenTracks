@@ -37,7 +37,6 @@ import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.MyTracksLocationManager;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.settings.SettingsActivity;
-import com.google.android.apps.mytracks.util.AnalyticsUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.EulaUtils;
 import com.google.android.apps.mytracks.util.GoogleLocationUtils;
@@ -242,19 +241,16 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     public void onClick(View v) {
       if (recordingTrackId == PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
         // Not recording -> Recording
-        AnalyticsUtils.sendPageViews(TrackListActivity.this, AnalyticsUtils.ACTION_RECORD_TRACK);
         updateMenuItems(false, true);
         startRecording();
       } else {
         if (recordingTrackPaused) {
           // Paused -> Resume
-          AnalyticsUtils.sendPageViews(TrackListActivity.this, AnalyticsUtils.ACTION_RESUME_TRACK);
           updateMenuItems(false, true);
           TrackRecordingServiceConnectionUtils.resumeTrack(trackRecordingServiceConnection);
           trackController.update(true, false);
         } else {
           // Recording -> Paused
-          AnalyticsUtils.sendPageViews(TrackListActivity.this, AnalyticsUtils.ACTION_PAUSE_TRACK);
           updateMenuItems(false, true);
           TrackRecordingServiceConnectionUtils.pauseTrack(trackRecordingServiceConnection);
           trackController.update(true, true);
@@ -266,7 +262,6 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
   private final OnClickListener stopListener = new OnClickListener() {
       @Override
     public void onClick(View v) {
-      AnalyticsUtils.sendPageViews(TrackListActivity.this, AnalyticsUtils.ACTION_STOP_RECORDING);
       updateMenuItems(false, false);
       TrackRecordingServiceConnectionUtils.stopRecording(
           TrackListActivity.this, trackRecordingServiceConnection, true);
@@ -407,8 +402,6 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
 
     // Update track recording service connection
     TrackRecordingServiceConnectionUtils.startConnection(this, trackRecordingServiceConnection);
-
-    AnalyticsUtils.sendPageViews(this, AnalyticsUtils.PAGE_TRACK_LIST);
   }
 
   @Override
@@ -438,8 +431,6 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
     trackRecordingServiceConnection.unbind();
-
-    AnalyticsUtils.dispatch();
   }
 
   @Override
@@ -628,16 +619,12 @@ public class TrackListActivity extends AbstractSendToGoogleActivity
     Intent intent;
     switch (menuId) {
       case R.id.track_list_export_all:
-        AnalyticsUtils.sendPageViews(
-            this, AnalyticsUtils.ACTION_EXPORT_ALL_PREFIX + trackFileFormat.getExtension());
         intent = IntentUtils.newIntent(this, SaveActivity.class)
             .putExtra(SaveActivity.EXTRA_TRACK_IDS, new long[] {-1L})   
             .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);
         startActivity(intent);
         break;
       case R.id.track_list_import_all:
-        AnalyticsUtils.sendPageViews(
-            this, AnalyticsUtils.ACTION_IMPORT_ALL_PREFIX + trackFileFormat.getExtension());
         intent = IntentUtils.newIntent(this, ImportActivity.class)
             .putExtra(ImportActivity.EXTRA_IMPORT_ALL, true)
             .putExtra(ImportActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);

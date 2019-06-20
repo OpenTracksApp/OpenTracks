@@ -18,37 +18,23 @@ package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment;
 import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment.ConfirmDeleteCaller;
-import com.google.android.apps.mytracks.fragments.ExportDialogFragment.ExportType;
 import com.google.android.apps.mytracks.fragments.InstallEarthDialogFragment;
 import com.google.android.apps.mytracks.fragments.ShareTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.ShareTrackDialogFragment.ShareTrackCaller;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.io.file.exporter.SaveActivity;
-import com.google.android.apps.mytracks.io.sync.SyncUtils;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.services.tasks.CheckPermissionAsyncTask;
-import com.google.android.apps.mytracks.services.tasks.CheckPermissionAsyncTask.CheckPermissionCaller;
-import com.google.android.apps.mytracks.util.AnalyticsUtils;
 import com.google.android.apps.mytracks.util.GoogleEarthUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
 import com.google.android.maps.mytracks.R;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
-import android.accounts.AccountManagerCallback;
-import android.accounts.AccountManagerFuture;
-import android.accounts.AuthenticatorException;
-import android.accounts.OperationCanceledException;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.util.Log;
 import android.widget.Toast;
-
-import java.io.IOException;
 
 /**
  * An abstract class for the following common tasks across
@@ -115,7 +101,6 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
    * @param trackId the track id
    */
   protected void shareTrack(long trackId) {
-    AnalyticsUtils.sendPageViews(this, AnalyticsUtils.ACTION_SHARE_DRIVE);
     ShareTrackDialogFragment.newInstance(trackId)
         .show(getSupportFragmentManager(), ShareTrackDialogFragment.SHARE_TRACK_DIALOG_TAG);
   }
@@ -177,7 +162,6 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
    * @param trackIds the track ids
    */
   protected void playTracks(long[] trackIds) {
-    AnalyticsUtils.sendPageViews(this, AnalyticsUtils.ACTION_PLAY);
     if (GoogleEarthUtils.isEarthInstalled(this)) {
       Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
           .putExtra(SaveActivity.EXTRA_TRACK_IDS, trackIds)
