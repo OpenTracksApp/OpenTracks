@@ -226,12 +226,10 @@ public class TrackIconUtils {
    * @param menu the menu
    */
   public static void setMenuIconColor(Menu menu) {
-    if (ApiAdapterFactory.getApiAdapter().revertMenuIconColor()) {
-      int size = menu.size();
-      for (int i = 0; i < size; i++) {
-        MenuItem menuitem = menu.getItem(i);
-        revertMenuIconColor(menuitem);
-      }
+    int size = menu.size();
+    for (int i = 0; i < size; i++) {
+      MenuItem menuitem = menu.getItem(i);
+      revertMenuIconColor(menuitem);
     }
   }
 
@@ -241,9 +239,7 @@ public class TrackIconUtils {
    * @param menuitem the menu item
    */
   public static void setMenuIconColor(MenuItem menuitem) {
-    if (ApiAdapterFactory.getApiAdapter().revertMenuIconColor()) {
-      revertMenuIconColor(menuitem);
-    }
+    revertMenuIconColor(menuitem);
   }
 
   /**

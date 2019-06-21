@@ -16,7 +16,6 @@
 package com.google.android.apps.mytracks.io.backup;
 
 import com.google.android.apps.mytracks.content.ContentTypeIds;
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.maps.mytracks.R;
 
 import android.annotation.SuppressLint;
@@ -133,7 +132,7 @@ public class PreferenceBackupHelper {
       byte typeId = reader.readByte();
       readAndSetPreference(name, typeId, reader, editor);
     }
-    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
+    editor.apply();
   }
 
   /**

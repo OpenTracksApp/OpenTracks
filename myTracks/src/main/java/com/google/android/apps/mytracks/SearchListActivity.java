@@ -29,7 +29,6 @@ import com.google.android.apps.mytracks.fragments.DeleteMarkerDialogFragment.Del
 import com.google.android.apps.mytracks.services.MyTracksLocationManager;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.ListItemUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
@@ -39,7 +38,6 @@ import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtil
 import com.google.android.gms.location.LocationListener;
 import com.google.android.maps.mytracks.R;
 
-import android.accounts.Account;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -244,8 +242,7 @@ public class SearchListActivity extends AbstractSendToGoogleActivity implements 
       }
     };
     listView.setAdapter(arrayAdapter);
-    ApiAdapterFactory.getApiAdapter()
-        .configureListViewContextualMenu(this, listView, contextualActionModeCallback);
+    AbstractSendToGoogleActivity.configureListViewContextualMenu(this, listView, contextualActionModeCallback);
     handleIntent(getIntent());
   }
 
@@ -285,7 +282,7 @@ public class SearchListActivity extends AbstractSendToGoogleActivity implements 
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.search_list, menu);
     searchMenuItem = menu.findItem(R.id.search_list_search);
-    ApiAdapterFactory.getApiAdapter().configureSearchWidget(this, searchMenuItem, null);
+    AbstractSendToGoogleActivity.configureSearchWidget(this, searchMenuItem, null);
     return super.onCreateOptionsMenu(menu);
   }
 
@@ -293,7 +290,7 @@ public class SearchListActivity extends AbstractSendToGoogleActivity implements 
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.search_list_search:
-        return ApiAdapterFactory.getApiAdapter().handleSearchMenuSelection(this);
+        return false;
       default:
         return super.onOptionsItemSelected(item);
     }
@@ -321,9 +318,7 @@ public class SearchListActivity extends AbstractSendToGoogleActivity implements 
   @Override
   public boolean onKeyUp(int keyCode, KeyEvent event) {
     if (keyCode == KeyEvent.KEYCODE_SEARCH && searchMenuItem != null) {
-      if (ApiAdapterFactory.getApiAdapter().handleSearchKey(searchMenuItem)) {
-        return true;
-      }
+      return true;
     }
     return super.onKeyUp(keyCode, event);
   }
@@ -427,7 +422,7 @@ public class SearchListActivity extends AbstractSendToGoogleActivity implements 
         @Override
       public void run() {
         arrayAdapter.clear();
-        ApiAdapterFactory.getApiAdapter().addAllToArrayAdapter(arrayAdapter, displayResults);
+        arrayAdapter.addAll(displayResults);
       }
     });
 

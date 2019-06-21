@@ -149,7 +149,7 @@ public class PreferencesUtils {
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     Editor editor = sharedPreferences.edit();
     editor.putBoolean(getKey(context, keyId), value);
-    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
+    editor.apply();
   }
 
   /**
@@ -178,7 +178,7 @@ public class PreferencesUtils {
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     Editor editor = sharedPreferences.edit();
     editor.putInt(getKey(context, keyId), value);
-    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
+    editor.apply();
   }
 
   /**
@@ -207,7 +207,7 @@ public class PreferencesUtils {
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     Editor editor = sharedPreferences.edit();
     editor.putFloat(getKey(context, keyId), value);
-    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
+    editor.apply();
   }
 
   /**
@@ -235,7 +235,7 @@ public class PreferencesUtils {
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     Editor editor = sharedPreferences.edit();
     editor.putLong(getKey(context, keyId), value);
-    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
+    editor.apply();
   }
 
   /**
@@ -264,7 +264,7 @@ public class PreferencesUtils {
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     Editor editor = sharedPreferences.edit();
     editor.putString(getKey(context, keyId), value);
-    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
+    editor.apply();
   }
   
   /**

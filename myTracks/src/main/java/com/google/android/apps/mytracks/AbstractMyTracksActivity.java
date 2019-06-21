@@ -16,9 +16,9 @@
 
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.TrackIconUtils;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.app.FragmentActivity;
@@ -39,24 +39,16 @@ public abstract class AbstractMyTracksActivity extends FragmentActivity {
     // Set volume control stream for text to speech
     setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
 
-    // Hide title must be before setContentView
-    if (hideTitle()) {
-      ApiAdapterFactory.getApiAdapter().hideTitle(this);
-    }
-
     setContentView(getLayoutResId());
 
     // Configure action bar must be after setContentView
     if (configureActionBarHomeAsUp()) {
-      ApiAdapterFactory.getApiAdapter().configureActionBarHomeAsUp(this);
+      ActionBar actionBar = this.getActionBar();
+      if (actionBar != null) {
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+      }
     }
-  }
-
-  /**
-   * Returns true to hide the title. Be default, do not hide the title.
-   */
-  protected boolean hideTitle() {
-    return false;
   }
 
   /**

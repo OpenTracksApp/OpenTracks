@@ -127,36 +127,34 @@ public class DialogUtils {
    * @param dialog the dialog
    */
   public static void setDialogTitleDivider(Context context, Dialog dialog) {
-    if (ApiAdapterFactory.getApiAdapter().hasDialogTitleDivider()) {
-      try {
-        ViewGroup decorView = (ViewGroup) dialog.getWindow().getDecorView();
-        if (decorView == null) {
-          return;
-        }
-        FrameLayout windowContentView = (FrameLayout) decorView.getChildAt(0);
-        if (windowContentView == null) {
-          return;
-        }
-        FrameLayout contentView = (FrameLayout) windowContentView.getChildAt(0);
-        if (contentView == null) {
-          return;
-        }
-        LinearLayout parentPanel = (LinearLayout) contentView.getChildAt(0);
-        if (parentPanel == null) {
-          return;
-        }
-        LinearLayout topPanel = (LinearLayout) parentPanel.getChildAt(0);
-        if (topPanel == null) {
-          return;
-        }
-        View titleDivider = topPanel.getChildAt(2);
-        if (titleDivider == null) {
-          return;
-        }
-        titleDivider.setBackgroundColor(context.getResources().getColor(R.color.holo_orange_dark));
-      } catch (Exception e) {
-        // Can safely ignore
+    try {
+      ViewGroup decorView = (ViewGroup) dialog.getWindow().getDecorView();
+      if (decorView == null) {
+        return;
       }
+      FrameLayout windowContentView = (FrameLayout) decorView.getChildAt(0);
+      if (windowContentView == null) {
+        return;
+      }
+      FrameLayout contentView = (FrameLayout) windowContentView.getChildAt(0);
+      if (contentView == null) {
+        return;
+      }
+      LinearLayout parentPanel = (LinearLayout) contentView.getChildAt(0);
+      if (parentPanel == null) {
+        return;
+      }
+      LinearLayout topPanel = (LinearLayout) parentPanel.getChildAt(0);
+      if (topPanel == null) {
+        return;
+      }
+      View titleDivider = topPanel.getChildAt(2);
+      if (titleDivider == null) {
+        return;
+      }
+      titleDivider.setBackgroundColor(context.getResources().getColor(R.color.holo_orange_dark));
+    } catch (Exception e) {
+      // Can safely ignore
     }
   }
 }

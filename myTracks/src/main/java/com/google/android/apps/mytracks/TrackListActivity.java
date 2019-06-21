@@ -16,7 +16,6 @@
 
 package com.google.android.apps.mytracks;
 
-import android.accounts.Account;
 import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
@@ -29,6 +28,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.os.Parcelable;
 import android.os.RemoteException;
+import android.os.StrictMode;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -59,7 +59,6 @@ import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.MyTracksLocationManager;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.settings.SettingsActivity;
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.GoogleLocationUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.ListItemUtils;
@@ -173,7 +172,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity implements F
             runOnUiThread(new Runnable() {
                 @Override
               public void run() {
-                ApiAdapterFactory.getApiAdapter().invalidMenu(TrackListActivity.this);
+                TrackListActivity.this.invalidateOptionsMenu();
                 getSupportLoaderManager().restartLoader(0, null, loaderCallbacks);
                 boolean isRecording = recordingTrackId
                     != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
@@ -296,7 +295,15 @@ public class TrackListActivity extends AbstractSendToGoogleActivity implements F
     super.onCreate(savedInstanceState);
 
     if (BuildConfig.DEBUG) {
-      ApiAdapterFactory.getApiAdapter().enableStrictMode();
+      Log.d(TAG, "Enabling strict mode");
+      StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+              .detectAll()
+              .penaltyLog()
+              .build());
+      StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+              .detectAll()
+              .penaltyLog()
+              .build());
     }
 
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
@@ -361,8 +368,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity implements F
       }
     };
     listView.setAdapter(sectionResourceCursorAdapter);
-    ApiAdapterFactory.getApiAdapter()
-        .configureListViewContextualMenu(this, listView, contextualActionModeCallback);
+    AbstractSendToGoogleActivity.configureListViewContextualMenu(this, listView, contextualActionModeCallback);
 
     getSupportLoaderManager().initLoader(0, null, loaderCallbacks);
     showStartupDialogs();
@@ -387,7 +393,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity implements F
     super.onResume();
     
     // Update UI
-    ApiAdapterFactory.getApiAdapter().invalidMenu(this);
+    this.invalidateOptionsMenu();
     getSupportLoaderManager().restartLoader(0, null, loaderCallbacks);
     boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
     trackController.onResume(isRecording, recordingTrackPaused);
@@ -435,7 +441,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity implements F
     getMenuInflater().inflate(R.menu.track_list, menu);
 
     searchMenuItem = menu.findItem(R.id.track_list_search);
-    ApiAdapterFactory.getApiAdapter().configureSearchWidget(this, searchMenuItem, trackController);
+    AbstractSendToGoogleActivity.configureSearchWidget(this, searchMenuItem, trackController);
 
     startGpsMenuItem = menu.findItem(R.id.track_list_start_gps);
     aggregatedStatisticsMenuItem = menu.findItem(R.id.track_list_aggregated_statistics);
@@ -459,7 +465,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity implements F
     Intent intent;
     switch (item.getItemId()) {
       case R.id.track_list_search:
-        return ApiAdapterFactory.getApiAdapter().handleSearchMenuSelection(this);
+        return false;
       case R.id.track_list_start_gps:
         MyTracksLocationManager myTracksLocationManager = new MyTracksLocationManager(
             this, Looper.myLooper(), false);
@@ -494,7 +500,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity implements F
           }
           
           // Update menu after starting or stopping gps
-          ApiAdapterFactory.getApiAdapter().invalidMenu(this);  
+          this.invalidateOptionsMenu();
         }
         myTracksLocationManager.close();
         return true;
@@ -546,9 +552,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity implements F
   @Override
   public boolean onKeyUp(int keyCode, KeyEvent event) {
     if (keyCode == KeyEvent.KEYCODE_SEARCH && searchMenuItem != null) {
-      if (ApiAdapterFactory.getApiAdapter().handleSearchKey(searchMenuItem)) {
-        return true;
-      }
+     return true;
     }
     return super.onKeyUp(keyCode, event);
   }

@@ -18,9 +18,9 @@ package com.google.android.apps.mytracks.settings;
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.maps.mytracks.R;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -45,7 +45,12 @@ public class AbstractSettingsActivity extends PreferenceActivity {
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
     setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
-    ApiAdapterFactory.getApiAdapter().configureActionBarHomeAsUp(this);
+
+    ActionBar actionBar = this.getActionBar();
+    if (actionBar != null) {
+      actionBar.setHomeButtonEnabled(true);
+      actionBar.setDisplayHomeAsUpEnabled(true);
+    }
 
     PreferenceManager preferenceManager = getPreferenceManager();
     preferenceManager.setSharedPreferencesName(Constants.SETTINGS_NAME);

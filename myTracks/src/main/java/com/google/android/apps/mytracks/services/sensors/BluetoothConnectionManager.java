@@ -18,7 +18,6 @@ package com.google.android.apps.mytracks.services.sensors;
 
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.content.Sensor.SensorState;
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -161,11 +160,21 @@ public class BluetoothConnectionManager {
       setName("ConnectThread-" + device.getName());
       this.bluetoothDevice = device;
       BluetoothSocket tmp = null;
+
       try {
-        tmp = ApiAdapterFactory.getApiAdapter().getBluetoothSocket(device);
+        tmp = bluetoothDevice.createInsecureRfcommSocketToServiceRecord(BluetoothConnectionManager.MY_TRACKS_UUID);
       } catch (IOException e) {
-        Log.e(TAG, "Unable to get blueooth socket.", e);
+        Log.d(TAG, "Unable to create insecure connection", e);
       }
+
+      if (tmp == null) {
+        try {
+          tmp = bluetoothDevice.createRfcommSocketToServiceRecord(BluetoothConnectionManager.MY_TRACKS_UUID);
+        } catch (IOException e) {
+          Log.e(TAG, "Unable to get blueooth socket.", e);
+        }
+      }
+
       bluetoothSocket = tmp;
     }
 

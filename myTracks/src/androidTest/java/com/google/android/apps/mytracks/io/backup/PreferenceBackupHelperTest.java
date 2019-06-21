@@ -15,8 +15,6 @@
  */
 package com.google.android.apps.mytracks.io.backup;
 
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
-
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.test.AndroidTestCase;

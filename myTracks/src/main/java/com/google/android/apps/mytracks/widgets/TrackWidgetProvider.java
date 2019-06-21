@@ -22,7 +22,6 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.services.ControlRecordingService;
 import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
@@ -54,6 +53,8 @@ public class TrackWidgetProvider extends AppWidgetProvider {
 
   public static final int KEYGUARD_DEFAULT_SIZE = 1;
   public static final int HOME_SCREEN_DEFAULT_SIZE = 2;
+
+  private static final String APP_WIDGET_SIZE_KEY = "app_widget_size_key";
 
   private static final int TWO_CELLS = 110;
   private static final int THREE_CELLS = 180;
@@ -124,9 +125,13 @@ public class TrackWidgetProvider extends AppWidgetProvider {
           newSize = 1;
         }
       }
-      int size = ApiAdapterFactory.getApiAdapter().getAppWidgetSize(appWidgetManager, appWidgetId);
+      int size = getAppWidgetSize(appWidgetManager, appWidgetId);
+
       if (size != newSize) {
-        ApiAdapterFactory.getApiAdapter().setAppWidgetSize(appWidgetManager, appWidgetId, newSize);
+        Bundle bundle = new Bundle();
+        bundle.putInt(APP_WIDGET_SIZE_KEY, size);
+        appWidgetManager.updateAppWidgetOptions(appWidgetId, bundle);
+
         updateAppWidget(context, appWidgetManager, appWidgetId, -1L);
       }
     }
@@ -142,7 +147,7 @@ public class TrackWidgetProvider extends AppWidgetProvider {
    */
   public static void updateAppWidget(
       Context context, AppWidgetManager appWidgetManager, int appWidgetId, long trackId) {
-    int size = ApiAdapterFactory.getApiAdapter().getAppWidgetSize(appWidgetManager, appWidgetId);
+    int size = getAppWidgetSize(appWidgetManager, appWidgetId);
     RemoteViews remoteViews = getRemoteViews(context, trackId, size);
     appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
   }
@@ -231,6 +236,17 @@ public class TrackWidgetProvider extends AppWidgetProvider {
       updateRecordStatus(context, remoteViews, isRecording, isPaused);
     }
     return remoteViews;
+  }
+
+  /**
+   * Gets the app widget size.
+   *
+   * @param appWidgetManager the app widget manager
+   * @param appWidgetId the app widget id
+   */
+  private static int getAppWidgetSize(AppWidgetManager appWidgetManager, int appWidgetId) {
+    Bundle bundle = appWidgetManager.getAppWidgetOptions(appWidgetId);
+    return bundle.getInt(APP_WIDGET_SIZE_KEY, HOME_SCREEN_DEFAULT_SIZE);
   }
 
   /**

@@ -75,9 +75,7 @@ public class GoogleLocationUtils {
    * @param context the context
    */
   public static String getGpsDisabledMessage(Context context) {
-    int id = ApiAdapterFactory.getApiAdapter().hasLocationMode() ? R.string.gps_disabled_location_mode
-        : R.string.gps_disabled;
-    return context.getString(id, getLocationSettingsName(context));
+    return context.getString(R.string.gps_disabled_location_mode, getLocationSettingsName(context));
   }
 
   /**
@@ -86,9 +84,7 @@ public class GoogleLocationUtils {
    * @param context the context
    */
   public static String getGpsDisabledMyLocationMessage(Context context) {
-    int id = ApiAdapterFactory.getApiAdapter().hasLocationMode() ? R.string.gps_disabled_my_location_location_mode
-        : R.string.gps_disabled_my_location;
-    return context.getString(id, getLocationSettingsName(context));
+    return context.getString(R.string.gps_disabled_my_location_location_mode, getLocationSettingsName(context));
   }
 
   /**
@@ -113,13 +109,7 @@ public class GoogleLocationUtils {
     if (!isEnforceable(context)) {
       return true;
     }
-    if (!ApiAdapterFactory.getApiAdapter().hasLocationMode()) {
-      // Before KitKat
-      return getUseLocationForServices(context) == USE_LOCATION_FOR_SERVICES_ON;
-    } else {
-      // KitKat+
-      return getUseLocationForServices(context) != USE_LOCATION_FOR_SERVICES_OFF;
-    }
+    return getUseLocationForServices(context) != USE_LOCATION_FOR_SERVICES_OFF;
   }
 
   /**
@@ -142,13 +132,8 @@ public class GoogleLocationUtils {
     if (!isEnforceable(context)) {
       return false;
     }
-    if (!ApiAdapterFactory.getApiAdapter().hasLocationMode()) {
-      // Before KitKat
-      return true;
-    } else {
-      // KitKat+
-      return getUseLocationForServices(context) == USE_LOCATION_FOR_SERVICES_OFF;
-    }
+
+    return getUseLocationForServices(context) == USE_LOCATION_FOR_SERVICES_OFF;
   }
 
   /**

@@ -34,7 +34,6 @@ import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.io.file.exporter.SaveActivity;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.settings.SettingsActivity;
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.CalorieUtils;
 import com.google.android.apps.mytracks.util.CalorieUtils.ActivityType;
 import com.google.android.apps.mytracks.util.FileUtils;
@@ -171,7 +170,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
             runOnUiThread(new Runnable() {
                 @Override
               public void run() {
-                ApiAdapterFactory.getApiAdapter().invalidMenu(TrackDetailActivity.this);
+                TrackDetailActivity.this.invalidateOptionsMenu();
                 boolean isRecording = trackId == recordingTrackId;
                 trackController.update(isRecording, recordingTrackPaused);
               }
@@ -246,8 +245,10 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
     }
     
     // Set the background after all three tabs are added
-    ApiAdapterFactory.getApiAdapter().setTabBackground(tabHost.getTabWidget());
-    
+    for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
+      tabHost.getTabWidget().getChildAt(i).setBackgroundResource(R.drawable.tab_indicator_mytracks);
+    }
+
     trackController = new TrackController(
         this, trackRecordingServiceConnection, false, recordListener, stopListener);
   }
@@ -269,7 +270,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
     trackDataHub.loadTrack(trackId);
 
     // Update UI
-    ApiAdapterFactory.getApiAdapter().invalidMenu(this);
+    this.invalidateOptionsMenu();
     boolean isRecording = trackId == recordingTrackId;
     trackController.onResume(isRecording, recordingTrackPaused);
   }
@@ -316,11 +317,6 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
   }
 
   @Override
-  protected boolean hideTitle() {
-    return true;
-  }
-
-  @Override
   protected void onHomeSelected() {
     /*
      * According to
@@ -347,9 +343,6 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
     boolean isSharedWithMe = track != null ? track.isSharedWithMe() : true;
 
     menu.findItem(R.id.track_detail_edit).setVisible(!isSharedWithMe);  
-    menu.findItem(R.id.track_detail_help_feedback).setTitle(
-        ApiAdapterFactory.getApiAdapter().isGoogleFeedbackAvailable() ? R.string.menu_help_feedback
-            : R.string.menu_help);
 
     insertMarkerMenuItem = menu.findItem(R.id.track_detail_insert_marker);
     insertPhotoMenuItem = menu.findItem(R.id.track_detail_insert_photo);

@@ -22,7 +22,6 @@ import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.fragments.DeleteMarkerDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.ListItemUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
@@ -119,7 +118,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
             runOnUiThread(new Runnable() {
                 @Override
               public void run() {
-                ApiAdapterFactory.getApiAdapter().invalidMenu(MarkerListActivity.this);
+                  MarkerListActivity.this.invalidateOptionsMenu();
               }
             });
           }
@@ -192,8 +191,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
       }
     };
     listView.setAdapter(resourceCursorAdapter);
-    ApiAdapterFactory.getApiAdapter()
-        .configureListViewContextualMenu(this, listView, contextualActionModeCallback);
+    AbstractSendToGoogleActivity.configureListViewContextualMenu(this, listView, contextualActionModeCallback);
 
     final long firstWaypointId = myTracksProviderUtils.getFirstWaypointId(trackId);
     getSupportLoaderManager().initLoader(0, null, new LoaderCallbacks<Cursor>() {
@@ -226,7 +224,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
   @Override
   protected void onResume() {
     super.onResume();
-    ApiAdapterFactory.getApiAdapter().invalidMenu(this);
+    this.invalidateOptionsMenu();
   }
 
   @Override
@@ -245,7 +243,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
     getMenuInflater().inflate(R.menu.marker_list, menu);
     insertMarkerMenuItem = menu.findItem(R.id.marker_list_insert_marker);
     searchMenuItem = menu.findItem(R.id.marker_list_search);
-    ApiAdapterFactory.getApiAdapter().configureSearchWidget(this, searchMenuItem, null);
+    AbstractSendToGoogleActivity.configureSearchWidget(this, searchMenuItem, null);
     return super.onCreateOptionsMenu(menu);
   }
 
@@ -266,7 +264,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
         startActivity(intent);
         return true;
       case R.id.marker_list_search:
-        return ApiAdapterFactory.getApiAdapter().handleSearchMenuSelection(this);
+        return false;
       default:
         return super.onOptionsItemSelected(item);
     }
@@ -336,9 +334,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
   @Override
   public boolean onKeyUp(int keyCode, KeyEvent event) {
     if (keyCode == KeyEvent.KEYCODE_SEARCH && searchMenuItem != null) {
-      if (ApiAdapterFactory.getApiAdapter().handleSearchKey(searchMenuItem)) {
-        return true;
-      }
+      return true;
     }
     return super.onKeyUp(keyCode, event);
   }

@@ -91,7 +91,7 @@ public class TrackNameUtils {
    * @param location the location
    */
   private static String getReverseGeoCoding(Context context, Location location) {
-    if (location == null || !ApiAdapterFactory.getApiAdapter().isGeoCoderPresent()) {
+    if (location == null || !Geocoder.isPresent()) {
       return null;
     }
     Geocoder geocoder = new Geocoder(context);

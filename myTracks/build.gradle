@@ -21,14 +21,8 @@ android {
 }
 
 dependencies {
-    compile project(':myTracksLib')
+    implementation project(':myTracksLib')
     compile files('libs/antlib.jar')
-    compile files('libs/google-api-client-1.12.0-beta.jar')
-    compile files('libs/google-api-client-android-1.12.0-beta.jar')
-    compile files('libs/google-api-services-drive-v2-rev30-1.12.0-beta.jar')
-    compile files('libs/google-http-client-1.12.0-beta.jar')
-    compile files('libs/google-http-client-android-1.12.0-beta.jar')
-    compile files('libs/google-http-client-gson-1.12.0-beta.jar')
     androidTestCompile files('libs/AndroidMockGenerator.jar')
     androidTestCompile files('libs/robotium-solo-5.0.1.jar')
 

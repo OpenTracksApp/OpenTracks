@@ -1,7 +1,6 @@
 package com.google.android.apps.mytracks.services.sensors;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
