@@ -79,14 +79,8 @@ public class ExportDialogFragment extends AbstractMyTracksDialogFragment {
 
   public static final String EXPORT_DIALOG_TAG = "export";
 
-  public static ExportDialogFragment newInstance(boolean hideDrive) {
-    //TODO REMOVE
-    return new ExportDialogFragment();
-  }
-
   private ExportCaller caller;
-  private ArrayList<ExportType> exportTypeOptionsList;
-  
+
   // UI elements
   private Spinner exportTypeOptions;
   private RadioGroup exportExternalStorageOptions;
@@ -108,7 +102,8 @@ public class ExportDialogFragment extends AbstractMyTracksDialogFragment {
 
     // Get views
     View view = fragmentActivity.getLayoutInflater().inflate(R.layout.export, null);
-    exportTypeOptions = (Spinner) view.findViewById(R.id.export_type_options);
+    exportExternalStorageOptions = (RadioGroup) view.findViewById(
+            R.id.export_external_storage_options);
 
     // Setup exportExternalStorageOptions
     setExternalStorageOption(
@@ -122,6 +117,7 @@ public class ExportDialogFragment extends AbstractMyTracksDialogFragment {
     TrackFileFormat trackFileFormat = TrackFileFormat.valueOf(PreferencesUtils.getString(
         fragmentActivity, R.string.export_external_storage_format_key,
         PreferencesUtils.EXPORT_EXTERNAL_STORAGE_FORMAT_DEFAULT));
+
     exportExternalStorageOptions.check(getExternalStorageFormatId(trackFileFormat));
 
     return new AlertDialog.Builder(fragmentActivity)
@@ -130,17 +126,13 @@ public class ExportDialogFragment extends AbstractMyTracksDialogFragment {
               @Override
               public void onClick(DialogInterface dialog, int which) {
                 FragmentActivity context = getActivity();
-                ExportType type = exportTypeOptionsList.get(
-                        exportTypeOptions.getSelectedItemPosition());
                 TrackFileFormat format = null;
 
-                PreferencesUtils.setString(context, R.string.export_type_key, type.name());
-                if (type == ExportType.EXTERNAL_STORAGE) {
-                  format = getTrackFileFormat(exportExternalStorageOptions.getCheckedRadioButtonId());
-                  PreferencesUtils.setString(
-                          context, R.string.export_external_storage_format_key, format.name());
-                }
-                caller.onExportDone(type, format);
+                PreferencesUtils.setString(context, R.string.export_type_key, ExportType.EXTERNAL_STORAGE.name());
+
+                format = getTrackFileFormat(exportExternalStorageOptions.getCheckedRadioButtonId());
+                PreferencesUtils.setString(context, R.string.export_external_storage_format_key, format.name());
+                caller.onExportDone(ExportType.EXTERNAL_STORAGE, format);
               }
             })
             .setTitle(R.string.export_title).setView(view).create();

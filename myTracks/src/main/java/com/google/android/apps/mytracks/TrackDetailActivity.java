@@ -408,8 +408,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
       case R.id.track_detail_export:
         Track track = myTracksProviderUtils.getTrack(trackId);
         boolean hideDrive = track != null ? track.isSharedWithMe() : true;
-        ExportDialogFragment.newInstance(hideDrive)
-            .show(getSupportFragmentManager(), ExportDialogFragment.EXPORT_DIALOG_TAG);
+        new ExportDialogFragment().show(getSupportFragmentManager(), ExportDialogFragment.EXPORT_DIALOG_TAG);
         return true;
       case R.id.track_detail_edit:
         intent = IntentUtils.newIntent(this, TrackEditActivity.class)
