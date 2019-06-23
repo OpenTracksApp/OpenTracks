@@ -15,10 +15,9 @@ public class SensorManagerFactoryTest extends AndroidTestCase {
   protected void setUp() throws Exception {
     super.setUp();
 
-    SharedPreferences sharedPreferences = getContext().getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    SharedPreferences sharedPreferences = getContext().getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     // Let's use default values.
-    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(sharedPreferences.edit().clear());
+    sharedPreferences.edit().clear().apply();
   }
 
   @SmallTest

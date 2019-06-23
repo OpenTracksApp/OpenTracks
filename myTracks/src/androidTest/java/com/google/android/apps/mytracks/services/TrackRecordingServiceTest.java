@@ -193,10 +193,9 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
 
     providerUtils = MyTracksProviderUtils.Factory.get(context);
 
-    SharedPreferences sharedPreferences = context.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     // Let's use default values.
-    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(sharedPreferences.edit().clear());
+    sharedPreferences.edit().clear().apply();
 
     // Disable auto resume by default.
     updateAutoResumePrefs(PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT, 0);

@@ -623,64 +623,6 @@ limitations under the License.
       %2$s the directory. E.g., '/MyTracks/kml'.">
     Exported %1$s to %2$s
   </string>
-  <string name="export_google_drive"
-    translation_description="When exporting a track, the option to export to Google Drive.">
-    Google Drive
-  </string>
-  <string name="export_google_error"
-    translation_description="When exporting a track, the error message.
-
-      %1$s service name. E.g, Google Maps.
-      %2$s service url. E.g, maps.google.com.">
-    An error has occurred. Unable to export to %1$s (%2$s). Please try again.
-  </string>
-  <string name="export_google_error_public"
-    translation_description="The error message when not able to make a track public.
-
-      %1$s service name. E.g, Google Drive.
-      %2$s service url. E.g, drive.google.com.">
-    Unable to make track public in %1$s (%2$s)
-  </string>
-  <string name="export_google_fusion_tables"
-    translation_description="When exporting a track, the option to export to Google Fusion Tables.">
-    Google Fusion Tables
-  </string>
-  <string name="export_google_fusion_tables_private"
-    translation_description="When exporting a track to Google Fusion Tables, the option to export as
-      a new private table as opposed to a new public table.">
-    as new private table
-  </string>
-  <string name="export_google_fusion_tables_public"
-    translation_description="When exporting a track to Google Fusion Tables, the option to export as
-      a new public table as opposed to a new private table.">
-    as new public table
-  </string>
-  <string name="export_google_maps"
-    translation_description="When exporting a track, the option to export to Google Maps.">
-    Google Maps
-  </string>
-  <string name="export_google_maps_public"
-    translation_description="When exporting a track to Google Maps, the option to export as a new
-      public map as opposed to a new unlisted map.">
-    as new public map
-  </string>
-  <string name="export_google_maps_unlisted"
-    translation_description="When exporting a track to Google Maps, the option to export as a new
-      unlisted map as opposed to a new public map.">
-    as new unlisted map
-  </string>
-  <string name="export_google_spreadsheets"
-    translation_description="When exporting a track, the option to export to Google Spreadsheets.">
-    Google Spreadsheets
-  </string>
-  <string name="export_google_success"
-    translation_description="When sending a track to Google, the additional comment on the bottom of
-      the result page.
-
-      %1$s service name. E.g, Google Maps.
-      %2$s service url. E.g, maps.google.com.">
-    Track exported to %1$s (%2$s). It may take a few minutes for it to appear.
-  </string>
   <string name="export_title"
     translation_description="The dialog title when exporting a track.">
     Export to&#8230;

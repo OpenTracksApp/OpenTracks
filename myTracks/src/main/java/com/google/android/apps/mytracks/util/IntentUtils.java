@@ -37,8 +37,6 @@ import java.io.File;
 public class IntentUtils {
 
   public static final String TEXT_PLAIN_TYPE = "text/plain";
-  private static final String BLUETOOTH_PACKAGE_NAME = "com.android.bluetooth";
-  private static final String TWITTER_PACKAGE_NAME = "com.twitter.android";
 
   private IntentUtils() {}
 
@@ -54,33 +52,6 @@ public class IntentUtils {
         Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
   }
 
-  /**
-   * Creates an intent to share a track url with an app.
-   * 
-   * @param context the context
-   * @param trackId the track id
-   * @param trackUrl the track url
-   * @param packageName the sharing app package name
-   * @param className the sharing app class name
-   */
-  public static final Intent newShareUrlIntent(
-      Context context, long trackId, String trackUrl, String packageName, String className) {
-    Track track = MyTracksProviderUtils.Factory.get(context).getTrack(trackId);
-    String trackDescription = track == null ? ""
-        : new DescriptionGeneratorImpl(context).generateTrackDescription(track, null, null, false);
-    boolean urlOnly = TWITTER_PACKAGE_NAME.equals(packageName)
-        || BLUETOOTH_PACKAGE_NAME.equals(packageName);
-    
-    return new Intent(Intent.ACTION_SEND)
-        .addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP)
-        .putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.share_track_subject))
-        .putExtra(Intent.EXTRA_TEXT, urlOnly 
-            ? trackUrl 
-            : context.getString(R.string.share_track_share_url_body, trackUrl, trackDescription))
-        .setComponent(new ComponentName(packageName, className))
-        .setType(TEXT_PLAIN_TYPE);
-  }
-  
   /**
    * Creates an intent to share a track file with an app.
    * 

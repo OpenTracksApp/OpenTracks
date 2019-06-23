@@ -25,13 +25,9 @@ import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.fragments.ChartFragment;
 import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller;
-import com.google.android.apps.mytracks.fragments.ExportDialogFragment;
-import com.google.android.apps.mytracks.fragments.ExportDialogFragment.ExportCaller;
-import com.google.android.apps.mytracks.fragments.ExportDialogFragment.ExportType;
+import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment;
 import com.google.android.apps.mytracks.fragments.FrequencyDialogFragment;
 import com.google.android.apps.mytracks.fragments.StatsFragment;
-import com.google.android.apps.mytracks.io.file.TrackFileFormat;
-import com.google.android.apps.mytracks.io.file.exporter.SaveActivity;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.settings.SettingsActivity;
 import com.google.android.apps.mytracks.util.CalorieUtils;
@@ -44,7 +40,6 @@ import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtil
 import com.google.android.apps.mytracks.util.TrackUtils;
 import com.google.android.maps.mytracks.R;
 
-import android.accounts.Account;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -52,7 +47,6 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
@@ -76,7 +70,7 @@ import java.util.Date;
  * @author Rodrigo Damazio
  */
 public class TrackDetailActivity extends AbstractSendToGoogleActivity
-    implements ChooseActivityTypeCaller, ExportCaller {
+        implements ChooseActivityTypeCaller, ConfirmDeleteDialogFragment.ConfirmDeleteCaller {
 
   public static final String EXTRA_TRACK_ID = "track_id";
   public static final String EXTRA_MARKER_ID = "marker_id";
@@ -111,7 +105,6 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
   private MenuItem insertMarkerMenuItem;
   private MenuItem insertPhotoMenuItem;
   private MenuItem shareMenuItem;
-  private MenuItem exportMenuItem;
   private MenuItem voiceFrequencyMenuItem;
   private MenuItem splitFrequencyMenuItem;
   private MenuItem sensorStateMenuItem;
@@ -351,7 +344,6 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
     shareMenuItem.setEnabled(!isSharedWithMe);
     shareMenuItem.setVisible(!isSharedWithMe);
 
-    exportMenuItem = menu.findItem(R.id.track_detail_export);
     voiceFrequencyMenuItem = menu.findItem(R.id.track_detail_voice_frequency);
     splitFrequencyMenuItem = menu.findItem(R.id.track_detail_split_frequency);
     sensorStateMenuItem = menu.findItem(R.id.track_detail_sensor_state);
@@ -405,11 +397,6 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
             PreferencesUtils.SPLIT_FREQUENCY_DEFAULT, R.string.menu_split_frequency)
             .show(getSupportFragmentManager(), FrequencyDialogFragment.FREQUENCY_DIALOG_TAG);
         return true;
-      case R.id.track_detail_export:
-        Track track = myTracksProviderUtils.getTrack(trackId);
-        boolean hideDrive = track != null ? track.isSharedWithMe() : true;
-        new ExportDialogFragment().show(getSupportFragmentManager(), ExportDialogFragment.EXPORT_DIALOG_TAG);
-        return true;
       case R.id.track_detail_edit:
         intent = IntentUtils.newIntent(this, TrackEditActivity.class)
             .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackId);
@@ -441,16 +428,6 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
       }
     }
     return super.onTrackballEvent(event);
-  }
-
-  public void onExportDone(
-      ExportType exportType, TrackFileFormat trackFileFormat, Account account) {
-    if (exportType == ExportType.EXTERNAL_STORAGE) {
-      Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
-          .putExtra(SaveActivity.EXTRA_TRACK_IDS, new long[] { trackId })
-          .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);
-      startActivity(intent);
-    }
   }
 
   @Override
@@ -538,9 +515,6 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
     if (shareMenuItem != null && shareMenuItem.isEnabled()) {
       shareMenuItem.setVisible(!isRecording);
     }
-    if (exportMenuItem != null) {
-      exportMenuItem.setVisible(!isRecording);
-    }
     if (voiceFrequencyMenuItem != null) {
       voiceFrequencyMenuItem.setVisible(isRecording);
     }
@@ -578,10 +552,5 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
       String message = getString(R.string.stats_calorie_no_calculation, category);
       Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
-  }
-
-  @Override
-  public void onExportDone(ExportType exportType, TrackFileFormat trackFileFormat) {
-    //TODO
   }
 }

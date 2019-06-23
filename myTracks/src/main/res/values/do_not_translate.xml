@@ -72,10 +72,6 @@ Google은 이용자에 대한 위치정보의 이용∙제공사실을 위치정
 대표자: 염동훈\n
 주소 : 서울 강남구 역삼동 737 강남파이낸스센터 22층\n
 전화번호 : (02) 531-9000\n</string>
-  <string name="export_google_drive_url">drive.google.com</string>
-  <string name="export_google_fusion_tables_url">google.com/fusiontables</string>
-  <string name="export_google_maps_url">maps.google.com</string>
-  <string name="export_google_spreadsheets_url">drive.google.com</string>
   <string name="marker_statistics_icon_url">http://maps.google.com/mapfiles/ms/micons/ylw-pushpin.png</string>
   <string name="marker_waypoint_icon_url">http://maps.google.com/mapfiles/ms/micons/blue-pushpin.png</string>
   <string name="my_tracks_help_url">http://support.google.com/gmm/bin/topic.py?topic=2391064&amp;hl=%1$s</string>

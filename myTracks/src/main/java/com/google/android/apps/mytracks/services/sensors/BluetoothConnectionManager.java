@@ -39,10 +39,9 @@ import java.util.UUID;
  */
 public class BluetoothConnectionManager {
 
-  // My Tracks UUID
   public static final UUID MY_TRACKS_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
-  // Message types sent to hander
+  // Message types sent to handler
   public static final int MESSAGE_DEVICE_NAME = 1;
   public static final int MESSAGE_READ = 2;
 

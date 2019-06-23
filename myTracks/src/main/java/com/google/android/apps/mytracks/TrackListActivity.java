@@ -50,6 +50,7 @@ import android.widget.Toast;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
+import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment;
 import com.google.android.apps.mytracks.fragments.FileTypeDialogFragment;
 import com.google.android.apps.mytracks.fragments.FileTypeDialogFragment.FileTypeCaller;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
@@ -79,7 +80,7 @@ import java.util.Locale;
  * 
  * @author Leif Hendrik Wilden
  */
-public class TrackListActivity extends AbstractSendToGoogleActivity implements FileTypeCaller {
+public class TrackListActivity extends AbstractSendToGoogleActivity implements FileTypeCaller, ConfirmDeleteDialogFragment.ConfirmDeleteCaller {
 
   private static final String TAG = TrackListActivity.class.getSimpleName();
   private static final String[] PROJECTION = new String[] { TracksColumns._ID, TracksColumns.NAME,

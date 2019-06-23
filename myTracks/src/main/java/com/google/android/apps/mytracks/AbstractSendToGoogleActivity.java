@@ -91,15 +91,13 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
       }
 
       @Override
-      public void onItemCheckedStateChanged(
-              ActionMode mode, int position, long id, boolean checked) {
+      public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
         mode.invalidate();
       }
 
       @Override
       public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-        if (contextualActionModeCallback.onClick(
-                item.getItemId(), getCheckedPositions(listView), listView.getCheckedItemIds())) {
+        if (contextualActionModeCallback.onClick(item.getItemId(), getCheckedPositions(listView), listView.getCheckedItemIds())) {
           mode.finish();
         }
         return true;
@@ -128,8 +126,7 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
     });
   }
 
-    public static void configureSearchWidget(
-            Activity activity, final MenuItem menuItem, final TrackController trackController) {
+    public static void configureSearchWidget(Activity activity, final MenuItem menuItem, final TrackController trackController) {
         SearchManager searchManager = (SearchManager) activity.getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menuItem.getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(activity.getComponentName()));

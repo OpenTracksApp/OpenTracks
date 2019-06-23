@@ -17,7 +17,6 @@
 package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.fragments.ExportDialogFragment.ExportType;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.gms.location.DetectedActivity;
 import com.google.android.maps.mytracks.R;
