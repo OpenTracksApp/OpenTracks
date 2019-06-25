@@ -30,8 +30,8 @@ import android.os.Parcelable;
  */
 public final class Waypoint implements Parcelable {
 
-  public static enum WaypointType {
-    WAYPOINT, STATISTICS;
+  public enum WaypointType {
+    WAYPOINT, STATISTICS
   }
 
   private long id = -1L;

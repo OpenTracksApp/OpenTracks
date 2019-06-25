@@ -56,7 +56,7 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
     /**
      * Called when choose activity type is done.
      */
-    public void onChooseActivityTypeDone(String iconValue, boolean newWeight);
+    void onChooseActivityTypeDone(String iconValue, boolean newWeight);
   }
 
   public static final String CHOOSE_ACTIVITY_TYPE_DIALOG_TAG = "chooseActivityType";

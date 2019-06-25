@@ -106,7 +106,7 @@ public class FileUtils {
   }
 
   public static File getPhotoDir(long trackId) {
-    return new File(getPath(PICTURES_DIR, "MyTracks" + Long.toString(trackId)));
+    return new File(getPath(PICTURES_DIR, "MyTracks" + trackId));
   }
 
   /**
@@ -197,7 +197,7 @@ public class FileUtils {
       File directory, String base, String extension, int suffix) {
     String suffixName = "";
     if (suffix > 0) {
-      suffixName += "(" + Integer.toString(suffix) + ")";
+      suffixName += "(" + suffix + ")";
     }
     suffixName += "." + extension;
 

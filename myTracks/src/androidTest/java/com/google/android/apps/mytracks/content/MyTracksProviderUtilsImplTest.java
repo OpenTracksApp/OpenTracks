@@ -210,7 +210,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     // Id
     AndroidMock.expect(cursorMock.getLong(columnIndex++)).andReturn(trackId);
     // Name
-    String name = NAME_PREFIX + Long.toString(trackId);
+    String name = NAME_PREFIX + trackId;
     AndroidMock.expect(cursorMock.getString(columnIndex++)).andReturn(name);
     AndroidMock.replay(cursorMock);
     Track track = providerUtils.createTrack(cursorMock);
@@ -416,7 +416,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     // Id
     AndroidMock.expect(cursorMock.getLong(columnIndex++)).andReturn(id);
     // Name
-    String name = NAME_PREFIX + Long.toString(id);
+    String name = NAME_PREFIX + id;
     AndroidMock.expect(cursorMock.getString(columnIndex++)).andReturn(name);
     // trackIdIndex
     long trackId = 11L;

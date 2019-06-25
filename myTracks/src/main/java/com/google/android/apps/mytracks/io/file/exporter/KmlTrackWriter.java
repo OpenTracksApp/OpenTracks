@@ -425,9 +425,9 @@ public class KmlTrackWriter implements TrackWriter {
   
   private String getCoordinates(Location location, String separator) {
     StringBuffer buffer = new StringBuffer();
-    buffer.append(location.getLongitude() + separator + location.getLatitude());
+    buffer.append(location.getLongitude()).append(separator).append(location.getLatitude());
     if (location.hasAltitude()) {
-      buffer.append(separator + location.getAltitude());
+      buffer.append(separator).append(location.getAltitude());
     }
     return buffer.toString();    
   }

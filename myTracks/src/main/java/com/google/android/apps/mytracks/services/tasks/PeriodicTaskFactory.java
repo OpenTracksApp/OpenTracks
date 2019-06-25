@@ -30,5 +30,5 @@ public interface PeriodicTaskFactory {
    * 
    * @return the task, or null if the task is not supported
    */
-  public PeriodicTask create(Context context);
+  PeriodicTask create(Context context);
 }

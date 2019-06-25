@@ -215,8 +215,8 @@ public class TrackListActivity extends AbstractSendToGoogleActivity implements F
           @Override
         public boolean onClick(int itemId, int[] positions, long[] ids) {
           return handleContextItem(itemId, ids);
-        };
-      };
+        }
+  };
 
   private final OnClickListener recordListener = new OnClickListener() {
     public void onClick(View v) {
@@ -563,7 +563,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity implements F
     // Hide trackController when search dialog is shown
     trackController.hide();
     return super.onSearchRequested();
-  };
+  }
 
   @Override
   protected TrackRecordingServiceConnection getTrackRecordingServiceConnection() {

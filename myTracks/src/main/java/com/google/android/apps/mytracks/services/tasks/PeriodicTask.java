@@ -27,17 +27,17 @@ public interface PeriodicTask {
   /**
    * Sets up this task for subsequent calls to the run method.
    */
-  public void start();
+  void start();
 
   /**
    * This method will be called periodically.
    * 
    * @param trackRecordingService the track recording service
    */
-  public void run(TrackRecordingService trackRecordingService);
+  void run(TrackRecordingService trackRecordingService);
 
   /**
    * Shuts down this task and clean up resources.
    */
-  public void shutdown();
+  void shutdown();
 }

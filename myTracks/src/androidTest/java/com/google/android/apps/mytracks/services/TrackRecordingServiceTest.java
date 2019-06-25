@@ -164,26 +164,25 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
         @Override
       public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
           String sortOrder) {
-        MockCursor mockCursor = new MockCursor() {
-            @Override
-          public int getCount() {
-            return 1;
-          }
+          return new MockCursor() {
+              @Override
+            public int getCount() {
+              return 1;
+            }
 
-            @Override
-          public boolean moveToNext() {
-            return true;
-          }
+              @Override
+            public boolean moveToNext() {
+              return true;
+            }
 
-            @Override
-          public String getString(int columnIndex) {
-            return String.valueOf(GoogleLocationUtils.USE_LOCATION_FOR_SERVICES_ON);
-          }
+              @Override
+            public String getString(int columnIndex) {
+              return String.valueOf(GoogleLocationUtils.USE_LOCATION_FOR_SERVICES_ON);
+            }
 
-            @Override
-          public void close() {}
-        };
-        return mockCursor;
+              @Override
+            public void close() {}
+          };
       }
     };
     mockContentResolver.addProvider("com.google.settings", googleSettingsProvider);

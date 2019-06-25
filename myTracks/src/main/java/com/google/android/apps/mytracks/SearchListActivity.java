@@ -289,12 +289,10 @@ public class SearchListActivity extends AbstractSendToGoogleActivity implements 
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case R.id.search_list_search:
-        return false;
-      default:
-        return super.onOptionsItemSelected(item);
+    if (item.getItemId() == R.id.search_list_search) {
+      return false;
     }
+    return super.onOptionsItemSelected(item);
   }
 
   @Override

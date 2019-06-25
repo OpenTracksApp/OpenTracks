@@ -44,7 +44,7 @@ public class DeleteMarkerDialogFragment extends AbstractMyTracksDialogFragment {
     /**
      * Called when delete marker is done.
      */
-    public void onDeleteMarkerDone();
+    void onDeleteMarkerDone();
   }
 
   public static final String DELETE_MARKER_DIALOG_TAG = "deleteMarkerDialog";

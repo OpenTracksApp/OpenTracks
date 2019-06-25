@@ -165,7 +165,7 @@ public class StringUtilsTest extends AndroidTestCase {
    * Tests {@link StringUtils#getTimeParts(long)} with a positive number.
    */
   public void testGetTimeParts_postive() {
-    int parts[] = StringUtils.getTimeParts(61000);
+      int[] parts = StringUtils.getTimeParts(61000);
     assertEquals(1, parts[0]);
     assertEquals(1, parts[1]);
     assertEquals(0, parts[2]);
@@ -175,7 +175,7 @@ public class StringUtilsTest extends AndroidTestCase {
    * Tests {@link StringUtils#getTimeParts(long)} with a negative number.
    */
   public void testGetTimeParts_negative() {
-    int parts[] = StringUtils.getTimeParts(-61000);
+      int[] parts = StringUtils.getTimeParts(-61000);
     assertEquals(-1, parts[0]);
     assertEquals(-1, parts[1]);
     assertEquals(0, parts[2]);

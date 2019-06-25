@@ -29,5 +29,5 @@ public interface TrackExporterListener {
    * @param max the maximum number of locations in a track, for calculation of
    *          completion percentage
    */
-  public void onProgressUpdate(int number, int max);
+  void onProgressUpdate(int number, int max);
 }

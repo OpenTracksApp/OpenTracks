@@ -30,12 +30,12 @@ public interface LocationListenerPolicy {
    * 
    * @return the polling interval
    */
-  public long getDesiredPollingInterval();
+  long getDesiredPollingInterval();
 
   /**
    * Returns the minimum distance between updates.
    */
-  public int getMinDistance();
+  int getMinDistance();
 
   /**
    * Notifies the amount of time the user has been idle at his current location.
@@ -43,5 +43,5 @@ public interface LocationListenerPolicy {
    * @param idleTime the time that the user has been idle at his current
    *          location
    */
-  public void updateIdleTime(long idleTime);
+  void updateIdleTime(long idleTime);
 }

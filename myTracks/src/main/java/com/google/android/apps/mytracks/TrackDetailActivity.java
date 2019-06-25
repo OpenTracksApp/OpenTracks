@@ -204,8 +204,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
     hasCamera = getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
     photoUri = savedInstanceState != null ? (Uri) savedInstanceState.getParcelable(PHOTO_URI_KEY)
         : null;
-    hasPhoto = savedInstanceState != null ? savedInstanceState.getBoolean(HAS_PHOTO_KEY, false)
-        : false;
+    hasPhoto = savedInstanceState != null && savedInstanceState.getBoolean(HAS_PHOTO_KEY, false);
        
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
     handleIntent(getIntent());

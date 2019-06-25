@@ -54,60 +54,60 @@ public interface TrackWriter {
   /**
    * Gets the file extension (e.g, gpx, kml, ...).
    */
-  public String getExtension();
+  String getExtension();
 
   /**
    * Prepares the output stream.
    * 
    * @param outputStream the output stream
    */
-  public void prepare(OutputStream outputStream);
+  void prepare(OutputStream outputStream);
 
   /**
    * Closes the output stream.
    */
-  public void close();
+  void close();
 
   /**
    * Writes the header
    * 
    * @param tracks the tracks
    */
-  public void writeHeader(Track[] tracks);
+  void writeHeader(Track[] tracks);
 
   /**
    * Writes the footer.
    */
-  public void writeFooter();
+  void writeFooter();
 
   /**
    * Writes the beginning of the waypoints.
    * 
    * @param track the track
    */
-  public void writeBeginWaypoints(Track track);
+  void writeBeginWaypoints(Track track);
 
   /**
    * Writes the end of the waypoints.
    */
-  public void writeEndWaypoints();
+  void writeEndWaypoints();
 
   /**
    * Writes a waypoint.
    * 
    * @param waypoint the waypoint
    */
-  public void writeWaypoint(Waypoint waypoint);
+  void writeWaypoint(Waypoint waypoint);
 
   /**
    * Writes the beginning of the tracks.
    */
-  public void writeBeginTracks();
+  void writeBeginTracks();
 
   /**
    * Writes the end of the tracks,
    */
-  public void writeEndTracks();
+  void writeEndTracks();
 
   /**
    * Writes the beginning of a track.
@@ -115,7 +115,7 @@ public interface TrackWriter {
    * @param track the track
    * @param startLocation the start location
    */
-  public void writeBeginTrack(Track track, Location startLocation);
+  void writeBeginTrack(Track track, Location startLocation);
 
   /**
    * Writes the end of a track.
@@ -123,22 +123,22 @@ public interface TrackWriter {
    * @param track the track
    * @param endLocation the end location
    */
-  public void writeEndTrack(Track track, Location endLocation);
+  void writeEndTrack(Track track, Location endLocation);
 
   /**
    * Writes open segment.
    */
-  public void writeOpenSegment();
+  void writeOpenSegment();
 
   /**
    * Writes close segment.
    */
-  public void writeCloseSegment();
+  void writeCloseSegment();
 
   /**
    * Writes a location.
    * 
    * @param location the location
    */
-  public void writeLocation(Location location);
+  void writeLocation(Location location);
 }

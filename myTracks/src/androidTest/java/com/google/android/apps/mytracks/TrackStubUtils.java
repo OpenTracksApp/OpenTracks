@@ -83,9 +83,8 @@ public class TrackStubUtils {
     loc.setTime(INITIAL_TIME);
     loc.setBearing(INITIAL_BEARING);
     SensorDataSet sd = SensorDataSet.newBuilder().build();
-    MyTracksLocation myTracksLocation = new MyTracksLocation(loc, sd);
 
-    return myTracksLocation;
+    return new MyTracksLocation(loc, sd);
   }
 
 }

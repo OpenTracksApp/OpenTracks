@@ -35,13 +35,13 @@ public interface DescriptionGenerator {
    * @param elevations a vector of elevations to generate the elevation chart
    * @param html true to output html, false to output plain text
    */
-  public String generateTrackDescription(
-      Track track, Vector<Double> distances, Vector<Double> elevations, boolean html);
+  String generateTrackDescription(
+          Track track, Vector<Double> distances, Vector<Double> elevations, boolean html);
 
   /**
    * Generate a waypoint description from a trip statistics.
    *
    * @param tripStatistics the trip statistics
    */
-  public String generateWaypointDescription(TripStatistics tripStatistics);
+  String generateWaypointDescription(TripStatistics tripStatistics);
 }

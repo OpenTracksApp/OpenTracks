@@ -31,6 +31,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager.WakeLock;
 import android.os.Process;
+import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
@@ -301,18 +302,6 @@ public class TrackRecordingService extends Service {
       }
       showNotification(false);
     }
-  }
-
-  /*
-   * Note that this service, through the AndroidManifest.xml, is configured to
-   * allow both MyTracks and third party apps to invoke it. For the onStart
-   * callback, we cannot tell whether the caller is MyTracks or a third party
-   * app, thus it cannot start/stop a recording or write/update MyTracks
-   * database.
-   */
-  @Override
-  public void onStart(Intent intent, int startId) {
-    handleStartCommand(intent, startId);
   }
 
   /*
@@ -1157,12 +1146,12 @@ public class TrackRecordingService extends Service {
     }
 
     @Override
-    public void linkToDeath(DeathRecipient recipient, int flags) {
+    public void linkToDeath(@NonNull DeathRecipient recipient, int flags) {
       deathRecipient = recipient;
     }
 
     @Override
-    public boolean unlinkToDeath(DeathRecipient recipient, int flags) {
+    public boolean unlinkToDeath(@NonNull DeathRecipient recipient, int flags) {
       if (!isBinderAlive()) {
         return false;
       }

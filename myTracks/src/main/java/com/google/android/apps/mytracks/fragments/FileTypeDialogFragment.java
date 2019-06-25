@@ -44,7 +44,7 @@ public class FileTypeDialogFragment extends AbstractMyTracksDialogFragment {
     /**
      * Called when file type selection is done.
      */
-    public void onFileTypeDone(int menuId, TrackFileFormat trackFileFormat);
+    void onFileTypeDone(int menuId, TrackFileFormat trackFileFormat);
   }
 
   public static final String FILE_TYPE_DIALOG_TAG = "fileType";

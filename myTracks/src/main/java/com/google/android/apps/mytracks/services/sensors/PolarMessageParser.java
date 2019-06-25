@@ -89,12 +89,10 @@ public class PolarMessageParser implements MessageParser {
       .setValue(heartRate)
       .setState(Sensor.SensorState.SENDING);
 
-    Sensor.SensorDataSet sds = Sensor.SensorDataSet.newBuilder()
+    return Sensor.SensorDataSet.newBuilder()
       .setCreationTime(System.currentTimeMillis())
       .setHeartRate(b)
       .build();
-    
-    return sds;
   }
 
   /**

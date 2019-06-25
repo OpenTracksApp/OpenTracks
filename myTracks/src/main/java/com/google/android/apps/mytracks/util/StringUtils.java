@@ -83,6 +83,7 @@ public class StringUtils {
    */
   public static String formatElapsedTime(long time) {
     /*
+     * TODO
      * Temporary workaround for DateUtils.formatElapsedTime(time * MS_TO_S). In API
      * level 17, it returns strings like "1:0:00" instead of "1:00:00", which
      * breaks several unit tests.
@@ -277,9 +278,9 @@ public class StringUtils {
 
     StringBuffer buffer = new StringBuffer();
 
-    buffer.append("[" + category + "]");
+    buffer.append("[").append(category).append("]");
     if (description != null && description.length() != 0) {
-      buffer.append(" " + description);
+      buffer.append(" ").append(description);
     }
     return buffer.toString();
   }

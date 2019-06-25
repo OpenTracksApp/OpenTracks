@@ -45,7 +45,7 @@ public final class Sensor {
     
     private final int index;
     private final int value;
-    private SensorState(int index, int value) {
+    SensorState(int index, int value) {
       this.index = index;
       this.value = value;
     }

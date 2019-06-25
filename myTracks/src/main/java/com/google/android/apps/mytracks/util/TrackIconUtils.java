@@ -23,6 +23,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -134,10 +135,8 @@ public class TrackIconUtils {
    * Gets all icon values.
    */
   public static List<String> getAllIconValues() {
-    List<String> values = new ArrayList<String>();
-    for (String value : MAP.keySet()) {
-      values.add(value);
-    }
+    List<String> values = new ArrayList<>();
+    values.addAll(MAP.keySet());
     return values;
   }
 
@@ -191,10 +190,10 @@ public class TrackIconUtils {
       final Context context, String iconValue) {
     return new ArrayAdapter<StringBuilder>(context, android.R.layout.simple_spinner_item,
         new StringBuilder[] { new StringBuilder(iconValue) }) {
+        @NonNull
         @Override
-      public View getView(int position, View convertView, android.view.ViewGroup parent) {
-        ImageView imageView = convertView != null ? (ImageView) convertView
-            : new ImageView(getContext());
+      public View getView(int position, View convertView, @NonNull android.view.ViewGroup parent) {
+        ImageView imageView = convertView != null ? (ImageView) convertView : new ImageView(getContext());
         Bitmap source = BitmapFactory.decodeResource(
             context.getResources(), TrackIconUtils.getIconDrawable(getItem(position).toString()));
         imageView.setImageBitmap(source);

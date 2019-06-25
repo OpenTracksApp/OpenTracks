@@ -25,11 +25,11 @@ import com.google.android.apps.mytracks.content.Sensor;
  */
 public interface MessageParser {
 
-  public int getFrameSize();
+  int getFrameSize();
   
-  public Sensor.SensorDataSet parseBuffer(byte[] readBuff);
+  Sensor.SensorDataSet parseBuffer(byte[] readBuff);
   
-  public boolean isValid(byte[] buffer);
+  boolean isValid(byte[] buffer);
 
-  public int findNextAlignment(byte[] buffer);
+  int findNextAlignment(byte[] buffer);
 }

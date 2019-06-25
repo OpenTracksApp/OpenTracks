@@ -153,12 +153,12 @@ public abstract class TrackWriterTest extends AndroidTestCase {
     assertTrue(length > 0);
 
     // The children may be a sucession of text elements, just concatenate them
-    String result = "";
+    StringBuilder result = new StringBuilder();
     for (int i = 0; i < length; i++) {
       Text textNode = (Text) children.item(i);
-      result += textNode.getNodeValue();
+      result.append(textNode.getNodeValue());
     }
-    return result;
+    return result.toString();
   }
 
   /**
@@ -212,8 +212,7 @@ public abstract class TrackWriterTest extends AndroidTestCase {
     builderFactory.setIgnoringComments(true);
     builderFactory.setIgnoringElementContentWhitespace(true);
     DocumentBuilder documentBuilder = builderFactory.newDocumentBuilder();
-    Document doc = documentBuilder.parse(
-        new InputSource(new StringReader(contents)));
-    return doc;
+
+    return documentBuilder.parse(new InputSource(new StringReader(contents)));
   }
 }

@@ -143,9 +143,9 @@ public class MarkerDetailFragment extends Fragment {
       }
     });
     return view;
-  };
+  }
 
-  @Override
+    @Override
   public void onResume() {
     super.onResume();
 

@@ -62,7 +62,7 @@ public class WaypointCreationRequest implements Parcelable {
 
     @Override
     public WaypointCreationRequest createFromParcel(Parcel source) {
-      WaypointCreationRequest request = new WaypointCreationRequest(
+      return new WaypointCreationRequest(
           WaypointType.values()[source.readInt()],
           source.readByte() == 1,
           source.readString(),
@@ -70,7 +70,6 @@ public class WaypointCreationRequest implements Parcelable {
           source.readString(),
           source.readString(),
           source.readString());
-      return request;
     }
 
     public WaypointCreationRequest[] newArray(int size) {

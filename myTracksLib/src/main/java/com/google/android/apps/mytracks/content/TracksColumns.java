@@ -26,73 +26,73 @@ import android.provider.BaseColumns;
  */
 public interface TracksColumns extends BaseColumns {
 
-  public static final String TABLE_NAME = "tracks";
+  String TABLE_NAME = "tracks";
 
   /**
    * Tracks provider uri.
    */
-  public static final Uri CONTENT_URI = Uri.parse(
+  Uri CONTENT_URI = Uri.parse(
       "content://com.google.android.maps.mytracks/tracks");
 
   /**
    * Track content type.
    */
-  public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.google.track";
+  String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.google.track";
 
   /**
    * Track id content type.
    */
-  public static final String CONTENT_ITEMTYPE = "vnd.android.cursor.item/vnd.google.track";
+  String CONTENT_ITEMTYPE = "vnd.android.cursor.item/vnd.google.track";
 
   /**
    * Tracks table default sort order.
    */
-  public static final String DEFAULT_SORT_ORDER = "_id";
+  String DEFAULT_SORT_ORDER = "_id";
 
   // Columns
-  public static final String NAME = "name"; // track name
-  public static final String DESCRIPTION = "description"; // track description
-  public static final String CATEGORY = "category"; // track activity type
-  public static final String STARTID = "startid"; // first track point id
-  public static final String STOPID = "stopid"; // last track point id
-  public static final String STARTTIME = "starttime"; // track start time
-  public static final String STOPTIME = "stoptime"; // track stop time
-  public static final String NUMPOINTS = "numpoints"; // number of track points
-  public static final String TOTALDISTANCE = "totaldistance"; // total distance
-  public static final String TOTALTIME = "totaltime"; // total time
-  public static final String MOVINGTIME = "movingtime"; // moving time
-  public static final String MINLAT = "minlat"; // minimum latitude
-  public static final String MAXLAT = "maxlat"; // maximum latitude
-  public static final String MINLON = "minlon"; // minimum longitude
-  public static final String MAXLON = "maxlon"; // maximum longitude
-  public static final String AVGSPEED = "avgspeed"; // average speed
+  String NAME = "name"; // track name
+  String DESCRIPTION = "description"; // track description
+  String CATEGORY = "category"; // track activity type
+  String STARTID = "startid"; // first track point id
+  String STOPID = "stopid"; // last track point id
+  String STARTTIME = "starttime"; // track start time
+  String STOPTIME = "stoptime"; // track stop time
+  String NUMPOINTS = "numpoints"; // number of track points
+  String TOTALDISTANCE = "totaldistance"; // total distance
+  String TOTALTIME = "totaltime"; // total time
+  String MOVINGTIME = "movingtime"; // moving time
+  String MINLAT = "minlat"; // minimum latitude
+  String MAXLAT = "maxlat"; // maximum latitude
+  String MINLON = "minlon"; // minimum longitude
+  String MAXLON = "maxlon"; // maximum longitude
+  String AVGSPEED = "avgspeed"; // average speed
 
   // average moving speed
-  public static final String AVGMOVINGSPEED = "avgmovingspeed";
-  public static final String MAXSPEED = "maxspeed"; // maximum speed
-  public static final String MINELEVATION = "minelevation"; // minimum elevation
-  public static final String MAXELEVATION = "maxelevation"; // maximum elevation
-  public static final String ELEVATIONGAIN = "elevationgain"; // elevation gain
-  public static final String MINGRADE = "mingrade"; // minimum grade
-  public static final String MAXGRADE = "maxgrade"; // maximum grade
-  public static final String MAPID = "mapid"; // Google Maps id
-  public static final String TABLEID = "tableid"; // Google Fusion Tables id
-  public static final String ICON = "icon"; // track activity type icon
-  public static final String DRIVEID = "driveid"; // Google Drive file id
+  String AVGMOVINGSPEED = "avgmovingspeed";
+  String MAXSPEED = "maxspeed"; // maximum speed
+  String MINELEVATION = "minelevation"; // minimum elevation
+  String MAXELEVATION = "maxelevation"; // maximum elevation
+  String ELEVATIONGAIN = "elevationgain"; // elevation gain
+  String MINGRADE = "mingrade"; // minimum grade
+  String MAXGRADE = "maxgrade"; // maximum grade
+  String MAPID = "mapid"; // Google Maps id
+  String TABLEID = "tableid"; // Google Fusion Tables id
+  String ICON = "icon"; // track activity type icon
+  String DRIVEID = "driveid"; // Google Drive file id
 
   // Google drive file modified time
-  public static final String MODIFIEDTIME = "modifiedtime";
+  String MODIFIEDTIME = "modifiedtime";
 
   // 1 if the Google Drive file is from the "Shared with me" directory
-  public static final String SHAREDWITHME = "sharedwithme";
+  String SHAREDWITHME = "sharedwithme";
 
   // The owner of the shared with me track
-  public static final String SHAREDOWNER = "sharedOwner";
+  String SHAREDOWNER = "sharedOwner";
   
   // Calorie burned of the track
-  public static final String CALORIE = "calorie";
+  String CALORIE = "calorie";
 
-  public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" // table
+  String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" // table
       + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " // id
       + NAME + " STRING, " // name
       + DESCRIPTION + " STRING, " // description
@@ -126,7 +126,7 @@ public interface TracksColumns extends BaseColumns {
       + SHAREDOWNER + " STRING, " // shared owner
       + CALORIE + " FLOAT);"; // calorie
 
-  public static final String[] COLUMNS = { _ID, // id
+  String[] COLUMNS = { _ID, // id
       NAME, // name
       DESCRIPTION, // description
       CATEGORY, // category
@@ -159,7 +159,7 @@ public interface TracksColumns extends BaseColumns {
       SHAREDOWNER,// shared owner
       CALORIE }; // calorie
 
-  public static final byte[] COLUMN_TYPES = { ContentTypeIds.LONG_TYPE_ID, // id
+  byte[] COLUMN_TYPES = { ContentTypeIds.LONG_TYPE_ID, // id
       ContentTypeIds.STRING_TYPE_ID, // name
       ContentTypeIds.STRING_TYPE_ID, // description
       ContentTypeIds.STRING_TYPE_ID, // category

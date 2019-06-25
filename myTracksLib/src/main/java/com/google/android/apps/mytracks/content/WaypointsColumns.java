@@ -31,50 +31,50 @@ import android.provider.BaseColumns;
  */
 public interface WaypointsColumns extends BaseColumns {
 
-  public static final String TABLE_NAME = "waypoints";
-  public static final Uri CONTENT_URI = Uri.parse(
+  String TABLE_NAME = "waypoints";
+  Uri CONTENT_URI = Uri.parse(
       "content://com.google.android.maps.mytracks/waypoints");
-  public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.google.waypoint";
-  public static final String CONTENT_ITEMTYPE = "vnd.android.cursor.item/vnd.google.waypoint";
-  public static final String DEFAULT_SORT_ORDER = "_id";
+  String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.google.waypoint";
+  String CONTENT_ITEMTYPE = "vnd.android.cursor.item/vnd.google.waypoint";
+  String DEFAULT_SORT_ORDER = "_id";
 
   // Columns
-  public static final String NAME = "name"; // waypoint name
-  public static final String DESCRIPTION = "description"; // waypoint description
-  public static final String CATEGORY = "category"; // waypoint category
-  public static final String ICON = "icon"; // waypoint icon
-  public static final String TRACKID = "trackid"; // track id
-  public static final String TYPE = "type"; // type
-  public static final String LENGTH = "length"; // length of the track (without smoothing) 
-  public static final String DURATION = "duration"; // total duration of the track (not from last waypoint)
-  public static final String STARTTIME = "starttime"; // start time of the trip statistics 
-  public static final String STARTID = "startid"; // start track point id
-  public static final String STOPID = "stopid"; // stop track point id
+  String NAME = "name"; // waypoint name
+  String DESCRIPTION = "description"; // waypoint description
+  String CATEGORY = "category"; // waypoint category
+  String ICON = "icon"; // waypoint icon
+  String TRACKID = "trackid"; // track id
+  String TYPE = "type"; // type
+  String LENGTH = "length"; // length of the track (without smoothing)
+  String DURATION = "duration"; // total duration of the track (not from last waypoint)
+  String STARTTIME = "starttime"; // start time of the trip statistics
+  String STARTID = "startid"; // start track point id
+  String STOPID = "stopid"; // stop track point id
 
-  public static final String LONGITUDE = "longitude"; // longitude
-  public static final String LATITUDE = "latitude"; // latitude
-  public static final String TIME = "time"; // time
-  public static final String ALTITUDE = "elevation"; // altitude
-  public static final String ACCURACY = "accuracy"; // accuracy
-  public static final String SPEED = "speed"; // speed  
-  public static final String BEARING = "bearing"; // bearing
+  String LONGITUDE = "longitude"; // longitude
+  String LATITUDE = "latitude"; // latitude
+  String TIME = "time"; // time
+  String ALTITUDE = "elevation"; // altitude
+  String ACCURACY = "accuracy"; // accuracy
+  String SPEED = "speed"; // speed
+  String BEARING = "bearing"; // bearing
 
-  public static final String TOTALDISTANCE = "totaldistance"; // total distance
-  public static final String TOTALTIME = "totaltime"; // total time
-  public static final String MOVINGTIME = "movingtime"; // moving time
-  public static final String AVGSPEED = "avgspeed"; // average speed
-  public static final String AVGMOVINGSPEED = "avgmovingspeed"; // average moving speed
-  public static final String MAXSPEED = "maxspeed"; // max speed
-  public static final String MINELEVATION = "minelevation"; // min elevation
-  public static final String MAXELEVATION = "maxelevation"; // max elevation
-  public static final String ELEVATIONGAIN = "elevationgain"; // elevation gain
-  public static final String MINGRADE = "mingrade"; // min grade
-  public static final String MAXGRADE = "maxgrade"; // max grade
-  public static final String CALORIE = "calorie"; // calorie
+  String TOTALDISTANCE = "totaldistance"; // total distance
+  String TOTALTIME = "totaltime"; // total time
+  String MOVINGTIME = "movingtime"; // moving time
+  String AVGSPEED = "avgspeed"; // average speed
+  String AVGMOVINGSPEED = "avgmovingspeed"; // average moving speed
+  String MAXSPEED = "maxspeed"; // max speed
+  String MINELEVATION = "minelevation"; // min elevation
+  String MAXELEVATION = "maxelevation"; // max elevation
+  String ELEVATIONGAIN = "elevationgain"; // elevation gain
+  String MINGRADE = "mingrade"; // min grade
+  String MAXGRADE = "maxgrade"; // max grade
+  String CALORIE = "calorie"; // calorie
   
-  public static final String PHOTOURL = "photoUrl"; // url for the photo
+  String PHOTOURL = "photoUrl"; // url for the photo
   
-  public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" 
+  String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
       + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
       + NAME + " STRING, "
       + DESCRIPTION + " STRING, "
@@ -109,7 +109,7 @@ public interface WaypointsColumns extends BaseColumns {
       + PHOTOURL + " STRING"
       + ");";
   
-  public static final String[] COLUMNS = {
+  String[] COLUMNS = {
       _ID,
       NAME,
       DESCRIPTION,
@@ -144,7 +144,7 @@ public interface WaypointsColumns extends BaseColumns {
       PHOTOURL
     };
     
-  public static final byte[] COLUMN_TYPES = {
+  byte[] COLUMN_TYPES = {
       LONG_TYPE_ID, // id
       STRING_TYPE_ID, // name
       STRING_TYPE_ID, // description

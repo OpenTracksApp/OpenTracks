@@ -185,7 +185,7 @@ public class KmzTrackExporter implements TrackExporter {
     try {
       fileInputStream = new FileInputStream(new File(uri.getPath()));
       byte[] buffer = new byte[BUFFER_SIZE];
-      int byteCount = 0;
+      int byteCount;
       while ((byteCount = fileInputStream.read(buffer)) != -1) {
         zipOutputStream.write(buffer, 0, byteCount);
       }

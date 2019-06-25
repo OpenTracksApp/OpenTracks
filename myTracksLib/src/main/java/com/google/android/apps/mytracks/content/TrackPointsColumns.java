@@ -31,25 +31,25 @@ import android.provider.BaseColumns;
  */
 public interface TrackPointsColumns extends BaseColumns {
 
-  public static final String TABLE_NAME = "trackpoints";
-  public static final Uri CONTENT_URI = Uri.parse(
+  String TABLE_NAME = "trackpoints";
+  Uri CONTENT_URI = Uri.parse(
       "content://com.google.android.maps.mytracks/trackpoints");
-  public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.google.trackpoint";
-  public static final String CONTENT_ITEMTYPE = "vnd.android.cursor.item/vnd.google.trackpoint";
-  public static final String DEFAULT_SORT_ORDER = "_id";
+  String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.google.trackpoint";
+  String CONTENT_ITEMTYPE = "vnd.android.cursor.item/vnd.google.trackpoint";
+  String DEFAULT_SORT_ORDER = "_id";
 
   // Columns
-  public static final String TRACKID = "trackid"; // track id
-  public static final String LONGITUDE = "longitude"; // longitude
-  public static final String LATITUDE = "latitude"; // latitude
-  public static final String TIME = "time"; // time
-  public static final String ALTITUDE = "elevation"; // altitude
-  public static final String ACCURACY = "accuracy"; // accuracy
-  public static final String SPEED = "speed"; // speed
-  public static final String BEARING = "bearing"; // bearing
-  public static final String SENSOR = "sensor"; // sensor
+  String TRACKID = "trackid"; // track id
+  String LONGITUDE = "longitude"; // longitude
+  String LATITUDE = "latitude"; // latitude
+  String TIME = "time"; // time
+  String ALTITUDE = "elevation"; // altitude
+  String ACCURACY = "accuracy"; // accuracy
+  String SPEED = "speed"; // speed
+  String BEARING = "bearing"; // bearing
+  String SENSOR = "sensor"; // sensor
 
-  public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
+  String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
       + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
       + TRACKID + " INTEGER, "
       + LONGITUDE + " INTEGER, "
@@ -62,7 +62,7 @@ public interface TrackPointsColumns extends BaseColumns {
       + SENSOR + " BLOB" 
       + ");";
 
-  public static final String[] COLUMNS = {
+  String[] COLUMNS = {
       _ID,
       TRACKID,
       LONGITUDE,
@@ -75,7 +75,7 @@ public interface TrackPointsColumns extends BaseColumns {
       SENSOR
    };
 
-   public static final byte[] COLUMN_TYPES = {
+   byte[] COLUMN_TYPES = {
        LONG_TYPE_ID, // id
        LONG_TYPE_ID, // track id
        INT_TYPE_ID, // longitude

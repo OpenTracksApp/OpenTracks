@@ -30,5 +30,5 @@ public interface TrackImporter {
    * @param inputStream the file's input stream
    * @return the imported track id or -1L.
    */
-  public long importFile(InputStream inputStream);
+  long importFile(InputStream inputStream);
 }

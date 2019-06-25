@@ -105,7 +105,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
      * data on every onStart or onResume.
      */
     chartView = new ChartView(getActivity());
-  };
+  }
 
   @Override
   public View onCreateView(

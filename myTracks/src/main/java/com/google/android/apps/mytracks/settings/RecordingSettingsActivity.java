@@ -203,22 +203,18 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity
       String displayValue;
       if (metricUnits) {
         displayValue = getString(R.string.value_integer_meter, value);
-        switch (value) {
-          case PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT:
-            options[i] = getString(R.string.value_integer_meter_recommended, value);
-            break;
-          default:
-            options[i] = displayValue;
+        if (value == PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT) {
+          options[i] = getString(R.string.value_integer_meter_recommended, value);
+        } else {
+          options[i] = displayValue;
         }
       } else {
         int feet = (int) (value * UnitConversions.M_TO_FT);
         displayValue = getString(R.string.value_integer_feet, feet);
-        switch (value) {
-          case PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT:
-            options[i] = getString(R.string.value_integer_feet_recommended, feet);
-            break;
-          default:
-            options[i] = displayValue;
+        if (value == PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT) {
+          options[i] = getString(R.string.value_integer_feet_recommended, feet);
+        } else {
+          options[i] = displayValue;
         }
       }
       summary[i] = getString(R.string.settings_recording_location_frequency_summary, displayValue);
@@ -240,23 +236,19 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity
       String displayValue;
       if (metricUnits) {
         displayValue = getString(R.string.value_integer_meter, value);
-        switch (value) {
-          case PreferencesUtils.MAX_RECORDING_DISTANCE_DEFAULT:
-            options[i] = getString(R.string.value_integer_meter_recommended, value);
-            break;
-          default:
-            options[i] = displayValue;
+        if (value == PreferencesUtils.MAX_RECORDING_DISTANCE_DEFAULT) {
+          options[i] = getString(R.string.value_integer_meter_recommended, value);
+        } else {
+          options[i] = displayValue;
         }
       } else {
         int feet = (int) (value * UnitConversions.M_TO_FT);
         if (feet < 2000) {
           displayValue = getString(R.string.value_integer_feet, feet);
-          switch (value) {
-            case PreferencesUtils.MAX_RECORDING_DISTANCE_DEFAULT:
-              options[i] = getString(R.string.value_integer_feet_recommended, feet);
-              break;
-            default:
-              options[i] = displayValue;
+          if (value == PreferencesUtils.MAX_RECORDING_DISTANCE_DEFAULT) {
+            options[i] = getString(R.string.value_integer_feet_recommended, feet);
+          } else {
+            options[i] = displayValue;
           }
         } else {
           double mile = feet * UnitConversions.FT_TO_MI;
@@ -314,12 +306,10 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity
         } else {
           double mile = feet * UnitConversions.FT_TO_MI;
           displayValue = getString(R.string.value_float_mile, mile);
-          switch (value) {
-            case PreferencesUtils.RECORDING_GPS_ACCURACY_POOR:
-              options[i] = getString(R.string.value_float_mile_poor_gps, mile);
-              break;
-            default:
-              options[i] = displayValue;
+          if (value == PreferencesUtils.RECORDING_GPS_ACCURACY_POOR) {
+            options[i] = getString(R.string.value_float_mile_poor_gps, mile);
+          } else {
+            options[i] = displayValue;
           }
         }
       }

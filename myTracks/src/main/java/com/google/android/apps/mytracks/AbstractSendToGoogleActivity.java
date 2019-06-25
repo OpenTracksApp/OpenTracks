@@ -58,13 +58,11 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    switch (requestCode) {
-      case DELETE_REQUEST_CODE:
-        onDeleted();
-        break;
-      default:
-        super.onActivityResult(requestCode, resultCode, data);
-    }
+      if (requestCode == DELETE_REQUEST_CODE) {
+          onDeleted();
+      } else {
+          super.onActivityResult(requestCode, resultCode, data);
+      }
   }
 
   public static void configureListViewContextualMenu(final Activity activity, final ListView listView,

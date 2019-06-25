@@ -30,8 +30,8 @@ public interface TrackDataListener {
    * 
    * @author Jimmy Shih
    */
-  public enum LocationState {
-    DISABLED, NO_FIX, BAD_FIX, GOOD_FIX;
+  enum LocationState {
+    DISABLED, NO_FIX, BAD_FIX, GOOD_FIX
   }
 
   /**
@@ -39,31 +39,31 @@ public interface TrackDataListener {
    * 
    * @param track the track
    */
-  public void onTrackUpdated(Track track);
+  void onTrackUpdated(Track track);
 
   /**
    * Called to clear previously-sent track points.
    */
-  public void clearTrackPoints();
+  void clearTrackPoints();
 
   /**
    * Called when a sampled in track point is read.
    * 
    * @param location the location
    */
-  public void onSampledInTrackPoint(Location location);
+  void onSampledInTrackPoint(Location location);
 
   /**
    * Called when a sampled out track point is read.
    * 
    * @param location the location
    */
-  public void onSampledOutTrackPoint(Location location);
+  void onSampledOutTrackPoint(Location location);
 
   /**
    * Called when an invalid track point representing a segment split is read.
    */
-  public void onSegmentSplit(Location location);
+  void onSegmentSplit(Location location);
 
   /**
    * Called when finish sending new track points. This gets called after every
@@ -71,26 +71,26 @@ public interface TrackDataListener {
    * {@link #onSampledOutTrackPoint(Location)} and
    * {@link #onSegmentSplit(Location)}.
    */
-  public void onNewTrackPointsDone();
+  void onNewTrackPointsDone();
 
   /**
    * Called to clear previously sent waypoints.
    */
-  public void clearWaypoints();
+  void clearWaypoints();
 
   /**
    * Called when a new waypoint is read.
    * 
    * @param waypoint the waypoint
    */
-  public void onNewWaypoint(Waypoint waypoint);
+  void onNewWaypoint(Waypoint waypoint);
 
   /**
    * Called when finish sending new waypoints. This gets called after every
    * batch of calls to {@link #clearWaypoints()} and
    * {@link #onNewWaypoint(Waypoint)}.
    */
-  public void onNewWaypointsDone();
+  void onNewWaypointsDone();
 
   /**
    * Called when the metric units preference value is change.
@@ -98,7 +98,7 @@ public interface TrackDataListener {
    * @param metricUnits true to use metric units, false to use imperial units
    * @return true to reload all the data, false otherwise.
    */
-  public boolean onMetricUnitsChanged(boolean metricUnits);
+  boolean onMetricUnitsChanged(boolean metricUnits);
 
   /**
    * Called when the report speed preference value is changed.
@@ -106,7 +106,7 @@ public interface TrackDataListener {
    * @param reportSpeed true to report speed, false to report pace
    * @return true to reload all the data, false otherwise.
    */
-  public boolean onReportSpeedChanged(boolean reportSpeed);
+  boolean onReportSpeedChanged(boolean reportSpeed);
 
   /**
    * Called when the recording gps accuracy preference value is changed.
@@ -114,7 +114,7 @@ public interface TrackDataListener {
    * @param recordingGpsAccuracy the new value
    * @return true to reload all the data, false otherwise
    */
-  public boolean onRecordingGpsAccuracy(int recordingGpsAccuracy);
+  boolean onRecordingGpsAccuracy(int recordingGpsAccuracy);
   
   /**
    * Called when the recording distance interval preference value is changed.
@@ -122,7 +122,7 @@ public interface TrackDataListener {
    * @param recordingDistanceInterval the new value
    * @return true to reload all the data, false otherwise.
    */
-  public boolean onRecordingDistanceIntervalChanged(int recordingDistanceInterval);
+  boolean onRecordingDistanceIntervalChanged(int recordingDistanceInterval);
   
   /**
    * Called when the map type preference value is changed.
@@ -130,5 +130,5 @@ public interface TrackDataListener {
    * @param mapType the new value
    * @return true to reload all the data, false otherwise.
    */
-  public boolean onMapTypeChanged(int mapType);
+  boolean onMapTypeChanged(int mapType);
 }

@@ -27,22 +27,22 @@ public interface DataSourceListener {
   /**
    * Notifies when the tracks table is updated.
    */
-  public void notifyTracksTableUpdated();
+  void notifyTracksTableUpdated();
 
   /**
    * Notifies when the waypoints table is updated.
    */
-  public void notifyWaypointsTableUpdated();
+  void notifyWaypointsTableUpdated();
 
   /**
    * Notifies when the track points table is updated.
    */
-  public void notifyTrackPointsTableUpdated();
+  void notifyTrackPointsTableUpdated();
 
   /**
    * Notifies when a preference changes.
    * 
    * @param key the preference key
    */
-  public void notifyPreferenceChanged(String key);
+  void notifyPreferenceChanged(String key);
 }

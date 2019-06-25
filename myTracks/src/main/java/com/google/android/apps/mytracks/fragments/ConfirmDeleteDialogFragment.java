@@ -45,7 +45,7 @@ public class ConfirmDeleteDialogFragment extends AbstractMyTracksDialogFragment 
      * @param trackIds list of track ids to delete. To delete all, set to size 1
      *          with trackIds[0] == -1L
      */
-    public void onConfirmDeleteDone(long[] trackIds);
+    void onConfirmDeleteDone(long[] trackIds);
   }
 
   public static final String CONFIRM_DELETE_DIALOG_TAG = "confirmDeleteDialog";

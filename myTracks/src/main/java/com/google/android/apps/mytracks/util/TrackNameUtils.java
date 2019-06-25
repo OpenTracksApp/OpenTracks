@@ -74,7 +74,7 @@ public class TrackNameUtils {
       if (location != null) {
         String address = getReverseGeoCoding(context, location);
         if (address != null && !address.equals("")) {
-          value.append(" " + address);
+          value.append(" ").append(address);
         }
       }
       return value.toString();

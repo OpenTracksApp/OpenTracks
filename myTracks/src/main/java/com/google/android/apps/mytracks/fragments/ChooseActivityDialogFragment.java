@@ -28,6 +28,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ShareCompat;
 import android.view.View;
@@ -58,7 +59,7 @@ public class ChooseActivityDialogFragment extends AbstractMyTracksDialogFragment
     /**
      * Called when choose activity is done.
      */
-    public void onChooseActivityDone(String packageName, String className);
+    void onChooseActivityDone(String packageName, String className);
   }
   
   private static class ViewHolder {
@@ -91,8 +92,9 @@ public class ChooseActivityDialogFragment extends AbstractMyTracksDialogFragment
 
     ArrayAdapter<DisplayInfo> arrayAdapter = new ArrayAdapter<DisplayInfo>(fragmentActivity,
         R.layout.choose_activity_list_item, R.id.choose_activity_list_item_text1, displayInfos) {
+        @NonNull
         @Override
-      public View getView(int position, View convertView, ViewGroup parent) {
+      public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         View view;
         ViewHolder viewHolder;
         if (convertView == null) {
