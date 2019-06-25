@@ -16,7 +16,6 @@
 
 package com.google.android.apps.mytracks.services.sensors;
 
-import com.google.android.apps.mytracks.services.sensors.ant.AntSensorManager;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -96,7 +95,6 @@ public class SensorManagerFactory {
         context, R.string.sensor_type_key, PreferencesUtils.SENSOR_TYPE_DEFAULT);
 
     switch (sensorType) {
-      case "ANT": return new AntSensorManager(context);
       case "ZEPHYR": return new ZephyrSensorManager(context);
       case "POLAR": return new PolarSensorManager(context);
     }

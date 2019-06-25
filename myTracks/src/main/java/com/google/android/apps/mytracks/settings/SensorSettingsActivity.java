@@ -16,8 +16,6 @@
 
 package com.google.android.apps.mytracks.settings;
 
-import com.dsi.ant.AntInterface;
-import com.google.android.apps.mytracks.services.sensors.ant.AntSensorManager;
 import com.google.android.apps.mytracks.util.BluetoothDeviceUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
@@ -48,9 +46,7 @@ public class SensorSettingsActivity extends AbstractSettingsActivity {
     super.onCreate(bundle);
     addPreferencesFromResource(R.xml.sensor_settings);
 
-    boolean hasAntSupport = AntInterface.hasAntSupport(this);
-
-    configSensorType(hasAntSupport);
+    configSensorType();
 
     findPreference(getString(R.string.settings_sensor_bluetooth_pairing_key))
         .setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -60,30 +56,15 @@ public class SensorSettingsActivity extends AbstractSettingsActivity {
             return true;
           }
         });
-
-    if (!hasAntSupport) {
-      PreferenceScreen rootPreferenceScreen = (PreferenceScreen) findPreference(
-          getString(R.string.settings_sensor_root_key));
-      rootPreferenceScreen.removePreference(
-          findPreference(getString(R.string.settings_sensor_ant_key)));
-    }
   }
 
   @SuppressWarnings("deprecation")
-  private void configSensorType(boolean hasAntSupport) {
-    ListPreference preference = (ListPreference) findPreference(
-        getString(R.string.sensor_type_key));
+  private void configSensorType() {
+    ListPreference preference = (ListPreference) findPreference(getString(R.string.sensor_type_key));
     String value = PreferencesUtils.getString(
         this, R.string.sensor_type_key, PreferencesUtils.SENSOR_TYPE_DEFAULT);
-    String[] options = getResources().getStringArray(
-        hasAntSupport ? R.array.sensor_type_all_options : R.array.sensor_type_bluetooth_options);
-    String[] values = getResources().getStringArray(
-        hasAntSupport ? R.array.sensor_type_all_values : R.array.sensor_type_bluetooth_values);
-
-    if (!hasAntSupport && value.equals(R.string.sensor_type_value_ant)) {
-      value = PreferencesUtils.SENSOR_TYPE_DEFAULT;
-      PreferencesUtils.setString(this, R.string.sensor_type_key, value);
-    }
+    String[] options = getResources().getStringArray(R.array.sensor_type_bluetooth_options);
+    String[] values = getResources().getStringArray( R.array.sensor_type_bluetooth_values);
 
     OnPreferenceChangeListener listener = new OnPreferenceChangeListener() {
         @Override
@@ -102,49 +83,10 @@ public class SensorSettingsActivity extends AbstractSettingsActivity {
    */
   @SuppressWarnings("deprecation")
   private void updateUiBySensorType(String sensorType) {
-    boolean isBluetooth = getString(R.string.sensor_type_value_polar).equals(sensorType)
-        || getString(R.string.sensor_type_value_zephyr).equals(sensorType);
+    boolean isBluetooth = getString(R.string.sensor_type_value_polar).equals(sensorType) || getString(R.string.sensor_type_value_zephyr).equals(sensorType);
     findPreference(getString(R.string.settings_sensor_bluetooth_key)).setEnabled(isBluetooth);
-
-    boolean isAnt = getString(R.string.sensor_type_value_ant).equals(sensorType);
-    updateAntSensor(R.string.settings_sensor_ant_reset_heart_rate_monitor_key,
-        R.string.ant_heart_rate_monitor_id_key, isAnt);
-    updateAntSensor(R.string.settings_sensor_ant_reset_speed_distance_monitor_key,
-        R.string.ant_speed_distance_monitor_id_key, isAnt);
-    updateAntSensor(R.string.settings_sensor_ant_reset_bike_cadence_sensor_key,
-        R.string.ant_bike_cadence_sensor_id_key, isAnt);
-    updateAntSensor(R.string.settings_sensor_ant_reset_combined_bike_sensor_key,
-        R.string.ant_combined_bike_sensor_id_key, isAnt);
   }
 
-  /**
-   * Updates an ant sensor.
-   * 
-   * @param preferenceKey the preference key
-   * @param valueKey the value key
-   * @param enabled true if enabled
-   */
-  @SuppressWarnings("deprecation")
-  private void updateAntSensor(int preferenceKey, final int valueKey, boolean enabled) {
-    Preference preference = findPreference(getString(preferenceKey));
-    if (preference != null) {
-      preference.setEnabled(enabled);
-      int deviceId = PreferencesUtils.getInt(this, valueKey, AntSensorManager.WILDCARD);
-      if (deviceId == AntSensorManager.WILDCARD) {
-        preference.setSummary(R.string.settings_sensor_ant_not_connected);
-      } else {
-        preference.setSummary(getString(R.string.settings_sensor_ant_paired, deviceId));
-      }
-      preference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-          @Override
-        public boolean onPreferenceClick(Preference pref) {
-          PreferencesUtils.setInt(SensorSettingsActivity.this, valueKey, AntSensorManager.WILDCARD);
-          pref.setSummary(R.string.settings_sensor_ant_not_connected);
-          return true;
-        }
-      });
-    }
-  }
 
   @Override
   protected void onResume() {

@@ -1814,13 +1814,6 @@ limitations under the License.
       Character limit: ~23 (1 line)">
     Sensor type
   </string>
-  <string name="settings_sensor_type_ant"
-    translation_description="In the 'Sensor' settings, the option in the 'Sensor type' picker to
-      choose an ANT+ sensor. Note that ANT+ is a radio standard.
-
-      Character limit: ~20 (1 line)">
-    ANT+
-  </string>
   <string name="settings_sensor_type_polar"
     translation_description="In the 'Sensor' settings, the option in the 'Sensor type' picker to
       choose a Polar bluetooth sensor. Do not translate Polar, the company name, but can translate

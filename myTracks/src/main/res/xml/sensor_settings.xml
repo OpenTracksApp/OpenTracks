@@ -34,24 +34,4 @@ limitations under the License.
       android:key="@string/bluetooth_sensor_key"
       android:title="@string/settings_sensor_bluetooth_sensor" />
   </PreferenceCategory>
-  <PreferenceCategory
-    android:key="@string/settings_sensor_ant_key"
-    android:title="@string/settings_sensor_type_ant" >
-    <Preference
-      android:key="@string/settings_sensor_ant_reset_heart_rate_monitor_key"
-      android:persistent="false"
-      android:title="@string/settings_sensor_ant_reset_heart_rate_monitor" />
-    <Preference
-      android:key="@string/settings_sensor_ant_reset_speed_distance_monitor_key"
-      android:persistent="false"
-      android:title="@string/settings_sensor_ant_reset_speed_distance_monitor" />
-    <Preference
-      android:key="@string/settings_sensor_ant_reset_bike_cadence_sensor_key"
-      android:persistent="false"
-      android:title="@string/settings_sensor_ant_reset_bike_cadence_sensor" />
-    <Preference
-      android:key="@string/settings_sensor_ant_reset_combined_bike_sensor_key"
-      android:persistent="false"
-      android:title="@string/settings_sensor_ant_reset_combined_bike_sensor" />
-  </PreferenceCategory>
 </PreferenceScreen>
