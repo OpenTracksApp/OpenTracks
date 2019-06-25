@@ -20,7 +20,6 @@ import android.content.Context;
 import android.support.annotation.VisibleForTesting;
 
 import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.apps.mytracks.util.ChartURLGenerator;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
@@ -65,12 +64,6 @@ public class DescriptionGeneratorImpl implements DescriptionGenerator {
     writeString(track.getDescription(), builder, R.string.generic_description_line, lineBreak);
     builder.append(generateTripStatisticsDescription(track.getTripStatistics(), html));
 
-    // Elevation chart
-    if (html && distances != null && elevations != null) {
-      builder.append("<img border=\"0\" src=\""
-          + ChartURLGenerator.getChartUrl(distances, elevations, track, context) + "\"/>");
-      builder.append(HTML_LINE_BREAK);
-    }
     return builder.toString();
   }
 
