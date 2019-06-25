@@ -17,7 +17,6 @@
 package com.google.android.apps.mytracks.settings;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
 import com.google.android.maps.mytracks.R;
 
 import android.app.ActionBar;
@@ -38,8 +37,6 @@ import android.view.MenuItem;
  */
 public class AbstractSettingsActivity extends PreferenceActivity {
 
-  private BackupPreferencesListener backupPreferencesListener;
-
   @SuppressWarnings("deprecation")
   @Override
   protected void onCreate(Bundle bundle) {
@@ -55,12 +52,6 @@ public class AbstractSettingsActivity extends PreferenceActivity {
     PreferenceManager preferenceManager = getPreferenceManager();
     preferenceManager.setSharedPreferencesName(Constants.SETTINGS_NAME);
     preferenceManager.setSharedPreferencesMode(Context.MODE_PRIVATE);
-
-    // Set up automatic preferences backup
-    backupPreferencesListener = new BackupPreferencesListener(this);
-
-    preferenceManager.getSharedPreferences()
-        .registerOnSharedPreferenceChangeListener(backupPreferencesListener);
   }
 
   @Override
@@ -70,15 +61,6 @@ public class AbstractSettingsActivity extends PreferenceActivity {
     }
     finish();
     return true;
-  }
-
-  @SuppressWarnings("deprecation")
-  @Override
-  protected void onDestroy() {
-    super.onDestroy();
-    PreferenceManager preferenceManager = getPreferenceManager();
-    preferenceManager.getSharedPreferences()
-        .unregisterOnSharedPreferenceChangeListener(backupPreferencesListener);
   }
 
   /**
