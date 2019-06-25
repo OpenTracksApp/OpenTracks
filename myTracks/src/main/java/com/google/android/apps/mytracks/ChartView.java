@@ -508,7 +508,6 @@ public class ChartView extends View {
       
       clipToGraphArea(canvas);
       drawDataSeries(canvas);
-      drawWaypoints(canvas);
       drawGrid(canvas);
       
       canvas.restore();
@@ -545,38 +544,6 @@ public class ChartView extends View {
     for (ChartValueSeries chartValueSeries : series) {
       if (chartValueSeries.isEnabled() && chartValueSeries.hasData()) {
         chartValueSeries.drawPath(canvas);
-      }
-    }
-  }
-
-  /**
-   * Draws the waypoints.
-   * 
-   * @param canvas the canvas
-   */
-  private void drawWaypoints(Canvas canvas) {
-    synchronized (waypoints) {
-      for (int i = 0; i < waypoints.size(); i++) {
-        final Waypoint waypoint = waypoints.get(i);
-        if (waypoint.getLocation() == null) {
-          continue;
-        }
-        double xValue = getWaypointXValue(waypoint);
-        if (xValue > maxX) {
-          continue;
-        }
-        canvas.save();
-        float x = getX(getWaypointXValue(waypoint));
-        canvas.drawLine(
-            x, topBorder + spacer + markerHeight / 2, x, topBorder + effectiveHeight, markerPaint);
-        canvas.translate(
-            x - (float) (markerWidth * MapOverlay.WAYPOINT_X_ANCHOR), topBorder + spacer);
-        if (waypoints.get(i).getType() == WaypointType.STATISTICS) {
-          statisticsMarker.draw(canvas);
-        } else {
-          waypointMarker.draw(canvas);
-        }
-        canvas.restore();
       }
     }
   }
