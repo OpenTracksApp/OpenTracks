@@ -43,7 +43,6 @@ public class SettingsActivity extends AbstractSettingsActivity {
 
     addPreferencesFromResource(R.xml.settings);
 
-    configPreference(R.string.settings_map_key, MapSettingsActivity.class);
     configPreference(R.string.settings_chart_key, ChartSettingsActivity.class);
     configPreference(R.string.settings_stats_key, StatsSettingsActivity.class);
     configPreference(R.string.settings_recording_key, RecordingSettingsActivity.class);

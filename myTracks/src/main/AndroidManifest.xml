@@ -204,8 +204,7 @@ limitations under the License.
     <activity android:name="com.google.android.apps.mytracks.io.spreadsheets.SendSpreadsheetsActivity" />
     <activity android:name="com.google.android.apps.mytracks.settings.AdvancedSettingsActivity" />
     <activity android:name="com.google.android.apps.mytracks.settings.ChartSettingsActivity" />
-    <activity android:name="com.google.android.apps.mytracks.settings.MapSettingsActivity" />
-    <activity android:name="com.google.android.apps.mytracks.settings.RecordingSettingsActivity" />
+      <activity android:name="com.google.android.apps.mytracks.settings.RecordingSettingsActivity" />
     <activity android:name="com.google.android.apps.mytracks.settings.SensorSettingsActivity" />
     <activity android:name="com.google.android.apps.mytracks.settings.SettingsActivity" />
     <activity android:name="com.google.android.apps.mytracks.settings.StatsSettingsActivity" />
