@@ -219,8 +219,6 @@ limitations under the License.
       </intent-filter>
     </activity>
     <service
-      android:name="com.google.android.apps.mytracks.services.ActivityRecognitionIntentService" />
-    <service
       android:exported="false"
       android:name="com.google.android.apps.mytracks.services.ControlRecordingService" />
     <service
