@@ -66,7 +66,24 @@ public class MyTracksLocationManager {
     private final ConnectionCallbacks connectionCallbacks = new ConnectionCallbacks() {
         @Override
         public void onConnected(@Nullable Bundle bundle) {
-
+            handler.post(new Runnable() {
+                @SuppressLint("MissingPermission")
+                @Override
+                public void run() {
+                    if (requestLastLocation != null) {
+                        requestLastLocation.onLocationChanged(locationClient.getLastLocation().getResult());
+                        requestLastLocation = null;
+                    }
+                    if (requestLocationUpdates != null) {
+                        LocationRequest locationRequest = new LocationRequest()
+                                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                                .setInterval(requestLocationUpdatesTime)
+                                .setFastestInterval(requestLocationUpdatesTime)
+                                .setSmallestDisplacement(requestLocationUpdatesDistance);
+                        locationClient.requestLocationUpdates(locationRequest, requestLocationUpdates, handler.getLooper());
+                    }
+                }
+            });
         }
 
         @Override
@@ -89,7 +106,8 @@ public class MyTracksLocationManager {
                                 });
                     }
                     if (requestLocationUpdates != null) {
-                        LocationRequest locationRequest = new LocationRequest().setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                        LocationRequest locationRequest = new LocationRequest()
+                                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                                 .setInterval(requestLocationUpdatesTime)
                                 .setFastestInterval(requestLocationUpdatesTime)
                                 .setSmallestDisplacement(requestLocationUpdatesDistance);
