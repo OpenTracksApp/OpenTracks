@@ -76,7 +76,6 @@ public class AdvancedSettingsActivity extends AbstractSettingsActivity {
         }
       };
 
-  @SuppressWarnings("deprecation")
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);

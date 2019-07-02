@@ -64,7 +64,6 @@ public class PhotoUtils {
     if (imageView != null) {
       Object object = imageView.getTag();
       if (object instanceof WeakReference<?>) {
-        @SuppressWarnings("unchecked")
         WeakReference<BitmapLoader> bitmapLoaderReference = (WeakReference<BitmapLoader>) object;
         return bitmapLoaderReference.get();
       }

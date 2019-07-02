@@ -30,7 +30,6 @@ import android.preference.ListPreference;
  */
 public class ChartSettingsActivity extends AbstractSettingsActivity {
 
-  @SuppressWarnings("deprecation")
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
@@ -44,7 +43,6 @@ public class ChartSettingsActivity extends AbstractSettingsActivity {
     updateUi();
   }
 
-  @SuppressWarnings("deprecation")
   private void updateUi() {
     CheckBoxPreference speedCheckBoxPreference = (CheckBoxPreference) findPreference(
         getString(R.string.chart_show_speed_key));
@@ -56,7 +54,6 @@ public class ChartSettingsActivity extends AbstractSettingsActivity {
    * Configures the x axis list preference.
    */
   private void configXAxisListPreference() {
-    @SuppressWarnings("deprecation")
     ListPreference listPreference = (ListPreference) findPreference(
         getString(R.string.chart_x_axis_key));
     String value = PreferencesUtils.getString(

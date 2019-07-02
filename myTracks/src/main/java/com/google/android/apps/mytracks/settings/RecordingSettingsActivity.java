@@ -40,7 +40,6 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity
 
   private ActivityTypePreference activityTypePreference;
 
-  @SuppressWarnings("deprecation")
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
@@ -82,7 +81,6 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity
     return ChooseActivityTypeDialogFragment.getDialog(this, category, this);    
   }
 
-  @SuppressWarnings("deprecation")
   private void configFrequencyPreference(
       int key, int defaultValue, int valueArray, boolean metricUnits) {
     ListPreference preference = (ListPreference) findPreference(getString(key));
@@ -92,7 +90,6 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity
     configureListPreference(preference, options, options, values, String.valueOf(value), null);
   }
 
-  @SuppressWarnings("deprecation")
   private void configTrackName() {
     ListPreference preference = (ListPreference) findPreference(getString(R.string.track_name_key));
     String value = PreferencesUtils.getString(
@@ -102,7 +99,6 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity
     configureListPreference(preference, options, options, values, value, null);
   }
 
-  @SuppressWarnings("deprecation")
   private void configDefaultActivity() {
     activityTypePreference = (ActivityTypePreference) findPreference(
         getString(R.string.default_activity_key));
@@ -125,7 +121,6 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity
     activityTypePreference.setRecordingSettingsActivity(this);
   }
 
-  @SuppressWarnings("deprecation")
   private void configListPreference(
       int key, int defaultValue, int valueArray, boolean metricUnits) {
     ListPreference preference = (ListPreference) findPreference(getString(key));
@@ -348,7 +343,6 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity
     }
   }
 
-  @SuppressWarnings("deprecation")
   public void showChooseActivityTypeDialog() {
     try {
       removeDialog(DIALOG_CHOOSE_ACTIVITY);

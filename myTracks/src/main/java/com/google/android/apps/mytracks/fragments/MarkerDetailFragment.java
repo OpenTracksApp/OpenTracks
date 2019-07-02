@@ -254,7 +254,6 @@ public class MarkerDetailFragment extends Fragment {
   /**
    * Updates the UI.
    */
-  @SuppressWarnings("deprecation")
   private void updateUi() {
     View waypointView = getView().findViewById(R.id.marker_detail_waypoint);
     View statisticsView = getView().findViewById(R.id.marker_detail_statistics);

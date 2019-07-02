@@ -40,7 +40,6 @@ import java.util.List;
  */
 public class SensorSettingsActivity extends AbstractSettingsActivity {
 
-  @SuppressWarnings("deprecation")
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
@@ -58,7 +57,6 @@ public class SensorSettingsActivity extends AbstractSettingsActivity {
         });
   }
 
-  @SuppressWarnings("deprecation")
   private void configSensorType() {
     ListPreference preference = (ListPreference) findPreference(getString(R.string.sensor_type_key));
     String value = PreferencesUtils.getString(
@@ -81,7 +79,6 @@ public class SensorSettingsActivity extends AbstractSettingsActivity {
    * 
    * @param sensorType the sensor type
    */
-  @SuppressWarnings("deprecation")
   private void updateUiBySensorType(String sensorType) {
     boolean isBluetooth = getString(R.string.sensor_type_value_polar).equals(sensorType) || getString(R.string.sensor_type_value_zephyr).equals(sensorType);
     findPreference(getString(R.string.settings_sensor_bluetooth_key)).setEnabled(isBluetooth);
@@ -99,7 +96,6 @@ public class SensorSettingsActivity extends AbstractSettingsActivity {
   /**
    * Configures the bluetooth sensor.
    */
-  @SuppressWarnings("deprecation")
   private void configBluetoothSensor() {
     ListPreference preference = (ListPreference) findPreference(
         getString(R.string.bluetooth_sensor_key));

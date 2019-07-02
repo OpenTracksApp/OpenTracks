@@ -62,7 +62,6 @@ public class ListItemUtils {
    * @param description the description value
    * @param photoUrl the photo url
    */
-  @SuppressWarnings("deprecation")
   public static void setListItem(Activity activity, View view, boolean isRecording,
       boolean isPaused, int iconId, int iconContentDescriptionId, String name, String sharedOwner,
       String totalTime, String totalDistance, int markerCount, long startTime,

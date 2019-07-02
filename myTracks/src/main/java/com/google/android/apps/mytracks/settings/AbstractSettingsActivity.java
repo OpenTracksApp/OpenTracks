@@ -37,7 +37,6 @@ import android.view.MenuItem;
  */
 public class AbstractSettingsActivity extends PreferenceActivity {
 
-  @SuppressWarnings("deprecation")
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);

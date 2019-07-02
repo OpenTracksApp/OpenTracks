@@ -31,7 +31,6 @@ import android.preference.Preference.OnPreferenceChangeListener;
  */
 public class StatsSettingsActivity extends AbstractSettingsActivity {
 
-  @SuppressWarnings("deprecation")
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
@@ -48,7 +47,6 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
    * Configures the preferred units list preference.
    */
   private void configUnitsListPreference() {
-    @SuppressWarnings("deprecation")
     ListPreference listPreference = (ListPreference) findPreference(
         getString(R.string.stats_units_key));
     OnPreferenceChangeListener listener = new OnPreferenceChangeListener() {
@@ -73,7 +71,6 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
    * @param metricUnits true if metric units
    */
   private void configRateListPreference(boolean metricUnits) {
-    @SuppressWarnings("deprecation")
     ListPreference listPreference = (ListPreference) findPreference(
         getString(R.string.stats_rate_key));
     String value = PreferencesUtils.getString(

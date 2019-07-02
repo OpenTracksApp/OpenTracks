@@ -178,7 +178,6 @@ public class TrackIconUtils {
   }
 
   public static void setIconSpinner(Spinner spinner, String iconValue) {
-    @SuppressWarnings("unchecked")
     ArrayAdapter<StringBuilder> adapter = (ArrayAdapter<StringBuilder>) spinner.getAdapter();
     StringBuilder stringBuilder = adapter.getItem(0);
     stringBuilder.delete(0, stringBuilder.length());
