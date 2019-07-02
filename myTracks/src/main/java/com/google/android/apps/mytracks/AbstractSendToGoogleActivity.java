@@ -127,6 +127,12 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
     public static void configureSearchWidget(Activity activity, final MenuItem menuItem, final TrackController trackController) {
         SearchManager searchManager = (SearchManager) activity.getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menuItem.getActionView();
+
+        if (searchView == null) {
+            //TODO This is a workaround and needs to be fixed; looks like a configuration issue.
+            return;
+        }
+
         searchView.setSearchableInfo(searchManager.getSearchableInfo(activity.getComponentName()));
         searchView.setQueryRefinementEnabled(true);
         searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
