@@ -20,7 +20,6 @@ import com.google.android.apps.mytracks.Constants;
 import com.google.android.gms.location.DetectedActivity;
 import com.google.android.maps.mytracks.R;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -133,7 +132,6 @@ public class PreferencesUtils {
    * @param keyId the key id
    * @param value the value
    */
-  @SuppressLint("CommitPrefEdits")
   public static void setBoolean(Context context, int keyId, boolean value) {
     SharedPreferences sharedPreferences = context.getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
@@ -162,7 +160,6 @@ public class PreferencesUtils {
    * @param keyId the key id
    * @param value the value
    */
-  @SuppressLint("CommitPrefEdits")
   public static void setInt(Context context, int keyId, int value) {
     SharedPreferences sharedPreferences = context.getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
@@ -191,7 +188,6 @@ public class PreferencesUtils {
    * @param keyId the key id
    * @param value the value
    */
-  @SuppressLint("CommitPrefEdits")
   public static void setFloat(Context context, int keyId, float value) {
     SharedPreferences sharedPreferences = context.getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
@@ -219,7 +215,6 @@ public class PreferencesUtils {
    * @param keyId the key id
    * @param value the value
    */
-  @SuppressLint("CommitPrefEdits")
   public static void setLong(Context context, int keyId, long value) {
     SharedPreferences sharedPreferences = context.getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
@@ -248,7 +243,6 @@ public class PreferencesUtils {
    * @param keyId the key id
    * @param value the value
    */
-  @SuppressLint("CommitPrefEdits")
   public static void setString(Context context, int keyId, String value) {
     SharedPreferences sharedPreferences = context.getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);

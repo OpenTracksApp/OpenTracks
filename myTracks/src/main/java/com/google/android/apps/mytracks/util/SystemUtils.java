@@ -16,7 +16,6 @@
 
 package com.google.android.apps.mytracks.util;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -63,7 +62,6 @@ public class SystemUtils {
    * @param context the context
    * @param wakeLock wake lock or null
    */
-  @SuppressLint("Wakelock")
   public static WakeLock acquireWakeLock(Context context, WakeLock wakeLock) {
     Log.i(TAG, "Acquiring wake lock.");
     try {
