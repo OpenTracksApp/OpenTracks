@@ -18,7 +18,7 @@ package com.google.android.apps.mytracks.io.file.importer;
 
 import android.content.Context;
 import android.location.Location;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.VisibleForTesting;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;

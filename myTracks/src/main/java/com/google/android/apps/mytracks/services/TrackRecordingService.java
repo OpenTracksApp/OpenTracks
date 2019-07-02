@@ -31,10 +31,10 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager.WakeLock;
 import android.os.Process;
-import android.support.annotation.NonNull;
-import android.support.annotation.VisibleForTesting;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.TaskStackBuilder;
 import android.util.Log;
 
 import com.google.android.apps.mytracks.Constants;

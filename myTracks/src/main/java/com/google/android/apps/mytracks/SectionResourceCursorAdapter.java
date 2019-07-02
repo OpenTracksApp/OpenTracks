@@ -21,7 +21,7 @@ import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.support.v4.widget.ResourceCursorAdapter;
+import androidx.cursoradapter.widget.ResourceCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

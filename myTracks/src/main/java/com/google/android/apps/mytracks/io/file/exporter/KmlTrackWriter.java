@@ -19,7 +19,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.VisibleForTesting;
 
 import com.google.android.apps.mytracks.content.DescriptionGenerator;
 import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;

@@ -17,7 +17,7 @@
 package com.google.android.apps.mytracks.stats;
 
 import android.location.Location;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.VisibleForTesting;
 import android.util.Log;
 
 import com.google.android.apps.mytracks.util.CalorieUtils;

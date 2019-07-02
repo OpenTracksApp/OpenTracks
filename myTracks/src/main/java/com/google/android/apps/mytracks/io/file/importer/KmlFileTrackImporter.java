@@ -25,7 +25,7 @@ import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import android.content.Context;
 import android.location.Location;
 import android.net.Uri;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.VisibleForTesting;
 
 import java.util.ArrayList;
 

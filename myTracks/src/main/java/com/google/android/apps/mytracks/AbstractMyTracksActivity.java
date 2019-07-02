@@ -21,7 +21,7 @@ import com.google.android.apps.mytracks.util.TrackIconUtils;
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
-import android.support.v4.app.FragmentActivity;
+import androidx.fragment.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 

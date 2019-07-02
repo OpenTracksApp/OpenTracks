@@ -20,5 +20,5 @@ limitations under the License.
         android:id="@+id/search_list_search"
         android:title="@string/menu_search"
         app:showAsAction="ifRoom|collapseActionView"
-        app:actionViewClass="android.widget.SearchView" />
+        app:actionViewClass="androidx.appcompat.widget.SearchView" />
 </menu>

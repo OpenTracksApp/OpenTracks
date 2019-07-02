@@ -19,8 +19,8 @@ limitations under the License.
         android:icon="@drawable/ic_menu_search"
         android:id="@+id/track_list_search"
         android:title="@string/menu_search"
-        app:actionViewClass="android.widget.SearchView"
-        app:showAsAction="ifRoom|collapseActionView" />
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="always" />
     <item
         android:icon="@drawable/ic_menu_start_gps"
         android:id="@+id/track_list_start_gps"

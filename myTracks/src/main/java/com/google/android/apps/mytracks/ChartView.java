@@ -27,7 +27,7 @@ import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.VisibleForTesting;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
@@ -35,7 +35,6 @@ import android.view.ViewConfiguration;
 import android.widget.Scroller;
 
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.stats.ExtremityMonitor;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.StringUtils;

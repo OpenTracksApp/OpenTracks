@@ -32,7 +32,7 @@ import android.net.Uri;
 import android.os.Binder;
 import android.os.ParcelFileDescriptor;
 import android.os.Process;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.VisibleForTesting;
 import android.text.TextUtils;
 import android.util.Log;
 
