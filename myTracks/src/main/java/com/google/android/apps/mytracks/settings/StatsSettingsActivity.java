@@ -55,7 +55,7 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
 
         @Override
       public boolean onPreferenceChange(Preference pref, Object newValue) {
-        boolean metricUnits = PreferencesUtils.STATS_UNITS_DEFAULT.equals((String) newValue);
+        boolean metricUnits = PreferencesUtils.STATS_UNITS_DEFAULT.equals(newValue);
         configRateListPreference(metricUnits);
         return true;
       }

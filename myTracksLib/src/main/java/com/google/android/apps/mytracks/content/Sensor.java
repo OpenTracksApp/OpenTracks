@@ -88,8 +88,7 @@ public final class Sensor {
       state_ = com.google.android.apps.mytracks.content.Sensor.SensorState.NONE;
     }
     public final boolean isInitialized() {
-      if (!hasState) return false;
-      return true;
+        return hasState;
     }
     
     public void writeTo(com.google.protobuf.CodedOutputStream output)
@@ -422,7 +421,7 @@ public final class Sensor {
         if (!getPower().isInitialized()) return false;
       }
       if (hasBatteryLevel()) {
-        if (!getBatteryLevel().isInitialized()) return false;
+          return getBatteryLevel().isInitialized();
       }
       return true;
     }

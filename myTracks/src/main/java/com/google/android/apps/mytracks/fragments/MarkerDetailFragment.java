@@ -126,9 +126,9 @@ public class MarkerDetailFragment extends Fragment {
       LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.marker_detail_fragment, container, false);
 
-    photo = (ImageView) view.findViewById(R.id.marker_detail_waypoint_photo);
-    textGradient = (ImageView) view.findViewById(R.id.marker_detail_waypoint_text_gradient);
-    waypointInfo = (LinearLayout) view.findViewById(R.id.marker_detail_waypoint_info);
+    photo = view.findViewById(R.id.marker_detail_waypoint_photo);
+    textGradient = view.findViewById(R.id.marker_detail_waypoint_text_gradient);
+    waypointInfo = view.findViewById(R.id.marker_detail_waypoint_info);
     
     photo.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -192,7 +192,7 @@ public class MarkerDetailFragment extends Fragment {
     updateWaypoint(false);
 
     Track track = myTracksProviderUtils.getTrack(waypoint.getTrackId());
-    boolean isSharedWithMe = track != null ? track.isSharedWithMe() : true;
+    boolean isSharedWithMe = track == null || track.isSharedWithMe();
 
     menu.findItem(R.id.marker_detail_edit).setVisible(!isSharedWithMe);
     menu.findItem(R.id.marker_detail_delete).setVisible(!isSharedWithMe);
@@ -280,11 +280,11 @@ public class MarkerDetailFragment extends Fragment {
 
       setName(R.id.marker_detail_waypoint_name, hasPhoto);
 
-      TextView category = (TextView) getView().findViewById(R.id.marker_detail_waypoint_category);
+      TextView category = getView().findViewById(R.id.marker_detail_waypoint_category);
       ListItemUtils.setTextView(
           getActivity(), category, StringUtils.getCategory(waypoint.getCategory()), hasPhoto);
 
-      TextView description = (TextView) getView()
+      TextView description = getView()
           .findViewById(R.id.marker_detail_waypoint_description);
       ListItemUtils.setTextView(getActivity(), description, waypoint.getDescription(), hasPhoto);
 
@@ -305,12 +305,12 @@ public class MarkerDetailFragment extends Fragment {
   }
 
   private void setName(int resId, boolean addShadow) {
-    TextView textView = (TextView) getView().findViewById(resId);
+    TextView textView = getView().findViewById(resId);
     ListItemUtils.setTextView(getActivity(), textView, waypoint.getName(), addShadow);
   }
 
   private void setLocation(int resId, boolean addShadow) {
-    TextView textView = (TextView) getView().findViewById(resId);
+    TextView textView = getView().findViewById(resId);
     Location location = waypoint.getLocation();
     String value;
     if (location == null) {

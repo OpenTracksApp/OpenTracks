@@ -91,7 +91,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     super.onActivityCreated(savedInstanceState);
     handler = new Handler();
    
-    Spinner activityTypeIcon = (Spinner) getView().findViewById(R.id.stats_activity_type_icon);
+    Spinner activityTypeIcon = getView().findViewById(R.id.stats_activity_type_icon);
     activityTypeIcon.setAdapter(TrackIconUtils.getIconSpinnerAdapter(getActivity(), ""));
     activityTypeIcon.setOnTouchListener(new View.OnTouchListener() {
         @Override

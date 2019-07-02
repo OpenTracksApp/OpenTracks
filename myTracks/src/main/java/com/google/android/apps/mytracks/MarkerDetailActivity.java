@@ -85,7 +85,7 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity implements De
       }
     }
 
-    ViewPager viewPager = (ViewPager) findViewById(R.id.maker_detail_activity_view_pager);
+    ViewPager viewPager = findViewById(R.id.maker_detail_activity_view_pager);
     viewPager.setAdapter(new MarkerDetailPagerAdapter(getSupportFragmentManager()));
     if (markerIndex != -1) {
       viewPager.setCurrentItem(markerIndex);

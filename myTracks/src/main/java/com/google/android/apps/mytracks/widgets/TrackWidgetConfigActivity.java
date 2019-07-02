@@ -55,10 +55,10 @@ public class TrackWidgetConfigActivity extends Activity {
     setResult(RESULT_CANCELED);
 
     setContentView(R.layout.track_widget_config);
-    item1 = (Spinner) findViewById(R.id.track_widget_config_item1);
-    item2 = (Spinner) findViewById(R.id.track_widget_config_item2);
-    item3 = (Spinner) findViewById(R.id.track_widget_config_item3);
-    item4 = (Spinner) findViewById(R.id.track_widget_config_item4);
+    item1 = findViewById(R.id.track_widget_config_item1);
+    item2 = findViewById(R.id.track_widget_config_item2);
+    item3 = findViewById(R.id.track_widget_config_item3);
+    item4 = findViewById(R.id.track_widget_config_item4);
 
     boolean reportSpeed = PreferencesUtils.isReportSpeed(this);
 

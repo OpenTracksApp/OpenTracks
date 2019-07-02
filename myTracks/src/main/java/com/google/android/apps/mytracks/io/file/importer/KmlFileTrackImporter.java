@@ -202,7 +202,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
    */
   private void onWaypointLocationEnd() {
     if (content != null) {
-      String parts[] = content.trim().split(",");
+      String[] parts = content.trim().split(",");
       if (parts.length != 2 && parts.length != 3) {
         return;
       }
@@ -264,7 +264,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
     if (content == null) {
       return;
     }
-    String parts[] = content.trim().split(" ");
+    String[] parts = content.trim().split(" ");
     if (parts.length != 2 && parts.length != 3) {
       return;
     }

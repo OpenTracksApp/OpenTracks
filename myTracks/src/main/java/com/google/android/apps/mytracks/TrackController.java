@@ -80,12 +80,12 @@ public class TrackController {
     this.trackRecordingServiceConnection = trackRecordingServiceConnection;
     this.alwaysShow = alwaysShow;
     handler = new Handler();
-    containerView = (View) activity.findViewById(R.id.track_controler_container);
-    statusTextView = (TextView) activity.findViewById(R.id.track_controller_status);
-    totalTimeTextView = (TextView) activity.findViewById(R.id.track_controller_total_time);
-    recordImageButton = (ImageButton) activity.findViewById(R.id.track_controller_record);
+    containerView = activity.findViewById(R.id.track_controler_container);
+    statusTextView = activity.findViewById(R.id.track_controller_status);
+    totalTimeTextView = activity.findViewById(R.id.track_controller_total_time);
+    recordImageButton = activity.findViewById(R.id.track_controller_record);
     recordImageButton.setOnClickListener(recordListener);
-    stopImageButton = (ImageButton) activity.findViewById(R.id.track_controller_stop);
+    stopImageButton = activity.findViewById(R.id.track_controller_stop);
     stopImageButton.setOnClickListener(stopListener);
   }
 

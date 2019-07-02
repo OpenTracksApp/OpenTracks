@@ -671,6 +671,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
 
     cursor.moveToFirst();
     int count = cursor.getInt(0);
+    cursor.close();
     // not count the first waypoint
     return count > 0 ? count - 1 : 0;
   }

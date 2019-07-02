@@ -221,7 +221,7 @@ public class StatsUtils {
    */
   private static void setSpeed(Context context, View view, int speedLabelId, int paceLabelId,
       double speed, boolean metricUnits, boolean reportSpeed) {
-    String parts[] = StringUtils.getSpeedParts(context, speed, metricUnits, reportSpeed);
+      String[] parts = StringUtils.getSpeedParts(context, speed, metricUnits, reportSpeed);
     setItem(context, view, reportSpeed ? speedLabelId : paceLabelId, parts[0], parts[1]);
   }
 
@@ -248,7 +248,7 @@ public class StatsUtils {
    */
   private static void setDistanceValue(
       Context context, View view, double distance, boolean metricUnits) {
-    String parts[] = StringUtils.getDistanceParts(context, distance, metricUnits);
+      String[] parts = StringUtils.getDistanceParts(context, distance, metricUnits);
     setItem(context, view, R.string.stats_distance, parts[0], parts[1]);
   }
 
@@ -334,9 +334,9 @@ public class StatsUtils {
    */
   private static void setItem(
       Context context, View view, int labelId, CharSequence value, CharSequence unit) {
-    TextView labelTextView = (TextView) view.findViewById(R.id.stats_label);
-    TextView valueTextView = (TextView) view.findViewById(R.id.stats_value);
-    TextView unitTextView = (TextView) view.findViewById(R.id.stats_unit);
+    TextView labelTextView = view.findViewById(R.id.stats_label);
+    TextView valueTextView = view.findViewById(R.id.stats_value);
+    TextView unitTextView = view.findViewById(R.id.stats_unit);
     if (labelTextView == null || valueTextView == null || unitTextView == null) {
       return;
     }

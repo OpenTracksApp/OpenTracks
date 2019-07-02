@@ -63,7 +63,7 @@ public class StringUtils {
   public static String formatDateTime(Context context, long time) {
     return DateUtils.formatDateTime(
         context, time, DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE) + " "
-        + DateUtils.formatDateTime(context, time, DateUtils.FORMAT_SHOW_TIME).toString();
+        + DateUtils.formatDateTime(context, time, DateUtils.FORMAT_SHOW_TIME);
   }
 
   /**

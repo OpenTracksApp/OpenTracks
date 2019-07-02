@@ -93,15 +93,15 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
   public static Dialog getDialog(
       final Activity activity, final String category, final ChooseActivityTypeCaller caller) {
     View view = activity.getLayoutInflater().inflate(R.layout.choose_activity_type, null);
-    GridView gridView = (GridView) view.findViewById(R.id.choose_activity_type_grid_view);
+    GridView gridView = view.findViewById(R.id.choose_activity_type_grid_view);
     final View weightContainer = view.findViewById(R.id.choose_activity_type_weight_container);
 
-    TextView weightLabel = (TextView) view.findViewById(R.id.choose_activity_type_weight_label);
+    TextView weightLabel = view.findViewById(R.id.choose_activity_type_weight_label);
     weightLabel.setText(
         PreferencesUtils.isMetricUnits(activity) ? R.string.description_weight_metric
             : R.string.description_weight_imperial);
 
-    final TextView weight = (TextView) view.findViewById(R.id.choose_activity_type_weight);
+    final TextView weight = view.findViewById(R.id.choose_activity_type_weight);
 
     List<Integer> imageIds = new ArrayList<Integer>();
     for (String iconValue : TrackIconUtils.getAllIconValues()) {

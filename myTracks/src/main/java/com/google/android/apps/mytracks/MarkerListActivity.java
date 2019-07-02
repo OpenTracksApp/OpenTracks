@@ -155,7 +155,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity implements Dele
     
     setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
-    listView = (ListView) findViewById(R.id.marker_list);
+    listView = findViewById(R.id.marker_list);
     listView.setEmptyView(findViewById(R.id.marker_list_empty));
     listView.setOnItemClickListener(new OnItemClickListener() {
         @Override

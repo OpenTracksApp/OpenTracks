@@ -71,24 +71,24 @@ public class MarkerEditActivity extends AbstractMyTracksActivity {
         
     // Setup UI elements
     statisticsSection = findViewById(R.id.marker_edit_statistics_section);
-    statisticsName = (EditText) findViewById(R.id.marker_edit_statistics_name);
+    statisticsName = findViewById(R.id.marker_edit_statistics_name);
     
     waypointSection = findViewById(R.id.marker_edit_waypoint_section);
-    waypointName = (EditText) findViewById(R.id.marker_edit_waypoint_name);   
-    waypointMarkerType = (AutoCompleteTextView) findViewById(R.id.marker_edit_waypoint_marker_type);
+    waypointName = findViewById(R.id.marker_edit_waypoint_name);
+    waypointMarkerType = findViewById(R.id.marker_edit_waypoint_marker_type);
     ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
         this, R.array.waypoint_types, android.R.layout.simple_dropdown_item_1line);
     waypointMarkerType.setAdapter(adapter);
-    waypointDescription = (EditText) findViewById(R.id.marker_edit_waypoint_description);
+    waypointDescription = findViewById(R.id.marker_edit_waypoint_description);
 
-    Button cancel = (Button) findViewById(R.id.marker_edit_cancel);
+    Button cancel = findViewById(R.id.marker_edit_cancel);
     cancel.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
         finish();
       }
     });
-    done = (Button) findViewById(R.id.marker_edit_done);
+    done = findViewById(R.id.marker_edit_done);
     updateUiByMarkerId();
   }
 

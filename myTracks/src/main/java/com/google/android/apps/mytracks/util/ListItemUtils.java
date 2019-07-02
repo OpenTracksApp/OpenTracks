@@ -69,8 +69,8 @@ public class ListItemUtils {
       boolean useRelativeTime, String category, String description, String photoUrl) {
 
     // Set photo
-    ImageView photo = (ImageView) view.findViewById(R.id.list_item_photo);
-    ImageView textGradient = (ImageView) view.findViewById(R.id.list_item_text_gradient);
+    ImageView photo = view.findViewById(R.id.list_item_photo);
+    ImageView textGradient = view.findViewById(R.id.list_item_text_gradient);
     boolean hasPhoto = photoUrl != null && !photoUrl.equals("");
 
     photo.setVisibility(hasPhoto ? View.VISIBLE : View.GONE);
@@ -91,16 +91,16 @@ public class ListItemUtils {
       iconContentDescriptionId = isPaused ? R.string.image_pause : R.string.image_record;
     }
 
-    ImageView iconImageView = (ImageView) view.findViewById(R.id.list_item_icon);
+    ImageView iconImageView = view.findViewById(R.id.list_item_icon);
     iconImageView.setImageResource(iconId);
     iconImageView.setContentDescription(activity.getString(iconContentDescriptionId));
 
     // Set name
-    TextView nameTextView = (TextView) view.findViewById(R.id.list_item_name);
+    TextView nameTextView = view.findViewById(R.id.list_item_name);
     setTextView(activity, nameTextView, name, hasPhoto);
 
     // Set sharedOwner/totalTime/totalDistance
-    TextView ownerTimeDistanceTextView = (TextView) view.findViewById(
+    TextView ownerTimeDistanceTextView = view.findViewById(
         R.id.list_item_owner_time_distance);
     String ownerTimeDistance;
     if (isRecording) {
@@ -119,8 +119,8 @@ public class ListItemUtils {
     setTextView(activity, ownerTimeDistanceTextView, ownerTimeDistance, hasPhoto);
 
     // Set markerCount
-    ImageView markerCountIcon = (ImageView) view.findViewById(R.id.list_item_marker_count_icon);
-    TextView markerCountTextView = (TextView) view.findViewById(R.id.list_item_marker_count);
+    ImageView markerCountIcon = view.findViewById(R.id.list_item_marker_count_icon);
+    TextView markerCountTextView = view.findViewById(R.id.list_item_marker_count);
     boolean hasMarker = markerCount > 0;
     markerCountIcon.setVisibility(hasMarker ? View.VISIBLE : View.GONE);
     String markerCountValue = hasMarker ? String.valueOf(markerCount) : null;
@@ -135,14 +135,14 @@ public class ListItemUtils {
 
     // Set date/time
     String[] dateTime = getDateTime(isRecording, activity, startTime, useRelativeTime);
-    TextView dateTextView = (TextView) view.findViewById(R.id.list_item_date);
+    TextView dateTextView = view.findViewById(R.id.list_item_date);
     setTextView(activity, dateTextView, dateTime[0], hasPhoto);
 
-    TextView timeTextView = (TextView) view.findViewById(R.id.list_item_time);
+    TextView timeTextView = view.findViewById(R.id.list_item_time);
     setTextView(activity, timeTextView, dateTime[1], hasPhoto);
 
     // Set category and description
-    TextView categoryDescriptionTextView = (TextView) view.findViewById(
+    TextView categoryDescriptionTextView = view.findViewById(
         R.id.list_item_category_description);
     String categoryDescription = isRecording ? null
         : StringUtils.getCategoryDescription(category, description);

@@ -325,7 +325,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity implements F
       }
     });
 
-    listView = (ListView) findViewById(R.id.track_list);
+    listView = findViewById(R.id.track_list);
     listView.setEmptyView(findViewById(R.id.track_list_empty_view));
     listView.setOnItemClickListener(new OnItemClickListener() {
         @Override

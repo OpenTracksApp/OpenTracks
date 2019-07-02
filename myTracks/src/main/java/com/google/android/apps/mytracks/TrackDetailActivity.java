@@ -215,10 +215,10 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
         this, bindChangedCallback);
     trackDataHub = TrackDataHub.newInstance(this);
 
-    tabHost = (TabHost) findViewById(android.R.id.tabhost);
+    tabHost = findViewById(android.R.id.tabhost);
     tabHost.setup();
 
-    viewPager = (ViewPager) findViewById(R.id.pager);
+    viewPager = findViewById(R.id.pager);
 
     tabsAdapter = new TabsAdapter(this, tabHost, viewPager);
 
@@ -332,7 +332,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
     getMenuInflater().inflate(R.menu.track_detail, menu);
 
     Track track = myTracksProviderUtils.getTrack(trackId);
-    boolean isSharedWithMe = track != null ? track.isSharedWithMe() : true;
+    boolean isSharedWithMe = track == null || track.isSharedWithMe();
 
     menu.findItem(R.id.track_detail_edit).setVisible(!isSharedWithMe);  
 

@@ -101,9 +101,9 @@ public class ChooseActivityDialogFragment extends AbstractMyTracksDialogFragment
           view = getActivity().getLayoutInflater()
               .inflate(R.layout.choose_activity_list_item, parent, false);
           viewHolder = new ViewHolder();
-          viewHolder.text1 = (TextView) view.findViewById(R.id.choose_activity_list_item_text1);
-          viewHolder.text2 = (TextView) view.findViewById(R.id.choose_activity_list_item_text2);
-          viewHolder.icon = (ImageView) view.findViewById(R.id.choose_activity_list_item_icon);
+          viewHolder.text1 = view.findViewById(R.id.choose_activity_list_item_text1);
+          viewHolder.text2 = view.findViewById(R.id.choose_activity_list_item_text2);
+          viewHolder.icon = view.findViewById(R.id.choose_activity_list_item_icon);
           view.setTag(viewHolder);
         } else {
           view = convertView;

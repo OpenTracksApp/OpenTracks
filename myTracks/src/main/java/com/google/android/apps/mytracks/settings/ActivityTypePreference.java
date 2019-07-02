@@ -57,8 +57,8 @@ public class ActivityTypePreference extends DialogPreference {
   @Override
   protected View onCreateDialogView() {
     View view = super.onCreateDialogView();
-    textView = (AutoCompleteTextView) view.findViewById(R.id.activity_type_preference_text_view);
-    spinner = (Spinner) view.findViewById(R.id.activity_type_preference_spinner);
+    textView = view.findViewById(R.id.activity_type_preference_text_view);
+    spinner = view.findViewById(R.id.activity_type_preference_spinner);
 
     String category = PreferencesUtils.getString(
         getContext(), R.string.default_activity_key, PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT);
