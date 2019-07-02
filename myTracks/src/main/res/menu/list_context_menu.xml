@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2012 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,30 +13,31 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
-  <item
-    android:icon="@drawable/ic_menu_share"
-    android:id="@+id/list_context_menu_share"
-    android:showAsAction="ifRoom"
-    android:title="@string/menu_share"/>
-  <item
-    android:icon="@drawable/ic_menu_show_on_map"
-    android:id="@+id/list_context_menu_show_on_map"
-    android:showAsAction="ifRoom"
-    android:title="@string/menu_show_on_map"/>
-  <item
-    android:icon="@drawable/ic_menu_edit"
-    android:id="@+id/list_context_menu_edit"
-    android:showAsAction="ifRoom"
-    android:title="@string/menu_edit"/>
-  <item
-    android:icon="@drawable/ic_menu_delete"
-    android:id="@+id/list_context_menu_delete"
-    android:showAsAction="ifRoom"
-    android:title="@string/menu_delete"/>
-  <item
-    android:icon="@drawable/ic_menu_select_all"
-    android:id="@+id/list_context_menu_select_all"
-    android:showAsAction="ifRoom"
-    android:title="@string/menu_select_all"/>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:icon="@drawable/ic_menu_share"
+        android:id="@+id/list_context_menu_share"
+        android:title="@string/menu_share"
+        app:showAsAction="ifRoom" />
+    <item
+        android:icon="@drawable/ic_menu_show_on_map"
+        android:id="@+id/list_context_menu_show_on_map"
+        android:title="@string/menu_show_on_map"
+        app:showAsAction="ifRoom" />
+    <item
+        android:icon="@drawable/ic_menu_edit"
+        android:id="@+id/list_context_menu_edit"
+        android:title="@string/menu_edit"
+        app:showAsAction="ifRoom" />
+    <item
+        android:icon="@drawable/ic_menu_delete"
+        android:id="@+id/list_context_menu_delete"
+        android:title="@string/menu_delete"
+        app:showAsAction="ifRoom" />
+    <item
+        android:icon="@drawable/ic_menu_select_all"
+        android:id="@+id/list_context_menu_select_all"
+        android:title="@string/menu_select_all"
+        app:showAsAction="ifRoom" />
 </menu>

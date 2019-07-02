@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2012 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,16 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
-  <item
-    android:icon="@drawable/ic_menu_insert_marker"
-    android:id="@+id/marker_list_insert_marker"
-    android:showAsAction="ifRoom"
-    android:title="@string/menu_insert_marker"/>
-  <item
-    android:actionViewClass="android.widget.SearchView"
-    android:icon="@drawable/ic_menu_search"
-    android:id="@+id/marker_list_search"
-    android:showAsAction="ifRoom|collapseActionView"
-    android:title="@string/menu_search"/>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:icon="@drawable/ic_menu_insert_marker"
+        android:id="@+id/marker_list_insert_marker"
+        app:showAsAction="ifRoom"
+        android:title="@string/menu_insert_marker" />
+    <item
+        android:icon="@drawable/ic_menu_search"
+        android:id="@+id/marker_list_search"
+        android:title="@string/menu_search"
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionViewClass="android.widget.SearchView" />
 </menu>
