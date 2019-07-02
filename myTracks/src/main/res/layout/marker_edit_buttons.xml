@@ -15,13 +15,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <merge xmlns:android="http://schemas.android.com/apk/res/android" >
-  <Button
-    android:id="@+id/marker_edit_done"
-    android:layout_gravity="left"
-    style="@style/BottomButton" />
+  <!-- In v14, postive button on the right. -->
   <Button
     android:id="@+id/marker_edit_cancel"
-    android:layout_gravity="right"
+    android:layout_gravity="left"
     android:text="@string/generic_cancel"
+    style="@style/BottomButton" />
+  <Button
+    android:id="@+id/marker_edit_done"
+    android:layout_gravity="right"
     style="@style/BottomButton" />
 </merge>
