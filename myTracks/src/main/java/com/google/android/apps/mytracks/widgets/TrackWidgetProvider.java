@@ -51,7 +51,6 @@ import android.widget.RemoteViews;
  */
 public class TrackWidgetProvider extends AppWidgetProvider {
 
-  public static final int KEYGUARD_DEFAULT_SIZE = 1;
   public static final int HOME_SCREEN_DEFAULT_SIZE = 2;
 
   private static final String APP_WIDGET_SIZE_KEY = "app_widget_size_key";

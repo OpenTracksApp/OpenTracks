@@ -68,16 +68,16 @@ public class TrackNameUtils {
       return new SimpleDateFormat(ISO_8601_FORMAT, Locale.US).format(startTime);
     } else if (trackName.equals(
         context.getString(R.string.settings_recording_track_name_date_iso_8601_location_value))) {
-      StringBuffer value = new StringBuffer(
+      StringBuilder builder = new StringBuilder(
           new SimpleDateFormat(ISO_8601_FORMAT, Locale.US).format(startTime));
 
       if (location != null) {
         String address = getReverseGeoCoding(context, location);
         if (address != null && !address.equals("")) {
-          value.append(" ").append(address);
+          builder.append(" ").append(address);
         }
       }
-      return value.toString();
+      return builder.toString();
     } else {
       // R.string.settings_recording_track_name_number_value)
       return context.getString(R.string.track_name_format, trackId);

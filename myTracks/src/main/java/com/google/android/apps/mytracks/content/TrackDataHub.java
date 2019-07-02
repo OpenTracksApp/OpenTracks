@@ -410,10 +410,9 @@ public class TrackDataHub implements DataSourceListener {
       if (isOnlyListener) {
         resetSamplingState();
       }
-      Set<TrackDataListener> sampledInListeners = trackDataListeners;
       Set<TrackDataListener> sampledOutListeners = hasSampledOut ? trackDataListeners
           : Collections.<TrackDataListener> emptySet();
-      notifyTrackPointsTableUpdate(isOnlyListener, sampledInListeners, sampledOutListeners);
+      notifyTrackPointsTableUpdate(isOnlyListener, trackDataListeners, sampledOutListeners);
     }
 
     if (trackDataTypes.contains(TrackDataType.WAYPOINTS_TABLE)) {
@@ -452,10 +451,8 @@ public class TrackDataHub implements DataSourceListener {
       trackDataListener.clearWaypoints();
     }
 
-    Cursor cursor = null;
-    try {
-      cursor = myTracksProviderUtils.getWaypointCursor(
-          selectedTrackId, -1L, MAX_DISPLAYED_WAYPOINTS);
+    try (Cursor cursor = myTracksProviderUtils.getWaypointCursor(
+            selectedTrackId, -1L, MAX_DISPLAYED_WAYPOINTS)) {
       if (cursor != null && cursor.moveToFirst()) {
         do {
           Waypoint waypoint = myTracksProviderUtils.createWaypoint(cursor);
@@ -466,10 +463,6 @@ public class TrackDataHub implements DataSourceListener {
             trackDataListener.onNewWaypoint(waypoint);
           }
         } while (cursor.moveToNext());
-      }
-    } finally {
-      if (cursor != null) {
-        cursor.close();
       }
     }
 

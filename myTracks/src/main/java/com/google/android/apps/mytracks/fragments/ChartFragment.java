@@ -58,7 +58,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
 
   public static final String CHART_FRAGMENT_TAG = "chartFragment";
 
-  private final ArrayList<double[]> pendingPoints = new ArrayList<double[]>();
+  private final ArrayList<double[]> pendingPoints = new ArrayList<>();
 
   private TrackDataHub trackDataHub;
 

@@ -90,23 +90,29 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
   @Override
   public void startElement(String uri, String localName, String tag, Attributes attributes)
       throws SAXException {
-    if (tag.equals(TAG_PLACEMARK) || tag.equals(TAG_PHOTO_OVERLAY)) {
-      /*
-       * Note that a track is contained in a Placemark, calling onWaypointStart
-       * will clear various track variables like name, category, and
-       * description.
-       */
-      onWaypointStart();
-    } else if (tag.equals(TAG_GX_MULTI_TRACK)) {
-      trackStarted = true;
-      onTrackStart();
-    } else if (tag.equals(TAG_GX_TRACK)) {
-      if (!trackStarted) {
-        throw new SAXException("No " + TAG_GX_MULTI_TRACK);
-      }
-      onTrackSegmentStart();
-    } else if (tag.equals(TAG_GX_SIMPLE_ARRAY_DATA)) {
-      onSensorDataStart(attributes);
+    switch (tag) {
+      case TAG_PLACEMARK:
+      case TAG_PHOTO_OVERLAY:
+        /*
+         * Note that a track is contained in a Placemark, calling onWaypointStart
+         * will clear various track variables like name, category, and
+         * description.
+         */
+        onWaypointStart();
+        break;
+      case TAG_GX_MULTI_TRACK:
+        trackStarted = true;
+        onTrackStart();
+        break;
+      case TAG_GX_TRACK:
+        if (!trackStarted) {
+          throw new SAXException("No " + TAG_GX_MULTI_TRACK);
+        }
+        onTrackSegmentStart();
+        break;
+      case TAG_GX_SIMPLE_ARRAY_DATA:
+        onSensorDataStart(attributes);
+        break;
     }
   }
 
@@ -215,10 +221,10 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
   @Override
   protected void onTrackSegmentStart() {
     super.onTrackSegmentStart();
-    locationList = new ArrayList<Location>();
-    powerList = new ArrayList<Integer>();
-    cadenceList = new ArrayList<Integer>();
-    heartRateList = new ArrayList<Integer>();
+    locationList = new ArrayList<>();
+    powerList = new ArrayList<>();
+    cadenceList = new ArrayList<>();
+    heartRateList = new ArrayList<>();
   }
 
   /**

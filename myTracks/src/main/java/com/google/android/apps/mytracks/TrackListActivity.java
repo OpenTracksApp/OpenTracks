@@ -624,7 +624,6 @@ public class TrackListActivity extends AbstractSendToGoogleActivity implements F
           });
       if (dialog != null) {
         dialog.show();
-        return;
       }
     }
   }

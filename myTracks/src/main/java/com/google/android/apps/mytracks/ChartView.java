@@ -82,8 +82,8 @@ public class ChartView extends View {
   private static final int Y_AXIS_OFFSET = 16;
 
   private final ChartValueSeries[] series = new ChartValueSeries[NUM_SERIES];
-  private final ArrayList<double[]> chartData = new ArrayList<double[]>();
-  private final ArrayList<Waypoint> waypoints = new ArrayList<Waypoint>();
+  private final ArrayList<double[]> chartData = new ArrayList<>();
+  private final ArrayList<Waypoint> waypoints = new ArrayList<>();
   private final ExtremityMonitor xExtremityMonitor = new ExtremityMonitor();
   private double maxX = 1.0;
 
@@ -686,7 +686,7 @@ public class ChartView extends View {
    * Gets the x axis marker positions.
    */
   private ArrayList<Double> getXAxisMarkerPositions(double interval) {
-    ArrayList<Double> markers = new ArrayList<Double>();
+    ArrayList<Double> markers = new ArrayList<>();
     markers.add(0d);
     for (int i = 1; i * interval < maxX; i++) {
       markers.add(i * interval);

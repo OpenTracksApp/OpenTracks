@@ -103,7 +103,7 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
 
     final TextView weight = view.findViewById(R.id.choose_activity_type_weight);
 
-    List<Integer> imageIds = new ArrayList<Integer>();
+    List<Integer> imageIds = new ArrayList<>();
     for (String iconValue : TrackIconUtils.getAllIconValues()) {
       imageIds.add(TrackIconUtils.getIconDrawable(iconValue));
     }

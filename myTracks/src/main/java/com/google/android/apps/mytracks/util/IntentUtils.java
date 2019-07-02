@@ -22,7 +22,6 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.maps.mytracks.R;
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -47,7 +46,7 @@ public class IntentUtils {
    * @param context the context
    * @param cls the class
    */
-  public static final Intent newIntent(Context context, Class<?> cls) {
+  public static Intent newIntent(Context context, Class<?> cls) {
     return new Intent(context, cls).addFlags(
         Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
   }
@@ -60,7 +59,7 @@ public class IntentUtils {
    * @param filePath the file path
    * @param trackFileFormat the track file format
    */
-  public static final Intent newShareFileIntent(
+  public static Intent newShareFileIntent(
       Context context, long trackId, String filePath, TrackFileFormat trackFileFormat) {
     Track track = MyTracksProviderUtils.Factory.get(context).getTrack(trackId);
     String trackDescription = track == null ? ""

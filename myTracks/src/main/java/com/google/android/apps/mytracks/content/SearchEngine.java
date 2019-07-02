@@ -161,9 +161,9 @@ public class SearchEngine {
    * @return a set of results, sorted according to their score
    */
   public SortedSet<ScoredResult> search(SearchQuery query) {
-    ArrayList<Track> tracks = new ArrayList<Track>();
-    ArrayList<Waypoint> waypoints = new ArrayList<Waypoint>();
-    TreeSet<ScoredResult> scoredResults = new TreeSet<ScoredResult>(SCORED_RESULT_COMPARATOR);
+    ArrayList<Track> tracks = new ArrayList<>();
+    ArrayList<Waypoint> waypoints = new ArrayList<>();
+    TreeSet<ScoredResult> scoredResults = new TreeSet<>(SCORED_RESULT_COMPARATOR);
 
     retrieveTracks(query, tracks);
     retrieveWaypoints(query, waypoints);
@@ -187,19 +187,13 @@ public class SearchEngine {
         queryLikeSelection,
         queryLikeSelection };
 
-    Cursor cursor = null;
-    try {
-      cursor = providerUtils.getTrackCursor(
-          TRACK_SELECTION_QUERY, trackSelectionArgs, TRACK_SELECTION_ORDER);
+    try (Cursor cursor = providerUtils.getTrackCursor(
+            TRACK_SELECTION_QUERY, trackSelectionArgs, TRACK_SELECTION_ORDER)) {
       if (cursor != null) {
         tracks.ensureCapacity(cursor.getCount());
         while (cursor.moveToNext()) {
           tracks.add(providerUtils.createTrack(cursor));
         }
-      }
-    } finally {
-      if (cursor != null) {
-        cursor.close();
       }
     }
   }
@@ -216,10 +210,8 @@ public class SearchEngine {
         queryLikeSelection2,
         queryLikeSelection2,
         queryLikeSelection2 };
-    Cursor cursor = null;
-    try {
-      cursor = providerUtils.getWaypointCursor(WAYPOINT_SELECTION_QUERY, waypointSelectionArgs,
-          WAYPOINT_SELECTION_ORDER, MAX_SCORED_WAYPOINTS);
+    try (Cursor cursor = providerUtils.getWaypointCursor(WAYPOINT_SELECTION_QUERY, waypointSelectionArgs,
+            WAYPOINT_SELECTION_ORDER, MAX_SCORED_WAYPOINTS)) {
       if (cursor != null) {
         waypoints.ensureCapacity(cursor.getCount());
         while (cursor.moveToNext()) {
@@ -228,10 +220,6 @@ public class SearchEngine {
             waypoints.add(waypoint);
           }
         }
-      }
-    } finally {
-      if (cursor != null) {
-        cursor.close();
       }
     }
   }

@@ -94,12 +94,12 @@ public class LocationUtils {
     }
     int idx;
     int maxIdx = 0;
-    Stack<int[]> stack = new Stack<int[]>();
+    Stack<int[]> stack = new Stack<>();
     double[] dists = new double[n];
     dists[0] = 1;
     dists[n - 1] = 1;
     double maxDist;
-    double dist = 0.0;
+    double dist;
     int[] current;
 
     if (n > 2) {
@@ -146,7 +146,7 @@ public class LocationUtils {
    * @param precision desired precision in meters
    */
   public static void decimate(Track track, double precision) {
-    ArrayList<Location> decimated = new ArrayList<Location>();
+    ArrayList<Location> decimated = new ArrayList<>();
     decimate(precision, track.getLocations(), decimated);
     track.setLocations(decimated);
   }

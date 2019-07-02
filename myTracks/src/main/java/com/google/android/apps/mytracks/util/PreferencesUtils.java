@@ -17,7 +17,6 @@
 package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.gms.location.DetectedActivity;
 import com.google.android.maps.mytracks.R;
 
@@ -59,8 +58,6 @@ public class PreferencesUtils {
   public static final String CHART_X_AXIS_DEFAULT = "DISTANCE";
 
   public static final String DEFAULT_ACTIVITY_DEFAULT = "";
-  
-  public static final String EXPORT_EXTERNAL_STORAGE_FORMAT_DEFAULT = TrackFileFormat.KML.name();
 
   // Value for split_frequency_key and voice_frequency_key
   public static final int FREQUENCY_OFF = 0;
@@ -92,13 +89,7 @@ public class PreferencesUtils {
   public static final boolean STATS_SHOW_COORDINATE_DEFAULT = false;
   public static final boolean STATS_SHOW_GRADE_ELEVATION_DEFAULT = false;
   public static final String STATS_UNITS_DEFAULT = "METRIC";
-  
-  // Track color
-  public static final String TRACK_COLOR_MODE_DEFAULT = "SINGLE";
-  public static final int TRACK_COLOR_MODE_MEDIUM_DEFAULT = 15;
-  public static final int TRACK_COLOR_MODE_PERCENTAGE_DEFAULT = 25;
-  public static final int TRACK_COLOR_MODE_SLOW_DEFAULT = 9;
-  
+
   public static final String TRACK_NAME_DEFAULT = "LOCATION";
   
   // Track widget

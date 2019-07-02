@@ -50,7 +50,7 @@ public class TabsAdapter extends FragmentPagerAdapter
   private final Context context;
   private final TabHost tabHost;
   private final ViewPager viewPager;
-  private final ArrayList<TabInfo> tabInfos = new ArrayList<TabInfo>();
+  private final ArrayList<TabInfo> tabInfos = new ArrayList<>();
 
   /**
    * An object to hold a tab's info.

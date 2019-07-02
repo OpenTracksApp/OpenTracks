@@ -66,14 +66,14 @@ public class FileTrackExporter implements TrackExporter {
     try {
       trackWriter.prepare(outputStream);
       trackWriter.writeHeader(tracks);
-      for (int i = 0; i < tracks.length; i++) {
-        writeWaypoints(tracks[i]);
+      for (Track track1 : tracks) {
+        writeWaypoints(track1);
       }
       trackWriter.writeBeginTracks();
       long startTime = tracks[0].getTripStatistics().getStartTime();
-      for (int i = 0; i < tracks.length; i++) {
-        long offset = tracks[i].getTripStatistics().getStartTime() - startTime;
-        writeLocations(tracks[i], offset);
+      for (Track track : tracks) {
+        long offset = track.getTripStatistics().getStartTime() - startTime;
+        writeLocations(track, offset);
       }
       trackWriter.writeEndTracks();
       trackWriter.writeFooter();
@@ -95,10 +95,8 @@ public class FileTrackExporter implements TrackExporter {
      * load them into objects all at the same time.
      */
     boolean hasWaypoints = false;
-    Cursor cursor = null;
-    try {
-      cursor = myTracksProviderUtils.getWaypointCursor(
-          track.getId(), -1L, Constants.MAX_LOADED_WAYPOINTS_POINTS);
+    try (Cursor cursor = myTracksProviderUtils.getWaypointCursor(
+            track.getId(), -1L, Constants.MAX_LOADED_WAYPOINTS_POINTS)) {
       if (cursor != null && cursor.moveToFirst()) {
         /*
          * Yes, this will skip the first waypoint and that is intentional as the
@@ -115,10 +113,6 @@ public class FileTrackExporter implements TrackExporter {
           Waypoint waypoint = myTracksProviderUtils.createWaypoint(cursor);
           trackWriter.writeWaypoint(waypoint);
         }
-      }
-    } finally {
-      if (cursor != null) {
-        cursor.close();
       }
     }
     if (hasWaypoints) {
@@ -183,10 +177,6 @@ public class FileTrackExporter implements TrackExporter {
         isLastLocationValid = isLocationValid;
       }
 
-      if (wroteSegment) {
-        trackWriter.writeCloseSegment();
-        wroteSegment = false;
-      }
       if (wroteTrack) {
         Location lastValidTrackPoint = myTracksProviderUtils.getLastValidTrackPoint(track.getId());
         setLocationTime(lastValidTrackPoint, offset);

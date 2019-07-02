@@ -52,7 +52,7 @@ public class Track implements Parcelable {
   private TripStatistics tripStatistics = new TripStatistics();
 
   // Location points (which may not have been loaded)
-  private ArrayList<Location> locations = new ArrayList<Location>();
+  private ArrayList<Location> locations = new ArrayList<>();
 
   public Track() {}
 

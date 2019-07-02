@@ -437,10 +437,10 @@ public class SearchListActivity extends AbstractSendToGoogleActivity implements 
    */
   private List<Map<String, Object>> prepareResultsforDisplay(
       Collection<ScoredResult> scoredResults) {
-    ArrayList<Map<String, Object>> output = new ArrayList<Map<String, Object>>(
-        scoredResults.size());
+    ArrayList<Map<String, Object>> output = new ArrayList<>(
+            scoredResults.size());
     for (ScoredResult result : scoredResults) {
-      Map<String, Object> resultMap = new HashMap<String, Object>();
+      Map<String, Object> resultMap = new HashMap<>();
       if (result.track != null) {
         prepareTrackForDisplay(result.track, resultMap);
       } else {

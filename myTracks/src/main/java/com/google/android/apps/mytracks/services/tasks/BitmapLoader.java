@@ -48,7 +48,7 @@ public class BitmapLoader extends AsyncTask<Void, Void, Bitmap> {
       ImageView imageView, Uri uri, int targetWidth, int targetHeight, boolean fitWithin) {
 
     // Use a WeakReference to ensure the ImageView can be garbage collected
-    imageViewReference = new WeakReference<ImageView>(imageView);
+    imageViewReference = new WeakReference<>(imageView);
     this.uri = uri;
     this.targetWidth = targetWidth;
     this.targetHeight = targetHeight;

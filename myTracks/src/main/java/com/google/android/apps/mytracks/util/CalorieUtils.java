@@ -74,12 +74,13 @@ public class CalorieUtils {
     if (activityType == null || activityType.equals("")) {
       return ActivityType.INVALID;
     }
-    if (TrackIconUtils.getIconValue(context, activityType).equals(TrackIconUtils.WALK)) {
-      return ActivityType.WALKING;
-    } else if (TrackIconUtils.getIconValue(context, activityType).equals(TrackIconUtils.RUN)) {
-      return ActivityType.RUNNING;
-    } else if (TrackIconUtils.getIconValue(context, activityType).equals(TrackIconUtils.BIKE)) {
-      return ActivityType.CYCLING;
+    switch (TrackIconUtils.getIconValue(context, activityType)) {
+      case TrackIconUtils.WALK:
+        return ActivityType.WALKING;
+      case TrackIconUtils.RUN:
+        return ActivityType.RUNNING;
+      case TrackIconUtils.BIKE:
+        return ActivityType.CYCLING;
     }
     return ActivityType.INVALID;
   }
@@ -225,9 +226,7 @@ public class CalorieUtils {
   private static void clearCalorie(MyTracksProviderUtils myTracksProviderUtils, Track track) {
     track.getTripStatistics().setCalorie(0);
     myTracksProviderUtils.updateTrack(track);
-    Cursor cursor = null;
-    try {
-      cursor = myTracksProviderUtils.getWaypointCursor(track.getId(), -1L, -1);
+    try (Cursor cursor = myTracksProviderUtils.getWaypointCursor(track.getId(), -1L, -1)) {
       if (cursor != null && cursor.moveToFirst()) {
         /*
          * Yes, this will skip the first waypoint and that is intentional as the
@@ -239,10 +238,6 @@ public class CalorieUtils {
           myTracksProviderUtils.updateWaypoint(waypoint);
           waypoint = getNextStatisticsWaypoint(myTracksProviderUtils, cursor);
         }
-      }
-    } finally {
-      if (cursor != null) {
-        cursor.close();
       }
     }
   }

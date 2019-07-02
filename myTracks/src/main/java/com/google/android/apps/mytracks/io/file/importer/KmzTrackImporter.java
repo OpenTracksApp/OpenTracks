@@ -152,19 +152,13 @@ public class KmzTrackImporter implements TrackImporter {
    * @param zipInputStream the zip input stream
    */
   private byte[] getKml(ZipInputStream zipInputStream) throws IOException {
-    ByteArrayOutputStream byteArrayOutputStream = null;
-    try {
-      byteArrayOutputStream = new ByteArrayOutputStream();
+    try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
       byte[] buffer = new byte[BUFFER_SIZE];
       int count;
       while ((count = zipInputStream.read(buffer)) != -1) {
         byteArrayOutputStream.write(buffer, 0, count);
       }
       return byteArrayOutputStream.toByteArray();
-    } finally {
-      if (byteArrayOutputStream != null) {
-        byteArrayOutputStream.close();
-      }
     }
   }
 

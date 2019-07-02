@@ -155,20 +155,14 @@ public class GoogleLocationUtils {
    */
   private static int getUseLocationForServices(Context context) {
     ContentResolver contentResolver = context.getContentResolver();
-    Cursor cursor = null;
     String stringValue = null;
-    try {
-      cursor = contentResolver.query(GOOGLE_SETTINGS_CONTENT_URI, new String[] { VALUE },
-          NAME + "=?", new String[] { USE_LOCATION_FOR_SERVICES }, null);
+    try (Cursor cursor = contentResolver.query(GOOGLE_SETTINGS_CONTENT_URI, new String[]{VALUE},
+            NAME + "=?", new String[]{USE_LOCATION_FOR_SERVICES}, null)) {
       if (cursor != null && cursor.moveToNext()) {
         stringValue = cursor.getString(0);
       }
     } catch (RuntimeException e) {
       Log.w(TAG, "Failed to get 'Use My Location' setting", e);
-    } finally {
-      if (cursor != null) {
-        cursor.close();
-      }
     }
     if (stringValue == null) {
       return USE_LOCATION_FOR_SERVICES_NOT_SET;

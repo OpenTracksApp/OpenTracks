@@ -148,8 +148,8 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT);
     this.weight = PreferencesUtils.getFloat(
         context, R.string.weight_key, PreferencesUtils.getDefaultWeight(context));
-    trackIds = new ArrayList<Long>();
-    waypoints = new ArrayList<Waypoint>();
+    trackIds = new ArrayList<>();
+    waypoints = new ArrayList<>();
   }
 
   @Override
@@ -158,7 +158,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
   }
 
   @Override
-  public void characters(char[] ch, int start, int length) throws SAXException {
+  public void characters(char[] ch, int start, int length) {
     String newContent = new String(ch, start, length);
     if (content == null) {
       content = newContent;

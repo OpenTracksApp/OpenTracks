@@ -233,19 +233,13 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
 
   @Override
   public List<Track> getAllTracks() {
-    ArrayList<Track> tracks = new ArrayList<Track>();
-    Cursor cursor = null;
-    try {
-      cursor = getTrackCursor(null, null, null, TracksColumns._ID);
+    ArrayList<Track> tracks = new ArrayList<>();
+    try (Cursor cursor = getTrackCursor(null, null, null, TracksColumns._ID)) {
       if (cursor != null && cursor.moveToFirst()) {
         tracks.ensureCapacity(cursor.getCount());
         do {
           tracks.add(createTrack(cursor));
         } while (cursor.moveToNext());
-      }
-    } finally {
-      if (cursor != null) {
-        cursor.close();
       }
     }
     return tracks;
@@ -253,17 +247,11 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
 
   @Override
   public Track getLastTrack() {
-    Cursor cursor = null;
-    try {
+    try (Cursor cursor = getTrackCursor(null, null, null,
+            TracksColumns.SHAREDWITHME + " ASC, " + TracksColumns.STARTTIME + " DESC")) {
       // Using the same order as shown in the track list
-      cursor = getTrackCursor(null, null, null,
-          TracksColumns.SHAREDWITHME + " ASC, " + TracksColumns.STARTTIME + " DESC");
       if (cursor != null && cursor.moveToNext()) {
         return createTrack(cursor);
-      }
-    } finally {
-      if (cursor != null) {
-        cursor.close();
       }
     }
     return null;
@@ -274,16 +262,10 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     if (trackId < 0) {
       return null;
     }
-    Cursor cursor = null;
-    try {
-      cursor = getTrackCursor(null, TracksColumns._ID + "=?",
-          new String[] { Long.toString(trackId) }, TracksColumns._ID);
+    try (Cursor cursor = getTrackCursor(null, TracksColumns._ID + "=?",
+            new String[]{Long.toString(trackId)}, TracksColumns._ID)) {
       if (cursor != null && cursor.moveToNext()) {
         return createTrack(cursor);
-      }
-    } finally {
-      if (cursor != null) {
-        cursor.close();
       }
     }
     return null;
@@ -547,17 +529,11 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     if (trackId < 0) {
       return -1L;
     }
-    Cursor cursor = null;
-    try {
-      cursor = getWaypointCursor(new String[] { WaypointsColumns._ID },
-          WaypointsColumns.TRACKID + "=?", new String[] { Long.toString(trackId) },
-          WaypointsColumns._ID, 1);
+    try (Cursor cursor = getWaypointCursor(new String[]{WaypointsColumns._ID},
+            WaypointsColumns.TRACKID + "=?", new String[]{Long.toString(trackId)},
+            WaypointsColumns._ID, 1)) {
       if (cursor != null && cursor.moveToFirst()) {
         return cursor.getLong(cursor.getColumnIndexOrThrow(WaypointsColumns._ID));
-      }
-    } finally {
-      if (cursor != null) {
-        cursor.close();
       }
     }
     return -1L;
@@ -618,16 +594,10 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     if (waypointId < 0) {
       return null;
     }
-    Cursor cursor = null;
-    try {
-      cursor = getWaypointCursor(null, WaypointsColumns._ID + "=?",
-          new String[] { Long.toString(waypointId) }, WaypointsColumns._ID, 1);
+    try (Cursor cursor = getWaypointCursor(null, WaypointsColumns._ID + "=?",
+            new String[]{Long.toString(waypointId)}, WaypointsColumns._ID, 1)) {
       if (cursor != null && cursor.moveToFirst()) {
         return createWaypoint(cursor);
-      }
-    } finally {
-      if (cursor != null) {
-        cursor.close();
       }
     }
     return null;
@@ -1117,15 +1087,9 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   }
 
   private Location findTrackPointBy(String selection, String[] selectionArgs) {
-    Cursor cursor = null;
-    try {
-      cursor = getTrackPointCursor(null, selection, selectionArgs, TrackPointsColumns._ID);
+    try (Cursor cursor = getTrackPointCursor(null, selection, selectionArgs, TrackPointsColumns._ID)) {
       if (cursor != null && cursor.moveToNext()) {
         return createTrackPoint(cursor);
-      }
-    } finally {
-      if (cursor != null) {
-        cursor.close();
       }
     }
     return null;

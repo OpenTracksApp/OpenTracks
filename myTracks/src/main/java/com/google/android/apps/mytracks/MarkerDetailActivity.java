@@ -59,31 +59,25 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity implements De
     MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
     waypoint = myTracksProviderUtils.getWaypoint(markerId);
 
-    markerIds = new ArrayList<Long>();
+    markerIds = new ArrayList<>();
     int markerIndex = -1;
-    Cursor cursor = null;
 
-    try {
-      cursor = myTracksProviderUtils.getWaypointCursor(waypoint.getTrackId(), -1L, -1);
-      if (cursor != null && cursor.moveToFirst()) {
-        /*
-         * Yes, this will skip the first waypoint and that is intentional as the
-         * first waypoint holds the stats for the track.
-         */
-        while (cursor.moveToNext()) {
-          Waypoint current = myTracksProviderUtils.createWaypoint(cursor);
+      try (Cursor cursor = myTracksProviderUtils.getWaypointCursor(waypoint.getTrackId(), -1L, -1)) {
+          if (cursor != null && cursor.moveToFirst()) {
+              /*
+               * Yes, this will skip the first waypoint and that is intentional as the
+               * first waypoint holds the stats for the track.
+               */
+              while (cursor.moveToNext()) {
+                  Waypoint current = myTracksProviderUtils.createWaypoint(cursor);
 
-          markerIds.add(current.getId());
-          if (current.getId() == markerId) {
-            markerIndex = markerIds.size() - 1;
+                  markerIds.add(current.getId());
+                  if (current.getId() == markerId) {
+                      markerIndex = markerIds.size() - 1;
+                  }
+              }
           }
-        }
       }
-    } finally {
-      if (cursor != null) {
-        cursor.close();
-      }
-    }
 
     ViewPager viewPager = findViewById(R.id.maker_detail_activity_view_pager);
     viewPager.setAdapter(new MarkerDetailPagerAdapter(getSupportFragmentManager()));

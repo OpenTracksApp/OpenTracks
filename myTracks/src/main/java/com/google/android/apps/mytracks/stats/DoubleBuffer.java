@@ -120,14 +120,14 @@ public class DoubleBuffer {
 
   @Override
   public String toString() {
-    StringBuffer stringBuffer = new StringBuffer("Full: ");
-    stringBuffer.append(isFull);
-    stringBuffer.append("\n");
+    StringBuilder builder = new StringBuilder("Full: ");
+    builder.append(isFull);
+    builder.append("\n");
     for (int i = 0; i < buffer.length; i++) {
-      stringBuffer.append((i == index) ? "<<" : "[");
-      stringBuffer.append(buffer[i]);
-      stringBuffer.append((i == index) ? ">> " : "] ");
+      builder.append((i == index) ? "<<" : "[");
+      builder.append(buffer[i]);
+      builder.append((i == index) ? ">> " : "] ");
     }
-    return stringBuffer.toString();
+    return builder.toString();
   }
 }

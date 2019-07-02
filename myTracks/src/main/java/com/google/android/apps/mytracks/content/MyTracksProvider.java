@@ -276,7 +276,7 @@ public class MyTracksProvider extends ContentProvider {
     if (initialValues == null) {
       initialValues = new ContentValues();
     }
-    Uri result = null;
+    Uri result;
     try {
       db.beginTransaction();
       result = insertContentValues(url, getUrlType(url), initialValues);
@@ -293,7 +293,7 @@ public class MyTracksProvider extends ContentProvider {
     if (!canAccess()) {
       return 0;
     }
-    int numInserted = 0;
+    int numInserted;
     try {
       // Use a transaction in order to make the insertions run as a single batch
       db.beginTransaction();

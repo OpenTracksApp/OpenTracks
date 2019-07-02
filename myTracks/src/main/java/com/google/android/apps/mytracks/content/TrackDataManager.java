@@ -37,11 +37,11 @@ public class TrackDataManager {
   
   // Map of listener to its track data types
   private final Map<TrackDataListener, EnumSet<TrackDataType>>
-      listenerToTypesMap = new HashMap<TrackDataListener, EnumSet<TrackDataType>>();
+      listenerToTypesMap = new HashMap<>();
 
   // Map of track data type to listeners
   private final Map<TrackDataType, Set<TrackDataListener>>
-      typeToListenersMap = new EnumMap<TrackDataType, Set<TrackDataListener>>(TrackDataType.class);
+      typeToListenersMap = new EnumMap<>(TrackDataType.class);
 
   public TrackDataManager() {
     for (TrackDataType trackDataType : TrackDataType.values()) {

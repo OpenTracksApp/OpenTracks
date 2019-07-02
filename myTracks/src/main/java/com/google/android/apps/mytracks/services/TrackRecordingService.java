@@ -512,7 +512,6 @@ public class TrackRecordingService extends Service {
         Log.i(TAG, "Stop resume track.");
         updateRecordingState(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, true);
         stopSelfResult(startId);
-        return;
       }
     }
   }
@@ -1088,7 +1087,6 @@ public class TrackRecordingService extends Service {
             .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
         startForegroundService(pendingIntent, R.string.track_record_notification);
       }
-      return;
     } else {
       // Not recording
       if (isGpsStarted) {

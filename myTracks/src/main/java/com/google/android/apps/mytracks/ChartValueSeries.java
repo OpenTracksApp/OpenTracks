@@ -173,8 +173,7 @@ public class ChartValueSeries {
    * @param max the max value
    */
   private int getInterval(double min, double max) {
-    for (int i = 0; i < intervalValues.length; i++) {
-      int intervalValue = intervalValues[i];
+    for (int intervalValue : intervalValues) {
       int minValue = getMinMarkerValue(min, intervalValue);
       double targetInterval = (max - minValue) / ChartView.Y_AXIS_INTERVALS;
       if (intervalValue >= targetInterval) {

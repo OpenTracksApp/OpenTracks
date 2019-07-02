@@ -214,7 +214,7 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
    * just the path file.
    */
   private List<File> getFiles() {
-    List<File> files = new ArrayList<File>();
+    List<File> files = new ArrayList<>();
     File file = new File(path);
     if (importAll) {
       File[] candidates = file.listFiles();

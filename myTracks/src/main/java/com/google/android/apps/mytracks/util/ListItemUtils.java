@@ -178,23 +178,23 @@ public class ListItemUtils {
    */
   private static String getOwnerTimeDistance(
       String sharedOwner, String totalTime, String totalDistance) {
-    StringBuffer buffer = new StringBuffer();
+    StringBuilder builder = new StringBuilder();
     if (sharedOwner != null && sharedOwner.length() != 0) {
-      buffer.append(sharedOwner);
+      builder.append(sharedOwner);
     }
     if (totalTime != null && totalTime.length() != 0) {
-      if (buffer.length() != 0) {
-        buffer.append(" \u2027 ");
+      if (builder.length() != 0) {
+        builder.append(" \u2027 ");
       }
-      buffer.append(totalTime);
+      builder.append(totalTime);
     }
     if (totalDistance != null && totalDistance.length() != 0) {
-      if (buffer.length() != 0) {
-        buffer.append(" ");
+      if (builder.length() != 0) {
+        builder.append(" ");
       }
-      buffer.append("(").append(totalDistance).append(")");
+      builder.append("(").append(totalDistance).append(")");
     }
-    return buffer.toString();
+    return builder.toString();
   }
 
   /**

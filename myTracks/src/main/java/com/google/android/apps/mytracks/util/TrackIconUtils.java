@@ -76,25 +76,25 @@ public class TrackIconUtils {
       R.string.activity_type_trail_hiking, R.string.activity_type_walking };
 
   private static final LinkedHashMap<String, Pair<Integer, Integer>>
-      MAP = new LinkedHashMap<String, Pair<Integer, Integer>>();
+      MAP = new LinkedHashMap<>();
 
   static {
     MAP.put(
-        RUN, new Pair<Integer, Integer>(R.string.activity_type_running, R.drawable.ic_track_run));
+        RUN, new Pair<>(R.string.activity_type_running, R.drawable.ic_track_run));
     MAP.put(
-        WALK, new Pair<Integer, Integer>(R.string.activity_type_walking, R.drawable.ic_track_walk));
+        WALK, new Pair<>(R.string.activity_type_walking, R.drawable.ic_track_walk));
     MAP.put(
-        BIKE, new Pair<Integer, Integer>(R.string.activity_type_biking, R.drawable.ic_track_bike));
+        BIKE, new Pair<>(R.string.activity_type_biking, R.drawable.ic_track_bike));
     MAP.put(DRIVE,
-        new Pair<Integer, Integer>(R.string.activity_type_driving, R.drawable.ic_track_drive));
+            new Pair<>(R.string.activity_type_driving, R.drawable.ic_track_drive));
     MAP.put(
-        SKI, new Pair<Integer, Integer>(R.string.activity_type_skiing, R.drawable.ic_track_ski));
-    MAP.put(SNOW_BOARDING, new Pair<Integer, Integer>(
-        R.string.activity_type_snow_boarding, R.drawable.ic_track_snow_boarding));
+        SKI, new Pair<>(R.string.activity_type_skiing, R.drawable.ic_track_ski));
+    MAP.put(SNOW_BOARDING, new Pair<>(
+            R.string.activity_type_snow_boarding, R.drawable.ic_track_snow_boarding));
     MAP.put(AIRPLANE,
-        new Pair<Integer, Integer>(R.string.activity_type_airplane, R.drawable.ic_track_airplane));
+            new Pair<>(R.string.activity_type_airplane, R.drawable.ic_track_airplane));
     MAP.put(
-        BOAT, new Pair<Integer, Integer>(R.string.activity_type_boat, R.drawable.ic_track_boat));
+        BOAT, new Pair<>(R.string.activity_type_boat, R.drawable.ic_track_boat));
   }
 
   private static final float[] REVERT_COLOR_MATRIX = { -1.0f, 0, 0, 0, 255, // red
@@ -135,9 +135,7 @@ public class TrackIconUtils {
    * Gets all icon values.
    */
   public static List<String> getAllIconValues() {
-    List<String> values = new ArrayList<>();
-    values.addAll(MAP.keySet());
-    return values;
+    return new ArrayList<>(MAP.keySet());
   }
 
   /**

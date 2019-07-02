@@ -49,9 +49,6 @@ public class UnitConversions {
   // multiplication factor to convert kilometers to miles
   public static final double KM_TO_MI = 0.621371192;
 
-  // multiplication factor to convert miles to kilometers
-  public static final double MI_TO_KM = 1 / KM_TO_MI;
-
   // multiplication factor to convert miles to feet
   public static final double MI_TO_FT = 5280.0;
 

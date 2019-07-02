@@ -131,10 +131,7 @@ public class FileUtils {
    * @param components the components
    */
   public static String getPath(String... components) {
-    StringBuilder dirNameBuilder = new StringBuilder();
-    dirNameBuilder.append(Environment.getExternalStorageDirectory());
-    dirNameBuilder.append(getPathDisplayName(components));
-    return dirNameBuilder.toString();
+    return Environment.getExternalStorageDirectory() + getPathDisplayName(components);
   }
 
   /**
@@ -220,17 +217,17 @@ public class FileUtils {
    * @param name name
    */
   static String sanitizeFileName(String name) {
-    StringBuffer buffer = new StringBuffer(name.length());
+    StringBuilder builder = new StringBuilder(name.length());
     for (int i = 0; i < name.length(); i++) {
       int codePoint = name.codePointAt(i);
       char character = name.charAt(i);
       if (Character.isLetterOrDigit(character) || codePoint > 127 || isSpecialFat32(character)) {
-        buffer.appendCodePoint(codePoint);
+        builder.appendCodePoint(codePoint);
       } else {
-        buffer.append("_");
+        builder.append("_");
       }
     }
-    String result = buffer.toString();
+    String result = builder.toString();
     return result.replaceAll("_+", "_");
   }
 

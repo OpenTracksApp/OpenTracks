@@ -240,29 +240,23 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
    * Saves all the tracks.
    */
   private Boolean saveAllTracks() {
-    Cursor cursor = null;
-    try {
-      cursor = myTracksProviderUtils.getTrackCursor(null, null, TracksColumns._ID);
-      if (cursor == null) {
-        return false;
+      try (Cursor cursor = myTracksProviderUtils.getTrackCursor(null, null, TracksColumns._ID)) {
+          if (cursor == null) {
+              return false;
+          }
+          totalCount = cursor.getCount();
+          for (int i = 0; i < totalCount; i++) {
+              if (isCancelled()) {
+                  return false;
+              }
+              cursor.moveToPosition(i);
+              Track track = myTracksProviderUtils.createTrack(cursor);
+              if (track != null && saveTracks(new Track[]{track})) {
+                  successCount++;
+              }
+              publishProgress(i + 1, totalCount);
+          }
+          return true;
       }
-      totalCount = cursor.getCount();
-      for (int i = 0; i < totalCount; i++) {
-        if (isCancelled()) {
-          return false;
-        }
-        cursor.moveToPosition(i);
-        Track track = myTracksProviderUtils.createTrack(cursor);
-        if (track != null && saveTracks(new Track[] { track })) {
-          successCount++;
-        }
-        publishProgress(i + 1, totalCount);
-      }
-      return true;
-    } finally {
-      if (cursor != null) {
-        cursor.close();
-      }
-    }
   }
 }

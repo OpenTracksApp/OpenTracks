@@ -21,7 +21,6 @@ import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
-import com.google.android.apps.mytracks.util.UriUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -108,7 +107,7 @@ public class ImportActivity extends Activity {
       }
 
       Uri data = intent.getData();
-      if (!UriUtils.isFileUri(data)) {
+      if ("file".equals(data.getScheme())) {
         Log.d(TAG, "Invalid data: " + intent);
         finish();
         return;

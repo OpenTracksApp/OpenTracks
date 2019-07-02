@@ -65,52 +65,68 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
   @Override
   public void startElement(String uri, String localName, String tag, Attributes attributes)
       throws SAXException {
-    if (tag.equals(TAG_WAYPOINT)) {
-      onWaypointStart(attributes);
-    } else if (tag.equals(TAG_TRACK)) {
-      onTrackStart();
-    } else if (tag.equals(TAG_TRACK_SEGMENT)) {
-      onTrackSegmentStart();
-    } else if (tag.equals(TAG_TRACK_POINT)) {
-      onTrackPointStart(attributes);
-    }
+      switch (tag) {
+          case TAG_WAYPOINT:
+              onWaypointStart(attributes);
+              break;
+          case TAG_TRACK:
+              onTrackStart();
+              break;
+          case TAG_TRACK_SEGMENT:
+              onTrackSegmentStart();
+              break;
+          case TAG_TRACK_POINT:
+              onTrackPointStart(attributes);
+              break;
+      }
   }
 
   @Override
   public void endElement(String uri, String localName, String tag) throws SAXException {
-    if (tag.equals(TAG_GPX)) {
-      onFileEnd();
-    } else if (tag.equals(TAG_WAYPOINT)) {
-      onWaypointEnd();
-    } else if (tag.equals(TAG_TRACK)) {
-      onTrackEnd();
-    } else if (tag.equals(TAG_TRACK_POINT)) {
-      onTrackPointEnd();
-    } else if (tag.equals(TAG_NAME)) {
-      if (content != null) {
-        name = content.trim();
+      switch (tag) {
+          case TAG_GPX:
+              onFileEnd();
+              break;
+          case TAG_WAYPOINT:
+              onWaypointEnd();
+              break;
+          case TAG_TRACK:
+              onTrackEnd();
+              break;
+          case TAG_TRACK_POINT:
+              onTrackPointEnd();
+              break;
+          case TAG_NAME:
+              if (content != null) {
+                  name = content.trim();
+              }
+              break;
+          case TAG_DESCRIPTION:
+              if (content != null) {
+                  description = content.trim();
+              }
+              break;
+          case TAG_TYPE:
+              if (content != null) {
+                  category = content.trim();
+              }
+              break;
+          case TAG_TIME:
+              if (content != null) {
+                  time = content.trim();
+              }
+              break;
+          case TAG_ELEVATION:
+              if (content != null) {
+                  altitude = content.trim();
+              }
+              break;
+          case TAG_COMMENT:
+              if (content != null) {
+                  waypointType = content.trim();
+              }
+              break;
       }
-    } else if (tag.equals(TAG_DESCRIPTION)) {
-      if (content != null) {
-        description = content.trim();
-      }
-    } else if (tag.equals(TAG_TYPE)) {
-      if (content != null) {
-        category = content.trim();
-      }
-    } else if (tag.equals(TAG_TIME)) {
-      if (content != null) {
-        time = content.trim();
-      }
-    } else if (tag.equals(TAG_ELEVATION)) {
-      if (content != null) {
-        altitude = content.trim();
-      }
-    } else if (tag.equals(TAG_COMMENT)) {
-      if (content != null) {
-        waypointType = content.trim();
-      }
-    }
 
     // Reset element content
     content = null;

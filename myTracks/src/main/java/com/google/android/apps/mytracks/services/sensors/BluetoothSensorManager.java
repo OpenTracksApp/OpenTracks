@@ -55,7 +55,7 @@ public class BluetoothSensorManager extends SensorManager {
     }
   
     // Get the default adapter from the main application thread
-    final ArrayList<BluetoothAdapter> adapters = new ArrayList<BluetoothAdapter>(1);
+    final ArrayList<BluetoothAdapter> adapters = new ArrayList<>(1);
     final Object mutex = new Object();
   
     Handler handler = new Handler(Looper.getMainLooper());

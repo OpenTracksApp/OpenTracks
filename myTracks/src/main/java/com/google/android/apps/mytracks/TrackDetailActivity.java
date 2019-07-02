@@ -495,7 +495,6 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
         }
       }
       finish();
-      return;
     }
   }
 

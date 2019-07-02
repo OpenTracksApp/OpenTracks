@@ -62,7 +62,7 @@ public class TrackWidgetConfigActivity extends Activity {
 
     boolean reportSpeed = PreferencesUtils.isReportSpeed(this);
 
-    List<CharSequence> list = new ArrayList<CharSequence>();
+    List<CharSequence> list = new ArrayList<>();
     addItem(list, R.string.stats_distance);
     addItem(list, R.string.stats_total_time);
     addItem(list, reportSpeed ? R.string.stats_average_speed : R.string.stats_average_pace);
@@ -128,8 +128,8 @@ public class TrackWidgetConfigActivity extends Activity {
   }
 
   private void configSpinner(Spinner spinner, List<CharSequence> list, int position) {
-    ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
-        this, android.R.layout.simple_spinner_item, list);
+    ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(
+            this, android.R.layout.simple_spinner_item, list);
     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     spinner.setAdapter(adapter);
     spinner.setSelection(position);

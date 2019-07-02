@@ -36,7 +36,6 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -108,7 +107,7 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
        */
       private int[] getCheckedPositions(ListView list) {
         SparseBooleanArray positions  = list.getCheckedItemPositions();
-        ArrayList<Integer> arrayList = new ArrayList<Integer>();
+        ArrayList<Integer> arrayList = new ArrayList<>();
         for (int i = 0; i < positions.size(); i++) {
           int key = positions.keyAt(i);
           if (positions.valueAt(i)) {

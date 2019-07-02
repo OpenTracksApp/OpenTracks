@@ -39,7 +39,7 @@ public class StrideReadings {
   private final List<Integer> strideReadingsHistory;
 
   public StrideReadings() {
-    strideReadingsHistory = new LinkedList<Integer>();
+    strideReadingsHistory = new LinkedList<>();
   }
 
   public void updateStrideReading(int numStrides) {

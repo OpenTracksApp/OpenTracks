@@ -75,9 +75,9 @@ public class KmlTrackWriter implements TrackWriter {
   private final MyTracksProviderUtils myTracksProviderUtils;
 
   private PrintWriter printWriter;
-  private ArrayList<Integer> powerList = new ArrayList<Integer>();
-  private ArrayList<Integer> cadenceList = new ArrayList<Integer>();
-  private ArrayList<Integer> heartRateList = new ArrayList<Integer>();
+  private ArrayList<Integer> powerList = new ArrayList<>();
+  private ArrayList<Integer> cadenceList = new ArrayList<>();
+  private ArrayList<Integer> heartRateList = new ArrayList<>();
   private boolean hasPower;
   private boolean hasCadence;
   private boolean hasHeartRate;
@@ -406,30 +406,24 @@ public class KmlTrackWriter implements TrackWriter {
     if (trackPointId == -1L) {
       return location.getBearing();
     }
-    Cursor cursor = null;
     Location viewLocation;
-    try {
-      cursor = myTracksProviderUtils.getTrackPointCursor(trackId, trackPointId, 10, true);
+    try (Cursor cursor = myTracksProviderUtils.getTrackPointCursor(trackId, trackPointId, 10, true)) {
       if (cursor == null || cursor.getCount() == 0) {
         return location.getBearing();
       }
       cursor.moveToPosition(cursor.getCount() - 1);
       viewLocation = myTracksProviderUtils.createTrackPoint(cursor);
-    } finally {
-      if (cursor != null) {
-        cursor.close();
-      }
-    }  
+    }
     return viewLocation.bearingTo(location);
   }
   
   private String getCoordinates(Location location, String separator) {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append(location.getLongitude()).append(separator).append(location.getLatitude());
+    StringBuilder builder = new StringBuilder();
+    builder.append(location.getLongitude()).append(separator).append(location.getLatitude());
     if (location.hasAltitude()) {
-      buffer.append(separator).append(location.getAltitude());
+      builder.append(separator).append(location.getAltitude());
     }
-    return buffer.toString();    
+    return builder.toString();
   }
 
   /**

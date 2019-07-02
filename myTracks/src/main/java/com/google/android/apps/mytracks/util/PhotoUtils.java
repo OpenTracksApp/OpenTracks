@@ -48,8 +48,8 @@ public class PhotoUtils {
     if (cancelBitmapLoader(imageView, uri)) {
       BitmapLoader bitmapLoader = new BitmapLoader(
           imageView, uri, targetWidth, targetHeight, fitWithin);
-      WeakReference<BitmapLoader> bitmapLoaderReference = new WeakReference<BitmapLoader>(
-          bitmapLoader);
+      WeakReference<BitmapLoader> bitmapLoaderReference = new WeakReference<>(
+              bitmapLoader);
       imageView.setTag(bitmapLoaderReference);
       bitmapLoader.execute();
     }

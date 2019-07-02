@@ -52,7 +52,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
   private static final String TAG = AnnouncementPeriodicTask.class.getSimpleName();
   
   @VisibleForTesting
-  static final HashMap<String, String> SPEECH_PARAMS = new HashMap<String, String>();
+  static final HashMap<String, String> SPEECH_PARAMS = new HashMap<>();
   static {
     SPEECH_PARAMS.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "not_used");
   }
@@ -295,14 +295,10 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
     if (parts[2] != 0) {
       sb.append(hours);
       sb.append(" ");
-      sb.append(minutes);
-      sb.append(" ");
-      sb.append(seconds);
-    } else {
-      sb.append(minutes);
-      sb.append(" ");
-      sb.append(seconds);
     }
+    sb.append(minutes);
+    sb.append(" ");
+    sb.append(seconds);
     return sb.toString();
   }
 

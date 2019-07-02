@@ -147,7 +147,7 @@ public class ChooseActivityDialogFragment extends AbstractMyTracksDialogFragment
    * Gets the display info.
    */
   private List<DisplayInfo> getDisplayInfos(FragmentActivity fragmentActivity) {
-    List<DisplayInfo> displayInfos = new ArrayList<DisplayInfo>();
+    List<DisplayInfo> displayInfos = new ArrayList<>();
     Intent intent = ShareCompat.IntentBuilder.from(fragmentActivity)
         .setType(IntentUtils.TEXT_PLAIN_TYPE).getIntent();
     List<ResolveInfo> resolveInfos = packageManager.queryIntentActivities(
@@ -244,7 +244,7 @@ public class ChooseActivityDialogFragment extends AbstractMyTracksDialogFragment
         usePackageName = true;
       } else {
         // Use HashSet to track duplicates
-        HashSet<CharSequence> duplicates = new HashSet<CharSequence>();
+        HashSet<CharSequence> duplicates = new HashSet<>();
         duplicates.add(appName);
         for (int i = start + 1; i <= end; i++) {
           ResolveInfo resolveInfo = resolveInfos.get(i);

@@ -93,7 +93,6 @@ public class StringUtils {
     }
     long hours = 0;
     long minutes = 0;
-    long seconds = 0;
     long elapsedSeconds = (long) (time * UnitConversions.MS_TO_S);
 
     if (elapsedSeconds >= 3600) {
@@ -104,7 +103,7 @@ public class StringUtils {
       minutes = elapsedSeconds / 60;
       elapsedSeconds -= minutes * 60;
     }
-    seconds = elapsedSeconds;
+    long seconds = elapsedSeconds;
 
     if (hours > 0) {
       return String.format(Locale.US, "%d:%02d:%02d", hours, minutes, seconds);
@@ -276,13 +275,12 @@ public class StringUtils {
       return description;
     }
 
-    StringBuffer buffer = new StringBuffer();
-
-    buffer.append("[").append(category).append("]");
+    StringBuilder builder = new StringBuilder();
+    builder.append("[").append(category).append("]");
     if (description != null && description.length() != 0) {
-      buffer.append(" ").append(description);
+      builder.append(" ").append(description);
     }
-    return buffer.toString();
+    return builder.toString();
   }
   
   /**

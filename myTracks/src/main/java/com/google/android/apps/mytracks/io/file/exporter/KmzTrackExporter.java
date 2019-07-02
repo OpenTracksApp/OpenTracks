@@ -111,9 +111,7 @@ public class KmzTrackExporter implements TrackExporter {
 
   private void addImages(ZipOutputStream zipOutputStream) throws InterruptedException, IOException {
     for (Track track : tracks) {
-      Cursor cursor = null;
-      try {
-        cursor = myTracksProviderUtils.getWaypointCursor(track.getId(), -1L, -1);
+      try (Cursor cursor = myTracksProviderUtils.getWaypointCursor(track.getId(), -1L, -1)) {
         if (cursor != null && cursor.moveToFirst()) {
           /*
            * Yes, this will skip the first waypoint and that is intentional as
@@ -129,10 +127,6 @@ public class KmzTrackExporter implements TrackExporter {
               addImage(zipOutputStream, photoUrl);
             }
           }
-        }
-      } finally {
-        if (cursor != null) {
-          cursor.close();
         }
       }
     }
@@ -181,17 +175,11 @@ public class KmzTrackExporter implements TrackExporter {
   }
 
   private void readFromFile(ZipOutputStream zipOutputStream, Uri uri) throws IOException {
-    FileInputStream fileInputStream = null;
-    try {
-      fileInputStream = new FileInputStream(new File(uri.getPath()));
+    try (FileInputStream fileInputStream = new FileInputStream(new File(uri.getPath()))) {
       byte[] buffer = new byte[BUFFER_SIZE];
       int byteCount;
       while ((byteCount = fileInputStream.read(buffer)) != -1) {
         zipOutputStream.write(buffer, 0, byteCount);
-      }
-    } finally {
-      if (fileInputStream != null) {
-        fileInputStream.close();
       }
     }
   }

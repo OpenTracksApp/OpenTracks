@@ -27,7 +27,6 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
-import android.preference.PreferenceScreen;
 import android.provider.Settings;
 
 import java.util.ArrayList;
@@ -101,14 +100,12 @@ public class SensorSettingsActivity extends AbstractSettingsActivity {
         getString(R.string.bluetooth_sensor_key));
     String value = PreferencesUtils.getString(
         this, R.string.bluetooth_sensor_key, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT);
-    List<String> optionsList = new ArrayList<String>();
-    List<String> valuesList = new ArrayList<String>();
+    List<String> optionsList = new ArrayList<>();
+    List<String> valuesList = new ArrayList<>();
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     if (bluetoothAdapter != null) {
       BluetoothDeviceUtils.populateDeviceLists(bluetoothAdapter, optionsList, valuesList);
     }
-    String[] options = optionsList.toArray(new String[optionsList.size()]);
-    String[] values = valuesList.toArray(new String[valuesList.size()]);
 
     if (valuesList.size() == 1) {
       if (!valuesList.get(0).equals(value)) {
@@ -121,6 +118,9 @@ public class SensorSettingsActivity extends AbstractSettingsActivity {
         PreferencesUtils.setString(this, R.string.bluetooth_sensor_key, value);
       }
     }
+
+    String[] options = optionsList.toArray(new String[0]);
+    String[] values = valuesList.toArray(new String[0]);
     configureListPreference(preference, options, options, values, value, null);
   }
 }

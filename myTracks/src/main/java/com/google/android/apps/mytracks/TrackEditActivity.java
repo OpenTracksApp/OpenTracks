@@ -26,7 +26,6 @@ import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtil
 import com.google.android.apps.mytracks.util.TrackUtils;
 import com.google.android.maps.mytracks.R;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -52,8 +51,6 @@ public class TrackEditActivity extends AbstractMyTracksActivity implements Choos
 
   private static final String TAG = TrackEditActivity.class.getSimpleName();
   private static final String ICON_VALUE_KEY = "icon_value_key";
-
-  private static final int DRIVE_REQUEST_CODE = 0;
 
   private Long trackId;
   private TrackRecordingServiceConnection trackRecordingServiceConnection;

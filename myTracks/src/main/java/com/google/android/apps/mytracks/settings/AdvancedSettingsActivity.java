@@ -194,7 +194,7 @@ public class AdvancedSettingsActivity extends AbstractSettingsActivity {
         Log.i(TAG, "Resetting all settings");
 
         // Actually wipe preferences and save synchronously
-        sharedPreferences.edit().clear().commit();
+        sharedPreferences.edit().clear().apply();
 
         // Give UI feedback in the UI thread
         runOnUiThread(new Runnable() {
