@@ -222,15 +222,16 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
 
     tabsAdapter = new TabsAdapter(this, tabHost, viewPager);
 
+    TabSpec statsTabSpec = tabHost.newTabSpec(StatsFragment.STATS_FRAGMENT_TAG).setIndicator(
+            getString(R.string.track_detail_stats_tab),
+            getResources().getDrawable(R.drawable.ic_tab_stats));
+    tabsAdapter.addTab(statsTabSpec, StatsFragment.class, null);
+
     TabSpec chartTabSpec = tabHost.newTabSpec(ChartFragment.CHART_FRAGMENT_TAG).setIndicator(
         getString(R.string.track_detail_chart_tab),
         getResources().getDrawable(R.drawable.ic_tab_chart));
     tabsAdapter.addTab(chartTabSpec, ChartFragment.class, null);
 
-    TabSpec statsTabSpec = tabHost.newTabSpec(StatsFragment.STATS_FRAGMENT_TAG).setIndicator(
-        getString(R.string.track_detail_stats_tab),
-        getResources().getDrawable(R.drawable.ic_tab_stats));
-    tabsAdapter.addTab(statsTabSpec, StatsFragment.class, null);
 
     if (savedInstanceState != null) {
       tabHost.setCurrentTabByTag(savedInstanceState.getString(CURRENT_TAB_TAG_KEY));
