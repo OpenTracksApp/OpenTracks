@@ -44,8 +44,6 @@ public class SensorSettingsActivity extends AbstractSettingsActivity {
     super.onCreate(bundle);
     addPreferencesFromResource(R.xml.sensor_settings);
 
-    configSensorType();
-
     findPreference(getString(R.string.settings_sensor_bluetooth_pairing_key))
         .setOnPreferenceClickListener(new OnPreferenceClickListener() {
           public boolean onPreferenceClick(Preference preference) {
@@ -55,34 +53,6 @@ public class SensorSettingsActivity extends AbstractSettingsActivity {
           }
         });
   }
-
-  private void configSensorType() {
-    ListPreference preference = (ListPreference) findPreference(getString(R.string.sensor_type_key));
-    String value = PreferencesUtils.getString(
-        this, R.string.sensor_type_key, PreferencesUtils.SENSOR_TYPE_DEFAULT);
-    String[] options = getResources().getStringArray(R.array.sensor_type_bluetooth_options);
-    String[] values = getResources().getStringArray( R.array.sensor_type_bluetooth_values);
-
-    OnPreferenceChangeListener listener = new OnPreferenceChangeListener() {
-        @Override
-      public boolean onPreferenceChange(Preference pref, Object newValue) {
-        updateUiBySensorType((String) newValue);
-        return true;
-      }
-    };
-    configureListPreference(preference, options, options, values, value, listener);
-  }
-
-  /**
-   * Updates the UI based on the sensor type.
-   * 
-   * @param sensorType the sensor type
-   */
-  private void updateUiBySensorType(String sensorType) {
-    boolean isBluetooth = getString(R.string.sensor_type_value_polar).equals(sensorType) || getString(R.string.sensor_type_value_zephyr).equals(sensorType);
-    findPreference(getString(R.string.settings_sensor_bluetooth_key)).setEnabled(isBluetooth);
-  }
-
 
   @Override
   protected void onResume() {

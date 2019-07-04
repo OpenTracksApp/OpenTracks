@@ -91,13 +91,8 @@ public class SensorManagerFactory {
    * @param context the context
    */
   private static SensorManager getSensorManager(Context context) {
-    String sensorType = PreferencesUtils.getString(
-        context, R.string.sensor_type_key, PreferencesUtils.SENSOR_TYPE_DEFAULT);
+    //TODO Implement Bluetooth LE Sensor manager
 
-    switch (sensorType) {
-      case "ZEPHYR": return new ZephyrSensorManager(context);
-      case "POLAR": return new PolarSensorManager(context);
-    }
     return null;
    }
 }
