@@ -19,13 +19,13 @@ limitations under the License.
         android:icon="@drawable/ic_menu_search"
         android:id="@+id/track_list_search"
         android:title="@string/menu_search"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="always" />
+        android:actionViewClass="androidx.appcompat.widget.SearchView"
+        android:showAsAction="always" />
     <item
         android:icon="@drawable/ic_menu_start_gps"
         android:id="@+id/track_list_start_gps"
         android:title="@string/menu_start_gps"
-        app:showAsAction="ifRoom" />
+        android:showAsAction="ifRoom" />
     <item
         android:icon="@drawable/ic_menu_aggregated_statistics"
         android:id="@+id/track_list_aggregated_statistics"

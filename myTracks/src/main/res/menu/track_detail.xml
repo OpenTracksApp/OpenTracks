@@ -13,25 +13,24 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:icon="@drawable/ic_menu_insert_marker"
         android:id="@+id/track_detail_insert_marker"
         android:orderInCategory="1"
-        app:showAsAction="ifRoom"
+        android:showAsAction="ifRoom"
         android:title="@string/menu_insert_marker" />
     <item
         android:icon="@drawable/ic_menu_insert_photo"
         android:id="@+id/track_detail_insert_photo"
         android:orderInCategory="2"
-        app:showAsAction="ifRoom"
+        android:showAsAction="ifRoom"
         android:title="@string/menu_insert_photo" />
     <item
         android:icon="@drawable/ic_menu_share"
         android:id="@+id/track_detail_share"
         android:orderInCategory="4"
-        app:showAsAction="ifRoom"
+        android:showAsAction="ifRoom"
         android:title="@string/menu_share" />
     <item
         android:icon="@drawable/ic_menu_markers"

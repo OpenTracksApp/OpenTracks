@@ -17,10 +17,6 @@ limitations under the License.
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
   android:key="@string/settings_sensor_root_key"
   android:title="@string/settings_sensor" >
-  <com.google.android.apps.mytracks.settings.MyTracksListPreference
-    android:defaultValue="@string/sensor_type_value_none"
-    android:key="@string/sensor_type_key"
-    android:title="@string/settings_sensor_type" />
   <PreferenceCategory
     android:key="@string/settings_sensor_bluetooth_key"
     android:title="@string/settings_sensor_bluetooth" >
