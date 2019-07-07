@@ -154,6 +154,7 @@ public class TrackEditActivity extends AbstractMyTracksActivity implements Choos
         TrackUtils.updateTrack(TrackEditActivity.this, track, name.getText().toString(),
             activityType.getText().toString(), description.getText().toString(),
             myTracksProviderUtils, trackRecordingServiceConnection, newWeight);
+        finish();
       }
     });
 
