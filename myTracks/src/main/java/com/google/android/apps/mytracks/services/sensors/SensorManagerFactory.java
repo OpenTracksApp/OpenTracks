@@ -16,9 +16,6 @@
 
 package com.google.android.apps.mytracks.services.sensors;
 
-import com.google.android.apps.mytracks.util.PreferencesUtils;
-import com.google.android.maps.mytracks.R;
-
 import android.content.Context;
 
 /**
@@ -29,7 +26,7 @@ import android.content.Context;
 public class SensorManagerFactory {
 
   private static SensorManager systemSensorManager = null;
-  private static SensorManager tempSensorManager = null;
+  private static SensorManager sensorManagerTemporary = null;
 
   private SensorManagerFactory() {}
 
@@ -39,7 +36,7 @@ public class SensorManagerFactory {
    * @param context the context
    */
   public static SensorManager getSystemSensorManager(Context context) {
-    releaseTempSensorManager();
+    releaseSensorManagerTemporary();
     releaseSystemSensorManager();
     systemSensorManager = getSensorManager(context);
     if (systemSensorManager != null) {
@@ -63,26 +60,26 @@ public class SensorManagerFactory {
    *
    * @param context
    */
-  public static SensorManager getTempSensorManager(Context context) {
-    releaseTempSensorManager();
+  public static SensorManager getSensorManagerTemporary(Context context) {
+    releaseSensorManagerTemporary();
     if (systemSensorManager != null) {
       return null;
     }
-    tempSensorManager = getSensorManager(context);
-    if (tempSensorManager != null) {
-      tempSensorManager.startSensor();
+    sensorManagerTemporary = getSensorManager(context);
+    if (sensorManagerTemporary != null) {
+      sensorManagerTemporary.startSensor();
     }
-    return tempSensorManager;
+    return sensorManagerTemporary;
   }
 
   /**
    * Releases the temp sensor manager.
    */
-  public static void releaseTempSensorManager() {
-    if (tempSensorManager != null) {
-      tempSensorManager.stopSensor();
+  public static void releaseSensorManagerTemporary() {
+    if (sensorManagerTemporary != null) {
+      sensorManagerTemporary.stopSensor();
     }
-    tempSensorManager = null;
+    sensorManagerTemporary = null;
   }
 
   /**
