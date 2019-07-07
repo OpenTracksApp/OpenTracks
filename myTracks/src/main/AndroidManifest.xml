@@ -22,6 +22,7 @@ limitations under the License.
   package="com.google.android.maps.mytracks" >
   <!-- Permission to initialize services -->
   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
   <!-- Permissions to record locations -->
   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
