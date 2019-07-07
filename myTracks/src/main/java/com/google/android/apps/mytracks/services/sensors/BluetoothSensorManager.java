@@ -16,6 +16,7 @@
 
 package com.google.android.apps.mytracks.services.sensors;
 
+import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Sensor.SensorState;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
@@ -25,6 +26,7 @@ import com.google.android.maps.mytracks.R;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -35,19 +37,17 @@ import java.util.ArrayList;
 
 /**
  * Bluetooth sensor manager.
- * 
+ *
+ * TODO: Handle a BluetoothGatt.STATE_DISCONNECTED
+ *
  * @author Sandor Dornbush
  */
 public class BluetoothSensorManager extends SensorManager {
 
-  // 1 second in milliseconds
   private static final long ONE_SECOND = (long) UnitConversions.S_TO_MS;
   private static final BluetoothAdapter bluetoothAdapter = getDefaultBluetoothAdapter();
   private static final String TAG = BluetoothConnectionManager.class.getSimpleName();
 
-  /**
-   * Gets the default bluetooth adapter.
-   */
   private static BluetoothAdapter getDefaultBluetoothAdapter() {
     // If from the main application thread, return directly
     if (Thread.currentThread().equals(Looper.getMainLooper().getThread())) {
@@ -87,7 +87,6 @@ public class BluetoothSensorManager extends SensorManager {
   }
 
   private final Context context;
-  private final MessageParser messageParser;
   private final BluetoothConnectionManager bluetoothConnectionManager;
   private SensorDataSet sensorDataSet = null;
 
@@ -97,23 +96,14 @@ public class BluetoothSensorManager extends SensorManager {
     public void handleMessage(Message message) {
       switch (message.what) {
         case BluetoothConnectionManager.MESSAGE_DEVICE_NAME:
-          String deviceName = message.getData()
-              .getString(BluetoothConnectionManager.KEY_DEVICE_NAME);
-          Toast.makeText(context, context.getString(R.string.settings_sensor_connected, deviceName),
-              Toast.LENGTH_SHORT).show();
+          String deviceName = message.getData().getString(BluetoothConnectionManager.KEY_DEVICE_NAME);
+          Toast.makeText(context, context.getString(R.string.settings_sensor_connected, deviceName), Toast.LENGTH_LONG).show();
           break;
         case BluetoothConnectionManager.MESSAGE_READ:
-          try {
-            byte[] readBuf = (byte[]) message.obj;
-            sensorDataSet = messageParser.parseBuffer(readBuf);
-            Log.d(TAG, "MESSAGE_READ: " + sensorDataSet);
-          } catch (IllegalArgumentException e) {
-            sensorDataSet = null;
-            Log.i(TAG, "Unexpected exception on read", e);
-          } catch (RuntimeException e) {
-            sensorDataSet = null;
-            Log.i(TAG, "Unexpected exception on read.", e);
-          }
+          sensorDataSet = SensorDataSet.newBuilder()
+                  .setHeartRate(Sensor.SensorData.newBuilder().setValue(message.arg1)
+                  .setState(SensorState.SENDING))
+                  .build();
           break;
         default:
           break;
@@ -122,16 +112,11 @@ public class BluetoothSensorManager extends SensorManager {
   };
 
   /**
-   * Constructor.
-   * 
    * @param context the context
-   * @param messageParser the message parser
    */
-  public BluetoothSensorManager(Context context, MessageParser messageParser) {
+  public BluetoothSensorManager(Context context) {
     this.context = context;
-    this.messageParser = messageParser;
-    bluetoothConnectionManager = new BluetoothConnectionManager(
-        bluetoothAdapter, messageHandler, messageParser);
+    bluetoothConnectionManager = new BluetoothConnectionManager(context, messageHandler);
   }
 
   @Override
@@ -145,10 +130,9 @@ public class BluetoothSensorManager extends SensorManager {
       Log.w(TAG, "Bluetooth not enabled.");
       return;
     }
-    String address = PreferencesUtils.getString(
-        context, R.string.bluetooth_sensor_key, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT);
+    String address = PreferencesUtils.getString(context, R.string.bluetooth_sensor_key, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT);
     if (PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT.equals(address)) {
-      Log.w(TAG, "No blueooth address.");
+      Log.w(TAG, "No bluetooth address.");
       return;
     }
     Log.w(TAG, "Connecting to bluetooth address: " + address);

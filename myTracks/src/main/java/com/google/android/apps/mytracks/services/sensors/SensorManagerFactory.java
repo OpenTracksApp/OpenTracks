@@ -88,8 +88,6 @@ public class SensorManagerFactory {
    * @param context the context
    */
   private static SensorManager getSensorManager(Context context) {
-    //TODO Implement Bluetooth LE Sensor manager
-
-    return null;
+    return new BluetoothSensorManager(context);
    }
 }
