@@ -16,6 +16,9 @@
 
 package com.google.android.apps.mytracks.services;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
@@ -27,6 +30,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager.WakeLock;
@@ -484,10 +488,20 @@ public class TrackRecordingService extends Service {
    */
   @VisibleForTesting
   protected void startForegroundService(PendingIntent pendingIntent, int messageId) {
-    NotificationCompat.Builder builder = new NotificationCompat.Builder(this).setContentIntent(
-        pendingIntent).setContentText(getString(messageId))
-        .setContentTitle(getString(R.string.my_tracks_app_name)).setOngoing(true)
-        .setSmallIcon(R.drawable.ic_stat_notify_recording).setWhen(System.currentTimeMillis());
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      NotificationChannel notificationChannel = new NotificationChannel(getString(R.string.my_tracks_app_name), getString(R.string.my_tracks_app_name), NotificationManager.IMPORTANCE_DEFAULT);
+      NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+      assert manager != null;
+      manager.createNotificationChannel(notificationChannel);
+    }
+    NotificationCompat.Builder builder = new NotificationCompat.Builder(this, getString(R.string.my_tracks_app_name))
+            .setContentIntent(pendingIntent)
+            .setContentText(getString(messageId))
+            .setContentTitle(getString(R.string.my_tracks_app_name))
+            .setOngoing(true)
+            .setSmallIcon(R.drawable.ic_stat_notify_recording)
+            .setCategory(Notification.CATEGORY_SERVICE)
+            .setWhen(System.currentTimeMillis());
     startForeground(1, builder.build());
   }
 
