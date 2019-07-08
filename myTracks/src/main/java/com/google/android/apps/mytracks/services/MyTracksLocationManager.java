@@ -174,11 +174,7 @@ public class MyTracksLocationManager {
         if (!isAllowed()) {
             return false;
         }
-        String provider = LocationManager.GPS_PROVIDER;
-        if (locationManager.getProvider(provider) == null) {
-            return false;
-        }
-        return locationManager.isProviderEnabled(provider);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
     /**
