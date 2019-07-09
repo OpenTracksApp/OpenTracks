@@ -16,14 +16,6 @@ limitations under the License.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
   android:title="@string/menu_settings" >
-  <CheckBoxPreference
-    android:defaultValue="false"
-    android:key="@string/drive_sync_key"
-    android:title="@string/menu_sync_drive" />
-  <Preference
-    android:key="@string/settings_map_key"
-    android:persistent="false"
-    android:title="@string/track_detail_map_tab" />
   <Preference
     android:key="@string/settings_chart_key"
     android:persistent="false"
