@@ -90,8 +90,7 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
     return getDialog(getActivity(), getArguments().getString(KEY_CATEGORY), caller);
   }
 
-  public static Dialog getDialog(
-      final Activity activity, final String category, final ChooseActivityTypeCaller caller) {
+  public static Dialog getDialog(final Activity activity, final String category, final ChooseActivityTypeCaller caller) {
     View view = activity.getLayoutInflater().inflate(R.layout.choose_activity_type, null);
     GridView gridView = view.findViewById(R.id.choose_activity_type_grid_view);
 
@@ -108,25 +107,14 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
     int height = options.outHeight + 2 * padding;
     gridView.setColumnWidth(width);
 
-    final ChooseActivityTypeImageAdapter imageAdapter = new ChooseActivityTypeImageAdapter(
-        activity, imageIds, width, height, padding);
+    final ChooseActivityTypeImageAdapter imageAdapter = new ChooseActivityTypeImageAdapter(activity, imageIds, width, height, padding);
     gridView.setAdapter(imageAdapter);
 
-    final AlertDialog alertDialog = new AlertDialog.Builder(activity).setNegativeButton(
-        R.string.generic_cancel, null)
-        .setPositiveButton(R.string.generic_ok, new Dialog.OnClickListener() {
-
-            @Override
-          public void onClick(DialogInterface dialog, int which) {
-            int selected = imageAdapter.getSelected();
-            caller.onChooseActivityTypeDone(TrackIconUtils.getAllIconValues().get(selected));
-          }
-        }).setTitle(R.string.track_edit_activity_type_hint).setView(view).create();
+    final AlertDialog alertDialog = new AlertDialog.Builder(activity).setTitle(R.string.track_edit_activity_type_hint).setView(view).create();
     alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
         @Override
       public void onShow(DialogInterface dialog) {
         int position = getPosition(activity, category);
-        alertDialog.getButton(Dialog.BUTTON_POSITIVE).setEnabled(position != -1);
         if (position != -1) {
           imageAdapter.setSelected(position);
           imageAdapter.notifyDataSetChanged();
@@ -138,9 +126,8 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
     gridView.setOnItemClickListener(new OnItemClickListener() {
         @Override
       public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-        alertDialog.getButton(Dialog.BUTTON_POSITIVE).setEnabled(true);
-        imageAdapter.setSelected(position);
-        imageAdapter.notifyDataSetChanged();
+        caller.onChooseActivityTypeDone(TrackIconUtils.getAllIconValues().get(position));
+        alertDialog.dismiss();
       }
     });
     return alertDialog;
