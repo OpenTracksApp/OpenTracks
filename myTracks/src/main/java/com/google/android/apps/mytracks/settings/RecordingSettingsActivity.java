@@ -353,7 +353,7 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity
   }
 
   @Override
-  public void onChooseActivityTypeDone(String iconValue, boolean newWeight) {
+  public void onChooseActivityTypeDone(String iconValue) {
     activityTypePreference.updateValue(iconValue);
   }
 }

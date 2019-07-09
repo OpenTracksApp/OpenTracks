@@ -106,9 +106,4 @@ interface ITrackRecordingService {
    * return a Sensor.SensorState enum value.
    */
   int getSensorState();
-  
-  /**
-   * Updates the calorie of current recording track. 
-   */
-  void updateCalorie();
 }

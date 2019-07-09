@@ -25,8 +25,6 @@ import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.stats.TripStatisticsUpdater;
-import com.google.android.apps.mytracks.util.CalorieUtils;
-import com.google.android.apps.mytracks.util.CalorieUtils.ActivityType;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
@@ -108,7 +106,6 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
   private final long importTrackId;
   private final MyTracksProviderUtils myTracksProviderUtils;
   private final int recordingDistanceInterval;
-  private final double weight;
   private final List<Long> trackIds;
   private final List<Waypoint> waypoints;
 
@@ -146,8 +143,6 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
     this.recordingDistanceInterval = PreferencesUtils.getInt(context,
         R.string.recording_distance_interval_key,
         PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT);
-    this.weight = PreferencesUtils.getFloat(
-        context, R.string.weight_key, PreferencesUtils.getDefaultWeight(context));
     trackIds = new ArrayList<>();
     waypoints = new ArrayList<>();
   }
@@ -224,8 +219,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
     TripStatisticsUpdater markerTripStatisticsUpdater = new TripStatisticsUpdater(
         track.getTripStatistics().getStartTime());
     LocationIterator locationIterator = null;
-    ActivityType activityType = CalorieUtils.getActivityType(context, track.getCategory());
-    
+
     try {
       locationIterator = myTracksProviderUtils.getTrackPointLocationIterator(
           track.getId(), -1L, false, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
@@ -245,10 +239,8 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
             return;
           }
           location = locationIterator.next();
-          trackTripStatisticstrackUpdater.addLocation(
-              location, recordingDistanceInterval, false, ActivityType.INVALID, 0.0);
-          markerTripStatisticsUpdater.addLocation(
-              location, recordingDistanceInterval, true, activityType, weight);
+          trackTripStatisticstrackUpdater.addLocation(location, recordingDistanceInterval);
+          markerTripStatisticsUpdater.addLocation(location, recordingDistanceInterval);
         }
         if (waypoint.getLocation().getTime() > location.getTime()) {
           location = null;
@@ -563,9 +555,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
       trackData.tripStatisticsUpdater = new TripStatisticsUpdater(
           location.getTime() != -1L ? location.getTime() : trackData.importTime);
     }
-    ActivityType activityType = CalorieUtils.getActivityType(context, category);
-    trackData.tripStatisticsUpdater.addLocation(
-        location, recordingDistanceInterval, true, activityType, weight);
+    trackData.tripStatisticsUpdater.addLocation(location, recordingDistanceInterval);
 
     trackData.bufferedLocations[trackData.numBufferedLocations] = location;
     trackData.numBufferedLocations++;

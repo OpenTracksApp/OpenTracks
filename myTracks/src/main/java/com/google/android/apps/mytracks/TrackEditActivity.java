@@ -63,8 +63,6 @@ public class TrackEditActivity extends AbstractMyTracksActivity implements Choos
   private Spinner activityTypeIcon;
   private EditText description;
 
-  private boolean newWeight = false;
-
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
@@ -153,7 +151,7 @@ public class TrackEditActivity extends AbstractMyTracksActivity implements Choos
       public void onClick(View v) {
         TrackUtils.updateTrack(TrackEditActivity.this, track, name.getText().toString(),
             activityType.getText().toString(), description.getText().toString(),
-            myTracksProviderUtils, trackRecordingServiceConnection, newWeight);
+            myTracksProviderUtils);
         finish();
       }
     });
@@ -204,10 +202,7 @@ public class TrackEditActivity extends AbstractMyTracksActivity implements Choos
   }
 
   @Override
-  public void onChooseActivityTypeDone(String value, boolean hasNewWeight) {
-    if (!newWeight) {
-      newWeight = hasNewWeight;
-    }
+  public void onChooseActivityTypeDone(String value) {
     setActivityTypeIcon(value);
     activityType.setText(getString(TrackIconUtils.getIconActivityType(value)));
   }

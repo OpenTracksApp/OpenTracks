@@ -156,9 +156,6 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     if (!cursor.isNull(maxGradeIndex)) {
       tripStatistics.setMaxGrade(cursor.getFloat(maxGradeIndex));
     }
-    if (!cursor.isNull(caloriesIndex)) {
-      tripStatistics.setCalorie(cursor.getFloat(caloriesIndex));
-    }
     if (!cursor.isNull(iconIndex)) {
       track.setIcon(cursor.getString(iconIndex));
     }
@@ -322,8 +319,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     values.put(TracksColumns.MODIFIEDTIME, track.getModifiedTime());
     values.put(TracksColumns.SHAREDWITHME, track.isSharedWithMe());
     values.put(TracksColumns.SHAREDOWNER, track.getSharedOwner());
-    values.put(TracksColumns.CALORIE, tripStatistics.getCalorie());
-    
+
     return values;
   }
 
@@ -472,10 +468,6 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     }
     if (!cursor.isNull(maxGradeIndex)) {
       tripStatistics.setMaxGrade(cursor.getFloat(maxGradeIndex));
-      hasTripStatistics = true;
-    }
-    if (!cursor.isNull(calorieIndex)) {
-      tripStatistics.setCalorie(cursor.getFloat(calorieIndex));
       hasTripStatistics = true;
     }
     if (hasTripStatistics) {
@@ -710,7 +702,6 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
       values.put(WaypointsColumns.ELEVATIONGAIN, tripStatistics.getTotalElevationGain());
       values.put(WaypointsColumns.MINGRADE, tripStatistics.getMinGrade());
       values.put(WaypointsColumns.MAXGRADE, tripStatistics.getMaxGrade());
-      values.put(WaypointsColumns.CALORIE, tripStatistics.getCalorie());
     }
     
     values.put(WaypointsColumns.PHOTOURL, waypoint.getPhotoUrl());    

@@ -17,7 +17,6 @@
 package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.apps.mytracks.util.CalorieUtils.ActivityType;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -38,7 +37,6 @@ public class StatsUtils {
 
   private static final String GRADE_PERCENTAGE = "%";
   private static final String GRADE_FORMAT = "%1$d";
-  private static final String CALORIES_FORMAT = "%1$,.0f";
 
   private StatsUtils() {}
 
@@ -124,12 +122,11 @@ public class StatsUtils {
    * @param view the containing view for finding views. If null, the activity
    *          cannot be null
    * @param tripStatistics the trip statistics
-   * @param activityType the activity type
    * @param trackIconValue the track icon value or null to hide the track icon
    *          spinner
    */
   public static void setTripStatisticsValues(Context context, Activity activity, View view,
-      TripStatistics tripStatistics, ActivityType activityType, String trackIconValue) {
+      TripStatistics tripStatistics, String trackIconValue) {
     boolean metricUnits = PreferencesUtils.isMetricUnits(context);
     boolean reportSpeed = PreferencesUtils.isReportSpeed(context);
 
@@ -138,11 +135,7 @@ public class StatsUtils {
     setDistanceValue(
         context, getView(activity, view, R.id.stats_distance), totalDistance, metricUnits);
 
-    // Set calorie
-    double calorie = tripStatistics == null || activityType == ActivityType.INVALID ? Double.NaN
-        : tripStatistics.getCalorie();
-    setCalorie(context, getView(activity, view, R.id.stats_calorie), calorie);
-
+    // Set activity type
     Spinner spinner = (Spinner) getView(activity, view, R.id.stats_activity_type_icon);
     spinner.setVisibility(trackIconValue != null ? View.VISIBLE : View.GONE);
     if (trackIconValue != null) {
@@ -223,19 +216,6 @@ public class StatsUtils {
       double speed, boolean metricUnits, boolean reportSpeed) {
       String[] parts = StringUtils.getSpeedParts(context, speed, metricUnits, reportSpeed);
     setItem(context, view, reportSpeed ? speedLabelId : paceLabelId, parts[0], parts[1]);
-  }
-
-  /**
-   * Sets calorie.
-   * 
-   * @param context the context
-   * @param view the containing view
-   * @param calorie the value of calorie
-   */
-  private static void setCalorie(Context context, View view, double calorie) {
-    String value = Double.isNaN(calorie) ? null
-        : String.format(Locale.getDefault(), CALORIES_FORMAT, calorie);
-    setItem(context, view, R.string.stats_calorie, value, context.getString(R.string.unit_calorie));
   }
 
   /**
@@ -332,19 +312,21 @@ public class StatsUtils {
    * @param value the value, can be null
    * @param unit the unit. Null to hide the unit
    */
-  private static void setItem(
-      Context context, View view, int labelId, CharSequence value, CharSequence unit) {
+  private static void setItem(Context context, View view, int labelId, CharSequence value, CharSequence unit) {
     TextView labelTextView = view.findViewById(R.id.stats_label);
+    if (labelTextView != null) {
+      if (labelId == -1) {
+        labelTextView.setVisibility(View.GONE);
+      } else {
+        labelTextView.setVisibility(View.VISIBLE);
+        labelTextView.setText(labelId);
+      }
+    }
+
     TextView valueTextView = view.findViewById(R.id.stats_value);
     TextView unitTextView = view.findViewById(R.id.stats_unit);
-    if (labelTextView == null || valueTextView == null || unitTextView == null) {
+    if (valueTextView == null || unitTextView == null) {
       return;
-    }
-    if (labelId == -1) {
-      labelTextView.setVisibility(View.GONE);
-    } else {
-      labelTextView.setVisibility(View.VISIBLE);
-      labelTextView.setText(labelId);
     }
 
     if (value == null) {

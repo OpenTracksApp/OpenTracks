@@ -22,15 +22,6 @@ limitations under the License.
     style="@style/StatsLargeLabel" />
   <!-- Value container -->
   <LinearLayout style="@style/StatsLargeValueContainer" >
-    <!-- Value -->
-    <TextView
-      android:id="@+id/stats_value"
-      style="@style/StatsLargeValue" />
-    <!-- Unit -->
-    <TextView
-      android:id="@+id/stats_unit"
-      style="@style/StatsUnit" />
-    <!-- Activity type -->
     <Spinner
       android:id="@+id/stats_activity_type_icon"
       android:layout_height="wrap_content"

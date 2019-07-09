@@ -67,28 +67,6 @@ public class UnitConversions {
   // multiplication factor to convert meters to feet
   public static final double M_TO_FT = M_TO_MI * MI_TO_FT;
 
-  // Weight
-
-  // multiplication factor to convert kilograms to pounds
-  public static final double KG_TO_LB = 2.2046;
-
-  // multiplication factor to convert pounds to kilograms
-  public static final double LB_TO_KG = 1 / KG_TO_LB;
-
-  // Calories
-
-  // multiplication factor to convert milliliters to liters
-  public static final double ML_TO_L = 1 / 1000.0;
-
-  // multiplication factor to convert liter to kcal
-  public static final double L_TO_KCAL = 5.0;
-
-  // multiplication factor to convert watt to kgm/min
-  public static final double W_TO_KGM = 6.12;
-
-  // multiplication factor to convert kgm to kcal
-  public static final double KGM_TO_KCAL = 1 / 427.0;
-
   // Others
 
   // multiplication factor to convert meters per second to kilometers per hour

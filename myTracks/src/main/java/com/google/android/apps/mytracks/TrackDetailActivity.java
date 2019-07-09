@@ -30,8 +30,6 @@ import com.google.android.apps.mytracks.fragments.FrequencyDialogFragment;
 import com.google.android.apps.mytracks.fragments.StatsFragment;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.settings.SettingsActivity;
-import com.google.android.apps.mytracks.util.CalorieUtils;
-import com.google.android.apps.mytracks.util.CalorieUtils.ActivityType;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
@@ -540,16 +538,9 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
   }
 
   @Override
-  public void onChooseActivityTypeDone(String iconValue, boolean newWeight) {
+  public void onChooseActivityTypeDone(String iconValue) {
     Track track = myTracksProviderUtils.getTrack(trackId);
     String category = getString(TrackIconUtils.getIconActivityType(iconValue));
-    TrackUtils.updateTrack(
-        this, track, null, category, null, myTracksProviderUtils, trackRecordingServiceConnection, newWeight);
-
-    // Add toast if cannot calculate calorie
-    if (CalorieUtils.getActivityType(this, category) == ActivityType.INVALID) {
-      String message = getString(R.string.stats_calorie_no_calculation, category);
-      Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-    }
+    TrackUtils.updateTrack(this, track, null, category, null, myTracksProviderUtils);
   }
 }

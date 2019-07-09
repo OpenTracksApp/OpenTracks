@@ -19,8 +19,6 @@ package com.google.android.apps.mytracks.util;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
-import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
-import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
 
@@ -37,14 +35,11 @@ public class TrackUtils {
       + TracksColumns.STARTTIME + " DESC";
 
   public static void updateTrack(Context context, Track track, String name, String category,
-      String description, MyTracksProviderUtils myTracksProviderUtils,
-      TrackRecordingServiceConnection trackRecordingServiceConnection, boolean newWeight) {
+                                 String description, MyTracksProviderUtils myTracksProviderUtils) {
     if (name != null) {
       track.setName(name);
     }
-    boolean updateCalorie = false;
     if (category != null) {
-      updateCalorie = !category.equals(track.getCategory()) || newWeight;
       track.setCategory(category);
       track.setIcon(TrackIconUtils.getIconValue(context, category));
     }
@@ -54,14 +49,5 @@ public class TrackUtils {
     }
     track.setModifiedTime(System.currentTimeMillis());
     myTracksProviderUtils.updateTrack(track);
-
-    if (updateCalorie) {
-      if (track.getId() == PreferencesUtils.getLong(context, R.string.recording_track_id_key)) {
-        // Update calorie through track recording service
-        TrackRecordingServiceConnectionUtils.updateCalorie(trackRecordingServiceConnection);
-      } else {
-        CalorieUtils.updateTrackCalorie(context, track);
-      }
-    }
   }
 }

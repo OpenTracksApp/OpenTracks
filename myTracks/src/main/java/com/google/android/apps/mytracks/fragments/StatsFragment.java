@@ -16,6 +16,19 @@
 
 package com.google.android.apps.mytracks.fragments;
 
+import android.location.Location;
+import android.os.Bundle;
+import android.os.Handler;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Spinner;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+
 import com.google.android.apps.mytracks.TrackDetailActivity;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackDataHub;
@@ -23,26 +36,12 @@ import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.TrackDataType;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.apps.mytracks.util.CalorieUtils;
-import com.google.android.apps.mytracks.util.CalorieUtils.ActivityType;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StatsUtils;
 import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
-
-import android.location.Location;
-import android.os.Bundle;
-import android.os.Handler;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Spinner;
 
 import java.util.EnumSet;
 
@@ -297,11 +296,8 @@ public class StatsFragment extends Fragment implements TrackDataListener {
    * Updates the UI.
    */
   private void updateUi(FragmentActivity activity) {
-    ActivityType activityType = CalorieUtils.getActivityType(activity, category);
     String trackIconValue = TrackIconUtils.getIconValue(activity, category);
-    StatsUtils.setTripStatisticsValues(
-        activity, activity, null, lastTripStatistics, activityType, trackIconValue);
-    StatsUtils.setLocationValues(
-        activity, activity, null, lastLocation, isSelectedTrackRecording());
+    StatsUtils.setTripStatisticsValues(activity, activity, null, lastTripStatistics, trackIconValue);
+    StatsUtils.setLocationValues(activity, activity, null, lastLocation, isSelectedTrackRecording());
   }
 }

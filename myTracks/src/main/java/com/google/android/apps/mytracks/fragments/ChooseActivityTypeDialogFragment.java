@@ -56,7 +56,7 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
     /**
      * Called when choose activity type is done.
      */
-    void onChooseActivityTypeDone(String iconValue, boolean newWeight);
+    void onChooseActivityTypeDone(String iconValue);
   }
 
   public static final String CHOOSE_ACTIVITY_TYPE_DIALOG_TAG = "chooseActivityType";
@@ -94,14 +94,6 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
       final Activity activity, final String category, final ChooseActivityTypeCaller caller) {
     View view = activity.getLayoutInflater().inflate(R.layout.choose_activity_type, null);
     GridView gridView = view.findViewById(R.id.choose_activity_type_grid_view);
-    final View weightContainer = view.findViewById(R.id.choose_activity_type_weight_container);
-
-    TextView weightLabel = view.findViewById(R.id.choose_activity_type_weight_label);
-    weightLabel.setText(
-        PreferencesUtils.isMetricUnits(activity) ? R.string.description_weight_metric
-            : R.string.description_weight_imperial);
-
-    final TextView weight = view.findViewById(R.id.choose_activity_type_weight);
 
     List<Integer> imageIds = new ArrayList<>();
     for (String iconValue : TrackIconUtils.getAllIconValues()) {
@@ -120,25 +112,14 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
         activity, imageIds, width, height, padding);
     gridView.setAdapter(imageAdapter);
 
-    final String weightValue = StringUtils.formatWeight(
-        PreferencesUtils.getWeightDisplayValue(activity));
     final AlertDialog alertDialog = new AlertDialog.Builder(activity).setNegativeButton(
         R.string.generic_cancel, null)
         .setPositiveButton(R.string.generic_ok, new Dialog.OnClickListener() {
 
             @Override
           public void onClick(DialogInterface dialog, int which) {
-            boolean newWeight = false;
-            if (weightContainer.getVisibility() == View.VISIBLE) {
-              String newValue = weight.getText().toString();
-              if (!newValue.equals(weightValue)) {
-                newWeight = true;
-                PreferencesUtils.storeWeightValue(activity, newValue);
-              }
-            }
             int selected = imageAdapter.getSelected();
-            caller.onChooseActivityTypeDone(
-                TrackIconUtils.getAllIconValues().get(selected), newWeight);
+            caller.onChooseActivityTypeDone(TrackIconUtils.getAllIconValues().get(selected));
           }
         }).setTitle(R.string.track_edit_activity_type_hint).setView(view).create();
     alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
@@ -150,8 +131,6 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
           imageAdapter.setSelected(position);
           imageAdapter.notifyDataSetChanged();
         }
-        updateWeightContainer(weightContainer, position);
-        weight.setText(weightValue);
         DialogUtils.setDialogTitleDivider(activity, alertDialog);
       }
     });
@@ -162,7 +141,6 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
         alertDialog.getButton(Dialog.BUTTON_POSITIVE).setEnabled(true);
         imageAdapter.setSelected(position);
         imageAdapter.notifyDataSetChanged();
-        updateWeightContainer(weightContainer, position);
       }
     });
     return alertDialog;

@@ -17,11 +17,10 @@
 package com.google.android.apps.mytracks.stats;
 
 import android.location.Location;
-import androidx.annotation.VisibleForTesting;
 import android.util.Log;
 
-import com.google.android.apps.mytracks.util.CalorieUtils;
-import com.google.android.apps.mytracks.util.CalorieUtils.ActivityType;
+import androidx.annotation.VisibleForTesting;
+
 import com.google.android.apps.mytracks.util.LocationUtils;
 
 import static com.google.android.apps.mytracks.services.TrackRecordingService.MAX_NO_MOVEMENT_SPEED;
@@ -124,14 +123,8 @@ public class TripStatisticsUpdater {
    * 
    * @param location the location
    * @param minRecordingDistance the min recording distance
-   * @param calculateCalorie true means calculate calorie
-   * @param activityType the activity type of current track which is used to
-   *          calculate calorie
-   * @param weight the weight to calculate calorie which is used to calculate
-   *          calorie
    */
-  public void addLocation(Location location, int minRecordingDistance,
-      boolean calculateCalorie, ActivityType activityType, double weight) {
+  public void addLocation(Location location, int minRecordingDistance) {
     // Always update time
     updateTime(location.getTime());
     if (!LocationUtils.isValidLocation(location)) {
@@ -193,12 +186,6 @@ public class TripStatisticsUpdater {
           location.getTime(), location.getSpeed(), lastLocation.getTime(), lastLocation.getSpeed());
     }
     
-    if (calculateCalorie) {
-      // Update calorie
-      double calorie = CalorieUtils.getCalorie(lastMovingLocation, location,
-          gradeBuffer.getAverage(), weight, activityType);
-      currentSegment.addCalorie(calorie);
-    }
     lastLocation = location;
     lastMovingLocation = location;
   }
@@ -337,15 +324,5 @@ public class TripStatisticsUpdater {
     } else {
       return true;
     }
-  }
-  
-  /**
-   * Updates the calorie value; 
-   * 
-   * @param calorie
-   */
-  public void updateCalorie(double calorie) {
-    tripStatistics.setCalorie(calorie);
-    currentSegment.setCalorie(0);
   }
 }

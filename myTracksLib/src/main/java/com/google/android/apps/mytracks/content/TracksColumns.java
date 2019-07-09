@@ -88,7 +88,7 @@ public interface TracksColumns extends BaseColumns {
 
   // The owner of the shared with me track
   String SHAREDOWNER = "sharedOwner";
-  
+
   // Calorie burned of the track
   String CALORIE = "calorie";
 

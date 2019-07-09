@@ -304,48 +304,4 @@ public class PreferencesUtils {
     }
     setString(context, keyId, list + ";" + value);
   }
-  
-  /**
-   * Gets the default weight.
-   * 
-   * @param context the context
-   */
-  public static float getDefaultWeight(Context context) {
-    if (isMetricUnits(context)) {
-      return 65.0f; // in kg
-    } else {
-      return 68.0389f; // 150 lb in kg
-    }
-  }
-  /**
-   * Stores the weight value, always in metric units.
-   * 
-   * @param displayValue the display value
-   */
-  public static void storeWeightValue(Context context, String displayValue) {
-    double value;
-    try {
-      value = Double.parseDouble(displayValue);
-      if (!isMetricUnits(context)) {
-        value = value * UnitConversions.LB_TO_KG;
-      }
-    } catch (NumberFormatException e) {
-      Log.e(TAG, "invalid value " + displayValue);
-      value = getDefaultWeight(context);
-    }
-    setFloat(context, R.string.weight_key, (float) value);
-  }
-  
-  /**
-   * Gets the weight display value.
-   * 
-   * @param context the context
-   */
-  public static double getWeightDisplayValue(Context context) {
-    double value = getFloat(context, R.string.weight_key, getDefaultWeight(context));
-    if (!isMetricUnits(context)) {
-      value = value * UnitConversions.KG_TO_LB;
-    }
-    return value;
-  }  
 }

@@ -2,7 +2,6 @@
 
 package com.google.android.apps.mytracks.stats;
 
-import com.google.android.apps.mytracks.util.CalorieUtils.ActivityType;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 
 import android.location.Location;
@@ -19,8 +18,7 @@ public class TripStatisticsUpdaterTest extends TestCase {
   private static final long ONE_SECOND = 1000;
   private static final long TEN_SECONDS = 10 * ONE_SECOND;
   private static final float MOVING_SPEED = 11.1f;
-  private static final double DEFAULT_WEIGHT = 65.0;
-  
+
   private TripStatisticsUpdater tripStatisticsUpdater = null;
 
   @Override
@@ -214,9 +212,7 @@ public class TripStatisticsUpdaterTest extends TestCase {
       // Each time slice is 10 seconds.
       Location location = getLocation(i + locationOffset, (i + locationOffset) * .001, MOVING_SPEED,
           startTime + (timeOffset + i) * TEN_SECONDS);
-      tripStatisticsUpdater.addLocation(location,
-          PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT, true, ActivityType.WALKING,
-          DEFAULT_WEIGHT);
+      tripStatisticsUpdater.addLocation(location, PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT);
       tripStatistics = tripStatisticsUpdater.getTripStatistics();
 
       assertEquals((timeOffset + i) * TEN_SECONDS, tripStatistics.getTotalTime());
@@ -262,9 +258,7 @@ public class TripStatisticsUpdaterTest extends TestCase {
     for (int i = 0; i < points; i++) {
       Location location = getLocation(
           locationOffset, locationOffset * .001, 0, startTime + (i + timeOffset) * TEN_SECONDS);
-      tripStatisticsUpdater.addLocation(location,
-          PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT, false, ActivityType.WALKING,
-          DEFAULT_WEIGHT);
+      tripStatisticsUpdater.addLocation(location, PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT);
 
       tripStatistics = tripStatisticsUpdater.getTripStatistics();
       assertEquals((i + timeOffset) * TEN_SECONDS, tripStatistics.getTotalTime());
@@ -298,9 +292,7 @@ public class TripStatisticsUpdaterTest extends TestCase {
       // 99999 means a speed should bigger than given speed.
       Location location = getLocation(i + locationOffset, (i + locationOffset) * .001, 99999,
           startTime + (timeOffset + i) * TEN_SECONDS);
-      tripStatisticsUpdater.addLocation(location,
-          PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT, true, ActivityType.WALKING,
-          DEFAULT_WEIGHT);
+      tripStatisticsUpdater.addLocation(location, PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT);
       tripStatistics = tripStatisticsUpdater.getTripStatistics();
 
       assertTrue(tripStatistics.getMovingTime() <= tripStatistics.getTotalTime());

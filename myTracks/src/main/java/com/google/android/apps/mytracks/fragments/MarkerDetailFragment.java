@@ -16,29 +16,11 @@
 
 package com.google.android.apps.mytracks.fragments;
 
-import com.google.android.apps.mytracks.MarkerEditActivity;
-import com.google.android.apps.mytracks.TrackDetailActivity;
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
-import com.google.android.apps.mytracks.util.CalorieUtils;
-import com.google.android.apps.mytracks.util.CalorieUtils.ActivityType;
-import com.google.android.apps.mytracks.util.IntentUtils;
-import com.google.android.apps.mytracks.util.ListItemUtils;
-import com.google.android.apps.mytracks.util.PhotoUtils;
-import com.google.android.apps.mytracks.util.StatsUtils;
-import com.google.android.apps.mytracks.util.StringUtils;
-import com.google.android.apps.mytracks.util.TrackIconUtils;
-import com.google.android.maps.mytracks.R;
-
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -53,6 +35,23 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+
+import com.google.android.apps.mytracks.MarkerEditActivity;
+import com.google.android.apps.mytracks.TrackDetailActivity;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
+import com.google.android.apps.mytracks.util.IntentUtils;
+import com.google.android.apps.mytracks.util.ListItemUtils;
+import com.google.android.apps.mytracks.util.PhotoUtils;
+import com.google.android.apps.mytracks.util.StatsUtils;
+import com.google.android.apps.mytracks.util.StringUtils;
+import com.google.android.apps.mytracks.util.TrackIconUtils;
+import com.google.android.maps.mytracks.R;
 
 /**
  * A fragment to show marker details.
@@ -294,11 +293,7 @@ public class MarkerDetailFragment extends Fragment {
       setLocation(R.id.marker_detail_statistics_location, false);
 
       Track track = myTracksProviderUtils.getTrack(waypoint.getTrackId());
-      ActivityType activityType = track != null ? CalorieUtils.getActivityType(
-          getActivity(), track.getCategory())
-          : ActivityType.INVALID;
-      StatsUtils.setTripStatisticsValues(
-          getActivity(), null, getView(), waypoint.getTripStatistics(), activityType, null);
+      StatsUtils.setTripStatisticsValues(getActivity(), null, getView(), waypoint.getTripStatistics(), null);
       StatsUtils.setLocationValues(getActivity(), null, getView(), waypoint.getLocation(), false);
     }
   }

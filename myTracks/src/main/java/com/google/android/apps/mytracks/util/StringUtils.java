@@ -151,10 +151,6 @@ public class StringUtils {
     }
   }
 
-  public static String formatWeight(double value) {
-    return formatDecimal(value, 1);
-  }
-  
   public static String formatDecimal(double value) {
     return formatDecimal(value, 2);
   }
