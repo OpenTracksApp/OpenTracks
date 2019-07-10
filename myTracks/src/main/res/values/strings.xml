@@ -1173,18 +1173,6 @@ limitations under the License.
       Character limit: ~20 (1 line)">
     Share
   </string>
-  <string name="menu_sync_drive"
-    translation_description="In the menu, to sync to Google Drive.
-
-      Character limit: ~20 (1 line)">
-    Sync to Google Drive
-  </string>
-  <string name="menu_sync_now"
-    translation_description="In the menu, to sync now with Google Drive.
-
-      Character limit: ~20 (1 line)">
-    Sync now
-  </string>
   <string name="menu_show_on_map"
     translation_description="In the menu, to show a track or a marker on the map.
 
@@ -1483,15 +1471,6 @@ limitations under the License.
     X axis
   </string>
 
-  <!-- Settings Google -->
-  <string name="settings_google_drive_sync_summary_on"
-    translation_description="In the 'Sync to Google Drive' setting, the summary explaining that all
-      tracks will be synced to a Google Drive account.
-
-      %1$s account name. E.g., 'foo@foo.com'.">
-    All tracks will be synced to %1$s Google Drive
-  </string>
-
   <!-- Settings Map -->
   <string name="settings_map_medium"
     translation_description="In the 'Map' settings, under the 'Fixed thresholds' section, the option
@@ -1705,7 +1684,7 @@ limitations under the License.
     translation_description="In the 'Backup and reset' settings, after pressing the 'Reset' option,
       the confirmation dialog message informing the user that all settings will be reverted.">
     All settings will be reverted to the default values. This will not delete any tracks on the
-    device or on Google Drive.
+    device.
   </string>
   <string name="settings_reset_confirm_title"
     translation_description="In the 'Backup and reset' settings, after pressing the 'Reset' option,
@@ -1922,39 +1901,21 @@ limitations under the License.
       dialog to share the saved track file with friends.">
     Share track file
   </string>
+  <string name="share_track_share_url_title"
+      translation_description="The dialog title asking the user to select an application for sharing
+      an URL.">
+    Share URL using:
+  </string>
   <string name="share_track_share_file_body"
     translation_description="When sharing a track file with friends, the body of the message. Note
       that \n is the new line character.
 
       %1$s track description.">
-    I think you might be interested in this track.\n\nTo view this track, use Google Earth or other
-    mapping software.\n\n%1$s
-  </string>
-  <string name="share_track_share_url"
-    translation_description="After sending a track to Google, the button on the result dialog to
-      share the uploaded track URL with friends.">
-    Share track URL
-  </string>
-  <string name="share_track_share_url_body"
-    translation_description="When sharing a track URL with friends, the body of the message. Note
-      that \n is the newline character.
-
-      %1$s url. E.g., 'https://maps.google.com/maps'.
-      %2$s track description.">
-    I think you might be interested in this track:\n\n%1$s\n\n%2$s
-  </string>
-  <string name="share_track_share_url_title"
-    translation_description="The dialog title asking the user to select an application for sharing
-      an URL.">
-    Share URL using:
+    I think you might be interested in this track.\n\n%1$s
   </string>
   <string name="share_track_subject"
-    translation_description="When sharing a track with friends, the subject line.">
+      translation_description="When sharing a track with friends, the subject line.">
     I would like to share a track with you
-  </string>
-  <string name="share_track_title"
-    translation_description="The dialog title to share a track.">
-    Share on Google Drive
   </string>
 
   <!-- Stats -->
@@ -2038,30 +1999,6 @@ limitations under the License.
     Total time
   </string>
 
-  <!-- Sync Drive -->
-  <string name="sync_drive_confirm_message"
-    translation_description="The dialog message to confirm sync to Google Drive.
-
-      %1$s account name. E.g., 'foo@foo.com'.
-      %2$s folder name. E.g., 'My Tracks'.">
-    All files in the %1$s Google Drive &#8216;%2$s&#8217; folder will be imported as new tracks. If
-    not desired, move the files to a different folder beforehand.
-  </string>
-  <string name="sync_drive_confirm_title"
-    translation_description="The dialog title to confirm sync to Google Drive.">
-    Sync with Google Drive?
-  </string>
-  <string name="sync_drive_enable_message"
-    translation_description="The dialog message to enable sync to Google Drive.">
-    Do you want to sync your tracks to Google Drive? This will allow you to view your tracks in
-    Google Drive and view the tracks shared with you. All tracks synced to Google Drive will be
-    private by default.
-  </string>
-  <string name="sync_drive_enable_title"
-    translation_description="The dialog title after the track is saved.">
-    Track Saved
-  </string>
-
   <!-- Track -->
   <string name="track_name_format"
     translation_description="When creating a new track, the string format to name the track.
@@ -2082,22 +2019,9 @@ limitations under the License.
   </string>
 
   <!-- Track Delete -->
-  <string name="track_delete_all_confirm_message_sync_off"
-    translation_description="When deleting all the tracks, the confirmation message when sync to
-      Google Drive is off.">
-    All tracks and markers will be permanently deleted from the device. Exported tracks on Google
-    Drive and external storage will not be deleted.
-  </string>
-  <string name="track_delete_all_confirm_message_sync_on"
-    translation_description="When deleting all the tracks, the confirmation message when sync to
-      Google Drive is on.">
-    All tracks and markers will be permanently deleted from the device. Google Drive sync will be
-    turned off. Exported tracks on Google Drive and external storage will not be deleted.
-  </string>
   <string name="track_delete_one_confirm_message"
     translation_description="When deleting one track, the confirmation message.">
-    The track and its markers will be permanently deleted from the device. If Google Drive sync is
-    enabled, this will also delete the track on Google Drive.
+    The track and its markers will be permanently deleted from the device.
   </string>
   <string name="track_delete_one_confirm_title"
     translation_description="When deleting one track, the title of the confirmation dialog.">
@@ -2105,8 +2029,7 @@ limitations under the License.
   </string>
   <string name="track_delete_multiple_confirm_message"
     translation_description="When deleting multiple tracks, the confirmation message.">
-    The selected tracks and their markers will be permanently deleted from the device. If Google
-    Drive sync is enabled, this will also delete the tracks on Google Drive.
+    The selected tracks and their markers will be permanently deleted from the device.
   </string>
   <string name="track_delete_progress_message"
     translation_description="The progress message when deleting tracks.">
@@ -2117,25 +2040,6 @@ limitations under the License.
   <string name="track_detail_chart_tab"
     translation_description="In the track detail page, the title of the tab showing the chart.">
     Chart
-  </string>
-  <string name="track_detail_install_earth_message"
-    translation_description="When playing a track, the message informing the user that he needs
-      Google Earth to play the track.">
-    You need Google Earth to play the track
-  </string>
-  <string name="track_detail_install_earth_title"
-    translation_description="When playing a track, the title asking the user if he wants to install
-      Google Earth to play the track.">
-    Install Google Earth?
-  </string>
-  <string name="track_detail_install_earth_error"
-    translation_description="Message informing the user not able to install Google Earth from the
-      Play Store.">
-    Unable to install Google Earth from the Play Store
-  </string>
-  <string name="track_detail_map_tab"
-    translation_description="In the track detail page, the title of the tab showing the map.">
-    Map
   </string>
   <string name="track_detail_stats_tab"
     translation_description="In the track detail page, the title of the tab showing the stats.">
