@@ -54,8 +54,9 @@ public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActiv
   private static final int DELETE_REQUEST_CODE = 3;
   protected static final int GOOGLE_PLAY_SERVICES_REQUEST_CODE = 4;
   protected static final int CAMERA_REQUEST_CODE = 5;
+  protected static final int GPS_REQUEST_CODE = 6;
 
-  @Override
+    @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
       if (requestCode == DELETE_REQUEST_CODE) {
           onDeleted();

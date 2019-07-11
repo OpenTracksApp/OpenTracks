@@ -1233,6 +1233,9 @@ limitations under the License.
   </string>
 
   <!-- Permission -->
+  <string name="permission_gps_failed">
+    My Tracks requires permission to use GPS.
+  </string>
   <string name="permission_notification_description"
     translation_description="The permission description the Google Play Store shows during app
       installation when the app wants to receive Google My Tracks notifications.">
@@ -1297,6 +1300,8 @@ limitations under the License.
       what will be searched for.">
     Speak the name of a track or marker
   </string>
+
+
 
   <!-- Send Google -->
   <string name="send_google_by_my_tracks"

@@ -37,7 +37,6 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 
-
 /**
  * My Tracks Location Manager. Applies Google location settings before allowing
  * access to {@link LocationManager}.
@@ -67,6 +66,7 @@ public class MyTracksLocationManager {
         @Override
         public void onConnected(@Nullable Bundle bundle) {
             handler.post(new Runnable() {
+                //Permissions should be already acquired by TrackListActivity during start up.
                 @SuppressLint("MissingPermission")
                 @Override
                 public void run() {

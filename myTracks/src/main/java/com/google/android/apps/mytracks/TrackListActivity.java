@@ -16,6 +16,7 @@
 
 package com.google.android.apps.mytracks;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
@@ -23,15 +24,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.Parcelable;
 import android.os.RemoteException;
 import android.os.StrictMode;
-import androidx.loader.app.LoaderManager.LoaderCallbacks;
-import androidx.loader.content.CursorLoader;
-import androidx.loader.content.Loader;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -46,6 +45,12 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.loader.app.LoaderManager.LoaderCallbacks;
+import androidx.loader.content.CursorLoader;
+import androidx.loader.content.Loader;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
@@ -428,6 +433,17 @@ public class TrackListActivity extends AbstractSendToGoogleActivity implements F
   }
 
   @Override
+  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    if (requestCode == GPS_REQUEST_CODE) {
+      if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        Toast.makeText(this, R.string.permission_gps_failed, Toast.LENGTH_SHORT).show();
+        finish();
+      }
+    }
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+  }
+
+  @Override
   protected int getLayoutResId() {
     return R.layout.track_list;
   }
@@ -466,20 +482,18 @@ public class TrackListActivity extends AbstractSendToGoogleActivity implements F
     Intent intent;
     switch (item.getItemId()) {
       case R.id.track_list_search:
+        // TODO ?
         return false;
       case R.id.track_list_start_gps:
-        MyTracksLocationManager myTracksLocationManager = new MyTracksLocationManager(
-            this, Looper.myLooper(), false);
+        MyTracksLocationManager myTracksLocationManager = new MyTracksLocationManager(this, Looper.myLooper(), false);
         if (!myTracksLocationManager.isGpsProviderEnabled()) {
           intent = GoogleLocationUtils.newLocationSettingsIntent(TrackListActivity.this);
           startActivity(intent);
         } else {
-          startGps = !TrackRecordingServiceConnectionUtils.isRecordingServiceRunning(
-              this);      
+          startGps = !TrackRecordingServiceConnectionUtils.isRecordingServiceRunning(this);
 
           // Show toast
-          Toast toast = Toast.makeText(
-              this, startGps ? R.string.gps_starting : R.string.gps_stopping, Toast.LENGTH_SHORT);
+          Toast toast = Toast.makeText(this, startGps ? R.string.gps_starting : R.string.gps_stopping, Toast.LENGTH_SHORT);
           toast.setGravity(Gravity.CENTER, 0, 0);
           toast.show();
 
@@ -599,16 +613,15 @@ public class TrackListActivity extends AbstractSendToGoogleActivity implements F
    * Shows start up dialogs.
    */
   public void showStartupDialogs() {
-    {
-      // If stats_units_key is undefined, set it
-      if (PreferencesUtils.getString(this,  R.string.stats_units_key, "").equals("")) {
-        String statsUnits = getString(
-            Locale.US.equals(Locale.getDefault()) ? R.string.stats_units_imperial
-                : R.string.stats_units_metric);
-        PreferencesUtils.setString(this, R.string.stats_units_key, statsUnits);        
-      }
-      checkGooglePlayServices();
+    // If stats_units_key is undefined, set it
+    if (PreferencesUtils.getString(this, R.string.stats_units_key, "").equals("")) {
+      String statsUnits = getString(Locale.US.equals(Locale.getDefault()) ? R.string.stats_units_imperial : R.string.stats_units_metric);
+      PreferencesUtils.setString(this, R.string.stats_units_key, statsUnits);
     }
+
+    checkGooglePlayServices();
+
+    requestGPSPermissions();
   }
 
   private void checkGooglePlayServices() {
@@ -625,6 +638,12 @@ public class TrackListActivity extends AbstractSendToGoogleActivity implements F
       if (dialog != null) {
         dialog.show();
       }
+    }
+  }
+
+  private void requestGPSPermissions() {
+    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+      ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, GPS_REQUEST_CODE);
     }
   }
 
