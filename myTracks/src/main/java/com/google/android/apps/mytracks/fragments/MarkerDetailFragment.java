@@ -190,12 +190,6 @@ public class MarkerDetailFragment extends Fragment {
 
     updateWaypoint(false);
 
-    Track track = myTracksProviderUtils.getTrack(waypoint.getTrackId());
-    boolean isSharedWithMe = track == null || track.isSharedWithMe();
-
-    menu.findItem(R.id.marker_detail_edit).setVisible(!isSharedWithMe);
-    menu.findItem(R.id.marker_detail_delete).setVisible(!isSharedWithMe);
-
     String photoUrl = waypoint.getPhotoUrl();
     boolean hasPhoto = photoUrl != null && !photoUrl.equals("");
     menu.findItem(R.id.marker_detail_view_photo).setVisible(hasPhoto);

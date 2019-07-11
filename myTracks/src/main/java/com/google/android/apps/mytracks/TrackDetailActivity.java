@@ -344,18 +344,11 @@ public class TrackDetailActivity extends AbstractTrackActivity
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.track_detail, menu);
 
-    Track track = myTracksProviderUtils.getTrack(trackId);
-    boolean isSharedWithMe = track == null || track.isSharedWithMe();
-
-    menu.findItem(R.id.track_detail_edit).setVisible(!isSharedWithMe);  
-
     insertMarkerMenuItem = menu.findItem(R.id.track_detail_insert_marker);
     insertPhotoMenuItem = menu.findItem(R.id.track_detail_insert_photo);
     insertPhotoMenuItem.setVisible(new Intent(MediaStore.ACTION_IMAGE_CAPTURE).resolveActivity(getPackageManager()) != null);
 
     shareMenuItem = menu.findItem(R.id.track_detail_share);
-    shareMenuItem.setEnabled(!isSharedWithMe);
-    shareMenuItem.setVisible(!isSharedWithMe);
 
     voiceFrequencyMenuItem = menu.findItem(R.id.track_detail_voice_frequency);
     splitFrequencyMenuItem = menu.findItem(R.id.track_detail_split_frequency);

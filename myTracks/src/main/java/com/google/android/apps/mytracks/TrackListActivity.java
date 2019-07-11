@@ -197,23 +197,10 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
         public void onPrepare(Menu menu, int[] positions, long[] ids, boolean showSelectAll) {
           boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
           boolean isSingleSelection = ids.length == 1;
-          boolean isSingleSelectionShareWithMe;
-          if (isSingleSelection) {
-            Track track = myTracksProviderUtils.getTrack(ids[0]);
-            isSingleSelectionShareWithMe = track.isSharedWithMe();
-          } else {
-            isSingleSelectionShareWithMe = false;
-          }
 
-          // Not recording, one item, not sharedWithMe item
-          menu.findItem(R.id.list_context_menu_share)
-              .setVisible(!isRecording && isSingleSelection && !isSingleSelectionShareWithMe);
-          // Always disable
+          menu.findItem(R.id.list_context_menu_share).setVisible(!isRecording && isSingleSelection);
           menu.findItem(R.id.list_context_menu_show_on_map).setVisible(false);
-          // One item, not sharedWithMe item
-          menu.findItem(R.id.list_context_menu_edit)
-              .setVisible(isSingleSelection && !isSingleSelectionShareWithMe);
-          // delete is always enabled
+          menu.findItem(R.id.list_context_menu_edit).setVisible(isSingleSelection);
           menu.findItem(R.id.list_context_menu_select_all).setVisible(showSelectAll);
         }
 

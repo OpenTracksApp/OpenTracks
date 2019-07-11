@@ -135,32 +135,25 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
         public void onPrepare(Menu menu, int[] positions, long[] ids, boolean showSelectAll) {
           boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
           boolean isSingleSelection = positions.length == 1;
-          boolean isSingleSelectionShareWithMe;
           boolean isSingleSelectionTrack;
           if (isSingleSelection) {
             Map<String, Object> item = arrayAdapter.getItem(positions[0]);
             Long trackId = (Long) item.get(TRACK_ID_FIELD);
             Track track = myTracksProviderUtils.getTrack(trackId);
 
-            isSingleSelectionShareWithMe = track.isSharedWithMe();
             isSingleSelectionTrack = item.get(MARKER_ID_FIELD) == null;
           } else {
-            isSingleSelectionShareWithMe = false;
             isSingleSelectionTrack = false;
           }
-          // Not recording, one item, item is a track, not shareWithMe item
-          menu.findItem(R.id.list_context_menu_share).setVisible(!isRecording && isSingleSelection
-              && isSingleSelectionTrack && !isSingleSelectionShareWithMe);
+          // Not recording, one item, item is a track
+          menu.findItem(R.id.list_context_menu_share).setVisible(!isRecording && isSingleSelection && isSingleSelectionTrack);
           // One item, item is a marker
           menu.findItem(R.id.list_context_menu_show_on_map)
               .setVisible(isSingleSelection && !isSingleSelectionTrack);
-          // One item, can be a track or a marker, cannot be a sharedWithMe item
-          menu.findItem(R.id.list_context_menu_edit)
-              .setVisible(isSingleSelection && !isSingleSelectionShareWithMe);
-          // One item. If track, no restriction. If marker, cannot be a
-          // shareWithMe item
-          menu.findItem(R.id.list_context_menu_delete).setVisible(
-              isSingleSelection && (isSingleSelectionTrack || !isSingleSelectionShareWithMe));
+          // One item, can be a track or a marker
+          menu.findItem(R.id.list_context_menu_edit).setVisible(isSingleSelection);
+          // One item. If track, no restriction.
+          menu.findItem(R.id.list_context_menu_delete).setVisible(isSingleSelection && (isSingleSelectionTrack));
           // Disable select all, no action is available for multiple selection
           menu.findItem(R.id.list_context_menu_select_all).setVisible(false);
         }

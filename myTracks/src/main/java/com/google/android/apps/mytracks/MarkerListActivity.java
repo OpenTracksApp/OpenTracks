@@ -73,19 +73,14 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
 
           // Always disable
           menu.findItem(R.id.list_context_menu_share).setVisible(false);
-          // One item
           menu.findItem(R.id.list_context_menu_show_on_map).setVisible(isSingleSelection);
-          // One item, track not sharedWithMe
-          menu.findItem(R.id.list_context_menu_edit)
-              .setVisible(isSingleSelection && !track.isSharedWithMe());
-          // Track not sharedWithMe
-          menu.findItem(R.id.list_context_menu_delete).setVisible(!track.isSharedWithMe());
+          menu.findItem(R.id.list_context_menu_edit).setVisible(isSingleSelection);
+          menu.findItem(R.id.list_context_menu_delete).setVisible(true);
           /*
            * Set select all to the same visibility as delete since delete is the
            * only action that can be applied to multiple markers.
            */
-          menu.findItem(R.id.list_context_menu_select_all)
-              .setVisible(showSelectAll && !track.isSharedWithMe());
+          menu.findItem(R.id.list_context_menu_select_all).setVisible(showSelectAll);
         }
 
           @Override
