@@ -52,13 +52,7 @@ public abstract class SectionResourceCursorAdapter extends ResourceCursorAdapter
     if (getItemViewType(position) == ItemType.TRACK.ordinal()) {
       return super.getView(getCursorPosition(position), convertView, parent);
     } else {
-      TextView textView;
-      if (convertView == null) {
-        textView = (TextView) layoutInflater.inflate(R.layout.track_list_header, parent, false);
-      } else {
-        textView = (TextView) convertView;
-      }
-      return textView;
+      return convertView;
     }
   }
 
