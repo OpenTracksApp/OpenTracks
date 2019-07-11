@@ -13,58 +13,60 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:icon="@drawable/ic_menu_insert_marker"
         android:id="@+id/track_detail_insert_marker"
+        android:icon="@drawable/ic_menu_insert_marker"
         android:orderInCategory="1"
-        android:showAsAction="ifRoom"
-        android:title="@string/menu_insert_marker" />
+        android:title="@string/menu_insert_marker"
+        app:showAsAction="ifRoom" />
     <item
-        android:icon="@drawable/ic_menu_insert_photo"
         android:id="@+id/track_detail_insert_photo"
+        android:icon="@drawable/ic_menu_insert_photo"
         android:orderInCategory="2"
-        android:showAsAction="ifRoom"
-        android:title="@string/menu_insert_photo" />
+        android:title="@string/menu_insert_photo"
+        app:showAsAction="ifRoom" />
     <item
-        android:icon="@drawable/ic_menu_share"
         android:id="@+id/track_detail_share"
+        android:icon="@drawable/ic_menu_share"
         android:orderInCategory="4"
-        android:showAsAction="ifRoom"
-        android:title="@string/menu_share" />
+        android:title="@string/menu_share"
+        app:actionProviderClass="androidx.appcompat.widget.ShareActionProvider"
+        app:showAsAction="never" />
     <item
-        android:icon="@drawable/ic_menu_markers"
         android:id="@+id/track_detail_markers"
+        android:icon="@drawable/ic_menu_markers"
         android:orderInCategory="5"
         android:title="@string/menu_markers" />
     <item
-        android:icon="@drawable/ic_menu_edit"
         android:id="@+id/track_detail_edit"
+        android:icon="@drawable/ic_menu_edit"
         android:orderInCategory="9"
         android:title="@string/menu_edit" />
     <item
-        android:icon="@drawable/ic_menu_delete"
         android:id="@+id/track_detail_delete"
+        android:icon="@drawable/ic_menu_delete"
         android:orderInCategory="10"
         android:title="@string/menu_delete" />
     <item
-        android:icon="@drawable/ic_menu_voice_frequency"
         android:id="@+id/track_detail_voice_frequency"
+        android:icon="@drawable/ic_menu_voice_frequency"
         android:orderInCategory="11"
         android:title="@string/menu_voice_frequency" />
     <item
-        android:icon="@drawable/ic_menu_split_frequency"
         android:id="@+id/track_detail_split_frequency"
+        android:icon="@drawable/ic_menu_split_frequency"
         android:orderInCategory="12"
         android:title="@string/menu_split_frequency" />
     <item
-        android:icon="@drawable/ic_menu_sensor_state"
         android:id="@+id/track_detail_sensor_state"
+        android:icon="@drawable/ic_menu_sensor_state"
         android:orderInCategory="13"
         android:title="@string/menu_sensor_state" />
     <item
-        android:icon="@drawable/ic_menu_settings"
         android:id="@+id/track_detail_settings"
+        android:icon="@drawable/ic_menu_settings"
         android:orderInCategory="14"
         android:title="@string/menu_settings" />
 </menu>

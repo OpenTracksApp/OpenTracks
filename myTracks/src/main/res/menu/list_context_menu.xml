@@ -13,30 +13,38 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:icon="@drawable/ic_menu_share"
         android:id="@+id/list_context_menu_share"
+        android:icon="@drawable/ic_menu_share"
         android:title="@string/menu_share"
-        android:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom" />
     <item
-        android:icon="@drawable/ic_menu_show_on_map"
+        android:id="@+id/track_detail_share"
+        android:icon="@drawable/ic_menu_share"
+        android:orderInCategory="4"
+        android:title="@string/menu_share"
+        app:actionProviderClass="androidx.appcompat.widget.ShareActionProvider"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/list_context_menu_show_on_map"
+        android:icon="@drawable/ic_menu_show_on_map"
         android:title="@string/menu_show_on_map"
-        android:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom" />
     <item
-        android:icon="@drawable/ic_menu_edit"
         android:id="@+id/list_context_menu_edit"
+        android:icon="@drawable/ic_menu_edit"
         android:title="@string/menu_edit"
-        android:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom" />
     <item
-        android:icon="@drawable/ic_menu_delete"
         android:id="@+id/list_context_menu_delete"
+        android:icon="@drawable/ic_menu_delete"
         android:title="@string/menu_delete"
-        android:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom" />
     <item
-        android:icon="@drawable/ic_menu_select_all"
         android:id="@+id/list_context_menu_select_all"
+        android:icon="@drawable/ic_menu_select_all"
         android:title="@string/menu_select_all"
-        android:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom" />
 </menu>

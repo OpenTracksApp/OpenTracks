@@ -13,37 +13,37 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:icon="@drawable/ic_menu_search"
         android:id="@+id/track_list_search"
+        android:icon="@drawable/ic_menu_search"
         android:title="@string/menu_search"
-        android:actionViewClass="androidx.appcompat.widget.SearchView"
-        android:showAsAction="always" />
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="always" />
     <item
-        android:icon="@drawable/ic_menu_start_gps"
         android:id="@+id/track_list_start_gps"
+        android:icon="@drawable/ic_menu_start_gps"
         android:title="@string/menu_start_gps"
-        android:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom" />
     <item
-        android:icon="@drawable/ic_menu_aggregated_statistics"
         android:id="@+id/track_list_aggregated_statistics"
+        android:icon="@drawable/ic_menu_aggregated_statistics"
         android:title="@string/menu_aggregated_statistics" />
     <item
-        android:icon="@drawable/ic_menu_export"
         android:id="@+id/track_list_export_all"
+        android:icon="@drawable/ic_menu_export"
         android:title="@string/menu_export_all" />
     <item
-        android:icon="@drawable/ic_menu_import"
         android:id="@+id/track_list_import_all"
+        android:icon="@drawable/ic_menu_import"
         android:title="@string/menu_import_all" />
     <item
-        android:icon="@drawable/ic_menu_delete"
         android:id="@+id/track_list_delete_all"
+        android:icon="@drawable/ic_menu_delete"
         android:title="@string/menu_delete_all" />
     <item
-        android:icon="@drawable/ic_menu_settings"
         android:id="@+id/track_list_settings"
+        android:icon="@drawable/ic_menu_settings"
         android:title="@string/menu_settings" />
 </menu>

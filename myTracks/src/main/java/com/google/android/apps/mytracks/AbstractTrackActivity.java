@@ -28,6 +28,7 @@ import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -129,6 +130,7 @@ public abstract class AbstractTrackActivity extends AbstractActivity implements 
 
         if (searchView == null) {
             //TODO This is a workaround and needs to be fixed; looks like a configuration issue.
+            Log.d(AbstractTrackActivity.class.getCanonicalName(), "Search is not yet implemented.");
             return;
         }
 

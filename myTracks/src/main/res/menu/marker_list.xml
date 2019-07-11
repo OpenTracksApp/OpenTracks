@@ -13,16 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:icon="@drawable/ic_menu_insert_marker"
         android:id="@+id/marker_list_insert_marker"
-        android:showAsAction="ifRoom"
-        android:title="@string/menu_insert_marker" />
+        android:icon="@drawable/ic_menu_insert_marker"
+        android:title="@string/menu_insert_marker"
+        app:showAsAction="ifRoom" />
     <item
-        android:icon="@drawable/ic_menu_search"
         android:id="@+id/marker_list_search"
+        android:icon="@drawable/ic_menu_search"
         android:title="@string/menu_search"
-        android:showAsAction="ifRoom|collapseActionView"
-        android:actionViewClass="androidx.appcompat.widget.SearchView" />
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView" />
 </menu>
