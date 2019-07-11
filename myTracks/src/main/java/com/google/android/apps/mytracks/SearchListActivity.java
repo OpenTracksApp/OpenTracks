@@ -82,7 +82,6 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
   private static final String ICON_ID_FIELD = "icon";
   private static final String ICON_CONTENT_DESCRIPTION_ID_FIELD = "iconContentDescription";
   private static final String NAME_FIELD = "name";
-  private static final String SHARED_OWNER_FIELD = "sharedOwner";
   private static final String TOTAL_TIME_FIELD = "totalTime";
   private static final String TOTAL_DISTANCE_FIELD = "totalDistance";
   private static final String MARKER_COUNT_FIELD = "markerCount";
@@ -220,7 +219,6 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
         int iconId = (Integer) resultMap.get(ICON_ID_FIELD);
         int iconContentDescriptionId = (Integer) resultMap.get(ICON_CONTENT_DESCRIPTION_ID_FIELD);
         String name = (String) resultMap.get(NAME_FIELD);
-        String sharedOwner = (String) resultMap.get(SHARED_OWNER_FIELD);
         String totalTime = (String) resultMap.get(TOTAL_TIME_FIELD);
         String totalDistance = (String) resultMap.get(TOTAL_DISTANCE_FIELD);
         int markerCount = (Integer) resultMap.get(MARKER_COUNT_FIELD);
@@ -230,7 +228,7 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
         String photoUrl = (String) resultMap.get(PHOTO_URL_FIELD);
         
         ListItemUtils.setListItem(SearchListActivity.this, view, isRecording, isPaused, iconId,
-            iconContentDescriptionId, name, sharedOwner, totalTime, totalDistance, markerCount,
+            iconContentDescriptionId, name, totalTime, totalDistance, markerCount,
             startTime, false, category, description, photoUrl);
         return view;
       }
@@ -472,7 +470,6 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
         statistics ? R.drawable.ic_marker_yellow_pushpin : R.drawable.ic_marker_blue_pushpin);
     resultMap.put(ICON_CONTENT_DESCRIPTION_ID_FIELD, R.string.image_marker);
     resultMap.put(NAME_FIELD, waypoint.getName());
-    resultMap.put(SHARED_OWNER_FIELD, null);
     // Display the marker's track name in the total time field
     resultMap.put(TOTAL_TIME_FIELD, trackName == null ? null
         : getString(R.string.search_list_marker_track_location, trackName));
@@ -502,7 +499,6 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
     resultMap.put(ICON_ID_FIELD, TrackIconUtils.getIconDrawable(icon));
     resultMap.put(ICON_CONTENT_DESCRIPTION_ID_FIELD, R.string.image_track);
     resultMap.put(NAME_FIELD, track.getName());
-    resultMap.put(SHARED_OWNER_FIELD, track.getSharedOwner());
     resultMap.put(TOTAL_TIME_FIELD, StringUtils.formatElapsedTime(tripStatitics.getTotalTime()));
     resultMap.put(TOTAL_DISTANCE_FIELD,
         StringUtils.formatDistance(this, tripStatitics.getTotalDistance(), metricUnits));

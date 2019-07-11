@@ -86,11 +86,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     int minGradeIndex = cursor.getColumnIndexOrThrow(TracksColumns.MINGRADE);
     int maxGradeIndex = cursor.getColumnIndexOrThrow(TracksColumns.MAXGRADE);
     int iconIndex = cursor.getColumnIndexOrThrow(TracksColumns.ICON);
-    int driveIdIndex = cursor.getColumnIndexOrThrow(TracksColumns.DRIVEID);
     int modifiedTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.MODIFIEDTIME);
-    int sharedWithMeIndex = cursor.getColumnIndexOrThrow(TracksColumns.SHAREDWITHME);
-    int sharedOwnerIndex = cursor.getColumnIndexOrThrow(TracksColumns.SHAREDOWNER);
-    int caloriesIndex = cursor.getColumnIndexOrThrow(TracksColumns.CALORIE);
     
     Track track = new Track();
     TripStatistics tripStatistics = track.getTripStatistics();
@@ -161,12 +157,6 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     }
     if (!cursor.isNull(modifiedTimeIndex)) {
       track.setModifiedTime(cursor.getLong(modifiedTimeIndex));
-    }
-    if (!cursor.isNull(sharedWithMeIndex)) {
-      track.setSharedWithMe(cursor.getInt(sharedWithMeIndex) == 1);
-    }
-    if (!cursor.isNull(sharedOwnerIndex)) {
-      track.setSharedOwner(cursor.getString(sharedOwnerIndex));
     }
     return track;
   }
@@ -317,8 +307,6 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     values.put(TracksColumns.MAXGRADE, tripStatistics.getMaxGrade());
     values.put(TracksColumns.ICON, track.getIcon());
     values.put(TracksColumns.MODIFIEDTIME, track.getModifiedTime());
-    values.put(TracksColumns.SHAREDWITHME, track.isSharedWithMe());
-    values.put(TracksColumns.SHAREDOWNER, track.getSharedOwner());
 
     return values;
   }
@@ -367,7 +355,6 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     int elevationGainIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.ELEVATIONGAIN);
     int minGradeIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.MINGRADE);
     int maxGradeIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.MAXGRADE);
-    int calorieIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.CALORIE);
     int photoUrlIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.PHOTOURL);
     
     Waypoint waypoint = new Waypoint();

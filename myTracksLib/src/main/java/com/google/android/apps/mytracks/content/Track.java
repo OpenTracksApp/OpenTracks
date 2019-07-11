@@ -46,8 +46,6 @@ public class Track implements Parcelable {
   private int numberOfPoints = 0;
   private String icon = "";
   private long modifiedTime = -1L;
-  private boolean sharedWithMe = false;
-  private String sharedOwner = "";
 
   private TripStatistics tripStatistics = new TripStatistics();
 
@@ -66,8 +64,6 @@ public class Track implements Parcelable {
     numberOfPoints = in.readInt();
     icon = in.readString();
     modifiedTime = in.readLong();
-    sharedWithMe = in.readByte() == 1;
-    sharedOwner = in.readString();
 
     ClassLoader classLoader = getClass().getClassLoader();
     tripStatistics = in.readParcelable(classLoader);
@@ -94,8 +90,6 @@ public class Track implements Parcelable {
     dest.writeInt(numberOfPoints);
     dest.writeString(icon);
     dest.writeLong(modifiedTime);
-    dest.writeByte((byte) (sharedWithMe ? 1 : 0));
-    dest.writeString(sharedOwner);
 
     dest.writeParcelable(tripStatistics, 0);
     for (int i = 0; i < numberOfPoints; ++i) {
@@ -187,22 +181,6 @@ public class Track implements Parcelable {
     this.modifiedTime = modifiedTime;
   }
 
-  public boolean isSharedWithMe() {
-    return sharedWithMe;
-  }
-
-  public void setSharedWithMe(boolean sharedWithMe) {
-    this.sharedWithMe = sharedWithMe;
-  }
-
-  public String getSharedOwner() {
-    return sharedOwner;
-  }
-  
-  public void setSharedOwner(String sharedOwner) {
-    this.sharedOwner = sharedOwner;
-  }
-  
   public TripStatistics getTripStatistics() {
     return tripStatistics;
   }

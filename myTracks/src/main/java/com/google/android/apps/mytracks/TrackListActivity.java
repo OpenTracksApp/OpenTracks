@@ -334,7 +334,6 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
         int idIndex = cursor.getColumnIndex(TracksColumns._ID);
         int iconIndex = cursor.getColumnIndex(TracksColumns.ICON);
         int nameIndex = cursor.getColumnIndex(TracksColumns.NAME);
-        int sharedOwnerIndex = cursor.getColumnIndex(TracksColumns.SHAREDOWNER);
         int totalTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALTIME);
         int totalDistanceIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALDISTANCE);
         int startTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME);
@@ -346,7 +345,6 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
         String icon = cursor.getString(iconIndex);
         int iconId = TrackIconUtils.getIconDrawable(icon);
         String name = cursor.getString(nameIndex);
-        String sharedOwner = cursor.getString(sharedOwnerIndex);
         String totalTime = StringUtils.formatElapsedTime(cursor.getLong(totalTimeIndex));
         String totalDistance = StringUtils.formatDistance(
             TrackListActivity.this, cursor.getDouble(totalDistanceIndex), metricUnits);
@@ -356,7 +354,7 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
         String description = cursor.getString(descriptionIndex);
 
         ListItemUtils.setListItem(TrackListActivity.this, view, isRecording, recordingTrackPaused,
-            iconId, R.string.image_track, name, sharedOwner, totalTime, totalDistance, markerCount,
+            iconId, R.string.image_track, name, totalTime, totalDistance, markerCount,
             startTime, true, category, description, null);
       }
     };

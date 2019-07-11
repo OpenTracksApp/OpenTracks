@@ -180,9 +180,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         String description = statistics ? null : cursor.getString(descriptionIndex);
         String photoUrl = cursor.getString(photoUrlIndex);
 
-        ListItemUtils.setListItem(MarkerListActivity.this, view, false, true, iconId,
-            R.string.image_marker, name, null, null, null, 0, time, false, category, description,
-            photoUrl);
+        ListItemUtils.setListItem(MarkerListActivity.this, view, false, true, iconId, R.string.image_marker, name, null, null, 0, time, false, category, description, photoUrl);
       }
     };
     listView.setAdapter(resourceCursorAdapter);

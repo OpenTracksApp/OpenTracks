@@ -52,7 +52,6 @@ public class ListItemUtils {
    * @param iconId the icon id
    * @param iconContentDescriptionId the icon content description id
    * @param name the name value
-   * @param sharedOwner if shared with me track, the owner, else null
    * @param totalTime the total time value
    * @param totalDistance the total distance value
    * @param markerCount the marker count
@@ -63,7 +62,7 @@ public class ListItemUtils {
    * @param photoUrl the photo url
    */
   public static void setListItem(Activity activity, View view, boolean isRecording,
-      boolean isPaused, int iconId, int iconContentDescriptionId, String name, String sharedOwner,
+      boolean isPaused, int iconId, int iconContentDescriptionId, String name,
       String totalTime, String totalDistance, int markerCount, long startTime,
       boolean useRelativeTime, String category, String description, String photoUrl) {
 
@@ -98,19 +97,16 @@ public class ListItemUtils {
     TextView nameTextView = view.findViewById(R.id.list_item_name);
     setTextView(activity, nameTextView, name, hasPhoto);
 
-    // Set sharedOwner/totalTime/totalDistance
-    TextView ownerTimeDistanceTextView = view.findViewById(
-        R.id.list_item_owner_time_distance);
+    // Set totalTime/totalDistance
+    TextView ownerTimeDistanceTextView = view.findViewById(R.id.list_item_owner_time_distance);
     String ownerTimeDistance;
     if (isRecording) {
-      ownerTimeDistanceTextView.setTextColor(activity.getResources()
-          .getColor(isPaused ? android.R.color.white : R.color.recording_text));
-      ownerTimeDistance = activity.getString(
-          isPaused ? R.string.generic_paused : R.string.generic_recording);
+      ownerTimeDistanceTextView.setTextColor(activity.getResources().getColor(isPaused ? android.R.color.white : R.color.recording_text));
+      ownerTimeDistance = activity.getString(isPaused ? R.string.generic_paused : R.string.generic_recording);
     } else {
       // Match list_item_owner_time_distance in list_item.xml
       ownerTimeDistanceTextView.setTextAppearance(activity, R.style.TextSmall);
-      ownerTimeDistance = getOwnerTimeDistance(sharedOwner, totalTime, totalDistance);
+      ownerTimeDistance = getTimeDistance(totalTime, totalDistance);
       if (markerCount > 0) {
         ownerTimeDistance += "  \u2027";
       }
@@ -172,16 +168,11 @@ public class ListItemUtils {
   /**
    * Gets a string for share owner, total time, and total distance.
    * 
-   * @param sharedOwner the share owner. Can be null
    * @param totalTime the total time. Can be null
    * @param totalDistance the total distance. Can be null
    */
-  private static String getOwnerTimeDistance(
-      String sharedOwner, String totalTime, String totalDistance) {
+  private static String getTimeDistance(String totalTime, String totalDistance) {
     StringBuilder builder = new StringBuilder();
-    if (sharedOwner != null && sharedOwner.length() != 0) {
-      builder.append(sharedOwner);
-    }
     if (totalTime != null && totalTime.length() != 0) {
       if (builder.length() != 0) {
         builder.append(" \u2027 ");
