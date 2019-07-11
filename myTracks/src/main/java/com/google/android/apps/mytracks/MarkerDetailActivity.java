@@ -37,7 +37,7 @@ import java.util.ArrayList;
  * 
  * @author Leif Hendrik Wilden
  */
-public class MarkerDetailActivity extends AbstractMyTracksActivity implements DeleteMarkerCaller {
+public class MarkerDetailActivity extends AbstractActivity implements DeleteMarkerCaller {
 
   public static final String EXTRA_MARKER_ID = "marker_id";
   private static final String TAG = MarkerDetailActivity.class.getSimpleName();

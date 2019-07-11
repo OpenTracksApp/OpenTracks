@@ -85,7 +85,7 @@ import java.util.Locale;
  * 
  * @author Leif Hendrik Wilden
  */
-public class TrackListActivity extends AbstractSendToGoogleActivity implements FileTypeCaller, ConfirmDeleteDialogFragment.ConfirmDeleteCaller {
+public class TrackListActivity extends AbstractTrackActivity implements FileTypeCaller, ConfirmDeleteDialogFragment.ConfirmDeleteCaller {
 
   private static final String TAG = TrackListActivity.class.getSimpleName();
   private static final String[] PROJECTION = new String[] { TracksColumns._ID, TracksColumns.NAME,
@@ -374,7 +374,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity implements F
       }
     };
     listView.setAdapter(sectionResourceCursorAdapter);
-    AbstractSendToGoogleActivity.configureListViewContextualMenu(this, listView, contextualActionModeCallback);
+    AbstractTrackActivity.configureListViewContextualMenu(this, listView, contextualActionModeCallback);
 
     getSupportLoaderManager().initLoader(0, null, loaderCallbacks);
     showStartupDialogs();
@@ -458,7 +458,7 @@ public class TrackListActivity extends AbstractSendToGoogleActivity implements F
     getMenuInflater().inflate(R.menu.track_list, menu);
 
     searchMenuItem = menu.findItem(R.id.track_list_search);
-    AbstractSendToGoogleActivity.configureSearchWidget(this, searchMenuItem, trackController);
+    AbstractTrackActivity.configureSearchWidget(this, searchMenuItem, trackController);
 
     startGpsMenuItem = menu.findItem(R.id.track_list_start_gps);
     aggregatedStatisticsMenuItem = menu.findItem(R.id.track_list_aggregated_statistics);

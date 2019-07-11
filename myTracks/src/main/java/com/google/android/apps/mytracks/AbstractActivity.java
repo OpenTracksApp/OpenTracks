@@ -30,7 +30,7 @@ import android.view.MenuItem;
  * 
  * @author Jimmy Shih
  */
-public abstract class AbstractMyTracksActivity extends FragmentActivity {
+public abstract class AbstractActivity extends FragmentActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

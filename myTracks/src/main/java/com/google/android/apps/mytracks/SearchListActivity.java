@@ -73,7 +73,7 @@ import java.util.SortedSet;
  * 
  * @author Rodrigo Damazio
  */
-public class SearchListActivity extends AbstractSendToGoogleActivity implements DeleteMarkerCaller, ConfirmDeleteDialogFragment.ConfirmDeleteCaller {
+public class SearchListActivity extends AbstractTrackActivity implements DeleteMarkerCaller, ConfirmDeleteDialogFragment.ConfirmDeleteCaller {
 
   private static final String TAG = SearchListActivity.class.getSimpleName();
 
@@ -243,7 +243,7 @@ public class SearchListActivity extends AbstractSendToGoogleActivity implements 
       }
     };
     listView.setAdapter(arrayAdapter);
-    AbstractSendToGoogleActivity.configureListViewContextualMenu(this, listView, contextualActionModeCallback);
+    AbstractTrackActivity.configureListViewContextualMenu(this, listView, contextualActionModeCallback);
     handleIntent(getIntent());
   }
 
@@ -283,7 +283,7 @@ public class SearchListActivity extends AbstractSendToGoogleActivity implements 
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.search_list, menu);
     searchMenuItem = menu.findItem(R.id.search_list_search);
-    AbstractSendToGoogleActivity.configureSearchWidget(this, searchMenuItem, null);
+    AbstractTrackActivity.configureSearchWidget(this, searchMenuItem, null);
     return super.onCreateOptionsMenu(menu);
   }
 

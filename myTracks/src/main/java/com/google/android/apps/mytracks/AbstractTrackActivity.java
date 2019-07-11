@@ -49,7 +49,7 @@ import java.util.ArrayList;
  *
  * @author Jimmy Shih
  */
-public abstract class AbstractSendToGoogleActivity extends AbstractMyTracksActivity implements ConfirmDeleteCaller {
+public abstract class AbstractTrackActivity extends AbstractActivity implements ConfirmDeleteCaller {
 
   private static final int DELETE_REQUEST_CODE = 3;
   protected static final int GOOGLE_PLAY_SERVICES_REQUEST_CODE = 4;

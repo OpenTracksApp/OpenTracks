@@ -31,7 +31,7 @@ import java.util.List;
  *
  * @author Fergus Nelson
  */
-public class AggregatedStatsActivity extends AbstractMyTracksActivity {
+public class AggregatedStatsActivity extends AbstractActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

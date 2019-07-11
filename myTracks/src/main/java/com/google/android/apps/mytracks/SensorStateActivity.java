@@ -39,7 +39,7 @@ import android.widget.TextView;
  * 
  * @author Sandor Dornbush
  */
-public class SensorStateActivity extends AbstractMyTracksActivity {
+public class SensorStateActivity extends AbstractActivity {
 
   private static final String TAG = SensorStateActivity.class.getName();
   

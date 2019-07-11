@@ -38,7 +38,7 @@ import android.widget.EditText;
  *
  * @author Jimmy Shih
  */
-public class MarkerEditActivity extends AbstractMyTracksActivity {
+public class MarkerEditActivity extends AbstractActivity {
 
   private static final String TAG = MarkerEditActivity.class.getSimpleName();
 

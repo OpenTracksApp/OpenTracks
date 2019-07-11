@@ -44,7 +44,7 @@ import android.widget.Spinner;
  * 
  * @author Leif Hendrik Wilden
  */
-public class TrackEditActivity extends AbstractMyTracksActivity implements ChooseActivityTypeCaller {
+public class TrackEditActivity extends AbstractActivity implements ChooseActivityTypeCaller {
 
   public static final String EXTRA_TRACK_ID = "track_id";
   public static final String EXTRA_NEW_TRACK = "new_track";

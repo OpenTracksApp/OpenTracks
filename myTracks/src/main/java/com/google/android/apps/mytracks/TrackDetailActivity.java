@@ -74,7 +74,7 @@ import java.util.Date;
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
-public class TrackDetailActivity extends AbstractSendToGoogleActivity
+public class TrackDetailActivity extends AbstractTrackActivity
         implements ChooseActivityTypeCaller, ConfirmDeleteDialogFragment.ConfirmDeleteCaller {
 
   private static final String TAG = TrackDetailActivity.class.getSimpleName();
