@@ -19,6 +19,7 @@ package com.google.android.apps.mytracks.fragments;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -30,6 +31,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.apps.mytracks.TrackDetailActivity;
+import com.google.android.apps.mytracks.content.MyTracksLocation;
+import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.TrackDataListener;
@@ -55,11 +58,8 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
   public static final String STATS_FRAGMENT_TAG = "statsFragment";
 
-  // 1 second in milliseconds
-  private static final long ONE_SECOND = (long) UnitConversions.S_TO_MS;
-
   private TrackDataHub trackDataHub;
-  private Handler handler;
+  private Handler handlerUpdateUI;
 
   private Location lastLocation = null;
   private TripStatistics lastTripStatistics = null;
@@ -71,24 +71,22 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     public void run() {
       if (isResumed() && isSelectedTrackRecording()) {
         if (!isSelectedTrackPaused() && lastTripStatistics != null) {
-          StatsUtils.setTotalTimeValue(getActivity(), System.currentTimeMillis()
-              - lastTripStatistics.getStopTime() + lastTripStatistics.getTotalTime());
+          StatsUtils.setTotalTimeValue(getActivity(), System.currentTimeMillis() - lastTripStatistics.getStopTime() + lastTripStatistics.getTotalTime());
         }
-        handler.postDelayed(this, ONE_SECOND);
+        handlerUpdateUI.postDelayed(this, UnitConversions.ONE_SECOND);
       }
     }
   };
 
   @Override
-  public View onCreateView(
-      LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     return inflater.inflate(R.layout.stats, container, false);
   }
 
   @Override
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
-    handler = new Handler();
+    handlerUpdateUI = new Handler();
    
     Spinner activityTypeIcon = getView().findViewById(R.id.stats_activity_type_icon);
     activityTypeIcon.setAdapter(TrackIconUtils.getIconSpinnerAdapter(getActivity(), ""));
@@ -118,7 +116,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     resumeTrackDataHub();
     updateUi(getActivity());
     if (isSelectedTrackRecording()) {
-      handler.post(updateTotalTime);
+      handlerUpdateUI.post(updateTotalTime);
     }
   }
 
@@ -126,7 +124,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   public void onPause() {
     super.onPause();
     pauseTrackDataHub();
-    handler.removeCallbacks(updateTotalTime);
+    handlerUpdateUI.removeCallbacks(updateTotalTime);
   }
 
   @Override
@@ -178,15 +176,13 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
             if (lastLocation != null) {
               boolean hasFix = !LocationUtils.isLocationOld(lastLocation);
-              boolean hasGoodFix = lastLocation.hasAccuracy()
-                  && lastLocation.getAccuracy() < recordingGpsAccuracy;
+              boolean hasGoodFix = lastLocation.hasAccuracy() && lastLocation.getAccuracy() < recordingGpsAccuracy;
 
               if (!hasFix || !hasGoodFix) {
                 lastLocation = null;
               }
             }
-            StatsUtils.setLocationValues(
-                getActivity(), getActivity(), null, lastLocation, isSelectedTrackRecording());
+            StatsUtils.setLocationValues(getActivity(), getActivity(), null, lastLocation, isSelectedTrackRecording());
           }
         }
       });

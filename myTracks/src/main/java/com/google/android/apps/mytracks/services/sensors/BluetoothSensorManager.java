@@ -44,7 +44,6 @@ import java.util.ArrayList;
  */
 public class BluetoothSensorManager extends SensorManager {
 
-  private static final long ONE_SECOND = (long) UnitConversions.S_TO_MS;
   private static final BluetoothAdapter bluetoothAdapter = getDefaultBluetoothAdapter();
   private static final String TAG = BluetoothConnectionManager.class.getSimpleName();
 
@@ -72,7 +71,7 @@ public class BluetoothSensorManager extends SensorManager {
     while (adapters.isEmpty()) {
       synchronized (mutex) {
         try {
-          mutex.wait(ONE_SECOND);
+          mutex.wait(UnitConversions.ONE_SECOND);
         } catch (InterruptedException e) {
           Log.e(TAG, "Interrupted while waiting for default bluetooth adapter", e);
         }

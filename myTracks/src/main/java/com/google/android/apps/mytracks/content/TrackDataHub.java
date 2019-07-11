@@ -179,8 +179,7 @@ public class TrackDataHub implements DataSourceListener {
    * @param trackDataListener the track data listener
    * @param trackDataTypes the track data types
    */
-  public void registerTrackDataListener(
-      final TrackDataListener trackDataListener, final EnumSet<TrackDataType> trackDataTypes) {
+  public void registerTrackDataListener(final TrackDataListener trackDataListener, final EnumSet<TrackDataType> trackDataTypes) {
     runInHanderThread(new Runnable() {
         @Override
       public void run() {
@@ -360,8 +359,7 @@ public class TrackDataHub implements DataSourceListener {
       return;
     }
 
-    for (TrackDataListener trackDataListener :
-        trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
+    for (TrackDataListener trackDataListener : trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
       trackDataListener.onMetricUnitsChanged(metricUnits);
       trackDataListener.onReportSpeedChanged(reportSpeed);
       trackDataListener.onRecordingGpsAccuracy(recordingGpsAccuracy);
@@ -371,8 +369,7 @@ public class TrackDataHub implements DataSourceListener {
 
     notifyTracksTableUpdate(trackDataManager.getListeners(TrackDataType.TRACKS_TABLE));
 
-    for (TrackDataListener listener :
-        trackDataManager.getListeners(TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE)) {
+    for (TrackDataListener listener : trackDataManager.getListeners(TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE)) {
       listener.clearTrackPoints();
     }
     notifyTrackPointsTableUpdate(true,

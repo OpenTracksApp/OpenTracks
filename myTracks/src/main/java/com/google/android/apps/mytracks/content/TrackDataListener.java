@@ -26,15 +26,6 @@ import android.location.Location;
 public interface TrackDataListener {
 
   /**
-   * Location state.
-   * 
-   * @author Jimmy Shih
-   */
-  enum LocationState {
-    DISABLED, NO_FIX, BAD_FIX, GOOD_FIX
-  }
-
-  /**
    * Called when the track or its statistics has been updated.
    * 
    * @param track the track

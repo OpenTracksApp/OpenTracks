@@ -29,9 +29,6 @@ import com.google.android.apps.mytracks.util.UnitConversions;
  */
 public class DeleteAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
-  // 1 second in milliseconds
-  private static final long ONE_SECOND = (long) UnitConversions.S_TO_MS;
-
   private DeleteActivity deleteActivity;
   private final long[] trackIds;
   private final Context context;

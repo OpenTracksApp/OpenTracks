@@ -101,10 +101,7 @@ public class TrackRecordingService extends Service {
   public static final double MAX_NO_MOVEMENT_SPEED = 0.224;
   
   private static final String TAG = TrackRecordingService.class.getSimpleName();
-  
-  // 1 second in milliseconds
-  private static final long ONE_SECOND = (long) UnitConversions.S_TO_MS;
-  
+
   // 1 minute in milliseconds
   private static final long ONE_MINUTE = (long) (UnitConversions.MIN_TO_S
       * UnitConversions.S_TO_MS);
@@ -184,23 +181,18 @@ public class TrackRecordingService extends Service {
           }
           if (key == null || key.equals(
               PreferencesUtils.getKey(context, R.string.min_recording_interval_key))) {
-            int minRecordingInterval = PreferencesUtils.getInt(context,
-                R.string.min_recording_interval_key,
-                PreferencesUtils.MIN_RECORDING_INTERVAL_DEFAULT);
+            int minRecordingInterval = PreferencesUtils.getInt(context, R.string.min_recording_interval_key, PreferencesUtils.MIN_RECORDING_INTERVAL_DEFAULT);
             switch (minRecordingInterval) {
               case PreferencesUtils.MIN_RECORDING_INTERVAL_ADAPT_BATTERY_LIFE:
                 // Choose battery life over moving time accuracy.
-                locationListenerPolicy = new AdaptiveLocationListenerPolicy(
-                    30 * ONE_SECOND, 5 * ONE_MINUTE, 5);
+                locationListenerPolicy = new AdaptiveLocationListenerPolicy(30 * UnitConversions.ONE_SECOND, 5 * ONE_MINUTE, 5);
                 break;
               case PreferencesUtils.MIN_RECORDING_INTERVAL_ADAPT_ACCURACY:
                 // Get all the updates.
-                locationListenerPolicy = new AdaptiveLocationListenerPolicy(
-                    ONE_SECOND, 30 * ONE_SECOND, 0);
+                locationListenerPolicy = new AdaptiveLocationListenerPolicy(UnitConversions.ONE_SECOND, 30 * UnitConversions.ONE_SECOND, 0);
                 break;
               default:
-                locationListenerPolicy = new AbsoluteLocationListenerPolicy(
-                    minRecordingInterval * ONE_SECOND);
+                locationListenerPolicy = new AbsoluteLocationListenerPolicy(minRecordingInterval * UnitConversions.ONE_SECOND);
             }
           }
           if (key == null || key.equals(

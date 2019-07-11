@@ -30,7 +30,7 @@ import java.util.Locale;
 
 /**
  * Utilities for updating the statistics UI labels and values.
- * 
+ *
  * @author Jimmy Shih
  */
 public class StatsUtils {
@@ -42,7 +42,7 @@ public class StatsUtils {
 
   /**
    * Sets the location values.
-   * 
+   *
    * @param context the context
    * @param activity the activity for finding views. If null, the view cannot be
    *          null
@@ -104,7 +104,7 @@ public class StatsUtils {
 
   /**
    * Sets the total time value.
-   * 
+   *
    * @param activity the activity
    * @param totalTime the total time
    */
@@ -115,7 +115,7 @@ public class StatsUtils {
 
   /**
    * Sets the trip statistics values.
-   * 
+   *
    * @param context the context
    * @param activity the activity for finding views. If null, then view cannot
    *          be null
@@ -125,8 +125,7 @@ public class StatsUtils {
    * @param trackIconValue the track icon value or null to hide the track icon
    *          spinner
    */
-  public static void setTripStatisticsValues(Context context, Activity activity, View view,
-      TripStatistics tripStatistics, String trackIconValue) {
+  public static void setTripStatisticsValues(Context context, Activity activity, View view, TripStatistics tripStatistics, String trackIconValue) {
     boolean metricUnits = PreferencesUtils.isMetricUnits(context);
     boolean reportSpeed = PreferencesUtils.isReportSpeed(context);
 
@@ -158,52 +157,42 @@ public class StatsUtils {
 
     // Set max speed/pace
     double maxSpeed = tripStatistics == null ? Double.NaN : tripStatistics.getMaxSpeed();
-    setSpeed(context, getView(activity, view, R.id.stats_max_speed), R.string.stats_max_speed,
-        R.string.stats_fastest_pace, maxSpeed, metricUnits, reportSpeed);
+    setSpeed(context, getView(activity, view, R.id.stats_max_speed), R.string.stats_max_speed, R.string.stats_fastest_pace, maxSpeed, metricUnits, reportSpeed);
 
     // Set average moving speed/pace
-    double averageMovingSpeed = tripStatistics != null ? tripStatistics.getAverageMovingSpeed()
-        : Double.NaN;
+    double averageMovingSpeed = tripStatistics != null ? tripStatistics.getAverageMovingSpeed() : Double.NaN;
     setSpeed(context, getView(activity, view, R.id.stats_average_moving_speed),
         R.string.stats_average_moving_speed, R.string.stats_average_moving_pace, averageMovingSpeed,
         metricUnits, reportSpeed);
 
     // Set grade/elevation
-    boolean showGradeElevation = PreferencesUtils.getBoolean(context,
-        R.string.stats_show_grade_elevation_key,
-        PreferencesUtils.STATS_SHOW_GRADE_ELEVATION_DEFAULT);
+    boolean showGradeElevation = PreferencesUtils.getBoolean(context,R.string.stats_show_grade_elevation_key, PreferencesUtils.STATS_SHOW_GRADE_ELEVATION_DEFAULT);
     View gradeElevationSeparator = getView(activity, view, R.id.stats_grade_elevation_separator);
-    View gradeElevationContainer = getView(activity, view, R.id.stats_grade_elevation_container);
-
     gradeElevationSeparator.setVisibility(showGradeElevation ? View.VISIBLE : View.GONE);
+
+    View gradeElevationContainer = getView(activity, view, R.id.stats_grade_elevation_container);
     gradeElevationContainer.setVisibility(showGradeElevation ? View.VISIBLE : View.GONE);
 
     if (showGradeElevation) {
       // Set grade
       double minGrade = tripStatistics == null ? Double.NaN : tripStatistics.getMinGrade();
       double maxGrade = tripStatistics == null ? Double.NaN : tripStatistics.getMaxGrade();
-      setGradeValue(
-          context, getView(activity, view, R.id.stats_grade_min), R.string.stats_min, minGrade);
-      setGradeValue(
-          context, getView(activity, view, R.id.stats_grade_max), R.string.stats_max, maxGrade);
+      setGradeValue(context, getView(activity, view, R.id.stats_grade_min), R.string.stats_min, minGrade);
+      setGradeValue(context, getView(activity, view, R.id.stats_grade_max), R.string.stats_max, maxGrade);
 
       // Set elevation
-      double elevationGain = tripStatistics == null ? Double.NaN
-          : tripStatistics.getTotalElevationGain();
+      double elevationGain = tripStatistics == null ? Double.NaN : tripStatistics.getTotalElevationGain();
       double minElevation = tripStatistics == null ? Double.NaN : tripStatistics.getMinElevation();
       double maxElevation = tripStatistics == null ? Double.NaN : tripStatistics.getMaxElevation();
-      setElevationValue(context, getView(activity, view, R.id.stats_elevation_gain),
-          R.string.stats_gain, elevationGain, metricUnits);
-      setElevationValue(context, getView(activity, view, R.id.stats_elevation_min),
-          R.string.stats_min, minElevation, metricUnits);
-      setElevationValue(context, getView(activity, view, R.id.stats_elevation_max),
-          R.string.stats_max, maxElevation, metricUnits);
+      setElevationValue(context, getView(activity, view, R.id.stats_elevation_gain), R.string.stats_gain, elevationGain, metricUnits);
+      setElevationValue(context, getView(activity, view, R.id.stats_elevation_min), R.string.stats_min, minElevation, metricUnits);
+      setElevationValue(context, getView(activity, view, R.id.stats_elevation_max), R.string.stats_max, maxElevation, metricUnits);
     }
   }
 
   /**
    * Sets speed.
-   * 
+   *
    * @param context the context
    * @param view the containing view
    * @param speedLabelId the speed label id
@@ -212,29 +201,27 @@ public class StatsUtils {
    * @param metricUnits true if metric units
    * @param reportSpeed true if report speed
    */
-  private static void setSpeed(Context context, View view, int speedLabelId, int paceLabelId,
-      double speed, boolean metricUnits, boolean reportSpeed) {
-      String[] parts = StringUtils.getSpeedParts(context, speed, metricUnits, reportSpeed);
+  private static void setSpeed(Context context, View view, int speedLabelId, int paceLabelId, double speed, boolean metricUnits, boolean reportSpeed) {
+    String[] parts = StringUtils.getSpeedParts(context, speed, metricUnits, reportSpeed);
     setItem(context, view, reportSpeed ? speedLabelId : paceLabelId, parts[0], parts[1]);
   }
 
   /**
    * Sets distance value.
-   * 
+   *
    * @param context the context
    * @param view the containing view
    * @param distance the distance in meters
    * @param metricUnits true if metric units
    */
-  private static void setDistanceValue(
-      Context context, View view, double distance, boolean metricUnits) {
-      String[] parts = StringUtils.getDistanceParts(context, distance, metricUnits);
+  private static void setDistanceValue(Context context, View view, double distance, boolean metricUnits) {
+    String[] parts = StringUtils.getDistanceParts(context, distance, metricUnits);
     setItem(context, view, R.string.stats_distance, parts[0], parts[1]);
   }
 
   /**
    * Sets a time value.
-   * 
+   *
    * @param context the context
    * @param view the containing view
    * @param labelId the label id
@@ -247,15 +234,14 @@ public class StatsUtils {
 
   /**
    * Sets an elevation value.
-   * 
+   *
    * @param context the context
    * @param view the containing view
    * @param labelId the label id
    * @param elevation the elevation in meters
    * @param metricUnits true if metric units
    */
-  private static void setElevationValue(
-      Context context, View view, int labelId, double elevation, boolean metricUnits) {
+  private static void setElevationValue(Context context, View view, int labelId, double elevation, boolean metricUnits) {
     String value;
     String unit;
     if (Double.isNaN(elevation) || Double.isInfinite(elevation)) {
@@ -276,7 +262,7 @@ public class StatsUtils {
 
   /**
    * Sets a grade value.
-   * 
+   *
    * @param context the context
    * @param view the containing view
    * @param labelId the label id
@@ -290,14 +276,13 @@ public class StatsUtils {
 
   /**
    * Sets a coordinate value.
-   * 
+   *
    * @param context the context
    * @param view the containing view
    * @param labelId the label id
    * @param coordinate the coordinate in degrees
    */
-  private static void setCoordinateValue(
-      Context context, View view, int labelId, double coordinate) {
+  private static void setCoordinateValue(Context context, View view, int labelId, double coordinate) {
     String value = Double.isNaN(coordinate) || Double.isInfinite(coordinate) ? null
         : StringUtils.formatCoordinate(coordinate);
     setItem(context, view, labelId, value, null);
@@ -305,7 +290,7 @@ public class StatsUtils {
 
   /**
    * Sets an item.
-   * 
+   *
    * @param context the context
    * @param view the containing view
    * @param labelId the label id. -1 to hide the label
@@ -345,7 +330,7 @@ public class StatsUtils {
 
   /**
    * Get a view.
-   * 
+   *
    * @param activity the activity
    * @param view the containing view
    * @param id the id

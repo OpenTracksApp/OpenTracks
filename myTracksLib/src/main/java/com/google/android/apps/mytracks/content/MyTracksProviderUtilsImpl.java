@@ -1056,8 +1056,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     if (location instanceof MyTracksLocation && !cursor.isNull(indexes.sensorIndex)) {
       MyTracksLocation myTracksLocation = (MyTracksLocation) location;
       try {
-        myTracksLocation.setSensorDataSet(
-            SensorDataSet.parseFrom(cursor.getBlob(indexes.sensorIndex)));
+        myTracksLocation.setSensorDataSet(SensorDataSet.parseFrom(cursor.getBlob(indexes.sensorIndex)));
       } catch (InvalidProtocolBufferException e) {
         Log.w(TAG, "Failed to parse sensor data.", e);
       }

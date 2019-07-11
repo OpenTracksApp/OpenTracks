@@ -39,13 +39,10 @@ import android.widget.TextView;
 public class TrackController {
 
   private static final String TAG = TrackController.class.getSimpleName();
-  
-  // 1 second in milliseconds
-  private static final long ONE_SECOND = (long) UnitConversions.S_TO_MS;
 
   private final Activity activity;
   private final TrackRecordingServiceConnection trackRecordingServiceConnection;
-  private final Handler handler;
+  private final Handler handlerUpdateTotalTime;
   private final View containerView;
   private final TextView statusTextView;
   private final TextView totalTimeTextView;
@@ -66,25 +63,24 @@ public class TrackController {
   private final Runnable updateTotalTimeRunnable = new Runnable() {
     public void run() {
       if (isResumed && isRecording && !isPaused) {
-        totalTimeTextView.setText(StringUtils.formatElapsedTimeWithHour(
-            System.currentTimeMillis() - totalTimeTimestamp + totalTime));
-        handler.postDelayed(this, ONE_SECOND);
+        totalTimeTextView.setText(StringUtils.formatElapsedTimeWithHour(System.currentTimeMillis() - totalTimeTimestamp + totalTime));
+        handlerUpdateTotalTime.postDelayed(this, UnitConversions.ONE_SECOND);
       }
     }
   };
 
-  public TrackController(Activity activity,
-      TrackRecordingServiceConnection trackRecordingServiceConnection, boolean alwaysShow,
-      OnClickListener recordListener, OnClickListener stopListener) {
+  public TrackController(Activity activity, TrackRecordingServiceConnection trackRecordingServiceConnection, boolean alwaysShow, OnClickListener recordListener, OnClickListener stopListener) {
     this.activity = activity;
     this.trackRecordingServiceConnection = trackRecordingServiceConnection;
     this.alwaysShow = alwaysShow;
-    handler = new Handler();
+    handlerUpdateTotalTime = new Handler();
     containerView = activity.findViewById(R.id.track_controller_container);
     statusTextView = activity.findViewById(R.id.track_controller_status);
     totalTimeTextView = activity.findViewById(R.id.track_controller_total_time);
+
     recordImageButton = activity.findViewById(R.id.track_controller_record);
     recordImageButton.setOnClickListener(recordListener);
+
     stopImageButton = activity.findViewById(R.id.track_controller_stop);
     stopImageButton.setOnClickListener(stopListener);
   }
@@ -99,34 +95,30 @@ public class TrackController {
     containerView.setVisibility(visible ? View.VISIBLE : View.GONE);
 
     if (!visible) {
-      handler.removeCallbacks(updateTotalTimeRunnable);
+      handlerUpdateTotalTime.removeCallbacks(updateTotalTimeRunnable);
       return;
     }
 
-    recordImageButton.setImageResource(
-        isRecording && !isPaused ? R.drawable.button_pause : R.drawable.button_record);
-    recordImageButton.setContentDescription(activity.getString(
-        isRecording && !isPaused ? R.string.image_pause : R.string.image_record));
+    recordImageButton.setImageResource(isRecording && !isPaused ? R.drawable.button_pause : R.drawable.button_record);
+    recordImageButton.setContentDescription(activity.getString(isRecording && !isPaused ? R.string.image_pause : R.string.image_record));
 
-    stopImageButton.setImageResource(
-        isRecording ? R.drawable.button_stop : R.drawable.ic_button_stop_disabled);
+    stopImageButton.setImageResource(isRecording ? R.drawable.button_stop : R.drawable.ic_button_stop_disabled);
     stopImageButton.setEnabled(isRecording);
 
     statusTextView.setVisibility(isRecording ? View.VISIBLE : View.INVISIBLE);
     if (isRecording) {
-      statusTextView.setTextColor(activity.getResources()
-          .getColor(isPaused ? android.R.color.white : R.color.recording_text));
+      statusTextView.setTextColor(activity.getResources().getColor(isPaused ? android.R.color.white : R.color.recording_text));
       statusTextView.setText(isPaused ? R.string.generic_paused : R.string.generic_recording);
     }
 
-    handler.removeCallbacks(updateTotalTimeRunnable);
+    handlerUpdateTotalTime.removeCallbacks(updateTotalTimeRunnable);
     totalTimeTextView.setVisibility(isRecording ? View.VISIBLE : View.INVISIBLE);
     if (isRecording) {
       totalTime = getTotalTime();
       totalTimeTextView.setText(StringUtils.formatElapsedTimeWithHour(totalTime));
       if (!isPaused) {
         totalTimeTimestamp = System.currentTimeMillis();
-        handler.postDelayed(updateTotalTimeRunnable, ONE_SECOND);
+        handlerUpdateTotalTime.postDelayed(updateTotalTimeRunnable, UnitConversions.ONE_SECOND);
       }
     }
   }
@@ -138,7 +130,7 @@ public class TrackController {
 
   public void onPause() {
     isResumed = false;
-    handler.removeCallbacks(updateTotalTimeRunnable);
+    handlerUpdateTotalTime.removeCallbacks(updateTotalTimeRunnable);
   }
 
   public void hide() {
@@ -153,8 +145,7 @@ public class TrackController {
    * Gets the total time for the current recording track.
    */
   private long getTotalTime() {
-    ITrackRecordingService trackRecordingService = trackRecordingServiceConnection
-        .getServiceIfBound();
+    ITrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
     try {
       return trackRecordingService != null ? trackRecordingService.getTotalTime() : 0L;
     } catch (RemoteException e) {

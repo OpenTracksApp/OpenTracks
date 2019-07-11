@@ -129,12 +129,9 @@ public class TrackDetailActivity extends AbstractTrackActivity
           trackController.update(trackId == recordingTrackId, recordingTrackPaused);
           if (hasPhoto && photoUri != null) {
             hasPhoto = false;
-            WaypointCreationRequest waypointCreationRequest = new WaypointCreationRequest(
-                WaypointType.WAYPOINT, false, null, null, null, null, photoUri.toString());
-            long id = TrackRecordingServiceConnectionUtils.addMarker(
-                TrackDetailActivity.this, trackRecordingServiceConnection, waypointCreationRequest);
-
-            if (id != -1L) {
+            WaypointCreationRequest waypointCreationRequest = new WaypointCreationRequest(WaypointType.WAYPOINT, false, null, null, null, null, photoUri.toString());
+            long markerId = TrackRecordingServiceConnectionUtils.addMarker(TrackDetailActivity.this, trackRecordingServiceConnection, waypointCreationRequest);
+            if (markerId != -1L) {
               FileUtils.updateMediaScanner(TrackDetailActivity.this, photoUri);
             }
           }
@@ -151,28 +148,24 @@ public class TrackDetailActivity extends AbstractTrackActivity
       sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
           @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-          // Note that key can be null
-          if (key == null || key.equals(
-              PreferencesUtils.getKey(TrackDetailActivity.this, R.string.recording_track_id_key))) {
-            recordingTrackId = PreferencesUtils.getLong(
-                TrackDetailActivity.this, R.string.recording_track_id_key);
+          if (key == null || key.equals(PreferencesUtils.getKey(TrackDetailActivity.this, R.string.recording_track_id_key))) {
+            recordingTrackId = PreferencesUtils.getLong(TrackDetailActivity.this, R.string.recording_track_id_key);
           }
-          if (key == null || key.equals(PreferencesUtils.getKey(
-              TrackDetailActivity.this, R.string.recording_track_paused_key))) {
-            recordingTrackPaused = PreferencesUtils.getBoolean(TrackDetailActivity.this,
-                R.string.recording_track_paused_key,
-                PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+
+          if (key == null || key.equals(PreferencesUtils.getKey(TrackDetailActivity.this, R.string.recording_track_paused_key))) {
+            recordingTrackPaused = PreferencesUtils.getBoolean(TrackDetailActivity.this, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
           }
-          if (key != null) {
-            runOnUiThread(new Runnable() {
-                @Override
-              public void run() {
-                TrackDetailActivity.this.invalidateOptionsMenu();
-                boolean isRecording = trackId == recordingTrackId;
-                trackController.update(isRecording, recordingTrackPaused);
-              }
-            });
-          }
+
+          if (key == null) return;
+
+          runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+              TrackDetailActivity.this.invalidateOptionsMenu();
+              boolean isRecording = trackId == recordingTrackId;
+              trackController.update(isRecording, recordingTrackPaused);
+            }
+          });
         }
       };
 
@@ -214,8 +207,7 @@ public class TrackDetailActivity extends AbstractTrackActivity
 
     sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
 
-    trackRecordingServiceConnection = new TrackRecordingServiceConnection(
-        this, bindChangedCallback);
+    trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, bindChangedCallback);
     trackDataHub = TrackDataHub.newInstance(this);
 
     tabHost = findViewById(android.R.id.tabhost);
@@ -225,16 +217,11 @@ public class TrackDetailActivity extends AbstractTrackActivity
 
     tabsAdapter = new TabsAdapter(this, tabHost, viewPager);
 
-    TabSpec statsTabSpec = tabHost.newTabSpec(StatsFragment.STATS_FRAGMENT_TAG).setIndicator(
-            getString(R.string.track_detail_stats_tab),
-            getResources().getDrawable(R.drawable.ic_tab_stats));
+    TabSpec statsTabSpec = tabHost.newTabSpec(StatsFragment.STATS_FRAGMENT_TAG).setIndicator(getString(R.string.track_detail_stats_tab), getResources().getDrawable(R.drawable.ic_tab_stats));
     tabsAdapter.addTab(statsTabSpec, StatsFragment.class, null);
 
-    TabSpec chartTabSpec = tabHost.newTabSpec(ChartFragment.CHART_FRAGMENT_TAG).setIndicator(
-        getString(R.string.track_detail_chart_tab),
-        getResources().getDrawable(R.drawable.ic_tab_chart));
+    TabSpec chartTabSpec = tabHost.newTabSpec(ChartFragment.CHART_FRAGMENT_TAG).setIndicator(getString(R.string.track_detail_chart_tab),getResources().getDrawable(R.drawable.ic_tab_chart));
     tabsAdapter.addTab(chartTabSpec, ChartFragment.class, null);
-
 
     if (savedInstanceState != null) {
       tabHost.setCurrentTabByTag(savedInstanceState.getString(CURRENT_TAB_TAG_KEY));
@@ -245,8 +232,7 @@ public class TrackDetailActivity extends AbstractTrackActivity
       tabHost.getTabWidget().getChildAt(i).setBackgroundResource(R.drawable.tab_indicator_mytracks);
     }
 
-    trackController = new TrackController(
-        this, trackRecordingServiceConnection, false, recordListener, stopListener);
+    trackController = new TrackController(this, trackRecordingServiceConnection, false, recordListener, stopListener);
   }
 
   @Override
@@ -323,6 +309,7 @@ public class TrackDetailActivity extends AbstractTrackActivity
   @Override
   protected void onHomeSelected() {
     /*
+     * TODO: Investigate
      * According to
      * http://developer.android.com/training/implementing-navigation
      * /ancestral.html, we should use NavUtils.shouldUpRecreateTask instead of
@@ -470,14 +457,7 @@ public class TrackDetailActivity extends AbstractTrackActivity
   public long getTrackId() {
     return trackId;
   }
-  
-  /**
-   * Gets the marker id.
-   */
-  public long getMarkerId() {
-    return markerId;
-  }
-  
+
   /**
    * Handles the data in the intent.
    */

@@ -43,9 +43,6 @@ public class SensorStateActivity extends AbstractActivity {
 
   private static final String TAG = SensorStateActivity.class.getName();
   
-  // 1 second in milliseconds
-  private static final long ONE_SECOND = (long) UnitConversions.S_TO_MS;
-
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
   private Handler handler;
   private SensorManager tempSensorManager;
@@ -53,8 +50,7 @@ public class SensorStateActivity extends AbstractActivity {
   private final Runnable updateUiRunnable = new Runnable() {
       @Override
     public void run() {
-      ITrackRecordingService trackRecordingService = trackRecordingServiceConnection
-          .getServiceIfBound();
+      ITrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
 
       // Check if service is available and recording
       boolean isRecording = false;
@@ -72,7 +68,7 @@ public class SensorStateActivity extends AbstractActivity {
         stopTempSensorManager();
         updateFromSystemSensorManager();
       }
-      handler.postDelayed(this, ONE_SECOND);
+      handler.postDelayed(this, UnitConversions.ONE_SECOND);
     }
   };
 
@@ -149,12 +145,11 @@ public class SensorStateActivity extends AbstractActivity {
     Sensor.SensorState sensorState = Sensor.SensorState.NONE;
     Sensor.SensorDataSet sensorDataSet = null;
 
-    ITrackRecordingService trackRecordingService = trackRecordingServiceConnection
-        .getServiceIfBound();
+    ITrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
 
     // Get sensor details from the service.
     if (trackRecordingService == null) {
-      Log.d(TAG, "Cannot get teh track recording service.");
+      Log.d(TAG, "Cannot get the track recording service.");
     } else {
       try {
         sensorState = Sensor.SensorState.valueOf(trackRecordingService.getSensorState());
@@ -184,21 +179,14 @@ public class SensorStateActivity extends AbstractActivity {
    * @param sensorState sensor state
    * @param sensorDataSet sensor data set
    */
-  private void updateSensorStateAndDataSet(
-      Sensor.SensorState sensorState, Sensor.SensorDataSet sensorDataSet) {
-    ((TextView) findViewById(R.id.sensor_state)).setText(
-        SensorUtils.getStateAsString(sensorState, this));
+  private void updateSensorStateAndDataSet(Sensor.SensorState sensorState, Sensor.SensorDataSet sensorDataSet) {
+    ((TextView) findViewById(R.id.sensor_state)).setText(SensorUtils.getStateAsString(sensorState, this));
 
-    String lastSensorTime = sensorDataSet == null ? getString(R.string.value_unknown)
-        : getLastSensorTime(sensorDataSet);
-    String heartRate = sensorDataSet == null ? getString(R.string.value_unknown)
-        : getHeartRate(sensorDataSet);
-    String cadence = sensorDataSet == null ? getString(R.string.value_unknown)
-        : getCadence(sensorDataSet);
-    String power = sensorDataSet == null ? getString(R.string.value_unknown)
-        : getPower(sensorDataSet);
-    String battery = sensorDataSet == null ? getString(R.string.value_unknown)
-        : getBattery(sensorDataSet);
+    String lastSensorTime = sensorDataSet == null ? getString(R.string.value_unknown) : getLastSensorTime(sensorDataSet);
+    String heartRate = sensorDataSet == null ? getString(R.string.value_unknown) : getHeartRate(sensorDataSet);
+    String cadence = sensorDataSet == null ? getString(R.string.value_unknown) : getCadence(sensorDataSet);
+    String power = sensorDataSet == null ? getString(R.string.value_unknown) : getPower(sensorDataSet);
+    String battery = sensorDataSet == null ? getString(R.string.value_unknown) : getBattery(sensorDataSet);
 
     ((TextView) findViewById(R.id.sensor_state_last_sensor_time)).setText(lastSensorTime);
     ((TextView) findViewById(R.id.sensor_state_heart_rate)).setText(heartRate);
@@ -223,14 +211,11 @@ public class SensorStateActivity extends AbstractActivity {
    */
   private String getHeartRate(Sensor.SensorDataSet sensorDataSet) {
     String value;
-    if (sensorDataSet.hasHeartRate() && sensorDataSet.getHeartRate().hasValue()
-        && sensorDataSet.getHeartRate().getState() == Sensor.SensorState.SENDING) {
+    if (sensorDataSet.hasHeartRate() && sensorDataSet.getHeartRate().hasValue() && sensorDataSet.getHeartRate().getState() == Sensor.SensorState.SENDING) {
       value = getString(
           R.string.sensor_state_heart_rate_value, sensorDataSet.getHeartRate().getValue());
     } else {
-      value = SensorUtils.getStateAsString(
-          sensorDataSet.hasHeartRate() ? sensorDataSet.getHeartRate().getState()
-              : Sensor.SensorState.NONE, this);
+      value = SensorUtils.getStateAsString(sensorDataSet.hasHeartRate() ? sensorDataSet.getHeartRate().getState() : Sensor.SensorState.NONE, this);
     }
     return value;
   }
