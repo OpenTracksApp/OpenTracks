@@ -98,8 +98,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
   // Preferences
   private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
   private boolean recordingTrackPaused = PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT;
-  private String sensorType = PreferencesUtils.SENSOR_TYPE_DEFAULT;
-  
+
   private MenuItem insertMarkerMenuItem;
   private MenuItem insertPhotoMenuItem;
   private MenuItem shareMenuItem;
@@ -151,11 +150,6 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
             recordingTrackPaused = PreferencesUtils.getBoolean(TrackDetailActivity.this,
                 R.string.recording_track_paused_key,
                 PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
-          }
-          if (key == null || key.equals(
-              PreferencesUtils.getKey(TrackDetailActivity.this, R.string.sensor_type_key))) {
-            sensorType = PreferencesUtils.getString(TrackDetailActivity.this,
-                R.string.sensor_type_key, PreferencesUtils.SENSOR_TYPE_DEFAULT);
           }
           if (key != null) {
             runOnUiThread(new Runnable() {
@@ -519,7 +513,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
       splitFrequencyMenuItem.setVisible(isRecording);
     }    
     if (sensorStateMenuItem != null) {
-      sensorStateMenuItem.setVisible(!PreferencesUtils.SENSOR_TYPE_DEFAULT.equals(sensorType));
+      sensorStateMenuItem.setVisible(isRecording);
     }
 
     String title;

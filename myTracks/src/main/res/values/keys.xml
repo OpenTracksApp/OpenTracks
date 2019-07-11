@@ -25,17 +25,12 @@ limitations under the License.
   <string name="chart_show_speed_key">chartShowSpeed</string>
   <string name="chart_x_axis_key">chartXAxis</string>
   <string name="default_activity_key">defaultActivity</string>
-  <string name="export_external_storage_format_key">exportExternalStorageFormat</string>
-  <string name="export_google_fusion_tables_public_key">exportGoogleFusionTablesPublic</string>
-  <string name="export_google_maps_public_key">exportGoogleMapsPublic</string>
-  <string name="export_type_key">exportType</string>
   <string name="map_type_key">mapType</string>
   <string name="max_recording_distance_key">maxRecordingDistance</string>
   <string name="min_recording_interval_key">minRecordingInterval</string>
   <string name="photo_size_key">photoSize</string>
   <string name="recording_distance_interval_key">recordingDistanceInterval</string>
   <string name="recording_gps_accuracy_key">recordingGpsAccuracy</string>
-  <string name="sensor_type_key">sensorType</string>
   <string name="share_track_invite_key">shareTrackInvite</string>
   <string name="share_track_public_key">shareTrackPublic</string>
   <string name="split_frequency_key">splitFrequency</string>
@@ -55,28 +50,14 @@ limitations under the License.
   <string name="voice_frequency_key">voiceFrequency</string>
   <!-- Keys for persistend preferences. But they should not get backed up or restored. -->
   <string name="activity_recognition_type_key">activityRecognitionType</string>
-  <string name="ant_bike_cadence_sensor_id_key">antBikeCadenceSensorId</string>
-  <string name="ant_combined_bike_sensor_id_key">antCombinedBikeSensorId</string>
-  <string name="ant_heart_rate_monitor_id_key">antHeartRateMonitorId</string>
-  <string name="ant_speed_distance_monitor_id_key">antSpeedDistanceMonitorId</string>
   <string name="auto_resume_track_current_retry_key">autoResumeTrackCurrentRetry</string>
   <string name="bluetooth_sensor_key">bluetoothSensor</string>
-  <string name="drive_deleted_list_key">driveDeletedList</string>
-  <string name="drive_edited_list_key">driveEditedList</string>
-  <string name="drive_largest_change_id_key">driveLargestChangeId</string>
-  <string name="drive_sync_key">driveSync</string>
-  <string name="google_account_key">googleAccount</string>
   <string name="recording_track_id_key">recordingTrackId</string>
   <string name="recording_track_paused_key">recordingTrackPaused</string>
   <string name="share_track_account_key">shareTrackAccountKey</string>
-  <string name="weight_key">weight</string>
   <!-- Keys for non-persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
   <string name="settings_advanced_key">settingsAdvanced</string>
   <string name="settings_chart_key">settingsChart</string>
-  <string name="settings_map_key">settingsMap</string>
-  <string name="settings_map_medium_display_key">settingsMapMediumDisplay</string>
-  <string name="settings_map_percentage_display_key">settingsMapPercentageDisplay</string>
-  <string name="settings_map_slow_display_key">settingsMapSlowDisplay</string>
   <string name="settings_recording_key">settingsRecording</string>
   <string name="settings_reset_key">settingsReset</string>
   <string name="settings_sensor_key">settingsSensor</string>

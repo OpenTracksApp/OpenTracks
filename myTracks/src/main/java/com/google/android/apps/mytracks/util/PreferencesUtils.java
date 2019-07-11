@@ -79,7 +79,6 @@ public class PreferencesUtils {
   
   public static final long RECORDING_TRACK_ID_DEFAULT = -1L;
   public static final boolean RECORDING_TRACK_PAUSED_DEFAULT = true;
-  public static final String SENSOR_TYPE_DEFAULT = "NONE";
 
   public static final int SPLIT_FREQUENCY_DEFAULT = 0;
   
