@@ -17,20 +17,19 @@
 package com.google.android.apps.mytracks;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Looper;
 import android.os.Parcelable;
 import android.os.RemoteException;
 import android.os.StrictMode;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -53,7 +52,6 @@ import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment;
 import com.google.android.apps.mytracks.fragments.FileTypeDialogFragment;
@@ -62,10 +60,8 @@ import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.io.file.exporter.SaveActivity;
 import com.google.android.apps.mytracks.io.file.importer.ImportActivity;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
-import com.google.android.apps.mytracks.services.MyTracksLocationManager;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.settings.SettingsActivity;
-import com.google.android.apps.mytracks.util.GoogleLocationUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.ListItemUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
@@ -73,8 +69,6 @@ import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
 import com.google.android.apps.mytracks.util.TrackUtils;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.maps.mytracks.BuildConfig;
 import com.google.android.maps.mytracks.R;
 
@@ -409,15 +403,6 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
   }
 
   @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    if (requestCode == GOOGLE_PLAY_SERVICES_REQUEST_CODE) {
-      checkGooglePlayServices();
-    } else {
-      super.onActivityResult(requestCode, resultCode, data);
-    }
-  }
-
-  @Override
   public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
     if (requestCode == GPS_REQUEST_CODE) {
       if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -470,9 +455,9 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
         // TODO ?
         return false;
       case R.id.track_list_start_gps:
-        MyTracksLocationManager myTracksLocationManager = new MyTracksLocationManager(this, Looper.myLooper(), false);
-        if (!myTracksLocationManager.isGpsProviderEnabled()) {
-          intent = GoogleLocationUtils.newLocationSettingsIntent(TrackListActivity.this);
+        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+          intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
           startActivity(intent);
         } else {
           startGps = !TrackRecordingServiceConnectionUtils.isRecordingServiceRunning(this);
@@ -502,7 +487,6 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
           // Update menu after starting or stopping gps
           this.invalidateOptionsMenu();
         }
-        myTracksLocationManager.close();
         return true;
       case R.id.track_list_aggregated_statistics:
         intent = IntentUtils.newIntent(this, AggregatedStatsActivity.class);
@@ -604,26 +588,7 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
       PreferencesUtils.setString(this, R.string.stats_units_key, statsUnits);
     }
 
-    checkGooglePlayServices();
-
     requestGPSPermissions();
-  }
-
-  private void checkGooglePlayServices() {
-    int code = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-    if (code != ConnectionResult.SUCCESS) {
-      Dialog dialog = GooglePlayServicesUtil.getErrorDialog(
-          code, this, GOOGLE_PLAY_SERVICES_REQUEST_CODE, new DialogInterface.OnCancelListener() {
-
-              @Override
-            public void onCancel(DialogInterface dialogInterface) {
-              finish();
-            }
-          });
-      if (dialog != null) {
-        dialog.show();
-      }
-    }
   }
 
   private void requestGPSPermissions() {

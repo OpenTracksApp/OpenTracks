@@ -23,7 +23,6 @@ import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.apps.mytracks.util.GoogleLocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -154,38 +153,6 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
       }
     };
     mockContentResolver.addProvider(Settings.AUTHORITY, settingsProvider);
-
-    MockContentProvider googleSettingsProvider = new MockContentProvider(context) {
-        @Override
-      public Bundle call(String method, String arg, Bundle extras) {
-        return null;
-      }
-
-        @Override
-      public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
-          String sortOrder) {
-          return new MockCursor() {
-              @Override
-            public int getCount() {
-              return 1;
-            }
-
-              @Override
-            public boolean moveToNext() {
-              return true;
-            }
-
-              @Override
-            public String getString(int columnIndex) {
-              return String.valueOf(GoogleLocationUtils.USE_LOCATION_FOR_SERVICES_ON);
-            }
-
-              @Override
-            public void close() {}
-          };
-      }
-    };
-    mockContentResolver.addProvider("com.google.settings", googleSettingsProvider);
 
     // Set the context
     setContext(context);

@@ -197,8 +197,7 @@ public class TrackDetailActivity extends AbstractTrackActivity
       @Override
     public void onClick(View v) {
       updateMenuItems(false, true);
-      TrackRecordingServiceConnectionUtils.stopRecording(
-          TrackDetailActivity.this, trackRecordingServiceConnection, true);
+      TrackRecordingServiceConnectionUtils.stopRecording(TrackDetailActivity.this, trackRecordingServiceConnection, true);
     }
   };
 

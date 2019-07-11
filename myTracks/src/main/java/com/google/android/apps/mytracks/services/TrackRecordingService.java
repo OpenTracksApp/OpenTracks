@@ -27,10 +27,12 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.sqlite.SQLiteException;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager.WakeLock;
@@ -70,9 +72,6 @@ import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.apps.mytracks.util.TrackNameUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
-import com.google.android.gms.location.DetectedActivity;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationResult;
 import com.google.android.maps.mytracks.R;
 
 import java.util.concurrent.ExecutorService;
@@ -231,21 +230,38 @@ public class TrackRecordingService extends Service {
         }
       };
 
-  private LocationCallback locationListener = new LocationCallback() {
+  private LocationListener locationListener = new LocationListener() {
 
-      public void onLocationResult(final LocationResult locationResult) {
-          if (myTracksLocationManager == null || executorService == null
-                  || !myTracksLocationManager.isAllowed() || executorService.isShutdown()
-                  || executorService.isTerminated()) {
-              return;
-          }
-          executorService.submit(new Runnable() {
-              @Override
-              public void run() {
-                  onLocationChangedAsync(locationResult.getLastLocation());
-              }
-          });
+    @Override
+    public void onLocationChanged(final Location location) {
+      if (myTracksLocationManager == null
+              || executorService == null
+              || executorService.isShutdown()
+              || executorService.isTerminated()) {
+        return;
       }
+      executorService.submit(new Runnable() {
+        @Override
+        public void run() {
+          onLocationChangedAsync(location);
+        }
+      });
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+      Log.w(TAG, "LocationListener.onStatusChanged(): is not implemented.");
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+      Log.w(TAG, "LocationListener.onProviderEnabled(): is not implemented.");
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+      Log.w(TAG, "LocationListener.onProviderDisabled(): is not implemented.");
+    }
   };
 
   private final Runnable registerLocationRunnable = new Runnable() {
@@ -272,7 +288,7 @@ public class TrackRecordingService extends Service {
     context = this;
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
     handler = new Handler();
-    myTracksLocationManager = new MyTracksLocationManager(this, handler.getLooper(), true);
+    myTracksLocationManager = new MyTracksLocationManager(this, handler.getLooper());
     voiceExecutor = new PeriodicTaskExecutor(this, new AnnouncementPeriodicTaskFactory());
     splitExecutor = new PeriodicTaskExecutor(this, new SplitPeriodicTaskFactory());
     sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
@@ -348,7 +364,6 @@ public class TrackRecordingService extends Service {
       voiceExecutor = null;
     }
     
-    myTracksLocationManager.close();
     myTracksLocationManager = null;
     myTracksProviderUtils = null;        
 
@@ -718,7 +733,6 @@ public class TrackRecordingService extends Service {
     // Update database
     Track track = myTracksProviderUtils.getTrack(trackId);
     if (track != null) {
-
       // If not paused, add the last location
       if (!paused) {
         insertLocation(track, lastLocation, getLastValidTrackPointInCurrentSegment(trackId));
@@ -733,33 +747,6 @@ public class TrackRecordingService extends Service {
       if (trackName != null && !trackName.equals(track.getName())) {
         track.setName(trackName);
         myTracksProviderUtils.updateTrack(track);
-      }
-
-      if (track.getCategory().equals(PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT)) {
-        int activityRecognitionType = PreferencesUtils.getInt(this,
-            R.string.activity_recognition_type_key,
-            PreferencesUtils.ACTIVITY_RECOGNITION_TYPE_DEFAULT);
-        if (activityRecognitionType != PreferencesUtils.ACTIVITY_RECOGNITION_TYPE_DEFAULT) {
-          String iconValue = null;
-          switch (activityRecognitionType) {
-            case DetectedActivity.IN_VEHICLE:
-              iconValue = TrackIconUtils.DRIVE;
-              break;
-            case DetectedActivity.ON_BICYCLE:
-              iconValue = TrackIconUtils.BIKE;
-              break;
-            case DetectedActivity.ON_FOOT:
-              iconValue = TrackIconUtils.WALK;
-              break;
-            default:
-              break;
-          }
-          if (iconValue != null) {
-            track.setIcon(iconValue);
-            track.setCategory(getString(TrackIconUtils.getIconActivityType(iconValue)));
-            myTracksProviderUtils.updateTrack(track);
-          }
-        }
       }
     }
     endRecording(true, trackId);
@@ -1041,8 +1028,7 @@ public class TrackRecordingService extends Service {
     }
     try {
       long interval = locationListenerPolicy.getDesiredPollingInterval();
-      myTracksLocationManager.requestLocationUpdates(
-          interval, locationListenerPolicy.getMinDistance(), locationListener);
+      myTracksLocationManager.requestLocationUpdates(interval, locationListenerPolicy.getMinDistance(), locationListener);
       currentRecordingInterval = interval;
     } catch (RuntimeException e) {
       Log.e(TAG, "Could not register location listener.", e);

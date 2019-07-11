@@ -36,7 +36,6 @@ import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
-import com.google.android.gms.location.LocationListener;
 import com.google.android.maps.mytracks.R;
 
 import android.app.SearchManager;
@@ -45,6 +44,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.location.Location;
+import android.location.LocationListener;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.SearchRecentSuggestions;
@@ -379,23 +379,42 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
     final String textQuery = intent.getStringExtra(SearchManager.QUERY);
     setTitle(textQuery);
 
-    final MyTracksLocationManager myTracksLocationManager = new MyTracksLocationManager(
-        this, Looper.myLooper(), true);
-    LocationListener locationListener = new LocationListener() {
-        @Override
-      public void onLocationChanged(final Location location) {
-        myTracksLocationManager.close();
-        new Thread() {
-            @Override
-          public void run() {
-            SearchQuery query = new SearchQuery(
-                textQuery, location, -1L, System.currentTimeMillis());
-            doSearch(query);
-          }
-        }.start();
-      }
-    };
-    myTracksLocationManager.requestLastLocation(locationListener);
+    SearchQuery query = new SearchQuery(textQuery, null, -1L, System.currentTimeMillis());
+    doSearch(query);
+
+//    // TODO Why was this done? Somehow we searched by last location?
+//    @Deprecated
+//    final MyTracksLocationManager myTracksLocationManager = new MyTracksLocationManager(this, Looper.myLooper(), true);
+//    LocationListener locationListener = new LocationListener() {
+//        @Override
+//      public void onLocationChanged(final Location location) {
+//        myTracksLocationManager.close();
+//        new Thread() {
+//            @Override
+//          public void run() {
+//            SearchQuery query = new SearchQuery(
+//                textQuery, location, -1L, System.currentTimeMillis());
+//            doSearch(query);
+//          }
+//        }.start();
+//      }
+//
+//      @Override
+//      public void onStatusChanged(String provider, int status, Bundle extras) {
+//        Log.w(TAG, "LocationListener.onStatusChanged(): is not implemented.");
+//      }
+//
+//      @Override
+//      public void onProviderEnabled(String provider) {
+//        Log.w(TAG, "LocationListener.onProviderEnabled(): is not implemented.");
+//      }
+//
+//      @Override
+//      public void onProviderDisabled(String provider) {
+//        Log.w(TAG, "LocationListener.onProviderDisabled(): is not implemented.");
+//      }
+//    };
+//    myTracksLocationManager.requestLastLocation(locationListener);
   }
 
   /**

@@ -22,7 +22,5 @@ android {
 dependencies {
     implementation project(':myTracksLib')
 
-    implementation 'com.google.android.gms:play-services-location:17.0.0'
-
     implementation 'androidx.appcompat:appcompat:1.0.0'
 }

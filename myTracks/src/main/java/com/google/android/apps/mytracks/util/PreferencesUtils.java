@@ -16,15 +16,13 @@
 
 package com.google.android.apps.mytracks.util;
 
-import com.google.android.apps.mytracks.Constants;
-import com.google.android.gms.location.DetectedActivity;
-import com.google.android.maps.mytracks.R;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.text.TextUtils;
-import android.util.Log;
+
+import com.google.android.apps.mytracks.Constants;
+import com.google.android.maps.mytracks.R;
 
 /**
  * Utilities to access preferences stored in {@link SharedPreferences}.
@@ -32,8 +30,6 @@ import android.util.Log;
  * @author Jimmy Shih
  */
 public class PreferencesUtils {
-
-  public static final int ACTIVITY_RECOGNITION_TYPE_DEFAULT = DetectedActivity.UNKNOWN;
   
   /*
    * Preferences values. The defaults need to match the defaults in the xml

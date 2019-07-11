@@ -53,7 +53,6 @@ import java.util.ArrayList;
 public abstract class AbstractTrackActivity extends AbstractActivity implements ConfirmDeleteCaller {
 
   private static final int DELETE_REQUEST_CODE = 3;
-  protected static final int GOOGLE_PLAY_SERVICES_REQUEST_CODE = 4;
   protected static final int GPS_REQUEST_CODE = 6;
 
     @Override
