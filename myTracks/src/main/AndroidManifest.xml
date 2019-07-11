@@ -253,5 +253,15 @@ limitations under the License.
       android:authorities="com.google.android.maps.mytracks.search"
       android:exported="false"
       android:name="com.google.android.apps.mytracks.content.SearchEngineProvider" />
+
+    <provider
+        android:name="androidx.core.content.FileProvider"
+        android:authorities="com.google.android.apps.mytracks.fileprovider"
+        android:exported="false"
+        android:grantUriPermissions="true">
+      <meta-data
+          android:name="android.support.FILE_PROVIDER_PATHS"
+          android:resource="@xml/file_paths" />
+    </provider>
   </application>
 </manifest>

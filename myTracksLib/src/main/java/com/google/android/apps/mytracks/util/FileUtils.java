@@ -32,11 +32,6 @@ public class FileUtils {
   private FileUtils() {}
 
   /**
-   * The backups directory under the My Tracks external storage directory.
-   */
-  public static final String BACKUPS_DIR = "backups";
-
-  /**
    * The My Tracks external storage directory.
    */
   static final String SDCARD_TOP_DIR = "MyTracks";
@@ -51,11 +46,6 @@ public class FileUtils {
    * The play tracks directory under the My Tracks cache directory.
    */
   public static final String PLAY_TRACKS_DIR = "temp";
-
-  /**
-   * The temp files directory under the My Tracks cache directory.
-   */
-  public static final String TEMP_FILES_DIR = "temp_files";
 
   /**
    * The pictures directory under the My Tracks external storage directory.

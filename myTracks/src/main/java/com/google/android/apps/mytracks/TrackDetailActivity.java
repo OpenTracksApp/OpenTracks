@@ -38,6 +38,7 @@ import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtil
 import com.google.android.apps.mytracks.util.TrackUtils;
 import com.google.android.maps.mytracks.R;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -46,8 +47,14 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.TaskStackBuilder;
+import androidx.core.content.FileProvider;
 import androidx.viewpager.widget.ViewPager;
+
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -70,6 +77,8 @@ import java.util.Date;
 public class TrackDetailActivity extends AbstractSendToGoogleActivity
         implements ChooseActivityTypeCaller, ConfirmDeleteDialogFragment.ConfirmDeleteCaller {
 
+  private static final String TAG = TrackDetailActivity.class.getSimpleName();
+
   public static final String EXTRA_TRACK_ID = "track_id";
   public static final String EXTRA_MARKER_ID = "marker_id";
 
@@ -77,7 +86,10 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
   private static final String PHOTO_URI_KEY = "photo_uri_key";
   private static final String HAS_PHOTO_KEY = "has_photo_key";
   private static final String JPEG_EXTENSION = "jpeg";
-  
+
+  private static final int CAMERA_REQUEST_CODE = 5;
+  private static final int EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE = 6;
+
   // The following are set in onCreate
   private boolean hasCamera;
   private Uri photoUri;
@@ -289,11 +301,19 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
     if (requestCode == CAMERA_REQUEST_CODE) {
       if (resultCode == RESULT_CANCELED) {
         Toast.makeText(this, R.string.marker_add_canceled, Toast.LENGTH_LONG).show();
+        return;
       }
       hasPhoto = resultCode == RESULT_OK;
-    } else {
-      super.onActivityResult(requestCode, resultCode, data);
+
+      if (hasPhoto) {
+        //Register photo in media scanner
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        mediaScanIntent.setData(photoUri);
+        this.sendBroadcast(mediaScanIntent);
+        return;
+      }
     }
+    super.onActivityResult(requestCode, resultCode, data);
   }
 
   @Override
@@ -331,6 +351,7 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
 
     insertMarkerMenuItem = menu.findItem(R.id.track_detail_insert_marker);
     insertPhotoMenuItem = menu.findItem(R.id.track_detail_insert_photo);
+    insertPhotoMenuItem.setVisible(new Intent(MediaStore.ACTION_IMAGE_CAPTURE).resolveActivity(getPackageManager()) != null);
 
     shareMenuItem = menu.findItem(R.id.track_detail_share);
     shareMenuItem.setEnabled(!isSharedWithMe);
@@ -353,26 +374,18 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
     Intent intent;
     switch (item.getItemId()) {
       case R.id.track_detail_insert_marker:
-        intent = IntentUtils.newIntent(this, MarkerEditActivity.class)
-            .putExtra(MarkerEditActivity.EXTRA_TRACK_ID, trackId);
+        intent = IntentUtils
+                .newIntent(this, MarkerEditActivity.class)
+                .putExtra(MarkerEditActivity.EXTRA_TRACK_ID, trackId);
         startActivity(intent);
         return true;
       case R.id.track_detail_insert_photo:
-        if (!FileUtils.isExternalStorageWriteable()) {
-          Toast.makeText(this, R.string.external_storage_not_writable, Toast.LENGTH_LONG).show();
+        if (!FileUtils.isExternalStorageWriteable() || ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+          ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
           return false;
         }
 
-        File dir = FileUtils.getPhotoDir(trackId);
-        FileUtils.ensureDirectoryExists(dir);
-
-        String fileName = SimpleDateFormat.getDateTimeInstance().format(new Date());
-        File file = new File(dir, FileUtils.buildUniqueFileName(dir, fileName, JPEG_EXTENSION));
-
-        photoUri = Uri.fromFile(file);
-        intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE).putExtra(
-            MediaStore.EXTRA_OUTPUT, photoUri);
-        startActivityForResult(intent, CAMERA_REQUEST_CODE);
+        takePicture();
         return true;
       case R.id.track_detail_markers:
         intent = IntentUtils.newIntent(this, MarkerListActivity.class)
@@ -380,13 +393,11 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
         startActivity(intent);
         return true;
       case R.id.track_detail_voice_frequency:
-        FrequencyDialogFragment.newInstance(R.string.voice_frequency_key,
-            PreferencesUtils.VOICE_FREQUENCY_DEFAULT, R.string.menu_voice_frequency)
+        FrequencyDialogFragment.newInstance(R.string.voice_frequency_key, PreferencesUtils.VOICE_FREQUENCY_DEFAULT, R.string.menu_voice_frequency)
             .show(getSupportFragmentManager(), FrequencyDialogFragment.FREQUENCY_DIALOG_TAG);
         return true;
       case R.id.track_detail_split_frequency:
-        FrequencyDialogFragment.newInstance(R.string.split_frequency_key,
-            PreferencesUtils.SPLIT_FREQUENCY_DEFAULT, R.string.menu_split_frequency)
+        FrequencyDialogFragment.newInstance(R.string.split_frequency_key, PreferencesUtils.SPLIT_FREQUENCY_DEFAULT, R.string.menu_split_frequency)
             .show(getSupportFragmentManager(), FrequencyDialogFragment.FREQUENCY_DIALOG_TAG);
         return true;
       case R.id.track_detail_edit:
@@ -408,6 +419,36 @@ public class TrackDetailActivity extends AbstractSendToGoogleActivity
       default:
         return super.onOptionsItemSelected(item);
     }
+  }
+
+  private void takePicture() {
+    Intent intent;
+    File dir = FileUtils.getPhotoDir(trackId);
+    FileUtils.ensureDirectoryExists(dir);
+
+    String fileName = SimpleDateFormat.getDateTimeInstance().format(new Date());
+    File file = new File(dir, FileUtils.buildUniqueFileName(dir, fileName, JPEG_EXTENSION));
+
+    if (file != null) {
+      photoUri = FileProvider.getUriForFile(this, "com.google.android.apps.mytracks.fileprovider", file);
+      Log.d(TAG, "Taking photo to URI: " + photoUri);
+      intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+              .putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+      startActivityForResult(intent, CAMERA_REQUEST_CODE);
+    }
+  }
+
+  @Override
+  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    if (requestCode == EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE) {
+      if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+        Toast.makeText(this, R.string.external_storage_not_writable, Toast.LENGTH_LONG).show();
+      } else {
+        this.takePicture();
+      }
+      return;
+    }
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
   }
 
   @Override
