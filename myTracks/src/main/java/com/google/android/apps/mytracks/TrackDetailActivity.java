@@ -414,7 +414,6 @@ public class TrackDetailActivity extends AbstractTrackActivity
   }
 
   private void takePicture() {
-    Intent intent;
     File dir = FileUtils.getPhotoDir(trackId);
     FileUtils.ensureDirectoryExists(dir);
 
@@ -424,7 +423,7 @@ public class TrackDetailActivity extends AbstractTrackActivity
     if (file != null) {
       photoUri = FileProvider.getUriForFile(this, "com.google.android.apps.mytracks.fileprovider", file);
       Log.d(TAG, "Taking photo to URI: " + photoUri);
-      intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+      Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE)
               .putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
       startActivityForResult(intent, CAMERA_REQUEST_CODE);
     }
@@ -441,18 +440,6 @@ public class TrackDetailActivity extends AbstractTrackActivity
       return;
     }
     super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-  }
-
-  @Override
-  public boolean onTrackballEvent(MotionEvent event) {
-    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-      if (trackId == recordingTrackId && !recordingTrackPaused) {
-        TrackRecordingServiceConnectionUtils.addMarker(
-            this, trackRecordingServiceConnection, WaypointCreationRequest.DEFAULT_WAYPOINT);
-        return true;
-      }
-    }
-    return super.onTrackballEvent(event);
   }
 
   @Override
