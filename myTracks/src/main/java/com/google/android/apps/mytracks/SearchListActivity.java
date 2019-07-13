@@ -146,6 +146,8 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
           }
           // Not recording, one item, item is a track
           menu.findItem(R.id.list_context_menu_share).setVisible(!isRecording && isSingleSelection && isSingleSelectionTrack);
+          //TODO Setup shareIntent.
+
           // One item, item is a marker
           menu.findItem(R.id.list_context_menu_show_on_map)
               .setVisible(isSingleSelection && !isSingleSelectionTrack);

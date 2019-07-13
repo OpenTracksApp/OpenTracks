@@ -28,6 +28,7 @@ import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragme
 import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment;
 import com.google.android.apps.mytracks.fragments.FrequencyDialogFragment;
 import com.google.android.apps.mytracks.fragments.StatsFragment;
+import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.settings.SettingsActivity;
 import com.google.android.apps.mytracks.util.FileUtils;
@@ -57,9 +58,9 @@ import androidx.viewpager.widget.ViewPager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ShareActionProvider;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.Toast;
@@ -335,6 +336,9 @@ public class TrackDetailActivity extends AbstractTrackActivity
     insertPhotoMenuItem.setVisible(new Intent(MediaStore.ACTION_IMAGE_CAPTURE).resolveActivity(getPackageManager()) != null);
 
     shareMenuItem = menu.findItem(R.id.track_detail_share);
+    ShareActionProvider shareActionProvider = (ShareActionProvider) shareMenuItem.getActionProvider();
+    //TODO: Share the actual track when track is finished? How to get the file path or create a new file?
+    shareActionProvider.setShareIntent(IntentUtils.newShareFileIntent(this, trackId, "", TrackFileFormat.KML));
 
     voiceFrequencyMenuItem = menu.findItem(R.id.track_detail_voice_frequency);
     splitFrequencyMenuItem = menu.findItem(R.id.track_detail_split_frequency);

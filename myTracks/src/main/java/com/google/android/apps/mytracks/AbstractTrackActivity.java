@@ -77,8 +77,7 @@ public abstract class AbstractTrackActivity extends AbstractActivity implements 
 
       @Override
       public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-        contextualActionModeCallback.onPrepare(
-                menu, getCheckedPositions(listView), listView.getCheckedItemIds(), true);
+        contextualActionModeCallback.onPrepare(menu, getCheckedPositions(listView), listView.getCheckedItemIds(), true);
         return true;
       }
 

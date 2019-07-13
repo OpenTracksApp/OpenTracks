@@ -19,13 +19,7 @@ limitations under the License.
         android:id="@+id/list_context_menu_share"
         android:icon="@drawable/ic_menu_share"
         android:title="@string/menu_share"
-        app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/track_detail_share"
-        android:icon="@drawable/ic_menu_share"
-        android:orderInCategory="4"
-        android:title="@string/menu_share"
-        app:actionProviderClass="androidx.appcompat.widget.ShareActionProvider"
+        android:actionProviderClass="android.widget.ShareActionProvider"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/list_context_menu_show_on_map"
