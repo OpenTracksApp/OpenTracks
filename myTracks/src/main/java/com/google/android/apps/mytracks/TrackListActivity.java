@@ -43,6 +43,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -444,6 +445,11 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
     boolean isGpsStarted = TrackRecordingServiceConnectionUtils.isRecordingServiceRunning(this);
     boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
     updateMenuItems(isGpsStarted, isRecording);
+
+    View searchView = searchMenuItem.getActionView();
+    if (searchView != null && searchView instanceof  SearchView) {
+      ((SearchView) searchView).setQuery("", false);
+    }
     return super.onPrepareOptionsMenu(menu);
   }
   
@@ -451,9 +457,6 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
   public boolean onOptionsItemSelected(MenuItem item) {
     Intent intent;
     switch (item.getItemId()) {
-      case R.id.track_list_search:
-        // TODO ?
-        return false;
       case R.id.track_list_start_gps:
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -472,8 +475,7 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
             trackRecordingServiceConnection.startAndBind();
             bindChangedCallback.run();
           } else {
-            ITrackRecordingService trackRecordingService = trackRecordingServiceConnection
-                .getServiceIfBound();
+            ITrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
             if (trackRecordingService != null) {
               try {
                 trackRecordingService.stopGps();

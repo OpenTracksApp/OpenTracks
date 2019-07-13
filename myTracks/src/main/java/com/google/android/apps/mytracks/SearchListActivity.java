@@ -173,7 +173,6 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
 
   // UI elements
   private ListView listView;
-  private MenuItem searchMenuItem;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -275,8 +274,7 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.search_list, menu);
-    searchMenuItem = menu.findItem(R.id.search_list_search);
-    AbstractTrackActivity.configureSearchWidget(this, searchMenuItem, null);
+    menu.findItem(R.id.search_list_search).setVisible(false);
     return super.onCreateOptionsMenu(menu);
   }
 
@@ -309,7 +307,7 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
 
   @Override
   public boolean onKeyUp(int keyCode, KeyEvent event) {
-    if (keyCode == KeyEvent.KEYCODE_SEARCH && searchMenuItem != null) {
+    if (keyCode == KeyEvent.KEYCODE_SEARCH) {
       return true;
     }
     return super.onKeyUp(keyCode, event);
