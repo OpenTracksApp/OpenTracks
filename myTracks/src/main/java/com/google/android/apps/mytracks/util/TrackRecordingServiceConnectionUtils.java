@@ -106,10 +106,8 @@ public class TrackRecordingServiceConnectionUtils {
    *          connection
    * @param showEditor true to show the editor
    */
-  public static void stopRecording(Context context,
-      TrackRecordingServiceConnection trackRecordingServiceConnection, boolean showEditor) {
-    ITrackRecordingService trackRecordingService = trackRecordingServiceConnection
-        .getServiceIfBound();
+  public static void stopRecording(Context context, TrackRecordingServiceConnection trackRecordingServiceConnection, boolean showEditor) {
+    ITrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
     if (trackRecordingService != null) {
       try {
         if (showEditor) {
@@ -117,8 +115,7 @@ public class TrackRecordingServiceConnectionUtils {
            * Need to remember the recordingTrackId before calling
            * endCurrentTrack. endCurrentTrack sets the value to -1L.
            */
-          long recordingTrackId = PreferencesUtils.getLong(
-              context, R.string.recording_track_id_key);
+          long recordingTrackId = PreferencesUtils.getLong(context, R.string.recording_track_id_key);
           trackRecordingService.endCurrentTrack();
           if (recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
             Intent intent = IntentUtils.newIntent(context, TrackEditActivity.class)
