@@ -26,10 +26,7 @@ limitations under the License.
   <!-- Permissions to record locations -->
   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.WAKE_LOCK" />
-  <!-- Permission for activity recognition -->
-  <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION" />
   <!-- Permissions to access sensors -->
   <uses-permission android:name="android.permission.BLUETOOTH" />
   <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -42,8 +39,6 @@ limitations under the License.
   <!-- Permission to read/write external storage -->
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-  <!--  Permission to read contacts -->
-  <uses-permission android:name="android.permission.READ_CONTACTS" />
   <!-- Permissions to access My Tracks data -->
   <uses-permission android:name="com.google.android.apps.mytracks.MYTRACKS_NOTIFICATIONS" />
   <uses-permission android:name="com.google.android.apps.mytracks.READ_TRACK_DATA" />
@@ -132,14 +127,6 @@ limitations under the License.
     android:label="@string/my_tracks_app_name"
     android:theme="@style/ThemeMyTracks"
     tools:replace="android:label" >
-    <!-- For data backup -->
-    <meta-data
-      android:name="com.google.android.backup.api_key"
-      android:value="TO BE REMOVED" />
-    <!-- For map view v2 -->
-    <meta-data
-      android:name="com.google.android.maps.v2.API_KEY"
-      android:value="TO BE REMOVED" />
     <!-- Activities -->
     <activity
       android:label="@string/menu_aggregated_statistics"
