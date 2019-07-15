@@ -20,7 +20,7 @@ android {
 }
 
 dependencies {
-    implementation project(':myTracksLib')
-
     implementation 'androidx.appcompat:appcompat:1.0.0'
+
+    implementation 'com.google.protobuf:protobuf-java:2.5.0'
 }

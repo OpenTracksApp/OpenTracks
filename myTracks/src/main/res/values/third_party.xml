@@ -18,8 +18,6 @@ limitations under the License.
   <!-- Do not translate -->
   <!-- Permissions, need to be in sync with the permissions in AndroidManifest.xml -->
   <string name="broadcast_notifications_permission">com.google.android.apps.mytracks.TRACK_NOTIFICATIONS</string>
-  <string name="read_track_data_permission">com.google.android.apps.mytracks.READ_TRACK_DATA</string>
-  <string name="write_track_data_permission">com.google.android.apps.mytracks.WRITE_TRACK_DATA</string>
   <!-- Broadcast -->
   <string name="track_id_broadcast_extra">com.google.android.apps.mytracks.TRACK_ID</string>
   <string name="track_paused_broadcast_action">com.google.android.apps.mytracks.TRACK_PAUSED</string>
@@ -27,7 +25,4 @@ limitations under the License.
   <string name="track_started_broadcast_action">com.google.android.apps.mytracks.TRACK_STARTED</string>
   <string name="track_stopped_broadcast_action">com.google.android.apps.mytracks.TRACK_STOPPED</string>
   <string name="track_update_broadcast_action">com.google.android.apps.mytracks.TRACK_UPDATE</string>
-  <!-- My Tracks service -->
-  <string name="mytracks_service_class">com.google.android.apps.mytracks.services.TrackRecordingService</string>
-  <string name="mytracks_service_package">com.google.android.maps.mytracks</string>
 </resources>

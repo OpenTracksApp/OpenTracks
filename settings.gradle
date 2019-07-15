@@ -1,1 +1,1 @@
-include ':myTracks', ':myTracksLib'
+include ':myTracks'
