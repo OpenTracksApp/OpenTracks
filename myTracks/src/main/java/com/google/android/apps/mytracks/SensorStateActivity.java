@@ -55,11 +55,7 @@ public class SensorStateActivity extends AbstractActivity {
       // Check if service is available and recording
       boolean isRecording = false;
       if (trackRecordingService != null) {
-        try {
-          isRecording = trackRecordingService.isRecording();
-        } catch (RemoteException e) {
-          Log.e(TAG, "Unable to determine if the track recording service is recording.", e);
-        }
+        isRecording = trackRecordingService.isRecording();
       }
 
       if (!isRecording) {
@@ -151,20 +147,13 @@ public class SensorStateActivity extends AbstractActivity {
     if (trackRecordingService == null) {
       Log.d(TAG, "Cannot get the track recording service.");
     } else {
-      try {
-        sensorState = Sensor.SensorState.valueOf(trackRecordingService.getSensorState());
-      } catch (RemoteException e) {
-        Log.e(TAG, "Cannote read sensor state.", e);
-        sensorState = Sensor.SensorState.NONE;
-      }
+      sensorState = Sensor.SensorState.valueOf(trackRecordingService.getSensorState());
 
       try {
         byte[] buff = trackRecordingService.getSensorData();
         if (buff != null) {
           sensorDataSet = Sensor.SensorDataSet.parseFrom(buff);
         }
-      } catch (RemoteException e) {
-        Log.e(TAG, "Cannot read sensor data set.", e);
       } catch (InvalidProtocolBufferException e) {
         Log.e(TAG, "Cannot read sensor data set.", e);
       }

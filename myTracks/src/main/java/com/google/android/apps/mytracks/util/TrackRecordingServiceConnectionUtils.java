@@ -71,13 +71,9 @@ public class TrackRecordingServiceConnectionUtils {
    * @param trackRecordingServiceConnection the track recording service
    */
   public static void resumeTrack(TrackRecordingServiceConnection trackRecordingServiceConnection) {
-    try {
-      ITrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
-      if (service != null) {
-        service.resumeCurrentTrack();
-      }
-    } catch (RemoteException e) {
-      Log.e(TAG, "Unable to resume track.", e);
+    ITrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
+    if (service != null) {
+      service.resumeCurrentTrack();
     }
   }
 
@@ -88,13 +84,9 @@ public class TrackRecordingServiceConnectionUtils {
    *          connection
    */
   public static void pauseTrack(TrackRecordingServiceConnection trackRecordingServiceConnection) {
-    try {
-      ITrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
-      if (service != null) {
-        service.pauseCurrentTrack();
-      }
-    } catch (RemoteException e) {
-      Log.e(TAG, "Unable to resume track.", e);
+    ITrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
+    if (service != null) {
+      service.pauseCurrentTrack();
     }
   }
 
@@ -181,8 +173,6 @@ public class TrackRecordingServiceConnectionUtils {
           Toast.makeText(context, R.string.marker_add_success, Toast.LENGTH_SHORT).show();
           return markerId;
         }
-      } catch (RemoteException e) {
-        Log.e(TAG, "Unable to add marker", e);
       } catch (IllegalStateException e) {
         Log.e(TAG, "Unable to add marker.", e);
       }

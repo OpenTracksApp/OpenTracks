@@ -56,7 +56,7 @@ public class TrackRecordingServiceConnection {
       } catch (RemoteException e) {
         Log.e(TAG, "Failed to bind a death recipient.", e);
       }
-      setTrackRecordingService(ITrackRecordingService.Stub.asInterface(service));
+      setTrackRecordingService((ITrackRecordingService)service);
     }
 
       @Override
@@ -119,7 +119,7 @@ public class TrackRecordingServiceConnection {
    * Gets the track recording service if bound. Returns null otherwise
    */
   public ITrackRecordingService getServiceIfBound() {
-    if (trackRecordingService != null && !trackRecordingService.asBinder().isBinderAlive()) {
+    if (trackRecordingService != null) {
       setTrackRecordingService(null);
       return null;
     }

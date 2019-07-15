@@ -115,30 +115,19 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
       }
       if (startNewRecording) {
         startGps = false;
-        try {
-          long trackId = service.startNewTrack();
-          startNewRecording = false;
-          Intent intent = IntentUtils.newIntent(TrackListActivity.this, TrackDetailActivity.class)
-              .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);
-          startActivity(intent);
-          Toast.makeText(
-              TrackListActivity.this, R.string.track_list_record_success, Toast.LENGTH_SHORT)
-              .show();
-        } catch (RemoteException e) {
-          Toast.makeText(
-              TrackListActivity.this, R.string.track_list_record_error, Toast.LENGTH_LONG).show();
-          Log.e(TAG, "Unable to start a new recording.", e);
-        }
+
+        long trackId = service.startNewTrack();
+        startNewRecording = false;
+        Intent intent = IntentUtils.newIntent(TrackListActivity.this, TrackDetailActivity.class)
+                .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);
+        startActivity(intent);
+        Toast.makeText(
+                TrackListActivity.this, R.string.track_list_record_success, Toast.LENGTH_SHORT)
+                .show();
       }
       if (startGps) {
-        try {
-          service.startGps();
-          startGps = false;
-        } catch (RemoteException e) {
-          Toast.makeText(TrackListActivity.this, R.string.gps_starting_error, Toast.LENGTH_LONG)
-              .show();
-          Log.e(TAG, "Unable to start gps");
-        }
+        service.startGps();
+        startGps = false;
       }
     }
   };
@@ -477,11 +466,7 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
           } else {
             ITrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
             if (trackRecordingService != null) {
-              try {
-                trackRecordingService.stopGps();
-              } catch (RemoteException e) {
-                Log.e(TAG, "Unable to stop gps.", e);
-              }
+              trackRecordingService.stopGps();
             }
             trackRecordingServiceConnection.unbindAndStop();
           }

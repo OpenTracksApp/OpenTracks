@@ -15,13 +15,15 @@
  */
 package com.google.android.apps.mytracks.services;
 
+import android.location.Location;
+
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 
 /**
  * MyTracks service.
  * This service is the process that actually records and manages tracks.
  */
-interface ITrackRecordingService {
+public interface ITrackRecordingService {
 
   /**
    * Starts gps.
@@ -81,7 +83,7 @@ interface ITrackRecordingService {
    * @param request the details of the waypoint to be inserted
    * @return the ID of the inserted waypoint
    */
-  long insertWaypoint(in WaypointCreationRequest request);
+  long insertWaypoint(WaypointCreationRequest request);
 
   /**
    * Inserts a track point in the current recording track.
@@ -91,7 +93,7 @@ interface ITrackRecordingService {
    *
    * @param location the track point to be inserted
    */
-  void insertTrackPoint(in Location location);
+  void insertTrackPoint(Location location);
 
   /**
    * Gets the current sensor data. Returns null if there is no data.

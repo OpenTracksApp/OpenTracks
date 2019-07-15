@@ -60,7 +60,7 @@ public class ControlRecordingService extends IntentService implements ServiceCon
 
   @Override
   public void onServiceConnected(ComponentName name, IBinder service) {
-    trackRecordingService = ITrackRecordingService.Stub.asInterface(service);
+    trackRecordingService = (ITrackRecordingService)service;
     notifyConnected();
   }
 
@@ -109,18 +109,14 @@ public class ControlRecordingService extends IntentService implements ServiceCon
   void onHandleIntent(Intent intent, ITrackRecordingService service) {
     String action = intent.getAction();
     if (action != null) {
-      try {
-        if (action.equals(getString(R.string.track_action_start))) {
-          service.startNewTrack();
-        } else if (action.equals(getString(R.string.track_action_end))) {
-          service.endCurrentTrack();
-        } else if (action.equals(getString(R.string.track_action_pause))) {
-          service.pauseCurrentTrack();
-        } else if (action.equals(getString(R.string.track_action_resume))) {
-          service.resumeCurrentTrack();
-        }
-      } catch (RemoteException e) {
-        Log.d(TAG, "ControlRecordingService onHandleIntent RemoteException", e);
+      if (action.equals(getString(R.string.track_action_start))) {
+        service.startNewTrack();
+      } else if (action.equals(getString(R.string.track_action_end))) {
+        service.endCurrentTrack();
+      } else if (action.equals(getString(R.string.track_action_pause))) {
+        service.pauseCurrentTrack();
+      } else if (action.equals(getString(R.string.track_action_resume))) {
+        service.resumeCurrentTrack();
       }
     }
     unbindService(this);

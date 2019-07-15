@@ -146,11 +146,6 @@ public class TrackController {
    */
   private long getTotalTime() {
     ITrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
-    try {
-      return trackRecordingService != null ? trackRecordingService.getTotalTime() : 0L;
-    } catch (RemoteException e) {
-      Log.e(TAG, "exception", e);
-      return 0L;
-    }
+    return trackRecordingService != null ? trackRecordingService.getTotalTime() : 0L;
   }
 }
