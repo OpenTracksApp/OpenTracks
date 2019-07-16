@@ -304,7 +304,7 @@ public class TrackRecordingService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return binder;
     }
 
     @Override
@@ -1059,7 +1059,7 @@ public class TrackRecordingService extends Service {
      * each service instance. For more details, see the following bug:
      * http://code.google.com/p/android/issues/detail?id=6426.
      */
-    private static class ServiceBinder implements ITrackRecordingService {
+    private static class ServiceBinder extends android.os.Binder implements ITrackRecordingService {
         private TrackRecordingService trackRecordingService;
 
         public ServiceBinder(TrackRecordingService trackRecordingService) {

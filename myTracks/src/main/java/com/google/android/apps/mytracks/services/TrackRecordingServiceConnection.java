@@ -119,10 +119,6 @@ public class TrackRecordingServiceConnection {
    * Gets the track recording service if bound. Returns null otherwise
    */
   public ITrackRecordingService getServiceIfBound() {
-    if (trackRecordingService != null) {
-      setTrackRecordingService(null);
-      return null;
-    }
     return trackRecordingService;
   }
 

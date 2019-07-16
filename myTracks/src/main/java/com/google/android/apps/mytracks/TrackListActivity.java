@@ -99,8 +99,7 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
       runOnUiThread(new Runnable() {
           @Override
         public void run() {
-          trackController.update(recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT,
-              recordingTrackPaused);
+          trackController.update(recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, recordingTrackPaused);
         }
       });
 
