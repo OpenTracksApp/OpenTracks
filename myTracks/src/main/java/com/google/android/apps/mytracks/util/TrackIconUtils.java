@@ -43,14 +43,14 @@ import java.util.List;
  */
 public class TrackIconUtils {
 
-  public static final String AIRPLANE = "AIRPLANE";
-  public static final String BIKE = "BIKE";
-  public static final String BOAT = "BOAT";
-  public static final String DRIVE = "DRIVE";
-  public static final String RUN = "RUN";
-  public static final String SKI = "SKI";
-  public static final String SNOW_BOARDING = "SNOW_BOARDING";
-  public static final String WALK = "WALK";
+  private static final String AIRPLANE = "AIRPLANE";
+  private static final String BIKE = "BIKE";
+  private static final String BOAT = "BOAT";
+  private static final String DRIVE = "DRIVE";
+  private static final String RUN = "RUN";
+  private static final String SKI = "SKI";
+  private static final String SNOW_BOARDING = "SNOW_BOARDING";
+  private static final String WALK = "WALK";
 
   private static final int[] AIRPLANE_LIST = new int[] { R.string.activity_type_airplane,
       R.string.activity_type_commercial_airplane, R.string.activity_type_rc_airplane };
@@ -79,25 +79,18 @@ public class TrackIconUtils {
       MAP = new LinkedHashMap<>();
 
   static {
-    MAP.put(
-        RUN, new Pair<>(R.string.activity_type_running, R.drawable.ic_track_run));
-    MAP.put(
-        WALK, new Pair<>(R.string.activity_type_walking, R.drawable.ic_track_walk));
-    MAP.put(
-        BIKE, new Pair<>(R.string.activity_type_biking, R.drawable.ic_track_bike));
-    MAP.put(DRIVE,
-            new Pair<>(R.string.activity_type_driving, R.drawable.ic_track_drive));
-    MAP.put(
-        SKI, new Pair<>(R.string.activity_type_skiing, R.drawable.ic_track_ski));
-    MAP.put(SNOW_BOARDING, new Pair<>(
-            R.string.activity_type_snow_boarding, R.drawable.ic_track_snow_boarding));
-    MAP.put(AIRPLANE,
-            new Pair<>(R.string.activity_type_airplane, R.drawable.ic_track_airplane));
-    MAP.put(
-        BOAT, new Pair<>(R.string.activity_type_boat, R.drawable.ic_track_boat));
+    MAP.put(RUN, new Pair<>(R.string.activity_type_running, R.drawable.ic_track_run));
+    MAP.put(WALK, new Pair<>(R.string.activity_type_walking, R.drawable.ic_track_walk));
+    MAP.put(BIKE, new Pair<>(R.string.activity_type_biking, R.drawable.ic_track_bike));
+    MAP.put(DRIVE, new Pair<>(R.string.activity_type_driving, R.drawable.ic_track_drive));
+    MAP.put(SKI, new Pair<>(R.string.activity_type_skiing, R.drawable.ic_track_ski));
+    MAP.put(SNOW_BOARDING, new Pair<>(R.string.activity_type_snow_boarding, R.drawable.ic_track_snow_boarding));
+    MAP.put(AIRPLANE,new Pair<>(R.string.activity_type_airplane, R.drawable.ic_track_airplane));
+    MAP.put(BOAT, new Pair<>(R.string.activity_type_boat, R.drawable.ic_track_boat));
   }
 
-  private static final float[] REVERT_COLOR_MATRIX = { -1.0f, 0, 0, 0, 255, // red
+  private static final float[] REVERT_COLOR_MATRIX = {
+     -1.0f, 0, 0, 0, 255, // red
       0, -1.0f, 0, 0, 255, // green
       0, 0, -1.0f, 0, 255, // blue
       0, 0, 0, 1.0f, 0 // alpha
@@ -191,8 +184,7 @@ public class TrackIconUtils {
         @Override
       public View getView(int position, View convertView, @NonNull android.view.ViewGroup parent) {
         ImageView imageView = convertView != null ? (ImageView) convertView : new ImageView(getContext());
-        Bitmap source = BitmapFactory.decodeResource(
-            context.getResources(), TrackIconUtils.getIconDrawable(getItem(position).toString()));
+        Bitmap source = BitmapFactory.decodeResource(context.getResources(), TrackIconUtils.getIconDrawable(getItem(position).toString()));
         imageView.setImageBitmap(source);
         imageView.setPadding(4, 4, -4, -4);
         return imageView;

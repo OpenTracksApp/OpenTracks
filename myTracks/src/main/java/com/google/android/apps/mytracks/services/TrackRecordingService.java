@@ -1044,8 +1044,7 @@ public class TrackRecordingService extends Service {
         Intent intent = new Intent().setAction(getString(actionId))
                 .putExtra(getString(R.string.track_id_broadcast_extra), trackId);
         sendBroadcast(intent, getString(R.string.permission_notification_value));
-        if (PreferencesUtils.getBoolean(
-                this, R.string.allow_access_key, PreferencesUtils.ALLOW_ACCESS_DEFAULT)) {
+        if (PreferencesUtils.getBoolean(this, R.string.allow_access_key, PreferencesUtils.ALLOW_ACCESS_DEFAULT)) {
             sendBroadcast(intent, getString(R.string.broadcast_notifications_permission));
         }
     }
@@ -1068,18 +1067,12 @@ public class TrackRecordingService extends Service {
 
         @Override
         public void startGps() {
-            if (!canAccess()) {
-                return;
-            }
             if (!trackRecordingService.isRecording()) {
                 trackRecordingService.startGps();
             }
         }
 
         public void stopGps() {
-            if (!canAccess()) {
-                return;
-            }
             if (!trackRecordingService.isRecording()) {
                 trackRecordingService.stopGps(true);
             }
@@ -1087,65 +1080,41 @@ public class TrackRecordingService extends Service {
 
         @Override
         public long startNewTrack() {
-            if (!canAccess()) {
-                return -1L;
-            }
             return trackRecordingService.startNewTrack();
         }
 
         @Override
         public void pauseCurrentTrack() {
-            if (!canAccess()) {
-                return;
-            }
             trackRecordingService.pauseCurrentTrack();
         }
 
         @Override
         public void resumeCurrentTrack() {
-            if (!canAccess()) {
-                return;
-            }
             trackRecordingService.resumeCurrentTrack();
         }
 
         @Override
         public void endCurrentTrack() {
-            if (!canAccess()) {
-                return;
-            }
             trackRecordingService.endCurrentTrack();
         }
 
         @Override
         public boolean isRecording() {
-            if (!canAccess()) {
-                return false;
-            }
             return trackRecordingService.isRecording();
         }
 
         @Override
         public boolean isPaused() {
-            if (!canAccess()) {
-                return false;
-            }
             return trackRecordingService.isPaused();
         }
 
         @Override
         public long getRecordingTrackId() {
-            if (!canAccess()) {
-                return -1L;
-            }
             return trackRecordingService.recordingTrackId;
         }
 
         @Override
         public long getTotalTime() {
-            if (!canAccess()) {
-                return 0;
-            }
             TripStatisticsUpdater updater = trackRecordingService.trackTripStatisticsUpdater;
             if (updater == null) {
                 return 0;
@@ -1158,25 +1127,16 @@ public class TrackRecordingService extends Service {
 
         @Override
         public long insertWaypoint(WaypointCreationRequest waypointCreationRequest) {
-            if (!canAccess()) {
-                return -1L;
-            }
             return trackRecordingService.insertWaypoint(waypointCreationRequest);
         }
 
         @Override
         public void insertTrackPoint(Location location) {
-            if (!canAccess()) {
-                return;
-            }
             //TODO trackRecordingService.locationListener.onLocationChanged(location);
         }
 
         @Override
         public byte[] getSensorData() {
-            if (!canAccess()) {
-                return null;
-            }
             if (trackRecordingService.sensorManager == null) {
                 Log.d(TAG, "sensorManager is null.");
                 return null;
@@ -1190,32 +1150,11 @@ public class TrackRecordingService extends Service {
 
         @Override
         public int getSensorState() {
-            if (!canAccess()) {
-                return Sensor.SensorState.NONE.getNumber();
-            }
             if (trackRecordingService.sensorManager == null) {
                 Log.d(TAG, "sensorManager is null.");
                 return Sensor.SensorState.NONE.getNumber();
             }
             return trackRecordingService.sensorManager.getSensorState().getNumber();
-        }
-
-        /**
-         * Returns true if the RPC caller is from the same application or if the
-         * "Allow access" setting indicates that another app can invoke this
-         * service's RPCs.
-         */
-        private boolean canAccess() {
-            // As a precondition for access, must check if the service is available.
-            if (trackRecordingService == null) {
-                throw new IllegalStateException("The track recording service has been detached!");
-            }
-            if (Process.myPid() == Binder.getCallingPid()) {
-                return true;
-            } else {
-                return PreferencesUtils.getBoolean(trackRecordingService, R.string.allow_access_key,
-                        PreferencesUtils.ALLOW_ACCESS_DEFAULT);
-            }
         }
 
         /**
