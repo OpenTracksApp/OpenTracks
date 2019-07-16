@@ -100,13 +100,6 @@ public class MyTracksProvider extends ContentProvider {
               + TrackPointsColumns.SENSOR + " BLOB");
         }
 
-        // Add track TABLEID column
-        if (oldVersion <= 18) {
-          Log.w(TAG, "Upgrade DB: Adding track tableid column.");
-          db.execSQL("ALTER TABLE " + TracksColumns.TABLE_NAME + " ADD " + TracksColumns.TABLEID
-              + " STRING");
-        }
-
         // Add track ICON column
         if (oldVersion <= 19) {
           Log.w(TAG, "Upgrade DB: Adding track icon column.");
@@ -114,37 +107,10 @@ public class MyTracksProvider extends ContentProvider {
               "ALTER TABLE " + TracksColumns.TABLE_NAME + " ADD " + TracksColumns.ICON + " STRING");
         }
 
-        // Add track DRIVEID, MODIFIEDTIME, and SHAREDWITHME columns
-        if (oldVersion <= 20) {
-          Log.w(TAG, "Upgrade DB: Adding track driveid column.");
-          db.execSQL("ALTER TABLE " + TracksColumns.TABLE_NAME + " ADD " + TracksColumns.DRIVEID
-              + " STRING");
-          Log.w(TAG, "Upgrade DB: Adding track modifiedtime column.");
-          db.execSQL("ALTER TABLE " + TracksColumns.TABLE_NAME + " ADD "
-              + TracksColumns.MODIFIEDTIME + " INTEGER");
-
-          Log.w(TAG, "Upgrade DB: Adding track sharedwithme column.");
-          db.execSQL("ALTER TABLE " + TracksColumns.TABLE_NAME + " ADD "
-              + TracksColumns.SHAREDWITHME + " INTEGER");
-
-          Log.w(TAG, "Upgrade DB: Adding track sharedowner column.");
-          db.execSQL("ALTER TABLE " + TracksColumns.TABLE_NAME + " ADD " + TracksColumns.SHAREDOWNER
-              + " STRING");
-        }
-
         // Add waypoint CALORIE and PHOTOURL columns. Add track CALORIE column.
         if (oldVersion <= 21) {
-          Log.w(TAG, "Upgrade DB: Adding waypoint calorie column.");
-          db.execSQL("ALTER TABLE " + WaypointsColumns.TABLE_NAME + " ADD "
-              + WaypointsColumns.CALORIE + " FLOAT");
-
           Log.w(TAG, "Upgrade DB: Adding waypoint photo url column.");
-          db.execSQL("ALTER TABLE " + WaypointsColumns.TABLE_NAME + " ADD "
-              + WaypointsColumns.PHOTOURL + " STRING");
-
-          Log.w(TAG, "Upgrade DB: Adding track calorie column.");
-          db.execSQL("ALTER TABLE " + TracksColumns.TABLE_NAME + " ADD " + TracksColumns.CALORIE
-              + " FLOAT");
+          db.execSQL("ALTER TABLE " + WaypointsColumns.TABLE_NAME + " ADD " + WaypointsColumns.PHOTOURL + " STRING");
         }
       }
     }
@@ -165,18 +131,12 @@ public class MyTracksProvider extends ContentProvider {
 
   public MyTracksProvider() {
     uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-    uriMatcher.addURI(MyTracksProviderUtils.AUTHORITY, TrackPointsColumns.TABLE_NAME,
-        UrlType.TRACKPOINTS.ordinal());
-    uriMatcher.addURI(MyTracksProviderUtils.AUTHORITY, TrackPointsColumns.TABLE_NAME + "/#",
-        UrlType.TRACKPOINTS_ID.ordinal());
-    uriMatcher.addURI(
-        MyTracksProviderUtils.AUTHORITY, TracksColumns.TABLE_NAME, UrlType.TRACKS.ordinal());
-    uriMatcher.addURI(MyTracksProviderUtils.AUTHORITY, TracksColumns.TABLE_NAME + "/#",
-        UrlType.TRACKS_ID.ordinal());
-    uriMatcher.addURI(
-        MyTracksProviderUtils.AUTHORITY, WaypointsColumns.TABLE_NAME, UrlType.WAYPOINTS.ordinal());
-    uriMatcher.addURI(MyTracksProviderUtils.AUTHORITY, WaypointsColumns.TABLE_NAME + "/#",
-        UrlType.WAYPOINTS_ID.ordinal());
+    uriMatcher.addURI(MyTracksProviderUtils.AUTHORITY, TrackPointsColumns.TABLE_NAME, UrlType.TRACKPOINTS.ordinal());
+    uriMatcher.addURI(MyTracksProviderUtils.AUTHORITY, TrackPointsColumns.TABLE_NAME + "/#", UrlType.TRACKPOINTS_ID.ordinal());
+    uriMatcher.addURI(MyTracksProviderUtils.AUTHORITY, TracksColumns.TABLE_NAME, UrlType.TRACKS.ordinal());
+    uriMatcher.addURI(MyTracksProviderUtils.AUTHORITY, TracksColumns.TABLE_NAME + "/#", UrlType.TRACKS_ID.ordinal());
+    uriMatcher.addURI(MyTracksProviderUtils.AUTHORITY, WaypointsColumns.TABLE_NAME, UrlType.WAYPOINTS.ordinal());
+    uriMatcher.addURI(MyTracksProviderUtils.AUTHORITY, WaypointsColumns.TABLE_NAME + "/#", UrlType.WAYPOINTS_ID.ordinal());
   }
 
   @Override
@@ -192,9 +152,6 @@ public class MyTracksProvider extends ContentProvider {
    */
   @VisibleForTesting
   boolean onCreate(Context context) {
-    if (!canAccess()) {
-      return false;
-    }
     DatabaseHelper databaseHelper = new DatabaseHelper(context);
     try {
       db = databaseHelper.getWritableDatabase();
@@ -206,9 +163,6 @@ public class MyTracksProvider extends ContentProvider {
 
   @Override
   public int delete(Uri url, String where, String[] selectionArgs) {
-    if (!canAccess()) {
-      return 0;
-    }
     String table;
     boolean shouldVacuum = false;
     switch (getUrlType(url)) {
@@ -247,9 +201,6 @@ public class MyTracksProvider extends ContentProvider {
 
   @Override
   public String getType(Uri url) {
-    if (!canAccess()) {
-      return null;
-    }
     switch (getUrlType(url)) {
       case TRACKPOINTS:
         return TrackPointsColumns.CONTENT_TYPE;
@@ -270,9 +221,6 @@ public class MyTracksProvider extends ContentProvider {
 
   @Override
   public Uri insert(Uri url, ContentValues initialValues) {
-    if (!canAccess()) {
-      return null;
-    }
     if (initialValues == null) {
       initialValues = new ContentValues();
     }
@@ -290,9 +238,6 @@ public class MyTracksProvider extends ContentProvider {
 
   @Override
   public int bulkInsert(Uri url, ContentValues[] valuesBulk) {
-    if (!canAccess()) {
-      return 0;
-    }
     int numInserted;
     try {
       // Use a transaction in order to make the insertions run as a single batch
@@ -315,11 +260,7 @@ public class MyTracksProvider extends ContentProvider {
   }
 
   @Override
-  public Cursor query(
-      Uri url, String[] projection, String selection, String[] selectionArgs, String sort) {
-    if (!canAccess()) {
-      return null;
-    }
+  public Cursor query(Uri url, String[] projection, String selection, String[] selectionArgs, String sort) {
     SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
     String sortOrder = null;
     switch (getUrlType(url)) {
@@ -350,17 +291,13 @@ public class MyTracksProvider extends ContentProvider {
       default:
         throw new IllegalArgumentException("Unknown url " + url);
     }
-    Cursor cursor = queryBuilder.query(
-        db, projection, selection, selectionArgs, null, null, sortOrder);
+    Cursor cursor = queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
     cursor.setNotificationUri(getContext().getContentResolver(), url);
     return cursor;
   }
 
   @Override
   public int update(Uri url, ContentValues values, String where, String[] selectionArgs) {
-    if (!canAccess()) {
-      return 0;
-    }
     String table;
     String whereClause;
     switch (getUrlType(url)) {
@@ -426,18 +363,6 @@ public class MyTracksProvider extends ContentProvider {
         file.delete();
       }
       getContext().revokeUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
-    }
-  }
-  
-  /**
-   * Returns true if the caller can access the content provider.
-   */
-  private boolean canAccess() {
-    if (Binder.getCallingPid() == Process.myPid()) {
-      return true;
-    } else {
-      return PreferencesUtils.getBoolean(
-          getContext(), R.string.allow_access_key, PreferencesUtils.ALLOW_ACCESS_DEFAULT);
     }
   }
 

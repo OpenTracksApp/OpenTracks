@@ -27,7 +27,6 @@ import android.database.Cursor;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.os.RemoteException;
 import android.os.StrictMode;
 import android.provider.Settings;
 import android.util.Log;
@@ -48,6 +47,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.cursoradapter.widget.ResourceCursorAdapter;
 import androidx.loader.app.LoaderManager.LoaderCallbacks;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
@@ -85,8 +85,7 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
   private static final String TAG = TrackListActivity.class.getSimpleName();
   private static final String[] PROJECTION = new String[] { TracksColumns._ID, TracksColumns.NAME,
       TracksColumns.DESCRIPTION, TracksColumns.CATEGORY, TracksColumns.STARTTIME,
-      TracksColumns.TOTALDISTANCE, TracksColumns.TOTALTIME, TracksColumns.ICON,
-      TracksColumns.SHAREDWITHME, TracksColumns.SHAREDOWNER };
+      TracksColumns.TOTALDISTANCE, TracksColumns.TOTALTIME, TracksColumns.ICON };
 
   // Callback when the trackRecordingServiceConnection binding changes.
   private final Runnable bindChangedCallback = new Runnable() {
@@ -233,12 +232,12 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
 
       @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-      sectionResourceCursorAdapter.swapCursor(cursor);
+      resourceCursorAdapter.swapCursor(cursor);
     }
 
       @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-      sectionResourceCursorAdapter.swapCursor(null);
+      resourceCursorAdapter.swapCursor(null);
     }
   };
   
@@ -248,7 +247,7 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
   private TrackController trackController;
   private ListView listView;
-  private SectionResourceCursorAdapter sectionResourceCursorAdapter;
+  private ResourceCursorAdapter resourceCursorAdapter;
 
   // Preferences
   private boolean metricUnits = true;
@@ -310,8 +309,7 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
         startActivity(newIntent);
       }
     });
-    sectionResourceCursorAdapter = new SectionResourceCursorAdapter(
-        this, R.layout.list_item, null, 0) {
+    resourceCursorAdapter = new ResourceCursorAdapter(this, R.layout.list_item, null, 0) {
         @Override
       public void bindView(View view, Context context, Cursor cursor) {
         int idIndex = cursor.getColumnIndex(TracksColumns._ID);
@@ -341,7 +339,7 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
             startTime, true, category, description, null);
       }
     };
-    listView.setAdapter(sectionResourceCursorAdapter);
+    listView.setAdapter(resourceCursorAdapter);
     AbstractTrackActivity.configureListViewContextualMenu(this, listView, contextualActionModeCallback);
 
     getSupportLoaderManager().initLoader(0, null, loaderCallbacks);

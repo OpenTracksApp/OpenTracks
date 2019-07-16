@@ -75,22 +75,7 @@ public interface TracksColumns extends BaseColumns {
   String ELEVATIONGAIN = "elevationgain"; // elevation gain
   String MINGRADE = "mingrade"; // minimum grade
   String MAXGRADE = "maxgrade"; // maximum grade
-  String MAPID = "mapid"; // Google Maps id
-  String TABLEID = "tableid"; // Google Fusion Tables id
   String ICON = "icon"; // track activity type icon
-  String DRIVEID = "driveid"; // Google Drive file id
-
-  // Google drive file modified time
-  String MODIFIEDTIME = "modifiedtime";
-
-  // 1 if the Google Drive file is from the "Shared with me" directory
-  String SHAREDWITHME = "sharedwithme";
-
-  // The owner of the shared with me track
-  String SHAREDOWNER = "sharedOwner";
-
-  // Calorie burned of the track
-  String CALORIE = "calorie";
 
   String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" // table
       + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " // id
@@ -117,79 +102,5 @@ public interface TracksColumns extends BaseColumns {
       + ELEVATIONGAIN + " FLOAT, " // elevation gain
       + MINGRADE + " FLOAT, " // min grade
       + MAXGRADE + " FLOAT, " // max grade
-      + MAPID + " STRING, " // map id
-      + TABLEID + " STRING, " // table id
-      + ICON + " STRING, " // icon
-      + DRIVEID + " STRING, " // drive id
-      + MODIFIEDTIME + " INTEGER, " // modified time
-      + SHAREDWITHME + " INTEGER, " // shared with me
-      + SHAREDOWNER + " STRING, " // shared owner
-      + CALORIE + " FLOAT);"; // calorie
-
-  String[] COLUMNS = { _ID, // id
-      NAME, // name
-      DESCRIPTION, // description
-      CATEGORY, // category
-      STARTID, // start id
-      STOPID, // stop id
-      STARTTIME, // start time
-      STOPTIME, // stop time
-      NUMPOINTS, // num points
-      TOTALDISTANCE, // total distance
-      TOTALTIME, // total time
-      MOVINGTIME, // moving time
-      MINLAT, // min latitude
-      MAXLAT, // max latitude
-      MINLON, // min longitude
-      MAXLON, // max longitude
-      AVGSPEED, // average speed
-      AVGMOVINGSPEED, // average moving speed
-      MAXSPEED, // max speed
-      MINELEVATION, // min elevation
-      MAXELEVATION, // max elevation
-      ELEVATIONGAIN, // elevation gain
-      MINGRADE, // min grade
-      MAXGRADE, // max grade
-      MAPID, // map id
-      TABLEID, // table id
-      ICON, // icon
-      DRIVEID, // drive id
-      MODIFIEDTIME, // modified time
-      SHAREDWITHME, // shared with me
-      SHAREDOWNER,// shared owner
-      CALORIE }; // calorie
-
-  byte[] COLUMN_TYPES = { ContentTypeIds.LONG_TYPE_ID, // id
-      ContentTypeIds.STRING_TYPE_ID, // name
-      ContentTypeIds.STRING_TYPE_ID, // description
-      ContentTypeIds.STRING_TYPE_ID, // category
-      ContentTypeIds.LONG_TYPE_ID, // start id
-      ContentTypeIds.LONG_TYPE_ID, // stop id
-      ContentTypeIds.LONG_TYPE_ID, // start time
-      ContentTypeIds.LONG_TYPE_ID, // stop time
-      ContentTypeIds.INT_TYPE_ID, // num points
-      ContentTypeIds.FLOAT_TYPE_ID, // total distance
-      ContentTypeIds.LONG_TYPE_ID, // total time
-      ContentTypeIds.LONG_TYPE_ID, // moving time
-      ContentTypeIds.INT_TYPE_ID, // min latitude
-      ContentTypeIds.INT_TYPE_ID, // max latitude
-      ContentTypeIds.INT_TYPE_ID, // min longitude
-      ContentTypeIds.INT_TYPE_ID, // max longitude
-      ContentTypeIds.FLOAT_TYPE_ID, // average speed
-      ContentTypeIds.FLOAT_TYPE_ID, // average moving speed
-      ContentTypeIds.FLOAT_TYPE_ID, // max speed
-      ContentTypeIds.FLOAT_TYPE_ID, // min elevation
-      ContentTypeIds.FLOAT_TYPE_ID, // max elevation
-      ContentTypeIds.FLOAT_TYPE_ID, // elevation gain
-      ContentTypeIds.FLOAT_TYPE_ID, // min grade
-      ContentTypeIds.FLOAT_TYPE_ID, // max grade
-      ContentTypeIds.STRING_TYPE_ID, // map id
-      ContentTypeIds.STRING_TYPE_ID, // table id
-      ContentTypeIds.STRING_TYPE_ID, // icon
-      ContentTypeIds.STRING_TYPE_ID, // drive id
-      ContentTypeIds.LONG_TYPE_ID, // modified time
-      ContentTypeIds.BOOLEAN_TYPE_ID, // shared with me
-      ContentTypeIds.STRING_TYPE_ID, // shared owner
-      ContentTypeIds.FLOAT_TYPE_ID // calorie
-  };
+      + ICON + " STRING);"; // icon
 }

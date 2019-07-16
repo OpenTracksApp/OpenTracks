@@ -31,11 +31,9 @@ public class TrackUtils {
 
   private TrackUtils() {}
 
-  public static String TRACK_SORT_ORDER = "IFNULL(" + TracksColumns.SHAREDWITHME + ",0) ASC, "
-      + TracksColumns.STARTTIME + " DESC";
+  public static String TRACK_SORT_ORDER = TracksColumns.STARTTIME + " DESC";
 
-  public static void updateTrack(Context context, Track track, String name, String category,
-                                 String description, MyTracksProviderUtils myTracksProviderUtils) {
+  public static void updateTrack(Context context, Track track, String name, String category, String description, MyTracksProviderUtils myTracksProviderUtils) {
     if (name != null) {
       track.setName(name);
     }

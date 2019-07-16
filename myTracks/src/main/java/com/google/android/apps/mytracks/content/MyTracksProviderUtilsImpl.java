@@ -86,8 +86,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     int minGradeIndex = cursor.getColumnIndexOrThrow(TracksColumns.MINGRADE);
     int maxGradeIndex = cursor.getColumnIndexOrThrow(TracksColumns.MAXGRADE);
     int iconIndex = cursor.getColumnIndexOrThrow(TracksColumns.ICON);
-    int modifiedTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.MODIFIEDTIME);
-    
+
     Track track = new Track();
     TripStatistics tripStatistics = track.getTripStatistics();
     if (!cursor.isNull(idIndex)) {
@@ -126,8 +125,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     if (!cursor.isNull(movingTimeIndex)) {
       tripStatistics.setMovingTime(cursor.getLong(movingTimeIndex));
     }
-    if (!cursor.isNull(minLatIndex) && !cursor.isNull(maxLatIndex) && !cursor.isNull(minLonIndex)
-        && !cursor.isNull(maxLonIndex)) {
+    if (!cursor.isNull(minLatIndex) && !cursor.isNull(maxLatIndex) && !cursor.isNull(minLonIndex) && !cursor.isNull(maxLonIndex)) {
       int bottom = cursor.getInt(minLatIndex);
       int top = cursor.getInt(maxLatIndex);
       int left = cursor.getInt(minLonIndex);
@@ -154,9 +152,6 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     }
     if (!cursor.isNull(iconIndex)) {
       track.setIcon(cursor.getString(iconIndex));
-    }
-    if (!cursor.isNull(modifiedTimeIndex)) {
-      track.setModifiedTime(cursor.getLong(modifiedTimeIndex));
     }
     return track;
   }
@@ -234,8 +229,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
 
   @Override
   public Track getLastTrack() {
-    try (Cursor cursor = getTrackCursor(null, null, null,
-            TracksColumns.SHAREDWITHME + " ASC, " + TracksColumns.STARTTIME + " DESC")) {
+    try (Cursor cursor = getTrackCursor(null, null, null,TracksColumns.STARTTIME + " DESC")) {
       // Using the same order as shown in the track list
       if (cursor != null && cursor.moveToNext()) {
         return createTrack(cursor);
@@ -306,7 +300,6 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     values.put(TracksColumns.MINGRADE, tripStatistics.getMinGrade());
     values.put(TracksColumns.MAXGRADE, tripStatistics.getMaxGrade());
     values.put(TracksColumns.ICON, track.getIcon());
-    values.put(TracksColumns.MODIFIEDTIME, track.getModifiedTime());
 
     return values;
   }

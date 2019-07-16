@@ -32,8 +32,7 @@ import android.provider.BaseColumns;
 public interface WaypointsColumns extends BaseColumns {
 
   String TABLE_NAME = "waypoints";
-  Uri CONTENT_URI = Uri.parse(
-      "content://com.google.android.maps.mytracks/waypoints");
+  Uri CONTENT_URI = Uri.parse("content://com.google.android.maps.mytracks/waypoints");
   String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.google.waypoint";
   String CONTENT_ITEMTYPE = "vnd.android.cursor.item/vnd.google.waypoint";
   String DEFAULT_SORT_ORDER = "_id";
@@ -70,8 +69,7 @@ public interface WaypointsColumns extends BaseColumns {
   String ELEVATIONGAIN = "elevationgain"; // elevation gain
   String MINGRADE = "mingrade"; // min grade
   String MAXGRADE = "maxgrade"; // max grade
-  String CALORIE = "calorie"; // calorie
-  
+
   String PHOTOURL = "photoUrl"; // url for the photo
   
   String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
@@ -105,77 +103,6 @@ public interface WaypointsColumns extends BaseColumns {
       + ELEVATIONGAIN + " FLOAT, "
       + MINGRADE + " FLOAT, "
       + MAXGRADE + " FLOAT, "
-      + CALORIE + " FLOAT, "  
       + PHOTOURL + " STRING"
       + ");";
-  
-  String[] COLUMNS = {
-      _ID,
-      NAME,
-      DESCRIPTION,
-      CATEGORY,
-      ICON,
-      TRACKID,
-      TYPE,
-      LENGTH,
-      DURATION,
-      STARTTIME,
-      STARTID,
-      STOPID,
-      LONGITUDE,
-      LATITUDE,
-      TIME,
-      ALTITUDE,
-      ACCURACY,
-      SPEED,
-      BEARING,
-      TOTALDISTANCE,
-      TOTALTIME,
-      MOVINGTIME,
-      AVGSPEED,
-      AVGMOVINGSPEED,
-      MAXSPEED,
-      MINELEVATION,
-      MAXELEVATION,
-      ELEVATIONGAIN,
-      MINGRADE,
-      MAXGRADE,
-      CALORIE,
-      PHOTOURL
-    };
-    
-  byte[] COLUMN_TYPES = {
-      LONG_TYPE_ID, // id
-      STRING_TYPE_ID, // name
-      STRING_TYPE_ID, // description
-      STRING_TYPE_ID, // category
-      STRING_TYPE_ID, // icon
-      LONG_TYPE_ID, // track id
-      INT_TYPE_ID, // type
-      FLOAT_TYPE_ID, // length
-      LONG_TYPE_ID, // duration
-      LONG_TYPE_ID, // start time
-      LONG_TYPE_ID, // start id
-      LONG_TYPE_ID, // stop id
-      INT_TYPE_ID, // longitude
-      INT_TYPE_ID, // latitude
-      LONG_TYPE_ID, // time
-      FLOAT_TYPE_ID, // altitude
-      FLOAT_TYPE_ID, // accuracy
-      FLOAT_TYPE_ID, // speed
-      FLOAT_TYPE_ID, // bearing
-      FLOAT_TYPE_ID, // total distance
-      LONG_TYPE_ID, // total time
-      LONG_TYPE_ID, // moving time
-      FLOAT_TYPE_ID, // average speed
-      FLOAT_TYPE_ID, // average moving speed
-      FLOAT_TYPE_ID, // max speed
-      FLOAT_TYPE_ID, // min elevation
-      FLOAT_TYPE_ID, // max elevation
-      FLOAT_TYPE_ID, // elevation gain
-      FLOAT_TYPE_ID, // min grade
-      FLOAT_TYPE_ID, // max grade
-      FLOAT_TYPE_ID, // calorie
-      STRING_TYPE_ID // photo url
-    };
 }
