@@ -15,6 +15,16 @@
  */
 package com.google.android.apps.mytracks.content;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.location.Location;
+import android.test.RenamingDelegatingContext;
+import android.test.mock.MockContentResolver;
+
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationFactory;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
@@ -23,14 +33,9 @@ import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.testing.mocking.AndroidMock;
 import com.google.android.testing.mocking.UsesMocks;
 
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.location.Location;
-import android.test.AndroidTestCase;
-import android.test.RenamingDelegatingContext;
-import android.test.mock.MockContentResolver;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +48,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Bartlomiej Niechwiej
  * @author Youtao Liu
  */
-public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
+@RunWith(AndroidJUnit4.class)
+public class MyTracksProviderUtilsImplTest {
   private Context context;
   private MyTracksProviderUtils providerUtils;
   
@@ -55,10 +61,8 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
   private double INITIAL_LONGITUDE = -57.0;
   private double ALTITUDE_INTERVAL = 2.5;
 
-  @Override
-  protected void setUp() throws Exception {
-    super.setUp();
-    
+  @Before
+  protected void setUp() {
     MockContentResolver mockContentResolver = new MockContentResolver();
     RenamingDelegatingContext targetContext = new RenamingDelegatingContext(
         getContext(), getContext(), "test.");
@@ -87,7 +91,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
       }
     });
     // Make sure we were called exactly as many times as we had track points.
-    assertEquals(15, counter.get());
+    Assert.assertEquals(15, counter.get());
   }
   
   public void testLocationIterator_nullFactory() {
@@ -133,13 +137,13 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     try {
       while (it.hasNext()) {
         Location loc = it.next();
-        assertNotNull(loc);
+        Assert.assertNotNull(loc);
         locations.add(loc);
         // Make sure the IDs are returned in the right order.
-        assertEquals(descending ? lastPointId - locations.size() + 1
+        Assert.assertEquals(descending ? lastPointId - locations.size() + 1
             : lastPointId - numPoints + locations.size(), it.getLocationId());
       }
-      assertEquals(numPoints, locations.size());
+      Assert.assertEquals(numPoints, locations.size());
     } finally {
       it.close();
     }
@@ -153,7 +157,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     track.setNumberOfPoints(numPoints);
     providerUtils.insertTrack(track);
     track = providerUtils.getTrack(id);
-    assertNotNull(track);
+    Assert.assertNotNull(track);
     
     Location[] locations = new Location[numPoints];
     for (int i = 0; i < numPoints; ++i) {
@@ -181,9 +185,9 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
       it.close();
     }
 
-    assertTrue(numPoints == 0 || lastPointId > 0);
-    assertEquals(numPoints, track.getNumberOfPoints());
-    assertEquals(numPoints, counter);
+    Assert.assertTrue(numPoints == 0 || lastPointId > 0);
+    Assert.assertEquals(numPoints, track.getNumberOfPoints());
+    Assert.assertEquals(numPoints, counter);
     
     return lastPointId;
   }
@@ -214,8 +218,8 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     AndroidMock.expect(cursorMock.getString(columnIndex++)).andReturn(name);
     AndroidMock.replay(cursorMock);
     Track track = providerUtils.createTrack(cursorMock);
-    assertEquals(trackId, track.getId());
-    assertEquals(name, track.getName());
+    Assert.assertEquals(trackId, track.getId());
+    Assert.assertEquals(name, track.getName());
     AndroidMock.verify(cursorMock);
   }
 
@@ -232,25 +236,25 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     ContentResolver contentResolver = context.getContentResolver();
     Cursor tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null,
         TracksColumns._ID);
-    assertEquals(1, tracksCursor.getCount());
+    Assert.assertEquals(1, tracksCursor.getCount());
     Cursor tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI, null, null,
         null, TrackPointsColumns._ID);
-    assertEquals(10, tracksPointsCursor.getCount());
+    Assert.assertEquals(10, tracksPointsCursor.getCount());
     Cursor waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null,
         null, WaypointsColumns._ID);
-    assertEquals(1, waypointCursor.getCount());
+    Assert.assertEquals(1, waypointCursor.getCount());
     // Delete all.
     providerUtils.deleteAllTracks(context);
     // Check whether all have been deleted. 
     tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null,
         TracksColumns._ID);
-    assertEquals(0, tracksCursor.getCount());
+    Assert.assertEquals(0, tracksCursor.getCount());
     tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI, null, null,
         null, TrackPointsColumns._ID);
-    assertEquals(0, tracksPointsCursor.getCount());
+    Assert.assertEquals(0, tracksPointsCursor.getCount());
     waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null,
         null, WaypointsColumns._ID);
-    assertEquals(0, waypointCursor.getCount());
+    Assert.assertEquals(0, waypointCursor.getCount());
   }
 
   /**
@@ -272,25 +276,25 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     ContentResolver contentResolver = context.getContentResolver();
     Cursor tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null,
         TracksColumns._ID);
-    assertEquals(3, tracksCursor.getCount());
+    Assert.assertEquals(3, tracksCursor.getCount());
     Cursor tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI, null, null,
         null, TrackPointsColumns._ID);
-    assertEquals(20, tracksPointsCursor.getCount());
+    Assert.assertEquals(20, tracksPointsCursor.getCount());
     Cursor waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null,
         null, WaypointsColumns._ID);
-    assertEquals(1, waypointCursor.getCount());
+    Assert.assertEquals(1, waypointCursor.getCount());
     // Delete one track.
     providerUtils.deleteTrack(context, trackId);
     // Check whether all data of a track has been deleted. 
     tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null,
         TracksColumns._ID);
-    assertEquals(2, tracksCursor.getCount());
+    Assert.assertEquals(2, tracksCursor.getCount());
     tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI, null, null,
         null, TrackPointsColumns._ID);
-    assertEquals(20, tracksPointsCursor.getCount());
+    Assert.assertEquals(20, tracksPointsCursor.getCount());
     waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null,
         null, WaypointsColumns._ID);
-    assertEquals(0, waypointCursor.getCount());
+    Assert.assertEquals(0, waypointCursor.getCount());
   }
 
   /**
@@ -301,8 +305,8 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     long trackId = System.currentTimeMillis();
     providerUtils.insertTrack(getTrack(trackId, 0));
     List<Track> allTracks = providerUtils.getAllTracks();
-    assertEquals(initialTrackNumber + 1, allTracks.size());
-    assertEquals(trackId, allTracks.get(allTracks.size() - 1).getId());
+    Assert.assertEquals(initialTrackNumber + 1, allTracks.size());
+    Assert.assertEquals(trackId, allTracks.get(allTracks.size() - 1).getId());
   }
   
   /**
@@ -311,7 +315,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
   public void testGetLastTrack() {
     long trackId = System.currentTimeMillis();
     providerUtils.insertTrack(getTrack(trackId, 0));
-    assertEquals(trackId, providerUtils.getLastTrack().getId());
+    Assert.assertEquals(trackId, providerUtils.getLastTrack().getId());
   }
 
   /**
@@ -320,7 +324,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
   public void testGetTrack() {
     long trackId = System.currentTimeMillis();
     providerUtils.insertTrack(getTrack(trackId, 0));
-    assertNotNull(providerUtils.getTrack(trackId));
+    Assert.assertNotNull(providerUtils.getTrack(trackId));
   }
   
   /**
@@ -333,10 +337,10 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     String nameNew = "name2";
     track.setName(nameOld);
     providerUtils.insertTrack(track);
-    assertEquals(nameOld, providerUtils.getTrack(trackId).getName()); 
+    Assert.assertEquals(nameOld, providerUtils.getTrack(trackId).getName());
     track.setName(nameNew);
     providerUtils.updateTrack(track);
-    assertEquals(nameNew, providerUtils.getTrack(trackId).getName()); 
+    Assert.assertEquals(nameNew, providerUtils.getTrack(trackId).getName());
   }
   
   /**
@@ -383,11 +387,11 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     long waypointId = System.currentTimeMillis();
     waypoint.setId(waypointId);
     ContentValues contentValues = myTracksProviderUtilsImpl.createContentValues(waypoint);
-    assertEquals(waypointId, contentValues.get(WaypointsColumns._ID));
-    assertEquals(22 * 1000000, contentValues.get(WaypointsColumns.LONGITUDE));
-    assertEquals(TEST_DESC, contentValues.get(WaypointsColumns.DESCRIPTION));
-    assertEquals(startTime, contentValues.get(WaypointsColumns.STARTTIME));
-    assertEquals(minGrade, contentValues.get(WaypointsColumns.MINGRADE));
+    Assert.assertEquals(waypointId, contentValues.get(WaypointsColumns._ID));
+    Assert.assertEquals(22 * 1000000, contentValues.get(WaypointsColumns.LONGITUDE));
+    Assert.assertEquals(TEST_DESC, contentValues.get(WaypointsColumns.DESCRIPTION));
+    Assert.assertEquals(startTime, contentValues.get(WaypointsColumns.STARTTIME));
+    Assert.assertEquals(minGrade, contentValues.get(WaypointsColumns.MINGRADE));
   }
 
   /**
@@ -423,9 +427,9 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     AndroidMock.expect(cursorMock.getLong(columnIndex++)).andReturn(trackId);
     AndroidMock.replay(cursorMock);
     Waypoint waypoint = providerUtils.createWaypoint(cursorMock);
-    assertEquals(id, waypoint.getId());
-    assertEquals(name, waypoint.getName());
-    assertEquals(trackId, waypoint.getTrackId());
+    Assert.assertEquals(id, waypoint.getId());
+    Assert.assertEquals(name, waypoint.getName());
+    Assert.assertEquals(trackId, waypoint.getTrackId());
     AndroidMock.verify(cursorMock);
   }
 
@@ -462,7 +466,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     };
     providerUtils.deleteWaypoint(context, 1, descriptionGenerator);
   
-    assertNull(providerUtils.getWaypoint(1));
+    Assert.assertNull(providerUtils.getWaypoint(1));
   }
 
   /**
@@ -517,8 +521,8 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     };
     providerUtils.deleteWaypoint(context, 1, descriptionGenerator);
   
-    assertNull(providerUtils.getWaypoint(1));
-    assertEquals(MyTracksProviderUtilsImplTest.MOCK_DESC, providerUtils.getWaypoint(2)
+    Assert.assertNull(providerUtils.getWaypoint(1));
+    Assert.assertEquals(MyTracksProviderUtilsImplTest.MOCK_DESC, providerUtils.getWaypoint(2)
         .getDescription());
   }
 
@@ -537,8 +541,8 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     providerUtils.insertWaypoint(waypoint1);
     providerUtils.insertWaypoint(waypoint2);
     
-    assertEquals(-1L, providerUtils.getFirstWaypointId(-1));
-    assertEquals(1L, providerUtils.getFirstWaypointId(trackId));
+    Assert.assertEquals(-1L, providerUtils.getFirstWaypointId(-1));
+    Assert.assertEquals(1L, providerUtils.getFirstWaypointId(trackId));
   }
 
   /**
@@ -566,8 +570,8 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     providerUtils.insertWaypoint(waypoint3);
     providerUtils.insertWaypoint(waypoint4);
     
-    assertEquals(2, providerUtils.getNextWaypointNumber(trackId, WaypointType.STATISTICS));
-    assertEquals(3, providerUtils.getNextWaypointNumber(trackId, WaypointType.WAYPOINT));
+    Assert.assertEquals(2, providerUtils.getNextWaypointNumber(trackId, WaypointType.STATISTICS));
+    Assert.assertEquals(3, providerUtils.getNextWaypointNumber(trackId, WaypointType.WAYPOINT));
   }
 
   /**
@@ -595,7 +599,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     providerUtils.insertWaypoint(waypoint2);
     providerUtils.insertWaypoint(waypoint3);
 
-    assertEquals("Desc2", providerUtils.getLastWaypoint(trackId, WaypointType.STATISTICS).getDescription());
+    Assert.assertEquals("Desc2", providerUtils.getLastWaypoint(trackId, WaypointType.STATISTICS).getDescription());
   }
 
   /**
@@ -612,7 +616,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     waypoint.setTrackId(trackId);
     providerUtils.insertWaypoint(waypoint);
     
-    assertEquals(TEST_DESC, providerUtils.getWaypoint(1).getDescription());
+    Assert.assertEquals(TEST_DESC, providerUtils.getWaypoint(1).getDescription());
   }
   
   /**
@@ -632,7 +636,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     waypoint.setDescription(TEST_DESC_NEW);
     providerUtils.updateWaypoint(waypoint);
   
-    assertEquals(TEST_DESC_NEW, providerUtils.getWaypoint(1).getDescription());
+    Assert.assertEquals(TEST_DESC_NEW, providerUtils.getWaypoint(1).getDescription());
   }
 
   /**
@@ -646,9 +650,9 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     insertTrackWithLocations(track);
   
     providerUtils.bulkInsertTrackPoint(track.getLocations().toArray(new Location[0]), -1, trackId);
-    assertEquals(20, providerUtils.getTrackPointCursor(trackId, -1L, 1000, false).getCount());
+    Assert.assertEquals(20, providerUtils.getTrackPointCursor(trackId, -1L, 1000, false).getCount());
     providerUtils.bulkInsertTrackPoint(track.getLocations().toArray(new Location[0]), 8, trackId);
-    assertEquals(28, providerUtils.getTrackPointCursor(trackId, -1L, 1000, false).getCount());
+    Assert.assertEquals(28, providerUtils.getTrackPointCursor(trackId, -1L, 1000, false).getCount());
   }
 
   /**
@@ -711,10 +715,10 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
   
     AndroidMock.replay(cursorMock);
     Location location = providerUtils.createTrackPoint(cursorMock);
-    assertEquals((double) longitude, location.getLongitude());
-    assertEquals((double) latitude, location.getLatitude());
-    assertEquals(time, location.getTime());
-    assertEquals(speed, location.getSpeed());
+    Assert.assertEquals((double) longitude, location.getLongitude());
+    Assert.assertEquals((double) latitude, location.getLatitude());
+    Assert.assertEquals(time, location.getTime());
+    Assert.assertEquals(speed, location.getSpeed());
     AndroidMock.verify(cursorMock);
   }
 
@@ -729,7 +733,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     insertTrackWithLocations(track);
 
     providerUtils.insertTrackPoint(createLocation(22), trackId);
-    assertEquals(11, providerUtils.getTrackPointCursor(trackId, -1L, 1000, false).getCount());
+    Assert.assertEquals(11, providerUtils.getTrackPointCursor(trackId, -1L, 1000, false).getCount());
   }
 
   /**
@@ -741,7 +745,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     Track track = getTrack(trackId, 10);
     insertTrackWithLocations(track);
   
-    assertEquals(1, providerUtils.getFirstTrackPointId(trackId));
+    Assert.assertEquals(1, providerUtils.getFirstTrackPointId(trackId));
   }
   
   /**
@@ -753,7 +757,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     Track track = getTrack(trackId, 10);
     insertTrackWithLocations(track);
   
-    assertEquals(10, providerUtils.getLastTrackPointId(trackId));
+    Assert.assertEquals(10, providerUtils.getLastTrackPointId(trackId));
   }
 
   /**
@@ -781,7 +785,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     insertTrackWithLocations(track);
 
     Cursor cursor = providerUtils.getTrackPointCursor(trackId, 2L, 5, true);
-    assertEquals(2, cursor.getCount());
+    Assert.assertEquals(2, cursor.getCount());
   }
   
   /**
@@ -796,7 +800,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     insertTrackWithLocations(track);
 
     Cursor cursor = providerUtils.getTrackPointCursor(trackId, 2L, 5, false);
-    assertEquals(5, cursor.getCount());
+    Assert.assertEquals(5, cursor.getCount());
   }
   
   /**
@@ -815,12 +819,12 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     LocationIterator locationIterator = providerUtils.getTrackPointLocationIterator(trackId,
         startTrackPointId, true, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
     for (int i = 1; i >= 0; i--) {
-      assertTrue(locationIterator.hasNext());
+      Assert.assertTrue(locationIterator.hasNext());
       Location location = locationIterator.next();
-      assertEquals(2 + (i - 1), locationIterator.getLocationId());
+      Assert.assertEquals(2 + (i - 1), locationIterator.getLocationId());
       checkLocation(i, location);
     }
-    assertFalse(locationIterator.hasNext());
+    Assert.assertFalse(locationIterator.hasNext());
   }
   
   /**
@@ -840,12 +844,12 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
         startTrackPointId, false, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
     
     for (int i = 1; i < 10; i++) {
-      assertTrue(locationIterator.hasNext());
+      Assert.assertTrue(locationIterator.hasNext());
       Location location = locationIterator.next();
-      assertEquals(2 + (i - 1), locationIterator.getLocationId());
+      Assert.assertEquals(2 + (i - 1), locationIterator.getLocationId());
       checkLocation(i, location);
     }
-    assertFalse(locationIterator.hasNext());
+    Assert.assertFalse(locationIterator.hasNext());
   }
 
   /**
@@ -889,10 +893,10 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
    * @param location the location to be checked
    */
   private void checkLocation(int i, Location location) {
-    assertEquals(INITIAL_LATITUDE + (double) i / 10000.0, location.getLatitude());
-    assertEquals(INITIAL_LONGITUDE - (double) i / 10000.0, location.getLongitude());
-    assertEquals((float) i / 100.0f, location.getAccuracy());
-    assertEquals(i * ALTITUDE_INTERVAL, location.getAltitude());
+    Assert.assertEquals(INITIAL_LATITUDE + (double) i / 10000.0, location.getLatitude());
+    Assert.assertEquals(INITIAL_LONGITUDE - (double) i / 10000.0, location.getLongitude());
+    Assert.assertEquals((float) i / 100.0f, location.getAccuracy());
+    Assert.assertEquals(i * ALTITUDE_INTERVAL, location.getAltitude());
   }
   
   /**

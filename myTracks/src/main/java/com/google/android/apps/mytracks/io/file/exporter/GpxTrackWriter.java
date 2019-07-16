@@ -16,14 +16,12 @@
 
 package com.google.android.apps.mytracks.io.file.exporter;
 
+import android.location.Location;
+
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.util.StringUtils;
-import com.google.android.maps.mytracks.R;
-
-import android.content.Context;
-import android.location.Location;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -52,11 +50,11 @@ public class GpxTrackWriter implements TrackWriter {
     COORDINATE_FORMAT.setGroupingUsed(false);
   }
 
-  private final Context context;
+  private final String creator;
   private PrintWriter printWriter;
 
-  public GpxTrackWriter(Context context) {
-    this.context = context;
+  public GpxTrackWriter(String creator) {
+    this.creator = creator;
   }
 
   @Override
@@ -84,7 +82,7 @@ public class GpxTrackWriter implements TrackWriter {
       printWriter.println("<gpx");
       printWriter.println("version=\"1.1\"");
       printWriter.println(
-          "creator=\"" + context.getString(R.string.send_google_by_my_tracks, "", "") + "\"");
+          "creator=\"" + creator + "\"");
       printWriter.println("xmlns=\"http://www.topografix.com/GPX/1/1\"");
       printWriter.println(
           "xmlns:topografix=\"http://www.topografix.com/GPX/Private/TopoGrafix/0/1\"");

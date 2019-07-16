@@ -16,7 +16,11 @@
 
 package com.google.android.apps.mytracks.util;
 
-import android.test.AndroidTestCase;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
+
+import org.junit.Assert;
+import org.junit.runner.RunWith;
 
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
@@ -26,13 +30,14 @@ import java.util.TimeZone;
  *
  * @author Rodrigo Damazio
  */
-public class StringUtilsTest extends AndroidTestCase {
+@RunWith(AndroidJUnit4.class)
+public class StringUtilsTest {
 
   /**
    * Tests {@link StringUtils#formatDateTimeIso8601(long)}.
    */
   public void testFormatDateTimeIso8601() {
-    assertEquals("1970-01-01T00:00:12.345Z", StringUtils.formatDateTimeIso8601(12345));
+    Assert.assertEquals("1970-01-01T00:00:12.345Z", StringUtils.formatDateTimeIso8601(12345));
   }
 
   /**
@@ -40,19 +45,19 @@ public class StringUtilsTest extends AndroidTestCase {
    */
   public void testformatElapsedTime() {
     // 1 second
-    assertEquals("00:01", StringUtils.formatElapsedTime(1000));
+    Assert.assertEquals("00:01", StringUtils.formatElapsedTime(1000));
     // 10 seconds
-    assertEquals("00:10", StringUtils.formatElapsedTime(10000));
+    Assert.assertEquals("00:10", StringUtils.formatElapsedTime(10000));
     // 1 minute
-    assertEquals("01:00", StringUtils.formatElapsedTime(60000));
+    Assert.assertEquals("01:00", StringUtils.formatElapsedTime(60000));
     // 10 minutes
-    assertEquals("10:00", StringUtils.formatElapsedTime(600000));
+    Assert.assertEquals("10:00", StringUtils.formatElapsedTime(600000));
     // 1 hour
-    assertEquals("1:00:00", StringUtils.formatElapsedTime(3600000));
+    Assert.assertEquals("1:00:00", StringUtils.formatElapsedTime(3600000));
     // 10 hours
-    assertEquals("10:00:00", StringUtils.formatElapsedTime(36000000));
+    Assert.assertEquals("10:00:00", StringUtils.formatElapsedTime(36000000));
     // 100 hours
-    assertEquals("100:00:00", StringUtils.formatElapsedTime(360000000));
+    Assert.assertEquals("100:00:00", StringUtils.formatElapsedTime(360000000));
   }
 
   /**
@@ -60,19 +65,19 @@ public class StringUtilsTest extends AndroidTestCase {
    */
   public void testformatElapsedTimeWithHour() {
     // 1 second
-    assertEquals("0:00:01", StringUtils.formatElapsedTimeWithHour(1000));
+    Assert.assertEquals("0:00:01", StringUtils.formatElapsedTimeWithHour(1000));
     // 10 seconds
-    assertEquals("0:00:10", StringUtils.formatElapsedTimeWithHour(10000));
+    Assert.assertEquals("0:00:10", StringUtils.formatElapsedTimeWithHour(10000));
     // 1 minute
-    assertEquals("0:01:00", StringUtils.formatElapsedTimeWithHour(60000));
+    Assert.assertEquals("0:01:00", StringUtils.formatElapsedTimeWithHour(60000));
     // 10 minutes
-    assertEquals("0:10:00", StringUtils.formatElapsedTimeWithHour(600000));
+    Assert.assertEquals("0:10:00", StringUtils.formatElapsedTimeWithHour(600000));
     // 1 hour
-    assertEquals("1:00:00", StringUtils.formatElapsedTimeWithHour(3600000));
+    Assert.assertEquals("1:00:00", StringUtils.formatElapsedTimeWithHour(3600000));
     // 10 hours
-    assertEquals("10:00:00", StringUtils.formatElapsedTimeWithHour(36000000));
+    Assert.assertEquals("10:00:00", StringUtils.formatElapsedTimeWithHour(36000000));
     // 100 hours
-    assertEquals("100:00:00", StringUtils.formatElapsedTimeWithHour(360000000));
+    Assert.assertEquals("100:00:00", StringUtils.formatElapsedTimeWithHour(360000000));
   }
 
   /**
@@ -81,21 +86,21 @@ public class StringUtilsTest extends AndroidTestCase {
    */
   public void testFormatDistance() {
     // A large number in metric
-    assertEquals("5.00 km", StringUtils.formatDistance(getContext(), 5000, true));
+    Assert.assertEquals("5.00 km", StringUtils.formatDistance(InstrumentationRegistry.getInstrumentation().getContext(), 5000, true));
     // A large number in imperial
-    assertEquals("3.11 mi", StringUtils.formatDistance(getContext(), 5000, false));
+    Assert.assertEquals("3.11 mi", StringUtils.formatDistance(InstrumentationRegistry.getInstrumentation().getContext(), 5000, false));
     // A small number in metric
-    assertEquals("100.00 m", StringUtils.formatDistance(getContext(), 100, true));
+    Assert.assertEquals("100.00 m", StringUtils.formatDistance(InstrumentationRegistry.getInstrumentation().getContext(), 100, true));
     // A small number in imperial
-    assertEquals("328.08 ft", StringUtils.formatDistance(getContext(), 100, false));
+    Assert.assertEquals("328.08 ft", StringUtils.formatDistance(InstrumentationRegistry.getInstrumentation().getContext(), 100, false));
   }
 
   /**
    * Tests {@link StringUtils#formatCData(String)}.
    */
   public void testFormatCData() {
-    assertEquals("<![CDATA[hello]]>", StringUtils.formatCData("hello"));
-    assertEquals("<![CDATA[hello]]]]><![CDATA[>there]]>", StringUtils.formatCData("hello]]>there"));
+    Assert.assertEquals("<![CDATA[hello]]>", StringUtils.formatCData("hello"));
+    Assert.assertEquals("<![CDATA[hello]]]]><![CDATA[>there]]>", StringUtils.formatCData("hello]]>there"));
   }
   
   /**
@@ -158,7 +163,7 @@ public class StringUtilsTest extends AndroidTestCase {
     GregorianCalendar calendar = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
     calendar.set(year, month - 1, day, hour, minute, second);
     calendar.set(GregorianCalendar.MILLISECOND, millisecond);
-    assertEquals(calendar.getTimeInMillis(), StringUtils.getTime(xmlDateTime));
+    Assert.assertEquals(calendar.getTimeInMillis(), StringUtils.getTime(xmlDateTime));
   }
 
   /**
@@ -166,9 +171,9 @@ public class StringUtilsTest extends AndroidTestCase {
    */
   public void testGetTimeParts_postive() {
       int[] parts = StringUtils.getTimeParts(61000);
-    assertEquals(1, parts[0]);
-    assertEquals(1, parts[1]);
-    assertEquals(0, parts[2]);
+    Assert.assertEquals(1, parts[0]);
+    Assert.assertEquals(1, parts[1]);
+    Assert.assertEquals(0, parts[2]);
   }
 
   /**
@@ -176,8 +181,8 @@ public class StringUtilsTest extends AndroidTestCase {
    */
   public void testGetTimeParts_negative() {
       int[] parts = StringUtils.getTimeParts(-61000);
-    assertEquals(-1, parts[0]);
-    assertEquals(-1, parts[1]);
-    assertEquals(0, parts[2]);
+    Assert.assertEquals(-1, parts[0]);
+    Assert.assertEquals(-1, parts[1]);
+    Assert.assertEquals(0, parts[2]);
   }
 }

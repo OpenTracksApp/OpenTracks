@@ -87,8 +87,7 @@ public class KmlTrackWriter implements TrackWriter {
   }
 
   @VisibleForTesting
-  KmlTrackWriter(Context context, boolean multiple, boolean playTrack,
-      DescriptionGenerator descriptionGenerator) {
+  KmlTrackWriter(Context context, boolean multiple, boolean playTrack, DescriptionGenerator descriptionGenerator) {
     this.context = context;
     this.multiple = multiple;
     this.playTrack = playTrack;

@@ -3,6 +3,7 @@ package com.google.android.apps.mytracks.io.file;
 import com.google.android.apps.mytracks.io.file.exporter.GpxTrackWriter;
 import com.google.android.apps.mytracks.io.file.exporter.KmlTrackWriter;
 import com.google.android.apps.mytracks.io.file.exporter.TrackWriter;
+import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
 import android.os.Parcel;
@@ -23,7 +24,7 @@ public enum TrackFileFormat implements Parcelable {
   GPX {
   @Override
     public TrackWriter newTrackWriter(Context context, boolean multiple, boolean playTrack) {
-      return new GpxTrackWriter(context);
+      return new GpxTrackWriter(context.getString(R.string.send_google_by_my_tracks, "", ""));
     }
   };
 

@@ -15,10 +15,14 @@
  */
 package com.google.android.apps.mytracks.content;
 
+import android.os.Parcel;
+
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 
-import android.os.Parcel;
-import android.test.AndroidTestCase;
+import org.junit.Assert;
+import org.junit.runner.RunWith;
 
 /**
  * Tests for the WaypointCreationRequest class.
@@ -26,7 +30,8 @@ import android.test.AndroidTestCase;
  *
  * @author Sandor Dornbush
  */
-public class WaypointCreationRequestTest extends AndroidTestCase {
+@RunWith(AndroidJUnit4.class)
+public class WaypointCreationRequestTest {
 
   public void testTypeParceling() {
     WaypointCreationRequest original = WaypointCreationRequest.DEFAULT_WAYPOINT;
@@ -34,11 +39,11 @@ public class WaypointCreationRequestTest extends AndroidTestCase {
     original.writeToParcel(p, 0);
     p.setDataPosition(0);
     WaypointCreationRequest copy = WaypointCreationRequest.CREATOR.createFromParcel(p);
-    assertEquals(original.getType(), copy.getType());
-    assertFalse(copy.isTrackStatistics());
-    assertNull(copy.getName());
-    assertNull(copy.getDescription());
-    assertNull(copy.getIconUrl());
+    Assert.assertEquals(original.getType(), copy.getType());
+    Assert.assertFalse(copy.isTrackStatistics());
+    Assert.assertNull(copy.getName());
+    Assert.assertNull(copy.getDescription());
+    Assert.assertNull(copy.getIconUrl());
   }
 
   public void testAllAttributesParceling() {
@@ -48,11 +53,11 @@ public class WaypointCreationRequestTest extends AndroidTestCase {
     original.writeToParcel(p, 0);
     p.setDataPosition(0);
     WaypointCreationRequest copy = WaypointCreationRequest.CREATOR.createFromParcel(p);
-    assertEquals(original.getType(), copy.getType());
-    assertFalse(copy.isTrackStatistics());
-    assertEquals("name", copy.getName());
-    assertEquals("category", copy.getCategory());
-    assertEquals("description", copy.getDescription());
-    assertEquals("img.png", copy.getIconUrl());
+    Assert.assertEquals(original.getType(), copy.getType());
+    Assert.assertFalse(copy.isTrackStatistics());
+    Assert.assertEquals("name", copy.getName());
+    Assert.assertEquals("category", copy.getCategory());
+    Assert.assertEquals("description", copy.getDescription());
+    Assert.assertEquals("img.png", copy.getIconUrl());
   }
 }

@@ -16,6 +16,11 @@
 
 package com.google.android.apps.mytracks.fragments;
 
+import android.location.Location;
+
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
+
 import com.google.android.apps.mytracks.ChartView;
 import com.google.android.apps.mytracks.TrackStubUtils;
 import com.google.android.apps.mytracks.content.MyTracksLocation;
@@ -23,24 +28,26 @@ import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.util.UnitConversions;
 
-import android.location.Location;
-import android.test.AndroidTestCase;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.runner.RunWith;
 
 /**
  * Tests {@link ChartFragment}.
  * 
  * @author Youtao Liu
  */
-public class ChartFragmentTest extends AndroidTestCase {
+@RunWith(AndroidJUnit4.class)
+public class ChartFragmentTest {
 
   private static final double HOURS_PER_UNIT = 60.0;
 
   private ChartFragment chartFragment;
 
-  @Override
-  protected void setUp() throws Exception {
+  @Before
+  protected void setUp() {
     chartFragment = new ChartFragment();
-    chartFragment.setChartView(new ChartView(getContext()));
+    chartFragment.setChartView(new ChartView(InstrumentationRegistry.getInstrumentation().getContext()));
     chartFragment.setTripStatisticsUpdater(TrackStubUtils.INITIAL_TIME);
   }
 
@@ -53,9 +60,9 @@ public class ChartFragmentTest extends AndroidTestCase {
 
     // No input.
     double[] point = fillDataPointTestHelper(myTracksLocation);
-    assertEquals(Double.NaN, point[ChartView.HEART_RATE_SERIES + 1]);
-    assertEquals(Double.NaN, point[ChartView.CADENCE_SERIES + 1]);
-    assertEquals(Double.NaN, point[ChartView.POWER_SERIES + 1]);
+    Assert.assertEquals(Double.NaN, point[ChartView.HEART_RATE_SERIES + 1]);
+    Assert.assertEquals(Double.NaN, point[ChartView.CADENCE_SERIES + 1]);
+    Assert.assertEquals(Double.NaN, point[ChartView.POWER_SERIES + 1]);
 
     // Input incorrect state.
     // Creates SensorData.
@@ -73,9 +80,9 @@ public class ChartFragmentTest extends AndroidTestCase {
     myTracksLocation.setSensorDataSet(sensorDataSet);
     // Test.
     point = fillDataPointTestHelper(myTracksLocation);
-    assertEquals(Double.NaN, point[ChartView.HEART_RATE_SERIES + 1]);
-    assertEquals(Double.NaN, point[ChartView.CADENCE_SERIES + 1]);
-    assertEquals(Double.NaN, point[ChartView.POWER_SERIES + 1]);
+    Assert.assertEquals(Double.NaN, point[ChartView.HEART_RATE_SERIES + 1]);
+    Assert.assertEquals(Double.NaN, point[ChartView.CADENCE_SERIES + 1]);
+    Assert.assertEquals(Double.NaN, point[ChartView.POWER_SERIES + 1]);
   }
 
   /**
@@ -86,9 +93,9 @@ public class ChartFragmentTest extends AndroidTestCase {
     MyTracksLocation myTracksLocation = TrackStubUtils.createMyTracksLocation();
     // No input.
     double[] point = fillDataPointTestHelper(myTracksLocation);
-    assertEquals(Double.NaN, point[ChartView.HEART_RATE_SERIES + 1]);
-    assertEquals(Double.NaN, point[ChartView.CADENCE_SERIES + 1]);
-    assertEquals(Double.NaN, point[ChartView.POWER_SERIES + 1]);
+    Assert.assertEquals(Double.NaN, point[ChartView.HEART_RATE_SERIES + 1]);
+    Assert.assertEquals(Double.NaN, point[ChartView.CADENCE_SERIES + 1]);
+    Assert.assertEquals(Double.NaN, point[ChartView.POWER_SERIES + 1]);
 
     // Creates SensorData.
     Sensor.SensorData.Builder heartRateData = Sensor.SensorData.newBuilder()
@@ -105,9 +112,9 @@ public class ChartFragmentTest extends AndroidTestCase {
     myTracksLocation.setSensorDataSet(sensorDataSet);
     // Test.
     point = fillDataPointTestHelper(myTracksLocation);
-    assertEquals(100.0, point[ChartView.HEART_RATE_SERIES + 1]);
-    assertEquals(101.0, point[ChartView.CADENCE_SERIES + 1]);
-    assertEquals(102.0, point[ChartView.POWER_SERIES + 1]);
+    Assert.assertEquals(100.0, point[ChartView.HEART_RATE_SERIES + 1]);
+    Assert.assertEquals(101.0, point[ChartView.CADENCE_SERIES + 1]);
+    Assert.assertEquals(102.0, point[ChartView.POWER_SERIES + 1]);
   }
 
   /**
@@ -120,12 +127,12 @@ public class ChartFragmentTest extends AndroidTestCase {
     // Resets last location and writes first location.
     MyTracksLocation myTracksLocation1 = TrackStubUtils.createMyTracksLocation();
     double[] point = fillDataPointTestHelper(myTracksLocation1);
-    assertEquals(0.0, point[0]);
+    Assert.assertEquals(0.0, point[0]);
 
     // The second is a same location, just different time.
     MyTracksLocation myTracksLocation2 = TrackStubUtils.createMyTracksLocation();
     point = fillDataPointTestHelper(myTracksLocation2);
-    assertEquals(0.0, point[0]);
+    Assert.assertEquals(0.0, point[0]);
 
     // The third location is a new location, and use metric.
     MyTracksLocation myTracksLocation3 = TrackStubUtils.createMyTracksLocation();
@@ -137,7 +144,7 @@ public class ChartFragmentTest extends AndroidTestCase {
     Location.distanceBetween(myTracksLocation2.getLatitude(), myTracksLocation2.getLongitude(),
         myTracksLocation3.getLatitude(), myTracksLocation3.getLongitude(), results);
     double distance1 = results[0] * UnitConversions.M_TO_KM;
-    assertEquals(distance1, point[0]);
+    Assert.assertEquals(distance1, point[0]);
 
     // The fourth location is a new location, and use metric.
     MyTracksLocation myTracksLocation4 = TrackStubUtils.createMyTracksLocation();
@@ -148,7 +155,7 @@ public class ChartFragmentTest extends AndroidTestCase {
     Location.distanceBetween(myTracksLocation3.getLatitude(), myTracksLocation3.getLongitude(),
         myTracksLocation4.getLatitude(), myTracksLocation4.getLongitude(), results);
     double distance2 = results[0] * UnitConversions.M_TO_KM;
-    assertEquals((distance1 + distance2), point[0]);
+    Assert.assertEquals((distance1 + distance2), point[0]);
   }
 
   /**
@@ -164,7 +171,7 @@ public class ChartFragmentTest extends AndroidTestCase {
     // The first is a same location, just different time.
     MyTracksLocation myTracksLocation1 = TrackStubUtils.createMyTracksLocation();
     double[] point = fillDataPointTestHelper(myTracksLocation1);
-    assertEquals(0.0, point[0]);
+    Assert.assertEquals(0.0, point[0]);
 
     // The second location is a new location, and use imperial.
     MyTracksLocation myTracksLocation2 = TrackStubUtils.createMyTracksLocation();
@@ -179,7 +186,7 @@ public class ChartFragmentTest extends AndroidTestCase {
     Location.distanceBetween(myTracksLocation1.getLatitude(), myTracksLocation1.getLongitude(),
         myTracksLocation2.getLatitude(), myTracksLocation2.getLongitude(), results);
     double distance1 = results[0] * UnitConversions.M_TO_KM * UnitConversions.KM_TO_MI;
-    assertEquals(distance1, point[0]);
+    Assert.assertEquals(distance1, point[0]);
 
     // The third location is a new location, and use imperial.
     MyTracksLocation myTracksLocation3 = TrackStubUtils.createMyTracksLocation();
@@ -193,7 +200,7 @@ public class ChartFragmentTest extends AndroidTestCase {
     Location.distanceBetween(myTracksLocation2.getLatitude(), myTracksLocation2.getLongitude(),
         myTracksLocation3.getLatitude(), myTracksLocation3.getLongitude(), results);
     double distance2 = results[0] * UnitConversions.M_TO_KM * UnitConversions.KM_TO_MI;
-    assertEquals(distance1 + distance2, point[0]);
+    Assert.assertEquals(distance1 + distance2, point[0]);
   }
 
   /**
@@ -205,12 +212,12 @@ public class ChartFragmentTest extends AndroidTestCase {
     chartFragment.setChartByDistance(false);
     MyTracksLocation myTracksLocation1 = TrackStubUtils.createMyTracksLocation();
     double[] point = fillDataPointTestHelper(myTracksLocation1);
-    assertEquals(0.0, point[0]);
+    Assert.assertEquals(0.0, point[0]);
     long timeSpan = 222;
     MyTracksLocation myTracksLocation2 = TrackStubUtils.createMyTracksLocation();
     myTracksLocation2.setTime(myTracksLocation1.getTime() + timeSpan);
     point = fillDataPointTestHelper(myTracksLocation2);
-    assertEquals((double) timeSpan, point[0]);
+    Assert.assertEquals((double) timeSpan, point[0]);
   }
 
   /**
@@ -225,7 +232,7 @@ public class ChartFragmentTest extends AndroidTestCase {
      * parameter. Then only one value INITIALLONGTITUDE in buffer.
      */
     double[] point = fillDataPointTestHelper(myTracksLocation1);
-    assertEquals(TrackStubUtils.INITIAL_ALTITUDE, point[ChartView.ELEVATION_SERIES + 1]);
+    Assert.assertEquals(TrackStubUtils.INITIAL_ALTITUDE, point[ChartView.ELEVATION_SERIES + 1]);
 
     /*
      * Send another value to buffer, now there are two values, INITIALALTITUDE
@@ -234,7 +241,7 @@ public class ChartFragmentTest extends AndroidTestCase {
     MyTracksLocation myTracksLocation2 = TrackStubUtils.createMyTracksLocation();
     myTracksLocation2.setAltitude(TrackStubUtils.INITIAL_ALTITUDE * 2);
     point = fillDataPointTestHelper(myTracksLocation2);
-    assertEquals((TrackStubUtils.INITIAL_ALTITUDE + TrackStubUtils.INITIAL_ALTITUDE * 2) / 2.0,
+    Assert.assertEquals((TrackStubUtils.INITIAL_ALTITUDE + TrackStubUtils.INITIAL_ALTITUDE * 2) / 2.0,
         point[ChartView.ELEVATION_SERIES + 1]);
   }
 
@@ -252,7 +259,7 @@ public class ChartFragmentTest extends AndroidTestCase {
     MyTracksLocation myTracksLocation1 = TrackStubUtils.createMyTracksLocation();
     myTracksLocation1.setSpeed(128.5f);
     double[] point = fillDataPointTestHelper(myTracksLocation1);
-    assertEquals(0.0, point[ChartView.SPEED_SERIES + 1]);
+    Assert.assertEquals(0.0, point[ChartView.SPEED_SERIES + 1]);
 
     /*
      * Tests the logic when both metricUnits and reportSpeed are true.This
@@ -267,7 +274,7 @@ public class ChartFragmentTest extends AndroidTestCase {
     myTracksLocation2.setTime(myTracksLocation1.getTime() + 222);
     myTracksLocation2.setSpeed(130);
     point = fillDataPointTestHelper(myTracksLocation2);
-    assertEquals(130.0 * UnitConversions.MS_TO_KMH, point[ChartView.SPEED_SERIES + 1]);
+    Assert.assertEquals(130.0 * UnitConversions.MS_TO_KMH, point[ChartView.SPEED_SERIES + 1]);
   }
 
   /**
@@ -281,7 +288,7 @@ public class ChartFragmentTest extends AndroidTestCase {
     MyTracksLocation myTracksLocation1 = TrackStubUtils.createMyTracksLocation();
     myTracksLocation1.setSpeed(100.0f);
     double[] point = fillDataPointTestHelper(myTracksLocation1);
-    assertEquals(0.0, point[ChartView.SPEED_SERIES + 1]);
+    Assert.assertEquals(0.0, point[ChartView.SPEED_SERIES + 1]);
 
     MyTracksLocation myTracksLocation2 = TrackStubUtils.createMyTracksLocation();
 
@@ -293,8 +300,7 @@ public class ChartFragmentTest extends AndroidTestCase {
     myTracksLocation2.setTime(myTracksLocation2.getTime() + 222);
     myTracksLocation2.setSpeed(102);
     point = fillDataPointTestHelper(myTracksLocation2);
-    assertEquals(102.0 * UnitConversions.MS_TO_KMH * UnitConversions.KM_TO_MI,
-        point[ChartView.SPEED_SERIES + 1]);
+    Assert.assertEquals(102.0 * UnitConversions.MS_TO_KMH * UnitConversions.KM_TO_MI, point[ChartView.SPEED_SERIES + 1]);
   }
 
   /**
@@ -308,7 +314,7 @@ public class ChartFragmentTest extends AndroidTestCase {
     MyTracksLocation myTracksLocation1 = TrackStubUtils.createMyTracksLocation();
     myTracksLocation1.setSpeed(100.0f);
     double[] point = fillDataPointTestHelper(myTracksLocation1);
-    assertEquals(0.0, point[ChartView.SPEED_SERIES + 1]);
+    Assert.assertEquals(0.0, point[ChartView.SPEED_SERIES + 1]);
 
     MyTracksLocation myTracksLocation2 = TrackStubUtils.createMyTracksLocation();
 
@@ -320,8 +326,7 @@ public class ChartFragmentTest extends AndroidTestCase {
     myTracksLocation2.setTime(myTracksLocation2.getTime() + 222);
     myTracksLocation2.setSpeed(102);
     point = fillDataPointTestHelper(myTracksLocation2);
-    assertEquals(
-        HOURS_PER_UNIT / (102.0 * UnitConversions.MS_TO_KMH), point[ChartView.PACE_SERIES + 1]);
+    Assert.assertEquals(HOURS_PER_UNIT / (102.0 * UnitConversions.MS_TO_KMH), point[ChartView.PACE_SERIES + 1]);
   }
 
   /**
@@ -334,7 +339,7 @@ public class ChartFragmentTest extends AndroidTestCase {
     MyTracksLocation myTracksLocation = TrackStubUtils.createMyTracksLocation();
     myTracksLocation.setSpeed(0);
     double[] point = fillDataPointTestHelper(myTracksLocation);
-    assertEquals(0.0, point[ChartView.PACE_SERIES + 1]);
+    Assert.assertEquals(0.0, point[ChartView.PACE_SERIES + 1]);
   }
 
   /**

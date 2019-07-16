@@ -15,10 +15,18 @@
  */
 package com.google.android.apps.mytracks.content;
 
-import static com.google.android.testing.mocking.AndroidMock.capture;
-import static com.google.android.testing.mocking.AndroidMock.eq;
-import static com.google.android.testing.mocking.AndroidMock.expect;
-import static com.google.android.testing.mocking.AndroidMock.isA;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.database.ContentObserver;
+import android.database.Cursor;
+import android.database.MatrixCursor;
+import android.location.Location;
+import android.provider.BaseColumns;
+import android.test.RenamingDelegatingContext;
+import android.test.mock.MockContentResolver;
+
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.TrackStubUtils;
@@ -30,31 +38,27 @@ import com.google.android.maps.mytracks.R;
 import com.google.android.testing.mocking.AndroidMock;
 import com.google.android.testing.mocking.UsesMocks;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.database.ContentObserver;
-import android.database.Cursor;
-import android.database.MatrixCursor;
-import android.location.Location;
-import android.provider.BaseColumns;
-import android.test.AndroidTestCase;
-import android.test.RenamingDelegatingContext;
-import android.test.mock.MockContentResolver;
+import org.easymock.Capture;
+import org.easymock.IAnswer;
+import org.junit.Before;
+import org.junit.runner.RunWith;
 
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.easymock.Capture;
-import org.easymock.IAnswer;
+import static com.google.android.testing.mocking.AndroidMock.capture;
+import static com.google.android.testing.mocking.AndroidMock.eq;
+import static com.google.android.testing.mocking.AndroidMock.expect;
+import static com.google.android.testing.mocking.AndroidMock.isA;
 
 /**
  * Tests for {@link TrackDataHub}.
  * 
  * @author Rodrigo Damazio
  */
-public class TrackDataHubTest extends AndroidTestCase {
+@RunWith(AndroidJUnit4.class)
+public class TrackDataHubTest {
 
   private static final long TRACK_ID = 42L;
   private static final int TARGET_POINTS = 50;
@@ -70,10 +74,10 @@ public class TrackDataHubTest extends AndroidTestCase {
   private Capture<OnSharedPreferenceChangeListener> preferenceChangeListenerCapture = new Capture<
       SharedPreferences.OnSharedPreferenceChangeListener>();
 
+  @Before
   @UsesMocks({ MyTracksProviderUtils.class, DataSource.class, TrackDataListener.class })
   @Override
-  protected void setUp() throws Exception {
-    super.setUp();
+  protected void setUp() {
     context = new MockContext(new MockContentResolver(), new RenamingDelegatingContext(
         getContext(), getContext(), "test."));
     sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);

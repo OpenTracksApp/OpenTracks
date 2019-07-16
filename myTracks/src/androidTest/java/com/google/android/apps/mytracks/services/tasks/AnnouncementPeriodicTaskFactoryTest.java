@@ -16,7 +16,11 @@
 
 package com.google.android.apps.mytracks.services.tasks;
 
-import android.test.AndroidTestCase;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
+
+import org.junit.Assert;
+import org.junit.runner.RunWith;
 
 /**
  * Tests for {@link AnnouncementPeriodicTaskFactory}.
@@ -24,10 +28,11 @@ import android.test.AndroidTestCase;
  *
  * @author Rodrigo Damazio
  */
-public class AnnouncementPeriodicTaskFactoryTest extends AndroidTestCase {
+@RunWith(AndroidJUnit4.class)
+public class AnnouncementPeriodicTaskFactoryTest {
   public void testCreate() {
     PeriodicTaskFactory factory = new AnnouncementPeriodicTaskFactory();
-    PeriodicTask task = factory.create(getContext());
-    assertTrue(task instanceof AnnouncementPeriodicTask);
+    PeriodicTask task = factory.create(InstrumentationRegistry.getInstrumentation().getContext());
+    Assert.assertTrue(task instanceof AnnouncementPeriodicTask);
   }
 }

@@ -16,17 +16,22 @@
 
 package com.google.android.apps.mytracks.content;
 
+import android.content.ContentUris;
+import android.location.Location;
+import android.net.Uri;
+import android.test.RenamingDelegatingContext;
+import android.test.mock.MockContentResolver;
+
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+
 import com.google.android.apps.mytracks.content.SearchEngine.ScoredResult;
 import com.google.android.apps.mytracks.content.SearchEngine.SearchQuery;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceTest.MockContext;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 
-import android.content.ContentUris;
-import android.location.Location;
-import android.net.Uri;
-import android.test.AndroidTestCase;
-import android.test.RenamingDelegatingContext;
-import android.test.mock.MockContentResolver;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,17 +45,16 @@ import java.util.List;
  *
  * @author Rodrigo Damazio
  */
-public class SearchEngineTest extends AndroidTestCase {
+@RunWith(AndroidJUnit4.class)
+public class SearchEngineTest {
 
   private static final Location HERE = new Location("gps");
   private static final long NOW = 1234567890000L;  // After OLDEST_ALLOWED_TIMESTAMP
   private MyTracksProviderUtils providerUtils;
   private SearchEngine engine;
 
-  @Override
-  protected void setUp() throws Exception {
-    super.setUp();
-
+  @Before
+  protected void setUp() {
     MockContentResolver mockContentResolver = new MockContentResolver();
     RenamingDelegatingContext targetContext = new RenamingDelegatingContext(
         getContext(), getContext(), "test.");
@@ -64,11 +68,9 @@ public class SearchEngineTest extends AndroidTestCase {
     engine = new SearchEngine(providerUtils);
   }
 
-  @Override
+  @After
   protected void tearDown() throws Exception {
     providerUtils.deleteAllTracks(getContext());
-
-    super.tearDown();
   }
 
   private long insertTrack(String title, String description, String category, double distance, long hoursAgo) {

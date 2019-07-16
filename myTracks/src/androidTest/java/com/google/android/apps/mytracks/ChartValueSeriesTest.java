@@ -15,21 +15,28 @@
  */
 package com.google.android.apps.mytracks;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
+
 import com.google.android.maps.mytracks.R;
 
-import android.test.AndroidTestCase;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.runner.RunWith;
 
 /**
  * Tests {@link ChartValueSeries}.
  * 
  * @author Sandor Dornbush
  */
-public class ChartValueSeriesTest extends AndroidTestCase {
+@RunWith(AndroidJUnit4.class)
+public class ChartValueSeriesTest {
   private ChartValueSeries series;
 
-  @Override
-  protected void setUp() throws Exception {
-    series = new ChartValueSeries(getContext(),
+  @Before
+  protected void setUp() {
+    series = new ChartValueSeries(
+        InstrumentationRegistry.getInstrumentation().getContext(),
         Integer.MIN_VALUE,
         Integer.MAX_VALUE,
         new int[] {100, 1000 },
@@ -40,41 +47,41 @@ public class ChartValueSeriesTest extends AndroidTestCase {
   }
 
   public void testInitialConditions() {
-    assertEquals(1, series.getInterval());
-    assertEquals(0, series.getMinMarkerValue());
-    assertEquals(5, series.getMaxMarkerValue());
-    assertTrue(series.isEnabled());
+    Assert.assertEquals(1, series.getInterval());
+    Assert.assertEquals(0, series.getMinMarkerValue());
+    Assert.assertEquals(5, series.getMaxMarkerValue());
+    Assert.assertTrue(series.isEnabled());
   }
 
   public void testEnabled() {
     series.setEnabled(false);
-    assertFalse(series.isEnabled());
+    Assert.assertFalse(series.isEnabled());
   }
 
   public void testSmallUpdates() {
     series.update(0);
     series.update(10);
     series.updateDimension();
-    assertEquals(100, series.getInterval());
-    assertEquals(0, series.getMinMarkerValue());
-    assertEquals(500, series.getMaxMarkerValue());
+    Assert.assertEquals(100, series.getInterval());
+    Assert.assertEquals(0, series.getMinMarkerValue());
+    Assert.assertEquals(500, series.getMaxMarkerValue());
   }
 
   public void testBigUpdates() {
     series.update(0);
     series.update(901);
     series.updateDimension();
-    assertEquals(1000, series.getInterval());
-    assertEquals(0, series.getMinMarkerValue());
-    assertEquals(5000, series.getMaxMarkerValue());
+    Assert.assertEquals(1000, series.getInterval());
+    Assert.assertEquals(0, series.getMinMarkerValue());
+    Assert.assertEquals(5000, series.getMaxMarkerValue());
   }
 
   public void testNotZeroBasedUpdates() {
     series.update(220);
     series.update(250);
     series.updateDimension();
-    assertEquals(100, series.getInterval());
-    assertEquals(200, series.getMinMarkerValue());
-    assertEquals(700, series.getMaxMarkerValue());
+    Assert.assertEquals(100, series.getInterval());
+    Assert.assertEquals(200, series.getMinMarkerValue());
+    Assert.assertEquals(700, series.getMaxMarkerValue());
   }
 }

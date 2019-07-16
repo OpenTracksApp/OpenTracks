@@ -16,25 +16,31 @@
 
 package com.google.android.apps.mytracks.content;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
+
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
-import android.test.AndroidTestCase;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.runner.RunWith;
 
 /**
  * Tests for {@link DescriptionGeneratorImpl}.
  *
  * @author Jimmy Shih
  */
-public class DescriptionGeneratorImplTest extends AndroidTestCase {
+@RunWith(AndroidJUnit4.class)
+public class DescriptionGeneratorImplTest {
 
   private static final long START_TIME = 1288721514000L;
   private DescriptionGeneratorImpl descriptionGenerator;
 
-  @Override
+  @Before
   protected void setUp() throws Exception {
-    descriptionGenerator = new DescriptionGeneratorImpl(getContext());
+    descriptionGenerator = new DescriptionGeneratorImpl(InstrumentationRegistry.getInstrumentation().getContext());
   }
 
   /**
@@ -75,8 +81,8 @@ public class DescriptionGeneratorImplTest extends AndroidTestCase {
       + "Elevation gain: 6000 m (19685 ft)<br>"
       + "Max grade: 42 %<br>"
       + "Min grade: 11 %<br>"
-      + "Recorded: " + StringUtils.formatDateTime(getContext(), START_TIME) + "<br>";
-    assertEquals(expected, descriptionGenerator.generateTrackDescription(track, null, null, true));
+      + "Recorded: " + StringUtils.formatDateTime(InstrumentationRegistry.getInstrumentation().getContext(), START_TIME) + "<br>";
+    Assert.assertEquals(expected, descriptionGenerator.generateTrackDescription(track, null, null, true));
   }
 
   /**
@@ -110,8 +116,8 @@ public class DescriptionGeneratorImplTest extends AndroidTestCase {
       + "Elevation gain: 6000 m (19685 ft)\n"
       + "Max grade: 42 %\n"
       + "Min grade: 11 %\n"
-      + "Recorded: " + StringUtils.formatDateTime(getContext(), START_TIME) + "\n";
-    assertEquals(
+      + "Recorded: " + StringUtils.formatDateTime(InstrumentationRegistry.getInstrumentation().getContext(), START_TIME) + "\n";
+    Assert.assertEquals(
         expected, descriptionGenerator.generateWaypointDescription(waypoint.getTripStatistics()));
   }
 
@@ -122,7 +128,7 @@ public class DescriptionGeneratorImplTest extends AndroidTestCase {
   public void testWriteDistance() {
     StringBuilder builder = new StringBuilder();
     descriptionGenerator.writeDistance(1100, builder, R.string.description_total_distance, "<br>");
-    assertEquals("Total distance: 1.10 km (0.7 mi)<br>", builder.toString());
+    Assert.assertEquals("Total distance: 1.10 km (0.7 mi)<br>", builder.toString());
   }
 
   /**
@@ -132,7 +138,7 @@ public class DescriptionGeneratorImplTest extends AndroidTestCase {
   public void testWriteTime() {
     StringBuilder builder = new StringBuilder();
     descriptionGenerator.writeTime(1000, builder, R.string.description_total_time, "<br>");
-    assertEquals("Total time: 00:01<br>", builder.toString());
+    Assert.assertEquals("Total time: 00:01<br>", builder.toString());
   }
 
   /**
@@ -142,7 +148,7 @@ public class DescriptionGeneratorImplTest extends AndroidTestCase {
   public void testWriteSpeed() {
     StringBuilder builder = new StringBuilder();
     descriptionGenerator.writeSpeed(1.1, builder, R.string.description_average_speed, "\n");
-    assertEquals("Average speed: 3.96 km/h (2.5 mi/h)\n", builder.toString());
+    Assert.assertEquals("Average speed: 3.96 km/h (2.5 mi/h)\n", builder.toString());
   }
 
   /**
@@ -152,7 +158,7 @@ public class DescriptionGeneratorImplTest extends AndroidTestCase {
   public void testWriteElevation() {
     StringBuilder builder = new StringBuilder();
     descriptionGenerator.writeElevation(4.2, builder, R.string.description_min_elevation, "<br>");
-    assertEquals("Min elevation: 4 m (14 ft)<br>", builder.toString());
+    Assert.assertEquals("Min elevation: 4 m (14 ft)<br>", builder.toString());
   }
 
   /**
@@ -162,7 +168,7 @@ public class DescriptionGeneratorImplTest extends AndroidTestCase {
   public void testWritePace() {
     StringBuilder builder = new StringBuilder();
     descriptionGenerator.writePace(1.1, builder, R.string.description_average_pace_in_minute, "\n");
-    assertEquals("Average pace: 15:09 min/km (24:23 min/mi)\n", builder.toString());
+    Assert.assertEquals("Average pace: 15:09 min/km (24:23 min/mi)\n", builder.toString());
   }
 
   /**
@@ -172,7 +178,7 @@ public class DescriptionGeneratorImplTest extends AndroidTestCase {
   public void testWriteGrade() {
     StringBuilder builder = new StringBuilder();
     descriptionGenerator.writeGrade(.042, builder, R.string.description_max_grade, "<br>");
-    assertEquals("Max grade: 4 %<br>", builder.toString());
+    Assert.assertEquals("Max grade: 4 %<br>", builder.toString());
   }
 
   /**
@@ -182,7 +188,7 @@ public class DescriptionGeneratorImplTest extends AndroidTestCase {
   public void testWriteGrade_nan() {
     StringBuilder builder = new StringBuilder();
     descriptionGenerator.writeGrade(Double.NaN, builder, R.string.description_max_grade, "<br>");
-    assertEquals("Max grade: 0 %<br>", builder.toString());
+    Assert.assertEquals("Max grade: 0 %<br>", builder.toString());
   }
 
   /**
@@ -193,6 +199,6 @@ public class DescriptionGeneratorImplTest extends AndroidTestCase {
     StringBuilder builder = new StringBuilder();
     descriptionGenerator.writeGrade(
         Double.POSITIVE_INFINITY, builder, R.string.description_max_grade, "<br>");
-    assertEquals("Max grade: 0 %<br>", builder.toString());
+    Assert.assertEquals("Max grade: 0 %<br>", builder.toString());
   }
 }
