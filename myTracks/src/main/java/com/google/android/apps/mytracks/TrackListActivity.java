@@ -162,8 +162,7 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
               public void run() {
                 TrackListActivity.this.invalidateOptionsMenu();
                 getSupportLoaderManager().restartLoader(0, null, loaderCallbacks);
-                boolean isRecording = recordingTrackId
-                    != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+                boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
                 trackController.update(isRecording, recordingTrackPaused);
               }
             });

@@ -16,6 +16,31 @@
 
 package com.google.android.apps.mytracks;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ShareActionProvider;
+import android.widget.TabHost;
+import android.widget.TabHost.TabSpec;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.TaskStackBuilder;
+import androidx.core.content.FileProvider;
+import androidx.viewpager.widget.ViewPager;
+
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackDataHub;
@@ -27,7 +52,6 @@ import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragme
 import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller;
 import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment;
 import com.google.android.apps.mytracks.fragments.FrequencyDialogFragment;
-import com.google.android.apps.mytracks.fragments.MarkerDetailFragment;
 import com.google.android.apps.mytracks.fragments.StatsFragment;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
@@ -39,33 +63,6 @@ import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
 import com.google.android.apps.mytracks.util.TrackUtils;
 import com.google.android.maps.mytracks.R;
-
-import android.Manifest;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Bundle;
-import android.provider.MediaStore;
-
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.TaskStackBuilder;
-import androidx.core.content.FileProvider;
-import androidx.viewpager.widget.ViewPager;
-
-import android.util.Log;
-import android.view.ActionProvider;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ShareActionProvider;
-import android.widget.TabHost;
-import android.widget.TabHost.TabSpec;
-import android.widget.Toast;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -102,13 +99,10 @@ public class TrackDetailActivity extends AbstractTrackActivity
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
   private TrackDataHub trackDataHub;
   private TabHost tabHost;
-  private ViewPager viewPager;
-  private TabsAdapter tabsAdapter;
   private TrackController trackController;
 
   // From intent
   private long trackId;
-  private long markerId;
 
   // Preferences
   private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
@@ -216,9 +210,8 @@ public class TrackDetailActivity extends AbstractTrackActivity
     tabHost = findViewById(android.R.id.tabhost);
     tabHost.setup();
 
-    viewPager = findViewById(R.id.pager);
-
-    tabsAdapter = new TabsAdapter(this, tabHost, viewPager);
+    ViewPager viewPager = findViewById(R.id.pager);
+    TabsAdapter tabsAdapter = new TabsAdapter(this, tabHost, viewPager);
 
     TabSpec statsTabSpec = tabHost.newTabSpec(StatsFragment.STATS_FRAGMENT_TAG).setIndicator(getString(R.string.track_detail_stats_tab), getResources().getDrawable(R.drawable.ic_tab_stats));
     tabsAdapter.addTab(statsTabSpec, StatsFragment.class, null);
@@ -469,7 +462,7 @@ public class TrackDetailActivity extends AbstractTrackActivity
    */
   private void handleIntent(Intent intent) {
     trackId = intent.getLongExtra(EXTRA_TRACK_ID, -1L);
-    markerId = intent.getLongExtra(EXTRA_MARKER_ID, -1L);
+    long markerId = intent.getLongExtra(EXTRA_MARKER_ID, -1L);
     if (markerId != -1L) {
       // Use the trackId from the marker
       Waypoint waypoint = myTracksProviderUtils.getWaypoint(markerId);

@@ -16,19 +16,20 @@
 
 package com.google.android.apps.mytracks;
 
+import android.database.Cursor;
+import android.os.Bundle;
+import android.util.Log;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
 import com.google.android.apps.mytracks.fragments.MarkerDetailFragment;
 import com.google.android.maps.mytracks.R;
-
-import android.database.Cursor;
-import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -42,7 +43,6 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
   public static final String EXTRA_MARKER_ID = "marker_id";
   private static final String TAG = MarkerDetailActivity.class.getSimpleName();
 
-  private Waypoint waypoint;
   private ArrayList<Long> markerIds;
 
   @Override
@@ -57,7 +57,7 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
     }
 
     MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
-    waypoint = myTracksProviderUtils.getWaypoint(markerId);
+    Waypoint waypoint = myTracksProviderUtils.getWaypoint(markerId);
 
     markerIds = new ArrayList<>();
     int markerIndex = -1;

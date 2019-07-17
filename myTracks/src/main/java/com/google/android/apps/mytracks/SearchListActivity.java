@@ -16,37 +16,12 @@
 
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.content.SearchEngine;
-import com.google.android.apps.mytracks.content.SearchEngine.ScoredResult;
-import com.google.android.apps.mytracks.content.SearchEngine.SearchQuery;
-import com.google.android.apps.mytracks.content.SearchEngineProvider;
-import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
-import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment;
-import com.google.android.apps.mytracks.fragments.DeleteMarkerDialogFragment;
-import com.google.android.apps.mytracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
-import com.google.android.apps.mytracks.services.MyTracksLocationManager;
-import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
-import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.apps.mytracks.util.IntentUtils;
-import com.google.android.apps.mytracks.util.ListItemUtils;
-import com.google.android.apps.mytracks.util.PreferencesUtils;
-import com.google.android.apps.mytracks.util.StringUtils;
-import com.google.android.apps.mytracks.util.TrackIconUtils;
-import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
-import com.google.android.maps.mytracks.R;
-
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.location.Location;
-import android.location.LocationListener;
 import android.os.Bundle;
-import android.os.Looper;
 import android.provider.SearchRecentSuggestions;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -60,6 +35,27 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.SearchEngine;
+import com.google.android.apps.mytracks.content.SearchEngine.ScoredResult;
+import com.google.android.apps.mytracks.content.SearchEngine.SearchQuery;
+import com.google.android.apps.mytracks.content.SearchEngineProvider;
+import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
+import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment;
+import com.google.android.apps.mytracks.fragments.DeleteMarkerDialogFragment;
+import com.google.android.apps.mytracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
+import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
+import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.IntentUtils;
+import com.google.android.apps.mytracks.util.ListItemUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.apps.mytracks.util.StringUtils;
+import com.google.android.apps.mytracks.util.TrackIconUtils;
+import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
+import com.google.android.maps.mytracks.R;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -171,9 +167,6 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
   private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
   private boolean recordingTrackPaused = PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT;
 
-  // UI elements
-  private ListView listView;
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -185,27 +178,7 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
     searchEngine = new SearchEngine(myTracksProviderUtils);
     searchRecentSuggestions = SearchEngineProvider.newHelper(this);
 
-    listView = findViewById(R.id.search_list);
-    listView.setEmptyView(findViewById(R.id.search_list_empty));
-    listView.setOnItemClickListener(new OnItemClickListener() {
-        @Override
-      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Map<String, Object> item = arrayAdapter.getItem(position);
-        Long trackId = (Long) item.get(TRACK_ID_FIELD);
-        Long markerId = (Long) item.get(MARKER_ID_FIELD);
-        Intent intent;
-        if (markerId != null) {
-          intent = IntentUtils.newIntent(SearchListActivity.this, TrackDetailActivity.class)
-              .putExtra(TrackDetailActivity.EXTRA_MARKER_ID, markerId);
-        } else {
-          intent = IntentUtils.newIntent(SearchListActivity.this, TrackDetailActivity.class)
-              .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);
-        }
-        startActivity(intent);
-      }
-    });
-    arrayAdapter = new ArrayAdapter<Map<String, Object>>(
-        this, R.layout.list_item, R.id.list_item_name) {
+    arrayAdapter = new ArrayAdapter<Map<String, Object>>(this, R.layout.list_item, R.id.list_item_name) {
         @Override
       public View getView(int position, View convertView, android.view.ViewGroup parent) {
         View view;
@@ -234,7 +207,27 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
         return view;
       }
     };
+    // UI elements
+    ListView listView = findViewById(R.id.search_list);
     listView.setAdapter(arrayAdapter);
+    listView.setEmptyView(findViewById(R.id.search_list_empty));
+    listView.setOnItemClickListener(new OnItemClickListener() {
+      @Override
+      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Map<String, Object> item = arrayAdapter.getItem(position);
+        Long trackId = (Long) item.get(TRACK_ID_FIELD);
+        Long markerId = (Long) item.get(MARKER_ID_FIELD);
+        Intent intent;
+        if (markerId != null) {
+          intent = IntentUtils.newIntent(SearchListActivity.this, TrackDetailActivity.class)
+                  .putExtra(TrackDetailActivity.EXTRA_MARKER_ID, markerId);
+        } else {
+          intent = IntentUtils.newIntent(SearchListActivity.this, TrackDetailActivity.class)
+                  .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);
+        }
+        startActivity(intent);
+      }
+    });
     AbstractTrackActivity.configureListViewContextualMenu(this, listView, contextualActionModeCallback);
     handleIntent(getIntent());
   }

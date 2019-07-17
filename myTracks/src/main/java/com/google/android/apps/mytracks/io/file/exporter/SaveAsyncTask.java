@@ -16,6 +16,12 @@
 
 package com.google.android.apps.mytracks.io.file.exporter;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.os.AsyncTask;
+import android.os.PowerManager.WakeLock;
+import android.util.Log;
+
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
@@ -24,12 +30,6 @@ import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.maps.mytracks.R;
-
-import android.content.Context;
-import android.database.Cursor;
-import android.os.AsyncTask;
-import android.os.PowerManager.WakeLock;
-import android.util.Log;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -54,7 +54,6 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   private final MyTracksProviderUtils myTracksProviderUtils;
 
   private WakeLock wakeLock;
-  private TrackExporter trackExporter;
 
   // true if the AsyncTask has completed
   private boolean completed;
@@ -78,8 +77,7 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
    * @param playTrack true to play track
    * @param directory the directory to write the file
    */
-  public SaveAsyncTask(SaveActivity saveActivity, long[] trackIds, TrackFileFormat trackFileFormat,
-      boolean playTrack, File directory) {
+  public SaveAsyncTask(SaveActivity saveActivity, long[] trackIds, TrackFileFormat trackFileFormat, boolean playTrack, File directory) {
     this.saveActivity = saveActivity;
     this.trackIds = trackIds;
     this.trackFileFormat = trackFileFormat;
@@ -203,9 +201,7 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
           }
         });
 
-    trackExporter = useKmz ? new KmzTrackExporter(
-        myTracksProviderUtils, fileTrackExporter, tracks, context)
-        : fileTrackExporter;
+    TrackExporter trackExporter = useKmz ? new KmzTrackExporter(myTracksProviderUtils, fileTrackExporter, tracks, context) : fileTrackExporter;
 
     String fileName = FileUtils.buildUniqueFileName(directory, track.getName(), extension);
     File file = new File(directory, fileName);

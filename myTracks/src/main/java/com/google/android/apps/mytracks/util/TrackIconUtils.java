@@ -16,14 +16,11 @@
 
 package com.google.android.apps.mytracks.util;
 
-import com.google.android.maps.mytracks.R;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.Drawable;
-import androidx.annotation.NonNull;
 import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,6 +28,10 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.maps.mytracks.R;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -184,7 +185,7 @@ public class TrackIconUtils {
         @Override
       public View getView(int position, View convertView, @NonNull android.view.ViewGroup parent) {
         ImageView imageView = convertView != null ? (ImageView) convertView : new ImageView(getContext());
-        Bitmap source = BitmapFactory.decodeResource(context.getResources(), TrackIconUtils.getIconDrawable(getItem(position).toString()));
+        Bitmap source = BitmapFactory.decodeResource(context.getResources(), TrackIconUtils.getIconDrawable(getItem(position) + ""));
         imageView.setImageBitmap(source);
         imageView.setPadding(4, 4, -4, -4);
         return imageView;

@@ -604,8 +604,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     String[] projection = new String[] { "count(*) AS count" };
     String selection = WaypointsColumns.TRACKID + "=?";
     String[] selectionArgs = new String[] { Long.toString(trackId) };
-    Cursor cursor = contentResolver.query(
-        WaypointsColumns.CONTENT_URI, projection, selection, selectionArgs, WaypointsColumns._ID);
+    Cursor cursor = contentResolver.query(WaypointsColumns.CONTENT_URI, projection, selection, selectionArgs, WaypointsColumns._ID);
 
     cursor.moveToFirst();
     int count = cursor.getInt(0);
@@ -1079,17 +1078,17 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
    * A cache of track points indexes.
    */
   private static class CachedTrackPointsIndexes {
-    public final int idIndex;
-    public final int longitudeIndex;
-    public final int latitudeIndex;
-    public final int timeIndex;
-    public final int altitudeIndex;
-    public final int accuracyIndex;
-    public final int speedIndex;
-    public final int bearingIndex;
-    public final int sensorIndex;
+    final int idIndex;
+    final int longitudeIndex;
+    final int latitudeIndex;
+    final int timeIndex;
+    final int altitudeIndex;
+    final int accuracyIndex;
+    final int speedIndex;
+    final int bearingIndex;
+    final int sensorIndex;
 
-    public CachedTrackPointsIndexes(Cursor cursor) {
+    CachedTrackPointsIndexes(Cursor cursor) {
       idIndex = cursor.getColumnIndex(TrackPointsColumns._ID);
       longitudeIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.LONGITUDE);
       latitudeIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.LATITUDE);

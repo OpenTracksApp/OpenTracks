@@ -27,12 +27,13 @@ import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import androidx.annotation.VisibleForTesting;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.Scroller;
+
+import androidx.annotation.VisibleForTesting;
 
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.stats.ExtremityMonitor;
@@ -90,11 +91,8 @@ public class ChartView extends View {
   private final Paint axisPaint;
   private final Paint xAxisMarkerPaint;
   private final Paint gridPaint;
-  private final Paint markerPaint;
 
   private final Drawable pointer;
-  private final Drawable statisticsMarker;
-  private final Drawable waypointMarker;
   private final int markerWidth;
   private final int markerHeight;
 
@@ -194,7 +192,7 @@ public class ChartView extends View {
     gridPaint.setAntiAlias(false);
     gridPaint.setPathEffect(new DashPathEffect(new float[] { 3, 2 }, 0));
 
-    markerPaint = new Paint();
+    Paint markerPaint = new Paint();
     markerPaint.setStyle(Style.STROKE);
     markerPaint.setColor(context.getResources().getColor(android.R.color.darker_gray));
     markerPaint.setAntiAlias(false);
@@ -202,12 +200,12 @@ public class ChartView extends View {
     pointer = context.getResources().getDrawable(R.drawable.ic_arrow_180);
     pointer.setBounds(0, 0, pointer.getIntrinsicWidth(), pointer.getIntrinsicHeight());
 
-    statisticsMarker = getResources().getDrawable(R.drawable.ic_marker_yellow_pushpin);
+    Drawable statisticsMarker = getResources().getDrawable(R.drawable.ic_marker_yellow_pushpin);
     markerWidth = statisticsMarker.getIntrinsicWidth();
     markerHeight = statisticsMarker.getIntrinsicHeight();
     statisticsMarker.setBounds(0, 0, markerWidth, markerHeight);
 
-    waypointMarker = getResources().getDrawable(R.drawable.ic_marker_blue_pushpin);
+    Drawable waypointMarker = getResources().getDrawable(R.drawable.ic_marker_blue_pushpin);
     waypointMarker.setBounds(0, 0, markerWidth, markerHeight);
 
     scroller = new Scroller(context);

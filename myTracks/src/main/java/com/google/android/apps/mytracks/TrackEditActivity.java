@@ -16,16 +16,6 @@
 
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment;
-import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller;
-import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
-import com.google.android.apps.mytracks.util.TrackIconUtils;
-import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
-import com.google.android.apps.mytracks.util.TrackUtils;
-import com.google.android.maps.mytracks.R;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -37,6 +27,16 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment;
+import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller;
+import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
+import com.google.android.apps.mytracks.util.TrackIconUtils;
+import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
+import com.google.android.apps.mytracks.util.TrackUtils;
+import com.google.android.maps.mytracks.R;
 
 /**
  * An activity that let's the user see and edit the user editable track meta
@@ -52,7 +52,6 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
   private static final String TAG = TrackEditActivity.class.getSimpleName();
   private static final String ICON_VALUE_KEY = "icon_value_key";
 
-  private Long trackId;
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
   private MyTracksProviderUtils myTracksProviderUtils;
   private Track track;
@@ -68,7 +67,7 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
     super.onCreate(bundle);
 
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
-    trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1L);
+    Long trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1L);
     if (trackId == -1L) {
       Log.e(TAG, "invalid trackId");
       finish();

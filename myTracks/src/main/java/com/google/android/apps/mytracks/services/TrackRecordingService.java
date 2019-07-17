@@ -152,11 +152,8 @@ public class TrackRecordingService extends Service {
                     recordingTrackId = trackId;
                 }
             }
-            if (key == null || key.equals(
-                    PreferencesUtils.getKey(context, R.string.recording_track_paused_key))) {
-                recordingTrackPaused = PreferencesUtils.getBoolean(context,
-                        R.string.recording_track_paused_key,
-                        PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+            if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.recording_track_paused_key))) {
+                recordingTrackPaused = PreferencesUtils.getBoolean(context, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
             }
             if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.stats_units_key))) {
                 boolean metricUnits = PreferencesUtils.isMetricUnits(context);
@@ -164,12 +161,10 @@ public class TrackRecordingService extends Service {
                 splitExecutor.setMetricUnits(metricUnits);
             }
             if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.voice_frequency_key))) {
-                voiceExecutor.setTaskFrequency(PreferencesUtils.getInt(
-                        context, R.string.voice_frequency_key, PreferencesUtils.VOICE_FREQUENCY_DEFAULT));
+                voiceExecutor.setTaskFrequency(PreferencesUtils.getInt(context, R.string.voice_frequency_key, PreferencesUtils.VOICE_FREQUENCY_DEFAULT));
             }
             if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.split_frequency_key))) {
-                splitExecutor.setTaskFrequency(PreferencesUtils.getInt(
-                        context, R.string.split_frequency_key, PreferencesUtils.SPLIT_FREQUENCY_DEFAULT));
+                splitExecutor.setTaskFrequency(PreferencesUtils.getInt(context, R.string.split_frequency_key, PreferencesUtils.SPLIT_FREQUENCY_DEFAULT));
             }
             if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.min_recording_interval_key))) {
                 int minRecordingInterval = PreferencesUtils.getInt(context, R.string.min_recording_interval_key, PreferencesUtils.MIN_RECORDING_INTERVAL_DEFAULT);

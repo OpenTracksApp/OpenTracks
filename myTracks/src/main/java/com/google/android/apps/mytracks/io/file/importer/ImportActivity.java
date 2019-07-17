@@ -16,13 +16,6 @@
 
 package com.google.android.apps.mytracks.io.file.importer;
 
-import com.google.android.apps.mytracks.TrackDetailActivity;
-import com.google.android.apps.mytracks.io.file.TrackFileFormat;
-import com.google.android.apps.mytracks.util.DialogUtils;
-import com.google.android.apps.mytracks.util.FileUtils;
-import com.google.android.apps.mytracks.util.IntentUtils;
-import com.google.android.maps.mytracks.R;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -31,9 +24,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.core.app.TaskStackBuilder;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.core.app.TaskStackBuilder;
+
+import com.google.android.apps.mytracks.TrackDetailActivity;
+import com.google.android.apps.mytracks.io.file.TrackFileFormat;
+import com.google.android.apps.mytracks.util.DialogUtils;
+import com.google.android.apps.mytracks.util.FileUtils;
+import com.google.android.apps.mytracks.util.IntentUtils;
+import com.google.android.maps.mytracks.R;
 
 import java.io.File;
 
@@ -56,7 +57,6 @@ public class ImportActivity extends Activity {
   private ProgressDialog progressDialog;
 
   private boolean importAll;
-  private TrackFileFormat trackFileFormat;
 
   // the path on the external storage to import
   private String directoryDisplayName;
@@ -76,7 +76,7 @@ public class ImportActivity extends Activity {
 
     Intent intent = getIntent();
     importAll = intent.getBooleanExtra(EXTRA_IMPORT_ALL, false);
-    trackFileFormat = intent.getParcelableExtra(EXTRA_TRACK_FILE_FORMAT);
+    TrackFileFormat trackFileFormat = intent.getParcelableExtra(EXTRA_TRACK_FILE_FORMAT);
     if (trackFileFormat == null) {
       trackFileFormat = TrackFileFormat.GPX;
     }
@@ -88,8 +88,7 @@ public class ImportActivity extends Activity {
     }
     String directoryPath;
     if (importAll) {
-      directoryDisplayName = FileUtils.getPathDisplayName(
-          trackFileFormat.getExtension());
+      directoryDisplayName = FileUtils.getPathDisplayName(trackFileFormat.getExtension());
       directoryPath = FileUtils.getPath(trackFileFormat.getExtension());
       if (!FileUtils.isDirectory(new File(directoryPath))) {
         Toast.makeText(

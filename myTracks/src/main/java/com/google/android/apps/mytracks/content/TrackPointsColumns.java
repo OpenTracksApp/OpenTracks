@@ -16,11 +16,6 @@
 
 package com.google.android.apps.mytracks.content;
 
-import static com.google.android.apps.mytracks.content.ContentTypeIds.BLOB_TYPE_ID;
-import static com.google.android.apps.mytracks.content.ContentTypeIds.FLOAT_TYPE_ID;
-import static com.google.android.apps.mytracks.content.ContentTypeIds.INT_TYPE_ID;
-import static com.google.android.apps.mytracks.content.ContentTypeIds.LONG_TYPE_ID;
-
 import android.net.Uri;
 import android.provider.BaseColumns;
 
@@ -38,15 +33,15 @@ public interface TrackPointsColumns extends BaseColumns {
   String DEFAULT_SORT_ORDER = "_id";
 
   // Columns
-  String TRACKID = "trackid"; // track id
-  String LONGITUDE = "longitude"; // longitude
-  String LATITUDE = "latitude"; // latitude
-  String TIME = "time"; // time
-  String ALTITUDE = "elevation"; // altitude
-  String ACCURACY = "accuracy"; // accuracy
-  String SPEED = "speed"; // speed
-  String BEARING = "bearing"; // bearing
-  String SENSOR = "sensor"; // sensor
+  String TRACKID = "trackid";
+  String LONGITUDE = "longitude";
+  String LATITUDE = "latitude";
+  String TIME = "time";
+  String ALTITUDE = "elevation";
+  String ACCURACY = "accuracy";
+  String SPEED = "speed";
+  String BEARING = "bearing";
+  String SENSOR = "sensor";
 
   String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
       + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -60,30 +55,4 @@ public interface TrackPointsColumns extends BaseColumns {
       + BEARING + " FLOAT, "
       + SENSOR + " BLOB" 
       + ");";
-
-  String[] COLUMNS = {
-      _ID,
-      TRACKID,
-      LONGITUDE,
-      LATITUDE,
-      TIME,
-      ALTITUDE,
-      ACCURACY,
-      SPEED,
-      BEARING,
-      SENSOR
-   };
-
-   byte[] COLUMN_TYPES = {
-       LONG_TYPE_ID, // id
-       LONG_TYPE_ID, // track id
-       INT_TYPE_ID, // longitude
-       INT_TYPE_ID, // latitude
-       LONG_TYPE_ID, // time
-       FLOAT_TYPE_ID, // altitude
-       FLOAT_TYPE_ID, // accuracy
-       FLOAT_TYPE_ID, // speed
-       FLOAT_TYPE_ID, // bearing
-       BLOB_TYPE_ID // sensor
-   };
 }
