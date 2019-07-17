@@ -23,8 +23,6 @@ import android.os.Parcelable;
 
 import com.google.android.apps.mytracks.stats.TripStatistics;
 
-import java.net.URI;
-
 /**
  * A waypoint.
  * 

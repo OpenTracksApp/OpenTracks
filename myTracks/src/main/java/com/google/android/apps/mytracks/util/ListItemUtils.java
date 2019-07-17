@@ -21,7 +21,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.text.format.DateUtils;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -75,8 +74,7 @@ public class ListItemUtils {
     textGradient.setVisibility(hasPhoto ? View.VISIBLE : View.GONE);
 
     if (hasPhoto) {
-      int photoHeight = getPhotoHeight(activity);
-      photo.getLayoutParams().height = photoHeight;
+      photo.getLayoutParams().height = getPhotoHeight(activity);
       photo.setImageResource(android.R.color.transparent);
       photo.setImageURI(Uri.parse(photoUrl));
     }

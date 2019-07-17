@@ -48,6 +48,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.cursoradapter.widget.ResourceCursorAdapter;
+import androidx.loader.app.LoaderManager;
 import androidx.loader.app.LoaderManager.LoaderCallbacks;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
@@ -161,7 +162,7 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
                 @Override
               public void run() {
                 TrackListActivity.this.invalidateOptionsMenu();
-                getSupportLoaderManager().restartLoader(0, null, loaderCallbacks);
+                LoaderManager.getInstance(TrackListActivity.this).restartLoader(0, null, loaderCallbacks);
                 boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
                 trackController.update(isRecording, recordingTrackPaused);
               }
@@ -230,12 +231,12 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
     }
 
       @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
       resourceCursorAdapter.swapCursor(cursor);
     }
 
       @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
+    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
       resourceCursorAdapter.swapCursor(null);
     }
   };
@@ -339,9 +340,9 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
       }
     };
     listView.setAdapter(resourceCursorAdapter);
-    AbstractTrackActivity.configureListViewContextualMenu(this, listView, contextualActionModeCallback);
+    AbstractTrackActivity.configureListViewContextualMenu(listView, contextualActionModeCallback);
 
-    getSupportLoaderManager().initLoader(0, null, loaderCallbacks);
+    LoaderManager.getInstance(this).initLoader(0, null, loaderCallbacks);
     showStartupDialogs();
   }
 
@@ -365,7 +366,7 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
     
     // Update UI
     this.invalidateOptionsMenu();
-    getSupportLoaderManager().restartLoader(0, null, loaderCallbacks);
+    LoaderManager.getInstance(this).restartLoader(0, null, loaderCallbacks);
     boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
     trackController.onResume(isRecording, recordingTrackPaused);
   }
@@ -432,7 +433,7 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
     updateMenuItems(isGpsStarted, isRecording);
 
     View searchView = searchMenuItem.getActionView();
-    if (searchView != null && searchView instanceof  SearchView) {
+    if (searchView instanceof SearchView) {
       ((SearchView) searchView).setQuery("", false);
     }
     return super.onPrepareOptionsMenu(menu);

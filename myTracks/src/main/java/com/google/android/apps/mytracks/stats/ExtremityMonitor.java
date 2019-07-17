@@ -16,6 +16,8 @@
 
 package com.google.android.apps.mytracks.stats;
 
+import androidx.annotation.NonNull;
+
 /**
  * A helper class that tracks a minimum and a maximum of a variable.
  * 
@@ -110,6 +112,7 @@ public class ExtremityMonitor {
     return min != Double.POSITIVE_INFINITY && max != Double.NEGATIVE_INFINITY;
   }
 
+  @NonNull
   @Override
   public String toString() {
     return "Min: " + min + " Max: " + max;

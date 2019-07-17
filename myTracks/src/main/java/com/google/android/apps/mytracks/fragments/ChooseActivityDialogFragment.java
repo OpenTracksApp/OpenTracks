@@ -16,26 +16,27 @@
 
 package com.google.android.apps.mytracks.fragments;
 
-import com.google.android.apps.mytracks.util.IntentUtils;
-import com.google.android.maps.mytracks.R;
-
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
-import androidx.core.app.ShareCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ShareCompat;
+import androidx.fragment.app.FragmentActivity;
+
+import com.google.android.apps.mytracks.util.IntentUtils;
+import com.google.android.maps.mytracks.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -68,19 +69,16 @@ public class ChooseActivityDialogFragment extends AbstractMyTracksDialogFragment
     ImageView icon;
   }
 
-  public static final String CHOOSE_ACTIVITY_DIALOG_TAG = "chooseActivityDialog";
-
   private ChooseActivityCaller caller;
   private PackageManager packageManager;
   
   @Override
-  public void onAttach(Activity activity) {
-    super.onAttach(activity);
+  public void onAttach(Context context) {
+    super.onAttach(context);
     try {
-      caller = (ChooseActivityCaller) activity;
+      caller = (ChooseActivityCaller) context;
     } catch (ClassCastException e) {
-      throw new ClassCastException(
-          activity.toString() + " must implement " + ChooseActivityCaller.class.getSimpleName());
+      throw new ClassCastException(context + " must implement " + ChooseActivityCaller.class.getSimpleName());
     }
   }
   

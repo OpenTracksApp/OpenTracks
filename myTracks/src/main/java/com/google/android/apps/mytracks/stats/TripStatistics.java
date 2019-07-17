@@ -19,6 +19,8 @@ package com.google.android.apps.mytracks.stats;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+
 /**
  * Statistical data about a trip. The data in this class should be filled out by
  * TripStatisticsBuilder.
@@ -477,6 +479,7 @@ public class TripStatistics implements Parcelable {
     gradeExtremities.update(grade);
   }
 
+  @NonNull
   @Override
   public String toString() {
     return "TripStatistics { Start Time: " + getStartTime() + "; Stop Time: " + getStopTime()

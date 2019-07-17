@@ -20,11 +20,12 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
-import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
-import androidx.annotation.VisibleForTesting;
+import android.speech.tts.UtteranceProgressListener;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+
+import androidx.annotation.VisibleForTesting;
 
 import com.google.android.apps.mytracks.services.TrackRecordingService;
 import com.google.android.apps.mytracks.stats.TripStatistics;
@@ -33,7 +34,6 @@ import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
-import java.util.HashMap;
 import java.util.Locale;
 
 /**
@@ -51,22 +51,23 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
 
   private static final String TAG = AnnouncementPeriodicTask.class.getSimpleName();
   
-  @VisibleForTesting
-  static final HashMap<String, String> SPEECH_PARAMS = new HashMap<>();
-  static {
-    SPEECH_PARAMS.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "not_used");
-  }
+  private final UtteranceProgressListener utteranceListener = new UtteranceProgressListener() {
+    @Override
+    public void onStart(String utteranceId) {
+    }
 
-  private final OnUtteranceCompletedListener
-      utteranceListener = new OnUtteranceCompletedListener() {
-          @Override
-        public void onUtteranceCompleted(String utteranceId) {
-          int result = audioManager.abandonAudioFocus(null);
-          if (result == AudioManager.AUDIOFOCUS_REQUEST_FAILED) {
-            Log.w(TAG, "Failed to relinquish audio focus.");
-          }
-        }
-      };
+    @Override
+    public void onDone(String utteranceId) {
+      int result = audioManager.abandonAudioFocus(null);
+      if (result == AudioManager.AUDIOFOCUS_REQUEST_FAILED) {
+        Log.w(TAG, "Failed to relinquish audio focus.");
+      }
+    }
+
+    @Override
+    public void onError(String utteranceId) {
+    }
+  };
 
   private final Context context;
   private TextToSpeech tts;
@@ -186,7 +187,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
     // Slow down the speed just a bit as it is hard to hear when exercising.
     tts.setSpeechRate(TTS_SPEECH_RATE);
 
-    tts.setOnUtteranceCompletedListener(utteranceListener);
+    tts.setOnUtteranceProgressListener(utteranceListener);
   }
 
   /**
@@ -205,7 +206,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
      * We don't care about the utterance id. It is supplied here to force
      * onUtteranceCompleted to be called.
      */
-    tts.speak(announcement, TextToSpeech.QUEUE_FLUSH, SPEECH_PARAMS);
+    tts.speak(announcement, TextToSpeech.QUEUE_FLUSH, null, "not used");
   }
 
   /**

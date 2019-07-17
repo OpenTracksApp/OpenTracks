@@ -16,19 +16,10 @@
 
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment;
-import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment.ConfirmDeleteCaller;
-import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
-import com.google.android.apps.mytracks.util.IntentUtils;
-import com.google.android.apps.mytracks.util.PreferencesUtils;
-import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
-import com.google.android.maps.mytracks.R;
-
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -37,6 +28,14 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.SearchView;
+
+import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment;
+import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment.ConfirmDeleteCaller;
+import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
+import com.google.android.apps.mytracks.util.IntentUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
+import com.google.android.maps.mytracks.R;
 
 import java.util.ArrayList;
 
@@ -64,8 +63,7 @@ public abstract class AbstractTrackActivity extends AbstractActivity implements 
       }
   }
 
-  public static void configureListViewContextualMenu(final Activity activity, final ListView listView,
-                                                     final ContextualActionModeCallback contextualActionModeCallback) {
+  public static void configureListViewContextualMenu(final ListView listView, final ContextualActionModeCallback contextualActionModeCallback) {
     listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
     listView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
 

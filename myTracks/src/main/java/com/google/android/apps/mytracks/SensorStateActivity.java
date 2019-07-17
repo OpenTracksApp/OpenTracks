@@ -16,6 +16,12 @@
 
 package com.google.android.apps.mytracks;
 
+import android.os.Bundle;
+import android.os.Handler;
+import android.text.format.DateFormat;
+import android.util.Log;
+import android.widget.TextView;
+
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
@@ -26,13 +32,6 @@ import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtil
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 import com.google.protobuf.InvalidProtocolBufferException;
-
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.RemoteException;
-import android.text.format.DateFormat;
-import android.util.Log;
-import android.widget.TextView;
 
 /**
  * An activity that displays information about sensors.

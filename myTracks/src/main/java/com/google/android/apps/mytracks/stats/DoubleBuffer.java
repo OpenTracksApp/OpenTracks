@@ -16,6 +16,8 @@
 
 package com.google.android.apps.mytracks.stats;
 
+import androidx.annotation.NonNull;
+
 /**
  * This class maintains a buffer of doubles. This buffer is a convenient class
  * for storing a series of doubles and calculating information about them. This
@@ -118,6 +120,7 @@ public class DoubleBuffer {
     }
   }
 
+  @NonNull
   @Override
   public String toString() {
     StringBuilder builder = new StringBuilder("Full: ");

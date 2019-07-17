@@ -16,13 +16,13 @@
 
 package com.google.android.apps.mytracks.fragments;
 
-import com.google.android.apps.mytracks.util.DialogUtils;
-import com.google.android.maps.mytracks.R;
-
-import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+
+import com.google.android.apps.mytracks.util.DialogUtils;
+import com.google.android.maps.mytracks.R;
 
 /**
  * A DialogFragment to confirm delete.
@@ -68,13 +68,12 @@ public class ConfirmDeleteDialogFragment extends AbstractMyTracksDialogFragment 
   private ConfirmDeleteCaller caller;
 
   @Override
-  public void onAttach(Activity activity) {
-    super.onAttach(activity);
+  public void onAttach(Context context) {
+    super.onAttach(context);
     try {
-      caller = (ConfirmDeleteCaller) activity;
+      caller = (ConfirmDeleteCaller) context;
     } catch (ClassCastException e) {
-      throw new ClassCastException(
-          activity.toString() + " must implement " + ConfirmDeleteCaller.class.getSimpleName());
+      throw new ClassCastException(context + " must implement " + ConfirmDeleteCaller.class.getSimpleName());
     }
   }
 

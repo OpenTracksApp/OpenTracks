@@ -15,14 +15,14 @@
  */
 package com.google.android.apps.mytracks.util;
 
-import com.google.android.maps.mytracks.R;
-
 import android.content.Context;
 import android.location.Location;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
+
+import com.google.android.maps.mytracks.R;
 
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
@@ -152,11 +152,7 @@ public class StringUtils {
   }
 
   public static String formatDecimal(double value) {
-    return formatDecimal(value, 2);
-  }
-  
-  private static String formatDecimal(double value, int precision) {
-    String result = String.format(Locale.getDefault(), "%1$,." + precision + "f", value);
+    String result = String.format(Locale.getDefault(), "%1$,.2f", value);
     return result.replaceAll("[0]*$", "").replaceAll("\\.$", "");
   }
 

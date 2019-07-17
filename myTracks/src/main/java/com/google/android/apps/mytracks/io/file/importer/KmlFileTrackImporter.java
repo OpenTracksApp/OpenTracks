@@ -16,21 +16,22 @@
 
 package com.google.android.apps.mytracks.io.file.importer;
 
+import android.content.Context;
+import android.location.Location;
+import android.net.Uri;
+
+import androidx.annotation.VisibleForTesting;
+
 import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 
-import android.content.Context;
-import android.location.Location;
-import android.net.Uri;
-import androidx.annotation.VisibleForTesting;
-
-import java.util.ArrayList;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
+
+import java.util.ArrayList;
 
 /**
  * Imports a KML file.
@@ -288,8 +289,6 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
 
   /**
    * On sensor data start. gx:SimpleArrayData start tag.
-   * 
-   * @param attributes
    */
   private void onSensorDataStart(Attributes attributes) {
     sensorName = attributes.getValue(ATTRIBUTE_NAME);

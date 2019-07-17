@@ -16,12 +16,6 @@
 
 package com.google.android.apps.mytracks.content;
 
-import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
-import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
-import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.apps.mytracks.util.FileUtils;
-import com.google.protobuf.InvalidProtocolBufferException;
-
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -29,6 +23,12 @@ import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
 import android.util.Log;
+
+import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
+import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
+import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.FileUtils;
+import com.google.protobuf.InvalidProtocolBufferException;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -312,10 +312,8 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
    * @param selectionArgs the selection arguments
    * @param sortOrder the sort oder
    */
-  private Cursor getTrackCursor(
-      String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-    return contentResolver.query(
-        TracksColumns.CONTENT_URI, projection, selection, selectionArgs, sortOrder);
+  private Cursor getTrackCursor(String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+    return contentResolver.query(TracksColumns.CONTENT_URI, projection, selection, selectionArgs, sortOrder);
   }
 
   @Override

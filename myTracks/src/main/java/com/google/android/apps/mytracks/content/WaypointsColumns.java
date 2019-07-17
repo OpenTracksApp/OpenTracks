@@ -16,11 +16,6 @@
 
 package com.google.android.apps.mytracks.content;
 
-import static com.google.android.apps.mytracks.content.ContentTypeIds.FLOAT_TYPE_ID;
-import static com.google.android.apps.mytracks.content.ContentTypeIds.INT_TYPE_ID;
-import static com.google.android.apps.mytracks.content.ContentTypeIds.LONG_TYPE_ID;
-import static com.google.android.apps.mytracks.content.ContentTypeIds.STRING_TYPE_ID;
-
 import android.net.Uri;
 import android.provider.BaseColumns;
 

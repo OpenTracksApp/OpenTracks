@@ -33,6 +33,7 @@ import android.os.ParcelFileDescriptor;
 import android.text.TextUtils;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 import com.google.android.apps.mytracks.util.FileUtils;
@@ -129,7 +130,7 @@ public class MyTracksProvider extends ContentProvider {
   }
 
   @Override
-  public int delete(Uri url, String where, String[] selectionArgs) {
+  public int delete(@NonNull Uri url, String where, String[] selectionArgs) {
     String table;
     boolean shouldVacuum = false;
     switch (getUrlType(url)) {
@@ -167,7 +168,7 @@ public class MyTracksProvider extends ContentProvider {
   }
 
   @Override
-  public String getType(Uri url) {
+  public String getType(@NonNull Uri url) {
     switch (getUrlType(url)) {
       case TRACKPOINTS:
         return TrackPointsColumns.CONTENT_TYPE;
@@ -187,7 +188,7 @@ public class MyTracksProvider extends ContentProvider {
   }
 
   @Override
-  public Uri insert(Uri url, ContentValues initialValues) {
+  public Uri insert(@NonNull Uri url, ContentValues initialValues) {
     if (initialValues == null) {
       initialValues = new ContentValues();
     }
@@ -204,7 +205,7 @@ public class MyTracksProvider extends ContentProvider {
   }
 
   @Override
-  public int bulkInsert(Uri url, ContentValues[] valuesBulk) {
+  public int bulkInsert(@NonNull Uri url, @NonNull ContentValues[] valuesBulk) {
     int numInserted;
     try {
       // Use a transaction in order to make the insertions run as a single batch
@@ -227,7 +228,7 @@ public class MyTracksProvider extends ContentProvider {
   }
 
   @Override
-  public Cursor query(Uri url, String[] projection, String selection, String[] selectionArgs, String sort) {
+  public Cursor query(@NonNull Uri url, String[] projection, String selection, String[] selectionArgs, String sort) {
     SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
     String sortOrder = null;
     switch (getUrlType(url)) {
@@ -264,7 +265,7 @@ public class MyTracksProvider extends ContentProvider {
   }
 
   @Override
-  public int update(Uri url, ContentValues values, String where, String[] selectionArgs) {
+  public int update(@NonNull Uri url, ContentValues values, String where, String[] selectionArgs) {
     String table;
     String whereClause;
     switch (getUrlType(url)) {
@@ -317,7 +318,7 @@ public class MyTracksProvider extends ContentProvider {
   }
 
   @Override
-  public ParcelFileDescriptor openFile(Uri uri, String mode) throws FileNotFoundException {
+  public ParcelFileDescriptor openFile(@NonNull Uri uri, @NonNull String mode) throws FileNotFoundException {
     try {
       File file = new File(uri.getPath());
       if (file.exists()) {

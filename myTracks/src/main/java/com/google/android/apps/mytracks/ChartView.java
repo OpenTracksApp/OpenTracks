@@ -33,8 +33,6 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.Scroller;
 
-import androidx.annotation.VisibleForTesting;
-
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.stats.ExtremityMonitor;
 import com.google.android.apps.mytracks.util.IntentUtils;
@@ -649,18 +647,15 @@ public class ChartView extends View {
   /**
    * Draws a x axis marker.
    * 
-   * @param canvas
+   * @param canvas canvas
    * @param value value
    * @param numberFormat the number format
    * @param spacing the spacing between x axis and marker
    */
-  private void drawXAxisMarker(
-      Canvas canvas, double value, NumberFormat numberFormat, int spacing) {
-    String marker = chartByDistance ? numberFormat.format(value)
-        : StringUtils.formatElapsedTime((long) value);
+  private void drawXAxisMarker(Canvas canvas, double value, NumberFormat numberFormat, int spacing) {
+    String marker = chartByDistance ? numberFormat.format(value) : StringUtils.formatElapsedTime((long) value);
     Rect rect = getRect(xAxisMarkerPaint, marker);
-    canvas.drawText(marker, getX(value), topBorder + effectiveHeight + spacing + rect.height(),
-        xAxisMarkerPaint);
+    canvas.drawText(marker, getX(value), topBorder + effectiveHeight + spacing + rect.height(), xAxisMarkerPaint);
   }
 
   /**
@@ -980,15 +975,5 @@ public class ChartView extends View {
       default:
         return false;
     }
-  }
-  
-  /**
-   * Returns the status of metricUnits.
-   * 
-   * @return the status of metricUnits
-   */
-  @VisibleForTesting
-  public boolean isMetricUnits() {
-    return metricUnits;
   }
 }

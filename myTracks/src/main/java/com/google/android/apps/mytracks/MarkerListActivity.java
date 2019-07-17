@@ -16,27 +16,12 @@
 
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
-import com.google.android.apps.mytracks.content.WaypointsColumns;
-import com.google.android.apps.mytracks.fragments.DeleteMarkerDialogFragment;
-import com.google.android.apps.mytracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
-import com.google.android.apps.mytracks.util.IntentUtils;
-import com.google.android.apps.mytracks.util.ListItemUtils;
-import com.google.android.apps.mytracks.util.PreferencesUtils;
-import com.google.android.maps.mytracks.R;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.os.Bundle;
-import androidx.loader.app.LoaderManager.LoaderCallbacks;
-import androidx.loader.content.CursorLoader;
-import androidx.loader.content.Loader;
-import androidx.cursoradapter.widget.ResourceCursorAdapter;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -48,6 +33,24 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+
+import androidx.annotation.NonNull;
+import androidx.cursoradapter.widget.ResourceCursorAdapter;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.app.LoaderManager.LoaderCallbacks;
+import androidx.loader.content.CursorLoader;
+import androidx.loader.content.Loader;
+
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
+import com.google.android.apps.mytracks.content.WaypointsColumns;
+import com.google.android.apps.mytracks.fragments.DeleteMarkerDialogFragment;
+import com.google.android.apps.mytracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
+import com.google.android.apps.mytracks.util.IntentUtils;
+import com.google.android.apps.mytracks.util.ListItemUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.maps.mytracks.R;
 
 /**
  * Activity to show a list of markers in a track.
@@ -177,10 +180,11 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
       }
     };
     listView.setAdapter(resourceCursorAdapter);
-    AbstractTrackActivity.configureListViewContextualMenu(this, listView, contextualActionModeCallback);
+    AbstractTrackActivity.configureListViewContextualMenu(listView, contextualActionModeCallback);
 
     final long firstWaypointId = myTracksProviderUtils.getFirstWaypointId(trackId);
-    getSupportLoaderManager().initLoader(0, null, new LoaderCallbacks<Cursor>() {
+    LoaderManager.getInstance(this).initLoader(0, null, new LoaderCallbacks<Cursor>() {
+        @NonNull
         @Override
       public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
         return new CursorLoader(MarkerListActivity.this, WaypointsColumns.CONTENT_URI, PROJECTION,
@@ -189,12 +193,12 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
       }
 
         @Override
-      public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+      public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
         resourceCursorAdapter.swapCursor(cursor);
       }
 
         @Override
-      public void onLoaderReset(Loader<Cursor> loader) {
+      public void onLoaderReset(@NonNull Loader<Cursor> loader) {
         resourceCursorAdapter.swapCursor(null);
       }
     });
@@ -244,15 +248,13 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
   
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case R.id.marker_list_insert_marker:
-        Intent intent = IntentUtils.newIntent(this, MarkerEditActivity.class)
-            .putExtra(MarkerEditActivity.EXTRA_TRACK_ID, track.getId());
-        startActivity(intent);
-        return true;
-      default:
-        return super.onOptionsItemSelected(item);
+    if (item.getItemId() == R.id.marker_list_insert_marker) {
+      Intent intent = IntentUtils.newIntent(this, MarkerEditActivity.class)
+              .putExtra(MarkerEditActivity.EXTRA_TRACK_ID, track.getId());
+      startActivity(intent);
+      return true;
     }
+    return super.onOptionsItemSelected(item);
   }
 
   @Override

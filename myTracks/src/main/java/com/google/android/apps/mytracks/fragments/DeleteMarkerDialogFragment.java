@@ -16,16 +16,17 @@
 
 package com.google.android.apps.mytracks.fragments;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Bundle;
+
+import androidx.fragment.app.FragmentActivity;
+
 import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.maps.mytracks.R;
-
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.DialogInterface;
-import android.os.Bundle;
-import androidx.fragment.app.FragmentActivity;
 
 /**
  * A DialogFragment to delete marker.
@@ -62,13 +63,12 @@ public class DeleteMarkerDialogFragment extends AbstractMyTracksDialogFragment {
   private DeleteMarkerCaller caller;
 
   @Override
-  public void onAttach(Activity activity) {
-    super.onAttach(activity);
+  public void onAttach(Context context) {
+    super.onAttach(context);
     try {
-      caller = (DeleteMarkerCaller) activity;
+      caller = (DeleteMarkerCaller) context;
     } catch (ClassCastException e) {
-      throw new ClassCastException(
-          activity.toString() + " must implement " + DeleteMarkerCaller.class.getSimpleName());
+      throw new ClassCastException(context + " must implement " + DeleteMarkerCaller.class.getSimpleName());
     }
   }
 

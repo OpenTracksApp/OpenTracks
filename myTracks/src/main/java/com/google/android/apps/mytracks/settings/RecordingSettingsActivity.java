@@ -16,17 +16,17 @@
 
 package com.google.android.apps.mytracks.settings;
 
+import android.app.Dialog;
+import android.os.Bundle;
+import android.preference.ListPreference;
+import android.preference.Preference;
+
 import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
-
-import android.app.Dialog;
-import android.os.Bundle;
-import android.preference.ListPreference;
-import android.preference.Preference;
 
 /**
  * An activity for accessing recording settings.
@@ -81,8 +81,7 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity
     return ChooseActivityTypeDialogFragment.getDialog(this, category, this);    
   }
 
-  private void configFrequencyPreference(
-      int key, int defaultValue, int valueArray, boolean metricUnits) {
+  private void configFrequencyPreference(int key, int defaultValue, int valueArray, boolean metricUnits) {
     ListPreference preference = (ListPreference) findPreference(getString(key));
     int value = PreferencesUtils.getInt(this, key, defaultValue);
     String[] values = getResources().getStringArray(valueArray);

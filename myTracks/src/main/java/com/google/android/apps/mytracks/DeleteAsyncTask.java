@@ -20,7 +20,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.util.UnitConversions;
 
 /**
  * Async Task to delete tracks.

@@ -30,13 +30,11 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
-import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager.WakeLock;
-import android.os.Process;
 import android.util.Log;
 
 import androidx.annotation.VisibleForTesting;

@@ -18,14 +18,16 @@ package com.google.android.apps.mytracks.fragments;
 
 import android.location.Location;
 import android.os.Bundle;
-import androidx.annotation.VisibleForTesting;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ZoomControls;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.apps.mytracks.ChartView;
 import com.google.android.apps.mytracks.TrackDetailActivity;
@@ -108,7 +110,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
 
   @Override
   public View onCreateView(
-      LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+          @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.chart, container, false);
     zoomControls = view.findViewById(R.id.chart_zoom_controls);
     zoomControls.setOnZoomInClickListener(new View.OnClickListener() {
@@ -505,11 +507,6 @@ public class ChartFragment extends Fragment implements TrackDataListener {
       data[5] = cadence;
       data[6] = power;
     }
-  }
-
-  @VisibleForTesting
-  ChartView getChartView() {
-    return chartView;
   }
 
   @VisibleForTesting

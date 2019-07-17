@@ -16,25 +16,25 @@
 
 package com.google.android.apps.mytracks.fragments;
 
-import com.google.android.apps.mytracks.util.DialogUtils;
-import com.google.android.apps.mytracks.util.PreferencesUtils;
-import com.google.android.apps.mytracks.util.StringUtils;
-import com.google.android.apps.mytracks.util.TrackIconUtils;
-import com.google.android.maps.mytracks.R;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
 import android.os.Bundle;
-import androidx.fragment.app.DialogFragment;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+
+import com.google.android.apps.mytracks.util.DialogUtils;
+import com.google.android.apps.mytracks.util.TrackIconUtils;
+import com.google.android.maps.mytracks.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,16 +75,16 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
   }
 
   @Override
-  public void onAttach(Activity activity) {
-    super.onAttach(activity);
+  public void onAttach(Context context) {
+    super.onAttach(context);
     try {
-      caller = (ChooseActivityTypeCaller) activity;
+      caller = (ChooseActivityTypeCaller) context;
     } catch (ClassCastException e) {
-      throw new ClassCastException(activity.toString() + " must implement "
-          + ChooseActivityTypeCaller.class.getSimpleName());
+      throw new ClassCastException(context + " must implement " + ChooseActivityTypeCaller.class.getSimpleName());
     }
   }
 
+  @NonNull
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     return getDialog(getActivity(), getArguments().getString(KEY_CATEGORY), caller);

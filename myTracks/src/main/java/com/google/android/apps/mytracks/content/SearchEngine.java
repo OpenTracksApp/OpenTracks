@@ -15,12 +15,14 @@
  */
 package com.google.android.apps.mytracks.content;
 
+import android.database.Cursor;
+import android.location.Location;
+
+import androidx.annotation.NonNull;
+
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
-
-import android.database.Cursor;
-import android.location.Location;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -113,6 +115,7 @@ public class SearchEngine {
     public final Waypoint waypoint;
     public final double score;
 
+    @NonNull
     @Override
     public String toString() {
       return "ScoredResult ["

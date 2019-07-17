@@ -16,18 +16,17 @@
 
 package com.google.android.apps.mytracks.settings;
 
-import com.google.android.apps.mytracks.util.BluetoothDeviceUtils;
-import com.google.android.apps.mytracks.util.PreferencesUtils;
-import com.google.android.maps.mytracks.R;
-
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.provider.Settings;
+
+import com.google.android.apps.mytracks.util.BluetoothDeviceUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.maps.mytracks.R;
 
 import java.util.ArrayList;
 import java.util.List;

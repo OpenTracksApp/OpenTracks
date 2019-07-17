@@ -16,16 +16,16 @@
 
 package com.google.android.apps.mytracks.fragments;
 
-import com.google.android.apps.mytracks.io.file.TrackFileFormat;
-import com.google.android.apps.mytracks.util.FileUtils;
-import com.google.android.maps.mytracks.R;
-
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+
+import com.google.android.apps.mytracks.io.file.TrackFileFormat;
+import com.google.android.apps.mytracks.util.FileUtils;
+import com.google.android.maps.mytracks.R;
 
 /**
  * A DialogFragment to select a file type, gpx, kml, etc.
@@ -70,13 +70,12 @@ public class FileTypeDialogFragment extends AbstractMyTracksDialogFragment {
   private FileTypeCaller caller;
 
   @Override
-  public void onAttach(Activity activity) {
-    super.onAttach(activity);
+  public void onAttach(Context context) {
+    super.onAttach(context);
     try {
-      caller = (FileTypeCaller) activity;
+      caller = (FileTypeCaller) context;
     } catch (ClassCastException e) {
-      throw new ClassCastException(
-          activity.toString() + " must implement " + FileTypeCaller.class.getSimpleName());
+      throw new ClassCastException(context + " must implement " + FileTypeCaller.class.getSimpleName());
     }
   }
 

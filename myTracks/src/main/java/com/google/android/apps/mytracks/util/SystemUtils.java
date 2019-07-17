@@ -16,6 +16,7 @@
 
 package com.google.android.apps.mytracks.util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -52,16 +53,12 @@ public class SystemUtils {
   }
 
   /**
-   * Tries to acquire a partial wake lock if not already acquired. Logs errors
-   * and gives up trying in case the wake lock cannot be acquired.
-   */
-
-  /**
    * Acquire a wake lock if not already acquired.
    * 
    * @param context the context
    * @param wakeLock wake lock or null
    */
+  @SuppressLint("WakelockTimeout")
   public static WakeLock acquireWakeLock(Context context, WakeLock wakeLock) {
     Log.i(TAG, "Acquiring wake lock.");
     try {

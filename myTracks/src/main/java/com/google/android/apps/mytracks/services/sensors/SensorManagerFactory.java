@@ -57,8 +57,6 @@ public class SensorManagerFactory {
 
   /**
    * Gets the temp sensor manager.
-   *
-   * @param context
    */
   public static SensorManager getSensorManagerTemporary(Context context) {
     releaseSensorManagerTemporary();

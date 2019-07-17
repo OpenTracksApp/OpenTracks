@@ -17,16 +17,11 @@
 package com.google.android.apps.mytracks.services;
 
 import android.annotation.SuppressLint;
-import android.content.ContentResolver;
 import android.content.Context;
-import android.database.ContentObserver;
-import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import androidx.annotation.Nullable;
 
 /**
  * My Tracks Location Manager. Applies Google location settings before allowing

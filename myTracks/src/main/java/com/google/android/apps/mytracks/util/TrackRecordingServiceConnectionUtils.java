@@ -16,21 +16,20 @@
 
 package com.google.android.apps.mytracks.util;
 
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
+import android.widget.Toast;
+
 import com.google.android.apps.mytracks.TrackEditActivity;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.maps.mytracks.R;
-
-import android.app.ActivityManager;
-import android.app.ActivityManager.RunningServiceInfo;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.os.RemoteException;
-import android.util.Log;
-import android.widget.Toast;
 
 import java.util.List;
 

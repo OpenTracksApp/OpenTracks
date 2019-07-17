@@ -36,6 +36,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
+
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.SearchEngine;
 import com.google.android.apps.mytracks.content.SearchEngine.ScoredResult;
@@ -179,8 +181,9 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
     searchRecentSuggestions = SearchEngineProvider.newHelper(this);
 
     arrayAdapter = new ArrayAdapter<Map<String, Object>>(this, R.layout.list_item, R.id.list_item_name) {
+        @NonNull
         @Override
-      public View getView(int position, View convertView, android.view.ViewGroup parent) {
+      public View getView(int position, View convertView, @NonNull android.view.ViewGroup parent) {
         View view;
         if (convertView == null) {
           view = getLayoutInflater().inflate(R.layout.list_item, parent, false);
@@ -228,7 +231,7 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
         startActivity(intent);
       }
     });
-    AbstractTrackActivity.configureListViewContextualMenu(this, listView, contextualActionModeCallback);
+    AbstractTrackActivity.configureListViewContextualMenu(listView, contextualActionModeCallback);
     handleIntent(getIntent());
   }
 

@@ -16,6 +16,12 @@
 
 package com.google.android.apps.mytracks.io.file.importer;
 
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationManager;
+import android.net.Uri;
+import android.util.Log;
+
 import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
@@ -33,11 +39,9 @@ import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
-import android.content.Context;
-import android.location.Location;
-import android.location.LocationManager;
-import android.net.Uri;
-import android.util.Log;
+import org.xml.sax.Locator;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,10 +53,6 @@ import java.util.Locale;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-
-import org.xml.sax.Locator;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * Abstract class for various file track importers like {@link GpxFileTrackImporter} and
@@ -403,8 +403,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
     Location location = createLocation();
 
     // Calculate derived attributes from the previous point
-    if (trackData.lastLocationInCurrentSegment != null
-        && trackData.lastLocationInCurrentSegment.getTime() != 0) {
+    if (trackData.lastLocationInCurrentSegment != null && trackData.lastLocationInCurrentSegment.getTime() != 0) {
       long timeDifference = location.getTime() - trackData.lastLocationInCurrentSegment.getTime();
 
       // Check for negative time change

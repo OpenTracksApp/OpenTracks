@@ -16,9 +16,6 @@
 
 package com.google.android.apps.mytracks.settings;
 
-import com.google.android.apps.mytracks.Constants;
-import com.google.android.maps.mytracks.R;
-
 import android.app.ActionBar;
 import android.content.Context;
 import android.os.Bundle;
@@ -29,6 +26,9 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
 import android.view.MenuItem;
+
+import com.google.android.apps.mytracks.Constants;
+import com.google.android.maps.mytracks.R;
 
 /**
  * An abstract activity for all the settings activities.
@@ -101,8 +101,7 @@ public class AbstractSettingsActivity extends PreferenceActivity {
    * @param values the values array
    * @param value the value
    */
-  private void updatePreferenceSummary(
-      Preference preference, String[] summary, String[] values, String value) {
+  private void updatePreferenceSummary(Preference preference, String[] summary, String[] values, String value) {
     int index = getIndex(values, value);
     if (index == -1) {
       preference.setSummary(R.string.value_unknown);
