@@ -21,7 +21,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -46,7 +45,6 @@ import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.ListItemUtils;
-import com.google.android.apps.mytracks.util.PhotoUtils;
 import com.google.android.apps.mytracks.util.StatsUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.TrackIconUtils;
@@ -245,9 +243,7 @@ public class MarkerDetailFragment extends Fragment {
 
       if (hasPhoto) {
         handler.removeCallbacks(hideText);
-
-        Display defaultDisplay = getActivity().getWindowManager().getDefaultDisplay();
-        PhotoUtils.setImageView(getActivity(), photo, waypoint.getPhotoURI(), defaultDisplay.getWidth(), defaultDisplay.getHeight(), true);
+        photo.setImageURI(waypoint.getPhotoURI());
         handler.postDelayed(hideText, HIDE_TEXT_DELAY);
       }
 
