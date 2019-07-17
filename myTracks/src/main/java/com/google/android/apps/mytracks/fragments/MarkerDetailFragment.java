@@ -16,6 +16,7 @@
 
 package com.google.android.apps.mytracks.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
@@ -121,9 +122,10 @@ public class MarkerDetailFragment extends Fragment {
   }
 
   @Override
-  public View onCreateView(
-      LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.marker_detail_fragment, container, false);
+
+    getActivity().setTitle(getArguments().getString(KEY_TITLE));
 
     photo = view.findViewById(R.id.marker_detail_waypoint_photo);
     textGradient = view.findViewById(R.id.marker_detail_waypoint_text_gradient);
@@ -157,14 +159,6 @@ public class MarkerDetailFragment extends Fragment {
   public void onPause() {
     super.onPause();
     handler.removeCallbacks(hideText);
-  }
-
-  @Override
-  public void setUserVisibleHint(boolean isVisibleToUser) {
-    super.setUserVisibleHint(isVisibleToUser);
-    if (isVisibleToUser) {
-      getActivity().setTitle(getArguments().getString(KEY_TITLE));
-    }
   }
 
   @Override
