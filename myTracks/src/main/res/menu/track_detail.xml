@@ -13,32 +13,32 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/track_detail_insert_marker"
         android:icon="@drawable/ic_menu_insert_marker"
         android:orderInCategory="1"
         android:title="@string/menu_insert_marker"
-        app:showAsAction="ifRoom" />
+        android:showAsAction="ifRoom" />
     <item
         android:id="@+id/track_detail_insert_photo"
         android:icon="@drawable/ic_menu_insert_photo"
         android:orderInCategory="2"
         android:title="@string/menu_insert_photo"
-        app:showAsAction="ifRoom" />
+        android:showAsAction="ifRoom" />
     <item
         android:id="@+id/track_detail_share"
         android:icon="@drawable/ic_menu_share"
         android:orderInCategory="4"
         android:title="@string/menu_share"
         android:actionProviderClass="android.widget.ShareActionProvider"
-        app:showAsAction="ifRoom" />
+        android:showAsAction="ifRoom" />
     <item
         android:id="@+id/track_detail_markers"
         android:icon="@drawable/ic_menu_markers"
         android:orderInCategory="5"
-        android:title="@string/menu_markers" />
+        android:title="@string/menu_markers"
+        android:showAsAction="ifRoom" />
     <item
         android:id="@+id/track_detail_edit"
         android:icon="@drawable/ic_menu_edit"

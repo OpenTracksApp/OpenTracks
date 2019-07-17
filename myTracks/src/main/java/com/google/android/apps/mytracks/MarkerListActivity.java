@@ -65,13 +65,11 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
       WaypointsColumns.TYPE, WaypointsColumns.TIME, WaypointsColumns.PHOTOURL };
 
   // Callback when an item is selected in the contextual action mode
-  private ContextualActionModeCallback
-      contextualActionModeCallback = new ContextualActionModeCallback() {
-          @Override
+  private ContextualActionModeCallback contextualActionModeCallback = new ContextualActionModeCallback() {
+        @Override
         public void onPrepare(Menu menu, int[] positions, long[] ids, boolean showSelectAll) {
           boolean isSingleSelection = ids.length == 1;
 
-          // Always disable
           menu.findItem(R.id.list_context_menu_share).setVisible(false);
           menu.findItem(R.id.list_context_menu_show_on_map).setVisible(isSingleSelection);
           menu.findItem(R.id.list_context_menu_edit).setVisible(isSingleSelection);
