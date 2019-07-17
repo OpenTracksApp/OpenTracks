@@ -96,16 +96,11 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
           @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
           // Note that the key can be null
-          if (key == null || key.equals(
-              PreferencesUtils.getKey(MarkerListActivity.this, R.string.recording_track_id_key))) {
-            recordingTrackId = PreferencesUtils.getLong(
-                MarkerListActivity.this, R.string.recording_track_id_key);
+          if (key == null || key.equals(PreferencesUtils.getKey(MarkerListActivity.this, R.string.recording_track_id_key))) {
+            recordingTrackId = PreferencesUtils.getLong(MarkerListActivity.this, R.string.recording_track_id_key);
           }
-          if (key == null || key.equals(PreferencesUtils.getKey(
-              MarkerListActivity.this, R.string.recording_track_paused_key))) {
-            recordingTrackPaused = PreferencesUtils.getBoolean(MarkerListActivity.this,
-                R.string.recording_track_paused_key,
-                PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+          if (key == null || key.equals(PreferencesUtils.getKey(MarkerListActivity.this, R.string.recording_track_paused_key))) {
+            recordingTrackPaused = PreferencesUtils.getBoolean(MarkerListActivity.this, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
           }
           if (key != null) {
             runOnUiThread(new Runnable() {
@@ -232,17 +227,18 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.marker_list, menu);
+
     insertMarkerMenuItem = menu.findItem(R.id.marker_list_insert_marker);
+
     searchMenuItem = menu.findItem(R.id.marker_list_search);
     AbstractTrackActivity.configureSearchWidget(this, searchMenuItem, null);
+
     return super.onCreateOptionsMenu(menu);
   }
 
   @Override
   public boolean onPrepareOptionsMenu(Menu menu) {
-    if (insertMarkerMenuItem != null) {
-      insertMarkerMenuItem.setVisible(track.getId() == recordingTrackId && !recordingTrackPaused);
-    }
+    insertMarkerMenuItem.setVisible(track.getId() == recordingTrackId && !recordingTrackPaused);
     return super.onPrepareOptionsMenu(menu);
   }
   
@@ -254,8 +250,6 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
             .putExtra(MarkerEditActivity.EXTRA_TRACK_ID, track.getId());
         startActivity(intent);
         return true;
-      case R.id.marker_list_search:
-        return false;
       default:
         return super.onOptionsItemSelected(item);
     }
