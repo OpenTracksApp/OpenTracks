@@ -43,13 +43,10 @@ public class PhotoUtils {
    *          entire image (no cropping). False to fill the entire target area.
    *          (allow cropping).
    */
-  public static void setImageVew(
-      ImageView imageView, Uri uri, int targetWidth, int targetHeight, boolean fitWithin) {
+  public static void setImageView(ImageView imageView, Uri uri, int targetWidth, int targetHeight, boolean fitWithin) {
     if (cancelBitmapLoader(imageView, uri)) {
-      BitmapLoader bitmapLoader = new BitmapLoader(
-          imageView, uri, targetWidth, targetHeight, fitWithin);
-      WeakReference<BitmapLoader> bitmapLoaderReference = new WeakReference<>(
-              bitmapLoader);
+      BitmapLoader bitmapLoader = new BitmapLoader(imageView, uri, targetWidth, targetHeight, fitWithin);
+      WeakReference<BitmapLoader> bitmapLoaderReference = new WeakReference<>(bitmapLoader);
       imageView.setTag(bitmapLoaderReference);
       bitmapLoader.execute();
     }

@@ -16,7 +16,6 @@
 
 package com.google.android.apps.mytracks.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
@@ -184,9 +183,7 @@ public class MarkerDetailFragment extends Fragment {
 
     updateWaypoint(false);
 
-    String photoUrl = waypoint.getPhotoUrl();
-    boolean hasPhoto = photoUrl != null && !photoUrl.equals("");
-    menu.findItem(R.id.marker_detail_view_photo).setVisible(hasPhoto);
+    menu.findItem(R.id.marker_detail_view_photo).setVisible(waypoint.hasPhoto());
 
     TrackIconUtils.setMenuIconColor(menu);
   }
@@ -215,7 +212,7 @@ public class MarkerDetailFragment extends Fragment {
       case R.id.marker_detail_view_photo:
         intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.parse(waypoint.getPhotoUrl()), "image/*");
+        intent.setDataAndType(waypoint.getPhotoURI(), "image/*");
         startActivity(intent);
         return true;
       default:
@@ -250,8 +247,7 @@ public class MarkerDetailFragment extends Fragment {
     statisticsView.setVisibility(isWaypoint ? View.GONE : View.VISIBLE);
 
     if (isWaypoint) {
-      String photoUrl = waypoint.getPhotoUrl();
-      boolean hasPhoto = photoUrl != null && !photoUrl.equals("");
+      boolean hasPhoto = waypoint.hasPhoto();
       photo.setVisibility(hasPhoto ? View.VISIBLE : View.GONE);
       textGradient.setVisibility(hasPhoto ? View.VISIBLE : View.GONE);
       waypointInfo.setVisibility(View.VISIBLE);
@@ -259,8 +255,7 @@ public class MarkerDetailFragment extends Fragment {
       if (hasPhoto) {
         handler.removeCallbacks(hideText);
         Display defaultDisplay = getActivity().getWindowManager().getDefaultDisplay();
-        PhotoUtils.setImageVew(photo, Uri.parse(photoUrl), defaultDisplay.getWidth(),
-            defaultDisplay.getHeight(), true);
+        PhotoUtils.setImageView(photo, waypoint.getPhotoURI(), defaultDisplay.getWidth(), defaultDisplay.getHeight(), true);
         handler.postDelayed(hideText, HIDE_TEXT_DELAY);
       }
 

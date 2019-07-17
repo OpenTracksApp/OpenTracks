@@ -169,16 +169,12 @@ public class KmlTrackWriter implements TrackWriter {
   @Override
   public void writeWaypoint(Waypoint waypoint) {
     if (printWriter != null) {
-      String styleName = waypoint.getType() == WaypointType.STATISTICS ? STATISTICS_STYLE
-          : WAYPOINT_STYLE;
-      String photoUrl = waypoint.getPhotoUrl();
-      if (photoUrl != null && !photoUrl.equals("")) {
+      String styleName = waypoint.getType() == WaypointType.STATISTICS ? STATISTICS_STYLE : WAYPOINT_STYLE;
+      if (waypoint.hasPhoto()) {
         float heading = getHeading(waypoint.getTrackId(), waypoint.getLocation());
-        writePhotoOverlay(waypoint.getName(), waypoint.getCategory(), waypoint.getDescription(),
-            styleName, waypoint.getLocation(), photoUrl, heading);
+        writePhotoOverlay(waypoint.getName(), waypoint.getCategory(), waypoint.getDescription(), styleName, waypoint.getLocation(), waypoint.getPhotoUrl(), heading);
       } else {
-        writePlacemark(waypoint.getName(), waypoint.getCategory(), waypoint.getDescription(),
-            styleName, waypoint.getLocation());
+        writePlacemark(waypoint.getName(), waypoint.getCategory(), waypoint.getDescription(), styleName, waypoint.getLocation());
       }
     }
   }

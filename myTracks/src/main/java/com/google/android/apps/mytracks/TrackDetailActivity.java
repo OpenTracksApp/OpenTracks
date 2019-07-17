@@ -27,6 +27,7 @@ import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragme
 import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller;
 import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment;
 import com.google.android.apps.mytracks.fragments.FrequencyDialogFragment;
+import com.google.android.apps.mytracks.fragments.MarkerDetailFragment;
 import com.google.android.apps.mytracks.fragments.StatsFragment;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;

@@ -31,8 +31,7 @@ public interface TracksColumns extends BaseColumns {
   /**
    * Tracks provider uri.
    */
-  Uri CONTENT_URI = Uri.parse(
-      "content://com.google.android.maps.mytracks/tracks");
+  Uri CONTENT_URI = Uri.parse("content://com.google.android.maps.mytracks/tracks");
 
   /**
    * Track content type.

@@ -79,8 +79,7 @@ public class ListItemUtils {
       photo.getLayoutParams().height = photoHeight;
       photo.setImageResource(android.R.color.transparent);
       Display defaultDisplay = activity.getWindowManager().getDefaultDisplay();
-      PhotoUtils.setImageVew(
-          photo, Uri.parse(photoUrl), defaultDisplay.getWidth(), photoHeight, false);
+      PhotoUtils.setImageView(photo, Uri.parse(photoUrl), defaultDisplay.getWidth(), photoHeight, false);
     }
     
     // Set icon

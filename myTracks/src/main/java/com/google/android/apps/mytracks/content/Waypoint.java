@@ -16,11 +16,14 @@
 
 package com.google.android.apps.mytracks.content;
 
-import com.google.android.apps.mytracks.stats.TripStatistics;
-
 import android.location.Location;
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.google.android.apps.mytracks.stats.TripStatistics;
+
+import java.net.URI;
 
 /**
  * A waypoint.
@@ -241,6 +244,14 @@ public final class Waypoint implements Parcelable {
   
   public String getPhotoUrl() {
     return photoUrl;
+  }
+
+  public Uri getPhotoURI() {
+    return Uri.parse(photoUrl);
+  }
+
+  public boolean hasPhoto() {
+    return photoUrl != null && !"".equals(photoUrl);
   }
 
   public void setPhotoUrl(String photoUrl) {

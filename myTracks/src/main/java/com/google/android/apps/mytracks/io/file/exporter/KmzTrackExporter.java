@@ -122,9 +122,8 @@ public class KmzTrackExporter implements TrackExporter {
               throw new InterruptedException();
             }
             Waypoint waypoint = myTracksProviderUtils.createWaypoint(cursor);
-            String photoUrl = waypoint.getPhotoUrl();
-            if (photoUrl != null && !photoUrl.equals("")) {
-              addImage(zipOutputStream, photoUrl);
+            if (waypoint.hasPhoto()) {
+              addImage(zipOutputStream, waypoint.getPhotoUrl());
             }
           }
         }

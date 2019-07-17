@@ -477,23 +477,19 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
         }
       }
     }
-    if (waypoint != null) {
-      String photoUrl = waypoint.getPhotoUrl();
-      if (photoUrl != null && !photoUrl.equals("")) {
-        Uri uri = Uri.parse(photoUrl);
-        File file = new File(uri.getPath());
-        if (file.exists()) {
-          File parent = file.getParentFile();
-          file.delete();
-          FileUtils.updateMediaScanner(context, uri);
-          if (parent.listFiles().length == 0) {
-            parent.delete();
-          }
-        }                      
+    if (waypoint != null && waypoint.hasPhoto()) {
+      Uri uri = waypoint.getPhotoURI();
+      File file = new File(uri.getPath());
+      if (file.exists()) {
+        File parent = file.getParentFile();
+        file.delete();
+        FileUtils.updateMediaScanner(context, uri);
+        if (parent.listFiles().length == 0) {
+          parent.delete();
+        }
       }
     }
-    contentResolver.delete(WaypointsColumns.CONTENT_URI, WaypointsColumns._ID + "=?",
-        new String[] { Long.toString(waypointId) });
+    contentResolver.delete(WaypointsColumns.CONTENT_URI, WaypointsColumns._ID + "=?", new String[] { Long.toString(waypointId) });
   }
 
   @Override
