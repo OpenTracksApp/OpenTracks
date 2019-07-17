@@ -16,8 +16,7 @@
 
 package com.google.android.apps.mytracks.services.tasks;
 
-import com.google.android.apps.mytracks.util.PhotoUtils;
-
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -27,7 +26,11 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.google.android.apps.mytracks.util.PhotoUtils;
+
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.ref.WeakReference;
 
 /**
@@ -38,21 +41,23 @@ import java.lang.ref.WeakReference;
 public class BitmapLoader extends AsyncTask<Void, Void, Bitmap> {
   private static final String TAG = BitmapLoader.class.getSimpleName();
 
+  // Use a WeakReference to ensure the ImageView can be garbage collected
   private final WeakReference<ImageView> imageViewReference;
+  private final Context context;
   private final Uri uri;
   private final int targetWidth;
   private final int targetHeight;
   private final boolean fitWithin;
 
-  public BitmapLoader(
-      ImageView imageView, Uri uri, int targetWidth, int targetHeight, boolean fitWithin) {
-
-    // Use a WeakReference to ensure the ImageView can be garbage collected
+  public BitmapLoader(Context context, ImageView imageView, Uri uri, int targetWidth, int targetHeight, boolean fitWithin) {
     imageViewReference = new WeakReference<>(imageView);
-    this.uri = uri;
+
+    this.context = context;
     this.targetWidth = targetWidth;
     this.targetHeight = targetHeight;
     this.fitWithin = fitWithin;
+
+    this.uri = uri;
   }
 
   public Uri getUri() {
@@ -61,19 +66,26 @@ public class BitmapLoader extends AsyncTask<Void, Void, Bitmap> {
 
   @Override
   protected Bitmap doInBackground(Void... params) {
-
     // Get the image dimensions
     BitmapFactory.Options options = new BitmapFactory.Options();
-
     options.inJustDecodeBounds = true;
-    BitmapFactory.decodeFile(uri.getPath(), options);
-    
-    if (options.outWidth == 0 || options.outHeight == 0) {
+
+    InputStream inputStream = null;
+    try {
+      inputStream = context.getContentResolver().openInputStream(uri);
+    } catch (FileNotFoundException e) {
+      Log.e(TAG, "Could not load bitmap from uri.");
       return null;
     }
+    BitmapFactory.decodeStream(inputStream);
 
     // Set imageWidth and imageHeight based on image rotation
-    int rotation = getRotation();
+    try {
+      inputStream = context.getContentResolver().openInputStream(uri);
+    } catch (FileNotFoundException e) {
+      return null;
+    }
+    int rotation = getRotation(inputStream);
     int imageWidth;
     int imageHeight;
 
@@ -88,13 +100,18 @@ public class BitmapLoader extends AsyncTask<Void, Void, Bitmap> {
     // Get a scaled down version of the image
     options.inJustDecodeBounds = false;
     options.inSampleSize = getInSampleSize(imageWidth, imageHeight);
-    options.inPurgeable = true;
 
-    Bitmap scaledBitmap = BitmapFactory.decodeFile(uri.getPath(), options);
+    try {
+      inputStream = context.getContentResolver().openInputStream(uri);
+    } catch (FileNotFoundException e) {
+      return null;
+    }
+    Bitmap scaledBitmap;
+    scaledBitmap = BitmapFactory.decodeStream(inputStream, null, options);
     if (scaledBitmap == null) {
       return null;
     }
-    
+
     // Get the final bitmap after rotating the scaled down image
     Bitmap bitmap;
     if (rotation == 0 && fitWithin) {
@@ -140,9 +157,9 @@ public class BitmapLoader extends AsyncTask<Void, Void, Bitmap> {
     }
   }
 
-  private int getRotation() {
+  private int getRotation(InputStream inputStream) {
     try {
-      ExifInterface exifInterface = new ExifInterface(uri.getPath());
+      ExifInterface exifInterface = new ExifInterface(inputStream);
       switch (exifInterface.getAttributeInt(
           ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)) {
         case ExifInterface.ORIENTATION_ROTATE_90:

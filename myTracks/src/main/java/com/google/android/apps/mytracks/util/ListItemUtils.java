@@ -16,8 +16,6 @@
 
 package com.google.android.apps.mytracks.util;
 
-import com.google.android.maps.mytracks.R;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -30,6 +28,8 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.google.android.maps.mytracks.R;
 
 /**
  * Utilities to display a list item.
@@ -79,7 +79,7 @@ public class ListItemUtils {
       photo.getLayoutParams().height = photoHeight;
       photo.setImageResource(android.R.color.transparent);
       Display defaultDisplay = activity.getWindowManager().getDefaultDisplay();
-      PhotoUtils.setImageView(photo, Uri.parse(photoUrl), defaultDisplay.getWidth(), photoHeight, false);
+      PhotoUtils.setImageView(activity, photo, Uri.parse(photoUrl), defaultDisplay.getWidth(), photoHeight, false);
     }
     
     // Set icon

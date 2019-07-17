@@ -18,7 +18,6 @@ package com.google.android.apps.mytracks.fragments;
 
 import android.content.Intent;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -183,8 +182,6 @@ public class MarkerDetailFragment extends Fragment {
 
     updateWaypoint(false);
 
-    menu.findItem(R.id.marker_detail_view_photo).setVisible(waypoint.hasPhoto());
-
     TrackIconUtils.setMenuIconColor(menu);
   }
 
@@ -208,12 +205,6 @@ public class MarkerDetailFragment extends Fragment {
       case R.id.marker_detail_delete:
         DeleteMarkerDialogFragment.newInstance(new long[] { markerId })
             .show(getChildFragmentManager(), DeleteMarkerDialogFragment.DELETE_MARKER_DIALOG_TAG);
-        return true;
-      case R.id.marker_detail_view_photo:
-        intent = new Intent();
-        intent.setAction(Intent.ACTION_VIEW);
-        intent.setDataAndType(waypoint.getPhotoURI(), "image/*");
-        startActivity(intent);
         return true;
       default:
         return super.onOptionsItemSelected(item);
@@ -254,8 +245,9 @@ public class MarkerDetailFragment extends Fragment {
 
       if (hasPhoto) {
         handler.removeCallbacks(hideText);
+
         Display defaultDisplay = getActivity().getWindowManager().getDefaultDisplay();
-        PhotoUtils.setImageView(photo, waypoint.getPhotoURI(), defaultDisplay.getWidth(), defaultDisplay.getHeight(), true);
+        PhotoUtils.setImageView(getActivity(), photo, waypoint.getPhotoURI(), defaultDisplay.getWidth(), defaultDisplay.getHeight(), true);
         handler.postDelayed(hideText, HIDE_TEXT_DELAY);
       }
 
