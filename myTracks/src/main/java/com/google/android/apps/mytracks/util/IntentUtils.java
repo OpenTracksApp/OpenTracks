@@ -16,15 +16,15 @@
 
 package com.google.android.apps.mytracks.util;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+
 import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.maps.mytracks.R;
-
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 
 import java.io.File;
 
@@ -72,5 +72,11 @@ public class IntentUtils {
             context.getString(R.string.share_track_share_file_body, trackDescription))
         .putExtra(context.getString(R.string.track_id_broadcast_extra), trackId)
         .setType(trackFileFormat.getMimeType());
+  }
+
+  public static Intent newShowOnMapIntent(double latitude, double longitude) {
+    Intent intent = new Intent(Intent.ACTION_VIEW);
+    intent.setData(Uri.parse("geo:" + latitude + "," + longitude));
+    return intent;
   }
 }

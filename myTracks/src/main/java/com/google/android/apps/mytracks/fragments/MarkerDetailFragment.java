@@ -39,7 +39,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.apps.mytracks.MarkerEditActivity;
-import com.google.android.apps.mytracks.TrackDetailActivity;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
@@ -188,16 +187,13 @@ public class MarkerDetailFragment extends Fragment {
   public boolean onOptionsItemSelected(MenuItem item) {
     long markerId = getArguments().getLong(KEY_MARKER_ID);
     FragmentActivity fragmentActivity = getActivity();
-    Intent intent;
 
     switch (item.getItemId()) {
       case R.id.marker_detail_show_on_map:
-        intent = IntentUtils.newIntent(fragmentActivity, TrackDetailActivity.class)
-            .putExtra(TrackDetailActivity.EXTRA_MARKER_ID, markerId);
-        startActivity(intent);
+        startActivity(IntentUtils.newShowOnMapIntent(waypoint.getLocation().getLatitude(), waypoint.getLocation().getLongitude()));
         return true;
       case R.id.marker_detail_edit:
-        intent = IntentUtils.newIntent(fragmentActivity, MarkerEditActivity.class)
+        Intent intent = IntentUtils.newIntent(fragmentActivity, MarkerEditActivity.class)
             .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, markerId);
         startActivity(intent);
         return true;
