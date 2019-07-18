@@ -65,7 +65,8 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
 
   private static final String[] PROJECTION = new String[] { WaypointsColumns._ID,
       WaypointsColumns.NAME, WaypointsColumns.DESCRIPTION, WaypointsColumns.CATEGORY,
-      WaypointsColumns.TYPE, WaypointsColumns.TIME, WaypointsColumns.PHOTOURL };
+      WaypointsColumns.TYPE, WaypointsColumns.TIME, WaypointsColumns.PHOTOURL,
+      WaypointsColumns.LATITUDE, WaypointsColumns.LONGITUDE};
 
   // Callback when an item is selected in the contextual action mode
   private ContextualActionModeCallback contextualActionModeCallback = new ContextualActionModeCallback() {
@@ -165,16 +166,18 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         int categoryIndex = cursor.getColumnIndex(WaypointsColumns.CATEGORY);
         int descriptionIndex = cursor.getColumnIndex(WaypointsColumns.DESCRIPTION);
         int photoUrlIndex = cursor.getColumnIndex(WaypointsColumns.PHOTOURL);
+        int latitudeIndex = cursor.getColumnIndex(WaypointsColumns.LATITUDE);
+        int longitudeIndex = cursor.getColumnIndex(WaypointsColumns.LONGITUDE);
 
-        boolean statistics = WaypointType.values()[cursor.getInt(typeIndex)]
-            == WaypointType.STATISTICS;
-        int iconId = statistics ? R.drawable.ic_marker_yellow_pushpin
-            : R.drawable.ic_marker_blue_pushpin;
+        boolean statistics = WaypointType.values()[cursor.getInt(typeIndex)] == WaypointType.STATISTICS;
+        int iconId = statistics ? R.drawable.ic_marker_yellow_pushpin : R.drawable.ic_marker_blue_pushpin;
         String name = cursor.getString(nameIndex);
         long time = cursor.getLong(timeIndex);
         String category = statistics ? null : cursor.getString(categoryIndex);
         String description = statistics ? null : cursor.getString(descriptionIndex);
         String photoUrl = cursor.getString(photoUrlIndex);
+        double latitude = cursor.getDouble(latitudeIndex);
+        double longitude = cursor.getDouble(longitudeIndex);
 
         ListItemUtils.setListItem(MarkerListActivity.this, view, false, true, iconId, R.string.image_marker, name, null, null, 0, time, false, category, description, photoUrl);
       }
@@ -263,8 +266,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
     getMenuInflater().inflate(R.menu.list_context_menu, menu);
 
     AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
-    contextualActionModeCallback.onPrepare(
-        menu, new int[] { info.position }, new long[] { info.id }, false);
+    contextualActionModeCallback.onPrepare(menu, new int[] { info.position }, new long[] { info.id }, false);
   }
 
   @Override
@@ -290,6 +292,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         if (markerIds.length == 1) {
           intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
               .putExtra(TrackDetailActivity.EXTRA_MARKER_ID, markerIds[0]);
+          //TODO Use IntentUtils.newShowOnMapIntent()
           startActivity(intent);
         }
         return true;

@@ -23,6 +23,7 @@ import android.net.Uri;
 import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.maps.mytracks.R;
 
@@ -47,8 +48,7 @@ public class IntentUtils {
    * @param cls the class
    */
   public static Intent newIntent(Context context, Class<?> cls) {
-    return new Intent(context, cls).addFlags(
-        Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+    return new Intent(context, cls).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
   }
 
   /**
@@ -59,24 +59,30 @@ public class IntentUtils {
    * @param filePath the file path
    * @param trackFileFormat the track file format
    */
-  public static Intent newShareFileIntent(
-      Context context, long trackId, String filePath, TrackFileFormat trackFileFormat) {
+  public static Intent newShareFileIntent(Context context, long trackId, String filePath, TrackFileFormat trackFileFormat) {
     Track track = MyTracksProviderUtils.Factory.get(context).getTrack(trackId);
-    String trackDescription = track == null ? ""
-        : new DescriptionGeneratorImpl(context).generateTrackDescription(track, null, null, false);
+    String trackDescription = track == null ? "" : new DescriptionGeneratorImpl(context).generateTrackDescription(track, null, null, false);
 
     return new Intent(Intent.ACTION_SEND)
         .putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(filePath)))
         .putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.share_track_subject))
-        .putExtra(Intent.EXTRA_TEXT,
-            context.getString(R.string.share_track_share_file_body, trackDescription))
+        .putExtra(Intent.EXTRA_TEXT, context.getString(R.string.share_track_share_file_body, trackDescription))
         .putExtra(context.getString(R.string.track_id_broadcast_extra), trackId)
         .setType(trackFileFormat.getMimeType());
   }
 
-  public static Intent newShowOnMapIntent(double latitude, double longitude) {
+  public static Intent newShowOnMapIntent(Waypoint waypoint) {
+    return newShowOnMapIntent(waypoint.getLocation().getLatitude(), waypoint.getLocation().getLongitude(), waypoint.getName());
+  }
+
+  public static Intent newShowOnMapIntent(double latitude, double longitude, String label) {
+    //SEE https://developer.android.com/guide/components/intents-common.html#Maps
     Intent intent = new Intent(Intent.ACTION_VIEW);
-    intent.setData(Uri.parse("geo:" + latitude + "," + longitude));
+    String uri = "geo:0,0?q=" + latitude + "," + longitude;
+    if (label != null && label.length() > 0) {
+      uri += "(" + label + ")";
+    }
+    intent.setData(Uri.parse(uri));
     return intent;
   }
 }

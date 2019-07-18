@@ -70,6 +70,8 @@ import java.util.SortedSet;
  * An activity to display a list of search results.
  * 
  * @author Rodrigo Damazio
+ *
+ * TODO: allow to refine search (present search in context menu)
  */
 public class SearchListActivity extends AbstractTrackActivity implements DeleteMarkerCaller, ConfirmDeleteDialogFragment.ConfirmDeleteCaller {
 
@@ -87,6 +89,8 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
   private static final String CATEGORY_FIELD = "category";
   private static final String DESCRIPTION_FIELD = "description";
   private static final String PHOTO_URL_FIELD = "photoUrl";
+  private static final String MARKER_LATITUDE_FIELD = "latitude";
+  private static final String MARKER_LONGITUDE_FIELD = "longitude";
 
   private static final String TRACK_ID_FIELD = "trackId";
   private static final String MARKER_ID_FIELD = "markerId";
@@ -95,20 +99,14 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
       sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
           @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-          if (key == null || key.equals(
-              PreferencesUtils.getKey(SearchListActivity.this, R.string.stats_units_key))) {
+          if (key == null || key.equals(PreferencesUtils.getKey(SearchListActivity.this, R.string.stats_units_key))) {
             metricUnits = PreferencesUtils.isMetricUnits(SearchListActivity.this);
           }
-          if (key == null || key.equals(
-              PreferencesUtils.getKey(SearchListActivity.this, R.string.recording_track_id_key))) {
-            recordingTrackId = PreferencesUtils.getLong(
-                SearchListActivity.this, R.string.recording_track_id_key);
+          if (key == null || key.equals(PreferencesUtils.getKey(SearchListActivity.this, R.string.recording_track_id_key))) {
+            recordingTrackId = PreferencesUtils.getLong(SearchListActivity.this, R.string.recording_track_id_key);
           }
-          if (key == null || key.equals(PreferencesUtils.getKey(
-              SearchListActivity.this, R.string.recording_track_paused_key))) {
-            recordingTrackPaused = PreferencesUtils.getBoolean(SearchListActivity.this,
-                R.string.recording_track_paused_key,
-                PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+          if (key == null || key.equals(PreferencesUtils.getKey(SearchListActivity.this, R.string.recording_track_paused_key))) {
+            recordingTrackPaused = PreferencesUtils.getBoolean(SearchListActivity.this, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
           }
           if (key != null) {
             runOnUiThread(new Runnable() {
@@ -122,8 +120,7 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
       };
 
   // Callback when an item is selected in the contextual action mode
-  private ContextualActionModeCallback
-      contextualActionModeCallback = new ContextualActionModeCallback() {
+  private ContextualActionModeCallback contextualActionModeCallback = new ContextualActionModeCallback() {
           @Override
         public boolean onClick(int itemId, int[] positions, long[] ids) {
           return handleContextItem(itemId, positions);          
@@ -147,8 +144,7 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
           //TODO Setup shareIntent.
 
           // One item, item is a marker
-          menu.findItem(R.id.list_context_menu_show_on_map)
-              .setVisible(isSingleSelection && !isSingleSelectionTrack);
+          menu.findItem(R.id.list_context_menu_show_on_map).setVisible(isSingleSelection && !isSingleSelectionTrack);
           // One item, can be a track or a marker
           menu.findItem(R.id.list_context_menu_edit).setVisible(isSingleSelection);
           // One item. If track, no restriction.
@@ -191,15 +187,15 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
           view = convertView;
         }
         Map<String, Object> resultMap = getItem(position);
-        boolean isRecording = (Boolean) resultMap.get(IS_RECORDING_FIELD);
-        boolean isPaused = (Boolean) resultMap.get(IS_PAUSED_FIELD);
-        int iconId = (Integer) resultMap.get(ICON_ID_FIELD);
-        int iconContentDescriptionId = (Integer) resultMap.get(ICON_CONTENT_DESCRIPTION_ID_FIELD);
+        boolean isRecording = (boolean) resultMap.get(IS_RECORDING_FIELD);
+        boolean isPaused = (boolean) resultMap.get(IS_PAUSED_FIELD);
+        int iconId = (int) resultMap.get(ICON_ID_FIELD);
+        int iconContentDescriptionId = (int) resultMap.get(ICON_CONTENT_DESCRIPTION_ID_FIELD);
         String name = (String) resultMap.get(NAME_FIELD);
         String totalTime = (String) resultMap.get(TOTAL_TIME_FIELD);
         String totalDistance = (String) resultMap.get(TOTAL_DISTANCE_FIELD);
-        int markerCount = (Integer) resultMap.get(MARKER_COUNT_FIELD);
-        Long startTime = (Long) resultMap.get(START_TIME_FIELD);
+        int markerCount = (int) resultMap.get(MARKER_COUNT_FIELD);
+        long startTime = (long) resultMap.get(START_TIME_FIELD);
         String category = (String) resultMap.get(CATEGORY_FIELD);
         String description = (String) resultMap.get(DESCRIPTION_FIELD);
         String photoUrl = (String) resultMap.get(PHOTO_URL_FIELD);
@@ -288,8 +284,7 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
     getMenuInflater().inflate(R.menu.list_context_menu, menu);
 
     AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
-    contextualActionModeCallback.onPrepare(
-        menu, new int[] { info.position }, new long[] { info.id }, false);
+    contextualActionModeCallback.onPrepare(menu, new int[] { info.position }, new long[] { info.id }, false);
   }
 
   @Override
@@ -330,8 +325,7 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
         Log.e(TAG, "Not implemented");
         return true;
       case R.id.list_context_menu_show_on_map:
-        intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
-            .putExtra(TrackDetailActivity.EXTRA_MARKER_ID, markerId);
+        intent = IntentUtils.newShowOnMapIntent((double)item.get(MARKER_LATITUDE_FIELD), (double)item.get(MARKER_LONGITUDE_FIELD), item.get(NAME_FIELD) + "");
         startActivity(intent);
         return true;
       case R.id.list_context_menu_edit:
@@ -349,8 +343,7 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
         return true;
       case R.id.list_context_menu_delete:
         if (markerId != null) {
-          DeleteMarkerDialogFragment.newInstance(new long[] { markerId }).show(
-              getSupportFragmentManager(), DeleteMarkerDialogFragment.DELETE_MARKER_DIALOG_TAG);
+          DeleteMarkerDialogFragment.newInstance(new long[] { markerId }).show(getSupportFragmentManager(), DeleteMarkerDialogFragment.DELETE_MARKER_DIALOG_TAG);
         } else {
           deleteTracks(new long[] { trackId });
         }
@@ -375,50 +368,16 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
     final String textQuery = intent.getStringExtra(SearchManager.QUERY);
     setTitle(textQuery);
 
-    SearchQuery query = new SearchQuery(textQuery, null, -1L, System.currentTimeMillis());
-    doSearch(query);
-
-//    // TODO Why was this done? Somehow we searched by last location?
-//    @Deprecated
-//    final MyTracksLocationManager myTracksLocationManager = new MyTracksLocationManager(this, Looper.myLooper(), true);
-//    LocationListener locationListener = new LocationListener() {
-//        @Override
-//      public void onLocationChanged(final Location location) {
-//        myTracksLocationManager.close();
-//        new Thread() {
-//            @Override
-//          public void run() {
-//            SearchQuery query = new SearchQuery(
-//                textQuery, location, -1L, System.currentTimeMillis());
-//            doSearch(query);
-//          }
-//        }.start();
-//      }
-//
-//      @Override
-//      public void onStatusChanged(String provider, int status, Bundle extras) {
-//        Log.w(TAG, "LocationListener.onStatusChanged(): is not implemented.");
-//      }
-//
-//      @Override
-//      public void onProviderEnabled(String provider) {
-//        Log.w(TAG, "LocationListener.onProviderEnabled(): is not implemented.");
-//      }
-//
-//      @Override
-//      public void onProviderDisabled(String provider) {
-//        Log.w(TAG, "LocationListener.onProviderDisabled(): is not implemented.");
-//      }
-//    };
-//    myTracksLocationManager.requestLastLocation(locationListener);
+    doSearch(textQuery);
   }
 
   /**
    * Do the search.
    * 
-   * @param query the query
+   * @param textQuery the query
    */
-  private void doSearch(SearchQuery query) {
+  private void doSearch(String textQuery) {
+    SearchQuery query = new SearchQuery(textQuery, null, -1L, System.currentTimeMillis());
     SortedSet<ScoredResult> scoredResults = searchEngine.search(query);
     final List<Map<String, Object>> displayResults = prepareResultsforDisplay(scoredResults);
 
@@ -441,10 +400,9 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
    * @param scoredResults a list of score results
    * @return a list of result maps
    */
-  private List<Map<String, Object>> prepareResultsforDisplay(
-      Collection<ScoredResult> scoredResults) {
-    ArrayList<Map<String, Object>> output = new ArrayList<>(
-            scoredResults.size());
+  private List<Map<String, Object>> prepareResultsforDisplay(Collection<ScoredResult> scoredResults) {
+    //TODO Replace use of map<string, object>, but rather provide Track or Waypoint directly.
+    ArrayList<Map<String, Object>> output = new ArrayList<>(scoredResults.size());
     for (ScoredResult result : scoredResults) {
       Map<String, Object> resultMap = new HashMap<>();
       if (result.track != null) {
@@ -463,6 +421,7 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
    * @param waypoint the marker
    * @param resultMap the result map
    */
+  @Deprecated
   private void prepareMarkerForDisplay(Waypoint waypoint, Map<String, Object> resultMap) {
     /*
      * TODO: It may be more appropriate to obtain the track name as a join in
@@ -481,13 +440,11 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
 
     resultMap.put(IS_RECORDING_FIELD, false);
     resultMap.put(IS_PAUSED_FIELD, true);
-    resultMap.put(ICON_ID_FIELD,
-        statistics ? R.drawable.ic_marker_yellow_pushpin : R.drawable.ic_marker_blue_pushpin);
+    resultMap.put(ICON_ID_FIELD, statistics ? R.drawable.ic_marker_yellow_pushpin : R.drawable.ic_marker_blue_pushpin);
     resultMap.put(ICON_CONTENT_DESCRIPTION_ID_FIELD, R.string.image_marker);
     resultMap.put(NAME_FIELD, waypoint.getName());
     // Display the marker's track name in the total time field
-    resultMap.put(TOTAL_TIME_FIELD, trackName == null ? null
-        : getString(R.string.search_list_marker_track_location, trackName));
+    resultMap.put(TOTAL_TIME_FIELD, trackName == null ? null : getString(R.string.search_list_marker_track_location, trackName));
     resultMap.put(TOTAL_DISTANCE_FIELD, null);
     resultMap.put(MARKER_COUNT_FIELD, 0);
     resultMap.put(START_TIME_FIELD, waypoint.getLocation().getTime());
@@ -496,6 +453,9 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
     resultMap.put(PHOTO_URL_FIELD, waypoint.getPhotoUrl());
     resultMap.put(TRACK_ID_FIELD, waypoint.getTrackId());
     resultMap.put(MARKER_ID_FIELD, waypoint.getId());
+
+    resultMap.put(MARKER_LATITUDE_FIELD, waypoint.getLocation().getLatitude());
+    resultMap.put(MARKER_LONGITUDE_FIELD, waypoint.getLocation().getLongitude());
   }
 
   /**
@@ -504,6 +464,7 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
    * @param track the track
    * @param resultMap the result map
    */
+  @Deprecated
   private void prepareTrackForDisplay(Track track, Map<String, Object> resultMap) {
     TripStatistics tripStatitics = track.getTripStatistics();
     String icon = track.getIcon();
@@ -515,8 +476,7 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
     resultMap.put(ICON_CONTENT_DESCRIPTION_ID_FIELD, R.string.image_track);
     resultMap.put(NAME_FIELD, track.getName());
     resultMap.put(TOTAL_TIME_FIELD, StringUtils.formatElapsedTime(tripStatitics.getTotalTime()));
-    resultMap.put(TOTAL_DISTANCE_FIELD,
-        StringUtils.formatDistance(this, tripStatitics.getTotalDistance(), metricUnits));
+    resultMap.put(TOTAL_DISTANCE_FIELD, StringUtils.formatDistance(this, tripStatitics.getTotalDistance(), metricUnits));
     resultMap.put(MARKER_COUNT_FIELD, myTracksProviderUtils.getWaypointCount(track.getId()));
     resultMap.put(START_TIME_FIELD, tripStatitics.getStartTime());
     resultMap.put(CATEGORY_FIELD, category);

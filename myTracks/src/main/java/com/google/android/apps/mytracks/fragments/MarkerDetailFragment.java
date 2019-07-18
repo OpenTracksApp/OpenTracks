@@ -187,13 +187,14 @@ public class MarkerDetailFragment extends Fragment {
   public boolean onOptionsItemSelected(MenuItem item) {
     long markerId = getArguments().getLong(KEY_MARKER_ID);
     FragmentActivity fragmentActivity = getActivity();
-
+    Intent intent;
     switch (item.getItemId()) {
       case R.id.marker_detail_show_on_map:
-        startActivity(IntentUtils.newShowOnMapIntent(waypoint.getLocation().getLatitude(), waypoint.getLocation().getLongitude()));
+        intent = IntentUtils.newShowOnMapIntent(waypoint);
+        startActivity(intent);
         return true;
       case R.id.marker_detail_edit:
-        Intent intent = IntentUtils.newIntent(fragmentActivity, MarkerEditActivity.class)
+        intent = IntentUtils.newIntent(fragmentActivity, MarkerEditActivity.class)
             .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, markerId);
         startActivity(intent);
         return true;
