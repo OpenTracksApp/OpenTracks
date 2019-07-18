@@ -327,8 +327,7 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
         int iconId = TrackIconUtils.getIconDrawable(icon);
         String name = cursor.getString(nameIndex);
         String totalTime = StringUtils.formatElapsedTime(cursor.getLong(totalTimeIndex));
-        String totalDistance = StringUtils.formatDistance(
-            TrackListActivity.this, cursor.getDouble(totalDistanceIndex), metricUnits);
+        String totalDistance = StringUtils.formatDistance(TrackListActivity.this, cursor.getDouble(totalDistanceIndex), metricUnits);
         int markerCount = myTracksProviderUtils.getWaypointCount(trackId);
         long startTime = cursor.getLong(startTimeIndex);
         String category = icon != null && !icon.equals("") ? null : cursor.getString(categoryIndex);

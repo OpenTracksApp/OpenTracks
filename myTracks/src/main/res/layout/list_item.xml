@@ -86,7 +86,7 @@ limitations under the License.
               android:layout_width="match_parent" >
               <TextView
                 android:ellipsize="end"
-                android:id="@+id/list_item_owner_time_distance"
+                android:id="@+id/list_item_time_distance"
                 android:layout_gravity="bottom"
                 android:singleLine="true"
                 style="@style/TextSmall" />

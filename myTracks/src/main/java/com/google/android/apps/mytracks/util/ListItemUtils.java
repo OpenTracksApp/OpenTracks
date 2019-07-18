@@ -94,20 +94,20 @@ public class ListItemUtils {
     setTextView(activity, nameTextView, name, hasPhoto);
 
     // Set totalTime/totalDistance
-    TextView ownerTimeDistanceTextView = view.findViewById(R.id.list_item_owner_time_distance);
-    String ownerTimeDistance;
+    TextView timeDistanceTextView = view.findViewById(R.id.list_item_time_distance);
+    String timeDistanceText;
     if (isRecording) {
-      ownerTimeDistanceTextView.setTextColor(activity.getResources().getColor(isPaused ? android.R.color.white : R.color.recording_text));
-      ownerTimeDistance = activity.getString(isPaused ? R.string.generic_paused : R.string.generic_recording);
+      timeDistanceTextView.setTextColor(activity.getResources().getColor(isPaused ? android.R.color.white : R.color.recording_text));
+      timeDistanceText = activity.getString(isPaused ? R.string.generic_paused : R.string.generic_recording);
     } else {
-      // Match list_item_owner_time_distance in list_item.xml
-      ownerTimeDistanceTextView.setTextAppearance(activity, R.style.TextSmall);
-      ownerTimeDistance = getTimeDistance(totalTime, totalDistance);
+      // Match list_item_time_distance in list_item.xml
+      timeDistanceTextView.setTextAppearance(activity, R.style.TextSmall);
+      timeDistanceText = getTimeDistance(totalTime, totalDistance);
       if (markerCount > 0) {
-        ownerTimeDistance += "  \u2027";
+        timeDistanceText += "  \u2027";
       }
     }
-    setTextView(activity, ownerTimeDistanceTextView, ownerTimeDistance, hasPhoto);
+    setTextView(activity, timeDistanceTextView, timeDistanceText, hasPhoto);
 
     // Set markerCount
     ImageView markerCountIcon = view.findViewById(R.id.list_item_marker_count_icon);
@@ -142,22 +142,22 @@ public class ListItemUtils {
      * Place categoryDescription in either ownerTimeDistanceTextView or
      * categoryDescriptionTextView
      */
-    if (ownerTimeDistanceTextView.getVisibility() == View.GONE
+    if (timeDistanceTextView.getVisibility() == View.GONE
         && markerCountIcon.getVisibility() == View.GONE) {
       setTextView(activity, categoryDescriptionTextView, null, hasPhoto);
       // Match list_item_category_description in list_item.xml
-      ownerTimeDistanceTextView.setSingleLine(false);
-      ownerTimeDistanceTextView.setMaxLines(2);
-      setTextView(activity, ownerTimeDistanceTextView, categoryDescription, hasPhoto);
+      timeDistanceTextView.setSingleLine(false);
+      timeDistanceTextView.setMaxLines(2);
+      setTextView(activity, timeDistanceTextView, categoryDescription, hasPhoto);
     } else {
-      // Match list_item_owner_time_distance in list_item.xml
-      ownerTimeDistanceTextView.setSingleLine(true);
+      // Match list_item_time_distance in list_item.xml
+      timeDistanceTextView.setSingleLine(true);
       setTextView(activity, categoryDescriptionTextView, categoryDescription, hasPhoto);
     }
 
     // Adjust iconImageView layout gravity
     LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) iconImageView.getLayoutParams();
-    params.gravity = ownerTimeDistanceTextView.getVisibility() == View.GONE
+    params.gravity = timeDistanceTextView.getVisibility() == View.GONE
         && markerCountIcon.getVisibility() == View.GONE ? Gravity.TOP : Gravity.CENTER_VERTICAL;
   }
   
@@ -191,8 +191,7 @@ public class ListItemUtils {
    * @param context the context
    * @param time the start time
    */
-  private static String[] getDateTime(
-      boolean isRecording, Context context, long time, boolean useRelativeTime) {
+  private static String[] getDateTime(boolean isRecording, Context context, long time, boolean useRelativeTime) {
     if (isRecording || time == 0L) {
       return new String[] { null, null };
     }
@@ -222,8 +221,7 @@ public class ListItemUtils {
    * @param value the value for the text view
    * @param addShadow true to add shadow
    */
-  public static void setTextView(
-      Context context, TextView textView, String value, boolean addShadow) {
+  public static void setTextView(Context context, TextView textView, String value, boolean addShadow) {
     if (value == null || value.length() == 0) {
       textView.setVisibility(View.GONE);
     } else {

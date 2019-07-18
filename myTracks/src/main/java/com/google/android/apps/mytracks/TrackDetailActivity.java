@@ -123,7 +123,7 @@ public class TrackDetailActivity extends AbstractTrackActivity
       runOnUiThread(new Runnable() {
           @Override
         public void run() {
-          trackController.update(trackId == recordingTrackId, recordingTrackPaused);
+          trackController.update(isRecording(), recordingTrackPaused);
           if (hasPhoto && photoUri != null) {
             hasPhoto = false;
             WaypointCreationRequest waypointCreationRequest = new WaypointCreationRequest(WaypointType.WAYPOINT, false, null, null, null, null, photoUri.toString());
@@ -159,7 +159,7 @@ public class TrackDetailActivity extends AbstractTrackActivity
             @Override
             public void run() {
               TrackDetailActivity.this.invalidateOptionsMenu();
-              boolean isRecording = trackId == recordingTrackId;
+              boolean isRecording = isRecording();
               trackController.update(isRecording, recordingTrackPaused);
             }
           });
@@ -171,12 +171,12 @@ public class TrackDetailActivity extends AbstractTrackActivity
     public void onClick(View v) {
       if (recordingTrackPaused) {
         // Paused -> Resume
-        updateMenuItems(true, false);
+        updateMenuItems(false);
         TrackRecordingServiceConnectionUtils.resumeTrack(trackRecordingServiceConnection);
         trackController.update(true, false);
       } else {
         // Recording -> Paused
-        updateMenuItems(true, true);
+        updateMenuItems(true);
         TrackRecordingServiceConnectionUtils.pauseTrack(trackRecordingServiceConnection);
         trackController.update(true, true);
       }
@@ -186,8 +186,8 @@ public class TrackDetailActivity extends AbstractTrackActivity
   private final OnClickListener stopListener = new OnClickListener() {
       @Override
     public void onClick(View v) {
-      updateMenuItems(false, true);
       TrackRecordingServiceConnectionUtils.stopRecording(TrackDetailActivity.this, trackRecordingServiceConnection, true);
+        updateMenuItems(true);
     }
   };
 
@@ -195,8 +195,7 @@ public class TrackDetailActivity extends AbstractTrackActivity
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     hasCamera = getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
-    photoUri = savedInstanceState != null ? (Uri) savedInstanceState.getParcelable(PHOTO_URI_KEY)
-        : null;
+    photoUri = savedInstanceState != null ? (Uri) savedInstanceState.getParcelable(PHOTO_URI_KEY) : null;
     hasPhoto = savedInstanceState != null && savedInstanceState.getBoolean(HAS_PHOTO_KEY, false);
        
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
@@ -249,8 +248,7 @@ public class TrackDetailActivity extends AbstractTrackActivity
 
     // Update UI
     this.invalidateOptionsMenu();
-    boolean isRecording = trackId == recordingTrackId;
-    trackController.onResume(isRecording, recordingTrackPaused);
+    trackController.onResume(isRecording(), recordingTrackPaused);
   }
 
   @Override
@@ -343,7 +341,7 @@ public class TrackDetailActivity extends AbstractTrackActivity
 
   @Override
   public boolean onPrepareOptionsMenu(Menu menu) {
-    updateMenuItems(trackId == recordingTrackId, recordingTrackPaused);
+    updateMenuItems(recordingTrackPaused);
     return super.onPrepareOptionsMenu(menu);
   }
 
@@ -492,31 +490,29 @@ public class TrackDetailActivity extends AbstractTrackActivity
 
   /**
    * Updates the menu items.
-   * 
-   * @param isRecording true if recording
    */
-  private void updateMenuItems(boolean isRecording, boolean isPaused) {
+  private void updateMenuItems(boolean isPaused) {
     if (insertMarkerMenuItem != null) {
-      insertMarkerMenuItem.setVisible(isRecording && !isPaused);
+      insertMarkerMenuItem.setVisible(isRecording() && !isPaused);
     }
     if (insertPhotoMenuItem != null) {
-      insertPhotoMenuItem.setVisible(hasCamera && isRecording && !isPaused);
+      insertPhotoMenuItem.setVisible(hasCamera && isRecording() && !isPaused);
     }
     if (shareMenuItem != null && shareMenuItem.isEnabled()) {
-      shareMenuItem.setVisible(!isRecording);
+      shareMenuItem.setVisible(!isRecording());
     }
     if (voiceFrequencyMenuItem != null) {
-      voiceFrequencyMenuItem.setVisible(isRecording);
+      voiceFrequencyMenuItem.setVisible(isRecording());
     }
     if (splitFrequencyMenuItem != null) {
-      splitFrequencyMenuItem.setVisible(isRecording);
+      splitFrequencyMenuItem.setVisible(isRecording());
     }    
     if (sensorStateMenuItem != null) {
-      sensorStateMenuItem.setVisible(isRecording);
+      sensorStateMenuItem.setVisible(isRecording());
     }
 
     String title;
-    if (isRecording) {
+    if (isRecording()) {
       title = getString(isPaused ? R.string.generic_paused : R.string.generic_recording);
     } else {
       Track track = myTracksProviderUtils.getTrack(trackId);
@@ -535,5 +531,9 @@ public class TrackDetailActivity extends AbstractTrackActivity
     Track track = myTracksProviderUtils.getTrack(trackId);
     String category = getString(TrackIconUtils.getIconActivityType(iconValue));
     TrackUtils.updateTrack(this, track, null, category, null, myTracksProviderUtils);
+  }
+
+  private boolean isRecording() {
+    return trackId == recordingTrackId;
   }
 }
