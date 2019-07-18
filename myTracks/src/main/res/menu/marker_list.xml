@@ -21,7 +21,6 @@ limitations under the License.
         android:showAsAction="ifRoom" />
     <item
         android:id="@+id/marker_list_search"
-        android:icon="@drawable/ic_menu_search"
         android:title="@string/menu_search"
         android:actionViewClass="android.widget.SearchView"
         android:showAsAction="ifRoom|collapseActionView" />

@@ -238,6 +238,8 @@ public class TrackIconUtils {
    */
   private static void revertMenuIconColor(MenuItem menuitem) {
     Drawable drawable = menuitem.getIcon();
-    drawable.setColorFilter(new ColorMatrixColorFilter(REVERT_COLOR_MATRIX));
+    if (drawable != null) {
+      drawable.setColorFilter(new ColorMatrixColorFilter(REVERT_COLOR_MATRIX));
+    }
   }
 }

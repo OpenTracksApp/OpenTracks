@@ -17,7 +17,6 @@ limitations under the License.
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/search_list_search"
-        android:icon="@drawable/ic_menu_search"
         android:title="@string/menu_search"
         android:actionViewClass="android.widget.SearchView"
         app:showAsAction="ifRoom|collapseActionView" />

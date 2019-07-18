@@ -593,8 +593,7 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
       startGpsMenuItem.setVisible(!isRecording);
       if (!isRecording) {
         startGpsMenuItem.setTitle(isGpsStarted ? R.string.menu_stop_gps : R.string.menu_start_gps);
-        startGpsMenuItem.setIcon(
-            isGpsStarted ? R.drawable.ic_menu_stop_gps : R.drawable.ic_menu_start_gps);
+        startGpsMenuItem.setIcon(isGpsStarted ? R.drawable.ic_menu_stop_gps : R.drawable.ic_menu_start_gps);
         TrackIconUtils.setMenuIconColor(startGpsMenuItem);        
       }
     }
