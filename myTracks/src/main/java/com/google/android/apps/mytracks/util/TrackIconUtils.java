@@ -19,7 +19,9 @@ package com.google.android.apps.mytracks.util;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.util.Pair;
 import android.view.Menu;
@@ -89,13 +91,6 @@ public class TrackIconUtils {
     MAP.put(AIRPLANE,new Pair<>(R.string.activity_type_airplane, R.drawable.ic_track_airplane));
     MAP.put(BOAT, new Pair<>(R.string.activity_type_boat, R.drawable.ic_track_boat));
   }
-
-  private static final float[] REVERT_COLOR_MATRIX = {
-     -1.0f, 0, 0, 0, 255, // red
-      0, -1.0f, 0, 0, 255, // green
-      0, 0, -1.0f, 0, 255, // blue
-      0, 0, 0, 1.0f, 0 // alpha
-  };
 
   private TrackIconUtils() {}
 
@@ -218,7 +213,7 @@ public class TrackIconUtils {
     int size = menu.size();
     for (int i = 0; i < size; i++) {
       MenuItem menuitem = menu.getItem(i);
-      revertMenuIconColor(menuitem);
+      setMenuIconColor(menuitem);
     }
   }
 
@@ -239,7 +234,8 @@ public class TrackIconUtils {
   private static void revertMenuIconColor(MenuItem menuitem) {
     Drawable drawable = menuitem.getIcon();
     if (drawable != null) {
-      drawable.setColorFilter(new ColorMatrixColorFilter(REVERT_COLOR_MATRIX));
+      final PorterDuffColorFilter colorFilter = new PorterDuffColorFilter(Color.rgb(255, 255, 255), PorterDuff.Mode.MULTIPLY);
+      drawable.setColorFilter(colorFilter);
     }
   }
 }
