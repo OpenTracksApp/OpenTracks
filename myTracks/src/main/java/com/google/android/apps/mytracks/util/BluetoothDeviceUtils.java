@@ -39,8 +39,7 @@ public class BluetoothDeviceUtils {
    * @param deviceNames list of device names
    * @param deviceAddresses list of device addresses
    */
-  public static void populateDeviceLists(
-      BluetoothAdapter bluetoothAdapter, List<String> deviceNames, List<String> deviceAddresses) {
+  public static void populateDeviceLists(BluetoothAdapter bluetoothAdapter, List<String> deviceNames, List<String> deviceAddresses) {
     // Ensure the bluetooth adapter is not in discovery mode.
     bluetoothAdapter.cancelDiscovery();
 
@@ -48,7 +47,7 @@ public class BluetoothDeviceUtils {
     for (BluetoothDevice device : pairedDevices) {
       BluetoothClass bluetoothClass = device.getBluetoothClass();
       if (bluetoothClass != null) {
-        // Not really sure what we want, but I know what we don't want.
+        //TODO Not really sure what we want, but I know what we don't want.
         switch (bluetoothClass.getMajorDeviceClass()) {
           case BluetoothClass.Device.Major.COMPUTER:
           case BluetoothClass.Device.Major.PHONE:

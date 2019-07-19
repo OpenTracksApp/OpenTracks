@@ -15,9 +15,9 @@
  */
 package com.google.android.apps.mytracks.content;
 
-import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
-
 import android.location.Location;
+
+import com.google.android.apps.mytracks.content.sensor.SensorDataSet;
 
 /**
  * This class extends the standard Android location with extra information.
@@ -33,9 +33,9 @@ public class MyTracksLocation extends Location {
    */
   private int id = -1;
 
-  public MyTracksLocation(Location location, Sensor.SensorDataSet sd) {
+  public MyTracksLocation(Location location, SensorDataSet sensorDataSet) {
     super(location);
-    this.sensorDataSet = sd;
+    this.sensorDataSet = sensorDataSet;
   }
 
   public MyTracksLocation(String provider) {

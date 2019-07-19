@@ -24,11 +24,10 @@ import android.location.Location;
 import android.net.Uri;
 import android.util.Log;
 
-import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
+import com.google.android.apps.mytracks.content.sensor.SensorDataSet;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.FileUtils;
-import com.google.protobuf.InvalidProtocolBufferException;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -999,10 +998,18 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
       values.put(TrackPointsColumns.BEARING, location.getBearing());
     }
 
+    //SensorData
     if (location instanceof MyTracksLocation) {
       MyTracksLocation myTracksLocation = (MyTracksLocation) location;
-      if (myTracksLocation.getSensorDataSet() != null) {
-        values.put(TrackPointsColumns.SENSOR, myTracksLocation.getSensorDataSet().toByteArray());
+      SensorDataSet sensorDataSet = myTracksLocation.getSensorDataSet();
+      if (sensorDataSet != null && sensorDataSet.hasHeartRate()) {
+        values.put(TrackPointsColumns.SENSOR_HEARTRATE, myTracksLocation.getSensorDataSet().getHeartRate());
+      }
+      if (sensorDataSet != null && sensorDataSet.hasCadence()) {
+        values.put(TrackPointsColumns.SENSOR_CADENCE, myTracksLocation.getSensorDataSet().getCadence());
+      }
+      if (sensorDataSet != null && sensorDataSet.hasPower()) {
+        values.put(TrackPointsColumns.SENSOR_POWER, myTracksLocation.getSensorDataSet().getPower());
       }
     }
     return values;
@@ -1039,13 +1046,14 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     if (!cursor.isNull(indexes.bearingIndex)) {
       location.setBearing(cursor.getFloat(indexes.bearingIndex));
     }
-    if (location instanceof MyTracksLocation && !cursor.isNull(indexes.sensorIndex)) {
+    if (location instanceof MyTracksLocation) {
       MyTracksLocation myTracksLocation = (MyTracksLocation) location;
-      try {
-        myTracksLocation.setSensorDataSet(SensorDataSet.parseFrom(cursor.getBlob(indexes.sensorIndex)));
-      } catch (InvalidProtocolBufferException e) {
-        Log.w(TAG, "Failed to parse sensor data.", e);
-      }
+
+      float heartRate = cursor.isNull(indexes.sensorHeartRateIndex) ? SensorDataSet.DATA_UNAVAILABLE : cursor.getFloat(indexes.sensorHeartRateIndex);
+      float cadence = cursor.isNull(indexes.sensorCadenceIndex) ? SensorDataSet.DATA_UNAVAILABLE : cursor.getFloat(indexes.sensorCadenceIndex);
+      float power = cursor.isNull(indexes.sensorPowerIndex) ? SensorDataSet.DATA_UNAVAILABLE : cursor.getFloat(indexes.sensorPowerIndex);
+
+      myTracksLocation.setSensorDataSet(new SensorDataSet(heartRate, cadence, power, SensorDataSet.DATA_UNAVAILABLE, location.getTime()));
     }
   }
 
@@ -1084,7 +1092,9 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     final int accuracyIndex;
     final int speedIndex;
     final int bearingIndex;
-    final int sensorIndex;
+    final int sensorHeartRateIndex;
+    final int sensorCadenceIndex;
+    final int sensorPowerIndex;
 
     CachedTrackPointsIndexes(Cursor cursor) {
       idIndex = cursor.getColumnIndex(TrackPointsColumns._ID);
@@ -1095,7 +1105,9 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
       accuracyIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.ACCURACY);
       speedIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.SPEED);
       bearingIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.BEARING);
-      sensorIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.SENSOR);
+      sensorHeartRateIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.SENSOR_HEARTRATE);
+      sensorCadenceIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.SENSOR_CADENCE);
+      sensorPowerIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.SENSOR_POWER);
     }
   }
 

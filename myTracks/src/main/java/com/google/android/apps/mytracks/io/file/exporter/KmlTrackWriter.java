@@ -19,18 +19,17 @@ import android.content.Context;
 import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
+
 import androidx.annotation.VisibleForTesting;
 
 import com.google.android.apps.mytracks.content.DescriptionGenerator;
 import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
 import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.content.Sensor;
-import com.google.android.apps.mytracks.content.Sensor.SensorData;
-import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
+import com.google.android.apps.mytracks.content.sensor.SensorDataSet;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
@@ -75,9 +74,9 @@ public class KmlTrackWriter implements TrackWriter {
   private final MyTracksProviderUtils myTracksProviderUtils;
 
   private PrintWriter printWriter;
-  private ArrayList<Integer> powerList = new ArrayList<>();
-  private ArrayList<Integer> cadenceList = new ArrayList<>();
-  private ArrayList<Integer> heartRateList = new ArrayList<>();
+  private ArrayList<Float> powerList = new ArrayList<>();
+  private ArrayList<Float> cadenceList = new ArrayList<>();
+  private ArrayList<Float> heartRateList = new ArrayList<>();
   private boolean hasPower;
   private boolean hasCadence;
   private boolean hasHeartRate;
@@ -264,36 +263,17 @@ public class KmlTrackWriter implements TrackWriter {
       printWriter.println("<gx:coord>" + getCoordinates(location, " ") + "</gx:coord>");
       if (location instanceof MyTracksLocation) {
         SensorDataSet sensorDataSet = ((MyTracksLocation) location).getSensorDataSet();
-        int power = -1;
-        int cadence = -1;
-        int heartRate = -1;
-
         if (sensorDataSet != null) {
-          if (sensorDataSet.hasPower()) {
-            SensorData sensorData = sensorDataSet.getPower();
-            if (sensorData.hasValue() && sensorData.getState() == Sensor.SensorState.SENDING) {
-              hasPower = true;
-              power = sensorData.getValue();
-            }
+          if (sensorDataSet.hasHeartRate()) {
+            heartRateList.add(sensorDataSet.getHeartRate());
           }
           if (sensorDataSet.hasCadence()) {
-            SensorData sensorData = sensorDataSet.getCadence();
-            if (sensorData.hasValue() && sensorData.getState() == Sensor.SensorState.SENDING) {
-              hasCadence = true;
-              cadence = sensorData.getValue();
-            }
+            cadenceList.add(sensorDataSet.getCadence());
           }
-          if (sensorDataSet.hasHeartRate()) {
-            SensorData sensorData = sensorDataSet.getHeartRate();
-            if (sensorData.hasValue() && sensorData.getState() == Sensor.SensorState.SENDING) {
-              hasHeartRate = true;
-              heartRate = sensorData.getValue();
-            }
+          if (sensorDataSet.hasPower()) {
+            powerList.add(sensorDataSet.getPower());
           }
         }
-        powerList.add(power);
-        cadenceList.add(cadence);
-        heartRateList.add(heartRate);
       }
     }
   }
@@ -304,7 +284,7 @@ public class KmlTrackWriter implements TrackWriter {
    * @param list a list of sensor data
    * @param name the name of the sensor data
    */
-  private void writeSensorData(ArrayList<Integer> list, String name) {
+  private void writeSensorData(ArrayList<Float> list, String name) {
     printWriter.println("<gx:SimpleArrayData name=\"" + name + "\">");
     for (int i = 0; i < list.size(); i++) {
       printWriter.println("<gx:value>" + list.get(i) + "</gx:value>");

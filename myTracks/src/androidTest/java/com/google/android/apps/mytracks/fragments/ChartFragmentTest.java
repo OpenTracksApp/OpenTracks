@@ -24,8 +24,8 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import com.google.android.apps.mytracks.ChartView;
 import com.google.android.apps.mytracks.TrackStubUtils;
 import com.google.android.apps.mytracks.content.MyTracksLocation;
-import com.google.android.apps.mytracks.content.Sensor;
-import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
+import com.google.android.apps.mytracks.content.sensor.Sensor;
+import com.google.android.apps.mytracks.content.sensor.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.util.UnitConversions;
 
 import org.junit.Assert;

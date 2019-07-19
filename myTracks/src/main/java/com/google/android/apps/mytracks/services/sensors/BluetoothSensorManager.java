@@ -25,9 +25,8 @@ import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.google.android.apps.mytracks.content.Sensor;
-import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
-import com.google.android.apps.mytracks.content.Sensor.SensorState;
+import com.google.android.apps.mytracks.content.sensor.SensorDataSet;
+import com.google.android.apps.mytracks.content.sensor.SensorState;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
@@ -98,10 +97,7 @@ public class BluetoothSensorManager extends SensorManager {
           Toast.makeText(context, context.getString(R.string.settings_sensor_connected, deviceName), Toast.LENGTH_LONG).show();
           break;
         case BluetoothConnectionManager.MESSAGE_READ:
-          sensorDataSet = SensorDataSet.newBuilder()
-                  .setHeartRate(Sensor.SensorData.newBuilder().setValue(message.arg1)
-                  .setState(SensorState.SENDING))
-                  .build();
+          sensorDataSet = new SensorDataSet(message.arg1, SensorDataSet.DATA_UNAVAILABLE, SensorDataSet.DATA_UNAVAILABLE);
           break;
         default:
           break;

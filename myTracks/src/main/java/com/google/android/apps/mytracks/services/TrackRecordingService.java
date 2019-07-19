@@ -49,12 +49,12 @@ import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.MyTracksProvider;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
-import com.google.android.apps.mytracks.content.Sensor;
-import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
+import com.google.android.apps.mytracks.content.sensor.SensorDataSet;
+import com.google.android.apps.mytracks.content.sensor.SensorState;
 import com.google.android.apps.mytracks.services.sensors.SensorManager;
 import com.google.android.apps.mytracks.services.sensors.SensorManagerFactory;
 import com.google.android.apps.mytracks.services.tasks.AnnouncementPeriodicTaskFactory;
@@ -1129,7 +1129,7 @@ public class TrackRecordingService extends Service {
         }
 
         @Override
-        public byte[] getSensorData() {
+        public SensorDataSet getSensorData() {
             if (trackRecordingService.sensorManager == null) {
                 Log.d(TAG, "sensorManager is null.");
                 return null;
@@ -1138,16 +1138,16 @@ public class TrackRecordingService extends Service {
                 Log.d(TAG, "Sensor data set is null.");
                 return null;
             }
-            return trackRecordingService.sensorManager.getSensorDataSet().toByteArray();
+            return trackRecordingService.sensorManager.getSensorDataSet();
         }
 
         @Override
-        public int getSensorState() {
+        public SensorState getSensorState() {
             if (trackRecordingService.sensorManager == null) {
                 Log.d(TAG, "sensorManager is null.");
-                return Sensor.SensorState.NONE.getNumber();
+                return SensorState.NONE;
             }
-            return trackRecordingService.sensorManager.getSensorState().getNumber();
+            return trackRecordingService.sensorManager.getSensorState();
         }
 
         /**

@@ -30,8 +30,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.apps.mytracks.content.Sensor;
-import com.google.android.apps.mytracks.content.Sensor.SensorState;
+import com.google.android.apps.mytracks.content.sensor.SensorState;
 
 import java.util.UUID;
 
@@ -123,7 +122,7 @@ public class BluetoothConnectionManager {
      *
      * @param sensorState the sensor state
      */
-    private synchronized void setState(Sensor.SensorState sensorState) {
+    private synchronized void setState(SensorState sensorState) {
         this.sensorState = sensorState;
     }
 
@@ -132,7 +131,7 @@ public class BluetoothConnectionManager {
      */
     public synchronized void reset() {
         //TODO Disconnect
-        setState(Sensor.SensorState.NONE);
+        setState(SensorState.NONE);
     }
 
     /**
@@ -144,6 +143,6 @@ public class BluetoothConnectionManager {
         Log.d(TAG, "connect to: " + bluetoothDevice);
 
         bluetoothDevice.connectGatt(this.context, false, this.connectCallback);
-        setState(Sensor.SensorState.CONNECTING);
+        setState(SensorState.CONNECTING);
     }
 }

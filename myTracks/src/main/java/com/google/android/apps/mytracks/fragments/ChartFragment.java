@@ -32,13 +32,12 @@ import androidx.fragment.app.FragmentActivity;
 import com.google.android.apps.mytracks.ChartView;
 import com.google.android.apps.mytracks.TrackDetailActivity;
 import com.google.android.apps.mytracks.content.MyTracksLocation;
-import com.google.android.apps.mytracks.content.Sensor;
-import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.TrackDataType;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.content.sensor.SensorDataSet;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.stats.TripStatisticsUpdater;
 import com.google.android.apps.mytracks.util.LocationUtils;
@@ -478,23 +477,16 @@ public class ChartFragment extends Fragment implements TrackDataListener {
       }
       pace = speed == 0 ? 0.0 : 60.0 / speed;
     }
-    if (location instanceof MyTracksLocation
-        && ((MyTracksLocation) location).getSensorDataSet() != null) {
+    if (location instanceof MyTracksLocation && ((MyTracksLocation) location).getSensorDataSet() != null) {
       SensorDataSet sensorDataSet = ((MyTracksLocation) location).getSensorDataSet();
-      if (sensorDataSet.hasHeartRate()
-          && sensorDataSet.getHeartRate().getState() == Sensor.SensorState.SENDING
-          && sensorDataSet.getHeartRate().hasValue()) {
-        heartRate = sensorDataSet.getHeartRate().getValue();
+      if (sensorDataSet.hasHeartRate()) {
+        heartRate = sensorDataSet.getHeartRate();
       }
-      if (sensorDataSet.hasCadence()
-          && sensorDataSet.getCadence().getState() == Sensor.SensorState.SENDING
-          && sensorDataSet.getCadence().hasValue()) {
-        cadence = sensorDataSet.getCadence().getValue();
+      if (sensorDataSet.hasCadence()) {
+        cadence = sensorDataSet.getCadence();
       }
-      if (sensorDataSet.hasPower()
-          && sensorDataSet.getPower().getState() == Sensor.SensorState.SENDING
-          && sensorDataSet.getPower().hasValue()) {
-        power = sensorDataSet.getPower().getValue();
+      if (sensorDataSet.hasPower()) {
+        power = sensorDataSet.getPower();
       }
     }
 

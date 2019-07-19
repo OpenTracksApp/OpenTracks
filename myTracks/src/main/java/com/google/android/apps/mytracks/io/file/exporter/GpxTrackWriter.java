@@ -33,6 +33,7 @@ import java.util.Locale;
  * 
  * @author Sandor Dornbush
  */
+//TODO Can we export Sensor.Data in GPX?
 public class GpxTrackWriter implements TrackWriter {
 
   private static final NumberFormat ELEVATION_FORMAT = NumberFormat.getInstance(Locale.US);

@@ -24,9 +24,8 @@ import androidx.annotation.VisibleForTesting;
 
 import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.content.Sensor;
-import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
+import com.google.android.apps.mytracks.content.sensor.SensorDataSet;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -223,9 +222,9 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
   protected void onTrackSegmentStart() {
     super.onTrackSegmentStart();
     locationList = new ArrayList<>();
-    powerList = new ArrayList<>();
-    cadenceList = new ArrayList<>();
     heartRateList = new ArrayList<>();
+    cadenceList = new ArrayList<>();
+    powerList = new ArrayList<>();
   }
 
   /**
@@ -233,9 +232,9 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
    */
   private void onTrackSegmentEnd() {
     // Close a track segment by inserting the segment locations
-    boolean hasPower = powerList.size() == locationList.size();
-    boolean hasCadence = cadenceList.size() == locationList.size();
     boolean hasHeartRate = heartRateList.size() == locationList.size();
+    boolean hasCadence = cadenceList.size() == locationList.size();
+    boolean hasPower = powerList.size() == locationList.size();
 
     for (int i = 0; i < locationList.size(); i++) {
       Location location = locationList.get(i);
@@ -243,21 +242,11 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
       if (!hasPower && !hasCadence && !hasHeartRate) {
         insertTrackPoint(location);
       } else {
-        SensorDataSet.Builder builder = Sensor.SensorDataSet.newBuilder();
-        if (hasPower) {
-          builder.setPower(Sensor.SensorData.newBuilder()
-              .setValue(powerList.get(i)).setState(Sensor.SensorState.SENDING));
-        }
-        if (hasCadence) {
-          builder.setCadence(Sensor.SensorData.newBuilder()
-              .setValue(cadenceList.get(i)).setState(Sensor.SensorState.SENDING));
-        }
-        if (hasHeartRate) {
-          builder.setHeartRate(Sensor.SensorData.newBuilder()
-              .setValue(heartRateList.get(i)).setState(Sensor.SensorState.SENDING));
-        }
-        SensorDataSet sensorDataSet = builder.setCreationTime(location.getTime()).build();
-        MyTracksLocation myTracksLocation = new MyTracksLocation(location, sensorDataSet);
+        float heartrate = hasHeartRate ? heartRateList.get(i) : SensorDataSet.DATA_UNAVAILABLE;
+        float cadence = hasHeartRate ? cadenceList.get(i) : SensorDataSet.DATA_UNAVAILABLE;
+        float power = hasHeartRate ? powerList.get(i) : SensorDataSet.DATA_UNAVAILABLE;
+
+        MyTracksLocation myTracksLocation = new MyTracksLocation(location, new SensorDataSet(heartrate, cadence, power, SensorDataSet.DATA_UNAVAILABLE, location.getTime()));
         insertTrackPoint(myTracksLocation);
       }
     }

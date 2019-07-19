@@ -679,7 +679,7 @@ public class MyTracksProviderUtilsImplTest {
     AndroidMock.expect(cursorMock.getColumnIndexOrThrow(TrackPointsColumns.SPEED)).andReturn(
         index++);
     // Sensor
-    AndroidMock.expect(cursorMock.getColumnIndexOrThrow(TrackPointsColumns.SENSOR)).andReturn(
+    AndroidMock.expect(cursorMock.getColumnIndexOrThrow(TrackPointsColumns.SENSOR_HEARTRATE)).andReturn(
         index++);
   
     // Set return value of isNull().

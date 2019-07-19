@@ -16,10 +16,10 @@
 
 package com.google.android.apps.mytracks.services.sensors;
 
-import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
-import com.google.android.apps.mytracks.content.Sensor.SensorState;
-
 import android.util.Log;
+
+import com.google.android.apps.mytracks.content.sensor.SensorDataSet;
+import com.google.android.apps.mytracks.content.sensor.SensorState;
 
 import java.util.Timer;
 import java.util.TimerTask;

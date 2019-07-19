@@ -41,7 +41,9 @@ public interface TrackPointsColumns extends BaseColumns {
   String ACCURACY = "accuracy";
   String SPEED = "speed";
   String BEARING = "bearing";
-  String SENSOR = "sensor";
+  String SENSOR_HEARTRATE = "sensor_heartrate";
+  String SENSOR_CADENCE = "sensor_cadence";
+  String SENSOR_POWER = "sensor_power";
 
   String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
       + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -53,6 +55,7 @@ public interface TrackPointsColumns extends BaseColumns {
       + ACCURACY + " FLOAT, "
       + SPEED + " FLOAT, "
       + BEARING + " FLOAT, "
-      + SENSOR + " BLOB" 
-      + ");";
+      + SENSOR_HEARTRATE + " FLOAT, "
+      + SENSOR_CADENCE + " FLOAT, "
+      + SENSOR_POWER + " FLOAT);";
 }

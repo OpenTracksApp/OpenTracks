@@ -52,7 +52,7 @@ public class MyTracksProvider extends ContentProvider {
   private static final String TAG = MyTracksProvider.class.getSimpleName();
 
   @VisibleForTesting
-  static final int DATABASE_VERSION = 22;
+  static final int DATABASE_VERSION = 23;
 
   @VisibleForTesting
   static final String DATABASE_NAME = "mytracks.db";

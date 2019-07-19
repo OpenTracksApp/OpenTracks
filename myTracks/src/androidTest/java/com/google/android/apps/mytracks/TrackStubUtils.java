@@ -16,11 +16,11 @@
 
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.content.MyTracksLocation;
-import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
-import com.google.android.apps.mytracks.content.Track;
-
 import android.location.Location;
+
+import com.google.android.apps.mytracks.content.MyTracksLocation;
+import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.content.sensor.Sensor.SensorDataSet;
 
 /**
  * Commons utilities for creating stubs of track, location. The class will be

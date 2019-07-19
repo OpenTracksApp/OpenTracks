@@ -18,6 +18,8 @@ package com.google.android.apps.mytracks.services;
 import android.location.Location;
 
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
+import com.google.android.apps.mytracks.content.sensor.SensorDataSet;
+import com.google.android.apps.mytracks.content.sensor.SensorState;
 
 /**
  * MyTracks service.
@@ -98,14 +100,14 @@ public interface ITrackRecordingService {
   /**
    * Gets the current sensor data. Returns null if there is no data.
 
-   * @return a byte array of the binary version of the Sensor.SensorDataSet object.
+   * @return SensorDataSet object.
    */
-  byte[] getSensorData();
+  SensorDataSet getSensorData();
 
   /**
    * Gets the current sensor manager state.
    *
    * return a Sensor.SensorState enum value.
    */
-  int getSensorState();
+  SensorState getSensorState();
 }
