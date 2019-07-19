@@ -148,7 +148,7 @@ public class MyTracksProvider extends ContentProvider {
         throw new IllegalArgumentException("Unknown URL " + url);
     }
 
-    Log.w(MyTracksProvider.TAG, "Deleting table " + table);
+    Log.w(TAG, "Deleting table " + table);
     int count;
     try {
       db.beginTransaction();

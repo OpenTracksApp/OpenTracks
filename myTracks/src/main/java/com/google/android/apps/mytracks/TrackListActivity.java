@@ -284,10 +284,8 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
     sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
 
-    trackRecordingServiceConnection = new TrackRecordingServiceConnection(
-        this, bindChangedCallback);
-    trackController = new TrackController(
-        this, trackRecordingServiceConnection, true, recordListener, stopListener);
+    trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, bindChangedCallback);
+    trackController = new TrackController(this, trackRecordingServiceConnection, true, recordListener, stopListener);
 
     setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
     // Show trackController when search dialog is dismissed
@@ -349,13 +347,8 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
   protected void onStart() {
     super.onStart();
 
-    // Register shared preferences listener
     sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-
-    // Update shared preferences
     sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
-
-    // Update track recording service connection
     TrackRecordingServiceConnectionUtils.startConnection(this, trackRecordingServiceConnection);
   }
 
@@ -382,9 +375,7 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
   protected void onStop() {
     super.onStop();
 
-    // Unregister shared preferences listener
     sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-
     trackRecordingServiceConnection.unbind();
   }
 
@@ -470,6 +461,10 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
           // Update menu after starting or stopping gps
           this.invalidateOptionsMenu();
         }
+        return true;
+      case R.id.track_list_markers:
+        intent = IntentUtils.newIntent(this, MarkerListActivity.class);
+        startActivity(intent);
         return true;
       case R.id.track_list_aggregated_statistics:
         intent = IntentUtils.newIntent(this, AggregatedStatsActivity.class);

@@ -25,6 +25,12 @@ limitations under the License.
         android:title="@string/menu_start_gps"
         android:showAsAction="ifRoom" />
     <item
+        android:id="@+id/track_list_markers"
+        android:icon="@drawable/ic_menu_insert_marker"
+        android:orderInCategory="5"
+        android:title="@string/menu_markers"
+        android:showAsAction="ifRoom" />
+    <item
         android:id="@+id/track_list_aggregated_statistics"
         android:icon="@drawable/ic_menu_aggregated_statistics"
         android:title="@string/menu_aggregated_statistics" />
