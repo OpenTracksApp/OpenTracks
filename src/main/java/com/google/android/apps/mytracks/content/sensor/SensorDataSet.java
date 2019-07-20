@@ -12,6 +12,9 @@ public final class SensorDataSet {
     private float batteryLevel;
     private long creationTimestamp;
 
+    public String sensorName;
+    public String sensorAddress;
+
     public SensorDataSet(float heartRate, float cadence, float power, float batteryLevel, long creationTimestamp) {
         this.heartRate = heartRate;
         this.cadence = cadence;
@@ -32,8 +35,10 @@ public final class SensorDataSet {
         this(heartRate, cadence, DATA_UNAVAILABLE, DATA_UNAVAILABLE, System.currentTimeMillis());
     }
 
-    public SensorDataSet(float heartRate) {
+    public SensorDataSet(float heartRate, String sensorName, String sensorAddress) {
         this(heartRate, DATA_UNAVAILABLE, DATA_UNAVAILABLE, DATA_UNAVAILABLE, System.currentTimeMillis());
+        this.sensorName = sensorName;
+        this.sensorAddress = sensorAddress;
     }
 
     public boolean hasHeartRate() {
@@ -78,5 +83,13 @@ public final class SensorDataSet {
 
     public float getBatteryLevel() {
         return batteryLevel;
+    }
+
+    public String getSensorName() {
+        return sensorName;
+    }
+
+    public String getSensorAddress() {
+        return sensorAddress;
     }
 }

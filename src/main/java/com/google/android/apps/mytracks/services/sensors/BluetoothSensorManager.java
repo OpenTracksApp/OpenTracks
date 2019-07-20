@@ -97,7 +97,12 @@ public class BluetoothSensorManager extends SensorManager {
           Toast.makeText(context, context.getString(R.string.settings_sensor_connected, deviceName), Toast.LENGTH_LONG).show();
           break;
         case BluetoothConnectionManager.MESSAGE_READ:
-          sensorDataSet = new SensorDataSet(message.arg1, SensorDataSet.DATA_UNAVAILABLE, SensorDataSet.DATA_UNAVAILABLE);
+          if (!(message.obj instanceof SensorDataSet)) {
+            Log.e(TAG ,"Received message did not contain a SensorDataSet.");
+            sensorDataSet = null;
+          } else {
+            sensorDataSet = (SensorDataSet) message.obj;
+          }
           break;
         default:
           break;

@@ -97,10 +97,12 @@ public class StatsUtils {
   public static void setSensorData(Context context, Activity activity, SensorDataSet sensorDataSet, boolean isRecording) {
     {
       // SensorDataSet: heart rate
-      View view = getView(activity, null, R.id.stats_sensor_heart_rate_value);
-      view.setVisibility(isRecording ? View.VISIBLE : View.INVISIBLE);
+      getView(activity, null, R.id.stats_sensor_container).setVisibility(isRecording ? View.VISIBLE : View.INVISIBLE);
+
+      View viewValue = getView(activity, null, R.id.stats_sensor_heart_rate_value);
+      View viewSensor = getView(activity, null, R.id.stats_sensor_heart_rate_sensor);
       if (isRecording) {
-        setHeartRateValue(context, view, sensorDataSet);
+        setHeartRateData(context, viewValue, viewSensor, sensorDataSet);
       }
     }
   }
@@ -287,15 +289,18 @@ public class StatsUtils {
    * Sets a heart rate value (sensor)
    *
    * @param context the context
-   * @param view the containing view
+   * @param viewValue the containing view
    * @param sensorDataSet the sensorDataSet
    */
-  private static void setHeartRateValue(Context context, View view, SensorDataSet sensorDataSet) {
+  private static void setHeartRateData(Context context, View viewValue, View viewSensor, SensorDataSet sensorDataSet) {
     String heartRate = context.getString(R.string.value_unknown);
+    String sensor = context.getString(R.string.value_unknown);
     if (sensorDataSet != null && sensorDataSet.hasHeartRate() && sensorDataSet.isRecent(SensorManager.MAX_SENSOR_DATE_SET_AGE)) {
       heartRate = StringUtils.formatDecimal(sensorDataSet.getHeartRate(), 0);
+      sensor = sensorDataSet.getSensorName();
     }
-    setItem(context, view, R.string.sensor_state_heart_rate, heartRate, context.getString(R.string.sensor_unit_beats_per_minute));
+    setItem(context, viewValue, R.string.sensor_state_heart_rate, heartRate, context.getString(R.string.sensor_unit_beats_per_minute));
+    setItem(context, viewSensor, R.string.settings_sensor_bluetooth_sensor, sensor, null);
   }
 
   /**

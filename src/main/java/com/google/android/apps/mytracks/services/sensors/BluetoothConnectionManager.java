@@ -30,6 +30,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.apps.mytracks.content.sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.sensor.SensorState;
 
 import java.util.UUID;
@@ -88,14 +89,11 @@ public class BluetoothConnectionManager {
 
         @Override
         public void onCharacteristicChanged(BluetoothGatt gatt, @NonNull BluetoothGattCharacteristic characteristic) {
-            //DOCUMENTATION https://www.bluetooth.com/specifications/gatt/characteristics/
-            byte[] raw = characteristic.getValue();
-            int index = ((raw[0] & 0x1) == 1) ? 2 : 1;
-            int format = (index == 1) ? BluetoothGattCharacteristic.FORMAT_UINT8 : BluetoothGattCharacteristic.FORMAT_UINT16;
-            int value = characteristic.getIntValue(format, index);
+            int heartRate = BluetoothLEUtils.parseHeartRate(characteristic);
 
-            Log.d(TAG, "Received heart beat rate: " + value);
-            handler.obtainMessage(MESSAGE_READ, value, value).sendToTarget();
+            Log.d(TAG, "Received heart beat rate: " + heartRate);
+            SensorDataSet sensorDataSet = new SensorDataSet(heartRate, gatt.getDevice().getName(), gatt.getDevice().getAddress());
+            handler.obtainMessage(MESSAGE_READ, sensorDataSet).sendToTarget();
         }
     };
 
