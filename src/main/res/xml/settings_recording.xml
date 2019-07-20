@@ -24,12 +24,12 @@ limitations under the License.
     android:defaultValue="0"
     android:key="@string/split_frequency_key"
     android:title="@string/menu_split_frequency" />
-  <com.google.android.apps.mytracks.settings.MyTracksListPreference
+  <ListPreference
     android:defaultValue="@string/settings_recording_track_name_date_iso_8601_location_value"
     android:key="@string/track_name_key"
     android:title="@string/settings_recording_track_name_title" />
   <com.google.android.apps.mytracks.settings.ActivityTypePreference
-    android:defaultValue=""
+    android:defaultValue="@string/activity_type_running"
     android:key="@string/default_activity_key"
     android:title="@string/settings_recording_default_activity_title" />
   <com.google.android.apps.mytracks.settings.IntegerListPreference

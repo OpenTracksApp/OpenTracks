@@ -25,8 +25,8 @@ limitations under the License.
       android:persistent="false"
       android:summary="@string/settings_sensor_bluetooth_pairing_summary"
       android:title="@string/settings_sensor_bluetooth_pairing" />
-    <com.google.android.apps.mytracks.settings.MyTracksListPreference
-      android:defaultValue=""
+    <ListPreference
+      android:defaultValue="@string/sensor_type_value_none"
       android:key="@string/bluetooth_sensor_key"
       android:title="@string/settings_sensor_bluetooth_sensor" />
   </PreferenceCategory>

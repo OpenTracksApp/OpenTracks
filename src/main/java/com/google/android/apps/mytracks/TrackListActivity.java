@@ -487,9 +487,8 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
         intent = IntentUtils.newIntent(this, SettingsActivity.class);
         startActivity(intent);
         return true;
-      default:
-        return super.onOptionsItemSelected(item);
     }
+    return super.onOptionsItemSelected(item);
   }
 
   @Override
