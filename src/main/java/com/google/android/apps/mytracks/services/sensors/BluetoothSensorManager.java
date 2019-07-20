@@ -94,7 +94,6 @@ public class BluetoothSensorManager extends SensorManager {
       switch (message.what) {
         case BluetoothConnectionManager.MESSAGE_DEVICE_NAME:
           String deviceName = message.getData().getString(BluetoothConnectionManager.KEY_DEVICE_NAME);
-          Toast.makeText(context, context.getString(R.string.settings_sensor_connected, deviceName), Toast.LENGTH_LONG).show();
           break;
         case BluetoothConnectionManager.MESSAGE_READ:
           if (!(message.obj instanceof SensorDataSet)) {

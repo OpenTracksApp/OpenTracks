@@ -74,17 +74,10 @@ public class SensorSettingsActivity extends AbstractSettingsActivity {
       BluetoothDeviceUtils.populateDeviceLists(bluetoothAdapter, devicesNameList, devicesAddressList);
     }
 
-    //TODO Investigate why the settings are also written here?
-    if (devicesAddressList.size() == 1) {
-      if (!devicesAddressList.get(0).equals(value)) {
-        value = devicesAddressList.get(0);
-        PreferencesUtils.setString(this, R.string.bluetooth_sensor_key, value);
-      }
-    } else {
-      if (!devicesAddressList.contains(value)) {
-        value = PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT;
-        PreferencesUtils.setString(this, R.string.bluetooth_sensor_key, value);
-      }
+    // Was the previously configured device unpaired? Then forget it.
+    if (!devicesAddressList.contains(value)) {
+      value = PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT;
+      PreferencesUtils.setString(this, R.string.bluetooth_sensor_key, value);
     }
 
     devicesNameList.add(0, getString(R.string.value_none));
