@@ -113,7 +113,6 @@ public class TrackDetailActivity extends AbstractTrackActivity
   private MenuItem shareMenuItem;
   private MenuItem voiceFrequencyMenuItem;
   private MenuItem splitFrequencyMenuItem;
-  private MenuItem sensorStateMenuItem;
 
   private final Runnable bindChangedCallback = new Runnable() {
       @Override
@@ -335,7 +334,6 @@ public class TrackDetailActivity extends AbstractTrackActivity
 
     voiceFrequencyMenuItem = menu.findItem(R.id.track_detail_voice_frequency);
     splitFrequencyMenuItem = menu.findItem(R.id.track_detail_split_frequency);
-    sensorStateMenuItem = menu.findItem(R.id.track_detail_sensor_state);
     return super.onCreateOptionsMenu(menu);
   }
 
@@ -383,10 +381,6 @@ public class TrackDetailActivity extends AbstractTrackActivity
         return true;
       case R.id.track_detail_delete:
         deleteTracks(new long[] { trackId });
-        return true;
-      case R.id.track_detail_sensor_state:
-        intent = IntentUtils.newIntent(this, SensorStateActivity.class);
-        startActivity(intent);
         return true;
       case R.id.track_detail_settings:
         intent = IntentUtils.newIntent(this, SettingsActivity.class);
@@ -507,9 +501,6 @@ public class TrackDetailActivity extends AbstractTrackActivity
     if (splitFrequencyMenuItem != null) {
       splitFrequencyMenuItem.setVisible(isRecording());
     }    
-    if (sensorStateMenuItem != null) {
-      sensorStateMenuItem.setVisible(isRecording());
-    }
 
     String title;
     if (isRecording()) {

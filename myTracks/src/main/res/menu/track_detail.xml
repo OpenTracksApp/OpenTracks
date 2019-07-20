@@ -59,13 +59,8 @@ limitations under the License.
         android:orderInCategory="12"
         android:title="@string/menu_split_frequency" />
     <item
-        android:id="@+id/track_detail_sensor_state"
-        android:icon="@drawable/ic_menu_sensor_state"
-        android:orderInCategory="13"
-        android:title="@string/menu_sensor_state" />
-    <item
         android:id="@+id/track_detail_settings"
         android:icon="@drawable/ic_menu_settings"
-        android:orderInCategory="14"
+        android:orderInCategory="13"
         android:title="@string/menu_settings" />
 </menu>

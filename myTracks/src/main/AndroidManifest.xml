@@ -165,9 +165,6 @@ limitations under the License.
         android:resource="@xml/search" />
     </activity>
     <activity
-      android:label="@string/menu_sensor_state"
-      android:name="com.google.android.apps.mytracks.SensorStateActivity" />
-    <activity
       android:name="com.google.android.apps.mytracks.TrackDetailActivity"
       android:parentActivityName="com.google.android.apps.mytracks.TrackListActivity" >
       <meta-data
