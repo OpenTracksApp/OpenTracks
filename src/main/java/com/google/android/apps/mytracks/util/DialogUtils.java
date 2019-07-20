@@ -45,8 +45,7 @@ public class DialogUtils {
    * @param message the message
    * @param okListener the listener when OK is clicked
    */
-  public static Dialog createConfirmationDialog(
-      final Context context, int titleId, String message, DialogInterface.OnClickListener okListener) {
+  public static Dialog createConfirmationDialog(final Context context, int titleId, String message, DialogInterface.OnClickListener okListener) {
     final AlertDialog alertDialog = new AlertDialog.Builder(context)
         .setCancelable(true)
         .setIcon(android.R.drawable.ic_dialog_alert)
@@ -71,8 +70,7 @@ public class DialogUtils {
    * @param messageId the progress message id
    * @param onCancelListener the cancel listener
    */
-  public static ProgressDialog createSpinnerProgressDialog(
-      Context context, int messageId, DialogInterface.OnCancelListener onCancelListener) {
+  public static ProgressDialog createSpinnerProgressDialog(Context context, int messageId, DialogInterface.OnCancelListener onCancelListener) {
     return createProgressDialog(true, context, messageId, onCancelListener);
   }
 
@@ -84,8 +82,7 @@ public class DialogUtils {
    * @param onCancelListener the cancel listener
    * @param formatArgs the format arguments for the messageId
    */
-  public static ProgressDialog createHorizontalProgressDialog(Context context, int messageId,
-      DialogInterface.OnCancelListener onCancelListener, Object... formatArgs) {
+  public static ProgressDialog createHorizontalProgressDialog(Context context, int messageId, DialogInterface.OnCancelListener onCancelListener, Object... formatArgs) {
     return createProgressDialog(false, context, messageId, onCancelListener, formatArgs);
   }
 
@@ -98,8 +95,7 @@ public class DialogUtils {
    * @param onCancelListener the cancel listener
    * @param formatArgs the format arguments for the message id
    */
-  private static ProgressDialog createProgressDialog(boolean spinner, final Context context,
-      int messageId, DialogInterface.OnCancelListener onCancelListener, Object... formatArgs) {
+  private static ProgressDialog createProgressDialog(boolean spinner, final Context context, int messageId, DialogInterface.OnCancelListener onCancelListener, Object... formatArgs) {
     final ProgressDialog progressDialog = new ProgressDialog(context);
     progressDialog.setCancelable(true);
     progressDialog.setCanceledOnTouchOutside(false);
@@ -107,8 +103,7 @@ public class DialogUtils {
     progressDialog.setIndeterminate(true);
     progressDialog.setMessage(context.getString(messageId, formatArgs));
     progressDialog.setOnCancelListener(onCancelListener);
-    progressDialog.setProgressStyle(spinner ? ProgressDialog.STYLE_SPINNER
-        : ProgressDialog.STYLE_HORIZONTAL);
+    progressDialog.setProgressStyle(spinner ? ProgressDialog.STYLE_SPINNER : ProgressDialog.STYLE_HORIZONTAL);
     progressDialog.setTitle(R.string.generic_progress_title);
     progressDialog.setOnShowListener(new DialogInterface.OnShowListener() {
 

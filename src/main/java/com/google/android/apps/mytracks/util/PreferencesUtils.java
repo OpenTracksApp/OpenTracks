@@ -84,7 +84,7 @@ public class PreferencesUtils {
   public static final boolean STATS_SHOW_GRADE_ELEVATION_DEFAULT = false;
   public static final String STATS_UNITS_DEFAULT = "METRIC";
 
-  public static final String TRACK_NAME_DEFAULT = "LOCATION";
+  public static final String TRACK_NAME_DEFAULT = "DATE_ISO_8601_LOCATION";
   
   // Track widget
   public static final int TRACK_WIDGET_ITEM1_DEFAULT = 3; // moving time
@@ -92,9 +92,7 @@ public class PreferencesUtils {
   public static final int TRACK_WIDGET_ITEM3_DEFAULT = 1; // total time
   public static final int TRACK_WIDGET_ITEM4_DEFAULT = 2; // average speed
   public static final int VOICE_FREQUENCY_DEFAULT = 0;
-  
-  private static final String TAG = PreferencesUtils.class.getSimpleName();
-  
+
   private PreferencesUtils() {}
 
   /**
@@ -115,8 +113,7 @@ public class PreferencesUtils {
    * @param defaultValue the default value
    */
   public static boolean getBoolean(Context context, int keyId, boolean defaultValue) {
-    SharedPreferences sharedPreferences = context.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     return sharedPreferences.getBoolean(getKey(context, keyId), defaultValue);
   }
 
@@ -128,8 +125,7 @@ public class PreferencesUtils {
    * @param value the value
    */
   public static void setBoolean(Context context, int keyId, boolean value) {
-    SharedPreferences sharedPreferences = context.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     Editor editor = sharedPreferences.edit();
     editor.putBoolean(getKey(context, keyId), value);
     editor.apply();
@@ -143,8 +139,7 @@ public class PreferencesUtils {
    * @param defaultValue the default value
    */
   public static int getInt(Context context, int keyId, int defaultValue) {
-    SharedPreferences sharedPreferences = context.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     return sharedPreferences.getInt(getKey(context, keyId), defaultValue);
   }
 
@@ -156,8 +151,7 @@ public class PreferencesUtils {
    * @param value the value
    */
   public static void setInt(Context context, int keyId, int value) {
-    SharedPreferences sharedPreferences = context.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     Editor editor = sharedPreferences.edit();
     editor.putInt(getKey(context, keyId), value);
     editor.apply();
@@ -171,8 +165,7 @@ public class PreferencesUtils {
    * @param defaultValue the default value
    */
   public static float getFloat(Context context, int keyId, float defaultValue) {
-    SharedPreferences sharedPreferences = context.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     return sharedPreferences.getFloat(getKey(context, keyId), defaultValue);
   }
 
@@ -184,8 +177,7 @@ public class PreferencesUtils {
    * @param value the value
    */
   public static void setFloat(Context context, int keyId, float value) {
-    SharedPreferences sharedPreferences = context.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     Editor editor = sharedPreferences.edit();
     editor.putFloat(getKey(context, keyId), value);
     editor.apply();
@@ -198,8 +190,7 @@ public class PreferencesUtils {
    * @param keyId the key id
    */
   public static long getLong(Context context, int keyId) {
-    SharedPreferences sharedPreferences = context.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     return sharedPreferences.getLong(getKey(context, keyId), -1L);
   }
 
@@ -211,8 +202,7 @@ public class PreferencesUtils {
    * @param value the value
    */
   public static void setLong(Context context, int keyId, long value) {
-    SharedPreferences sharedPreferences = context.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     Editor editor = sharedPreferences.edit();
     editor.putLong(getKey(context, keyId), value);
     editor.apply();
@@ -226,8 +216,7 @@ public class PreferencesUtils {
    * @param defaultValue default value
    */
   public static String getString(Context context, int keyId, String defaultValue) {
-    SharedPreferences sharedPreferences = context.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     return sharedPreferences.getString(getKey(context, keyId), defaultValue);
   }
 
@@ -239,8 +228,7 @@ public class PreferencesUtils {
    * @param value the value
    */
   public static void setString(Context context, int keyId, String value) {
-    SharedPreferences sharedPreferences = context.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     Editor editor = sharedPreferences.edit();
     editor.putString(getKey(context, keyId), value);
     editor.apply();
@@ -252,8 +240,7 @@ public class PreferencesUtils {
    * @param context the context
    */
   public static boolean isMetricUnits(Context context) {
-    return STATS_UNITS_DEFAULT.equals(
-        getString(context, R.string.stats_units_key, STATS_UNITS_DEFAULT));
+    return STATS_UNITS_DEFAULT.equals(getString(context, R.string.stats_units_key, STATS_UNITS_DEFAULT));
   }
 
   /**
@@ -263,8 +250,7 @@ public class PreferencesUtils {
    * @param context the context
    */
   public static boolean isReportSpeed(Context context) {
-    return STATS_RATE_DEFAULT.equals(
-        getString(context, R.string.stats_rate_key, STATS_RATE_DEFAULT));
+    return STATS_RATE_DEFAULT.equals(getString(context, R.string.stats_rate_key, STATS_RATE_DEFAULT));
   }
 
   /**
@@ -273,30 +259,6 @@ public class PreferencesUtils {
    * @param context the context
    */
   public static boolean isChartByDistance(Context context) {
-    return CHART_X_AXIS_DEFAULT.equals(
-        getString(context, R.string.chart_x_axis_key, CHART_X_AXIS_DEFAULT));
-  }
-  
-  /**
-   * Adds a value to a list.
-   * 
-   * @param context the context
-   * @param keyId the key id
-   * @param defaultValue the default value
-   * @param value the value
-   */
-  public static void addToList(Context context, int keyId, String defaultValue, String value) {
-    String list = getString(context, keyId, defaultValue);
-    if (defaultValue.equals(list)) {
-      setString(context, keyId, value);
-      return;
-    }
-    String[] items = TextUtils.split(list, ";");
-    for (String item : items) {
-      if (value.equals(item)) {
-        return;
-      }
-    }
-    setString(context, keyId, list + ";" + value);
+    return CHART_X_AXIS_DEFAULT.equals(getString(context, R.string.chart_x_axis_key, CHART_X_AXIS_DEFAULT));
   }
 }

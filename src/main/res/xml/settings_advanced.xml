@@ -20,12 +20,6 @@ limitations under the License.
     android:defaultValue="1024"
     android:key="@string/photo_size_key"
     android:title="@string/settings_advanced_photo_size_title" />
-  <CheckBoxPreference
-    android:defaultValue="false"
-    android:key="@string/allow_access_key"
-    android:summaryOff="@string/settings_sharing_allow_access_summary"
-    android:summaryOn="@string/settings_sharing_allow_access_summary"
-    android:title="@string/settings_sharing_allow_access" />  
   <Preference
     android:key="@string/settings_reset_key"
     android:persistent="false"

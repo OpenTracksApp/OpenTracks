@@ -45,10 +45,8 @@ public class AdvancedSettingsActivity extends AbstractSettingsActivity {
 
   private static final String TAG = AdvancedSettingsActivity.class.getSimpleName();
 
-  private static final int DIALOG_CONFIRM_ALLOW_ACCESS_ID = 0;
   private static final int DIALOG_CONFIRM_RESET_ID = 1;
 
-  private CheckBoxPreference allowAccessCheckBoxPreference;
   private Preference resetPreference;
 
   private SharedPreferences sharedPreferences;
@@ -90,20 +88,6 @@ public class AdvancedSettingsActivity extends AbstractSettingsActivity {
     setPhotoSizeSummaryAndOptions(summary, options, values);
     configureListPreference(preference, summary, options, values, String.valueOf(value), null);
 
-    allowAccessCheckBoxPreference = (CheckBoxPreference) findPreference(
-        getString(R.string.allow_access_key));
-    allowAccessCheckBoxPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-        @Override
-      public boolean onPreferenceChange(Preference pref, Object newValue) {
-        if ((Boolean) newValue) {
-          showDialog(DIALOG_CONFIRM_ALLOW_ACCESS_ID);
-          return false;
-        } else {
-          return true;
-        }
-      }
-    });
-
     sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
 
     resetPreference = findPreference(getString(R.string.settings_reset_key));
@@ -133,16 +117,6 @@ public class AdvancedSettingsActivity extends AbstractSettingsActivity {
   @Override
   protected Dialog onCreateDialog(int id) {
     switch (id) {
-      case DIALOG_CONFIRM_ALLOW_ACCESS_ID:
-        return DialogUtils.createConfirmationDialog(this,
-            R.string.settings_sharing_allow_access_confirm_title,
-            getString(R.string.settings_sharing_allow_access_confirm_message),
-            new DialogInterface.OnClickListener() {
-                @Override
-              public void onClick(DialogInterface dialog, int button) {
-                allowAccessCheckBoxPreference.setChecked(true);
-              }
-            });
       case DIALOG_CONFIRM_RESET_ID:
         return DialogUtils.createConfirmationDialog(this, R.string.settings_reset_confirm_title,
             getString(R.string.settings_reset_confirm_message),
@@ -204,8 +178,7 @@ public class AdvancedSettingsActivity extends AbstractSettingsActivity {
                 AdvancedSettingsActivity.this, R.string.settings_reset_done, Toast.LENGTH_SHORT)
                 .show();
             // Restart the settings activity so all changes are loaded
-            Intent intent = getIntent()
-                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            Intent intent = getIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
           }
         });

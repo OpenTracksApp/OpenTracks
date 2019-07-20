@@ -25,7 +25,7 @@ limitations under the License.
     android:key="@string/split_frequency_key"
     android:title="@string/menu_split_frequency" />
   <com.google.android.apps.mytracks.settings.MyTracksListPreference
-    android:defaultValue="@string/settings_recording_track_name_location_value"
+    android:defaultValue="@string/settings_recording_track_name_date_iso_8601_location_value"
     android:key="@string/track_name_key"
     android:title="@string/settings_recording_track_name_title" />
   <com.google.android.apps.mytracks.settings.ActivityTypePreference

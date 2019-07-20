@@ -50,26 +50,18 @@ public class TrackNameUtils {
    * @param startTime the track start time
    * @param location the track location, can be null
    */
-  public static String getTrackName(
-      Context context, long trackId, long startTime, Location location) {
-    String trackName = PreferencesUtils.getString(
-        context, R.string.track_name_key, PreferencesUtils.TRACK_NAME_DEFAULT);
+  public static String getTrackName(Context context, long trackId, long startTime, Location location) {
+    String trackName = PreferencesUtils.getString(context, R.string.track_name_key, PreferencesUtils.TRACK_NAME_DEFAULT);
 
-    if (trackName.equals(
-        context.getString(R.string.settings_recording_track_name_location_value))) {
+    if (trackName.equals(context.getString(R.string.settings_recording_track_name_location_value))) {
       // Use the startTime if location is null
-      return location != null ? getReverseGeoCoding(context, location)
-          : StringUtils.formatDateTime(context, startTime);
-    } else if (trackName.equals(
-        context.getString(R.string.settings_recording_track_name_date_local_value))) {
+      return location != null ? getReverseGeoCoding(context, location) : StringUtils.formatDateTime(context, startTime);
+    } else if (trackName.equals(context.getString(R.string.settings_recording_track_name_date_local_value))) {
       return StringUtils.formatDateTime(context, startTime);
-    } else if (trackName.equals(
-        context.getString(R.string.settings_recording_track_name_date_iso_8601_value))) {
+    } else if (trackName.equals(context.getString(R.string.settings_recording_track_name_date_iso_8601_value))) {
       return new SimpleDateFormat(ISO_8601_FORMAT, Locale.US).format(startTime);
-    } else if (trackName.equals(
-        context.getString(R.string.settings_recording_track_name_date_iso_8601_location_value))) {
-      StringBuilder builder = new StringBuilder(
-          new SimpleDateFormat(ISO_8601_FORMAT, Locale.US).format(startTime));
+    } else if (trackName.equals(context.getString(R.string.settings_recording_track_name_date_iso_8601_location_value))) {
+      StringBuilder builder = new StringBuilder(new SimpleDateFormat(ISO_8601_FORMAT, Locale.US).format(startTime));
 
       if (location != null) {
         String address = getReverseGeoCoding(context, location);

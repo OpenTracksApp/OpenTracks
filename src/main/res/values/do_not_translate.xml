@@ -21,14 +21,11 @@ limitations under the License.
   <string name="marker_statistics_icon_url">http://maps.google.com/mapfiles/ms/micons/ylw-pushpin.png</string>
   <string name="marker_waypoint_icon_url">http://maps.google.com/mapfiles/ms/micons/blue-pushpin.png</string>
   <string name="my_tracks_recording_service_name">My Tracks Recording Service</string>
-  <string name="my_tracks_web_url">www.google.com/mobile/mytracks</string>
+  <string name="my_tracks_web_url">TODO</string>
   <string name="permission_notification_value">com.google.android.apps.mytracks.MYTRACKS_NOTIFICATIONS</string>
   <string name="sensor_type_value_none">NONE</string>
   <string name="sensor_unit_rounds_per_minute">RPM</string>
   <string name="sensor_unit_beats_per_minute">BPM</string>
-  <string name="settings_map_track_color_mode_dynamic_value">DYNAMIC</string>
-  <string name="settings_map_track_color_mode_fixed_value">FIXED</string>
-  <string name="settings_map_track_color_mode_single_value">SINGLE</string>
   <string name="settings_recording_track_name_date_iso_8601_value">DATE_ISO_8601</string>
   <string name="settings_recording_track_name_date_iso_8601_location_value">DATE_ISO_8601_LOCATION</string>
   <string name="settings_recording_track_name_date_local_value">DATE_LOCAL</string>
