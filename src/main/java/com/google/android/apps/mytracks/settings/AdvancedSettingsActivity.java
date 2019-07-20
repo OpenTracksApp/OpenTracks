@@ -79,7 +79,7 @@ public class AdvancedSettingsActivity extends AbstractSettingsActivity {
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
-    addPreferencesFromResource(R.xml.advanced_settings);
+    addPreferencesFromResource(R.xml.settings_advanced);
 
     ListPreference preference = (ListPreference) findPreference(getString(R.string.photo_size_key));
     int value = PreferencesUtils.getInt(

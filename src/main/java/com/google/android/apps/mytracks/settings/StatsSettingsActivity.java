@@ -34,7 +34,7 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
-    addPreferencesFromResource(R.xml.stats_settings);
+    addPreferencesFromResource(R.xml.settings_statistics);
 
     /*
      * Note configureUnitsListPreference will trigger

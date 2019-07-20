@@ -41,7 +41,7 @@ public class SensorSettingsActivity extends AbstractSettingsActivity {
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
-    addPreferencesFromResource(R.xml.sensor_settings);
+    addPreferencesFromResource(R.xml.settings_sensors);
 
     findPreference(getString(R.string.settings_sensor_bluetooth_pairing_key))
         .setOnPreferenceClickListener(new OnPreferenceClickListener() {

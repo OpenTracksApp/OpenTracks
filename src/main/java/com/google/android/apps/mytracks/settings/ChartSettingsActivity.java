@@ -33,7 +33,7 @@ public class ChartSettingsActivity extends AbstractSettingsActivity {
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
-    addPreferencesFromResource(R.xml.chart_settings);
+    addPreferencesFromResource(R.xml.settings_chart);
     configXAxisListPreference();
   }
 

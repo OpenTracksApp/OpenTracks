@@ -43,7 +43,7 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
-    addPreferencesFromResource(R.xml.recording_settings);
+    addPreferencesFromResource(R.xml.settings_recording);
 
     boolean metricUnits = PreferencesUtils.isMetricUnits(this);
 

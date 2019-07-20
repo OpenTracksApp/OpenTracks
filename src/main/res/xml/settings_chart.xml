@@ -32,6 +32,8 @@ limitations under the License.
       android:defaultValue="true"
       android:key="@string/chart_show_heart_rate_key"
       android:title="@string/sensor_state_heart_rate" />
+<!--
+TODO: Sensors are not implemented.
     <CheckBoxPreference
       android:defaultValue="true"
       android:key="@string/chart_show_cadence_key"
@@ -40,5 +42,6 @@ limitations under the License.
       android:defaultValue="true"
       android:key="@string/chart_show_power_key"
       android:title="@string/sensor_state_power" />
+-->
   </PreferenceCategory>
 </PreferenceScreen>
