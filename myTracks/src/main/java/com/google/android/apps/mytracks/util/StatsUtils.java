@@ -23,6 +23,8 @@ import android.view.View;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.apps.mytracks.content.sensor.SensorDataSet;
+import com.google.android.apps.mytracks.services.sensors.SensorManager;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.maps.mytracks.R;
 
@@ -51,8 +53,7 @@ public class StatsUtils {
    * @param location the location
    * @param isRecording true if recording
    */
-  public static void setLocationValues(
-      Context context, Activity activity, View view, Location location, boolean isRecording) {
+  public static void setLocationValues(Context context, Activity activity, View view, Location location, boolean isRecording) {
     boolean metricUnits = PreferencesUtils.isMetricUnits(context);
     boolean reportSpeed = PreferencesUtils.isReportSpeed(context);
 
@@ -61,29 +62,22 @@ public class StatsUtils {
     speed.setVisibility(isRecording ? View.VISIBLE : View.INVISIBLE);
 
     if (isRecording) {
-      double value = isRecording && location != null && location.hasSpeed() ? location.getSpeed()
-          : Double.NaN;
-      setSpeed(context, speed, R.string.stats_speed, R.string.stats_pace, value, metricUnits,
-          reportSpeed);
+      double value = isRecording && location != null && location.hasSpeed() ? location.getSpeed() : Double.NaN;
+      setSpeed(context, speed, R.string.stats_speed, R.string.stats_pace, value, metricUnits, reportSpeed);
     }
 
     // Set elevation
-    boolean showGradeElevation = PreferencesUtils.getBoolean(
-        context, R.string.stats_show_grade_elevation_key,
-        PreferencesUtils.STATS_SHOW_GRADE_ELEVATION_DEFAULT) && isRecording;
+    boolean showGradeElevation = PreferencesUtils.getBoolean(context, R.string.stats_show_grade_elevation_key, PreferencesUtils.STATS_SHOW_GRADE_ELEVATION_DEFAULT) && isRecording;
     View elevation = getView(activity, view, R.id.stats_elevation);
     elevation.setVisibility(showGradeElevation ? View.VISIBLE : View.GONE);
 
     if (showGradeElevation) {
-      double altitude = location != null && location.hasAltitude() ? location.getAltitude()
-          : Double.NaN;
+      double altitude = location != null && location.hasAltitude() ? location.getAltitude() : Double.NaN;
       setElevationValue(context, elevation, -1, altitude, metricUnits);
     }
 
     // Set coordinate
-    boolean showCoordinate = PreferencesUtils.getBoolean(
-        context, R.string.stats_show_coordinate_key, PreferencesUtils.STATS_SHOW_COORDINATE_DEFAULT)
-        && isRecording;
+    boolean showCoordinate = isRecording && PreferencesUtils.getBoolean(context, R.string.stats_show_coordinate_key, PreferencesUtils.STATS_SHOW_COORDINATE_DEFAULT);
     View coordinateSeparator = getView(activity, view, R.id.stats_coordinate_separator);
     View coordinateContainer = getView(activity, view, R.id.stats_coordinate_container);
 
@@ -95,10 +89,19 @@ public class StatsUtils {
     if (showCoordinate) {
       double latitude = location != null ? location.getLatitude() : Double.NaN;
       double longitude = location != null ? location.getLongitude() : Double.NaN;
-      setCoordinateValue(
-          context, getView(activity, view, R.id.stats_latitude), R.string.stats_latitude, latitude);
-      setCoordinateValue(context, getView(activity, view, R.id.stats_longitude),
-          R.string.stats_longitude, longitude);
+      setCoordinateValue(context, getView(activity, view, R.id.stats_latitude), R.string.stats_latitude, latitude);
+      setCoordinateValue(context, getView(activity, view, R.id.stats_longitude), R.string.stats_longitude, longitude);
+    }
+  }
+
+  public static void setSensorData(Context context, Activity activity, SensorDataSet sensorDataSet, boolean isRecording) {
+    {
+      // SensorDataSet: heart rate
+      View view = getView(activity, null, R.id.stats_sensor_heart_rate_value);
+      view.setVisibility(isRecording ? View.VISIBLE : View.INVISIBLE);
+      if (isRecording) {
+        setHeartRateValue(context, view, sensorDataSet);
+      }
     }
   }
 
@@ -109,8 +112,7 @@ public class StatsUtils {
    * @param totalTime the total time
    */
   public static void setTotalTimeValue(Activity activity, long totalTime) {
-    setTimeValue(activity, activity.findViewById(R.id.stats_total_time), R.string.stats_total_time,
-        totalTime);
+    setTimeValue(activity, activity.findViewById(R.id.stats_total_time), R.string.stats_total_time, totalTime);
   }
 
   /**
@@ -282,6 +284,21 @@ public class StatsUtils {
   }
 
   /**
+   * Sets a heart rate value (sensor)
+   *
+   * @param context the context
+   * @param view the containing view
+   * @param sensorDataSet the sensorDataSet
+   */
+  private static void setHeartRateValue(Context context, View view, SensorDataSet sensorDataSet) {
+    String heartRate = context.getString(R.string.value_unknown);
+    if (sensorDataSet != null && sensorDataSet.hasHeartRate() && sensorDataSet.isRecent(SensorManager.MAX_SENSOR_DATE_SET_AGE)) {
+      heartRate = StringUtils.formatDecimal(sensorDataSet.getHeartRate(), 0);
+    }
+    setItem(context, view, R.string.sensor_state_heart_rate, heartRate, context.getString(R.string.sensor_unit_beats_per_minute));
+  }
+
+  /**
    * Sets an item.
    *
    * @param context the context
@@ -328,6 +345,7 @@ public class StatsUtils {
    * @param view the containing view
    * @param id the id
    */
+  //TODO What is the difference between the two cases? Is it (still) necessary?
   private static View getView(Activity activity, View view, int id) {
     if (activity != null) {
       return activity.findViewById(id);

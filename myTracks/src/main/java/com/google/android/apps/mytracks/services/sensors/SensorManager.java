@@ -31,9 +31,10 @@ import java.util.TimerTask;
  */
 public abstract class SensorManager {
 
+  public static final long MAX_SENSOR_DATE_SET_AGE = 5000;
+  public static final long MAX_SENSOR_STATE_AGE = 20000;
+
   private static final String TAG = SensorManager.class.getSimpleName();
-  private static final long MAX_SENSOR_DATE_SET_AGE = 5000;
-  private static final long MAX_SENSOR_STATE_AGE = 20000;
   private static final int RETRY_PERIOD = 20000;
 
   private SensorState sensorState = SensorState.NONE;
@@ -132,6 +133,6 @@ public abstract class SensorManager {
     if (sensorDataSet == null) {
       return false;
     }
-    return (System.currentTimeMillis() - sensorDataSet.getCreationTime()) < MAX_SENSOR_DATE_SET_AGE;
+    return sensorDataSet.isRecent(MAX_SENSOR_DATE_SET_AGE);
   }
 }

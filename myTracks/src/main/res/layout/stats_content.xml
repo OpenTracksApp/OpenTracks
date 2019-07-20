@@ -134,4 +134,19 @@ limitations under the License.
       android:id="@+id/stats_longitude"
       layout="@layout/stats_small_item" />
   </LinearLayout>
+  <!-- Sensor data-->
+  <View
+      android:id="@+id/stats_sensor_separator"
+      style="@style/StatsHorizontalLine" />
+  <LinearLayout
+      android:id="@+id/stats_sensor_container"
+      android:layout_height="wrap_content"
+      android:layout_width="match_parent" >
+    <include
+        android:id="@+id/stats_sensor_heart_rate_value"
+        layout="@layout/stats_small_item" />
+    <include
+        android:id="@+id/stats_sensor_PLACEHOLDER"
+        layout="@layout/stats_small_item" />
+  </LinearLayout>
 </merge>

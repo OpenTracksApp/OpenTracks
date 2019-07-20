@@ -64,6 +64,14 @@ public final class SensorDataSet {
         return creationTimestamp;
     }
 
+    /**
+     * Is the data recent considering the current time.
+     * @param maxAge the maximal age in milliseconds.
+     */
+    public boolean isRecent(long maxAge) {
+        return creationTimestamp + maxAge > System.currentTimeMillis();
+    }
+
     public boolean hasBatteryLevel() {
         return batteryLevel != DATA_UNAVAILABLE;
     }

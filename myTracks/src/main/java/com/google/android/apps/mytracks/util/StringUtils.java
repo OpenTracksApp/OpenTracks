@@ -152,7 +152,11 @@ public class StringUtils {
   }
 
   public static String formatDecimal(double value) {
-    String result = String.format(Locale.getDefault(), "%1$,.2f", value);
+    return StringUtils.formatDecimal(value, 2);
+  }
+
+  public static String formatDecimal(double value, int decimalPlaces) {
+    String result = String.format(Locale.getDefault(), "%1$,." + decimalPlaces +"f", value);
     return result.replaceAll("[0]*$", "").replaceAll("\\.$", "");
   }
 

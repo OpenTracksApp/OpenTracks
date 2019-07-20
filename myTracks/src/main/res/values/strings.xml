@@ -1392,7 +1392,7 @@ limitations under the License.
   </string>
   <string name="sensor_state_heart_rate_value"
     translation_description="In the 'Sensor state' page, the value for the 'Heart rate'. E.g.,
-      'Hear rate: 100 bpm'.
+      'Heart rate: 100 bpm'.
 
       %1$d a number. E.g., '100'.">
     %1$d bpm

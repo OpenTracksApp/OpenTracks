@@ -19,6 +19,7 @@ package com.google.android.apps.mytracks.fragments;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -36,11 +37,15 @@ import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.TrackDataType;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.content.sensor.SensorDataSet;
+import com.google.android.apps.mytracks.services.ITrackRecordingService;
+import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StatsUtils;
 import com.google.android.apps.mytracks.util.TrackIconUtils;
+import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
@@ -59,8 +64,11 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   private TrackDataHub trackDataHub;
   private Handler handlerUpdateUI;
 
+  private TrackRecordingServiceConnection trackRecordingServiceConnection;
+
   private Location lastLocation = null;
   private TripStatistics lastTripStatistics = null;
+  private SensorDataSet sensorDataSet = null;
   private String category = "";
   private int recordingGpsAccuracy = PreferencesUtils.RECORDING_GPS_ACCURACY_DEFAULT;
 
@@ -70,11 +78,14 @@ public class StatsFragment extends Fragment implements TrackDataListener {
       if (isResumed() && isSelectedTrackRecording()) {
         if (!isSelectedTrackPaused() && lastTripStatistics != null) {
           StatsUtils.setTotalTimeValue(getActivity(), System.currentTimeMillis() - lastTripStatistics.getStopTime() + lastTripStatistics.getTotalTime());
+          updateSensorDataUI();
         }
+
         handlerUpdateUI.postDelayed(this, UnitConversions.ONE_SECOND);
       }
     }
   };
+
 
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -85,7 +96,9 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
     handlerUpdateUI = new Handler();
-   
+    trackRecordingServiceConnection = new TrackRecordingServiceConnection(getContext(), null);
+    TrackRecordingServiceConnectionUtils.startConnection(getContext(), trackRecordingServiceConnection);
+
     Spinner activityTypeIcon = getView().findViewById(R.id.stats_activity_type_icon);
     activityTypeIcon.setAdapter(TrackIconUtils.getIconSpinnerAdapter(getActivity(), ""));
     activityTypeIcon.setOnTouchListener(new View.OnTouchListener() {
@@ -123,6 +136,12 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     super.onPause();
     pauseTrackDataHub();
     handlerUpdateUI.removeCallbacks(updateTotalTime);
+  }
+
+  @Override
+  public void onStop() {
+    super.onStop();
+    trackRecordingServiceConnection.unbind();
   }
 
   @Override
@@ -287,11 +306,28 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   }
 
   /**
+   * Tries to fetch most recent {@link SensorDataSet} {@link com.google.android.apps.mytracks.services.sensors.SensorManager}.
+   */
+  private void updateSensorDataUI() {
+    ITrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
+    if (trackRecordingService == null) {
+      Log.d(STATS_FRAGMENT_TAG, "Cannot get the track recording service.");
+      sensorDataSet = null;
+    } else {
+      //TODO sensorState = trackRecordingService.getSensorState();
+      sensorDataSet =  trackRecordingService.getSensorData();
+    }
+
+    StatsUtils.setSensorData(getActivity(), getActivity(), sensorDataSet, isSelectedTrackRecording());
+  }
+
+  /**
    * Updates the UI.
    */
   private void updateUi(FragmentActivity activity) {
     String trackIconValue = TrackIconUtils.getIconValue(activity, category);
     StatsUtils.setTripStatisticsValues(activity, activity, null, lastTripStatistics, trackIconValue);
     StatsUtils.setLocationValues(activity, activity, null, lastLocation, isSelectedTrackRecording());
+    updateSensorDataUI();
   }
 }

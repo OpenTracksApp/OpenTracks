@@ -248,11 +248,9 @@ public class MarkerDetailFragment extends Fragment {
       setName(R.id.marker_detail_waypoint_name, hasPhoto);
 
       TextView category = getView().findViewById(R.id.marker_detail_waypoint_category);
-      ListItemUtils.setTextView(
-          getActivity(), category, StringUtils.getCategory(waypoint.getCategory()), hasPhoto);
+      ListItemUtils.setTextView(getActivity(), category, StringUtils.getCategory(waypoint.getCategory()), hasPhoto);
 
-      TextView description = getView()
-          .findViewById(R.id.marker_detail_waypoint_description);
+      TextView description = getView().findViewById(R.id.marker_detail_waypoint_description);
       ListItemUtils.setTextView(getActivity(), description, waypoint.getDescription(), hasPhoto);
 
       setLocation(R.id.marker_detail_waypoint_location, hasPhoto);

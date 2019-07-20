@@ -81,6 +81,8 @@ Google은 이용자에 대한 위치정보의 이용∙제공사실을 위치정
   <string name="sensor_type_value_none">NONE</string>
   <string name="sensor_type_value_polar">POLAR</string>
   <string name="sensor_type_value_zephyr">ZEPHYR</string>
+  <string name="sensor_unit_rounds_per_minute">RPM</string>
+  <string name="sensor_unit_beats_per_minute">BPM</string>
   <string name="settings_map_track_color_mode_dynamic_value">DYNAMIC</string>
   <string name="settings_map_track_color_mode_fixed_value">FIXED</string>
   <string name="settings_map_track_color_mode_single_value">SINGLE</string>
