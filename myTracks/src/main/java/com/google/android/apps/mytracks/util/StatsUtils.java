@@ -16,15 +16,15 @@
 
 package com.google.android.apps.mytracks.util;
 
-import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.maps.mytracks.R;
-
 import android.app.Activity;
 import android.content.Context;
 import android.location.Location;
 import android.view.View;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.maps.mytracks.R;
 
 import java.util.Locale;
 
@@ -131,8 +131,7 @@ public class StatsUtils {
 
     // Set total distance
     double totalDistance = tripStatistics == null ? Double.NaN : tripStatistics.getTotalDistance();
-    setDistanceValue(
-        context, getView(activity, view, R.id.stats_distance), totalDistance, metricUnits);
+    setDistanceValue(context, getView(activity, view, R.id.stats_distance), totalDistance, metricUnits);
 
     // Set activity type
     Spinner spinner = (Spinner) getView(activity, view, R.id.stats_activity_type_icon);
@@ -142,18 +141,14 @@ public class StatsUtils {
     }
 
     // Set total time
-    setTimeValue(context, getView(activity, view, R.id.stats_total_time), R.string.stats_total_time,
-        tripStatistics != null ? tripStatistics.getTotalTime() : -1L);
+    setTimeValue(context, getView(activity, view, R.id.stats_total_time), R.string.stats_total_time, tripStatistics != null ? tripStatistics.getTotalTime() : -1L);
 
     // Set moving time
-    setTimeValue(context, getView(activity, view, R.id.stats_moving_time),
-        R.string.stats_moving_time, tripStatistics != null ? tripStatistics.getMovingTime() : -1L);
+    setTimeValue(context, getView(activity, view, R.id.stats_moving_time), R.string.stats_moving_time, tripStatistics != null ? tripStatistics.getMovingTime() : -1L);
 
     // Set average speed/pace
     double averageSpeed = tripStatistics != null ? tripStatistics.getAverageSpeed() : Double.NaN;
-    setSpeed(context, getView(activity, view, R.id.stats_average_speed),
-        R.string.stats_average_speed, R.string.stats_average_pace, averageSpeed, metricUnits,
-        reportSpeed);
+    setSpeed(context, getView(activity, view, R.id.stats_average_speed), R.string.stats_average_speed, R.string.stats_average_pace, averageSpeed, metricUnits, reportSpeed);
 
     // Set max speed/pace
     double maxSpeed = tripStatistics == null ? Double.NaN : tripStatistics.getMaxSpeed();
@@ -161,9 +156,7 @@ public class StatsUtils {
 
     // Set average moving speed/pace
     double averageMovingSpeed = tripStatistics != null ? tripStatistics.getAverageMovingSpeed() : Double.NaN;
-    setSpeed(context, getView(activity, view, R.id.stats_average_moving_speed),
-        R.string.stats_average_moving_speed, R.string.stats_average_moving_pace, averageMovingSpeed,
-        metricUnits, reportSpeed);
+    setSpeed(context, getView(activity, view, R.id.stats_average_moving_speed), R.string.stats_average_moving_speed, R.string.stats_average_moving_pace, averageMovingSpeed, metricUnits, reportSpeed);
 
     // Set grade/elevation
     boolean showGradeElevation = PreferencesUtils.getBoolean(context,R.string.stats_show_grade_elevation_key, PreferencesUtils.STATS_SHOW_GRADE_ELEVATION_DEFAULT);

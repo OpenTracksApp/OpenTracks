@@ -19,6 +19,7 @@ limitations under the License.
   <!-- Label -->
   <TextView
     android:id="@+id/stats_label"
+    android:text="@string/track_edit_activity_type_hint"
     style="@style/StatsLargeLabel" />
   <!-- Value container -->
   <LinearLayout style="@style/StatsLargeValueContainer" >
