@@ -472,12 +472,12 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
         return true;
       case R.id.track_list_export_all:
         FileTypeDialogFragment.newInstance(R.id.track_list_export_all,
-            R.string.export_all_title, R.string.export_all_option, 4)
+            R.string.export_all_title, R.string.export_all_option)
             .show(getSupportFragmentManager(), FileTypeDialogFragment.FILE_TYPE_DIALOG_TAG);
         return true;
       case R.id.track_list_import_all:
         FileTypeDialogFragment.newInstance(R.id.track_list_import_all,
-            R.string.import_selection_title, R.string.import_selection_option, 2)
+            R.string.import_selection_title, R.string.import_selection_option)
             .show(getSupportFragmentManager(), FileTypeDialogFragment.FILE_TYPE_DIALOG_TAG);
         return true;
       case R.id.track_list_delete_all:

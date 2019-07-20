@@ -52,15 +52,12 @@ public class FileTypeDialogFragment extends AbstractMyTracksDialogFragment {
   private static final String KEY_MENU_ID = "menuId";
   private static final String KEY_TITLE_ID = "titleId";
   private static final String KEY_OPTION_ID = "optionId";
-  private static final String KEY_SIZE = "size";
 
-  public static FileTypeDialogFragment newInstance(
-      int menuId, int titleId, int optionId, int size) {
+  public static FileTypeDialogFragment newInstance(int menuId, int titleId, int optionId) {
     Bundle bundle = new Bundle();
     bundle.putInt(KEY_MENU_ID, menuId);
     bundle.putInt(KEY_TITLE_ID, titleId);
     bundle.putInt(KEY_OPTION_ID, optionId);
-    bundle.putInt(KEY_SIZE, size);
 
     FileTypeDialogFragment fileTypeDialogFragment = new FileTypeDialogFragment();
     fileTypeDialogFragment.setArguments(bundle);
@@ -81,12 +78,11 @@ public class FileTypeDialogFragment extends AbstractMyTracksDialogFragment {
 
   @Override
   protected Dialog createDialog() {
-    int size = getArguments().getInt(KEY_SIZE);
     int optionId = getArguments().getInt(KEY_OPTION_ID);
     final int titleId = getArguments().getInt(KEY_TITLE_ID);
     final int menuId = getArguments().getInt(KEY_MENU_ID);
-    String[] choices = new String[size];
     TrackFileFormat[] trackFileFormats = TrackFileFormat.values();
+    String[] choices = new String[trackFileFormats.length];
     for (int i = 0; i < choices.length; i++) {
       TrackFileFormat trackFileFormat = trackFileFormats[i];
       choices[i] = getString(optionId, trackFileFormat.name(),
