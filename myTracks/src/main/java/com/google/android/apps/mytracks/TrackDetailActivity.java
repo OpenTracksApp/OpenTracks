@@ -110,6 +110,7 @@ public class TrackDetailActivity extends AbstractTrackActivity
 
   private MenuItem insertMarkerMenuItem;
   private MenuItem insertPhotoMenuItem;
+  private MenuItem markerListMenuItem;
   private MenuItem shareMenuItem;
   private MenuItem voiceFrequencyMenuItem;
   private MenuItem splitFrequencyMenuItem;
@@ -334,6 +335,8 @@ public class TrackDetailActivity extends AbstractTrackActivity
 
     voiceFrequencyMenuItem = menu.findItem(R.id.track_detail_voice_frequency);
     splitFrequencyMenuItem = menu.findItem(R.id.track_detail_split_frequency);
+    markerListMenuItem = menu.findItem(R.id.track_detail_markers);
+
     return super.onCreateOptionsMenu(menu);
   }
 
@@ -358,7 +361,6 @@ public class TrackDetailActivity extends AbstractTrackActivity
           ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
           return false;
         }
-
         takePicture();
         return true;
       case R.id.track_detail_markers:
@@ -486,22 +488,12 @@ public class TrackDetailActivity extends AbstractTrackActivity
    * Updates the menu items.
    */
   private void updateMenuItems(boolean isPaused) {
-    if (insertMarkerMenuItem != null) {
-      insertMarkerMenuItem.setVisible(isRecording() && !isPaused);
-    }
-    if (insertPhotoMenuItem != null) {
-      insertPhotoMenuItem.setVisible(hasCamera && isRecording() && !isPaused);
-    }
-    if (shareMenuItem != null && shareMenuItem.isEnabled()) {
-      shareMenuItem.setVisible(!isRecording());
-    }
-    if (voiceFrequencyMenuItem != null) {
-      voiceFrequencyMenuItem.setVisible(isRecording());
-    }
-    if (splitFrequencyMenuItem != null) {
-      splitFrequencyMenuItem.setVisible(isRecording());
-    }    
-
+    insertMarkerMenuItem.setVisible(isRecording() && !isPaused);
+    insertPhotoMenuItem.setVisible(hasCamera && isRecording() && !isPaused);
+    shareMenuItem.setVisible(!isRecording());
+    markerListMenuItem.setShowAsAction(isRecording() ? MenuItem.SHOW_AS_ACTION_NEVER : MenuItem.SHOW_AS_ACTION_IF_ROOM);
+    voiceFrequencyMenuItem.setVisible(isRecording());
+    splitFrequencyMenuItem.setVisible(isRecording());
     String title;
     if (isRecording()) {
       title = getString(isPaused ? R.string.generic_paused : R.string.generic_recording);
@@ -513,8 +505,7 @@ public class TrackDetailActivity extends AbstractTrackActivity
   }
   
   public void chooseActivityType(String category) {
-    ChooseActivityTypeDialogFragment.newInstance(category).show(getSupportFragmentManager(),
-        ChooseActivityTypeDialogFragment.CHOOSE_ACTIVITY_TYPE_DIALOG_TAG);
+    ChooseActivityTypeDialogFragment.newInstance(category).show(getSupportFragmentManager(), ChooseActivityTypeDialogFragment.CHOOSE_ACTIVITY_TYPE_DIALOG_TAG);
   }
 
   @Override

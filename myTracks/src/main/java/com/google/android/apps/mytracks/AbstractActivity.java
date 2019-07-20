@@ -16,14 +16,15 @@
 
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.util.TrackIconUtils;
-
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
-import androidx.fragment.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import androidx.fragment.app.FragmentActivity;
+
+import com.google.android.apps.mytracks.util.TrackIconUtils;
 
 /**
  * An abstract class for all My Tracks activities.
@@ -57,7 +58,7 @@ public abstract class AbstractActivity extends FragmentActivity {
   protected abstract int getLayoutResId();
 
   /**
-   * Returns true to configure the action bar home button as the up button.
+   * Returns true to configure the action bar home button as the up button (go to previous activity).
    */
   protected boolean configureActionBarHomeAsUp() {
     return true;
@@ -65,17 +66,13 @@ public abstract class AbstractActivity extends FragmentActivity {
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-
-    // Set menu icon color
     TrackIconUtils.setMenuIconColor(menu);
-
     return super.onCreateOptionsMenu(menu);
   }
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-
-    // Handle home menu item, up navigation
+    // Handles actionBar's home menu item (arrow top left corner) and triggers, up navigation to previous activity.
     if (item.getItemId() == android.R.id.home) {
       onHomeSelected();
       return true;
@@ -84,8 +81,7 @@ public abstract class AbstractActivity extends FragmentActivity {
   }
 
   /**
-   * Callback when the home menu item is selected. E.g., setup the back stack
-   * when home is selected.
+   * Callback when the home menu item is selected. E.g., setup the back stack when home is selected.
    */
   protected void onHomeSelected() {
     finish();
