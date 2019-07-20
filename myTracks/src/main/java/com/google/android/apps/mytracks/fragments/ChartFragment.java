@@ -301,12 +301,6 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     }
     return false;
   }
-  
-  @Override
-  public boolean onMapTypeChanged(int mapType) {
-    // We don't care.
-    return false;
-  }
 
   /**
    * Checks the chart settings.
@@ -319,8 +313,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
       reloadTrackDataHub();
       needUpdate = true;
     }
-    if (setSeriesEnabled(ChartView.ELEVATION_SERIES, PreferencesUtils.getBoolean(getActivity(),
-        R.string.chart_show_elevation_key, PreferencesUtils.CHART_SHOW_ELEVATION_DEFAULT))) {
+    if (setSeriesEnabled(ChartView.ELEVATION_SERIES, PreferencesUtils.getBoolean(getActivity(), R.string.chart_show_elevation_key, PreferencesUtils.CHART_SHOW_ELEVATION_DEFAULT))) {
       needUpdate = true;
     }
 

@@ -21,8 +21,9 @@ import android.database.Cursor;
 import android.location.Location;
 import android.os.Handler;
 import android.os.HandlerThread;
-import androidx.annotation.VisibleForTesting;
 import android.util.Log;
+
+import androidx.annotation.VisibleForTesting;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
 import com.google.android.apps.mytracks.util.LocationUtils;
@@ -74,7 +75,6 @@ public class TrackDataHub implements DataSourceListener {
   private boolean reportSpeed;
   private int recordingGpsAccuracy;
   private int recordingDistanceInterval;
-  private int mapType;
 
   // Track points sampling state
   private int numLoadedPoints;
@@ -320,27 +320,11 @@ public class TrackDataHub implements DataSourceListener {
             }
           }
         }
-        if (key == null || key.equals(
-            PreferencesUtils.getKey(context, R.string.recording_distance_interval_key))) {
-          recordingDistanceInterval = PreferencesUtils.getInt(
-              context, R.string.recording_distance_interval_key,
-              PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT);
+        if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.recording_distance_interval_key))) {
+          recordingDistanceInterval = PreferencesUtils.getInt(context, R.string.recording_distance_interval_key, PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT);
           if (key != null) {
-            for (TrackDataListener trackDataListener :
-                trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
+            for (TrackDataListener trackDataListener : trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
               if (trackDataListener.onRecordingDistanceIntervalChanged(recordingDistanceInterval)) {
-                loadDataForListener(trackDataListener);
-              }
-            }
-          }
-        }
-        if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.map_type_key))) {
-          mapType = PreferencesUtils.getInt(
-              context, R.string.map_type_key, PreferencesUtils.MAP_TYPE_DEFAUlT);
-          if (key != null) {
-            for (TrackDataListener trackDataListener :
-                trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
-              if (trackDataListener.onMapTypeChanged(mapType)) {
                 loadDataForListener(trackDataListener);
               }
             }
@@ -364,7 +348,6 @@ public class TrackDataHub implements DataSourceListener {
       trackDataListener.onReportSpeedChanged(reportSpeed);
       trackDataListener.onRecordingGpsAccuracy(recordingGpsAccuracy);
       trackDataListener.onRecordingDistanceIntervalChanged(recordingDistanceInterval);
-      trackDataListener.onMapTypeChanged(mapType);
     }
 
     notifyTracksTableUpdate(trackDataManager.getListeners(TrackDataType.TRACKS_TABLE));
@@ -392,7 +375,6 @@ public class TrackDataHub implements DataSourceListener {
       trackDataListener.onReportSpeedChanged(reportSpeed);
       trackDataListener.onRecordingGpsAccuracy(recordingGpsAccuracy);
       trackDataListener.onRecordingDistanceIntervalChanged(recordingDistanceInterval);
-      trackDataListener.onMapTypeChanged(mapType);
     }
 
     if (trackDataTypes.contains(TrackDataType.TRACKS_TABLE)) {
