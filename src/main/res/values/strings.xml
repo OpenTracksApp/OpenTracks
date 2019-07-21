@@ -1156,47 +1156,6 @@ limitations under the License.
   <string name="permission_gps_failed">
     My Tracks requires permission to use GPS.
   </string>
-  <string name="permission_notification_description"
-    translation_description="The permission description the Google Play Store shows during app
-      installation when the app wants to receive Google My Tracks notifications.">
-    Allows the application to receive notifications when Google My Tracks starts or stops a
-    recording.
-  </string>
-  <string name="permission_notification_label"
-    translation_description="The permission label the Google Play Store shows during app
-      installation when the app wants to receive Google My Tracks notifications.">
-    receive Google My Tracks notifications
-  </string>
-  <string name="permission_read_description"
-    translation_description="The permission description the Google Play Store shows during app
-      installation when the app wants to read Google My Tracks data.">
-    Allows the application to read Google My Tracks data.
-  </string>
-  <string name="permission_read_label"
-    translation_description="The permission label the Google Play Store shows during app
-      installation when the app wants to read My Tracks data.">
-    read Google My Tracks data
-  </string>
-  <string name="permission_request_message"
-    translation_description="The message when requesting permission.
-      %1$s account name. E.g., 'foo@foo.com'.">
-    for account %1$s
-  </string>
-  <string name="permission_request_title"
-    translation_description="The title when the 'My Tracks' app is requesting permission.">
-    My Tracks requesting permission
-  </string>
-  <string name="permission_write_description"
-    translation_description="The permission description the Google Play Store shows during app
-      installation when the app wants to write data to My Tracks.">
-    Allows the application to write data to Google My Tracks and start/stop Google My Tracks
-    recording.
-  </string>
-  <string name="permission_write_label"
-    translation_description="The permission label the Google Play Store shows during app
-      installation when the app wants to write data to My Tracks.">
-    write data to Google My Tracks and start/stop Google My Tracks recording
-  </string>
 
   <!-- Search -->
   <string name="search_global_description"
