@@ -78,9 +78,9 @@ public interface TracksColumns extends BaseColumns {
 
   String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" // table
       + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " // id
-      + NAME + " STRING, " // name
-      + DESCRIPTION + " STRING, " // description
-      + CATEGORY + " STRING, " // category
+      + NAME + " TEXT, " // name
+      + DESCRIPTION + " TEXT, " // description
+      + CATEGORY + " TEXT, " // category
       + STARTID + " INTEGER, " // start id
       + STOPID + " INTEGER, " // stop id
       + STARTTIME + " INTEGER, " // start time
@@ -101,5 +101,5 @@ public interface TracksColumns extends BaseColumns {
       + ELEVATIONGAIN + " FLOAT, " // elevation gain
       + MINGRADE + " FLOAT, " // min grade
       + MAXGRADE + " FLOAT, " // max grade
-      + ICON + " STRING);"; // icon
+      + ICON + " TEXT);"; // icon
 }

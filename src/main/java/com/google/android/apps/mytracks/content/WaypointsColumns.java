@@ -69,10 +69,10 @@ public interface WaypointsColumns extends BaseColumns {
   
   String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
       + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-      + NAME + " STRING, "
-      + DESCRIPTION + " STRING, "
-      + CATEGORY + " STRING, "
-      + ICON + " STRING, "
+      + NAME + " TEXT, "
+      + DESCRIPTION + " TEXT, "
+      + CATEGORY + " TEXT, "
+      + ICON + " TEXT, "
       + TRACKID + " INTEGER, "
       + TYPE + " INTEGER, "
       + LENGTH + " FLOAT, "
@@ -98,6 +98,6 @@ public interface WaypointsColumns extends BaseColumns {
       + ELEVATIONGAIN + " FLOAT, "
       + MINGRADE + " FLOAT, "
       + MAXGRADE + " FLOAT, "
-      + PHOTOURL + " STRING"
+      + PHOTOURL + " TEXT"
       + ");";
 }
