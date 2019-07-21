@@ -43,6 +43,8 @@ public class SaveActivity extends Activity {
 
   public static final String EXTRA_TRACK_FILE_FORMAT = "track_file_format";
   public static final String EXTRA_TRACK_IDS = "track_ids";
+
+  @Deprecated //TODO Seems to be a left over from Google Earth integration and can be removed.
   public static final String EXTRA_PLAY_TRACK = "play_track";
 
   private static final int DIALOG_PROGRESS_ID = 0;

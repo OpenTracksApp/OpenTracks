@@ -48,6 +48,7 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   private SaveActivity saveActivity;
   private final long[] trackIds;
   private final TrackFileFormat trackFileFormat;
+  @Deprecated //TODO Seems to be a left over from Google Earth integration and can be removed.
   private final boolean playTrack;
   private final File directory;
   private final Context context;
@@ -115,10 +116,8 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   protected Boolean doInBackground(Void... params) {
     try {
       Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
-      boolean isRecording = PreferencesUtils.getLong(saveActivity, R.string.recording_track_id_key)
-          != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
-      boolean isPaused = PreferencesUtils.getBoolean(saveActivity,
-          R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+      boolean isRecording = PreferencesUtils.getLong(saveActivity, R.string.recording_track_id_key) != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+      boolean isPaused = PreferencesUtils.getBoolean(saveActivity, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
       // Get the wake lock if not recording or paused
       if (!isRecording || isPaused) {
         wakeLock = SystemUtils.acquireWakeLock(saveActivity, wakeLock);
