@@ -35,6 +35,7 @@ public class PreferencesUtils {
    * Preferences values. The defaults need to match the defaults in the xml
    * files.
    */
+  @Deprecated //TODO: to be removed.
   public static final boolean ALLOW_ACCESS_DEFAULT = false;
   public static final int AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT = 0;
 
@@ -139,8 +140,16 @@ public class PreferencesUtils {
    * @param defaultValue the default value
    */
   public static int getInt(Context context, int keyId, int defaultValue) {
+    //NOTE: We assume that the data was stored as String due to use of ListPreference.
     SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    return sharedPreferences.getInt(getKey(context, keyId), defaultValue);
+    String stringValue = sharedPreferences.getString(getKey(context, keyId), null);
+
+    int intValue = defaultValue;
+    try {
+      intValue = Integer.parseInt(stringValue);
+    } catch (NumberFormatException e){
+    }
+    return intValue;
   }
 
   /**
@@ -154,32 +163,6 @@ public class PreferencesUtils {
     SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     Editor editor = sharedPreferences.edit();
     editor.putInt(getKey(context, keyId), value);
-    editor.apply();
-  }
-
-  /**
-   * Gets a float preference value.
-   * 
-   * @param context the context
-   * @param keyId the key id
-   * @param defaultValue the default value
-   */
-  public static float getFloat(Context context, int keyId, float defaultValue) {
-    SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    return sharedPreferences.getFloat(getKey(context, keyId), defaultValue);
-  }
-
-  /**
-   * Sets a float preference value.
-   * 
-   * @param context the context
-   * @param keyId the key id
-   * @param value the value
-   */
-  public static void setFloat(Context context, int keyId, float value) {
-    SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    Editor editor = sharedPreferences.edit();
-    editor.putFloat(getKey(context, keyId), value);
     editor.apply();
   }
 

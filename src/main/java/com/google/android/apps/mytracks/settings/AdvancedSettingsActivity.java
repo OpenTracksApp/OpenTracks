@@ -80,8 +80,7 @@ public class AdvancedSettingsActivity extends AbstractSettingsActivity {
     addPreferencesFromResource(R.xml.settings_advanced);
 
     ListPreference preference = (ListPreference) findPreference(getString(R.string.photo_size_key));
-    int value = PreferencesUtils.getInt(
-        this, R.string.photo_size_key, PreferencesUtils.PHOTO_SIZE_DEFAULT);
+    int value = PreferencesUtils.getInt(this, R.string.photo_size_key, PreferencesUtils.PHOTO_SIZE_DEFAULT);
     String[] values = getResources().getStringArray(R.array.photo_size_values);
     String[] options = new String[values.length];
     String[] summary = new String[values.length];
