@@ -35,10 +35,6 @@ limitations under the License.
   <string name="stats_show_coordinate_key">statsShowCoordinate</string>
   <string name="stats_show_grade_elevation_key">statsShowGradeElevation</string>
   <string name="stats_units_key">statsUnits</string>
-  <string name="track_color_mode_medium_key">trackColorModeMedium</string>
-  <string name="track_color_mode_percentage_key">trackColorModePercentage</string>
-  <string name="track_color_mode_slow_key">trackColorModeSlow</string>
-  <string name="track_color_mode_key">trackColorMode</string>
   <string name="track_name_key">trackName</string>
   <string name="track_widget_item1">trackWidgetItem1</string>
   <string name="track_widget_item2">trackWidgetItem2</string>
@@ -50,7 +46,6 @@ limitations under the License.
   <string name="bluetooth_sensor_key">bluetoothSensor</string>
   <string name="recording_track_id_key">recordingTrackId</string>
   <string name="recording_track_paused_key">recordingTrackPaused</string>
-  <string name="share_track_account_key">shareTrackAccountKey</string>
   <!-- Keys for non-persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
   <string name="settings_advanced_key">settingsAdvanced</string>
   <string name="settings_chart_key">settingsChart</string>

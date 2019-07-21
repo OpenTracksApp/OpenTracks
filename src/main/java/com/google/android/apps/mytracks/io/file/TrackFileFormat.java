@@ -24,7 +24,7 @@ public enum TrackFileFormat implements Parcelable {
   GPX {
   @Override
     public TrackWriter newTrackWriter(Context context, boolean multiple, boolean playTrack) {
-      return new GpxTrackWriter(context.getString(R.string.send_google_by_my_tracks, "", ""));
+      return new GpxTrackWriter(context.getString(R.string.app_name));
     }
   };
 

@@ -453,15 +453,15 @@ public class TrackRecordingService extends Service {
     @VisibleForTesting
     protected void startForegroundService(PendingIntent pendingIntent, int messageId) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel notificationChannel = new NotificationChannel(getString(R.string.my_tracks_app_name), getString(R.string.my_tracks_app_name), NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel notificationChannel = new NotificationChannel(getString(R.string.app_name), getString(R.string.app_name), NotificationManager.IMPORTANCE_DEFAULT);
             NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             assert manager != null;
             manager.createNotificationChannel(notificationChannel);
         }
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, getString(R.string.my_tracks_app_name))
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, getString(R.string.app_name))
                 .setContentIntent(pendingIntent)
                 .setContentText(getString(messageId))
-                .setContentTitle(getString(R.string.my_tracks_app_name))
+                .setContentTitle(getString(R.string.app_name))
                 .setOngoing(true)
                 .setSmallIcon(R.drawable.ic_stat_notify_recording)
                 .setCategory(Notification.CATEGORY_SERVICE)

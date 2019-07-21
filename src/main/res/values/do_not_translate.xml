@@ -20,8 +20,7 @@ limitations under the License.
   <string name="chart_x_axis_time">TIME</string>
   <string name="marker_statistics_icon_url">http://maps.google.com/mapfiles/ms/micons/ylw-pushpin.png</string>
   <string name="marker_waypoint_icon_url">http://maps.google.com/mapfiles/ms/micons/blue-pushpin.png</string>
-  <string name="my_tracks_recording_service_name">My Tracks Recording Service</string>
-  <string name="my_tracks_web_url">TODO</string>
+  <string name="app_web_url">TODO</string>
   <string name="permission_notification_value">com.google.android.apps.mytracks.MYTRACKS_NOTIFICATIONS</string>
   <string name="sensor_type_value_none">NONE</string>
   <string name="sensor_unit_rounds_per_minute">RPM</string>

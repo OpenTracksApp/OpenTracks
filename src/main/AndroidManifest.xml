@@ -105,7 +105,7 @@ limitations under the License.
     android:allowBackup="true"
     android:hardwareAccelerated="true"
     android:icon="@drawable/ic_launcher"
-    android:label="@string/my_tracks_app_name"
+    android:label="@string/app_name"
     android:theme="@style/ThemeCustom"
     tools:replace="android:label" >
     <!-- Activities -->
@@ -182,7 +182,7 @@ limitations under the License.
       android:enabled="true"
       android:exported="false"
       android:icon="@drawable/ic_arrow_320"
-      android:label="@string/my_tracks_recording_service"
+      android:label="@string/recording_service"
       android:name="com.google.android.apps.mytracks.services.TrackRecordingService"
       android:permission="com.google.android.apps.mytracks.WRITE_TRACK_DATA" />
     <!-- Receivers -->

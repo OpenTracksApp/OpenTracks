@@ -45,18 +45,17 @@ public class DescriptionGeneratorImpl implements DescriptionGenerator {
   }
 
   @Override
-  public String generateTrackDescription(
-      Track track, Vector<Double> distances, Vector<Double> elevations, boolean html) {
+  public String generateTrackDescription(Track track, Vector<Double> distances, Vector<Double> elevations, boolean html) {
     String paragraphSeparator = html ? HTML_PARAGRAPH_SEPARATOR : TEXT_PARAGRAPH_SEPARATOR;
     String lineBreak = html ? HTML_LINE_BREAK : TEXT_LINE_BREAK;
     StringBuilder builder = new StringBuilder();
 
     // Created by
-    String beginAnchor = html 
-        ? "<a href='http://" + context.getString(R.string.my_tracks_web_url) + "'>"
-        : "";
-    String endAnchor = html ? "</a>" : "";
-    builder.append(context.getString(R.string.send_google_by_my_tracks, beginAnchor, endAnchor));
+    String creator = html
+        ? "<a href='http://" + context.getString(R.string.app_web_url) + "'>" + context.getString(R.string.app_name) +  "</a>"
+        : context.getString(R.string.app_name);
+    builder.append(creator);
+
     builder.append(paragraphSeparator);
 
     writeString(track.getName(), builder, R.string.generic_name_line, lineBreak);

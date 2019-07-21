@@ -531,42 +531,6 @@ limitations under the License.
   </string>
 
   <!-- Eula -->
-  <string name="eula_accept"
-    translation_description="In the 'Terms of Service' dialog, the button to accept.">
-    Accept
-  </string>
-  <string name="eula_body"
-    translation_description="The body in the 'Terms of Service. See http://m.google.com/toscountry.
-
-      %1$s host name, 'm.google.com'">
-    By using Google\'s mobile products and services (&#8220;Services&#8221;), you agree to be bound
-    by a) the YouTube Terms of Use (%1$s/tos_youtube) for YouTube-related Services, b) the Google
-    Maps Terms and Conditions (%1$s/tos_maps) for mapping, local and location-based Services, c) the
-    Google Books Terms of Service (%1$s/tos_books) for Books-related Services, and d) the Google
-    Terms of Service (%1$s/utos) for all other Services, as updated from time to time.
-  </string>
-  <string name="eula_copyright_year"
-    translation_description="The copyright year in the 'Terms of Service'. See
-      http://m.google.com/toscountry. \u00A9 is the unicode value for the copyright symbol.">
-    \u00A92014
-  </string>
-  <string name="eula_date"
-    translation_description="The date in the 'Terms of Service'. See
-      http://m.google.com/toscountry.">
-    March 1, 2012
-  </string>
-  <string name="eula_decline"
-    translation_description="In the 'Terms of Service' dialog, the button to decline.">
-    Decline
-  </string>
-  <string name="eula_footer"
-    translation_description="The footer in the 'Terms of Service'. See
-      http://m.google.com/toscountry.
-
-      %1$s host name, 'm.google.com'">
-    Any required attribution or notice for the third party content may be found at
-    %1$s/legalnotices.
-  </string>
 
   <!-- Export -->
   <string name="export_all_option"
@@ -753,11 +717,6 @@ limitations under the License.
   </string>
 
   <!-- Gps -->
-  <string name="gps_google_location_settings"
-     translation_description="In Android, the Google location settings to modify location settings
-      for all Google applications. See Settings -> Google -> Location settings.">
-    &#8216;Google location settings&#8217;
-  </string>
   <string name="gps_location_access"
     translation_description="In Android, the location access settings to modify location settings
       for all applications. See Settings -> Location access.">
@@ -1062,12 +1021,6 @@ limitations under the License.
       Character limit: ~20 (1 line)">
     Help
   </string>
-  <string name="menu_help_eula"
-    translation_description="In the menu, to go to the terms of service page.
-
-      Character limit: ~20 (1 line)">
-    Terms of service
-  </string>
   <string name="menu_help_feedback"
     translation_description="In the menu, to go to the help and feedback page.
 
@@ -1079,12 +1032,6 @@ limitations under the License.
 
       Character limit: ~20 (1 line)">
     Help forum
-  </string>
-  <string name="menu_help_play_store"
-    translation_description="In the menu, to go to the My Tracks Google Play Store page.
-
-      Character limit: ~20 (1 line)">
-    View in Google Play Store
   </string>
   <string name="menu_import_all"
     translation_description="In the menu, to import all the tracks from the external storage.
@@ -1111,12 +1058,6 @@ limitations under the License.
       Character limit: ~20 (1 line)">
     Map
   </string>
-  <string name="menu_map_layer"
-    translation_description="In the menu, to change the map layer.
-
-      Character limit: ~20 (1 line)">
-    Map layer
-  </string>
   <string name="menu_markers"
     translation_description="In the menu, to show a list of markers for the current track.
 
@@ -1128,20 +1069,6 @@ limitations under the License.
 
       Character limit: ~20 (1 line)">
     Play
-  </string>
-  <string name="menu_satellite"
-    translation_description="In the menu, under the map layer option, the submenu to display
-      satellite.
-
-      Character limit: ~20 (1 line)">
-    Satellite
-  </string>
-  <string name="menu_satellite_with_streets"
-    translation_description="In the menu, under the map layer option, the submenu to display
-      satellite with major streets.
-
-      Character limit: ~20 (1 line)">
-    Satellite with streets
   </string>
   <string name="menu_search"
     translation_description="In the menu, to start a textual search for tracks or markers.
@@ -1198,13 +1125,6 @@ limitations under the License.
       Character limit: ~20 (1 line)">
     Stop GPS
   </string>
-  <string name="menu_terrain"
-    translation_description="In the menu, under the map layer option, the submenu to display
-      terrain.
-
-      Character limit: ~20 (1 line)">
-    Terrain
-  </string>
   <string name="menu_view_photo"
     translation_description="In the menu, to view a photo.
 
@@ -1220,11 +1140,11 @@ limitations under the License.
   </string>
 
   <!-- My Tracks -->
-  <string name="my_tracks_app_name"
+  <string name="app_name"
     translation_description="The My Tracks application name.">
       My Tracks
   </string>
-  <string name="my_tracks_recording_service"
+  <string name="recording_service"
     translation_description="When viewing the 'Running services' on Android, the name of the My
       Tracks service that is recording a track in the background.
 
@@ -1300,54 +1220,6 @@ limitations under the License.
       what will be searched for.">
     Speak the name of a track or marker
   </string>
-
-
-
-  <!-- Send Google -->
-  <string name="send_google_by_my_tracks"
-    translation_description="When sending a track to Google, a note indicating it is created by
-      Google My Tracks on Android.
-
-      %1$s the html anchor opening tag. Place this placeholder before the app name,
-      'Google My Tracks'.
-      %2$s the html anchor closing tag. Place this placeholder after the app name,
-      'Google My Tracks'.">
-    Created by %1$sGoogle My Tracks%2$s on Android
-  </string>
-  <string name="send_google_choose_account_title"
-    translation_description="When sending to Google, the dialog title to choose a Google account.">
-    Choose account
-  </string>
-  <string name="send_google_no_account_message"
-    translation_description="When sending to Google, the dialog message when no Google account is
-      found.">
-    Add account at &#8216;Settings&#8217; &#45;&#62; &#8216;Add account&#8217;
-  </string>
-  <string name="send_google_no_account_title"
-    translation_description="When sending to Google, the dialog title when no Google account is
-      found.">
-    No account found
-  </string>
-  <string name="send_google_no_account_permission"
-    translation_description="When sending to Google, the message when not able to get account
-      permission.">
-    Not able to get account permission. Make sure network is available.
-  </string>
-  <string name="send_google_progress_message"
-    translation_description="When sending a track to a Google service, the progress message.
-
-      %1$s service name. 'Google Maps', 'Google Fusion Tables', or 'Google Spreadsheets'.">
-    Sending to %1$s&#8230;
-  </string>
-  <string name="send_google_track_part_label"
-    translation_description="When sending a track to Google, the label to name segments of a large
-      track. E.g., 'track_name (Part 1)'.
-
-      %1$s track name. E.g., 'Grand Canyon trail'.
-      %2$d part number. E.g., '1'.">
-    %1$s (Part %2$d)
-  </string>
-
   <!-- Sensor State -->
   <string name="sensor_state_battery"
     translation_description="In the 'Sensor state' page, the label for the battery level on the bike
@@ -1477,74 +1349,6 @@ limitations under the License.
   </string>
 
   <!-- Settings Map -->
-  <string name="settings_map_medium"
-    translation_description="In the 'Map' settings, under the 'Fixed thresholds' section, the option
-      to configure the top medium speed.
-
-      Character limit: ~23 (1 line)">
-    Top medium speed
-  </string>
-  <string name="settings_map_percentage"
-    translation_description="In the 'Map' settings, under the 'Dynamic thresholds' section, the
-      option to configure the medium speed range as a percentage from the average speed.
-
-      Character limit: ~23 (1 line)">
-    Percentage from average
-  </string>
-  <string name="settings_map_percentage_summary"
-    translation_description="In the 'Map' settings, under the 'Dynamic thresholds' section, the
-      summary for the 'Percentage from average' option explaining that the medium speed range is set
-      as a percentage from the average speed.
-
-      %1$d an integer value. E.g., '15'.">
-    The medium speed range is %1$d %% from the average speed
-  </string>
-  <string name="settings_map_slow"
-    translation_description="In the 'Map' settings, under the 'Fixed thresholds' section, the option
-      to configure the top slow speed.
-
-      Character limit: ~23 (1 line)">
-    Top slow speed
-  </string>
-  <string name="settings_map_track_color_mode"
-    translation_description="In the 'Map' settings, the picker to select how track color is
-      configured.
-
-      Character limit: ~23 (1 line)">
-    Track color
-  </string><string name="settings_map_track_color_mode_dynamic"
-    translation_description="In the 'Map' settings, for the 'Track color' picker, the option to use
-      dynamic thresholds to set slow, medium, and fast speed when coloring a track based on speed.
-
-      Character limit: ~20 (1 line)">
-    Dynamic thresholds
-  </string>
-  <string name="settings_map_track_color_mode_dynamic_summary"
-    translation_description="In the 'Map' settings, the summary for the 'Track color' picker when
-      the 'Dynamic thresholds' is selected explaining that it uses dynamic thresholds to set slow,
-      medium, and fast speed when coloring a track based on speed.">
-    Use dynamic thresholds to set slow, medium, and fast speed when coloring a track based on speed
-  </string>
-  <string name="settings_map_track_color_mode_fixed"
-    translation_description="In the 'Map' settings, for the 'Track color' picker, the option to use
-      fixed thresholds to set slow, medium, and fast speed when coloring a track based on speed.
-
-      Character limit: ~20 (1 line)">
-    Fixed thresholds
-  </string>
-  <string name="settings_map_track_color_mode_fixed_summary"
-    translation_description="In the 'Map' settings, the summary for the 'Track color' picker when
-      the 'Fixed thresholds' is selected explaining that it uses fixed thresholds to set slow,
-      medium, and fast speed when coloring a track based on speed.">
-    Use fixed thresholds to set slow, medium, and fast speed when coloring a track based on speed
-  </string>
-  <string name="settings_map_track_color_mode_single"
-    translation_description="In the 'Map' settings, for the 'Track color' picker, the option to use
-      a single color to color a track.
-
-      Character limit: ~20 (1 line)">
-    Single color
-  </string>
 
   <!-- Settings Recording -->
   <string name="settings_recording"
@@ -1710,18 +1514,6 @@ limitations under the License.
       Character limit: ~26 (1 line)">
     Sensor
   </string>
-  <string name="settings_sensor_ant_not_connected"
-    translation_description="In the 'Sensor' settings, the summary to indicate that an ANT+ sensor
-      is not connected.">
-    Not connected
-  </string>
-  <string name="settings_sensor_ant_paired"
-    translation_description="In the 'Sensor' settings, the summary to indicate that an ANT+ sensor
-      is paired. Note that ANT+ is a radio standard.
-
-      %1$d device id number. E.g., '1'.">
-    Paired with %1$d
-  </string>
   <string name="settings_sensor_ant_reset_bike_cadence_sensor"
     translation_description="In the 'Sensor' settings, under the 'ANT+' section, the option to reset
       an ANT+ bike cadence sensor. Note that ANT+ is a radio standard.
@@ -1784,55 +1576,6 @@ limitations under the License.
       %1$s sensor name. E.g., 'Polar Bluetooth'.">
    Connected to %1$s
   </string>
-  <string name="settings_sensor_type"
-    translation_description="In the 'Sensor' settings, the picker to choose a sensor type.
-
-      Character limit: ~23 (1 line)">
-    Sensor type
-  </string>
-  <string name="settings_sensor_type_polar"
-    translation_description="In the 'Sensor' settings, the option in the 'Sensor type' picker to
-      choose a Polar bluetooth sensor. Do not translate Polar, the company name, but can translate
-      Bluetooth, the radio standard.
-
-      Character limit: ~20 (1 line)">
-    Polar Bluetooth
-  </string>
-  <string name="settings_sensor_type_zephyr"
-    translation_description="In the 'Sensor' settings, the option in the 'Sensor type' picker to
-      choose a Zephyr bluetooth sensor. Do not translate Zephyr, the company name, but can translate
-      Bluetooth, the radio standard.
-
-      Character limit: ~20 (1 line)">
-    Zephyr Bluetooth
-  </string>
-
-  <!-- Settings Sharing -->
-  <string name="settings_sharing_allow_access"
-    translation_description="In the 'Sharing' settings, the checkbox option to allow third party
-      apps access to the My Tracks data.
-
-      Character limit: ~23 (1 line)">
-    Allow access
-  </string>
-  <string name="settings_sharing_allow_access_confirm_message"
-    translation_description="In the 'Sharing' settings, after checking the 'Allow access' checkbox,
-      the confirmation dialog message informing the user that other apps, including apps installed
-      in the future, will be able to control and access My Tracks data. In addition, no further
-      notification of third party app access will be shown.">
-    Other apps, including future apps, will be able to control and access My Tracks data. There will
-    be no further notification.
-  </string>
-  <string name="settings_sharing_allow_access_confirm_title"
-    translation_description="In the 'Sharing' settings, after checking the 'Allow access' checkbox,
-      the title of the confirmation dialog.">
-    Allow access?
-  </string>
-  <string name="settings_sharing_allow_access_summary"
-    translation_description="In the 'Sharing' settings, the summary for the 'Allow access' checkbox
-      option.">
-    Let other apps read, write, start/stop recording My Tracks data
-  </string>
 
   <!-- Settings Stats -->
   <string name="settings_stats_coordinate"
@@ -1878,38 +1621,15 @@ limitations under the License.
     translation_description="The hint for the auto complete text box for entering email addresses.">
     Email addresses
   </string>
-  <string name="share_track_invite"
-    translation_description="The checkbox to invite people to view a track.">
-    Invite people to view
-  </string>
-  <string name="share_track_no_emails"
-    translation_description="When sharing a track, error message indicating that no email addresses
-      is entered.">
-    No email addresses entered
-  </string>
-  <string name="share_track_no_selection"
-    translation_description="When sharing a track, error message indicating that no option is
-      selected.">
-    No option selected
-  </string>
   <string name="share_track_picker_title"
     translation_description="When sharing a track with friends, the title on the picker to ask the
       user to select an application.">
     Select an application
   </string>
-  <string name="share_track_public"
-    translation_description="The checkbox to make a track public and share its url.">
-    Make public &amp; share URL
-  </string>
   <string name="share_track_share_file"
     translation_description="After saving a track to the external storage, the button on the result
       dialog to share the saved track file with friends.">
     Share track file
-  </string>
-  <string name="share_track_share_url_title"
-      translation_description="The dialog title asking the user to select an application for sharing
-      an URL.">
-    Share URL using:
   </string>
   <string name="share_track_share_file_body"
     translation_description="When sharing a track file with friends, the body of the message. Note

@@ -125,7 +125,7 @@ public class KmlTrackWriter implements TrackWriter {
       Track track = tracks[0];
       printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
       printWriter.println("<atom:author><atom:name>"
-          + StringUtils.formatCData(context.getString(R.string.send_google_by_my_tracks, "", ""))
+          + StringUtils.formatCData(context.getString(R.string.app_name))
           + "</atom:name></atom:author>");
       writeTrackStyle();
       writePlacemarkerStyle(START_STYLE, START_ICON, 32, 1);
