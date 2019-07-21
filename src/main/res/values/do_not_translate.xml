@@ -16,27 +16,27 @@ limitations under the License.
 -->
 <resources>
   <!-- DO NOT TRANSLATE ANY STRINGS IN THIS FILE. -->
-  <string name="chart_x_axis_distance">DISTANCE</string>
-  <string name="chart_x_axis_time">TIME</string>
-  <string name="marker_statistics_icon_url">http://maps.google.com/mapfiles/ms/micons/ylw-pushpin.png</string>
-  <string name="marker_waypoint_icon_url">http://maps.google.com/mapfiles/ms/micons/blue-pushpin.png</string>
-  <string name="app_web_url">TODO</string>
-  <string name="permission_notification_value">com.google.android.apps.mytracks.MYTRACKS_NOTIFICATIONS</string>
-  <string name="sensor_type_value_none">NONE</string>
-  <string name="sensor_unit_rounds_per_minute">RPM</string>
-  <string name="sensor_unit_beats_per_minute">BPM</string>
-  <string name="settings_recording_track_name_date_iso_8601_value">DATE_ISO_8601</string>
-  <string name="settings_recording_track_name_date_iso_8601_location_value">DATE_ISO_8601_LOCATION</string>
-  <string name="settings_recording_track_name_date_local_value">DATE_LOCAL</string>
-  <string name="settings_recording_track_name_location_value">LOCATION</string>
-  <string name="settings_recording_track_name_number_value">NUMBER</string>
-  <string name="stats_rate_pace">PACE</string>
-  <string name="stats_rate_speed">SPEED</string>
-  <string name="stats_units_imperial">IMPERIAL</string>
-  <string name="stats_units_metric">METRIC</string>
-  <string name="track_action_end">com.google.android.apps.mytracks.END_CURRENT_TRACK</string>
-  <string name="track_action_pause">com.google.android.apps.mytracks.PAUSE_CURRENT_TRACK</string>
-  <string name="track_action_resume">com.google.android.apps.mytracks.RESUME_CURRENT_TRACK</string>
-  <string name="track_action_start">com.google.android.apps.mytracks.START_NEW_TRACK</string>
-  <string name="value_unknown">-</string>
+  <string name="chart_x_axis_distance" translatable="false">DISTANCE</string>
+  <string name="chart_x_axis_time" translatable="false">TIME</string>
+  <string name="marker_statistics_icon_url" translatable="false">http://maps.google.com/mapfiles/ms/micons/ylw-pushpin.png</string>
+  <string name="marker_waypoint_icon_url" translatable="false">http://maps.google.com/mapfiles/ms/micons/blue-pushpin.png</string>
+  <string name="app_web_url" translatable="false">TODO</string>
+  <string name="permission_notification_value" translatable="false">com.google.android.apps.mytracks.MYTRACKS_NOTIFICATIONS</string>
+  <string name="sensor_type_value_none" translatable="false">NONE</string>
+  <string name="sensor_unit_rounds_per_minute" translatable="false">RPM</string>
+  <string name="sensor_unit_beats_per_minute" translatable="false">BPM</string>
+  <string name="settings_recording_track_name_date_iso_8601_value" translatable="false">DATE_ISO_8601</string>
+  <string name="settings_recording_track_name_date_iso_8601_location_value" translatable="false">DATE_ISO_8601_LOCATION</string>
+  <string name="settings_recording_track_name_date_local_value" translatable="false">DATE_LOCAL</string>
+  <string name="settings_recording_track_name_location_value" translatable="false">LOCATION</string>
+  <string name="settings_recording_track_name_number_value" translatable="false">NUMBER</string>
+  <string name="stats_rate_pace" translatable="false">PACE</string>
+  <string name="stats_rate_speed" translatable="false">SPEED</string>
+  <string name="stats_units_imperial" translatable="false">IMPERIAL</string>
+  <string name="stats_units_metric" translatable="false">METRIC</string>
+  <string name="track_action_end" translatable="false">com.google.android.apps.mytracks.END_CURRENT_TRACK</string>
+  <string name="track_action_pause" translatable="false">com.google.android.apps.mytracks.PAUSE_CURRENT_TRACK</string>
+  <string name="track_action_resume" translatable="false">com.google.android.apps.mytracks.RESUME_CURRENT_TRACK</string>
+  <string name="track_action_start" translatable="false">com.google.android.apps.mytracks.START_NEW_TRACK</string>
+  <string name="value_unknown" translatable="false">-</string>
 </resources>

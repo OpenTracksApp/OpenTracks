@@ -726,21 +726,21 @@ limitations under the License.
     translation_description="In the main view, the message on the top asking the user to enable
       GPS.
 
-      %1$s location settings. E.g., 'Google location settings'.">
+      %1$s location settings.">
     GPS not enabled. Tap here to go to %1$s. Press the back button to return.
   </string>
   <string name="gps_disabled_location_mode"
     translation_description="In the main view, the message on the top asking the user to select the
       high-accuracy location mode.
 
-      %1$s location settings. E.g., 'Google location settings'.">
+      %1$s location settings.">
     Select high-accuracy location mode. Tap here to go to %1$s. Press the back button to return.
   </string>
   <string name="gps_disabled_my_location"
     translation_description="When pressing the my location button, the message indicating that the
       current location cannot be determined.
 
-      %1$s location settings. E.g., 'Google location settings'.">
+      %1$s location settings.">
     Current location cannot be determined. Enable more location sources at %1$s &amp; make sure the
     sky is visible. Try again later.
   </string>
@@ -748,7 +748,7 @@ limitations under the License.
     translation_description="When pressing the my location button, the message indicating that the
       current location cannot be determined.
 
-      %1$s location settings. E.g., 'Google location settings'.">
+      %1$s location settings.">
     Current location cannot be determined. Select the high-accuracy location mode at %1$s &amp; make
     sure the sky is visible. Try again later.
   </string>
