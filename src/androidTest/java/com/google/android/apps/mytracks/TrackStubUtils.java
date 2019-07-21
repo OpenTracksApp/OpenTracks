@@ -18,9 +18,10 @@ package com.google.android.apps.mytracks;
 
 import android.location.Location;
 
-import com.google.android.apps.mytracks.content.MyTracksLocation;
+import com.google.android.apps.mytracks.content.SensorDataSetLocation;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.sensor.Sensor.SensorDataSet;
+import com.google.android.apps.mytracks.content.sensor.SensorDataSet;
 
 /**
  * Commons utilities for creating stubs of track, location. The class will be
@@ -31,8 +32,8 @@ import com.google.android.apps.mytracks.content.sensor.Sensor.SensorDataSet;
 public class TrackStubUtils {
 
   static final String LOCATION_PROVIDER = "gps";
-  public static final double INITIAL_LATITUDE = 22;
-  public static final double INITIAL_LONGITUDE = 22;
+  static final double INITIAL_LATITUDE = 22;
+  static final double INITIAL_LONGITUDE = 22;
   public static final double INITIAL_ALTITUDE = 22;
   static final float INITIAL_ACCURACY = 5;
   static final float INITIAL_SPEED = 10;
@@ -50,7 +51,7 @@ public class TrackStubUtils {
   public static Track createTrack(int numberOfLocations) {
     Track track = new Track();
     for (int i = 0; i < numberOfLocations; i++) {
-      track.addLocation(createMyTracksLocation(INITIAL_LATITUDE + i * DIFFERENCE, INITIAL_LONGITUDE
+      track.addLocation(createSensorDataSetLocation(INITIAL_LATITUDE + i * DIFFERENCE, INITIAL_LONGITUDE
           + i * DIFFERENCE, INITIAL_ALTITUDE + i * DIFFERENCE));
     }
 
@@ -62,17 +63,17 @@ public class TrackStubUtils {
    * 
    * @return a track stub.
    */
-  public static MyTracksLocation createMyTracksLocation() {
-    return createMyTracksLocation(INITIAL_LATITUDE, INITIAL_LONGITUDE, INITIAL_ALTITUDE);
+  public static SensorDataSetLocation createSensorDataSetLocation() {
+    return createSensorDataSetLocation(INITIAL_LATITUDE, INITIAL_LONGITUDE, INITIAL_ALTITUDE);
   }
 
   /**
-   * Creates a {@link MyTracksLocation} stub with specified values.
+   * Creates a {@link SensorDataSetLocation} stub with specified values.
    * 
-   * @return a MyTracksLocation stub.
+   * @return a SensorDataSetLocation stub.
    */
-  public static MyTracksLocation createMyTracksLocation(double latitude, double longitude,
-      double altitude) {
+  public static SensorDataSetLocation createSensorDataSetLocation(double latitude, double longitude,
+                                                                  double altitude) {
     // Initial Location
     Location loc = new Location(LOCATION_PROVIDER);
     loc.setLatitude(latitude);
@@ -82,9 +83,9 @@ public class TrackStubUtils {
     loc.setSpeed(INITIAL_SPEED);
     loc.setTime(INITIAL_TIME);
     loc.setBearing(INITIAL_BEARING);
-    SensorDataSet sd = SensorDataSet.newBuilder().build();
+    SensorDataSet sd = new SensorDataSet(100, 100);
 
-    return new MyTracksLocation(loc, sd);
+    return new SensorDataSetLocation(loc, sd);
   }
 
 }

@@ -22,34 +22,34 @@ import android.net.Uri;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.google.android.apps.mytracks.content.MyTracksProvider.DatabaseHelper;
+import com.google.android.apps.mytracks.content.CustomContentProvider.DatabaseHelper;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 
 /**
- * Tests {@link MyTracksProvider}.
+ * Tests {@link CustomContentProvider}.
  * 
  * @author Youtao Liu
  */
 @RunWith(AndroidJUnit4.class)
-public class MyTracksProviderTest {
+public class CustomContentProviderTest {
 
   private static final String DATABASE_NAME = "mytrackstest.db";
 
   private SQLiteDatabase db;
-  private MyTracksProvider myTracksProvider;
+  private CustomContentProvider myTracksProvider;
 
   @Before
   protected void setUp()  {
     InstrumentationRegistry.getInstrumentation().getContext().deleteDatabase(DATABASE_NAME);
     db = (new DatabaseHelper(InstrumentationRegistry.getInstrumentation().getContext(), DATABASE_NAME)).getWritableDatabase();
-    myTracksProvider = new MyTracksProvider();
+    myTracksProvider = new CustomContentProvider();
   }
 
   /**
-   * Tests {@link MyTracksProvider.DatabaseHelper#onCreate(SQLiteDatabase)}.
+   * Tests {@link CustomContentProvider.DatabaseHelper#onCreate(SQLiteDatabase)}.
    */
   public void testDatabaseHelper_OnCreate() {
     Assert.assertTrue(hasTable(TracksColumns.TABLE_NAME));
@@ -58,14 +58,14 @@ public class MyTracksProviderTest {
   }
 
   /**
-   * Tests {@link MyTracksProvider#onCreate(android.content.Context)}.
+   * Tests {@link CustomContentProvider#onCreate(android.content.Context)}.
    */
   public void testOnCreate() {
     Assert.assertTrue(myTracksProvider.onCreate(InstrumentationRegistry.getInstrumentation().getContext()));
   }
 
   /**
-   * Tests {@link MyTracksProvider#getType(Uri)}.
+   * Tests {@link CustomContentProvider#getType(Uri)}.
    */
   public void testGetType() {
     Assert.assertEquals(TracksColumns.CONTENT_TYPE, myTracksProvider.getType(TracksColumns.CONTENT_URI));
@@ -138,6 +138,6 @@ public class MyTracksProviderTest {
     createTable(WaypointsColumns.TABLE_NAME);
 
     DatabaseHelper databaseHelper = new DatabaseHelper(InstrumentationRegistry.getInstrumentation().getContext());
-    databaseHelper.onUpgrade(db, oldVersion, MyTracksProvider.DATABASE_VERSION);
+    databaseHelper.onUpgrade(db, oldVersion, CustomContentProvider.DATABASE_VERSION);
   }
 }

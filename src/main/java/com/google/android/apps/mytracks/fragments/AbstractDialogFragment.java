@@ -14,33 +14,36 @@
  * the License.
  */
 
-package com.google.android.apps.mytracks.settings;
+package com.google.android.apps.mytracks.fragments;
 
 import com.google.android.apps.mytracks.util.DialogUtils;
 
-import android.content.Context;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.preference.EditTextPreference;
-import android.util.AttributeSet;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 
 /**
- * My Tracks edit text preference.
+ * Abstract My Tracks DialogFragment.
  * 
  * @author Jimmy Shih
  */
-public class MyTracksEditTextPreference extends EditTextPreference {
+public abstract class AbstractDialogFragment extends DialogFragment {
 
-  public MyTracksEditTextPreference(Context context) {
-    super(context);
-  }
-  
-  public MyTracksEditTextPreference(Context context, AttributeSet attrs) {
-    super(context, attrs);
-  }
-
+  @NonNull
   @Override
-  protected void showDialog(Bundle state) {
-    super.showDialog(state);
-    DialogUtils.setDialogTitleDivider(getContext(), getDialog());
+  public Dialog onCreateDialog(Bundle savedInstanceState) {
+    final Dialog dialog = createDialog();
+    dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+
+        @Override
+      public void onShow(DialogInterface dialogInterface) {
+        DialogUtils.setDialogTitleDivider(getActivity(), dialog);
+      }
+    });
+    return dialog;
   }
+
+  protected abstract Dialog createDialog();
 }

@@ -41,7 +41,7 @@ import androidx.core.app.TaskStackBuilder;
 import androidx.core.content.FileProvider;
 import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.ContentProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.Waypoint;
@@ -93,7 +93,7 @@ public class TrackDetailActivity extends AbstractTrackActivity implements Choose
   private boolean hasCamera;
   private Uri photoUri;
   private boolean hasPhoto;
-  private MyTracksProviderUtils myTracksProviderUtils;
+  private ContentProviderUtils contentProviderUtils;
   private SharedPreferences sharedPreferences;
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
   private TrackDataHub trackDataHub;
@@ -197,7 +197,7 @@ public class TrackDetailActivity extends AbstractTrackActivity implements Choose
     photoUri = savedInstanceState != null ? (Uri) savedInstanceState.getParcelable(PHOTO_URI_KEY) : null;
     hasPhoto = savedInstanceState != null && savedInstanceState.getBoolean(HAS_PHOTO_KEY, false);
        
-    myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
+    contentProviderUtils = ContentProviderUtils.Factory.get(this);
     handleIntent(getIntent());
 
     sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
@@ -458,7 +458,7 @@ public class TrackDetailActivity extends AbstractTrackActivity implements Choose
     long markerId = intent.getLongExtra(EXTRA_MARKER_ID, -1L);
     if (markerId != -1L) {
       // Use the trackId from the marker
-      Waypoint waypoint = myTracksProviderUtils.getWaypoint(markerId);
+      Waypoint waypoint = contentProviderUtils.getWaypoint(markerId);
       if (waypoint == null) {
         finish();
         return;
@@ -469,11 +469,11 @@ public class TrackDetailActivity extends AbstractTrackActivity implements Choose
       finish();
       return;
     }
-    Track track = myTracksProviderUtils.getTrack(trackId);
+    Track track = contentProviderUtils.getTrack(trackId);
     if (track == null) {
       // Use the last track if markerId is not set
       if (markerId == -1L) {
-        track = myTracksProviderUtils.getLastTrack();
+        track = contentProviderUtils.getLastTrack();
         if (track != null) {
           trackId = track.getId();
           return;
@@ -497,7 +497,7 @@ public class TrackDetailActivity extends AbstractTrackActivity implements Choose
     if (isRecording()) {
       title = getString(isPaused ? R.string.generic_paused : R.string.generic_recording);
     } else {
-      Track track = myTracksProviderUtils.getTrack(trackId);
+      Track track = contentProviderUtils.getTrack(trackId);
       title = track != null ? track.getName() : "";
     }
     setTitle(title);
@@ -509,9 +509,9 @@ public class TrackDetailActivity extends AbstractTrackActivity implements Choose
 
   @Override
   public void onChooseActivityTypeDone(String iconValue) {
-    Track track = myTracksProviderUtils.getTrack(trackId);
+    Track track = contentProviderUtils.getTrack(trackId);
     String category = getString(TrackIconUtils.getIconActivityType(iconValue));
-    TrackUtils.updateTrack(this, track, null, category, null, myTracksProviderUtils);
+    TrackUtils.updateTrack(this, track, null, category, null, contentProviderUtils);
   }
 
   private boolean isRecording() {

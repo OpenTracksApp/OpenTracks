@@ -31,7 +31,7 @@ import androidx.fragment.app.FragmentActivity;
  * 
  * @author Jimmy Shih
  */
-public class FrequencyDialogFragment extends AbstractMyTracksDialogFragment {
+public class FrequencyDialogFragment extends AbstractDialogFragment {
 
   public static final String FREQUENCY_DIALOG_TAG = "frequencyDialog";
 

@@ -35,20 +35,20 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
- * {@link MyTracksProviderUtils} implementation.
+ * {@link ContentProviderUtils} implementation.
  * 
  * @author Leif Hendrik Wilden
  */
-public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
+public class ContentProviderUtilsImpl implements ContentProviderUtils {
 
-  private static final String TAG = MyTracksProviderUtilsImpl.class.getSimpleName();
+  private static final String TAG = ContentProviderUtilsImpl.class.getSimpleName();
 
   private static final int MAX_LATITUDE = 90000000;
 
   private final ContentResolver contentResolver;
   private int defaultCursorBatchSize = 2000;
 
-  public MyTracksProviderUtilsImpl(ContentResolver contentResolver) {
+  public ContentProviderUtilsImpl(ContentResolver contentResolver) {
     this.contentResolver = contentResolver;
   }
 
@@ -734,7 +734,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
 
   @Override
   public Location createTrackPoint(Cursor cursor) {
-    Location location = new MyTracksLocation("");
+    Location location = new SensorDataSetLocation("");
     fillTrackPoint(cursor, new CachedTrackPointsIndexes(cursor), location);
     return location;
   }
@@ -999,17 +999,17 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     }
 
     //SensorData
-    if (location instanceof MyTracksLocation) {
-      MyTracksLocation myTracksLocation = (MyTracksLocation) location;
-      SensorDataSet sensorDataSet = myTracksLocation.getSensorDataSet();
+    if (location instanceof SensorDataSetLocation) {
+      SensorDataSetLocation sensorDataSetLocation = (SensorDataSetLocation) location;
+      SensorDataSet sensorDataSet = sensorDataSetLocation.getSensorDataSet();
       if (sensorDataSet != null && sensorDataSet.hasHeartRate()) {
-        values.put(TrackPointsColumns.SENSOR_HEARTRATE, myTracksLocation.getSensorDataSet().getHeartRate());
+        values.put(TrackPointsColumns.SENSOR_HEARTRATE, sensorDataSetLocation.getSensorDataSet().getHeartRate());
       }
       if (sensorDataSet != null && sensorDataSet.hasCadence()) {
-        values.put(TrackPointsColumns.SENSOR_CADENCE, myTracksLocation.getSensorDataSet().getCadence());
+        values.put(TrackPointsColumns.SENSOR_CADENCE, sensorDataSetLocation.getSensorDataSet().getCadence());
       }
       if (sensorDataSet != null && sensorDataSet.hasPower()) {
-        values.put(TrackPointsColumns.SENSOR_POWER, myTracksLocation.getSensorDataSet().getPower());
+        values.put(TrackPointsColumns.SENSOR_POWER, sensorDataSetLocation.getSensorDataSet().getPower());
       }
     }
     return values;
@@ -1046,14 +1046,14 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     if (!cursor.isNull(indexes.bearingIndex)) {
       location.setBearing(cursor.getFloat(indexes.bearingIndex));
     }
-    if (location instanceof MyTracksLocation) {
-      MyTracksLocation myTracksLocation = (MyTracksLocation) location;
+    if (location instanceof SensorDataSetLocation) {
+      SensorDataSetLocation sensorDataSetLocation = (SensorDataSetLocation) location;
 
       float heartRate = cursor.isNull(indexes.sensorHeartRateIndex) ? SensorDataSet.DATA_UNAVAILABLE : cursor.getFloat(indexes.sensorHeartRateIndex);
       float cadence = cursor.isNull(indexes.sensorCadenceIndex) ? SensorDataSet.DATA_UNAVAILABLE : cursor.getFloat(indexes.sensorCadenceIndex);
       float power = cursor.isNull(indexes.sensorPowerIndex) ? SensorDataSet.DATA_UNAVAILABLE : cursor.getFloat(indexes.sensorPowerIndex);
 
-      myTracksLocation.setSensorDataSet(new SensorDataSet(heartRate, cadence, power, SensorDataSet.DATA_UNAVAILABLE, location.getTime()));
+      sensorDataSetLocation.setSensorDataSet(new SensorDataSet(heartRate, cadence, power, SensorDataSet.DATA_UNAVAILABLE, location.getTime()));
     }
   }
 

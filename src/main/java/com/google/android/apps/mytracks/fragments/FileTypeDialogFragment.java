@@ -32,7 +32,7 @@ import com.google.android.maps.mytracks.R;
  * 
  * @author Jimmy Shih
  */
-public class FileTypeDialogFragment extends AbstractMyTracksDialogFragment {
+public class FileTypeDialogFragment extends AbstractDialogFragment {
 
   /**
    * Interface for caller of this dialog fragment.

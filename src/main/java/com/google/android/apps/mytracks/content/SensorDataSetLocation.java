@@ -24,7 +24,7 @@ import com.google.android.apps.mytracks.content.sensor.SensorDataSet;
  *
  * @author Sandor Dornbush
  */
-public class MyTracksLocation extends Location {
+public class SensorDataSetLocation extends Location {
 
   private SensorDataSet sensorDataSet = null;
 
@@ -33,12 +33,12 @@ public class MyTracksLocation extends Location {
    */
   private int id = -1;
 
-  public MyTracksLocation(Location location, SensorDataSet sensorDataSet) {
+  public SensorDataSetLocation(Location location, SensorDataSet sensorDataSet) {
     super(location);
     this.sensorDataSet = sensorDataSet;
   }
 
-  public MyTracksLocation(String provider) {
+  public SensorDataSetLocation(String provider) {
     super(provider);
   }
 

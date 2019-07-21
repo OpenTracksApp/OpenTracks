@@ -39,7 +39,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.apps.mytracks.MarkerEditActivity;
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.ContentProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
@@ -72,7 +72,7 @@ public class MarkerDetailFragment extends Fragment {
   private static final String KEY_TITLE = "title";
   private static final long HIDE_TEXT_DELAY = 4000L; // 4 seconds
 
-  private MyTracksProviderUtils myTracksProviderUtils;
+  private ContentProviderUtils contentProviderUtils;
   private Handler handler;
   private ImageView photo;
   private ImageView textGradient;
@@ -112,7 +112,7 @@ public class MarkerDetailFragment extends Fragment {
       getFragmentManager().popBackStack();
       return;
     }
-    myTracksProviderUtils = MyTracksProviderUtils.Factory.get(getActivity());
+    contentProviderUtils = ContentProviderUtils.Factory.get(getActivity());
     handler = new Handler();
     setHasOptionsMenu(true);
   }
@@ -214,7 +214,7 @@ public class MarkerDetailFragment extends Fragment {
    */
   private void updateWaypoint(boolean refresh) {
     if (refresh || waypoint == null) {
-      waypoint = myTracksProviderUtils.getWaypoint(getArguments().getLong(KEY_MARKER_ID));
+      waypoint = contentProviderUtils.getWaypoint(getArguments().getLong(KEY_MARKER_ID));
       if (waypoint == null) {
         Log.d(TAG, "waypoint is null");
         getFragmentManager().popBackStack();
@@ -259,7 +259,7 @@ public class MarkerDetailFragment extends Fragment {
 
       setLocation(R.id.marker_detail_statistics_location, false);
 
-      Track track = myTracksProviderUtils.getTrack(waypoint.getTrackId());
+      Track track = contentProviderUtils.getTrack(waypoint.getTrackId());
       StatsUtils.setTripStatisticsValues(getActivity(), null, getView(), waypoint.getTripStatistics(), null);
       StatsUtils.setLocationValues(getActivity(), null, getView(), waypoint.getLocation(), false);
     }

@@ -21,7 +21,7 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.ContentProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
@@ -60,7 +60,7 @@ public class IntentUtils {
    * @param trackFileFormat the track file format
    */
   public static Intent newShareFileIntent(Context context, long trackId, String filePath, TrackFileFormat trackFileFormat) {
-    Track track = MyTracksProviderUtils.Factory.get(context).getTrack(trackId);
+    Track track = ContentProviderUtils.Factory.get(context).getTrack(trackId);
     String trackDescription = track == null ? "" : new DescriptionGeneratorImpl(context).generateTrackDescription(track, null, null, false);
 
     return new Intent(Intent.ACTION_SEND)

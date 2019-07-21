@@ -17,9 +17,9 @@
 package com.google.android.apps.mytracks.io.file.exporter;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.content.MyTracksLocation;
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
+import com.google.android.apps.mytracks.content.SensorDataSetLocation;
+import com.google.android.apps.mytracks.content.ContentProviderUtils;
+import com.google.android.apps.mytracks.content.ContentProviderUtils.LocationIterator;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.util.LocationUtils;
@@ -40,7 +40,7 @@ public class FileTrackExporter implements TrackExporter {
 
   private static final String TAG = FileTrackExporter.class.getSimpleName();
 
-  private final MyTracksProviderUtils myTracksProviderUtils;
+  private final ContentProviderUtils contentProviderUtils;
   private final Track[] tracks;
   private final TrackWriter trackWriter;
   private final TrackExporterListener trackExporterListener;
@@ -48,14 +48,14 @@ public class FileTrackExporter implements TrackExporter {
   /**
    * Constructor.
    * 
-   * @param myTracksProviderUtils the my tracks provider utils
+   * @param contentProviderUtils the my tracks provider utils
    * @param tracks the tracks
    * @param trackWriter the track writer
    * @param trackExporterListener the track export listener
    */
-  public FileTrackExporter(MyTracksProviderUtils myTracksProviderUtils, Track[] tracks,
-      TrackWriter trackWriter, TrackExporterListener trackExporterListener) {
-    this.myTracksProviderUtils = myTracksProviderUtils;
+  public FileTrackExporter(ContentProviderUtils contentProviderUtils, Track[] tracks,
+                           TrackWriter trackWriter, TrackExporterListener trackExporterListener) {
+    this.contentProviderUtils = contentProviderUtils;
     this.tracks = tracks;
     this.trackWriter = trackWriter;
     this.trackExporterListener = trackExporterListener;
@@ -95,7 +95,7 @@ public class FileTrackExporter implements TrackExporter {
      * load them into objects all at the same time.
      */
     boolean hasWaypoints = false;
-    try (Cursor cursor = myTracksProviderUtils.getWaypointCursor(
+    try (Cursor cursor = contentProviderUtils.getWaypointCursor(
             track.getId(), -1L, Constants.MAX_LOADED_WAYPOINTS_POINTS)) {
       if (cursor != null && cursor.moveToFirst()) {
         /*
@@ -110,7 +110,7 @@ public class FileTrackExporter implements TrackExporter {
             trackWriter.writeBeginWaypoints(track);
             hasWaypoints = true;
           }
-          Waypoint waypoint = myTracksProviderUtils.createWaypoint(cursor);
+          Waypoint waypoint = contentProviderUtils.createWaypoint(cursor);
           trackWriter.writeWaypoint(waypoint);
         }
       }
@@ -132,7 +132,7 @@ public class FileTrackExporter implements TrackExporter {
     LocationIterator locationIterator = null;
 
     try {
-      locationIterator = myTracksProviderUtils.getTrackPointLocationIterator(
+      locationIterator = contentProviderUtils.getTrackPointLocationIterator(
           track.getId(), -1L, false, locationFactory);
 
       while (locationIterator.hasNext()) {
@@ -178,7 +178,7 @@ public class FileTrackExporter implements TrackExporter {
       }
 
       if (wroteTrack) {
-        Location lastValidTrackPoint = myTracksProviderUtils.getLastValidTrackPoint(track.getId());
+        Location lastValidTrackPoint = contentProviderUtils.getLastValidTrackPoint(track.getId());
         setLocationTime(lastValidTrackPoint, offset);
         trackWriter.writeEndTrack(track, lastValidTrackPoint);
       } else {
@@ -210,14 +210,14 @@ public class FileTrackExporter implements TrackExporter {
    * 
    * @author Jimmy Shih
    */
-  private class TrackWriterLocationFactory implements MyTracksProviderUtils.LocationFactory {
+  private class TrackWriterLocationFactory implements ContentProviderUtils.LocationFactory {
     Location currentLocation;
     Location lastLocation;
 
     @Override
     public Location createLocation() {
       if (currentLocation == null) {
-        currentLocation = new MyTracksLocation("");
+        currentLocation = new SensorDataSetLocation("");
       }
       return currentLocation;
     }

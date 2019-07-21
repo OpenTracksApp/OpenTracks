@@ -22,8 +22,8 @@ import android.net.Uri;
 
 import androidx.annotation.VisibleForTesting;
 
-import com.google.android.apps.mytracks.content.MyTracksLocation;
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.SensorDataSetLocation;
+import com.google.android.apps.mytracks.content.ContentProviderUtils;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.content.sensor.SensorDataSet;
 
@@ -78,13 +78,13 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
    * @param importTrackId track id to import to. -1L to import to a new track.
    */
   public KmlFileTrackImporter(Context context, long importTrackId) {
-    this(context, importTrackId, MyTracksProviderUtils.Factory.get(context));
+    this(context, importTrackId, ContentProviderUtils.Factory.get(context));
   }
 
   @VisibleForTesting
   KmlFileTrackImporter(
-      Context context, long importTrackId, MyTracksProviderUtils myTracksProviderUtils) {
-    super(context, importTrackId, myTracksProviderUtils);
+      Context context, long importTrackId, ContentProviderUtils contentProviderUtils) {
+    super(context, importTrackId, contentProviderUtils);
   }
 
   @Override
@@ -246,8 +246,8 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
         float cadence = hasHeartRate ? cadenceList.get(i) : SensorDataSet.DATA_UNAVAILABLE;
         float power = hasHeartRate ? powerList.get(i) : SensorDataSet.DATA_UNAVAILABLE;
 
-        MyTracksLocation myTracksLocation = new MyTracksLocation(location, new SensorDataSet(heartrate, cadence, power, SensorDataSet.DATA_UNAVAILABLE, location.getTime()));
-        insertTrackPoint(myTracksLocation);
+        SensorDataSetLocation sensorDataSetLocation = new SensorDataSetLocation(location, new SensorDataSet(heartrate, cadence, power, SensorDataSet.DATA_UNAVAILABLE, location.getTime()));
+        insertTrackPoint(sensorDataSetLocation);
       }
     }
   }

@@ -29,7 +29,7 @@ import com.google.android.maps.mytracks.R;
  * 
  * @author Jimmy Shih
  */
-public class ConfirmDeleteDialogFragment extends AbstractMyTracksDialogFragment {
+public class ConfirmDeleteDialogFragment extends AbstractDialogFragment {
 
   /**
    * Interface for caller of this dialog fragment.

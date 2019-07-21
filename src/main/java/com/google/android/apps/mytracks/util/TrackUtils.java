@@ -16,7 +16,7 @@
 
 package com.google.android.apps.mytracks.util;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.ContentProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
 
@@ -33,7 +33,7 @@ public class TrackUtils {
 
   public static String TRACK_SORT_ORDER = TracksColumns.STARTTIME + " DESC";
 
-  public static void updateTrack(Context context, Track track, String name, String category, String description, MyTracksProviderUtils myTracksProviderUtils) {
+  public static void updateTrack(Context context, Track track, String name, String category, String description, ContentProviderUtils contentProviderUtils) {
     if (name != null) {
       track.setName(name);
     }
@@ -46,6 +46,6 @@ public class TrackUtils {
       track.setDescription(description);
     }
     track.setModifiedTime(System.currentTimeMillis());
-    myTracksProviderUtils.updateTrack(track);
+    contentProviderUtils.updateTrack(track);
   }
 }

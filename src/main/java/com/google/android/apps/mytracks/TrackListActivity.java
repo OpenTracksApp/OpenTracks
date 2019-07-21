@@ -53,7 +53,7 @@ import androidx.loader.app.LoaderManager.LoaderCallbacks;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.ContentProviderUtils;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.fragments.ConfirmDeleteDialogFragment;
 import com.google.android.apps.mytracks.fragments.FileTypeDialogFragment;
@@ -242,7 +242,7 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
   };
   
   // The following are set in onCreate
-  private MyTracksProviderUtils myTracksProviderUtils;
+  private ContentProviderUtils contentProviderUtils;
   private SharedPreferences sharedPreferences;
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
   private TrackController trackController;
@@ -281,7 +281,7 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
               .build());
     }
 
-    myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
+    contentProviderUtils = ContentProviderUtils.Factory.get(this);
     sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
 
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, bindChangedCallback);
@@ -326,7 +326,7 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
         String name = cursor.getString(nameIndex);
         String totalTime = StringUtils.formatElapsedTime(cursor.getLong(totalTimeIndex));
         String totalDistance = StringUtils.formatDistance(TrackListActivity.this, cursor.getDouble(totalDistanceIndex), metricUnits);
-        int markerCount = myTracksProviderUtils.getWaypointCount(trackId);
+        int markerCount = contentProviderUtils.getWaypointCount(trackId);
         long startTime = cursor.getLong(startTimeIndex);
         String category = icon != null && !icon.equals("") ? null : cursor.getString(categoryIndex);
         String description = cursor.getString(descriptionIndex);

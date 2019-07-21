@@ -16,7 +16,7 @@
 
 package com.google.android.apps.mytracks.io.file.importer;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.ContentProviderUtils;
 import com.google.android.apps.mytracks.io.file.exporter.KmzTrackExporter;
 import com.google.android.apps.mytracks.util.FileUtils;
 
@@ -111,8 +111,8 @@ public class KmzTrackImporter implements TrackImporter {
    */
   private void cleanImport(long trackId) {
     if (trackId != -1L) {
-      MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
-      myTracksProviderUtils.deleteTrack(context, trackId);
+      ContentProviderUtils contentProviderUtils = ContentProviderUtils.Factory.get(context);
+      contentProviderUtils.deleteTrack(context, trackId);
     }
 
     if (importTrackId != -1L) {

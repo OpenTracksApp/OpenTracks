@@ -20,7 +20,7 @@ import android.content.Context;
 import android.location.Location;
 import androidx.annotation.VisibleForTesting;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.ContentProviderUtils;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 
 import org.xml.sax.Attributes;
@@ -54,12 +54,12 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
    * @param context the context
    */
   public GpxFileTrackImporter(Context context) {
-    this(context, MyTracksProviderUtils.Factory.get(context));
+    this(context, ContentProviderUtils.Factory.get(context));
   }
 
   @VisibleForTesting
-  GpxFileTrackImporter(Context context, MyTracksProviderUtils myTracksProviderUtils) {
-    super(context, -1L, myTracksProviderUtils);
+  GpxFileTrackImporter(Context context, ContentProviderUtils contentProviderUtils) {
+    super(context, -1L, contentProviderUtils);
   }
 
   @Override

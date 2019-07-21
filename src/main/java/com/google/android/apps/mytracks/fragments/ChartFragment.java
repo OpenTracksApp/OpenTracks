@@ -31,7 +31,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.apps.mytracks.ChartView;
 import com.google.android.apps.mytracks.TrackDetailActivity;
-import com.google.android.apps.mytracks.content.MyTracksLocation;
+import com.google.android.apps.mytracks.content.SensorDataSetLocation;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.TrackDataListener;
@@ -470,8 +470,8 @@ public class ChartFragment extends Fragment implements TrackDataListener {
       }
       pace = speed == 0 ? 0.0 : 60.0 / speed;
     }
-    if (location instanceof MyTracksLocation && ((MyTracksLocation) location).getSensorDataSet() != null) {
-      SensorDataSet sensorDataSet = ((MyTracksLocation) location).getSensorDataSet();
+    if (location instanceof SensorDataSetLocation && ((SensorDataSetLocation) location).getSensorDataSet() != null) {
+      SensorDataSet sensorDataSet = ((SensorDataSetLocation) location).getSensorDataSet();
       if (sensorDataSet.hasHeartRate()) {
         heartRate = sensorDataSet.getHeartRate();
       }

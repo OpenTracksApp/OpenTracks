@@ -16,7 +16,7 @@
 
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.ContentProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.StatsUtils;
@@ -50,7 +50,7 @@ public class AggregatedStatsActivity extends AbstractActivity {
    * there is no track.
    */
   private TripStatistics getTripStatistics() {
-    List<Track> tracks = MyTracksProviderUtils.Factory.get(this).getAllTracks();
+    List<Track> tracks = ContentProviderUtils.Factory.get(this).getAllTracks();
     TripStatistics tripStatistics = null;
     if (!tracks.isEmpty()) {
       tripStatistics = new TripStatistics(tracks.iterator().next().getTripStatistics());

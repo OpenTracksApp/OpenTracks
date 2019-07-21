@@ -25,7 +25,7 @@ import android.util.Log;
 
 import androidx.annotation.VisibleForTesting;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
+import com.google.android.apps.mytracks.content.ContentProviderUtils.LocationIterator;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
@@ -58,7 +58,7 @@ public class TrackDataHub implements DataSourceListener {
   
   private final Context context;
   private final TrackDataManager trackDataManager;
-  private final MyTracksProviderUtils myTracksProviderUtils;
+  private final ContentProviderUtils contentProviderUtils;
   private final int targetNumPoints;
 
   private boolean started;
@@ -85,7 +85,7 @@ public class TrackDataHub implements DataSourceListener {
    * Creates a new instance.
    */
   public synchronized static TrackDataHub newInstance(Context context) {
-    return new TrackDataHub(context, new TrackDataManager(), MyTracksProviderUtils.Factory.get(
+    return new TrackDataHub(context, new TrackDataManager(), ContentProviderUtils.Factory.get(
         context), TARGET_DISPLAYED_TRACK_POINTS);
   }
 
@@ -94,15 +94,15 @@ public class TrackDataHub implements DataSourceListener {
    * 
    * @param context the context
    * @param trackDataManager the track data manager
-   * @param myTracksProviderUtils the my tracks provider utils
+   * @param contentProviderUtils the my tracks provider utils
    * @param targetNumPoints the target number of points
    */
   @VisibleForTesting
   TrackDataHub(Context context, TrackDataManager trackDataManager,
-      MyTracksProviderUtils myTracksProviderUtils, int targetNumPoints) {
+               ContentProviderUtils contentProviderUtils, int targetNumPoints) {
     this.context = context;
     this.trackDataManager = trackDataManager;
-    this.myTracksProviderUtils = myTracksProviderUtils;
+    this.contentProviderUtils = contentProviderUtils;
     this.targetNumPoints = targetNumPoints;
     resetSamplingState();
   }
@@ -408,7 +408,7 @@ public class TrackDataHub implements DataSourceListener {
     if (trackDataListeners.isEmpty()) {
       return;
     }
-    Track track = myTracksProviderUtils.getTrack(selectedTrackId);
+    Track track = contentProviderUtils.getTrack(selectedTrackId);
     for (TrackDataListener trackDataListener : trackDataListeners) {
       trackDataListener.onTrackUpdated(track);
     }
@@ -430,11 +430,11 @@ public class TrackDataHub implements DataSourceListener {
       trackDataListener.clearWaypoints();
     }
 
-    try (Cursor cursor = myTracksProviderUtils.getWaypointCursor(
+    try (Cursor cursor = contentProviderUtils.getWaypointCursor(
             selectedTrackId, -1L, MAX_DISPLAYED_WAYPOINTS)) {
       if (cursor != null && cursor.moveToFirst()) {
         do {
-          Waypoint waypoint = myTracksProviderUtils.createWaypoint(cursor);
+          Waypoint waypoint = contentProviderUtils.createWaypoint(cursor);
           if (!LocationUtils.isValidLocation(waypoint.getLocation())) {
             continue;
           }
@@ -477,14 +477,14 @@ public class TrackDataHub implements DataSourceListener {
     long localLastSeenLocationId = updateSamplingState ? lastSeenLocationId : -1L;
     long maxPointId = updateSamplingState ? -1L : lastSeenLocationId;
 
-    long lastTrackPointId = myTracksProviderUtils.getLastTrackPointId(selectedTrackId);
+    long lastTrackPointId = contentProviderUtils.getLastTrackPointId(selectedTrackId);
     int samplingFrequency = -1;
     boolean includeNextPoint = false;
     LocationIterator locationIterator = null;
 
     try {
-      locationIterator = myTracksProviderUtils.getTrackPointLocationIterator(selectedTrackId,
-          localLastSeenLocationId + 1, false, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
+      locationIterator = contentProviderUtils.getTrackPointLocationIterator(selectedTrackId,
+          localLastSeenLocationId + 1, false, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
 
       while (locationIterator.hasNext()) {
         Location location = locationIterator.next();

@@ -30,8 +30,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.TrackStubUtils;
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationFactory;
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
+import com.google.android.apps.mytracks.content.ContentProviderUtils.LocationFactory;
+import com.google.android.apps.mytracks.content.ContentProviderUtils.LocationIterator;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceTest.MockContext;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
@@ -65,7 +65,7 @@ public class TrackDataHubTest {
 
   private MockContext context;
   private SharedPreferences sharedPreferences;
-  private MyTracksProviderUtils myTracksProviderUtils;
+  private ContentProviderUtils contentProviderUtils;
   private DataSource dataSource;
   private TrackDataManager trackDataManager;
   private TrackDataHub trackDataHub;
@@ -75,17 +75,17 @@ public class TrackDataHubTest {
       SharedPreferences.OnSharedPreferenceChangeListener>();
 
   @Before
-  @UsesMocks({ MyTracksProviderUtils.class, DataSource.class, TrackDataListener.class })
+  @UsesMocks({ ContentProviderUtils.class, DataSource.class, TrackDataListener.class })
   @Override
   protected void setUp() {
     context = new MockContext(new MockContentResolver(), new RenamingDelegatingContext(
         getContext(), getContext(), "test."));
     sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    myTracksProviderUtils = AndroidMock.createMock(MyTracksProviderUtils.class);
+    contentProviderUtils = AndroidMock.createMock(ContentProviderUtils.class);
     dataSource = AndroidMock.createMock(DataSource.class, context);
     trackDataManager = new TrackDataManager();
     trackDataHub = new TrackDataHub(
-        context, trackDataManager, myTracksProviderUtils, TARGET_POINTS) {
+        context, trackDataManager, contentProviderUtils, TARGET_POINTS) {
         @Override
       protected DataSource newDataSource() {
         return dataSource;
@@ -129,7 +129,7 @@ public class TrackDataHubTest {
     // Register two listeners
     Capture<ContentObserver> contentObserverCapture = new Capture<ContentObserver>();
     Track track = new Track();
-    expect(myTracksProviderUtils.getTrack(TRACK_ID)).andStubReturn(track);
+    expect(contentProviderUtils.getTrack(TRACK_ID)).andStubReturn(track);
     dataSource.registerContentObserver(
         eq(TracksColumns.CONTENT_URI), capture(contentObserverCapture));
     trackDataListener1.onTrackUpdated(track);
@@ -146,7 +146,7 @@ public class TrackDataHubTest {
 
     // Causes tracks table update
     ContentObserver contentObserver = contentObserverCapture.getValue();
-    expect(myTracksProviderUtils.getTrack(TRACK_ID)).andStubReturn(track);
+    expect(contentProviderUtils.getTrack(TRACK_ID)).andStubReturn(track);
     trackDataListener1.onTrackUpdated(track);
     trackDataListener2.onTrackUpdated(track);
     replay();
@@ -155,7 +155,7 @@ public class TrackDataHubTest {
     verifyAndReset();
 
     // Unregister one listener
-    expect(myTracksProviderUtils.getTrack(TRACK_ID)).andStubReturn(track);
+    expect(contentProviderUtils.getTrack(TRACK_ID)).andStubReturn(track);
     trackDataListener2.onTrackUpdated(track);
     replay();
 
@@ -190,10 +190,10 @@ public class TrackDataHubTest {
 
     // Register two listeners
     Capture<ContentObserver> contentObserverCapture = new Capture<ContentObserver>();
-    expect(myTracksProviderUtils.getWaypointCursor(
+    expect(contentProviderUtils.getWaypointCursor(
         eq(TRACK_ID), AndroidMock.leq(-1L), eq(TrackDataHub.MAX_DISPLAYED_WAYPOINTS)))
         .andStubAnswer(new FixedSizeCursorAnswer(2));
-    expect(myTracksProviderUtils.createWaypoint(isA(Cursor.class)))
+    expect(contentProviderUtils.createWaypoint(isA(Cursor.class)))
         .andReturn(waypoint1).andReturn(waypoint2).andReturn(waypoint1).andReturn(waypoint2);
     dataSource.registerContentObserver(
         eq(WaypointsColumns.CONTENT_URI), capture(contentObserverCapture));
@@ -217,10 +217,10 @@ public class TrackDataHubTest {
 
     // Cause waypoints table update
     ContentObserver contentObserver = contentObserverCapture.getValue();
-    expect(myTracksProviderUtils.getWaypointCursor(
+    expect(contentProviderUtils.getWaypointCursor(
         eq(TRACK_ID), AndroidMock.leq(-1L), eq(TrackDataHub.MAX_DISPLAYED_WAYPOINTS)))
         .andStubAnswer(new FixedSizeCursorAnswer(3));
-    expect(myTracksProviderUtils.createWaypoint(isA(Cursor.class)))
+    expect(contentProviderUtils.createWaypoint(isA(Cursor.class)))
         .andReturn(waypoint1).andReturn(waypoint2).andReturn(waypoint3);
     trackDataListener1.clearWaypoints();
     trackDataListener2.clearWaypoints();
@@ -238,10 +238,10 @@ public class TrackDataHubTest {
     verifyAndReset();
 
     // Unregister one listener
-    expect(myTracksProviderUtils.getWaypointCursor(
+    expect(contentProviderUtils.getWaypointCursor(
         eq(TRACK_ID), AndroidMock.leq(-1L), eq(TrackDataHub.MAX_DISPLAYED_WAYPOINTS)))
         .andStubAnswer(new FixedSizeCursorAnswer(4));
-    expect(myTracksProviderUtils.createWaypoint(isA(Cursor.class)))
+    expect(contentProviderUtils.createWaypoint(isA(Cursor.class)))
         .andReturn(waypoint1).andReturn(waypoint2).andReturn(waypoint3).andReturn(waypoint4);
     trackDataListener2.clearWaypoints();
     trackDataListener2.onNewWaypoint(waypoint1);
@@ -274,9 +274,9 @@ public class TrackDataHubTest {
         eq(TrackPointsColumns.CONTENT_URI), capture(contentObserverCapture));
 
     FixedSizeLocationIterator locationIterator = new FixedSizeLocationIterator(1, 10, 5);
-    expect(myTracksProviderUtils.getTrackPointLocationIterator(
+    expect(contentProviderUtils.getTrackPointLocationIterator(
         eq(TRACK_ID), eq(0L), eq(false), isA(LocationFactory.class))).andReturn(locationIterator);
-    expect(myTracksProviderUtils.getLastTrackPointId(TRACK_ID)).andReturn(10L);
+    expect(contentProviderUtils.getLastTrackPointId(TRACK_ID)).andReturn(10L);
     trackDataListener1.clearTrackPoints();
     locationIterator.expectLocationsDelivered(trackDataListener1);
     trackDataListener1.onNewTrackPointsDone();
@@ -290,9 +290,9 @@ public class TrackDataHubTest {
 
     // Register a second listener
     locationIterator = new FixedSizeLocationIterator(1, 10, 5);
-    expect(myTracksProviderUtils.getTrackPointLocationIterator(
+    expect(contentProviderUtils.getTrackPointLocationIterator(
         eq(TRACK_ID), eq(0L), eq(false), isA(LocationFactory.class))).andReturn(locationIterator);
-    expect(myTracksProviderUtils.getLastTrackPointId(TRACK_ID)).andReturn(10L);
+    expect(contentProviderUtils.getLastTrackPointId(TRACK_ID)).andReturn(10L);
     trackDataListener2.clearTrackPoints();
     locationIterator.expectLocationsDelivered(trackDataListener2);
     trackDataListener2.onNewTrackPointsDone();
@@ -305,9 +305,9 @@ public class TrackDataHubTest {
     // Deliver more points - should go to both listeners without clearing
     ContentObserver contentObserver = contentObserverCapture.getValue();
     locationIterator = new FixedSizeLocationIterator(11, 10, 1);
-    expect(myTracksProviderUtils.getTrackPointLocationIterator(
+    expect(contentProviderUtils.getTrackPointLocationIterator(
         eq(TRACK_ID), eq(11L), eq(false), isA(LocationFactory.class))).andReturn(locationIterator);
-    expect(myTracksProviderUtils.getLastTrackPointId(TRACK_ID)).andReturn(20L);
+    expect(contentProviderUtils.getLastTrackPointId(TRACK_ID)).andReturn(20L);
     locationIterator.expectLocationsDelivered(trackDataListener1);
     locationIterator.expectLocationsDelivered(trackDataListener2);
     trackDataListener1.onNewTrackPointsDone();
@@ -319,10 +319,10 @@ public class TrackDataHubTest {
 
     // Unregister one listener and change track
     locationIterator = new FixedSizeLocationIterator(101, 10);
-    expect(myTracksProviderUtils.getTrackPointLocationIterator(
+    expect(contentProviderUtils.getTrackPointLocationIterator(
         eq(TRACK_ID + 1), eq(0L), eq(false), isA(LocationFactory.class)))
         .andReturn(locationIterator);
-    expect(myTracksProviderUtils.getLastTrackPointId(TRACK_ID + 1)).andReturn(110L);
+    expect(contentProviderUtils.getLastTrackPointId(TRACK_ID + 1)).andReturn(110L);
     trackDataListener2.clearTrackPoints();
     locationIterator.expectLocationsDelivered(trackDataListener2);
     trackDataListener2.onNewTrackPointsDone();
@@ -344,9 +344,9 @@ public class TrackDataHubTest {
         eq(TrackPointsColumns.CONTENT_URI), capture(contentObserverCapture));
 
     FixedSizeLocationIterator locationIterator = new FixedSizeLocationIterator(1, 10, 5);
-    expect(myTracksProviderUtils.getTrackPointLocationIterator(
+    expect(contentProviderUtils.getTrackPointLocationIterator(
         eq(TRACK_ID), eq(0L), eq(false), isA(LocationFactory.class))).andReturn(locationIterator);
-    expect(myTracksProviderUtils.getLastTrackPointId(TRACK_ID)).andReturn(10L);
+    expect(contentProviderUtils.getLastTrackPointId(TRACK_ID)).andReturn(10L);
 
     trackDataListener1.clearTrackPoints();
     locationIterator.expectLocationsDelivered(trackDataListener1);
@@ -371,9 +371,9 @@ public class TrackDataHubTest {
     dataSource.registerContentObserver(
         eq(TrackPointsColumns.CONTENT_URI), capture(contentObserverCapture));
     locationIterator = new FixedSizeLocationIterator(1, 10, 5);
-    expect(myTracksProviderUtils.getTrackPointLocationIterator(
+    expect(contentProviderUtils.getTrackPointLocationIterator(
         eq(TRACK_ID), eq(0L), eq(false), isA(LocationFactory.class))).andReturn(locationIterator);
-    expect(myTracksProviderUtils.getLastTrackPointId(TRACK_ID)).andReturn(10L);
+    expect(contentProviderUtils.getLastTrackPointId(TRACK_ID)).andReturn(10L);
     trackDataListener1.clearTrackPoints();
     locationIterator.expectLocationsDelivered(trackDataListener1);
     trackDataListener1.onNewTrackPointsDone();
@@ -395,9 +395,9 @@ public class TrackDataHubTest {
         eq(TrackPointsColumns.CONTENT_URI), capture(observerCapture));
 
     FixedSizeLocationIterator locationIterator = new FixedSizeLocationIterator(1, 10, 5);
-    expect(myTracksProviderUtils.getTrackPointLocationIterator(
+    expect(contentProviderUtils.getTrackPointLocationIterator(
         eq(TRACK_ID), eq(0L), eq(false), isA(LocationFactory.class))).andReturn(locationIterator);
-    expect(myTracksProviderUtils.getLastTrackPointId(TRACK_ID)).andReturn(10L);
+    expect(contentProviderUtils.getLastTrackPointId(TRACK_ID)).andReturn(10L);
     trackDataListener1.clearTrackPoints();
     locationIterator.expectLocationsDelivered(trackDataListener1);
     trackDataListener1.onNewTrackPointsDone();
@@ -421,10 +421,10 @@ public class TrackDataHubTest {
     dataSource.registerContentObserver(
         eq(TrackPointsColumns.CONTENT_URI), capture(observerCapture));
     locationIterator = new FixedSizeLocationIterator(1, 10);
-    expect(myTracksProviderUtils.getTrackPointLocationIterator(
+    expect(contentProviderUtils.getTrackPointLocationIterator(
         eq(TRACK_ID + 1), eq(0L), eq(false), isA(LocationFactory.class)))
         .andReturn(locationIterator);
-    expect(myTracksProviderUtils.getLastTrackPointId(TRACK_ID + 1)).andReturn(10L);
+    expect(contentProviderUtils.getLastTrackPointId(TRACK_ID + 1)).andReturn(10L);
     trackDataListener1.clearTrackPoints();
     locationIterator.expectLocationsDelivered(trackDataListener1);
     trackDataListener1.onNewTrackPointsDone();
@@ -444,15 +444,15 @@ public class TrackDataHubTest {
     dataSource.registerContentObserver(
         eq(TrackPointsColumns.CONTENT_URI), capture(contentObserverCapture));
 
-    expect(myTracksProviderUtils.getLastTrackPointId(TRACK_ID)).andReturn(200L);
+    expect(contentProviderUtils.getLastTrackPointId(TRACK_ID)).andReturn(200L);
     AndroidMock.expectLastCall().anyTimes();
     FixedSizeLocationIterator locationIterator1 = new FixedSizeLocationIterator(
         1, 200, 4, 25, 71, 120);
-    expect(myTracksProviderUtils.getTrackPointLocationIterator(
+    expect(contentProviderUtils.getTrackPointLocationIterator(
         eq(TRACK_ID), eq(0L), eq(false), isA(LocationFactory.class))).andReturn(locationIterator1);
     FixedSizeLocationIterator locationIterator2 = new FixedSizeLocationIterator(
         1, 200, 4, 25, 71, 120);
-    expect(myTracksProviderUtils.getTrackPointLocationIterator(
+    expect(contentProviderUtils.getTrackPointLocationIterator(
         eq(TRACK_ID), eq(0L), eq(false), isA(LocationFactory.class))).andReturn(locationIterator2);
 
     trackDataListener1.clearTrackPoints();
@@ -482,9 +482,9 @@ public class TrackDataHubTest {
 
     // Deliver 30 points (no sampling happens)
     FixedSizeLocationIterator locationIterator = new FixedSizeLocationIterator(1, 30, 5);
-    expect(myTracksProviderUtils.getTrackPointLocationIterator(
+    expect(contentProviderUtils.getTrackPointLocationIterator(
         eq(TRACK_ID), eq(0L), eq(false), isA(LocationFactory.class))).andReturn(locationIterator);
-    expect(myTracksProviderUtils.getLastTrackPointId(TRACK_ID)).andReturn(30L);
+    expect(contentProviderUtils.getLastTrackPointId(TRACK_ID)).andReturn(30L);
 
     trackDataListener1.clearTrackPoints();
     locationIterator.expectLocationsDelivered(trackDataListener1);
@@ -500,9 +500,9 @@ public class TrackDataHubTest {
     // Now deliver 30 more (incrementally sampled)
     ContentObserver observer = observerCapture.getValue();
     locationIterator = new FixedSizeLocationIterator(31, 30);
-    expect(myTracksProviderUtils.getTrackPointLocationIterator(
+    expect(contentProviderUtils.getTrackPointLocationIterator(
         eq(TRACK_ID), eq(31L), eq(false), isA(LocationFactory.class))).andReturn(locationIterator);
-    expect(myTracksProviderUtils.getLastTrackPointId(TRACK_ID)).andReturn(60L);
+    expect(contentProviderUtils.getLastTrackPointId(TRACK_ID)).andReturn(60L);
     locationIterator.expectSampledLocationsDelivered(trackDataListener1, 2, false);
     trackDataListener1.onNewTrackPointsDone();
     replay();
@@ -512,9 +512,9 @@ public class TrackDataHubTest {
 
     // Now another 30 (triggers resampling)
     locationIterator = new FixedSizeLocationIterator(1, 90);
-    expect(myTracksProviderUtils.getTrackPointLocationIterator(
+    expect(contentProviderUtils.getTrackPointLocationIterator(
         eq(TRACK_ID), eq(0L), eq(false), isA(LocationFactory.class))).andReturn(locationIterator);
-    expect(myTracksProviderUtils.getLastTrackPointId(TRACK_ID)).andReturn(90L);
+    expect(contentProviderUtils.getLastTrackPointId(TRACK_ID)).andReturn(90L);
     trackDataListener1.clearTrackPoints();
     locationIterator.expectSampledLocationsDelivered(trackDataListener1, 2, false);
     trackDataListener1.onNewTrackPointsDone();
@@ -594,15 +594,15 @@ public class TrackDataHubTest {
    * Replays mocks.
    */
   private void replay() {
-    AndroidMock.replay(myTracksProviderUtils, dataSource, trackDataListener1, trackDataListener2);
+    AndroidMock.replay(contentProviderUtils, dataSource, trackDataListener1, trackDataListener2);
   }
 
   /**
    * Verifies and resets mocks.
    */
   private void verifyAndReset() {
-    AndroidMock.verify(myTracksProviderUtils, dataSource, trackDataListener1, trackDataListener2);
-    AndroidMock.reset(myTracksProviderUtils, dataSource, trackDataListener1, trackDataListener2);
+    AndroidMock.verify(contentProviderUtils, dataSource, trackDataListener1, trackDataListener2);
+    AndroidMock.reset(contentProviderUtils, dataSource, trackDataListener1, trackDataListener2);
   }
 
   /**
@@ -725,7 +725,7 @@ public class TrackDataHubTest {
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
     dataSource.registerContentObserver(eq(TracksColumns.CONTENT_URI), capture(observerCapture));
     Track track = TrackStubUtils.createTrack(1);
-    expect(myTracksProviderUtils.getTrack(capture(new Capture<Long>()))).andReturn(track);
+    expect(contentProviderUtils.getTrack(capture(new Capture<Long>()))).andReturn(track);
     // Make the track id is unique.
     PreferencesUtils.setLong(context, R.string.recording_track_id_key, System.currentTimeMillis());
     trackDataListener1.onTrackUpdated(track);
@@ -742,7 +742,7 @@ public class TrackDataHubTest {
   public void testRegisterWaypointsTableListener() {
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
     dataSource.registerContentObserver(eq(WaypointsColumns.CONTENT_URI), capture(observerCapture));
-    expect(myTracksProviderUtils.getWaypointCursor(
+    expect(contentProviderUtils.getWaypointCursor(
         capture(new Capture<Long>()), capture(new Capture<Long>()),
         capture(new Capture<Integer>()))).andReturn(null);
     trackDataListener1.clearWaypoints();

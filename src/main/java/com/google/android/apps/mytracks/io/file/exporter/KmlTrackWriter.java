@@ -24,8 +24,8 @@ import androidx.annotation.VisibleForTesting;
 
 import com.google.android.apps.mytracks.content.DescriptionGenerator;
 import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
-import com.google.android.apps.mytracks.content.MyTracksLocation;
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.SensorDataSetLocation;
+import com.google.android.apps.mytracks.content.ContentProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
@@ -71,7 +71,7 @@ public class KmlTrackWriter implements TrackWriter {
   private final boolean multiple;
   private final boolean playTrack;
   private final DescriptionGenerator descriptionGenerator;  
-  private final MyTracksProviderUtils myTracksProviderUtils;
+  private final ContentProviderUtils contentProviderUtils;
 
   private PrintWriter printWriter;
   private ArrayList<Float> powerList = new ArrayList<>();
@@ -91,7 +91,7 @@ public class KmlTrackWriter implements TrackWriter {
     this.multiple = multiple;
     this.playTrack = playTrack;
     this.descriptionGenerator = descriptionGenerator;
-    this.myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
+    this.contentProviderUtils = ContentProviderUtils.Factory.get(context);
   }
 
   @Override
@@ -261,8 +261,8 @@ public class KmlTrackWriter implements TrackWriter {
       printWriter.println(
           "<when>" + StringUtils.formatDateTimeIso8601(location.getTime()) + "</when>");
       printWriter.println("<gx:coord>" + getCoordinates(location, " ") + "</gx:coord>");
-      if (location instanceof MyTracksLocation) {
-        SensorDataSet sensorDataSet = ((MyTracksLocation) location).getSensorDataSet();
+      if (location instanceof SensorDataSetLocation) {
+        SensorDataSet sensorDataSet = ((SensorDataSetLocation) location).getSensorDataSet();
         if (sensorDataSet != null) {
           if (sensorDataSet.hasHeartRate()) {
             heartRateList.add(sensorDataSet.getHeartRate());
@@ -377,17 +377,17 @@ public class KmlTrackWriter implements TrackWriter {
    * @param location the location
    */
   private float getHeading(long trackId, Location location) {
-    long trackPointId = myTracksProviderUtils.getTrackPointId(trackId, location);
+    long trackPointId = contentProviderUtils.getTrackPointId(trackId, location);
     if (trackPointId == -1L) {
       return location.getBearing();
     }
     Location viewLocation;
-    try (Cursor cursor = myTracksProviderUtils.getTrackPointCursor(trackId, trackPointId, 10, true)) {
+    try (Cursor cursor = contentProviderUtils.getTrackPointCursor(trackId, trackPointId, 10, true)) {
       if (cursor == null || cursor.getCount() == 0) {
         return location.getBearing();
       }
       cursor.moveToPosition(cursor.getCount() - 1);
-      viewLocation = myTracksProviderUtils.createTrackPoint(cursor);
+      viewLocation = contentProviderUtils.createTrackPoint(cursor);
     }
     return viewLocation.bearingTo(location);
   }

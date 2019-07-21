@@ -40,7 +40,7 @@ import androidx.loader.app.LoaderManager.LoaderCallbacks;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.ContentProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
@@ -116,7 +116,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         }
       };
 
-  private MyTracksProviderUtils myTracksProviderUtils;
+  private ContentProviderUtils contentProviderUtils;
   private SharedPreferences sharedPreferences;
 
   private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
@@ -134,12 +134,12 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
+    contentProviderUtils = ContentProviderUtils.Factory.get(this);
     sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
 
     long trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1L);
-    track = trackId != -1L ? myTracksProviderUtils.getTrack(trackId) : null;
-    final long trackFirstWaypointId = trackId != -1 ? myTracksProviderUtils.getFirstWaypointId(trackId) : -1;
+    track = trackId != -1L ? contentProviderUtils.getTrack(trackId) : null;
+    final long trackFirstWaypointId = trackId != -1 ? contentProviderUtils.getFirstWaypointId(trackId) : -1;
 
     setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 

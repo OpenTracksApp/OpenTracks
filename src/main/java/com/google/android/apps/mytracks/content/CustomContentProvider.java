@@ -47,9 +47,9 @@ import java.io.FileNotFoundException;
  * 
  * @author Leif Hendrik Wilden
  */
-public class MyTracksProvider extends ContentProvider {
+public class CustomContentProvider extends ContentProvider {
 
-  private static final String TAG = MyTracksProvider.class.getSimpleName();
+  private static final String TAG = CustomContentProvider.class.getSimpleName();
 
   @VisibleForTesting
   static final int DATABASE_VERSION = 23;
@@ -97,14 +97,14 @@ public class MyTracksProvider extends ContentProvider {
   private final UriMatcher uriMatcher;
   private SQLiteDatabase db;
 
-  public MyTracksProvider() {
+  public CustomContentProvider() {
     uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-    uriMatcher.addURI(MyTracksProviderUtils.AUTHORITY, TrackPointsColumns.TABLE_NAME, UrlType.TRACKPOINTS.ordinal());
-    uriMatcher.addURI(MyTracksProviderUtils.AUTHORITY, TrackPointsColumns.TABLE_NAME + "/#", UrlType.TRACKPOINTS_ID.ordinal());
-    uriMatcher.addURI(MyTracksProviderUtils.AUTHORITY, TracksColumns.TABLE_NAME, UrlType.TRACKS.ordinal());
-    uriMatcher.addURI(MyTracksProviderUtils.AUTHORITY, TracksColumns.TABLE_NAME + "/#", UrlType.TRACKS_ID.ordinal());
-    uriMatcher.addURI(MyTracksProviderUtils.AUTHORITY, WaypointsColumns.TABLE_NAME, UrlType.WAYPOINTS.ordinal());
-    uriMatcher.addURI(MyTracksProviderUtils.AUTHORITY, WaypointsColumns.TABLE_NAME + "/#", UrlType.WAYPOINTS_ID.ordinal());
+    uriMatcher.addURI(ContentProviderUtils.AUTHORITY, TrackPointsColumns.TABLE_NAME, UrlType.TRACKPOINTS.ordinal());
+    uriMatcher.addURI(ContentProviderUtils.AUTHORITY, TrackPointsColumns.TABLE_NAME + "/#", UrlType.TRACKPOINTS_ID.ordinal());
+    uriMatcher.addURI(ContentProviderUtils.AUTHORITY, TracksColumns.TABLE_NAME, UrlType.TRACKS.ordinal());
+    uriMatcher.addURI(ContentProviderUtils.AUTHORITY, TracksColumns.TABLE_NAME + "/#", UrlType.TRACKS_ID.ordinal());
+    uriMatcher.addURI(ContentProviderUtils.AUTHORITY, WaypointsColumns.TABLE_NAME, UrlType.WAYPOINTS.ordinal());
+    uriMatcher.addURI(ContentProviderUtils.AUTHORITY, WaypointsColumns.TABLE_NAME + "/#", UrlType.WAYPOINTS_ID.ordinal());
   }
 
   @Override

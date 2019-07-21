@@ -28,7 +28,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.ContentProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment;
 import com.google.android.apps.mytracks.fragments.ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller;
@@ -53,7 +53,7 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
   private static final String ICON_VALUE_KEY = "icon_value_key";
 
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
-  private MyTracksProviderUtils myTracksProviderUtils;
+  private ContentProviderUtils contentProviderUtils;
   private Track track;
   private String iconValue;
 
@@ -74,8 +74,8 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
       return;
     }
 
-    myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
-    track = myTracksProviderUtils.getTrack(trackId);
+    contentProviderUtils = ContentProviderUtils.Factory.get(this);
+    track = contentProviderUtils.getTrack(trackId);
     if (track == null) {
       Log.e(TAG, "No track for " + trackId);
       finish();
@@ -150,7 +150,7 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
       public void onClick(View v) {
         TrackUtils.updateTrack(TrackEditActivity.this, track, name.getText().toString(),
             activityType.getText().toString(), description.getText().toString(),
-            myTracksProviderUtils);
+                contentProviderUtils);
         finish();
       }
     });

@@ -38,7 +38,7 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.ContentProviderUtils;
 import com.google.android.apps.mytracks.content.SearchEngine;
 import com.google.android.apps.mytracks.content.SearchEngine.ScoredResult;
 import com.google.android.apps.mytracks.content.SearchEngine.SearchQuery;
@@ -133,7 +133,7 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
           if (isSingleSelection) {
             Map<String, Object> item = arrayAdapter.getItem(positions[0]);
             Long trackId = (Long) item.get(TRACK_ID_FIELD);
-            Track track = myTracksProviderUtils.getTrack(trackId);
+            Track track = contentProviderUtils.getTrack(trackId);
 
             isSingleSelectionTrack = item.get(MARKER_ID_FIELD) == null;
           } else {
@@ -154,7 +154,7 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
         }
       };
 
-  private MyTracksProviderUtils myTracksProviderUtils;
+  private ContentProviderUtils contentProviderUtils;
   private SharedPreferences sharedPreferences;
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
   private SearchEngine searchEngine;
@@ -170,10 +170,10 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
     super.onCreate(savedInstanceState);
     setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
-    myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
+    contentProviderUtils = ContentProviderUtils.Factory.get(this);
     sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
-    searchEngine = new SearchEngine(myTracksProviderUtils);
+    searchEngine = new SearchEngine(contentProviderUtils);
     searchRecentSuggestions = SearchEngineProvider.newHelper(this);
 
     arrayAdapter = new ArrayAdapter<Map<String, Object>>(this, R.layout.list_item, R.id.list_item_name) {
@@ -430,7 +430,7 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
     String trackName = null;
     long trackId = waypoint.getTrackId();
     if (trackId != -1L) {
-      Track track = myTracksProviderUtils.getTrack(trackId);
+      Track track = contentProviderUtils.getTrack(trackId);
       if (track != null) {
         trackName = track.getName();
       }
@@ -477,7 +477,7 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
     resultMap.put(NAME_FIELD, track.getName());
     resultMap.put(TOTAL_TIME_FIELD, StringUtils.formatElapsedTime(tripStatitics.getTotalTime()));
     resultMap.put(TOTAL_DISTANCE_FIELD, StringUtils.formatDistance(this, tripStatitics.getTotalDistance(), metricUnits));
-    resultMap.put(MARKER_COUNT_FIELD, myTracksProviderUtils.getWaypointCount(track.getId()));
+    resultMap.put(MARKER_COUNT_FIELD, contentProviderUtils.getWaypointCount(track.getId()));
     resultMap.put(START_TIME_FIELD, tripStatitics.getStartTime());
     resultMap.put(CATEGORY_FIELD, category);
     resultMap.put(DESCRIPTION_FIELD, track.getDescription());

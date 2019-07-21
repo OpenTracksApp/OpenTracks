@@ -19,8 +19,8 @@ package com.google.android.apps.mytracks.io.file.importer;
 import static com.google.android.testing.mocking.AndroidMock.eq;
 import static com.google.android.testing.mocking.AndroidMock.expect;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils.Factory;
+import com.google.android.apps.mytracks.content.ContentProviderUtils;
+import com.google.android.apps.mytracks.content.ContentProviderUtils.Factory;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
@@ -92,17 +92,17 @@ public class AbstractTestFileTrackImporter extends AndroidTestCase {
   protected static final Uri WAYPOINT_ID_O_URI = ContentUris.appendId(
       WaypointsColumns.CONTENT_URI.buildUpon(), WAYPOINT_ID_0).build();
 
-  protected MyTracksProviderUtils myTracksProviderUtils;
+  protected ContentProviderUtils contentProviderUtils;
 
   private Factory oldMyTracksProviderUtilsFactory;
 
-  @UsesMocks(MyTracksProviderUtils.class)
+  @UsesMocks(ContentProviderUtils.class)
   @Override
   protected void setUp() throws Exception {
     super.setUp();
-    myTracksProviderUtils = AndroidMock.createMock(MyTracksProviderUtils.class);
+    contentProviderUtils = AndroidMock.createMock(ContentProviderUtils.class);
     oldMyTracksProviderUtilsFactory = TestingProviderUtilsFactory.installWithInstance(
-        myTracksProviderUtils);
+            contentProviderUtils);
   }
 
   @Override
@@ -128,11 +128,11 @@ public class AbstractTestFileTrackImporter extends AndroidTestCase {
    * @param trackPointId the track point id
    */
   protected void expectFirstTrackPoint(Location location, long trackId, long trackPointId) {
-    expect(myTracksProviderUtils.bulkInsertTrackPoint(
+    expect(contentProviderUtils.bulkInsertTrackPoint(
         location != null ? LocationsMatcher.eqLoc(location) : (Location[]) AndroidMock.anyObject(),
         eq(1), eq(trackId))).andReturn(1);
-    expect(myTracksProviderUtils.getFirstTrackPointId(trackId)).andReturn(trackPointId);
-    expect(myTracksProviderUtils.getLastTrackPointId(trackId)).andReturn(trackPointId);
+    expect(contentProviderUtils.getFirstTrackPointId(trackId)).andReturn(trackPointId);
+    expect(contentProviderUtils.getLastTrackPointId(trackId)).andReturn(trackPointId);
   }
 
   /**
@@ -143,12 +143,12 @@ public class AbstractTestFileTrackImporter extends AndroidTestCase {
    * @param trackId the track id
    */
   protected void expectUpdateTrack(Capture<Track> track, boolean lastTrack, long trackId) {
-    myTracksProviderUtils.updateTrack(AndroidMock.capture(track));
-    expect(myTracksProviderUtils.insertWaypoint((Waypoint) AndroidMock.anyObject()))
+    contentProviderUtils.updateTrack(AndroidMock.capture(track));
+    expect(contentProviderUtils.insertWaypoint((Waypoint) AndroidMock.anyObject()))
         .andReturn(WAYPOINT_ID_O_URI);
     if (lastTrack) {
       // Return null to not add waypoints
-      expect(myTracksProviderUtils.getTrack(trackId)).andReturn(null);
+      expect(contentProviderUtils.getTrack(trackId)).andReturn(null);
     }
   }
 

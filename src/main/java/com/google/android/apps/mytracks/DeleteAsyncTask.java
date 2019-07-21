@@ -19,7 +19,7 @@ package com.google.android.apps.mytracks;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.ContentProviderUtils;
 
 /**
  * Async Task to delete tracks.
@@ -70,16 +70,16 @@ public class DeleteAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
   @Override
   protected Boolean doInBackground(Void... params) {
-    MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
+    ContentProviderUtils contentProviderUtils = ContentProviderUtils.Factory.get(context);
 
     if (trackIds.length == 1 && trackIds[0] == -1L) {
-      myTracksProviderUtils.deleteAllTracks(context);
+      contentProviderUtils.deleteAllTracks(context);
     } else {
       for (long id : trackIds) {
         if (isCancelled()) {
           return false;
         }
-        myTracksProviderUtils.deleteTrack(context, id);
+        contentProviderUtils.deleteTrack(context, id);
       }
     }
     return true;

@@ -25,7 +25,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.ContentProviderUtils;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
 import com.google.android.apps.mytracks.fragments.MarkerDetailFragment;
@@ -56,20 +56,20 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
       return;
     }
 
-    MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
-    Waypoint waypoint = myTracksProviderUtils.getWaypoint(markerId);
+    ContentProviderUtils contentProviderUtils = ContentProviderUtils.Factory.get(this);
+    Waypoint waypoint = contentProviderUtils.getWaypoint(markerId);
 
     markerIds = new ArrayList<>();
     int markerIndex = -1;
 
-      try (Cursor cursor = myTracksProviderUtils.getWaypointCursor(waypoint.getTrackId(), -1L, -1)) {
+      try (Cursor cursor = contentProviderUtils.getWaypointCursor(waypoint.getTrackId(), -1L, -1)) {
           if (cursor != null && cursor.moveToFirst()) {
               /*
                * Yes, this will skip the first waypoint and that is intentional as the
                * first waypoint holds the stats for the track.
                */
               while (cursor.moveToNext()) {
-                  Waypoint current = myTracksProviderUtils.createWaypoint(cursor);
+                  Waypoint current = contentProviderUtils.createWaypoint(cursor);
 
                   markerIds.add(current.getId());
                   if (current.getId() == markerId) {

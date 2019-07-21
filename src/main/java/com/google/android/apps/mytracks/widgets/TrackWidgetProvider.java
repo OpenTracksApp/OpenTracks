@@ -18,7 +18,7 @@ package com.google.android.apps.mytracks.widgets;
 
 import com.google.android.apps.mytracks.TrackDetailActivity;
 import com.google.android.apps.mytracks.TrackListActivity;
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.ContentProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.services.ControlRecordingService;
 import com.google.android.apps.mytracks.stats.TripStatistics;
@@ -207,12 +207,12 @@ public class TrackWidgetProvider extends AppWidgetProvider {
         context, R.string.track_widget_item2, PreferencesUtils.TRACK_WIDGET_ITEM2_DEFAULT);
 
     // Get track and trip statistics
-    MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
+    ContentProviderUtils contentProviderUtils = ContentProviderUtils.Factory.get(context);
     if (trackId == -1L) {
       trackId = recordingTrackId;
     }
-    Track track = trackId != -1L ? myTracksProviderUtils.getTrack(trackId)
-        : myTracksProviderUtils.getLastTrack();
+    Track track = trackId != -1L ? contentProviderUtils.getTrack(trackId)
+        : contentProviderUtils.getLastTrack();
     TripStatistics tripStatistics = track == null ? null : track.getTripStatistics();
 
     updateStatisticsContainer(context, remoteViews, track);

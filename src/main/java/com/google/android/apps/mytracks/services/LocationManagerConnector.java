@@ -24,12 +24,11 @@ import android.os.Handler;
 import android.os.Looper;
 
 /**
- * My Tracks Location Manager. Applies Google location settings before allowing
- * access to {@link LocationManager}.
+ * Handles connection to {@link LocationManager}.
  *
  * @author Jimmy Shih
  */
-public class MyTracksLocationManager {
+public class LocationManagerConnector {
 
     private final Handler handler;
     private final LocationManager locationManager;
@@ -38,7 +37,7 @@ public class MyTracksLocationManager {
     private float requestLocationUpdatesDistance;
     private long requestLocationUpdatesTime;
 
-    public MyTracksLocationManager(Context context, Looper looper) {
+    public LocationManagerConnector(Context context, Looper looper) {
         this.handler = new Handler(looper);
 
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);

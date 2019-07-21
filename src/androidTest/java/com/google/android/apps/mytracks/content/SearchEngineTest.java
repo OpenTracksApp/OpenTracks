@@ -50,7 +50,7 @@ public class SearchEngineTest {
 
   private static final Location HERE = new Location("gps");
   private static final long NOW = 1234567890000L;  // After OLDEST_ALLOWED_TIMESTAMP
-  private MyTracksProviderUtils providerUtils;
+  private ContentProviderUtils providerUtils;
   private SearchEngine engine;
 
   @Before
@@ -59,12 +59,12 @@ public class SearchEngineTest {
     RenamingDelegatingContext targetContext = new RenamingDelegatingContext(
         getContext(), getContext(), "test.");
     MockContext context = new MockContext(mockContentResolver, targetContext);
-    MyTracksProvider provider = new MyTracksProvider();
+    CustomContentProvider provider = new CustomContentProvider();
     provider.attachInfo(context, null);
-    mockContentResolver.addProvider(MyTracksProviderUtils.AUTHORITY, provider);
+    mockContentResolver.addProvider(ContentProviderUtils.AUTHORITY, provider);
     setContext(context);
 
-    providerUtils = MyTracksProviderUtils.Factory.get(context);
+    providerUtils = ContentProviderUtils.Factory.get(context);
     engine = new SearchEngine(providerUtils);
   }
 

@@ -24,7 +24,7 @@ import android.os.Bundle;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.ContentProviderUtils;
 import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -33,7 +33,7 @@ import com.google.android.maps.mytracks.R;
  * 
  * @author Jimmy Shih
  */
-public class DeleteMarkerDialogFragment extends AbstractMyTracksDialogFragment {
+public class DeleteMarkerDialogFragment extends AbstractDialogFragment {
 
   /**
    * Interface for caller of this dialog fragment.
@@ -94,10 +94,10 @@ public class DeleteMarkerDialogFragment extends AbstractMyTracksDialogFragment {
             new Thread(new Runnable() {
                 @Override
               public void run() {
-                MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(
+                ContentProviderUtils contentProviderUtils = ContentProviderUtils.Factory.get(
                     fragmentActivity);
                 for (long markerId : markerIds) {
-                  myTracksProviderUtils.deleteWaypoint(fragmentActivity,
+                  contentProviderUtils.deleteWaypoint(fragmentActivity,
                       markerId, new DescriptionGeneratorImpl(fragmentActivity));
                 }
                 caller.onDeleteMarkerDone();

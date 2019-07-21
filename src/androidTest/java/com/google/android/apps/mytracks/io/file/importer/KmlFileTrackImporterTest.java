@@ -74,29 +74,29 @@ public class KmlFileTrackImporterTest extends AbstractTestFileTrackImporter {
     Location location0 = createLocation(0, DATE_FORMAT_0.parse(TRACK_TIME_0).getTime());
     Location location1 = createLocation(1, DATE_FORMAT_1.parse(TRACK_TIME_1).getTime());
 
-    myTracksProviderUtils.clearTrack(getContext(), TRACK_ID_0);
+    contentProviderUtils.clearTrack(getContext(), TRACK_ID_0);
     expectFirstTrackPoint(location0, TRACK_ID_0, TRACK_POINT_ID_0);
 
     // A flush happens at the end
-    expect(myTracksProviderUtils.bulkInsertTrackPoint(
+    expect(contentProviderUtils.bulkInsertTrackPoint(
         LocationsMatcher.eqLoc(location1), eq(1), eq(TRACK_ID_0))).andReturn(1);
-    expect(myTracksProviderUtils.getLastTrackPointId(TRACK_ID_0)).andReturn(TRACK_POINT_ID_1);
+    expect(contentProviderUtils.getLastTrackPointId(TRACK_ID_0)).andReturn(TRACK_POINT_ID_1);
     expect(
-        myTracksProviderUtils.getTrack(PreferencesUtils.getLong(getContext(),
+        contentProviderUtils.getTrack(PreferencesUtils.getLong(getContext(),
             R.string.recording_track_id_key))).andStubReturn(null);
     expectUpdateTrack(track, true, TRACK_ID_0);
-    AndroidMock.replay(myTracksProviderUtils);
+    AndroidMock.replay(contentProviderUtils);
 
     InputStream inputStream = new ByteArrayInputStream(VALID_ONE_TRACK_ONE_SEGMENT_GPX.getBytes());
     KmlFileTrackImporter kmlFileTrackImporter = new KmlFileTrackImporter(
-        getContext(), TRACK_ID_0, myTracksProviderUtils);
+        getContext(), TRACK_ID_0, contentProviderUtils);
     long trackId = kmlFileTrackImporter.importFile(inputStream);
     assertEquals(TRACK_ID_0, trackId);
 
     long time0 = DATE_FORMAT_0.parse(TRACK_TIME_0).getTime();
     long time1 = DATE_FORMAT_1.parse(TRACK_TIME_1).getTime();
     assertEquals(time1 - time0, track.getValue().getTripStatistics().getTotalTime());
-    AndroidMock.verify(myTracksProviderUtils);
+    AndroidMock.verify(contentProviderUtils);
     verifyTrack(track.getValue(), TRACK_NAME_0, TRACK_DESCRIPTION_0, time0);
   }
 
@@ -108,22 +108,22 @@ public class KmlFileTrackImporterTest extends AbstractTestFileTrackImporter {
 
     Location location0 = createLocation(0, DATE_FORMAT_0.parse(TRACK_TIME_0).getTime());
 
-    myTracksProviderUtils.clearTrack(getContext(), TRACK_ID_0);
+    contentProviderUtils.clearTrack(getContext(), TRACK_ID_0);
     expectFirstTrackPoint(location0, TRACK_ID_0, TRACK_POINT_ID_0);
 
     // A flush happens at the end
-    expect(myTracksProviderUtils.bulkInsertTrackPoint(
+    expect(contentProviderUtils.bulkInsertTrackPoint(
         (Location[]) AndroidMock.anyObject(), eq(5), eq(TRACK_ID_0))).andStubReturn(5);
-    expect(myTracksProviderUtils.getLastTrackPointId(TRACK_ID_0)).andReturn(TRACK_POINT_ID_3);
+    expect(contentProviderUtils.getLastTrackPointId(TRACK_ID_0)).andReturn(TRACK_POINT_ID_3);
     expect(
-        myTracksProviderUtils.getTrack(PreferencesUtils.getLong(getContext(),
+        contentProviderUtils.getTrack(PreferencesUtils.getLong(getContext(),
             R.string.recording_track_id_key))).andStubReturn(null);
     expectUpdateTrack(track, true, TRACK_ID_0);
-    AndroidMock.replay(myTracksProviderUtils);
+    AndroidMock.replay(contentProviderUtils);
 
     InputStream inputStream = new ByteArrayInputStream(VALID_ONE_TRACK_TWO_SEGMENTS_GPX.getBytes());
     KmlFileTrackImporter kmlFileTrackImporter = new KmlFileTrackImporter(
-        getContext(), TRACK_ID_0, myTracksProviderUtils);
+        getContext(), TRACK_ID_0, contentProviderUtils);
     long trackId = kmlFileTrackImporter.importFile(inputStream);
     assertEquals(TRACK_ID_0, trackId);
 
@@ -134,7 +134,7 @@ public class KmlFileTrackImporterTest extends AbstractTestFileTrackImporter {
     assertEquals(
         time1 - time0 + time3 - time2, track.getValue().getTripStatistics().getTotalTime());
 
-    AndroidMock.verify(myTracksProviderUtils);
+    AndroidMock.verify(contentProviderUtils);
     verifyTrack(track.getValue(), TRACK_NAME_0, TRACK_DESCRIPTION_0,
         DATE_FORMAT_0.parse(TRACK_TIME_0).getTime());
   }

@@ -32,7 +32,7 @@ import java.util.List;
  * 
  * @author Rodrigo Damazio
  */
-public interface MyTracksProviderUtils {
+public interface ContentProviderUtils {
 
   /**
    * The authority (the first part of the URI) for the My Tracks content
@@ -350,12 +350,12 @@ public interface MyTracksProviderUtils {
   LocationFactory DEFAULT_LOCATION_FACTORY = new LocationFactory() {
       @Override
     public Location createLocation() {
-      return new MyTracksLocation(LocationManager.GPS_PROVIDER);
+      return new SensorDataSetLocation(LocationManager.GPS_PROVIDER);
     }
   };
 
   /**
-   * A factory which can produce instances of {@link MyTracksProviderUtils}, and
+   * A factory which can produce instances of {@link ContentProviderUtils}, and
    * can be overridden for testing.
    */
   class Factory {
@@ -363,11 +363,11 @@ public interface MyTracksProviderUtils {
     private static Factory instance = new Factory();
 
     /**
-     * Creates an instance of {@link MyTracksProviderUtils}.
+     * Creates an instance of {@link ContentProviderUtils}.
      * 
      * @param context the context
      */
-    public static MyTracksProviderUtils get(Context context) {
+    public static ContentProviderUtils get(Context context) {
       return instance.newForContext(context);
     }
 
@@ -389,13 +389,13 @@ public interface MyTracksProviderUtils {
     }
 
     /**
-     * Creates an instance of {@link MyTracksProviderUtils}. Allows subclasses
+     * Creates an instance of {@link ContentProviderUtils}. Allows subclasses
      * to override for testing.
      * 
      * @param context the context
      */
-    protected MyTracksProviderUtils newForContext(Context context) {
-      return new MyTracksProviderUtilsImpl(context.getContentResolver());
+    protected ContentProviderUtils newForContext(Context context) {
+      return new ContentProviderUtilsImpl(context.getContentResolver());
     }
   }
 }

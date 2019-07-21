@@ -151,9 +151,9 @@ public class SearchEngine {
         }
       };
 
-  private final MyTracksProviderUtils providerUtils;
+  private final ContentProviderUtils providerUtils;
 
-  public SearchEngine(MyTracksProviderUtils providerUtils) {
+  public SearchEngine(ContentProviderUtils providerUtils) {
     this.providerUtils = providerUtils;
   }
 

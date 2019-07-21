@@ -41,7 +41,7 @@ public class SystemUtils {
    * 
    * @return the version, or an empty string in case of failure.
    */
-  public static String getMyTracksVersion(Context context) {
+  public static String getAppVersion(Context context) {
     try {
       PackageInfo pi = context.getPackageManager()
           .getPackageInfo("com.google.android.maps.mytracks", PackageManager.GET_META_DATA);

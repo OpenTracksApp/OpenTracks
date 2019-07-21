@@ -23,7 +23,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.google.android.apps.mytracks.ChartView;
 import com.google.android.apps.mytracks.TrackStubUtils;
-import com.google.android.apps.mytracks.content.MyTracksLocation;
+import com.google.android.apps.mytracks.content.SensorDataSetLocation;
 import com.google.android.apps.mytracks.content.sensor.Sensor;
 import com.google.android.apps.mytracks.content.sensor.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.util.UnitConversions;
@@ -56,10 +56,10 @@ public class ChartFragmentTest {
    * double[])}
    */
   public void testFillDataPoint_sensorIncorrect() {
-    MyTracksLocation myTracksLocation = TrackStubUtils.createMyTracksLocation();
+    SensorDataSetLocation sensorDataSetLocation = TrackStubUtils.createSensorDataSetLocation();
 
     // No input.
-    double[] point = fillDataPointTestHelper(myTracksLocation);
+    double[] point = fillDataPointTestHelper(sensorDataSetLocation);
     Assert.assertEquals(Double.NaN, point[ChartView.HEART_RATE_SERIES + 1]);
     Assert.assertEquals(Double.NaN, point[ChartView.CADENCE_SERIES + 1]);
     Assert.assertEquals(Double.NaN, point[ChartView.POWER_SERIES + 1]);
@@ -74,12 +74,12 @@ public class ChartFragmentTest {
         .setValue(102).setState(Sensor.SensorState.NONE);
 
     // Creates SensorDataSet.
-    SensorDataSet sensorDataSet = myTracksLocation.getSensorDataSet();
+    SensorDataSet sensorDataSet = sensorDataSetLocation.getSensorDataSet();
     sensorDataSet = sensorDataSet.toBuilder()
         .setHeartRate(heartRateData).setCadence(cadenceData).setPower(powerData).build();
-    myTracksLocation.setSensorDataSet(sensorDataSet);
+    sensorDataSetLocation.setSensorDataSet(sensorDataSet);
     // Test.
-    point = fillDataPointTestHelper(myTracksLocation);
+    point = fillDataPointTestHelper(sensorDataSetLocation);
     Assert.assertEquals(Double.NaN, point[ChartView.HEART_RATE_SERIES + 1]);
     Assert.assertEquals(Double.NaN, point[ChartView.CADENCE_SERIES + 1]);
     Assert.assertEquals(Double.NaN, point[ChartView.POWER_SERIES + 1]);
@@ -90,9 +90,9 @@ public class ChartFragmentTest {
    * double[])}.
    */
   public void testFillDataPoint_sensorCorrect() {
-    MyTracksLocation myTracksLocation = TrackStubUtils.createMyTracksLocation();
+    SensorDataSetLocation sensorDataSetLocation = TrackStubUtils.createSensorDataSetLocation();
     // No input.
-    double[] point = fillDataPointTestHelper(myTracksLocation);
+    double[] point = fillDataPointTestHelper(sensorDataSetLocation);
     Assert.assertEquals(Double.NaN, point[ChartView.HEART_RATE_SERIES + 1]);
     Assert.assertEquals(Double.NaN, point[ChartView.CADENCE_SERIES + 1]);
     Assert.assertEquals(Double.NaN, point[ChartView.POWER_SERIES + 1]);
@@ -106,12 +106,12 @@ public class ChartFragmentTest {
         .setValue(102).setState(Sensor.SensorState.SENDING);
 
     // Creates SensorDataSet.
-    SensorDataSet sensorDataSet = myTracksLocation.getSensorDataSet();
+    SensorDataSet sensorDataSet = sensorDataSetLocation.getSensorDataSet();
     sensorDataSet = sensorDataSet.toBuilder()
         .setHeartRate(heartRateData).setCadence(cadenceData).setPower(powerData).build();
-    myTracksLocation.setSensorDataSet(sensorDataSet);
+    sensorDataSetLocation.setSensorDataSet(sensorDataSet);
     // Test.
-    point = fillDataPointTestHelper(myTracksLocation);
+    point = fillDataPointTestHelper(sensorDataSetLocation);
     Assert.assertEquals(100.0, point[ChartView.HEART_RATE_SERIES + 1]);
     Assert.assertEquals(101.0, point[ChartView.CADENCE_SERIES + 1]);
     Assert.assertEquals(102.0, point[ChartView.POWER_SERIES + 1]);
@@ -125,35 +125,35 @@ public class ChartFragmentTest {
     // By distance.
     chartFragment.setChartByDistance(true);
     // Resets last location and writes first location.
-    MyTracksLocation myTracksLocation1 = TrackStubUtils.createMyTracksLocation();
-    double[] point = fillDataPointTestHelper(myTracksLocation1);
+    SensorDataSetLocation sensorDataSetLocation1 = TrackStubUtils.createSensorDataSetLocation();
+    double[] point = fillDataPointTestHelper(sensorDataSetLocation1);
     Assert.assertEquals(0.0, point[0]);
 
     // The second is a same location, just different time.
-    MyTracksLocation myTracksLocation2 = TrackStubUtils.createMyTracksLocation();
-    point = fillDataPointTestHelper(myTracksLocation2);
+    SensorDataSetLocation sensorDataSetLocation2 = TrackStubUtils.createSensorDataSetLocation();
+    point = fillDataPointTestHelper(sensorDataSetLocation2);
     Assert.assertEquals(0.0, point[0]);
 
     // The third location is a new location, and use metric.
-    MyTracksLocation myTracksLocation3 = TrackStubUtils.createMyTracksLocation();
-    myTracksLocation3.setLatitude(23);
-    point = fillDataPointTestHelper(myTracksLocation3);
+    SensorDataSetLocation sensorDataSetLocation3 = TrackStubUtils.createSensorDataSetLocation();
+    sensorDataSetLocation3.setLatitude(23);
+    point = fillDataPointTestHelper(sensorDataSetLocation3);
 
     // Computes the distance between Latitude 22 and 23.
     float[] results = new float[4];
-    Location.distanceBetween(myTracksLocation2.getLatitude(), myTracksLocation2.getLongitude(),
-        myTracksLocation3.getLatitude(), myTracksLocation3.getLongitude(), results);
+    Location.distanceBetween(sensorDataSetLocation2.getLatitude(), sensorDataSetLocation2.getLongitude(),
+        sensorDataSetLocation3.getLatitude(), sensorDataSetLocation3.getLongitude(), results);
     double distance1 = results[0] * UnitConversions.M_TO_KM;
     Assert.assertEquals(distance1, point[0]);
 
     // The fourth location is a new location, and use metric.
-    MyTracksLocation myTracksLocation4 = TrackStubUtils.createMyTracksLocation();
-    myTracksLocation4.setLatitude(24);
-    point = fillDataPointTestHelper(myTracksLocation4);
+    SensorDataSetLocation sensorDataSetLocation4 = TrackStubUtils.createSensorDataSetLocation();
+    sensorDataSetLocation4.setLatitude(24);
+    point = fillDataPointTestHelper(sensorDataSetLocation4);
 
     // Computes the distance between Latitude 23 and 24.
-    Location.distanceBetween(myTracksLocation3.getLatitude(), myTracksLocation3.getLongitude(),
-        myTracksLocation4.getLatitude(), myTracksLocation4.getLongitude(), results);
+    Location.distanceBetween(sensorDataSetLocation3.getLatitude(), sensorDataSetLocation3.getLongitude(),
+        sensorDataSetLocation4.getLatitude(), sensorDataSetLocation4.getLongitude(), results);
     double distance2 = results[0] * UnitConversions.M_TO_KM;
     Assert.assertEquals((distance1 + distance2), point[0]);
   }
@@ -169,36 +169,36 @@ public class ChartFragmentTest {
     chartFragment.setMetricUnits(false);
 
     // The first is a same location, just different time.
-    MyTracksLocation myTracksLocation1 = TrackStubUtils.createMyTracksLocation();
-    double[] point = fillDataPointTestHelper(myTracksLocation1);
+    SensorDataSetLocation sensorDataSetLocation1 = TrackStubUtils.createSensorDataSetLocation();
+    double[] point = fillDataPointTestHelper(sensorDataSetLocation1);
     Assert.assertEquals(0.0, point[0]);
 
     // The second location is a new location, and use imperial.
-    MyTracksLocation myTracksLocation2 = TrackStubUtils.createMyTracksLocation();
-    myTracksLocation2.setLatitude(23);
-    point = fillDataPointTestHelper(myTracksLocation2);
+    SensorDataSetLocation sensorDataSetLocation2 = TrackStubUtils.createSensorDataSetLocation();
+    sensorDataSetLocation2.setLatitude(23);
+    point = fillDataPointTestHelper(sensorDataSetLocation2);
 
     /*
      * Computes the distance between Latitude 22 and 23. And for we set using
      * imperial, the distance should be multiplied by UnitConversions.KM_TO_MI.
      */
     float[] results = new float[4];
-    Location.distanceBetween(myTracksLocation1.getLatitude(), myTracksLocation1.getLongitude(),
-        myTracksLocation2.getLatitude(), myTracksLocation2.getLongitude(), results);
+    Location.distanceBetween(sensorDataSetLocation1.getLatitude(), sensorDataSetLocation1.getLongitude(),
+        sensorDataSetLocation2.getLatitude(), sensorDataSetLocation2.getLongitude(), results);
     double distance1 = results[0] * UnitConversions.M_TO_KM * UnitConversions.KM_TO_MI;
     Assert.assertEquals(distance1, point[0]);
 
     // The third location is a new location, and use imperial.
-    MyTracksLocation myTracksLocation3 = TrackStubUtils.createMyTracksLocation();
-    myTracksLocation3.setLatitude(24);
-    point = fillDataPointTestHelper(myTracksLocation3);
+    SensorDataSetLocation sensorDataSetLocation3 = TrackStubUtils.createSensorDataSetLocation();
+    sensorDataSetLocation3.setLatitude(24);
+    point = fillDataPointTestHelper(sensorDataSetLocation3);
 
     /*
      * Computes the distance between Latitude 23 and 24. And for we set using
      * imperial, the distance should be multiplied by UnitConversions.KM_TO_MI.
      */
-    Location.distanceBetween(myTracksLocation2.getLatitude(), myTracksLocation2.getLongitude(),
-        myTracksLocation3.getLatitude(), myTracksLocation3.getLongitude(), results);
+    Location.distanceBetween(sensorDataSetLocation2.getLatitude(), sensorDataSetLocation2.getLongitude(),
+        sensorDataSetLocation3.getLatitude(), sensorDataSetLocation3.getLongitude(), results);
     double distance2 = results[0] * UnitConversions.M_TO_KM * UnitConversions.KM_TO_MI;
     Assert.assertEquals(distance1 + distance2, point[0]);
   }
@@ -210,13 +210,13 @@ public class ChartFragmentTest {
   public void testFillDataPoint_time() {
     // By time
     chartFragment.setChartByDistance(false);
-    MyTracksLocation myTracksLocation1 = TrackStubUtils.createMyTracksLocation();
-    double[] point = fillDataPointTestHelper(myTracksLocation1);
+    SensorDataSetLocation sensorDataSetLocation1 = TrackStubUtils.createSensorDataSetLocation();
+    double[] point = fillDataPointTestHelper(sensorDataSetLocation1);
     Assert.assertEquals(0.0, point[0]);
     long timeSpan = 222;
-    MyTracksLocation myTracksLocation2 = TrackStubUtils.createMyTracksLocation();
-    myTracksLocation2.setTime(myTracksLocation1.getTime() + timeSpan);
-    point = fillDataPointTestHelper(myTracksLocation2);
+    SensorDataSetLocation sensorDataSetLocation2 = TrackStubUtils.createSensorDataSetLocation();
+    sensorDataSetLocation2.setTime(sensorDataSetLocation1.getTime() + timeSpan);
+    point = fillDataPointTestHelper(sensorDataSetLocation2);
     Assert.assertEquals((double) timeSpan, point[0]);
   }
 
@@ -225,22 +225,22 @@ public class ChartFragmentTest {
    * double[])} by one and two points.
    */
   public void testFillDataPoint_elevation() {
-    MyTracksLocation myTracksLocation1 = TrackStubUtils.createMyTracksLocation();
+    SensorDataSetLocation sensorDataSetLocation1 = TrackStubUtils.createSensorDataSetLocation();
 
     /*
      * At first, clear old points of elevation, so give true to the second
      * parameter. Then only one value INITIALLONGTITUDE in buffer.
      */
-    double[] point = fillDataPointTestHelper(myTracksLocation1);
+    double[] point = fillDataPointTestHelper(sensorDataSetLocation1);
     Assert.assertEquals(TrackStubUtils.INITIAL_ALTITUDE, point[ChartView.ELEVATION_SERIES + 1]);
 
     /*
      * Send another value to buffer, now there are two values, INITIALALTITUDE
      * and INITIALALTITUDE * 2.
      */
-    MyTracksLocation myTracksLocation2 = TrackStubUtils.createMyTracksLocation();
-    myTracksLocation2.setAltitude(TrackStubUtils.INITIAL_ALTITUDE * 2);
-    point = fillDataPointTestHelper(myTracksLocation2);
+    SensorDataSetLocation sensorDataSetLocation2 = TrackStubUtils.createSensorDataSetLocation();
+    sensorDataSetLocation2.setAltitude(TrackStubUtils.INITIAL_ALTITUDE * 2);
+    point = fillDataPointTestHelper(sensorDataSetLocation2);
     Assert.assertEquals((TrackStubUtils.INITIAL_ALTITUDE + TrackStubUtils.INITIAL_ALTITUDE * 2) / 2.0,
         point[ChartView.ELEVATION_SERIES + 1]);
   }
@@ -256,24 +256,24 @@ public class ChartFragmentTest {
      * At first, clear old points of speed, so give true to the second
      * parameter. It will not be filled in to the speed buffer.
      */
-    MyTracksLocation myTracksLocation1 = TrackStubUtils.createMyTracksLocation();
-    myTracksLocation1.setSpeed(128.5f);
-    double[] point = fillDataPointTestHelper(myTracksLocation1);
+    SensorDataSetLocation sensorDataSetLocation1 = TrackStubUtils.createSensorDataSetLocation();
+    sensorDataSetLocation1.setSpeed(128.5f);
+    double[] point = fillDataPointTestHelper(sensorDataSetLocation1);
     Assert.assertEquals(0.0, point[ChartView.SPEED_SERIES + 1]);
 
     /*
      * Tests the logic when both metricUnits and reportSpeed are true.This
      * location will be filled into speed buffer.
      */
-    MyTracksLocation myTracksLocation2 = TrackStubUtils.createMyTracksLocation();
+    SensorDataSetLocation sensorDataSetLocation2 = TrackStubUtils.createSensorDataSetLocation();
 
     /*
      * Add a time span here to make sure the second point is valid, the value
      * 222 here is doesn't matter.
      */
-    myTracksLocation2.setTime(myTracksLocation1.getTime() + 222);
-    myTracksLocation2.setSpeed(130);
-    point = fillDataPointTestHelper(myTracksLocation2);
+    sensorDataSetLocation2.setTime(sensorDataSetLocation1.getTime() + 222);
+    sensorDataSetLocation2.setSpeed(130);
+    point = fillDataPointTestHelper(sensorDataSetLocation2);
     Assert.assertEquals(130.0 * UnitConversions.MS_TO_KMH, point[ChartView.SPEED_SERIES + 1]);
   }
 
@@ -285,21 +285,21 @@ public class ChartFragmentTest {
     chartFragment.setMetricUnits(false);
 
     // First data point is not added to the speed buffer
-    MyTracksLocation myTracksLocation1 = TrackStubUtils.createMyTracksLocation();
-    myTracksLocation1.setSpeed(100.0f);
-    double[] point = fillDataPointTestHelper(myTracksLocation1);
+    SensorDataSetLocation sensorDataSetLocation1 = TrackStubUtils.createSensorDataSetLocation();
+    sensorDataSetLocation1.setSpeed(100.0f);
+    double[] point = fillDataPointTestHelper(sensorDataSetLocation1);
     Assert.assertEquals(0.0, point[ChartView.SPEED_SERIES + 1]);
 
-    MyTracksLocation myTracksLocation2 = TrackStubUtils.createMyTracksLocation();
+    SensorDataSetLocation sensorDataSetLocation2 = TrackStubUtils.createSensorDataSetLocation();
 
     /*
      * Add a time span here to make sure the second point is valid and the speed
      * is valid. Speed is valid if: speedDifference > Constants.MAX_ACCELERATION
      * * timeDifference speedDifference = 102 -100 timeDifference = 222
      */
-    myTracksLocation2.setTime(myTracksLocation2.getTime() + 222);
-    myTracksLocation2.setSpeed(102);
-    point = fillDataPointTestHelper(myTracksLocation2);
+    sensorDataSetLocation2.setTime(sensorDataSetLocation2.getTime() + 222);
+    sensorDataSetLocation2.setSpeed(102);
+    point = fillDataPointTestHelper(sensorDataSetLocation2);
     Assert.assertEquals(102.0 * UnitConversions.MS_TO_KMH * UnitConversions.KM_TO_MI, point[ChartView.SPEED_SERIES + 1]);
   }
 
@@ -311,21 +311,21 @@ public class ChartFragmentTest {
     chartFragment.setReportSpeed(false);
 
     // First data point is not added to the speed buffer
-    MyTracksLocation myTracksLocation1 = TrackStubUtils.createMyTracksLocation();
-    myTracksLocation1.setSpeed(100.0f);
-    double[] point = fillDataPointTestHelper(myTracksLocation1);
+    SensorDataSetLocation sensorDataSetLocation1 = TrackStubUtils.createSensorDataSetLocation();
+    sensorDataSetLocation1.setSpeed(100.0f);
+    double[] point = fillDataPointTestHelper(sensorDataSetLocation1);
     Assert.assertEquals(0.0, point[ChartView.SPEED_SERIES + 1]);
 
-    MyTracksLocation myTracksLocation2 = TrackStubUtils.createMyTracksLocation();
+    SensorDataSetLocation sensorDataSetLocation2 = TrackStubUtils.createSensorDataSetLocation();
 
     /*
      * Add a time span here to make sure the second point is valid and the speed
      * is valid. Speed is valid if: speedDifference > Constants.MAX_ACCELERATION
      * * timeDifference speedDifference = 102 -100 timeDifference = 222
      */
-    myTracksLocation2.setTime(myTracksLocation2.getTime() + 222);
-    myTracksLocation2.setSpeed(102);
-    point = fillDataPointTestHelper(myTracksLocation2);
+    sensorDataSetLocation2.setTime(sensorDataSetLocation2.getTime() + 222);
+    sensorDataSetLocation2.setSpeed(102);
+    point = fillDataPointTestHelper(sensorDataSetLocation2);
     Assert.assertEquals(HOURS_PER_UNIT / (102.0 * UnitConversions.MS_TO_KMH), point[ChartView.PACE_SERIES + 1]);
   }
 
@@ -336,9 +336,9 @@ public class ChartFragmentTest {
   public void testFillDataPoint_pace_zeroSpeed() {
     // Setups reportSpeed to false.
     chartFragment.setReportSpeed(false);
-    MyTracksLocation myTracksLocation = TrackStubUtils.createMyTracksLocation();
-    myTracksLocation.setSpeed(0);
-    double[] point = fillDataPointTestHelper(myTracksLocation);
+    SensorDataSetLocation sensorDataSetLocation = TrackStubUtils.createSensorDataSetLocation();
+    sensorDataSetLocation.setSpeed(0);
+    double[] point = fillDataPointTestHelper(sensorDataSetLocation);
     Assert.assertEquals(0.0, point[ChartView.PACE_SERIES + 1]);
   }
 

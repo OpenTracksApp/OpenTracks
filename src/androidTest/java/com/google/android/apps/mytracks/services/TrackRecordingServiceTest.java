@@ -38,8 +38,8 @@ import android.test.suitebuilder.annotation.SmallTest;
 import android.util.Log;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.content.MyTracksProvider;
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.CustomContentProvider;
+import com.google.android.apps.mytracks.content.ContentProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
@@ -64,7 +64,7 @@ import java.util.List;
 public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingService> {
 
   private Context context;
-  private MyTracksProviderUtils providerUtils;
+  private ContentProviderUtils providerUtils;
 
   /*
    * In order to support starting and binding to the service in the same unit
@@ -135,9 +135,9 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     context = new MockContext(mockContentResolver, renamingDelegatingContext);
 
     // Set up the mock content resolver
-    MyTracksProvider myTracksProvider = new MyTracksProvider();
+    CustomContentProvider myTracksProvider = new CustomContentProvider();
     myTracksProvider.attachInfo(context, null);
-    mockContentResolver.addProvider(MyTracksProviderUtils.AUTHORITY, myTracksProvider);
+    mockContentResolver.addProvider(ContentProviderUtils.AUTHORITY, myTracksProvider);
 
     MockContentProvider settingsProvider = new MockContentProvider(context) {
         @Override
@@ -156,7 +156,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     // Set the context
     setContext(context);
 
-    providerUtils = MyTracksProviderUtils.Factory.get(context);
+    providerUtils = ContentProviderUtils.Factory.get(context);
 
     SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     // Let's use default values.

@@ -16,7 +16,7 @@
 
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.ContentProviderUtils;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
@@ -130,7 +130,7 @@ public class MarkerEditActivity extends AbstractActivity {
       statisticsSection.setVisibility(View.GONE);
       waypointSection.setVisibility(View.VISIBLE);
       int nextWaypointNumber = trackId == -1L ? -1
-          : MyTracksProviderUtils.Factory.get(this).getNextWaypointNumber(trackId, WaypointType.WAYPOINT);
+          : ContentProviderUtils.Factory.get(this).getNextWaypointNumber(trackId, WaypointType.WAYPOINT);
       if (nextWaypointNumber == -1) {
         nextWaypointNumber = 0;
       }
@@ -139,7 +139,7 @@ public class MarkerEditActivity extends AbstractActivity {
       waypointMarkerType.setText("");
       waypointDescription.setText("");
     } else {
-      waypoint = MyTracksProviderUtils.Factory.get(this).getWaypoint(markerId);
+      waypoint = ContentProviderUtils.Factory.get(this).getWaypoint(markerId);
       if (waypoint == null) {
         Log.d(TAG, "waypoint is null");
         finish();
@@ -186,6 +186,6 @@ public class MarkerEditActivity extends AbstractActivity {
       waypoint.setCategory(waypointMarkerType.getText().toString());
       waypoint.setDescription(waypointDescription.getText().toString());
     }
-    MyTracksProviderUtils.Factory.get(this).updateWaypoint(waypoint);
+    ContentProviderUtils.Factory.get(this).updateWaypoint(waypoint);
   }
 }

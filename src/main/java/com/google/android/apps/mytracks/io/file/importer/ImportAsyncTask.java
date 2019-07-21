@@ -16,7 +16,7 @@
 
 package com.google.android.apps.mytracks.io.file.importer;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.ContentProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
 import com.google.android.apps.mytracks.io.file.exporter.KmzTrackExporter;
@@ -182,8 +182,8 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         if (TrackFileFormat.KML.getExtension().equals(extension)) {
           trackImporter = new KmlFileTrackImporter(context, -1L);
         } else {         
-          MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
-          Uri uri = myTracksProviderUtils.insertTrack(new Track());
+          ContentProviderUtils contentProviderUtils = ContentProviderUtils.Factory.get(context);
+          Uri uri = contentProviderUtils.insertTrack(new Track());
           long newId = Long.parseLong(uri.getLastPathSegment());
 
           trackImporter = new KmzTrackImporter(context, newId);

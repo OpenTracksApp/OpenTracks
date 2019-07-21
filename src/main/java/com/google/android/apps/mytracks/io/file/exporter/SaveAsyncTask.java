@@ -22,7 +22,7 @@ import android.os.AsyncTask;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.ContentProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.io.file.TrackFileFormat;
@@ -52,7 +52,7 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   private final boolean playTrack;
   private final File directory;
   private final Context context;
-  private final MyTracksProviderUtils myTracksProviderUtils;
+  private final ContentProviderUtils contentProviderUtils;
 
   private WakeLock wakeLock;
 
@@ -85,7 +85,7 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     this.playTrack = playTrack;
     this.directory = directory;
     context = saveActivity.getApplicationContext();
-    myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
+    contentProviderUtils = ContentProviderUtils.Factory.get(context);
 
     completed = false;
     successCount = 0;
@@ -128,7 +128,7 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         totalCount = 1;
         Track[] tracks = new Track[trackIds.length];
         for (int i = 0; i < trackIds.length; i++) {
-          tracks[i] = myTracksProviderUtils.getTrack(trackIds[i]);
+          tracks[i] = contentProviderUtils.getTrack(trackIds[i]);
           if (tracks[i] == null) {
             Log.d(TAG, "No track for " + trackIds[i]);
             return false;
@@ -184,7 +184,7 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     Track track = tracks[0];
     boolean useKmz = trackFileFormat == TrackFileFormat.KML && !playTrack;
     String extension = useKmz ? KmzTrackExporter.KMZ_EXTENSION : trackFileFormat.getExtension();
-    FileTrackExporter fileTrackExporter = new FileTrackExporter(myTracksProviderUtils, tracks,
+    FileTrackExporter fileTrackExporter = new FileTrackExporter(contentProviderUtils, tracks,
         trackFileFormat.newTrackWriter(context, tracks.length > 1, playTrack),
         new TrackExporterListener() {
 
@@ -200,7 +200,7 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
           }
         });
 
-    TrackExporter trackExporter = useKmz ? new KmzTrackExporter(myTracksProviderUtils, fileTrackExporter, tracks, context) : fileTrackExporter;
+    TrackExporter trackExporter = useKmz ? new KmzTrackExporter(contentProviderUtils, fileTrackExporter, tracks, context) : fileTrackExporter;
 
     String fileName = FileUtils.buildUniqueFileName(directory, track.getName(), extension);
     File file = new File(directory, fileName);
@@ -235,7 +235,7 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
    * Saves all the tracks.
    */
   private Boolean saveAllTracks() {
-      try (Cursor cursor = myTracksProviderUtils.getTrackCursor(null, null, TracksColumns._ID)) {
+      try (Cursor cursor = contentProviderUtils.getTrackCursor(null, null, TracksColumns._ID)) {
           if (cursor == null) {
               return false;
           }
@@ -245,7 +245,7 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
                   return false;
               }
               cursor.moveToPosition(i);
-              Track track = myTracksProviderUtils.createTrack(cursor);
+              Track track = contentProviderUtils.createTrack(cursor);
               if (track != null && saveTracks(new Track[]{track})) {
                   successCount++;
               }

@@ -90,30 +90,30 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
     Location location0 = createLocation(0, DATE_FORMAT_0.parse(TRACK_TIME_0).getTime());
     Location location1 = createLocation(1, DATE_FORMAT_1.parse(TRACK_TIME_1).getTime());
 
-    expect(myTracksProviderUtils.insertTrack((Track) AndroidMock.anyObject()))
+    expect(contentProviderUtils.insertTrack((Track) AndroidMock.anyObject()))
         .andReturn(TRACK_ID_0_URI);
     expectFirstTrackPoint(location0, TRACK_ID_0, TRACK_POINT_ID_0);
 
     // A flush happens at the end
-    expect(myTracksProviderUtils.bulkInsertTrackPoint(
+    expect(contentProviderUtils.bulkInsertTrackPoint(
         LocationsMatcher.eqLoc(location1), eq(1), eq(TRACK_ID_0))).andReturn(1);
-    expect(myTracksProviderUtils.getLastTrackPointId(TRACK_ID_0)).andReturn(TRACK_POINT_ID_1);
+    expect(contentProviderUtils.getLastTrackPointId(TRACK_ID_0)).andReturn(TRACK_POINT_ID_1);
     expect(
-        myTracksProviderUtils.getTrack(PreferencesUtils.getLong(getContext(),
+        contentProviderUtils.getTrack(PreferencesUtils.getLong(getContext(),
             R.string.recording_track_id_key))).andStubReturn(null);
     expectUpdateTrack(track, true, TRACK_ID_0);
-    AndroidMock.replay(myTracksProviderUtils);
+    AndroidMock.replay(contentProviderUtils);
 
     InputStream inputStream = new ByteArrayInputStream(VALID_ONE_TRACK_ONE_SEGMENT_GPX.getBytes());
     GpxFileTrackImporter gpxFileTrackImporter = new GpxFileTrackImporter(
-        getContext(), myTracksProviderUtils);
+        getContext(), contentProviderUtils);
     long trackId = gpxFileTrackImporter.importFile(inputStream);
     assertEquals(TRACK_ID_0, trackId);
 
     long time0 = DATE_FORMAT_0.parse(TRACK_TIME_0).getTime();
     long time1 = DATE_FORMAT_1.parse(TRACK_TIME_1).getTime();
     assertEquals(time1 - time0, track.getValue().getTripStatistics().getTotalTime());
-    AndroidMock.verify(myTracksProviderUtils);
+    AndroidMock.verify(contentProviderUtils);
     verifyTrack(track.getValue(), TRACK_NAME_0, TRACK_DESCRIPTION_0, time0);
   }
 
@@ -125,22 +125,22 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
 
     Location location0 = createLocation(0, DATE_FORMAT_0.parse(TRACK_TIME_0).getTime());
 
-    expect(myTracksProviderUtils.insertTrack((Track) AndroidMock.anyObject()))
+    expect(contentProviderUtils.insertTrack((Track) AndroidMock.anyObject()))
         .andReturn(TRACK_ID_0_URI);
     expectFirstTrackPoint(location0, TRACK_ID_0, TRACK_POINT_ID_0);
     // A flush happens at the end
-    expect(myTracksProviderUtils.bulkInsertTrackPoint(
+    expect(contentProviderUtils.bulkInsertTrackPoint(
         (Location[]) AndroidMock.anyObject(), eq(5), eq(TRACK_ID_0))).andStubReturn(5);
-    expect(myTracksProviderUtils.getLastTrackPointId(TRACK_ID_0)).andReturn(TRACK_POINT_ID_3);
+    expect(contentProviderUtils.getLastTrackPointId(TRACK_ID_0)).andReturn(TRACK_POINT_ID_3);
     expect(
-        myTracksProviderUtils.getTrack(PreferencesUtils.getLong(getContext(),
+        contentProviderUtils.getTrack(PreferencesUtils.getLong(getContext(),
             R.string.recording_track_id_key))).andStubReturn(null);
     expectUpdateTrack(track, true, TRACK_ID_0);
-    AndroidMock.replay(myTracksProviderUtils);
+    AndroidMock.replay(contentProviderUtils);
 
     InputStream inputStream = new ByteArrayInputStream(VALID_ONE_TRACK_TWO_SEGMENTS_GPX.getBytes());
     GpxFileTrackImporter gpxFileTrackImporter = new GpxFileTrackImporter(
-        getContext(), myTracksProviderUtils);
+        getContext(), contentProviderUtils);
     long trackId = gpxFileTrackImporter.importFile(inputStream);
     assertEquals(TRACK_ID_0, trackId);
 
@@ -151,7 +151,7 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
     assertEquals(
         time1 - time0 + time3 - time2, track.getValue().getTripStatistics().getTotalTime());
 
-    AndroidMock.verify(myTracksProviderUtils);
+    AndroidMock.verify(contentProviderUtils);
     verifyTrack(track.getValue(), TRACK_NAME_0, TRACK_DESCRIPTION_0,
         DATE_FORMAT_0.parse(TRACK_TIME_0).getTime());
   }
@@ -162,29 +162,29 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
   public void testOneTrackTwoSegmentsNoTime() throws Exception {
     Capture<Track> track = new Capture<Track>();
 
-    expect(myTracksProviderUtils.insertTrack((Track) AndroidMock.anyObject()))
+    expect(contentProviderUtils.insertTrack((Track) AndroidMock.anyObject()))
         .andReturn(TRACK_ID_0_URI);
     expectFirstTrackPoint(null, TRACK_ID_0, TRACK_POINT_ID_0);
 
     // A flush happens at the end
-    expect(myTracksProviderUtils.bulkInsertTrackPoint(
+    expect(contentProviderUtils.bulkInsertTrackPoint(
         (Location[]) AndroidMock.anyObject(), eq(5), eq(TRACK_ID_0))).andStubReturn(5);
-    expect(myTracksProviderUtils.getLastTrackPointId(TRACK_ID_0)).andReturn(TRACK_POINT_ID_3);
+    expect(contentProviderUtils.getLastTrackPointId(TRACK_ID_0)).andReturn(TRACK_POINT_ID_3);
     expect(
-        myTracksProviderUtils.getTrack(PreferencesUtils.getLong(getContext(),
+        contentProviderUtils.getTrack(PreferencesUtils.getLong(getContext(),
             R.string.recording_track_id_key))).andStubReturn(null);
     expectUpdateTrack(track, true, TRACK_ID_0);
-    AndroidMock.replay(myTracksProviderUtils);
+    AndroidMock.replay(contentProviderUtils);
 
     InputStream inputStream = new ByteArrayInputStream(
         VALID_ONE_TRACK_TWO_SEGMENTS_NO_TIME_GPX.getBytes());
     GpxFileTrackImporter gpxFileTrackImporter = new GpxFileTrackImporter(
-        getContext(), myTracksProviderUtils);
+        getContext(), contentProviderUtils);
     long trackId = gpxFileTrackImporter.importFile(inputStream);
     assertEquals(TRACK_ID_0, trackId);
     assertEquals(0, track.getValue().getTripStatistics().getTotalTime());
 
-    AndroidMock.verify(myTracksProviderUtils);
+    AndroidMock.verify(contentProviderUtils);
     verifyTrack(track.getValue(), TRACK_NAME_0, TRACK_DESCRIPTION_0, -1L);
   }
 
@@ -231,27 +231,27 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
   }
 
   private void testInvalidGpx(String xml) throws Exception {
-    expect(myTracksProviderUtils.insertTrack((Track) AndroidMock.anyObject()))
+    expect(contentProviderUtils.insertTrack((Track) AndroidMock.anyObject()))
         .andReturn(TRACK_ID_0_URI);
 
     // For the following, use StubReturn since we don't care whether they are
     // invoked or not.
-    expect(myTracksProviderUtils.bulkInsertTrackPoint(
+    expect(contentProviderUtils.bulkInsertTrackPoint(
         (Location[]) AndroidMock.anyObject(), AndroidMock.anyInt(), AndroidMock.anyLong()))
         .andStubReturn(1);
-    expect(myTracksProviderUtils.getFirstTrackPointId(TRACK_ID_0)).andStubReturn(TRACK_POINT_ID_0);
-    expect(myTracksProviderUtils.getLastTrackPointId(TRACK_ID_0)).andStubReturn(TRACK_POINT_ID_0);
+    expect(contentProviderUtils.getFirstTrackPointId(TRACK_ID_0)).andStubReturn(TRACK_POINT_ID_0);
+    expect(contentProviderUtils.getLastTrackPointId(TRACK_ID_0)).andStubReturn(TRACK_POINT_ID_0);
     expect(
-        myTracksProviderUtils.getTrack(PreferencesUtils.getLong(getContext(),
+        contentProviderUtils.getTrack(PreferencesUtils.getLong(getContext(),
             R.string.recording_track_id_key))).andStubReturn(null);
-    myTracksProviderUtils.deleteTrack(getContext(), TRACK_ID_0);
-    AndroidMock.replay(myTracksProviderUtils);
+    contentProviderUtils.deleteTrack(getContext(), TRACK_ID_0);
+    AndroidMock.replay(contentProviderUtils);
 
     InputStream inputStream = new ByteArrayInputStream(xml.getBytes());
     GpxFileTrackImporter gpxFileTrackImporter = new GpxFileTrackImporter(
-          getContext(), myTracksProviderUtils);
+          getContext(), contentProviderUtils);
     long trackId = gpxFileTrackImporter.importFile(inputStream);
     assertEquals(-1L, trackId);
-    AndroidMock.verify(myTracksProviderUtils);
+    AndroidMock.verify(contentProviderUtils);
   }
 }

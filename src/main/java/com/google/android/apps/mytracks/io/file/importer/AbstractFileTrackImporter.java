@@ -23,8 +23,8 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
+import com.google.android.apps.mytracks.content.ContentProviderUtils;
+import com.google.android.apps.mytracks.content.ContentProviderUtils.LocationIterator;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
@@ -104,7 +104,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
 
   private final Context context;
   private final long importTrackId;
-  private final MyTracksProviderUtils myTracksProviderUtils;
+  private final ContentProviderUtils contentProviderUtils;
   private final int recordingDistanceInterval;
   private final List<Long> trackIds;
   private final List<Waypoint> waypoints;
@@ -136,10 +136,10 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
    *          track.
    */
   AbstractFileTrackImporter(
-      Context context, long importTrackId, MyTracksProviderUtils myTracksProviderUtils) {
+      Context context, long importTrackId, ContentProviderUtils contentProviderUtils) {
     this.context = context;
     this.importTrackId = importTrackId;
-    this.myTracksProviderUtils = myTracksProviderUtils;
+    this.contentProviderUtils = contentProviderUtils;
     this.recordingDistanceInterval = PreferencesUtils.getInt(context,
         R.string.recording_distance_interval_key,
         PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT);
@@ -206,7 +206,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
       return;
     }
     long trackId = trackIds.get(size - 1);
-    Track track = myTracksProviderUtils.getTrack(trackId);
+    Track track = contentProviderUtils.getTrack(trackId);
     if (track == null) {
       return;
     }
@@ -221,8 +221,8 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
     LocationIterator locationIterator = null;
 
     try {
-      locationIterator = myTracksProviderUtils.getTrackPointLocationIterator(
-          track.getId(), -1L, false, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
+      locationIterator = contentProviderUtils.getTrackPointLocationIterator(
+          track.getId(), -1L, false, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
 
       while (true) {
         if (waypoint == null) {
@@ -283,7 +283,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
             Waypoint newWaypoint = new Waypoint(waypoint.getName(), waypointDescription,
                 waypoint.getCategory(), icon, track.getId(), waypoint.getType(), length, duration,
                 -1L, -1L, location, tripStatistics, waypoint.getPhotoUrl());
-            myTracksProviderUtils.insertWaypoint(newWaypoint);
+            contentProviderUtils.insertWaypoint(newWaypoint);
           }
 
           // Load the next waypoint
@@ -304,7 +304,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
     trackData = new TrackData();
     long trackId;
     if (importTrackId == -1L) {
-      Uri uri = myTracksProviderUtils.insertTrack(trackData.track);
+      Uri uri = contentProviderUtils.insertTrack(trackData.track);
       trackId = Long.parseLong(uri.getLastPathSegment());
     } else {
       if (trackIds.size() > 0) {
@@ -312,7 +312,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
             "Cannot import more than one track to an existing track " + importTrackId));
       }
       trackId = importTrackId;
-      myTracksProviderUtils.clearTrack(context, trackId);
+      contentProviderUtils.clearTrack(context, trackId);
     }
     trackIds.add(trackId);
     trackData.track.setId(trackId);
@@ -339,7 +339,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
     }
     trackData.track.setTripStatistics(trackData.tripStatisticsUpdater.getTripStatistics());
     trackData.track.setNumberOfPoints(trackData.numberOfLocations);
-    myTracksProviderUtils.updateTrack(trackData.track);
+    contentProviderUtils.updateTrack(trackData.track);
     insertFirstWaypoint(trackData.track);
   }
 
@@ -574,13 +574,13 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
     if (data.numBufferedLocations <= 0) {
       return;
     }
-    myTracksProviderUtils.bulkInsertTrackPoint(
+    contentProviderUtils.bulkInsertTrackPoint(
         data.bufferedLocations, data.numBufferedLocations, data.track.getId());
     data.numBufferedLocations = 0;
     if (data.track.getStartId() == -1L) {
-      data.track.setStartId(myTracksProviderUtils.getFirstTrackPointId(data.track.getId()));
+      data.track.setStartId(contentProviderUtils.getFirstTrackPointId(data.track.getId()));
     }
-    data.track.setStopId(myTracksProviderUtils.getLastTrackPointId(data.track.getId()));
+    data.track.setStopId(contentProviderUtils.getLastTrackPointId(data.track.getId()));
   }
 
   /**
@@ -605,7 +605,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
     Waypoint waypoint = new Waypoint(waypointName, waypointDescription, waypointCategory, icon,
         track.getId(), WaypointType.STATISTICS, length, duration, -1L, -1L, waypointLocation,
         tripStatistics, "");
-    myTracksProviderUtils.insertWaypoint(waypoint);
+    contentProviderUtils.insertWaypoint(waypoint);
   }
 
   /**
@@ -613,7 +613,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
    */
   private void cleanImport() {
     for (long trackId : trackIds) {
-      myTracksProviderUtils.deleteTrack(context, trackId);
+      contentProviderUtils.deleteTrack(context, trackId);
     }
   }
 }

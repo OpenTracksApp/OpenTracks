@@ -16,7 +16,7 @@
 
 package com.google.android.apps.mytracks.io.file.exporter;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.ContentProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
@@ -50,7 +50,7 @@ public class KmzTrackExporter implements TrackExporter {
   private static final String TAG = KmzTrackExporter.class.getSimpleName();
   private static final int BUFFER_SIZE = 4096;
 
-  private final MyTracksProviderUtils myTracksProviderUtils;
+  private final ContentProviderUtils contentProviderUtils;
   private final FileTrackExporter fileTrackExporter;
   private final Track[] tracks;
   private final long photoSize;
@@ -58,14 +58,14 @@ public class KmzTrackExporter implements TrackExporter {
   /**
    * Constructor.
    * 
-   * @param myTracksProviderUtils the my tracks provider utils
+   * @param contentProviderUtils the my tracks provider utils
    * @param fileTrackExporter the file track exporter
    * @param tracks the tracks to export
    * @param context the context
    */
-  public KmzTrackExporter(MyTracksProviderUtils myTracksProviderUtils,
-      FileTrackExporter fileTrackExporter, Track[] tracks, Context context) {
-    this.myTracksProviderUtils = myTracksProviderUtils;
+  public KmzTrackExporter(ContentProviderUtils contentProviderUtils,
+                          FileTrackExporter fileTrackExporter, Track[] tracks, Context context) {
+    this.contentProviderUtils = contentProviderUtils;
     this.fileTrackExporter = fileTrackExporter;
     this.tracks = tracks;
     this.photoSize = PreferencesUtils.getInt(
@@ -111,7 +111,7 @@ public class KmzTrackExporter implements TrackExporter {
 
   private void addImages(ZipOutputStream zipOutputStream) throws InterruptedException, IOException {
     for (Track track : tracks) {
-      try (Cursor cursor = myTracksProviderUtils.getWaypointCursor(track.getId(), -1L, -1)) {
+      try (Cursor cursor = contentProviderUtils.getWaypointCursor(track.getId(), -1L, -1)) {
         if (cursor != null && cursor.moveToFirst()) {
           /*
            * Yes, this will skip the first waypoint and that is intentional as
@@ -121,7 +121,7 @@ public class KmzTrackExporter implements TrackExporter {
             if (Thread.interrupted()) {
               throw new InterruptedException();
             }
-            Waypoint waypoint = myTracksProviderUtils.createWaypoint(cursor);
+            Waypoint waypoint = contentProviderUtils.createWaypoint(cursor);
             if (waypoint.hasPhoto()) {
               addImage(zipOutputStream, waypoint.getPhotoUrl());
             }
