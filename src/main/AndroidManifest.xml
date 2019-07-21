@@ -104,9 +104,9 @@ limitations under the License.
   <application
     android:allowBackup="true"
     android:hardwareAccelerated="true"
-    android:icon="@drawable/ic_launcher_my_tracks"
+    android:icon="@drawable/ic_launcher"
     android:label="@string/my_tracks_app_name"
-    android:theme="@style/ThemeMyTracks"
+    android:theme="@style/ThemeCustom"
     tools:replace="android:label" >
     <!-- Activities -->
     <activity
