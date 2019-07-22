@@ -1,30 +1,53 @@
-# MyTracks
-*A respawn of Google MyTracks*
+# OpenTracks: a sport tracker
 
-**MyTracks** is a GPS tracking application, that was [open-sourced by Google](http://google-latlong.blogspot.fr/2010/05/code-for-my-tracks-is-now-yours.html) on May 28, 2010. It is licensed under the terms of [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0). 
+![OpenTracks logo](LOGO.svg)
 
-On 2014, Google [announced](https://code.google.com/archive/p/mytracks/) updates will no longer be published as open-source, and source will be removed from Google Code on January 01, 2015.
+_OpenTracks_ is a sport tracking application that completely respects your privacy.
 
-On January 29, 2016, Google [announced](https://support.google.com/maps/answer/6333516) **MyTracks** will no longer be available after April 30, 2016. The application has been removed from Google Play.
+## Features:
+* __Tracking:__ track your sport and outdoor activities 
+* __Photos and Markers:__ mark interesting locations while tracking
+* __Heart rate:__ supports bluetooth LE sensors
+* __Export data:__ Export tracks either as KML or GPX
+* __Voice annoucements__
+* __No Internet access:__ Internet is not used
+* __No advertising__
+* __Privacy:__
+    * _contains in-app analytics_
+    * _does not Google Play Services_ 
+    * _has no cloud integration_
 
-The last open source version available is **2.0.6**, released in February 2014. This fork is based on this version.
+    
+__Only required permissions:__
+* _ACCESS_FINE_LOCATION_: required to use the GPS.
 
--------
+_Please note:_
+_Tracks_ does not contain a _map_ (as this would required Internet access).
+To show your tracks on a map, a 3rd party application (e.g., [OsmAnd](https://play.google.com/store/apps/details?id=net.osmand) or [MAPS.ME](https://play.google.com/store/apps/details?id=com.mapswithme.maps.pro)) needs to be installed.  
 
-Releases since **2.0.5** :
+## Project history
 
-| Version | Release date      | Min SDK | Changelog                                                         |
-|---------|-------------------|---------|-------------------------------------------------------------------|
-| 2.0.11  | January 28, 2016  |      14 |                                                                   |
-| 2.0.10  | April 29, 2015    |      14 | A new map layer, Earth, for viewing tracks in 3D                  |
-| 2.0.9   | December 11, 2014 |       9 | Sync to Google Fit                                                |
-| 2.0.8   | October 16, 2014  |       9 | Support Android Wear. Remove sharing with other apps on the phone |
-| 2.0.7   | June 18, 2014     |       9 | Export to Google Maps Engine. Remove export to Google Fusion Tables and Google Maps  |
-| 2.0.6   | Jan 30, 2014      |       9 | Insert photo markers. Calculate calories burned Play multiple tracks in Google Earth |
+_OpenTracks_ is based upon Google _My Tracks app_ ([code](https://code.google.com/archive/p/mytracks/).
+Initially, _My Tracks_ was initially released by Google in 2010 as [open-source software](http://google-latlong.blogspot.fr/2010/05/code-for-my-tracks-is-now-yours.html).
+In 2016, [Google decided to discontinue](https://support.google.com/maps/answer/6333516) _My Tracks_ and stopped distributing it via the Google Play store in April 2016.
+The [Plonk42](https://github.com/plonk42) conducted some maintenance work until 2016, so _My Tracks_ could still be used (based upon version _Google's MyTracks_ version 2.0.6).
+Plonk42's version is available [here](https://github.com/Plonk42/mytracks).
+In 2019, _OpenTracks_ was forked from Plonk42's _My Tracks_ and major rework was conducted.
 
-----
+Rework of _OpenTracks_ included:
+* removing Google's analytics code, 
+* removing integration into Google Drive, 
+* removing Google Maps integration,
+* removing Google Earth integration,
+* removing use of Google Play service,
+* removing calorie estimation and activity estimation,
+* removing support for ANT+ and Classic Bluetooth,
+* adding support for Bluetooth LE heart rate sensors,
+* removing Protobuf (store sensor data in SQLite columns directly), and
+* removing Android Service API for other apps.
 
-More information about **Google MyTracks**:
-- [Wikipedia page](https://en.wikipedia.org/wiki/MyTracks)
-- [Google code archive](https://code.google.com/archive/p/mytracks/)
-- [Release history on AppBrain](http://www.appbrain.com/app/my-tracks/com.google.android.maps.mytracks)
+Artwork, logos and user interface remained more or less unchanged. 
+
+More information about _Google My Tracks_:
+* [Wikipedia page](https://en.wikipedia.org/wiki/MyTracks)
+* [Google code archive](https://code.google.com/archive/p/mytracks/)
