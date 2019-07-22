@@ -538,7 +538,7 @@ limitations under the License.
       as a certain file format.
 
       %1$s the file format. E.g., 'KML'.
-      %2$s the directory. E.g., '/MyTracks/kml'.">
+      %2$s the directory. E.g., '/kml'.">
     All as %1$s to %2$s
   </string>
   <string name="export_all_title"
@@ -555,7 +555,7 @@ limitations under the License.
 
       %1$d the number of tracks successfully exported. E.g., '1'.
       %1$s the number of tracks to export. E.g., '2 tracks'.
-      %2$s the directory. E.g., '/MyTracks/kml'.">
+      %2$s the directory. E.g., '/kml'.">
     Exported %1$d of %2$s to %3$s
   </string>
   <string name="export_external_storage_option"
@@ -563,20 +563,20 @@ limitations under the License.
       a certain file format.
 
       %1$s the file format. E.g., 'KML'.
-      %2$s the directory. E.g., '/MyTracks/kml'.">
+      %2$s the directory. E.g., '/kml'.">
     as %1$s to %2$s
   </string>
   <string name="export_external_storage_progress_message"
     translation_description="When exporting tracks to the external storage, the progress message.
 
-      %1$s the directory. E.g., '/MyTracks/kml'.">
+      %1$s the directory. E.g., '/kml'.">
     Exporting to %1$s&#8230;
   </string>
   <string name="export_external_storage_success"
     translation_description="When exporting tracks to the external storage, the success message.
 
       %1$s the number of tracks. E.g., '2 tracks'.
-      %2$s the directory. E.g., '/MyTracks/kml'.">
+      %2$s the directory. E.g., '/kml'.">
     Exported %1$s to %2$s
   </string>
   <string name="export_title"
@@ -834,21 +834,21 @@ limitations under the License.
 
       %1$d the number of files successfully imported. E.g., '2'.
       %2$s the number of files in the directory. E.g., '2 files'.
-      %3$s the directory. E.g., '/MyTracks/kml'.">
+      %3$s the directory. E.g., '/kml'.">
     Imported %1$d of %2$s from %3$s
   </string>
   <string name="import_no_directory"
     translation_description="When importing from the external storage, the error message when the
       directory doesn't exist.
 
-      %1$s the directory. E.g., '/MyTracks/kml'.">
+      %1$s the directory. E.g., '/kml'.">
     %1$s does not exist
   </string>
   <string name="import_no_file"
     translation_description="When importing from the external storage, the message in the result
       dialog when there is no files to import.
 
-      %1$s the directory. E.g., '/MyTracks/kml'.">
+      %1$s the directory. E.g., '/kml'.">
     There were no files to import. Connect your device to your computer and place the files to
     import in %1$s.
   </string>
@@ -860,7 +860,7 @@ limitations under the License.
   <string name="import_progress_message"
     translation_description="When importing from the external storage, the progress message.
 
-      %1$s the directory. E.g., '/MyTracks/kml'.">
+      %1$s the directory. E.g., '/kml'.">
     Importing from %1$s&#8230;
   </string>
   <string name="import_selection_option"
@@ -868,7 +868,7 @@ limitations under the License.
       files of a certain file format.
 
       %1$s the file format. E.g., 'KML'.
-      %2$s the directory. E.g., '/MyTracks/kml'.">
+      %2$s the directory. E.g., '/kml'.">
     All %1$s from %2$s
   </string>
   <string name="import_selection_title"
@@ -879,7 +879,7 @@ limitations under the License.
     translation_description="When importing from the external storage, the success message.
 
       %1$s the number of files. E.g., '2 files'.
-      %2$s the directory. E.g., '/MyTracks/kml'.">
+      %2$s the directory. E.g., '/kml'.">
     Imported %1$s from %2$s
   </string>
 
