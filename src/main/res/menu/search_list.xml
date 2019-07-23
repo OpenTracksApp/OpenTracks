@@ -16,7 +16,7 @@ limitations under the License.
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/search_list_search"
-        android:title="@string/menu_search"
         android:actionViewClass="android.widget.SearchView"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_search" />
 </menu>

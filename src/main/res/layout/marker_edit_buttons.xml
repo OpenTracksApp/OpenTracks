@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2012 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,15 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<merge xmlns:android="http://schemas.android.com/apk/res/android" >
-  <!-- In v14, postive button on the right. -->
-  <Button
-    android:id="@+id/marker_edit_cancel"
-    android:layout_gravity="left"
-    android:text="@string/generic_cancel"
-    style="@style/BottomButton" />
-  <Button
-    android:id="@+id/marker_edit_done"
-    android:layout_gravity="right"
-    style="@style/BottomButton" />
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- In v14, postive button on the right. -->
+    <Button
+        android:id="@+id/marker_edit_cancel"
+        style="@style/BottomButton"
+        android:layout_gravity="left"
+        android:text="@string/generic_cancel" />
+
+    <Button
+        android:id="@+id/marker_edit_done"
+        style="@style/BottomButton"
+        android:layout_gravity="right" />
 </merge>

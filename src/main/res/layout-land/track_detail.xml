@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2013 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,15 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:baselineAligned="false"
-  android:layout_height="match_parent"
-  android:layout_width="match_parent" >
-  <include layout="@layout/track_controller" />
-  <TabHost
-    android:id="@android:id/tabhost"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_weight="1"
-    android:layout_width="0dp" >
-    <include layout="@layout/track_details_tab" />
-  </TabHost>
+    android:baselineAligned="false">
+
+    <include layout="@layout/track_controller" />
+
+    <TabHost
+        android:id="@android:id/tabhost"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <include layout="@layout/track_details_tab" />
+    </TabHost>
 </LinearLayout>

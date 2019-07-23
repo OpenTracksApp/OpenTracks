@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2012 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,19 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-  android:key="@string/settings_sensor_root_key"
-  android:title="@string/settings_sensor" >
-  <PreferenceCategory
-    android:key="@string/settings_sensor_bluetooth_key"
-    android:title="@string/settings_sensor_bluetooth" >
-    <Preference
-      android:key="@string/settings_sensor_bluetooth_pairing_key"
-      android:persistent="false"
-      android:summary="@string/settings_sensor_bluetooth_pairing_summary"
-      android:title="@string/settings_sensor_bluetooth_pairing" />
-    <ListPreference
-      android:defaultValue="@string/sensor_type_value_none"
-      android:key="@string/bluetooth_sensor_key"
-      android:title="@string/settings_sensor_bluetooth_sensor" />
-  </PreferenceCategory>
+    android:key="@string/settings_sensor_root_key"
+    android:title="@string/settings_sensor">
+    <PreferenceCategory
+        android:key="@string/settings_sensor_bluetooth_key"
+        android:title="@string/settings_sensor_bluetooth">
+        <Preference
+            android:key="@string/settings_sensor_bluetooth_pairing_key"
+            android:persistent="false"
+            android:summary="@string/settings_sensor_bluetooth_pairing_summary"
+            android:title="@string/settings_sensor_bluetooth_pairing" />
+        <ListPreference
+            android:defaultValue="@string/sensor_type_value_none"
+            android:key="@string/bluetooth_sensor_key"
+            android:title="@string/settings_sensor_bluetooth_sensor" />
+    </PreferenceCategory>
 </PreferenceScreen>

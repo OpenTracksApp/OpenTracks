@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,63 +14,73 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_height="match_parent"
-  android:layout_width="match_parent"
-  android:orientation="vertical" >
-  <ListView
-    android:id="@+id/track_list"
-    android:layout_height="0dp"
-    android:layout_weight="1.0"
-    android:layout_width="match_parent" />
-  <RelativeLayout
-    android:id="@+id/track_list_empty_view"
-    android:layout_height="0dp"
-    android:layout_weight="1.0"
-    android:layout_width="match_parent" >
-    <LinearLayout
-      android:id="@+id/track_list_arrow_long"
-      android:layout_alignParentBottom="true"
-      android:layout_height="wrap_content"
-      android:layout_width="match_parent"
-      android:paddingBottom="12dp"
-      android:paddingTop="16dp" >
-      <View
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:layout_width="0dp" />
-      <ImageView
-        android:contentDescription="@string/image_arrow"
-        android:layout_height="wrap_content"
-        android:layout_weight="10"
-        android:layout_width="0dp"
-        android:src="@drawable/ic_arrow_long" />
-      <View
-        android:layout_height="match_parent"
-        android:layout_weight="17"
-        android:layout_width="0dp" />
-    </LinearLayout>
-    <LinearLayout
-      android:layout_above="@id/track_list_arrow_long"
-      android:layout_height="wrap_content"
-      android:layout_width="match_parent" >
-      <View
-        android:layout_height="match_parent"
-        android:layout_weight="5"
-        android:layout_width="0dp" />
-      <TextView
-        android:gravity="left"
-        android:layout_height="wrap_content"
-        android:layout_weight="22"
-        android:layout_width="0dp"
-        android:text="@string/track_list_empty_message"
-        android:textColor="@color/list_empty_text"
-        style="@style/TextLarge" >
-      </TextView>
-      <View
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:layout_width="0dp" />
-    </LinearLayout>
-  </RelativeLayout>
-  <include layout="@layout/track_controller" />
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ListView
+        android:id="@+id/track_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.0" />
+
+    <RelativeLayout
+        android:id="@+id/track_list_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.0">
+
+        <LinearLayout
+            android:id="@+id/track_list_arrow_long"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:paddingTop="16dp"
+            android:paddingBottom="12dp">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:contentDescription="@string/image_arrow"
+                android:src="@drawable/ic_arrow_long" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="17" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/track_list_arrow_long">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5" />
+
+            <TextView
+                style="@style/TextLarge"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="22"
+                android:gravity="left"
+                android:text="@string/track_list_empty_message"
+                android:textColor="@color/list_empty_text"></TextView>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <include layout="@layout/track_controller" />
 </LinearLayout>

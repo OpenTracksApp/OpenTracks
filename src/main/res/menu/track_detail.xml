@@ -18,26 +18,26 @@ limitations under the License.
         android:id="@+id/track_detail_insert_marker"
         android:icon="@drawable/ic_menu_insert_marker"
         android:orderInCategory="1"
-        android:title="@string/menu_insert_marker"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_insert_marker" />
     <item
         android:id="@+id/track_detail_insert_photo"
         android:icon="@drawable/ic_menu_insert_photo"
         android:orderInCategory="2"
-        android:title="@string/menu_insert_photo"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_insert_photo" />
     <item
         android:id="@+id/track_detail_share"
-        android:orderInCategory="4"
-        android:title="@string/menu_share"
         android:actionProviderClass="android.widget.ShareActionProvider"
-        android:showAsAction="ifRoom" />
+        android:orderInCategory="4"
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_share" />
     <item
         android:id="@+id/track_detail_markers"
         android:icon="@drawable/ic_menu_insert_marker"
         android:orderInCategory="5"
-        android:title="@string/menu_markers"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_markers" />
     <item
         android:id="@+id/track_detail_edit"
         android:icon="@drawable/ic_menu_edit"

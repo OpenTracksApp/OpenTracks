@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,44 +14,44 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
-  <!-- Keys for persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
-  <string name="auto_resume_track_timeout_key" translatable="false">autoResumeTrackTimeout</string>
-  <string name="chart_show_cadence_key" translatable="false">chartShowCadence</string>
-  <string name="chart_show_elevation_key" translatable="false">chartShowElevation</string>
-  <string name="chart_show_heart_rate_key" translatable="false">chartShowHeartRate</string>
-  <string name="chart_show_power_key" translatable="false">chartShowPower</string>
-  <string name="chart_show_speed_key" translatable="false">chartShowSpeed</string>
-  <string name="chart_x_axis_key" translatable="false">chartXAxis</string>
-  <string name="default_activity_key" translatable="false">defaultActivity</string>
-  <string name="max_recording_distance_key" translatable="false">maxRecordingDistance</string>
-  <string name="min_recording_interval_key" translatable="false">minRecordingInterval</string>
-  <string name="photo_size_key" translatable="false">photoSize</string>
-  <string name="recording_distance_interval_key" translatable="false">recordingDistanceInterval</string>
-  <string name="recording_gps_accuracy_key" translatable="false">recordingGpsAccuracy</string>
-  <string name="split_frequency_key" translatable="false">splitFrequency</string>
-  <string name="stats_rate_key" translatable="false">statsRate</string>
-  <string name="stats_show_coordinate_key" translatable="false">statsShowCoordinate</string>
-  <string name="stats_show_grade_elevation_key" translatable="false">statsShowGradeElevation</string>
-  <string name="stats_units_key" translatable="false">statsUnits</string>
-  <string name="track_name_key" translatable="false">trackName</string>
-  <string name="track_widget_item1" translatable="false">trackWidgetItem1</string>
-  <string name="track_widget_item2" translatable="false">trackWidgetItem2</string>
-  <string name="track_widget_item3" translatable="false">trackWidgetItem3</string>
-  <string name="track_widget_item4" translatable="false">trackWidgetItem4</string>
-  <string name="voice_frequency_key" translatable="false">voiceFrequency</string>
-  <!-- Keys for persistend preferences. But they should not get backed up or restored. -->
-  <string name="auto_resume_track_current_retry_key" translatable="false">autoResumeTrackCurrentRetry</string>
-  <string name="bluetooth_sensor_key" translatable="false">bluetoothSensor</string>
-  <string name="recording_track_id_key" translatable="false">recordingTrackId</string>
-  <string name="recording_track_paused_key" translatable="false">recordingTrackPaused</string>
-  <!-- Keys for non-persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
-  <string name="settings_advanced_key" translatable="false">settingsAdvanced</string>
-  <string name="settings_chart_key" translatable="false">settingsChart</string>
-  <string name="settings_recording_key" translatable="false">settingsRecording</string>
-  <string name="settings_reset_key" translatable="false">settingsReset</string>
-  <string name="settings_sensor_key" translatable="false">settingsSensor</string>
-  <string name="settings_sensor_bluetooth_key" translatable="false">settingsSensorBluetooth</string>
-  <string name="settings_sensor_bluetooth_pairing_key" translatable="false">settingsSensorBluetoothPairing</string>
-  <string name="settings_sensor_root_key" translatable="false">settingsSensorRoot</string>
-  <string name="settings_stats_key" translatable="false">settingsStats</string>
+    <!-- Keys for persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
+    <string name="auto_resume_track_timeout_key" translatable="false">autoResumeTrackTimeout</string>
+    <string name="chart_show_cadence_key" translatable="false">chartShowCadence</string>
+    <string name="chart_show_elevation_key" translatable="false">chartShowElevation</string>
+    <string name="chart_show_heart_rate_key" translatable="false">chartShowHeartRate</string>
+    <string name="chart_show_power_key" translatable="false">chartShowPower</string>
+    <string name="chart_show_speed_key" translatable="false">chartShowSpeed</string>
+    <string name="chart_x_axis_key" translatable="false">chartXAxis</string>
+    <string name="default_activity_key" translatable="false">defaultActivity</string>
+    <string name="max_recording_distance_key" translatable="false">maxRecordingDistance</string>
+    <string name="min_recording_interval_key" translatable="false">minRecordingInterval</string>
+    <string name="photo_size_key" translatable="false">photoSize</string>
+    <string name="recording_distance_interval_key" translatable="false">recordingDistanceInterval</string>
+    <string name="recording_gps_accuracy_key" translatable="false">recordingGpsAccuracy</string>
+    <string name="split_frequency_key" translatable="false">splitFrequency</string>
+    <string name="stats_rate_key" translatable="false">statsRate</string>
+    <string name="stats_show_coordinate_key" translatable="false">statsShowCoordinate</string>
+    <string name="stats_show_grade_elevation_key" translatable="false">statsShowGradeElevation</string>
+    <string name="stats_units_key" translatable="false">statsUnits</string>
+    <string name="track_name_key" translatable="false">trackName</string>
+    <string name="track_widget_item1" translatable="false">trackWidgetItem1</string>
+    <string name="track_widget_item2" translatable="false">trackWidgetItem2</string>
+    <string name="track_widget_item3" translatable="false">trackWidgetItem3</string>
+    <string name="track_widget_item4" translatable="false">trackWidgetItem4</string>
+    <string name="voice_frequency_key" translatable="false">voiceFrequency</string>
+    <!-- Keys for persistend preferences. But they should not get backed up or restored. -->
+    <string name="auto_resume_track_current_retry_key" translatable="false">autoResumeTrackCurrentRetry</string>
+    <string name="bluetooth_sensor_key" translatable="false">bluetoothSensor</string>
+    <string name="recording_track_id_key" translatable="false">recordingTrackId</string>
+    <string name="recording_track_paused_key" translatable="false">recordingTrackPaused</string>
+    <!-- Keys for non-persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
+    <string name="settings_advanced_key" translatable="false">settingsAdvanced</string>
+    <string name="settings_chart_key" translatable="false">settingsChart</string>
+    <string name="settings_recording_key" translatable="false">settingsRecording</string>
+    <string name="settings_reset_key" translatable="false">settingsReset</string>
+    <string name="settings_sensor_key" translatable="false">settingsSensor</string>
+    <string name="settings_sensor_bluetooth_key" translatable="false">settingsSensorBluetooth</string>
+    <string name="settings_sensor_bluetooth_pairing_key" translatable="false">settingsSensorBluetoothPairing</string>
+    <string name="settings_sensor_root_key" translatable="false">settingsSensorRoot</string>
+    <string name="settings_stats_key" translatable="false">settingsStats</string>
 </resources>

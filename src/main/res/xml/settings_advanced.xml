@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2012 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-  android:title="@string/settings_advanced" >
-  <ListPreference
-    android:defaultValue="1024"
-    android:key="@string/photo_size_key"
-    android:title="@string/settings_advanced_photo_size_title" />
-  <Preference
-    android:key="@string/settings_reset_key"
-    android:persistent="false"
-    android:title="@string/settings_reset" />
+    android:title="@string/settings_advanced">
+    <ListPreference
+        android:defaultValue="1024"
+        android:key="@string/photo_size_key"
+        android:title="@string/settings_advanced_photo_size_title" />
+    <Preference
+        android:key="@string/settings_reset_key"
+        android:persistent="false"
+        android:title="@string/settings_reset" />
 </PreferenceScreen>

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,52 +14,60 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-  style="@style/ScrollView" >
-  <LinearLayout
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:padding="8dp" >
-    <TextView
-      android:text="@string/menu_sensor_state"
-      style="@style/TextMedium" />
-    <TextView
-      android:id="@+id/sensor_state"
-      style="@style/SensorStateValue" />
-    <!-- Last sensor time -->
-    <TextView
-      android:text="@string/sensor_state_last_sensor_time"
-      style="@style/TextMedium" />
-    <TextView
-      android:id="@+id/sensor_state_last_sensor_time"
-      style="@style/SensorStateValue" />
-    <!-- Heart rate -->
-    <TextView
-      android:text="@string/sensor_state_heart_rate"
-      style="@style/TextMedium" />
-    <TextView
-      android:id="@+id/sensor_state_heart_rate"
-      style="@style/SensorStateValue" />
-    <!-- Cadence -->
-    <TextView
-      android:text="@string/sensor_state_cadence"
-      style="@style/TextMedium" />
-    <TextView
-      android:id="@+id/sensor_state_cadence"
-      style="@style/SensorStateValue" />
-    <!-- Power -->
-    <TextView
-      android:text="@string/sensor_state_power"
-      style="@style/TextMedium" />
-    <TextView
-      android:id="@+id/sensor_state_power"
-      style="@style/SensorStateValue" />
-    <!-- Battery level -->
-    <TextView
-      android:text="@string/sensor_state_battery"
-      style="@style/TextMedium" />
-    <TextView
-      android:id="@+id/sensor_state_battery"
-      style="@style/SensorStateValue" />
-  </LinearLayout>
+    style="@style/ScrollView">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            style="@style/TextMedium"
+            android:text="@string/menu_sensor_state" />
+
+        <TextView
+            android:id="@+id/sensor_state"
+            style="@style/SensorStateValue" />
+        <!-- Last sensor time -->
+        <TextView
+            style="@style/TextMedium"
+            android:text="@string/sensor_state_last_sensor_time" />
+
+        <TextView
+            android:id="@+id/sensor_state_last_sensor_time"
+            style="@style/SensorStateValue" />
+        <!-- Heart rate -->
+        <TextView
+            style="@style/TextMedium"
+            android:text="@string/sensor_state_heart_rate" />
+
+        <TextView
+            android:id="@+id/sensor_state_heart_rate"
+            style="@style/SensorStateValue" />
+        <!-- Cadence -->
+        <TextView
+            style="@style/TextMedium"
+            android:text="@string/sensor_state_cadence" />
+
+        <TextView
+            android:id="@+id/sensor_state_cadence"
+            style="@style/SensorStateValue" />
+        <!-- Power -->
+        <TextView
+            style="@style/TextMedium"
+            android:text="@string/sensor_state_power" />
+
+        <TextView
+            android:id="@+id/sensor_state_power"
+            style="@style/SensorStateValue" />
+        <!-- Battery level -->
+        <TextView
+            style="@style/TextMedium"
+            android:text="@string/sensor_state_battery" />
+
+        <TextView
+            android:id="@+id/sensor_state_battery"
+            style="@style/SensorStateValue" />
+    </LinearLayout>
 </ScrollView>

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2013 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,33 +14,34 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <TableRow xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_height="wrap_content"
-  android:layout_width="wrap_content" >
-  <!-- Value container -->
-  <LinearLayout
-    android:layout_gravity="right|bottom"
-    style="@style/StatsSmallValueContainer" >
-    <!-- Value -->
-    <TextView
-      android:id="@+id/stats_value"
-      style="@style/StatsSmallValue" />
-    <!-- Unit -->
-    <TextView
-      android:id="@+id/stats_unit"
-      style="@style/StatsUnit" />
-  </LinearLayout>
-  <!-- Label container -->
-  <LinearLayout
-    android:layout_gravity="left|bottom"
-    style="@style/StatsSmallValueContainer" >
-    <TextView
-      android:visibility="invisible"
-      style="@style/StatsSmallValue" />
-    <!-- Label -->
-    <TextView
-      android:id="@+id/stats_label"
-      android:layout_gravity="bottom"
-      android:paddingLeft="8dp"
-      style="@style/StatsSmallLabel" />
-  </LinearLayout>
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <!-- Value container -->
+    <LinearLayout
+        style="@style/StatsSmallValueContainer"
+        android:layout_gravity="right|bottom">
+        <!-- Value -->
+        <TextView
+            android:id="@+id/stats_value"
+            style="@style/StatsSmallValue" />
+        <!-- Unit -->
+        <TextView
+            android:id="@+id/stats_unit"
+            style="@style/StatsUnit" />
+    </LinearLayout>
+    <!-- Label container -->
+    <LinearLayout
+        style="@style/StatsSmallValueContainer"
+        android:layout_gravity="left|bottom">
+
+        <TextView
+            style="@style/StatsSmallValue"
+            android:visibility="invisible" />
+        <!-- Label -->
+        <TextView
+            android:id="@+id/stats_label"
+            style="@style/StatsSmallLabel"
+            android:layout_gravity="bottom"
+            android:paddingLeft="8dp" />
+    </LinearLayout>
 </TableRow>

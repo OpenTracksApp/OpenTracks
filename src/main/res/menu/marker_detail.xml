@@ -17,16 +17,16 @@ limitations under the License.
     <item
         android:id="@+id/marker_detail_show_on_map"
         android:icon="@drawable/ic_menu_show_on_map"
-        android:title="@string/menu_show_on_map"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_show_on_map" />
     <item
         android:id="@+id/marker_detail_edit"
         android:icon="@drawable/ic_menu_edit"
-        android:title="@string/menu_edit"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_edit" />
     <item
         android:id="@+id/marker_detail_delete"
         android:icon="@drawable/ic_menu_delete"
-        android:title="@string/menu_delete"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_delete" />
 </menu>

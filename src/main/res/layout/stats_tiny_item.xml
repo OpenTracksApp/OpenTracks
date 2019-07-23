@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2013 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,20 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  style="@style/StatsSmallItemContainer" >
-  <!-- Label -->
-  <TextView
-    android:id="@+id/stats_label"
-    style="@style/StatsSmallLabel" />
-  <!-- Value container -->
-  <LinearLayout style="@style/StatsSmallValueContainer" >
-    <!-- Value -->
+    style="@style/StatsSmallItemContainer">
+    <!-- Label -->
     <TextView
-      android:id="@+id/stats_value"
-      style="@style/StatsTinyValue" />
-    <!-- Unit -->
-    <TextView
-      android:id="@+id/stats_unit"
-      style="@style/StatsUnit" />
-  </LinearLayout>
+        android:id="@+id/stats_label"
+        style="@style/StatsSmallLabel" />
+    <!-- Value container -->
+    <LinearLayout style="@style/StatsSmallValueContainer">
+        <!-- Value -->
+        <TextView
+            android:id="@+id/stats_value"
+            style="@style/StatsTinyValue" />
+        <!-- Unit -->
+        <TextView
+            android:id="@+id/stats_unit"
+            style="@style/StatsUnit" />
+    </LinearLayout>
 </LinearLayout>

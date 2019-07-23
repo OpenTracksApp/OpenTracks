@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2013 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,18 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  style="@style/StatsLargeItemContainer" >
-  <!-- Label -->
-  <TextView
-    android:id="@+id/stats_label"
-    android:text="@string/track_edit_activity_type_hint"
-    style="@style/StatsLargeLabel" />
-  <!-- Value container -->
-  <LinearLayout style="@style/StatsLargeValueContainer" >
-    <Spinner
-      android:id="@+id/stats_activity_type_icon"
-      android:layout_height="wrap_content"
-      android:layout_marginLeft="4dp"
-      android:layout_width="wrap_content" />
-  </LinearLayout>
+    style="@style/StatsLargeItemContainer">
+    <!-- Label -->
+    <TextView
+        android:id="@+id/stats_label"
+        style="@style/StatsLargeLabel"
+        android:text="@string/track_edit_activity_type_hint" />
+    <!-- Value container -->
+    <LinearLayout style="@style/StatsLargeValueContainer">
+
+        <Spinner
+            android:id="@+id/stats_activity_type_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp" />
+    </LinearLayout>
 </LinearLayout>

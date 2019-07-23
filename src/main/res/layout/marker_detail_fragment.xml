@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,74 +14,88 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_height="match_parent"
-  android:layout_width="match_parent" >
-  <FrameLayout
-    android:id="@+id/marker_detail_waypoint"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent" >
-    <ImageView
-      android:background="@android:color/black"
-      android:contentDescription="@string/image_photo_marker"
-      android:id="@+id/marker_detail_waypoint_photo"
-      android:layout_height="match_parent"
-      android:layout_width="match_parent"
-      android:scaleType="fitCenter" />
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
     <FrameLayout
-      android:layout_height="wrap_content"
-      android:layout_width="match_parent" >
-      <!-- A gradient on top of the text -->
-      <ImageView
-        android:alpha=".6"
-        android:contentDescription="@string/image_photo_marker"
-        android:id="@+id/marker_detail_waypoint_text_gradient"
-        android:layout_height="match_parent"
+        android:id="@+id/marker_detail_waypoint"
         android:layout_width="match_parent"
-        android:src="@drawable/text_gradient" />
-      <LinearLayout
-        android:id="@+id/marker_detail_waypoint_info"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="80dp"
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:padding="8dp" >
-        <TextView
-          android:id="@+id/marker_detail_waypoint_name"
-          android:paddingTop="8dp"
-          style="@style/TextMedium" />
-        <TextView
-          android:id="@+id/marker_detail_waypoint_category"
-          style="@style/TextSmall" />
-        <TextView
-          android:id="@+id/marker_detail_waypoint_description"
-          style="@style/TextSmall" />
-        <TextView
-          android:id="@+id/marker_detail_waypoint_location"
-          style="@style/TextSmall" />
-      </LinearLayout>
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/marker_detail_waypoint_photo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/black"
+            android:contentDescription="@string/image_photo_marker"
+            android:scaleType="fitCenter" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!-- A gradient on top of the text -->
+            <ImageView
+                android:id="@+id/marker_detail_waypoint_text_gradient"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha=".6"
+                android:contentDescription="@string/image_photo_marker"
+                android:src="@drawable/text_gradient" />
+
+            <LinearLayout
+                android:id="@+id/marker_detail_waypoint_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="80dp"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/marker_detail_waypoint_name"
+                    style="@style/TextMedium"
+                    android:paddingTop="8dp" />
+
+                <TextView
+                    android:id="@+id/marker_detail_waypoint_category"
+                    style="@style/TextSmall" />
+
+                <TextView
+                    android:id="@+id/marker_detail_waypoint_description"
+                    style="@style/TextSmall" />
+
+                <TextView
+                    android:id="@+id/marker_detail_waypoint_location"
+                    style="@style/TextSmall" />
+            </LinearLayout>
+        </FrameLayout>
     </FrameLayout>
-  </FrameLayout>
-  <ScrollView
-    android:id="@+id/marker_detail_statistics"
-    style="@style/StatsScrollView" >
-    <LinearLayout
-      android:layout_height="wrap_content"
-      android:layout_width="match_parent"
-      android:orientation="vertical"
-      android:padding="8dp" >
-      <TextView
-        android:id="@+id/marker_detail_statistics_name"
-        android:paddingTop="8dp"
-        style="@style/TextMedium" />
-      <TextView
-        android:id="@+id/marker_detail_statistics_location"
-        style="@style/TextSmall" />
-      <TextView
-        android:paddingBottom="6dp"
-        android:paddingTop="4dp"
-        android:text="@string/marker_detail_statistics_title"
-        style="@style/TextSmall" />
-      <include layout="@layout/stats_content" />
-    </LinearLayout>
-  </ScrollView>
+
+    <ScrollView
+        android:id="@+id/marker_detail_statistics"
+        style="@style/StatsScrollView">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/marker_detail_statistics_name"
+                style="@style/TextMedium"
+                android:paddingTop="8dp" />
+
+            <TextView
+                android:id="@+id/marker_detail_statistics_location"
+                style="@style/TextSmall" />
+
+            <TextView
+                style="@style/TextSmall"
+                android:paddingTop="4dp"
+                android:paddingBottom="6dp"
+                android:text="@string/marker_detail_statistics_title" />
+
+            <include layout="@layout/stats_content" />
+        </LinearLayout>
+    </ScrollView>
 </FrameLayout>

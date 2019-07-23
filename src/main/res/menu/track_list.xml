@@ -16,20 +16,20 @@ limitations under the License.
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/track_list_search"
-        android:title="@string/menu_search"
         android:actionViewClass="android.widget.SearchView"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_search" />
     <item
         android:id="@+id/track_list_start_gps"
         android:icon="@drawable/ic_menu_start_gps"
-        android:title="@string/menu_start_gps"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_start_gps" />
     <item
         android:id="@+id/track_list_markers"
         android:icon="@drawable/ic_menu_insert_marker"
         android:orderInCategory="5"
-        android:title="@string/menu_markers"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_markers" />
     <item
         android:id="@+id/track_list_aggregated_statistics"
         android:icon="@drawable/ic_menu_aggregated_statistics"

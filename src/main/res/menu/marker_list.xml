@@ -17,11 +17,11 @@ limitations under the License.
     <item
         android:id="@+id/marker_list_insert_marker"
         android:icon="@drawable/ic_menu_insert_marker"
-        android:title="@string/menu_insert_marker"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_insert_marker" />
     <item
         android:id="@+id/marker_list_search"
-        android:title="@string/menu_search"
         android:actionViewClass="android.widget.SearchView"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_search" />
 </menu>

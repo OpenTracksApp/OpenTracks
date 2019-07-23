@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2012 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,15 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_height="match_parent"
-  android:layout_width="match_parent" >
-  <ListView
-    android:id="@+id/search_list"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent" />
-  <TextView
-    android:id="@+id/search_list_empty"
-    android:text="@string/search_list_empty_message"
-    style="@style/ListEmptyTextView" >
-  </TextView>
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ListView
+        android:id="@+id/search_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/search_list_empty"
+        style="@style/ListEmptyTextView"
+        android:text="@string/search_list_empty_message"></TextView>
 </merge>

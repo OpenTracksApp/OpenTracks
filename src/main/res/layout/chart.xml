@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,21 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_height="match_parent"
-  android:layout_width="match_parent"
-  android:orientation="vertical" >
-  <LinearLayout
-    android:id="@+id/chart_view_layout"
-    android:layout_height="0dp"
-    android:layout_weight="1"
     android:layout_width="match_parent"
-    android:orientation="vertical" >
-  </LinearLayout>
-  <ZoomControls
-    android:background="@android:color/white"
-    android:gravity="right"
-    android:id="@+id/chart_zoom_controls"
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent"
-    android:paddingRight="8dp" />
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/chart_view_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"></LinearLayout>
+
+    <ZoomControls
+        android:id="@+id/chart_zoom_controls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:gravity="right"
+        android:paddingRight="8dp" />
 </LinearLayout>

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,25 +14,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-  android:title="@string/menu_settings" >
-  <Preference
-    android:key="@string/settings_chart_key"
-    android:persistent="false"
-    android:title="@string/track_detail_chart_tab" />
-  <Preference
-    android:key="@string/settings_stats_key"
-    android:persistent="false"
-    android:title="@string/track_detail_stats_tab" />
-  <Preference
-    android:key="@string/settings_recording_key"
-    android:persistent="false"
-    android:title="@string/settings_recording" />
-  <Preference
-    android:key="@string/settings_sensor_key"
-    android:persistent="false"
-    android:title="@string/settings_sensor" />
-  <Preference
-    android:key="@string/settings_advanced_key"
-    android:persistent="false"
-    android:title="@string/settings_advanced" />
+    android:title="@string/menu_settings">
+    <Preference
+        android:key="@string/settings_chart_key"
+        android:persistent="false"
+        android:title="@string/track_detail_chart_tab" />
+    <Preference
+        android:key="@string/settings_stats_key"
+        android:persistent="false"
+        android:title="@string/track_detail_stats_tab" />
+    <Preference
+        android:key="@string/settings_recording_key"
+        android:persistent="false"
+        android:title="@string/settings_recording" />
+    <Preference
+        android:key="@string/settings_sensor_key"
+        android:persistent="false"
+        android:title="@string/settings_sensor" />
+    <Preference
+        android:key="@string/settings_advanced_key"
+        android:persistent="false"
+        android:title="@string/settings_advanced" />
 </PreferenceScreen>

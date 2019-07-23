@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2013 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,16 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_height="wrap_content"
-  android:layout_width="match_parent"
-  android:orientation="vertical" >
-  <GridView
-    android:id="@+id/choose_activity_type_grid_view"
-    android:layout_height="0dp"
-    android:layout_weight="1"
     android:layout_width="match_parent"
-    android:numColumns="4"
-    android:padding="4dp"
-    android:stretchMode="spacingWidth"
-    android:verticalSpacing="4dp" />
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <GridView
+        android:id="@+id/choose_activity_type_grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:numColumns="4"
+        android:padding="4dp"
+        android:stretchMode="spacingWidth"
+        android:verticalSpacing="4dp" />
 </LinearLayout>

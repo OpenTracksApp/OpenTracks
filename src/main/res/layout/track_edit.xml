@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,56 +14,69 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_height="match_parent"
-  android:layout_width="match_parent"
-  android:orientation="vertical" >
-  <ScrollView style="@style/ScrollView.WithBottomButtons" >
-    <LinearLayout
-      android:layout_height="wrap_content"
-      android:layout_width="match_parent"
-      android:orientation="vertical"
-      android:padding="8dp" >
-      <TextView
-        android:text="@string/generic_name"
-        style="@style/EditLabel" />
-      <EditText
-        android:hint="@string/generic_name"
-        android:id="@+id/track_edit_name"
-        android:imeOptions="actionNext"
-        style="@style/EditNameTrack" />
-      <TextView
-        android:id="@+id/track_edit_activity_type_label"
-        android:text="@string/track_edit_activity_type"
-        style="@style/EditLabel.WithPaddingTop" />
-      <LinearLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent" >
-        <AutoCompleteTextView
-          android:hint="@string/track_edit_activity_type_hint"
-          android:id="@+id/track_edit_activity_type"
-          android:imeOptions="actionNext"
-          android:layout_height="match_parent"
-          android:layout_weight="1"
-          android:layout_width="0dp"
-          style="@style/EditCategory" />
-        <Spinner
-          android:id="@+id/track_edit_activity_type_icon"
-          android:layout_gravity="bottom"
-          android:layout_height="wrap_content"
-          android:layout_width="wrap_content" />
-      </LinearLayout>
-      <TextView
-        android:text="@string/generic_description"
-        style="@style/EditLabel.WithPaddingTop" />
-      <EditText
-        android:hint="@string/generic_description"
-        android:id="@+id/track_edit_description"
-        android:imeOptions="actionDone"
-        style="@style/EditDescription" />
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView style="@style/ScrollView.WithBottomButtons">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                style="@style/EditLabel"
+                android:text="@string/generic_name" />
+
+            <EditText
+                android:id="@+id/track_edit_name"
+                style="@style/EditNameTrack"
+                android:hint="@string/generic_name"
+                android:imeOptions="actionNext" />
+
+            <TextView
+                android:id="@+id/track_edit_activity_type_label"
+                style="@style/EditLabel.WithPaddingTop"
+                android:text="@string/track_edit_activity_type" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <AutoCompleteTextView
+                    android:id="@+id/track_edit_activity_type"
+                    style="@style/EditCategory"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:hint="@string/track_edit_activity_type_hint"
+                    android:imeOptions="actionNext" />
+
+                <Spinner
+                    android:id="@+id/track_edit_activity_type_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/EditLabel.WithPaddingTop"
+                android:text="@string/generic_description" />
+
+            <EditText
+                android:id="@+id/track_edit_description"
+                style="@style/EditDescription"
+                android:hint="@string/generic_description"
+                android:imeOptions="actionDone" />
+        </LinearLayout>
+    </ScrollView>
+
+    <View style="@style/BottomButtonDivider" />
+
+    <LinearLayout style="@style/BottomButtonBar">
+
+        <include layout="@layout/track_edit_buttons" />
     </LinearLayout>
-  </ScrollView>
-  <View style="@style/BottomButtonDivider" />
-  <LinearLayout style="@style/BottomButtonBar" >
-    <include layout="@layout/track_edit_buttons" />
-  </LinearLayout>
 </LinearLayout>
