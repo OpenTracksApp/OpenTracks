@@ -52,7 +52,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Tests for the MyTracks track recording service.
+ * Tests for the track recording service.
  * <p>
  * TODO: The original class, ServiceTestCase, has a few limitations, e.g. it's
  * not possible to properly shutdown the service, unless tearDown() is called,
@@ -135,9 +135,9 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     context = new MockContext(mockContentResolver, renamingDelegatingContext);
 
     // Set up the mock content resolver
-    CustomContentProvider myTracksProvider = new CustomContentProvider();
-    myTracksProvider.attachInfo(context, null);
-    mockContentResolver.addProvider(ContentProviderUtils.AUTHORITY, myTracksProvider);
+    CustomContentProvider customContentProvider = new CustomContentProvider();
+    customContentProvider.attachInfo(context, null);
+    mockContentResolver.addProvider(ContentProviderUtils.AUTHORITY, customContentProvider);
 
     MockContentProvider settingsProvider = new MockContentProvider(context) {
         @Override
@@ -341,7 +341,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
 
     @Override
     public void onReceive(Context ctx, Intent intent) {
-      Log.d("MyTracksTest", "Got broadcast: " + intent);
+      Log.d("Test", "Got broadcast: " + intent);
       synchronized (receivedIntents) {
         receivedIntents.add(intent);
         receivedIntents.notifyAll();

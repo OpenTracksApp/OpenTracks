@@ -238,13 +238,6 @@ public class TrackRecordingService extends Service {
         }
     };
 
-    /*
-     * Note that this service, through the AndroidManifest.xml, is configured to
-     * allow both MyTracks and third party apps to invoke it. For the onCreate
-     * callback, we cannot tell whether the caller is MyTracks or a third party
-     * app, thus it cannot start/stop a recording or write/update MyTracks
-     * database.
-     */
     @Override
     public void onCreate() {
         super.onCreate();
@@ -282,13 +275,6 @@ public class TrackRecordingService extends Service {
         }
     }
 
-    /*
-     * Note that this service, through the AndroidManifest.xml, is configured to
-     * allow both MyTracks and third party apps to invoke it. For the
-     * onStartCommand callback, we cannot tell whether the caller is MyTracks or a
-     * third party app, thus it cannot start/stop a recording or write/update
-     * MyTracks database.
-     */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         handleStartCommand(intent, startId);

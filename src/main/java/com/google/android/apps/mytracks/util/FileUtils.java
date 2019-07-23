@@ -36,6 +36,13 @@ public class FileUtils {
    */
   static final String SDCARD_TOP_DIR = "MyTracks";
 
+  static final String TRACK_PREFIX = "MyTracks";
+
+  /**
+   * Used to transfer picture from the camera.
+   */
+  public static final String FILEPROVIDER = "com.google.android.apps.mytracks.fileprovider";
+
   /**
    * The maximum FAT32 path length. See the FAT32 spec at
    * http://msdn.microsoft.com/en-us/windows/hardware/gg463080
@@ -96,7 +103,7 @@ public class FileUtils {
   }
 
   public static File getPhotoDir(long trackId) {
-    return new File(getPath(PICTURES_DIR, "MyTracks" + trackId));
+    return new File(getPath(PICTURES_DIR, TRACK_PREFIX + trackId));
   }
 
   /**

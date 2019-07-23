@@ -30,7 +30,7 @@ import com.google.android.maps.mytracks.R;
 /**
  * A service to control starting and stopping of a recording. This service,
  * through the AndroidManifest.xml, is configured to only allow components of
- * the same application to invoke it. Thus this service can be used my MyTracks
+ * the same application to invoke it. Thus this service can be used my the
  * app widget, {@link TrackWidgetProvider}, but not by other applications. This
  * application delegates starting and stopping a recording to
  * {@link TrackRecordingService} using RPC calls.

@@ -381,12 +381,12 @@ public class CustomContentProviderUtilsImplTest {
     waypoint.setLocation(loc);
     providerUtils.insertWaypoint(waypoint);
   
-    ContentProviderUtilsImpl myTracksProviderUtilsImpl = new ContentProviderUtilsImpl(
+    ContentProviderUtilsImpl contentProviderUtils = new ContentProviderUtilsImpl(
         new MockContentResolver());
     
     long waypointId = System.currentTimeMillis();
     waypoint.setId(waypointId);
-    ContentValues contentValues = myTracksProviderUtilsImpl.createContentValues(waypoint);
+    ContentValues contentValues = contentProviderUtils.createContentValues(waypoint);
     Assert.assertEquals(waypointId, contentValues.get(WaypointsColumns._ID));
     Assert.assertEquals(22 * 1000000, contentValues.get(WaypointsColumns.LONGITUDE));
     Assert.assertEquals(TEST_DESC, contentValues.get(WaypointsColumns.DESCRIPTION));

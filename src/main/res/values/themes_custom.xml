@@ -27,7 +27,7 @@ limitations under the License.
     <item name="android:progressBarStyleHorizontal">@style/ProgressBarCustom</item>
     <!-- Manually added -->
     <item name="android:actionBarStyle">@style/ActionBarStyleCustom</item>
-    <item name="android:actionModeBackground">@drawable/action_mode_background_mytracks</item>
+    <item name="android:actionModeBackground">@drawable/custom_action_mode_background</item>
     <item name="android:alertDialogTheme">@style/CustomAlertDialogTheme</item>
   </style>
   <style name="CustomAlertDialogTheme" parent="@android:style/Theme.Holo.Dialog">

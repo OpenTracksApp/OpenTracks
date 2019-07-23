@@ -55,7 +55,7 @@ public class CustomContentProvider extends ContentProvider {
   static final int DATABASE_VERSION = 23;
 
   @VisibleForTesting
-  static final String DATABASE_NAME = "mytracks.db";
+  static final String DATABASE_NAME = "database.db";
 
   /**
    * Database helper for creating and upgrading the database.

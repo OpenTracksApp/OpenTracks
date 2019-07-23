@@ -400,7 +400,7 @@ public class TrackDetailActivity extends AbstractTrackActivity implements Choose
     File file = new File(dir, FileUtils.buildUniqueFileName(dir, fileName, JPEG_EXTENSION));
 
     if (file != null) {
-      photoUri = FileProvider.getUriForFile(this, "com.google.android.apps.mytracks.fileprovider", file);
+      photoUri = FileProvider.getUriForFile(this, FileUtils.FILEPROVIDER, file);
       Log.d(TAG, "Taking photo to URI: " + photoUri);
       Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE)
               .putExtra(MediaStore.EXTRA_OUTPUT, photoUri);

@@ -22,7 +22,7 @@ import com.google.android.apps.mytracks.content.sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.sensor.SensorState;
 
 /**
- * MyTracks service.
+ * App's service.
  * This service is the process that actually records and manages tracks.
  */
 public interface ITrackRecordingService {

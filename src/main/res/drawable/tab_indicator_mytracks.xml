@@ -16,16 +16,16 @@ limitations under the License.
 -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
   <!-- Non focused states -->
-  <item android:drawable="@drawable/tab_unselected_mytracks" android:state_focused="false" android:state_pressed="false" android:state_selected="false"/>
-  <item android:drawable="@drawable/tab_selected_mytracks" android:state_focused="false" android:state_pressed="false" android:state_selected="true"/>
+  <item android:drawable="@drawable/tab_unselected" android:state_focused="false" android:state_pressed="false" android:state_selected="false"/>
+  <item android:drawable="@drawable/tab_selected" android:state_focused="false" android:state_pressed="false" android:state_selected="true"/>
   <!-- Focused states -->
-  <item android:drawable="@drawable/tab_unselected_focused_mytracks" android:state_focused="true" android:state_pressed="false" android:state_selected="false"/>
-  <item android:drawable="@drawable/tab_selected_focused_mytracks" android:state_focused="true" android:state_pressed="false" android:state_selected="true"/>
+  <item android:drawable="@drawable/tab_unselected_focused" android:state_focused="true" android:state_pressed="false" android:state_selected="false"/>
+  <item android:drawable="@drawable/tab_selected_focused" android:state_focused="true" android:state_pressed="false" android:state_selected="true"/>
   <!-- Pressed -->
   <!-- Non focused states -->
-  <item android:drawable="@drawable/tab_unselected_pressed_mytracks" android:state_focused="false" android:state_pressed="true" android:state_selected="false"/>
-  <item android:drawable="@drawable/tab_selected_pressed_mytracks" android:state_focused="false" android:state_pressed="true" android:state_selected="true"/>
+  <item android:drawable="@drawable/tab_unselected_pressed" android:state_focused="false" android:state_pressed="true" android:state_selected="false"/>
+  <item android:drawable="@drawable/tab_selected_pressed" android:state_focused="false" android:state_pressed="true" android:state_selected="true"/>
   <!-- Focused states -->
-  <item android:drawable="@drawable/tab_unselected_pressed_mytracks" android:state_focused="true" android:state_pressed="true" android:state_selected="false"/>
-  <item android:drawable="@drawable/tab_selected_pressed_mytracks" android:state_focused="true" android:state_pressed="true" android:state_selected="true"/>
+  <item android:drawable="@drawable/tab_unselected_pressed" android:state_focused="true" android:state_pressed="true" android:state_selected="false"/>
+  <item android:drawable="@drawable/tab_selected_pressed" android:state_focused="true" android:state_pressed="true" android:state_selected="true"/>
 </selector>

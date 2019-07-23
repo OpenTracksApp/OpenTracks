@@ -25,7 +25,7 @@ import android.content.Intent;
 import android.util.Log;
 
 /**
- * This class handles MyTracks related broadcast messages.
+ * This class react to the BOOT_COMPLETED broadcast.
  *
  * One example of a broadcast message that this class is interested in,
  * is notification about the phone boot.  We may want to resume a previously

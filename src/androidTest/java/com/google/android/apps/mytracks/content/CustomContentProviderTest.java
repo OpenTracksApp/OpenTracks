@@ -36,16 +36,16 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class CustomContentProviderTest {
 
-  private static final String DATABASE_NAME = "mytrackstest.db";
+  private static final String DATABASE_NAME = "test.db";
 
   private SQLiteDatabase db;
-  private CustomContentProvider myTracksProvider;
+  private CustomContentProvider customContentProvider;
 
   @Before
   protected void setUp()  {
     InstrumentationRegistry.getInstrumentation().getContext().deleteDatabase(DATABASE_NAME);
     db = (new DatabaseHelper(InstrumentationRegistry.getInstrumentation().getContext(), DATABASE_NAME)).getWritableDatabase();
-    myTracksProvider = new CustomContentProvider();
+    customContentProvider = new CustomContentProvider();
   }
 
   /**
@@ -61,18 +61,18 @@ public class CustomContentProviderTest {
    * Tests {@link CustomContentProvider#onCreate(android.content.Context)}.
    */
   public void testOnCreate() {
-    Assert.assertTrue(myTracksProvider.onCreate(InstrumentationRegistry.getInstrumentation().getContext()));
+    Assert.assertTrue(customContentProvider.onCreate(InstrumentationRegistry.getInstrumentation().getContext()));
   }
 
   /**
    * Tests {@link CustomContentProvider#getType(Uri)}.
    */
   public void testGetType() {
-    Assert.assertEquals(TracksColumns.CONTENT_TYPE, myTracksProvider.getType(TracksColumns.CONTENT_URI));
+    Assert.assertEquals(TracksColumns.CONTENT_TYPE, customContentProvider.getType(TracksColumns.CONTENT_URI));
     Assert.assertEquals(
-        TrackPointsColumns.CONTENT_TYPE, myTracksProvider.getType(TrackPointsColumns.CONTENT_URI));
+        TrackPointsColumns.CONTENT_TYPE, customContentProvider.getType(TrackPointsColumns.CONTENT_URI));
     Assert.assertEquals(
-        WaypointsColumns.CONTENT_TYPE, myTracksProvider.getType(WaypointsColumns.CONTENT_URI));
+        WaypointsColumns.CONTENT_TYPE, customContentProvider.getType(WaypointsColumns.CONTENT_URI));
   }
 
   /**
