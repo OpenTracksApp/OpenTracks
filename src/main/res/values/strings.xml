@@ -391,11 +391,11 @@ limitations under the License.
     Elevation gain: %1$d m (%2$d ft)
   </string>
   <string name="description_elevation_imperial"
-    translation_description="Elevation in imperial units, feet.">
+   >
     Elevation (ft)
   </string>
   <string name="description_elevation_metric"
-    translation_description="Elevation in metric units, meters.">
+   >
     Elevation (m)
   </string>
   <string name="description_fastest_pace_in_minute"
@@ -406,27 +406,27 @@ limitations under the License.
     Fastest pace: %1$s min/km (%2$s min/mi)
   </string>
   <string name="description_location_accuracy"
-    translation_description="Label for location accuracy in meters.">
+   >
     Accuracy (m)
   </string>
   <string name="description_location_altitude"
-    translation_description="Label for location altitude in meters.">
+   >
     Altitude (m)
   </string>
   <string name="description_location_bearing"
-    translation_description="Label for location bearing in degrees.">
+   >
     Bearing (deg)
   </string>
   <string name="description_location_latitude"
-    translation_description="Label for location latitude in degrees.">
+   >
     Latitude (deg)
   </string>
   <string name="description_location_longitude"
-    translation_description="Label for location longitude in degrees.">
+   >
     Longitude (deg)
   </string>
   <string name="description_location_speed"
-    translation_description="Label for location speed in meters per second.">
+   >
     Speed (m/s)
   </string>
   <string name="description_max_elevation"
@@ -471,11 +471,11 @@ limitations under the License.
     Moving time: %1$s
   </string>
   <string name="description_pace_imperial"
-    translation_description="Pace in imperial units, minutes per mile.">
+   >
     Pace (min/mi)
   </string>
   <string name="description_pace_metric"
-    translation_description="Pace in metric units, minutes per kilometer.">
+   >
     Pace (min/km)
   </string>
   <string name="description_recorded_time"
@@ -485,27 +485,27 @@ limitations under the License.
     Recorded: %1$s
   </string>
   <string name="description_sensor_cadence"
-    translation_description="Label for cadence with its unit revolutions per minute (rpm).">
+   >
     Cadence (rpm)
   </string>
   <string name="description_sensor_heart_rate"
-    translation_description="Label for heart rate with its unit beats per minute (bpm).">
+   >
     Heart rate (bpm)
   </string>
   <string name="description_sensor_power"
-    translation_description="Label for power with its unit watt (W).">
+   >
     Power (W)
   </string>
   <string name="description_speed_imperial"
-    translation_description="Speed in imperial units, miles per hour.">
+   >
     Speed (mi/hr)
   </string>
   <string name="description_speed_metric"
-    translation_description="Speed in metric units, kilometers per hour.">
+   >
     Speed (km/hr)
   </string>
   <string name="description_time"
-    translation_description="Label for time.">
+   >
     Time
   </string>
   <string name="description_total_distance"
@@ -522,11 +522,11 @@ limitations under the License.
     Total time: %1$s
   </string>
   <string name="description_track_point"
-    translation_description="Label for a track point">
+   >
     Point
   </string>
   <string name="description_track_segment"
-    translation_description="Label for a track segment">
+   >
     Segment
   </string>
 
@@ -542,11 +542,11 @@ limitations under the License.
     All as %1$s to %2$s
   </string>
   <string name="export_all_title"
-    translation_description="The dialog title to export all tracks to the external storage.">
+   >
     Export to external storage
   </string>
   <string name="export_external_storage"
-    translation_description="When exporting a track, the option to export to the external storage.">
+   >
     External storage
   </string>
   <string name="export_external_storage_error"
@@ -580,17 +580,17 @@ limitations under the License.
     Exported %1$s to %2$s
   </string>
   <string name="export_title"
-    translation_description="The dialog title when exporting a track.">
+   >
     Export to&#8230;
   </string>
 
   <!-- External Storage -->
   <string name="external_storage_not_available"
-    translation_description="Error message when the external storage is not available.">
+   >
     External storage not available
   </string>
   <string name="external_storage_not_writable"
-    translation_description="Error message when the external storage is not writable.">
+   >
     External storage not writable
   </string>
 
@@ -640,23 +640,23 @@ limitations under the License.
 
   <!-- Generic -->
   <string name="generic_add"
-    translation_description="The text on a button to say add.">
+   >
     Add
   </string>
   <string name="generic_cancel"
-    translation_description="The text on a button to say cancel.">
+   >
     Cancel
   </string>
   <string name="generic_delete_all_confirm_title"
-    translation_description="When deleting all the items, the title on the confirmation dialog.">
+   >
     Delete all?
   </string>
   <string name="generic_delete_selected_confirm_title"
-    translation_description="When deleting selected items, the title on the confirmation dialog.">
+   >
     Delete selected?
   </string>
   <string name="generic_description"
-    translation_description="The text label for entering a description.">
+   >
     Description
   </string>
   <string name="generic_description_line"
@@ -666,11 +666,11 @@ limitations under the License.
     Description: %1$s
   </string>
   <string name="generic_error_title"
-    translation_description="The title on an alert dialog indicating error.">
+   >
     Error
   </string>
   <string name="generic_name"
-    translation_description="The text label for entering a name.">
+   >
     Name
   </string>
   <string name="generic_name_line"
@@ -680,39 +680,39 @@ limitations under the License.
     Name: %1$s
   </string>
   <string name="generic_no"
-    translation_description="The text on a button to say no.">
+   >
     No
   </string>
   <string name="generic_ok"
-    translation_description="The text on a button to say ok.">
+   >
     OK
   </string>
   <string name="generic_paused"
-    translation_description="Text indicating a track is paused.">
+   >
     Paused
   </string>
   <string name="generic_progress_title"
-    translation_description="The title on a progress dialog asking the user to wait.">
+   >
     Please wait&#8230;
   </string>
   <string name="generic_recording"
-    translation_description="Text indicating a track is recording.">
+   >
     Recording&#8230;
   </string>
   <string name="generic_save"
-    translation_description="The text on a button to say save.">
+   >
     Save
   </string>
   <string name="generic_success_title"
-    translation_description="The title on an alert dialog indicating success.">
+   >
     Success
   </string>
   <string name="generic_tracks"
-    translation_description="Generic title for a list of tracks.">
+   >
     Tracks
   </string>
   <string name="generic_yes"
-    translation_description="The text on a button to say yes.">
+   >
     Yes
   </string>
 
@@ -753,19 +753,19 @@ limitations under the License.
     sure the sky is visible. Try again later.
   </string>
   <string name="gps_not_found"
-    translation_description="On application start, message when there is no GPS on the device.">
+   >
     No GPS is found on the device
   </string>
   <string name="gps_starting"
-    translation_description="The message when starting GPS.">
+   >
     Starting GPS
   </string>
   <string name="gps_starting_error"
-    translation_description="The message when unable to start GPS.">
+   >
     Unable to start GPS
   </string>
   <string name="gps_stopping"
-    translation_description="The message when stopping GPS.">
+   >
     Stopping GPS
   </string>
   <string name="gps_wait_for_better_signal"
@@ -781,11 +781,11 @@ limitations under the License.
 
   <!-- Image -->
   <string name="image_application"
-    translation_description="The accessibility description for a generic application icon.">
+   >
     Application
   </string>
   <string name="image_arrow"
-    translation_description="The accessibility description for an arrow image.">
+   >
     Arrow
   </string>
   <string name="image_marker"
@@ -794,31 +794,31 @@ limitations under the License.
     Marker
   </string>
   <string name="image_marker_count"
-    translation_description="The accessibility description for the marker count icon.">
+   >
     Marker count
   </string>
   <string name="image_my_location"
-    translation_description="The accessibility description for the 'My Location' button.">
+   >
     My Location
   </string>
   <string name="image_my_tracks_logo"
-    translation_description="The accessibility description for the 'My Tracks' logo.">
+   >
     My Tracks logo
   </string>
   <string name="image_pause"
-    translation_description="The accessibility description for the pause button.">
+   >
     Pause
   </string>
   <string name="image_photo_marker"
-    translation_description="The accessibility description for a photo marker">
+   >
     Photo marker
   </string>
   <string name="image_record"
-    translation_description="The accessibility description for the record button.">
+   >
     Record
   </string>
   <string name="image_stop"
-    translation_description="The accessibility description for the stop button.">
+   >
     Stop
   </string>
   <string name="image_track"
@@ -872,7 +872,7 @@ limitations under the License.
     All %1$s from %2$s
   </string>
   <string name="import_selection_title"
-     translation_description="The dialog title to import all from external storage.">
+    >
     Import from external storage
   </string>
   <string name="import_success"
@@ -890,27 +890,27 @@ limitations under the License.
     Unable to insert a marker. No GPS signal. Try again.
   </string>
   <string name="marker_add_success"
-    translation_description="When adding a marker, the message indicating success.">
+   >
     A marker was inserted
   </string>
   <string name="marker_add_canceled"
-    translation_description="When adding a marker, the message indicating it is canceled.">
+   >
     Canceled, no marker added
   </string>
   <string name="marker_delete_all_confirm_message"
-    translation_description="When deleting all markers, the confirmation message.">
+   >
     All markers for this track will be permanently deleted from the device
   </string>
   <string name="marker_delete_one_confirm_message"
-    translation_description="When deleting one marker, the confirmation message.">
+   >
     The marker will be permanently deleted from the device
   </string>
   <string name="marker_delete_one_confirm_title"
-    translation_description="When deleting one marker, the title of the confirmation dialog.">
+   >
     Delete marker?
   </string>
   <string name="marker_delete_multiple_confirm_message"
-    translation_description="When deleting multiple markers, the confirmation message.">
+   >
     The selected markers will be permanently deleted from the device
   </string>
   <string name="marker_label_end"
@@ -968,7 +968,7 @@ limitations under the License.
 
   <!-- Marker List -->
   <string name="marker_list_empty_message"
-    translation_description="The message when the marker list is empty.">
+   >
     You don\'t have any markers
   </string>
 
@@ -1141,7 +1141,7 @@ limitations under the License.
 
   <!-- My Tracks -->
   <string name="app_name"
-    translation_description="The My Tracks application name.">
+   >
       My Tracks
   </string>
   <string name="recording_service"
@@ -1164,7 +1164,7 @@ limitations under the License.
     Tracks and markers
   </string>
   <string name="search_list_empty_message"
-    translation_description="Message when the search result is empty.">
+   >
     No tracks or markers matched your search
   </string>
   <string name="search_list_marker_track_location"
@@ -1285,7 +1285,7 @@ limitations under the License.
     Scale photo to %1$s for export
   </string>
   <string name="settings_advanced_photo_size_title"
-    translation_description="In the 'Advanced' settings, the option to set the photo size.">
+   >
     Photo size
   </string>
 
@@ -1296,7 +1296,7 @@ limitations under the License.
     By distance
   </string>
   <string name="settings_chart_by_time"
-    translation_description="In the 'Chart' settings, the option to display the x axis by time.">
+   >
     By time
   </string>
   <string name="settings_chart_x_axis"
@@ -1577,7 +1577,7 @@ limitations under the License.
 
   <!-- Share Track -->
   <string name="share_track_emails_hint"
-    translation_description="The hint for the auto complete text box for entering email addresses.">
+   >
     Email addresses
   </string>
   <string name="share_track_picker_title"
@@ -1598,25 +1598,25 @@ limitations under the License.
     I think you might be interested in this track.\n\n%1$s
   </string>
   <string name="share_track_subject"
-      translation_description="When sharing a track with friends, the subject line.">
+     >
     I would like to share a track with you
   </string>
 
   <!-- Stats -->
   <string name="stats_average_moving_pace"
-    translation_description="In the 'Stats' page, the average moving pace.">
+   >
     Avg moving pace
   </string>
   <string name="stats_average_moving_speed"
-    translation_description="In the 'Stats' page, the average moving speed.">
+   >
     Avg moving speed
   </string>
   <string name="stats_average_pace"
-    translation_description="In the 'Stats' page, the average pace.">
+   >
     Avg pace
   </string>
   <string name="stats_average_speed"
-    translation_description="In the 'Stats' page, the average speed.">
+   >
     Avg speed
   </string>
   <string name="stats_elevation"
@@ -1626,11 +1626,11 @@ limitations under the License.
     Elevation
   </string>
   <string name="stats_fastest_pace"
-    translation_description="In the 'Stats' page, the fastest pace.">
+   >
     Fastest pace
   </string>
   <string name="stats_gain"
-    translation_description="In the 'Stats' page, the gain of a value. E.g, gain in elevation.">
+   >
     Gain
   </string>
   <string name="stats_grade"
@@ -1639,27 +1639,27 @@ limitations under the License.
     Grade
   </string>
   <string name="stats_latitude"
-    translation_description="In the 'Stats' page, the latitude.">
+   >
     Latitude
   </string>
   <string name="stats_longitude"
-    translation_description="In the 'Stats' page, the longitude.">
+   >
     Longitude
   </string>
   <string name="stats_max"
-    translation_description="In the 'Stats' page, the maximum of a value.">
+   >
     Max
   </string>
   <string name="stats_max_speed"
-    translation_description="In the 'Stats' page, the maximum speed.">
+   >
     Max speed
   </string>
   <string name="stats_min"
-    translation_description="In the 'Stats' page, the minimum of a value.">
+   >
     Min
   </string>
   <string name="stats_moving_time"
-    translation_description="In the 'Stats' page, the moving time.">
+   >
     Moving time
   </string>
   <string name="stats_pace"
@@ -1675,11 +1675,11 @@ limitations under the License.
     Speed
   </string>
   <string name="stats_distance"
-    translation_description="In the 'Stats' page, the distance.">
+   >
     Distance
   </string>
   <string name="stats_total_time"
-    translation_description="In the 'Stats' page, the total time.">
+   >
     Total time
   </string>
 
@@ -1704,29 +1704,29 @@ limitations under the License.
 
   <!-- Track Delete -->
   <string name="track_delete_one_confirm_message"
-    translation_description="When deleting one track, the confirmation message.">
+   >
     The track and its markers will be permanently deleted from the device.
   </string>
   <string name="track_delete_one_confirm_title"
-    translation_description="When deleting one track, the title of the confirmation dialog.">
+   >
     Delete track?
   </string>
   <string name="track_delete_multiple_confirm_message"
-    translation_description="When deleting multiple tracks, the confirmation message.">
+   >
     The selected tracks and their markers will be permanently deleted from the device.
   </string>
   <string name="track_delete_progress_message"
-    translation_description="The progress message when deleting tracks.">
+   >
     Deleting&#8230;
   </string>
 
   <!-- Track Detail -->
   <string name="track_detail_chart_tab"
-    translation_description="In the track detail page, the title of the tab showing the chart.">
+   >
     Chart
   </string>
   <string name="track_detail_stats_tab"
-    translation_description="In the track detail page, the title of the tab showing the stats.">
+   >
     Stats
   </string>
 
@@ -1742,7 +1742,7 @@ limitations under the License.
     Activity type
   </string>
   <string name="track_edit_new_track_title"
-    translation_description="The title of the track edit page when saving a new track.">
+   >
     New Track
   </string>
 
@@ -1765,7 +1765,7 @@ limitations under the License.
 
   <!-- Track Widget -->
   <string name="track_widget_config_title"
-    translation_description="Title of the page to configure the My Tracks widget items.">
+   >
     Configure Widget Items
   </string>
 
@@ -1815,49 +1815,49 @@ limitations under the License.
 
   <!-- Unit -->
   <string name="unit_feet"
-    translation_description="Abbreviation for feet. E.g., '2 ft'.">
+   >
     ft
   </string>
   <string name="unit_kilometer"
-    translation_description="Abbreviation for kilometers. E.g., '2 km'.">
+   >
     km
   </string>
   <string name="unit_kilometer_per_hour"
-    translation_description="Abbreviation for kilometers per hour. E.g., '5 km/h'.">
+   >
     km/h
   </string>
   <string name="unit_meter"
-    translation_description="Abbreviation for meters. E.g., '2 m'.">
+   >
     m
   </string>
   <string name="unit_mile"
-    translation_description="Abbreviation for miles. E.g., '2 mi'.">
+   >
     mi
   </string>
   <string name="unit_mile_per_hour"
-    translation_description="Abbreviation for miles per hour. E.g., '5 mi/h'.">
+   >
     mi/h
   </string>
   <string name="unit_minute_per_kilometer"
-    translation_description="Abbreviation for minutes per kilometer. E.g., '5 min/km'.">
+   >
     min/km
   </string>
   <string name="unit_minute_per_mile"
-    translation_description="Abbreviation for minutes per mile. E.g., '5 min/mi'.">
+   >
     min/mi
   </string>
 
   <!-- Value -->
   <string name="value_adapt_accuracy"
-    translation_description="In a setting picker, the value to adapt for accuracy.">
+   >
     Adapt for accuracy
   </string>
   <string name="value_adapt_battery_life"
-    translation_description="In a setting picker, the value to adapt for battery life.">
+   >
     Adapt for battery life
   </string>
   <string name="value_always"
-    translation_description="In a setting picker, the value to always enable the option.">
+   >
     Always
   </string>
   <string name="value_float_feet"
@@ -2000,19 +2000,19 @@ limitations under the License.
     %1$d s
   </string>
   <string name="value_never"
-    translation_description="In a setting picker, the value to never use the feature.">
+   >
     Never
   </string>
   <string name="value_none"
-    translation_description="In a setting picker, the value to pick none of the options.">
+   >
     None
   </string>
   <string name="value_off"
-    translation_description="In a setting picker, the value to turn off the feature.">
+   >
     Off
   </string>
   <string name="value_smallest"
-    translation_description="In a setting picker, the value to use the smallest value.">
+   >
     Smallest
   </string>
   <string name="value_smallest_recommended"
@@ -2035,7 +2035,7 @@ limitations under the License.
     %1$d hours
   </string>
   <string name="voice_hours_one"
-    translation_description="For voice announcement, to say 1 hour.">
+   >
     1 hour
   </string>
   <string name="voice_hours_other"
@@ -2046,11 +2046,11 @@ limitations under the License.
     %1$d hours
   </string>
   <string name="voice_hours_two"
-    translation_description="For voice announcement, to say 2 hours.">
+   >
     2 hours
   </string>
   <string name="voice_hours_zero"
-    translation_description="For voice announcement, to say 0 hours.">
+   >
     0 hours
   </string>
   <string name="voice_minutes_few"
@@ -2066,7 +2066,7 @@ limitations under the License.
     %1$d minutes
   </string>
   <string name="voice_minutes_one"
-    translation_description="For voice announcement, to say 1 minute.">
+   >
     1 minute
   </string>
   <string name="voice_minutes_other"
@@ -2077,11 +2077,11 @@ limitations under the License.
     %1$d minutes
   </string>
   <string name="voice_minutes_two"
-    translation_description="For voice announcement, to say 2 minutes.">
+   >
     2 minutes
   </string>
   <string name="voice_minutes_zero"
-    translation_description="For voice announcement, to say 0 minutes.">
+   >
     0 minutes
   </string>
   <string name="voice_pace_per_kilometer"
@@ -2111,7 +2111,7 @@ limitations under the License.
     %1$d seconds
   </string>
   <string name="voice_seconds_one"
-    translation_description="For voice announcement, to say 1 second.">
+   >
     1 second
   </string>
   <string name="voice_seconds_other"
@@ -2122,11 +2122,11 @@ limitations under the License.
     %1$d seconds
   </string>
   <string name="voice_seconds_two"
-    translation_description="For voice announcement, to say 2 seconds.">
+   >
     2 seconds
   </string>
   <string name="voice_seconds_zero"
-    translation_description="For voice announcement, to say 0 seconds.">
+   >
     0 seconds
   </string>
   <string name="voice_speed_kilometers_per_hour_few"
@@ -2142,7 +2142,7 @@ limitations under the License.
     %1$.1f kilometers per hour
   </string>
   <string name="voice_speed_kilometers_per_hour_one"
-    translation_description="For voice announcement, to say 1 kilometer per hour.">
+   >
     1 kilometer per hour
   </string>
   <string name="voice_speed_kilometers_per_hour_other"
@@ -2153,11 +2153,11 @@ limitations under the License.
     %1$.1f kilometers per hour
   </string>
   <string name="voice_speed_kilometers_per_hour_two"
-    translation_description="For voice announcement, to say 2 kilometers per hour.">
+   >
     2 kilometers per hour
   </string>
   <string name="voice_speed_kilometers_per_hour_zero"
-    translation_description="For voice announcement, to say 0 kilometers per hour.">
+   >
     0 kilometers per hour
   </string>
   <string name="voice_speed_miles_per_hour_few"
@@ -2173,7 +2173,7 @@ limitations under the License.
     %1$.1f miles per hour
   </string>
   <string name="voice_speed_miles_per_hour_one"
-    translation_description="For voice announcement, to say 1 mile per hour.">
+   >
     1 mile per hour
   </string>
   <string name="voice_speed_miles_per_hour_other"
@@ -2184,11 +2184,11 @@ limitations under the License.
     %1$.1f miles per hour
   </string>
   <string name="voice_speed_miles_per_hour_two"
-    translation_description="For voice announcement, to say 2 miles per hour.">
+   >
     2 miles per hour
   </string>
   <string name="voice_speed_miles_per_hour_zero"
-    translation_description="For voice announcement, to say 0 miles per hour.">
+   >
     0 miles per hour
   </string>
   <string name="voice_template"
@@ -2213,7 +2213,7 @@ limitations under the License.
     total distance %1$.2f kilometers
   </string>
   <string name="voice_total_distance_kilometers_one"
-    translation_description="For voice announcement, to say total distance 1 kilometer.">
+   >
     total distance 1 kilometer
   </string>
   <string name="voice_total_distance_kilometers_other"
@@ -2225,11 +2225,11 @@ limitations under the License.
     total distance %1$.2f kilometers
   </string>
   <string name="voice_total_distance_kilometers_two"
-    translation_description="For voice announcement, to say total distance 2 kilometers.">
+   >
     total distance 2 kilometers
   </string>
   <string name="voice_total_distance_kilometers_zero"
-    translation_description="For voice announcement, to say total distance 0 kilometers.">
+   >
     total distance 0 kilometers
   </string>
   <string name="voice_total_distance_miles_few"
@@ -2245,7 +2245,7 @@ limitations under the License.
     total distance %1$.2f miles
   </string>
   <string name="voice_total_distance_miles_one"
-    translation_description="For voice announcement, to say total distance 1 mile.">
+   >
     total distance 1 mile
   </string>
   <string name="voice_total_distance_miles_other"
@@ -2256,11 +2256,11 @@ limitations under the License.
     total distance %1$.2f miles
   </string>
   <string name="voice_total_distance_miles_two"
-    translation_description="For voice announcement, to say total distance 2 miles.">
+   >
     total distance 2 miles
   </string>
   <string name="voice_total_distance_miles_zero"
-    translation_description="For voice announcement, to say total distance 0 miles.">
+   >
     total distance 0 miles
   </string>
   <string name="voice_total_distance_zero"
