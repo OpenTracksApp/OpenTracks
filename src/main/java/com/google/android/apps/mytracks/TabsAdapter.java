@@ -44,8 +44,8 @@ import java.util.ArrayList;
  * 
  * @author Jimmy Shih
  */
-public class TabsAdapter extends FragmentPagerAdapter
-    implements TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
+//TODO Rework or better remove.
+public class TabsAdapter extends FragmentPagerAdapter implements TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 
   private final Context context;
   private final TabHost tabHost;

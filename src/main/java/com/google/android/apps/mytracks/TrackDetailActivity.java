@@ -74,8 +74,7 @@ import java.util.Date;
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
-public class TrackDetailActivity extends AbstractTrackActivity
-        implements ChooseActivityTypeCaller, ConfirmDeleteDialogFragment.ConfirmDeleteCaller {
+public class TrackDetailActivity extends AbstractTrackActivity implements ChooseActivityTypeCaller, ConfirmDeleteDialogFragment.ConfirmDeleteCaller {
 
   private static final String TAG = TrackDetailActivity.class.getSimpleName();
 
@@ -415,7 +414,7 @@ public class TrackDetailActivity extends AbstractTrackActivity
       if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
         Toast.makeText(this, R.string.external_storage_not_writable, Toast.LENGTH_LONG).show();
       } else {
-        this.takePicture();
+        takePicture();
       }
       return;
     }

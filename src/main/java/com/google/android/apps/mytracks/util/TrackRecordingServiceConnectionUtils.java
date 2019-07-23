@@ -50,8 +50,7 @@ public class TrackRecordingServiceConnectionUtils {
    * @param context the current context
    */
   public static boolean isRecordingServiceRunning(Context context) {
-    ActivityManager activityManager = (ActivityManager) context.getSystemService(
-        Context.ACTIVITY_SERVICE);
+    ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
     List<RunningServiceInfo> services = activityManager.getRunningServices(Integer.MAX_VALUE);
 
     for (RunningServiceInfo serviceInfo : services) {

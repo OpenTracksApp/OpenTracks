@@ -176,8 +176,7 @@ public interface MyTracksProviderUtils {
    * @param maxWaypoints the maximum number of waypoints to return. -1 for no
    *          limit
    */
-  Cursor getWaypointCursor(
-          String selection, String[] selectionArgs, String sortOrder, int maxWaypoints);
+  Cursor getWaypointCursor(String selection, String[] selectionArgs, String sortOrder, int maxWaypoints);
 
   /**
    * Gets a waypoint cursor for a track. The caller owns the returned cursor and

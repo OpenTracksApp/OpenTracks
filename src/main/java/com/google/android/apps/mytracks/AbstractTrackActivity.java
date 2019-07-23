@@ -191,8 +191,7 @@ public abstract class AbstractTrackActivity extends AbstractActivity implements 
       }
     }
     if (stopRecording) {
-      TrackRecordingServiceConnectionUtils.stopRecording(
-          this, getTrackRecordingServiceConnection(), false);
+      TrackRecordingServiceConnectionUtils.stopRecording(this, getTrackRecordingServiceConnection(), false);
     }
     Intent intent = IntentUtils.newIntent(this, DeleteActivity.class);
     intent.putExtra(DeleteActivity.EXTRA_TRACK_IDS, trackIds);

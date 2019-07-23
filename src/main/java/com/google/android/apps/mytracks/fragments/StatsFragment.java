@@ -72,8 +72,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   private String category = "";
   private int recordingGpsAccuracy = PreferencesUtils.RECORDING_GPS_ACCURACY_DEFAULT;
 
-  // A runnable to update the total time field.
-  private final Runnable updateTotalTime = new Runnable() {
+  private final Runnable updateUIeachSecond = new Runnable() {
     public void run() {
       if (isResumed() && isSelectedTrackRecording()) {
         if (!isSelectedTrackPaused() && lastTripStatistics != null) {
@@ -127,7 +126,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     resumeTrackDataHub();
     updateUi(getActivity());
     if (isSelectedTrackRecording()) {
-      handlerUpdateUI.post(updateTotalTime);
+      handlerUpdateUI.post(updateUIeachSecond);
     }
   }
 
@@ -135,7 +134,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   public void onPause() {
     super.onPause();
     pauseTrackDataHub();
-    handlerUpdateUI.removeCallbacks(updateTotalTime);
+    handlerUpdateUI.removeCallbacks(updateUIeachSecond);
   }
 
   @Override
