@@ -82,7 +82,7 @@ public class PeriodicTaskExecutor {
 
     // Returning null is ok
     if (periodicTask == null) {
-      Log.d(TAG, "Peridoic task is null.");
+      Log.d(TAG, "Periodic task is null.");
       return;
     }
     periodicTask.start();

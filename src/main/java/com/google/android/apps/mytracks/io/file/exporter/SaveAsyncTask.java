@@ -94,7 +94,7 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   }
 
   /**
-   * Sets the current activity associated with this AyncTask.
+   * Sets the current activity associated with this AsyncTask.
    * 
    * @param saveActivity the current activity, can be null
    */

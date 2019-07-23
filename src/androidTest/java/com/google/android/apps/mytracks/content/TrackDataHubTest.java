@@ -547,7 +547,7 @@ public class TrackDataHubTest {
         .andReturn(false);
     expect(trackDataListener1.onRecordingDistanceIntervalChanged(
         PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT)).andReturn(false);
-    expect(trackDataListener1.onMapTypeChanged(PreferencesUtils.MAP_TYPE_DEFAUlT)).andReturn(false);
+    expect(trackDataListener1.onMapTypeChanged(PreferencesUtils.MAP_TYPE_DEFAULT)).andReturn(false);
     
     expect(trackDataListener2.onMetricUnitsChanged(true)).andReturn(false);
     expect(trackDataListener2.onReportSpeedChanged(true)).andReturn(false);
@@ -556,7 +556,7 @@ public class TrackDataHubTest {
         .andReturn(false);
     expect(trackDataListener2.onRecordingDistanceIntervalChanged(
         PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT)).andReturn(false);
-    expect(trackDataListener2.onMapTypeChanged(PreferencesUtils.MAP_TYPE_DEFAUlT)).andReturn(false);
+    expect(trackDataListener2.onMapTypeChanged(PreferencesUtils.MAP_TYPE_DEFAULT)).andReturn(false);
     replay();
 
     trackDataHub.start();

@@ -28,9 +28,9 @@ limitations under the License.
     <!-- Manually added -->
     <item name="android:actionBarStyle">@style/ActionBarStyleCustom</item>
     <item name="android:actionModeBackground">@drawable/action_mode_background_mytracks</item>
-    <item name="android:alertDialogTheme">@style/AlertDialogThemeMyTracks</item>
+    <item name="android:alertDialogTheme">@style/CustomAlertDialogTheme</item>
   </style>
-  <style name="AlertDialogThemeMyTracks" parent="@android:style/Theme.Holo.Dialog">
+  <style name="CustomAlertDialogTheme" parent="@android:style/Theme.Holo.Dialog">
     <!-- From auto generated -->
     <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo_dark</item>
     <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewCustom</item>

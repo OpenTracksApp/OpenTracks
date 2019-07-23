@@ -17,12 +17,12 @@ limitations under the License.
 <resources>
   <!-- Do not translate -->
   <!-- Permissions, need to be in sync with the permissions in AndroidManifest.xml -->
-  <string name="broadcast_notifications_permission">com.google.android.apps.mytracks.TRACK_NOTIFICATIONS</string>
+  <string name="broadcast_notifications_permission" translatable="false">com.google.android.apps.mytracks.TRACK_NOTIFICATIONS</string>
   <!-- Broadcast -->
-  <string name="track_id_broadcast_extra">com.google.android.apps.mytracks.TRACK_ID</string>
-  <string name="track_paused_broadcast_action">com.google.android.apps.mytracks.TRACK_PAUSED</string>
-  <string name="track_resumed_broadcast_action">com.google.android.apps.mytracks.TRACK_RESUMED</string>
-  <string name="track_started_broadcast_action">com.google.android.apps.mytracks.TRACK_STARTED</string>
-  <string name="track_stopped_broadcast_action">com.google.android.apps.mytracks.TRACK_STOPPED</string>
-  <string name="track_update_broadcast_action">com.google.android.apps.mytracks.TRACK_UPDATE</string>
+  <string name="track_id_broadcast_extra" translatable="false">com.google.android.apps.mytracks.TRACK_ID</string>
+  <string name="track_paused_broadcast_action" translatable="false">com.google.android.apps.mytracks.TRACK_PAUSED</string>
+  <string name="track_resumed_broadcast_action" translatable="false">com.google.android.apps.mytracks.TRACK_RESUMED</string>
+  <string name="track_started_broadcast_action" translatable="false">com.google.android.apps.mytracks.TRACK_STARTED</string>
+  <string name="track_stopped_broadcast_action" translatable="false">com.google.android.apps.mytracks.TRACK_STOPPED</string>
+  <string name="track_update_broadcast_action" translatable="false">com.google.android.apps.mytracks.TRACK_UPDATE</string>
 </resources>
