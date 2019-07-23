@@ -32,7 +32,7 @@ public class FileUtils {
   private FileUtils() {}
 
   /**
-   * The My Tracks external storage directory.
+   * Our external storage directory.
    */
   static final String SDCARD_TOP_DIR = "MyTracks";
 
@@ -43,12 +43,12 @@ public class FileUtils {
   static final int MAX_FAT32_PATH_LENGTH = 260;
 
   /**
-   * The play tracks directory under the My Tracks cache directory.
+   * The play tracks directory in the app's cache directory.
    */
   public static final String PLAY_TRACKS_DIR = "temp";
 
   /**
-   * The pictures directory under the My Tracks external storage directory.
+   * The pictures directory under the app's external storage directory.
    */
   private static final String PICTURES_DIR = "pictures";
 

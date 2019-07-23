@@ -28,14 +28,14 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Utilities to access data from the My Tracks content provider.
+ * Utilities to access data from the app's content provider.
  * 
  * @author Rodrigo Damazio
  */
 public interface ContentProviderUtils {
 
   /**
-   * The authority (the first part of the URI) for the My Tracks content
+   * The authority (the first part of the URI) for the app's content
    * provider.
    */
   String AUTHORITY = "com.google.android.maps.mytracks";

@@ -27,8 +27,7 @@ import androidx.fragment.app.FragmentActivity;
 import com.google.android.apps.mytracks.util.TrackIconUtils;
 
 /**
- * An abstract class for all My Tracks activities.
- * 
+ *
  * @author Jimmy Shih
  */
 public abstract class AbstractActivity extends FragmentActivity {

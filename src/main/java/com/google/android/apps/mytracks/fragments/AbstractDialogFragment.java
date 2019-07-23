@@ -25,8 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 /**
- * Abstract My Tracks DialogFragment.
- * 
+
  * @author Jimmy Shih
  */
 public abstract class AbstractDialogFragment extends DialogFragment {

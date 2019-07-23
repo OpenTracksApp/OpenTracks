@@ -27,8 +27,6 @@ import com.google.android.maps.mytracks.R;
 import java.util.Vector;
 
 /**
- * An implementation of {@link DescriptionGenerator} for My Tracks.
- *
  * @author Jimmy Shih
  */
 public class DescriptionGeneratorImpl implements DescriptionGenerator {

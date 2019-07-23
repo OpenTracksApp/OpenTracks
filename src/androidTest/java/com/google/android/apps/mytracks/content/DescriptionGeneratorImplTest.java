@@ -63,7 +63,7 @@ public class DescriptionGeneratorImplTest {
     track.setTripStatistics(stats);
     track.setCategory("hiking");
     String expected = "Created by" 
-      + " <a href='http://www.google.com/mobile/mytracks'>Google My Tracks</a> on Android<p>" 
+      + " <a href='TODO'>TODO</a> on Android<p>"
       + "Name: -<br>"
       + "Activity type: hiking<br>"
       + "Description: -<br>"

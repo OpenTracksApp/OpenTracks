@@ -42,7 +42,7 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 /**
- * A track widget to start/stop/pause/resume recording, launch My Tracks, and
+ * A track widget to start/stop/pause/resume recording, launch the main activity, and
  * display track statistics (total distance, total time, average speed, and
  * moving time) for the recording track, the selected track or the last track.
  * 

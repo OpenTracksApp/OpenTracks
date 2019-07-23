@@ -94,7 +94,7 @@ public class TrackDataHub implements DataSourceListener {
    * 
    * @param context the context
    * @param trackDataManager the track data manager
-   * @param contentProviderUtils the my tracks provider utils
+   * @param contentProviderUtils the content tracks provider utils
    * @param targetNumPoints the target number of points
    */
   @VisibleForTesting

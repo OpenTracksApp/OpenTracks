@@ -372,8 +372,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
   @MediumTest
   public void testStartNewTrack_noRecording() throws Exception {
     // NOTICE: due to the way Android permissions work, if this fails,
-    // uninstall the test apk then retry - the test must be installed *after*
-    // My Tracks (go figure).
+    // uninstall the test apk then retry - the test must be installed *after* the app (go figure).
     // Reference: http://code.google.com/p/android/issues/detail?id=5521
     BlockingBroadcastReceiver startReceiver = new BlockingBroadcastReceiver();
     String startAction = context.getString(R.string.track_started_broadcast_action);

@@ -48,7 +48,7 @@ public class FileTrackExporter implements TrackExporter {
   /**
    * Constructor.
    * 
-   * @param contentProviderUtils the my tracks provider utils
+   * @param contentProviderUtils the content provider utils
    * @param tracks the tracks
    * @param trackWriter the track writer
    * @param trackExporterListener the track export listener

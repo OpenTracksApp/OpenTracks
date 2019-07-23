@@ -58,7 +58,7 @@ public class KmzTrackExporter implements TrackExporter {
   /**
    * Constructor.
    * 
-   * @param contentProviderUtils the my tracks provider utils
+   * @param contentProviderUtils the content provider utils
    * @param fileTrackExporter the file track exporter
    * @param tracks the tracks to export
    * @param context the context

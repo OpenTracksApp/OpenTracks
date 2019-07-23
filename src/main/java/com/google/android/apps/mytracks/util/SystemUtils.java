@@ -37,7 +37,7 @@ public class SystemUtils {
   private SystemUtils() {}
 
   /**
-   * Get the My Tracks version from the manifest.
+   * Get the app version from the manifest.
    * 
    * @return the version, or an empty string in case of failure.
    */
