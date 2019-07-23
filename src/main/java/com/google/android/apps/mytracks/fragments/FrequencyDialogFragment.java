@@ -16,91 +16,92 @@
 
 package com.google.android.apps.mytracks.fragments;
 
-import com.google.android.apps.mytracks.util.PreferencesUtils;
-import com.google.android.apps.mytracks.util.StringUtils;
-import com.google.android.maps.mytracks.R;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+
 import androidx.fragment.app.FragmentActivity;
+
+import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.apps.mytracks.util.StringUtils;
+import com.google.android.maps.mytracks.R;
 
 /**
  * A DialogFragment to configure frequency.
- * 
+ *
  * @author Jimmy Shih
  */
 public class FrequencyDialogFragment extends AbstractDialogFragment {
 
-  public static final String FREQUENCY_DIALOG_TAG = "frequencyDialog";
+    public static final String FREQUENCY_DIALOG_TAG = "frequencyDialog";
 
-  private static final String KEY_PREFERENCE_ID = "preferenceId";
-  private static final String KEY_DEFAULT_VALUE = "defaultValue";
-  private static final String KEY_TITLE_ID = "titleId";
+    private static final String KEY_PREFERENCE_ID = "preferenceId";
+    private static final String KEY_DEFAULT_VALUE = "defaultValue";
+    private static final String KEY_TITLE_ID = "titleId";
 
-  public static FrequencyDialogFragment newInstance(
-      int preferenceId, int defaultValue, int titleId) {
-    Bundle bundle = new Bundle();
-    bundle.putInt(KEY_PREFERENCE_ID, preferenceId);
-    bundle.putInt(KEY_DEFAULT_VALUE, defaultValue);
-    bundle.putInt(KEY_TITLE_ID, titleId);
+    public static FrequencyDialogFragment newInstance(
+            int preferenceId, int defaultValue, int titleId) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(KEY_PREFERENCE_ID, preferenceId);
+        bundle.putInt(KEY_DEFAULT_VALUE, defaultValue);
+        bundle.putInt(KEY_TITLE_ID, titleId);
 
-    FrequencyDialogFragment frequencyDialogFragment = new FrequencyDialogFragment();
-    frequencyDialogFragment.setArguments(bundle);
-    return frequencyDialogFragment;
-  }
-  
-  @Override
-  protected Dialog createDialog() {
-    FragmentActivity fragmentActivity = getActivity();
-    
-    final int preferenceId = getArguments().getInt(KEY_PREFERENCE_ID);
-    int defaultValue = getArguments().getInt(KEY_DEFAULT_VALUE);
-    int titleId = getArguments().getInt(KEY_TITLE_ID);
-    int frequencyValue = PreferencesUtils.getInt(fragmentActivity, preferenceId, defaultValue);
-
-    return new AlertDialog.Builder(fragmentActivity).setPositiveButton(
-        R.string.generic_ok, new DialogInterface.OnClickListener() {
-            @Override
-          public void onClick(DialogInterface dialog, int which) {
-            int listIndex = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-            PreferencesUtils.setInt(getActivity(), preferenceId, getFrequencyValue(listIndex));
-          }
-        }).setSingleChoiceItems(
-        getFrequencyDisplayOptions(fragmentActivity), getListIndex(frequencyValue), null)
-        .setTitle(titleId).create();
-  }
-
-  /**
-   * Gets the frequency display options.
-   */
-  private String[] getFrequencyDisplayOptions(FragmentActivity fragmentActivity) {
-    boolean metricUnits = PreferencesUtils.isMetricUnits(fragmentActivity);
-    return StringUtils.getFrequencyOptions(fragmentActivity, metricUnits);
-  }
-
-  /**
-   * Gets the list index for a frequency value. Returns 0 if the value is not on
-   * the list.
-   */
-  private int getListIndex(int frequencyValue) {
-    String[] values = getResources().getStringArray(R.array.frequency_values);
-    for (int i = 0; i < values.length; i++) {
-      if (frequencyValue == Integer.parseInt(values[i])) {
-        return i;
-      }
+        FrequencyDialogFragment frequencyDialogFragment = new FrequencyDialogFragment();
+        frequencyDialogFragment.setArguments(bundle);
+        return frequencyDialogFragment;
     }
-    return 0;
-  }
 
-  /**
-   * Gets the frequency value from a list index.
-   * 
-   * @param listIndex the list index
-   */
-  private int getFrequencyValue(int listIndex) {
-    String[] values = getResources().getStringArray(R.array.frequency_values);
-    return Integer.parseInt(values[listIndex]);
-  }
+    @Override
+    protected Dialog createDialog() {
+        FragmentActivity fragmentActivity = getActivity();
+
+        final int preferenceId = getArguments().getInt(KEY_PREFERENCE_ID);
+        int defaultValue = getArguments().getInt(KEY_DEFAULT_VALUE);
+        int titleId = getArguments().getInt(KEY_TITLE_ID);
+        int frequencyValue = PreferencesUtils.getInt(fragmentActivity, preferenceId, defaultValue);
+
+        return new AlertDialog.Builder(fragmentActivity).setPositiveButton(
+                R.string.generic_ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        int listIndex = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                        PreferencesUtils.setInt(getActivity(), preferenceId, getFrequencyValue(listIndex));
+                    }
+                }).setSingleChoiceItems(
+                getFrequencyDisplayOptions(fragmentActivity), getListIndex(frequencyValue), null)
+                .setTitle(titleId).create();
+    }
+
+    /**
+     * Gets the frequency display options.
+     */
+    private String[] getFrequencyDisplayOptions(FragmentActivity fragmentActivity) {
+        boolean metricUnits = PreferencesUtils.isMetricUnits(fragmentActivity);
+        return StringUtils.getFrequencyOptions(fragmentActivity, metricUnits);
+    }
+
+    /**
+     * Gets the list index for a frequency value. Returns 0 if the value is not on
+     * the list.
+     */
+    private int getListIndex(int frequencyValue) {
+        String[] values = getResources().getStringArray(R.array.frequency_values);
+        for (int i = 0; i < values.length; i++) {
+            if (frequencyValue == Integer.parseInt(values[i])) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Gets the frequency value from a list index.
+     *
+     * @param listIndex the list index
+     */
+    private int getFrequencyValue(int listIndex) {
+        String[] values = getResources().getStringArray(R.array.frequency_values);
+        return Integer.parseInt(values[listIndex]);
+    }
 }

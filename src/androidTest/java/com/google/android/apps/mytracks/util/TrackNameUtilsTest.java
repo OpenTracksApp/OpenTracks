@@ -32,46 +32,46 @@ import java.util.Locale;
 
 /**
  * Tests {@link TrackNameUtils}.
- * 
+ *
  * @author Matthew Simmons
  */
 @RunWith(AndroidJUnit4.class)
 public class TrackNameUtilsTest {
 
-  private static final long TRACK_ID = 1L;
-  private static final long START_TIME = 1288213406000L;
+    private static final long TRACK_ID = 1L;
+    private static final long START_TIME = 1288213406000L;
 
-  private static final Context CONTEXT = InstrumentationRegistry.getInstrumentation().getContext();
+    private static final Context CONTEXT = InstrumentationRegistry.getInstrumentation().getContext();
 
-  /**
-   * Tests when the track_name_key is
-   * settings_recording_track_name_date_local_value.
-   */
-  public void testTrackName_date_local() {
-    PreferencesUtils.setString(CONTEXT, R.string.track_name_key, CONTEXT.getString(R.string.settings_recording_track_name_date_local_value));
-    Assert.assertEquals(StringUtils.formatDateTime(CONTEXT, START_TIME),
-        TrackNameUtils.getTrackName(CONTEXT, TRACK_ID, START_TIME, null));
-  }
+    /**
+     * Tests when the track_name_key is
+     * settings_recording_track_name_date_local_value.
+     */
+    public void testTrackName_date_local() {
+        PreferencesUtils.setString(CONTEXT, R.string.track_name_key, CONTEXT.getString(R.string.settings_recording_track_name_date_local_value));
+        Assert.assertEquals(StringUtils.formatDateTime(CONTEXT, START_TIME),
+                TrackNameUtils.getTrackName(CONTEXT, TRACK_ID, START_TIME, null));
+    }
 
-  /**
-   * Tests when the track_name_key is
-   * settings_recording_track_name_date_iso_8601_value.
-   */
-  public void testTrackName_date_iso_8601() {
-    PreferencesUtils.setString(CONTEXT, R.string.track_name_key, CONTEXT.getString(R.string.settings_recording_track_name_date_iso_8601_value));
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-        TrackNameUtils.ISO_8601_FORMAT, Locale.US);
-    Assert.assertEquals(simpleDateFormat.format(new Date(START_TIME)),
-        TrackNameUtils.getTrackName(CONTEXT, TRACK_ID, START_TIME, null));
-  }
+    /**
+     * Tests when the track_name_key is
+     * settings_recording_track_name_date_iso_8601_value.
+     */
+    public void testTrackName_date_iso_8601() {
+        PreferencesUtils.setString(CONTEXT, R.string.track_name_key, CONTEXT.getString(R.string.settings_recording_track_name_date_iso_8601_value));
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+                TrackNameUtils.ISO_8601_FORMAT, Locale.US);
+        Assert.assertEquals(simpleDateFormat.format(new Date(START_TIME)),
+                TrackNameUtils.getTrackName(CONTEXT, TRACK_ID, START_TIME, null));
+    }
 
-  /**
-   * Tests when the track_name_key is
-   * settings_recording_track_name_number_value.
-   */
-  public void testTrackName_number() {
-    PreferencesUtils.setString(CONTEXT, R.string.track_name_key, CONTEXT.getString(R.string.settings_recording_track_name_number_value));
-    Assert.assertEquals(
-        "Track " + TRACK_ID, TrackNameUtils.getTrackName(CONTEXT, TRACK_ID, START_TIME, null));
-  }
+    /**
+     * Tests when the track_name_key is
+     * settings_recording_track_name_number_value.
+     */
+    public void testTrackName_number() {
+        PreferencesUtils.setString(CONTEXT, R.string.track_name_key, CONTEXT.getString(R.string.settings_recording_track_name_number_value));
+        Assert.assertEquals(
+                "Track " + TRACK_ID, TrackNameUtils.getTrackName(CONTEXT, TRACK_ID, START_TIME, null));
+    }
 }

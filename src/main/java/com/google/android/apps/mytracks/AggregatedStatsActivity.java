@@ -16,13 +16,13 @@
 
 package com.google.android.apps.mytracks;
 
+import android.os.Bundle;
+
 import com.google.android.apps.mytracks.content.ContentProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.StatsUtils;
 import com.google.android.maps.mytracks.R;
-
-import android.os.Bundle;
 
 import java.util.List;
 
@@ -33,31 +33,31 @@ import java.util.List;
  */
 public class AggregatedStatsActivity extends AbstractActivity {
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    StatsUtils.setTripStatisticsValues(this, this, null, getTripStatistics(), null);
-    StatsUtils.setLocationValues(this, this, null, null, false);
-  }
-
-  @Override
-  protected int getLayoutResId() {
-    return R.layout.stats;
-  }
-
-  /**
-   * Gets the aggregated trip statistics for all the recorded tracks or null if
-   * there is no track.
-   */
-  private TripStatistics getTripStatistics() {
-    List<Track> tracks = ContentProviderUtils.Factory.get(this).getAllTracks();
-    TripStatistics tripStatistics = null;
-    if (!tracks.isEmpty()) {
-      tripStatistics = new TripStatistics(tracks.iterator().next().getTripStatistics());
-      for (int i = 1; i < tracks.size(); i++) {
-        tripStatistics.merge(tracks.get(i).getTripStatistics());
-      }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        StatsUtils.setTripStatisticsValues(this, this, null, getTripStatistics(), null);
+        StatsUtils.setLocationValues(this, this, null, null, false);
     }
-    return tripStatistics;
-  }
+
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.stats;
+    }
+
+    /**
+     * Gets the aggregated trip statistics for all the recorded tracks or null if
+     * there is no track.
+     */
+    private TripStatistics getTripStatistics() {
+        List<Track> tracks = ContentProviderUtils.Factory.get(this).getAllTracks();
+        TripStatistics tripStatistics = null;
+        if (!tracks.isEmpty()) {
+            tripStatistics = new TripStatistics(tracks.iterator().next().getTripStatistics());
+            for (int i = 1; i < tracks.size(); i++) {
+                tripStatistics.merge(tracks.get(i).getTripStatistics());
+            }
+        }
+        return tripStatistics;
+    }
 }

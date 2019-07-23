@@ -1,12 +1,12 @@
 /*
  * Copyright 2009 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -25,234 +25,234 @@ import com.google.android.apps.mytracks.stats.TripStatistics;
 
 /**
  * A waypoint.
- * 
+ *
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
 public final class Waypoint implements Parcelable {
 
-  public enum WaypointType {
-    WAYPOINT, STATISTICS
-  }
+    public static final Parcelable.Creator<Waypoint> CREATOR = new Parcelable.Creator<Waypoint>() {
+        @Override
+        public Waypoint createFromParcel(Parcel in) {
+            return new Waypoint(in);
+        }
 
-  private long id = -1L;
-  private String name = "";
-  private String description = "";
-  private String category = "";
-  private String icon = "";
-  private long trackId = -1L;
-  private WaypointType type = WaypointType.WAYPOINT;
-  private double length = 0.0;
-  private long duration = 0;
-  private long startId = -1L;
-  private long stopId = -1L;
-  private Location location = null;
-  private TripStatistics tripStatistics = null;
-  private String photoUrl = "";
-  
-  public Waypoint() {}
-  
-  public Waypoint(String name, String description, String category, String icon, long trackId,
-      WaypointType type, double length, long duration, long startId, long stopId, Location location,
-      TripStatistics tripStatistics, String photoUrl) {
-    this.name = name;
-    this.description = description;
-    this.category = category;
-    this.icon = icon;
-    this.trackId = trackId;
-    this.type = type;
-    this.length = length;
-    this.duration = duration;
-    this.startId = startId;
-    this.stopId = stopId;
-    this.location = location;
-    this.tripStatistics = tripStatistics;
-    this.photoUrl = photoUrl;
-  }
+        @Override
+        public Waypoint[] newArray(int size) {
+            return new Waypoint[size];
+        }
+    };
+    private long id = -1L;
+    private String name = "";
+    private String description = "";
+    private String category = "";
+    private String icon = "";
+    private long trackId = -1L;
+    private WaypointType type = WaypointType.WAYPOINT;
+    private double length = 0.0;
+    private long duration = 0;
+    private long startId = -1L;
+    private long stopId = -1L;
+    private Location location = null;
+    private TripStatistics tripStatistics = null;
+    private String photoUrl = "";
 
-  private Waypoint(Parcel source) {
-    id = source.readLong();
-    name = source.readString();
-    description = source.readString();
-    category = source.readString();
-    icon = source.readString();
-    trackId = source.readLong();
-    type = WaypointType.values()[source.readInt()];
-    length = source.readDouble();
-    duration = source.readLong();
-    startId = source.readLong();
-    stopId = source.readLong();
- 
-    ClassLoader classLoader = getClass().getClassLoader();
-    byte hasLocation = source.readByte();
-    if (hasLocation > 0) {
-      location = source.readParcelable(classLoader);
-    }
-    byte hasStats = source.readByte();
-    if (hasStats > 0) {
-      tripStatistics = source.readParcelable(classLoader);
-    }
-    photoUrl = source.readString();
-  }
-
-  @Override
-  public int describeContents() {
-    return 0;
-  }
-
-  @Override
-  public void writeToParcel(Parcel dest, int flags) {
-    dest.writeLong(id);
-    dest.writeString(name);
-    dest.writeString(description);
-    dest.writeString(category);
-    dest.writeString(icon);
-    dest.writeLong(trackId);
-    dest.writeInt(type.ordinal());
-    dest.writeDouble(length);
-    dest.writeLong(duration);
-    dest.writeLong(startId);
-    dest.writeLong(stopId);
-    dest.writeByte(location == null ? (byte) 0 : (byte) 1);
-    if (location != null) {
-      dest.writeParcelable(location, 0);
-    }
-    dest.writeByte(tripStatistics == null ? (byte) 0 : (byte) 1);
-    if (tripStatistics != null) {
-      dest.writeParcelable(tripStatistics, 0);
-    }
-    dest.writeString(photoUrl);
-  }
-
-  public static final Parcelable.Creator<Waypoint> CREATOR = new Parcelable.Creator<Waypoint>() {
-      @Override
-    public Waypoint createFromParcel(Parcel in) {
-      return new Waypoint(in);
+    public Waypoint() {
     }
 
-      @Override
-    public Waypoint[] newArray(int size) {
-      return new Waypoint[size];
+    public Waypoint(String name, String description, String category, String icon, long trackId,
+                    WaypointType type, double length, long duration, long startId, long stopId, Location location,
+                    TripStatistics tripStatistics, String photoUrl) {
+        this.name = name;
+        this.description = description;
+        this.category = category;
+        this.icon = icon;
+        this.trackId = trackId;
+        this.type = type;
+        this.length = length;
+        this.duration = duration;
+        this.startId = startId;
+        this.stopId = stopId;
+        this.location = location;
+        this.tripStatistics = tripStatistics;
+        this.photoUrl = photoUrl;
     }
-  };
 
-  public long getId() {
-    return id;
-  }
+    private Waypoint(Parcel source) {
+        id = source.readLong();
+        name = source.readString();
+        description = source.readString();
+        category = source.readString();
+        icon = source.readString();
+        trackId = source.readLong();
+        type = WaypointType.values()[source.readInt()];
+        length = source.readDouble();
+        duration = source.readLong();
+        startId = source.readLong();
+        stopId = source.readLong();
 
-  public void setId(long id) {
-    this.id = id;
-  }
+        ClassLoader classLoader = getClass().getClassLoader();
+        byte hasLocation = source.readByte();
+        if (hasLocation > 0) {
+            location = source.readParcelable(classLoader);
+        }
+        byte hasStats = source.readByte();
+        if (hasStats > 0) {
+            tripStatistics = source.readParcelable(classLoader);
+        }
+        photoUrl = source.readString();
+    }
 
-  public String getName() {
-    return name;
-  }
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(name);
+        dest.writeString(description);
+        dest.writeString(category);
+        dest.writeString(icon);
+        dest.writeLong(trackId);
+        dest.writeInt(type.ordinal());
+        dest.writeDouble(length);
+        dest.writeLong(duration);
+        dest.writeLong(startId);
+        dest.writeLong(stopId);
+        dest.writeByte(location == null ? (byte) 0 : (byte) 1);
+        if (location != null) {
+            dest.writeParcelable(location, 0);
+        }
+        dest.writeByte(tripStatistics == null ? (byte) 0 : (byte) 1);
+        if (tripStatistics != null) {
+            dest.writeParcelable(tripStatistics, 0);
+        }
+        dest.writeString(photoUrl);
+    }
 
-  public String getDescription() {
-    return description;
-  }
+    public long getId() {
+        return id;
+    }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
+    public void setId(long id) {
+        this.id = id;
+    }
 
-  public String getCategory() {
-    return category;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public void setCategory(String category) {
-    this.category = category;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public String getIcon() {
-    return icon;
-  }
+    public String getDescription() {
+        return description;
+    }
 
-  public void setIcon(String icon) {
-    this.icon = icon;
-  }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-  public long getTrackId() {
-    return trackId;
-  }
+    public String getCategory() {
+        return category;
+    }
 
-  public void setTrackId(long trackId) {
-    this.trackId = trackId;
-  }
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
-  public WaypointType getType() {
-    return type;
-  }
+    public String getIcon() {
+        return icon;
+    }
 
-  public void setType(WaypointType type) {
-    this.type = type;
-  }
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
 
-  public double getLength() {
-    return length;
-  }
+    public long getTrackId() {
+        return trackId;
+    }
 
-  public void setLength(double length) {
-    this.length = length;
-  }
+    public void setTrackId(long trackId) {
+        this.trackId = trackId;
+    }
 
-  public long getDuration() {
-    return duration;
-  }
+    public WaypointType getType() {
+        return type;
+    }
 
-  public void setDuration(long duration) {
-    this.duration = duration;
-  }
+    public void setType(WaypointType type) {
+        this.type = type;
+    }
 
-  public long getStartId() {
-    return startId;
-  }
+    public double getLength() {
+        return length;
+    }
 
-  public void setStartId(long startId) {
-    this.startId = startId;
-  }
+    public void setLength(double length) {
+        this.length = length;
+    }
 
-  public long getStopId() {
-    return stopId;
-  }
+    public long getDuration() {
+        return duration;
+    }
 
-  public void setStopId(long stopId) {
-    this.stopId = stopId;
-  }
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }
 
-  public Location getLocation() {
-    return location;
-  }
+    public long getStartId() {
+        return startId;
+    }
 
-  public void setLocation(Location location) {
-    this.location = location;
-  }
+    public void setStartId(long startId) {
+        this.startId = startId;
+    }
 
-  public TripStatistics getTripStatistics() {
-    return tripStatistics;
-  }
+    public long getStopId() {
+        return stopId;
+    }
 
-  public void setTripStatistics(TripStatistics tripStatistics) {
-    this.tripStatistics = tripStatistics;
-  }  
-  
-  public String getPhotoUrl() {
-    return photoUrl;
-  }
+    public void setStopId(long stopId) {
+        this.stopId = stopId;
+    }
 
-  public Uri getPhotoURI() {
-    return Uri.parse(photoUrl);
-  }
+    public Location getLocation() {
+        return location;
+    }
 
-  public boolean hasPhoto() {
-    return photoUrl != null && !"".equals(photoUrl);
-  }
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 
-  public void setPhotoUrl(String photoUrl) {
-    this.photoUrl = photoUrl;
-  }
+    public TripStatistics getTripStatistics() {
+        return tripStatistics;
+    }
+
+    public void setTripStatistics(TripStatistics tripStatistics) {
+        this.tripStatistics = tripStatistics;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+
+    public Uri getPhotoURI() {
+        return Uri.parse(photoUrl);
+    }
+
+    public boolean hasPhoto() {
+        return photoUrl != null && !"".equals(photoUrl);
+    }
+
+    public enum WaypointType {
+        WAYPOINT, STATISTICS
+    }
 }

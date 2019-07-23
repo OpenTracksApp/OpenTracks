@@ -16,50 +16,50 @@
 
 package com.google.android.apps.mytracks.settings;
 
-import com.google.android.apps.mytracks.util.PreferencesUtils;
-import com.google.android.maps.mytracks.R;
-
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 
+import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.maps.mytracks.R;
+
 /**
  * An activity for accessing chart settings.
- * 
+ *
  * @author Jimmy Shih
  */
 public class ChartSettingsActivity extends AbstractSettingsActivity {
 
-  @Override
-  protected void onCreate(Bundle bundle) {
-    super.onCreate(bundle);
-    addPreferencesFromResource(R.xml.settings_chart);
-    configXAxisListPreference();
-  }
+    @Override
+    protected void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
+        addPreferencesFromResource(R.xml.settings_chart);
+        configXAxisListPreference();
+    }
 
-  @Override
-  protected void onResume() {
-    super.onResume();
-    updateUi();
-  }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateUi();
+    }
 
-  private void updateUi() {
-    CheckBoxPreference speedCheckBoxPreference = (CheckBoxPreference) findPreference(
-        getString(R.string.chart_show_speed_key));
-    speedCheckBoxPreference.setTitle(
-        PreferencesUtils.isReportSpeed(this) ? R.string.stats_speed : R.string.stats_pace);
-  }
+    private void updateUi() {
+        CheckBoxPreference speedCheckBoxPreference = (CheckBoxPreference) findPreference(
+                getString(R.string.chart_show_speed_key));
+        speedCheckBoxPreference.setTitle(
+                PreferencesUtils.isReportSpeed(this) ? R.string.stats_speed : R.string.stats_pace);
+    }
 
-  /**
-   * Configures the x axis list preference.
-   */
-  private void configXAxisListPreference() {
-    ListPreference listPreference = (ListPreference) findPreference(
-        getString(R.string.chart_x_axis_key));
-    String value = PreferencesUtils.getString(
-        this, R.string.chart_x_axis_key, PreferencesUtils.CHART_X_AXIS_DEFAULT);
-    String[] values = getResources().getStringArray(R.array.chart_x_axis_values);
-    String[] options = getResources().getStringArray(R.array.chart_x_axis_options);
-    configureListPreference(listPreference, options, options, values, value, null);
-  }
+    /**
+     * Configures the x axis list preference.
+     */
+    private void configXAxisListPreference() {
+        ListPreference listPreference = (ListPreference) findPreference(
+                getString(R.string.chart_x_axis_key));
+        String value = PreferencesUtils.getString(
+                this, R.string.chart_x_axis_key, PreferencesUtils.CHART_X_AXIS_DEFAULT);
+        String[] values = getResources().getStringArray(R.array.chart_x_axis_values);
+        String[] options = getResources().getStringArray(R.array.chart_x_axis_options);
+        configureListPreference(listPreference, options, options, values, value, null);
+    }
 }

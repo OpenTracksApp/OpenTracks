@@ -4,7 +4,8 @@ import android.bluetooth.BluetoothGattCharacteristic;
 
 public final class BluetoothLEUtils {
 
-    private BluetoothLEUtils() {}
+    private BluetoothLEUtils() {
+    }
 
     public static int parseHeartRate(BluetoothGattCharacteristic characteristic) {
         //DOCUMENTATION https://www.bluetooth.com/specifications/gatt/characteristics/

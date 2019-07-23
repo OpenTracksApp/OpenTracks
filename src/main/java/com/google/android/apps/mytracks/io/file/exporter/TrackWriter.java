@@ -15,16 +15,16 @@
  */
 package com.google.android.apps.mytracks.io.file.exporter;
 
+import android.location.Location;
+
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
-
-import android.location.Location;
 
 import java.io.OutputStream;
 
 /**
  * Interface for writing tracks to a file. The expected sequence of calls is:
- * 
+ *
  * <pre>
  * {@link #prepare(OutputStream)}
  * {@link #writeHeader(Track[])}
@@ -46,99 +46,99 @@ import java.io.OutputStream;
  * {@link #writeFooter()}
  * {@link #close()}
  * </pre>
- * 
+ *
  * @author Rodrigo Damazio
  */
 public interface TrackWriter {
 
-  /**
-   * Gets the file extension (e.g, gpx, kml, ...).
-   */
-  String getExtension();
+    /**
+     * Gets the file extension (e.g, gpx, kml, ...).
+     */
+    String getExtension();
 
-  /**
-   * Prepares the output stream.
-   * 
-   * @param outputStream the output stream
-   */
-  void prepare(OutputStream outputStream);
+    /**
+     * Prepares the output stream.
+     *
+     * @param outputStream the output stream
+     */
+    void prepare(OutputStream outputStream);
 
-  /**
-   * Closes the output stream.
-   */
-  void close();
+    /**
+     * Closes the output stream.
+     */
+    void close();
 
-  /**
-   * Writes the header
-   * 
-   * @param tracks the tracks
-   */
-  void writeHeader(Track[] tracks);
+    /**
+     * Writes the header
+     *
+     * @param tracks the tracks
+     */
+    void writeHeader(Track[] tracks);
 
-  /**
-   * Writes the footer.
-   */
-  void writeFooter();
+    /**
+     * Writes the footer.
+     */
+    void writeFooter();
 
-  /**
-   * Writes the beginning of the waypoints.
-   * 
-   * @param track the track
-   */
-  void writeBeginWaypoints(Track track);
+    /**
+     * Writes the beginning of the waypoints.
+     *
+     * @param track the track
+     */
+    void writeBeginWaypoints(Track track);
 
-  /**
-   * Writes the end of the waypoints.
-   */
-  void writeEndWaypoints();
+    /**
+     * Writes the end of the waypoints.
+     */
+    void writeEndWaypoints();
 
-  /**
-   * Writes a waypoint.
-   * 
-   * @param waypoint the waypoint
-   */
-  void writeWaypoint(Waypoint waypoint);
+    /**
+     * Writes a waypoint.
+     *
+     * @param waypoint the waypoint
+     */
+    void writeWaypoint(Waypoint waypoint);
 
-  /**
-   * Writes the beginning of the tracks.
-   */
-  void writeBeginTracks();
+    /**
+     * Writes the beginning of the tracks.
+     */
+    void writeBeginTracks();
 
-  /**
-   * Writes the end of the tracks,
-   */
-  void writeEndTracks();
+    /**
+     * Writes the end of the tracks,
+     */
+    void writeEndTracks();
 
-  /**
-   * Writes the beginning of a track.
-   * 
-   * @param track the track
-   * @param startLocation the start location
-   */
-  void writeBeginTrack(Track track, Location startLocation);
+    /**
+     * Writes the beginning of a track.
+     *
+     * @param track         the track
+     * @param startLocation the start location
+     */
+    void writeBeginTrack(Track track, Location startLocation);
 
-  /**
-   * Writes the end of a track.
-   * 
-   * @param track the track
-   * @param endLocation the end location
-   */
-  void writeEndTrack(Track track, Location endLocation);
+    /**
+     * Writes the end of a track.
+     *
+     * @param track       the track
+     * @param endLocation the end location
+     */
+    void writeEndTrack(Track track, Location endLocation);
 
-  /**
-   * Writes open segment.
-   */
-  void writeOpenSegment();
+    /**
+     * Writes open segment.
+     */
+    void writeOpenSegment();
 
-  /**
-   * Writes close segment.
-   */
-  void writeCloseSegment();
+    /**
+     * Writes close segment.
+     */
+    void writeCloseSegment();
 
-  /**
-   * Writes a location.
-   * 
-   * @param location the location
-   */
-  void writeLocation(Location location);
+    /**
+     * Writes a location.
+     *
+     * @param location the location
+     */
+    void writeLocation(Location location);
 }

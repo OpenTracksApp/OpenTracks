@@ -16,188 +16,185 @@
 
 package com.google.android.apps.mytracks.content;
 
-import com.google.android.apps.mytracks.stats.TripStatistics;
-
 import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.google.android.apps.mytracks.stats.TripStatistics;
 
 import java.util.ArrayList;
 
 /**
  * A track.
- * 
+ *
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
 public class Track implements Parcelable {
 
-  private long id = -1L;
-  private String name = "";
-  private String description = "";
-  private String category = "";
-  private long startId = -1L;
-  private long stopId = -1L;
+    public static final Parcelable.Creator<Track> CREATOR = new Parcelable.Creator<Track>() {
+        @Override
+        public Track createFromParcel(Parcel in) {
+            return new Track(in);
+        }
 
-  /*
-   * The number of location points (present even if the points themselves are
-   * not loaded)
-   */
-  private int numberOfPoints = 0;
-  private String icon = "";
-  private long modifiedTime = -1L;
+        @Override
+        public Track[] newArray(int size) {
+            return new Track[size];
+        }
+    };
+    private long id = -1L;
+    private String name = "";
+    private String description = "";
+    private String category = "";
+    private long startId = -1L;
+    private long stopId = -1L;
+    /*
+     * The number of location points (present even if the points themselves are
+     * not loaded)
+     */
+    private int numberOfPoints = 0;
+    private String icon = "";
+    private long modifiedTime = -1L;
+    private TripStatistics tripStatistics = new TripStatistics();
+    // Location points (which may not have been loaded)
+    private ArrayList<Location> locations = new ArrayList<>();
 
-  private TripStatistics tripStatistics = new TripStatistics();
-
-  // Location points (which may not have been loaded)
-  private ArrayList<Location> locations = new ArrayList<>();
-
-  public Track() {}
-
-  private Track(Parcel in) {
-    id = in.readLong();
-    name = in.readString();
-    description = in.readString();
-    category = in.readString();
-    startId = in.readLong();
-    stopId = in.readLong();
-    numberOfPoints = in.readInt();
-    icon = in.readString();
-    modifiedTime = in.readLong();
-
-    ClassLoader classLoader = getClass().getClassLoader();
-    tripStatistics = in.readParcelable(classLoader);
-
-    for (int i = 0; i < numberOfPoints; ++i) {
-      Location location = in.readParcelable(classLoader);
-      locations.add(location);
-    }
-  }
-
-  @Override
-  public int describeContents() {
-    return 0;
-  }
-
-  @Override
-  public void writeToParcel(Parcel dest, int flags) {
-    dest.writeLong(id);
-    dest.writeString(name);
-    dest.writeString(description);
-    dest.writeString(category);
-    dest.writeLong(startId);
-    dest.writeLong(stopId);
-    dest.writeInt(numberOfPoints);
-    dest.writeString(icon);
-    dest.writeLong(modifiedTime);
-
-    dest.writeParcelable(tripStatistics, 0);
-    for (int i = 0; i < numberOfPoints; ++i) {
-      dest.writeParcelable(locations.get(i), 0);
-    }
-  }
-
-  public static final Parcelable.Creator<Track> CREATOR = new Parcelable.Creator<Track>() {
-      @Override
-    public Track createFromParcel(Parcel in) {
-      return new Track(in);
+    public Track() {
     }
 
-      @Override
-    public Track[] newArray(int size) {
-      return new Track[size];
+    private Track(Parcel in) {
+        id = in.readLong();
+        name = in.readString();
+        description = in.readString();
+        category = in.readString();
+        startId = in.readLong();
+        stopId = in.readLong();
+        numberOfPoints = in.readInt();
+        icon = in.readString();
+        modifiedTime = in.readLong();
+
+        ClassLoader classLoader = getClass().getClassLoader();
+        tripStatistics = in.readParcelable(classLoader);
+
+        for (int i = 0; i < numberOfPoints; ++i) {
+            Location location = in.readParcelable(classLoader);
+            locations.add(location);
+        }
     }
-  };
 
-  public long getId() {
-    return id;
-  }
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
-  public void setId(long id) {
-    this.id = id;
-  }
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(name);
+        dest.writeString(description);
+        dest.writeString(category);
+        dest.writeLong(startId);
+        dest.writeLong(stopId);
+        dest.writeInt(numberOfPoints);
+        dest.writeString(icon);
+        dest.writeLong(modifiedTime);
 
-  public String getName() {
-    return name;
-  }
+        dest.writeParcelable(tripStatistics, 0);
+        for (int i = 0; i < numberOfPoints; ++i) {
+            dest.writeParcelable(locations.get(i), 0);
+        }
+    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    public long getId() {
+        return id;
+    }
 
-  public String getDescription() {
-    return description;
-  }
+    public void setId(long id) {
+        this.id = id;
+    }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public String getCategory() {
-    return category;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public void setCategory(String category) {
-    this.category = category;
-  }
+    public String getDescription() {
+        return description;
+    }
 
-  public long getStartId() {
-    return startId;
-  }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-  public void setStartId(long startId) {
-    this.startId = startId;
-  }
+    public String getCategory() {
+        return category;
+    }
 
-  public long getStopId() {
-    return stopId;
-  }
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
-  public void setStopId(long stopId) {
-    this.stopId = stopId;
-  }
+    public long getStartId() {
+        return startId;
+    }
 
-  public int getNumberOfPoints() {
-    return numberOfPoints;
-  }
+    public void setStartId(long startId) {
+        this.startId = startId;
+    }
 
-  public void setNumberOfPoints(int numberOfPoints) {
-    this.numberOfPoints = numberOfPoints;
-  }
+    public long getStopId() {
+        return stopId;
+    }
 
-  public String getIcon() {
-    return icon;
-  }
+    public void setStopId(long stopId) {
+        this.stopId = stopId;
+    }
 
-  public void setIcon(String icon) {
-    this.icon = icon;
-  }
+    public int getNumberOfPoints() {
+        return numberOfPoints;
+    }
 
-  public long getModifiedTime() {
-    return modifiedTime;
-  }
+    public void setNumberOfPoints(int numberOfPoints) {
+        this.numberOfPoints = numberOfPoints;
+    }
 
-  public void setModifiedTime(long modifiedTime) {
-    this.modifiedTime = modifiedTime;
-  }
+    public String getIcon() {
+        return icon;
+    }
 
-  public TripStatistics getTripStatistics() {
-    return tripStatistics;
-  }
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
 
-  public void setTripStatistics(TripStatistics tripStatistics) {
-    this.tripStatistics = tripStatistics;
-  }
+    public long getModifiedTime() {
+        return modifiedTime;
+    }
 
-  public void addLocation(Location location) {
-    locations.add(location);
-  }
+    public void setModifiedTime(long modifiedTime) {
+        this.modifiedTime = modifiedTime;
+    }
 
-  public ArrayList<Location> getLocations() {
-    return locations;
-  }
+    public TripStatistics getTripStatistics() {
+        return tripStatistics;
+    }
 
-  public void setLocations(ArrayList<Location> locations) {
-    this.locations = locations;
-  }
+    public void setTripStatistics(TripStatistics tripStatistics) {
+        this.tripStatistics = tripStatistics;
+    }
+
+    public void addLocation(Location location) {
+        locations.add(location);
+    }
+
+    public ArrayList<Location> getLocations() {
+        return locations;
+    }
+
+    public void setLocations(ArrayList<Location> locations) {
+        this.locations = locations;
+    }
 }

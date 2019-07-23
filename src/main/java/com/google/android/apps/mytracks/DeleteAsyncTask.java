@@ -23,73 +23,72 @@ import com.google.android.apps.mytracks.content.ContentProviderUtils;
 
 /**
  * Async Task to delete tracks.
- * 
+ *
  * @author Jimmy Shih
  */
 public class DeleteAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
-  private DeleteActivity deleteActivity;
-  private final long[] trackIds;
-  private final Context context;
+    private final long[] trackIds;
+    private final Context context;
+    private DeleteActivity deleteActivity;
+    // true if the AsyncTask has completed
+    private boolean completed;
 
-  // true if the AsyncTask has completed
-  private boolean completed;
-
-  /**
-   * Creates an AsyncTask.
-   * 
-   * @param deleteActivity the activity currently associated with this task
-   * @param trackIds the track ids to delete. To delete all, set to size 1 with
-   *          trackIds[0] == -1L
-   */
-  public DeleteAsyncTask(DeleteActivity deleteActivity, long[] trackIds) {
-    this.deleteActivity = deleteActivity;
-    this.trackIds = trackIds;
-    context = deleteActivity.getApplicationContext();
-    completed = false;
-  }
-
-  /**
-   * Sets the current activity associated with this AyncTask.
-   * 
-   * @param deleteActivity the current activity, can be null
-   */
-  public void setActivity(DeleteActivity deleteActivity) {
-    this.deleteActivity = deleteActivity;
-    if (completed && deleteActivity != null) {
-      deleteActivity.onAsyncTaskCompleted();
+    /**
+     * Creates an AsyncTask.
+     *
+     * @param deleteActivity the activity currently associated with this task
+     * @param trackIds       the track ids to delete. To delete all, set to size 1 with
+     *                       trackIds[0] == -1L
+     */
+    public DeleteAsyncTask(DeleteActivity deleteActivity, long[] trackIds) {
+        this.deleteActivity = deleteActivity;
+        this.trackIds = trackIds;
+        context = deleteActivity.getApplicationContext();
+        completed = false;
     }
-  }
 
-  @Override
-  protected void onPreExecute() {
-    if (deleteActivity != null) {
-      deleteActivity.showProgressDialog();
-    }
-  }
-
-  @Override
-  protected Boolean doInBackground(Void... params) {
-    ContentProviderUtils contentProviderUtils = ContentProviderUtils.Factory.get(context);
-
-    if (trackIds.length == 1 && trackIds[0] == -1L) {
-      contentProviderUtils.deleteAllTracks(context);
-    } else {
-      for (long id : trackIds) {
-        if (isCancelled()) {
-          return false;
+    /**
+     * Sets the current activity associated with this AyncTask.
+     *
+     * @param deleteActivity the current activity, can be null
+     */
+    public void setActivity(DeleteActivity deleteActivity) {
+        this.deleteActivity = deleteActivity;
+        if (completed && deleteActivity != null) {
+            deleteActivity.onAsyncTaskCompleted();
         }
-        contentProviderUtils.deleteTrack(context, id);
-      }
     }
-    return true;
-  }
 
-  @Override
-  protected void onPostExecute(Boolean result) {
-    completed = true;
-    if (deleteActivity != null) {
-      deleteActivity.onAsyncTaskCompleted();
+    @Override
+    protected void onPreExecute() {
+        if (deleteActivity != null) {
+            deleteActivity.showProgressDialog();
+        }
     }
-  }
+
+    @Override
+    protected Boolean doInBackground(Void... params) {
+        ContentProviderUtils contentProviderUtils = ContentProviderUtils.Factory.get(context);
+
+        if (trackIds.length == 1 && trackIds[0] == -1L) {
+            contentProviderUtils.deleteAllTracks(context);
+        } else {
+            for (long id : trackIds) {
+                if (isCancelled()) {
+                    return false;
+                }
+                contentProviderUtils.deleteTrack(context, id);
+            }
+        }
+        return true;
+    }
+
+    @Override
+    protected void onPostExecute(Boolean result) {
+        completed = true;
+        if (deleteActivity != null) {
+            deleteActivity.onAsyncTaskCompleted();
+        }
+    }
 }

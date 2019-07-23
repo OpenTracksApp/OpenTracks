@@ -39,95 +39,95 @@ import com.google.android.maps.mytracks.R;
  */
 public class ControlRecordingService extends IntentService implements ServiceConnection {
 
-  private static final String TAG = ControlRecordingService.class.getSimpleName();
-  
-  private ITrackRecordingService trackRecordingService;
-  private boolean connected = false;
+    private static final String TAG = ControlRecordingService.class.getSimpleName();
 
-  public ControlRecordingService() {
-    super(ControlRecordingService.class.getSimpleName());
-  }
+    private ITrackRecordingService trackRecordingService;
+    private boolean connected = false;
 
-  @Override
-  public void onCreate() {
-    super.onCreate();
-
-    Intent newIntent = new Intent(this, TrackRecordingService.class);
-    startService(newIntent);
-    bindService(newIntent, this, 0);
-  }
-
-  @Override
-  public void onServiceConnected(ComponentName name, IBinder service) {
-    trackRecordingService = (ITrackRecordingService)service;
-    notifyConnected();
-  }
-
-  @Override
-  public void onServiceDisconnected(ComponentName name) {
-    connected = false;
-  }
-
-  /**
-   * Notifies all threads that connection to {@link TrackRecordingService} is
-   * available.
-   */
-  private synchronized void notifyConnected() {
-    connected = true;
-    notifyAll();
-  }
-
-  /**
-   * Waits until the connection to {@link TrackRecordingService} is available.
-   */
-  private synchronized void waitConnected() {
-    while (!connected) {
-      try {
-        wait();
-      } catch (InterruptedException e) {
-
-        // can safely ignore
-      }
+    public ControlRecordingService() {
+        super(ControlRecordingService.class.getSimpleName());
     }
-  }
 
-  @Override
-  protected void onHandleIntent(Intent intent) {
-    waitConnected();
-    onHandleIntent(intent, trackRecordingService);
-  }
+    @Override
+    public void onCreate() {
+        super.onCreate();
 
-  
-  /**
-   * Handles the intent to start or stop a recording.
-   * 
-   * @param intent to be handled
-   * @param service the trackRecordingService
-   */
-  @VisibleForTesting
-  void onHandleIntent(Intent intent, ITrackRecordingService service) {
-    String action = intent.getAction();
-    if (action != null) {
-      if (action.equals(getString(R.string.track_action_start))) {
-        service.startNewTrack();
-      } else if (action.equals(getString(R.string.track_action_end))) {
-        service.endCurrentTrack();
-      } else if (action.equals(getString(R.string.track_action_pause))) {
-        service.pauseCurrentTrack();
-      } else if (action.equals(getString(R.string.track_action_resume))) {
-        service.resumeCurrentTrack();
-      }
+        Intent newIntent = new Intent(this, TrackRecordingService.class);
+        startService(newIntent);
+        bindService(newIntent, this, 0);
     }
-    unbindService(this);
-    connected = false;
-  }
 
-  @Override
-  public void onDestroy() {
-    super.onDestroy();
-    if (connected) {
-      unbindService(this);
-      connected = false;
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+        trackRecordingService = (ITrackRecordingService) service;
+        notifyConnected();
     }
-  }
+
+    @Override
+    public void onServiceDisconnected(ComponentName name) {
+        connected = false;
+    }
+
+    /**
+     * Notifies all threads that connection to {@link TrackRecordingService} is
+     * available.
+     */
+    private synchronized void notifyConnected() {
+        connected = true;
+        notifyAll();
+    }
+
+    /**
+     * Waits until the connection to {@link TrackRecordingService} is available.
+     */
+    private synchronized void waitConnected() {
+        while (!connected) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+
+                // can safely ignore
+            }
+        }
+    }
+
+    @Override
+    protected void onHandleIntent(Intent intent) {
+        waitConnected();
+        onHandleIntent(intent, trackRecordingService);
+    }
+
+
+    /**
+     * Handles the intent to start or stop a recording.
+     *
+     * @param intent  to be handled
+     * @param service the trackRecordingService
+     */
+    @VisibleForTesting
+    void onHandleIntent(Intent intent, ITrackRecordingService service) {
+        String action = intent.getAction();
+        if (action != null) {
+            if (action.equals(getString(R.string.track_action_start))) {
+                service.startNewTrack();
+            } else if (action.equals(getString(R.string.track_action_end))) {
+                service.endCurrentTrack();
+            } else if (action.equals(getString(R.string.track_action_pause))) {
+                service.pauseCurrentTrack();
+            } else if (action.equals(getString(R.string.track_action_resume))) {
+                service.resumeCurrentTrack();
+            }
+        }
+        unbindService(this);
+        connected = false;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (connected) {
+            unbindService(this);
+            connected = false;
+        }
+    }
 }

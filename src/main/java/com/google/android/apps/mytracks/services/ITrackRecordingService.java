@@ -27,87 +27,87 @@ import com.google.android.apps.mytracks.content.sensor.SensorState;
  */
 public interface ITrackRecordingService {
 
-  /**
-   * Starts gps.
-   */
-  void startGps();
+    /**
+     * Starts gps.
+     */
+    void startGps();
 
-  /**
-   * Stops gps.
-   */
-  void stopGps();
+    /**
+     * Stops gps.
+     */
+    void stopGps();
 
-  /**
-   * Starts recording a new track.
-   *
-   * @return the track ID of the new track.
-   */
-  long startNewTrack();
+    /**
+     * Starts recording a new track.
+     *
+     * @return the track ID of the new track.
+     */
+    long startNewTrack();
 
-  /**
-    * Pauses the current recording track.
-    */
-  void pauseCurrentTrack();
+    /**
+     * Pauses the current recording track.
+     */
+    void pauseCurrentTrack();
 
-  /**
-    * Resumes the current recording track.
-    */
-  void resumeCurrentTrack();
+    /**
+     * Resumes the current recording track.
+     */
+    void resumeCurrentTrack();
 
-  /**
-   * Ends the current recording track.
-   */
-  void endCurrentTrack();
+    /**
+     * Ends the current recording track.
+     */
+    void endCurrentTrack();
 
-  /**
-   * Returns true if currently recording a track.
-   */
-  boolean isRecording();
+    /**
+     * Returns true if currently recording a track.
+     */
+    boolean isRecording();
 
-  /**
-   * Returns true if the current recording track is paused. Returns true if not recording.
-   */
-  boolean isPaused();
+    /**
+     * Returns true if the current recording track is paused. Returns true if not recording.
+     */
+    boolean isPaused();
 
-  /**
-   * Gets the current recording track ID. Returns -1 if not recording.
-   */
-  long getRecordingTrackId();
+    /**
+     * Gets the current recording track ID. Returns -1 if not recording.
+     */
+    long getRecordingTrackId();
 
-  /**
-    * Gets the total time for the current recording track. Returns 0 if not recording.
-    */
-  long getTotalTime();
+    /**
+     * Gets the total time for the current recording track. Returns 0 if not recording.
+     */
+    long getTotalTime();
 
-  /**
-   * Inserts a waypoint in the current recording track.
-   *
-   * @param request the details of the waypoint to be inserted
-   * @return the ID of the inserted waypoint
-   */
-  long insertWaypoint(WaypointCreationRequest request);
+    /**
+     * Inserts a waypoint in the current recording track.
+     *
+     * @param request the details of the waypoint to be inserted
+     * @return the ID of the inserted waypoint
+     */
+    long insertWaypoint(WaypointCreationRequest request);
 
-  /**
-   * Inserts a track point in the current recording track.
-   *
-   * When recording a track, GPS locations are automatically inserted. This is used for
-   * inserting special track points or for testing.
-   *
-   * @param location the track point to be inserted
-   */
-  void insertTrackPoint(Location location);
+    /**
+     * Inserts a track point in the current recording track.
+     * <p>
+     * When recording a track, GPS locations are automatically inserted. This is used for
+     * inserting special track points or for testing.
+     *
+     * @param location the track point to be inserted
+     */
+    void insertTrackPoint(Location location);
 
-  /**
-   * Gets the current sensor data. Returns null if there is no data.
+    /**
+     * Gets the current sensor data. Returns null if there is no data.
+     *
+     * @return SensorDataSet object.
+     */
+    SensorDataSet getSensorData();
 
-   * @return SensorDataSet object.
-   */
-  SensorDataSet getSensorData();
-
-  /**
-   * Gets the current sensor manager state.
-   *
-   * return a Sensor.SensorState enum value.
-   */
-  SensorState getSensorState();
+    /**
+     * Gets the current sensor manager state.
+     * <p>
+     * return a Sensor.SensorState enum value.
+     */
+    SensorState getSensorState();
 }

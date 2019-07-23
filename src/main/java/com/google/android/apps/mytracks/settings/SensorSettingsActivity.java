@@ -33,58 +33,58 @@ import java.util.List;
 
 /**
  * An activity for accessing sensor settings.
- * 
+ *
  * @author Jimmy Shih
  */
 public class SensorSettingsActivity extends AbstractSettingsActivity {
 
-  @Override
-  protected void onCreate(Bundle bundle) {
-    super.onCreate(bundle);
-    addPreferencesFromResource(R.xml.settings_sensors);
+    @Override
+    protected void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
+        addPreferencesFromResource(R.xml.settings_sensors);
 
-    findPreference(getString(R.string.settings_sensor_bluetooth_pairing_key))
-        .setOnPreferenceClickListener(new OnPreferenceClickListener() {
-          public boolean onPreferenceClick(Preference preference) {
-            Intent settingsIntent = new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
-            startActivity(settingsIntent);
-            return true;
-          }
-        });
-  }
-
-  @Override
-  protected void onResume() {
-    super.onResume();
-
-    // Update each time in case the list of bluetooth sensors has changed
-    configBluetoothSensor();
-  }
-
-  /**
-   * Configures the bluetooth sensor.
-   */
-  private void configBluetoothSensor() {
-    ListPreference preference = (ListPreference) findPreference(getString(R.string.bluetooth_sensor_key));
-    String value = PreferencesUtils.getString(this, R.string.bluetooth_sensor_key, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT);
-    List<String> devicesNameList = new ArrayList<>();
-    List<String> devicesAddressList = new ArrayList<>();
-    BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-    if (bluetoothAdapter != null) {
-      BluetoothDeviceUtils.populateDeviceLists(bluetoothAdapter, devicesNameList, devicesAddressList);
+        findPreference(getString(R.string.settings_sensor_bluetooth_pairing_key))
+                .setOnPreferenceClickListener(new OnPreferenceClickListener() {
+                    public boolean onPreferenceClick(Preference preference) {
+                        Intent settingsIntent = new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
+                        startActivity(settingsIntent);
+                        return true;
+                    }
+                });
     }
 
-    // Was the previously configured device unpaired? Then forget it.
-    if (!devicesAddressList.contains(value)) {
-      value = PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT;
-      PreferencesUtils.setString(this, R.string.bluetooth_sensor_key, value);
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Update each time in case the list of bluetooth sensors has changed
+        configBluetoothSensor();
     }
 
-    devicesNameList.add(0, getString(R.string.value_none));
-    devicesAddressList.add(0, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT);
+    /**
+     * Configures the bluetooth sensor.
+     */
+    private void configBluetoothSensor() {
+        ListPreference preference = (ListPreference) findPreference(getString(R.string.bluetooth_sensor_key));
+        String value = PreferencesUtils.getString(this, R.string.bluetooth_sensor_key, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT);
+        List<String> devicesNameList = new ArrayList<>();
+        List<String> devicesAddressList = new ArrayList<>();
+        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (bluetoothAdapter != null) {
+            BluetoothDeviceUtils.populateDeviceLists(bluetoothAdapter, devicesNameList, devicesAddressList);
+        }
 
-    String[] options = devicesNameList.toArray(new String[0]);
-    String[] values = devicesAddressList.toArray(new String[0]);
-    configureListPreference(preference, options, options, values, value, null);
-  }
+        // Was the previously configured device unpaired? Then forget it.
+        if (!devicesAddressList.contains(value)) {
+            value = PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT;
+            PreferencesUtils.setString(this, R.string.bluetooth_sensor_key, value);
+        }
+
+        devicesNameList.add(0, getString(R.string.value_none));
+        devicesAddressList.add(0, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT);
+
+        String[] options = devicesNameList.toArray(new String[0]);
+        String[] values = devicesAddressList.toArray(new String[0]);
+        configureListPreference(preference, options, options, values, value, null);
+    }
 }

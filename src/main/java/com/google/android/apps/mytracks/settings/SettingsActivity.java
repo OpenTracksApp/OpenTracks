@@ -26,39 +26,39 @@ import com.google.android.maps.mytracks.R;
 
 /**
  * An activity for accessing settings.
- * 
+ *
  * @author Jimmy Shih
  */
 public class SettingsActivity extends AbstractSettingsActivity {
 
-  @Override
-  protected void onCreate(Bundle bundle) {
-    super.onCreate(bundle);
+    @Override
+    protected void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
 
-    addPreferencesFromResource(R.xml.settings);
+        addPreferencesFromResource(R.xml.settings);
 
-    configPreference(R.string.settings_chart_key, ChartSettingsActivity.class);
-    configPreference(R.string.settings_stats_key, StatsSettingsActivity.class);
-    configPreference(R.string.settings_recording_key, RecordingSettingsActivity.class);
-    configPreference(R.string.settings_sensor_key, SensorSettingsActivity.class);
-    configPreference(R.string.settings_advanced_key, AdvancedSettingsActivity.class);
-  }
+        configPreference(R.string.settings_chart_key, ChartSettingsActivity.class);
+        configPreference(R.string.settings_stats_key, StatsSettingsActivity.class);
+        configPreference(R.string.settings_recording_key, RecordingSettingsActivity.class);
+        configPreference(R.string.settings_sensor_key, SensorSettingsActivity.class);
+        configPreference(R.string.settings_advanced_key, AdvancedSettingsActivity.class);
+    }
 
-  /**
-   * Configures a preference by starting a new activity when it is clicked.
-   * 
-   * @param key the preference key
-   * @param cl the class to start the new activity
-   */
-  private void configPreference(int key, final Class<?> cl) {
-    Preference preference = findPreference(getString(key));
-    preference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-        @Override
-      public boolean onPreferenceClick(Preference pref) {
-        Intent intent = IntentUtils.newIntent(SettingsActivity.this, cl);
-        startActivity(intent);
-        return true;
-      }
-    });
-  }
+    /**
+     * Configures a preference by starting a new activity when it is clicked.
+     *
+     * @param key the preference key
+     * @param cl  the class to start the new activity
+     */
+    private void configPreference(int key, final Class<?> cl) {
+        Preference preference = findPreference(getString(key));
+        preference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference pref) {
+                Intent intent = IntentUtils.newIntent(SettingsActivity.this, cl);
+                startActivity(intent);
+                return true;
+            }
+        });
+    }
 }

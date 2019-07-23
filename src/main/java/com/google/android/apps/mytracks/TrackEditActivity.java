@@ -41,168 +41,168 @@ import com.google.android.maps.mytracks.R;
 /**
  * An activity that let's the user see and edit the user editable track meta
  * data such as track name, activity type, and track description.
- * 
+ *
  * @author Leif Hendrik Wilden
  */
 public class TrackEditActivity extends AbstractActivity implements ChooseActivityTypeCaller {
 
-  public static final String EXTRA_TRACK_ID = "track_id";
-  public static final String EXTRA_NEW_TRACK = "new_track";
+    public static final String EXTRA_TRACK_ID = "track_id";
+    public static final String EXTRA_NEW_TRACK = "new_track";
 
-  private static final String TAG = TrackEditActivity.class.getSimpleName();
-  private static final String ICON_VALUE_KEY = "icon_value_key";
+    private static final String TAG = TrackEditActivity.class.getSimpleName();
+    private static final String ICON_VALUE_KEY = "icon_value_key";
 
-  private TrackRecordingServiceConnection trackRecordingServiceConnection;
-  private ContentProviderUtils contentProviderUtils;
-  private Track track;
-  private String iconValue;
+    private TrackRecordingServiceConnection trackRecordingServiceConnection;
+    private ContentProviderUtils contentProviderUtils;
+    private Track track;
+    private String iconValue;
 
-  private EditText name;
-  private AutoCompleteTextView activityType;
-  private Spinner activityTypeIcon;
-  private EditText description;
+    private EditText name;
+    private AutoCompleteTextView activityType;
+    private Spinner activityTypeIcon;
+    private EditText description;
 
-  @Override
-  protected void onCreate(Bundle bundle) {
-    super.onCreate(bundle);
+    @Override
+    protected void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
 
-    trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
-    Long trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1L);
-    if (trackId == -1L) {
-      Log.e(TAG, "invalid trackId");
-      finish();
-      return;
-    }
-
-    contentProviderUtils = ContentProviderUtils.Factory.get(this);
-    track = contentProviderUtils.getTrack(trackId);
-    if (track == null) {
-      Log.e(TAG, "No track for " + trackId);
-      finish();
-      return;
-    }
-
-    name = findViewById(R.id.track_edit_name);
-    name.setText(track.getName());
-
-    activityType = findViewById(R.id.track_edit_activity_type);
-    activityType.setText(track.getCategory());
-
-    ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-        this, R.array.activity_types, android.R.layout.simple_dropdown_item_1line);
-    activityType.setAdapter(adapter);
-    activityType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-        @Override
-      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        setActivityTypeIcon(TrackIconUtils.getIconValue(
-            TrackEditActivity.this, (String) activityType.getAdapter().getItem(position)));
-      }
-    });
-    activityType.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-        @Override
-      public void onFocusChange(View v, boolean hasFocus) {
-        if (!hasFocus) {
-          setActivityTypeIcon(TrackIconUtils.getIconValue(
-              TrackEditActivity.this, activityType.getText().toString()));
+        trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
+        Long trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1L);
+        if (trackId == -1L) {
+            Log.e(TAG, "invalid trackId");
+            finish();
+            return;
         }
-      }
-    });
 
-    iconValue = null;
-    if (bundle != null) {
-      iconValue = bundle.getString(ICON_VALUE_KEY);
-    }
-    if (iconValue == null) {
-      iconValue = track.getIcon();
-    }
-
-    activityTypeIcon = findViewById(R.id.track_edit_activity_type_icon);
-    activityTypeIcon.setAdapter(TrackIconUtils.getIconSpinnerAdapter(this, iconValue));
-    activityTypeIcon.setOnTouchListener(new View.OnTouchListener() {
-        @Override
-      public boolean onTouch(View v, MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_UP) {
-          ChooseActivityTypeDialogFragment.newInstance(activityType.getText().toString()).show(
-              getSupportFragmentManager(),
-              ChooseActivityTypeDialogFragment.CHOOSE_ACTIVITY_TYPE_DIALOG_TAG);
+        contentProviderUtils = ContentProviderUtils.Factory.get(this);
+        track = contentProviderUtils.getTrack(trackId);
+        if (track == null) {
+            Log.e(TAG, "No track for " + trackId);
+            finish();
+            return;
         }
-        return true;
-      }
-    });
-    activityTypeIcon.setOnKeyListener(new View.OnKeyListener() {
-        @Override
-      public boolean onKey(View v, int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
-          ChooseActivityTypeDialogFragment.newInstance(activityType.getText().toString()).show(
-              getSupportFragmentManager(),
-              ChooseActivityTypeDialogFragment.CHOOSE_ACTIVITY_TYPE_DIALOG_TAG);
+
+        name = findViewById(R.id.track_edit_name);
+        name.setText(track.getName());
+
+        activityType = findViewById(R.id.track_edit_activity_type);
+        activityType.setText(track.getCategory());
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this, R.array.activity_types, android.R.layout.simple_dropdown_item_1line);
+        activityType.setAdapter(adapter);
+        activityType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                setActivityTypeIcon(TrackIconUtils.getIconValue(
+                        TrackEditActivity.this, (String) activityType.getAdapter().getItem(position)));
+            }
+        });
+        activityType.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    setActivityTypeIcon(TrackIconUtils.getIconValue(
+                            TrackEditActivity.this, activityType.getText().toString()));
+                }
+            }
+        });
+
+        iconValue = null;
+        if (bundle != null) {
+            iconValue = bundle.getString(ICON_VALUE_KEY);
         }
-        return true;
-      }
-    });
-
-    description = findViewById(R.id.track_edit_description);
-    description.setText(track.getDescription());
-
-    Button save = findViewById(R.id.track_edit_save);
-    save.setOnClickListener(new View.OnClickListener() {
-        @Override
-      public void onClick(View v) {
-        TrackUtils.updateTrack(TrackEditActivity.this, track, name.getText().toString(),
-            activityType.getText().toString(), description.getText().toString(),
-                contentProviderUtils);
-        finish();
-      }
-    });
-
-    Button cancel = findViewById(R.id.track_edit_cancel);
-    if (getIntent().getBooleanExtra(EXTRA_NEW_TRACK, false)) {
-      setTitle(R.string.track_edit_new_track_title);
-      cancel.setVisibility(View.GONE);
-    } else {
-      setTitle(R.string.menu_edit);
-      cancel.setOnClickListener(new View.OnClickListener() {
-          @Override
-        public void onClick(View v) {
-          finish();
+        if (iconValue == null) {
+            iconValue = track.getIcon();
         }
-      });
-      cancel.setVisibility(View.VISIBLE);
+
+        activityTypeIcon = findViewById(R.id.track_edit_activity_type_icon);
+        activityTypeIcon.setAdapter(TrackIconUtils.getIconSpinnerAdapter(this, iconValue));
+        activityTypeIcon.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    ChooseActivityTypeDialogFragment.newInstance(activityType.getText().toString()).show(
+                            getSupportFragmentManager(),
+                            ChooseActivityTypeDialogFragment.CHOOSE_ACTIVITY_TYPE_DIALOG_TAG);
+                }
+                return true;
+            }
+        });
+        activityTypeIcon.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
+                    ChooseActivityTypeDialogFragment.newInstance(activityType.getText().toString()).show(
+                            getSupportFragmentManager(),
+                            ChooseActivityTypeDialogFragment.CHOOSE_ACTIVITY_TYPE_DIALOG_TAG);
+                }
+                return true;
+            }
+        });
+
+        description = findViewById(R.id.track_edit_description);
+        description.setText(track.getDescription());
+
+        Button save = findViewById(R.id.track_edit_save);
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TrackUtils.updateTrack(TrackEditActivity.this, track, name.getText().toString(),
+                        activityType.getText().toString(), description.getText().toString(),
+                        contentProviderUtils);
+                finish();
+            }
+        });
+
+        Button cancel = findViewById(R.id.track_edit_cancel);
+        if (getIntent().getBooleanExtra(EXTRA_NEW_TRACK, false)) {
+            setTitle(R.string.track_edit_new_track_title);
+            cancel.setVisibility(View.GONE);
+        } else {
+            setTitle(R.string.menu_edit);
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+            cancel.setVisibility(View.VISIBLE);
+        }
     }
-  }
 
 
-  @Override
-  protected void onStart() {
-    super.onStart();
-    TrackRecordingServiceConnectionUtils.startConnection(this, trackRecordingServiceConnection);
-  }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        TrackRecordingServiceConnectionUtils.startConnection(this, trackRecordingServiceConnection);
+    }
 
-  @Override
-  protected void onStop() {
-    super.onStop();
-    trackRecordingServiceConnection.unbind();
-  }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        trackRecordingServiceConnection.unbind();
+    }
 
-  @Override
-  public void onSaveInstanceState(Bundle outState) {
-    super.onSaveInstanceState(outState);
-    outState.putString(ICON_VALUE_KEY, iconValue);
-  }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(ICON_VALUE_KEY, iconValue);
+    }
 
-  @Override
-  protected int getLayoutResId() {
-    return R.layout.track_edit;
-  }
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.track_edit;
+    }
 
-  private void setActivityTypeIcon(String value) {
-    iconValue = value;
-    TrackIconUtils.setIconSpinner(activityTypeIcon, value);
-  }
+    private void setActivityTypeIcon(String value) {
+        iconValue = value;
+        TrackIconUtils.setIconSpinner(activityTypeIcon, value);
+    }
 
-  @Override
-  public void onChooseActivityTypeDone(String value) {
-    setActivityTypeIcon(value);
-    activityType.setText(getString(TrackIconUtils.getIconActivityType(value)));
-  }
+    @Override
+    public void onChooseActivityTypeDone(String value) {
+        setActivityTypeIcon(value);
+        activityType.setText(getString(TrackIconUtils.getIconActivityType(value)));
+    }
 }

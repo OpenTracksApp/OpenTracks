@@ -30,9 +30,9 @@ import org.junit.runner.RunWith;
  */
 @RunWith(AndroidJUnit4.class)
 public class AnnouncementPeriodicTaskFactoryTest {
-  public void testCreate() {
-    PeriodicTaskFactory factory = new AnnouncementPeriodicTaskFactory();
-    PeriodicTask task = factory.create(InstrumentationRegistry.getInstrumentation().getContext());
-    Assert.assertTrue(task instanceof AnnouncementPeriodicTask);
-  }
+    public void testCreate() {
+        PeriodicTaskFactory factory = new AnnouncementPeriodicTaskFactory();
+        PeriodicTask task = factory.create(InstrumentationRegistry.getInstrumentation().getContext());
+        Assert.assertTrue(task instanceof AnnouncementPeriodicTask);
+    }
 }

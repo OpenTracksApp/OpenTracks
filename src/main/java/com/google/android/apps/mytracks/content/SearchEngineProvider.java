@@ -26,19 +26,19 @@ import android.provider.SearchRecentSuggestions;
  */
 public class SearchEngineProvider extends SearchRecentSuggestionsProvider {
 
-  private static final String AUTHORITY = "com.google.android.maps.mytracks.search";
-  private static final int MODE = DATABASE_MODE_QUERIES;
+    private static final String AUTHORITY = "com.google.android.maps.mytracks.search";
+    private static final int MODE = DATABASE_MODE_QUERIES;
 
-  public SearchEngineProvider() {
-    setupSuggestions(AUTHORITY, MODE);
-  }
+    public SearchEngineProvider() {
+        setupSuggestions(AUTHORITY, MODE);
+    }
 
-  // TODO: Also add suggestions from the database.
+    // TODO: Also add suggestions from the database.
 
-  /**
-   * Creates and returns a helper for adding recent queries or clearing the recent query history.
-   */
-  public static SearchRecentSuggestions newHelper(Context context) {
-    return new SearchRecentSuggestions(context, AUTHORITY, MODE);
-  }
+    /**
+     * Creates and returns a helper for adding recent queries or clearing the recent query history.
+     */
+    public static SearchRecentSuggestions newHelper(Context context) {
+        return new SearchRecentSuggestions(context, AUTHORITY, MODE);
+    }
 }

@@ -16,82 +16,82 @@
 
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.util.DialogUtils;
-import com.google.android.maps.mytracks.R;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.google.android.apps.mytracks.util.DialogUtils;
+import com.google.android.maps.mytracks.R;
+
 /**
  * An activity for delete tracks.
- * 
+ *
  * @author Jimmy Shih
  */
 public class DeleteActivity extends Activity {
 
-  public static final String EXTRA_TRACK_IDS = "track_ids";
+    public static final String EXTRA_TRACK_IDS = "track_ids";
 
-  private static final int DIALOG_PROGRESS_ID = 0;
+    private static final int DIALOG_PROGRESS_ID = 0;
 
-  private DeleteAsyncTask deleteAsyncTask;
+    private DeleteAsyncTask deleteAsyncTask;
 
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    
-    setResult(RESULT_CANCELED);
-    
-    Intent intent = getIntent();
-    long[] trackIds = intent.getLongArrayExtra(EXTRA_TRACK_IDS);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-    Object retained = getLastNonConfigurationInstance();
-    if (retained instanceof DeleteAsyncTask) {
-      deleteAsyncTask = (DeleteAsyncTask) retained;
-      deleteAsyncTask.setActivity(this);
-    } else {
-      deleteAsyncTask = new DeleteAsyncTask(this, trackIds);
-      deleteAsyncTask.execute();
+        setResult(RESULT_CANCELED);
+
+        Intent intent = getIntent();
+        long[] trackIds = intent.getLongArrayExtra(EXTRA_TRACK_IDS);
+
+        Object retained = getLastNonConfigurationInstance();
+        if (retained instanceof DeleteAsyncTask) {
+            deleteAsyncTask = (DeleteAsyncTask) retained;
+            deleteAsyncTask.setActivity(this);
+        } else {
+            deleteAsyncTask = new DeleteAsyncTask(this, trackIds);
+            deleteAsyncTask.execute();
+        }
     }
-  }
 
-  @Override
-  public Object onRetainNonConfigurationInstance() {
-    deleteAsyncTask.setActivity(null);
-    return deleteAsyncTask;
-  }
-
-  @Override
-  protected Dialog onCreateDialog(int id) {
-    if (id != DIALOG_PROGRESS_ID) {
-      return null;
+    @Override
+    public Object onRetainNonConfigurationInstance() {
+        deleteAsyncTask.setActivity(null);
+        return deleteAsyncTask;
     }
-    return DialogUtils.createSpinnerProgressDialog(
-        this, R.string.track_delete_progress_message, new DialogInterface.OnCancelListener() {
-            @Override
-          public void onCancel(DialogInterface dialog) {
-            deleteAsyncTask.cancel(true);
-            dialog.dismiss();
-            finish();
-          }
-        });
-  }
 
-  /**
-   * Invokes when the associated AsyncTask completes.
-   */
-  public void onAsyncTaskCompleted() {
-    removeDialog(DIALOG_PROGRESS_ID);
-    setResult(RESULT_OK);
-    finish();
-  }
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        if (id != DIALOG_PROGRESS_ID) {
+            return null;
+        }
+        return DialogUtils.createSpinnerProgressDialog(
+                this, R.string.track_delete_progress_message, new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        deleteAsyncTask.cancel(true);
+                        dialog.dismiss();
+                        finish();
+                    }
+                });
+    }
 
-  /**
-   * Shows the progress dialog.
-   */
-  public void showProgressDialog() {
-    showDialog(DIALOG_PROGRESS_ID);
-  }
+    /**
+     * Invokes when the associated AsyncTask completes.
+     */
+    public void onAsyncTaskCompleted() {
+        removeDialog(DIALOG_PROGRESS_ID);
+        setResult(RESULT_OK);
+        finish();
+    }
+
+    /**
+     * Shows the progress dialog.
+     */
+    public void showProgressDialog() {
+        showDialog(DIALOG_PROGRESS_ID);
+    }
 }

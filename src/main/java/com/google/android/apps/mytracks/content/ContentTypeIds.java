@@ -18,18 +18,18 @@ package com.google.android.apps.mytracks.content;
 
 /**
  * Utilities for serializing primitive types.
- * 
+ *
  * @author Rodrigo Damazio
  */
 public class ContentTypeIds {
 
-  private ContentTypeIds() {}
-
-  public static final byte BOOLEAN_TYPE_ID = 0;
-  public static final byte LONG_TYPE_ID = 1;
-  public static final byte INT_TYPE_ID = 2;
-  public static final byte FLOAT_TYPE_ID = 3;
-  public static final byte DOUBLE_TYPE_ID = 4;
-  public static final byte STRING_TYPE_ID = 5;
-  public static final byte BLOB_TYPE_ID = 6;
+    public static final byte BOOLEAN_TYPE_ID = 0;
+    public static final byte LONG_TYPE_ID = 1;
+    public static final byte INT_TYPE_ID = 2;
+    public static final byte FLOAT_TYPE_ID = 3;
+    public static final byte DOUBLE_TYPE_ID = 4;
+    public static final byte STRING_TYPE_ID = 5;
+    public static final byte BLOB_TYPE_ID = 6;
+    private ContentTypeIds() {
+    }
 }

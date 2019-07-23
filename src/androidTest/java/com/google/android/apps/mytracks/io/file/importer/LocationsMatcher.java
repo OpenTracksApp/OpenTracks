@@ -16,66 +16,66 @@
 
 package com.google.android.apps.mytracks.io.file.importer;
 
-import com.google.android.testing.mocking.AndroidMock;
-
 import android.location.Location;
 
-import java.util.Arrays;
+import com.google.android.testing.mocking.AndroidMock;
 
 import org.easymock.IArgumentMatcher;
+
+import java.util.Arrays;
 
 /**
  * Locations matcher. Workaround because of capture bug 2617107 in easymock:
  * http://sourceforge.net/tracker/?func=detail&aid=2617107&group_id=82958&atid=567837
- * 
+ *
  * @author Jimmy Shih
  */
 public class LocationsMatcher implements IArgumentMatcher {
 
-  public static Location[] eqLoc(Location expected) {
-    return eqLoc(new Location[] { expected });
-  }
+    private final Location[] expectedLocations;
 
-  public static Location[] eqLoc(Location[] expected) {
-    IArgumentMatcher matcher = new LocationsMatcher(expected);
-    AndroidMock.reportMatcher(matcher);
-    return null;
-  }
-
-  private final Location[] expectedLocations;
-
-  private LocationsMatcher(Location[] expected) {
-    this.expectedLocations = expected;
-  }
-
-  @Override
-  public void appendTo(StringBuffer buf) {
-    buf.append("eqLoc(").append(Arrays.toString(expectedLocations)).append(")");
-  }
-
-  @Override
-  public boolean matches(Object obj) {
-    if (!(obj instanceof Location[])) {
-      return false;
-    }
-    Location[] locations = (Location[]) obj;
-    if (locations.length < expectedLocations.length) {
-      return false;
+    private LocationsMatcher(Location[] expected) {
+        this.expectedLocations = expected;
     }
 
-    // Only check the first elements (those that will be taken into account)
-    for (int i = 0; i < expectedLocations.length; i++) {
-      if (!matchLocation(locations[i], expectedLocations[i])) {
-        return false;
-      }
+    public static Location[] eqLoc(Location expected) {
+        return eqLoc(new Location[]{expected});
     }
-    return true;
-  }
 
-  private boolean matchLocation(Location location1, Location location2) {
-    return (location1.getTime() == location2.getTime())
-        && (location1.getLatitude() == location2.getLatitude())
-        && (location1.getLongitude() == location2.getLongitude())
-        && (location1.getAltitude() == location2.getAltitude());
-  }
+    public static Location[] eqLoc(Location[] expected) {
+        IArgumentMatcher matcher = new LocationsMatcher(expected);
+        AndroidMock.reportMatcher(matcher);
+        return null;
+    }
+
+    @Override
+    public void appendTo(StringBuffer buf) {
+        buf.append("eqLoc(").append(Arrays.toString(expectedLocations)).append(")");
+    }
+
+    @Override
+    public boolean matches(Object obj) {
+        if (!(obj instanceof Location[])) {
+            return false;
+        }
+        Location[] locations = (Location[]) obj;
+        if (locations.length < expectedLocations.length) {
+            return false;
+        }
+
+        // Only check the first elements (those that will be taken into account)
+        for (int i = 0; i < expectedLocations.length; i++) {
+            if (!matchLocation(locations[i], expectedLocations[i])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean matchLocation(Location location1, Location location2) {
+        return (location1.getTime() == location2.getTime())
+                && (location1.getLatitude() == location2.getLatitude())
+                && (location1.getLongitude() == location2.getLongitude())
+                && (location1.getAltitude() == location2.getAltitude());
+    }
 }

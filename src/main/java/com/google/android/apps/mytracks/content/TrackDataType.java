@@ -18,13 +18,13 @@ package com.google.android.apps.mytracks.content;
 
 /**
  * Types of track data.
- * 
+ *
  * @author Jimmy Shih
  */
 public enum TrackDataType {
-  TRACKS_TABLE, // tracks table changes
-  WAYPOINTS_TABLE, // waypoints table changes
-  SAMPLED_IN_TRACK_POINTS_TABLE, // sampled-in track points table changes
-  SAMPLED_OUT_TRACK_POINTS_TABLE, // sampled-out track points table changes
-  PREFERENCE // preference changes
+    TRACKS_TABLE, // tracks table changes
+    WAYPOINTS_TABLE, // waypoints table changes
+    SAMPLED_IN_TRACK_POINTS_TABLE, // sampled-in track points table changes
+    SAMPLED_OUT_TRACK_POINTS_TABLE, // sampled-out track points table changes
+    PREFERENCE // preference changes
 }

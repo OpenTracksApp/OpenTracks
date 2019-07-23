@@ -32,96 +32,96 @@ import com.google.android.maps.mytracks.R;
 
 /**
  * An abstract activity for all the settings activities.
- * 
+ *
  * @author Jimmy Shih
  */
 public class AbstractSettingsActivity extends PreferenceActivity {
 
-  @Override
-  protected void onCreate(Bundle bundle) {
-    super.onCreate(bundle);
-    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
+    @Override
+    protected void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
+        setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
 
-    ActionBar actionBar = this.getActionBar();
-    if (actionBar != null) {
-      actionBar.setHomeButtonEnabled(true);
-      actionBar.setDisplayHomeAsUpEnabled(true);
-    }
-
-    PreferenceManager preferenceManager = getPreferenceManager();
-    preferenceManager.setSharedPreferencesName(Constants.SETTINGS_NAME);
-    preferenceManager.setSharedPreferencesMode(Context.MODE_PRIVATE);
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    if (item.getItemId() != android.R.id.home) {
-      return super.onOptionsItemSelected(item);
-    }
-    finish();
-    return true;
-  }
-
-  /**
-   * Configures a list preference.
-   * 
-   * @param listPreference the list preference
-   * @param summary the summary array
-   * @param options the options array
-   * @param values the values array
-   * @param value the value
-   * @param listener optional listener
-   */
-  protected void configureListPreference(ListPreference listPreference, final String[] summary,
-      final String[] options, final String[] values, String value,
-      final OnPreferenceChangeListener listener) {
-    listPreference.setEntryValues(values);
-    listPreference.setEntries(options);
-    listPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-        @Override
-      public boolean onPreferenceChange(Preference pref, Object newValue) {
-        updatePreferenceSummary(pref, summary, values, (String) newValue);
-        if (listener != null) {
-          listener.onPreferenceChange(pref, newValue);
+        ActionBar actionBar = this.getActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        PreferenceManager preferenceManager = getPreferenceManager();
+        preferenceManager.setSharedPreferencesName(Constants.SETTINGS_NAME);
+        preferenceManager.setSharedPreferencesMode(Context.MODE_PRIVATE);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() != android.R.id.home) {
+            return super.onOptionsItemSelected(item);
+        }
+        finish();
         return true;
-      }
-    });
-    updatePreferenceSummary(listPreference, summary, values, value);
-    if (listener != null) {
-      listener.onPreferenceChange(listPreference, value);
     }
-  }
 
-  /**
-   * Update the preference summary.
-   * 
-   * @param preference the preference
-   * @param summary the summary array
-   * @param values the values array
-   * @param value the value
-   */
-  private void updatePreferenceSummary(Preference preference, String[] summary, String[] values, String value) {
-    int index = getIndex(values, value);
-    if (index == -1) {
-      preference.setSummary(R.string.value_unknown);
-    } else {
-      preference.setSummary(summary[index]);
+    /**
+     * Configures a list preference.
+     *
+     * @param listPreference the list preference
+     * @param summary        the summary array
+     * @param options        the options array
+     * @param values         the values array
+     * @param value          the value
+     * @param listener       optional listener
+     */
+    protected void configureListPreference(ListPreference listPreference, final String[] summary,
+                                           final String[] options, final String[] values, String value,
+                                           final OnPreferenceChangeListener listener) {
+        listPreference.setEntryValues(values);
+        listPreference.setEntries(options);
+        listPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference pref, Object newValue) {
+                updatePreferenceSummary(pref, summary, values, (String) newValue);
+                if (listener != null) {
+                    listener.onPreferenceChange(pref, newValue);
+                }
+                return true;
+            }
+        });
+        updatePreferenceSummary(listPreference, summary, values, value);
+        if (listener != null) {
+            listener.onPreferenceChange(listPreference, value);
+        }
     }
-  }
 
-  /**
-   * Get the array index for a value.
-   * 
-   * @param values the array
-   * @param value the value
-   */
-  private int getIndex(String[] values, String value) {
-    for (int i = 0; i < values.length; i++) {
-      if (value.equals(values[i])) {
-        return i;
-      }
+    /**
+     * Update the preference summary.
+     *
+     * @param preference the preference
+     * @param summary    the summary array
+     * @param values     the values array
+     * @param value      the value
+     */
+    private void updatePreferenceSummary(Preference preference, String[] summary, String[] values, String value) {
+        int index = getIndex(values, value);
+        if (index == -1) {
+            preference.setSummary(R.string.value_unknown);
+        } else {
+            preference.setSummary(summary[index]);
+        }
     }
-    return -1;
-  }
+
+    /**
+     * Get the array index for a value.
+     *
+     * @param values the array
+     * @param value  the value
+     */
+    private int getIndex(String[] values, String value) {
+        for (int i = 0; i < values.length; i++) {
+            if (value.equals(values[i])) {
+                return i;
+            }
+        }
+        return -1;
+    }
 }

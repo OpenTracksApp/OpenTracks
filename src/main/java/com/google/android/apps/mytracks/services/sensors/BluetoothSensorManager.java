@@ -23,7 +23,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.apps.mytracks.content.sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.sensor.SensorState;
@@ -35,128 +34,126 @@ import java.util.ArrayList;
 
 /**
  * Bluetooth sensor manager.
- *
+ * <p>
  * TODO: Handle a BluetoothGatt.STATE_DISCONNECTED
  *
  * @author Sandor Dornbush
  */
 public class BluetoothSensorManager extends SensorManager {
 
-  private static final BluetoothAdapter bluetoothAdapter = getDefaultBluetoothAdapter();
-  private static final String TAG = BluetoothConnectionManager.class.getSimpleName();
-
-  private static BluetoothAdapter getDefaultBluetoothAdapter() {
-    // If from the main application thread, return directly
-    if (Thread.currentThread().equals(Looper.getMainLooper().getThread())) {
-      return BluetoothAdapter.getDefaultAdapter();
-    }
-  
-    // Get the default adapter from the main application thread
-    final ArrayList<BluetoothAdapter> adapters = new ArrayList<>(1);
-    final Object mutex = new Object();
-  
-    Handler handler = new Handler(Looper.getMainLooper());
-    handler.post(new Runnable() {
+    private static final String TAG = BluetoothConnectionManager.class.getSimpleName();
+    private static final BluetoothAdapter bluetoothAdapter = getDefaultBluetoothAdapter();
+    private final Context context;
+    private final BluetoothConnectionManager bluetoothConnectionManager;
+    private SensorDataSet sensorDataSet = null;
+    // Handler that gets information back from the bluetoothConnectionManager
+    private final Handler messageHandler = new Handler(Looper.getMainLooper()) {
         @Override
-      public void run() {
-        adapters.add(BluetoothAdapter.getDefaultAdapter());
-        synchronized (mutex) {
-          mutex.notify();
+        public void handleMessage(Message message) {
+            switch (message.what) {
+                case BluetoothConnectionManager.MESSAGE_DEVICE_NAME:
+                    String deviceName = message.getData().getString(BluetoothConnectionManager.KEY_DEVICE_NAME);
+                    break;
+                case BluetoothConnectionManager.MESSAGE_READ:
+                    if (!(message.obj instanceof SensorDataSet)) {
+                        Log.e(TAG, "Received message did not contain a SensorDataSet.");
+                        sensorDataSet = null;
+                    } else {
+                        sensorDataSet = (SensorDataSet) message.obj;
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
-      }
-    });
-  
-    while (adapters.isEmpty()) {
-      synchronized (mutex) {
+    };
+
+    /**
+     * @param context the context
+     */
+    public BluetoothSensorManager(Context context) {
+        this.context = context;
+        bluetoothConnectionManager = new BluetoothConnectionManager(context, messageHandler);
+    }
+
+    private static BluetoothAdapter getDefaultBluetoothAdapter() {
+        // If from the main application thread, return directly
+        if (Thread.currentThread().equals(Looper.getMainLooper().getThread())) {
+            return BluetoothAdapter.getDefaultAdapter();
+        }
+
+        // Get the default adapter from the main application thread
+        final ArrayList<BluetoothAdapter> adapters = new ArrayList<>(1);
+        final Object mutex = new Object();
+
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                adapters.add(BluetoothAdapter.getDefaultAdapter());
+                synchronized (mutex) {
+                    mutex.notify();
+                }
+            }
+        });
+
+        while (adapters.isEmpty()) {
+            synchronized (mutex) {
+                try {
+                    mutex.wait(UnitConversions.ONE_SECOND);
+                } catch (InterruptedException e) {
+                    Log.e(TAG, "Interrupted while waiting for default bluetooth adapter", e);
+                }
+            }
+        }
+
+        if (adapters.get(0) == null) {
+            Log.w(TAG, "No bluetooth adapter found.");
+            return null;
+        }
+        return adapters.get(0);
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return bluetoothAdapter != null && bluetoothAdapter.isEnabled();
+    }
+
+    @Override
+    protected void setUpChannel() {
+        if (!isEnabled()) {
+            Log.w(TAG, "Bluetooth not enabled.");
+            return;
+        }
+        String address = PreferencesUtils.getString(context, R.string.bluetooth_sensor_key, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT);
+        if (PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT.equals(address)) {
+            Log.w(TAG, "No bluetooth address.");
+            return;
+        }
+        Log.w(TAG, "Connecting to bluetooth address: " + address);
+
+        BluetoothDevice device;
         try {
-          mutex.wait(UnitConversions.ONE_SECOND);
-        } catch (InterruptedException e) {
-          Log.e(TAG, "Interrupted while waiting for default bluetooth adapter", e);
+            device = bluetoothAdapter.getRemoteDevice(address);
+        } catch (IllegalArgumentException e) {
+            Log.d(TAG, "Unable to get remote device for: " + address, e);
+            return;
         }
-      }
+        bluetoothConnectionManager.connect(device);
     }
-  
-    if (adapters.get(0) == null) {
-      Log.w(TAG, "No bluetooth adapter found.");
-      return null;
+
+    @Override
+    protected void tearDownChannel() {
+        bluetoothConnectionManager.reset();
     }
-    return adapters.get(0);
-  }
 
-  private final Context context;
-  private final BluetoothConnectionManager bluetoothConnectionManager;
-  private SensorDataSet sensorDataSet = null;
-
-  // Handler that gets information back from the bluetoothConnectionManager
-  private final Handler messageHandler = new Handler(Looper.getMainLooper()) {
-      @Override
-    public void handleMessage(Message message) {
-      switch (message.what) {
-        case BluetoothConnectionManager.MESSAGE_DEVICE_NAME:
-          String deviceName = message.getData().getString(BluetoothConnectionManager.KEY_DEVICE_NAME);
-          break;
-        case BluetoothConnectionManager.MESSAGE_READ:
-          if (!(message.obj instanceof SensorDataSet)) {
-            Log.e(TAG ,"Received message did not contain a SensorDataSet.");
-            sensorDataSet = null;
-          } else {
-            sensorDataSet = (SensorDataSet) message.obj;
-          }
-          break;
-        default:
-          break;
-      }
+    @Override
+    public SensorState getSensorState() {
+        return bluetoothConnectionManager.getSensorState();
     }
-  };
 
-  /**
-   * @param context the context
-   */
-  public BluetoothSensorManager(Context context) {
-    this.context = context;
-    bluetoothConnectionManager = new BluetoothConnectionManager(context, messageHandler);
-  }
-
-  @Override
-  public boolean isEnabled() {
-    return bluetoothAdapter != null && bluetoothAdapter.isEnabled();
-  }
-
-  @Override
-  protected void setUpChannel() {
-    if (!isEnabled()) {
-      Log.w(TAG, "Bluetooth not enabled.");
-      return;
+    @Override
+    public SensorDataSet getSensorDataSet() {
+        return sensorDataSet;
     }
-    String address = PreferencesUtils.getString(context, R.string.bluetooth_sensor_key, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT);
-    if (PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT.equals(address)) {
-      Log.w(TAG, "No bluetooth address.");
-      return;
-    }
-    Log.w(TAG, "Connecting to bluetooth address: " + address);
-
-    BluetoothDevice device;
-    try {
-      device = bluetoothAdapter.getRemoteDevice(address);
-    } catch (IllegalArgumentException e) {
-      Log.d(TAG, "Unable to get remote device for: " + address, e);
-      return;
-    }
-    bluetoothConnectionManager.connect(device);
-  }
-
-  @Override
-  protected void tearDownChannel() {
-    bluetoothConnectionManager.reset();
-  }
-
-  @Override
-  public SensorState getSensorState() {
-    return bluetoothConnectionManager.getSensorState();
-  }
-
-  @Override
-  public SensorDataSet getSensorDataSet() {
-    return sensorDataSet;
-  }
 }

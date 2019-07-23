@@ -26,41 +26,41 @@ import com.google.android.apps.mytracks.content.sensor.SensorDataSet;
  */
 public class SensorDataSetLocation extends Location {
 
-  private SensorDataSet sensorDataSet = null;
+    private SensorDataSet sensorDataSet = null;
 
-  /**
-   * The id of this location from the provider.
-   */
-  private int id = -1;
+    /**
+     * The id of this location from the provider.
+     */
+    private int id = -1;
 
-  public SensorDataSetLocation(Location location, SensorDataSet sensorDataSet) {
-    super(location);
-    this.sensorDataSet = sensorDataSet;
-  }
+    public SensorDataSetLocation(Location location, SensorDataSet sensorDataSet) {
+        super(location);
+        this.sensorDataSet = sensorDataSet;
+    }
 
-  public SensorDataSetLocation(String provider) {
-    super(provider);
-  }
+    public SensorDataSetLocation(String provider) {
+        super(provider);
+    }
 
-  public SensorDataSet getSensorDataSet() {
-    return sensorDataSet;
-  }
+    public SensorDataSet getSensorDataSet() {
+        return sensorDataSet;
+    }
 
-  public void setSensorDataSet(SensorDataSet sensorDataSet) {
-    this.sensorDataSet = sensorDataSet;
-  }
+    public void setSensorDataSet(SensorDataSet sensorDataSet) {
+        this.sensorDataSet = sensorDataSet;
+    }
 
-  public int getId() {
-    return id;
-  }
+    public int getId() {
+        return id;
+    }
 
-  public void setId(int id) {
-    this.id = id;
-  }
-  
-  public void reset() {
-    super.reset();
-    sensorDataSet = null;
-    id = -1;
-  }
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void reset() {
+        super.reset();
+        sensorDataSet = null;
+        id = -1;
+    }
 }

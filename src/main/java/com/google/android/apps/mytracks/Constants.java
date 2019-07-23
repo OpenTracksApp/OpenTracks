@@ -18,20 +18,20 @@ package com.google.android.apps.mytracks;
 
 /**
  * Common constants.
- * 
+ *
  * @author Leif Hendrik Wilden
  */
 public class Constants {
 
-  private Constants() {}
+    /**
+     * Maximum number of waypoints that will be loaded at one time.
+     */
+    public static final int MAX_LOADED_WAYPOINTS_POINTS = 10000;
+    /**
+     * The settings file name.
+     */
+    public static final String SETTINGS_NAME = "SettingsActivity";
 
-  /**
-   * Maximum number of waypoints that will be loaded at one time.
-   */
-  public static final int MAX_LOADED_WAYPOINTS_POINTS = 10000;
-
-  /**
-   * The settings file name.
-   */
-  public static final String SETTINGS_NAME = "SettingsActivity";
+    private Constants() {
+    }
 }

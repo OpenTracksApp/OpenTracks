@@ -23,87 +23,86 @@ import android.os.Bundle;
 
 import androidx.fragment.app.FragmentActivity;
 
-import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
 import com.google.android.apps.mytracks.content.ContentProviderUtils;
+import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
 import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.maps.mytracks.R;
 
 /**
  * A DialogFragment to delete marker.
- * 
+ *
  * @author Jimmy Shih
  */
 public class DeleteMarkerDialogFragment extends AbstractDialogFragment {
 
-  /**
-   * Interface for caller of this dialog fragment.
-   * 
-   * @author Jimmy Shih
-   */
-  public interface DeleteMarkerCaller {
+    public static final String DELETE_MARKER_DIALOG_TAG = "deleteMarkerDialog";
+    private static final String KEY_MARKER_IDS = "markerIds";
+    private DeleteMarkerCaller caller;
+
+    public static DeleteMarkerDialogFragment newInstance(long[] markerIds) {
+        Bundle bundle = new Bundle();
+        bundle.putLongArray(KEY_MARKER_IDS, markerIds);
+
+        DeleteMarkerDialogFragment deleteMarkerDialogFragment = new DeleteMarkerDialogFragment();
+        deleteMarkerDialogFragment.setArguments(bundle);
+        return deleteMarkerDialogFragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            caller = (DeleteMarkerCaller) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context + " must implement " + DeleteMarkerCaller.class.getSimpleName());
+        }
+    }
+
+    @Override
+    protected Dialog createDialog() {
+        final FragmentActivity fragmentActivity = getActivity();
+        final long[] markerIds = getArguments().getLongArray(KEY_MARKER_IDS);
+        int titleId;
+        int messageId;
+        if (markerIds.length == 1 && markerIds[0] == -1L) {
+            titleId = R.string.generic_delete_all_confirm_title;
+            messageId = R.string.marker_delete_all_confirm_message;
+        } else {
+            titleId = markerIds.length > 1 ? R.string.generic_delete_selected_confirm_title
+                    : R.string.marker_delete_one_confirm_title;
+            messageId = markerIds.length > 1 ? R.string.marker_delete_multiple_confirm_message
+                    : R.string.marker_delete_one_confirm_message;
+        }
+        return DialogUtils.createConfirmationDialog(
+                fragmentActivity, titleId, getString(messageId), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ContentProviderUtils contentProviderUtils = ContentProviderUtils.Factory.get(
+                                        fragmentActivity);
+                                for (long markerId : markerIds) {
+                                    contentProviderUtils.deleteWaypoint(fragmentActivity,
+                                            markerId, new DescriptionGeneratorImpl(fragmentActivity));
+                                }
+                                caller.onDeleteMarkerDone();
+                            }
+                        }).start();
+                    }
+                });
+    }
 
     /**
-     * Called when delete marker is done.
+     * Interface for caller of this dialog fragment.
+     *
+     * @author Jimmy Shih
      */
-    void onDeleteMarkerDone();
-  }
+    public interface DeleteMarkerCaller {
 
-  public static final String DELETE_MARKER_DIALOG_TAG = "deleteMarkerDialog";
-  private static final String KEY_MARKER_IDS = "markerIds";
-
-  public static DeleteMarkerDialogFragment newInstance(long[] markerIds) {
-    Bundle bundle = new Bundle();
-    bundle.putLongArray(KEY_MARKER_IDS, markerIds);
-
-    DeleteMarkerDialogFragment deleteMarkerDialogFragment = new DeleteMarkerDialogFragment();
-    deleteMarkerDialogFragment.setArguments(bundle);
-    return deleteMarkerDialogFragment;
-  }
-
-  private DeleteMarkerCaller caller;
-
-  @Override
-  public void onAttach(Context context) {
-    super.onAttach(context);
-    try {
-      caller = (DeleteMarkerCaller) context;
-    } catch (ClassCastException e) {
-      throw new ClassCastException(context + " must implement " + DeleteMarkerCaller.class.getSimpleName());
+        /**
+         * Called when delete marker is done.
+         */
+        void onDeleteMarkerDone();
     }
-  }
-
-  @Override
-  protected Dialog createDialog() {
-    final FragmentActivity fragmentActivity = getActivity();
-    final long[] markerIds = getArguments().getLongArray(KEY_MARKER_IDS);
-    int titleId;
-    int messageId;
-    if (markerIds.length == 1 && markerIds[0] == -1L) {
-      titleId = R.string.generic_delete_all_confirm_title;
-      messageId = R.string.marker_delete_all_confirm_message;
-    } else {
-      titleId = markerIds.length > 1 ? R.string.generic_delete_selected_confirm_title
-          : R.string.marker_delete_one_confirm_title;
-      messageId = markerIds.length > 1 ? R.string.marker_delete_multiple_confirm_message
-          : R.string.marker_delete_one_confirm_message;
-    }
-    return DialogUtils.createConfirmationDialog(
-        fragmentActivity, titleId, getString(messageId), new DialogInterface.OnClickListener() {
-            @Override
-          public void onClick(DialogInterface dialog, int which) {
-            new Thread(new Runnable() {
-                @Override
-              public void run() {
-                ContentProviderUtils contentProviderUtils = ContentProviderUtils.Factory.get(
-                    fragmentActivity);
-                for (long markerId : markerIds) {
-                  contentProviderUtils.deleteWaypoint(fragmentActivity,
-                      markerId, new DescriptionGeneratorImpl(fragmentActivity));
-                }
-                caller.onDeleteMarkerDone();
-              }
-            }).start();
-          }
-        });
-  }
 }

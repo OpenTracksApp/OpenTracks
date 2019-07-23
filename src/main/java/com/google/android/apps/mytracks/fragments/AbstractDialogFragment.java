@@ -16,33 +16,33 @@
 
 package com.google.android.apps.mytracks.fragments;
 
-import com.google.android.apps.mytracks.util.DialogUtils;
-
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
-/**
+import com.google.android.apps.mytracks.util.DialogUtils;
 
+/**
  * @author Jimmy Shih
  */
 public abstract class AbstractDialogFragment extends DialogFragment {
 
-  @NonNull
-  @Override
-  public Dialog onCreateDialog(Bundle savedInstanceState) {
-    final Dialog dialog = createDialog();
-    dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        final Dialog dialog = createDialog();
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
 
-        @Override
-      public void onShow(DialogInterface dialogInterface) {
-        DialogUtils.setDialogTitleDivider(getActivity(), dialog);
-      }
-    });
-    return dialog;
-  }
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                DialogUtils.setDialogTitleDivider(getActivity(), dialog);
+            }
+        });
+        return dialog;
+    }
 
-  protected abstract Dialog createDialog();
+    protected abstract Dialog createDialog();
 }

@@ -19,16 +19,16 @@ import java.io.InputStream;
 
 /**
  * Interface for a track importer.
- * 
+ *
  * @author Jimmy Shih
  */
 public interface TrackImporter {
 
-  /**
-   * Import a file.
-   * 
-   * @param inputStream the file's input stream
-   * @return the imported track id or -1L.
-   */
-  long importFile(InputStream inputStream);
+    /**
+     * Import a file.
+     *
+     * @param inputStream the file's input stream
+     * @return the imported track id or -1L.
+     */
+    long importFile(InputStream inputStream);
 }

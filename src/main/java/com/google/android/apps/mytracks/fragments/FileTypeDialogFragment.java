@@ -29,72 +29,70 @@ import com.google.android.maps.mytracks.R;
 
 /**
  * A DialogFragment to select a file type, gpx, kml, etc.
- * 
+ *
  * @author Jimmy Shih
  */
 public class FileTypeDialogFragment extends AbstractDialogFragment {
 
-  /**
-   * Interface for caller of this dialog fragment.
-   * 
-   * @author Jimmy Shih
-   */
-  public interface FileTypeCaller {
+    public static final String FILE_TYPE_DIALOG_TAG = "fileType";
+    private static final String KEY_MENU_ID = "menuId";
+    private static final String KEY_TITLE_ID = "titleId";
+    private static final String KEY_OPTION_ID = "optionId";
+    private FileTypeCaller caller;
+
+    public static FileTypeDialogFragment newInstance(int menuId, int titleId, int optionId) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(KEY_MENU_ID, menuId);
+        bundle.putInt(KEY_TITLE_ID, titleId);
+        bundle.putInt(KEY_OPTION_ID, optionId);
+
+        FileTypeDialogFragment fileTypeDialogFragment = new FileTypeDialogFragment();
+        fileTypeDialogFragment.setArguments(bundle);
+        return fileTypeDialogFragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            caller = (FileTypeCaller) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context + " must implement " + FileTypeCaller.class.getSimpleName());
+        }
+    }
+
+    @Override
+    protected Dialog createDialog() {
+        int optionId = getArguments().getInt(KEY_OPTION_ID);
+        final int titleId = getArguments().getInt(KEY_TITLE_ID);
+        final int menuId = getArguments().getInt(KEY_MENU_ID);
+        TrackFileFormat[] trackFileFormats = TrackFileFormat.values();
+        String[] choices = new String[trackFileFormats.length];
+        for (int i = 0; i < choices.length; i++) {
+            TrackFileFormat trackFileFormat = trackFileFormats[i];
+            choices[i] = getString(optionId, trackFileFormat.name(),
+                    FileUtils.getPathDisplayName(trackFileFormat.getExtension()));
+        }
+        return new AlertDialog.Builder(getActivity()).setNegativeButton(R.string.generic_cancel, null)
+                .setPositiveButton(R.string.generic_ok, new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        int position = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                        caller.onFileTypeDone(menuId, TrackFileFormat.values()[position]);
+                    }
+                }).setSingleChoiceItems(choices, 0, null).setTitle(titleId).create();
+    }
 
     /**
-     * Called when file type selection is done.
+     * Interface for caller of this dialog fragment.
+     *
+     * @author Jimmy Shih
      */
-    void onFileTypeDone(int menuId, TrackFileFormat trackFileFormat);
-  }
+    public interface FileTypeCaller {
 
-  public static final String FILE_TYPE_DIALOG_TAG = "fileType";
-
-  private static final String KEY_MENU_ID = "menuId";
-  private static final String KEY_TITLE_ID = "titleId";
-  private static final String KEY_OPTION_ID = "optionId";
-
-  public static FileTypeDialogFragment newInstance(int menuId, int titleId, int optionId) {
-    Bundle bundle = new Bundle();
-    bundle.putInt(KEY_MENU_ID, menuId);
-    bundle.putInt(KEY_TITLE_ID, titleId);
-    bundle.putInt(KEY_OPTION_ID, optionId);
-
-    FileTypeDialogFragment fileTypeDialogFragment = new FileTypeDialogFragment();
-    fileTypeDialogFragment.setArguments(bundle);
-    return fileTypeDialogFragment;
-  }
-
-  private FileTypeCaller caller;
-
-  @Override
-  public void onAttach(Context context) {
-    super.onAttach(context);
-    try {
-      caller = (FileTypeCaller) context;
-    } catch (ClassCastException e) {
-      throw new ClassCastException(context + " must implement " + FileTypeCaller.class.getSimpleName());
+        /**
+         * Called when file type selection is done.
+         */
+        void onFileTypeDone(int menuId, TrackFileFormat trackFileFormat);
     }
-  }
-
-  @Override
-  protected Dialog createDialog() {
-    int optionId = getArguments().getInt(KEY_OPTION_ID);
-    final int titleId = getArguments().getInt(KEY_TITLE_ID);
-    final int menuId = getArguments().getInt(KEY_MENU_ID);
-    TrackFileFormat[] trackFileFormats = TrackFileFormat.values();
-    String[] choices = new String[trackFileFormats.length];
-    for (int i = 0; i < choices.length; i++) {
-      TrackFileFormat trackFileFormat = trackFileFormats[i];
-      choices[i] = getString(optionId, trackFileFormat.name(),
-          FileUtils.getPathDisplayName(trackFileFormat.getExtension()));
-    }
-    return new AlertDialog.Builder(getActivity()).setNegativeButton(R.string.generic_cancel, null)
-        .setPositiveButton(R.string.generic_ok, new OnClickListener() {
-            @Override
-          public void onClick(DialogInterface dialog, int which) {
-            int position = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-            caller.onFileTypeDone(menuId, TrackFileFormat.values()[position]);
-          }
-        }).setSingleChoiceItems(choices, 0, null).setTitle(titleId).create();
-  }
 }

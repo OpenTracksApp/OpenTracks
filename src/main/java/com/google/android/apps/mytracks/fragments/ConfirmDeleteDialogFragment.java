@@ -26,72 +26,71 @@ import com.google.android.maps.mytracks.R;
 
 /**
  * A DialogFragment to confirm delete.
- * 
+ *
  * @author Jimmy Shih
  */
 public class ConfirmDeleteDialogFragment extends AbstractDialogFragment {
 
-  /**
-   * Interface for caller of this dialog fragment.
-   * 
-   * @author Jimmy Shih
-   */
-  public interface ConfirmDeleteCaller {
+    public static final String CONFIRM_DELETE_DIALOG_TAG = "confirmDeleteDialog";
+    private static final String KEY_TRACK_IDS = "trackIds";
+    private ConfirmDeleteCaller caller;
 
     /**
-     * Called when confirm delete is done.
-     * 
+     * Create a new instance.
+     *
      * @param trackIds list of track ids to delete. To delete all, set to size 1
-     *          with trackIds[0] == -1L
+     *                 with trackIds[0] == -1L
      */
-    void onConfirmDeleteDone(long[] trackIds);
-  }
+    public static ConfirmDeleteDialogFragment newInstance(long[] trackIds) {
+        Bundle bundle = new Bundle();
+        bundle.putLongArray(KEY_TRACK_IDS, trackIds);
 
-  public static final String CONFIRM_DELETE_DIALOG_TAG = "confirmDeleteDialog";
-  private static final String KEY_TRACK_IDS = "trackIds";
-
-  /**
-   * Create a new instance.
-   * 
-   * @param trackIds list of track ids to delete. To delete all, set to size 1
-   *          with trackIds[0] == -1L
-   */
-  public static ConfirmDeleteDialogFragment newInstance(long[] trackIds) {
-    Bundle bundle = new Bundle();
-    bundle.putLongArray(KEY_TRACK_IDS, trackIds);
-
-    ConfirmDeleteDialogFragment deleteTrackDialogFragment = new ConfirmDeleteDialogFragment();
-    deleteTrackDialogFragment.setArguments(bundle);
-    return deleteTrackDialogFragment;
-  }
-
-  private ConfirmDeleteCaller caller;
-
-  @Override
-  public void onAttach(Context context) {
-    super.onAttach(context);
-    try {
-      caller = (ConfirmDeleteCaller) context;
-    } catch (ClassCastException e) {
-      throw new ClassCastException(context + " must implement " + ConfirmDeleteCaller.class.getSimpleName());
+        ConfirmDeleteDialogFragment deleteTrackDialogFragment = new ConfirmDeleteDialogFragment();
+        deleteTrackDialogFragment.setArguments(bundle);
+        return deleteTrackDialogFragment;
     }
-  }
 
-  @Override
-  protected Dialog createDialog() {
-    final long[] trackIds = getArguments().getLongArray(KEY_TRACK_IDS);
-    int titleId;
-    int messageId;
-    titleId = trackIds.length > 1 ? R.string.generic_delete_selected_confirm_title
-        : R.string.track_delete_one_confirm_title;
-    messageId = trackIds.length > 1 ? R.string.track_delete_multiple_confirm_message
-        : R.string.track_delete_one_confirm_message;
-    return DialogUtils.createConfirmationDialog(
-        getActivity(), titleId, getString(messageId), new DialogInterface.OnClickListener() {
-            @Override
-          public void onClick(DialogInterface dialog, int which) {
-            caller.onConfirmDeleteDone(trackIds);
-          }
-        });
-  }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            caller = (ConfirmDeleteCaller) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context + " must implement " + ConfirmDeleteCaller.class.getSimpleName());
+        }
+    }
+
+    @Override
+    protected Dialog createDialog() {
+        final long[] trackIds = getArguments().getLongArray(KEY_TRACK_IDS);
+        int titleId;
+        int messageId;
+        titleId = trackIds.length > 1 ? R.string.generic_delete_selected_confirm_title
+                : R.string.track_delete_one_confirm_title;
+        messageId = trackIds.length > 1 ? R.string.track_delete_multiple_confirm_message
+                : R.string.track_delete_one_confirm_message;
+        return DialogUtils.createConfirmationDialog(
+                getActivity(), titleId, getString(messageId), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        caller.onConfirmDeleteDone(trackIds);
+                    }
+                });
+    }
+
+    /**
+     * Interface for caller of this dialog fragment.
+     *
+     * @author Jimmy Shih
+     */
+    public interface ConfirmDeleteCaller {
+
+        /**
+         * Called when confirm delete is done.
+         *
+         * @param trackIds list of track ids to delete. To delete all, set to size 1
+         *                 with trackIds[0] == -1L
+         */
+        void onConfirmDeleteDone(long[] trackIds);
+    }
 }

@@ -20,15 +20,15 @@ import java.io.OutputStream;
 
 /**
  * Track exporting for exporting track to an {@link OutputStream}.
- * 
+ *
  * @author Jimmy Shih
  */
 public interface TrackExporter {
- 
-  /**
-   * Write track to an output stream
-   * 
-   * @param outputStream the output stream
-   */
-  boolean writeTrack(OutputStream outputStream);
+
+    /**
+     * Write track to an output stream
+     *
+     * @param outputStream the output stream
+     */
+    boolean writeTrack(OutputStream outputStream);
 }

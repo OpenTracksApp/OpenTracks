@@ -41,15 +41,13 @@ import java.util.UUID;
  */
 public class BluetoothConnectionManager {
 
-    private static final UUID HEART_RATE_SERVICE_UUID = new UUID(0x180D00001000L, 0x800000805f9b34fbL);
-    private static final UUID HEART_RATE_MEASUREMENT_CHAR_UUID = new UUID(0x2A3700001000L, 0x800000805f9b34fbL);
-    private static final UUID CLIENT_CHARACTERISTIC_CONFIG_UUID = new UUID(0x290200001000L, 0x800000805f9b34fbL);
-
     // Message types sent to handler
     public static final int MESSAGE_DEVICE_NAME = 1;
     public static final int MESSAGE_READ = 2;
     public static final String KEY_DEVICE_NAME = "device_name";
-
+    private static final UUID HEART_RATE_SERVICE_UUID = new UUID(0x180D00001000L, 0x800000805f9b34fbL);
+    private static final UUID HEART_RATE_MEASUREMENT_CHAR_UUID = new UUID(0x2A3700001000L, 0x800000805f9b34fbL);
+    private static final UUID CLIENT_CHARACTERISTIC_CONFIG_UUID = new UUID(0x290200001000L, 0x800000805f9b34fbL);
     private static final String TAG = BluetoothConnectionManager.class.getSimpleName();
 
     private final Context context;

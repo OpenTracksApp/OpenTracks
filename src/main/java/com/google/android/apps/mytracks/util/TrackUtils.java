@@ -16,36 +16,37 @@
 
 package com.google.android.apps.mytracks.util;
 
+import android.content.Context;
+
 import com.google.android.apps.mytracks.content.ContentProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
 
-import android.content.Context;
-
 /**
  * Utilities for updating track.
- * 
+ *
  * @author Jimmy Shih
  */
 public class TrackUtils {
 
-  private TrackUtils() {}
+    public static String TRACK_SORT_ORDER = TracksColumns.STARTTIME + " DESC";
 
-  public static String TRACK_SORT_ORDER = TracksColumns.STARTTIME + " DESC";
-
-  public static void updateTrack(Context context, Track track, String name, String category, String description, ContentProviderUtils contentProviderUtils) {
-    if (name != null) {
-      track.setName(name);
-    }
-    if (category != null) {
-      track.setCategory(category);
-      track.setIcon(TrackIconUtils.getIconValue(context, category));
+    private TrackUtils() {
     }
 
-    if (description != null) {
-      track.setDescription(description);
+    public static void updateTrack(Context context, Track track, String name, String category, String description, ContentProviderUtils contentProviderUtils) {
+        if (name != null) {
+            track.setName(name);
+        }
+        if (category != null) {
+            track.setCategory(category);
+            track.setIcon(TrackIconUtils.getIconValue(context, category));
+        }
+
+        if (description != null) {
+            track.setDescription(description);
+        }
+        track.setModifiedTime(System.currentTimeMillis());
+        contentProviderUtils.updateTrack(track);
     }
-    track.setModifiedTime(System.currentTimeMillis());
-    contentProviderUtils.updateTrack(track);
-  }
 }

@@ -16,126 +16,126 @@
 
 package com.google.android.apps.mytracks.io.file.importer;
 
-import static com.google.android.testing.mocking.AndroidMock.eq;
-import static com.google.android.testing.mocking.AndroidMock.expect;
+import android.location.Location;
 
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.android.testing.mocking.AndroidMock;
 
-import android.location.Location;
+import org.easymock.Capture;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import org.easymock.Capture;
+import static com.google.android.testing.mocking.AndroidMock.eq;
+import static com.google.android.testing.mocking.AndroidMock.expect;
 
 /**
  * Tests for {@link KmlFileTrackImporter}.
- * 
+ *
  * @author Jimmy Shih
  */
 public class KmlFileTrackImporterTest extends AbstractTestFileTrackImporter {
 
-  private static String getNameAndDescription(String name, String description) {
-    return "<name><![CDATA[" + name + "]]></name><description><![CDATA[" + description
-        + "]]></description>";
-  }
+    private static final String VALID_ONE_TRACK_ONE_SEGMENT_GPX =
+            "<kml xmlns:gx=\"http://www.google.com/kml/ext/2.2\"><Placemark>"
+                    + getNameAndDescription(TRACK_NAME_0, TRACK_DESCRIPTION_0) + "<gx:MultiTrack><gx:Track>"
+                    + getTrackPoint(0, TRACK_TIME_0) + getTrackPoint(1, TRACK_TIME_1)
+                    + "</gx:Track></gx:MultiTrack></Placemark></kml>";
+    private static final String VALID_ONE_TRACK_TWO_SEGMENTS_GPX =
+            "<kml xmlns:gx=\"http://www.google.com/kml/ext/2.2\"><Placemark>"
+                    + getNameAndDescription(TRACK_NAME_0, TRACK_DESCRIPTION_0) + "<gx:MultiTrack><gx:Track>"
+                    + getTrackPoint(0, TRACK_TIME_0) + getTrackPoint(1, TRACK_TIME_1) + "</gx:Track><gx:Track>"
+                    + getTrackPoint(2, TRACK_TIME_2) + getTrackPoint(3, TRACK_TIME_3)
+                    + "</gx:Track></gx:MultiTrack></Placemark></kml>";
 
-  private static String getTrackPoint(int index, String time) {
-    String latitude = Double.toString(TRACK_LATITUDE + index);
-    String longitude = Double.toString(TRACK_LONGITUDE + index);
-    String altitude = Double.toString(TRACK_ELEVATION + index);
-    StringBuffer buffer = new StringBuffer();
-    buffer.append("<when>" + time + "</when>" + "<gx:coord>" + longitude + " " + latitude + " "
-        + altitude + "</gx:coord>");
-    return buffer.toString();
-  }
+    private static String getNameAndDescription(String name, String description) {
+        return "<name><![CDATA[" + name + "]]></name><description><![CDATA[" + description
+                + "]]></description>";
+    }
 
-  private static final String VALID_ONE_TRACK_ONE_SEGMENT_GPX =
-      "<kml xmlns:gx=\"http://www.google.com/kml/ext/2.2\"><Placemark>"
-      + getNameAndDescription(TRACK_NAME_0, TRACK_DESCRIPTION_0) + "<gx:MultiTrack><gx:Track>"
-      + getTrackPoint(0, TRACK_TIME_0) + getTrackPoint(1, TRACK_TIME_1)
-      + "</gx:Track></gx:MultiTrack></Placemark></kml>";
-  private static final String VALID_ONE_TRACK_TWO_SEGMENTS_GPX =
-      "<kml xmlns:gx=\"http://www.google.com/kml/ext/2.2\"><Placemark>"
-      + getNameAndDescription(TRACK_NAME_0, TRACK_DESCRIPTION_0) + "<gx:MultiTrack><gx:Track>"
-      + getTrackPoint(0, TRACK_TIME_0) + getTrackPoint(1, TRACK_TIME_1) + "</gx:Track><gx:Track>"
-      + getTrackPoint(2, TRACK_TIME_2) + getTrackPoint(3, TRACK_TIME_3)
-      + "</gx:Track></gx:MultiTrack></Placemark></kml>";
+    private static String getTrackPoint(int index, String time) {
+        String latitude = Double.toString(TRACK_LATITUDE + index);
+        String longitude = Double.toString(TRACK_LONGITUDE + index);
+        String altitude = Double.toString(TRACK_ELEVATION + index);
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("<when>" + time + "</when>" + "<gx:coord>" + longitude + " " + latitude + " "
+                + altitude + "</gx:coord>");
+        return buffer.toString();
+    }
 
-  /**
-   * Tests one track with one segment.
-   */
-  public void testOneTrackOneSegment() throws Exception {
-    Capture<Track> track = new Capture<Track>();
+    /**
+     * Tests one track with one segment.
+     */
+    public void testOneTrackOneSegment() throws Exception {
+        Capture<Track> track = new Capture<Track>();
 
-    Location location0 = createLocation(0, DATE_FORMAT_0.parse(TRACK_TIME_0).getTime());
-    Location location1 = createLocation(1, DATE_FORMAT_1.parse(TRACK_TIME_1).getTime());
+        Location location0 = createLocation(0, DATE_FORMAT_0.parse(TRACK_TIME_0).getTime());
+        Location location1 = createLocation(1, DATE_FORMAT_1.parse(TRACK_TIME_1).getTime());
 
-    contentProviderUtils.clearTrack(getContext(), TRACK_ID_0);
-    expectFirstTrackPoint(location0, TRACK_ID_0, TRACK_POINT_ID_0);
+        contentProviderUtils.clearTrack(getContext(), TRACK_ID_0);
+        expectFirstTrackPoint(location0, TRACK_ID_0, TRACK_POINT_ID_0);
 
-    // A flush happens at the end
-    expect(contentProviderUtils.bulkInsertTrackPoint(
-        LocationsMatcher.eqLoc(location1), eq(1), eq(TRACK_ID_0))).andReturn(1);
-    expect(contentProviderUtils.getLastTrackPointId(TRACK_ID_0)).andReturn(TRACK_POINT_ID_1);
-    expect(
-        contentProviderUtils.getTrack(PreferencesUtils.getLong(getContext(),
-            R.string.recording_track_id_key))).andStubReturn(null);
-    expectUpdateTrack(track, true, TRACK_ID_0);
-    AndroidMock.replay(contentProviderUtils);
+        // A flush happens at the end
+        expect(contentProviderUtils.bulkInsertTrackPoint(
+                LocationsMatcher.eqLoc(location1), eq(1), eq(TRACK_ID_0))).andReturn(1);
+        expect(contentProviderUtils.getLastTrackPointId(TRACK_ID_0)).andReturn(TRACK_POINT_ID_1);
+        expect(
+                contentProviderUtils.getTrack(PreferencesUtils.getLong(getContext(),
+                        R.string.recording_track_id_key))).andStubReturn(null);
+        expectUpdateTrack(track, true, TRACK_ID_0);
+        AndroidMock.replay(contentProviderUtils);
 
-    InputStream inputStream = new ByteArrayInputStream(VALID_ONE_TRACK_ONE_SEGMENT_GPX.getBytes());
-    KmlFileTrackImporter kmlFileTrackImporter = new KmlFileTrackImporter(
-        getContext(), TRACK_ID_0, contentProviderUtils);
-    long trackId = kmlFileTrackImporter.importFile(inputStream);
-    assertEquals(TRACK_ID_0, trackId);
+        InputStream inputStream = new ByteArrayInputStream(VALID_ONE_TRACK_ONE_SEGMENT_GPX.getBytes());
+        KmlFileTrackImporter kmlFileTrackImporter = new KmlFileTrackImporter(
+                getContext(), TRACK_ID_0, contentProviderUtils);
+        long trackId = kmlFileTrackImporter.importFile(inputStream);
+        assertEquals(TRACK_ID_0, trackId);
 
-    long time0 = DATE_FORMAT_0.parse(TRACK_TIME_0).getTime();
-    long time1 = DATE_FORMAT_1.parse(TRACK_TIME_1).getTime();
-    assertEquals(time1 - time0, track.getValue().getTripStatistics().getTotalTime());
-    AndroidMock.verify(contentProviderUtils);
-    verifyTrack(track.getValue(), TRACK_NAME_0, TRACK_DESCRIPTION_0, time0);
-  }
+        long time0 = DATE_FORMAT_0.parse(TRACK_TIME_0).getTime();
+        long time1 = DATE_FORMAT_1.parse(TRACK_TIME_1).getTime();
+        assertEquals(time1 - time0, track.getValue().getTripStatistics().getTotalTime());
+        AndroidMock.verify(contentProviderUtils);
+        verifyTrack(track.getValue(), TRACK_NAME_0, TRACK_DESCRIPTION_0, time0);
+    }
 
-  /**
-   * Tests one track with two segments.
-   */
-  public void testOneTrackTwoSegments() throws Exception {
-    Capture<Track> track = new Capture<Track>();
+    /**
+     * Tests one track with two segments.
+     */
+    public void testOneTrackTwoSegments() throws Exception {
+        Capture<Track> track = new Capture<Track>();
 
-    Location location0 = createLocation(0, DATE_FORMAT_0.parse(TRACK_TIME_0).getTime());
+        Location location0 = createLocation(0, DATE_FORMAT_0.parse(TRACK_TIME_0).getTime());
 
-    contentProviderUtils.clearTrack(getContext(), TRACK_ID_0);
-    expectFirstTrackPoint(location0, TRACK_ID_0, TRACK_POINT_ID_0);
+        contentProviderUtils.clearTrack(getContext(), TRACK_ID_0);
+        expectFirstTrackPoint(location0, TRACK_ID_0, TRACK_POINT_ID_0);
 
-    // A flush happens at the end
-    expect(contentProviderUtils.bulkInsertTrackPoint(
-        (Location[]) AndroidMock.anyObject(), eq(5), eq(TRACK_ID_0))).andStubReturn(5);
-    expect(contentProviderUtils.getLastTrackPointId(TRACK_ID_0)).andReturn(TRACK_POINT_ID_3);
-    expect(
-        contentProviderUtils.getTrack(PreferencesUtils.getLong(getContext(),
-            R.string.recording_track_id_key))).andStubReturn(null);
-    expectUpdateTrack(track, true, TRACK_ID_0);
-    AndroidMock.replay(contentProviderUtils);
+        // A flush happens at the end
+        expect(contentProviderUtils.bulkInsertTrackPoint(
+                (Location[]) AndroidMock.anyObject(), eq(5), eq(TRACK_ID_0))).andStubReturn(5);
+        expect(contentProviderUtils.getLastTrackPointId(TRACK_ID_0)).andReturn(TRACK_POINT_ID_3);
+        expect(
+                contentProviderUtils.getTrack(PreferencesUtils.getLong(getContext(),
+                        R.string.recording_track_id_key))).andStubReturn(null);
+        expectUpdateTrack(track, true, TRACK_ID_0);
+        AndroidMock.replay(contentProviderUtils);
 
-    InputStream inputStream = new ByteArrayInputStream(VALID_ONE_TRACK_TWO_SEGMENTS_GPX.getBytes());
-    KmlFileTrackImporter kmlFileTrackImporter = new KmlFileTrackImporter(
-        getContext(), TRACK_ID_0, contentProviderUtils);
-    long trackId = kmlFileTrackImporter.importFile(inputStream);
-    assertEquals(TRACK_ID_0, trackId);
+        InputStream inputStream = new ByteArrayInputStream(VALID_ONE_TRACK_TWO_SEGMENTS_GPX.getBytes());
+        KmlFileTrackImporter kmlFileTrackImporter = new KmlFileTrackImporter(
+                getContext(), TRACK_ID_0, contentProviderUtils);
+        long trackId = kmlFileTrackImporter.importFile(inputStream);
+        assertEquals(TRACK_ID_0, trackId);
 
-    long time0 = DATE_FORMAT_0.parse(TRACK_TIME_0).getTime();
-    long time1 = DATE_FORMAT_1.parse(TRACK_TIME_1).getTime();
-    long time2 = DATE_FORMAT_1.parse(TRACK_TIME_2).getTime();
-    long time3 = DATE_FORMAT_1.parse(TRACK_TIME_3).getTime();
-    assertEquals(
-        time1 - time0 + time3 - time2, track.getValue().getTripStatistics().getTotalTime());
+        long time0 = DATE_FORMAT_0.parse(TRACK_TIME_0).getTime();
+        long time1 = DATE_FORMAT_1.parse(TRACK_TIME_1).getTime();
+        long time2 = DATE_FORMAT_1.parse(TRACK_TIME_2).getTime();
+        long time3 = DATE_FORMAT_1.parse(TRACK_TIME_3).getTime();
+        assertEquals(
+                time1 - time0 + time3 - time2, track.getValue().getTripStatistics().getTotalTime());
 
-    AndroidMock.verify(contentProviderUtils);
-    verifyTrack(track.getValue(), TRACK_NAME_0, TRACK_DESCRIPTION_0,
-        DATE_FORMAT_0.parse(TRACK_TIME_0).getTime());
-  }
+        AndroidMock.verify(contentProviderUtils);
+        verifyTrack(track.getValue(), TRACK_NAME_0, TRACK_DESCRIPTION_0,
+                DATE_FORMAT_0.parse(TRACK_TIME_0).getTime());
+    }
 }

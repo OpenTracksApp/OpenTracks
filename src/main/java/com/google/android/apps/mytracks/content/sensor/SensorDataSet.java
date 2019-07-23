@@ -5,15 +5,13 @@ public final class SensorDataSet {
     public static final float DATA_UNAVAILABLE = Integer.MAX_VALUE;
 
     //TODO It might be necessary to consider: sensor if sensor was connected as well.
-
+    public String sensorName;
+    public String sensorAddress;
     private float heartRate;
     private float cadence;
     private float power;
     private float batteryLevel;
     private long creationTimestamp;
-
-    public String sensorName;
-    public String sensorAddress;
 
     public SensorDataSet(float heartRate, float cadence, float power, float batteryLevel, long creationTimestamp) {
         this.heartRate = heartRate;
@@ -71,6 +69,7 @@ public final class SensorDataSet {
 
     /**
      * Is the data recent considering the current time.
+     *
      * @param maxAge the maximal age in milliseconds.
      */
     public boolean isRecent(long maxAge) {

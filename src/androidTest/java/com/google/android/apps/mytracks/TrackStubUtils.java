@@ -20,72 +20,71 @@ import android.location.Location;
 
 import com.google.android.apps.mytracks.content.SensorDataSetLocation;
 import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.content.sensor.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.sensor.SensorDataSet;
 
 /**
  * Commons utilities for creating stubs of track, location. The class will be
  * enriched if needs more similar stubs for test.
- * 
+ *
  * @author Youtao Liu
  */
 public class TrackStubUtils {
 
-  static final String LOCATION_PROVIDER = "gps";
-  static final double INITIAL_LATITUDE = 22;
-  static final double INITIAL_LONGITUDE = 22;
-  public static final double INITIAL_ALTITUDE = 22;
-  static final float INITIAL_ACCURACY = 5;
-  static final float INITIAL_SPEED = 10;
-  public static final long INITIAL_TIME = 1000L;
-  static final float INITIAL_BEARING = 3.0f;
-  // Used to change the value of latitude, longitude, and altitude.
-  static final double DIFFERENCE = 0.01;
+    public static final double INITIAL_ALTITUDE = 22;
+    public static final long INITIAL_TIME = 1000L;
+    static final String LOCATION_PROVIDER = "gps";
+    static final double INITIAL_LATITUDE = 22;
+    static final double INITIAL_LONGITUDE = 22;
+    static final float INITIAL_ACCURACY = 5;
+    static final float INITIAL_SPEED = 10;
+    static final float INITIAL_BEARING = 3.0f;
+    // Used to change the value of latitude, longitude, and altitude.
+    static final double DIFFERENCE = 0.01;
 
-  /**
-   * Gets a a {@link Track} stub with specified number of locations.
-   * 
-   * @param numberOfLocations the number of locations for the track
-   * @return a track stub.
-   */
-  public static Track createTrack(int numberOfLocations) {
-    Track track = new Track();
-    for (int i = 0; i < numberOfLocations; i++) {
-      track.addLocation(createSensorDataSetLocation(INITIAL_LATITUDE + i * DIFFERENCE, INITIAL_LONGITUDE
-          + i * DIFFERENCE, INITIAL_ALTITUDE + i * DIFFERENCE));
+    /**
+     * Gets a a {@link Track} stub with specified number of locations.
+     *
+     * @param numberOfLocations the number of locations for the track
+     * @return a track stub.
+     */
+    public static Track createTrack(int numberOfLocations) {
+        Track track = new Track();
+        for (int i = 0; i < numberOfLocations; i++) {
+            track.addLocation(createSensorDataSetLocation(INITIAL_LATITUDE + i * DIFFERENCE, INITIAL_LONGITUDE
+                    + i * DIFFERENCE, INITIAL_ALTITUDE + i * DIFFERENCE));
+        }
+
+        return track;
     }
 
-    return track;
-  }
+    /**
+     * Create a MyTracks location with default values.
+     *
+     * @return a track stub.
+     */
+    public static SensorDataSetLocation createSensorDataSetLocation() {
+        return createSensorDataSetLocation(INITIAL_LATITUDE, INITIAL_LONGITUDE, INITIAL_ALTITUDE);
+    }
 
-  /**
-   * Create a MyTracks location with default values.
-   * 
-   * @return a track stub.
-   */
-  public static SensorDataSetLocation createSensorDataSetLocation() {
-    return createSensorDataSetLocation(INITIAL_LATITUDE, INITIAL_LONGITUDE, INITIAL_ALTITUDE);
-  }
+    /**
+     * Creates a {@link SensorDataSetLocation} stub with specified values.
+     *
+     * @return a SensorDataSetLocation stub.
+     */
+    public static SensorDataSetLocation createSensorDataSetLocation(double latitude, double longitude,
+                                                                    double altitude) {
+        // Initial Location
+        Location loc = new Location(LOCATION_PROVIDER);
+        loc.setLatitude(latitude);
+        loc.setLongitude(longitude);
+        loc.setAltitude(altitude);
+        loc.setAccuracy(INITIAL_ACCURACY);
+        loc.setSpeed(INITIAL_SPEED);
+        loc.setTime(INITIAL_TIME);
+        loc.setBearing(INITIAL_BEARING);
+        SensorDataSet sd = new SensorDataSet(100, 100);
 
-  /**
-   * Creates a {@link SensorDataSetLocation} stub with specified values.
-   * 
-   * @return a SensorDataSetLocation stub.
-   */
-  public static SensorDataSetLocation createSensorDataSetLocation(double latitude, double longitude,
-                                                                  double altitude) {
-    // Initial Location
-    Location loc = new Location(LOCATION_PROVIDER);
-    loc.setLatitude(latitude);
-    loc.setLongitude(longitude);
-    loc.setAltitude(altitude);
-    loc.setAccuracy(INITIAL_ACCURACY);
-    loc.setSpeed(INITIAL_SPEED);
-    loc.setTime(INITIAL_TIME);
-    loc.setBearing(INITIAL_BEARING);
-    SensorDataSet sd = new SensorDataSet(100, 100);
-
-    return new SensorDataSetLocation(loc, sd);
-  }
+        return new SensorDataSetLocation(loc, sd);
+    }
 
 }

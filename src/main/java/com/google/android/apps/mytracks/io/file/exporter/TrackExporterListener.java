@@ -17,17 +17,17 @@ package com.google.android.apps.mytracks.io.file.exporter;
 
 /**
  * Listener for {@link TrackExporter} progress.
- * 
+ *
  * @author Jimmy Shih
  */
 public interface TrackExporterListener {
 
-  /**
-   * Called to update progress.
-   * 
-   * @param number the number of locations written
-   * @param max the maximum number of locations in a track, for calculation of
-   *          completion percentage
-   */
-  void onProgressUpdate(int number, int max);
+    /**
+     * Called to update progress.
+     *
+     * @param number the number of locations written
+     * @param max    the maximum number of locations in a track, for calculation of
+     *               completion percentage
+     */
+    void onProgressUpdate(int number, int max);
 }

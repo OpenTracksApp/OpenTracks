@@ -29,27 +29,28 @@ import java.util.Set;
  */
 public class BluetoothDeviceUtils {
 
-  private BluetoothDeviceUtils() {}
-
-  /**
-   * Populates the device names and the device addresses with all the suitable
-   * bluetooth devices.
-   *
-   * @param bluetoothAdapter the bluetooth adapter
-   * @param deviceNames list of device names
-   * @param deviceAddresses list of device addresses
-   */
-  public static void populateDeviceLists(BluetoothAdapter bluetoothAdapter, List<String> deviceNames, List<String> deviceAddresses) {
-    // Ensure the bluetooth adapter is not in discovery mode.
-    bluetoothAdapter.cancelDiscovery();
-
-    Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
-    for (BluetoothDevice device : pairedDevices) {
-      BluetoothClass bluetoothClass = device.getBluetoothClass();
-      if (bluetoothClass != null && (bluetoothClass.getDeviceClass() & BluetoothClass.Device.HEALTH_PULSE_RATE) != 0) {
-            deviceAddresses.add(device.getAddress());
-            deviceNames.add(device.getName());
-      }
+    private BluetoothDeviceUtils() {
     }
-  }
+
+    /**
+     * Populates the device names and the device addresses with all the suitable
+     * bluetooth devices.
+     *
+     * @param bluetoothAdapter the bluetooth adapter
+     * @param deviceNames      list of device names
+     * @param deviceAddresses  list of device addresses
+     */
+    public static void populateDeviceLists(BluetoothAdapter bluetoothAdapter, List<String> deviceNames, List<String> deviceAddresses) {
+        // Ensure the bluetooth adapter is not in discovery mode.
+        bluetoothAdapter.cancelDiscovery();
+
+        Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
+        for (BluetoothDevice device : pairedDevices) {
+            BluetoothClass bluetoothClass = device.getBluetoothClass();
+            if (bluetoothClass != null && (bluetoothClass.getDeviceClass() & BluetoothClass.Device.HEALTH_PULSE_RATE) != 0) {
+                deviceAddresses.add(device.getAddress());
+                deviceNames.add(device.getName());
+            }
+        }
+    }
 }

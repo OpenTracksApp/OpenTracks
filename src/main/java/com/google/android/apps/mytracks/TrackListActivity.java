@@ -78,579 +78,569 @@ import java.util.Locale;
 
 /**
  * An activity displaying a list of tracks.
- * 
+ *
  * @author Leif Hendrik Wilden
  */
 public class TrackListActivity extends AbstractTrackActivity implements FileTypeCaller, ConfirmDeleteDialogFragment.ConfirmDeleteCaller {
 
-  private static final String TAG = TrackListActivity.class.getSimpleName();
-  private static final String[] PROJECTION = new String[] { TracksColumns._ID, TracksColumns.NAME,
-      TracksColumns.DESCRIPTION, TracksColumns.CATEGORY, TracksColumns.STARTTIME,
-      TracksColumns.TOTALDISTANCE, TracksColumns.TOTALTIME, TracksColumns.ICON };
-
-  // Callback when the trackRecordingServiceConnection binding changes.
-  private final Runnable bindChangedCallback = new Runnable() {
-      @Override
-    public void run() {
-      /*
-       * After binding changes (e.g., becomes available), update the total time
-       * in trackController.
-       */
-      runOnUiThread(new Runnable() {
-          @Override
-        public void run() {
-          trackController.update(recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, recordingTrackPaused);
+    private static final String TAG = TrackListActivity.class.getSimpleName();
+    private static final String[] PROJECTION = new String[]{TracksColumns._ID, TracksColumns.NAME,
+            TracksColumns.DESCRIPTION, TracksColumns.CATEGORY, TracksColumns.STARTTIME,
+            TracksColumns.TOTALDISTANCE, TracksColumns.TOTALTIME, TracksColumns.ICON};
+    // The following are set in onCreate
+    private ContentProviderUtils contentProviderUtils;
+    private SharedPreferences sharedPreferences;
+    private TrackRecordingServiceConnection trackRecordingServiceConnection;
+    private TrackController trackController;
+    private ListView listView;
+    private ResourceCursorAdapter resourceCursorAdapter;
+    private final LoaderCallbacks<Cursor> loaderCallbacks = new LoaderCallbacks<Cursor>() {
+        @Override
+        public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
+            return new CursorLoader(TrackListActivity.this, TracksColumns.CONTENT_URI, PROJECTION, null,
+                    null, TrackUtils.TRACK_SORT_ORDER);
         }
-      });
 
-      if (!startGps && !startNewRecording) {
-        return;
-      }
+        @Override
+        public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
+            resourceCursorAdapter.swapCursor(cursor);
+        }
 
-      ITrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
-      if (service == null) {
-        Log.d(TAG, "service not available to start gps or a new recording");
-        return;
-      }
-      if (startNewRecording) {
-        startGps = false;
+        @Override
+        public void onLoaderReset(@NonNull Loader<Cursor> loader) {
+            resourceCursorAdapter.swapCursor(null);
+        }
+    };
+    // Preferences
+    private boolean metricUnits = true;
+    private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+    // Callback when an item is selected in the contextual action mode
+    private final ContextualActionModeCallback
+            contextualActionModeCallback = new ContextualActionModeCallback() {
 
-        long trackId = service.startNewTrack();
-        startNewRecording = false;
-        Intent intent = IntentUtils.newIntent(TrackListActivity.this, TrackDetailActivity.class)
-                .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);
-        startActivity(intent);
-        Toast.makeText(
-                TrackListActivity.this, R.string.track_list_record_success, Toast.LENGTH_SHORT)
-                .show();
-      }
-      if (startGps) {
-        service.startGps();
-        startGps = false;
-      }
-    }
-  };
+        @Override
+        public void onPrepare(Menu menu, int[] positions, long[] ids, boolean showSelectAll) {
+            boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+            boolean isSingleSelection = ids.length == 1;
 
-  /*
-   * Note that sharedPreferenceChangeListenr cannot be an anonymous inner class.
-   * Anonymous inner class will get garbage collected.
-   */
-  private final OnSharedPreferenceChangeListener
-      sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
-          @Override
+            menu.findItem(R.id.list_context_menu_share).setVisible(!isRecording && isSingleSelection);
+            menu.findItem(R.id.list_context_menu_show_on_map).setVisible(false);
+            menu.findItem(R.id.list_context_menu_edit).setVisible(isSingleSelection);
+            menu.findItem(R.id.list_context_menu_select_all).setVisible(showSelectAll);
+        }
+
+        @Override
+        public boolean onClick(int itemId, int[] positions, long[] ids) {
+            return handleContextItem(itemId, ids);
+        }
+    };
+    private boolean recordingTrackPaused = PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT;
+    /*
+     * Note that sharedPreferenceChangeListenr cannot be an anonymous inner class.
+     * Anonymous inner class will get garbage collected.
+     */
+    private final OnSharedPreferenceChangeListener
+            sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
+        @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-          if (key == null || key.equals(
-              PreferencesUtils.getKey(TrackListActivity.this, R.string.stats_units_key))) {
-            metricUnits = PreferencesUtils.isMetricUnits(TrackListActivity.this);
-          }
-          if (key == null || key.equals(
-              PreferencesUtils.getKey(TrackListActivity.this, R.string.recording_track_id_key))) {
-            recordingTrackId = PreferencesUtils.getLong(
-                TrackListActivity.this, R.string.recording_track_id_key);
-            if (key != null && recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
-              trackRecordingServiceConnection.startAndBind();
+            if (key == null || key.equals(
+                    PreferencesUtils.getKey(TrackListActivity.this, R.string.stats_units_key))) {
+                metricUnits = PreferencesUtils.isMetricUnits(TrackListActivity.this);
             }
-          }
-          if (key == null || key.equals(PreferencesUtils.getKey(
-              TrackListActivity.this, R.string.recording_track_paused_key))) {
-            recordingTrackPaused = PreferencesUtils.getBoolean(TrackListActivity.this,
-                R.string.recording_track_paused_key,
-                PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
-          }
-          if (key != null) {
+            if (key == null || key.equals(
+                    PreferencesUtils.getKey(TrackListActivity.this, R.string.recording_track_id_key))) {
+                recordingTrackId = PreferencesUtils.getLong(
+                        TrackListActivity.this, R.string.recording_track_id_key);
+                if (key != null && recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
+                    trackRecordingServiceConnection.startAndBind();
+                }
+            }
+            if (key == null || key.equals(PreferencesUtils.getKey(
+                    TrackListActivity.this, R.string.recording_track_paused_key))) {
+                recordingTrackPaused = PreferencesUtils.getBoolean(TrackListActivity.this,
+                        R.string.recording_track_paused_key,
+                        PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+            }
+            if (key != null) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        TrackListActivity.this.invalidateOptionsMenu();
+                        LoaderManager.getInstance(TrackListActivity.this).restartLoader(0, null, loaderCallbacks);
+                        boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+                        trackController.update(isRecording, recordingTrackPaused);
+                    }
+                });
+            }
+        }
+    };
+    // Menu items
+    private MenuItem searchMenuItem;
+    private MenuItem startGpsMenuItem;
+    private MenuItem aggregatedStatisticsMenuItem;
+    private MenuItem exportAllMenuItem;
+    private MenuItem importAllMenuItem;
+    private MenuItem deleteAllMenuItem;
+    private final OnClickListener stopListener = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            updateMenuItems(false, false);
+            TrackRecordingServiceConnectionUtils.stopRecording(
+                    TrackListActivity.this, trackRecordingServiceConnection, true);
+        }
+    };
+    private boolean startGps = false; // true to start gps
+    private boolean startNewRecording = false; // true to start a new recording
+    // Callback when the trackRecordingServiceConnection binding changes.
+    private final Runnable bindChangedCallback = new Runnable() {
+        @Override
+        public void run() {
+            /*
+             * After binding changes (e.g., becomes available), update the total time
+             * in trackController.
+             */
             runOnUiThread(new Runnable() {
                 @Override
-              public void run() {
-                TrackListActivity.this.invalidateOptionsMenu();
-                LoaderManager.getInstance(TrackListActivity.this).restartLoader(0, null, loaderCallbacks);
-                boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
-                trackController.update(isRecording, recordingTrackPaused);
-              }
+                public void run() {
+                    trackController.update(recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, recordingTrackPaused);
+                }
             });
-          }
-        }
-      };
 
-  // Callback when an item is selected in the contextual action mode
-  private final ContextualActionModeCallback
-      contextualActionModeCallback = new ContextualActionModeCallback() {
-
-          @Override
-        public void onPrepare(Menu menu, int[] positions, long[] ids, boolean showSelectAll) {
-          boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
-          boolean isSingleSelection = ids.length == 1;
-
-          menu.findItem(R.id.list_context_menu_share).setVisible(!isRecording && isSingleSelection);
-          menu.findItem(R.id.list_context_menu_show_on_map).setVisible(false);
-          menu.findItem(R.id.list_context_menu_edit).setVisible(isSingleSelection);
-          menu.findItem(R.id.list_context_menu_select_all).setVisible(showSelectAll);
-        }
-
-          @Override
-        public boolean onClick(int itemId, int[] positions, long[] ids) {
-          return handleContextItem(itemId, ids);
-        }
-  };
-
-  private final OnClickListener recordListener = new OnClickListener() {
-    public void onClick(View v) {
-      if (recordingTrackId == PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
-        // Not recording -> Recording
-        updateMenuItems(false, true);
-        startRecording();
-      } else {
-        if (recordingTrackPaused) {
-          // Paused -> Resume
-          updateMenuItems(false, true);
-          TrackRecordingServiceConnectionUtils.resumeTrack(trackRecordingServiceConnection);
-          trackController.update(true, false);
-        } else {
-          // Recording -> Paused
-          updateMenuItems(false, true);
-          TrackRecordingServiceConnectionUtils.pauseTrack(trackRecordingServiceConnection);
-          trackController.update(true, true);
-        }
-      }
-    }
-  };
-
-  private final OnClickListener stopListener = new OnClickListener() {
-      @Override
-    public void onClick(View v) {
-      updateMenuItems(false, false);
-      TrackRecordingServiceConnectionUtils.stopRecording(
-          TrackListActivity.this, trackRecordingServiceConnection, true);
-    }
-  };
-
-  private final LoaderCallbacks<Cursor> loaderCallbacks = new LoaderCallbacks<Cursor>() {
-      @Override
-    public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-      return new CursorLoader(TrackListActivity.this, TracksColumns.CONTENT_URI, PROJECTION, null,
-          null, TrackUtils.TRACK_SORT_ORDER);
-    }
-
-      @Override
-    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
-      resourceCursorAdapter.swapCursor(cursor);
-    }
-
-      @Override
-    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
-      resourceCursorAdapter.swapCursor(null);
-    }
-  };
-  
-  // The following are set in onCreate
-  private ContentProviderUtils contentProviderUtils;
-  private SharedPreferences sharedPreferences;
-  private TrackRecordingServiceConnection trackRecordingServiceConnection;
-  private TrackController trackController;
-  private ListView listView;
-  private ResourceCursorAdapter resourceCursorAdapter;
-
-  // Preferences
-  private boolean metricUnits = true;
-  private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
-  private boolean recordingTrackPaused = PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT;
-
-  // Menu items
-  private MenuItem searchMenuItem;
-  private MenuItem startGpsMenuItem;
-  private MenuItem aggregatedStatisticsMenuItem;
-  private MenuItem exportAllMenuItem;
-  private MenuItem importAllMenuItem;
-  private MenuItem deleteAllMenuItem;
-
-  private boolean startGps = false; // true to start gps
-  private boolean startNewRecording = false; // true to start a new recording
-
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-
-    if (BuildConfig.DEBUG) {
-      Log.d(TAG, "Enabling strict mode");
-      StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-              .detectAll()
-              .penaltyLog()
-              .build());
-      StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-              .detectAll()
-              .penaltyLog()
-              .build());
-    }
-
-    contentProviderUtils = ContentProviderUtils.Factory.get(this);
-    sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-
-    trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, bindChangedCallback);
-    trackController = new TrackController(this, trackRecordingServiceConnection, true, recordListener, stopListener);
-
-    setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
-    // Show trackController when search dialog is dismissed
-    SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
-    searchManager.setOnDismissListener(new SearchManager.OnDismissListener() {
-        @Override
-      public void onDismiss() {
-        trackController.show();
-      }
-    });
-
-    listView = findViewById(R.id.track_list);
-    listView.setEmptyView(findViewById(R.id.track_list_empty_view));
-    listView.setOnItemClickListener(new OnItemClickListener() {
-        @Override
-      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackDetailActivity.class)
-            .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, id);
-        startActivity(newIntent);
-      }
-    });
-    resourceCursorAdapter = new ResourceCursorAdapter(this, R.layout.list_item, null, 0) {
-        @Override
-      public void bindView(View view, Context context, Cursor cursor) {
-        int idIndex = cursor.getColumnIndex(TracksColumns._ID);
-        int iconIndex = cursor.getColumnIndex(TracksColumns.ICON);
-        int nameIndex = cursor.getColumnIndex(TracksColumns.NAME);
-        int totalTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALTIME);
-        int totalDistanceIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALDISTANCE);
-        int startTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME);
-        int categoryIndex = cursor.getColumnIndex(TracksColumns.CATEGORY);
-        int descriptionIndex = cursor.getColumnIndex(TracksColumns.DESCRIPTION);
-
-        long trackId = cursor.getLong(idIndex);
-        boolean isRecording = trackId == recordingTrackId;
-        String icon = cursor.getString(iconIndex);
-        int iconId = TrackIconUtils.getIconDrawable(icon);
-        String name = cursor.getString(nameIndex);
-        String totalTime = StringUtils.formatElapsedTime(cursor.getLong(totalTimeIndex));
-        String totalDistance = StringUtils.formatDistance(TrackListActivity.this, cursor.getDouble(totalDistanceIndex), metricUnits);
-        int markerCount = contentProviderUtils.getWaypointCount(trackId);
-        long startTime = cursor.getLong(startTimeIndex);
-        String category = icon != null && !icon.equals("") ? null : cursor.getString(categoryIndex);
-        String description = cursor.getString(descriptionIndex);
-
-        ListItemUtils.setListItem(TrackListActivity.this, view, isRecording, recordingTrackPaused,
-            iconId, R.string.image_track, name, totalTime, totalDistance, markerCount,
-            startTime, true, category, description, null);
-      }
-    };
-    listView.setAdapter(resourceCursorAdapter);
-    AbstractTrackActivity.configureListViewContextualMenu(listView, contextualActionModeCallback);
-
-    LoaderManager.getInstance(this).initLoader(0, null, loaderCallbacks);
-    showStartupDialogs();
-  }
-
-  @Override
-  protected void onStart() {
-    super.onStart();
-
-    sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-    sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
-    TrackRecordingServiceConnectionUtils.startConnection(this, trackRecordingServiceConnection);
-  }
-
-  @Override
-  protected void onResume() {
-    super.onResume();
-    
-    // Update UI
-    this.invalidateOptionsMenu();
-    LoaderManager.getInstance(this).restartLoader(0, null, loaderCallbacks);
-    boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
-    trackController.onResume(isRecording, recordingTrackPaused);
-  }
-
-  @Override
-  protected void onPause() {
-    super.onPause();
-
-    // Update UI
-    trackController.onPause();
-  }
-
-  @Override
-  protected void onStop() {
-    super.onStop();
-
-    sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-    trackRecordingServiceConnection.unbind();
-  }
-
-  @Override
-  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-    if (requestCode == GPS_REQUEST_CODE) {
-      if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-        Toast.makeText(this, R.string.permission_gps_failed, Toast.LENGTH_SHORT).show();
-        finish();
-      }
-    }
-    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-  }
-
-  @Override
-  protected int getLayoutResId() {
-    return R.layout.track_list;
-  }
-
-  @Override
-  protected boolean configureActionBarHomeAsUp() {
-    return false;
-  }
-
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    getMenuInflater().inflate(R.menu.track_list, menu);
-
-    searchMenuItem = menu.findItem(R.id.track_list_search);
-    AbstractTrackActivity.configureSearchWidget(this, searchMenuItem, trackController);
-
-    startGpsMenuItem = menu.findItem(R.id.track_list_start_gps);
-    aggregatedStatisticsMenuItem = menu.findItem(R.id.track_list_aggregated_statistics);
-    exportAllMenuItem = menu.findItem(R.id.track_list_export_all);
-    importAllMenuItem = menu.findItem(R.id.track_list_import_all);
-    deleteAllMenuItem = menu.findItem(R.id.track_list_delete_all);
-
-    return super.onCreateOptionsMenu(menu);
-  }
-  
-  @Override
-  public boolean onPrepareOptionsMenu(Menu menu) {
-    boolean isGpsStarted = TrackRecordingServiceConnectionUtils.isRecordingServiceRunning(this);
-    boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
-    updateMenuItems(isGpsStarted, isRecording);
-
-    View searchView = searchMenuItem.getActionView();
-    if (searchView instanceof SearchView) {
-      ((SearchView) searchView).setQuery("", false);
-    }
-    return super.onPrepareOptionsMenu(menu);
-  }
-  
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    Intent intent;
-    switch (item.getItemId()) {
-      case R.id.track_list_start_gps:
-        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-          intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-          startActivity(intent);
-        } else {
-          startGps = !TrackRecordingServiceConnectionUtils.isRecordingServiceRunning(this);
-
-          // Show toast
-          Toast toast = Toast.makeText(this, startGps ? R.string.gps_starting : R.string.gps_stopping, Toast.LENGTH_SHORT);
-          toast.setGravity(Gravity.CENTER, 0, 0);
-          toast.show();
-
-          // Invoke trackRecordingService
-          if (startGps) {
-            trackRecordingServiceConnection.startAndBind();
-            bindChangedCallback.run();
-          } else {
-            ITrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
-            if (trackRecordingService != null) {
-              trackRecordingService.stopGps();
+            if (!startGps && !startNewRecording) {
+                return;
             }
-            trackRecordingServiceConnection.unbindAndStop();
-          }
-          
-          // Update menu after starting or stopping gps
-          this.invalidateOptionsMenu();
+
+            ITrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
+            if (service == null) {
+                Log.d(TAG, "service not available to start gps or a new recording");
+                return;
+            }
+            if (startNewRecording) {
+                startGps = false;
+
+                long trackId = service.startNewTrack();
+                startNewRecording = false;
+                Intent intent = IntentUtils.newIntent(TrackListActivity.this, TrackDetailActivity.class)
+                        .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);
+                startActivity(intent);
+                Toast.makeText(
+                        TrackListActivity.this, R.string.track_list_record_success, Toast.LENGTH_SHORT)
+                        .show();
+            }
+            if (startGps) {
+                service.startGps();
+                startGps = false;
+            }
         }
-        return true;
-      case R.id.track_list_markers:
-        intent = IntentUtils.newIntent(this, MarkerListActivity.class);
-        startActivity(intent);
-        return true;
-      case R.id.track_list_aggregated_statistics:
-        intent = IntentUtils.newIntent(this, AggregatedStatsActivity.class);
-        startActivity(intent);
-        return true;
-      case R.id.track_list_export_all:
-        FileTypeDialogFragment.newInstance(R.id.track_list_export_all,
-            R.string.export_all_title, R.string.export_all_option)
-            .show(getSupportFragmentManager(), FileTypeDialogFragment.FILE_TYPE_DIALOG_TAG);
-        return true;
-      case R.id.track_list_import_all:
-        FileTypeDialogFragment.newInstance(R.id.track_list_import_all,
-            R.string.import_selection_title, R.string.import_selection_option)
-            .show(getSupportFragmentManager(), FileTypeDialogFragment.FILE_TYPE_DIALOG_TAG);
-        return true;
-      case R.id.track_list_delete_all:
-        deleteTracks(new long[] {-1L});
-        return true;
-      case R.id.track_list_settings:
-        intent = IntentUtils.newIntent(this, SettingsActivity.class);
-        startActivity(intent);
-        return true;
-    }
-    return super.onOptionsItemSelected(item);
-  }
+    };
+    private final OnClickListener recordListener = new OnClickListener() {
+        public void onClick(View v) {
+            if (recordingTrackId == PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
+                // Not recording -> Recording
+                updateMenuItems(false, true);
+                startRecording();
+            } else {
+                if (recordingTrackPaused) {
+                    // Paused -> Resume
+                    updateMenuItems(false, true);
+                    TrackRecordingServiceConnectionUtils.resumeTrack(trackRecordingServiceConnection);
+                    trackController.update(true, false);
+                } else {
+                    // Recording -> Paused
+                    updateMenuItems(false, true);
+                    TrackRecordingServiceConnectionUtils.pauseTrack(trackRecordingServiceConnection);
+                    trackController.update(true, true);
+                }
+            }
+        }
+    };
 
-  @Override
-  public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-    super.onCreateContextMenu(menu, v, menuInfo);
-    getMenuInflater().inflate(R.menu.list_context_menu, menu);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-    AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
-    contextualActionModeCallback.onPrepare(
-        menu, new int[] { info.position }, new long[] { info.id }, false);
-  }
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, "Enabling strict mode");
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                    .detectAll()
+                    .penaltyLog()
+                    .build());
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                    .detectAll()
+                    .penaltyLog()
+                    .build());
+        }
 
-  @Override
-  public boolean onContextItemSelected(MenuItem item) {
-    AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-    if (handleContextItem(item.getItemId(), new long[] { info.id })) {
-      return true;
-    }
-    return super.onContextItemSelected(item);
-  }
+        contentProviderUtils = ContentProviderUtils.Factory.get(this);
+        sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
 
-  @Override
-  public boolean onKeyUp(int keyCode, KeyEvent event) {
-    if (keyCode == KeyEvent.KEYCODE_SEARCH && searchMenuItem != null) {
-     return true;
-    }
-    return super.onKeyUp(keyCode, event);
-  }
+        trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, bindChangedCallback);
+        trackController = new TrackController(this, trackRecordingServiceConnection, true, recordListener, stopListener);
 
-  @Override
-  public boolean onSearchRequested() {
-    // Hide trackController when search dialog is shown
-    trackController.hide();
-    return super.onSearchRequested();
-  }
+        setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
+        // Show trackController when search dialog is dismissed
+        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
+        searchManager.setOnDismissListener(new SearchManager.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                trackController.show();
+            }
+        });
 
-  @Override
-  protected TrackRecordingServiceConnection getTrackRecordingServiceConnection() {
-    return trackRecordingServiceConnection;
-  }
+        listView = findViewById(R.id.track_list);
+        listView.setEmptyView(findViewById(R.id.track_list_empty_view));
+        listView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackDetailActivity.class)
+                        .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, id);
+                startActivity(newIntent);
+            }
+        });
+        resourceCursorAdapter = new ResourceCursorAdapter(this, R.layout.list_item, null, 0) {
+            @Override
+            public void bindView(View view, Context context, Cursor cursor) {
+                int idIndex = cursor.getColumnIndex(TracksColumns._ID);
+                int iconIndex = cursor.getColumnIndex(TracksColumns.ICON);
+                int nameIndex = cursor.getColumnIndex(TracksColumns.NAME);
+                int totalTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALTIME);
+                int totalDistanceIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALDISTANCE);
+                int startTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME);
+                int categoryIndex = cursor.getColumnIndex(TracksColumns.CATEGORY);
+                int descriptionIndex = cursor.getColumnIndex(TracksColumns.DESCRIPTION);
 
-  @Override
-  protected void onDeleted() {
-    // Do nothing
-  }
+                long trackId = cursor.getLong(idIndex);
+                boolean isRecording = trackId == recordingTrackId;
+                String icon = cursor.getString(iconIndex);
+                int iconId = TrackIconUtils.getIconDrawable(icon);
+                String name = cursor.getString(nameIndex);
+                String totalTime = StringUtils.formatElapsedTime(cursor.getLong(totalTimeIndex));
+                String totalDistance = StringUtils.formatDistance(TrackListActivity.this, cursor.getDouble(totalDistanceIndex), metricUnits);
+                int markerCount = contentProviderUtils.getWaypointCount(trackId);
+                long startTime = cursor.getLong(startTimeIndex);
+                String category = icon != null && !icon.equals("") ? null : cursor.getString(categoryIndex);
+                String description = cursor.getString(descriptionIndex);
 
-  @Override
-  public void onFileTypeDone(int menuId, TrackFileFormat trackFileFormat) {
-    Intent intent;
-    switch (menuId) {
-      case R.id.track_list_export_all:
-        intent = IntentUtils.newIntent(this, SaveActivity.class)
-            .putExtra(SaveActivity.EXTRA_TRACK_IDS, new long[] {-1L})   
-            .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);
-        startActivity(intent);
-        break;
-      case R.id.track_list_import_all:
-        intent = IntentUtils.newIntent(this, ImportActivity.class)
-            .putExtra(ImportActivity.EXTRA_IMPORT_ALL, true)
-            .putExtra(ImportActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);
-        startActivity(intent);
-        break;
-      default:
-    }
-  }
+                ListItemUtils.setListItem(TrackListActivity.this, view, isRecording, recordingTrackPaused,
+                        iconId, R.string.image_track, name, totalTime, totalDistance, markerCount,
+                        startTime, true, category, description, null);
+            }
+        };
+        listView.setAdapter(resourceCursorAdapter);
+        AbstractTrackActivity.configureListViewContextualMenu(listView, contextualActionModeCallback);
 
-  /**
-   * Shows start up dialogs.
-   */
-  public void showStartupDialogs() {
-    // If stats_units_key is undefined, set it
-    if (PreferencesUtils.getString(this, R.string.stats_units_key, "").equals("")) {
-      String statsUnits = getString(Locale.US.equals(Locale.getDefault()) ? R.string.stats_units_imperial : R.string.stats_units_metric);
-      PreferencesUtils.setString(this, R.string.stats_units_key, statsUnits);
+        LoaderManager.getInstance(this).initLoader(0, null, loaderCallbacks);
+        showStartupDialogs();
     }
 
-    requestGPSPermissions();
-  }
+    @Override
+    protected void onStart() {
+        super.onStart();
 
-  private void requestGPSPermissions() {
-    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-      ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, GPS_REQUEST_CODE);
+        sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+        sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
+        TrackRecordingServiceConnectionUtils.startConnection(this, trackRecordingServiceConnection);
     }
-  }
 
-  /**
-   * Updates the menu items.
-   * 
-   * @param isGpsStarted true if gps is started
-   * @param isRecording true if recording
-   */
-  private void updateMenuItems(boolean isGpsStarted, boolean isRecording) {
-    boolean hasTrack = listView != null && listView.getCount() != 0;
-    if (startGpsMenuItem != null) {
-      startGpsMenuItem.setVisible(!isRecording);
-      if (!isRecording) {
-        startGpsMenuItem.setTitle(isGpsStarted ? R.string.menu_stop_gps : R.string.menu_start_gps);
-        startGpsMenuItem.setIcon(isGpsStarted ? R.drawable.ic_menu_stop_gps : R.drawable.ic_menu_start_gps);
-        TrackIconUtils.setMenuIconColor(startGpsMenuItem);        
-      }
-    }
-    if (aggregatedStatisticsMenuItem != null) {
-      aggregatedStatisticsMenuItem.setVisible(hasTrack);
-    }
-    if (exportAllMenuItem != null) {
-      exportAllMenuItem.setVisible(hasTrack && !isRecording);
-    }
-    if (importAllMenuItem != null) {
-      importAllMenuItem.setVisible(!isRecording);
-    }
-    if (deleteAllMenuItem != null) {
-      deleteAllMenuItem.setVisible(hasTrack && !isRecording);
-    }
-  }
-  
-  /**
-   * Starts a new recording.
-   */
-  private void startRecording() {
-    startNewRecording = true;
-    trackRecordingServiceConnection.startAndBind();
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-    /*
-     * If the binding has happened, then invoke the callback to start a new
-     * recording. If the binding hasn't happened, then invoking the callback
-     * will have no effect. But when the binding occurs, the callback will get
-     * invoked.
+        // Update UI
+        this.invalidateOptionsMenu();
+        LoaderManager.getInstance(this).restartLoader(0, null, loaderCallbacks);
+        boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+        trackController.onResume(isRecording, recordingTrackPaused);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        // Update UI
+        trackController.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+        trackRecordingServiceConnection.unbind();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == GPS_REQUEST_CODE) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, R.string.permission_gps_failed, Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.track_list;
+    }
+
+    @Override
+    protected boolean configureActionBarHomeAsUp() {
+        return false;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.track_list, menu);
+
+        searchMenuItem = menu.findItem(R.id.track_list_search);
+        AbstractTrackActivity.configureSearchWidget(this, searchMenuItem, trackController);
+
+        startGpsMenuItem = menu.findItem(R.id.track_list_start_gps);
+        aggregatedStatisticsMenuItem = menu.findItem(R.id.track_list_aggregated_statistics);
+        exportAllMenuItem = menu.findItem(R.id.track_list_export_all);
+        importAllMenuItem = menu.findItem(R.id.track_list_import_all);
+        deleteAllMenuItem = menu.findItem(R.id.track_list_delete_all);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        boolean isGpsStarted = TrackRecordingServiceConnectionUtils.isRecordingServiceRunning(this);
+        boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+        updateMenuItems(isGpsStarted, isRecording);
+
+        View searchView = searchMenuItem.getActionView();
+        if (searchView instanceof SearchView) {
+            ((SearchView) searchView).setQuery("", false);
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+        switch (item.getItemId()) {
+            case R.id.track_list_start_gps:
+                LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivity(intent);
+                } else {
+                    startGps = !TrackRecordingServiceConnectionUtils.isRecordingServiceRunning(this);
+
+                    // Show toast
+                    Toast toast = Toast.makeText(this, startGps ? R.string.gps_starting : R.string.gps_stopping, Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+
+                    // Invoke trackRecordingService
+                    if (startGps) {
+                        trackRecordingServiceConnection.startAndBind();
+                        bindChangedCallback.run();
+                    } else {
+                        ITrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
+                        if (trackRecordingService != null) {
+                            trackRecordingService.stopGps();
+                        }
+                        trackRecordingServiceConnection.unbindAndStop();
+                    }
+
+                    // Update menu after starting or stopping gps
+                    this.invalidateOptionsMenu();
+                }
+                return true;
+            case R.id.track_list_markers:
+                intent = IntentUtils.newIntent(this, MarkerListActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.track_list_aggregated_statistics:
+                intent = IntentUtils.newIntent(this, AggregatedStatsActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.track_list_export_all:
+                FileTypeDialogFragment.newInstance(R.id.track_list_export_all,
+                        R.string.export_all_title, R.string.export_all_option)
+                        .show(getSupportFragmentManager(), FileTypeDialogFragment.FILE_TYPE_DIALOG_TAG);
+                return true;
+            case R.id.track_list_import_all:
+                FileTypeDialogFragment.newInstance(R.id.track_list_import_all,
+                        R.string.import_selection_title, R.string.import_selection_option)
+                        .show(getSupportFragmentManager(), FileTypeDialogFragment.FILE_TYPE_DIALOG_TAG);
+                return true;
+            case R.id.track_list_delete_all:
+                deleteTracks(new long[]{-1L});
+                return true;
+            case R.id.track_list_settings:
+                intent = IntentUtils.newIntent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.list_context_menu, menu);
+
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
+        contextualActionModeCallback.onPrepare(
+                menu, new int[]{info.position}, new long[]{info.id}, false);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+        if (handleContextItem(item.getItemId(), new long[]{info.id})) {
+            return true;
+        }
+        return super.onContextItemSelected(item);
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_SEARCH && searchMenuItem != null) {
+            return true;
+        }
+        return super.onKeyUp(keyCode, event);
+    }
+
+    @Override
+    public boolean onSearchRequested() {
+        // Hide trackController when search dialog is shown
+        trackController.hide();
+        return super.onSearchRequested();
+    }
+
+    @Override
+    protected TrackRecordingServiceConnection getTrackRecordingServiceConnection() {
+        return trackRecordingServiceConnection;
+    }
+
+    @Override
+    protected void onDeleted() {
+        // Do nothing
+    }
+
+    @Override
+    public void onFileTypeDone(int menuId, TrackFileFormat trackFileFormat) {
+        Intent intent;
+        switch (menuId) {
+            case R.id.track_list_export_all:
+                intent = IntentUtils.newIntent(this, SaveActivity.class)
+                        .putExtra(SaveActivity.EXTRA_TRACK_IDS, new long[]{-1L})
+                        .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);
+                startActivity(intent);
+                break;
+            case R.id.track_list_import_all:
+                intent = IntentUtils.newIntent(this, ImportActivity.class)
+                        .putExtra(ImportActivity.EXTRA_IMPORT_ALL, true)
+                        .putExtra(ImportActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);
+                startActivity(intent);
+                break;
+            default:
+        }
+    }
+
+    /**
+     * Shows start up dialogs.
      */
-    bindChangedCallback.run();
-  }
-
-  /**
-   * Handles a context item selection.
-   * 
-   * @param itemId the menu item id
-   * @param trackIds the track ids
-   * @return true if handled.
-   */
-  private boolean handleContextItem(int itemId, long[] trackIds) {
-    switch (itemId) {
-      case R.id.list_context_menu_share:
-        //TODO
-        Log.e(TAG, "Not implemented");
-        return true;
-      case R.id.list_context_menu_edit:
-        Intent intent = IntentUtils.newIntent(this, TrackEditActivity.class)
-            .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackIds[0]);
-        startActivity(intent);
-        return true;
-      case R.id.list_context_menu_delete:
-        if (trackIds.length > 1 && trackIds.length == listView.getCount()) {
-          trackIds = new long[] {-1L};
+    public void showStartupDialogs() {
+        // If stats_units_key is undefined, set it
+        if (PreferencesUtils.getString(this, R.string.stats_units_key, "").equals("")) {
+            String statsUnits = getString(Locale.US.equals(Locale.getDefault()) ? R.string.stats_units_imperial : R.string.stats_units_metric);
+            PreferencesUtils.setString(this, R.string.stats_units_key, statsUnits);
         }
-        deleteTracks(trackIds);
-        return true;
-      case R.id.list_context_menu_select_all:
-        int size = listView.getCount();
-        for (int i = 0; i < size; i++) {
-          listView.setItemChecked(i, true);
+
+        requestGPSPermissions();
+    }
+
+    private void requestGPSPermissions() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, GPS_REQUEST_CODE);
+        }
+    }
+
+    /**
+     * Updates the menu items.
+     *
+     * @param isGpsStarted true if gps is started
+     * @param isRecording  true if recording
+     */
+    private void updateMenuItems(boolean isGpsStarted, boolean isRecording) {
+        boolean hasTrack = listView != null && listView.getCount() != 0;
+        if (startGpsMenuItem != null) {
+            startGpsMenuItem.setVisible(!isRecording);
+            if (!isRecording) {
+                startGpsMenuItem.setTitle(isGpsStarted ? R.string.menu_stop_gps : R.string.menu_start_gps);
+                startGpsMenuItem.setIcon(isGpsStarted ? R.drawable.ic_menu_stop_gps : R.drawable.ic_menu_start_gps);
+                TrackIconUtils.setMenuIconColor(startGpsMenuItem);
+            }
+        }
+        if (aggregatedStatisticsMenuItem != null) {
+            aggregatedStatisticsMenuItem.setVisible(hasTrack);
+        }
+        if (exportAllMenuItem != null) {
+            exportAllMenuItem.setVisible(hasTrack && !isRecording);
+        }
+        if (importAllMenuItem != null) {
+            importAllMenuItem.setVisible(!isRecording);
+        }
+        if (deleteAllMenuItem != null) {
+            deleteAllMenuItem.setVisible(hasTrack && !isRecording);
+        }
+    }
+
+    /**
+     * Starts a new recording.
+     */
+    private void startRecording() {
+        startNewRecording = true;
+        trackRecordingServiceConnection.startAndBind();
+
+        /*
+         * If the binding has happened, then invoke the callback to start a new
+         * recording. If the binding hasn't happened, then invoking the callback
+         * will have no effect. But when the binding occurs, the callback will get
+         * invoked.
+         */
+        bindChangedCallback.run();
+    }
+
+    /**
+     * Handles a context item selection.
+     *
+     * @param itemId   the menu item id
+     * @param trackIds the track ids
+     * @return true if handled.
+     */
+    private boolean handleContextItem(int itemId, long[] trackIds) {
+        switch (itemId) {
+            case R.id.list_context_menu_share:
+                //TODO
+                Log.e(TAG, "Not implemented");
+                return true;
+            case R.id.list_context_menu_edit:
+                Intent intent = IntentUtils.newIntent(this, TrackEditActivity.class)
+                        .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackIds[0]);
+                startActivity(intent);
+                return true;
+            case R.id.list_context_menu_delete:
+                if (trackIds.length > 1 && trackIds.length == listView.getCount()) {
+                    trackIds = new long[]{-1L};
+                }
+                deleteTracks(trackIds);
+                return true;
+            case R.id.list_context_menu_select_all:
+                int size = listView.getCount();
+                for (int i = 0; i < size; i++) {
+                    listView.setItemChecked(i, true);
+                }
+                return false;
         }
         return false;
     }
-    return false;
-  }
 }

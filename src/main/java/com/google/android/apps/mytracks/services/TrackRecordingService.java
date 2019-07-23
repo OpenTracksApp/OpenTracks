@@ -44,11 +44,11 @@ import androidx.core.app.TaskStackBuilder;
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.TrackDetailActivity;
 import com.google.android.apps.mytracks.TrackListActivity;
-import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
-import com.google.android.apps.mytracks.content.SensorDataSetLocation;
-import com.google.android.apps.mytracks.content.CustomContentProvider;
 import com.google.android.apps.mytracks.content.ContentProviderUtils;
 import com.google.android.apps.mytracks.content.ContentProviderUtils.LocationIterator;
+import com.google.android.apps.mytracks.content.CustomContentProvider;
+import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
+import com.google.android.apps.mytracks.content.SensorDataSetLocation;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.Waypoint.WaypointType;
@@ -95,15 +95,11 @@ public class TrackRecordingService extends Service {
      * Anything faster than that (in meters per second) will be considered moving.
      */
     public static final double MAX_NO_MOVEMENT_SPEED = 0.224;
-
-    private static final String TAG = TrackRecordingService.class.getSimpleName();
-
-    // 1 minute in milliseconds
-    private static final long ONE_MINUTE = (long) (UnitConversions.MIN_TO_S * UnitConversions.S_TO_MS);
-
     @VisibleForTesting
     static final int MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS = 3;
-
+    private static final String TAG = TrackRecordingService.class.getSimpleName();
+    // 1 minute in milliseconds
+    private static final long ONE_MINUTE = (long) (UnitConversions.MIN_TO_S * UnitConversions.S_TO_MS);
     // The following variables are set in onCreate:
     private ExecutorService executorService;
     private Context context;
@@ -124,15 +120,6 @@ public class TrackRecordingService extends Service {
 
     // The following variables are set when recording:
     private TripStatisticsUpdater trackTripStatisticsUpdater;
-    private TripStatisticsUpdater markerTripStatisticsUpdater;
-    private WakeLock wakeLock;
-    private SensorManager sensorManager;
-    private Location lastLocation;
-    private boolean currentSegmentHasLocation;
-    private boolean isIdle; // true if idle
-
-    private ServiceBinder binder = new ServiceBinder(this);
-
     /*
      * Note that sharedPreferenceChangeListener cannot be an anonymous inner
      * class. Anonymous inner class will get garbage collected.
@@ -193,7 +180,13 @@ public class TrackRecordingService extends Service {
             }
         }
     };
-
+    private TripStatisticsUpdater markerTripStatisticsUpdater;
+    private WakeLock wakeLock;
+    private SensorManager sensorManager;
+    private Location lastLocation;
+    private boolean currentSegmentHasLocation;
+    private boolean isIdle; // true if idle
+    private ServiceBinder binder = new ServiceBinder(this);
     private LocationListener locationListener = new LocationListener() {
 
         @Override
