@@ -83,36 +83,6 @@ public class MyTracksProvider extends ContentProvider {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-      Log.w(TAG, "Upgrading database from version " + oldVersion + " to " + newVersion);
-      if (oldVersion < 17) {
-        Log.w(TAG, "Deleting all old data.");
-        db.execSQL("DROP TABLE IF EXISTS " + TrackPointsColumns.TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + TracksColumns.TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + WaypointsColumns.TABLE_NAME);
-        onCreate(db);
-      } else {
-        // Incremental upgrades. One if statement per DB version.
-
-        // Add track point SENSOR column
-        if (oldVersion <= 17) {
-          Log.w(TAG, "Upgrade DB: Adding track point sensor column.");
-          db.execSQL("ALTER TABLE " + TrackPointsColumns.TABLE_NAME + " ADD "
-              + TrackPointsColumns.SENSOR + " BLOB");
-        }
-
-        // Add track ICON column
-        if (oldVersion <= 19) {
-          Log.w(TAG, "Upgrade DB: Adding track icon column.");
-          db.execSQL(
-              "ALTER TABLE " + TracksColumns.TABLE_NAME + " ADD " + TracksColumns.ICON + " STRING");
-        }
-
-        // Add waypoint CALORIE and PHOTOURL columns. Add track CALORIE column.
-        if (oldVersion <= 21) {
-          Log.w(TAG, "Upgrade DB: Adding waypoint photo url column.");
-          db.execSQL("ALTER TABLE " + WaypointsColumns.TABLE_NAME + " ADD " + WaypointsColumns.PHOTOURL + " STRING");
-        }
-      }
     }
   }
 
