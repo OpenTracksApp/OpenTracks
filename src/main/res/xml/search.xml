@@ -6,7 +6,7 @@
     android:label="@string/app_name"
     android:queryAfterZeroResults="true"
     android:searchSettingsDescription="@string/search_global_description"
-    android:searchSuggestAuthority="com.google.android.maps.mytracks.search"
+    android:searchSuggestAuthority="de.dennisguse.opentracks.search"
     android:searchSuggestSelection=" ? "
     android:searchSuggestThreshold="1"
     android:voicePromptText="@string/search_voice_prompt"

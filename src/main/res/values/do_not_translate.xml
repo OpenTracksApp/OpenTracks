@@ -20,7 +20,7 @@ limitations under the License.
     <string name="marker_statistics_icon_url" translatable="false">http://maps.google.com/mapfiles/ms/micons/ylw-pushpin.png</string>
     <string name="marker_waypoint_icon_url" translatable="false">http://maps.google.com/mapfiles/ms/micons/blue-pushpin.png</string>
     <string name="app_web_url" translatable="false">TODO</string>
-    <string name="permission_notification_value" translatable="false">com.google.android.apps.mytracks.MYTRACKS_NOTIFICATIONS</string>
+    <string name="permission_notification_value" translatable="false">de.dennisguse.opentracks.MYTRACKS_NOTIFICATIONS</string>
     <string name="sensor_type_value_none" translatable="false">NONE</string>
     <string name="sensor_unit_rounds_per_minute" translatable="false">RPM</string>
     <string name="sensor_unit_beats_per_minute" translatable="false">BPM</string>
@@ -33,9 +33,9 @@ limitations under the License.
     <string name="stats_rate_speed" translatable="false">SPEED</string>
     <string name="stats_units_imperial" translatable="false">IMPERIAL</string>
     <string name="stats_units_metric" translatable="false">METRIC</string>
-    <string name="track_action_end" translatable="false">com.google.android.apps.mytracks.END_CURRENT_TRACK</string>
-    <string name="track_action_pause" translatable="false">com.google.android.apps.mytracks.PAUSE_CURRENT_TRACK</string>
-    <string name="track_action_resume" translatable="false">com.google.android.apps.mytracks.RESUME_CURRENT_TRACK</string>
-    <string name="track_action_start" translatable="false">com.google.android.apps.mytracks.START_NEW_TRACK</string>
+    <string name="track_action_end" translatable="false">de.dennisguse.opentracks.END_CURRENT_TRACK</string>
+    <string name="track_action_pause" translatable="false">de.dennisguse.opentracks.PAUSE_CURRENT_TRACK</string>
+    <string name="track_action_resume" translatable="false">de.dennisguse.opentracks.RESUME_CURRENT_TRACK</string>
+    <string name="track_action_start" translatable="false">de.dennisguse.opentracks.START_NEW_TRACK</string>
     <string name="value_unknown" translatable="false">-</string>
 </resources>

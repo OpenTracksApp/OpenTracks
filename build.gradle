@@ -21,7 +21,7 @@ android {
     compileSdkVersion 28
 
     defaultConfig {
-        applicationId "com.google.android.maps.mytracks"
+        applicationId "de.dennisguse.opentracks"
         minSdkVersion 21
         targetSdkVersion 28
 

@@ -15,7 +15,7 @@ limitations under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.google.android.maps.mytracks"
+    package="de.dennisguse.opentracks"
     android:installLocation="auto"
     android:versionCode="74"
     android:versionName="2.0.6">
@@ -34,10 +34,10 @@ limitations under the License.
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- Permissions to access My Tracks data -->
-    <uses-permission android:name="com.google.android.apps.mytracks.MYTRACKS_NOTIFICATIONS" />
+    <uses-permission android:name="de.dennisguse.opentracks.MYTRACKS_NOTIFICATIONS" />
     <!-- Permission to receive My Tracks internal broadcasts -->
     <permission
-        android:name="com.google.android.apps.mytracks.MYTRACKS_NOTIFICATIONS"
+        android:name="de.dennisguse.opentracks.MYTRACKS_NOTIFICATIONS"
         android:permissionGroup="android.permission-group.LOCATION"
         android:protectionLevel="signature" />
     <!-- Required features -->
@@ -85,10 +85,10 @@ limitations under the License.
         tools:replace="android:label">
         <!-- Activities -->
         <activity
-            android:name="com.google.android.apps.mytracks.AggregatedStatsActivity"
+            android:name="de.dennisguse.opentracks.AggregatedStatsActivity"
             android:label="@string/menu_aggregated_statistics" />
-        <activity android:name="com.google.android.apps.mytracks.DeleteActivity" />
-        <activity android:name="com.google.android.apps.mytracks.io.file.importer.ImportActivity">
+        <activity android:name="de.dennisguse.opentracks.DeleteActivity" />
+        <activity android:name="de.dennisguse.opentracks.io.file.importer.ImportActivity">
             <intent-filter>
                 <action android:name="android.intent.action.ATTACH_DATA" />
                 <action android:name="android.intent.action.VIEW" />
@@ -103,17 +103,17 @@ limitations under the License.
                 <data android:scheme="file" />
             </intent-filter>
         </activity>
-        <activity android:name="com.google.android.apps.mytracks.MarkerEditActivity" />
-        <activity android:name="com.google.android.apps.mytracks.MarkerDetailActivity" />
+        <activity android:name="de.dennisguse.opentracks.MarkerEditActivity" />
+        <activity android:name="de.dennisguse.opentracks.MarkerDetailActivity" />
         <activity
-            android:name="com.google.android.apps.mytracks.MarkerListActivity"
+            android:name="de.dennisguse.opentracks.MarkerListActivity"
             android:label="@string/menu_markers">
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value="com.google.android.apps.mytracks.SearchListActivity" />
+                android:value="de.dennisguse.opentracks.SearchListActivity" />
         </activity>
         <activity
-            android:name="com.google.android.apps.mytracks.SearchListActivity"
+            android:name="de.dennisguse.opentracks.SearchListActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -123,31 +123,31 @@ limitations under the License.
                 android:resource="@xml/search" />
         </activity>
         <activity
-            android:name="com.google.android.apps.mytracks.TrackDetailActivity"
-            android:parentActivityName="com.google.android.apps.mytracks.TrackListActivity">
+            android:name="de.dennisguse.opentracks.TrackDetailActivity"
+            android:parentActivityName="de.dennisguse.opentracks.TrackListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.google.android.apps.mytracks.TrackListActivity" />
+                android:value="de.dennisguse.opentracks.TrackListActivity" />
         </activity>
-        <activity android:name="com.google.android.apps.mytracks.TrackEditActivity" />
-        <activity android:name="com.google.android.apps.mytracks.TrackListActivity">
+        <activity android:name="de.dennisguse.opentracks.TrackEditActivity" />
+        <activity android:name="de.dennisguse.opentracks.TrackListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value="com.google.android.apps.mytracks.SearchListActivity" />
+                android:value="de.dennisguse.opentracks.SearchListActivity" />
         </activity>
-        <activity android:name="com.google.android.apps.mytracks.io.file.exporter.SaveActivity" />
-        <activity android:name="com.google.android.apps.mytracks.settings.AdvancedSettingsActivity" />
-        <activity android:name="com.google.android.apps.mytracks.settings.ChartSettingsActivity" />
-        <activity android:name="com.google.android.apps.mytracks.settings.RecordingSettingsActivity" />
-        <activity android:name="com.google.android.apps.mytracks.settings.SensorSettingsActivity" />
-        <activity android:name="com.google.android.apps.mytracks.settings.SettingsActivity" />
-        <activity android:name="com.google.android.apps.mytracks.settings.StatsSettingsActivity" />
+        <activity android:name="de.dennisguse.opentracks.io.file.exporter.SaveActivity" />
+        <activity android:name="de.dennisguse.opentracks.settings.AdvancedSettingsActivity" />
+        <activity android:name="de.dennisguse.opentracks.settings.ChartSettingsActivity" />
+        <activity android:name="de.dennisguse.opentracks.settings.RecordingSettingsActivity" />
+        <activity android:name="de.dennisguse.opentracks.settings.SensorSettingsActivity" />
+        <activity android:name="de.dennisguse.opentracks.settings.SettingsActivity" />
+        <activity android:name="de.dennisguse.opentracks.settings.StatsSettingsActivity" />
         <activity
-            android:name="com.google.android.apps.mytracks.widgets.TrackWidgetConfigActivity"
+            android:name="de.dennisguse.opentracks.widgets.TrackWidgetConfigActivity"
             android:label="@string/track_widget_config_title">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -155,28 +155,28 @@ limitations under the License.
         </activity>
 
         <service
-            android:name="com.google.android.apps.mytracks.services.ControlRecordingService"
+            android:name="de.dennisguse.opentracks.services.ControlRecordingService"
             android:exported="false" />
         <service
-            android:name="com.google.android.apps.mytracks.services.TrackRecordingService"
+            android:name="de.dennisguse.opentracks.services.TrackRecordingService"
             android:enabled="true"
             android:exported="false"
             android:icon="@drawable/ic_arrow_320"
             android:label="@string/recording_service" />
         <!-- Receivers -->
-        <receiver android:name="com.google.android.apps.mytracks.BootReceiver">
+        <receiver android:name="de.dennisguse.opentracks.BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name="com.google.android.apps.mytracks.widgets.TrackWidgetProvider">
+        <receiver android:name="de.dennisguse.opentracks.widgets.TrackWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="com.google.android.apps.mytracks.TRACK_PAUSED" />
-                <action android:name="com.google.android.apps.mytracks.TRACK_RESUMED" />
-                <action android:name="com.google.android.apps.mytracks.TRACK_STARTED" />
-                <action android:name="com.google.android.apps.mytracks.TRACK_STOPPED" />
-                <action android:name="com.google.android.apps.mytracks.TRACK_UPDATE" />
+                <action android:name="de.dennisguse.opentracks.TRACK_PAUSED" />
+                <action android:name="de.dennisguse.opentracks.TRACK_RESUMED" />
+                <action android:name="de.dennisguse.opentracks.TRACK_STARTED" />
+                <action android:name="de.dennisguse.opentracks.TRACK_STOPPED" />
+                <action android:name="de.dennisguse.opentracks.TRACK_UPDATE" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
@@ -184,19 +184,19 @@ limitations under the License.
         </receiver>
         <!-- Providers -->
         <provider
-            android:name="com.google.android.apps.mytracks.content.CustomContentProvider"
-            android:authorities="com.google.android.maps.mytracks"
+            android:name="de.dennisguse.opentracks.content.CustomContentProvider"
+            android:authorities="de.dennisguse.opentracks"
             android:exported="false"
             android:grantUriPermissions="true" />
         <!-- Search suggestion provider -->
         <provider
-            android:name="com.google.android.apps.mytracks.content.SearchEngineProvider"
-            android:authorities="com.google.android.maps.mytracks.search"
+            android:name="de.dennisguse.opentracks.content.SearchEngineProvider"
+            android:authorities="de.dennisguse.opentracks.search"
             android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.google.android.apps.mytracks.fileprovider"
+            android:authorities="de.dennisguse.opentracks.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
