@@ -257,7 +257,7 @@
     <string name="settings_recording_track_name_number_option">Skaičius</string>
     <string name="settings_recording_track_name_title">Numatyt. maršruto pav.</string>
     <string name="settings_reset">Nustatyti iš naujo</string>
-    <string name="settings_reset_confirm_message">Visi nustatymai bus grąžinti į numatytąsias vertes. Šiuo veiksmu nebus ištrinti jokie maršrutai įrenginyje arba „Google“ diske.</string>
+    <string name="settings_reset_confirm_message">Visi nustatymai bus grąžinti į numatytąsias vertes.</string>
     <string name="settings_reset_confirm_title">Nustatyti iš naujo dabar?</string>
     <string name="settings_reset_done">Visi nustatymai buvo grąžinti į numatytąsias reikšmes</string>
     <string name="settings_sensor">Jutiklis</string>
@@ -303,11 +303,9 @@
     <string name="track_name_format">Maršrutas %1$d</string>
     <string name="track_record_notification">Jūsų maršrutas įrašomas...</string>
     <string name="track_markers">„%1$s“ žymekliai</string>
-    <string name="track_delete_one_confirm_message">Maršrutas ir jo žymekliai bus visam laikui ištrinti iš įrenginio. Jei „Google“ disko sinchronizavimas
-    bus įgalintas, šiuo veiksmu taip pat bus ištrintas maršrutas „Google“ diske.</string>
+    <string name="track_delete_one_confirm_message">Maršrutas ir jo žymekliai bus visam laikui ištrinti iš įrenginio.</string>
     <string name="track_delete_one_confirm_title">Ištrinti maršrutą?</string>
-    <string name="track_delete_multiple_confirm_message">Pasirinkti maršrutai ir jų žymekliai bus visam laikui ištrinti iš įrenginio. Jei yra įgalintas „Google“
-    disko sinchronizavimas, šiuo veiksmu taip pat bus ištrintas maršrutas „Google“ diske.</string>
+    <string name="track_delete_multiple_confirm_message">Pasirinkti maršrutai ir jų žymekliai bus visam laikui ištrinti iš įrenginio.</string>
     <string name="track_delete_progress_message">Trinama...</string>
     <string name="track_detail_chart_tab">Diagrama</string>
     <string name="track_detail_stats_tab">Statistika</string>

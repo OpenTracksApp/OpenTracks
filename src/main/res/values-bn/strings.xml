@@ -257,8 +257,7 @@
     <string name="settings_recording_track_name_number_option">Tall</string>
     <string name="settings_recording_track_name_title">Default track name</string>
     <string name="settings_reset">Tilbakestill</string>
-    <string name="settings_reset_confirm_message">All settings will be reverted to the default values. This will not delete any tracks on the
-    device or on Google Drive.</string>
+    <string name="settings_reset_confirm_message">All settings will be reverted to the default values.</string>
     <string name="settings_reset_confirm_title">Reset now?</string>
     <string name="settings_reset_done">All settings have been reverted to the default values</string>
     <string name="settings_sensor">Sensor</string>
@@ -304,11 +303,9 @@
     <string name="track_name_format">Sti %1$d</string>
     <string name="track_record_notification">Recording your track…</string>
     <string name="track_markers">%1$s Markers</string>
-    <string name="track_delete_one_confirm_message">The track and its markers will be permanently deleted from the device. If Google Drive sync is
-    enabled, this will also delete the track on Google Drive.</string>
+    <string name="track_delete_one_confirm_message">The track and its markers will be permanently deleted from the device.</string>
     <string name="track_delete_one_confirm_title">Delete track?</string>
-    <string name="track_delete_multiple_confirm_message">The selected tracks and their markers will be permanently deleted from the device. If Google
-    Drive sync is enabled, this will also delete the tracks on Google Drive.</string>
+    <string name="track_delete_multiple_confirm_message">The selected tracks and their markers will be permanently deleted from the device.</string>
     <string name="track_delete_progress_message">Deleting…</string>
     <string name="track_detail_chart_tab">Chart</string>
     <string name="track_detail_stats_tab">Stats</string>

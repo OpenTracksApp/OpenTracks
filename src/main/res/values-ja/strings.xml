@@ -257,8 +257,7 @@
     <string name="settings_recording_track_name_number_option">番号</string>
     <string name="settings_recording_track_name_title">デフォルトのトラック名</string>
     <string name="settings_reset">リセット</string>
-    <string name="settings_reset_confirm_message">すべての設定がデフォルト値に戻されます。デバイスやGoogleドライブのトラックが
-    削除されることはありません。</string>
+    <string name="settings_reset_confirm_message">すべての設定がデフォルト値に戻されます。</string>
     <string name="settings_reset_confirm_title">リセットしますか？</string>
     <string name="settings_reset_done">すべての設定をデフォルト値に戻しました</string>
     <string name="settings_sensor">センサー</string>
@@ -303,11 +302,9 @@
     <string name="track_name_format">トラック%1$d</string>
     <string name="track_record_notification">トラックを記録中...</string>
     <string name="track_markers">%1$sのマーカー</string>
-    <string name="track_delete_one_confirm_message">トラックとマーカーが端末から完全に削除されます。Googleドライブの同期が
-    有効になっている場合は、Googleドライブのトラックも削除されます。</string>
+    <string name="track_delete_one_confirm_message">トラックとマーカーが端末から完全に削除されます。</string>
     <string name="track_delete_one_confirm_title">トラックを削除しますか？</string>
-    <string name="track_delete_multiple_confirm_message">選択したトラックとマーカーが端末から完全に削除されます。Googleドライブの同期が
-    有効になっている場合は、Googleドライブのトラックも削除されます。</string>
+    <string name="track_delete_multiple_confirm_message">選択したトラックとマーカーが端末から完全に削除されます。</string>
     <string name="track_delete_progress_message">削除中...</string>
     <string name="track_detail_chart_tab">グラフ</string>
     <string name="track_detail_stats_tab">統計情報</string>

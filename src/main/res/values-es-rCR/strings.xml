@@ -254,7 +254,7 @@
     <string name="settings_recording_track_name_number_option">Número</string>
     <string name="settings_recording_track_name_title">Nombre de rec. predet.</string>
     <string name="settings_reset">Restablecer</string>
-    <string name="settings_reset_confirm_message">Todos los parámetros de configuración se restablecerán a los valores predeterminados. Esta acción no eliminará los recorridos en el dispositivo ni en Google Drive.</string>
+    <string name="settings_reset_confirm_message">Todos los parámetros de configuración se restablecerán a los valores predeterminados.</string>
     <string name="settings_reset_confirm_title">¿Restablecer ahora?</string>
     <string name="settings_reset_done">Se restablecieron los valores predeterminados de todas las opciones de configuración.</string>
     <string name="settings_sensor">Sensor</string>
@@ -299,9 +299,9 @@
     <string name="track_name_format">Recorrido %1$d</string>
     <string name="track_record_notification">Grabando tu recorrido...</string>
     <string name="track_markers">Marcadores de %1$s</string>
-    <string name="track_delete_one_confirm_message">El recorrido y sus marcadores se eliminarán del dispositivo permanentemente. Si la sincronización con Google Drive está habilitada, también se eliminará el recorrido de Google Drive.</string>
+    <string name="track_delete_one_confirm_message">El recorrido y sus marcadores se eliminarán del dispositivo permanentemente.</string>
     <string name="track_delete_one_confirm_title">¿Eliminar ruta?</string>
-    <string name="track_delete_multiple_confirm_message">Los recorridos seleccionados y sus respectivos marcadores se eliminarán del dispositivo permanentemente. Si la sincronización con Google Drive está habilitada, también se eliminarán los recorridos de Google Drive.</string>
+    <string name="track_delete_multiple_confirm_message">Los recorridos seleccionados y sus respectivos marcadores se eliminarán del dispositivo permanentemente.</string>
     <string name="track_delete_progress_message">Eliminando...</string>
     <string name="track_detail_chart_tab">Gráfico</string>
     <string name="track_detail_stats_tab">Estadísticas</string>

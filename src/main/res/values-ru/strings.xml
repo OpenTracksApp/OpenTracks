@@ -254,7 +254,7 @@
     <string name="settings_recording_track_name_number_option">Номер</string>
     <string name="settings_recording_track_name_title">Название по умолчанию</string>
     <string name="settings_reset">Сброс настроек</string>
-    <string name="settings_reset_confirm_message">Будут восстановлены значения по умолчанию. Сохраненные треки останутся в памяти устройства и на Google Диске.</string>
+    <string name="settings_reset_confirm_message">Будут восстановлены значения по умолчанию.</string>
     <string name="settings_reset_confirm_title">Сбросить настройки?</string>
     <string name="settings_reset_done">Настройки по умолчанию восстановлены</string>
     <string name="settings_sensor">Датчик</string>
@@ -299,9 +299,9 @@
     <string name="track_name_format">Трек %1$d</string>
     <string name="track_record_notification">Запись трека...</string>
     <string name="track_markers">%1$s – маркеры</string>
-    <string name="track_delete_one_confirm_message">Трек и связанные с ним маркеры будут удалены без возможности восстановления. Если включена синхронизация с аккаунтом, они также удалятся из Google Диска.</string>
+    <string name="track_delete_one_confirm_message">Трек и связанные с ним маркеры будут удалены без возможности восстановления.</string>
     <string name="track_delete_one_confirm_title">Удалить трек?</string>
-    <string name="track_delete_multiple_confirm_message">Треки и связанные с ними маркеры будут удалены без возможности восстановления. Если синхронизация с аккаунтом включена, они также удалятся с Google Диска.</string>
+    <string name="track_delete_multiple_confirm_message">Треки и связанные с ними маркеры будут удалены без возможности восстановления.</string>
     <string name="track_delete_progress_message">Удаление…</string>
     <string name="track_detail_chart_tab">График</string>
     <string name="track_detail_stats_tab">Статистика</string>

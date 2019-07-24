@@ -255,8 +255,7 @@
     <string name="settings_recording_track_name_number_option">Число</string>
     <string name="settings_recording_track_name_title">Стандартен маршрут: Име</string>
     <string name="settings_reset">Нулиране</string>
-    <string name="settings_reset_confirm_message">Всички настройки ще бъдат върнати към стандартните им стойности. Това няма да изтрие
-никакви маршрути на устройството или в Google Диск.</string>
+    <string name="settings_reset_confirm_message">Всички настройки ще бъдат върнати към стандартните им стойности.</string>
     <string name="settings_reset_confirm_title">Да се зададе ли повторно сега?</string>
     <string name="settings_reset_done">Всички настройки са възстановени до стойностите по подразбиране.</string>
     <string name="settings_sensor">Сензор</string>
@@ -302,11 +301,9 @@
     <string name="track_name_format">Път %1$d</string>
     <string name="track_record_notification">Маршрутът ви се записва...</string>
     <string name="track_markers">Маркери за %1$s</string>
-    <string name="track_delete_one_confirm_message">Маршрутът и маркерите му ще бъдат изтрити за постоянно от устройството. Ако синхронизирането с Google Диск е
-активирано, маршрутът ще бъде премахнат и от услугата.</string>
+    <string name="track_delete_one_confirm_message">Маршрутът и маркерите му ще бъдат изтрити за постоянно от устройството.</string>
     <string name="track_delete_one_confirm_title">Да се изтрие ли маршрутът?</string>
-    <string name="track_delete_multiple_confirm_message">Избраните маршрути и маркерите им ще бъдат изтрити за постоянно от устройството. Ако синхронизирането с Google
-Диск е активирано, маршрутите ще бъдат премахнати и от услугата.</string>
+    <string name="track_delete_multiple_confirm_message">Избраните маршрути и маркерите им ще бъдат изтрити за постоянно от устройството.</string>
     <string name="track_delete_progress_message">Изтрива се…</string>
     <string name="track_detail_chart_tab">Диаграма</string>
     <string name="track_detail_stats_tab">Статист. данни</string>

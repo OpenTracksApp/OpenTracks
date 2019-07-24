@@ -255,7 +255,7 @@
     <string name="settings_recording_track_name_number_option">Número</string>
     <string name="settings_recording_track_name_title">Nome de percurso predefinido</string>
     <string name="settings_reset">Repor</string>
-    <string name="settings_reset_confirm_message">Todas as definições são revertidas para os valores predefinidos. Os percursos não são eliminados do dispositivo ou do Google Drive.</string>
+    <string name="settings_reset_confirm_message">Todas as definições são revertidas para os valores predefinidos.</string>
     <string name="settings_reset_confirm_title">Repor agora?</string>
     <string name="settings_reset_done">Todas as definições foram revertidas para os valores predefinidos</string>
     <string name="settings_sensor">Sensor</string>
@@ -300,9 +300,9 @@
     <string name="track_name_format">Trajeto %1$d</string>
     <string name="track_record_notification">A gravar o seu percurso...</string>
     <string name="track_markers">Marcadores %1$s</string>
-    <string name="track_delete_one_confirm_message">O percurso e respetivos marcadores são eliminados permanentemente do dispositivo. Se a sincronização do Google Drive estiver ativada, esta ação também eliminará o percurso do Google Drive.</string>
+    <string name="track_delete_one_confirm_message">O percurso e respetivos marcadores são eliminados permanentemente do dispositivo.</string>
     <string name="track_delete_one_confirm_title">Eliminar percurso?</string>
-    <string name="track_delete_multiple_confirm_message">Os percursos selecionados e respetivos marcadores serão eliminados permanentemente do dispositivo. Se a sincronização do Google Drive estiver ativada, esta ação também eliminará o percurso do Google Drive.</string>
+    <string name="track_delete_multiple_confirm_message">Os percursos selecionados e respetivos marcadores serão eliminados permanentemente do dispositivo.</string>
     <string name="track_delete_progress_message">A eliminar...</string>
     <string name="track_detail_chart_tab">Carta</string>
     <string name="track_detail_stats_tab">Estatísticas</string>

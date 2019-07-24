@@ -257,7 +257,7 @@
     <string name="settings_recording_track_name_number_option">數字</string>
     <string name="settings_recording_track_name_title">預設足跡名稱</string>
     <string name="settings_reset">重設</string>
-    <string name="settings_reset_confirm_message">系統會將所有設定還原為預設值，但不會刪除裝置或 Google 雲端硬碟中的任何足跡。</string>
+    <string name="settings_reset_confirm_message">系統會將所有設定還原為預設值。</string>
     <string name="settings_reset_confirm_title">確定要立即重設？</string>
     <string name="settings_reset_done">所有設定已還原為預設值</string>
     <string name="settings_sensor">感應器</string>
@@ -302,10 +302,9 @@
     <string name="track_name_format">%1$d 號足跡</string>
     <string name="track_record_notification">正在記錄您的足跡…</string>
     <string name="track_markers">「%1$s」標記</string>
-    <string name="track_delete_one_confirm_message">系統將永久刪除裝置上儲存的這個足跡與其中的標記。如果您先前啟用了 Google 雲端硬碟的同步處理功能，Google 雲端硬碟中的足跡也將一併刪除。</string>
+    <string name="track_delete_one_confirm_message">系統將永久刪除裝置上儲存的這個足跡與其中的標記。</string>
     <string name="track_delete_one_confirm_title">確定要刪除足跡？</string>
-    <string name="track_delete_multiple_confirm_message">系統將永久刪除您在裝置上所選的足跡與其中的標記。如果您先前啟用了 Google 雲端硬碟
-    的同步處理功能，Google 雲端硬碟中的足跡也將一併刪除。</string>
+    <string name="track_delete_multiple_confirm_message">系統將永久刪除您在裝置上所選的足跡與其中的標記。</string>
     <string name="track_delete_progress_message">刪除中...</string>
     <string name="track_detail_chart_tab">圖表</string>
     <string name="track_detail_stats_tab">統計資料</string>

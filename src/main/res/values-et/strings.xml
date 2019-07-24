@@ -254,7 +254,7 @@
     <string name="settings_recording_track_name_number_option">Number</string>
     <string name="settings_recording_track_name_title">Raja vaikenimi</string>
     <string name="settings_reset">Lähtesta</string>
-    <string name="settings_reset_confirm_message">Taastatakse kõikide seadete vaikeväärtus. See ei kustuta radu seadmest või Google Drive\'ist.</string>
+    <string name="settings_reset_confirm_message">Taastatakse kõikide seadete vaikeväärtus.</string>
     <string name="settings_reset_confirm_title">Kas lähtestada kohe?</string>
     <string name="settings_reset_done">Kõik seaded on taastatud vaikeväärtustena</string>
     <string name="settings_sensor">Andur</string>
@@ -299,10 +299,9 @@
     <string name="track_name_format">Rada %1$d</string>
     <string name="track_record_notification">Raja salvestamine...</string>
     <string name="track_markers">Raja %1$s markerid</string>
-    <string name="track_delete_one_confirm_message">Rada ja selle markerid kustutatakse seadmest jäädavalt. Kui Google Drive\'i sünkroonimine on keelatud, siis kustutatakse sellega rada ka Google Drive\'ist.</string>
+    <string name="track_delete_one_confirm_message">Rada ja selle markerid kustutatakse seadmest jäädavalt.</string>
     <string name="track_delete_one_confirm_title">Kas kustutada rada?</string>
-    <string name="track_delete_multiple_confirm_message">Valitud rajad ja nende markerid kustutatakse seadmest jäädavalt. Kui Google
-Drive\'i sünkroonimine on keelatud, siis kustutatakse sellega rajad ka Google Drive\'ist.</string>
+    <string name="track_delete_multiple_confirm_message">Valitud rajad ja nende markerid kustutatakse seadmest jäädavalt.</string>
     <string name="track_delete_progress_message">Kustutamine...</string>
     <string name="track_detail_chart_tab">Diagramm</string>
     <string name="track_detail_stats_tab">Statistika</string>

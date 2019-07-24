@@ -256,7 +256,7 @@
     <string name="settings_recording_track_name_number_option">Številka</string>
     <string name="settings_recording_track_name_title">Privzeto ime poti</string>
     <string name="settings_reset">Ponastavi</string>
-    <string name="settings_reset_confirm_message">Vse nastavitve bodo povrnjene na privzete vrednosti. To ne bo izbrisalo poti iz naprave ali storitve Google Drive.</string>
+    <string name="settings_reset_confirm_message">Vse nastavitve bodo povrnjene na privzete vrednosti.</string>
     <string name="settings_reset_confirm_title">Ponastavi zdaj?</string>
     <string name="settings_reset_done">Vse nastavitve so bile povrnjene na privzete vrednosti</string>
     <string name="settings_sensor">Senzor</string>
@@ -302,9 +302,9 @@
     <string name="track_name_format">Proga %1$d</string>
     <string name="track_record_notification">Snemanje vaše poti ...</string>
     <string name="track_markers">Oznake %1$s</string>
-    <string name="track_delete_one_confirm_message">Pot in njene oznake bodo trajno izbrisane iz naprave. Če je sinhronizacija storitve Google Drive omogočena, bo s tem dejanjem izbrisana tudi pot iz storitve Google Drive.</string>
+    <string name="track_delete_one_confirm_message">Pot in njene oznake bodo trajno izbrisane iz naprave.</string>
     <string name="track_delete_one_confirm_title">Izbriši pot?</string>
-    <string name="track_delete_multiple_confirm_message">Izbrane poti in njihove oznake bodo trajno izbrisane iz naprave. Če je sinhronizacija storitve Google Drive omogočena, bodo izbrisane poti tudi iz storitve Google Drive.</string>
+    <string name="track_delete_multiple_confirm_message">Izbrane poti in njihove oznake bodo trajno izbrisane iz naprave.</string>
     <string name="track_delete_progress_message">Brisanje ...</string>
     <string name="track_detail_chart_tab">Grafikon</string>
     <string name="track_detail_stats_tab">Statistika</string>

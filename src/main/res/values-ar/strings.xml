@@ -254,7 +254,7 @@
     <string name="settings_recording_track_name_number_option">عدد</string>
     <string name="settings_recording_track_name_title">اسم المسار الافتراضي</string>
     <string name="settings_reset">إعادة تعيين</string>
-    <string name="settings_reset_confirm_message">ستتم إعادة جميع الإعدادات إلى القيم الافتراضية. لن يؤدي هذا إلى حذف أي مسارات على الجهاز أو على Google Drive.</string>
+    <string name="settings_reset_confirm_message">ستتم إعادة جميع الإعدادات إلى القيم الافتراضية.</string>
     <string name="settings_reset_confirm_title">إعادة التعيين الآن؟</string>
     <string name="settings_reset_done">لقد تمت إعادة جميع الإعدادات إلى القيم الافتراضية</string>
     <string name="settings_sensor">المستشعر</string>
@@ -299,9 +299,9 @@
     <string name="track_name_format">المسار %1$d</string>
     <string name="track_record_notification">جارٍ تسجيل مسارك...</string>
     <string name="track_markers">%1$s علامات</string>
-    <string name="track_delete_one_confirm_message">سيتم حذف المسار والعلامات نهائيًا من الجهاز. إذا كانت مزامنة Google Drive ممكَّنة، فسيؤدي ذلك أيضًا إلى حذف المسار على Google Drive.</string>
+    <string name="track_delete_one_confirm_message">سيتم حذف المسار والعلامات نهائيًا من الجهاز.</string>
     <string name="track_delete_one_confirm_title">حذف المسار؟</string>
-    <string name="track_delete_multiple_confirm_message">سيتم حذف المسارات المحددة وعلاماتها نهائيًا من الجهاز. إذا تم تمكين مزامنة Google Drive، سيؤدي هذا أيضًا إلى حذف المسارات على Google Drive.</string>
+    <string name="track_delete_multiple_confirm_message">سيتم حذف المسارات المحددة وعلاماتها نهائيًا من الجهاز.</string>
     <string name="track_delete_progress_message">جارٍ الحذف...</string>
     <string name="track_detail_chart_tab">الرسم البياني</string>
     <string name="track_detail_stats_tab">الإحصاءات</string>

@@ -254,7 +254,7 @@
     <string name="settings_recording_track_name_number_option">Zenbakia</string>
     <string name="settings_recording_track_name_title">Ibilbidearen izen lehenetsia</string>
     <string name="settings_reset">Berrezarri</string>
-    <string name="settings_reset_confirm_message">Ezarpen guztiak balio lehenetsietara leheneratuko dira. Ez da gailuko edo Google Drive-ko fitxategirik ezabatuko.</string>
+    <string name="settings_reset_confirm_message">Ezarpen guztiak balio lehenetsietara leheneratuko dira.</string>
     <string name="settings_reset_confirm_title">Berrezarri egin nahi duzu?</string>
     <string name="settings_reset_done">Ezarpen guztiak balio lehenetsietara leheneratu dira</string>
     <string name="settings_sensor">Sentsorea</string>
@@ -299,9 +299,9 @@
     <string name="track_name_format">%1$d. bidea</string>
     <string name="track_record_notification">Ibilbidea grabatzen...</string>
     <string name="track_markers">%1$s ibilbideko markatzaileak</string>
-    <string name="track_delete_one_confirm_message">Bidea eta bideko markatzaileak behin betiko ezabatuko dira gailutik. Google Drive-rekiko sinkronizazioa gaituta badago, Google Drive-ko ibilbidea ere ezabatu egingo da.</string>
+    <string name="track_delete_one_confirm_message">Bidea eta bideko markatzaileak behin betiko ezabatuko dira gailutik.</string>
     <string name="track_delete_one_confirm_title">Ibilbidea ezabatu nahi duzu?</string>
-    <string name="track_delete_multiple_confirm_message">Hautatutako bidea eta bideko markatzaileak behin betiko ezabatuko dira gailutik. Google Drive-rekiko sinkronizazioa gaituta badago, Google Drive-ko ibilbidea ere ezabatu egingo da.</string>
+    <string name="track_delete_multiple_confirm_message">Hautatutako bidea eta bideko markatzaileak behin betiko ezabatuko dira gailutik.</string>
     <string name="track_delete_progress_message">Ezabatzen…</string>
     <string name="track_detail_chart_tab">Diagrama</string>
     <string name="track_detail_stats_tab">Estatistikak</string>

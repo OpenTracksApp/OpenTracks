@@ -255,8 +255,7 @@
     <string name="settings_recording_track_name_number_option">Număr</string>
     <string name="settings_recording_track_name_title">Nume prestabilit traseu</string>
     <string name="settings_reset">Resetaţi</string>
-    <string name="settings_reset_confirm_message">Toate setările vor fi readuse la valorile implicite. Nu va fi șters niciun traseu de pe
-    dispozitiv sau de pe Google Drive.</string>
+    <string name="settings_reset_confirm_message">Toate setările vor fi readuse la valorile implicite.</string>
     <string name="settings_reset_confirm_title">Resetați acum?</string>
     <string name="settings_reset_done">Toate setările au revenit la valorile prestabilite</string>
     <string name="settings_sensor">Senzor</string>
@@ -301,11 +300,9 @@
     <string name="track_name_format">Traseul %1$d</string>
     <string name="track_record_notification">Se înregistrează traseul dvs...</string>
     <string name="track_markers">Marcatori %1$s</string>
-    <string name="track_delete_one_confirm_message">Traseul și marcatorii săi vor fi șterși definitiv de pe dispozitiv. Dacă sincronizarea Google Drive este
-    activată, va fi șters și traseul de pe Google Drive.</string>
+    <string name="track_delete_one_confirm_message">Traseul și marcatorii săi vor fi șterși definitiv de pe dispozitiv.</string>
     <string name="track_delete_one_confirm_title">Ștergeți traseul?</string>
-    <string name="track_delete_multiple_confirm_message">Traseele selectate și marcatorii lor vor fi șterși definitiv de pe dispozitiv. Dacă sincronizarea
-    Google Drive este activată, vor fi șterse și traseele de pe Google Drive.</string>
+    <string name="track_delete_multiple_confirm_message">Traseele selectate și marcatorii lor vor fi șterși definitiv de pe dispozitiv.</string>
     <string name="track_delete_progress_message">Se șterge...</string>
     <string name="track_detail_chart_tab">Diagramă</string>
     <string name="track_detail_stats_tab">Statistici</string>

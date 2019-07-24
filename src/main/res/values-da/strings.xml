@@ -257,7 +257,7 @@
     <string name="settings_recording_track_name_number_option">Nummer</string>
     <string name="settings_recording_track_name_title">Standardnavn på spor</string>
     <string name="settings_reset">Nulstil</string>
-    <string name="settings_reset_confirm_message">Alle indstillinger vil blive ændret til standardværdierne. Dette medfører ikke sletning af nogen ruter på enheden eller Google Drev.</string>
+    <string name="settings_reset_confirm_message">Alle indstillinger vil blive ændret til standardværdierne..</string>
     <string name="settings_reset_confirm_title">Vil du nulstille nu?</string>
     <string name="settings_reset_done">Alle indstillinger er blevet gendannet til standardværdierne</string>
     <string name="settings_sensor">Sensor</string>
@@ -303,11 +303,9 @@
     <string name="track_name_format">Rute %1$d</string>
     <string name="track_record_notification">Registrerer din rute...</string>
     <string name="track_markers">Markører på %1$s</string>
-    <string name="track_delete_one_confirm_message">Ruten og de tilhørende markører slettes permanent fra enheden. Hvis synkronisering med
-    Google Drev er aktiveret, slettes ruten også på Google Drev.</string>
+    <string name="track_delete_one_confirm_message">Ruten og de tilhørende markører slettes permanent fra enheden.</string>
     <string name="track_delete_one_confirm_title">Vil du slette ruten?</string>
-    <string name="track_delete_multiple_confirm_message">De valgte ruter og tilhørende markører slettes permanent fra enheden. Hvis synkronisering
-    med Google Drev er aktiveret, slettes ruten også på Google Drev.</string>
+    <string name="track_delete_multiple_confirm_message">De valgte ruter og tilhørende markører slettes permanent fra enheden.</string>
     <string name="track_delete_progress_message">Sletter...</string>
     <string name="track_detail_chart_tab">Diagram</string>
     <string name="track_detail_stats_tab">Statistik</string>

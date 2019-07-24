@@ -255,7 +255,7 @@
     <string name="settings_recording_track_name_number_option">Số</string>
     <string name="settings_recording_track_name_title">Tên mặc định của tuyến đường</string>
     <string name="settings_reset">Đặt lại</string>
-    <string name="settings_reset_confirm_message">Tất cả cài đặt của bạn sẽ được hoàn nguyên về giá trị mặc định. Làm điều này sẽ không xóa bất kỳ tuyến đường nào trên thiết bị hoặc trên Google Drive.</string>
+    <string name="settings_reset_confirm_message">Tất cả cài đặt của bạn sẽ được hoàn nguyên về giá trị mặc định.</string>
     <string name="settings_reset_confirm_title">Đặt lại bây giờ?</string>
     <string name="settings_reset_done">Tất cả cài đặt đã được hoàn nguyên về giá trị mặc định</string>
     <string name="settings_sensor">Cảm biến</string>
@@ -300,11 +300,9 @@
     <string name="track_name_format">Tuyến đường %1$d</string>
     <string name="track_record_notification">Đang ghi tuyến đường của bạn…</string>
     <string name="track_markers">%1$s Điểm đánh dấu</string>
-    <string name="track_delete_one_confirm_message">Tuyến đường và các điểm đánh dấu của nó sẽ bị xóa vĩnh viễn khỏi thiết bị. Nếu tính năng đồng bộ hóa Google Drive được
-    bật, làm điều này cũng sẽ xóa tuyến đường trên Google Drive.</string>
+    <string name="track_delete_one_confirm_message">Tuyến đường và các điểm đánh dấu của nó sẽ bị xóa vĩnh viễn khỏi thiết bị.</string>
     <string name="track_delete_one_confirm_title">Xóa tuyến đường</string>
-    <string name="track_delete_multiple_confirm_message">Các tuyến đường được chọn và điểm đánh dấu của chúng sẽ bị xóa vĩnh viễn khỏi thiết bị. Nếu tính năng đồng bộ hóa Google
-    Drive được bật, làm điều này cũng sẽ xóa các tuyến đường trên Google Drive.</string>
+    <string name="track_delete_multiple_confirm_message">Các tuyến đường được chọn và điểm đánh dấu của chúng sẽ bị xóa vĩnh viễn khỏi thiết bị.</string>
     <string name="track_delete_progress_message">Đang xóa...</string>
     <string name="track_detail_chart_tab">Biểu đồ</string>
     <string name="track_detail_stats_tab">Thống kê</string>

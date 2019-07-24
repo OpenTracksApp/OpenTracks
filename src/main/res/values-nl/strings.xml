@@ -254,7 +254,7 @@
     <string name="settings_recording_track_name_number_option">Nummer</string>
     <string name="settings_recording_track_name_title">Standaardroutenaam</string>
     <string name="settings_reset">Opnieuw instellen</string>
-    <string name="settings_reset_confirm_message">Alle instellingen worden teruggezet op de standaardwaarden. Er worden geen routes op het apparaat of Google Drive verwijderd.</string>
+    <string name="settings_reset_confirm_message">Alle instellingen worden teruggezet op de standaardwaarden.</string>
     <string name="settings_reset_confirm_title">Nu opnieuw instellen?</string>
     <string name="settings_reset_done">Voor alle instellingen zijn de standaardwaarden teruggezet</string>
     <string name="settings_sensor">Sensor</string>
@@ -299,9 +299,9 @@
     <string name="track_name_format">Route %1$d</string>
     <string name="track_record_notification">Uw route wordt opgenomen...</string>
     <string name="track_markers">Markeringen voor %1$s</string>
-    <string name="track_delete_one_confirm_message">De route en de bijbehorende markeringen worden definitief verwijderd van het apparaat. Als Google Drive-synchronisatie is ingeschakeld, wordt de route ook verwijderd uit Google Drive.</string>
+    <string name="track_delete_one_confirm_message">De route en de bijbehorende markeringen worden definitief verwijderd van het apparaat.</string>
     <string name="track_delete_one_confirm_title">Route verwijderen?</string>
-    <string name="track_delete_multiple_confirm_message">De geselecteerde routes en de bijbehorende markeringen worden definitief verwijderd van het apparaat. Als Google Drive-synchronisatie is ingeschakeld, worden de routes ook verwijderd uit Google Drive.</string>
+    <string name="track_delete_multiple_confirm_message">De geselecteerde routes en de bijbehorende markeringen worden definitief verwijderd van het apparaat.</string>
     <string name="track_delete_progress_message">Verwijderen...</string>
     <string name="track_detail_chart_tab">Grafiek</string>
     <string name="track_detail_stats_tab">Statistieken</string>

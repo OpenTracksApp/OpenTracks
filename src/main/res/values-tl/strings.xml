@@ -254,7 +254,7 @@
     <string name="settings_recording_track_name_number_option">Numero</string>
     <string name="settings_recording_track_name_title">Default na pangalan ng track</string>
     <string name="settings_reset">I-reset</string>
-    <string name="settings_reset_confirm_message">Ibabalik sa dati ang lahat ng mga setting sa mga default na value. Hindi nito tatanggalin ang anumang mga track sa device o sa Google Drive.</string>
+    <string name="settings_reset_confirm_message">Ibabalik sa dati ang lahat ng mga setting sa mga default na value.</string>
     <string name="settings_reset_confirm_title">I-reset ngayon?</string>
     <string name="settings_reset_done">Ibinalik ang lahat ng setting sa mga default na value</string>
     <string name="settings_sensor">Sensor</string>
@@ -299,9 +299,9 @@
     <string name="track_name_format">Track bilang %1$d</string>
     <string name="track_record_notification">Nire-rekord ang iyong track...</string>
     <string name="track_markers">%1$s Mga Marker</string>
-    <string name="track_delete_one_confirm_message">Ang track at ang mga marker nito ay permanenteng tatanggalin mula sa device. Kung pinagana ang pag-sync sa Google Drive, tatanggalin rin nito ang track sa Google Drive.</string>
+    <string name="track_delete_one_confirm_message">Ang track at ang mga marker nito ay permanenteng tatanggalin mula sa device.</string>
     <string name="track_delete_one_confirm_title">Tanggalin ang track?</string>
-    <string name="track_delete_multiple_confirm_message">Ang mga napiling track at mga marker nito ay permanenteng matatanggal mula sa device. Kung pinagana ang pag-sync sa Google Drive, tatanggalin din nito ang mga track sa Google Drive.</string>
+    <string name="track_delete_multiple_confirm_message">Ang mga napiling track at mga marker nito ay permanenteng matatanggal mula sa device.</string>
     <string name="track_delete_progress_message">Tinatanggal...</string>
     <string name="track_detail_chart_tab">Chart</string>
     <string name="track_detail_stats_tab">Mga Istatistika</string>

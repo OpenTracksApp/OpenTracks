@@ -254,7 +254,7 @@
     <string name="settings_recording_track_name_number_option">Numurs</string>
     <string name="settings_recording_track_name_title">Noklusējuma maršruta nosaukums</string>
     <string name="settings_reset">Atiestatīt</string>
-    <string name="settings_reset_confirm_message">Visiem iestatījumiem tiks atjaunotas to noklusējuma vērtības. Tādējādi maršruti netiks izdzēsti no ierīces vai Google diska.</string>
+    <string name="settings_reset_confirm_message">Visiem iestatījumiem tiks atjaunotas to noklusējuma vērtības.</string>
     <string name="settings_reset_confirm_title">Vai atiestatīt tagad?</string>
     <string name="settings_reset_done">Visos iestatījumos atjaunotas to noklusējuma vērtības</string>
     <string name="settings_sensor">Sensors</string>
@@ -300,9 +300,9 @@
     <string name="track_name_format">%1$d. maršruts</string>
     <string name="track_record_notification">Notiek maršruta ierakstīšana…</string>
     <string name="track_markers">Maršruta %1$s atzīmes</string>
-    <string name="track_delete_one_confirm_message">Maršruts un tā marķieri tiks neatgriezeniski dzēsti no ierīces. Ja ir iespējota Google diska sinhronizācija, maršruts tiks dzēsts arī no Google diska.</string>
+    <string name="track_delete_one_confirm_message">Maršruts un tā marķieri tiks neatgriezeniski dzēsti no ierīces.</string>
     <string name="track_delete_one_confirm_title">Vai dzēst maršrutu?</string>
-    <string name="track_delete_multiple_confirm_message">Atlasītie maršruti un to marķieri tiks neatgriezeniski dzēsti no ierīces. Ja ir iespējota Google diska sinhronizācija, maršruti tiks dzēsti arī no Google diska.</string>
+    <string name="track_delete_multiple_confirm_message">Atlasītie maršruti un to marķieri tiks neatgriezeniski dzēsti no ierīces.</string>
     <string name="track_delete_progress_message">Notiek dzēšana...</string>
     <string name="track_detail_chart_tab">Diagramma</string>
     <string name="track_detail_stats_tab">Statistika</string>

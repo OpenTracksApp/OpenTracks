@@ -256,7 +256,7 @@
     <string name="settings_recording_track_name_number_option">Angka</string>
     <string name="settings_recording_track_name_title">Nama trek default</string>
     <string name="settings_reset">Setel ulang</string>
-    <string name="settings_reset_confirm_message">Semua setelan akan diubah ke nilai default. Ini tidak akan menghapus satu jalur pun di perangkat atau di Google Drive.</string>
+    <string name="settings_reset_confirm_message">Semua setelan akan diubah ke nilai default.</string>
     <string name="settings_reset_confirm_title">Setel ulang sekarang?</string>
     <string name="settings_reset_done">Semua setelan telah dikembalikan ke nilai default</string>
     <string name="settings_sensor">Sensor</string>
@@ -301,11 +301,9 @@
     <string name="track_name_format">Lintasan %1$d</string>
     <string name="track_record_notification">Merekam lintasan Anda...</string>
     <string name="track_markers">Penanda %1$s</string>
-    <string name="track_delete_one_confirm_message">Jalur dan penandanya akan dihapus secara permanen dari perangkat. Jika sinkronisasi Google Drive
-    diaktifkan, jalur tersebut juga akan dihapus di Google Drive.</string>
+    <string name="track_delete_one_confirm_message">Jalur dan penandanya akan dihapus secara permanen dari perangkat.</string>
     <string name="track_delete_one_confirm_title">Hapus lintasan?</string>
-    <string name="track_delete_multiple_confirm_message">Jalur dipilih dan penandanya akan dihapus secara permanen dari perangkat. Jika sinkronisasi
-    Google Drive diaktifkan, jalur tersebut juga akan dihapus di Google Drive.</string>
+    <string name="track_delete_multiple_confirm_message">Jalur dipilih dan penandanya akan dihapus secara permanen dari perangkat.</string>
     <string name="track_delete_progress_message">Menghapus...</string>
     <string name="track_detail_chart_tab">Bagan</string>
     <string name="track_detail_stats_tab">Statistik</string>

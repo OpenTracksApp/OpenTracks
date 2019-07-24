@@ -254,7 +254,7 @@
     <string name="settings_recording_track_name_number_option">नंबर</string>
     <string name="settings_recording_track_name_title">डिफ़ॉल्ट ट्रैक नाम</string>
     <string name="settings_reset">रीसेट करें</string>
-    <string name="settings_reset_confirm_message">सभी सेटिंग को डिफ़ॉल्ट मानों पर उलट दिया जाएगा. यह उपकरण या Google डिस्क पर किसी ट्रैक को नहीं हटाएगा.</string>
+    <string name="settings_reset_confirm_message">सभी सेटिंग को डिफ़ॉल्ट मानों पर उलट दिया जाएगा.</string>
     <string name="settings_reset_confirm_title">अभी रीसेट करें?</string>
     <string name="settings_reset_done">सभी सेटिंग को सामान्य मानों में उलट दिया गया है</string>
     <string name="settings_sensor">सेंसर</string>
@@ -299,9 +299,9 @@
     <string name="track_name_format">ट्रैक %1$d</string>
     <string name="track_record_notification">आपका ट्रैक रिकॉर्ड कर रहा है...</string>
     <string name="track_markers">%1$s मार्कर</string>
-    <string name="track_delete_one_confirm_message">ट्रैक और इसके मार्कर को उपकरण से स्थायी रूप से हटा दिया जाएगा. यदि Google डिस्क समन्वयन सक्षम है, तो इससे Google डिस्क पर मौजूद ट्रैक भी हटा दिया जाएगा.</string>
+    <string name="track_delete_one_confirm_message">ट्रैक और इसके मार्कर को उपकरण से स्थायी रूप से हटा दिया जाएगा.</string>
     <string name="track_delete_one_confirm_title">ट्रैक हटाएं?</string>
-    <string name="track_delete_multiple_confirm_message">चयनित ट्रैक और उनके मार्कर को उपकरण से स्थायी रूप से हटा दिया जाएगा. यदि Google डिस्क समन्वयन सक्षम है, तो इससे Google डिस्क पर मौजूद ट्रैक भी हटा दिए जाएंगे.</string>
+    <string name="track_delete_multiple_confirm_message">चयनित ट्रैक और उनके मार्कर को उपकरण से स्थायी रूप से हटा दिया जाएगा.</string>
     <string name="track_delete_progress_message">हटा रहा है...</string>
     <string name="track_detail_chart_tab">चार्ट</string>
     <string name="track_detail_stats_tab">आंकड़े</string>

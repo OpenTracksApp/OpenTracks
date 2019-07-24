@@ -255,8 +255,7 @@
     <string name="settings_recording_track_name_number_option">Номер</string>
     <string name="settings_recording_track_name_title">Назва шляху за умовчанням</string>
     <string name="settings_reset">Скинути</string>
-    <string name="settings_reset_confirm_message">Усі налаштування буде скинуто до значень за умовчанням. Шляхи на Диску Google і на пристрої
-    залишаться.</string>
+    <string name="settings_reset_confirm_message">Усі налаштування буде скинуто до значень за умовчанням.</string>
     <string name="settings_reset_confirm_title">Скинути зараз?</string>
     <string name="settings_reset_done">Для всіх налаштувань відновлено значення за умовчанням</string>
     <string name="settings_sensor">Датчик</string>
@@ -301,12 +300,9 @@
     <string name="track_name_format">Шлях %1$d</string>
     <string name="track_record_notification">Записування шляху...</string>
     <string name="track_markers">Маркери шляху \"%1$s\"</string>
-    <string name="track_delete_one_confirm_message">Шлях і його маркери буде остаточно видалено з пристрою. Якщо синхронізація з Диском Google увімкнена,
-    шлях теж буде видалено звідти.</string>
+    <string name="track_delete_one_confirm_message">Шлях і його маркери буде остаточно видалено з пристрою.</string>
     <string name="track_delete_one_confirm_title">Видалити шлях?</string>
-    <string name="track_delete_multiple_confirm_message">Вибрані шляхи та їх маркери буде остаточно видалено з пристрою.
-Якщо синхронізація з Диском Google увімкнена,
-    шляхи теж буде видалено звідти.</string>
+    <string name="track_delete_multiple_confirm_message">Вибрані шляхи та їх маркери буде остаточно видалено з пристрою.</string>
     <string name="track_delete_progress_message">Видалення…</string>
     <string name="track_detail_chart_tab">Діаграма</string>
     <string name="track_detail_stats_tab">Статистика</string>

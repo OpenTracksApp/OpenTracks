@@ -257,8 +257,7 @@
     <string name="settings_recording_track_name_number_option">Tall</string>
     <string name="settings_recording_track_name_title">Standardnavn på sti</string>
     <string name="settings_reset">Tilbakestill</string>
-    <string name="settings_reset_confirm_message">Alle innstillinger går tilbake til standardverdiene. Dette sletter ikke noen av sporene på
-    enheten eller på Google Disk.</string>
+    <string name="settings_reset_confirm_message">Alle innstillinger går tilbake til standardverdiene.</string>
     <string name="settings_reset_confirm_title">Vil du tilbakestille nå?</string>
     <string name="settings_reset_done">Alle innstillinger er tilbakestilt til standardverdiene</string>
     <string name="settings_sensor">Sensor</string>
@@ -304,11 +303,9 @@
     <string name="track_name_format">Sti %1$d</string>
     <string name="track_record_notification">Tar opp stien …</string>
     <string name="track_markers">Markører for %1$s</string>
-    <string name="track_delete_one_confirm_message">Sporet og markørene slettes permanent fra enheten. Hvis synkronisering med
-    Google Disk er aktivert, slettes også sporet fra Google Disk.</string>
+    <string name="track_delete_one_confirm_message">Sporet og markørene slettes permanent fra enheten.</string>
     <string name="track_delete_one_confirm_title">Vil du slette sporet?</string>
-    <string name="track_delete_multiple_confirm_message">De valgte sporene og markørene slettes permanent fra enheten. Hvis Google
-    Disk-synkronisering er aktivert, sletter dette også sporene på Google Disk.</string>
+    <string name="track_delete_multiple_confirm_message">De valgte sporene og markørene slettes permanent fra enheten.</string>
     <string name="track_delete_progress_message">Sletter …</string>
     <string name="track_detail_chart_tab">Diagram</string>
     <string name="track_detail_stats_tab">Statistikk</string>

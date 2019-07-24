@@ -254,7 +254,7 @@
     <string name="settings_recording_track_name_number_option">หมายเลข</string>
     <string name="settings_recording_track_name_title">ชื่อเส้นการเดินทางเริ่มต้น</string>
     <string name="settings_reset">รีเซ็ต</string>
-    <string name="settings_reset_confirm_message">การตั้งค่าทั้งหมดจะกลับไปเป็นค่าเริ่มต้น การดำเนินการนี้จะไม่ลบเส้นการเดินทางใดๆ บนอุปกรณ์หรือบน Google ไดรฟ์</string>
+    <string name="settings_reset_confirm_message">การตั้งค่าทั้งหมดจะกลับไปเป็นค่าเริ่มต้น </string>
     <string name="settings_reset_confirm_title">รีเซ็ตเลยไหม</string>
     <string name="settings_reset_done">การตั้งค่าทั้งหมดถูกเปลี่ยนกลับไปเป็นค่าเริ่มต้นแล้ว</string>
     <string name="settings_sensor">เซ็นเซอร์</string>
@@ -299,9 +299,9 @@
     <string name="track_name_format">เส้นทาง %1$d</string>
     <string name="track_record_notification">กำลังบันทึกเส้นการเดินทางของคุณ...</string>
     <string name="track_markers">%1$s เครื่องหมาย</string>
-    <string name="track_delete_one_confirm_message">เส้นการเดินทางและเครื่องหมายจะถูกลบออกจากอุปกรณ์อย่างถาวร ถ้าคุณเปิดใช้งานการซิงค์ข้อมูลกับ Google ไดรฟ์ การดำเนินการนี้จะลบเส้นการเดินทางบน Google ไดรฟ์ด้วย</string>
+    <string name="track_delete_one_confirm_message">ส้นการเดินทางและเครื่องหมายจะถูกลบออกจากอุปกรณ์อย่างถาวร</string>
     <string name="track_delete_one_confirm_title">ลบเส้นการเดินทางนี้ไหม</string>
-    <string name="track_delete_multiple_confirm_message">เส้นการเดินทางและเครื่องหมายที่เลือกจะถูกลบออกจากอุปกรณ์อย่างถาวร ถ้าคุณเปิดใช้งานการซิงค์ข้อมูลกับ Google ไดรฟ์ การดำเนินการนี้จะลบเส้นการเดินทางบน Google ไดรฟ์ด้วย</string>
+    <string name="track_delete_multiple_confirm_message">ส้นการเดินทางและเครื่องหมายที่เลือกจะถูกลบออกจากอุปกรณ์อย่างถาวร</string>
     <string name="track_delete_progress_message">กำลังลบ...</string>
     <string name="track_detail_chart_tab">แผนภูมิ</string>
     <string name="track_detail_stats_tab">สถิติ</string>

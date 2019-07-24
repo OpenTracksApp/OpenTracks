@@ -255,8 +255,7 @@
     <string name="settings_recording_track_name_number_option">Sayı</string>
     <string name="settings_recording_track_name_title">Varsayılan parkur adı</string>
     <string name="settings_reset">Sıfırla</string>
-    <string name="settings_reset_confirm_message">Tüm ayarlar varsayılan değerlerine geri alınacak. Bu işlem sonucunda cihazdan
-    veya Google Drive\'dan herhangi bir parkur silinmeyecek.</string>
+    <string name="settings_reset_confirm_message">Tüm ayarlar varsayılan değerlerine geri alınacak.</string>
     <string name="settings_reset_confirm_title">Şimdi sıfırlansın mı?</string>
     <string name="settings_reset_done">Tüm ayarlar varsayılan değerlere döndürüldü</string>
     <string name="settings_sensor">Sensör</string>
@@ -301,11 +300,9 @@
     <string name="track_name_format">Parkur %1$d</string>
     <string name="track_record_notification">Parkurunuz kaydediliyor...</string>
     <string name="track_markers">%1$s İşaretçileri</string>
-    <string name="track_delete_one_confirm_message">Parkur ve işaretçileri cihazdan kalıcı olarak silinecek. Google Drive senkronizasyonu etkinse,
-    parkur Google Drive\'dan da silinecek.</string>
+    <string name="track_delete_one_confirm_message">Parkur ve işaretçileri cihazdan kalıcı olarak silinecek.</string>
     <string name="track_delete_one_confirm_title">Parkur silinsin mi?</string>
-    <string name="track_delete_multiple_confirm_message">Seçilen parkurlar ve işaretçileri cihazdan kalıcı olarak silinecek. Google Drive senkronizasyonu
-    etkinse, parkurlar Google Drive\'dan da silinecek.</string>
+    <string name="track_delete_multiple_confirm_message">Seçilen parkurlar ve işaretçileri cihazdan kalıcı olarak silinecek.</string>
     <string name="track_delete_progress_message">Siliniyor...</string>
     <string name="track_detail_chart_tab">Grafik</string>
     <string name="track_detail_stats_tab">İstatistikler</string>

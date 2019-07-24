@@ -257,8 +257,7 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="settings_recording_track_name_number_option">Numero</string>
     <string name="settings_recording_track_name_title">Reitin oletusnimi</string>
     <string name="settings_reset">Palauta</string>
-    <string name="settings_reset_confirm_message">Kaikki asetukset palautetaan oletusarvoisiksi.
-Reittejä ei poisteta laitteesta eikä Google Drivesta.</string>
+    <string name="settings_reset_confirm_message">Kaikki asetukset palautetaan oletusarvoisiksi.</string>
     <string name="settings_reset_confirm_title">Palautetaanko oletukset nyt?</string>
     <string name="settings_reset_done">Kaikki asetukset on palautettu oletusarvoisiksi</string>
     <string name="settings_sensor">Anturi</string>
@@ -304,11 +303,9 @@ Reittejä ei poisteta laitteesta eikä Google Drivesta.</string>
     <string name="track_name_format">Reitti %1$d</string>
     <string name="track_record_notification">Reittiä tallennetaan...</string>
     <string name="track_markers">Reitin %1$s merkit</string>
-    <string name="track_delete_one_confirm_message">Reitti ja sen merkitsimet poistetaan laitteesta pysyvästi.
-Jos Google Driven synkronointi on päällä, reitti poistetaan myös Google Drivesta.</string>
+    <string name="track_delete_one_confirm_message">Reitti ja sen merkitsimet poistetaan laitteesta pysyvästi.</string>
     <string name="track_delete_one_confirm_title">Poistetaanko reitti?</string>
-    <string name="track_delete_multiple_confirm_message">Valitut reitit ja niiden merkitsimet poistetaan laitteesta pysyvästi.
-Jos Google Driven synkronointi on päällä, reitit poistetaan myös Google Drivesta.</string>
+    <string name="track_delete_multiple_confirm_message">Valitut reitit ja niiden merkitsimet poistetaan laitteesta pysyvästi.</string>
     <string name="track_delete_progress_message">Poistetaan…</string>
     <string name="track_detail_chart_tab">Kaavio</string>
     <string name="track_detail_stats_tab">Tilastot</string>

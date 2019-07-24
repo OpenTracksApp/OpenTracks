@@ -255,8 +255,7 @@
     <string name="settings_recording_track_name_number_option">Nombor</string>
     <string name="settings_recording_track_name_title">Nama lalai laluan</string>
     <string name="settings_reset">Tetapkan semula</string>
-    <string name="settings_reset_confirm_message">Semua tetapan akan dikembalikan kepada nilai lalai. Ini tidak akan memadamkan sebarang laluan pada
-    peranti atau pada Google Drive.</string>
+    <string name="settings_reset_confirm_message">Semua tetapan akan dikembalikan kepada nilai lalai.</string>
     <string name="settings_reset_confirm_title">Tetapkan semula sekarang?</string>
     <string name="settings_reset_done">Semua tetapan telah dikembalikan kepada nilai tetapan asal</string>
     <string name="settings_sensor">Penderia</string>
@@ -302,11 +301,9 @@
     <string name="track_name_format">Jejak %1$d</string>
     <string name="track_record_notification">Merakamkan laluan anda…</string>
     <string name="track_markers">Penanda %1$s</string>
-    <string name="track_delete_one_confirm_message">Laluan dan penandanya akan dipadamkan secara kekal dari peranti. Jika penyegerakan Google Drive
-    didayakan, tindakan ini turut memadamkan laluan pada Google Drive.</string>
+    <string name="track_delete_one_confirm_message">Laluan dan penandanya akan dipadamkan secara kekal dari peranti.</string>
     <string name="track_delete_one_confirm_title">Padamkan lagu?</string>
-    <string name="track_delete_multiple_confirm_message">Laluan yang dipilih dan penandanya akan dipadamkan secara kekal dari peranti. Jika penyegerakan Google Drive
-    didayakan, tindakan ini turut memadamkan laluan pada Google Drive.</string>
+    <string name="track_delete_multiple_confirm_message">Laluan yang dipilih dan penandanya akan dipadamkan secara kekal dari peranti.</string>
     <string name="track_delete_progress_message">Memadamkan…</string>
     <string name="track_detail_chart_tab">Carta</string>
     <string name="track_detail_stats_tab">Statistik</string>

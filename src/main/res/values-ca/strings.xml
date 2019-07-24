@@ -257,8 +257,7 @@ es vegi el cel. Torneu-ho a provar més tard.</string>
     <string name="settings_recording_track_name_number_option">Número</string>
     <string name="settings_recording_track_name_title">Nom de la ruta</string>
     <string name="settings_reset">Restableix</string>
-    <string name="settings_reset_confirm_message">Es tornaran a definir els valors predeterminats de la configuració. Aquest canvi, però, no suprimirà cap ruta del
-    dispositiu o de Google Drive.</string>
+    <string name="settings_reset_confirm_message">Es tornaran a definir els valors predeterminats de la configuració.</string>
     <string name="settings_reset_confirm_title">Voleu restablir-ho ara?</string>
     <string name="settings_reset_done">S\'ha recuperat la configuració predeterminada.</string>
     <string name="settings_sensor">Sensor</string>
@@ -303,11 +302,9 @@ es vegi el cel. Torneu-ho a provar més tard.</string>
     <string name="track_name_format">Ruta %1$d</string>
     <string name="track_record_notification">S\'està enregistrant la ruta...</string>
     <string name="track_markers">Marcadors de %1$s</string>
-    <string name="track_delete_one_confirm_message">La ruta i els seus marcadors se suprimiran definitivament del dispositiu. Si la sincronització de Google Drive està
-    activada, també se suprimirà la ruta de Google Drive.</string>
+    <string name="track_delete_one_confirm_message">La ruta i els seus marcadors se suprimiran definitivament del dispositiu.</string>
     <string name="track_delete_one_confirm_title">Voleu suprimir la ruta?</string>
-    <string name="track_delete_multiple_confirm_message">Les rutes seleccionades i els seus marcadors se suprimiran definitivament del dispositiu. Si la sincronització amb Google
-    Drive està activada, també se suprimiran les rutes de Google Drive.</string>
+    <string name="track_delete_multiple_confirm_message">Les rutes seleccionades i els seus marcadors se suprimiran definitivament del dispositiu.</string>
     <string name="track_delete_progress_message">S\'està suprimint...</string>
     <string name="track_detail_chart_tab">Diagrama</string>
     <string name="track_detail_stats_tab">Estadístiques</string>

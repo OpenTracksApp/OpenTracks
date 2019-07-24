@@ -257,8 +257,7 @@
     <string name="settings_recording_track_name_number_option">Numero</string>
     <string name="settings_recording_track_name_title">Nome percorso predefinito</string>
     <string name="settings_reset">Reimposta</string>
-    <string name="settings_reset_confirm_message">Tutte le impostazioni verranno ripristinate sui valori predefiniti. Questa operazione non eliminerà nessun percorso sul
-    dispositivo o su Google Drive.</string>
+    <string name="settings_reset_confirm_message">Tutte le impostazioni verranno ripristinate sui valori predefiniti.</string>
     <string name="settings_reset_confirm_title">Reimpostare ora?</string>
     <string name="settings_reset_done">Tutte le impostazioni sono ripristinate sui valori predefiniti</string>
     <string name="settings_sensor">Sensore</string>
@@ -304,11 +303,9 @@
     <string name="track_name_format">Percorso %1$d</string>
     <string name="track_record_notification">Registrazione del percorso...</string>
     <string name="track_markers">Indicatori %1$s</string>
-    <string name="track_delete_one_confirm_message">Questo percorso e i suoi marcatori verranno eliminati definitivamente dal dispositivo. Se la sincronizzazione con Google Drive è
-    attivata, questa operazione eliminerà anche il percorso su Google Drive.</string>
+    <string name="track_delete_one_confirm_message">Questo percorso e i suoi marcatori verranno eliminati definitivamente dal dispositivo.</string>
     <string name="track_delete_one_confirm_title">Eliminare percorso?</string>
-    <string name="track_delete_multiple_confirm_message">I percorsi selezionati e i loro marcatori verranno eliminati definitivamente dal dispositivo. Se la
-    sincronizzazione con Google Drive è attivata, questa operazione eliminerà anche il percorso su Google Drive.</string>
+    <string name="track_delete_multiple_confirm_message">I percorsi selezionati e i loro marcatori verranno eliminati definitivamente dal dispositivo.</string>
     <string name="track_delete_progress_message">Eliminazione in corso...</string>
     <string name="track_detail_chart_tab">Grafico</string>
     <string name="track_detail_stats_tab">Statistiche</string>

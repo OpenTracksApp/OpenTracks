@@ -255,7 +255,7 @@
     <string name="settings_recording_track_name_number_option">Nummer</string>
     <string name="settings_recording_track_name_title">Standard-Trackname</string>
     <string name="settings_reset">Zurücksetzen</string>
-    <string name="settings_reset_confirm_message">Alle Einstellungen werden auf die Standardwerte zurückgesetzt. Es werden keine Tracks auf dem Gerät oder auf Google Drive gelöscht.</string>
+    <string name="settings_reset_confirm_message">Alle Einstellungen werden auf die Standardwerte zurückgesetzt.</string>
     <string name="settings_reset_confirm_title">Jetzt zurücksetzen?</string>
     <string name="settings_reset_done">Alle Einstellungen wurden auf ihre Standardwerte zurückgesetzt.</string>
     <string name="settings_sensor">Sensor</string>
@@ -300,11 +300,9 @@
     <string name="track_name_format">Track %1$d</string>
     <string name="track_record_notification">Der Track wird aufgezeichnet...</string>
     <string name="track_markers">Markierungen für %1$s</string>
-    <string name="track_delete_one_confirm_message">Der Track und seine Markierungen werden endgültig aus dem Gerät gelöscht. Ist die Google Drive-Synchronisierung
-    aktiviert, werden auch die Tracks auf Google Drive gelöscht.</string>
+    <string name="track_delete_one_confirm_message">Der Track und seine Markierungen werden endgültig aus dem Gerät gelöscht.</string>
     <string name="track_delete_one_confirm_title">Track löschen?</string>
-    <string name="track_delete_multiple_confirm_message">Die ausgewählten Tracks und ihre Markierungen werden endgültig aus dem Gerät gelöscht. Ist die Google
-    Drive-Synchronisierung aktiviert, werden auch die Tracks auf Google Drive gelöscht.</string>
+    <string name="track_delete_multiple_confirm_message">Die ausgewählten Tracks und ihre Markierungen werden endgültig aus dem Gerät gelöscht.</string>
     <string name="track_delete_progress_message">Löschen...</string>
     <string name="track_detail_chart_tab">Diagramm</string>
     <string name="track_detail_stats_tab">Statistik</string>

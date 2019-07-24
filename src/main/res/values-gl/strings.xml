@@ -254,7 +254,7 @@
     <string name="settings_recording_track_name_number_option">Número</string>
     <string name="settings_recording_track_name_title">Nome de ruta predeterm.</string>
     <string name="settings_reset">Restablecer</string>
-    <string name="settings_reset_confirm_message">Toda a configuración volverá aos valores predeterminados, pero non se eliminará ningunha ruta no dispositivo ou en Google Drive.</string>
+    <string name="settings_reset_confirm_message">Toda a configuración volverá aos valores predeterminados.</string>
     <string name="settings_reset_confirm_title">Restablecer agora?</string>
     <string name="settings_reset_done">Restablecéronse todos os valores predeterminados da configuración</string>
     <string name="settings_sensor">Sensor</string>
@@ -299,9 +299,9 @@
     <string name="track_name_format">Pista %1$d</string>
     <string name="track_record_notification">Gravando o teu traxecto...</string>
     <string name="track_markers">Marcadores de %1$s</string>
-    <string name="track_delete_one_confirm_message">A ruta e os seus marcadores eliminaranse permanentemente do dispositivo. Se a sincronización de Google Drive está activada, tamén se eliminará a ruta en Google Drive.</string>
+    <string name="track_delete_one_confirm_message">A ruta e os seus marcadores eliminaranse permanentemente do dispositivo.</string>
     <string name="track_delete_one_confirm_title">Eliminar o traxecto?</string>
-    <string name="track_delete_multiple_confirm_message">As rutas seleccionadas e os seus marcadores eliminaranse permanentemente do dispositivo. Se a sincronización de Google Drive está activada, tamén se eliminarán as rutas en Google Drive.</string>
+    <string name="track_delete_multiple_confirm_message">As rutas seleccionadas e os seus marcadores eliminaranse permanentemente do dispositivo.</string>
     <string name="track_delete_progress_message">Eliminando...</string>
     <string name="track_detail_chart_tab">Táboa</string>
     <string name="track_detail_stats_tab">Estatísticas</string>

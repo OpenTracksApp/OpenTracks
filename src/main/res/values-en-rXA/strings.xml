@@ -257,8 +257,7 @@
     <string name="settings_recording_track_name_number_option">[Ñûmɓéŕ one]</string>
     <string name="settings_recording_track_name_title">[Ðéƒåûļţ ţŕåçķ ñåmé one two three]</string>
     <string name="settings_reset">[Ŕéšéţ one]</string>
-    <string name="settings_reset_confirm_message">[Åļļ šéţţîñĝš ŵîļļ ɓé ŕévéŕţéð ţö ţĥé ðéƒåûļţ våļûéš. Ţĥîš ŵîļļ ñöţ ðéļéţé åñý ţŕåçķš öñ ţĥé
-    ðévîçé öŕ öñ Ĝööĝļé Ðŕîvé. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen]</string>
+    <string name="settings_reset_confirm_message">[Åļļ šéţţîñĝš ŵîļļ ɓé ŕévéŕţéð ţö ţĥé ðéƒåûļţ våļûéš.</string>
     <string name="settings_reset_confirm_title">[Ŕéšéţ ñöŵ¿ one two]</string>
     <string name="settings_reset_done">[Åļļ šéţţîñĝš ĥåvé ɓééñ ŕévéŕţéð ţö ţĥé ðéƒåûļţ våļûéš one two three four five six seven eight nine ten eleven]</string>
     <string name="settings_sensor">[Šéñšöŕ one]</string>
@@ -304,11 +303,9 @@
     <string name="track_name_format">[Ţŕåçķ ᐅ%1$dᐊ one two three]</string>
     <string name="track_record_notification">[Ŕéçöŕðîñĝ ýöûŕ ţŕåçķ… one two three]</string>
     <string name="track_markers">[ᐅ%1$sᐊ Måŕķéŕš one two three]</string>
-    <string name="track_delete_one_confirm_message">[Ţĥé ţŕåçķ åñð îţš måŕķéŕš ŵîļļ ɓé þéŕmåñéñţļý ðéļéţéð ƒŕöm ţĥé ðévîçé. Îƒ Ĝööĝļé Ðŕîvé šýñç îš
-    éñåɓļéð, ţĥîš ŵîļļ åļšö ðéļéţé ţĥé ţŕåçķ öñ Ĝööĝļé Ðŕîvé. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree]</string>
+    <string name="track_delete_one_confirm_message">[Ţĥé ţŕåçķ åñð îţš måŕķéŕš ŵîļļ ɓé þéŕmåñéñţļý ðéļéţéð ƒŕöm ţĥé ðévîçé.</string>
     <string name="track_delete_one_confirm_title">[Ðéļéţé ţŕåçķ¿ one two]</string>
-    <string name="track_delete_multiple_confirm_message">[Ţĥé šéļéçţéð ţŕåçķš åñð ţĥéîŕ måŕķéŕš ŵîļļ ɓé þéŕmåñéñţļý ðéļéţéð ƒŕöm ţĥé ðévîçé. Îƒ Ĝööĝļé
-    Ðŕîvé šýñç îš éñåɓļéð, ţĥîš ŵîļļ åļšö ðéļéţé ţĥé ţŕåçķš öñ Ĝööĝļé Ðŕîvé. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour]</string>
+    <string name="track_delete_multiple_confirm_message">[Ţĥé šéļéçţéð ţŕåçķš åñð ţĥéîŕ måŕķéŕš ŵîļļ ɓé þéŕmåñéñţļý ðéļéţéð ƒŕöm ţĥé ðévîçé. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour]</string>
     <string name="track_delete_progress_message">[Ðéļéţîñĝ… one]</string>
     <string name="track_detail_chart_tab">[Çĥåŕţ one]</string>
     <string name="track_detail_stats_tab">[Šţåţš one]</string>

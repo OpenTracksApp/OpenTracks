@@ -255,8 +255,7 @@
     <string name="settings_recording_track_name_number_option">Broj</string>
     <string name="settings_recording_track_name_title">Zadani naziv staze</string>
     <string name="settings_reset">Poništiti</string>
-    <string name="settings_reset_confirm_message">Sve će se postavke vratiti na zadane vrijednosti. Time se neće izbrisati nijedna staza
-    na uređaju ili Google disku.</string>
+    <string name="settings_reset_confirm_message">Sve će se postavke vratiti na zadane vrijednosti.</string>
     <string name="settings_reset_confirm_title">Želite li sada vratiti na zadano?</string>
     <string name="settings_reset_done">Sve su postavke vraćene na zadane vrijednosti</string>
     <string name="settings_sensor">Senzor</string>
@@ -301,11 +300,9 @@
     <string name="track_name_format">Staza %1$d</string>
     <string name="track_record_notification">Snimanje vaše staze…</string>
     <string name="track_markers">%1$s: oznake</string>
-    <string name="track_delete_one_confirm_message">Staza i njezine oznake trajno će se izbrisati s uređaja. Ako je sinkronizacija Google diska
-    omogućena, izbrisat će se i staza na Google disku.</string>
+    <string name="track_delete_one_confirm_message">Staza i njezine oznake trajno će se izbrisati s uređaja.</string>
     <string name="track_delete_one_confirm_title">Želite li izbrisati trasu?</string>
-    <string name="track_delete_multiple_confirm_message">Odabrane staze i njihove oznake trajno će se izbrisati s uređaja. Ako je sinkronizacija
-    Google diska omogućena, izbrisat će se i staze na Google disku.</string>
+    <string name="track_delete_multiple_confirm_message">Odabrane staze i njihove oznake trajno će se izbrisati s uređaja.</string>
     <string name="track_delete_progress_message">Brisanje…</string>
     <string name="track_detail_chart_tab">Grafikon</string>
     <string name="track_detail_stats_tab">Statistički podaci</string>

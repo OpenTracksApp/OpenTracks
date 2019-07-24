@@ -257,8 +257,7 @@
     <string name="settings_recording_track_name_number_option">编号</string>
     <string name="settings_recording_track_name_title">默认路线名称</string>
     <string name="settings_reset">重置</string>
-    <string name="settings_reset_confirm_message">所有设置都将恢复为默认值，但设备
-    和 Google 云端硬盘上的任何路线不会删除。</string>
+    <string name="settings_reset_confirm_message">所有设置都将恢复为默认值。</string>
     <string name="settings_reset_confirm_title">立即重置？</string>
     <string name="settings_reset_done">所有设置都已恢复为默认值</string>
     <string name="settings_sensor">传感器</string>
@@ -304,11 +303,9 @@
     <string name="track_name_format">路线 %1$d</string>
     <string name="track_record_notification">正在记录路线...</string>
     <string name="track_markers">%1$s标记</string>
-    <string name="track_delete_one_confirm_message">系统将从设备中永久删除路线及其标记。如果您先前已启用了 Google 云端硬盘同步功能，
-    则此操作也将从 Google 云端硬盘上删除该路线。</string>
+    <string name="track_delete_one_confirm_message">系统将从设备中永久删除路线及其标记。</string>
     <string name="track_delete_one_confirm_title">删除路线？</string>
-    <string name="track_delete_multiple_confirm_message">系统将从设备中永久删除选定的路线及其标记。如果您先前已启用了 Google 云端硬盘同步功能，
-    则此操作也将从 Google 云端硬盘上删除这些路线。</string>
+    <string name="track_delete_multiple_confirm_message">系统将从设备中永久删除选定的路线及其标记。</string>
     <string name="track_delete_progress_message">正在删除…</string>
     <string name="track_detail_chart_tab">图表</string>
     <string name="track_detail_stats_tab">统计信息</string>

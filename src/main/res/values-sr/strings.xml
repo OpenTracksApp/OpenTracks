@@ -254,7 +254,7 @@
     <string name="settings_recording_track_name_number_option">Број</string>
     <string name="settings_recording_track_name_title">Подразумевано име</string>
     <string name="settings_reset">Ресетуј</string>
-    <string name="settings_reset_confirm_message">Сва подешавања ће бити враћена на подразумеване вредности. Ово неће избрисати праћења на уређају ни Google диску.</string>
+    <string name="settings_reset_confirm_message">Сва подешавања ће бити враћена на подразумеване вредности.</string>
     <string name="settings_reset_confirm_title">Желите да ресетујете?</string>
     <string name="settings_reset_done">Сва подешавања су враћена на подразумеване вредности</string>
     <string name="settings_sensor">Сензор</string>
@@ -299,9 +299,9 @@
     <string name="track_name_format">Праћење %1$d</string>
     <string name="track_record_notification">Снимање праћења...</string>
     <string name="track_markers">%1$s – означивачи</string>
-    <string name="track_delete_one_confirm_message">Праћење и његови означивачи ће бити трајно избрисани са уређаја. Ако је синхронизација Google диска омогућена, ово ће избрисати праћење и на Google диску.</string>
+    <string name="track_delete_one_confirm_message">Праћење и његови означивачи ће бити трајно избрисани са уређаја.</string>
     <string name="track_delete_one_confirm_title">Желите да избришете праћење?</string>
-    <string name="track_delete_multiple_confirm_message">Изабрана праћења и њихови означивачи ће бити трајно избрисани са уређаја. Ако је синхронизација Google диска омогућена, ово ће избрисати праћења и на Google диску.</string>
+    <string name="track_delete_multiple_confirm_message">Изабрана праћења и њихови означивачи ће бити трајно избрисани са уређаја.</string>
     <string name="track_delete_progress_message">Брисање...</string>
     <string name="track_detail_chart_tab">Графикон</string>
     <string name="track_detail_stats_tab">Статистика</string>

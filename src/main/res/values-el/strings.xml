@@ -255,7 +255,7 @@
     <string name="settings_recording_track_name_number_option">Αριθμός</string>
     <string name="settings_recording_track_name_title">Προεπιλεγμένο όνομα ίχνους</string>
     <string name="settings_reset">Επαναφορά</string>
-    <string name="settings_reset_confirm_message">Όλες οι ρυθμίσεις θα επανέλθουν στις προεπιλεγμένες τιμές. Αυτή η ενέργεια δεν θα διαγράψει καμία διαδρομή στη συσκευή ή στο Google Drive.</string>
+    <string name="settings_reset_confirm_message">Όλες οι ρυθμίσεις θα επανέλθουν στις προεπιλεγμένες τιμές.</string>
     <string name="settings_reset_confirm_title">Επαναφορά τώρα;</string>
     <string name="settings_reset_done">Όλες οι ρυθμίσεις έχουν επανέλθει στις προεπιλεγμένες τιμές</string>
     <string name="settings_sensor">Αισθητήρας</string>
@@ -300,10 +300,9 @@
     <string name="track_name_format">Διαδρομή %1$d</string>
     <string name="track_record_notification">Καταγραφή του ίχνους σας…</string>
     <string name="track_markers">%1$s Δείκτες</string>
-    <string name="track_delete_one_confirm_message">Η διαδρομή και οι δείκτες της θα διαγραφούν οριστικά από τη συσκευή. Αν ο συγχρονισμός του Google Drive είναι ενεργοποιημένος, αυτή η ενέργεια θα διαγράψει επίσης τη διαδρομή στο Google Drive.</string>
+    <string name="track_delete_one_confirm_message">Η διαδρομή και οι δείκτες της θα διαγραφούν οριστικά από τη συσκευή.</string>
     <string name="track_delete_one_confirm_title">Διαγραφή διαδρομής;</string>
-    <string name="track_delete_multiple_confirm_message">Οι επιλεγμένες διαδρομές και οι δείκτες τους θα διαγραφούν οριστικά από τη συσκευή. Αν είναι ενεργοποιημένος ο συγχρονισμός του Google
-    Drive, αυτή η ενέργεια θα διαγράψει τις διαδρομές και από το Google Drive.</string>
+    <string name="track_delete_multiple_confirm_message">Οι επιλεγμένες διαδρομές και οι δείκτες τους θα διαγραφούν οριστικά από τη συσκευή.</string>
     <string name="track_delete_progress_message">Διαγραφή…</string>
     <string name="track_detail_chart_tab">Γράφημα</string>
     <string name="track_detail_stats_tab">Στατιστικά</string>

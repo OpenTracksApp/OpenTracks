@@ -254,7 +254,7 @@
     <string name="settings_recording_track_name_number_option">شماره</string>
     <string name="settings_recording_track_name_title">نام پیش‌فرض گذر</string>
     <string name="settings_reset">بازنشانی</string>
-    <string name="settings_reset_confirm_message">همه تنظیمات به مقادیر پیش‌فرض برگردانده خواهند شد. این کار هیچ گذری را از روی دستگاه یا Google Drive حذف نخواهد کرد.</string>
+    <string name="settings_reset_confirm_message">همه تنظیمات به مقادیر پیش‌فرض برگردانده خواهند شد.</string>
     <string name="settings_reset_confirm_title">اکنون بازنشانی شود؟</string>
     <string name="settings_reset_done">تمام تنظیمات به مقادیر پیش‌فرض برگردانده شدند</string>
     <string name="settings_sensor">حسگر</string>
@@ -299,9 +299,9 @@
     <string name="track_name_format">گذر %1$d</string>
     <string name="track_record_notification">ضبط گذر شما…</string>
     <string name="track_markers">نشانگرهای %1$s</string>
-    <string name="track_delete_one_confirm_message">گذر و نشانگرهایش برای همیشه از روی دستگاه حذف خواهند شد. چنانچه همگام‌سازی Google Drive فعال باشد، این کار گذر را از روی Google Drive هم حذف خواهد کرد.</string>
+    <string name="track_delete_one_confirm_message">گذر و نشانگرهایش برای همیشه از روی دستگاه حذف خواهند شد.</string>
     <string name="track_delete_one_confirm_title">مسیر حذف شود؟</string>
-    <string name="track_delete_multiple_confirm_message">گذرهای انتخاب شده و نشانگرهایشان برای همیشه از دستگاه حذف خواهند شد. چنانچه همگام‌سازی Google Drive فعال باشد، این کار گذر را از روی Google Drive هم حذف خواهد کرد.</string>
+    <string name="track_delete_multiple_confirm_message">گذرهای انتخاب شده و نشانگرهایشان برای همیشه از دستگاه حذف خواهند شد.</string>
     <string name="track_delete_progress_message">در حال حذف...</string>
     <string name="track_detail_chart_tab">نمودار</string>
     <string name="track_detail_stats_tab">آمار</string>

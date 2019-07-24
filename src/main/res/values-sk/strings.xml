@@ -254,7 +254,7 @@
     <string name="settings_recording_track_name_number_option">Číslovanie</string>
     <string name="settings_recording_track_name_title">Predvolený názov trasy</string>
     <string name="settings_reset">Obnoviť</string>
-    <string name="settings_reset_confirm_message">Obnovia sa predvolené hodnoty všetkých nastavení. Zo zariadenia ani z Disku Google sa neodstránia žiadne trasy.</string>
+    <string name="settings_reset_confirm_message">Obnovia sa predvolené hodnoty všetkých nastavení.</string>
     <string name="settings_reset_confirm_title">Obnoviť?</string>
     <string name="settings_reset_done">Boli vrátené predvolené hodnoty všetkých nastavení</string>
     <string name="settings_sensor">Senzor</string>
@@ -299,9 +299,9 @@
     <string name="track_name_format">Trasa %1$d</string>
     <string name="track_record_notification">Vaša trasa sa zaznamenáva...</string>
     <string name="track_markers">Značky pre %1$s</string>
-    <string name="track_delete_one_confirm_message">Trasa a jej značky sa natrvalo odstránia zo zariadenia. Ak je povolená synchronizácia Disku Google, trasa sa odstráni aj z Disku Google.</string>
+    <string name="track_delete_one_confirm_message">Trasa a jej značky sa natrvalo odstránia zo zariadenia.</string>
     <string name="track_delete_one_confirm_title">Odstrániť trasu?</string>
-    <string name="track_delete_multiple_confirm_message">Zvolené trasy a ich značky budú zo zariadenia natrvalo odstránené. V prípade, že je povolená synchronizácia so službou Disk Google, budú odstránené aj trasy v službe Disk Google.</string>
+    <string name="track_delete_multiple_confirm_message">Zvolené trasy a ich značky budú zo zariadenia natrvalo odstránené.</string>
     <string name="track_delete_progress_message">Prebieha odstraňovanie...</string>
     <string name="track_detail_chart_tab">Graf</string>
     <string name="track_detail_stats_tab">Štatistiky</string>

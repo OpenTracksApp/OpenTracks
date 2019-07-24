@@ -257,8 +257,7 @@
     <string name="settings_recording_track_name_number_option">Numer</string>
     <string name="settings_recording_track_name_title">Domyślna nazwa trasy</string>
     <string name="settings_reset">Zresetuj</string>
-    <string name="settings_reset_confirm_message">Wszystkie ustawienia zostaną zresetowane do wartości domyślnych. Nie spowoduje to usunięcia
-    żadnych tras na urządzeniu ani na Dysku Google.</string>
+    <string name="settings_reset_confirm_message">Wszystkie ustawienia zostaną zresetowane do wartości domyślnych.</string>
     <string name="settings_reset_confirm_title">Zresetować teraz?</string>
     <string name="settings_reset_done">Wszystkie ustawienia wróciły do wartości domyślnych</string>
     <string name="settings_sensor">Czujnik</string>
@@ -304,11 +303,9 @@
     <string name="track_name_format">Trasa %1$d</string>
     <string name="track_record_notification">Rejestrowanie Twojej trasy...</string>
     <string name="track_markers">Znaczniki: %1$s</string>
-    <string name="track_delete_one_confirm_message">Trasa wraz ze znacznikami zostanie trwale usunięta z urządzenia. Jeśli włączona jest synchronizacja
-    z Dyskiem Google, trasa zostanie usunięta również stamtąd.</string>
+    <string name="track_delete_one_confirm_message">Trasa wraz ze znacznikami zostanie trwale usunięta z urządzenia.</string>
     <string name="track_delete_one_confirm_title">Usunąć trasę?</string>
-    <string name="track_delete_multiple_confirm_message">Wybrane trasy wraz ze znacznikami zostaną trwale usunięte z urządzenia. Jeśli włączona jest
-    synchronizacja z Dyskiem Google, trasa zostanie usunięta również stamtąd.</string>
+    <string name="track_delete_multiple_confirm_message">Wybrane trasy wraz ze znacznikami zostaną trwale usunięte z urządzenia.</string>
     <string name="track_delete_progress_message">Usuwam…</string>
     <string name="track_detail_chart_tab">Wykres</string>
     <string name="track_detail_stats_tab">Statystyki</string>

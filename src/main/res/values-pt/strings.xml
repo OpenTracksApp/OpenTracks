@@ -257,8 +257,7 @@
     <string name="settings_recording_track_name_number_option">Número</string>
     <string name="settings_recording_track_name_title">Nome padrão para trilhas</string>
     <string name="settings_reset">Redefinir</string>
-    <string name="settings_reset_confirm_message">Todas as configurações serão revertidas para os valores padrão. Esta ação não excluirá as trilhas do
-    dispositivo nem do Google Drive.</string>
+    <string name="settings_reset_confirm_message">Todas as configurações serão revertidas para os valores padrão.</string>
     <string name="settings_reset_confirm_title">Redefinir agora?</string>
     <string name="settings_reset_done">Todas as configurações foram revertidas para os valores padrão</string>
     <string name="settings_sensor">Sensor</string>
@@ -304,11 +303,9 @@
     <string name="track_name_format">Trilha %1$d</string>
     <string name="track_record_notification">Gravando sua trilha...</string>
     <string name="track_markers">Marcadores de %1$s</string>
-    <string name="track_delete_one_confirm_message">A trilha e seus marcadores serão excluídos permanentemente do dispositivo. Se a sincronização do Google Drive estiver
-    ativada, esta ação também excluirá a trilha do Google Drive.</string>
+    <string name="track_delete_one_confirm_message">A trilha e seus marcadores serão excluídos permanentemente do dispositivo.</string>
     <string name="track_delete_one_confirm_title">Excluir rota?</string>
-    <string name="track_delete_multiple_confirm_message">As trilhas selecionadas e seus respectivos marcadores serão excluídos permanentemente do dispositivo. Se a sincronização do
-    Google Drive estiver ativada, esta ação também excluirá as trilhas do Google Drive.</string>
+    <string name="track_delete_multiple_confirm_message">As trilhas selecionadas e seus respectivos marcadores serão excluídos permanentemente do dispositivo.</string>
     <string name="track_delete_progress_message">Excluindo…</string>
     <string name="track_detail_chart_tab">Gráfico</string>
     <string name="track_detail_stats_tab">Estatísticas</string>

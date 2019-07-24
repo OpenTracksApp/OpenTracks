@@ -254,8 +254,7 @@
     <string name="settings_recording_track_name_number_option">Siffra</string>
     <string name="settings_recording_track_name_title">Standardnamn</string>
     <string name="settings_reset">Återställ</string>
-    <string name="settings_reset_confirm_message">Alla inställningar återställs till standardvärdena. Detta tar inte bort
-    spår på enheten eller på Google Drive.</string>
+    <string name="settings_reset_confirm_message">Alla inställningar återställs till standardvärdena.</string>
     <string name="settings_reset_confirm_title">Återställ nu?</string>
     <string name="settings_reset_done">Alla inställningar har återställts till standardvärdena</string>
     <string name="settings_sensor">Sensor</string>
@@ -300,9 +299,9 @@
     <string name="track_name_format">Spår %1$d</string>
     <string name="track_record_notification">Spelar in ditt spår...</string>
     <string name="track_markers">%1$s markörer</string>
-    <string name="track_delete_one_confirm_message">Spåret och dess markörer tas bort permanent från enheten. Är Google Drive-synkronisering aktiverat, tar detta även bort spåret på Google Drive.</string>
+    <string name="track_delete_one_confirm_message">Spåret och dess markörer tas bort permanent från enheten.</string>
     <string name="track_delete_one_confirm_title">Ta bort spår?</string>
-    <string name="track_delete_multiple_confirm_message">De valda spåren och deras markörer tas permanent bort från enheten. Är Google Drive-synkronisering aktiverat, tar detta även bort spåren på Google Drive.</string>
+    <string name="track_delete_multiple_confirm_message">De valda spåren och deras markörer tas permanent bort från enheten.</string>
     <string name="track_delete_progress_message">Tar bort ...</string>
     <string name="track_detail_chart_tab">Diagram</string>
     <string name="track_detail_stats_tab">Statistik</string>

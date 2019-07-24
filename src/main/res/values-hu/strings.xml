@@ -255,8 +255,7 @@
     <string name="settings_recording_track_name_number_option">Szám</string>
     <string name="settings_recording_track_name_title">Pálya alapértelmezett neve</string>
     <string name="settings_reset">Visszaállítás</string>
-    <string name="settings_reset_confirm_message">Minden beállítás visszaáll az alapértelmezett értékekre. Ezzel nem törlődnek útvonalak az
-    eszközről, illetve a Google Drive-ról.</string>
+    <string name="settings_reset_confirm_message">Minden beállítás visszaáll az alapértelmezett értékekre.</string>
     <string name="settings_reset_confirm_title">Visszaállítja most?</string>
     <string name="settings_reset_done">Minden beállítás visszaállt az alapértelmezett értékre</string>
     <string name="settings_sensor">Érzékelő</string>
@@ -301,11 +300,9 @@
     <string name="track_name_format">%1$d. pálya</string>
     <string name="track_record_notification">Útvonal rögzítése...</string>
     <string name="track_markers">%1$s jelölői</string>
-    <string name="track_delete_one_confirm_message">Az útvonal és a jelölők véglegesen törlődnek az eszközről. Ha a Google Drive szinkronizálása
-    engedélyezve van, akkor az útvonal a Google Drive-ról is törlődik.</string>
+    <string name="track_delete_one_confirm_message">Az útvonal és a jelölők véglegesen törlődnek az eszközről.</string>
     <string name="track_delete_one_confirm_title">Törli az útvonalat?</string>
-    <string name="track_delete_multiple_confirm_message">Az kiválasztott útvonalak és a jelölőik véglegesen törlődnek az eszközről. Ha a Google Drive szinkronizálása
-    engedélyezve van, akkor az útvonalak a Google Drive-ról is törlődnek.</string>
+    <string name="track_delete_multiple_confirm_message">Az kiválasztott útvonalak és a jelölőik véglegesen törlődnek az eszközről.</string>
     <string name="track_delete_progress_message">Törlés folyamatban...</string>
     <string name="track_detail_chart_tab">Grafikon</string>
     <string name="track_detail_stats_tab">Statisztikák</string>

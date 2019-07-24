@@ -256,8 +256,7 @@
     <string name="settings_recording_track_name_number_option">Numéro</string>
     <string name="settings_recording_track_name_title">Nom parcours par défaut</string>
     <string name="settings_reset">Réinitialiser</string>
-    <string name="settings_reset_confirm_message">Les valeurs par défaut seront rétablies pour tous les paramètres. Aucun parcours
-ne sera supprimé de l\'appareil ni de Google Drive.</string>
+    <string name="settings_reset_confirm_message">Les valeurs par défaut seront rétablies pour tous les paramètres.</string>
     <string name="settings_reset_confirm_title">Réinitialiser maintenant ?</string>
     <string name="settings_reset_done">Les valeurs par défaut de tous les paramètres ont bien été rétablies.</string>
     <string name="settings_sensor">Dispositif de mesure</string>
@@ -302,9 +301,9 @@ ne sera supprimé de l\'appareil ni de Google Drive.</string>
     <string name="track_name_format">Parcours %1$d</string>
     <string name="track_record_notification">Enregistrement du parcours...</string>
     <string name="track_markers">Repères pour le parcours %1$s</string>
-    <string name="track_delete_one_confirm_message">Ce parcours et ses repères vont être définitivement effacés de l\'appareil. Si la synchronisation Google Drive est activée, le parcours est également supprimé de Google Drive.</string>
+    <string name="track_delete_one_confirm_message">Ce parcours et ses repères vont être définitivement effacés de l\'appareil.</string>
     <string name="track_delete_one_confirm_title">Supprimer le parcours ?</string>
-    <string name="track_delete_multiple_confirm_message">Les parcours sélectionnés et leurs repères respectifs vont être définitivement effacés de l\'appareil. Si la synchronisation Google Drive est activée, les parcours sont également supprimés de Google Drive.</string>
+    <string name="track_delete_multiple_confirm_message">Les parcours sélectionnés et leurs repères respectifs vont être définitivement effacés de l\'appareil.</string>
     <string name="track_delete_progress_message">Suppression en cours…</string>
     <string name="track_detail_chart_tab">Graphique</string>
     <string name="track_detail_stats_tab">Statistiques</string>
