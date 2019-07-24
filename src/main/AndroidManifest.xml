@@ -17,8 +17,8 @@ limitations under the License.
     xmlns:tools="http://schemas.android.com/tools"
     package="de.dennisguse.opentracks"
     android:installLocation="auto"
-    android:versionCode="74"
-    android:versionName="2.0.6">
+    android:versionCode="100"
+    android:versionName="3.0.0">
     <!-- Permission to initialize services -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />

@@ -141,8 +141,7 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
             sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-            if (key == null || key.equals(
-                    PreferencesUtils.getKey(TrackListActivity.this, R.string.stats_units_key))) {
+            if (key == null || key.equals(PreferencesUtils.getKey(TrackListActivity.this, R.string.stats_units_key))) {
                 metricUnits = PreferencesUtils.isMetricUnits(TrackListActivity.this);
             }
             if (key == null || key.equals(
