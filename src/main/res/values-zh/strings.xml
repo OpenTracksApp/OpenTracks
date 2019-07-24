@@ -210,7 +210,7 @@
     <string name="menu_stop_gps">关闭 GPS</string>
     <string name="menu_view_photo">查看照片</string>
     <string name="menu_voice_frequency">语音提示频率</string>
-    <string name="app_name">我的足迹</string>
+    <string name="app_name">OpenTracks</string>
     <string name="recording_service">记录服务</string>
     <string name="search_global_description">路线和标记</string>
     <string name="search_list_empty_message">没有与您的搜索相符的路线或标记</string>

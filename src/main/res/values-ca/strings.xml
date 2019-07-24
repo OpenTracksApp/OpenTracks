@@ -152,7 +152,7 @@ es vegi el cel. Torneu-ho a provar més tard.</string>
     <string name="image_marker">Marcador</string>
     <string name="image_marker_count">Recompte de marcadors</string>
     <string name="image_my_location">La meva ubicació</string>
-    <string name="image_my_tracks_logo">Logotip de My Tracks</string>
+    <string name="image_my_tracks_logo">Logotip de OpenTracks</string>
     <string name="image_pause">Atura</string>
     <string name="image_photo_marker">Marcador de fotos</string>
     <string name="image_record">Enregistra</string>
@@ -210,7 +210,7 @@ es vegi el cel. Torneu-ho a provar més tard.</string>
     <string name="menu_stop_gps">Desactiva el GPS</string>
     <string name="menu_view_photo">Mostra la foto</string>
     <string name="menu_voice_frequency">Freqüència de veu</string>
-    <string name="app_name">My Tracks</string>
+    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Servei d\'enregistrament</string>
     <string name="search_global_description">Pistes i marcadors</string>
     <string name="search_list_empty_message">No hi ha cap ruta ni marcador que coincideixi amb els criteris de cerca.</string>
@@ -393,7 +393,7 @@ es vegi el cel. Torneu-ho a provar més tard.</string>
     <string name="voice_speed_miles_per_hour_other">%1$.1f milles per hora</string>
     <string name="voice_speed_miles_per_hour_two">2 milles per hora</string>
     <string name="voice_speed_miles_per_hour_zero">0 milles per hora</string>
-    <string name="voice_template">My Tracks: %1$s en %2$s a %3$s</string>
+    <string name="voice_template">OpenTracks: %1$s en %2$s a %3$s</string>
     <string name="voice_total_distance_kilometers_few">%1$.2f quilòmetres de distància total</string>
     <string name="voice_total_distance_kilometers_many">%1$.2f quilòmetres de distància total</string>
     <string name="voice_total_distance_kilometers_one">1 quilòmetre de distància total</string>
@@ -406,7 +406,7 @@ es vegi el cel. Torneu-ho a provar més tard.</string>
     <string name="voice_total_distance_miles_other">%1$.2f milles de distància total</string>
     <string name="voice_total_distance_miles_two">2 milles de distància total</string>
     <string name="voice_total_distance_miles_zero">0 milles de distància total</string>
-    <string name="voice_total_distance_zero">La distància total de My Tracks és zero.</string>
+    <string name="voice_total_distance_zero">La distància total de OpenTracks és zero.</string>
     <string name="waypoint_type_atm">caixer</string>
     <string name="waypoint_type_bank">banc</string>
     <string name="waypoint_type_bar">bar</string>

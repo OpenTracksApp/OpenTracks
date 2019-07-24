@@ -150,7 +150,7 @@
     <string name="image_marker">Markör</string>
     <string name="image_marker_count">Antal markörer</string>
     <string name="image_my_location">Min plats</string>
-    <string name="image_my_tracks_logo">Logotypen My Tracks</string>
+    <string name="image_my_tracks_logo">Logotypen OpenTracks</string>
     <string name="image_pause">Pausa</string>
     <string name="image_photo_marker">Fotomarkör</string>
     <string name="image_record">Spela in</string>
@@ -207,7 +207,7 @@
     <string name="menu_stop_gps">Stoppa GPS</string>
     <string name="menu_view_photo">Visa foto</string>
     <string name="menu_voice_frequency">Röstfrekvens</string>
-    <string name="app_name">Mina spår</string>
+    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Inspelningstjänst</string>
     <string name="search_global_description">Spår och markörer</string>
     <string name="search_list_empty_message">Inga spår eller markörer matchade sökningen</string>
@@ -388,7 +388,7 @@
     <string name="voice_speed_miles_per_hour_other">%1$.1f miles per timme</string>
     <string name="voice_speed_miles_per_hour_two">2 miles per timme</string>
     <string name="voice_speed_miles_per_hour_zero">0 miles per timme</string>
-    <string name="voice_template">My Tracks %1$s på %2$s med %3$s</string>
+    <string name="voice_template">OpenTracks %1$s på %2$s med %3$s</string>
     <string name="voice_total_distance_kilometers_few">totalt avstånd %1$.2f kilometer</string>
     <string name="voice_total_distance_kilometers_many">totalt avstånd %1$.2f kilometer</string>
     <string name="voice_total_distance_kilometers_one">totalt avstånd 1 kilometer</string>

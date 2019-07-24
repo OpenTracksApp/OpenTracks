@@ -152,7 +152,7 @@
     <string name="image_marker">Marker</string>
     <string name="image_marker_count">Marker count</string>
     <string name="image_my_location">My Location</string>
-    <string name="image_my_tracks_logo">My Tracks logo</string>
+    <string name="image_my_tracks_logo">OpenTracks logo</string>
     <string name="image_pause">Pause</string>
     <string name="image_photo_marker">Photo marker</string>
     <string name="image_record">Record</string>
@@ -210,7 +210,7 @@
     <string name="menu_stop_gps">Stop GPS</string>
     <string name="menu_view_photo">View photo</string>
     <string name="menu_voice_frequency">Voice frequency</string>
-    <string name="app_name">Spor</string>
+    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Opptakstjeneste</string>
     <string name="search_global_description">Tracks and markers</string>
     <string name="search_list_empty_message">No tracks or markers matched your search</string>
@@ -394,7 +394,7 @@
     <string name="voice_speed_miles_per_hour_other">%1$.1f engelske mil i timen</string>
     <string name="voice_speed_miles_per_hour_two">To engelske mil i timen</string>
     <string name="voice_speed_miles_per_hour_zero">Null engelske mil i timen</string>
-    <string name="voice_template">My Tracks %1$s in %2$s at %3$s</string>
+    <string name="voice_template">OpenTracks %1$s in %2$s at %3$s</string>
     <string name="voice_total_distance_kilometers_few">total avstand er %1$.2f kilometer</string>
     <string name="voice_total_distance_kilometers_many">total avstand er %1$.2f kilometer</string>
     <string name="voice_total_distance_kilometers_one">total avstand er én kilometer</string>

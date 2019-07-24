@@ -150,7 +150,7 @@
     <string name="image_marker">Marcador</string>
     <string name="image_marker_count">Recuento de marcadores</string>
     <string name="image_my_location">Mi ubicación</string>
-    <string name="image_my_tracks_logo">Logotipo de My Tracks</string>
+    <string name="image_my_tracks_logo">Logotipo de OpenTracks</string>
     <string name="image_pause">Pausa</string>
     <string name="image_photo_marker">Marcador de foto</string>
     <string name="image_record">Grabar</string>
@@ -207,7 +207,7 @@
     <string name="menu_stop_gps">Detener GPS</string>
     <string name="menu_view_photo">Ver foto</string>
     <string name="menu_voice_frequency">Frecuencia de voz</string>
-    <string name="app_name">My Tracks</string>
+    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Servicio de grabación</string>
     <string name="search_global_description">Recorridos y marcadores</string>
     <string name="search_list_empty_message">No hay rutas ni marcadores que coincidan con tu búsqueda.</string>
@@ -387,7 +387,7 @@
     <string name="voice_speed_miles_per_hour_other">%1$.1f millas por hora</string>
     <string name="voice_speed_miles_per_hour_two">2 millas por hora</string>
     <string name="voice_speed_miles_per_hour_zero">0 millas por hora</string>
-    <string name="voice_template">My Tracks de %1$s en %2$s a %3$s</string>
+    <string name="voice_template">OpenTracks de %1$s en %2$s a %3$s</string>
     <string name="voice_total_distance_kilometers_few">distancia total: %1$.2f kilómetros</string>
     <string name="voice_total_distance_kilometers_many">distancia total: %1$.2f kilómetros</string>
     <string name="voice_total_distance_kilometers_one">distancia total: 1 kilómetro</string>
@@ -400,7 +400,7 @@
     <string name="voice_total_distance_miles_other">distancia total: %1$.2f millas</string>
     <string name="voice_total_distance_miles_two">distancia total: 2 millas</string>
     <string name="voice_total_distance_miles_zero">distancia total: 0 millas</string>
-    <string name="voice_total_distance_zero">La distancia total de My Tracks es igual a cero.</string>
+    <string name="voice_total_distance_zero">La distancia total de OpenTracks es igual a cero.</string>
     <string name="waypoint_type_atm">cajero automático</string>
     <string name="waypoint_type_bank">banco</string>
     <string name="waypoint_type_bar">barra</string>

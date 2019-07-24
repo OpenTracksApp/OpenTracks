@@ -152,7 +152,7 @@
     <string name="image_marker">Markør</string>
     <string name="image_marker_count">Antal markører</string>
     <string name="image_my_location">Min placering</string>
-    <string name="image_my_tracks_logo">Logoet for My Tracks</string>
+    <string name="image_my_tracks_logo">Logoet for OpenTracks</string>
     <string name="image_pause">Pause</string>
     <string name="image_photo_marker">Billedmarkør</string>
     <string name="image_record">Registrer</string>
@@ -210,7 +210,7 @@
     <string name="menu_stop_gps">Stop GPS</string>
     <string name="menu_view_photo">Se billede</string>
     <string name="menu_voice_frequency">Stemmefrekvens</string>
-    <string name="app_name">My Tracks</string>
+    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Registreringstjeneste</string>
     <string name="search_global_description">Ruter og markører</string>
     <string name="search_list_empty_message">Ingen ruter eller markører matchede din søgning</string>
@@ -393,7 +393,7 @@
     <string name="voice_speed_miles_per_hour_other">%1$.1f mil i timen</string>
     <string name="voice_speed_miles_per_hour_two">2 mil i timen</string>
     <string name="voice_speed_miles_per_hour_zero">0 mil i timen</string>
-    <string name="voice_template">My Tracks %1$s på %2$s ved %3$s</string>
+    <string name="voice_template">OpenTracks %1$s på %2$s ved %3$s</string>
     <string name="voice_total_distance_kilometers_few">afstand i alt %1$.2f km</string>
     <string name="voice_total_distance_kilometers_many">afstand i alt %1$.2f km</string>
     <string name="voice_total_distance_kilometers_one">afstand i alt 1 kilometer</string>
@@ -406,7 +406,7 @@
     <string name="voice_total_distance_miles_other">afstand i alt %1$.2f mil</string>
     <string name="voice_total_distance_miles_two">afstand i alt 2 mil</string>
     <string name="voice_total_distance_miles_zero">afstand i alt 0 mil</string>
-    <string name="voice_total_distance_zero">Afstand i alt i My Tracks er nul.</string>
+    <string name="voice_total_distance_zero">Afstand i alt i OpenTracks er nul.</string>
     <string name="waypoint_type_atm">Pengeautomat</string>
     <string name="waypoint_type_bank">bank</string>
     <string name="waypoint_type_bar">bar</string>

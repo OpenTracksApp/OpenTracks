@@ -152,7 +152,7 @@
     <string name="image_marker">マーカー</string>
     <string name="image_marker_count">マーカー数</string>
     <string name="image_my_location">現在地</string>
-    <string name="image_my_tracks_logo">My Tracksのロゴ</string>
+    <string name="image_my_tracks_logo">OpenTracksのロゴ</string>
     <string name="image_pause">停止</string>
     <string name="image_photo_marker">写真マーカー</string>
     <string name="image_record">記録</string>
@@ -210,7 +210,7 @@
     <string name="menu_stop_gps">GPSを停止</string>
     <string name="menu_view_photo">写真を表示</string>
     <string name="menu_voice_frequency">音声アナウンスの頻度</string>
-    <string name="app_name">My Tracks</string>
+    <string name="app_name">OpenTracks</string>
     <string name="recording_service">記録サービス</string>
     <string name="search_global_description">トラックとマーカー</string>
     <string name="search_list_empty_message">該当するトラックやマーカーは見つかりませんでした</string>
@@ -393,7 +393,7 @@
     <string name="voice_speed_miles_per_hour_other">時速%1$.1fマイル</string>
     <string name="voice_speed_miles_per_hour_two">1時間につき2マイル</string>
     <string name="voice_speed_miles_per_hour_zero">時速0マイル</string>
-    <string name="voice_template">My Tracksの記録距離は%1$s、所要時間は%2$s、ペースは%3$sです</string>
+    <string name="voice_template">OpenTracksの記録距離は%1$s、所要時間は%2$s、ペースは%3$sです</string>
     <string name="voice_total_distance_kilometers_few">合計距離%1$.2fキロ</string>
     <string name="voice_total_distance_kilometers_many">合計距離%1$.2fキロ</string>
     <string name="voice_total_distance_kilometers_one">合計距離1キロ</string>
@@ -406,7 +406,7 @@
     <string name="voice_total_distance_miles_other">合計距離%1$.2fマイル</string>
     <string name="voice_total_distance_miles_two">合計距離2マイル</string>
     <string name="voice_total_distance_miles_zero">合計距離0マイル</string>
-    <string name="voice_total_distance_zero">My Tracksの合計距離はゼロです。</string>
+    <string name="voice_total_distance_zero">OpenTracksの合計距離はゼロです。</string>
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">銀行</string>
     <string name="waypoint_type_bar">バー</string>

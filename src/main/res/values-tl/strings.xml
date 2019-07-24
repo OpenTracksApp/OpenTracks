@@ -150,7 +150,7 @@
     <string name="image_marker">Marker</string>
     <string name="image_marker_count">Bilang ng marker</string>
     <string name="image_my_location">Aking Lokasyon</string>
-    <string name="image_my_tracks_logo">Logo ng My Tracks</string>
+    <string name="image_my_tracks_logo">Logo ng OpenTracks</string>
     <string name="image_pause">Pause</string>
     <string name="image_photo_marker">Marker ng larawan</string>
     <string name="image_record">Mag-record</string>
@@ -207,7 +207,7 @@
     <string name="menu_stop_gps">Itigil ang GPS</string>
     <string name="menu_view_photo">Tingnan ang larawan</string>
     <string name="menu_voice_frequency">Dalas ng voice</string>
-    <string name="app_name">Aking Mga Track</string>
+    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Serbisyo ng pagrerekord</string>
     <string name="search_global_description">Mga track at marker</string>
     <string name="search_list_empty_message">Walang mga track o marker na tumugma sa iyong paghahanap</string>
@@ -387,7 +387,7 @@
     <string name="voice_speed_miles_per_hour_other">%1$.1f (na) milya bawat oras</string>
     <string name="voice_speed_miles_per_hour_two">2 milya kada oras</string>
     <string name="voice_speed_miles_per_hour_zero">0 milya bawat oras</string>
-    <string name="voice_template">My Tracks %1$s sa %2$s sa %3$s</string>
+    <string name="voice_template">OpenTracks %1$s sa %2$s sa %3$s</string>
     <string name="voice_total_distance_kilometers_few">kabuuang distansya %1$.2f (na) kilometro</string>
     <string name="voice_total_distance_kilometers_many">kabuuang distansya %1$.2f (na) kilometro</string>
     <string name="voice_total_distance_kilometers_one">kabuuang distansya 1 kilometro</string>

@@ -150,7 +150,7 @@
     <string name="image_marker">Marcador</string>
     <string name="image_marker_count">Reconto de marcadores</string>
     <string name="image_my_location">A miña situación</string>
-    <string name="image_my_tracks_logo">Logotipo de My Tracks</string>
+    <string name="image_my_tracks_logo">Logotipo de OpenTracks</string>
     <string name="image_pause">Pausar</string>
     <string name="image_photo_marker">Marcador de fotos</string>
     <string name="image_record">Gravar</string>
@@ -207,7 +207,7 @@
     <string name="menu_stop_gps">Desactivar GPS</string>
     <string name="menu_view_photo">Ver foto</string>
     <string name="menu_voice_frequency">Frecuencia da voz</string>
-    <string name="app_name">As miñas rutas</string>
+    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Servizo de gravación</string>
     <string name="search_global_description">Traxectos e marcadores</string>
     <string name="search_list_empty_message">Non hai traxectos ou marcadores que coincidan coa túa busca</string>
@@ -387,7 +387,7 @@
     <string name="voice_speed_miles_per_hour_other">%1$.1f quilómetros por hora</string>
     <string name="voice_speed_miles_per_hour_two">2 quilómetros por hora</string>
     <string name="voice_speed_miles_per_hour_zero">0 quilómetros por hora</string>
-    <string name="voice_template">My Tracks: %1$s en %2$s a %3$s</string>
+    <string name="voice_template">OpenTracks: %1$s en %2$s a %3$s</string>
     <string name="voice_total_distance_kilometers_few">distancia total %1$.2f quilómetros</string>
     <string name="voice_total_distance_kilometers_many">distancia total %1$.2f quilómetros</string>
     <string name="voice_total_distance_kilometers_one">distancia total 1 quilómetro</string>

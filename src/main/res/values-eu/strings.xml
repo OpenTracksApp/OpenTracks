@@ -150,7 +150,7 @@
     <string name="image_marker">Markatzailea</string>
     <string name="image_marker_count">Markatzaile kopurua</string>
     <string name="image_my_location">Nire kokapena</string>
-    <string name="image_my_tracks_logo">My Tracks aplikazioaren logotipoa</string>
+    <string name="image_my_tracks_logo">OpenTracks aplikazioaren logotipoa</string>
     <string name="image_pause">Pausatu</string>
     <string name="image_photo_marker">Argazki-markatzailea</string>
     <string name="image_record">Grabatu</string>
@@ -207,7 +207,7 @@
     <string name="menu_stop_gps">Gelditu GPSa</string>
     <string name="menu_view_photo">Ikusi argazkia</string>
     <string name="menu_voice_frequency">Ahotsaren frekuentzia</string>
-    <string name="app_name">Nire ibilbideak</string>
+    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Grabaketa-zerbitzua</string>
     <string name="search_global_description">Ibilbideak eta markatzaileak</string>
     <string name="search_list_empty_message">Ez da bilaketarekin bat datorren ibilbide edo markatzailerik aurkitu</string>
@@ -387,7 +387,7 @@
     <string name="voice_speed_miles_per_hour_other">%1$.1f milia orduko</string>
     <string name="voice_speed_miles_per_hour_two">2 milia orduko</string>
     <string name="voice_speed_miles_per_hour_zero">0 milia orduko</string>
-    <string name="voice_template">My Tracks. Distantzia: %1$s. Denbora: %2$s. Abiadura: %3$s.</string>
+    <string name="voice_template">OpenTracks. Distantzia: %1$s. Denbora: %2$s. Abiadura: %3$s.</string>
     <string name="voice_total_distance_kilometers_few">distantzia, guztira: %1$.2f kilometro</string>
     <string name="voice_total_distance_kilometers_many">distantzia, guztira: %1$.2f kilometro</string>
     <string name="voice_total_distance_kilometers_one">distantzia, guztira: 1 kilometro</string>

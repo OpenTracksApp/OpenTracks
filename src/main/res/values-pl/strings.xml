@@ -210,7 +210,7 @@
     <string name="menu_stop_gps">Zatrzymaj GPS</string>
     <string name="menu_view_photo">Wyświetl zdjęcie</string>
     <string name="menu_voice_frequency">Częstość powiadomień</string>
-    <string name="app_name">Moje trasy</string>
+    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Usługa rejestrowania</string>
     <string name="search_global_description">Trasy i znaczniki</string>
     <string name="search_list_empty_message">Brak tras lub znaczników pasujących do wyszukiwania</string>

@@ -208,7 +208,7 @@
     <string name="menu_stop_gps">Спиране на GPS</string>
     <string name="menu_view_photo">Показв. на снимката</string>
     <string name="menu_voice_frequency">Честота на гласа</string>
-    <string name="app_name">Моите маршрути</string>
+    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Услуга за запис</string>
     <string name="search_global_description">Маршрути и маркери</string>
     <string name="search_list_empty_message">Няма маршрути или маркери, отговарящи на търсените от вас.</string>

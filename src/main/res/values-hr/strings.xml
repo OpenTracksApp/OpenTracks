@@ -208,7 +208,7 @@
     <string name="menu_stop_gps">Zaustavi GPS</string>
     <string name="menu_view_photo">Prikaz fotografije</string>
     <string name="menu_voice_frequency">Učest. glas. objava</string>
-    <string name="app_name">My Tracks</string>
+    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Usluga snimanja</string>
     <string name="search_global_description">Staze i oznake</string>
     <string name="search_list_empty_message">Nijedna trasa ni oznaka ne odgovaraju vašem pretraživanju</string>
@@ -404,7 +404,7 @@
     <string name="voice_total_distance_miles_other">ukupna udaljenost %1$.2f milja</string>
     <string name="voice_total_distance_miles_two">ukupna udaljenost dvije milje</string>
     <string name="voice_total_distance_miles_zero">ukupna udaljenost 0 milja</string>
-    <string name="voice_total_distance_zero">Ukupna udaljenost aplikacije My Tracks iznosi nula.</string>
+    <string name="voice_total_distance_zero">Ukupna udaljenost aplikacije OpenTracks iznosi nula.</string>
     <string name="waypoint_type_atm">Bankomat</string>
     <string name="waypoint_type_bank">banka</string>
     <string name="waypoint_type_bar">bar</string>

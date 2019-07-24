@@ -207,7 +207,7 @@
     <string name="menu_stop_gps">GPS stoppen</string>
     <string name="menu_view_photo">Foto weergeven</string>
     <string name="menu_voice_frequency">Frequentie voor gesproken berichten</string>
-    <string name="app_name">My Tracks</string>
+    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Opnameservice</string>
     <string name="search_global_description">Routes en markeringen</string>
     <string name="search_list_empty_message">Er zijn geen routes of markeringen gevonden die overeenkomen met uw zoekopdracht</string>
@@ -400,7 +400,7 @@
     <string name="voice_total_distance_miles_other">totale afstand %1$.2f mijl</string>
     <string name="voice_total_distance_miles_two">totale afstand 2 mijl</string>
     <string name="voice_total_distance_miles_zero">totale afstand 0 mijl</string>
-    <string name="voice_total_distance_zero">Totale afstand van My Tracks is nul.</string>
+    <string name="voice_total_distance_zero">Totale afstand van OpenTracks is nul.</string>
     <string name="waypoint_type_atm">Pinautomaat</string>
     <string name="waypoint_type_bank">bank</string>
     <string name="waypoint_type_bar">bar</string>

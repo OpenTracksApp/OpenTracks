@@ -207,7 +207,7 @@
     <string name="menu_stop_gps">توقف GPS</string>
     <string name="menu_view_photo">مشاهده عکس</string>
     <string name="menu_voice_frequency">بسامد اعلان صوتی</string>
-    <string name="app_name">My Tracks</string>
+    <string name="app_name">OpenTracks</string>
     <string name="recording_service">خدمات ضبط</string>
     <string name="search_global_description">گذرها و نشانگرها</string>
     <string name="search_list_empty_message">هیچ مسیر یا نشانگری با جستجوی شما مطابقت نداشت</string>
@@ -400,7 +400,7 @@
     <string name="voice_total_distance_miles_other">کل مسافت %1$.2f مایل</string>
     <string name="voice_total_distance_miles_two">کل مسافت 2 مایل</string>
     <string name="voice_total_distance_miles_zero">کل مسافت 0 مایل</string>
-    <string name="voice_total_distance_zero">جمع مسافت My Tracks صفر است.</string>
+    <string name="voice_total_distance_zero">جمع مسافت OpenTracks صفر است.</string>
     <string name="waypoint_type_atm">خودپرداز</string>
     <string name="waypoint_type_bank">بانک</string>
     <string name="waypoint_type_bar">بار</string>

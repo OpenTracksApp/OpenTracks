@@ -208,7 +208,7 @@
     <string name="menu_stop_gps">Διακοπή GPS</string>
     <string name="menu_view_photo">Προβολή φωτογραφίας</string>
     <string name="menu_voice_frequency">Συχνότητα ανακοινώσεων</string>
-    <string name="app_name">Τα ίχνη μου</string>
+    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Υπηρεσία καταγραφής</string>
     <string name="search_global_description">Ίχνη και σημάνσεις</string>
     <string name="search_list_empty_message">Δεν υπάρχουν διαδρομές ή δείκτες που να ταιριάζουν στην αναζήτησή σας</string>
@@ -402,7 +402,7 @@
     <string name="voice_total_distance_miles_other">συνολική απόσταση %1$.2f μίλια</string>
     <string name="voice_total_distance_miles_two">συνολική απόσταση 2 μίλια</string>
     <string name="voice_total_distance_miles_zero">συνολική απόσταση 0 μίλια</string>
-    <string name="voice_total_distance_zero">My Tracks συνολική απόσταση μηδέν.</string>
+    <string name="voice_total_distance_zero">OpenTracks συνολική απόσταση μηδέν.</string>
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">τράπεζα</string>
     <string name="waypoint_type_bar">μπαρ</string>

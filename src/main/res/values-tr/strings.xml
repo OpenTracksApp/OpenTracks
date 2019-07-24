@@ -150,7 +150,7 @@
     <string name="image_marker">İşaretçi</string>
     <string name="image_marker_count">İşaretçi sayısı</string>
     <string name="image_my_location">Konumum</string>
-    <string name="image_my_tracks_logo">My Tracks logosu</string>
+    <string name="image_my_tracks_logo">OpenTracks logosu</string>
     <string name="image_pause">Duraklat</string>
     <string name="image_photo_marker">Fotoğraf işaretçisi</string>
     <string name="image_record">Kaydet</string>
@@ -208,7 +208,7 @@
     <string name="menu_stop_gps">GPS\'i kapat</string>
     <string name="menu_view_photo">Fotoğraf görüntüle</string>
     <string name="menu_voice_frequency">Ses sıklığı</string>
-    <string name="app_name">My Tracks</string>
+    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Kayıt hizmeti</string>
     <string name="search_global_description">Parkurlar ve işaretçiler</string>
     <string name="search_list_empty_message">Aramanızla eşleşen parkur veya işaretçi yok</string>
@@ -391,7 +391,7 @@
     <string name="voice_speed_miles_per_hour_other">saatte %1$.1f mil</string>
     <string name="voice_speed_miles_per_hour_two">saatte 2 mil</string>
     <string name="voice_speed_miles_per_hour_zero">saatte 0 mil</string>
-    <string name="voice_template">My Tracks %3$s hızla %2$s sürede %1$s mesafe</string>
+    <string name="voice_template">OpenTracks %3$s hızla %2$s sürede %1$s mesafe</string>
     <string name="voice_total_distance_kilometers_few">toplam mesafe %1$.2f kilometre</string>
     <string name="voice_total_distance_kilometers_many">toplam mesafe %1$.2f kilometre</string>
     <string name="voice_total_distance_kilometers_one">toplam mesafe 1 kilometre</string>
@@ -404,7 +404,7 @@
     <string name="voice_total_distance_miles_other">toplam mesafe %1$.2f mil</string>
     <string name="voice_total_distance_miles_two">toplam mesafe 2 mil</string>
     <string name="voice_total_distance_miles_zero">toplam mesafe 0 mil</string>
-    <string name="voice_total_distance_zero">My Tracks toplam mesafe sıfır.</string>
+    <string name="voice_total_distance_zero">OpenTracks toplam mesafe sıfır.</string>
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">banka</string>
     <string name="waypoint_type_bar">bar</string>

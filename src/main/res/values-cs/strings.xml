@@ -207,7 +207,7 @@
     <string name="menu_stop_gps">Ukončit GPS</string>
     <string name="menu_view_photo">Zobrazit fotku</string>
     <string name="menu_voice_frequency">Frekvence oznámení</string>
-    <string name="app_name">Moje trasy</string>
+    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Služba pro záznam</string>
     <string name="search_global_description">Trasy a značky</string>
     <string name="search_list_empty_message">Vyhledávacímu dotazu neodpovídají žádné trasy ani značky.</string>

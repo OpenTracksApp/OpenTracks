@@ -207,7 +207,7 @@
     <string name="menu_stop_gps">Peata GPS</string>
     <string name="menu_view_photo">Foto kuvamine</string>
     <string name="menu_voice_frequency">Häälteadete sagedus</string>
-    <string name="app_name">Minu rajad</string>
+    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Salvestamisteenus</string>
     <string name="search_global_description">Rajad ja markerid</string>
     <string name="search_list_empty_message">Ükski rada ega marker ei sobinud teie otsinguga</string>

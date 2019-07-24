@@ -624,11 +624,11 @@ limitations under the License.
     <string name="gps_stopping">
     Stopping GPS
   </string>
-    <string name="gps_wait_for_better_signal" translation_description="In the main view, the message on the top indicating My Tracks is
+    <string name="gps_wait_for_better_signal" translation_description="In the main view, the message on the top indicating OpenTracks is
       waiting for a better GPS signal.">
     Waiting for a better GPS signal
   </string>
-    <string name="gps_wait_for_signal" translation_description="In the main view, the message on the top indicating My Tracks is
+    <string name="gps_wait_for_signal" translation_description="In the main view, the message on the top indicating OpenTracks is
       waiting for GPS signal.">
     Waiting for GPS signal
   </string>
@@ -651,7 +651,7 @@ limitations under the License.
     My Location
   </string>
     <string name="image_my_tracks_logo">
-    My Tracks logo
+    OpenTracks logo
   </string>
     <string name="image_pause">
     Pause
@@ -931,9 +931,9 @@ limitations under the License.
     Voice frequency
   </string>
 
-    <!-- My Tracks -->
+    <!-- OpenTracks -->
     <string name="app_name">
-      My Tracks
+      OpenTracks
   </string>
     <string name="recording_service" translation_description="When viewing the 'Running services' on Android, the name of the My
       Tracks service that is recording a track in the background.
@@ -944,11 +944,11 @@ limitations under the License.
 
     <!-- Permission -->
     <string name="permission_gps_failed">
-    My Tracks requires permission to use GPS.
+    OpenTracks requires permission to use GPS.
   </string>
 
     <!-- Search -->
-    <string name="search_global_description" translation_description="Description of what is searched in My Tracks, to be displayed in the
+    <string name="search_global_description" translation_description="Description of what is searched in OpenTracks, to be displayed in the
       global system search settings.">
     Tracks and markers
   </string>
@@ -1392,8 +1392,8 @@ limitations under the License.
       %1$d track number. E.g., '1'.">
     Track %1$d
   </string>
-    <string name="track_record_notification" translation_description="When recording a track, the message on the My Tracks notification
-      informing the user that My Tracks is actively recording his track.">
+    <string name="track_record_notification" translation_description="When recording a track, the message on the OpenTracks notification
+      informing the user that OpenTracks is actively recording his track.">
     Recording your track&#8230;
   </string>
     <string name="track_markers" translation_description="Title indicating a particular track's markers.
@@ -1809,7 +1809,7 @@ limitations under the License.
       %2$s time string. E.g., '20 minutes 1 second'.
       %3$s speed/pace string. E.g., '2.2 miles per hour' for speed and
       '30 minutes 1 second per kilometer' for pace.">
-    My Tracks %1$s in %2$s at %3$s
+    OpenTracks %1$s in %2$s at %3$s
   </string>
     <string name="voice_total_distance_kilometers_few" translation_description="For voice announcement, to say total distance 'few' kilometers.
 
@@ -1864,7 +1864,7 @@ limitations under the License.
   </string>
     <string name="voice_total_distance_zero" translation_description="For the voice announcement, the announcement when the current track's
       total distance is zero.">
-    My Tracks total distance zero.
+    OpenTracks total distance zero.
   </string>
 
     <!-- Waypoint Type -->
