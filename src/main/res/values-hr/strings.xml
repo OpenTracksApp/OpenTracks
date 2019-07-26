@@ -248,10 +248,8 @@
     <string name="settings_recording_min_recording_interval_title">Vremenski interval</string>
     <string name="settings_recording_min_required_accuracy_summary">Lokacija se ignorira ako joj je preciznost manja od %1$s</string>
     <string name="settings_recording_min_required_accuracy_title">Točnost GPS-a</string>
-    <string name="settings_recording_track_name_date_iso_8601_location_option">Datum (ISO 8601) i lokacija</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Datum (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Datum (lokalno)</string>
-    <string name="settings_recording_track_name_location_option">Lokacija</string>
     <string name="settings_recording_track_name_number_option">Broj</string>
     <string name="settings_recording_track_name_title">Zadani naziv staze</string>
     <string name="settings_reset">Poništiti</string>

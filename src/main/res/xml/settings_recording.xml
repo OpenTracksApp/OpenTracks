@@ -24,7 +24,7 @@ limitations under the License.
         android:key="@string/split_frequency_key"
         android:title="@string/menu_split_frequency" />
     <ListPreference
-        android:defaultValue="@string/settings_recording_track_name_date_iso_8601_location_value"
+        android:defaultValue="@string/settings_recording_track_name_date_iso_8601_value"
         android:key="@string/track_name_key"
         android:title="@string/settings_recording_track_name_title" />
     <de.dennisguse.opentracks.settings.ActivityTypePreference

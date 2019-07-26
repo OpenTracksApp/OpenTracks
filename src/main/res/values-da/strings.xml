@@ -250,10 +250,8 @@
     <string name="settings_recording_min_recording_interval_title">Reg. af tidsinterval</string>
     <string name="settings_recording_min_required_accuracy_summary">Placering ignoreres, hvis dens nøjagtighed er lavere end %1$s</string>
     <string name="settings_recording_min_required_accuracy_title">GPS-nøjagtighed</string>
-    <string name="settings_recording_track_name_date_iso_8601_location_option">Dato (ISO 8601) + placering</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Dato (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Dato (lokal)</string>
-    <string name="settings_recording_track_name_location_option">Placering</string>
     <string name="settings_recording_track_name_number_option">Nummer</string>
     <string name="settings_recording_track_name_title">Standardnavn på spor</string>
     <string name="settings_reset">Nulstil</string>

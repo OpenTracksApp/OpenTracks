@@ -82,7 +82,7 @@ public class PreferencesUtils {
     public static final boolean STATS_SHOW_GRADE_ELEVATION_DEFAULT = false;
     public static final String STATS_UNITS_DEFAULT = "METRIC";
 
-    public static final String TRACK_NAME_DEFAULT = "DATE_ISO_8601_LOCATION";
+    public static final String TRACK_NAME_DEFAULT = "DATE_ISO_8601";
 
     // Track widget
     public static final int TRACK_WIDGET_ITEM1_DEFAULT = 3; // moving time

@@ -49,70 +49,16 @@ public class TrackNameUtils {
      * @param context   the context
      * @param trackId   the track id
      * @param startTime the track start time
-     * @param location  the track location, can be null
      */
-    public static String getTrackName(Context context, long trackId, long startTime, Location location) {
+    public static String getTrackName(Context context, long trackId, long startTime) {
         String trackName = PreferencesUtils.getString(context, R.string.track_name_key, PreferencesUtils.TRACK_NAME_DEFAULT);
 
-        if (trackName.equals(context.getString(R.string.settings_recording_track_name_location_value))) {
-            // Use the startTime if location is null
-            return location != null ? getReverseGeoCoding(context, location) : StringUtils.formatDateTime(context, startTime);
-        } else if (trackName.equals(context.getString(R.string.settings_recording_track_name_date_local_value))) {
+        if (trackName.equals(context.getString(R.string.settings_recording_track_name_date_local_value))) {
             return StringUtils.formatDateTime(context, startTime);
         } else if (trackName.equals(context.getString(R.string.settings_recording_track_name_date_iso_8601_value))) {
             return new SimpleDateFormat(ISO_8601_FORMAT, Locale.US).format(startTime);
-        } else if (trackName.equals(context.getString(R.string.settings_recording_track_name_date_iso_8601_location_value))) {
-            StringBuilder builder = new StringBuilder(new SimpleDateFormat(ISO_8601_FORMAT, Locale.US).format(startTime));
-
-            if (location != null) {
-                String address = getReverseGeoCoding(context, location);
-                if (address != null && !address.equals("")) {
-                    builder.append(" ").append(address);
-                }
-            }
-            return builder.toString();
         } else {
-            // R.string.settings_recording_track_name_number_value)
             return context.getString(R.string.track_name_format, trackId);
         }
-    }
-
-    /**
-     * Gets the reverse geo coding string for a location.
-     *
-     * @param context  the context
-     * @param location the location
-     */
-    private static String getReverseGeoCoding(Context context, Location location) {
-        if (location == null || !Geocoder.isPresent()) {
-            return null;
-        }
-        Geocoder geocoder = new Geocoder(context);
-        try {
-            List<Address> addresses = geocoder.getFromLocation(
-                    location.getLatitude(), location.getLongitude(), 1);
-            if (addresses.size() > 0) {
-                Address address = addresses.get(0);
-                int lines = address.getMaxAddressLineIndex();
-                if (lines > 0) {
-                    return address.getAddressLine(0);
-                }
-                String featureName = address.getFeatureName();
-                if (featureName != null) {
-                    return featureName;
-                }
-                String thoroughfare = address.getThoroughfare();
-                if (thoroughfare != null) {
-                    return thoroughfare;
-                }
-                String locality = address.getLocality();
-                if (locality != null) {
-                    return locality;
-                }
-            }
-        } catch (IOException e) {
-            // Can safely ignore
-        }
-        return null;
     }
 }

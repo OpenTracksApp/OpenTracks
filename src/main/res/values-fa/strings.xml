@@ -247,10 +247,8 @@
     <string name="settings_recording_min_recording_interval_title">فاصله زمانی میان دو ضبط</string>
     <string name="settings_recording_min_required_accuracy_summary">چنانچه دقت یک موقعیت مکانی کمتر از %1$s باشد، نادیده گرفته شود</string>
     <string name="settings_recording_min_required_accuracy_title">دقت GPS</string>
-    <string name="settings_recording_track_name_date_iso_8601_location_option">تاریخ (ISO 8601) + مکان</string>
     <string name="settings_recording_track_name_date_iso_8601_option">تاریخ (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">تاریخ (محلی)</string>
-    <string name="settings_recording_track_name_location_option">موقعیت مکانی</string>
     <string name="settings_recording_track_name_number_option">شماره</string>
     <string name="settings_recording_track_name_title">نام پیش‌فرض گذر</string>
     <string name="settings_reset">بازنشانی</string>

@@ -247,10 +247,8 @@
     <string name="settings_recording_min_recording_interval_title">تسجيل الفاصل الزمني</string>
     <string name="settings_recording_min_required_accuracy_summary">يتم تجاهل الموقع إذا كانت دقته أقل من %1$s</string>
     <string name="settings_recording_min_required_accuracy_title">دقة نظام تحديد المواقع العالمي (GPS)</string>
-    <string name="settings_recording_track_name_date_iso_8601_location_option">التاريخ + الموقع</string>
     <string name="settings_recording_track_name_date_iso_8601_option">التاريخ (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">التاريخ (المحلي)</string>
-    <string name="settings_recording_track_name_location_option">الموقع</string>
     <string name="settings_recording_track_name_number_option">عدد</string>
     <string name="settings_recording_track_name_title">اسم المسار الافتراضي</string>
     <string name="settings_reset">إعادة تعيين</string>

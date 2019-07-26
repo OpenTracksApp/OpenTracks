@@ -529,7 +529,7 @@ public class TrackRecordingService extends Service {
 
         // Update database
         track.setId(trackId);
-        track.setName(TrackNameUtils.getTrackName(this, trackId, now, null));
+        track.setName(TrackNameUtils.getTrackName(this, trackId, now));
 
         String category = PreferencesUtils.getString(
                 this, R.string.default_activity_key, PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT);
@@ -667,7 +667,7 @@ public class TrackRecordingService extends Service {
                 updateRecordingTrack(track, contentProviderUtils.getLastTrackPointId(trackId), false);
             }
 
-            String trackName = TrackNameUtils.getTrackName(this, trackId, track.getTripStatistics().getStartTime(), contentProviderUtils.getFirstValidTrackPoint(trackId));
+            String trackName = TrackNameUtils.getTrackName(this, trackId, track.getTripStatistics().getStartTime());
             if (trackName != null && !trackName.equals(track.getName())) {
                 track.setName(trackName);
                 contentProviderUtils.updateTrack(track);

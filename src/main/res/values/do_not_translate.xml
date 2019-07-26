@@ -25,9 +25,7 @@ limitations under the License.
     <string name="sensor_unit_rounds_per_minute" translatable="false">RPM</string>
     <string name="sensor_unit_beats_per_minute" translatable="false">BPM</string>
     <string name="settings_recording_track_name_date_iso_8601_value" translatable="false">DATE_ISO_8601</string>
-    <string name="settings_recording_track_name_date_iso_8601_location_value" translatable="false">DATE_ISO_8601_LOCATION</string>
     <string name="settings_recording_track_name_date_local_value" translatable="false">DATE_LOCAL</string>
-    <string name="settings_recording_track_name_location_value" translatable="false">LOCATION</string>
     <string name="settings_recording_track_name_number_value" translatable="false">NUMBER</string>
     <string name="stats_rate_pace" translatable="false">PACE</string>
     <string name="stats_rate_speed" translatable="false">SPEED</string>

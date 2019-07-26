@@ -247,10 +247,8 @@
     <string name="settings_recording_min_recording_interval_title">Laika intervāla ierakstīšana</string>
     <string name="settings_recording_min_required_accuracy_summary">Atrašanās vieta tiek ignorēta, ja tās precizitāte ir zemāka par %1$s</string>
     <string name="settings_recording_min_required_accuracy_title">GPS precizitāte</string>
-    <string name="settings_recording_track_name_date_iso_8601_location_option">Dat. (ISO 8601)/vieta</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Datums (ISO 8601 form.)</string>
     <string name="settings_recording_track_name_date_local_option">Datums (vietējā form.)</string>
-    <string name="settings_recording_track_name_location_option">Atrašanās vieta</string>
     <string name="settings_recording_track_name_number_option">Numurs</string>
     <string name="settings_recording_track_name_title">Noklusējuma maršruta nosaukums</string>
     <string name="settings_reset">Atiestatīt</string>

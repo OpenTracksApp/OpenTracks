@@ -247,10 +247,8 @@
     <string name="settings_recording_min_recording_interval_title">Интервал времена</string>
     <string name="settings_recording_min_required_accuracy_summary">Локација се игнорише ако је прецизност мања од %1$s</string>
     <string name="settings_recording_min_required_accuracy_title">GPS прецизност</string>
-    <string name="settings_recording_track_name_date_iso_8601_location_option">Датум (ISO 8601) + лок.</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Датум (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Датум (локални)</string>
-    <string name="settings_recording_track_name_location_option">Локација</string>
     <string name="settings_recording_track_name_number_option">Број</string>
     <string name="settings_recording_track_name_title">Подразумевано име</string>
     <string name="settings_reset">Ресетуј</string>

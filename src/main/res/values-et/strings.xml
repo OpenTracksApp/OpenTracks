@@ -247,10 +247,8 @@
     <string name="settings_recording_min_recording_interval_title">Salvestamisaja intervall</string>
     <string name="settings_recording_min_required_accuracy_summary">Asukohta eiratakse, kui selle täpsus on väiksem kui %1$s</string>
     <string name="settings_recording_min_required_accuracy_title">GPS-i täpsus</string>
-    <string name="settings_recording_track_name_date_iso_8601_location_option">Kp. (ISO 8601) + koht</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Kuupäev (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Kuupäev (kohalik)</string>
-    <string name="settings_recording_track_name_location_option">Asukoht</string>
     <string name="settings_recording_track_name_number_option">Number</string>
     <string name="settings_recording_track_name_title">Raja vaikenimi</string>
     <string name="settings_reset">Lähtesta</string>

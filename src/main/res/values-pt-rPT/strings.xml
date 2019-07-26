@@ -248,10 +248,8 @@
     <string name="settings_recording_min_recording_interval_title">Tempo entre gravações</string>
     <string name="settings_recording_min_required_accuracy_summary">A localização é ignorada se a precisão for inferior a %1$s</string>
     <string name="settings_recording_min_required_accuracy_title">Precisão do GPS</string>
-    <string name="settings_recording_track_name_date_iso_8601_location_option">Data (ISO 8601) + Localização</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Data (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Data (local)</string>
-    <string name="settings_recording_track_name_location_option">Localização</string>
     <string name="settings_recording_track_name_number_option">Número</string>
     <string name="settings_recording_track_name_title">Nome de percurso predefinido</string>
     <string name="settings_reset">Repor</string>

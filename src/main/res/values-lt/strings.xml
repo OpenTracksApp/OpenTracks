@@ -250,10 +250,8 @@
     <string name="settings_recording_min_recording_interval_title">Įrašymo laiko interv.</string>
     <string name="settings_recording_min_required_accuracy_summary">Vieta nepaisoma, jei jos tikslumas mažesnis nei %1$s.</string>
     <string name="settings_recording_min_required_accuracy_title">GPS tikslumas</string>
-    <string name="settings_recording_track_name_date_iso_8601_location_option">Data (ISO 8601) + vieta</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Data (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Data (vietos)</string>
-    <string name="settings_recording_track_name_location_option">Vieta</string>
     <string name="settings_recording_track_name_number_option">Skaičius</string>
     <string name="settings_recording_track_name_title">Numatyt. maršruto pav.</string>
     <string name="settings_reset">Nustatyti iš naujo</string>

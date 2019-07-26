@@ -250,10 +250,8 @@ es vegi el cel. Torneu-ho a provar més tard.</string>
     <string name="settings_recording_min_recording_interval_title">Interval de temps</string>
     <string name="settings_recording_min_required_accuracy_summary">La ubicació s\'ignora si la seva precisió és inferior a %1$s.</string>
     <string name="settings_recording_min_required_accuracy_title">Precisió del GPS</string>
-    <string name="settings_recording_track_name_date_iso_8601_location_option">Data (ISO 8601) + ubicació</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Data (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Data (local)</string>
-    <string name="settings_recording_track_name_location_option">Ubicació</string>
     <string name="settings_recording_track_name_number_option">Número</string>
     <string name="settings_recording_track_name_title">Nom de la ruta</string>
     <string name="settings_reset">Restableix</string>

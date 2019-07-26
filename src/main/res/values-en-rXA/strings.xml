@@ -250,10 +250,8 @@
     <string name="settings_recording_min_recording_interval_title">[Ŕéçöŕðîñĝ ţîmé îñţéŕvåļ one two three]</string>
     <string name="settings_recording_min_required_accuracy_summary">[Ļöçåţîöñ îš îĝñöŕéð îƒ îţš åççûŕåçý îš ļéšš ţĥåñ ᐅ%1$sᐊ one two three four five six seven eight nine ten eleven]</string>
     <string name="settings_recording_min_required_accuracy_title">[ĜÞŠ åççûŕåçý one two]</string>
-    <string name="settings_recording_track_name_date_iso_8601_location_option">[Ðåţé (ÎŠÖ 8601) + Ļöçåţîöñ one two three four five six]</string>
     <string name="settings_recording_track_name_date_iso_8601_option">[Ðåţé (ÎŠÖ 8601) one two]</string>
     <string name="settings_recording_track_name_date_local_option">[Ðåţé (ļöçåļ) one two]</string>
-    <string name="settings_recording_track_name_location_option">[Ļöçåţîöñ one]</string>
     <string name="settings_recording_track_name_number_option">[Ñûmɓéŕ one]</string>
     <string name="settings_recording_track_name_title">[Ðéƒåûļţ ţŕåçķ ñåmé one two three]</string>
     <string name="settings_reset">[Ŕéšéţ one]</string>

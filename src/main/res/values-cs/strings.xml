@@ -247,10 +247,8 @@
     <string name="settings_recording_min_recording_interval_title">Časový interval záznamu</string>
     <string name="settings_recording_min_required_accuracy_summary">Pokud je přesnost polohy menší než %1$s, je poloha ignorována.</string>
     <string name="settings_recording_min_required_accuracy_title">Přesnost GPS</string>
-    <string name="settings_recording_track_name_date_iso_8601_location_option">Datum (ISO 8601) a poloha</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Datum (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Datum (místní)</string>
-    <string name="settings_recording_track_name_location_option">Poloha</string>
     <string name="settings_recording_track_name_number_option">Číslo</string>
     <string name="settings_recording_track_name_title">Výchozí název trasy</string>
     <string name="settings_reset">Resetovat</string>

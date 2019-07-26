@@ -249,10 +249,8 @@
     <string name="settings_recording_min_recording_interval_title">Intervalle temps enreg.</string>
     <string name="settings_recording_min_required_accuracy_summary">La position est ignorée si sa précision est inférieure à %1$s.</string>
     <string name="settings_recording_min_required_accuracy_title">Précision du GPS</string>
-    <string name="settings_recording_track_name_date_iso_8601_location_option">Date (ISO 8601) + position</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Date (format ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Date (format local)</string>
-    <string name="settings_recording_track_name_location_option">Position</string>
     <string name="settings_recording_track_name_number_option">Numéro</string>
     <string name="settings_recording_track_name_title">Nom parcours par défaut</string>
     <string name="settings_reset">Réinitialiser</string>

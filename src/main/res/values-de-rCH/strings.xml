@@ -248,10 +248,8 @@
     <string name="settings_recording_min_recording_interval_title">Zeitintervall aufz.</string>
     <string name="settings_recording_min_required_accuracy_summary">Der Standort wird ignoriert, wenn die Genauigkeit weniger als %1$s beträgt.</string>
     <string name="settings_recording_min_required_accuracy_title">GPS-Genauigkeit</string>
-    <string name="settings_recording_track_name_date_iso_8601_location_option">Datum (ISO 8601) + Ort</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Datum (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Datum (lokal)</string>
-    <string name="settings_recording_track_name_location_option">Standort</string>
     <string name="settings_recording_track_name_number_option">Nummer</string>
     <string name="settings_recording_track_name_title">Standard-Trackname</string>
     <string name="settings_reset">Zurücksetzen</string>

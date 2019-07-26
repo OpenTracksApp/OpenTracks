@@ -247,10 +247,8 @@
     <string name="settings_recording_min_recording_interval_title">ช่วงเวลาการบันทึก</string>
     <string name="settings_recording_min_required_accuracy_summary">ตำแหน่งจะถูกละเว้นถ้าความแม่นยำน้อยกว่า %1$s</string>
     <string name="settings_recording_min_required_accuracy_title">ความแม่นยำของ GPS</string>
-    <string name="settings_recording_track_name_date_iso_8601_location_option">วันที่ (ISO 8601) + ตำแหน่ง</string>
     <string name="settings_recording_track_name_date_iso_8601_option">วันที่ (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">วันที่ (ท้องถิ่น)</string>
-    <string name="settings_recording_track_name_location_option">ตำแหน่ง</string>
     <string name="settings_recording_track_name_number_option">หมายเลข</string>
     <string name="settings_recording_track_name_title">ชื่อเส้นการเดินทางเริ่มต้น</string>
     <string name="settings_reset">รีเซ็ต</string>
