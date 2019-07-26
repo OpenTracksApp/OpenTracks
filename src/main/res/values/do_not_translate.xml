@@ -22,7 +22,6 @@ limitations under the License.
     <string name="app_web_url" translatable="false">TODO</string>
     <string name="permission_notification_value" translatable="false">de.dennisguse.opentracks.MYTRACKS_NOTIFICATIONS</string>
     <string name="sensor_type_value_none" translatable="false">NONE</string>
-    <string name="sensor_unit_rounds_per_minute" translatable="false">RPM</string>
     <string name="sensor_unit_beats_per_minute" translatable="false">BPM</string>
     <string name="settings_recording_track_name_date_iso_8601_value" translatable="false">DATE_ISO_8601</string>
     <string name="settings_recording_track_name_date_local_value" translatable="false">DATE_LOCAL</string>

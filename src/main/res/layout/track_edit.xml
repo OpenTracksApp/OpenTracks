@@ -37,7 +37,6 @@ limitations under the License.
                 android:imeOptions="actionNext" />
 
             <TextView
-                android:id="@+id/track_edit_activity_type_label"
                 style="@style/EditLabel.WithPaddingTop"
                 android:text="@string/track_edit_activity_type" />
 
