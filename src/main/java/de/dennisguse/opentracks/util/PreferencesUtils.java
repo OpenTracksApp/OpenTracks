@@ -79,7 +79,7 @@ public class PreferencesUtils {
     // Stats
     public static final String STATS_RATE_DEFAULT = "SPEED";
     public static final boolean STATS_SHOW_COORDINATE_DEFAULT = false;
-    public static final boolean STATS_SHOW_GRADE_ELEVATION_DEFAULT = false;
+    public static final boolean STATS_SHOW_ELEVATION_DEFAULT = false;
     public static final String STATS_UNITS_DEFAULT = "METRIC";
 
     public static final String TRACK_NAME_DEFAULT = "DATE_ISO_8601";

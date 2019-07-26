@@ -68,7 +68,7 @@ public class StatsUtils {
         }
 
         // Set elevation
-        boolean showGradeElevation = PreferencesUtils.getBoolean(context, R.string.stats_show_grade_elevation_key, PreferencesUtils.STATS_SHOW_GRADE_ELEVATION_DEFAULT) && isRecording;
+        boolean showGradeElevation = PreferencesUtils.getBoolean(context, R.string.stats_show_grade_elevation_key, PreferencesUtils.STATS_SHOW_ELEVATION_DEFAULT) && isRecording;
         View elevation = getView(activity, view, R.id.stats_elevation);
         elevation.setVisibility(showGradeElevation ? View.VISIBLE : View.GONE);
 
@@ -168,26 +168,18 @@ public class StatsUtils {
         setSpeed(context, getView(activity, view, R.id.stats_average_moving_speed), R.string.stats_average_moving_speed, R.string.stats_average_moving_pace, averageMovingSpeed, metricUnits, reportSpeed);
 
         // Set grade/elevation
-        boolean showGradeElevation = PreferencesUtils.getBoolean(context, R.string.stats_show_grade_elevation_key, PreferencesUtils.STATS_SHOW_GRADE_ELEVATION_DEFAULT);
-        View gradeElevationSeparator = getView(activity, view, R.id.stats_grade_elevation_separator);
-        gradeElevationSeparator.setVisibility(showGradeElevation ? View.VISIBLE : View.GONE);
+        boolean showElevation = PreferencesUtils.getBoolean(context, R.string.stats_show_grade_elevation_key, PreferencesUtils.STATS_SHOW_ELEVATION_DEFAULT);
+        View gradeElevationSeparator = getView(activity, view, R.id.stats_elevation_separator);
+        gradeElevationSeparator.setVisibility(showElevation ? View.VISIBLE : View.GONE);
 
-        View gradeElevationContainer = getView(activity, view, R.id.stats_grade_elevation_container);
-        gradeElevationContainer.setVisibility(showGradeElevation ? View.VISIBLE : View.GONE);
+        View gradeElevationContainer = getView(activity, view, R.id.stats_elevation_container);
+        gradeElevationContainer.setVisibility(showElevation ? View.VISIBLE : View.GONE);
 
-        if (showGradeElevation) {
-            // Set grade
-            double minGrade = tripStatistics == null ? Double.NaN : tripStatistics.getMinGrade();
-            double maxGrade = tripStatistics == null ? Double.NaN : tripStatistics.getMaxGrade();
-            setGradeValue(context, getView(activity, view, R.id.stats_grade_min), R.string.stats_min, minGrade);
-            setGradeValue(context, getView(activity, view, R.id.stats_grade_max), R.string.stats_max, maxGrade);
-
+        if (showElevation) {
             // Set elevation
-            double elevationGain = tripStatistics == null ? Double.NaN : tripStatistics.getTotalElevationGain();
             double minElevation = tripStatistics == null ? Double.NaN : tripStatistics.getMinElevation();
-            double maxElevation = tripStatistics == null ? Double.NaN : tripStatistics.getMaxElevation();
-            setElevationValue(context, getView(activity, view, R.id.stats_elevation_gain), R.string.stats_gain, elevationGain, metricUnits);
             setElevationValue(context, getView(activity, view, R.id.stats_elevation_min), R.string.stats_min, minElevation, metricUnits);
+            double maxElevation = tripStatistics == null ? Double.NaN : tripStatistics.getMaxElevation();
             setElevationValue(context, getView(activity, view, R.id.stats_elevation_max), R.string.stats_max, maxElevation, metricUnits);
         }
     }

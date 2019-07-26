@@ -94,36 +94,18 @@ limitations under the License.
         </TableLayout>
         <!-- Vertical line -->
         <View
-            android:id="@+id/stats_grade_elevation_separator"
+            android:id="@+id/stats_elevation_separator"
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:background="@color/stats_separator" />
 
         <LinearLayout
-            android:id="@+id/stats_grade_elevation_container"
+            android:id="@+id/stats_elevation_container"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1">
-            <!-- Grade -->
             <LinearLayout style="@style/StatsSmallGroupContainer">
-                <!-- Grade label -->
-                <TextView
-                    style="@style/StatsSmallLabel"
-                    android:text="@string/stats_grade" />
-
-                <TableLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center">
-                    <!-- Grade min -->
-                    <include
-                        android:id="@+id/stats_grade_min"
-                        layout="@layout/stats_small_group_item" />
-                    <!-- Grade max -->
-                    <include
-                        android:id="@+id/stats_grade_max"
-                        layout="@layout/stats_small_group_item" />
-                </TableLayout>
+                <!-- This is a placeholder -->
             </LinearLayout>
             <!-- Elevation -->
             <LinearLayout style="@style/StatsSmallGroupContainer">
@@ -140,10 +122,11 @@ limitations under the License.
                     <include
                         android:id="@+id/stats_elevation"
                         layout="@layout/stats_small_group_item" />
+                    <!-- TODO DISABLED AS computation from GPS is not precise enough, go for getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, pressure) -->
                     <!-- Elevation gain -->
-                    <include
-                        android:id="@+id/stats_elevation_gain"
-                        layout="@layout/stats_small_group_item" />
+                    <!--<include-->
+                        <!--android:id="@+id/stats_elevation_gain"-->
+                        <!--layout="@layout/stats_small_group_item" />-->
                     <!-- Elevation min -->
                     <include
                         android:id="@+id/stats_elevation_min"
