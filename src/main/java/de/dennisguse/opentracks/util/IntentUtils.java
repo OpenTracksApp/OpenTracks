@@ -36,8 +36,6 @@ import java.io.File;
  */
 public class IntentUtils {
 
-    public static final String TEXT_PLAIN_TYPE = "text/plain";
-
     private IntentUtils() {
     }
 

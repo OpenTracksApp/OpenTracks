@@ -84,6 +84,7 @@ limitations under the License.
         android:theme="@style/ThemeCustom"
         tools:replace="android:label">
         <!-- Activities -->
+        <activity android:name="de.dennisguse.opentracks.AboutActivity" />
         <activity
             android:name="de.dennisguse.opentracks.AggregatedStatsActivity"
             android:label="@string/menu_aggregated_statistics" />

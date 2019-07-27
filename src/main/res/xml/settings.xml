@@ -35,4 +35,10 @@ limitations under the License.
         android:key="@string/settings_advanced_key"
         android:persistent="false"
         android:title="@string/settings_advanced" />
+    <Preference
+        android:title="@string/about_preference_title">
+        <intent
+            android:targetPackage="de.dennisguse.opentracks"
+            android:targetClass="de.dennisguse.opentracks.AboutActivity" />
+    </Preference>
 </PreferenceScreen>
