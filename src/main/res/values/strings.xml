@@ -24,8 +24,11 @@ limitations under the License.
   <string name="about_url" translate_description="In the about activity, the URL to the source code repository.">
     Project web page: <a href="%1$s">%1$s</a>
   </string>
-  <string name="about_version" translate_description="In the about activity, the version of the source code (i.e., Android's versionName).">
-    Version: %1$s
+  <string name="about_version_name" translate_description="In the about activity, the version of the source code (i.e., Android's versionName).">
+    Version name: %1$s
+  </string>
+  <string name="about_version_code" translate_description="In the about activity, the version of the source code (i.e., Android's versionName).">
+    Version code: %1$d
   </string>
   <string name="about_history" translatate_description="In the about activity, the relationship with MyTracks.">
     OpenTracks is a fork of <a href="https://code.google.com/archive/p/mytracks/"><i>Google\'s MyTracks</i></a> (discontinued in 2016).

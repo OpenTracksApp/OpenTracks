@@ -19,6 +19,8 @@ package de.dennisguse.opentracks.content;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
+import de.dennisguse.opentracks.BuildConfig;
+
 /**
  * Constants for the track points table.
  *
@@ -27,7 +29,7 @@ import android.provider.BaseColumns;
 public interface TrackPointsColumns extends BaseColumns {
 
     String TABLE_NAME = "trackpoints";
-    Uri CONTENT_URI = Uri.parse("content://de.dennisguse.opentracks/trackpoints");
+    Uri CONTENT_URI = Uri.parse("content://" + BuildConfig.APPLICATION_ID + "/trackpoints");
     String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.de.dennisguse.trackpoint";
     String CONTENT_ITEMTYPE = "vnd.android.cursor.item/vnd.de.dennisguse.trackpoint";
     String DEFAULT_SORT_ORDER = "_id";

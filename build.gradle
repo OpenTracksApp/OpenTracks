@@ -17,11 +17,43 @@ allprojects {
     }
 }
 
+def getVersionCode = { ->
+    try {
+        def stdout = new ByteArrayOutputStream()
+        exec {
+            commandLine 'git', 'rev-list', 'HEAD', '--count'
+            standardOutput = stdout
+        }
+        return Integer.parseInt(stdout.toString().trim())
+    }
+    catch (ignored) {
+        return -1;
+    }
+}
+
+def getVersionName = { ->
+    try {
+        def stdout = new ByteArrayOutputStream()
+        exec {
+            commandLine 'git', 'describe', '--tags', '--dirty'
+            standardOutput = stdout
+        }
+        return stdout.toString().trim()
+    }
+    catch (ignored) {
+        return null;
+    }
+}
+
 android {
     compileSdkVersion 28
 
     defaultConfig {
         applicationId "de.dennisguse.opentracks"
+        //Useful for debugging.
+        //versionCode getVersionCode()
+        //versionName getVersionName()
+
         minSdkVersion 21
         targetSdkVersion 28
 
@@ -29,9 +61,18 @@ android {
     }
 
     buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+        }
+
         release {
             minifyEnabled true
         }
+    }
+
+    applicationVariants.all { variant ->
+        variant.resValue  "string", "applicationId", variant.applicationId
     }
 }
 
@@ -43,3 +84,4 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     testImplementation 'androidx.test:core:1.2.0'
 }
+

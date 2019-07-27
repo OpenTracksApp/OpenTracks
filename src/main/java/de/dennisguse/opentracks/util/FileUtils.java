@@ -22,6 +22,8 @@ import android.os.Environment;
 
 import java.io.File;
 
+import de.dennisguse.opentracks.BuildConfig;
+
 /**
  * Utilities for dealing with files.
  *
@@ -32,7 +34,7 @@ public class FileUtils {
     /**
      * Used to transfer picture from the camera.
      */
-    public static final String FILEPROVIDER = "de.dennisguse.opentracks.fileprovider";
+    public static final String FILEPROVIDER = BuildConfig.APPLICATION_ID + ".fileprovider";
     /**
      * The play tracks directory in the app's cache directory.
      */

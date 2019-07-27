@@ -19,6 +19,8 @@ package de.dennisguse.opentracks.content;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
+import de.dennisguse.opentracks.BuildConfig;
+
 /**
  * Constants for waypoints table.
  *
@@ -27,7 +29,7 @@ import android.provider.BaseColumns;
 public interface WaypointsColumns extends BaseColumns {
 
     String TABLE_NAME = "waypoints";
-    Uri CONTENT_URI = Uri.parse("content://de.dennisguse.opentracks/waypoints");
+    Uri CONTENT_URI = Uri.parse("content://" + BuildConfig.APPLICATION_ID + "/waypoints");
     String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.de.dennisguse.waypoint";
     String CONTENT_ITEMTYPE = "vnd.android.cursor.item/vnd.de.dennisguse.waypoint";
     String DEFAULT_SORT_ORDER = "_id";

@@ -17,8 +17,8 @@ limitations under the License.
     xmlns:tools="http://schemas.android.com/tools"
     package="de.dennisguse.opentracks"
     android:installLocation="auto"
-    android:versionCode="100"
-    android:versionName="3.0.0">
+    android:versionCode="2916"
+    android:versionName="v3.0.0"> <!-- For FDroid. -->
     <!-- Permission to initialize services -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -186,18 +186,18 @@ limitations under the License.
         <!-- Providers -->
         <provider
             android:name="de.dennisguse.opentracks.content.CustomContentProvider"
-            android:authorities="de.dennisguse.opentracks"
+            android:authorities="${applicationId}"
             android:exported="false"
             android:grantUriPermissions="true" />
         <!-- Search suggestion provider -->
         <provider
             android:name="de.dennisguse.opentracks.content.SearchEngineProvider"
-            android:authorities="de.dennisguse.opentracks.search"
+            android:authorities="${applicationId}.search"
             android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="de.dennisguse.opentracks.fileprovider"
+            android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

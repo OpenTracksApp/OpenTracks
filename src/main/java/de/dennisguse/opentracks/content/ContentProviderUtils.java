@@ -22,6 +22,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 
+import de.dennisguse.opentracks.BuildConfig;
 import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 
 import java.util.Iterator;
@@ -38,7 +39,7 @@ public interface ContentProviderUtils {
      * The authority (the first part of the URI) for the app's content
      * provider.
      */
-    String AUTHORITY = "de.dennisguse.opentracks";
+    String AUTHORITY = BuildConfig.APPLICATION_ID;
     /**
      * The default {@link LocationFactory} which creates a location each time.
      */

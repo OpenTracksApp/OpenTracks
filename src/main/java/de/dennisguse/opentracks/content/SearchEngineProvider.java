@@ -19,6 +19,8 @@ import android.content.Context;
 import android.content.SearchRecentSuggestionsProvider;
 import android.provider.SearchRecentSuggestions;
 
+import de.dennisguse.opentracks.BuildConfig;
+
 /**
  * Content provider for search suggestions.
  *
@@ -26,7 +28,7 @@ import android.provider.SearchRecentSuggestions;
  */
 public class SearchEngineProvider extends SearchRecentSuggestionsProvider {
 
-    private static final String AUTHORITY = "de.dennisguse.opentracks.search";
+    private static final String AUTHORITY = BuildConfig.APPLICATION_ID + ".search";
     private static final int MODE = DATABASE_MODE_QUERIES;
 
     public SearchEngineProvider() {

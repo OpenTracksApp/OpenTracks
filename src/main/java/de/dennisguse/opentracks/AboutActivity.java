@@ -19,8 +19,11 @@ public class AboutActivity extends AbstractActivity {
         TextView textDescription = findViewById(R.id.about_text_description);
         textDescription.setText(getString(R.string.about_description));
 
-        TextView textVersion = findViewById(R.id.about_text_version);
-        textVersion.setText(getString(R.string.about_version, SystemUtils.getAppVersion(this)));
+        TextView textVersionName = findViewById(R.id.about_text_version_name);
+        textVersionName.setText(getString(R.string.about_version_name, SystemUtils.getAppVersionName(this)));
+
+        TextView textVersionCode = findViewById(R.id.about_text_version_code);
+        textVersionCode.setText(getString(R.string.about_version_code, SystemUtils.getAppVersionCode(this)));
 
         TextView textURL = findViewById(R.id.about_app_url);
         textURL.setText(getString(R.string.about_url, getString(R.string.app_web_url)));

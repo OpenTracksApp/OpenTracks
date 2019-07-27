@@ -19,6 +19,8 @@ package de.dennisguse.opentracks.content;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
+import de.dennisguse.opentracks.BuildConfig;
+
 /**
  * Constants for the tracks table.
  *
@@ -31,7 +33,7 @@ public interface TracksColumns extends BaseColumns {
     /**
      * Tracks provider uri.
      */
-    Uri CONTENT_URI = Uri.parse("content://de.dennisguse.opentracks/tracks");
+    Uri CONTENT_URI = Uri.parse("content://" + BuildConfig.APPLICATION_ID + "/tracks");
 
     /**
      * Track content type.

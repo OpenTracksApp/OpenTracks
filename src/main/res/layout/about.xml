@@ -33,7 +33,15 @@
     <View style="@style/StatsHorizontalLine" />
 
     <TextView
-        android:id="@+id/about_text_version"
+        android:id="@+id/about_text_version_name"
+        style="@style/TextSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="6dp" />
+
+    <TextView
+        android:id="@+id/about_text_version_code"
         style="@style/TextSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
