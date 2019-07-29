@@ -33,13 +33,6 @@ limitations under the License.
     <!-- Permission to read/write external storage -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!-- Permissions to access My Tracks data -->
-    <uses-permission android:name="de.dennisguse.opentracks.MYTRACKS_NOTIFICATIONS" />
-    <!-- Permission to receive My Tracks internal broadcasts -->
-    <permission
-        android:name="de.dennisguse.opentracks.MYTRACKS_NOTIFICATIONS"
-        android:permissionGroup="android.permission-group.LOCATION"
-        android:protectionLevel="signature" />
     <!-- Required features -->
     <uses-feature
         android:name="android.hardware.location.gps"
@@ -84,12 +77,12 @@ limitations under the License.
         android:theme="@style/ThemeCustom"
         tools:replace="android:label">
         <!-- Activities -->
-        <activity android:name="de.dennisguse.opentracks.AboutActivity" />
+        <activity android:name=".AboutActivity" />
         <activity
-            android:name="de.dennisguse.opentracks.AggregatedStatsActivity"
+            android:name=".AggregatedStatsActivity"
             android:label="@string/menu_aggregated_statistics" />
-        <activity android:name="de.dennisguse.opentracks.DeleteActivity" />
-        <activity android:name="de.dennisguse.opentracks.io.file.importer.ImportActivity">
+        <activity android:name=".DeleteActivity" />
+        <activity android:name=".io.file.importer.ImportActivity">
             <intent-filter>
                 <action android:name="android.intent.action.ATTACH_DATA" />
                 <action android:name="android.intent.action.VIEW" />
@@ -104,17 +97,17 @@ limitations under the License.
                 <data android:scheme="file" />
             </intent-filter>
         </activity>
-        <activity android:name="de.dennisguse.opentracks.MarkerEditActivity" />
-        <activity android:name="de.dennisguse.opentracks.MarkerDetailActivity" />
+        <activity android:name=".MarkerEditActivity" />
+        <activity android:name=".MarkerDetailActivity" />
         <activity
-            android:name="de.dennisguse.opentracks.MarkerListActivity"
+            android:name=".MarkerListActivity"
             android:label="@string/menu_markers">
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value="de.dennisguse.opentracks.SearchListActivity" />
+                android:value=".SearchListActivity" />
         </activity>
         <activity
-            android:name="de.dennisguse.opentracks.SearchListActivity"
+            android:name=".SearchListActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -124,31 +117,31 @@ limitations under the License.
                 android:resource="@xml/search" />
         </activity>
         <activity
-            android:name="de.dennisguse.opentracks.TrackDetailActivity"
-            android:parentActivityName="de.dennisguse.opentracks.TrackListActivity">
+            android:name=".TrackDetailActivity"
+            android:parentActivityName=".TrackListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.dennisguse.opentracks.TrackListActivity" />
+                android:value=".TrackListActivity" />
         </activity>
-        <activity android:name="de.dennisguse.opentracks.TrackEditActivity" />
-        <activity android:name="de.dennisguse.opentracks.TrackListActivity">
+        <activity android:name=".TrackEditActivity" />
+        <activity android:name=".TrackListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value="de.dennisguse.opentracks.SearchListActivity" />
+                android:value=".SearchListActivity" />
         </activity>
-        <activity android:name="de.dennisguse.opentracks.io.file.exporter.SaveActivity" />
-        <activity android:name="de.dennisguse.opentracks.settings.AdvancedSettingsActivity" />
-        <activity android:name="de.dennisguse.opentracks.settings.ChartSettingsActivity" />
-        <activity android:name="de.dennisguse.opentracks.settings.RecordingSettingsActivity" />
-        <activity android:name="de.dennisguse.opentracks.settings.SensorSettingsActivity" />
-        <activity android:name="de.dennisguse.opentracks.settings.SettingsActivity" />
-        <activity android:name="de.dennisguse.opentracks.settings.StatsSettingsActivity" />
+        <activity android:name=".io.file.exporter.SaveActivity" />
+        <activity android:name=".settings.AdvancedSettingsActivity" />
+        <activity android:name=".settings.ChartSettingsActivity" />
+        <activity android:name=".settings.RecordingSettingsActivity" />
+        <activity android:name=".settings.SensorSettingsActivity" />
+        <activity android:name=".settings.SettingsActivity" />
+        <activity android:name=".settings.StatsSettingsActivity" />
         <activity
-            android:name="de.dennisguse.opentracks.widgets.TrackWidgetConfigActivity"
+            android:name=".widgets.TrackWidgetConfigActivity"
             android:label="@string/track_widget_config_title">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -156,28 +149,28 @@ limitations under the License.
         </activity>
 
         <service
-            android:name="de.dennisguse.opentracks.services.ControlRecordingService"
+            android:name=".services.ControlRecordingService"
             android:exported="false" />
         <service
-            android:name="de.dennisguse.opentracks.services.TrackRecordingService"
+            android:name=".services.TrackRecordingService"
             android:enabled="true"
             android:exported="false"
             android:icon="@drawable/ic_arrow_320"
             android:label="@string/recording_service" />
         <!-- Receivers -->
-        <receiver android:name="de.dennisguse.opentracks.BootReceiver">
+        <receiver android:name=".BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name="de.dennisguse.opentracks.widgets.TrackWidgetProvider">
+        <receiver android:name=".widgets.TrackWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="de.dennisguse.opentracks.TRACK_PAUSED" />
-                <action android:name="de.dennisguse.opentracks.TRACK_RESUMED" />
-                <action android:name="de.dennisguse.opentracks.TRACK_STARTED" />
-                <action android:name="de.dennisguse.opentracks.TRACK_STOPPED" />
-                <action android:name="de.dennisguse.opentracks.TRACK_UPDATE" />
+                <action android:name="TRACK_PAUSED" />
+                <action android:name="TRACK_RESUMED" />
+                <action android:name="TRACK_STARTED" />
+                <action android:name="TRACK_STOPPED" />
+                <action android:name="TRACK_UPDATE" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
@@ -185,13 +178,13 @@ limitations under the License.
         </receiver>
         <!-- Providers -->
         <provider
-            android:name="de.dennisguse.opentracks.content.CustomContentProvider"
+            android:name=".content.CustomContentProvider"
             android:authorities="${applicationId}"
             android:exported="false"
             android:grantUriPermissions="true" />
         <!-- Search suggestion provider -->
         <provider
-            android:name="de.dennisguse.opentracks.content.SearchEngineProvider"
+            android:name=".content.SearchEngineProvider"
             android:authorities="${applicationId}.search"
             android:exported="false" />
 
