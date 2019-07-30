@@ -4,6 +4,8 @@
 
 _OpenTracks_ is a sport tracking application that completely respects your privacy.
 
+<a href="https://liberapay.com/dennis.guse/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
+
 ## Features:
 * __Tracking:__ track your sport and outdoor activities 
 * __Photos and Markers:__ mark interesting locations while tracking
@@ -16,7 +18,6 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
     * _contains in-app analytics_
     * _does not Google Play Services_ 
     * _has no cloud integration_
-
     
 __Only required permissions:__
 * _ACCESS_FINE_LOCATION_: required to use the GPS.
