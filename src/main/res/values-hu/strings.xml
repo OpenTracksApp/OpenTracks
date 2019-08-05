@@ -229,9 +229,6 @@
     <string name="settings_not_while_recording">Pálya rögzítése közben nem érhető el</string>
     <string name="settings_show">Megjelenítés</string>
     <string name="settings_advanced">Speciális</string>
-    <string name="settings_advanced_photo_size_original">Eredeti méret</string>
-    <string name="settings_advanced_photo_size_summary">Fénykép átméretezése %1$s méretűvé exportálás céljából</string>
-    <string name="settings_advanced_photo_size_title">Fénykép mérete</string>
     <string name="settings_chart_by_distance">Távolság szerint</string>
     <string name="settings_chart_by_time">Idő szerint</string>
     <string name="settings_chart_x_axis">X tengely</string>

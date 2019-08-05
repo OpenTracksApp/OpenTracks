@@ -230,9 +230,6 @@
     <string name="settings_not_while_recording">Ni na voljo med snemanjem poti</string>
     <string name="settings_show">Prikaži</string>
     <string name="settings_advanced">Dodatno</string>
-    <string name="settings_advanced_photo_size_original">Prvotna velikost</string>
-    <string name="settings_advanced_photo_size_summary">Prilagodi velikost strani na %1$s za izvoz</string>
-    <string name="settings_advanced_photo_size_title">Velikost fotografije</string>
     <string name="settings_chart_by_distance">Po razdalji</string>
     <string name="settings_chart_by_time">Po času</string>
     <string name="settings_chart_x_axis">Os X</string>

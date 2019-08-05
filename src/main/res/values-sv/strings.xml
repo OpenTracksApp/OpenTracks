@@ -228,9 +228,6 @@
     <string name="settings_not_while_recording">Inte tillgängligt under inspelning av ett spår</string>
     <string name="settings_show">Visa</string>
     <string name="settings_advanced">Avancerat</string>
-    <string name="settings_advanced_photo_size_original">Ursprunglig storlek</string>
-    <string name="settings_advanced_photo_size_summary">Skala foto till %1$s för export</string>
-    <string name="settings_advanced_photo_size_title">Fotostorlek</string>
     <string name="settings_chart_by_distance">Efter avstånd</string>
     <string name="settings_chart_by_time">Efter tid</string>
     <string name="settings_chart_x_axis">X-axel</string>

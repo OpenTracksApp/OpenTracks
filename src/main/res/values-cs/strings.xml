@@ -228,9 +228,6 @@
     <string name="settings_not_while_recording">Při záznamu trasy není tato funkce dostupná.</string>
     <string name="settings_show">Zobrazit</string>
     <string name="settings_advanced">Pokročilé</string>
-    <string name="settings_advanced_photo_size_original">Původní velikost</string>
-    <string name="settings_advanced_photo_size_summary">Změnit velikost fotografie na %1$s za účelem exportu</string>
-    <string name="settings_advanced_photo_size_title">Velikost fotografie</string>
     <string name="settings_chart_by_distance">Podle vzdálenosti</string>
     <string name="settings_chart_by_time">Podle doby</string>
     <string name="settings_chart_x_axis">Osa X</string>

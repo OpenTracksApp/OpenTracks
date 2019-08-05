@@ -229,9 +229,6 @@
     <string name="settings_not_while_recording">No disponible mientras se graba una ruta</string>
     <string name="settings_show">Mostrar</string>
     <string name="settings_advanced">Avanzado</string>
-    <string name="settings_advanced_photo_size_original">Tamaño original</string>
-    <string name="settings_advanced_photo_size_summary">Cambia el tamaño de la foto a %1$s para exportarla</string>
-    <string name="settings_advanced_photo_size_title">Tamaño de foto</string>
     <string name="settings_chart_by_distance">Por distancia</string>
     <string name="settings_chart_by_time">Por tiempo</string>
     <string name="settings_chart_x_axis">Eje X</string>

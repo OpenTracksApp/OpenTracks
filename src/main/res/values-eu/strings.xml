@@ -228,9 +228,6 @@
     <string name="settings_not_while_recording">Ez dago erabilgarri ibilbidea grabatzen ari den bitartean.</string>
     <string name="settings_show">Erakutsi</string>
     <string name="settings_advanced">Aurreratua</string>
-    <string name="settings_advanced_photo_size_original">Jatorrizko tamaina</string>
-    <string name="settings_advanced_photo_size_summary">Murriztu tamaina %1$s-ra esportatzeko</string>
-    <string name="settings_advanced_photo_size_title">Argazkiaren tamaina</string>
     <string name="settings_chart_by_distance">Distantziaren arabera</string>
     <string name="settings_chart_by_time">Denboraren arabera</string>
     <string name="settings_chart_x_axis">X ardatza</string>

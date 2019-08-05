@@ -228,9 +228,6 @@
     <string name="settings_not_while_recording">ไม่สามารถใช้งานได้ในขณะบันทึกเส้นการเดินทาง</string>
     <string name="settings_show">แสดง</string>
     <string name="settings_advanced">ขั้นสูง</string>
-    <string name="settings_advanced_photo_size_original">ขนาดดั้งเดิม</string>
-    <string name="settings_advanced_photo_size_summary">ปรับขนาดภาพเป็น %1$s เพื่อส่งออก</string>
-    <string name="settings_advanced_photo_size_title">ขนาดภาพ</string>
     <string name="settings_chart_by_distance">ตามระยะทาง</string>
     <string name="settings_chart_by_time">ตามเวลา</string>
     <string name="settings_chart_x_axis">แกน X</string>

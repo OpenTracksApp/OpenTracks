@@ -229,9 +229,6 @@
     <string name="settings_not_while_recording">Nije dostupno tijekom snimanja staze</string>
     <string name="settings_show">Prikaži</string>
     <string name="settings_advanced">Napredno</string>
-    <string name="settings_advanced_photo_size_original">Izvorna veličina</string>
-    <string name="settings_advanced_photo_size_summary">Smanji fotografiju na %1$s za izvoz</string>
-    <string name="settings_advanced_photo_size_title">Veličina fotografije</string>
     <string name="settings_chart_by_distance">Prema udaljenosti</string>
     <string name="settings_chart_by_time">Prema vremenu</string>
     <string name="settings_chart_x_axis">Os X</string>

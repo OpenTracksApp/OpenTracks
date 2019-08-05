@@ -140,12 +140,6 @@ limitations under the License.
         <item>900</item>
         <item>1800</item>
     </string-array>
-    <string-array name="photo_size_values">
-        <item>500</item>
-        <item>1024</item>
-        <item>2048</item>
-        <item>-1</item>
-    </string-array>
     <string-array name="recording_distance_interval_values">
         <item>1</item>
         <item>2</item>

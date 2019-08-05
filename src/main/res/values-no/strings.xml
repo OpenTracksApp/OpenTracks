@@ -231,9 +231,6 @@
     <string name="settings_not_while_recording">Ikke tilgjengelig mens du tar opp en sti.</string>
     <string name="settings_show">Vis</string>
     <string name="settings_advanced">Avansert</string>
-    <string name="settings_advanced_photo_size_original">Originalstørrelse</string>
-    <string name="settings_advanced_photo_size_summary">Skaler bildet til %1$s for eksport</string>
-    <string name="settings_advanced_photo_size_title">Bildestørrelse</string>
     <string name="settings_chart_by_distance">Etter distanse</string>
     <string name="settings_chart_by_time">Etter tid</string>
     <string name="settings_chart_x_axis">X-akse</string>

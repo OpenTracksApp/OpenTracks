@@ -228,9 +228,6 @@
     <string name="settings_not_while_recording">غير متاح أثناء تسجيل مسار</string>
     <string name="settings_show">إظهار</string>
     <string name="settings_advanced">خيارات متقدمة</string>
-    <string name="settings_advanced_photo_size_original">الحجم الأصلي</string>
-    <string name="settings_advanced_photo_size_summary">تغيير حجم الصورة إلى‏ %1$s‏ لتصديرها</string>
-    <string name="settings_advanced_photo_size_title">حجم الصورة</string>
     <string name="settings_chart_by_distance">بحسب المسافة</string>
     <string name="settings_chart_by_time">بحسب الوقت</string>
     <string name="settings_chart_x_axis">المحور س</string>

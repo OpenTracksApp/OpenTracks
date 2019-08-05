@@ -229,9 +229,6 @@
     <string name="settings_not_while_recording">Không khả dụng khi đang ghi tuyến đường</string>
     <string name="settings_show">Hiển thị</string>
     <string name="settings_advanced">Nâng cao</string>
-    <string name="settings_advanced_photo_size_original">Kích thước ban đầu</string>
-    <string name="settings_advanced_photo_size_summary">Chỉnh tỉ lệ ảnh thành %1$s để xuất</string>
-    <string name="settings_advanced_photo_size_title">Kích thước ảnh</string>
     <string name="settings_chart_by_distance">Theo khoảng cách</string>
     <string name="settings_chart_by_time">Theo thời gian</string>
     <string name="settings_chart_x_axis">Trục X</string>

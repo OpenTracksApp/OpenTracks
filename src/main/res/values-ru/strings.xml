@@ -228,9 +228,6 @@
     <string name="settings_not_while_recording">Недоступно во время записи трека</string>
     <string name="settings_show">Показать</string>
     <string name="settings_advanced">Расширенные</string>
-    <string name="settings_advanced_photo_size_original">Оригинал</string>
-    <string name="settings_advanced_photo_size_summary">Сжать до %1$s для экспорта</string>
-    <string name="settings_advanced_photo_size_title">Размер фотографии</string>
     <string name="settings_chart_by_distance">Расстояние</string>
     <string name="settings_chart_by_time">Время</string>
     <string name="settings_chart_x_axis">Ось X</string>

@@ -228,9 +228,6 @@
     <string name="settings_not_while_recording">Nav pieejams maršruta ierakstīšanas laikā.</string>
     <string name="settings_show">Rādīt</string>
     <string name="settings_advanced">Papildu iestatījumi</string>
-    <string name="settings_advanced_photo_size_original">Sākotnējais izmērs</string>
-    <string name="settings_advanced_photo_size_summary">Lai eksportētu fotoattēlu, pielāgojiet tā izmēru līdz vērtībai %1$s</string>
-    <string name="settings_advanced_photo_size_title">Fotoattēla izmērs</string>
     <string name="settings_chart_by_distance">Pēc attāluma</string>
     <string name="settings_chart_by_time">Pēc laika</string>
     <string name="settings_chart_x_axis">X ass</string>

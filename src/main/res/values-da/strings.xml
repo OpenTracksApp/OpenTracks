@@ -231,9 +231,6 @@
     <string name="settings_not_while_recording">Ikke tilgængelig ved registrering af rute</string>
     <string name="settings_show">Vis</string>
     <string name="settings_advanced">Avanceret</string>
-    <string name="settings_advanced_photo_size_original">Oprindelig størrelse</string>
-    <string name="settings_advanced_photo_size_summary">Skaler billede til %1$s til eksport</string>
-    <string name="settings_advanced_photo_size_title">Billedstørrelse</string>
     <string name="settings_chart_by_distance">Efter afstand</string>
     <string name="settings_chart_by_time">Efter tid</string>
     <string name="settings_chart_x_axis">X-akse</string>

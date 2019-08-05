@@ -229,9 +229,6 @@
     <string name="settings_not_while_recording">Indisponibilă în timp ce înregistrați un traseu.</string>
     <string name="settings_show">Afișați</string>
     <string name="settings_advanced">Avansate</string>
-    <string name="settings_advanced_photo_size_original">Dimensiune inițială</string>
-    <string name="settings_advanced_photo_size_summary">Scalează fotografia la %1$s pentru export</string>
-    <string name="settings_advanced_photo_size_title">Dimensiunea fotografiei</string>
     <string name="settings_chart_by_distance">După distanță</string>
     <string name="settings_chart_by_time">După durată</string>
     <string name="settings_chart_x_axis">Axa x</string>

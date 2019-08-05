@@ -229,9 +229,6 @@
     <string name="settings_not_while_recording">Не е налице при записване на маршрут.</string>
     <string name="settings_show">Показване</string>
     <string name="settings_advanced">Разширени</string>
-    <string name="settings_advanced_photo_size_original">Оригинален размер</string>
-    <string name="settings_advanced_photo_size_summary">Мащабиране на снимката до %1$s за експортиране</string>
-    <string name="settings_advanced_photo_size_title">Размер на снимката</string>
     <string name="settings_chart_by_distance">По разстояние</string>
     <string name="settings_chart_by_time">По време</string>
     <string name="settings_chart_x_axis">Ос X</string>

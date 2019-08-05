@@ -231,9 +231,6 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="settings_not_while_recording">Ei saatavilla reitin tallennuksen aikana</string>
     <string name="settings_show">Näytä</string>
     <string name="settings_advanced">Lisäasetukset</string>
-    <string name="settings_advanced_photo_size_original">Alkuperäinen koko</string>
-    <string name="settings_advanced_photo_size_summary">Skaalaa kuva kokoon %1$s vientiä varten</string>
-    <string name="settings_advanced_photo_size_title">Kuvan koko</string>
     <string name="settings_chart_by_distance">Etäisyyden mukaan</string>
     <string name="settings_chart_by_time">Ajan mukaan</string>
     <string name="settings_chart_x_axis">X-akseli</string>

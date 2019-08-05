@@ -231,9 +231,6 @@
     <string name="settings_not_while_recording">记录路线时不可用</string>
     <string name="settings_show">显示</string>
     <string name="settings_advanced">高级</string>
-    <string name="settings_advanced_photo_size_original">原始大小</string>
-    <string name="settings_advanced_photo_size_summary">将照片大小调整为%1$s，以便导出</string>
-    <string name="settings_advanced_photo_size_title">照片大小</string>
     <string name="settings_chart_by_distance">按距离</string>
     <string name="settings_chart_by_time">按时间</string>
     <string name="settings_chart_x_axis">X 轴</string>

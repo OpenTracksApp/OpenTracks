@@ -228,9 +228,6 @@
     <string name="settings_not_while_recording">در حال ضبط گذر، در دسترس نیست</string>
     <string name="settings_show">نمایش</string>
     <string name="settings_advanced">پیشرفته</string>
-    <string name="settings_advanced_photo_size_original">اندازه اصلی</string>
-    <string name="settings_advanced_photo_size_summary">تغییر اندازه عکس به %1$s برای صادر کردن</string>
-    <string name="settings_advanced_photo_size_title">اندازه عکس</string>
     <string name="settings_chart_by_distance">بر حسب مسافت</string>
     <string name="settings_chart_by_time">بر حسب زمان</string>
     <string name="settings_chart_x_axis">محور X</string>

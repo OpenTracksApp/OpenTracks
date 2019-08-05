@@ -229,9 +229,6 @@
     <string name="settings_not_while_recording">Während der Aufzeichnung eines Tracks nicht verfügbar</string>
     <string name="settings_show">Anzeigen</string>
     <string name="settings_advanced">Erweitert</string>
-    <string name="settings_advanced_photo_size_original">Originalgröße</string>
-    <string name="settings_advanced_photo_size_summary">Foto für Export auf %1$s skalieren</string>
-    <string name="settings_advanced_photo_size_title">Fotogröße</string>
     <string name="settings_chart_by_distance">Nach Strecke</string>
     <string name="settings_chart_by_time">Nach Zeit</string>
     <string name="settings_chart_x_axis">x-Achse</string>

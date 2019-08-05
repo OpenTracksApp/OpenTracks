@@ -231,9 +231,6 @@
     <string name="settings_not_while_recording">Non disponibile durante la registrazione di un percorso</string>
     <string name="settings_show">Mostra</string>
     <string name="settings_advanced">Avanzate</string>
-    <string name="settings_advanced_photo_size_original">Dimensioni originali</string>
-    <string name="settings_advanced_photo_size_summary">Scala foto a %1$s per l\'esportazione</string>
-    <string name="settings_advanced_photo_size_title">Dimensioni foto</string>
     <string name="settings_chart_by_distance">Pedistanza</string>
     <string name="settings_chart_by_time">Per durata</string>
     <string name="settings_chart_x_axis">Asse X</string>

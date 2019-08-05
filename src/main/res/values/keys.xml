@@ -25,7 +25,6 @@ limitations under the License.
     <string name="default_activity_key" translatable="false">defaultActivity</string>
     <string name="max_recording_distance_key" translatable="false">maxRecordingDistance</string>
     <string name="min_recording_interval_key" translatable="false">minRecordingInterval</string>
-    <string name="photo_size_key" translatable="false">photoSize</string>
     <string name="recording_distance_interval_key" translatable="false">recordingDistanceInterval</string>
     <string name="recording_gps_accuracy_key" translatable="false">recordingGpsAccuracy</string>
     <string name="split_frequency_key" translatable="false">splitFrequency</string>

@@ -23,16 +23,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
-import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.util.Log;
 import android.widget.Toast;
 
 import de.dennisguse.opentracks.Constants;
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.util.DialogUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
-import de.dennisguse.opentracks.R;
 
 /**
  * An activity for advanced settings.
@@ -77,14 +76,6 @@ public class AdvancedSettingsActivity extends AbstractSettingsActivity {
         super.onCreate(bundle);
         addPreferencesFromResource(R.xml.settings_advanced);
 
-        ListPreference preference = (ListPreference) findPreference(getString(R.string.photo_size_key));
-        int value = PreferencesUtils.getInt(this, R.string.photo_size_key, PreferencesUtils.PHOTO_SIZE_DEFAULT);
-        String[] values = getResources().getStringArray(R.array.photo_size_values);
-        String[] options = new String[values.length];
-        String[] summary = new String[values.length];
-        setPhotoSizeSummaryAndOptions(summary, options, values);
-        configureListPreference(preference, summary, options, values, String.valueOf(value), null);
-
         sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
 
         resetPreference = findPreference(getString(R.string.settings_reset_key));
@@ -128,23 +119,6 @@ public class AdvancedSettingsActivity extends AbstractSettingsActivity {
         }
     }
 
-    private void setPhotoSizeSummaryAndOptions(String[] summary, String[] options, String[] values) {
-        for (int i = 0; i < values.length; i++) {
-            int value = Integer.parseInt(values[i]);
-            if (value == -1) {
-                options[i] = getString(R.string.settings_advanced_photo_size_original);
-                summary[i] = getString(R.string.settings_advanced_photo_size_original);
-            } else if (value < 1024) {
-                options[i] = getString(R.string.value_integer_kilobyte, value);
-                summary[i] = getString(R.string.settings_advanced_photo_size_summary, options[i]);
-            } else {
-                int megabyte = value / 1024;
-                options[i] = getString(R.string.value_integer_megabyte, megabyte);
-                summary[i] = getString(R.string.settings_advanced_photo_size_summary, options[i]);
-            }
-        }
-    }
-
     /**
      * Updates the UI based on the recording state.
      */
@@ -171,8 +145,7 @@ public class AdvancedSettingsActivity extends AbstractSettingsActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(
-                                AdvancedSettingsActivity.this, R.string.settings_reset_done, Toast.LENGTH_SHORT)
+                        Toast.makeText(AdvancedSettingsActivity.this, R.string.settings_reset_done, Toast.LENGTH_SHORT)
                                 .show();
                         // Restart the settings activity so all changes are loaded
                         Intent intent = getIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -229,9 +229,6 @@
     <string name="settings_not_while_recording">Η επιλογή δεν είναι διαθέσιμη κατά την εγγραφή ίχνους</string>
     <string name="settings_show">Εμφάνιση</string>
     <string name="settings_advanced">Προηγμένες</string>
-    <string name="settings_advanced_photo_size_original">Αρχικό μέγεθος</string>
-    <string name="settings_advanced_photo_size_summary">Αλλαγή μεγέθους φωτογραφίας σε %1$s για εξαγωγή</string>
-    <string name="settings_advanced_photo_size_title">Μέγεθος φωτογραφίας</string>
     <string name="settings_chart_by_distance">Κατά απόσταση</string>
     <string name="settings_chart_by_time">Κατά χρόνο</string>
     <string name="settings_chart_x_axis">Άξονας Χ</string>

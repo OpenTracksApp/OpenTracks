@@ -231,9 +231,6 @@
     <string name="settings_not_while_recording">Kol įrašinėjamas maršrutas, nepasiekiama.</string>
     <string name="settings_show">Rodyti</string>
     <string name="settings_advanced">Išplėstinės</string>
-    <string name="settings_advanced_photo_size_original">Pradinis dydis</string>
-    <string name="settings_advanced_photo_size_summary">Keisti nuotraukos mastelį į %1$s eksportui</string>
-    <string name="settings_advanced_photo_size_title">Nuotraukos dydis</string>
     <string name="settings_chart_by_distance">Pagal atstumą</string>
     <string name="settings_chart_by_time">Pagal laiką</string>
     <string name="settings_chart_x_axis">X ašis</string>

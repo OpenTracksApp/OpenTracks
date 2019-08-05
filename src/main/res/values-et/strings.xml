@@ -228,9 +228,6 @@
     <string name="settings_not_while_recording">Raja salvestamise ajal ei ole kättesaadav</string>
     <string name="settings_show">Kuva</string>
     <string name="settings_advanced">Täpsemad seaded</string>
-    <string name="settings_advanced_photo_size_original">Originaalsuurus</string>
-    <string name="settings_advanced_photo_size_summary">Eksportimiseks skaleerige foto suurusele %1$s</string>
-    <string name="settings_advanced_photo_size_title">Foto suurus</string>
     <string name="settings_chart_by_distance">Vahemaa järgi</string>
     <string name="settings_chart_by_time">Aja järgi</string>
     <string name="settings_chart_x_axis">X-telg</string>

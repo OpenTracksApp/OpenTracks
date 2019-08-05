@@ -228,9 +228,6 @@
     <string name="settings_not_while_recording">Hindi available habang inire-rekord ang isang track.</string>
     <string name="settings_show">Ipakita</string>
     <string name="settings_advanced">Advanced</string>
-    <string name="settings_advanced_photo_size_original">Orihinal na laki</string>
-    <string name="settings_advanced_photo_size_summary">I-scale ang larawan sa %1$s para ma-export</string>
-    <string name="settings_advanced_photo_size_title">Laki ng larawan</string>
     <string name="settings_chart_by_distance">Ayon sa distansya</string>
     <string name="settings_chart_by_time">Ayon sa oras</string>
     <string name="settings_chart_x_axis">X axis</string>

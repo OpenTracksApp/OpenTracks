@@ -229,9 +229,6 @@
     <string name="settings_not_while_recording">Недоступно під час записування шляху.</string>
     <string name="settings_show">Показати</string>
     <string name="settings_advanced">Розширені</string>
-    <string name="settings_advanced_photo_size_original">Оригінальний розмір</string>
-    <string name="settings_advanced_photo_size_summary">Зменшити до %1$s для експорту</string>
-    <string name="settings_advanced_photo_size_title">Розмір фото</string>
     <string name="settings_chart_by_distance">За відстанню</string>
     <string name="settings_chart_by_time">За часом</string>
     <string name="settings_chart_x_axis">Вісь X</string>

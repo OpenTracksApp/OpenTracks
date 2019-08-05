@@ -228,9 +228,6 @@
     <string name="settings_not_while_recording">Niet beschikbaar tijdens het opnemen van een route</string>
     <string name="settings_show">Weergeven</string>
     <string name="settings_advanced">Geavanceerd</string>
-    <string name="settings_advanced_photo_size_original">Oorspronkelijke grootte</string>
-    <string name="settings_advanced_photo_size_summary">Foto schalen naar %1$s voor export</string>
-    <string name="settings_advanced_photo_size_title">Grootte van foto</string>
     <string name="settings_chart_by_distance">Op afstand</string>
     <string name="settings_chart_by_time">Op tijd</string>
     <string name="settings_chart_x_axis">X-as</string>

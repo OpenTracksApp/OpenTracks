@@ -231,9 +231,6 @@
     <string name="settings_not_while_recording">記錄足跡時無法使用這個選項</string>
     <string name="settings_show">顯示</string>
     <string name="settings_advanced">進階</string>
-    <string name="settings_advanced_photo_size_original">原始大小</string>
-    <string name="settings_advanced_photo_size_summary">將相片調整為 %1$s 以匯出</string>
-    <string name="settings_advanced_photo_size_title">相片大小</string>
     <string name="settings_chart_by_distance">依距離</string>
     <string name="settings_chart_by_time">依時間</string>
     <string name="settings_chart_x_axis">X 軸</string>

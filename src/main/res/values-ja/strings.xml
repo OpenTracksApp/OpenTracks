@@ -231,9 +231,6 @@
     <string name="settings_not_while_recording">トラックの記録中はご利用いただけません</string>
     <string name="settings_show">表示</string>
     <string name="settings_advanced">詳細設定</string>
-    <string name="settings_advanced_photo_size_original">元のサイズ</string>
-    <string name="settings_advanced_photo_size_summary">エクスポート用に写真サイズを%1$sに変更します</string>
-    <string name="settings_advanced_photo_size_title">写真サイズ</string>
     <string name="settings_chart_by_distance">距離</string>
     <string name="settings_chart_by_time">時間</string>
     <string name="settings_chart_x_axis">X軸</string>

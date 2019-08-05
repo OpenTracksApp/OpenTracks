@@ -1067,20 +1067,8 @@ limitations under the License.
       Character limit: ~26 (1 line)">
     Advanced
   </string>
-    <string name="settings_advanced_photo_size_original" translation_description="In the 'Advanced' settings, under the 'Photo size' option, the value to
-      use the original photo size.">
-    Original size
-  </string>
-    <string name="settings_advanced_photo_size_summary" translation_description="In the 'Advanced' settings, the summary for the 'Photo size' option.
 
-      %1$s value. E.g., '1 MB'.">
-    Scale photo to %1$s for export
-  </string>
-    <string name="settings_advanced_photo_size_title">
-    Photo size
-  </string>
-
-    <!-- Settings Chart -->
+  <!-- Settings Chart -->
     <string name="settings_chart_by_distance" translation_description="In the 'Chart' settings, the option to display the x axis by
       distance.">
     By distance

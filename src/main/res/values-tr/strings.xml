@@ -229,9 +229,6 @@
     <string name="settings_not_while_recording">Parkur kaydı sırasında kullanılamaz</string>
     <string name="settings_show">Göster</string>
     <string name="settings_advanced">Gelişmiş</string>
-    <string name="settings_advanced_photo_size_original">Orijinal boyut</string>
-    <string name="settings_advanced_photo_size_summary">Fotoğrafı dışa aktarılmak üzere %1$s boyutuna ayarlayın</string>
-    <string name="settings_advanced_photo_size_title">Fotoğraf boyutu</string>
     <string name="settings_chart_by_distance">Mesafeye göre</string>
     <string name="settings_chart_by_time">Zamana göre</string>
     <string name="settings_chart_x_axis">X ekseni</string>

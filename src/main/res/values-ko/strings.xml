@@ -230,9 +230,6 @@
     <string name="settings_not_while_recording">운동기록을 기록하는 동안 사용할 수 없습니다.</string>
     <string name="settings_show">표시</string>
     <string name="settings_advanced">고급</string>
-    <string name="settings_advanced_photo_size_original">원본 크기</string>
-    <string name="settings_advanced_photo_size_summary">사진을 내보내기 위해 %1$s(으)로 크기 조절</string>
-    <string name="settings_advanced_photo_size_title">사진 크기</string>
     <string name="settings_chart_by_distance">거리 기준</string>
     <string name="settings_chart_by_time">시간 기준</string>
     <string name="settings_chart_x_axis">X축</string>

@@ -231,9 +231,6 @@
     <string name="settings_not_while_recording">‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‏‎‏‏‏‏‏‎‎‎‏‏‏‏‎‏‏‎‏‎‎‏‏‏‏‎‏‏‎‎‎‏‎‏‏‎‏‏‏‎‎‎‎‏‏‎‎‏‏‎‏‏‏‏‏‎‏‎‎‏‎‎‎‏‎‏‏‏‎‎‎‏‎‎‏‎‎‎Not available while recording a track‎‏‎‎‏‎</string>
     <string name="settings_show">‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‏‎‏‏‏‏‏‎‎‎‏‏‏‏‏‎‏‎‏‎‎‎‎‏‎‎‏‎‏‏‏‏‎‎‏‏‏‎‏‏‏‏‏‏‎‎‏‏‏‎‏‎‎‎‎‏‏‎‎‏‎‎‏‏‏‎‏‏‏‎‏‏‎‎‏‏‎‏‎Show‎‏‎‎‏‎</string>
     <string name="settings_advanced">‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‏‎‏‏‏‏‏‎‎‎‏‏‏‏‏‎‏‎‎‎‎‎‏‎‏‏‎‏‏‏‎‎‏‎‎‎‎‎‎‎‎‎‎‏‎‏‏‎‏‏‎‏‏‏‎‏‏‏‎‎‎‏‏‎‏‎‎‎‏‏‎‎‎‎‏‎‏‏‎Advanced‎‏‎‎‏‎</string>
-    <string name="settings_advanced_photo_size_original">‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‏‎‏‏‏‏‏‎‎‎‏‏‏‏‎‏‏‎‏‏‎‎‎‏‎‎‏‎‎‏‏‎‎‏‏‏‏‎‎‏‎‏‏‎‎‏‏‏‏‎‏‎‏‏‏‎‎‏‎‎‎‎‏‎‏‏‎‏‎‏‎‏‏‏‏‎‏‎Original size‎‏‎‎‏‎</string>
-    <string name="settings_advanced_photo_size_summary">‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‏‎‏‏‏‏‏‎‎‎‏‏‏‏‏‎‏‏‎‎‎‏‏‎‎‏‏‏‎‎‎‏‎‎‏‎‏‎‎‏‎‎‎‏‏‎‏‎‏‏‎‎‏‎‎‎‏‎‏‏‏‎‏‏‎‏‎‎‏‎‎‏‎‎‎‏‎‎‎Scale photo to ‎‏‎‎‏‏‎%1$s‎‏‎‎‏‏‏‎ for export‎‏‎‎‏‎</string>
-    <string name="settings_advanced_photo_size_title">‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‏‎‏‏‏‏‏‎‎‎‏‏‏‏‎‏‏‎‎‎‎‎‎‏‎‏‎‏‎‎‏‎‏‏‏‏‎‎‏‎‎‏‏‎‎‏‏‏‏‎‎‎‎‏‏‎‏‎‎‎‎‏‎‏‏‏‎‏‏‏‏‏‏‏‏‏‎‎Photo size‎‏‎‎‏‎</string>
     <string name="settings_chart_by_distance">‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‏‎‏‏‏‏‏‎‎‎‏‏‏‏‏‎‏‎‏‏‎‎‎‎‏‏‎‎‏‏‎‏‏‏‎‎‏‎‏‎‏‏‏‏‏‎‎‏‏‏‏‏‎‏‎‏‎‏‎‏‎‎‏‎‎‏‏‏‏‏‎‎‎‏‎‎‏‎‎By distance‎‏‎‎‏‎</string>
     <string name="settings_chart_by_time">‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‏‎‏‏‏‏‏‎‎‎‏‏‏‏‏‎‏‏‎‎‏‏‎‎‎‏‎‎‎‏‏‏‏‏‏‎‎‏‏‎‎‎‏‏‏‎‏‎‏‎‏‎‏‏‎‎‎‎‎‎‎‏‏‎‏‎‏‎‎‏‎‎‎‏‎‏‏‎‎By time‎‏‎‎‏‎</string>
     <string name="settings_chart_x_axis">‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‏‎‏‏‏‏‏‎‎‎‏‏‏‏‏‏‏‏‏‏‏‎‎‏‏‏‏‎‎‏‎‎‎‎‎‎‏‏‏‎‏‏‎‏‏‎‏‏‏‏‎‏‎‎‏‏‏‏‎‏‎‎‏‎‏‏‏‏‏‎‏‎‏‎‎‎‏‏‎‎X axis‎‏‎‎‏‎</string>

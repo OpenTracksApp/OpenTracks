@@ -231,9 +231,6 @@ es vegi el cel. Torneu-ho a provar més tard.</string>
     <string name="settings_not_while_recording">No està disponible durant l\'enregistrament d\'una ruta.</string>
     <string name="settings_show">Mostra\'n més</string>
     <string name="settings_advanced">Avançades</string>
-    <string name="settings_advanced_photo_size_original">Mida original</string>
-    <string name="settings_advanced_photo_size_summary">Modifica la mida de la foto a %1$s per exportar-la.</string>
-    <string name="settings_advanced_photo_size_title">Mida de la foto</string>
     <string name="settings_chart_by_distance">Per distància</string>
     <string name="settings_chart_by_time">Per temps</string>
     <string name="settings_chart_x_axis">Eix X</string>

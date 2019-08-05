@@ -228,9 +228,6 @@
     <string name="settings_not_while_recording">Cette option n\'est pas accessible pendant l\'enregistrement d\'un parcours.</string>
     <string name="settings_show">Afficher</string>
     <string name="settings_advanced">Options avancées</string>
-    <string name="settings_advanced_photo_size_original">Taille originale</string>
-    <string name="settings_advanced_photo_size_summary">Définissez la taille de la photo à %1$s pour l\'exporter</string>
-    <string name="settings_advanced_photo_size_title">Taille de la photo</string>
     <string name="settings_chart_by_distance">Par distance</string>
     <string name="settings_chart_by_time">Par heure</string>
     <string name="settings_chart_x_axis">Axe X</string>

@@ -231,9 +231,6 @@
     <string name="settings_not_while_recording">[Ñöţ åvåîļåɓļé ŵĥîļé ŕéçöŕðîñĝ å ţŕåçķ one two three four five six seven eight]</string>
     <string name="settings_show">[Šĥöŵ one]</string>
     <string name="settings_advanced">[Åðvåñçéð one]</string>
-    <string name="settings_advanced_photo_size_original">[Öŕîĝîñåļ šîžé one two]</string>
-    <string name="settings_advanced_photo_size_summary">[Šçåļé þĥöţö ţö ᐅ%1$sᐊ ƒöŕ éxþöŕţ one two three four five six seven]</string>
-    <string name="settings_advanced_photo_size_title">[Þĥöţö šîžé one two]</string>
     <string name="settings_chart_by_distance">[Bý ðîšţåñçé one two]</string>
     <string name="settings_chart_by_time">[Bý ţîmé one]</string>
     <string name="settings_chart_x_axis">[X åxîš one]</string>

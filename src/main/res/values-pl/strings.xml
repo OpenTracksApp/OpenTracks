@@ -231,9 +231,6 @@
     <string name="settings_not_while_recording">Niedostępne podczas rejestrowania trasy</string>
     <string name="settings_show">Pokaż</string>
     <string name="settings_advanced">Zaawansowane</string>
-    <string name="settings_advanced_photo_size_original">Oryginalny rozmiar</string>
-    <string name="settings_advanced_photo_size_summary">Przed wyeksportowaniem zmień rozmiar zdjęcia na %1$s</string>
-    <string name="settings_advanced_photo_size_title">Rozmiar zdjęcia</string>
     <string name="settings_chart_by_distance">Wg odległości</string>
     <string name="settings_chart_by_time">Wg czasu</string>
     <string name="settings_chart_x_axis">Oś X</string>

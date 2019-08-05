@@ -228,9 +228,6 @@
     <string name="settings_not_while_recording">Није доступно при снимању праћења</string>
     <string name="settings_show">Прикажи</string>
     <string name="settings_advanced">Напредно</string>
-    <string name="settings_advanced_photo_size_original">Оригинална величина</string>
-    <string name="settings_advanced_photo_size_summary">Промените величину слике у %1$s за извоз</string>
-    <string name="settings_advanced_photo_size_title">Величина слике</string>
     <string name="settings_chart_by_distance">Према раздаљини</string>
     <string name="settings_chart_by_time">Према времену</string>
     <string name="settings_chart_x_axis">X оса</string>

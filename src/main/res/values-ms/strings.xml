@@ -229,9 +229,6 @@
     <string name="settings_not_while_recording">Tidak tersedia semasa merakam laluan</string>
     <string name="settings_show">Tunjukkan</string>
     <string name="settings_advanced">Terperinci</string>
-    <string name="settings_advanced_photo_size_original">Saiz asal</string>
-    <string name="settings_advanced_photo_size_summary">Tukar saiz foto kepada %1$s untuk dieksport</string>
-    <string name="settings_advanced_photo_size_title">Saiz foto</string>
     <string name="settings_chart_by_distance">Mengikut jarak</string>
     <string name="settings_chart_by_time">Mengikut masa</string>
     <string name="settings_chart_x_axis">Paksi-X</string>

@@ -230,9 +230,6 @@
     <string name="settings_not_while_recording">לא זמין בעת הקלטת מסלול</string>
     <string name="settings_show">הצג</string>
     <string name="settings_advanced">מתקדם</string>
-    <string name="settings_advanced_photo_size_original">הגודל המקורי</string>
-    <string name="settings_advanced_photo_size_summary">הגדר את קנה המידה של התמונה ל-%1$s כדי לייצא אותה</string>
-    <string name="settings_advanced_photo_size_title">גודל תמונה</string>
     <string name="settings_chart_by_distance">לפי מרחק</string>
     <string name="settings_chart_by_time">לפי זמן</string>
     <string name="settings_chart_x_axis">ציר X</string>

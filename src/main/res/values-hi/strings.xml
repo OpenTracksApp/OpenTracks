@@ -228,9 +228,6 @@
     <string name="settings_not_while_recording">ट्रैक रिकॉर्ड करते समय उपलब्ध नहीं</string>
     <string name="settings_show">दिखाएं</string>
     <string name="settings_advanced">उन्नत</string>
-    <string name="settings_advanced_photo_size_original">मूल आकार</string>
-    <string name="settings_advanced_photo_size_summary">निर्यात के लिए फ़ोटो को %1$s में बदलें</string>
-    <string name="settings_advanced_photo_size_title">फ़ोटो आकार</string>
     <string name="settings_chart_by_distance">दूरी के अनुसार</string>
     <string name="settings_chart_by_time">समय के अनुसार</string>
     <string name="settings_chart_x_axis">एक्स अक्ष</string>

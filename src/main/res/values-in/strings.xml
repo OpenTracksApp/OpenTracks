@@ -230,9 +230,6 @@
     <string name="settings_not_while_recording">Tidak tersedia saat merekam trek</string>
     <string name="settings_show">Tampilkan</string>
     <string name="settings_advanced">Lanjutan</string>
-    <string name="settings_advanced_photo_size_original">Ukuran asal</string>
-    <string name="settings_advanced_photo_size_summary">Skalakan foto ke %1$s untuk diekspor</string>
-    <string name="settings_advanced_photo_size_title">Ukuran foto</string>
     <string name="settings_chart_by_distance">Menurut jarak</string>
     <string name="settings_chart_by_time">Menurut waktu</string>
     <string name="settings_chart_x_axis">Sumbu X</string>

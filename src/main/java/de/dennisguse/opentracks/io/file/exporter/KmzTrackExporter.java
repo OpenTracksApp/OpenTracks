@@ -18,16 +18,8 @@ package de.dennisguse.opentracks.io.file.exporter;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
-
-import de.dennisguse.opentracks.content.ContentProviderUtils;
-import de.dennisguse.opentracks.content.Track;
-import de.dennisguse.opentracks.content.Waypoint;
-import de.dennisguse.opentracks.util.PreferencesUtils;
-import de.dennisguse.opentracks.R;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,6 +27,10 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+
+import de.dennisguse.opentracks.content.ContentProviderUtils;
+import de.dennisguse.opentracks.content.Track;
+import de.dennisguse.opentracks.content.Waypoint;
 
 /**
  * KMZ track exporter.
@@ -53,7 +49,6 @@ public class KmzTrackExporter implements TrackExporter {
     private final ContentProviderUtils contentProviderUtils;
     private final FileTrackExporter fileTrackExporter;
     private final Track[] tracks;
-    private final long photoSize;
 
     /**
      * Constructor.
@@ -68,8 +63,6 @@ public class KmzTrackExporter implements TrackExporter {
         this.contentProviderUtils = contentProviderUtils;
         this.fileTrackExporter = fileTrackExporter;
         this.tracks = tracks;
-        this.photoSize = PreferencesUtils.getInt(
-                context, R.string.photo_size_key, PreferencesUtils.PHOTO_SIZE_DEFAULT);
     }
 
     @Override
@@ -139,38 +132,11 @@ public class KmzTrackExporter implements TrackExporter {
             return;
         }
 
-        ZipEntry zipEntry = new ZipEntry(
-                KMZ_IMAGES_DIR + File.separatorChar + uri.getLastPathSegment());
+        ZipEntry zipEntry = new ZipEntry(KMZ_IMAGES_DIR + File.separatorChar + uri.getLastPathSegment());
         zipOutputStream.putNextEntry(zipEntry);
 
-        int sampleSize;
-        if (photoSize == -1) {
-            sampleSize = 1;
-        } else {
-            long size = file.length();
-            // Convert from kilobytes to bytes.
-            long limit = photoSize * 1024;
-            sampleSize = size > limit ? (int) Math.ceil(size / limit) : 1;
-        }
-        if (sampleSize == 1) {
-            readFromFile(zipOutputStream, uri);
-        } else {
-            readFromScaledBitmap(zipOutputStream, uri, sampleSize);
-        }
+        readFromFile(zipOutputStream, uri);
         zipOutputStream.closeEntry();
-    }
-
-    private void readFromScaledBitmap(ZipOutputStream zipOutputStream, Uri uri, int sampleSize) {
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = false;
-        options.inSampleSize = sampleSize;
-
-        Bitmap bitmap = BitmapFactory.decodeFile(uri.getPath(), options);
-        if (bitmap == null) {
-            return;
-        }
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, zipOutputStream);
-        bitmap.recycle();
     }
 
     private void readFromFile(ZipOutputStream zipOutputStream, Uri uri) throws IOException {
