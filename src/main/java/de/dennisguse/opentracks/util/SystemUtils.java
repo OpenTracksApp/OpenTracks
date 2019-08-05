@@ -25,6 +25,8 @@ import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
 
+import androidx.core.content.pm.PackageInfoCompat;
+
 import de.dennisguse.opentracks.BuildConfig;
 
 /**
@@ -57,7 +59,7 @@ public class SystemUtils {
     public static Long getAppVersionCode(Context context) {
         try {
             PackageInfo pi = context.getPackageManager().getPackageInfo(BuildConfig.APPLICATION_ID, PackageManager.GET_META_DATA);
-            return pi.getLongVersionCode();
+            return PackageInfoCompat.getLongVersionCode(pi);
         } catch (NameNotFoundException e) {
             Log.w(TAG, "Failed to get version info.", e);
             return -1L;
