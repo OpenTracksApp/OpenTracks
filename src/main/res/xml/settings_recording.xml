@@ -18,37 +18,46 @@ limitations under the License.
     <ListPreference
         android:defaultValue="0"
         android:key="@string/voice_frequency_key"
+        android:summary="%s"
         android:title="@string/menu_voice_frequency" />
     <ListPreference
         android:defaultValue="0"
         android:key="@string/split_frequency_key"
+        android:summary="%s"
         android:title="@string/menu_split_frequency" />
     <ListPreference
         android:defaultValue="@string/settings_recording_track_name_date_iso_8601_value"
         android:key="@string/track_name_key"
+        android:summary="%s"
         android:title="@string/settings_recording_track_name_title" />
     <de.dennisguse.opentracks.settings.ActivityTypePreference
         android:defaultValue="@string/activity_type_running"
         android:key="@string/default_activity_key"
+        android:summary="%s"
         android:title="@string/settings_recording_default_activity_title" />
     <ListPreference
         android:defaultValue="0"
         android:key="@string/min_recording_interval_key"
+        android:summary="%s"
         android:title="@string/settings_recording_min_recording_interval_title" />
     <ListPreference
         android:defaultValue="10"
         android:key="@string/recording_distance_interval_key"
+        android:summary="%s"
         android:title="@string/settings_recording_min_recording_distance_title" />
     <ListPreference
         android:defaultValue="200"
         android:key="@string/max_recording_distance_key"
+        android:summary="%s"
         android:title="@string/settings_recording_max_recording_distance_title" />
     <ListPreference
         android:defaultValue="50"
         android:key="@string/recording_gps_accuracy_key"
+        android:summary="%s"
         android:title="@string/settings_recording_min_required_accuracy_title" />
     <ListPreference
         android:defaultValue="10"
         android:key="@string/auto_resume_track_timeout_key"
+        android:summary="%s"
         android:title="@string/settings_recording_auto_resume_track_timeout_title" />
 </PreferenceScreen>

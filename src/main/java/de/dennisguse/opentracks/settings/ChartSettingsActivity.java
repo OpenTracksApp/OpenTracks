@@ -60,6 +60,6 @@ public class ChartSettingsActivity extends AbstractSettingsActivity {
                 this, R.string.chart_x_axis_key, PreferencesUtils.CHART_X_AXIS_DEFAULT);
         String[] values = getResources().getStringArray(R.array.chart_x_axis_values);
         String[] options = getResources().getStringArray(R.array.chart_x_axis_options);
-        configureListPreference(listPreference, options, options, values, value, null);
+        configureListPreference(listPreference, options, values, value, null);
     }
 }

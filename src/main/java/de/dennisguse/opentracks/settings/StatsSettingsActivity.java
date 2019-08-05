@@ -62,7 +62,7 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
                 this, R.string.stats_units_key, PreferencesUtils.STATS_UNITS_DEFAULT);
         String[] values = getResources().getStringArray(R.array.stats_units_values);
         String[] options = getResources().getStringArray(R.array.stats_units_options);
-        configureListPreference(listPreference, options, options, values, value, listener);
+        configureListPreference(listPreference, options, values, value, listener);
     }
 
     /**
@@ -78,6 +78,6 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
         String[] values = getResources().getStringArray(R.array.stats_rate_values);
         String[] options = getResources().getStringArray(
                 metricUnits ? R.array.stats_rate_metric_options : R.array.stats_rate_imperial_options);
-        configureListPreference(listPreference, options, options, values, value, null);
+        configureListPreference(listPreference, options, values, value, null);
     }
 }

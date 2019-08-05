@@ -86,7 +86,7 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity
         int value = PreferencesUtils.getInt(this, key, defaultValue);
         String[] values = getResources().getStringArray(valueArray);
         String[] options = StringUtils.getFrequencyOptions(this, metricUnits);
-        configureListPreference(preference, options, options, values, String.valueOf(value), null);
+        configureListPreference(preference, options, values, String.valueOf(value), null);
     }
 
     private void configTrackName() {
@@ -95,7 +95,7 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity
                 this, R.string.track_name_key, PreferencesUtils.TRACK_NAME_DEFAULT);
         String[] values = getResources().getStringArray(R.array.track_name_values);
         String[] options = getResources().getStringArray(R.array.track_name_options);
-        configureListPreference(preference, options, options, values, value, null);
+        configureListPreference(preference, options, values, value, null);
     }
 
     private void configDefaultActivity() {
@@ -146,7 +146,7 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity
             default:
                 return;
         }
-        configureListPreference(preference, summary, options, values, String.valueOf(value), null);
+        configureListPreference(preference, options, values, String.valueOf(value), null);
     }
 
     /**
@@ -319,8 +319,7 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity
      * @param options the options
      * @param values  the values
      */
-    private void setAutoResumeTrackTimeoutSummaryAndOptions(
-            String[] summary, String[] options, String[] values) {
+    private void setAutoResumeTrackTimeoutSummaryAndOptions(String[] summary, String[] options, String[] values) {
         for (int i = 0; i < values.length; i++) {
             int value = Integer.parseInt(values[i]);
             switch (value) {

@@ -85,6 +85,6 @@ public class SensorSettingsActivity extends AbstractSettingsActivity {
 
         String[] options = devicesNameList.toArray(new String[0]);
         String[] values = devicesAddressList.toArray(new String[0]);
-        configureListPreference(preference, options, options, values, value, null);
+        configureListPreference(preference, options, values, value, null);
     }
 }
