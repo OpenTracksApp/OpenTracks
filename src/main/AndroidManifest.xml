@@ -70,6 +70,7 @@ limitations under the License.
         android:smallScreens="true"
         android:xlargeScreens="true" />
     <application
+        android:name=".InitPreferences"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_logo"
