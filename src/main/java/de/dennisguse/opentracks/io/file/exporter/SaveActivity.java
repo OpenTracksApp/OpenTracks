@@ -82,8 +82,7 @@ public class SaveActivity extends Activity {
             return;
         }
 
-        File directory = playTrack ? new File(getCacheDir(), FileUtils.PLAY_TRACKS_DIR)
-                : new File(FileUtils.getPath(trackFileFormat.getExtension()));
+        File directory = playTrack ? new File(getCacheDir(), FileUtils.PLAY_TRACKS_DIR) : new File(FileUtils.getPath(trackFileFormat.getExtension()));
         if (!FileUtils.ensureDirectoryExists(directory)) {
             Toast.makeText(this, R.string.external_storage_not_writable, Toast.LENGTH_LONG).show();
             finish();
@@ -96,8 +95,7 @@ public class SaveActivity extends Activity {
             }
         }
 
-        directoryDisplayName = playTrack ? directory.getName()
-                : FileUtils.getPathDisplayName(trackFileFormat.getExtension());
+        directoryDisplayName = playTrack ? directory.getName() : FileUtils.getPathDisplayName(trackFileFormat.getExtension());
 
         Object retained = getLastNonConfigurationInstance();
         if (retained instanceof SaveAsyncTask) {

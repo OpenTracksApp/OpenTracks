@@ -143,6 +143,8 @@ public class StatsUtils {
         setDistanceValue(context, getView(activity, view, R.id.stats_distance), totalDistance, metricUnits);
 
         // Set activity type
+        getView(activity, null, R.id.stats_activity_type_label).setVisibility(trackIconValue != null ? View.VISIBLE : View.GONE);
+
         Spinner spinner = (Spinner) getView(activity, view, R.id.stats_activity_type_icon);
         spinner.setVisibility(trackIconValue != null ? View.VISIBLE : View.GONE);
         if (trackIconValue != null) {

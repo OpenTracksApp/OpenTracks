@@ -17,7 +17,7 @@ limitations under the License.
     style="@style/StatsLargeItemContainer">
     <!-- Label -->
     <TextView
-        android:id="@+id/stats_label"
+        android:id="@+id/stats_activity_type_label"
         style="@style/StatsLargeLabel"
         android:text="@string/track_edit_activity_type_hint" />
     <!-- Value container -->

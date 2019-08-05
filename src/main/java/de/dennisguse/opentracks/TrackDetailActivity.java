@@ -41,6 +41,10 @@ import androidx.core.app.TaskStackBuilder;
 import androidx.core.content.FileProvider;
 import androidx.viewpager.widget.ViewPager;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.content.TrackDataHub;
@@ -62,10 +66,6 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.TrackRecordingServiceConnectionUtils;
 import de.dennisguse.opentracks.util.TrackUtils;
-
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * An activity to show the track detail.
@@ -392,13 +392,11 @@ public class TrackDetailActivity extends AbstractTrackActivity implements Choose
         String fileName = SimpleDateFormat.getDateTimeInstance().format(new Date());
         File file = new File(dir, FileUtils.buildUniqueFileName(dir, fileName, JPEG_EXTENSION));
 
-        if (file != null) {
-            photoUri = FileProvider.getUriForFile(this, FileUtils.FILEPROVIDER, file);
-            Log.d(TAG, "Taking photo to URI: " + photoUri);
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                    .putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-            startActivityForResult(intent, CAMERA_REQUEST_CODE);
-        }
+        photoUri = FileProvider.getUriForFile(this, FileUtils.FILEPROVIDER, file);
+        Log.d(TAG, "Taking photo to URI: " + photoUri);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                .putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+        startActivityForResult(intent, CAMERA_REQUEST_CODE);
     }
 
     @Override
