@@ -42,8 +42,8 @@ public class FileUtils {
     /**
      * Our external storage directory.
      */
-    static final String SDCARD_TOP_DIR = "MyTracks";
-    static final String TRACK_PREFIX = "MyTracks";
+    static final String SDCARD_TOP_DIR = "OpenTracks";
+    static final String TRACK_PREFIX = "OpenTracks";
     /**
      * The maximum FAT32 path length. See the FAT32 spec at
      * http://msdn.microsoft.com/en-us/windows/hardware/gg463080

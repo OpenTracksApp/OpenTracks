@@ -62,7 +62,6 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.TrackRecordingServiceConnectionUtils;
 import de.dennisguse.opentracks.util.TrackUtils;
-import de.dennisguse.opentracks.R;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -217,7 +216,7 @@ public class TrackDetailActivity extends AbstractTrackActivity implements Choose
 
         // Set the background after all three tabs are added
         for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
-            tabHost.getTabWidget().getChildAt(i).setBackgroundResource(R.drawable.tab_indicator_mytracks);
+            tabHost.getTabWidget().getChildAt(i).setBackgroundResource(R.drawable.tab_indicator);
         }
 
         trackController = new TrackController(this, trackRecordingServiceConnection, false, recordListener, stopListener);
