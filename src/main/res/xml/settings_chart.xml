@@ -19,6 +19,8 @@ limitations under the License.
         android:defaultValue="@string/chart_x_axis_distance"
         android:key="@string/chart_x_axis_key"
         android:summary="%s"
+        android:entryValues="@array/chart_x_axis_values"
+        android:entries="@array/chart_x_axis_options"
         android:title="@string/settings_chart_x_axis" />
     <PreferenceCategory android:title="@string/settings_show">
         <CheckBoxPreference

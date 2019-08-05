@@ -13,20 +13,25 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
+
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="@string/settings_recording">
     <ListPreference
         android:defaultValue="0"
+        android:entryValues="@array/frequency_values"
         android:key="@string/voice_frequency_key"
         android:summary="%s"
         android:title="@string/menu_voice_frequency" />
     <ListPreference
         android:defaultValue="0"
+        android:entryValues="@array/frequency_values"
         android:key="@string/split_frequency_key"
         android:summary="%s"
         android:title="@string/menu_split_frequency" />
     <ListPreference
         android:defaultValue="@string/settings_recording_track_name_date_iso_8601_value"
+        android:entries="@array/stats_units_options"
+        android:entryValues="@array/stats_units_values"
         android:key="@string/track_name_key"
         android:summary="%s"
         android:title="@string/settings_recording_track_name_title" />
@@ -37,26 +42,31 @@ limitations under the License.
         android:title="@string/settings_recording_default_activity_title" />
     <ListPreference
         android:defaultValue="0"
+        android:entryValues="@array/min_recording_interval_values"
         android:key="@string/min_recording_interval_key"
         android:summary="%s"
         android:title="@string/settings_recording_min_recording_interval_title" />
     <ListPreference
         android:defaultValue="10"
+        android:entryValues="@array/recording_distance_interval_values"
         android:key="@string/recording_distance_interval_key"
         android:summary="%s"
         android:title="@string/settings_recording_min_recording_distance_title" />
     <ListPreference
         android:defaultValue="200"
+        android:entryValues="@array/max_recording_distance_values"
         android:key="@string/max_recording_distance_key"
         android:summary="%s"
         android:title="@string/settings_recording_max_recording_distance_title" />
     <ListPreference
         android:defaultValue="50"
+        android:entryValues="@array/recording_gps_accuracy_values"
         android:key="@string/recording_gps_accuracy_key"
         android:summary="%s"
         android:title="@string/settings_recording_min_required_accuracy_title" />
     <ListPreference
         android:defaultValue="10"
+        android:entryValues="@array/auto_resume_track_timeout_values"
         android:key="@string/auto_resume_track_timeout_key"
         android:summary="%s"
         android:title="@string/settings_recording_auto_resume_track_timeout_title" />

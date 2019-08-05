@@ -17,11 +17,15 @@ limitations under the License.
     android:title="@string/track_detail_stats_tab">
     <ListPreference
         android:defaultValue="@string/stats_units_metric"
+        android:entries="@array/stats_units_options"
+        android:entryValues="@array/stats_units_values"
         android:key="@string/stats_units_key"
         android:summary="%s"
         android:title="@string/settings_stats_units_title" />
     <ListPreference
         android:defaultValue="@string/stats_rate_speed"
+        android:entries="@array/stats_rate_metric_options"
+        android:entryValues="@array/stats_rate_values"
         android:key="@string/stats_rate_key"
         android:summary="%s"
         android:title="@string/settings_stats_rate_title" />

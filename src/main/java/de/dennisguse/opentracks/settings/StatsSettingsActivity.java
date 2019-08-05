@@ -23,6 +23,7 @@ import android.preference.Preference.OnPreferenceChangeListener;
 
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.util.StringUtils;
 
 /**
  * An activity for accessing stats settings.
@@ -36,20 +37,17 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
         super.onCreate(bundle);
         addPreferencesFromResource(R.xml.settings_statistics);
 
-        /*
-         * Note configureUnitsListPreference will trigger
-         * configureRateListPreference
-         */
         configUnitsListPreference();
+        boolean metricUnits = PreferencesUtils.STATS_UNITS_DEFAULT.equals(PreferencesUtils.getString(this, R.string.stats_units_key, ""));
+        configRateListPreference(metricUnits);
     }
 
     /**
      * Configures the preferred units list preference.
      */
     private void configUnitsListPreference() {
-        ListPreference listPreference = (ListPreference) findPreference(
-                getString(R.string.stats_units_key));
-        OnPreferenceChangeListener listener = new OnPreferenceChangeListener() {
+        ListPreference listPreference = (ListPreference) findPreference(getString(R.string.stats_units_key));
+        final OnPreferenceChangeListener listener = new OnPreferenceChangeListener() {
 
             @Override
             public boolean onPreferenceChange(Preference pref, Object newValue) {
@@ -58,11 +56,15 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
                 return true;
             }
         };
-        String value = PreferencesUtils.getString(
-                this, R.string.stats_units_key, PreferencesUtils.STATS_UNITS_DEFAULT);
-        String[] values = getResources().getStringArray(R.array.stats_units_values);
-        String[] options = getResources().getStringArray(R.array.stats_units_options);
-        configureListPreference(listPreference, options, values, value, listener);
+        listPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference pref, Object newValue) {
+                if (listener != null) {
+                    listener.onPreferenceChange(pref, newValue);
+                }
+                return true;
+            }
+        });
     }
 
     /**
@@ -71,13 +73,9 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
      * @param metricUnits true if metric units
      */
     private void configRateListPreference(boolean metricUnits) {
-        ListPreference listPreference = (ListPreference) findPreference(
-                getString(R.string.stats_rate_key));
-        String value = PreferencesUtils.getString(
-                this, R.string.stats_rate_key, PreferencesUtils.STATS_RATE_DEFAULT);
-        String[] values = getResources().getStringArray(R.array.stats_rate_values);
-        String[] options = getResources().getStringArray(
-                metricUnits ? R.array.stats_rate_metric_options : R.array.stats_rate_imperial_options);
-        configureListPreference(listPreference, options, values, value, null);
+        ListPreference listPreference = (ListPreference) findPreference(getString(R.string.stats_rate_key));
+        String[] options = getResources().getStringArray(metricUnits ? R.array.stats_rate_metric_options : R.array.stats_rate_imperial_options);
+
+        listPreference.setEntries(options);
     }
 }

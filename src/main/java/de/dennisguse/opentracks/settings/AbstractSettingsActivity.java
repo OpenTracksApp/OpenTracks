@@ -61,46 +61,4 @@ public class AbstractSettingsActivity extends PreferenceActivity {
         finish();
         return true;
     }
-
-    /**
-     * Configures a list preference.
-     *
-     * @param listPreference the list preference
-     * @param options        the options array
-     * @param values         the values array
-     * @param value          the value
-     * @param listener       optional listener
-     */
-    protected void configureListPreference(ListPreference listPreference, final String[] options, final String[] values, String value,
-                                           final OnPreferenceChangeListener listener) {
-        listPreference.setEntryValues(values);
-        listPreference.setEntries(options);
-        listPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference pref, Object newValue) {
-                if (listener != null) {
-                    listener.onPreferenceChange(pref, newValue);
-                }
-                return true;
-            }
-        });
-        if (listener != null) {
-            listener.onPreferenceChange(listPreference, value);
-        }
-    }
-
-    /**
-     * Get the array index for a value.
-     *
-     * @param values the array
-     * @param value  the value
-     */
-    private int getIndex(String[] values, String value) {
-        for (int i = 0; i < values.length; i++) {
-            if (value.equals(values[i])) {
-                return i;
-            }
-        }
-        return -1;
-    }
 }

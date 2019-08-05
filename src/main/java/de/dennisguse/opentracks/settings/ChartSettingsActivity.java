@@ -34,7 +34,6 @@ public class ChartSettingsActivity extends AbstractSettingsActivity {
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         addPreferencesFromResource(R.xml.settings_chart);
-        configXAxisListPreference();
     }
 
     @Override
@@ -44,22 +43,8 @@ public class ChartSettingsActivity extends AbstractSettingsActivity {
     }
 
     private void updateUi() {
-        CheckBoxPreference speedCheckBoxPreference = (CheckBoxPreference) findPreference(
-                getString(R.string.chart_show_speed_key));
-        speedCheckBoxPreference.setTitle(
-                PreferencesUtils.isReportSpeed(this) ? R.string.stats_speed : R.string.stats_pace);
+        CheckBoxPreference speedCheckBoxPreference = (CheckBoxPreference) findPreference(getString(R.string.chart_show_speed_key));
+        speedCheckBoxPreference.setTitle(PreferencesUtils.isReportSpeed(this) ? R.string.stats_speed : R.string.stats_pace);
     }
 
-    /**
-     * Configures the x axis list preference.
-     */
-    private void configXAxisListPreference() {
-        ListPreference listPreference = (ListPreference) findPreference(
-                getString(R.string.chart_x_axis_key));
-        String value = PreferencesUtils.getString(
-                this, R.string.chart_x_axis_key, PreferencesUtils.CHART_X_AXIS_DEFAULT);
-        String[] values = getResources().getStringArray(R.array.chart_x_axis_values);
-        String[] options = getResources().getStringArray(R.array.chart_x_axis_options);
-        configureListPreference(listPreference, options, values, value, null);
-    }
 }

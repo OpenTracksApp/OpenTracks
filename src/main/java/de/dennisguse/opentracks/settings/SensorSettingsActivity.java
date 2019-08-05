@@ -27,6 +27,7 @@ import android.provider.Settings;
 import de.dennisguse.opentracks.util.BluetoothDeviceUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,8 +84,10 @@ public class SensorSettingsActivity extends AbstractSettingsActivity {
         devicesNameList.add(0, getString(R.string.value_none));
         devicesAddressList.add(0, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT);
 
-        String[] options = devicesNameList.toArray(new String[0]);
         String[] values = devicesAddressList.toArray(new String[0]);
-        configureListPreference(preference, options, values, value, null);
+        preference.setEntryValues(values);
+
+        String[] options = devicesNameList.toArray(new String[0]);
+        preference.setEntries(options);
     }
 }
