@@ -269,7 +269,7 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
         }
 
         contentProviderUtils = ContentProviderUtils.Factory.get(this);
-        sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+        sharedPreferences = PreferencesUtils.getSharedPreferences(this);
 
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, bindChangedCallback);
         trackController = new TrackController(this, trackRecordingServiceConnection, true, recordListener, stopListener);

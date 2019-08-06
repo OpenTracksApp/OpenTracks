@@ -80,7 +80,7 @@ public class TrackDataHubTest {
     protected void setUp() {
         context = new MockContext(new MockContentResolver(), new RenamingDelegatingContext(
                 getContext(), getContext(), "test."));
-        sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+        sharedPreferences = PreferencesUtils.getSharedPreferences(context);
         contentProviderUtils = AndroidMock.createMock(ContentProviderUtils.class);
         dataSource = AndroidMock.createMock(DataSource.class, context);
         trackDataManager = new TrackDataManager();

@@ -35,7 +35,7 @@ import de.dennisguse.opentracks.R;
  *
  * @author Jimmy Shih
  */
-public class AbstractSettingsActivity extends PreferenceActivity {
+public abstract class AbstractSettingsActivity extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -47,10 +47,6 @@ public class AbstractSettingsActivity extends PreferenceActivity {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
-        PreferenceManager preferenceManager = getPreferenceManager();
-        preferenceManager.setSharedPreferencesName(Constants.SETTINGS_NAME);
-        preferenceManager.setSharedPreferencesMode(Context.MODE_PRIVATE);
     }
 
     @Override

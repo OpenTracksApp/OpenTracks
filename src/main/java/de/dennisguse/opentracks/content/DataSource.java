@@ -24,6 +24,7 @@ import android.database.ContentObserver;
 import android.net.Uri;
 
 import de.dennisguse.opentracks.Constants;
+import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
  * Data source on the phone.
@@ -37,7 +38,7 @@ public class DataSource {
 
     public DataSource(Context context) {
         contentResolver = context.getContentResolver();
-        sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+        sharedPreferences = PreferencesUtils.getSharedPreferences(context);
     }
 
     /**

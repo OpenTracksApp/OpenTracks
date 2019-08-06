@@ -93,6 +93,10 @@ public class PreferencesUtils {
     private PreferencesUtils() {
     }
 
+    public static SharedPreferences getSharedPreferences(Context context) {
+        return context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    }
+
     /**
      * Gets a preference key
      *
@@ -111,7 +115,7 @@ public class PreferencesUtils {
      * @param defaultValue the default value
      */
     public static boolean getBoolean(Context context, int keyId, boolean defaultValue) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(context);
         return sharedPreferences.getBoolean(getKey(context, keyId), defaultValue);
     }
 
@@ -123,7 +127,7 @@ public class PreferencesUtils {
      * @param value   the value
      */
     public static void setBoolean(Context context, int keyId, boolean value) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(context);
         Editor editor = sharedPreferences.edit();
         editor.putBoolean(getKey(context, keyId), value);
         editor.apply();
@@ -138,7 +142,7 @@ public class PreferencesUtils {
      */
     public static int getInt(Context context, int keyId, int defaultValue) {
         //NOTE: We assume that the data was stored as String due to use of ListPreference.
-        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(context);
         String stringValue = sharedPreferences.getString(getKey(context, keyId), null);
 
         int intValue = defaultValue;
@@ -157,7 +161,7 @@ public class PreferencesUtils {
      * @param value   the value
      */
     public static void setInt(Context context, int keyId, int value) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(context);
         Editor editor = sharedPreferences.edit();
         editor.putInt(getKey(context, keyId), value);
         editor.apply();
@@ -170,7 +174,7 @@ public class PreferencesUtils {
      * @param keyId   the key id
      */
     public static long getLong(Context context, int keyId) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(context);
         return sharedPreferences.getLong(getKey(context, keyId), -1L);
     }
 
@@ -182,7 +186,7 @@ public class PreferencesUtils {
      * @param value   the value
      */
     public static void setLong(Context context, int keyId, long value) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(context);
         Editor editor = sharedPreferences.edit();
         editor.putLong(getKey(context, keyId), value);
         editor.apply();
@@ -196,7 +200,7 @@ public class PreferencesUtils {
      * @param defaultValue default value
      */
     public static String getString(Context context, int keyId, String defaultValue) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(context);
         return sharedPreferences.getString(getKey(context, keyId), defaultValue);
     }
 
@@ -208,7 +212,7 @@ public class PreferencesUtils {
      * @param value   the value
      */
     public static void setString(Context context, int keyId, String value) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(context);
         Editor editor = sharedPreferences.edit();
         editor.putString(getKey(context, keyId), value);
         editor.apply();

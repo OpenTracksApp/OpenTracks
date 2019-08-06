@@ -140,7 +140,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
 
         providerUtils = ContentProviderUtils.Factory.get(context);
 
-        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
         // Let's use default values.
         sharedPreferences.edit().clear().apply();
 

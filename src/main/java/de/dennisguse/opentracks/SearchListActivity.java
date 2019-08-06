@@ -168,7 +168,7 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
         setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
         contentProviderUtils = ContentProviderUtils.Factory.get(this);
-        sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+        sharedPreferences = PreferencesUtils.getSharedPreferences(this);
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
         searchEngine = new SearchEngine(contentProviderUtils);
         searchRecentSuggestions = SearchEngineProvider.newHelper(this);

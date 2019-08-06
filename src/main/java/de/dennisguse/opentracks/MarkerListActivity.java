@@ -129,7 +129,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         super.onCreate(savedInstanceState);
 
         contentProviderUtils = ContentProviderUtils.Factory.get(this);
-        sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+        sharedPreferences = PreferencesUtils.getSharedPreferences(this);
 
         long trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1L);
         track = trackId != -1L ? contentProviderUtils.getTrack(trackId) : null;

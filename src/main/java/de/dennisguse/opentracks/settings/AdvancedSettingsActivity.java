@@ -76,7 +76,7 @@ public class AdvancedSettingsActivity extends AbstractSettingsActivity {
         super.onCreate(bundle);
         addPreferencesFromResource(R.xml.settings_advanced);
 
-        sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+        sharedPreferences = PreferencesUtils.getSharedPreferences(this);
 
         resetPreference = findPreference(getString(R.string.settings_reset_key));
         resetPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {

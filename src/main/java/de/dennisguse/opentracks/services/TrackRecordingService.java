@@ -241,7 +241,7 @@ public class TrackRecordingService extends Service {
         locationManagerConnector = new LocationManagerConnector(this, handler.getLooper());
         voiceExecutor = new PeriodicTaskExecutor(this, new AnnouncementPeriodicTaskFactory());
         splitExecutor = new PeriodicTaskExecutor(this, new SplitPeriodicTaskFactory());
-        sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+        sharedPreferences = PreferencesUtils.getSharedPreferences(this);
         sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
         // onSharedPreferenceChanged might not set recordingTrackId.

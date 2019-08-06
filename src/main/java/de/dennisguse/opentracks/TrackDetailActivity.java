@@ -193,7 +193,7 @@ public class TrackDetailActivity extends AbstractTrackActivity implements Choose
         contentProviderUtils = ContentProviderUtils.Factory.get(this);
         handleIntent(getIntent());
 
-        sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+        sharedPreferences = PreferencesUtils.getSharedPreferences(this);
 
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, bindChangedCallback);
         trackDataHub = TrackDataHub.newInstance(this);
