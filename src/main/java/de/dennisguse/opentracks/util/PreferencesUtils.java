@@ -250,7 +250,6 @@ public class PreferencesUtils {
 
     public static void resetPreferences(Context context, boolean readAgain) {
         PreferenceManager.setDefaultValues(context, R.xml.settings, readAgain);
-        PreferenceManager.setDefaultValues(context, R.xml.settings_chart, readAgain);
         PreferenceManager.setDefaultValues(context, R.xml.settings_recording, readAgain);
         PreferenceManager.setDefaultValues(context, R.xml.settings_sensors, readAgain);
         PreferenceManager.setDefaultValues(context, R.xml.settings_statistics, readAgain);

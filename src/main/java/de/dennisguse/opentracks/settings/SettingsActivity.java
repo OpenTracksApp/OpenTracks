@@ -45,13 +45,15 @@ public class SettingsActivity extends PreferenceActivity {
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
             if (key != null && key.equals(PreferencesUtils.getKey(SettingsActivity.this, R.string.recording_track_id_key))) {
                 recordingTrackId = PreferencesUtils.getLong(SettingsActivity.this, R.string.recording_track_id_key);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        updateUI();
-                    }
-                });
             }
+
+            //TODO Should only be called if something meaningful happens.
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    updateUI();
+                }
+            });
         }
     };
 
@@ -61,7 +63,6 @@ public class SettingsActivity extends PreferenceActivity {
 
         addPreferencesFromResource(R.xml.settings);
 
-        configPreference(R.string.settings_chart_key, ChartSettingsActivity.class);
         configPreference(R.string.settings_stats_key, StatsSettingsActivity.class);
         configPreference(R.string.settings_recording_key, RecordingSettingsActivity.class);
         configPreference(R.string.settings_sensor_key, SensorSettingsActivity.class);
@@ -103,7 +104,10 @@ public class SettingsActivity extends PreferenceActivity {
         //TODO Remove the following if recordingTrackId is replaced by direct communication rather than via preferences.
         boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
         Preference resetPreference = findPreference(getString(R.string.settings_reset_key));
-        resetPreference.setEnabled(!isRecording);
         resetPreference.setSummary(isRecording ? getString(R.string.settings_not_while_recording) : "");
+        resetPreference.setEnabled(!isRecording);
+
+        Preference speedCheckBoxPreference = findPreference(getString(R.string.chart_show_speed_key));
+        speedCheckBoxPreference.setTitle(PreferencesUtils.isReportSpeed(this) ? R.string.stats_speed : R.string.stats_pace);
     }
 }
