@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
+import android.preference.PreferenceActivity;
 
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.R;
@@ -30,7 +31,7 @@ import de.dennisguse.opentracks.util.StringUtils;
  *
  * @author Jimmy Shih
  */
-public class StatsSettingsActivity extends AbstractSettingsActivity {
+public class StatsSettingsActivity extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle bundle) {

@@ -293,20 +293,6 @@ public class TrackDetailActivity extends AbstractTrackActivity implements Choose
     }
 
     @Override
-    protected void onHomeSelected() {
-        /*
-         * TODO: Investigate
-         * According to
-         * http://developer.android.com/training/implementing-navigation
-         * /ancestral.html, we should use NavUtils.shouldUpRecreateTask instead of
-         * always creating a new back stack. However, NavUtils.shouldUpRecreateTask
-         * seems to always return false.
-         */
-        TaskStackBuilder.create(this).addParentStack(TrackDetailActivity.class).startActivities();
-        finish();
-    }
-
-    @Override
     public void onNewIntent(Intent intent) {
         setIntent(intent);
         handleIntent(intent);

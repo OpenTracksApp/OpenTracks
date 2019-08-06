@@ -383,11 +383,6 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
     }
 
     @Override
-    protected boolean configureActionBarHomeAsUp() {
-        return false;
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.track_list, menu);
 

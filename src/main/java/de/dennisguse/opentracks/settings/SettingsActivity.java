@@ -21,6 +21,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.preference.PreferenceActivity;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.util.IntentUtils;
@@ -31,7 +32,7 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
  *
  * @author Jimmy Shih
  */
-public class SettingsActivity extends AbstractSettingsActivity {
+public class SettingsActivity extends PreferenceActivity {
 
     private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
 

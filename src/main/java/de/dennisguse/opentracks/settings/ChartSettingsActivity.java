@@ -19,6 +19,7 @@ package de.dennisguse.opentracks.settings;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
+import android.preference.PreferenceActivity;
 
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.R;
@@ -28,7 +29,7 @@ import de.dennisguse.opentracks.R;
  *
  * @author Jimmy Shih
  */
-public class ChartSettingsActivity extends AbstractSettingsActivity {
+public class ChartSettingsActivity extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle bundle) {

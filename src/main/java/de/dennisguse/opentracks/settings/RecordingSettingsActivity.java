@@ -20,6 +20,7 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.PreferenceActivity;
 
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller;
@@ -33,7 +34,7 @@ import de.dennisguse.opentracks.R;
  *
  * @author Jimmy Shih
  */
-public class RecordingSettingsActivity extends AbstractSettingsActivity
+public class RecordingSettingsActivity extends PreferenceActivity
         implements ChooseActivityTypeCaller {
 
     private static final int DIALOG_CHOOSE_ACTIVITY = 0;

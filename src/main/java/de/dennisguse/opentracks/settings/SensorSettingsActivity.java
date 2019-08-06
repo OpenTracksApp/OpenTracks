@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.preference.PreferenceActivity;
 import android.provider.Settings;
 
 import de.dennisguse.opentracks.util.BluetoothDeviceUtils;
@@ -37,7 +38,7 @@ import java.util.List;
  *
  * @author Jimmy Shih
  */
-public class SensorSettingsActivity extends AbstractSettingsActivity {
+public class SensorSettingsActivity extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle bundle) {

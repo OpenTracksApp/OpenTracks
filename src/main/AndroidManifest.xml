@@ -117,13 +117,7 @@ limitations under the License.
                 android:name="android.app.searchable"
                 android:resource="@xml/search" />
         </activity>
-        <activity
-            android:name=".TrackDetailActivity"
-            android:parentActivityName=".TrackListActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".TrackListActivity" />
-        </activity>
+        <activity android:name=".TrackDetailActivity" />
         <activity android:name=".TrackEditActivity" />
         <activity android:name=".TrackListActivity">
             <intent-filter>
