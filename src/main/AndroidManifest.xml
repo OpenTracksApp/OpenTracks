@@ -130,7 +130,6 @@ limitations under the License.
         </activity>
         <activity android:name=".io.file.exporter.SaveActivity" />
         <activity android:name=".settings.RecordingSettingsActivity" />
-        <activity android:name=".settings.SensorSettingsActivity" />
         <activity android:name=".settings.SettingsActivity" />
         <activity android:name=".settings.StatsSettingsActivity" />
         <activity

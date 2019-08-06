@@ -18,10 +18,10 @@ limitations under the License.
     <PreferenceScreen android:title="@string/track_detail_chart_tab">
         <ListPreference
             android:defaultValue="@string/chart_x_axis_distance"
+            android:entries="@array/chart_x_axis_options"
+            android:entryValues="@array/chart_x_axis_values"
             android:key="@string/chart_x_axis_key"
             android:summary="%s"
-            android:entryValues="@array/chart_x_axis_values"
-            android:entries="@array/chart_x_axis_options"
             android:title="@string/settings_chart_x_axis" />
         <PreferenceCategory android:title="@string/settings_show">
             <CheckBoxPreference
@@ -48,6 +48,7 @@ limitations under the License.
             -->
         </PreferenceCategory>
     </PreferenceScreen>
+
     <Preference
         android:key="@string/settings_stats_key"
         android:persistent="false"
@@ -56,10 +57,26 @@ limitations under the License.
         android:key="@string/settings_recording_key"
         android:persistent="false"
         android:title="@string/settings_recording" />
-    <Preference
-        android:key="@string/settings_sensor_key"
-        android:persistent="false"
-        android:title="@string/settings_sensor" />
+
+    <PreferenceScreen
+        android:key="@string/settings_sensor_root_key"
+        android:title="@string/settings_sensor">
+        <PreferenceCategory
+            android:key="@string/settings_sensor_bluetooth_key"
+            android:title="@string/settings_sensor_bluetooth">
+            <Preference
+                android:key="@string/settings_sensor_bluetooth_pairing_key"
+                android:persistent="false"
+                android:summary="@string/settings_sensor_bluetooth_pairing_summary"
+                android:title="@string/settings_sensor_bluetooth_pairing" />
+            <ListPreference
+                android:defaultValue="@string/sensor_type_value_none"
+                android:key="@string/bluetooth_sensor_key"
+                android:summary="%s"
+                android:title="@string/settings_sensor_bluetooth_sensor" />
+        </PreferenceCategory>
+    </PreferenceScreen>
+
     <PreferenceCategory android:title="@string/settings_reset">
         <de.dennisguse.opentracks.settings.ResetDialogPreference
             android:dialogMessage="@string/settings_reset_confirm_message"
@@ -71,11 +88,10 @@ limitations under the License.
             android:title="@string/settings_reset" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/about_preference_title">
-        <Preference
-            android:title="@string/about_preference_title">
+        <Preference android:title="@string/about_preference_title">
             <intent
-                android:targetPackage="@string/applicationId"
-                android:targetClass="de.dennisguse.opentracks.AboutActivity" />
+                android:targetClass="de.dennisguse.opentracks.AboutActivity"
+                android:targetPackage="@string/applicationId" />
         </Preference>
     </PreferenceCategory>
 </PreferenceScreen>
