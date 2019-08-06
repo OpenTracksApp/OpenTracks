@@ -135,7 +135,6 @@ limitations under the License.
                 android:value=".SearchListActivity" />
         </activity>
         <activity android:name=".io.file.exporter.SaveActivity" />
-        <activity android:name=".settings.AdvancedSettingsActivity" />
         <activity android:name=".settings.ChartSettingsActivity" />
         <activity android:name=".settings.RecordingSettingsActivity" />
         <activity android:name=".settings.SensorSettingsActivity" />

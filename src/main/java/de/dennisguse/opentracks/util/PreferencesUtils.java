@@ -71,6 +71,7 @@ public class PreferencesUtils {
     public static final int RECORDING_GPS_ACCURACY_EXCELLENT = 10;
     public static final int RECORDING_GPS_ACCURACY_POOR = 2000;
 
+    @Deprecated //NOTE: is at the moment still used to determine if a track is currently recorded; better ask the service directly.
     public static final long RECORDING_TRACK_ID_DEFAULT = -1L;
     public static final boolean RECORDING_TRACK_PAUSED_DEFAULT = true;
 
@@ -245,5 +246,13 @@ public class PreferencesUtils {
      */
     public static boolean isChartByDistance(Context context) {
         return CHART_X_AXIS_DEFAULT.equals(getString(context, R.string.chart_x_axis_key, CHART_X_AXIS_DEFAULT));
+    }
+
+    public static void resetPreferences(Context context, boolean readAgain) {
+        PreferenceManager.setDefaultValues(context, R.xml.settings, readAgain);
+        PreferenceManager.setDefaultValues(context, R.xml.settings_chart, readAgain);
+        PreferenceManager.setDefaultValues(context, R.xml.settings_recording, readAgain);
+        PreferenceManager.setDefaultValues(context, R.xml.settings_sensors, readAgain);
+        PreferenceManager.setDefaultValues(context, R.xml.settings_statistics, readAgain);
     }
 }

@@ -31,10 +31,16 @@ limitations under the License.
         android:key="@string/settings_sensor_key"
         android:persistent="false"
         android:title="@string/settings_sensor" />
-    <Preference
-        android:key="@string/settings_advanced_key"
-        android:persistent="false"
-        android:title="@string/settings_advanced" />
+    <PreferenceCategory android:title="@string/settings_reset">
+        <de.dennisguse.opentracks.settings.ResetDialogPreference
+            android:dialogMessage="@string/settings_reset_confirm_message"
+            android:dialogTitle="@string/settings_reset_confirm_title"
+            android:key="@string/settings_reset_key"
+            android:negativeButtonText="@string/generic_cancel"
+            android:persistent="false"
+            android:positiveButtonText="@string/generic_yes"
+            android:title="@string/settings_reset" />
+    </PreferenceCategory>
     <PreferenceCategory android:title="@string/about_preference_title">
         <Preference
             android:title="@string/about_preference_title">

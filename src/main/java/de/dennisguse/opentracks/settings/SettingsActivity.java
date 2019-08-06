@@ -17,12 +17,14 @@
 package de.dennisguse.opentracks.settings;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 
-import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.util.IntentUtils;
+import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
  * An activity for accessing settings.
@@ -30,6 +32,27 @@ import de.dennisguse.opentracks.R;
  * @author Jimmy Shih
  */
 public class SettingsActivity extends AbstractSettingsActivity {
+
+    private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+
+    /*
+     * Note that sharedPreferenceChangeListenr cannot be an anonymous inner class.
+     * Anonymous inner class will get garbage collected.
+     */
+    private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
+            if (key != null && key.equals(PreferencesUtils.getKey(SettingsActivity.this, R.string.recording_track_id_key))) {
+                recordingTrackId = PreferencesUtils.getLong(SettingsActivity.this, R.string.recording_track_id_key);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateUI();
+                    }
+                });
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -41,7 +64,20 @@ public class SettingsActivity extends AbstractSettingsActivity {
         configPreference(R.string.settings_stats_key, StatsSettingsActivity.class);
         configPreference(R.string.settings_recording_key, RecordingSettingsActivity.class);
         configPreference(R.string.settings_sensor_key, SensorSettingsActivity.class);
-        configPreference(R.string.settings_advanced_key, AdvancedSettingsActivity.class);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        PreferencesUtils.getSharedPreferences(this).registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+        recordingTrackId = PreferencesUtils.getLong(this, R.string.recording_track_id_key);
+        updateUI();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        PreferencesUtils.getSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     }
 
     /**
@@ -60,5 +96,13 @@ public class SettingsActivity extends AbstractSettingsActivity {
                 return true;
             }
         });
+    }
+
+    private void updateUI() {
+        //TODO Remove the following if recordingTrackId is replaced by direct communication rather than via preferences.
+        boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+        Preference resetPreference = findPreference(getString(R.string.settings_reset_key));
+        resetPreference.setEnabled(!isRecording);
+        resetPreference.setSummary(isRecording ? getString(R.string.settings_not_while_recording) : "");
     }
 }
