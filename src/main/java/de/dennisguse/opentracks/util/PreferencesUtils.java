@@ -19,6 +19,7 @@ package de.dennisguse.opentracks.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.preference.PreferenceManager;
 
 import de.dennisguse.opentracks.Constants;
 import de.dennisguse.opentracks.R;
@@ -94,7 +95,7 @@ public class PreferencesUtils {
     }
 
     public static SharedPreferences getSharedPreferences(Context context) {
-        return context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+        return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     /**
