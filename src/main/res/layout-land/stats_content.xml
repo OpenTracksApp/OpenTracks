@@ -24,7 +24,7 @@ limitations under the License.
             layout="@layout/stats_large_item" />
 
         <include
-            android:id="@+id/stats_calorie"
+            android:id="@+id/stats_activity_type"
             layout="@layout/stats_activity_type" />
 
         <View
@@ -48,7 +48,7 @@ limitations under the License.
         android:layout_height="wrap_content">
 
         <TableLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1">
             <!-- Speed and average speed -->
@@ -135,6 +135,34 @@ limitations under the License.
                     <include
                         android:id="@+id/stats_elevation_max"
                         layout="@layout/stats_small_group_item" />
+                </TableLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Sensor data: heart rate-->
+        <View
+            android:id="@+id/stats_sensor_separator"
+            style="@style/StatsHorizontalLine" />
+
+        <LinearLayout
+            android:id="@+id/stats_sensor_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include
+                android:id="@+id/stats_sensor_heart_rate_value"
+                layout="@layout/stats_large_item" />
+
+            <LinearLayout style="@style/StatsSmallGroupContainer">
+
+                <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+
+                    <include
+                        android:id="@+id/stats_sensor_heart_rate_sensor"
+                        layout="@layout/stats_tiny_item" />
                 </TableLayout>
             </LinearLayout>
         </LinearLayout>
