@@ -16,7 +16,7 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
 * __No advertising__
 * __Privacy:__
     * _contains in-app analytics_
-    * _does not Google Play Services_ 
+    * _does not have Google Play Services_ 
     * _has no cloud integration_
     
 __Only required permissions:__
