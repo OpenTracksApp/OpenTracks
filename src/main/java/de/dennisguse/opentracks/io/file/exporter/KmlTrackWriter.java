@@ -56,16 +56,11 @@ public class KmlTrackWriter implements TrackWriter {
     private static final String HEART_RATE = "heart_rate";
     private static final String POWER = "power";
 
-    private static final String
-            WAYPOINT_ICON = "http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png";
-    private static final String
-            STATISTICS_ICON = "http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png";
-    private static final String
-            START_ICON = "http://maps.google.com/mapfiles/kml/paddle/grn-circle.png";
-    private static final String
-            END_ICON = "http://maps.google.com/mapfiles/kml/paddle/red-circle.png";
-    private static final String
-            TRACK_ICON = "http://earth.google.com/images/kml-icons/track-directional/track-0.png";
+    private static final String WAYPOINT_ICON = "http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png";
+    private static final String STATISTICS_ICON = "http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png";
+    private static final String START_ICON = "http://maps.google.com/mapfiles/kml/paddle/grn-circle.png";
+    private static final String END_ICON = "http://maps.google.com/mapfiles/kml/paddle/red-circle.png";
+    private static final String TRACK_ICON = "http://earth.google.com/images/kml-icons/track-directional/track-0.png";
 
     private final Context context;
     private final boolean multiple;
@@ -124,9 +119,7 @@ public class KmlTrackWriter implements TrackWriter {
             printWriter.println("<visibility>1</visibility>");
             Track track = tracks[0];
             printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
-            printWriter.println("<atom:author><atom:name>"
-                    + StringUtils.formatCData(context.getString(R.string.app_name))
-                    + "</atom:name></atom:author>");
+            printWriter.println("<atom:author><atom:name>" + StringUtils.formatCData(context.getString(R.string.app_name)) + "</atom:name></atom:author>");
             writeTrackStyle();
             writePlacemarkerStyle(START_STYLE, START_ICON, 32, 1);
             writePlacemarkerStyle(END_STYLE, END_ICON, 32, 1);
@@ -151,9 +144,7 @@ public class KmlTrackWriter implements TrackWriter {
     @Override
     public void writeBeginWaypoints(Track track) {
         if (printWriter != null) {
-            printWriter.println("<Folder><name>"
-                    + StringUtils.formatCData(context.getString(R.string.track_markers, track.getName()))
-                    + "</name>");
+            printWriter.println("<Folder><name>" + StringUtils.formatCData(context.getString(R.string.track_markers, track.getName())) + "</name>");
             printWriter.println("<open>1</open>");
         }
     }
@@ -258,8 +249,7 @@ public class KmlTrackWriter implements TrackWriter {
     @Override
     public void writeLocation(Location location) {
         if (printWriter != null) {
-            printWriter.println(
-                    "<when>" + StringUtils.formatDateTimeIso8601(location.getTime()) + "</when>");
+            printWriter.println("<when>" + StringUtils.formatDateTimeIso8601(location.getTime()) + "</when>");
             printWriter.println("<gx:coord>" + getCoordinates(location, " ") + "</gx:coord>");
             if (location instanceof SensorDataSetLocation) {
                 SensorDataSet sensorDataSet = ((SensorDataSetLocation) location).getSensorDataSet();
@@ -306,10 +296,8 @@ public class KmlTrackWriter implements TrackWriter {
         if (location != null) {
             printWriter.println("<Placemark>");
             printWriter.println("<name>" + StringUtils.formatCData(name) + "</name>");
-            printWriter.println(
-                    "<description>" + StringUtils.formatCData(description) + "</description>");
-            printWriter.println("<TimeStamp><when>"
-                    + StringUtils.formatDateTimeIso8601(location.getTime()) + "</when></TimeStamp>");
+            printWriter.println( "<description>" + StringUtils.formatCData(description) + "</description>");
+            printWriter.println("<TimeStamp><when>" + StringUtils.formatDateTimeIso8601(location.getTime()) + "</when></TimeStamp>");
             printWriter.println("<styleUrl>#" + styleName + "</styleUrl>");
             writeCategory(category);
             printWriter.println("<Point>");
@@ -330,13 +318,11 @@ public class KmlTrackWriter implements TrackWriter {
      * @param photoUrl    the photo url
      * @param heading     the heading
      */
-    private void writePhotoOverlay(String name, String category, String description, String styleName,
-                                   Location location, String photoUrl, float heading) {
+    private void writePhotoOverlay(String name, String category, String description, String styleName, Location location, String photoUrl, float heading) {
         if (location != null) {
             printWriter.println("<PhotoOverlay>");
             printWriter.println("<name>" + StringUtils.formatCData(name) + "</name>");
-            printWriter.println(
-                    "<description>" + StringUtils.formatCData(description) + "</description>");
+            printWriter.println( "<description>" + StringUtils.formatCData(description) + "</description>");
             printWriter.print("<Camera>");
             printWriter.print("<longitude>" + location.getLongitude() + "</longitude>");
             printWriter.print("<latitude>" + location.getLatitude() + "</latitude>");
@@ -344,16 +330,14 @@ public class KmlTrackWriter implements TrackWriter {
             printWriter.print("<heading>" + heading + "</heading>");
             printWriter.print("<tilt>90</tilt>");
             printWriter.println("</Camera>");
-            printWriter.println("<TimeStamp><when>"
-                    + StringUtils.formatDateTimeIso8601(location.getTime()) + "</when></TimeStamp>");
+            printWriter.println("<TimeStamp><when>" + StringUtils.formatDateTimeIso8601(location.getTime()) + "</when></TimeStamp>");
             printWriter.println("<styleUrl>#" + styleName + "</styleUrl>");
             writeCategory(category);
             if (playTrack) {
                 printWriter.println("<Icon><href>" + Uri.decode(photoUrl) + "</href></Icon>");
             } else {
                 Uri uri = Uri.parse(photoUrl);
-                printWriter.println("<Icon><href>" + KmzTrackExporter.KMZ_IMAGES_DIR + File.separatorChar
-                        + uri.getLastPathSegment() + "</href></Icon>");
+                printWriter.println("<Icon><href>" + KmzTrackExporter.KMZ_IMAGES_DIR + File.separatorChar + uri.getLastPathSegment() + "</href></Icon>");
             }
 
             printWriter.print("<ViewVolume>");
@@ -411,8 +395,7 @@ public class KmlTrackWriter implements TrackWriter {
             return;
         }
         printWriter.println("<ExtendedData>");
-        printWriter.println(
-                "<Data name=\"type\"><value>" + StringUtils.formatCData(category) + "</value></Data>");
+        printWriter.println( "<Data name=\"type\"><value>" + StringUtils.formatCData(category) + "</value></Data>");
         printWriter.println("</ExtendedData>");
     }
 
@@ -441,8 +424,7 @@ public class KmlTrackWriter implements TrackWriter {
         printWriter.println("<Style id=\"" + name + "\"><IconStyle>");
         printWriter.println("<scale>1.3</scale>");
         printWriter.println("<Icon><href>" + url + "</href></Icon>");
-        printWriter.println(
-                "<hotSpot x=\"" + x + "\" y=\"" + y + "\" xunits=\"pixels\" yunits=\"pixels\"/>");
+        printWriter.println("<hotSpot x=\"" + x + "\" y=\"" + y + "\" xunits=\"pixels\" yunits=\"pixels\"/>");
         printWriter.println("</IconStyle></Style>");
     }
 

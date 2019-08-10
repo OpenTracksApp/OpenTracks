@@ -6,6 +6,7 @@ import android.os.Parcelable;
 
 import de.dennisguse.opentracks.io.file.exporter.GpxTrackWriter;
 import de.dennisguse.opentracks.io.file.exporter.KmlTrackWriter;
+import de.dennisguse.opentracks.io.file.exporter.KmzTrackExporter;
 import de.dennisguse.opentracks.io.file.exporter.TrackWriter;
 import de.dennisguse.opentracks.R;
 

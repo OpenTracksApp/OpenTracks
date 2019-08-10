@@ -56,10 +56,8 @@ public class KmzTrackExporter implements TrackExporter {
      * @param contentProviderUtils the content provider utils
      * @param fileTrackExporter    the file track exporter
      * @param tracks               the tracks to export
-     * @param context              the context
      */
-    public KmzTrackExporter(ContentProviderUtils contentProviderUtils,
-                            FileTrackExporter fileTrackExporter, Track[] tracks, Context context) {
+    public KmzTrackExporter(ContentProviderUtils contentProviderUtils, FileTrackExporter fileTrackExporter, Track[] tracks) {
         this.contentProviderUtils = contentProviderUtils;
         this.fileTrackExporter = fileTrackExporter;
         this.tracks = tracks;
