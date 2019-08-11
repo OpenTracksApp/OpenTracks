@@ -197,9 +197,8 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
         String fileName = FileUtils.buildUniqueFileName(directory, track.getName(), extension);
         File file = new File(directory, fileName);
-        FileOutputStream fileOutputStream = null;
-        try {
-            fileOutputStream = new FileOutputStream(file);
+
+        try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             if (trackExporter.writeTrack(fileOutputStream)) {
                 savedPath = file.getAbsolutePath();
                 return true;
@@ -213,14 +212,9 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         } catch (FileNotFoundException e) {
             Log.e(TAG, "Unable to open file " + file.getName(), e);
             return false;
-        } finally {
-            if (fileOutputStream != null) {
-                try {
-                    fileOutputStream.close();
-                } catch (IOException e) {
-                    Log.e(TAG, "Unable to close file output stream", e);
-                }
-            }
+        } catch (IOException e) {
+            Log.e(TAG, "Unable to close file output stream", e);
+            return false;
         }
     }
 
