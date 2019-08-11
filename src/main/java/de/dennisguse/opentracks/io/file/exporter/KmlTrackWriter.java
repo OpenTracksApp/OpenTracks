@@ -22,6 +22,12 @@ import android.net.Uri;
 
 import androidx.annotation.VisibleForTesting;
 
+import java.io.File;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.DescriptionGenerator;
 import de.dennisguse.opentracks.content.DescriptionGeneratorImpl;
@@ -32,12 +38,6 @@ import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.util.StringUtils;
-import de.dennisguse.opentracks.R;
-
-import java.io.File;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 
 /**
  * Write track as KML to a file.
@@ -64,7 +64,7 @@ public class KmlTrackWriter implements TrackWriter {
 
     private final Context context;
     private final boolean multiple;
-    private final boolean playTrack;
+    private final boolean isKMZ;
     private final DescriptionGenerator descriptionGenerator;
     private final ContentProviderUtils contentProviderUtils;
 
@@ -76,15 +76,15 @@ public class KmlTrackWriter implements TrackWriter {
     private boolean hasCadence;
     private boolean hasHeartRate;
 
-    public KmlTrackWriter(Context context, boolean multiple, boolean playTrack) {
-        this(context, multiple, playTrack, new DescriptionGeneratorImpl(context));
+    public KmlTrackWriter(Context context, boolean multiple, boolean isKMZ) {
+        this(context, multiple, isKMZ, new DescriptionGeneratorImpl(context));
     }
 
     @VisibleForTesting
-    KmlTrackWriter(Context context, boolean multiple, boolean playTrack, DescriptionGenerator descriptionGenerator) {
+    KmlTrackWriter(Context context, boolean multiple, boolean isKMZ, DescriptionGenerator descriptionGenerator) {
         this.context = context;
         this.multiple = multiple;
-        this.playTrack = playTrack;
+        this.isKMZ = isKMZ;
         this.descriptionGenerator = descriptionGenerator;
         this.contentProviderUtils = ContentProviderUtils.Factory.get(context);
     }
@@ -333,7 +333,8 @@ public class KmlTrackWriter implements TrackWriter {
             printWriter.println("<TimeStamp><when>" + StringUtils.formatDateTimeIso8601(location.getTime()) + "</when></TimeStamp>");
             printWriter.println("<styleUrl>#" + styleName + "</styleUrl>");
             writeCategory(category);
-            if (playTrack) {
+
+            if (isKMZ) {
                 printWriter.println("<Icon><href>" + Uri.decode(photoUrl) + "</href></Icon>");
             } else {
                 Uri uri = Uri.parse(photoUrl);

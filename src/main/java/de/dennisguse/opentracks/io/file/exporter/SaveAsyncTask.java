@@ -22,6 +22,12 @@ import android.os.AsyncTask;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.content.TracksColumns;
@@ -29,12 +35,6 @@ import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.SystemUtils;
-import de.dennisguse.opentracks.R;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 /**
  * Async Task to save tracks to the external storage.
@@ -46,8 +46,6 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     private static final String TAG = SaveAsyncTask.class.getSimpleName();
     private final long[] trackIds;
     private final TrackFileFormat trackFileFormat;
-    @Deprecated //TODO Seems to be a left over from Google Earth integration and can be removed.
-    private final boolean playTrack;
     private final File directory;
     private final Context context;
     private final ContentProviderUtils contentProviderUtils;
@@ -73,14 +71,12 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
      * @param trackIds        the track ids to save. To save all, set to size 1 with
      *                        trackIds[0] == -1L
      * @param trackFileFormat the track file format
-     * @param playTrack       true to play track
      * @param directory       the directory to write the file
      */
-    public SaveAsyncTask(SaveActivity saveActivity, long[] trackIds, TrackFileFormat trackFileFormat, boolean playTrack, File directory) {
+    public SaveAsyncTask(SaveActivity saveActivity, long[] trackIds, TrackFileFormat trackFileFormat, File directory) {
         this.saveActivity = saveActivity;
         this.trackIds = trackIds;
         this.trackFileFormat = trackFileFormat;
-        this.playTrack = playTrack;
         this.directory = directory;
         context = saveActivity.getApplicationContext();
         contentProviderUtils = ContentProviderUtils.Factory.get(context);
@@ -180,10 +176,8 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         }
 
         Track track = tracks[0];
-        boolean useKmz = trackFileFormat == TrackFileFormat.KML && !playTrack;
-        String extension = useKmz ? KmzTrackExporter.KMZ_EXTENSION : trackFileFormat.getExtension();
         FileTrackExporter fileTrackExporter = new FileTrackExporter(contentProviderUtils, tracks,
-                trackFileFormat.newTrackWriter(context, tracks.length > 1, playTrack),
+                trackFileFormat.newTrackWriter(context, tracks.length > 1),
                 new TrackExporterListener() {
 
                     @Override
@@ -197,7 +191,8 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
                         }
                     }
                 });
-
+        boolean useKmz = trackFileFormat == TrackFileFormat.KMZ;
+        String extension = useKmz ? KmzTrackExporter.KMZ_EXTENSION : trackFileFormat.getExtension();
         TrackExporter trackExporter = useKmz ? new KmzTrackExporter(contentProviderUtils, fileTrackExporter, tracks) : fileTrackExporter;
 
         String fileName = FileUtils.buildUniqueFileName(directory, track.getName(), extension);

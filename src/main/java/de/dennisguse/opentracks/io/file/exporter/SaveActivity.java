@@ -25,13 +25,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import java.io.File;
+
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.util.DialogUtils;
 import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
-import de.dennisguse.opentracks.R;
-
-import java.io.File;
 
 /**
  * An activity for saving tracks to the external storage. If saving a specific
@@ -102,7 +102,7 @@ public class SaveActivity extends Activity {
             saveAsyncTask = (SaveAsyncTask) retained;
             saveAsyncTask.setActivity(this);
         } else {
-            saveAsyncTask = new SaveAsyncTask(this, trackIds, trackFileFormat, playTrack, directory);
+            saveAsyncTask = new SaveAsyncTask(this, trackIds, trackFileFormat, directory);
             saveAsyncTask.execute();
         }
     }

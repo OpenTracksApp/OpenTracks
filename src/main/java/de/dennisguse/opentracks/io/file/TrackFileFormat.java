@@ -4,13 +4,12 @@ import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Locale;
+
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.io.file.exporter.GpxTrackWriter;
 import de.dennisguse.opentracks.io.file.exporter.KmlTrackWriter;
-import de.dennisguse.opentracks.io.file.exporter.KmzTrackExporter;
 import de.dennisguse.opentracks.io.file.exporter.TrackWriter;
-import de.dennisguse.opentracks.R;
-
-import java.util.Locale;
 
 /**
  * Definition of all possible track formats.
@@ -18,13 +17,19 @@ import java.util.Locale;
 public enum TrackFileFormat implements Parcelable {
     KML {
         @Override
-        public TrackWriter newTrackWriter(Context context, boolean multiple, boolean playTrack) {
-            return new KmlTrackWriter(context, multiple, playTrack);
+        public TrackWriter newTrackWriter(Context context, boolean multiple) {
+            return new KmlTrackWriter(context, multiple, false);
+        }
+    },
+    KMZ {
+        @Override
+        public TrackWriter newTrackWriter(Context context, boolean multiple) {
+            return new KmlTrackWriter(context, multiple, true);
         }
     },
     GPX {
         @Override
-        public TrackWriter newTrackWriter(Context context, boolean multiple, boolean playTrack) {
+        public TrackWriter newTrackWriter(Context context, boolean multiple) {
             return new GpxTrackWriter(context.getString(R.string.app_name));
         }
     };
@@ -56,9 +61,8 @@ public enum TrackFileFormat implements Parcelable {
      *
      * @param context   the context
      * @param multiple  true for writing multiple tracks
-     * @param playTrack true to play track
      */
-    public abstract TrackWriter newTrackWriter(Context context, boolean multiple, boolean playTrack);
+    public abstract TrackWriter newTrackWriter(Context context, boolean multiple);
 
     /**
      * Returns the mime type for each format.
