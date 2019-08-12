@@ -18,10 +18,9 @@ package de.dennisguse.opentracks;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import de.dennisguse.opentracks.R;
-
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -34,7 +33,7 @@ public class ChartValueSeriesTest {
     private ChartValueSeries series;
 
     @Before
-    protected void setUp() {
+    public void setUp() {
         series = new ChartValueSeries(
                 InstrumentationRegistry.getInstrumentation().getContext(),
                 Integer.MIN_VALUE,
@@ -46,6 +45,7 @@ public class ChartValueSeriesTest {
                 R.color.chart_elevation_border);
     }
 
+    @Test
     public void testInitialConditions() {
         Assert.assertEquals(1, series.getInterval());
         Assert.assertEquals(0, series.getMinMarkerValue());
@@ -53,11 +53,13 @@ public class ChartValueSeriesTest {
         Assert.assertTrue(series.isEnabled());
     }
 
+    @Test
     public void testEnabled() {
         series.setEnabled(false);
         Assert.assertFalse(series.isEnabled());
     }
 
+    @Test
     public void testSmallUpdates() {
         series.update(0);
         series.update(10);
@@ -67,6 +69,7 @@ public class ChartValueSeriesTest {
         Assert.assertEquals(500, series.getMaxMarkerValue());
     }
 
+    @Test
     public void testBigUpdates() {
         series.update(0);
         series.update(901);
@@ -76,6 +79,7 @@ public class ChartValueSeriesTest {
         Assert.assertEquals(5000, series.getMaxMarkerValue());
     }
 
+    @Test
     public void testNotZeroBasedUpdates() {
         series.update(220);
         series.update(250);

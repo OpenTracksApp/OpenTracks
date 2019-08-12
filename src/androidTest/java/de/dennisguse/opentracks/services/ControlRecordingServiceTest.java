@@ -17,55 +17,52 @@ package de.dennisguse.opentracks.services;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.RemoteException;
-import android.test.ServiceTestCase;
+
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.rule.ServiceTestRule;
+
+import org.junit.Assert;
+import org.junit.Rule;
+import org.junit.Test;
+import org.mockito.Mock;
+
+import java.util.concurrent.TimeoutException;
 
 import de.dennisguse.opentracks.R;
-import com.google.android.testing.mocking.UsesMocks;
 
-import org.easymock.EasyMock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 
 /**
  * Tests {@link ControlRecordingService}.
  *
  * @author Youtao Liu
  */
-public class ControlRecordingServiceTest extends ServiceTestCase<ControlRecordingService> {
+public class ControlRecordingServiceTest {
 
-    private Context context;
-    private ControlRecordingService controlRecordingService;
+    @Rule
+    public final ServiceTestRule mServiceRule = new ServiceTestRule();
+    private Context context = ApplicationProvider.getApplicationContext();
+    @Mock
+    private ITrackRecordingService iTrackRecordingServiceMock;
 
-    public ControlRecordingServiceTest() {
-        super(ControlRecordingService.class);
-    }
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        context = getContext();
-    }
+    private ControlRecordingService subject;
 
     /**
      * Tests the start of {@link ControlRecordingService} and tests the method
      * {@link ControlRecordingService#onHandleIntent(Intent, ITrackRecordingService)}
      * to start a track recording.
      */
-    @UsesMocks(ITrackRecordingService.class)
-    public void testStartRecording() {
-        assertNull(controlRecordingService);
+    @Test
+    public void testStartRecording() throws TimeoutException {
+        Assert.assertNull(subject);
         Intent intent = startControlRecordingService(context.getString(R.string.track_action_start));
-        assertNotNull(controlRecordingService);
+        Assert.assertNotNull(subject);
 
-        ITrackRecordingService iTrackRecordingServiceMock = EasyMock
-                .createStrictMock(ITrackRecordingService.class);
-        try {
-            EasyMock.expect(iTrackRecordingServiceMock.startNewTrack()).andReturn(1L);
-            EasyMock.replay(iTrackRecordingServiceMock);
-            controlRecordingService.onHandleIntent(intent, iTrackRecordingServiceMock);
-            EasyMock.verify(iTrackRecordingServiceMock);
-        } catch (RemoteException e) {
-            fail();
-        }
+        when(iTrackRecordingServiceMock.startNewTrack()).thenReturn(1L);
+        subject.onHandleIntent(intent, iTrackRecordingServiceMock);
+        verify(iTrackRecordingServiceMock);
     }
 
     /**
@@ -73,20 +70,13 @@ public class ControlRecordingServiceTest extends ServiceTestCase<ControlRecordin
      * {@link ControlRecordingService#onHandleIntent(Intent, ITrackRecordingService)}
      * to stop a track recording.
      */
-    @UsesMocks(ITrackRecordingService.class)
-    public void testStopRecording() {
+    @Test
+    public void testStopRecording() throws TimeoutException {
         Intent intent = startControlRecordingService(context.getString(R.string.track_action_end));
+        iTrackRecordingServiceMock.endCurrentTrack();
 
-        ITrackRecordingService iTrackRecordingServiceMock = EasyMock
-                .createStrictMock(ITrackRecordingService.class);
-        try {
-            iTrackRecordingServiceMock.endCurrentTrack();
-            EasyMock.replay(iTrackRecordingServiceMock);
-            controlRecordingService.onHandleIntent(intent, iTrackRecordingServiceMock);
-            EasyMock.verify(iTrackRecordingServiceMock);
-        } catch (RemoteException e) {
-            fail();
-        }
+        subject.onHandleIntent(intent, iTrackRecordingServiceMock);
+        verify(iTrackRecordingServiceMock);
     }
 
     /**
@@ -94,12 +84,11 @@ public class ControlRecordingServiceTest extends ServiceTestCase<ControlRecordin
      *
      * @param action the action string in the start intent
      */
-    private Intent startControlRecordingService(String action) {
+    private Intent startControlRecordingService(String action) throws TimeoutException {
         Intent intent = new Intent(context, ControlRecordingService.class);
         intent.setAction(action);
-        startService(intent);
-        controlRecordingService = getService();
+        mServiceRule.startService(intent);
+        subject = ((ControlRecordingService) mServiceRule.bindService(intent));
         return intent;
     }
-
 }

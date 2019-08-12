@@ -19,10 +19,11 @@ import android.os.Parcel;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import de.dennisguse.opentracks.content.Waypoint.WaypointType;
-
 import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 
 /**
  * Tests for the WaypointCreationRequest class.
@@ -33,6 +34,7 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class WaypointCreationRequestTest {
 
+    @Test
     public void testTypeParceling() {
         WaypointCreationRequest original = WaypointCreationRequest.DEFAULT_WAYPOINT;
         Parcel p = Parcel.obtain();
@@ -46,9 +48,9 @@ public class WaypointCreationRequestTest {
         Assert.assertNull(copy.getIconUrl());
     }
 
+    @Test
     public void testAllAttributesParceling() {
-        WaypointCreationRequest original = new WaypointCreationRequest(
-                WaypointType.WAYPOINT, false, "name", "category", "description", "img.png", null);
+        WaypointCreationRequest original = new WaypointCreationRequest(WaypointType.WAYPOINT, false, "name", "category", "description", "img.png", null);
         Parcel p = Parcel.obtain();
         original.writeToParcel(p, 0);
         p.setDataPosition(0);

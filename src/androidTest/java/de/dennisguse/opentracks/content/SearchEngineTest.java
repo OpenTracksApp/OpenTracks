@@ -17,25 +17,26 @@
 package de.dennisguse.opentracks.content;
 
 import android.content.ContentUris;
+import android.content.Context;
 import android.location.Location;
 import android.net.Uri;
-import android.test.RenamingDelegatingContext;
-import android.test.mock.MockContentResolver;
 
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import de.dennisguse.opentracks.content.SearchEngine.ScoredResult;
-import de.dennisguse.opentracks.content.SearchEngine.SearchQuery;
-import de.dennisguse.opentracks.services.TrackRecordingServiceTest.MockContext;
-import de.dennisguse.opentracks.stats.TripStatistics;
-
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import de.dennisguse.opentracks.content.SearchEngine.ScoredResult;
+import de.dennisguse.opentracks.content.SearchEngine.SearchQuery;
+import de.dennisguse.opentracks.stats.TripStatistics;
 
 /**
  * Tests for {@link SearchEngine}.
@@ -53,24 +54,18 @@ public class SearchEngineTest {
     private ContentProviderUtils providerUtils;
     private SearchEngine engine;
 
-    @Before
-    protected void setUp() {
-        MockContentResolver mockContentResolver = new MockContentResolver();
-        RenamingDelegatingContext targetContext = new RenamingDelegatingContext(
-                getContext(), getContext(), "test.");
-        MockContext context = new MockContext(mockContentResolver, targetContext);
-        CustomContentProvider provider = new CustomContentProvider();
-        provider.attachInfo(context, null);
-        mockContentResolver.addProvider(ContentProviderUtils.AUTHORITY, provider);
-        setContext(context);
+    private Context context = ApplicationProvider.getApplicationContext();
 
+
+    @Before
+    public void setUp() {
         providerUtils = ContentProviderUtils.Factory.get(context);
         engine = new SearchEngine(providerUtils);
     }
 
     @After
-    protected void tearDown() throws Exception {
-        providerUtils.deleteAllTracks(getContext());
+    public void tearDown() throws Exception {
+        providerUtils.deleteAllTracks(context);
     }
 
     private long insertTrack(String title, String description, String category, double distance, long hoursAgo) {
@@ -141,6 +136,7 @@ public class SearchEngineTest {
         return insertWaypoint(title, "", "", 0.0, hoursAgo, trackId);
     }
 
+    @Test
     public void testSearchText() {
         // Insert 7 tracks (purposefully out of result order):
         // - one which won't match
@@ -162,11 +158,10 @@ public class SearchEngineTest {
         ArrayList<ScoredResult> results = new ArrayList<ScoredResult>(engine.search(query));
 
         // Title > Description > Category.
-        assertTrackResults(results,
-                allMatchId, titleDescriptionMatchId, titleCategoryMatchId, titleMatchId, descriptionMatchId,
-                categoryMatchId);
+        assertTrackResults(results, allMatchId, titleDescriptionMatchId, titleCategoryMatchId, titleMatchId, descriptionMatchId, categoryMatchId);
     }
 
+    @Test
     public void testSearchWaypointText() {
         // Insert 7 waypoints (purposefully out of result order):
         // - one which won't match
@@ -188,11 +183,10 @@ public class SearchEngineTest {
         ArrayList<ScoredResult> results = new ArrayList<ScoredResult>(engine.search(query));
 
         // Title > Description > Category.
-        assertWaypointResults(results,
-                allMatchId, titleDescriptionMatchId, titleCategoryMatchId, titleMatchId, descriptionMatchId,
-                categoryMatchId);
+        assertWaypointResults(results, allMatchId, titleDescriptionMatchId, titleCategoryMatchId, titleMatchId, descriptionMatchId, categoryMatchId);
     }
 
+    @Test
     public void testSearchMixedText() {
         // Insert 5 entries (purposefully out of result order):
         // - one waypoint which will match by description
@@ -210,12 +204,13 @@ public class SearchEngineTest {
         ArrayList<ScoredResult> results = new ArrayList<ScoredResult>(engine.search(query));
 
         // Title > Description > Category.
-        assertEquals(results.toString(), 3, results.size());
+        Assert.assertEquals(results.toString(), 3, results.size());
         assertTrackResult(trackId, results.get(0));
         assertWaypointResult(titleWaypointId, results.get(1));
         assertWaypointResult(descriptionWaypointId, results.get(2));
     }
 
+    @Test
     public void testSearchTrackDistance() {
         // All results match text, but they're at difference distances from the user.
         long farFarAwayId = insertTrack("aa", 0.3);
@@ -229,6 +224,7 @@ public class SearchEngineTest {
         assertTrackResults(results, nearId, farId, farFarAwayId);
     }
 
+    @Test
     public void testSearchWaypointDistance() {
         // All results match text, but they're at difference distances from the user.
         long farFarAwayId = insertWaypoint("aa", 0.3);
@@ -255,6 +251,7 @@ public class SearchEngineTest {
         assertTrackResults(results, recentId, oldId, oldestId);
     }
 
+    @Test
     public void testSearchWaypointRecent() {
         // All results match text, but they're were recorded at different times.
         long oldestId = insertWaypoint("aa", 2);
@@ -268,6 +265,7 @@ public class SearchEngineTest {
         assertWaypointResults(results, recentId, oldId, oldestId);
     }
 
+    @Test
     public void testSearchCurrentTrack() {
         // All results match text, but one of them is the current track.
         long currentId = insertTrack("ab", 1);
@@ -280,6 +278,7 @@ public class SearchEngineTest {
         assertTrackResults(results, otherId, currentId);
     }
 
+    @Test
     public void testSearchCurrentTrackWaypoint() {
         // All results match text, but one of them is in the current track.
         long otherId = insertWaypoint("aa", 1, 456);
@@ -293,36 +292,36 @@ public class SearchEngineTest {
     }
 
     private void assertTrackResult(long trackId, ScoredResult result) {
-        assertNotNull("Not a track", result.track);
-        assertNull("Ambiguous result", result.waypoint);
-        assertEquals(trackId, result.track.getId());
+        Assert.assertNotNull("Not a track", result.track);
+        Assert.assertNull("Ambiguous result", result.waypoint);
+        Assert.assertEquals(trackId, result.track.getId());
     }
 
     private void assertTrackResults(List<ScoredResult> results, long... trackIds) {
         String errMsg = "Expected IDs=" + Arrays.toString(trackIds) + "; results=" + results;
-        assertEquals(results.size(), trackIds.length);
+        Assert.assertEquals(results.size(), trackIds.length);
         for (int i = 0; i < results.size(); i++) {
             ScoredResult result = results.get(i);
-            assertNotNull(errMsg, result.track);
-            assertNull(errMsg, result.waypoint);
-            assertEquals(errMsg, trackIds[i], result.track.getId());
+            Assert.assertNotNull(errMsg, result.track);
+            Assert.assertNull(errMsg, result.waypoint);
+            Assert.assertEquals(errMsg, trackIds[i], result.track.getId());
         }
     }
 
     private void assertWaypointResult(long waypointId, ScoredResult result) {
-        assertNotNull("Not a waypoint", result.waypoint);
-        assertNull("Ambiguous result", result.track);
-        assertEquals(waypointId, result.waypoint.getId());
+        Assert.assertNotNull("Not a waypoint", result.waypoint);
+        Assert.assertNull("Ambiguous result", result.track);
+        Assert.assertEquals(waypointId, result.waypoint.getId());
     }
 
     private void assertWaypointResults(List<ScoredResult> results, long... waypointIds) {
         String errMsg = "Expected IDs=" + Arrays.toString(waypointIds) + "; results=" + results;
-        assertEquals(results.size(), waypointIds.length);
+        Assert.assertEquals(results.size(), waypointIds.length);
         for (int i = 0; i < results.size(); i++) {
             ScoredResult result = results.get(i);
-            assertNotNull(errMsg, result.waypoint);
-            assertNull(errMsg, result.track);
-            assertEquals(errMsg, waypointIds[i], result.waypoint.getId());
+            Assert.assertNotNull(errMsg, result.waypoint);
+            Assert.assertNull(errMsg, result.track);
+            Assert.assertEquals(errMsg, waypointIds[i], result.waypoint.getId());
         }
     }
 }

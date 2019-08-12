@@ -19,21 +19,19 @@ package de.dennisguse.opentracks.content;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
-
-import de.dennisguse.opentracks.content.CustomContentProvider.DatabaseHelper;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.runner.RunWith;
+import org.junit.Test;
+
+import de.dennisguse.opentracks.content.CustomContentProvider.DatabaseHelper;
 
 /**
  * Tests {@link CustomContentProvider}.
  *
  * @author Youtao Liu
  */
-@RunWith(AndroidJUnit4.class)
 public class CustomContentProviderTest {
 
     private static final String DATABASE_NAME = "test.db";
@@ -42,7 +40,7 @@ public class CustomContentProviderTest {
     private CustomContentProvider customContentProvider;
 
     @Before
-    protected void setUp() {
+    public void setUp() {
         InstrumentationRegistry.getInstrumentation().getContext().deleteDatabase(DATABASE_NAME);
         db = (new DatabaseHelper(InstrumentationRegistry.getInstrumentation().getContext(), DATABASE_NAME)).getWritableDatabase();
         customContentProvider = new CustomContentProvider();
@@ -51,6 +49,7 @@ public class CustomContentProviderTest {
     /**
      * Tests {@link CustomContentProvider.DatabaseHelper#onCreate(SQLiteDatabase)}.
      */
+    @Test
     public void testDatabaseHelper_OnCreate() {
         Assert.assertTrue(hasTable(TracksColumns.TABLE_NAME));
         Assert.assertTrue(hasTable(TrackPointsColumns.TABLE_NAME));
@@ -60,6 +59,7 @@ public class CustomContentProviderTest {
     /**
      * Tests {@link CustomContentProvider#onCreate(android.content.Context)}.
      */
+    @Test
     public void testOnCreate() {
         Assert.assertTrue(customContentProvider.onCreate(InstrumentationRegistry.getInstrumentation().getContext()));
     }
@@ -67,12 +67,11 @@ public class CustomContentProviderTest {
     /**
      * Tests {@link CustomContentProvider#getType(Uri)}.
      */
+    @Test
     public void testGetType() {
         Assert.assertEquals(TracksColumns.CONTENT_TYPE, customContentProvider.getType(TracksColumns.CONTENT_URI));
-        Assert.assertEquals(
-                TrackPointsColumns.CONTENT_TYPE, customContentProvider.getType(TrackPointsColumns.CONTENT_URI));
-        Assert.assertEquals(
-                WaypointsColumns.CONTENT_TYPE, customContentProvider.getType(WaypointsColumns.CONTENT_URI));
+        Assert.assertEquals(TrackPointsColumns.CONTENT_TYPE, customContentProvider.getType(TrackPointsColumns.CONTENT_URI));
+        Assert.assertEquals(WaypointsColumns.CONTENT_TYPE, customContentProvider.getType(WaypointsColumns.CONTENT_URI));
     }
 
     /**

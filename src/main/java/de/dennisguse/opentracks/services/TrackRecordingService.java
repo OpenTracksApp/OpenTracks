@@ -41,7 +41,10 @@ import androidx.annotation.VisibleForTesting;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.TaskStackBuilder;
 
-import de.dennisguse.opentracks.Constants;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackDetailActivity;
 import de.dennisguse.opentracks.TrackListActivity;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
@@ -69,10 +72,6 @@ import de.dennisguse.opentracks.util.SystemUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.TrackNameUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
-import de.dennisguse.opentracks.R;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * A background service that registers a location listener and records track
@@ -1013,8 +1012,7 @@ public class TrackRecordingService extends Service {
      * @param trackId  the track id
      */
     private void sendTrackBroadcast(int actionId, long trackId) {
-        Intent intent = new Intent().setAction(getString(actionId))
-                .putExtra(getString(R.string.track_id_broadcast_extra), trackId);
+        Intent intent = new Intent().setAction(getString(actionId)).putExtra(getString(R.string.track_id_broadcast_extra), trackId);
         sendBroadcast(intent, getString(R.string.permission_notification_value));
     }
 

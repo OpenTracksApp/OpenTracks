@@ -19,13 +19,14 @@ package de.dennisguse.opentracks.content;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import de.dennisguse.opentracks.stats.TripStatistics;
-import de.dennisguse.opentracks.util.StringUtils;
-import de.dennisguse.opentracks.R;
-
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.stats.TripStatistics;
+import de.dennisguse.opentracks.util.StringUtils;
 
 /**
  * Tests for {@link DescriptionGeneratorImpl}.
@@ -39,14 +40,14 @@ public class DescriptionGeneratorImplTest {
     private DescriptionGeneratorImpl descriptionGenerator;
 
     @Before
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         descriptionGenerator = new DescriptionGeneratorImpl(InstrumentationRegistry.getInstrumentation().getContext());
     }
 
     /**
-     * Tests {@link DescriptionGeneratorImpl#generateTrackDescription(Track,
-     * java.util.Vector, java.util.Vector, boolean)}.
+     * Tests {@link DescriptionGeneratorImpl#generateTrackDescription(Track, java.util.Vector, java.util.Vector, boolean)}.
      */
+    @Test
     public void testGenerateTrackDescription() {
         Track track = new Track();
         TripStatistics stats = new TripStatistics();
@@ -88,6 +89,7 @@ public class DescriptionGeneratorImplTest {
     /**
      * Tests {@link DescriptionGeneratorImpl#generateWaypointDescription(TripStatistics)}.
      */
+    @Test
     public void testGenerateWaypointDescription() {
         Waypoint waypoint = new Waypoint();
         TripStatistics stats = new TripStatistics();
@@ -117,14 +119,14 @@ public class DescriptionGeneratorImplTest {
                 + "Max grade: 42 %\n"
                 + "Min grade: 11 %\n"
                 + "Recorded: " + StringUtils.formatDateTime(InstrumentationRegistry.getInstrumentation().getContext(), START_TIME) + "\n";
-        Assert.assertEquals(
-                expected, descriptionGenerator.generateWaypointDescription(waypoint.getTripStatistics()));
+        Assert.assertEquals(expected, descriptionGenerator.generateWaypointDescription(waypoint.getTripStatistics()));
     }
 
     /**
      * Tests {@link DescriptionGeneratorImpl#writeDistance(double, StringBuilder,
      * int, String)}.
      */
+    @Test
     public void testWriteDistance() {
         StringBuilder builder = new StringBuilder();
         descriptionGenerator.writeDistance(1100, builder, R.string.description_total_distance, "<br>");
@@ -135,6 +137,7 @@ public class DescriptionGeneratorImplTest {
      * Tests {@link DescriptionGeneratorImpl#writeTime(long, StringBuilder, int,
      * String)}.
      */
+    @Test
     public void testWriteTime() {
         StringBuilder builder = new StringBuilder();
         descriptionGenerator.writeTime(1000, builder, R.string.description_total_time, "<br>");
@@ -145,6 +148,7 @@ public class DescriptionGeneratorImplTest {
      * Tests {@link DescriptionGeneratorImpl#writeSpeed(double, StringBuilder,
      * int, String)}.
      */
+    @Test
     public void testWriteSpeed() {
         StringBuilder builder = new StringBuilder();
         descriptionGenerator.writeSpeed(1.1, builder, R.string.description_average_speed, "\n");
@@ -155,6 +159,7 @@ public class DescriptionGeneratorImplTest {
      * Tests {@link DescriptionGeneratorImpl#writeElevation(double, StringBuilder,
      * int, String)}.
      */
+    @Test
     public void testWriteElevation() {
         StringBuilder builder = new StringBuilder();
         descriptionGenerator.writeElevation(4.2, builder, R.string.description_min_elevation, "<br>");
@@ -165,6 +170,7 @@ public class DescriptionGeneratorImplTest {
      * Tests {@link DescriptionGeneratorImpl#writePace(double, StringBuilder, int,
      * String)}.
      */
+    @Test
     public void testWritePace() {
         StringBuilder builder = new StringBuilder();
         descriptionGenerator.writePace(1.1, builder, R.string.description_average_pace_in_minute, "\n");
@@ -175,6 +181,7 @@ public class DescriptionGeneratorImplTest {
      * Tests {@link DescriptionGeneratorImpl#writeGrade(double, StringBuilder,
      * int, String)}.
      */
+    @Test
     public void testWriteGrade() {
         StringBuilder builder = new StringBuilder();
         descriptionGenerator.writeGrade(.042, builder, R.string.description_max_grade, "<br>");
@@ -185,6 +192,7 @@ public class DescriptionGeneratorImplTest {
      * Tests {@link DescriptionGeneratorImpl#writeGrade(double, StringBuilder,
      * int, String)} with a NaN.
      */
+    @Test
     public void testWriteGrade_nan() {
         StringBuilder builder = new StringBuilder();
         descriptionGenerator.writeGrade(Double.NaN, builder, R.string.description_max_grade, "<br>");
@@ -195,6 +203,7 @@ public class DescriptionGeneratorImplTest {
      * Tests {@link DescriptionGeneratorImpl#writeGrade(double, StringBuilder,
      * int, String)} with an infinite number.
      */
+    @Test
     public void testWriteGrade_infinite() {
         StringBuilder builder = new StringBuilder();
         descriptionGenerator.writeGrade(

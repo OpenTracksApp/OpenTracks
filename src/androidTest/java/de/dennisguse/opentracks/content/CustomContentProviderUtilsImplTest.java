@@ -20,27 +20,28 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.location.Location;
-import android.test.RenamingDelegatingContext;
-import android.test.mock.MockContentResolver;
 
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import de.dennisguse.opentracks.content.ContentProviderUtils.LocationFactory;
-import de.dennisguse.opentracks.content.ContentProviderUtils.LocationIterator;
-import de.dennisguse.opentracks.content.Waypoint.WaypointType;
-import de.dennisguse.opentracks.services.TrackRecordingServiceTest.MockContext;
-import de.dennisguse.opentracks.stats.TripStatistics;
-import com.google.android.testing.mocking.AndroidMock;
-import com.google.android.testing.mocking.UsesMocks;
+import androidx.test.core.app.ApplicationProvider;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import de.dennisguse.opentracks.content.ContentProviderUtils.LocationFactory;
+import de.dennisguse.opentracks.content.ContentProviderUtils.LocationIterator;
+import de.dennisguse.opentracks.content.Waypoint.WaypointType;
+import de.dennisguse.opentracks.stats.TripStatistics;
+
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * A unit test for {@link ContentProviderUtilsImpl}.
@@ -48,37 +49,36 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Bartlomiej Niechwiej
  * @author Youtao Liu
  */
-@RunWith(AndroidJUnit4.class)
+@RunWith(MockitoJUnitRunner.class)
 public class CustomContentProviderUtilsImplTest {
     private static final String NAME_PREFIX = "test name";
     private static final String MOCK_DESC = "Mock Next Waypoint Desc!";
     private static final String TEST_DESC = "Test Desc!";
     private static final String TEST_DESC_NEW = "Test Desc new!";
-    private Context context;
+    private Context context = ApplicationProvider.getApplicationContext();
     private ContentProviderUtils providerUtils;
     private double INITIAL_LATITUDE = 37.0;
     private double INITIAL_LONGITUDE = -57.0;
     private double ALTITUDE_INTERVAL = 2.5;
 
-    @Before
-    protected void setUp() {
-        MockContentResolver mockContentResolver = new MockContentResolver();
-        RenamingDelegatingContext targetContext = new RenamingDelegatingContext(
-                getContext(), getContext(), "test.");
-        context = new MockContext(mockContentResolver, targetContext);
-        CustomContentProvider provider = new CustomContentProvider();
-        provider.attachInfo(context, null);
-        mockContentResolver.addProvider(ContentProviderUtils.AUTHORITY, provider);
-        setContext(context);
+    @Mock
+    private Cursor cursorMock;
 
+    @Mock
+    private ContentResolver contentResolverMock;
+
+    @Before
+    public void setUp() {
         providerUtils = ContentProviderUtils.Factory.get(context);
         providerUtils.deleteAllTracks(context);
     }
 
+    @Test
     public void testLocationIterator_noPoints() {
         testIterator(1, 0, 1, false, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
     }
 
+    @Test
     public void testLocationIterator_customFactory() {
         final Location location = new Location("test_location");
         final AtomicInteger counter = new AtomicInteger();
@@ -93,46 +93,50 @@ public class CustomContentProviderUtilsImplTest {
         Assert.assertEquals(15, counter.get());
     }
 
+    @Test
     public void testLocationIterator_nullFactory() {
         try {
             testIterator(1, 15, 4, false, null);
-            fail("Expecting IllegalArgumentException");
+            Assert.fail("Expecting IllegalArgumentException");
         } catch (IllegalArgumentException e) {
             // Expected.
         }
     }
 
+    @Test
     public void testLocationIterator_noBatchAscending() {
         testIterator(1, 50, 100, false, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
         testIterator(2, 50, 50, false, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
     }
 
+    @Test
     public void testLocationIterator_noBatchDescending() {
         testIterator(1, 50, 100, true, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
         testIterator(2, 50, 50, true, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
     }
 
+    @Test
     public void testLocationIterator_batchAscending() {
         testIterator(1, 50, 11, false, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
         testIterator(2, 50, 25, false, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
     }
 
+    @Test
     public void testLocationIterator_batchDescending() {
         testIterator(1, 50, 11, true, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
         testIterator(2, 50, 25, true, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
     }
 
+    @Test
     public void testLocationIterator_largeTrack() {
         testIterator(1, 20000, 2000, false, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
     }
 
-    private List<Location> testIterator(long trackId, int numPoints, int batchSize,
-                                        boolean descending, LocationFactory locationFactory) {
+    private List<Location> testIterator(long trackId, int numPoints, int batchSize, boolean descending, LocationFactory locationFactory) {
         long lastPointId = initializeTrack(trackId, numPoints);
         ((ContentProviderUtilsImpl) providerUtils).setDefaultCursorBatchSize(batchSize);
         List<Location> locations = new ArrayList<Location>(numPoints);
-        LocationIterator it = providerUtils.getTrackPointLocationIterator(
-                trackId, -1L, descending, locationFactory);
+        LocationIterator it = providerUtils.getTrackPointLocationIterator(trackId, -1L, descending, locationFactory);
         try {
             while (it.hasNext()) {
                 Location loc = it.next();
@@ -172,8 +176,7 @@ public class CustomContentProviderUtilsImplTest {
         // Load all inserted locations.
         long lastPointId = -1;
         int counter = 0;
-        LocationIterator it = providerUtils.getTrackPointLocationIterator(id, -1L, false,
-                ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
+        LocationIterator it = providerUtils.getTrackPointLocationIterator(id, -1L, false, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
         try {
             while (it.hasNext()) {
                 it.next();
@@ -194,37 +197,35 @@ public class CustomContentProviderUtilsImplTest {
     /**
      * Tests the method {@link ContentProviderUtilsImpl#createTrack(Cursor)}.
      */
-    @UsesMocks(Cursor.class)
+    @Test
     public void testCreateTrack() {
-        Cursor cursorMock = AndroidMock.createNiceMock(Cursor.class);
         int startColumnIndex = 1;
         int columnIndex = startColumnIndex;
-        AndroidMock.expect(cursorMock.getColumnIndexOrThrow(TracksColumns._ID))
-                .andReturn(columnIndex++);
-        AndroidMock.expect(cursorMock.getColumnIndexOrThrow(TracksColumns.NAME)).andReturn(
-                columnIndex++);
+        when(cursorMock.getColumnIndexOrThrow(TracksColumns._ID)).thenReturn(columnIndex++);
+        when(cursorMock.getColumnIndexOrThrow(TracksColumns.NAME)).thenReturn(columnIndex++);
         columnIndex = startColumnIndex;
         // Id
-        AndroidMock.expect(cursorMock.isNull(columnIndex++)).andReturn(false);
+        when(cursorMock.isNull(columnIndex++)).thenReturn(false);
         // Name
-        AndroidMock.expect(cursorMock.isNull(columnIndex++)).andReturn(false);
+        when(cursorMock.isNull(columnIndex++)).thenReturn(false);
         long trackId = System.currentTimeMillis();
         columnIndex = startColumnIndex;
         // Id
-        AndroidMock.expect(cursorMock.getLong(columnIndex++)).andReturn(trackId);
+        when(cursorMock.getLong(columnIndex++)).thenReturn(trackId);
         // Name
         String name = NAME_PREFIX + trackId;
-        AndroidMock.expect(cursorMock.getString(columnIndex++)).andReturn(name);
-        AndroidMock.replay(cursorMock);
+        when(cursorMock.getString(columnIndex++)).thenReturn(name);
+
         Track track = providerUtils.createTrack(cursorMock);
         Assert.assertEquals(trackId, track.getId());
         Assert.assertEquals(name, track.getName());
-        AndroidMock.verify(cursorMock);
+        verify(cursorMock);
     }
 
     /**
      * Tests the method {@link ContentProviderUtilsImpl#deleteAllTracks(Context)}
      */
+    @Test
     public void testDeleteAllTracks() {
         // Insert track, points and waypoint at first.
         long trackId = System.currentTimeMillis();
@@ -233,32 +234,27 @@ public class CustomContentProviderUtilsImplTest {
         Waypoint waypoint = new Waypoint();
         providerUtils.insertWaypoint(waypoint);
         ContentResolver contentResolver = context.getContentResolver();
-        Cursor tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null,
-                TracksColumns._ID);
+        Cursor tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
         Assert.assertEquals(1, tracksCursor.getCount());
-        Cursor tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI, null, null,
-                null, TrackPointsColumns._ID);
+        Cursor tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI, null, null, null, TrackPointsColumns._ID);
         Assert.assertEquals(10, tracksPointsCursor.getCount());
-        Cursor waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null,
-                null, WaypointsColumns._ID);
+        Cursor waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null, null, WaypointsColumns._ID);
         Assert.assertEquals(1, waypointCursor.getCount());
         // Delete all.
         providerUtils.deleteAllTracks(context);
         // Check whether all have been deleted.
-        tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null,
-                TracksColumns._ID);
+        tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
         Assert.assertEquals(0, tracksCursor.getCount());
-        tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI, null, null,
-                null, TrackPointsColumns._ID);
+        tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI, null, null, null, TrackPointsColumns._ID);
         Assert.assertEquals(0, tracksPointsCursor.getCount());
-        waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null,
-                null, WaypointsColumns._ID);
+        waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null, null, WaypointsColumns._ID);
         Assert.assertEquals(0, waypointCursor.getCount());
     }
 
     /**
      * Tests the method {@link ContentProviderUtilsImpl#deleteTrack(Context, long)}.
      */
+    @Test
     public void testDeleteTrack() {
         // Insert three tracks, points of two tracks and way point of one track.
         long trackId = System.currentTimeMillis();
@@ -299,6 +295,7 @@ public class CustomContentProviderUtilsImplTest {
     /**
      * Tests the method {@link ContentProviderUtilsImpl#getAllTracks()}
      */
+    @Test
     public void testGetAllTracks() {
         int initialTrackNumber = providerUtils.getAllTracks().size();
         long trackId = System.currentTimeMillis();
@@ -311,6 +308,7 @@ public class CustomContentProviderUtilsImplTest {
     /**
      * Tests the method {@link ContentProviderUtilsImpl#getLastTrack()}
      */
+    @Test
     public void testGetLastTrack() {
         long trackId = System.currentTimeMillis();
         providerUtils.insertTrack(getTrack(trackId, 0));
@@ -320,6 +318,7 @@ public class CustomContentProviderUtilsImplTest {
     /**
      * Tests the method {@link ContentProviderUtilsImpl#getTrack(long)}
      */
+    @Test
     public void testGetTrack() {
         long trackId = System.currentTimeMillis();
         providerUtils.insertTrack(getTrack(trackId, 0));
@@ -329,6 +328,7 @@ public class CustomContentProviderUtilsImplTest {
     /**
      * Tests the method {@link ContentProviderUtilsImpl#updateTrack(Track)}
      */
+    @Test
     public void testUpdateTrack() {
         long trackId = System.currentTimeMillis();
         Track track = getTrack(trackId, 0);
@@ -345,6 +345,7 @@ public class CustomContentProviderUtilsImplTest {
     /**
      * Tests the method {@link ContentProviderUtilsImpl#createContentValues(Waypoint)}.
      */
+    @Test
     public void testCreateContentValues_waypoint() {
         long trackId = System.currentTimeMillis();
         Track track = getTrack(trackId, 10);
@@ -380,8 +381,7 @@ public class CustomContentProviderUtilsImplTest {
         waypoint.setLocation(loc);
         providerUtils.insertWaypoint(waypoint);
 
-        ContentProviderUtilsImpl contentProviderUtils = new ContentProviderUtilsImpl(
-                new MockContentResolver());
+        ContentProviderUtilsImpl contentProviderUtils = new ContentProviderUtilsImpl(contentResolverMock);
 
         long waypointId = System.currentTimeMillis();
         waypoint.setId(waypointId);
@@ -396,40 +396,36 @@ public class CustomContentProviderUtilsImplTest {
     /**
      * Tests the method {@link ContentProviderUtilsImpl#createWaypoint(Cursor)}.
      */
-    @UsesMocks(Cursor.class)
+    @Test
     public void testCreateWaypoint() {
-        Cursor cursorMock = AndroidMock.createNiceMock(Cursor.class);
         int startColumnIndex = 1;
         int columnIndex = startColumnIndex;
-        AndroidMock.expect(cursorMock.getColumnIndexOrThrow(WaypointsColumns._ID))
-                .andReturn(columnIndex++);
-        AndroidMock.expect(cursorMock.getColumnIndexOrThrow(WaypointsColumns.NAME)).andReturn(
-                columnIndex++);
-        AndroidMock.expect(cursorMock.getColumnIndexOrThrow(WaypointsColumns.TRACKID)).andReturn(
-                columnIndex++);
+        when(cursorMock.getColumnIndexOrThrow(WaypointsColumns._ID)).thenReturn(columnIndex++);
+        when(cursorMock.getColumnIndexOrThrow(WaypointsColumns.NAME)).thenReturn(columnIndex++);
+        when(cursorMock.getColumnIndexOrThrow(WaypointsColumns.TRACKID)).thenReturn(columnIndex++);
         columnIndex = startColumnIndex;
         // Id
-        AndroidMock.expect(cursorMock.isNull(columnIndex++)).andReturn(false);
+        when(cursorMock.isNull(columnIndex++)).thenReturn(false);
         // Name
-        AndroidMock.expect(cursorMock.isNull(columnIndex++)).andReturn(false);
+        when(cursorMock.isNull(columnIndex++)).thenReturn(false);
         // trackIdIndex
-        AndroidMock.expect(cursorMock.isNull(columnIndex++)).andReturn(false);
+        when(cursorMock.isNull(columnIndex++)).thenReturn(false);
         long id = System.currentTimeMillis();
         columnIndex = startColumnIndex;
         // Id
-        AndroidMock.expect(cursorMock.getLong(columnIndex++)).andReturn(id);
+        when(cursorMock.getLong(columnIndex++)).thenReturn(id);
         // Name
         String name = NAME_PREFIX + id;
-        AndroidMock.expect(cursorMock.getString(columnIndex++)).andReturn(name);
+        when(cursorMock.getString(columnIndex++)).thenReturn(name);
         // trackIdIndex
         long trackId = 11L;
-        AndroidMock.expect(cursorMock.getLong(columnIndex++)).andReturn(trackId);
-        AndroidMock.replay(cursorMock);
+        when(cursorMock.getLong(columnIndex++)).thenReturn(trackId);
+
         Waypoint waypoint = providerUtils.createWaypoint(cursorMock);
         Assert.assertEquals(id, waypoint.getId());
         Assert.assertEquals(name, waypoint.getName());
         Assert.assertEquals(trackId, waypoint.getTrackId());
-        AndroidMock.verify(cursorMock);
+        verify(cursorMock);
     }
 
     /**
@@ -437,6 +433,7 @@ public class CustomContentProviderUtilsImplTest {
      * {@link ContentProviderUtilsImpl#deleteWaypoint(Context, long, DescriptionGenerator)}
      * when there is only one waypoint in the track.
      */
+    @Test
     public void testDeleteWaypoint_onlyOneWayPoint() {
         long trackId = System.currentTimeMillis();
         Track track = getTrack(trackId, 10);
@@ -473,6 +470,7 @@ public class CustomContentProviderUtilsImplTest {
      * {@link ContentProviderUtilsImpl#deleteWaypoint(Context, long, DescriptionGenerator)}
      * when there is more than one waypoint in the track.
      */
+    @Test
     public void testDeleteWaypoint_hasNextWayPoint() {
         long trackId = System.currentTimeMillis();
         Track track = getTrack(trackId, 10);
@@ -528,6 +526,7 @@ public class CustomContentProviderUtilsImplTest {
     /**
      * Tests the method {@link ContentProviderUtilsImpl#getFirstWaypointId(long)}.
      */
+    @Test
     public void testGetFirstWaypointId() {
         long trackId = System.currentTimeMillis();
         Track track = getTrack(trackId, 10);
@@ -547,6 +546,7 @@ public class CustomContentProviderUtilsImplTest {
     /**
      * Tests the method {@link ContentProviderUtilsImpl#getNextWaypointNumber(long, WaypointType)}.
      */
+    @Test
     public void testGetNextWaypointNumber() {
         long trackId = System.currentTimeMillis();
         Track track = getTrack(trackId, 10);
@@ -577,6 +577,7 @@ public class CustomContentProviderUtilsImplTest {
      * Tests the method
      * {@link ContentProviderUtils#getLastWaypoint(long, WaypointType)}.
      */
+    @Test
     public void testGetLastStatisticsWaypoint() {
         long trackId = System.currentTimeMillis();
         Track track = getTrack(trackId, 10);
@@ -605,6 +606,7 @@ public class CustomContentProviderUtilsImplTest {
      * Tests the method {@link ContentProviderUtilsImpl#insertWaypoint(Waypoint)} and
      * {@link ContentProviderUtilsImpl#getWaypoint(long)}.
      */
+    @Test
     public void testInsertAndGetWaypoint() {
         long trackId = System.currentTimeMillis();
         Track track = getTrack(trackId, 10);
@@ -621,6 +623,7 @@ public class CustomContentProviderUtilsImplTest {
     /**
      * Tests the method {@link ContentProviderUtilsImpl#updateWaypoint(Waypoint)}.
      */
+    @Test
     public void testUpdateWaypoint() {
         long trackId = System.currentTimeMillis();
         Track track = getTrack(trackId, 10);
@@ -639,9 +642,9 @@ public class CustomContentProviderUtilsImplTest {
     }
 
     /**
-     * Tests the method {@link ContentProviderUtilsImpl#bulkInsertTrackPoint(Location[],
-     * int, long)}.
+     * Tests the method {@link ContentProviderUtilsImpl#bulkInsertTrackPoint(Location[], int, long)}.
      */
+    @Test
     public void testBulkInsertTrackPoint() {
         // Insert track, point at first.
         long trackId = System.currentTimeMillis();
@@ -657,74 +660,68 @@ public class CustomContentProviderUtilsImplTest {
     /**
      * Tests the method {@link ContentProviderUtilsImpl#createTrackPoint(Cursor)}.
      */
-    @UsesMocks(Cursor.class)
+    @Test
     public void testCreateTrackPoint() {
-        Cursor cursorMock = AndroidMock.createNiceMock(Cursor.class);
-
         // Set index.
         int index = 1;
         // Id
-        AndroidMock.expect(cursorMock.getColumnIndex(TrackPointsColumns._ID)).andReturn(index++);
+        when(cursorMock.getColumnIndex(TrackPointsColumns._ID)).thenReturn(index++);
         // Longitude
-        AndroidMock.expect(cursorMock.getColumnIndexOrThrow(TrackPointsColumns.LONGITUDE)).andReturn(
-                index++);
+        when(cursorMock.getColumnIndexOrThrow(TrackPointsColumns.LONGITUDE)).thenReturn(index++);
         // Latitude
-        AndroidMock.expect(cursorMock.getColumnIndexOrThrow(TrackPointsColumns.LATITUDE)).andReturn(
-                index++);
+        when(cursorMock.getColumnIndexOrThrow(TrackPointsColumns.LATITUDE)).thenReturn(index++);
         // Time
-        AndroidMock.expect(cursorMock.getColumnIndexOrThrow(TrackPointsColumns.TIME))
-                .andReturn(index++);
+        when(cursorMock.getColumnIndexOrThrow(TrackPointsColumns.TIME))
+                .thenReturn(index++);
         // Speed
-        AndroidMock.expect(cursorMock.getColumnIndexOrThrow(TrackPointsColumns.SPEED)).andReturn(
-                index++);
+        when(cursorMock.getColumnIndexOrThrow(TrackPointsColumns.SPEED)).thenReturn(index++);
         // Sensor
-        AndroidMock.expect(cursorMock.getColumnIndexOrThrow(TrackPointsColumns.SENSOR_HEARTRATE)).andReturn(
-                index++);
+        when(cursorMock.getColumnIndexOrThrow(TrackPointsColumns.SENSOR_HEARTRATE)).thenReturn(index++);
 
         // Set return value of isNull().
         index = 2;
         // Longitude
-        AndroidMock.expect(cursorMock.isNull(index++)).andReturn(false);
+        when(cursorMock.isNull(index++)).thenReturn(false);
         // Latitude
-        AndroidMock.expect(cursorMock.isNull(index++)).andReturn(false);
+        when(cursorMock.isNull(index++)).thenReturn(false);
         // Time
-        AndroidMock.expect(cursorMock.isNull(index++)).andReturn(false);
+        when(cursorMock.isNull(index++)).thenReturn(false);
         // Speed
-        AndroidMock.expect(cursorMock.isNull(index++)).andReturn(false);
+        when(cursorMock.isNull(index++)).thenReturn(false);
         // Sensor
-        AndroidMock.expect(cursorMock.isNull(index++)).andReturn(false);
+        when(cursorMock.isNull(index++)).thenReturn(false);
 
         // Set return value of isNull().
         index = 2;
         // Longitude
         int longitude = 11;
-        AndroidMock.expect(cursorMock.getInt(index++)).andReturn(longitude * 1000000);
+        when(cursorMock.getInt(index++)).thenReturn(longitude * 1000000);
         // Latitude.
         int latitude = 22;
-        AndroidMock.expect(cursorMock.getInt(index++)).andReturn(latitude * 1000000);
+        when(cursorMock.getInt(index++)).thenReturn(latitude * 1000000);
         // Time
         long time = System.currentTimeMillis();
-        AndroidMock.expect(cursorMock.getLong(index++)).andReturn(time);
+        when(cursorMock.getLong(index++)).thenReturn(time);
         // Speed
         float speed = 2.2f;
-        AndroidMock.expect(cursorMock.getFloat(index++)).andReturn(speed);
+        when(cursorMock.getFloat(index++)).thenReturn(speed);
         // Sensor
         byte[] sensor = "Sensor state".getBytes();
-        AndroidMock.expect(cursorMock.getBlob(index++)).andReturn(sensor);
+        when(cursorMock.getBlob(index++)).thenReturn(sensor);
 
-        AndroidMock.replay(cursorMock);
         Location location = providerUtils.createTrackPoint(cursorMock);
-        Assert.assertEquals((double) longitude, location.getLongitude());
-        Assert.assertEquals((double) latitude, location.getLatitude());
-        Assert.assertEquals(time, location.getTime());
-        Assert.assertEquals(speed, location.getSpeed());
-        AndroidMock.verify(cursorMock);
+        Assert.assertEquals((double) longitude, location.getLongitude(), 0.01);
+        Assert.assertEquals((double) latitude, location.getLatitude(), 0.01);
+        Assert.assertEquals(time, location.getTime(), 0.01);
+        Assert.assertEquals(speed, location.getSpeed(), 0.01);
+        verify(cursorMock);
     }
 
     /**
      * Tests the method
      * {@link ContentProviderUtilsImpl#insertTrackPoint(Location, long)}.
      */
+    @Test
     public void testInsertTrackPoint() {
         // Insert track, point at first.
         long trackId = System.currentTimeMillis();
@@ -738,6 +735,7 @@ public class CustomContentProviderUtilsImplTest {
     /**
      * Tests the method {@link ContentProviderUtilsImpl#getFirstTrackPointId(long)}.
      */
+    @Test
     public void testGetFirstTrackPointId() {
         // Insert track, point at first.
         long trackId = System.currentTimeMillis();
@@ -750,6 +748,7 @@ public class CustomContentProviderUtilsImplTest {
     /**
      * Tests the method {@link ContentProviderUtilsImpl#getLastTrackPointId(long)}.
      */
+    @Test
     public void testGetLastTrackPointId() {
         // Insert track, point at first.
         long trackId = System.currentTimeMillis();
@@ -762,6 +761,7 @@ public class CustomContentProviderUtilsImplTest {
     /**
      * Tests the method {@link ContentProviderUtilsImpl#getLastValidTrackPoint(long)}.
      */
+    @Test
     public void testGetLastValidTrackPoint() {
         // Insert track, points at first.
         long trackId = System.currentTimeMillis();
@@ -777,6 +777,7 @@ public class CustomContentProviderUtilsImplTest {
      * {@link ContentProviderUtilsImpl#getTrackPointCursor(long, long, int, boolean)}
      * in descending.
      */
+    @Test
     public void testGetTrackPointCursor_desc() {
         // Insert track, points at first.
         long trackId = System.currentTimeMillis();
@@ -792,6 +793,7 @@ public class CustomContentProviderUtilsImplTest {
      * {@link ContentProviderUtilsImpl#getTrackPointCursor(long, long, int, boolean)}
      * in ascending.
      */
+    @Test
     public void testGetTrackPointCursor_asc() {
         // Insert track, points at first.
         long trackId = System.currentTimeMillis();
@@ -803,10 +805,9 @@ public class CustomContentProviderUtilsImplTest {
     }
 
     /**
-     * Tests the method
-     * {@link ContentProviderUtilsImpl#getTrackPointLocationIterator(long, long, boolean, LocationFactory)}
-     * in descending.
+     * Tests the method {@link ContentProviderUtilsImpl#getTrackPointLocationIterator(long, long, boolean, LocationFactory)} in descending.
      */
+    @Test
     public void testGetTrackPointLocationIterator_desc() {
         // Insert track, points at first.
         long trackId = System.currentTimeMillis();
@@ -815,8 +816,7 @@ public class CustomContentProviderUtilsImplTest {
 
         long startTrackPointId = 2L;
 
-        LocationIterator locationIterator = providerUtils.getTrackPointLocationIterator(trackId,
-                startTrackPointId, true, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
+        LocationIterator locationIterator = providerUtils.getTrackPointLocationIterator(trackId, startTrackPointId, true, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
         for (int i = 1; i >= 0; i--) {
             Assert.assertTrue(locationIterator.hasNext());
             Location location = locationIterator.next();
@@ -831,6 +831,7 @@ public class CustomContentProviderUtilsImplTest {
      * {@link ContentProviderUtilsImpl#getTrackPointLocationIterator(long, long, boolean, LocationFactory)}
      * in ascending.
      */
+    @Test
     public void testGetTrackPointLocationIterator_asc() {
         // Insert track, point at first.
         long trackId = System.currentTimeMillis();
@@ -839,8 +840,7 @@ public class CustomContentProviderUtilsImplTest {
 
         long startTrackPointId = 2L;
 
-        LocationIterator locationIterator = providerUtils.getTrackPointLocationIterator(trackId,
-                startTrackPointId, false, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
+        LocationIterator locationIterator = providerUtils.getTrackPointLocationIterator(trackId, startTrackPointId, false, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
 
         for (int i = 1; i < 10; i++) {
             Assert.assertTrue(locationIterator.hasNext());
@@ -876,7 +876,6 @@ public class CustomContentProviderUtilsImplTest {
      * @return created location
      */
     private Location createLocation(int i) {
-
         Location loc = new Location("test");
         loc.setLatitude(INITIAL_LATITUDE + (double) i / 10000.0);
         loc.setLongitude(INITIAL_LONGITUDE - (double) i / 10000.0);
@@ -893,10 +892,10 @@ public class CustomContentProviderUtilsImplTest {
      * @param location the location to be checked
      */
     private void checkLocation(int i, Location location) {
-        Assert.assertEquals(INITIAL_LATITUDE + (double) i / 10000.0, location.getLatitude());
-        Assert.assertEquals(INITIAL_LONGITUDE - (double) i / 10000.0, location.getLongitude());
-        Assert.assertEquals((float) i / 100.0f, location.getAccuracy());
-        Assert.assertEquals(i * ALTITUDE_INTERVAL, location.getAltitude());
+        Assert.assertEquals(INITIAL_LATITUDE + (double) i / 10000.0, location.getLatitude(), 0.01);
+        Assert.assertEquals(INITIAL_LONGITUDE - (double) i / 10000.0, location.getLongitude(), 0.01);
+        Assert.assertEquals((float) i / 100.0f, location.getAccuracy(), 0.01);
+        Assert.assertEquals(i * ALTITUDE_INTERVAL, location.getAltitude(), 0.01);
     }
 
     /**
@@ -906,7 +905,6 @@ public class CustomContentProviderUtilsImplTest {
      */
     private void insertTrackWithLocations(Track track) {
         providerUtils.insertTrack(track);
-        providerUtils.bulkInsertTrackPoint(track.getLocations().toArray(new Location[0]), track
-                .getLocations().size(), track.getId());
+        providerUtils.bulkInsertTrackPoint(track.getLocations().toArray(new Location[0]), track.getLocations().size(), track.getId());
     }
 }

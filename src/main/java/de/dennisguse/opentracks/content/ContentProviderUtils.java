@@ -22,11 +22,11 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 
-import de.dennisguse.opentracks.BuildConfig;
-import de.dennisguse.opentracks.content.Waypoint.WaypointType;
-
 import java.util.Iterator;
 import java.util.List;
+
+import de.dennisguse.opentracks.BuildConfig;
+import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 
 /**
  * Utilities to access data from the app's content provider.
@@ -354,8 +354,7 @@ public interface ContentProviderUtils {
     }
 
     /**
-     * A factory which can produce instances of {@link ContentProviderUtils}, and
-     * can be overridden for testing.
+     * A factory which can produce instances of {@link ContentProviderUtils}, and can be overridden for testing.
      */
     class Factory {
 
