@@ -90,19 +90,20 @@ public class TrackRecordingServiceTest {
     }
 
     @MediumTest
+    @Test
     public void testBindable() throws TimeoutException {
         IBinder service = mServiceRule.bindService(createStartIntent());
         Assert.assertNotNull(service);
     }
 
     @MediumTest
+    @Test
     public void testResumeAfterReboot_shouldResume() throws Exception {
         // Insert a dummy track and mark it as recording track.
         createDummyTrack(123L, System.currentTimeMillis(), true);
 
         // Clear the number of attempts and set the timeout to 10 min.
-        updateAutoResumePrefs(PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT,
-                PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_DEFAULT);
+        updateAutoResumePrefs(PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT, PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_DEFAULT);
 
         // Start the service in "resume" mode (simulates the on-reboot action).
         Intent startIntent = createStartIntent();
@@ -116,6 +117,7 @@ public class TrackRecordingServiceTest {
     }
 
     @MediumTest
+    @Test
     public void testResumeAfterReboot_simulateReboot() throws Exception {
         updateAutoResumePrefs(PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT, PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_DEFAULT);
         ITrackRecordingService service = ((ITrackRecordingService) mServiceRule.bindService(createStartIntent()));
@@ -132,12 +134,14 @@ public class TrackRecordingServiceTest {
         Intent startIntent = createStartIntent();
         startIntent.putExtra(TrackRecordingService.RESUME_TRACK_EXTRA_NAME, true);
         mServiceRule.startService(startIntent);
+        service = ((ITrackRecordingService) mServiceRule.bindService(createStartIntent()));
         Assert.assertNotNull(service);
 
         Assert.assertTrue(service.isRecording());
     }
 
     @MediumTest
+    @Test
     public void testResumeAfterReboot_noRecordingTrack() throws Exception {
         // Insert a dummy track and mark it as recording track.
         createDummyTrack(123L, System.currentTimeMillis(), false);
@@ -158,6 +162,7 @@ public class TrackRecordingServiceTest {
     }
 
     @MediumTest
+    @Test
     public void testResumeAfterReboot_expiredTrack() throws Exception {
         // Insert a dummy track last updated 20 min ago.
         createDummyTrack(123L, System.currentTimeMillis() - 20 * 60 * 1000, true);
@@ -178,6 +183,7 @@ public class TrackRecordingServiceTest {
     }
 
     @MediumTest
+    @Test
     public void testResumeAfterReboot_tooManyAttempts() throws Exception {
         // Insert a dummy track.
         createDummyTrack(123L, System.currentTimeMillis(), true);
@@ -199,6 +205,7 @@ public class TrackRecordingServiceTest {
     }
 
     @MediumTest
+    @Test
     public void testRecording_noTracks() throws Exception {
         List<Track> tracks = providerUtils.getAllTracks();
         Assert.assertTrue(tracks.isEmpty());
@@ -210,6 +217,7 @@ public class TrackRecordingServiceTest {
     }
 
     @MediumTest
+    @Test
     public void testRecording_oldTracks() throws Exception {
         createDummyTrack(123L, -1L, false);
 
@@ -219,6 +227,7 @@ public class TrackRecordingServiceTest {
     }
 
     @MediumTest
+    @Test
     public void testRecording_orphanedRecordingTrack() throws Exception {
         // Just set recording track to a bogus value.
         PreferencesUtils.setLong(context, R.string.recording_track_id_key, 256L);
@@ -231,6 +240,7 @@ public class TrackRecordingServiceTest {
     }
 
     @MediumTest
+    @Test
     public void testStartNewTrack_noRecording() throws Exception {
         // NOTICE: due to the way Android permissions work, if this fails,
         // uninstall the test apk then retry - the test must be installed *after* the app (go figure).
@@ -267,6 +277,7 @@ public class TrackRecordingServiceTest {
     }
 
     @MediumTest
+    @Test
     public void testStartNewTrack_alreadyRecording() throws Exception {
         createDummyTrack(123L, -1L, true);
 
@@ -282,6 +293,7 @@ public class TrackRecordingServiceTest {
     }
 
     @MediumTest
+    @Test
     public void testEndCurrentTrack_alreadyRecording() throws Exception {
         // See comment above if this fails randomly.
         BlockingBroadcastReceiver stopReceiver = new BlockingBroadcastReceiver();
@@ -311,6 +323,7 @@ public class TrackRecordingServiceTest {
     }
 
     @MediumTest
+    @Test
     public void testEndCurrentTrack_noRecording() throws Exception {
         ITrackRecordingService service = ((ITrackRecordingService) mServiceRule.bindService(createStartIntent()));
         Assert.assertFalse(service.isRecording());
@@ -321,12 +334,12 @@ public class TrackRecordingServiceTest {
          */
         service.endCurrentTrack();
 
-        Assert.assertEquals(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT,
-                PreferencesUtils.getLong(context, R.string.recording_track_id_key));
+        Assert.assertEquals(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, PreferencesUtils.getLong(context, R.string.recording_track_id_key));
         Assert.assertEquals(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, service.getRecordingTrackId());
     }
 
     @MediumTest
+    @Test
     public void testIntegration_completeRecordingSession() throws Exception {
         List<Track> tracks = providerUtils.getAllTracks();
         Assert.assertTrue(tracks.isEmpty());
@@ -334,6 +347,7 @@ public class TrackRecordingServiceTest {
     }
 
     @MediumTest
+    @Test
     public void testInsertStatisticsMarker_noRecordingTrack() throws Exception {
         ITrackRecordingService service = ((ITrackRecordingService) mServiceRule.bindService(createStartIntent()));
         Assert.assertFalse(service.isRecording());
@@ -343,6 +357,7 @@ public class TrackRecordingServiceTest {
     }
 
     @MediumTest
+    @Test
     public void testInsertStatisticsMarker_validLocation() throws Exception {
         createDummyTrack(123L, -1L, true);
 
@@ -359,7 +374,7 @@ public class TrackRecordingServiceTest {
         Assert.assertEquals(context.getString(R.string.marker_split_name_format, 1), wpt.getName());
         Assert.assertEquals(WaypointType.STATISTICS, wpt.getType());
         Assert.assertEquals(123L, wpt.getTrackId());
-        Assert.assertEquals(0.0, wpt.getLength());
+        Assert.assertEquals(0.0, wpt.getLength(), 0.01);
         Assert.assertNotNull(wpt.getLocation());
         Assert.assertNotNull(wpt.getTripStatistics());
         // TODO check the rest of the params.
@@ -368,6 +383,7 @@ public class TrackRecordingServiceTest {
     }
 
     @MediumTest
+    @Test
     public void testInsertWaypointMarker_noRecordingTrack() throws Exception {
         ITrackRecordingService service = ((ITrackRecordingService) mServiceRule.bindService(createStartIntent()));
         Assert.assertFalse(service.isRecording());
@@ -377,6 +393,7 @@ public class TrackRecordingServiceTest {
     }
 
     @MediumTest
+    @Test
     public void testInsertWaypointMarker_validWaypoint() throws Exception {
         createDummyTrack(123L, -1L, true);
 
@@ -396,96 +413,112 @@ public class TrackRecordingServiceTest {
     }
 
     @MediumTest
+    @Test
     public void testWithProperties_voiceFrequencyDefault() throws Exception {
         PreferencesUtils.setInt(context, R.string.voice_frequency_key, PreferencesUtils.VOICE_FREQUENCY_DEFAULT);
         fullRecordingSession();
     }
 
     @MediumTest
+    @Test
     public void testWithProperties_voiceFrequencyByDistance() throws Exception {
         PreferencesUtils.setInt(context, R.string.voice_frequency_key, -1);
         fullRecordingSession();
     }
 
     @MediumTest
+    @Test
     public void testWithProperties_voiceFrequencyByTime() throws Exception {
         PreferencesUtils.setInt(context, R.string.voice_frequency_key, 1);
         fullRecordingSession();
     }
 
     @MediumTest
+    @Test
     public void testWithProperties_maxRecordingDistanceDefault() throws Exception {
         PreferencesUtils.setInt(context, R.string.max_recording_distance_key, PreferencesUtils.MAX_RECORDING_DISTANCE_DEFAULT);
         fullRecordingSession();
     }
 
     @MediumTest
+    @Test
     public void testWithProperties_maxRecordingDistance() throws Exception {
         PreferencesUtils.setInt(context, R.string.max_recording_distance_key, 50);
         fullRecordingSession();
     }
 
     @MediumTest
+    @Test
     public void testWithProperties_minRecordingDistanceDefault() throws Exception {
         PreferencesUtils.setInt(context, R.string.recording_distance_interval_key, PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT);
         fullRecordingSession();
     }
 
     @MediumTest
+    @Test
     public void testWithProperties_minRecordingDistance() throws Exception {
         PreferencesUtils.setInt(context, R.string.recording_distance_interval_key, 2);
         fullRecordingSession();
     }
 
     @MediumTest
+    @Test
     public void testWithProperties_splitFrequencyDefault() throws Exception {
         PreferencesUtils.setInt(context, R.string.split_frequency_key, PreferencesUtils.SPLIT_FREQUENCY_DEFAULT);
         fullRecordingSession();
     }
 
     @MediumTest
+    @Test
     public void testWithProperties_splitFrequencyByDistance() throws Exception {
         PreferencesUtils.setInt(context, R.string.split_frequency_key, -1);
         fullRecordingSession();
     }
 
     @MediumTest
+    @Test
     public void testWithProperties_splitFrequencyByTime() throws Exception {
         PreferencesUtils.setInt(context, R.string.split_frequency_key, 1);
         fullRecordingSession();
     }
 
     @MediumTest
+    @Test
     public void testWithProperties_metricUnitsDefault() throws Exception {
         PreferencesUtils.setString(context, R.string.stats_units_key, PreferencesUtils.STATS_UNITS_DEFAULT);
         fullRecordingSession();
     }
 
     @MediumTest
+    @Test
     public void testWithProperties_metricUnitsDisabled() throws Exception {
         PreferencesUtils.setString(context, R.string.stats_units_key, context.getString(R.string.stats_units_imperial));
         fullRecordingSession();
     }
 
     @MediumTest
+    @Test
     public void testWithProperties_minRecordingIntervalDefault() throws Exception {
         PreferencesUtils.setInt(context, R.string.min_recording_interval_key, PreferencesUtils.MIN_RECORDING_INTERVAL_DEFAULT);
         fullRecordingSession();
     }
 
     @MediumTest
+    @Test
     public void testWithProperties_minRecordingInterval() throws Exception {
         PreferencesUtils.setInt(context, R.string.min_recording_interval_key, 2);
         fullRecordingSession();
     }
 
     @MediumTest
+    @Test
     public void testWithProperties_minRequiredAccuracyDefault() throws Exception {
         PreferencesUtils.setInt(context, R.string.recording_gps_accuracy_key, PreferencesUtils.RECORDING_GPS_ACCURACY_DEFAULT);
         fullRecordingSession();
     }
 
     @MediumTest
+    @Test
     public void testWithProperties_minRequiredAccuracy() throws Exception {
         PreferencesUtils.setInt(context, R.string.recording_gps_accuracy_key, 500);
         fullRecordingSession();
