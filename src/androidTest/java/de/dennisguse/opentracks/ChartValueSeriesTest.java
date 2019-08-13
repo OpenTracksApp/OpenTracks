@@ -15,8 +15,8 @@
  */
 package de.dennisguse.opentracks;
 
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -35,7 +35,7 @@ public class ChartValueSeriesTest {
     @Before
     public void setUp() {
         series = new ChartValueSeries(
-                InstrumentationRegistry.getInstrumentation().getContext(),
+                ApplicationProvider.getApplicationContext(),
                 Integer.MIN_VALUE,
                 Integer.MAX_VALUE,
                 new int[]{100, 1000},

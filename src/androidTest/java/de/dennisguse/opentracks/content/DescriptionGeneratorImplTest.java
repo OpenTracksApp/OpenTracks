@@ -16,8 +16,10 @@
 
 package de.dennisguse.opentracks.content;
 
+import android.content.Context;
+
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -39,9 +41,11 @@ public class DescriptionGeneratorImplTest {
     private static final long START_TIME = 1288721514000L;
     private DescriptionGeneratorImpl descriptionGenerator;
 
+    private Context context = ApplicationProvider.getApplicationContext();
+
     @Before
-    public void setUp() throws Exception {
-        descriptionGenerator = new DescriptionGeneratorImpl(InstrumentationRegistry.getInstrumentation().getContext());
+    public void setUp() {
+        descriptionGenerator = new DescriptionGeneratorImpl(ApplicationProvider.getApplicationContext());
     }
 
     /**
@@ -82,7 +86,7 @@ public class DescriptionGeneratorImplTest {
                 + "Elevation gain: 6000 m (19685 ft)<br>"
                 + "Max grade: 42 %<br>"
                 + "Min grade: 11 %<br>"
-                + "Recorded: " + StringUtils.formatDateTime(InstrumentationRegistry.getInstrumentation().getContext(), START_TIME) + "<br>";
+                + "Recorded: " + StringUtils.formatDateTime(context, START_TIME) + "<br>";
         Assert.assertEquals(expected, descriptionGenerator.generateTrackDescription(track, null, null, true));
     }
 
@@ -118,7 +122,7 @@ public class DescriptionGeneratorImplTest {
                 + "Elevation gain: 6000 m (19685 ft)\n"
                 + "Max grade: 42 %\n"
                 + "Min grade: 11 %\n"
-                + "Recorded: " + StringUtils.formatDateTime(InstrumentationRegistry.getInstrumentation().getContext(), START_TIME) + "\n";
+                + "Recorded: " + StringUtils.formatDateTime(context, START_TIME) + "\n";
         Assert.assertEquals(expected, descriptionGenerator.generateWaypointDescription(waypoint.getTripStatistics()));
     }
 
@@ -206,8 +210,7 @@ public class DescriptionGeneratorImplTest {
     @Test
     public void testWriteGrade_infinite() {
         StringBuilder builder = new StringBuilder();
-        descriptionGenerator.writeGrade(
-                Double.POSITIVE_INFINITY, builder, R.string.description_max_grade, "<br>");
+        descriptionGenerator.writeGrade(Double.POSITIVE_INFINITY, builder, R.string.description_max_grade, "<br>");
         Assert.assertEquals("Max grade: 0 %<br>", builder.toString());
     }
 }

@@ -18,8 +18,8 @@ package de.dennisguse.opentracks.fragments;
 
 import android.location.Location;
 
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -47,7 +47,7 @@ public class ChartFragmentTest {
     @Before
     public void setUp() {
         chartFragment = new ChartFragment();
-        chartFragment.setChartView(new ChartView(InstrumentationRegistry.getInstrumentation().getContext()));
+        chartFragment.setChartView(new ChartView(ApplicationProvider.getApplicationContext()));
         chartFragment.setTripStatisticsUpdater(TrackStubUtils.INITIAL_TIME);
     }
 
@@ -109,12 +109,12 @@ public class ChartFragmentTest {
         // Resets last location and writes first location.
         SensorDataSetLocation sensorDataSetLocation1 = TrackStubUtils.createSensorDataSetLocation();
         double[] point = fillDataPointTestHelper(sensorDataSetLocation1);
-        Assert.assertEquals(0.0, point[0]);
+        Assert.assertEquals(0.0, point[0], 0.01);
 
         // The second is a same location, just different time.
         SensorDataSetLocation sensorDataSetLocation2 = TrackStubUtils.createSensorDataSetLocation();
         point = fillDataPointTestHelper(sensorDataSetLocation2);
-        Assert.assertEquals(0.0, point[0]);
+        Assert.assertEquals(0.0, point[0], 0.01);
 
         // The third location is a new location, and use metric.
         SensorDataSetLocation sensorDataSetLocation3 = TrackStubUtils.createSensorDataSetLocation();
@@ -126,7 +126,7 @@ public class ChartFragmentTest {
         Location.distanceBetween(sensorDataSetLocation2.getLatitude(), sensorDataSetLocation2.getLongitude(),
                 sensorDataSetLocation3.getLatitude(), sensorDataSetLocation3.getLongitude(), results);
         double distance1 = results[0] * UnitConversions.M_TO_KM;
-        Assert.assertEquals(distance1, point[0]);
+        Assert.assertEquals(distance1, point[0], 0.01);
 
         // The fourth location is a new location, and use metric.
         SensorDataSetLocation sensorDataSetLocation4 = TrackStubUtils.createSensorDataSetLocation();
@@ -137,7 +137,7 @@ public class ChartFragmentTest {
         Location.distanceBetween(sensorDataSetLocation3.getLatitude(), sensorDataSetLocation3.getLongitude(),
                 sensorDataSetLocation4.getLatitude(), sensorDataSetLocation4.getLongitude(), results);
         double distance2 = results[0] * UnitConversions.M_TO_KM;
-        Assert.assertEquals((distance1 + distance2), point[0]);
+        Assert.assertEquals((distance1 + distance2), point[0], 0.01);
     }
 
     /**
@@ -153,7 +153,7 @@ public class ChartFragmentTest {
         // The first is a same location, just different time.
         SensorDataSetLocation sensorDataSetLocation1 = TrackStubUtils.createSensorDataSetLocation();
         double[] point = fillDataPointTestHelper(sensorDataSetLocation1);
-        Assert.assertEquals(0.0, point[0]);
+        Assert.assertEquals(0.0, point[0], 0.01);
 
         // The second location is a new location, and use imperial.
         SensorDataSetLocation sensorDataSetLocation2 = TrackStubUtils.createSensorDataSetLocation();

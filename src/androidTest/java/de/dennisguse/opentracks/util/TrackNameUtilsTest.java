@@ -18,10 +18,11 @@ package de.dennisguse.opentracks.util;
 
 import android.content.Context;
 
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.text.SimpleDateFormat;
@@ -41,12 +42,13 @@ public class TrackNameUtilsTest {
     private static final long TRACK_ID = 1L;
     private static final long START_TIME = 1288213406000L;
 
-    private static final Context CONTEXT = InstrumentationRegistry.getInstrumentation().getContext();
+    private static final Context CONTEXT = ApplicationProvider.getApplicationContext();
 
     /**
      * Tests when the track_name_key is
      * settings_recording_track_name_date_local_value.
      */
+    @Test
     public void testTrackName_date_local() {
         PreferencesUtils.setString(CONTEXT, R.string.track_name_key, CONTEXT.getString(R.string.settings_recording_track_name_date_local_value));
         Assert.assertEquals(StringUtils.formatDateTime(CONTEXT, START_TIME), TrackNameUtils.getTrackName(CONTEXT, TRACK_ID, START_TIME));
@@ -56,6 +58,7 @@ public class TrackNameUtilsTest {
      * Tests when the track_name_key is
      * settings_recording_track_name_date_iso_8601_value.
      */
+    @Test
     public void testTrackName_date_iso_8601() {
         PreferencesUtils.setString(CONTEXT, R.string.track_name_key, CONTEXT.getString(R.string.settings_recording_track_name_date_iso_8601_value));
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(TrackNameUtils.ISO_8601_FORMAT, Locale.US);
@@ -66,6 +69,7 @@ public class TrackNameUtilsTest {
      * Tests when the track_name_key is
      * settings_recording_track_name_number_value.
      */
+    @Test
     public void testTrackName_number() {
         PreferencesUtils.setString(CONTEXT, R.string.track_name_key, CONTEXT.getString(R.string.settings_recording_track_name_number_value));
         Assert.assertEquals("Track " + TRACK_ID, TrackNameUtils.getTrackName(CONTEXT, TRACK_ID, START_TIME));

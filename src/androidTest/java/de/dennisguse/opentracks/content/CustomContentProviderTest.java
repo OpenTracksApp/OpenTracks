@@ -16,10 +16,11 @@
 
 package de.dennisguse.opentracks.content;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
-import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.core.app.ApplicationProvider;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -38,11 +39,12 @@ public class CustomContentProviderTest {
 
     private SQLiteDatabase db;
     private CustomContentProvider customContentProvider;
+    private Context context = ApplicationProvider.getApplicationContext();
 
     @Before
     public void setUp() {
-        InstrumentationRegistry.getInstrumentation().getContext().deleteDatabase(DATABASE_NAME);
-        db = (new DatabaseHelper(InstrumentationRegistry.getInstrumentation().getContext(), DATABASE_NAME)).getWritableDatabase();
+        context.deleteDatabase(DATABASE_NAME);
+        db = (new DatabaseHelper(context, DATABASE_NAME)).getWritableDatabase();
         customContentProvider = new CustomContentProvider();
     }
 
@@ -61,7 +63,7 @@ public class CustomContentProviderTest {
      */
     @Test
     public void testOnCreate() {
-        Assert.assertTrue(customContentProvider.onCreate(InstrumentationRegistry.getInstrumentation().getContext()));
+        Assert.assertTrue(customContentProvider.onCreate(context));
     }
 
     /**
@@ -116,7 +118,7 @@ public class CustomContentProviderTest {
         try {
             db.execSQL("SElECT count(*) from  " + table + " order by  " + column);
         } catch (Exception e) {
-            if (e.getMessage().indexOf("no such column") > -1) {
+            if (e.getMessage().contains("no such column")) {
                 return false;
             }
         }
@@ -136,7 +138,7 @@ public class CustomContentProviderTest {
         createTable(TrackPointsColumns.TABLE_NAME);
         createTable(WaypointsColumns.TABLE_NAME);
 
-        DatabaseHelper databaseHelper = new DatabaseHelper(InstrumentationRegistry.getInstrumentation().getContext());
+        DatabaseHelper databaseHelper = new DatabaseHelper(context);
         databaseHelper.onUpgrade(db, oldVersion, CustomContentProvider.DATABASE_VERSION);
     }
 }

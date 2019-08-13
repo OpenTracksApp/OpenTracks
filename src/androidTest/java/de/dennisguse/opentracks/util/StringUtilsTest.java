@@ -16,10 +16,13 @@
 
 package de.dennisguse.opentracks.util;
 
+import android.content.Context;
+
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.GregorianCalendar;
@@ -33,9 +36,13 @@ import java.util.TimeZone;
 @RunWith(AndroidJUnit4.class)
 public class StringUtilsTest {
 
+    private Context context = ApplicationProvider.getApplicationContext();
+
+
     /**
      * Tests {@link StringUtils#formatDateTimeIso8601(long)}.
      */
+    @Test
     public void testFormatDateTimeIso8601() {
         Assert.assertEquals("1970-01-01T00:00:12.345Z", StringUtils.formatDateTimeIso8601(12345));
     }
@@ -43,6 +50,7 @@ public class StringUtilsTest {
     /**
      * Tests {@link StringUtils#formatElapsedTime(long)}.
      */
+    @Test
     public void testformatElapsedTime() {
         // 1 second
         Assert.assertEquals("00:01", StringUtils.formatElapsedTime(1000));
@@ -63,6 +71,7 @@ public class StringUtilsTest {
     /**
      * Tests {@link StringUtils#formatElapsedTimeWithHour(long)}.
      */
+    @Test
     public void testformatElapsedTimeWithHour() {
         // 1 second
         Assert.assertEquals("0:00:01", StringUtils.formatElapsedTimeWithHour(1000));
@@ -84,20 +93,22 @@ public class StringUtilsTest {
      * Tests {@link StringUtils#formatDistance(android.content.Context, double,
      * boolean)}.
      */
+    @Test
     public void testFormatDistance() {
         // A large number in metric
-        Assert.assertEquals("5.00 km", StringUtils.formatDistance(InstrumentationRegistry.getInstrumentation().getContext(), 5000, true));
+        Assert.assertEquals("5.00 km", StringUtils.formatDistance(context, 5000, true));
         // A large number in imperial
-        Assert.assertEquals("3.11 mi", StringUtils.formatDistance(InstrumentationRegistry.getInstrumentation().getContext(), 5000, false));
+        Assert.assertEquals("3.11 mi", StringUtils.formatDistance(context, 5000, false));
         // A small number in metric
-        Assert.assertEquals("100.00 m", StringUtils.formatDistance(InstrumentationRegistry.getInstrumentation().getContext(), 100, true));
+        Assert.assertEquals("100.00 m", StringUtils.formatDistance(context, 100, true));
         // A small number in imperial
-        Assert.assertEquals("328.08 ft", StringUtils.formatDistance(InstrumentationRegistry.getInstrumentation().getContext(), 100, false));
+        Assert.assertEquals("328.08 ft", StringUtils.formatDistance(context, 100, false));
     }
 
     /**
      * Tests {@link StringUtils#formatCData(String)}.
      */
+    @Test
     public void testFormatCData() {
         Assert.assertEquals("<![CDATA[hello]]>", StringUtils.formatCData("hello"));
         Assert.assertEquals("<![CDATA[hello]]]]><![CDATA[>there]]>", StringUtils.formatCData("hello]]>there"));
@@ -106,6 +117,7 @@ public class StringUtilsTest {
     /**
      * Tests {@link StringUtils#getTime(String)}.
      */
+    @Test
     public void testGetTime() {
         assertGetTime("2010-05-04T03:02:01", 2010, 5, 4, 3, 2, 1, 0);
         assertGetTime("2010-05-04T03:02:01Z", 2010, 5, 4, 3, 2, 1, 0);
@@ -114,6 +126,7 @@ public class StringUtilsTest {
     /**
      * Tests {@link StringUtils#getTime(String)} with fractional seconds.
      */
+    @Test
     public void testGetTime_fractional() {
         assertGetTime("2010-05-04T03:02:01.3", 2010, 5, 4, 3, 2, 1, 300);
         assertGetTime("2010-05-04T03:02:01.35", 2010, 5, 4, 3, 2, 1, 350);
@@ -124,6 +137,7 @@ public class StringUtilsTest {
     /**
      * Tests {@link StringUtils#getTime(String)} with time zone.
      */
+    @Test
     public void testGetTime_timezone() {
         assertGetTime("2010-05-04T03:02:01Z", 2010, 5, 4, 3, 2, 1, 0);
         assertGetTime("2010-05-04T03:02:01+00:00", 2010, 5, 4, 3, 2, 1, 0);
@@ -138,6 +152,7 @@ public class StringUtilsTest {
      * Tests {@link StringUtils#getTime(String)} with fractional seconds and time
      * zone.
      */
+    @Test
     public void testGetTime_fractionalAndTimezone() {
         assertGetTime("2010-05-04T03:02:01.352Z", 2010, 5, 4, 3, 2, 1, 352);
         assertGetTime("2010-05-04T03:02:01.47+00:00", 2010, 5, 4, 3, 2, 1, 470);
@@ -169,6 +184,7 @@ public class StringUtilsTest {
     /**
      * Tests {@link StringUtils#getTimeParts(long)} with a positive number.
      */
+    @Test
     public void testGetTimeParts_postive() {
         int[] parts = StringUtils.getTimeParts(61000);
         Assert.assertEquals(1, parts[0]);
@@ -179,6 +195,7 @@ public class StringUtilsTest {
     /**
      * Tests {@link StringUtils#getTimeParts(long)} with a negative number.
      */
+    @Test
     public void testGetTimeParts_negative() {
         int[] parts = StringUtils.getTimeParts(-61000);
         Assert.assertEquals(-1, parts[0]);
