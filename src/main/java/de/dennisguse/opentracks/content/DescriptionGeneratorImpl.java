@@ -20,12 +20,12 @@ import android.content.Context;
 
 import androidx.annotation.VisibleForTesting;
 
+import java.util.Vector;
+
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.stats.TripStatistics;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
-import de.dennisguse.opentracks.R;
-
-import java.util.Vector;
 
 /**
  * @author Jimmy Shih
@@ -51,7 +51,7 @@ public class DescriptionGeneratorImpl implements DescriptionGenerator {
 
         // Created by
         String creator = html
-                ? "<a href='http://" + context.getString(R.string.app_web_url) + "'>" + context.getString(R.string.app_name) + "</a>"
+                ? "<a href='" + context.getString(R.string.app_web_url) + "'>" + context.getString(R.string.app_name) + "</a>"
                 : context.getString(R.string.app_name);
         builder.append(creator);
 

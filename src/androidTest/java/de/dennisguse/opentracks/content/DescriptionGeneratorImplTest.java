@@ -67,8 +67,8 @@ public class DescriptionGeneratorImplTest {
         stats.setStartTime(START_TIME);
         track.setTripStatistics(stats);
         track.setCategory("hiking");
-        String expected = "Created by"
-                + " <a href='TODO'>TODO</a> on Android<p>"
+        String expected = //"Created by"
+                "<a href='https://github.com/dennisguse/opentracks'>OpenTracks</a><p>"
                 + "Name: -<br>"
                 + "Activity type: hiking<br>"
                 + "Description: -<br>"
@@ -87,6 +87,7 @@ public class DescriptionGeneratorImplTest {
                 + "Max grade: 42 %<br>"
                 + "Min grade: 11 %<br>"
                 + "Recorded: " + StringUtils.formatDateTime(context, START_TIME) + "<br>";
+
         Assert.assertEquals(expected, descriptionGenerator.generateTrackDescription(track, null, null, true));
     }
 
