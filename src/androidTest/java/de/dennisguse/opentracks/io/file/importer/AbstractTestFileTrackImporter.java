@@ -17,36 +17,37 @@
 package de.dennisguse.opentracks.io.file.importer;
 
 import android.content.ContentUris;
+import android.content.Context;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
-import android.test.AndroidTestCase;
 
-import de.dennisguse.opentracks.content.ContentProviderUtils;
-import de.dennisguse.opentracks.content.ContentProviderUtils.Factory;
-import de.dennisguse.opentracks.content.Track;
-import de.dennisguse.opentracks.content.TracksColumns;
-import de.dennisguse.opentracks.content.Waypoint;
-import de.dennisguse.opentracks.content.WaypointsColumns;
-import de.dennisguse.opentracks.testing.TestingProviderUtilsFactory;
-import com.google.android.testing.mocking.AndroidMock;
-import com.google.android.testing.mocking.UsesMocks;
+import androidx.test.core.app.ApplicationProvider;
 
-import org.easymock.Capture;
+import org.junit.Assert;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.SimpleTimeZone;
 
-import static com.google.android.testing.mocking.AndroidMock.eq;
-import static com.google.android.testing.mocking.AndroidMock.expect;
+import de.dennisguse.opentracks.content.ContentProviderUtils;
+import de.dennisguse.opentracks.content.Track;
+import de.dennisguse.opentracks.content.TracksColumns;
+import de.dennisguse.opentracks.content.Waypoint;
+import de.dennisguse.opentracks.content.WaypointsColumns;
+
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.when;
 
 /**
  * Abstract class for testing file track importers.
  *
  * @author Jimmy Shih.
  */
-public class AbstractTestFileTrackImporter extends AndroidTestCase {
+public abstract class AbstractTestFileTrackImporter {
 
     protected static final String TRACK_NAME_0 = "blablub";
     protected static final String TRACK_DESCRIPTION_0 = "s'Laebe isch koi Schlotzer";
@@ -63,22 +64,19 @@ public class AbstractTestFileTrackImporter extends AndroidTestCase {
     protected static final String TRACK_TIME_2 = "2010-04-22T18:23:00.123";
     protected static final String TRACK_TIME_3 = "2010-04-22T18:24:50.123";
 
-    protected static final SimpleDateFormat DATE_FORMAT_0 = new SimpleDateFormat(
-            "yyyy-MM-dd'T'hh:mm:ss'Z'", Locale.US);
-    protected static final SimpleDateFormat DATE_FORMAT_1 = new SimpleDateFormat(
-            "yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US);
+    protected static final SimpleDateFormat DATE_FORMAT_0 = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'", Locale.US);
+    protected static final SimpleDateFormat DATE_FORMAT_1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US);
     protected static final long TRACK_ID_0 = 1;
     protected static final long TRACK_ID_1 = 2;
     protected static final long TRACK_POINT_ID_0 = 1;
     protected static final long TRACK_POINT_ID_1 = 2;
     protected static final long TRACK_POINT_ID_3 = 4;
     protected static final long WAYPOINT_ID_0 = 1;
-    protected static final Uri TRACK_ID_0_URI = ContentUris.appendId(
-            TracksColumns.CONTENT_URI.buildUpon(), TRACK_ID_0).build();
-    protected static final Uri TRACK_ID_1_URI = ContentUris.appendId(
-            TracksColumns.CONTENT_URI.buildUpon(), TRACK_ID_1).build();
-    protected static final Uri WAYPOINT_ID_O_URI = ContentUris.appendId(
-            WaypointsColumns.CONTENT_URI.buildUpon(), WAYPOINT_ID_0).build();
+    protected static final Uri TRACK_ID_0_URI = ContentUris.appendId(TracksColumns.CONTENT_URI.buildUpon(), TRACK_ID_0).build();
+    protected static final Uri TRACK_ID_1_URI = ContentUris.appendId(TracksColumns.CONTENT_URI.buildUpon(), TRACK_ID_1).build();
+    protected static final Uri WAYPOINT_ID_O_URI = ContentUris.appendId(WaypointsColumns.CONTENT_URI.buildUpon(), WAYPOINT_ID_0).build();
+
+    protected final Context context = ApplicationProvider.getApplicationContext();
 
     static {
         /*
@@ -90,24 +88,8 @@ public class AbstractTestFileTrackImporter extends AndroidTestCase {
         DATE_FORMAT_1.setTimeZone(utc);
     }
 
-    protected ContentProviderUtils contentProviderUtils;
-
-    private Factory oldMyTracksProviderUtilsFactory;
-
-    @UsesMocks(ContentProviderUtils.class)
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        contentProviderUtils = AndroidMock.createMock(ContentProviderUtils.class);
-        oldMyTracksProviderUtilsFactory = TestingProviderUtilsFactory.installWithInstance(
-                contentProviderUtils);
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        TestingProviderUtilsFactory.restoreOldFactory(oldMyTracksProviderUtilsFactory);
-        super.tearDown();
-    }
+    @Mock
+    public ContentProviderUtils contentProviderUtils;
 
     protected Location createLocation(int index, long time) {
         Location location = new Location(LocationManager.GPS_PROVIDER);
@@ -126,37 +108,35 @@ public class AbstractTestFileTrackImporter extends AndroidTestCase {
      * @param trackPointId the track point id
      */
     protected void expectFirstTrackPoint(Location location, long trackId, long trackPointId) {
-        expect(contentProviderUtils.bulkInsertTrackPoint(
-                location != null ? LocationsMatcher.eqLoc(location) : (Location[]) AndroidMock.anyObject(),
-                eq(1), eq(trackId))).andReturn(1);
-        expect(contentProviderUtils.getFirstTrackPointId(trackId)).andReturn(trackPointId);
-        expect(contentProviderUtils.getLastTrackPointId(trackId)).andReturn(trackPointId);
+        when(contentProviderUtils.bulkInsertTrackPoint(location != null ? (Location[]) any() : (Location[]) any(), eq(1), eq(trackId))).thenReturn(1);
+        when(contentProviderUtils.getFirstTrackPointId(trackId)).thenReturn(trackPointId);
+        when(contentProviderUtils.getLastTrackPointId(trackId)).thenReturn(trackPointId);
     }
 
     /**
      * Expects the track to be updated.
      *
-     * @param track     the track
-     * @param lastTrack true if it is the last track in the gpx
-     * @param trackId   the track id
+     * @param trackCaptor the track
+     * @param lastTrack   true if it is the last track in the gpx
+     * @param trackId     the track id
      */
-    protected void expectUpdateTrack(Capture<Track> track, boolean lastTrack, long trackId) {
-        contentProviderUtils.updateTrack(AndroidMock.capture(track));
-        expect(contentProviderUtils.insertWaypoint((Waypoint) AndroidMock.anyObject()))
-                .andReturn(WAYPOINT_ID_O_URI);
+    protected void expectUpdateTrack(ArgumentCaptor<Track> trackCaptor, boolean lastTrack, long trackId) {
+        contentProviderUtils.updateTrack(trackCaptor.capture());
+
+        when(contentProviderUtils.insertWaypoint((Waypoint) any())).thenReturn(WAYPOINT_ID_O_URI);
         if (lastTrack) {
             // Return null to not add waypoints
-            expect(contentProviderUtils.getTrack(trackId)).andReturn(null);
+            when(contentProviderUtils.getTrack(trackId)).thenReturn(null);
         }
     }
 
     protected void verifyTrack(Track track, String name, String description, long time) {
-        assertEquals(name, track.getName());
-        assertEquals(description, track.getDescription());
+        Assert.assertEquals(name, track.getName());
+        Assert.assertEquals(description, track.getDescription());
         if (time != -1L) {
-            assertEquals(time, track.getTripStatistics().getStartTime());
+            Assert.assertEquals(time, track.getTripStatistics().getStartTime());
         }
-        assertNotSame(-1, track.getStartId());
-        assertNotSame(-1, track.getStopId());
+        Assert.assertNotSame(-1, track.getStartId());
+        Assert.assertNotSame(-1, track.getStopId());
     }
 }
