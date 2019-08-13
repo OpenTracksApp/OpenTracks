@@ -21,7 +21,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 
-import de.dennisguse.opentracks.Constants;
 import de.dennisguse.opentracks.R;
 
 /**
@@ -143,16 +142,21 @@ public class PreferencesUtils {
      * @param defaultValue the default value
      */
     public static int getInt(Context context, int keyId, int defaultValue) {
-        //NOTE: We assume that the data was stored as String due to use of ListPreference.
         SharedPreferences sharedPreferences = getSharedPreferences(context);
-        String stringValue = sharedPreferences.getString(getKey(context, keyId), null);
 
-        int intValue = defaultValue;
         try {
-            intValue = Integer.parseInt(stringValue);
-        } catch (NumberFormatException e) {
+            return sharedPreferences.getInt(getKey(context, keyId), defaultValue);
+        } catch (ClassCastException e) {
+            //Ignore
         }
-        return intValue;
+
+        //NOTE: We assume that the data was stored as String due to use of ListPreference.
+        try {
+            String stringValue = sharedPreferences.getString(getKey(context, keyId), null);
+            return Integer.parseInt(stringValue);
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
     }
 
     /**
