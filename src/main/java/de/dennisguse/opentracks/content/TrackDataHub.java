@@ -25,14 +25,14 @@ import android.util.Log;
 
 import androidx.annotation.VisibleForTesting;
 
-import de.dennisguse.opentracks.content.ContentProviderUtils.LocationIterator;
-import de.dennisguse.opentracks.util.LocationUtils;
-import de.dennisguse.opentracks.util.PreferencesUtils;
-import de.dennisguse.opentracks.R;
-
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Set;
+
+import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.ContentProviderUtils.LocationIterator;
+import de.dennisguse.opentracks.util.LocationUtils;
+import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
  * Track data hub. Receives data from {@link DataSource} and distributes it to
@@ -120,7 +120,7 @@ public class TrackDataHub implements DataSourceListener {
         dataSourceManager = new DataSourceManager(dataSource, this);
 
         notifyPreferenceChanged(null);
-        runInHanderThread(new Runnable() {
+        runInHandlerThread(new Runnable() {
             @Override
             public void run() {
                 if (dataSourceManager != null) {
@@ -157,7 +157,7 @@ public class TrackDataHub implements DataSourceListener {
      * @param trackId the track id
      */
     public void loadTrack(final long trackId) {
-        runInHanderThread(new Runnable() {
+        runInHandlerThread(new Runnable() {
             @Override
             public void run() {
                 if (trackId == selectedTrackId) {
@@ -177,7 +177,7 @@ public class TrackDataHub implements DataSourceListener {
      * @param trackDataTypes    the track data types
      */
     public void registerTrackDataListener(final TrackDataListener trackDataListener, final EnumSet<TrackDataType> trackDataTypes) {
-        runInHanderThread(new Runnable() {
+        runInHandlerThread(new Runnable() {
             @Override
             public void run() {
                 trackDataManager.registerListener(trackDataListener, trackDataTypes);
@@ -195,7 +195,7 @@ public class TrackDataHub implements DataSourceListener {
      * @param trackDataListener the track data listener
      */
     public void unregisterTrackDataListener(final TrackDataListener trackDataListener) {
-        runInHanderThread(new Runnable() {
+        runInHandlerThread(new Runnable() {
             @Override
             public void run() {
                 trackDataManager.unregisterListener(trackDataListener);
@@ -210,7 +210,7 @@ public class TrackDataHub implements DataSourceListener {
      * Reloads data for a {@link TrackDataListener}.
      */
     public void reloadDataForListener(final TrackDataListener trackDataListener) {
-        runInHanderThread(new Runnable() {
+        runInHandlerThread(new Runnable() {
             @Override
             public void run() {
                 loadDataForListener(trackDataListener);
@@ -235,7 +235,7 @@ public class TrackDataHub implements DataSourceListener {
 
     @Override
     public void notifyTracksTableUpdated() {
-        runInHanderThread(new Runnable() {
+        runInHandlerThread(new Runnable() {
             @Override
             public void run() {
                 notifyTracksTableUpdate(trackDataManager.getListeners(TrackDataType.TRACKS_TABLE));
@@ -245,7 +245,7 @@ public class TrackDataHub implements DataSourceListener {
 
     @Override
     public void notifyWaypointsTableUpdated() {
-        runInHanderThread(new Runnable() {
+        runInHandlerThread(new Runnable() {
             @Override
             public void run() {
                 notifyWaypointsTableUpdate(trackDataManager.getListeners(TrackDataType.WAYPOINTS_TABLE));
@@ -255,7 +255,7 @@ public class TrackDataHub implements DataSourceListener {
 
     @Override
     public void notifyTrackPointsTableUpdated() {
-        runInHanderThread(new Runnable() {
+        runInHandlerThread(new Runnable() {
             @Override
             public void run() {
                 notifyTrackPointsTableUpdate(
@@ -267,7 +267,7 @@ public class TrackDataHub implements DataSourceListener {
 
     @Override
     public void notifyPreferenceChanged(final String key) {
-        runInHanderThread(new Runnable() {
+        runInHandlerThread(new Runnable() {
             @Override
             public void run() {
                 if (key == null
@@ -565,7 +565,7 @@ public class TrackDataHub implements DataSourceListener {
      * @param runnable the runnable
      */
     @VisibleForTesting
-    protected void runInHanderThread(Runnable runnable) {
+    protected void runInHandlerThread(Runnable runnable) {
         if (handler == null) {
             // Use a Throwable to ensure the stack trace is logged.
             Log.d(TAG, "handler is null.", new Throwable());

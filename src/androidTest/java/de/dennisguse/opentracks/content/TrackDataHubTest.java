@@ -88,7 +88,7 @@ public class TrackDataHubTest {
             }
 
             @Override
-            protected void runInHanderThread(Runnable runnable) {
+            protected void runInHandlerThread(Runnable runnable) {
                 // Run everything in the same thread
                 runnable.run();
             }
