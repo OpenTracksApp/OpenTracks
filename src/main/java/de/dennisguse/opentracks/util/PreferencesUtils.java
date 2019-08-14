@@ -55,7 +55,6 @@ public class PreferencesUtils {
     // Value for split_frequency_key and voice_frequency_key
     public static final int FREQUENCY_OFF = 0;
 
-    public static final int MAP_TYPE_DEFAULT = 1;
     public static final int MAX_RECORDING_DISTANCE_DEFAULT = 200;
 
     // Values for min_recording_interval_key
