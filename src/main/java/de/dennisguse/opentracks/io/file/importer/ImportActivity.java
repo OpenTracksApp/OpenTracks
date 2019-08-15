@@ -16,27 +16,23 @@
 
 package de.dennisguse.opentracks.io.file.importer;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
-import androidx.core.app.TaskStackBuilder;
+import androidx.fragment.app.FragmentActivity;
 
-import de.dennisguse.opentracks.TrackDetailActivity;
+import java.io.File;
+
+import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.fragments.FileTypeDialogFragment;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.util.DialogUtils;
 import de.dennisguse.opentracks.util.FileUtils;
-import de.dennisguse.opentracks.util.IntentUtils;
-import de.dennisguse.opentracks.R;
-
-import java.io.File;
 
 /**
  * An activity to import files from the external storage. Optionally to import
@@ -44,10 +40,7 @@ import java.io.File;
  *
  * @author Rodrigo Damazio
  */
-public class ImportActivity extends Activity {
-
-    public static final String EXTRA_IMPORT_ALL = "import_all";
-    public static final String EXTRA_TRACK_FILE_FORMAT = "track_file_format";
+public class ImportActivity extends FragmentActivity implements FileTypeDialogFragment.FileTypeCaller {
 
     private static final String TAG = ImportActivity.class.getSimpleName();
     private static final int DIALOG_PROGRESS_ID = 0;
@@ -55,8 +48,6 @@ public class ImportActivity extends Activity {
 
     private ImportAsyncTask importAsyncTask;
     private ProgressDialog progressDialog;
-
-    private boolean importAll;
 
     // the path on the external storage to import
     private String directoryDisplayName;
@@ -67,16 +58,19 @@ public class ImportActivity extends Activity {
     // the number of files to import
     private int totalCount;
 
-    // the last successfully imported track id
-    private long trackId;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        FileTypeDialogFragment
+                .newInstance(R.string.import_selection_title, R.string.import_selection_option)
+                .show(getSupportFragmentManager(), FileTypeDialogFragment.FILE_TYPE_DIALOG_TAG);
+    }
+
+
+    @Override
+    public void onFileTypeDone(TrackFileFormat trackFileFormat) {
         Intent intent = getIntent();
-        importAll = intent.getBooleanExtra(EXTRA_IMPORT_ALL, false);
-        TrackFileFormat trackFileFormat = intent.getParcelableExtra(EXTRA_TRACK_FILE_FORMAT);
         if (trackFileFormat == null) {
             trackFileFormat = TrackFileFormat.GPX;
         }
@@ -86,49 +80,26 @@ public class ImportActivity extends Activity {
             finish();
             return;
         }
-        String directoryPath;
-        if (importAll) {
-            directoryDisplayName = FileUtils.getPathDisplayName(trackFileFormat.getExtension());
-            directoryPath = FileUtils.getPath(trackFileFormat.getExtension());
-            if (!FileUtils.isDirectory(new File(directoryPath))) {
-                Toast.makeText(
-                        this, getString(R.string.import_no_directory, directoryDisplayName), Toast.LENGTH_LONG)
-                        .show();
-                finish();
-                return;
-            }
-        } else {
-            String action = intent.getAction();
-            if (!(Intent.ACTION_ATTACH_DATA.equals(action) || Intent.ACTION_VIEW.equals(action))) {
-                Log.d(TAG, "Invalid action: " + intent);
-                finish();
-                return;
-            }
 
-            Uri data = intent.getData();
-            if ("file".equals(data.getScheme())) {
-                Log.d(TAG, "Invalid data: " + intent);
-                finish();
-                return;
-            }
-            directoryDisplayName = data.getPath();
-            directoryPath = data.getPath();
+        directoryDisplayName = FileUtils.getPathDisplayName(trackFileFormat.getExtension());
+        String directoryPath = FileUtils.getPath(trackFileFormat.getExtension());
+        if (!FileUtils.isDirectory(new File(directoryPath))) {
+            Toast.makeText(
+                    this, getString(R.string.import_no_directory, directoryDisplayName), Toast.LENGTH_LONG)
+                    .show();
+            finish();
+            return;
         }
 
-        Object retained = getLastNonConfigurationInstance();
-        if (retained instanceof ImportAsyncTask) {
-            importAsyncTask = (ImportAsyncTask) retained;
-            importAsyncTask.setActivity(this);
-        } else {
-            importAsyncTask = new ImportAsyncTask(this, importAll, trackFileFormat, directoryPath);
-            importAsyncTask.execute();
-        }
-    }
-
-    @Override
-    public Object onRetainNonConfigurationInstance() {
-        importAsyncTask.setActivity(null);
-        return importAsyncTask;
+        //TODO (still needed?): getLastNonConfiguration instance returned SaveAsyncTask before
+//        Object retained = getLastNonConfigurationInstance();
+//        if (retained instanceof ImportAsyncTask) {
+//            importAsyncTask = (ImportAsyncTask) retained;
+//            importAsyncTask.setActivity(this);
+//        } else {
+        importAsyncTask = new ImportAsyncTask(this, trackFileFormat, directoryPath);
+        importAsyncTask.execute();
+//        }
     }
 
     @Override
@@ -176,14 +147,6 @@ public class ImportActivity extends Activity {
                         }).setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int which) {
-                                if (successCount == totalCount && !importAll && trackId != -1L) {
-                                    Intent intent = IntentUtils.newIntent(
-                                            ImportActivity.this, TrackDetailActivity.class)
-                                            .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);
-                                    TaskStackBuilder.create(ImportActivity.this)
-                                            .addParentStack(TrackDetailActivity.class).addNextIntent(intent)
-                                            .startActivities();
-                                }
                                 dialogInterface.dismiss();
                                 finish();
                             }
@@ -206,12 +169,10 @@ public class ImportActivity extends Activity {
      *
      * @param aSuccessCount the number of files successfully imported
      * @param aTotalCount   the number of files to import
-     * @param aTrackId      the last successfully imported track id
      */
-    public void onAsyncTaskCompleted(int aSuccessCount, int aTotalCount, long aTrackId) {
+    public void onAsyncTaskCompleted(int aSuccessCount, int aTotalCount) {
         successCount = aSuccessCount;
         totalCount = aTotalCount;
-        trackId = aTrackId;
         removeDialog(DIALOG_PROGRESS_ID);
         showDialog(DIALOG_RESULT_ID);
     }

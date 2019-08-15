@@ -26,7 +26,6 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.os.StrictMode;
 import android.provider.Settings;
 import android.util.Log;
@@ -58,11 +57,6 @@ import java.util.Locale;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.TracksColumns;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
-import de.dennisguse.opentracks.fragments.FileTypeDialogFragment;
-import de.dennisguse.opentracks.fragments.FileTypeDialogFragment.FileTypeCaller;
-import de.dennisguse.opentracks.io.file.TrackFileFormat;
-import de.dennisguse.opentracks.io.file.exporter.SaveActivity;
-import de.dennisguse.opentracks.io.file.importer.ImportActivity;
 import de.dennisguse.opentracks.services.ITrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.settings.SettingsActivity;
@@ -79,7 +73,7 @@ import de.dennisguse.opentracks.util.TrackUtils;
  *
  * @author Leif Hendrik Wilden
  */
-public class TrackListActivity extends AbstractTrackActivity implements FileTypeCaller, ConfirmDeleteDialogFragment.ConfirmDeleteCaller {
+public class TrackListActivity extends AbstractTrackActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller {
 
     private static final String TAG = TrackListActivity.class.getSimpleName();
     private static final String[] PROJECTION = new String[]{TracksColumns._ID, TracksColumns.NAME,
@@ -175,8 +169,6 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
     private MenuItem searchMenuItem;
     private MenuItem startGpsMenuItem;
     private MenuItem aggregatedStatisticsMenuItem;
-    private MenuItem exportAllMenuItem;
-    private MenuItem importAllMenuItem;
     private MenuItem deleteAllMenuItem;
     private final OnClickListener stopListener = new OnClickListener() {
         @Override
@@ -391,8 +383,6 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
 
         startGpsMenuItem = menu.findItem(R.id.track_list_start_gps);
         aggregatedStatisticsMenuItem = menu.findItem(R.id.track_list_aggregated_statistics);
-        exportAllMenuItem = menu.findItem(R.id.track_list_export_all);
-        importAllMenuItem = menu.findItem(R.id.track_list_import_all);
         deleteAllMenuItem = menu.findItem(R.id.track_list_delete_all);
 
         return super.onCreateOptionsMenu(menu);
@@ -452,16 +442,6 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
                 intent = IntentUtils.newIntent(this, AggregatedStatsActivity.class);
                 startActivity(intent);
                 return true;
-            case R.id.track_list_export_all:
-                FileTypeDialogFragment.newInstance(R.id.track_list_export_all,
-                        R.string.export_all_title, R.string.export_all_option)
-                        .show(getSupportFragmentManager(), FileTypeDialogFragment.FILE_TYPE_DIALOG_TAG);
-                return true;
-            case R.id.track_list_import_all:
-                FileTypeDialogFragment.newInstance(R.id.track_list_import_all,
-                        R.string.import_selection_title, R.string.import_selection_option)
-                        .show(getSupportFragmentManager(), FileTypeDialogFragment.FILE_TYPE_DIALOG_TAG);
-                return true;
             case R.id.track_list_delete_all:
                 deleteTracks(new long[]{-1L});
                 return true;
@@ -517,26 +497,6 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
         // Do nothing
     }
 
-    @Override
-    public void onFileTypeDone(int menuId, TrackFileFormat trackFileFormat) {
-        Intent intent;
-        switch (menuId) {
-            case R.id.track_list_export_all:
-                intent = IntentUtils.newIntent(this, SaveActivity.class)
-                        .putExtra(SaveActivity.EXTRA_TRACK_IDS, new long[]{-1L})
-                        .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);
-                startActivity(intent);
-                break;
-            case R.id.track_list_import_all:
-                intent = IntentUtils.newIntent(this, ImportActivity.class)
-                        .putExtra(ImportActivity.EXTRA_IMPORT_ALL, true)
-                        .putExtra(ImportActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);
-                startActivity(intent);
-                break;
-            default:
-        }
-    }
-
     /**
      * Shows start up dialogs.
      */
@@ -574,12 +534,6 @@ public class TrackListActivity extends AbstractTrackActivity implements FileType
         }
         if (aggregatedStatisticsMenuItem != null) {
             aggregatedStatisticsMenuItem.setVisible(hasTrack);
-        }
-        if (exportAllMenuItem != null) {
-            exportAllMenuItem.setVisible(hasTrack && !isRecording);
-        }
-        if (importAllMenuItem != null) {
-            importAllMenuItem.setVisible(!isRecording);
         }
         if (deleteAllMenuItem != null) {
             deleteAllMenuItem.setVisible(hasTrack && !isRecording);

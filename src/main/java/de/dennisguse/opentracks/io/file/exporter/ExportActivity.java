@@ -16,22 +16,22 @@
 
 package de.dennisguse.opentracks.io.file.exporter;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
+
+import androidx.fragment.app.FragmentActivity;
 
 import java.io.File;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.fragments.FileTypeDialogFragment;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.util.DialogUtils;
 import de.dennisguse.opentracks.util.FileUtils;
-import de.dennisguse.opentracks.util.IntentUtils;
 
 /**
  * An activity for saving tracks to the external storage. If saving a specific
@@ -39,20 +39,11 @@ import de.dennisguse.opentracks.util.IntentUtils;
  *
  * @author Rodrigo Damazio
  */
-public class SaveActivity extends Activity {
-
-    public static final String EXTRA_TRACK_FILE_FORMAT = "track_file_format";
-    public static final String EXTRA_TRACK_IDS = "track_ids";
-
-    @Deprecated //TODO Seems to be a left over from Google Earth integration and can be removed.
-    public static final String EXTRA_PLAY_TRACK = "play_track";
+public class ExportActivity extends FragmentActivity implements FileTypeDialogFragment.FileTypeCaller {
 
     private static final int DIALOG_PROGRESS_ID = 0;
     private static final int DIALOG_RESULT_ID = 1;
 
-    private TrackFileFormat trackFileFormat;
-    private long[] trackIds;
-    private boolean playTrack;
     private String directoryDisplayName;
 
     private SaveAsyncTask saveAsyncTask;
@@ -64,53 +55,41 @@ public class SaveActivity extends Activity {
     // the number of tracks to save
     private int totalCount;
 
-    // the last successfully saved path
-    private String savedPath;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intent = getIntent();
-        trackFileFormat = intent.getParcelableExtra(EXTRA_TRACK_FILE_FORMAT);
-        trackIds = intent.getLongArrayExtra(EXTRA_TRACK_IDS);
-        playTrack = intent.getBooleanExtra(EXTRA_PLAY_TRACK, false);
+        FileTypeDialogFragment
+                .newInstance(R.string.export_all_title, R.string.export_all_option)
+                .show(getSupportFragmentManager(), FileTypeDialogFragment.FILE_TYPE_DIALOG_TAG);
+    }
 
+    @Override
+    public void onFileTypeDone(TrackFileFormat trackFileFormat) {
         if (!FileUtils.isExternalStorageWriteable()) {
             Toast.makeText(this, R.string.external_storage_not_writable, Toast.LENGTH_LONG).show();
             finish();
             return;
         }
 
-        File directory = playTrack ? new File(getCacheDir(), FileUtils.PLAY_TRACKS_DIR) : new File(FileUtils.getPath(trackFileFormat.getExtension()));
+        File directory = new File(FileUtils.getPath(trackFileFormat.getExtension()));
         if (!FileUtils.ensureDirectoryExists(directory)) {
             Toast.makeText(this, R.string.external_storage_not_writable, Toast.LENGTH_LONG).show();
             finish();
             return;
         }
 
-        if (playTrack) {
-            for (File file : directory.listFiles()) {
-                file.delete();
-            }
-        }
+        directoryDisplayName = FileUtils.getPathDisplayName(trackFileFormat.getExtension());
 
-        directoryDisplayName = playTrack ? directory.getName() : FileUtils.getPathDisplayName(trackFileFormat.getExtension());
-
-        Object retained = getLastNonConfigurationInstance();
-        if (retained instanceof SaveAsyncTask) {
-            saveAsyncTask = (SaveAsyncTask) retained;
-            saveAsyncTask.setActivity(this);
-        } else {
-            saveAsyncTask = new SaveAsyncTask(this, trackIds, trackFileFormat, directory);
-            saveAsyncTask.execute();
-        }
-    }
-
-    @Override
-    public Object onRetainNonConfigurationInstance() {
-        saveAsyncTask.setActivity(null);
-        return saveAsyncTask;
+        //TODO (still needed?): getLastNonConfiguration instance returned SaveAsyncTask before
+//        Object retained = getLastNonConfigurationInstance();
+//        if (retained instanceof SaveAsyncTask) {
+//            saveAsyncTask = (SaveAsyncTask) retained;
+//            saveAsyncTask.setActivity(this);
+//        } else {
+        saveAsyncTask = new SaveAsyncTask(this, trackFileFormat, directory);
+        saveAsyncTask.execute();
+//        }
     }
 
     @Override
@@ -159,26 +138,12 @@ public class SaveActivity extends Activity {
                                 finish();
                             }
                         }).setTitle(titleId);
-                if (!playTrack && trackIds.length == 1 && trackIds[0] != -1L && successCount == totalCount
-                        && savedPath != null) {
-                    builder.setNegativeButton(
-                            R.string.share_track_share_file, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = IntentUtils.newShareFileIntent(
-                                            SaveActivity.this, trackIds[0], savedPath, trackFileFormat);
-                                    startActivity(
-                                            Intent.createChooser(intent, getString(R.string.share_track_picker_title)));
-                                    finish();
-                                }
-                            });
-                }
                 final Dialog dialog = builder.create();
                 dialog.setOnShowListener(new DialogInterface.OnShowListener() {
 
                     @Override
                     public void onShow(DialogInterface dialogInterface) {
-                        DialogUtils.setDialogTitleDivider(SaveActivity.this, dialog);
+                        DialogUtils.setDialogTitleDivider(ExportActivity.this, dialog);
                     }
                 });
                 return dialog;
@@ -192,12 +157,10 @@ public class SaveActivity extends Activity {
      *
      * @param aSuccessCount the number of tracks successfully saved
      * @param aTotalCount   the number of tracks to save
-     * @param aSavedPath    the last successfully saved path
      */
-    public void onAsyncTaskCompleted(int aSuccessCount, int aTotalCount, String aSavedPath) {
+    public void onAsyncTaskCompleted(int aSuccessCount, int aTotalCount) {
         successCount = aSuccessCount;
         totalCount = aTotalCount;
-        savedPath = aSavedPath;
         removeDialog(DIALOG_PROGRESS_ID);
         showDialog(DIALOG_RESULT_ID);
     }

@@ -22,6 +22,14 @@ import android.os.AsyncTask;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
@@ -29,14 +37,6 @@ import de.dennisguse.opentracks.io.file.exporter.KmzTrackExporter;
 import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.SystemUtils;
-import de.dennisguse.opentracks.R;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * AsyncTask to import files from the external storage.
@@ -46,7 +46,6 @@ import java.util.List;
 public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
     private static final String TAG = ImportAsyncTask.class.getSimpleName();
-    private final boolean importAll;
     private final TrackFileFormat trackFileFormat;
     private final String path;
     private final Context context;
@@ -69,14 +68,11 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
      * Creates an AsyncTask.
      *
      * @param importActivity  the activity currently associated with this AsyncTask
-     * @param importAll       true to import all GPX files
      * @param trackFileFormat the track file format
      * @param path            path to import GPX files
      */
-    public ImportAsyncTask(ImportActivity importActivity, boolean importAll,
-                           TrackFileFormat trackFileFormat, String path) {
+    public ImportAsyncTask(ImportActivity importActivity, TrackFileFormat trackFileFormat, String path) {
         this.importActivity = importActivity;
-        this.importAll = importAll;
         this.trackFileFormat = trackFileFormat;
         this.path = path;
         context = importActivity.getApplicationContext();
@@ -95,7 +91,7 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     public void setActivity(ImportActivity importActivity) {
         this.importActivity = importActivity;
         if (completed && importActivity != null) {
-            importActivity.onAsyncTaskCompleted(successCount, totalCount, trackId);
+            importActivity.onAsyncTaskCompleted(successCount, totalCount);
         }
     }
 
@@ -155,7 +151,7 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     protected void onPostExecute(Boolean result) {
         completed = true;
         if (importActivity != null) {
-            importActivity.onAsyncTaskCompleted(successCount, totalCount, trackId);
+            importActivity.onAsyncTaskCompleted(successCount, totalCount);
         }
     }
 
@@ -163,7 +159,7 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     protected void onCancelled() {
         completed = true;
         if (importActivity != null) {
-            importActivity.onAsyncTaskCompleted(successCount, totalCount, trackId);
+            importActivity.onAsyncTaskCompleted(successCount, totalCount);
         }
     }
 
@@ -215,26 +211,24 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     private List<File> getFiles() {
         List<File> files = new ArrayList<>();
         File file = new File(path);
-        if (importAll) {
-            File[] candidates = file.listFiles();
-            if (candidates != null) {
-                for (File candidate : candidates) {
-                    if (!FileUtils.isDirectory(candidate)) {
-                        String extension = FileUtils.getExtension(candidate.getName());
-                        if (trackFileFormat == TrackFileFormat.KML && (
-                                TrackFileFormat.KML.getExtension().equals(extension)
-                                        || KmzTrackExporter.KMZ_EXTENSION.equals(extension))) {
-                            files.add(candidate);
-                        } else if (trackFileFormat == TrackFileFormat.GPX
-                                && TrackFileFormat.GPX.getExtension().equals(extension)) {
-                            files.add(candidate);
-                        }
+
+        File[] candidates = file.listFiles();
+        if (candidates != null) {
+            for (File candidate : candidates) {
+                if (!FileUtils.isDirectory(candidate)) {
+                    String extension = FileUtils.getExtension(candidate.getName());
+                    if (trackFileFormat == TrackFileFormat.KML
+                            && (TrackFileFormat.KML.getExtension().equals(extension)
+                            || KmzTrackExporter.KMZ_EXTENSION.equals(extension))) {
+                        files.add(candidate);
+                    } else if (trackFileFormat == TrackFileFormat.GPX && TrackFileFormat.GPX.getExtension().equals(extension)) {
+                        files.add(candidate);
                     }
                 }
             }
-        } else {
-            files.add(file);
         }
+
+
         return files;
     }
 }

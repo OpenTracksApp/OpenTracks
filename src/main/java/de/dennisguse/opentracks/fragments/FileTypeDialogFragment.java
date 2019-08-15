@@ -23,9 +23,9 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.util.FileUtils;
-import de.dennisguse.opentracks.R;
 
 /**
  * A DialogFragment to select a file type, gpx, kml, etc.
@@ -35,14 +35,12 @@ import de.dennisguse.opentracks.R;
 public class FileTypeDialogFragment extends AbstractDialogFragment {
 
     public static final String FILE_TYPE_DIALOG_TAG = "fileType";
-    private static final String KEY_MENU_ID = "menuId";
     private static final String KEY_TITLE_ID = "titleId";
     private static final String KEY_OPTION_ID = "optionId";
     private FileTypeCaller caller;
 
-    public static FileTypeDialogFragment newInstance(int menuId, int titleId, int optionId) {
+    public static FileTypeDialogFragment newInstance(int titleId, int optionId) {
         Bundle bundle = new Bundle();
-        bundle.putInt(KEY_MENU_ID, menuId);
         bundle.putInt(KEY_TITLE_ID, titleId);
         bundle.putInt(KEY_OPTION_ID, optionId);
 
@@ -65,7 +63,6 @@ public class FileTypeDialogFragment extends AbstractDialogFragment {
     protected Dialog createDialog() {
         int optionId = getArguments().getInt(KEY_OPTION_ID);
         final int titleId = getArguments().getInt(KEY_TITLE_ID);
-        final int menuId = getArguments().getInt(KEY_MENU_ID);
         TrackFileFormat[] trackFileFormats = TrackFileFormat.values();
         String[] choices = new String[trackFileFormats.length];
         for (int i = 0; i < choices.length; i++) {
@@ -78,7 +75,7 @@ public class FileTypeDialogFragment extends AbstractDialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         int position = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-                        caller.onFileTypeDone(menuId, TrackFileFormat.values()[position]);
+                        caller.onFileTypeDone(TrackFileFormat.values()[position]);
                     }
                 }).setSingleChoiceItems(choices, 0, null).setTitle(titleId).create();
     }
@@ -93,6 +90,6 @@ public class FileTypeDialogFragment extends AbstractDialogFragment {
         /**
          * Called when file type selection is done.
          */
-        void onFileTypeDone(int menuId, TrackFileFormat trackFileFormat);
+        void onFileTypeDone(TrackFileFormat trackFileFormat);
     }
 }

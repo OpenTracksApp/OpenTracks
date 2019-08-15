@@ -44,12 +44,11 @@ import de.dennisguse.opentracks.util.SystemUtils;
 public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
     private static final String TAG = SaveAsyncTask.class.getSimpleName();
-    private final long[] trackIds;
     private final TrackFileFormat trackFileFormat;
     private final File directory;
     private final Context context;
     private final ContentProviderUtils contentProviderUtils;
-    private SaveActivity saveActivity;
+    private ExportActivity exportActivity;
     private WakeLock wakeLock;
 
     // true if the AsyncTask has completed
@@ -67,18 +66,15 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     /**
      * Creates an AsyncTask.
      *
-     * @param saveActivity    the activity currently associated with this task
-     * @param trackIds        the track ids to save. To save all, set to size 1 with
-     *                        trackIds[0] == -1L
+     * @param exportActivity    the activity currently associated with this task
      * @param trackFileFormat the track file format
      * @param directory       the directory to write the file
      */
-    public SaveAsyncTask(SaveActivity saveActivity, long[] trackIds, TrackFileFormat trackFileFormat, File directory) {
-        this.saveActivity = saveActivity;
-        this.trackIds = trackIds;
+    public SaveAsyncTask(ExportActivity exportActivity, TrackFileFormat trackFileFormat, File directory) {
+        this.exportActivity = exportActivity;
         this.trackFileFormat = trackFileFormat;
         this.directory = directory;
-        context = saveActivity.getApplicationContext();
+        context = exportActivity.getApplicationContext();
         contentProviderUtils = ContentProviderUtils.Factory.get(context);
 
         completed = false;
@@ -90,19 +86,19 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     /**
      * Sets the current activity associated with this AsyncTask.
      *
-     * @param saveActivity the current activity, can be null
+     * @param exportActivity the current activity, can be null
      */
-    public void setActivity(SaveActivity saveActivity) {
-        this.saveActivity = saveActivity;
-        if (completed && saveActivity != null) {
-            saveActivity.onAsyncTaskCompleted(successCount, totalCount, savedPath);
+    public void setActivity(ExportActivity exportActivity) {
+        this.exportActivity = exportActivity;
+        if (completed && exportActivity != null) {
+            exportActivity.onAsyncTaskCompleted(successCount, totalCount);
         }
     }
 
     @Override
     protected void onPreExecute() {
-        if (saveActivity != null) {
-            saveActivity.showProgressDialog();
+        if (exportActivity != null) {
+            exportActivity.showProgressDialog();
         }
     }
 
@@ -110,31 +106,13 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     protected Boolean doInBackground(Void... params) {
         try {
             Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
-            boolean isRecording = PreferencesUtils.getLong(saveActivity, R.string.recording_track_id_key) != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
-            boolean isPaused = PreferencesUtils.getBoolean(saveActivity, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+            boolean isRecording = PreferencesUtils.getLong(exportActivity, R.string.recording_track_id_key) != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+            boolean isPaused = PreferencesUtils.getBoolean(exportActivity, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
             // Get the wake lock if not recording or paused
             if (!isRecording || isPaused) {
-                wakeLock = SystemUtils.acquireWakeLock(saveActivity, wakeLock);
+                wakeLock = SystemUtils.acquireWakeLock(exportActivity, wakeLock);
             }
-            if (trackIds.length == 1 && trackIds[0] == -1L) {
-                return saveAllTracks();
-            } else {
-                totalCount = 1;
-                Track[] tracks = new Track[trackIds.length];
-                for (int i = 0; i < trackIds.length; i++) {
-                    tracks[i] = contentProviderUtils.getTrack(trackIds[i]);
-                    if (tracks[i] == null) {
-                        Log.d(TAG, "No track for " + trackIds[i]);
-                        return false;
-                    }
-                }
-                if (saveTracks(tracks)) {
-                    successCount = 1;
-                    return true;
-                } else {
-                    return false;
-                }
-            }
+            return saveAllTracks();
         } finally {
             if (wakeLock != null && wakeLock.isHeld()) {
                 wakeLock.release();
@@ -144,24 +122,24 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
     @Override
     protected void onProgressUpdate(Integer... values) {
-        if (saveActivity != null) {
-            saveActivity.setProgressDialogValue(values[0], values[1]);
+        if (exportActivity != null) {
+            exportActivity.setProgressDialogValue(values[0], values[1]);
         }
     }
 
     @Override
     protected void onPostExecute(Boolean result) {
         completed = true;
-        if (saveActivity != null) {
-            saveActivity.onAsyncTaskCompleted(successCount, totalCount, savedPath);
+        if (exportActivity != null) {
+            exportActivity.onAsyncTaskCompleted(successCount, totalCount);
         }
     }
 
     @Override
     protected void onCancelled() {
         completed = true;
-        if (saveActivity != null) {
-            saveActivity.onAsyncTaskCompleted(successCount, totalCount, null);
+        if (exportActivity != null) {
+            exportActivity.onAsyncTaskCompleted(successCount, totalCount);
         }
     }
 
@@ -179,14 +157,10 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         FileTrackExporter fileTrackExporter = new FileTrackExporter(contentProviderUtils, tracks,
                 trackFileFormat.newTrackWriter(context, tracks.length > 1),
                 new TrackExporterListener() {
-
                     @Override
                     public void onProgressUpdate(int number, int max) {
-                        /*
-                         * If only saving one track, update the progress dialog once every
-                         * 500 points
-                         */
-                        if (trackIds.length == 1 && trackIds[0] != -1L && number % 500 == 0) {
+                        //Update the progress dialog once every 500 points.
+                        if (number % 500 == 0) {
                             publishProgress(number, max);
                         }
                     }

@@ -128,7 +128,7 @@ limitations under the License.
                 android:name="android.app.default_searchable"
                 android:value=".SearchListActivity" />
         </activity>
-        <activity android:name=".io.file.exporter.SaveActivity" />
+        <activity android:name=".io.file.exporter.ExportActivity" />
         <activity android:name=".settings.RecordingSettingsActivity" />
         <activity android:name=".settings.SettingsActivity" />
         <activity android:name=".settings.StatsSettingsActivity" />

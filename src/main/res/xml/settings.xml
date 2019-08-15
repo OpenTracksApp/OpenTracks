@@ -77,6 +77,19 @@ limitations under the License.
         </PreferenceCategory>
     </PreferenceScreen>
 
+    <PreferenceCategory android:title="@string/menu_import_all">
+        <Preference android:title="@string/menu_import_all">
+            <intent
+                android:targetClass="de.dennisguse.opentracks.io.file.importer.ImportActivity"
+                android:targetPackage="@string/applicationId" />
+        </Preference>
+        <Preference android:title="@string/menu_export_all">
+            <intent
+                android:targetClass="de.dennisguse.opentracks.io.file.exporter.ExportActivity"
+                android:targetPackage="@string/applicationId" />
+        </Preference>
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/settings_reset">
         <de.dennisguse.opentracks.settings.ResetDialogPreference
             android:dialogMessage="@string/settings_reset_confirm_message"
