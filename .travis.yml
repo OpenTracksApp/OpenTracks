@@ -1,0 +1,12 @@
+language: android
+dist: trusty
+
+android:
+  components:
+    - build-tools-28.0.3
+    - android-28
+
+script:
+  - ./gradlew build
+  #TODO: When all tests are passing, CI should also execute them.
+  #- ./gradlew connectedCheck
