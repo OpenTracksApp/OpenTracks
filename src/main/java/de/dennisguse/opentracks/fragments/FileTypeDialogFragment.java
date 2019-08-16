@@ -70,14 +70,35 @@ public class FileTypeDialogFragment extends AbstractDialogFragment {
             choices[i] = getString(optionId, trackFileFormat.name(),
                     FileUtils.getPathDisplayName(trackFileFormat.getExtension()));
         }
-        return new AlertDialog.Builder(getActivity()).setNegativeButton(R.string.generic_cancel, null)
+        return new AlertDialog.Builder(getActivity())
+                .setCancelable(true)
+                .setNegativeButton(R.string.generic_cancel, new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        onDismissed();
+                    }
+                })
                 .setPositiveButton(R.string.generic_ok, new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         int position = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
                         caller.onFileTypeDone(TrackFileFormat.values()[position]);
                     }
-                }).setSingleChoiceItems(choices, 0, null).setTitle(titleId).create();
+                })
+                .setSingleChoiceItems(choices, 0, null)
+                .setTitle(titleId)
+                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        onDismissed();
+                    }
+                })
+                .create();
+    }
+
+    protected void onDismissed() {
+        dismiss();
+        caller.onDismissed();
     }
 
     /**
@@ -91,5 +112,7 @@ public class FileTypeDialogFragment extends AbstractDialogFragment {
          * Called when file type selection is done.
          */
         void onFileTypeDone(TrackFileFormat trackFileFormat);
+
+        void onDismissed();
     }
 }

@@ -93,6 +93,11 @@ public class ExportActivity extends FragmentActivity implements FileTypeDialogFr
     }
 
     @Override
+    public void onDismissed() {
+        finish();
+    }
+
+    @Override
     protected Dialog onCreateDialog(int id) {
         switch (id) {
             case DIALOG_PROGRESS_ID:
@@ -103,6 +108,7 @@ public class ExportActivity extends FragmentActivity implements FileTypeDialogFr
                             public void onCancel(DialogInterface dialog) {
                                 saveAsyncTask.cancel(true);
                                 dialog.dismiss();
+                                onDismissed();
                             }
                         }, directoryDisplayName);
                 return progressDialog;
@@ -129,13 +135,13 @@ public class ExportActivity extends FragmentActivity implements FileTypeDialogFr
                             @Override
                             public void onCancel(DialogInterface dialog) {
                                 dialog.dismiss();
-                                finish();
+                                onDismissed();
                             }
                         }).setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int arg1) {
                                 dialog.dismiss();
-                                finish();
+                                onDismissed();
                             }
                         }).setTitle(titleId);
                 final Dialog dialog = builder.create();

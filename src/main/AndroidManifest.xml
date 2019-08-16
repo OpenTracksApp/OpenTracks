@@ -83,7 +83,9 @@ limitations under the License.
             android:name=".AggregatedStatsActivity"
             android:label="@string/menu_aggregated_statistics" />
         <activity android:name=".DeleteActivity" />
-        <activity android:name=".io.file.importer.ImportActivity">
+        <activity
+            android:name=".io.file.importer.ImportActivity"
+            android:theme="@style/ThemeCustomTransparent">
             <intent-filter>
                 <action android:name="android.intent.action.ATTACH_DATA" />
                 <action android:name="android.intent.action.VIEW" />
@@ -128,7 +130,9 @@ limitations under the License.
                 android:name="android.app.default_searchable"
                 android:value=".SearchListActivity" />
         </activity>
-        <activity android:name=".io.file.exporter.ExportActivity" />
+        <activity
+            android:name=".io.file.exporter.ExportActivity"
+            android:theme="@style/ThemeCustomTransparent" />
         <activity android:name=".settings.RecordingSettingsActivity" />
         <activity android:name=".settings.SettingsActivity" />
         <activity android:name=".settings.StatsSettingsActivity" />
