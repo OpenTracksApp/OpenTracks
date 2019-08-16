@@ -17,8 +17,8 @@ limitations under the License.
     xmlns:tools="http://schemas.android.com/tools"
     package="de.dennisguse.opentracks"
     android:installLocation="auto"
-    android:versionCode="2916"
-    android:versionName="v3.0.0"> <!-- For FDroid. -->
+    android:versionCode="2947"
+    android:versionName="v3.0.1"> <!-- For FDroid. -->
     <!-- Permission to initialize services -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
