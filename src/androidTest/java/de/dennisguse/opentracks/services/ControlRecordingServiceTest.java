@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import androidx.test.core.app.ApplicationProvider;
+import androidx.test.rule.GrantPermissionRule;
 import androidx.test.rule.ServiceTestRule;
 
 import org.junit.Assert;
@@ -43,7 +44,12 @@ public class ControlRecordingServiceTest {
 
     @Rule
     public final ServiceTestRule mServiceRule = new ServiceTestRule();
+
+    @Rule
+    public GrantPermissionRule mRuntimePermissionRule = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION);
+
     private Context context = ApplicationProvider.getApplicationContext();
+
     @Mock
     private ITrackRecordingService iTrackRecordingServiceMock;
 
