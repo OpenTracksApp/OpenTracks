@@ -18,23 +18,23 @@ package de.dennisguse.opentracks.services.sensors;
 
 import android.util.Log;
 
-import de.dennisguse.opentracks.content.sensor.SensorDataSet;
-import de.dennisguse.opentracks.content.sensor.SensorState;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
+import de.dennisguse.opentracks.content.sensor.SensorDataSet;
+import de.dennisguse.opentracks.content.sensor.SensorState;
+
 /**
- * Manage the connection to a sensor.
+ * Manage the connection to a remote sensor.
  *
  * @author Sandor Dornbush
  */
-public abstract class SensorManager {
+public abstract class RemoteSensorManager {
 
     public static final long MAX_SENSOR_DATE_SET_AGE = 5000;
     public static final long MAX_SENSOR_STATE_AGE = 20000;
 
-    private static final String TAG = SensorManager.class.getSimpleName();
+    private static final String TAG = RemoteSensorManager.class.getSimpleName();
     private static final int RETRY_PERIOD = 20000;
 
     private SensorState sensorState = SensorState.NONE;
@@ -88,7 +88,7 @@ public abstract class SensorManager {
                 }
             }
         };
-        timer = new Timer(SensorManager.class.getSimpleName());
+        timer = new Timer(RemoteSensorManager.class.getSimpleName());
         timer.schedule(timerTask, RETRY_PERIOD, RETRY_PERIOD);
     }
 

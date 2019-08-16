@@ -24,13 +24,13 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
+import java.util.ArrayList;
+
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.content.sensor.SensorState;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
-import de.dennisguse.opentracks.R;
-
-import java.util.ArrayList;
 
 /**
  * Bluetooth sensor manager.
@@ -39,7 +39,7 @@ import java.util.ArrayList;
  *
  * @author Sandor Dornbush
  */
-public class BluetoothSensorManager extends SensorManager {
+public class BluetoothRemoteSensorManager extends RemoteSensorManager {
 
     private static final String TAG = BluetoothConnectionManager.class.getSimpleName();
     private static final BluetoothAdapter bluetoothAdapter = getDefaultBluetoothAdapter();
@@ -71,7 +71,7 @@ public class BluetoothSensorManager extends SensorManager {
     /**
      * @param context the context
      */
-    public BluetoothSensorManager(Context context) {
+    public BluetoothRemoteSensorManager(Context context) {
         this.context = context;
         bluetoothConnectionManager = new BluetoothConnectionManager(context, messageHandler);
     }

@@ -96,7 +96,7 @@ limitations under the License.
                     android:id="@+id/stats_elevation"
                     layout="@layout/stats_small_group_item" />
                 <!-- Elevation gain -->
-                <!-- TODO DISABLED AS computation from GPS is not precise enough, go for getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, pressure) -->
+                <!-- TODO DISABLED AS computation from GPS is not precise enough, go for getAltitude(RemoteSensorManager.PRESSURE_STANDARD_ATMOSPHERE, pressure) -->
                 <!--<include-->
                 <!--android:id="@+id/stats_elevation_gain"-->
                 <!--layout="@layout/stats_small_group_item" />-->

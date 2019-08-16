@@ -19,16 +19,16 @@ package de.dennisguse.opentracks.services.sensors;
 import android.content.Context;
 
 /**
- * A factory of {@link SensorManager}.
+ * A factory of {@link RemoteSensorManager}.
  *
  * @author Sandor Dornbush
  */
-public class SensorManagerFactory {
+public class RemoteSensorManagerFactory {
 
-    private static SensorManager systemSensorManager = null;
-    private static SensorManager sensorManagerTemporary = null;
+    private static RemoteSensorManager remoteSensorManagerSystem = null;
+    private static RemoteSensorManager remoteSensorManagerTemporary = null;
 
-    private SensorManagerFactory() {
+    private RemoteSensorManagerFactory() {
     }
 
     /**
@@ -36,49 +36,45 @@ public class SensorManagerFactory {
      *
      * @param context the context
      */
-    public static SensorManager getSystemSensorManager(Context context) {
+    public static RemoteSensorManager getSystemSensorManager(Context context) {
         releaseSensorManagerTemporary();
         releaseSystemSensorManager();
-        systemSensorManager = getSensorManager(context);
-        if (systemSensorManager != null) {
-            systemSensorManager.startSensor();
-        }
-        return systemSensorManager;
+        remoteSensorManagerSystem = getSensorManager(context);
+        remoteSensorManagerSystem.startSensor();
+        return remoteSensorManagerSystem;
     }
 
     /**
      * Releases the system sensor manager.
      */
     public static void releaseSystemSensorManager() {
-        if (systemSensorManager != null) {
-            systemSensorManager.stopSensor();
+        if (remoteSensorManagerSystem != null) {
+            remoteSensorManagerSystem.stopSensor();
         }
-        systemSensorManager = null;
+        remoteSensorManagerSystem = null;
     }
 
     /**
      * Gets the temp sensor manager.
      */
-    public static SensorManager getSensorManagerTemporary(Context context) {
+    public static RemoteSensorManager getSensorManagerTemporary(Context context) {
         releaseSensorManagerTemporary();
-        if (systemSensorManager != null) {
+        if (remoteSensorManagerSystem != null) {
             return null;
         }
-        sensorManagerTemporary = getSensorManager(context);
-        if (sensorManagerTemporary != null) {
-            sensorManagerTemporary.startSensor();
-        }
-        return sensorManagerTemporary;
+        remoteSensorManagerTemporary = getSensorManager(context);
+        remoteSensorManagerTemporary.startSensor();
+        return remoteSensorManagerTemporary;
     }
 
     /**
      * Releases the temp sensor manager.
      */
     public static void releaseSensorManagerTemporary() {
-        if (sensorManagerTemporary != null) {
-            sensorManagerTemporary.stopSensor();
+        if (remoteSensorManagerTemporary != null) {
+            remoteSensorManagerTemporary.stopSensor();
         }
-        sensorManagerTemporary = null;
+        remoteSensorManagerTemporary = null;
     }
 
     /**
@@ -86,7 +82,7 @@ public class SensorManagerFactory {
      *
      * @param context the context
      */
-    private static SensorManager getSensorManager(Context context) {
-        return new BluetoothSensorManager(context);
+    private static RemoteSensorManager getSensorManager(Context context) {
+        return new BluetoothRemoteSensorManager(context);
     }
 }

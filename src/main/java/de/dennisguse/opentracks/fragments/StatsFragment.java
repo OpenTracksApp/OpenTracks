@@ -31,6 +31,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import java.util.EnumSet;
+
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackDetailActivity;
 import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.content.TrackDataHub;
@@ -40,6 +43,7 @@ import de.dennisguse.opentracks.content.Waypoint;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.services.ITrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
+import de.dennisguse.opentracks.services.sensors.RemoteSensorManager;
 import de.dennisguse.opentracks.stats.TripStatistics;
 import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
@@ -47,9 +51,6 @@ import de.dennisguse.opentracks.util.StatsUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.TrackRecordingServiceConnectionUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
-import de.dennisguse.opentracks.R;
-
-import java.util.EnumSet;
 
 /**
  * A fragment to display track statistics to the user.
@@ -297,7 +298,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     }
 
     /**
-     * Tries to fetch most recent {@link SensorDataSet} {@link de.dennisguse.opentracks.services.sensors.SensorManager}.
+     * Tries to fetch most recent {@link SensorDataSet} {@link RemoteSensorManager}.
      */
     private void updateSensorDataUI() {
         ITrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();

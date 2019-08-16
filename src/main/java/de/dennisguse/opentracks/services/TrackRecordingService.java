@@ -58,8 +58,8 @@ import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 import de.dennisguse.opentracks.content.WaypointCreationRequest;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.content.sensor.SensorState;
-import de.dennisguse.opentracks.services.sensors.SensorManager;
-import de.dennisguse.opentracks.services.sensors.SensorManagerFactory;
+import de.dennisguse.opentracks.services.sensors.RemoteSensorManager;
+import de.dennisguse.opentracks.services.sensors.RemoteSensorManagerFactory;
 import de.dennisguse.opentracks.services.tasks.AnnouncementPeriodicTaskFactory;
 import de.dennisguse.opentracks.services.tasks.PeriodicTaskExecutor;
 import de.dennisguse.opentracks.services.tasks.SplitPeriodicTaskFactory;
@@ -181,7 +181,7 @@ public class TrackRecordingService extends Service {
     };
     private TripStatisticsUpdater markerTripStatisticsUpdater;
     private WakeLock wakeLock;
-    private SensorManager sensorManager;
+    private RemoteSensorManager remoteSensorManager;
     private Location lastLocation;
     private boolean currentSegmentHasLocation;
     private boolean isIdle; // true if idle
@@ -280,9 +280,9 @@ public class TrackRecordingService extends Service {
 
     @Override
     public void onDestroy() {
-        if (sensorManager != null) {
-            SensorManagerFactory.releaseSystemSensorManager();
-            sensorManager = null;
+        if (remoteSensorManager != null) {
+            RemoteSensorManagerFactory.releaseSystemSensorManager();
+            remoteSensorManager = null;
         }
 
         // Reverse order from onCreate
@@ -617,7 +617,7 @@ public class TrackRecordingService extends Service {
      */
     private void startRecording(boolean trackStarted) {
         // Update instance variables
-        sensorManager = SensorManagerFactory.getSystemSensorManager(this);
+        remoteSensorManager = RemoteSensorManagerFactory.getSystemSensorManager(this);
         lastLocation = null;
         currentSegmentHasLocation = false;
         isIdle = false;
@@ -715,9 +715,9 @@ public class TrackRecordingService extends Service {
         splitExecutor.shutdown();
 
         // Update instance variables
-        if (sensorManager != null) {
-            SensorManagerFactory.releaseSystemSensorManager();
-            sensorManager = null;
+        if (remoteSensorManager != null) {
+            RemoteSensorManagerFactory.releaseSystemSensorManager();
+            remoteSensorManager = null;
         }
         lastLocation = null;
 
@@ -931,10 +931,10 @@ public class TrackRecordingService extends Service {
     }
 
     private SensorDataSet getSensorDataSet() {
-        if (sensorManager == null || !sensorManager.isEnabled() || !sensorManager.isSensorDataSetValid()) {
+        if (remoteSensorManager == null || !remoteSensorManager.isEnabled() || !remoteSensorManager.isSensorDataSetValid()) {
             return null;
         }
-        return sensorManager.getSensorDataSet();
+        return remoteSensorManager.getSensorDataSet();
     }
 
     /**
@@ -1104,24 +1104,24 @@ public class TrackRecordingService extends Service {
 
         @Override
         public SensorDataSet getSensorData() {
-            if (trackRecordingService.sensorManager == null) {
-                Log.d(TAG, "sensorManager is null.");
+            if (trackRecordingService.remoteSensorManager == null) {
+                Log.d(TAG, "remoteSensorManager is null.");
                 return null;
             }
             if (trackRecordingService.getSensorDataSet() == null) {
                 Log.d(TAG, "Sensor data set is null.");
                 return null;
             }
-            return trackRecordingService.sensorManager.getSensorDataSet();
+            return trackRecordingService.remoteSensorManager.getSensorDataSet();
         }
 
         @Override
         public SensorState getSensorState() {
-            if (trackRecordingService.sensorManager == null) {
-                Log.d(TAG, "sensorManager is null.");
+            if (trackRecordingService.remoteSensorManager == null) {
+                Log.d(TAG, "remoteSensorManager is null.");
                 return SensorState.NONE;
             }
-            return trackRecordingService.sensorManager.getSensorState();
+            return trackRecordingService.remoteSensorManager.getSensorState();
         }
 
         /**

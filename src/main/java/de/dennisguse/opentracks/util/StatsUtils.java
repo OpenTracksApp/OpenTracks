@@ -23,12 +23,12 @@ import android.view.View;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import de.dennisguse.opentracks.content.sensor.SensorDataSet;
-import de.dennisguse.opentracks.services.sensors.SensorManager;
-import de.dennisguse.opentracks.stats.TripStatistics;
-import de.dennisguse.opentracks.R;
-
 import java.util.Locale;
+
+import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.sensor.SensorDataSet;
+import de.dennisguse.opentracks.services.sensors.RemoteSensorManager;
+import de.dennisguse.opentracks.stats.TripStatistics;
 
 /**
  * Utilities for updating the statistics UI labels and values.
@@ -294,7 +294,7 @@ public class StatsUtils {
     private static void setHeartRateData(Context context, View viewValue, View viewSensor, SensorDataSet sensorDataSet) {
         String heartRate = context.getString(R.string.value_unknown);
         String sensor = context.getString(R.string.value_unknown);
-        if (sensorDataSet != null && sensorDataSet.hasHeartRate() && sensorDataSet.isRecent(SensorManager.MAX_SENSOR_DATE_SET_AGE)) {
+        if (sensorDataSet != null && sensorDataSet.hasHeartRate() && sensorDataSet.isRecent(RemoteSensorManager.MAX_SENSOR_DATE_SET_AGE)) {
             heartRate = StringUtils.formatDecimal(sensorDataSet.getHeartRate(), 0);
             sensor = sensorDataSet.getSensorName();
         }
