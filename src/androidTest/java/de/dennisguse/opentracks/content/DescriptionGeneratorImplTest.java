@@ -88,7 +88,7 @@ public class DescriptionGeneratorImplTest {
                 + "Min grade: 11 %<br>"
                 + "Recorded: " + StringUtils.formatDateTime(context, START_TIME) + "<br>";
 
-        Assert.assertEquals(expected, descriptionGenerator.generateTrackDescription(track, null, null, true));
+        Assert.assertEquals(expected, descriptionGenerator.generateTrackDescription(track, true));
     }
 
     /**

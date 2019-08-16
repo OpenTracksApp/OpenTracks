@@ -17,8 +17,6 @@ package de.dennisguse.opentracks.content;
 
 import de.dennisguse.opentracks.stats.TripStatistics;
 
-import java.util.Vector;
-
 /**
  * An interface for an object that can generate descriptions of track and
  * waypoint.
@@ -31,12 +29,9 @@ public interface DescriptionGenerator {
      * Generates a track description.
      *
      * @param track      the track
-     * @param distances  a vector of distances to generate the elevation chart
-     * @param elevations a vector of elevations to generate the elevation chart
      * @param html       true to output html, false to output plain text
      */
-    String generateTrackDescription(
-            Track track, Vector<Double> distances, Vector<Double> elevations, boolean html);
+    String generateTrackDescription(Track track, boolean html);
 
     /**
      * Generate a waypoint description from a trip statistics.

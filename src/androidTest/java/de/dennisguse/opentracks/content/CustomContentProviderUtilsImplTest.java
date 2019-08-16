@@ -32,7 +32,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import de.dennisguse.opentracks.content.ContentProviderUtils.LocationFactory;
@@ -455,8 +454,7 @@ public class CustomContentProviderUtilsImplTest {
             }
 
             @Override
-            public String generateTrackDescription(Track aTrack, Vector<Double> distances,
-                                                   Vector<Double> elevations, boolean html) {
+            public String generateTrackDescription(Track aTrack, boolean html) {
                 return null;
             }
         };
@@ -511,8 +509,7 @@ public class CustomContentProviderUtilsImplTest {
             }
 
             @Override
-            public String generateTrackDescription(Track aTrack, Vector<Double> distances,
-                                                   Vector<Double> elevations, boolean html) {
+            public String generateTrackDescription(Track aTrack, boolean html) {
                 return null;
             }
         };

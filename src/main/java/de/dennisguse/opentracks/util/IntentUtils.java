@@ -20,14 +20,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
+import java.io.File;
+
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.DescriptionGeneratorImpl;
 import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.content.Waypoint;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
-import de.dennisguse.opentracks.R;
-
-import java.io.File;
 
 /**
  * Utilities for creating intents.
@@ -60,7 +60,7 @@ public class IntentUtils {
      */
     public static Intent newShareFileIntent(Context context, long trackId, String filePath, TrackFileFormat trackFileFormat) {
         Track track = ContentProviderUtils.Factory.get(context).getTrack(trackId);
-        String trackDescription = track == null ? "" : new DescriptionGeneratorImpl(context).generateTrackDescription(track, null, null, false);
+        String trackDescription = track == null ? "" : new DescriptionGeneratorImpl(context).generateTrackDescription(track, false);
 
         return new Intent(Intent.ACTION_SEND)
                 .putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(filePath)))

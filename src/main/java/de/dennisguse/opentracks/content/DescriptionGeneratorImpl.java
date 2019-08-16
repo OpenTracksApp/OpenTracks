@@ -20,8 +20,6 @@ import android.content.Context;
 
 import androidx.annotation.VisibleForTesting;
 
-import java.util.Vector;
-
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.stats.TripStatistics;
 import de.dennisguse.opentracks.util.StringUtils;
@@ -44,7 +42,7 @@ public class DescriptionGeneratorImpl implements DescriptionGenerator {
     }
 
     @Override
-    public String generateTrackDescription(Track track, Vector<Double> distances, Vector<Double> elevations, boolean html) {
+    public String generateTrackDescription(Track track, boolean html) {
         String paragraphSeparator = html ? HTML_PARAGRAPH_SEPARATOR : TEXT_PARAGRAPH_SEPARATOR;
         String lineBreak = html ? HTML_LINE_BREAK : TEXT_LINE_BREAK;
         StringBuilder builder = new StringBuilder();

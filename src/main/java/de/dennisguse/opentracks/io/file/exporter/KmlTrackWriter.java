@@ -208,7 +208,7 @@ public class KmlTrackWriter implements TrackWriter {
             printWriter.println("</gx:MultiTrack>");
             printWriter.println("</Placemark>");
             String name = context.getString(R.string.marker_label_end, track.getName());
-            String description = descriptionGenerator.generateTrackDescription(track, null, null, false);
+            String description = descriptionGenerator.generateTrackDescription(track, false);
             writePlacemark(name, "", description, END_STYLE, endLocation);
         }
     }
