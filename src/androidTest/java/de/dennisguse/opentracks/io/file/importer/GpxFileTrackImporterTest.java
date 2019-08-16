@@ -96,7 +96,7 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
         expectFirstTrackPoint(location0, TRACK_ID_0, TRACK_POINT_ID_0);
 
         // A flush happens at the end
-        when(contentProviderUtils.bulkInsertTrackPoint(new Location[]{location1}, eq(1), eq(TRACK_ID_0))).thenReturn(1);
+        when(contentProviderUtils.bulkInsertTrackPoint((Location[]) any(), eq(1), eq(TRACK_ID_0))).thenReturn(1);
         when(contentProviderUtils.getLastTrackPointId(TRACK_ID_0)).thenReturn(TRACK_POINT_ID_1);
         when(contentProviderUtils.getTrack(PreferencesUtils.getLong(context, R.string.recording_track_id_key))).thenReturn(null);
         expectUpdateTrack(trackCaptor, true, TRACK_ID_0);

@@ -60,9 +60,9 @@ public class ChartFragmentTest {
 
         // No input.
         double[] point = fillDataPointTestHelper(sensorDataSetLocation);
-        Assert.assertEquals(Double.NaN, point[ChartView.HEART_RATE_SERIES + 1], 0.01);
-        Assert.assertEquals(Double.NaN, point[ChartView.CADENCE_SERIES + 1], 0.01);
-        Assert.assertEquals(Double.NaN, point[ChartView.POWER_SERIES + 1], 0.01);
+        Assert.assertEquals(Float.NaN, point[ChartView.HEART_RATE_SERIES + 1], 0.01);
+        Assert.assertEquals(Float.NaN, point[ChartView.CADENCE_SERIES + 1], 0.01);
+        Assert.assertEquals(Float.NaN, point[ChartView.POWER_SERIES + 1], 0.01);
 
         // Input incorrect state.
         // Creates SensorData.
@@ -70,9 +70,9 @@ public class ChartFragmentTest {
         sensorDataSetLocation.setSensorDataSet(sensorDataSet);
         // Test.
         point = fillDataPointTestHelper(sensorDataSetLocation);
-        Assert.assertEquals(Double.NaN, point[ChartView.HEART_RATE_SERIES + 1], 0.01);
-        Assert.assertEquals(Double.NaN, point[ChartView.CADENCE_SERIES + 1], 0.01);
-        Assert.assertEquals(Double.NaN, point[ChartView.POWER_SERIES + 1], 0.01);
+        Assert.assertEquals(Float.NaN, point[ChartView.HEART_RATE_SERIES + 1], 0.01);
+        Assert.assertEquals(Float.NaN, point[ChartView.CADENCE_SERIES + 1], 0.01);
+        Assert.assertEquals(Float.NaN, point[ChartView.POWER_SERIES + 1], 0.01);
     }
 
     /**
@@ -83,9 +83,9 @@ public class ChartFragmentTest {
         SensorDataSetLocation sensorDataSetLocation = TrackStubUtils.createSensorDataSetLocation();
         // No input.
         double[] point = fillDataPointTestHelper(sensorDataSetLocation);
-        Assert.assertEquals(Double.NaN, point[ChartView.HEART_RATE_SERIES + 1], 0.01);
-        Assert.assertEquals(Double.NaN, point[ChartView.CADENCE_SERIES + 1], 0.01);
-        Assert.assertEquals(Double.NaN, point[ChartView.POWER_SERIES + 1], 0.01);
+        Assert.assertEquals(Float.NaN, point[ChartView.HEART_RATE_SERIES + 1], 0.01);
+        Assert.assertEquals(Float.NaN, point[ChartView.CADENCE_SERIES + 1], 0.01);
+        Assert.assertEquals(Float.NaN, point[ChartView.POWER_SERIES + 1], 0.01);
 
         // Creates SensorData.
         SensorDataSet sensorDataSet = new SensorDataSet(100, 101, 102);

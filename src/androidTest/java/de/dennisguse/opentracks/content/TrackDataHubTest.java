@@ -66,8 +66,6 @@ public class TrackDataHubTest {
     @Mock
     private DataSource dataSource;
 
-    private TrackDataManager trackDataManager;
-
     private TrackDataHub trackDataHub;
 
     @Mock
@@ -80,8 +78,7 @@ public class TrackDataHubTest {
     @Before
     public void setUp() {
         sharedPreferences = PreferencesUtils.getSharedPreferences(context);
-        trackDataManager = new TrackDataManager();
-        trackDataHub = new TrackDataHub(context, trackDataManager, contentProviderUtils, TARGET_POINTS) {
+        trackDataHub = new TrackDataHub(context, new TrackDataManager(), contentProviderUtils, TARGET_POINTS) {
             @Override
             protected DataSource newDataSource() {
                 return dataSource;
@@ -307,8 +304,7 @@ public class TrackDataHubTest {
 
         // Unregister one listener and change track
         locationIterator = new FixedSizeLocationIterator(101, 10);
-        when(contentProviderUtils.getTrackPointLocationIterator(
-                eq(TRACK_ID + 1), eq(0L), eq(false), isA(LocationFactory.class)))
+        when(contentProviderUtils.getTrackPointLocationIterator(eq(TRACK_ID + 1), eq(0L), eq(false), isA(LocationFactory.class)))
                 .thenReturn(locationIterator);
         when(contentProviderUtils.getLastTrackPointId(TRACK_ID + 1)).thenReturn(110L);
         trackDataListener2.clearTrackPoints();
@@ -387,8 +383,7 @@ public class TrackDataHubTest {
 
         trackDataHub.start();
         trackDataHub.loadTrack(TRACK_ID);
-        trackDataHub.registerTrackDataListener(
-                trackDataListener1, EnumSet.of(TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE));
+        trackDataHub.registerTrackDataListener(trackDataListener1, EnumSet.of(TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE));
         verifyAndReset();
 
         // Unregister the listener
@@ -400,11 +395,9 @@ public class TrackDataHubTest {
         verifyAndReset();
 
         // Register the listener after a new track
-        dataSource.registerContentObserver(
-                eq(TrackPointsColumns.CONTENT_URI), observerCapture.capture());
+        dataSource.registerContentObserver(eq(TrackPointsColumns.CONTENT_URI), observerCapture.capture());
         locationIterator = new FixedSizeLocationIterator(1, 10);
-        when(contentProviderUtils.getTrackPointLocationIterator(
-                eq(TRACK_ID + 1), eq(0L), eq(false), isA(LocationFactory.class)))
+        when(contentProviderUtils.getTrackPointLocationIterator(eq(TRACK_ID + 1), eq(0L), eq(false), isA(LocationFactory.class)))
                 .thenReturn(locationIterator);
         when(contentProviderUtils.getLastTrackPointId(TRACK_ID + 1)).thenReturn(10L);
         trackDataListener1.clearTrackPoints();
@@ -413,8 +406,7 @@ public class TrackDataHubTest {
         replay();
 
         trackDataHub.loadTrack(TRACK_ID + 1);
-        trackDataHub.registerTrackDataListener(
-                trackDataListener1, EnumSet.of(TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE));
+        trackDataHub.registerTrackDataListener(trackDataListener1, EnumSet.of(TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE));
         verifyAndReset();
     }
 
@@ -532,8 +524,7 @@ public class TrackDataHubTest {
         when(trackDataListener2.onReportSpeedChanged(false)).thenReturn(false);
         replay();
 
-        PreferencesUtils.setString(
-                context, R.string.stats_rate_key, context.getString(R.string.stats_rate_pace));
+        PreferencesUtils.setString(context, R.string.stats_rate_key, context.getString(R.string.stats_rate_pace));
         OnSharedPreferenceChangeListener listener = preferenceChangeListenerCapture.getValue();
         listener.onSharedPreferenceChanged(sharedPreferences, PreferencesUtils.getKey(context, R.string.stats_rate_key));
         verifyAndReset();

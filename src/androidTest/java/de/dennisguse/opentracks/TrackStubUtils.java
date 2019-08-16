@@ -32,14 +32,14 @@ public class TrackStubUtils {
 
     public static final double INITIAL_ALTITUDE = 22;
     public static final long INITIAL_TIME = 1000L;
-    static final String LOCATION_PROVIDER = "gps";
-    static final double INITIAL_LATITUDE = 22;
-    static final double INITIAL_LONGITUDE = 22;
-    static final float INITIAL_ACCURACY = 5;
-    static final float INITIAL_SPEED = 10;
-    static final float INITIAL_BEARING = 3.0f;
+    private static final String LOCATION_PROVIDER = "gps";
+    private static final double INITIAL_LATITUDE = 22;
+    private static final double INITIAL_LONGITUDE = 22;
+    private static final float INITIAL_ACCURACY = 5;
+    private static final float INITIAL_SPEED = 10;
+    private static final float INITIAL_BEARING = 3.0f;
     // Used to change the value of latitude, longitude, and altitude.
-    static final double DIFFERENCE = 0.01;
+    private static final double DIFFERENCE = 0.01;
 
     /**
      * Gets a a {@link Track} stub with specified number of locations.
@@ -71,8 +71,7 @@ public class TrackStubUtils {
      *
      * @return a SensorDataSetLocation stub.
      */
-    public static SensorDataSetLocation createSensorDataSetLocation(double latitude, double longitude,
-                                                                    double altitude) {
+    public static SensorDataSetLocation createSensorDataSetLocation(double latitude, double longitude, double altitude) {
         // Initial Location
         Location loc = new Location(LOCATION_PROVIDER);
         loc.setLatitude(latitude);
@@ -82,7 +81,7 @@ public class TrackStubUtils {
         loc.setSpeed(INITIAL_SPEED);
         loc.setTime(INITIAL_TIME);
         loc.setBearing(INITIAL_BEARING);
-        SensorDataSet sd = new SensorDataSet(100, 100);
+        SensorDataSet sd = new SensorDataSet(Float.NaN, Float.NaN);
 
         return new SensorDataSetLocation(loc, sd);
     }
