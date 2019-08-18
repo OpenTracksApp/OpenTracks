@@ -41,6 +41,7 @@ import de.dennisguse.opentracks.util.SystemUtils;
  *
  * @author Jimmy Shih
  */
+//TODO Make independent from ExportActivity?
 public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
     private static final String TAG = SaveAsyncTask.class.getSimpleName();
@@ -144,7 +145,7 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     }
 
     /**
-     * Saves tracks to one file.
+     * Saves tracks to one file (uses first track to determine the filename).
      *
      * @param tracks the tracks
      */
@@ -153,7 +154,6 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
             return false;
         }
 
-        Track track = tracks[0];
         FileTrackExporter fileTrackExporter = new FileTrackExporter(contentProviderUtils, tracks,
                 trackFileFormat.newTrackWriter(context, tracks.length > 1),
                 new TrackExporterListener() {
@@ -169,6 +169,7 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         String extension = useKmz ? KmzTrackExporter.KMZ_EXTENSION : trackFileFormat.getExtension();
         TrackExporter trackExporter = useKmz ? new KmzTrackExporter(contentProviderUtils, fileTrackExporter, tracks) : fileTrackExporter;
 
+        Track track = tracks[0];
         String fileName = FileUtils.buildUniqueFileName(directory, track.getName(), extension);
         File file = new File(directory, fileName);
 

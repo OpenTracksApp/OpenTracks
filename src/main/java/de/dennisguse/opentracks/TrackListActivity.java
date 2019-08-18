@@ -25,6 +25,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.Settings;
@@ -46,20 +47,30 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
 import androidx.cursoradapter.widget.ResourceCursorAdapter;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.app.LoaderManager.LoaderCallbacks;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Locale;
 
 import de.dennisguse.opentracks.content.ContentProviderUtils;
+import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.content.TracksColumns;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
+import de.dennisguse.opentracks.io.file.TrackFileFormat;
+import de.dennisguse.opentracks.io.file.exporter.FileTrackExporter;
+import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
 import de.dennisguse.opentracks.services.ITrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.settings.SettingsActivity;
+import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.ListItemUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
@@ -107,8 +118,7 @@ public class TrackListActivity extends AbstractTrackActivity implements ConfirmD
     private boolean metricUnits = true;
     private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
     // Callback when an item is selected in the contextual action mode
-    private final ContextualActionModeCallback
-            contextualActionModeCallback = new ContextualActionModeCallback() {
+    private final ContextualActionModeCallback contextualActionModeCallback = new ContextualActionModeCallback() {
 
         @Override
         public void onPrepare(Menu menu, int[] positions, long[] ids, boolean showSelectAll) {
@@ -116,7 +126,6 @@ public class TrackListActivity extends AbstractTrackActivity implements ConfirmD
             boolean isSingleSelection = ids.length == 1;
 
             menu.findItem(R.id.list_context_menu_share).setVisible(!isRecording && isSingleSelection);
-            menu.findItem(R.id.list_context_menu_show_on_map).setVisible(false);
             menu.findItem(R.id.list_context_menu_edit).setVisible(isSingleSelection);
             menu.findItem(R.id.list_context_menu_select_all).setVisible(showSelectAll);
         }
@@ -128,7 +137,7 @@ public class TrackListActivity extends AbstractTrackActivity implements ConfirmD
     };
     private boolean recordingTrackPaused = PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT;
     /*
-     * Note that sharedPreferenceChangeListenr cannot be an anonymous inner class.
+     * Note that sharedPreferenceChangeListener cannot be an anonymous inner class.
      * Anonymous inner class will get garbage collected.
      */
     private final OnSharedPreferenceChangeListener
@@ -557,6 +566,59 @@ public class TrackListActivity extends AbstractTrackActivity implements ConfirmD
     }
 
     /**
+     * Save tracks in one file and send an intent to show it with a map application.
+     * TODO: Exported file is not deleted automatically.
+     *
+     * @param trackIds
+     */
+    private void showOnExternalMap(long[] trackIds) {
+        if (trackIds.length == 0) {
+            return;
+        }
+
+        Track[] tracks = new Track[trackIds.length];
+        for (int i = 0; i < trackIds.length; i++) {
+            tracks[i] = contentProviderUtils.getTrack(trackIds[i]);
+        }
+
+        TrackFileFormat trackFileFormat = TrackFileFormat.KML;
+        TrackExporter trackExporter = new FileTrackExporter(contentProviderUtils, tracks,
+                trackFileFormat.newTrackWriter(this, tracks.length > 1), null);
+
+        File directory = new File(FileUtils.getPath(trackFileFormat.getExtension()));
+        if (!FileUtils.ensureDirectoryExists(directory)) {
+            Toast.makeText(this, R.string.external_storage_not_writable, Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
+
+        String fileName = FileUtils.buildUniqueFileName(directory, tracks[0].getName(), trackFileFormat.getExtension());
+        File file = new File(directory, fileName);
+
+        try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
+            if (trackExporter.writeTrack(fileOutputStream)) {
+                Uri fileUri = FileProvider.getUriForFile(this, FileUtils.FILEPROVIDER, file);
+
+                Intent intent = new Intent();
+                intent.setAction(android.content.Intent.ACTION_VIEW);
+                intent.setDataAndType(fileUri, "application/vnd.google-earth.kml+xml");
+
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                startActivity(intent);
+            } else {
+                if (!file.delete()) {
+                    Log.d(TAG, "Unable to delete file");
+                }
+                Log.e(TAG, "Unable to export track");
+            }
+        } catch (FileNotFoundException e) {
+            Log.e(TAG, "Unable to open file " + file.getName(), e);
+        } catch (IOException e) {
+            Log.e(TAG, "Unable to close file output stream", e);
+        }
+    }
+
+    /**
      * Handles a context item selection.
      *
      * @param itemId   the menu item id
@@ -565,6 +627,9 @@ public class TrackListActivity extends AbstractTrackActivity implements ConfirmD
      */
     private boolean handleContextItem(int itemId, long[] trackIds) {
         switch (itemId) {
+            case R.id.list_context_menu_show_on_map:
+                showOnExternalMap(trackIds);
+                return true;
             case R.id.list_context_menu_share:
                 //TODO
                 Log.e(TAG, "Not implemented");
