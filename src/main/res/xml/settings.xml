@@ -77,7 +77,7 @@ limitations under the License.
         </PreferenceCategory>
     </PreferenceScreen>
 
-    <PreferenceCategory android:title="@string/menu_import_all">
+    <PreferenceCategory android:title="@string/generic_tracks">
         <Preference android:title="@string/menu_import_all">
             <intent
                 android:targetClass="de.dennisguse.opentracks.io.file.importer.ImportActivity"
