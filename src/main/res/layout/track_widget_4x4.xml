@@ -199,7 +199,5 @@ limitations under the License.
         </LinearLayout>
     </LinearLayout>
 
-    <ImageView
-        style="@style/TrackWidgetLogo4x4"
-        android:contentDescription="@string/image_my_tracks_logo" />
+    <ImageView style="@style/TrackWidgetLogo4x4" />
 </RelativeLayout>

@@ -8,7 +8,6 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="239dp"
-        android:contentDescription="@string/image_my_tracks_logo"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_logo" />
 

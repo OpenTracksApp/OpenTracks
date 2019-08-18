@@ -673,10 +673,7 @@ limitations under the License.
     <string name="image_my_location">
     My Location
   </string>
-    <string name="image_my_tracks_logo">
-    OpenTracks logo
-  </string>
-    <string name="image_pause">
+  <string name="image_pause">
     Pause
   </string>
     <string name="image_photo_marker">
