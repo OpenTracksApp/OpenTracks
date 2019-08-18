@@ -23,9 +23,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import de.dennisguse.opentracks.R;
-
 import java.util.List;
+
+import de.dennisguse.opentracks.R;
 
 /**
  * Image adapter for choosing an activity type.
@@ -41,8 +41,7 @@ public class ChooseActivityTypeImageAdapter extends BaseAdapter {
     private final int padding;
     private int selected = -1;
 
-    public ChooseActivityTypeImageAdapter(
-            Context context, List<Integer> imageIds, int width, int height, int padding) {
+    public ChooseActivityTypeImageAdapter(Context context, List<Integer> imageIds, int width, int height, int padding) {
         this.context = context;
         this.imageIds = imageIds;
         this.width = width;

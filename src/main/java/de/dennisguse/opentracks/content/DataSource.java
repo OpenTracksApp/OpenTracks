@@ -23,7 +23,6 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.ContentObserver;
 import android.net.Uri;
 
-import de.dennisguse.opentracks.Constants;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**

@@ -25,5 +25,5 @@ limitations under the License.
     <TextView
         android:id="@+id/search_list_empty"
         style="@style/ListEmptyTextView"
-        android:text="@string/search_list_empty_message"></TextView>
+        android:text="@string/search_list_empty_message" />
 </merge>

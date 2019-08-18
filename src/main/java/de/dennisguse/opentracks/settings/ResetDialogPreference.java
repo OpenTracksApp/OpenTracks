@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.Toast;
 
 import de.dennisguse.opentracks.R;
@@ -14,11 +13,6 @@ public class ResetDialogPreference extends DialogPreference {
 
     public ResetDialogPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-    }
-
-    @Override
-    protected View onCreateDialogView() {
-        return super.onCreateDialogView();
     }
 
     @Override

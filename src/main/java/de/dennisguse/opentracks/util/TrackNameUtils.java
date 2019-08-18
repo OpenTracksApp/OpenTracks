@@ -17,18 +17,13 @@
 package de.dennisguse.opentracks.util;
 
 import android.content.Context;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
 
 import androidx.annotation.VisibleForTesting;
 
-import de.dennisguse.opentracks.R;
-
-import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.Locale;
+
+import de.dennisguse.opentracks.R;
 
 /**
  * Utilities for track name.

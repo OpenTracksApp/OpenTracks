@@ -22,9 +22,8 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 
-import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.util.StringUtils;
+import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
  * An activity for accessing stats settings.

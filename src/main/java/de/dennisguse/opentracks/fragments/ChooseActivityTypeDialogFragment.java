@@ -32,12 +32,12 @@ import android.widget.GridView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
-import de.dennisguse.opentracks.util.DialogUtils;
-import de.dennisguse.opentracks.util.TrackIconUtils;
-import de.dennisguse.opentracks.R;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.util.DialogUtils;
+import de.dennisguse.opentracks.util.TrackIconUtils;
 
 /**
  * A DialogFragment to choose an activity type.
@@ -117,11 +117,6 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
             }
         }
         return -1;
-    }
-
-    private static void updateWeightContainer(View weightContainer, int position) {
-        boolean showWeight = position == 0 || position == 1 || position == 2;
-        weightContainer.setVisibility(showWeight ? View.VISIBLE : View.GONE);
     }
 
     @Override

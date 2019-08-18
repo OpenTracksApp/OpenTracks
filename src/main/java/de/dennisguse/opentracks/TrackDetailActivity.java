@@ -17,7 +17,6 @@
 package de.dennisguse.opentracks;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -37,7 +36,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.TaskStackBuilder;
 import androidx.core.content.FileProvider;
 import androidx.viewpager.widget.ViewPager;
 

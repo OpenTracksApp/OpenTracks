@@ -16,7 +16,6 @@
 
 package de.dennisguse.opentracks.io.file.exporter;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;

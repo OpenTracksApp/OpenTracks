@@ -78,30 +78,6 @@ public class DoubleBuffer {
     }
 
     /**
-     * Gets the average and the variance of the buffer.
-     *
-     * @return an array of two elements - the first is the average, the second is
-     * the variance
-     */
-    public double[] getAverageAndVariance() {
-        int numberOfEntries = isFull ? buffer.length : index;
-        if (numberOfEntries == 0) {
-            return new double[]{0, 0};
-        }
-
-        double sum = 0;
-        double sumSquares = 0;
-        for (int i = 0; i < numberOfEntries; i++) {
-            sum += buffer[i];
-            sumSquares += Math.pow(buffer[i], 2);
-        }
-
-        double average = sum / numberOfEntries;
-        double variance = sumSquares / numberOfEntries - Math.pow(average, 2);
-        return new double[]{average, variance};
-    }
-
-    /**
      * Adds a double to the buffer. If the buffer is full the oldest element is
      * overwritten.
      *

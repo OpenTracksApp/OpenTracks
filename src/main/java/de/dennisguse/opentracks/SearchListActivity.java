@@ -17,7 +17,6 @@
 package de.dennisguse.opentracks;
 
 import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -38,6 +37,13 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
+
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.SearchEngine;
 import de.dennisguse.opentracks.content.SearchEngine.ScoredResult;
@@ -57,14 +63,6 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.TrackRecordingServiceConnectionUtils;
-import de.dennisguse.opentracks.R;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedSet;
 
 /**
  * An activity to display a list of search results.
