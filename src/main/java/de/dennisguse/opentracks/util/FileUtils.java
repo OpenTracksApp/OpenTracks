@@ -35,10 +35,7 @@ public class FileUtils {
      * Used to transfer picture from the camera.
      */
     public static final String FILEPROVIDER = BuildConfig.APPLICATION_ID + ".fileprovider";
-    /**
-     * The play tracks directory in the app's cache directory.
-     */
-    public static final String PLAY_TRACKS_DIR = "temp";
+
     /**
      * Our external storage directory.
      */

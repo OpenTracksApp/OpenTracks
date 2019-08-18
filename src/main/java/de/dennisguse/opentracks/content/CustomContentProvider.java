@@ -20,7 +20,6 @@ import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -29,17 +28,11 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import android.os.ParcelFileDescriptor;
 import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
-
-import de.dennisguse.opentracks.util.FileUtils;
-
-import java.io.File;
-import java.io.FileNotFoundException;
 
 /**
  * A {@link ContentProvider} that handles access to track points, tracks, and
@@ -275,23 +268,6 @@ public class CustomContentProvider extends ContentProvider {
         }
         getContext().getContentResolver().notifyChange(url, null, false);
         return count;
-    }
-
-    @Override
-    public ParcelFileDescriptor openFile(@NonNull Uri uri, @NonNull String mode) throws FileNotFoundException {
-        try {
-            File file = new File(uri.getPath());
-            if (file.exists()) {
-                return ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY);
-            }
-            throw new FileNotFoundException(uri.getPath());
-        } finally {
-            File dir = new File(getContext().getCacheDir(), FileUtils.PLAY_TRACKS_DIR);
-            for (File file : dir.listFiles()) {
-                file.delete();
-            }
-            getContext().revokeUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        }
     }
 
     /**
