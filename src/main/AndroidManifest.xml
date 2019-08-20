@@ -175,6 +175,11 @@ limitations under the License.
         <!-- Providers -->
         <provider
             android:name=".content.CustomContentProvider"
+            android:authorities="${applicationId}.content"
+            android:exported="false"
+            android:grantUriPermissions="true" />
+        <provider
+            android:name=".content.ShareContentProvider"
             android:authorities="${applicationId}"
             android:exported="false"
             android:grantUriPermissions="true" />

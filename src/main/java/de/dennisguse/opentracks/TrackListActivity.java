@@ -18,6 +18,7 @@ package de.dennisguse.opentracks;
 
 import android.Manifest;
 import android.app.SearchManager;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,9 +26,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -47,30 +46,21 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.FileProvider;
 import androidx.cursoradapter.widget.ResourceCursorAdapter;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.app.LoaderManager.LoaderCallbacks;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Locale;
 
 import de.dennisguse.opentracks.content.ContentProviderUtils;
-import de.dennisguse.opentracks.content.Track;
+import de.dennisguse.opentracks.content.ShareContentProvider;
 import de.dennisguse.opentracks.content.TracksColumns;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
-import de.dennisguse.opentracks.io.file.TrackFileFormat;
-import de.dennisguse.opentracks.io.file.exporter.FileTrackExporter;
-import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
 import de.dennisguse.opentracks.services.ITrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.settings.SettingsActivity;
-import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.ListItemUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
@@ -257,17 +247,17 @@ public class TrackListActivity extends AbstractTrackActivity implements ConfirmD
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (BuildConfig.DEBUG) {
-            Log.d(TAG, "Enabling strict mode");
-            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-                    .detectAll()
-                    .penaltyLog()
-                    .build());
-            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-                    .detectAll()
-                    .penaltyLog()
-                    .build());
-        }
+//        if (BuildConfig.DEBUG) {
+//            Log.d(TAG, "Enabling strict mode");
+//            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+//                    .detectAll()
+//                    .penaltyLog()
+//                    .build());
+//            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+//                    .detectAll()
+//                    .penaltyLog()
+//                    .build());
+//        }
 
         contentProviderUtils = ContentProviderUtils.Factory.get(this);
         sharedPreferences = PreferencesUtils.getSharedPreferences(this);
@@ -566,8 +556,7 @@ public class TrackListActivity extends AbstractTrackActivity implements ConfirmD
     }
 
     /**
-     * Save tracks in one file and send an intent to show it with a map application.
-     * TODO: Exported file is not deleted automatically.
+     * Send intent to show tracks on a map (needs an another app).
      *
      * @param trackIds
      */
@@ -576,45 +565,14 @@ public class TrackListActivity extends AbstractTrackActivity implements ConfirmD
             return;
         }
 
-        Track[] tracks = new Track[trackIds.length];
-        for (int i = 0; i < trackIds.length; i++) {
-            tracks[i] = contentProviderUtils.getTrack(trackIds[i]);
-        }
-
-        TrackFileFormat trackFileFormat = TrackFileFormat.KML;
-        TrackExporter trackExporter = new FileTrackExporter(contentProviderUtils, tracks,
-                trackFileFormat.newTrackWriter(this, tracks.length > 1), null);
-
-        File directory = new File(FileUtils.getPath(trackFileFormat.getExtension()));
-        if (!FileUtils.ensureDirectoryExists(directory)) {
-            Toast.makeText(this, R.string.external_storage_not_writable, Toast.LENGTH_LONG).show();
-            finish();
-            return;
-        }
-
-        String fileName = FileUtils.buildUniqueFileName(directory, tracks[0].getName(), trackFileFormat.getExtension());
-        File file = new File(directory, fileName);
-
-        try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
-            if (trackExporter.writeTrack(fileOutputStream)) {
-                Uri fileUri = FileProvider.getUriForFile(this, FileUtils.FILEPROVIDER, file);
-
-                Intent intent = new Intent();
-                intent.setAction(android.content.Intent.ACTION_VIEW);
-                intent.setDataAndType(fileUri, "application/vnd.google-earth.kml+xml");
-
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                startActivity(intent);
-            } else {
-                if (!file.delete()) {
-                    Log.d(TAG, "Unable to delete file");
-                }
-                Log.e(TAG, "Unable to export track");
-            }
-        } catch (FileNotFoundException e) {
-            Log.e(TAG, "Unable to open file " + file.getName(), e);
-        } catch (IOException e) {
-            Log.e(TAG, "Unable to close file output stream", e);
+        Intent intent = new Intent();
+        intent.setAction(android.content.Intent.ACTION_VIEW);
+        intent.setDataAndType(ShareContentProvider.createURI(trackIds), ShareContentProvider.MIME);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, "No app installed that can show the tracks on a map.", Toast.LENGTH_SHORT).show();
         }
     }
 

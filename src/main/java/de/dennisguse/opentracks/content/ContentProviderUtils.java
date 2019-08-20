@@ -39,7 +39,7 @@ public interface ContentProviderUtils {
      * The authority (the first part of the URI) for the app's content
      * provider.
      */
-    String AUTHORITY = BuildConfig.APPLICATION_ID;
+    String AUTHORITY = BuildConfig.APPLICATION_ID + ".content";
     /**
      * The default {@link LocationFactory} which creates a location each time.
      */
