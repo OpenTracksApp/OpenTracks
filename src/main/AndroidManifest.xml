@@ -174,13 +174,8 @@ limitations under the License.
         </receiver>
         <!-- Providers -->
         <provider
-            android:name=".content.CustomContentProvider"
-            android:authorities="${applicationId}.content"
-            android:exported="false"
-            android:grantUriPermissions="true" />
-        <provider
             android:name=".content.ShareContentProvider"
-            android:authorities="${applicationId}"
+            android:authorities="${applicationId}.content"
             android:exported="false"
             android:grantUriPermissions="true" />
         <!-- Search suggestion provider -->

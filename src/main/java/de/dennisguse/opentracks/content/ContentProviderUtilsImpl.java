@@ -24,18 +24,21 @@ import android.location.Location;
 import android.net.Uri;
 import android.util.Log;
 
-import de.dennisguse.opentracks.content.Waypoint.WaypointType;
-import de.dennisguse.opentracks.content.sensor.SensorDataSet;
-import de.dennisguse.opentracks.stats.TripStatistics;
-import de.dennisguse.opentracks.util.FileUtils;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import de.dennisguse.opentracks.android.ContentResolverWrapper;
+import de.dennisguse.opentracks.android.IContentResolver;
+import de.dennisguse.opentracks.content.Waypoint.WaypointType;
+import de.dennisguse.opentracks.content.sensor.SensorDataSet;
+import de.dennisguse.opentracks.stats.TripStatistics;
+import de.dennisguse.opentracks.util.FileUtils;
+
 /**
  * {@link ContentProviderUtils} implementation.
+ * Allows to use {@link ContentResolver} and {@link android.content.ContentProvider} interchangeably via {@link IContentResolver}.
  *
  * @author Leif Hendrik Wilden
  */
@@ -45,10 +48,14 @@ public class ContentProviderUtilsImpl implements ContentProviderUtils {
 
     private static final int MAX_LATITUDE = 90000000;
 
-    private final ContentResolver contentResolver;
+    private final IContentResolver contentResolver;
     private int defaultCursorBatchSize = 2000;
 
     public ContentProviderUtilsImpl(ContentResolver contentResolver) {
+        this.contentResolver = new ContentResolverWrapper(contentResolver);
+    }
+
+    public ContentProviderUtilsImpl(IContentResolver contentResolver) {
         this.contentResolver = contentResolver;
     }
 
@@ -716,8 +723,7 @@ public class ContentProviderUtilsImpl implements ContentProviderUtils {
         if (maxWaypoints >= 0) {
             sortOrder += " LIMIT " + maxWaypoints;
         }
-        return contentResolver.query(
-                WaypointsColumns.CONTENT_URI, projection, selection, selectionArgs, sortOrder);
+        return contentResolver.query(WaypointsColumns.CONTENT_URI, projection, selection, selectionArgs, sortOrder);
     }
 
     @Override

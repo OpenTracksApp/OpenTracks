@@ -40,7 +40,7 @@ import androidx.annotation.VisibleForTesting;
  *
  * @author Leif Hendrik Wilden
  */
-public class CustomContentProvider extends ContentProvider {
+public abstract class CustomContentProvider extends ContentProvider {
 
     @VisibleForTesting
     static final int DATABASE_VERSION = 23;
