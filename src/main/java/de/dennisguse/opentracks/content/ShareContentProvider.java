@@ -59,12 +59,12 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
         }
         builder.deleteCharAt(builder.lastIndexOf(","));
 
-        return Uri.parse("content://" + ContentProviderUtils.AUTHORITY + "/" + TracksColumns.TABLE_NAME + "/kml/" + builder + ".kml");
+        return Uri.parse(ContentProviderUtils.CONTENT_BASE_URI + "/" + TracksColumns.TABLE_NAME + "/kml/" + builder + ".kml");
     }
 
     @Override
     public boolean onCreate() {
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY, TracksColumns.TABLE_NAME + "/kml/*", URI_KML);
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/kml/*", URI_KML);
         return super.onCreate();
     }
 

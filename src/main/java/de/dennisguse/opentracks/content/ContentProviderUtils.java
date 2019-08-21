@@ -36,10 +36,15 @@ import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 public interface ContentProviderUtils {
 
     /**
-     * The authority (the first part of the URI) for the app's content
-     * provider.
+     * The authority (the first part of the URI) for the app's content provider.
      */
-    String AUTHORITY = BuildConfig.APPLICATION_ID + ".content";
+    String AUTHORITY_PACKAGE = BuildConfig.APPLICATION_ID + ".content";
+
+    /**
+     * The base URI for the app's content provider.
+     */
+    String CONTENT_BASE_URI = "content://" + AUTHORITY_PACKAGE;
+
     /**
      * The default {@link LocationFactory} which creates a location each time.
      */

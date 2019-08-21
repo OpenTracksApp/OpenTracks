@@ -31,7 +31,7 @@ public interface TracksColumns extends BaseColumns {
     /**
      * Tracks provider uri.
      */
-    Uri CONTENT_URI = Uri.parse("content://" + ContentProviderUtils.AUTHORITY + "/tracks");
+    Uri CONTENT_URI = Uri.parse(ContentProviderUtils.CONTENT_BASE_URI + "/tracks");
 
     /**
      * Track content type.

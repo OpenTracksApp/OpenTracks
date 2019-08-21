@@ -52,12 +52,12 @@ public abstract class CustomContentProvider extends ContentProvider {
 
     public CustomContentProvider() {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY, TrackPointsColumns.TABLE_NAME, UrlType.TRACKPOINTS.ordinal());
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY, TrackPointsColumns.TABLE_NAME + "/#", UrlType.TRACKPOINTS_ID.ordinal());
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY, TracksColumns.TABLE_NAME, UrlType.TRACKS.ordinal());
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY, TracksColumns.TABLE_NAME + "/#", UrlType.TRACKS_ID.ordinal());
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY, WaypointsColumns.TABLE_NAME, UrlType.WAYPOINTS.ordinal());
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY, WaypointsColumns.TABLE_NAME + "/#", UrlType.WAYPOINTS_ID.ordinal());
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TrackPointsColumns.TABLE_NAME, UrlType.TRACKPOINTS.ordinal());
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TrackPointsColumns.TABLE_NAME + "/#", UrlType.TRACKPOINTS_ID.ordinal());
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME, UrlType.TRACKS.ordinal());
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/#", UrlType.TRACKS_ID.ordinal());
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, WaypointsColumns.TABLE_NAME, UrlType.WAYPOINTS.ordinal());
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, WaypointsColumns.TABLE_NAME + "/#", UrlType.WAYPOINTS_ID.ordinal());
     }
 
     @Override

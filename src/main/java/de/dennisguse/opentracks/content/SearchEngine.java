@@ -20,16 +20,16 @@ import android.location.Location;
 
 import androidx.annotation.NonNull;
 
-import de.dennisguse.opentracks.stats.TripStatistics;
-import de.dennisguse.opentracks.util.LocationUtils;
-import de.dennisguse.opentracks.util.UnitConversions;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Locale;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import de.dennisguse.opentracks.stats.TripStatistics;
+import de.dennisguse.opentracks.util.LocationUtils;
+import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
  * Engine for searching for tracks and waypoints by text.
@@ -381,6 +381,7 @@ public class SearchEngine {
         public final Location currentLocation;
         public final long currentTrackId;
         public final long currentTimestamp;
+
         public SearchQuery(String textQuery, Location currentLocation, long currentTrackId,
                            long currentTimestamp) {
             this.textQuery = textQuery.toLowerCase(Locale.getDefault());
@@ -397,11 +398,13 @@ public class SearchEngine {
         public final Track track;
         public final Waypoint waypoint;
         public final double score;
+
         ScoredResult(Track track, double score) {
             this.track = track;
             this.waypoint = null;
             this.score = score;
         }
+
         ScoredResult(Waypoint waypoint, double score) {
             this.track = null;
             this.waypoint = waypoint;

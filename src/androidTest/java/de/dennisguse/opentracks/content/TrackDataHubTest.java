@@ -183,7 +183,7 @@ public class TrackDataHubTest {
 //                .thenReturn(waypoint2)
 //                .thenReturn(waypoint1)
 //                .thenReturn(waypoint2);
-//        dataSource.registerContentObserver(eq(WaypointsColumns.CONTENT_URI), contentObserverCapture.capture());
+//        dataSource.registerContentObserver(eq(WaypointsColumns.CONTENT_BASE_URI), contentObserverCapture.capture());
 //        trackDataListener1.clearWaypoints();
 //        trackDataListener2.clearWaypoints();
 //        trackDataListener1.onNewWaypoint(waypoint1);
@@ -417,7 +417,7 @@ public class TrackDataHubTest {
 //    @Test
 //    public void testTrackPointsTableUpdate_largeTrackSampling() {
 //        ArgumentCaptor<ContentObserver> contentObserverCapture = ArgumentCaptor.forClass(ContentObserver.class);
-//        dataSource.registerContentObserver(eq(TrackPointsColumns.CONTENT_URI), contentObserverCapture.capture());
+//        dataSource.registerContentObserver(eq(TrackPointsColumns.CONTENT_BASE_URI), contentObserverCapture.capture());
 //
 //        when(contentProviderUtils.getLastTrackPointId(TRACK_ID)).thenReturn(200L);
 //        AndroidMock.expectLastCall().anyTimes();
@@ -565,7 +565,7 @@ public class TrackDataHubTest {
 //    @Test
 //    public void testRegisterTracksTableListener() {
 //        ArgumentCaptor<ContentObserver> observerCapture = ArgumentCaptor.forClass(ContentObserver.class);
-//        dataSource.registerContentObserver(eq(TracksColumns.CONTENT_URI), observerCapture.capture());
+//        dataSource.registerContentObserver(eq(TracksColumns.CONTENT_BASE_URI), observerCapture.capture());
 //        Track track = TrackStubUtils.createTrack(1);
 //
 //        when(contentProviderUtils.getTrack(capture(new Capture<Long>())).thenReturn(track);
@@ -585,7 +585,7 @@ public class TrackDataHubTest {
 //    @Test
 //    public void testRegisterWaypointsTableListener() {
 //        ArgumentCaptor<ContentObserver> observerCapture = ArgumentCaptor.forClass(ContentObserver.class);
-//        dataSource.registerContentObserver(eq(WaypointsColumns.CONTENT_URI), observerCapture.capture());
+//        dataSource.registerContentObserver(eq(WaypointsColumns.CONTENT_BASE_URI), observerCapture.capture());
 //        when(contentProviderUtils.getWaypointCursor(
 //                capture(new Capture<Long>()), capture(new Capture<Long>()),
 //                capture(new Capture<Integer>()))).thenReturn(null);
