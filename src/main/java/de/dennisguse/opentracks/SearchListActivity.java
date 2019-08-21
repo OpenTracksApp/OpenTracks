@@ -21,7 +21,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
-import android.provider.SearchRecentSuggestions;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -48,7 +47,6 @@ import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.SearchEngine;
 import de.dennisguse.opentracks.content.SearchEngine.ScoredResult;
 import de.dennisguse.opentracks.content.SearchEngine.SearchQuery;
-import de.dennisguse.opentracks.content.SearchEngineProvider;
 import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.content.Waypoint;
 import de.dennisguse.opentracks.content.Waypoint.WaypointType;
@@ -96,7 +94,6 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
     private SharedPreferences sharedPreferences;
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
     private SearchEngine searchEngine;
-    private SearchRecentSuggestions searchRecentSuggestions;
     private ArrayAdapter<Map<String, Object>> arrayAdapter;
     private boolean metricUnits = true;
     private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
@@ -169,7 +166,6 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
         sharedPreferences = PreferencesUtils.getSharedPreferences(this);
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
         searchEngine = new SearchEngine(contentProviderUtils);
-        searchRecentSuggestions = SearchEngineProvider.newHelper(this);
 
         arrayAdapter = new ArrayAdapter<Map<String, Object>>(this, R.layout.list_item, R.id.list_item_name) {
             @NonNull
@@ -384,9 +380,6 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
                 arrayAdapter.addAll(displayResults);
             }
         });
-
-        // Save the query as a suggestion for the future
-        searchRecentSuggestions.saveRecentQuery(query.textQuery, null);
     }
 
     /**
@@ -418,10 +411,7 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
      */
     @Deprecated
     private void prepareMarkerForDisplay(Waypoint waypoint, Map<String, Object> resultMap) {
-        /*
-         * TODO: It may be more appropriate to obtain the track name as a join in
-         * the retrieval phase of the search.
-         */
+        //TODO: It may be more appropriate to obtain the track name as a join in the retrieval phase of the search.
         String trackName = null;
         long trackId = waypoint.getTrackId();
         if (trackId != -1L) {
