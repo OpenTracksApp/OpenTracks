@@ -64,7 +64,7 @@ import de.dennisguse.opentracks.util.TrackUtils;
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
-public class TrackDetailActivity extends AbstractTrackActivity implements ChooseActivityTypeCaller, ConfirmDeleteDialogFragment.ConfirmDeleteCaller {
+public class TrackDetailActivity extends AbstractListActivity implements ChooseActivityTypeCaller, ConfirmDeleteDialogFragment.ConfirmDeleteCaller {
 
     public static final String EXTRA_TRACK_ID = "track_id";
     public static final String EXTRA_MARKER_ID = "marker_id";

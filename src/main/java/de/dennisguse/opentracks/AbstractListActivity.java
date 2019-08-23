@@ -29,15 +29,14 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.SearchView;
 
+import java.util.ArrayList;
+
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment.ConfirmDeleteCaller;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.TrackRecordingServiceConnectionUtils;
-import de.dennisguse.opentracks.R;
-
-import java.util.ArrayList;
 
 /**
  * An abstract class for the following common tasks across
@@ -49,7 +48,7 @@ import java.util.ArrayList;
  *
  * @author Jimmy Shih
  */
-public abstract class AbstractTrackActivity extends AbstractActivity implements ConfirmDeleteCaller {
+public abstract class AbstractListActivity extends AbstractActivity implements ConfirmDeleteCaller {
 
     protected static final int GPS_REQUEST_CODE = 6;
     private static final int DELETE_REQUEST_CODE = 3;

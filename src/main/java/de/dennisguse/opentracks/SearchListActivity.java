@@ -69,7 +69,7 @@ import de.dennisguse.opentracks.util.TrackRecordingServiceConnectionUtils;
  * <p>
  * TODO: allow to refine search (present search in context menu)
  */
-public class SearchListActivity extends AbstractTrackActivity implements DeleteMarkerCaller, ConfirmDeleteDialogFragment.ConfirmDeleteCaller {
+public class SearchListActivity extends AbstractListActivity implements DeleteMarkerCaller, ConfirmDeleteDialogFragment.ConfirmDeleteCaller {
 
     private static final String TAG = SearchListActivity.class.getSimpleName();
 
@@ -218,7 +218,7 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
                 startActivity(intent);
             }
         });
-        AbstractTrackActivity.configureListViewContextualMenu(listView, contextualActionModeCallback);
+        AbstractListActivity.configureListViewContextualMenu(listView, contextualActionModeCallback);
         handleIntent(getIntent());
     }
 

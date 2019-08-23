@@ -72,7 +72,7 @@ import de.dennisguse.opentracks.util.TrackUtils;
  *
  * @author Leif Hendrik Wilden
  */
-public class TrackListActivity extends AbstractTrackActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller {
+public class TrackListActivity extends AbstractListActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller {
 
     private static final String TAG = TrackListActivity.class.getSimpleName();
     private static final String[] PROJECTION = new String[]{TracksColumns._ID, TracksColumns.NAME,
@@ -313,7 +313,7 @@ public class TrackListActivity extends AbstractTrackActivity implements ConfirmD
             }
         };
         listView.setAdapter(resourceCursorAdapter);
-        AbstractTrackActivity.configureListViewContextualMenu(listView, contextualActionModeCallback);
+        AbstractListActivity.configureListViewContextualMenu(listView, contextualActionModeCallback);
 
         LoaderManager.getInstance(this).initLoader(0, null, loaderCallbacks);
         showStartupDialogs();
@@ -376,7 +376,7 @@ public class TrackListActivity extends AbstractTrackActivity implements ConfirmD
         getMenuInflater().inflate(R.menu.track_list, menu);
 
         searchMenuItem = menu.findItem(R.id.track_list_search);
-        AbstractTrackActivity.configureSearchWidget(this, searchMenuItem, trackController);
+        AbstractListActivity.configureSearchWidget(this, searchMenuItem, trackController);
 
         startGpsMenuItem = menu.findItem(R.id.track_list_start_gps);
         aggregatedStatisticsMenuItem = menu.findItem(R.id.track_list_aggregated_statistics);

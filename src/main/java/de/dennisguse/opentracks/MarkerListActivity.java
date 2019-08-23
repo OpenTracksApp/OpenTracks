@@ -173,7 +173,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
             }
         };
         listView.setAdapter(resourceCursorAdapter);
-        AbstractTrackActivity.configureListViewContextualMenu(listView, contextualActionModeCallback);
+        AbstractListActivity.configureListViewContextualMenu(listView, contextualActionModeCallback);
 
         LoaderManager.getInstance(this).initLoader(0, null, new LoaderCallbacks<Cursor>() {
             @NonNull
@@ -232,7 +232,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         insertMarkerMenuItem = menu.findItem(R.id.marker_list_insert_marker);
 
         searchMenuItem = menu.findItem(R.id.marker_list_search);
-        AbstractTrackActivity.configureSearchWidget(this, searchMenuItem, null);
+        AbstractListActivity.configureSearchWidget(this, searchMenuItem, null);
 
         return super.onCreateOptionsMenu(menu);
     }
