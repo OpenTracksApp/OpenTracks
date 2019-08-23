@@ -26,9 +26,11 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.util.Pair;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Gravity;
@@ -565,9 +567,10 @@ public class TrackListActivity extends AbstractTrackActivity implements ConfirmD
             return;
         }
 
+        Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(trackIds);
         Intent intent = new Intent();
         intent.setAction(android.content.Intent.ACTION_VIEW);
-        intent.setDataAndType(ShareContentProvider.createURI(trackIds), ShareContentProvider.MIME);
+        intent.setDataAndType(uriAndMime.first, uriAndMime.second);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         try {
             startActivity(intent);

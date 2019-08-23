@@ -55,7 +55,6 @@ import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment.Choos
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.fragments.FrequencyDialogFragment;
 import de.dennisguse.opentracks.fragments.StatsFragment;
-import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.util.FileUtils;
@@ -306,7 +305,7 @@ public class TrackDetailActivity extends AbstractTrackActivity implements Choose
 
         shareMenuItem = menu.findItem(R.id.track_detail_share);
         ShareActionProvider shareActionProvider = (ShareActionProvider) shareMenuItem.getActionProvider();
-        shareActionProvider.setShareIntent(IntentUtils.newShareFileIntent(this, trackId, TrackFileFormat.KML));
+        shareActionProvider.setShareIntent(IntentUtils.newShareFileIntent(this, trackId));
 
         voiceFrequencyMenuItem = menu.findItem(R.id.track_detail_voice_frequency);
         splitFrequencyMenuItem = menu.findItem(R.id.track_detail_split_frequency);

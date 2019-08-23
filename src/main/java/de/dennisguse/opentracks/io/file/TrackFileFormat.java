@@ -20,17 +20,32 @@ public enum TrackFileFormat implements Parcelable {
         public TrackWriter newTrackWriter(Context context, boolean multiple) {
             return new KmlTrackWriter(context, multiple, false);
         }
+
+        @Override
+        public String getMimeType() {
+            return "application/vnd.google-earth.kml+xml";
+        }
     },
     KMZ {
         @Override
         public TrackWriter newTrackWriter(Context context, boolean multiple) {
             return new KmlTrackWriter(context, multiple, true);
         }
+
+        @Override
+        public String getMimeType() {
+            return "application/vnd.google-earth.kmz";
+        }
     },
     GPX {
         @Override
         public TrackWriter newTrackWriter(Context context, boolean multiple) {
             return new GpxTrackWriter(context.getString(R.string.app_name));
+        }
+
+        @Override
+        public String getMimeType() {
+            return "application/gpx+xml";
         }
     };
 
@@ -67,9 +82,7 @@ public enum TrackFileFormat implements Parcelable {
     /**
      * Returns the mime type for each format.
      */
-    public String getMimeType() {
-        return "application/" + getExtension() + "+xml";
-    }
+    public abstract String getMimeType();
 
     /**
      * Returns the file extension for each format.

@@ -19,6 +19,7 @@ package de.dennisguse.opentracks.util;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Pair;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
@@ -26,7 +27,6 @@ import de.dennisguse.opentracks.content.DescriptionGeneratorImpl;
 import de.dennisguse.opentracks.content.ShareContentProvider;
 import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.content.Waypoint;
-import de.dennisguse.opentracks.io.file.TrackFileFormat;
 
 /**
  * Utilities for creating intents.
@@ -54,17 +54,18 @@ public class IntentUtils {
      *
      * @param context         the context
      * @param trackId         the track id
-     * @param trackFileFormat the track file format
      */
-    public static Intent newShareFileIntent(Context context, long trackId, TrackFileFormat trackFileFormat) {
+    public static Intent newShareFileIntent(Context context, long trackId) {
         Track track = ContentProviderUtils.Factory.get(context).getTrack(trackId);
         String trackDescription = track == null ? "" : new DescriptionGeneratorImpl(context).generateTrackDescription(track, false);
 
+        Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(new long[]{trackId});
+
         return new Intent(Intent.ACTION_SEND)
-                .putExtra(Intent.EXTRA_STREAM, ShareContentProvider.createURI(new long[]{trackId}))
+                .putExtra(Intent.EXTRA_STREAM, uriAndMime.first)
                 .putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.share_track_subject))
                 .putExtra(Intent.EXTRA_TEXT, context.getString(R.string.share_track_share_file_body, trackDescription))
-                .setType(trackFileFormat.getMimeType())
+                .setType(uriAndMime.second)
                 .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
     }
 
