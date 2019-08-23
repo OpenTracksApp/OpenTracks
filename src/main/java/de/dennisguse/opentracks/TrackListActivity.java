@@ -18,7 +18,6 @@ package de.dennisguse.opentracks;
 
 import android.Manifest;
 import android.app.SearchManager;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,11 +25,9 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
-import android.util.Pair;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Gravity;
@@ -57,7 +54,6 @@ import androidx.loader.content.Loader;
 import java.util.Locale;
 
 import de.dennisguse.opentracks.content.ContentProviderUtils;
-import de.dennisguse.opentracks.content.ShareContentProvider;
 import de.dennisguse.opentracks.content.TracksColumns;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.services.ITrackRecordingService;
@@ -558,28 +554,6 @@ public class TrackListActivity extends AbstractTrackActivity implements ConfirmD
     }
 
     /**
-     * Send intent to show tracks on a map (needs an another app).
-     *
-     * @param trackIds
-     */
-    private void showOnExternalMap(long[] trackIds) {
-        if (trackIds.length == 0) {
-            return;
-        }
-
-        Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(trackIds);
-        Intent intent = new Intent();
-        intent.setAction(android.content.Intent.ACTION_VIEW);
-        intent.setDataAndType(uriAndMime.first, uriAndMime.second);
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        try {
-            startActivity(intent);
-        } catch (ActivityNotFoundException e) {
-            Toast.makeText(this, "No app installed that can show the tracks on a map.", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    /**
      * Handles a context item selection.
      *
      * @param itemId   the menu item id
@@ -589,7 +563,7 @@ public class TrackListActivity extends AbstractTrackActivity implements ConfirmD
     private boolean handleContextItem(int itemId, long[] trackIds) {
         switch (itemId) {
             case R.id.list_context_menu_show_on_map:
-                showOnExternalMap(trackIds);
+                IntentUtils.showTrackOnMap(this, trackIds);
                 return true;
             case R.id.list_context_menu_share:
                 //TODO

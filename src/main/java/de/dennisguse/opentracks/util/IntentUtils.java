@@ -16,10 +16,20 @@
 
 package de.dennisguse.opentracks.util;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.util.Pair;
+import android.widget.Toast;
+
+import androidx.core.content.FileProvider;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
@@ -35,6 +45,8 @@ import de.dennisguse.opentracks.content.Waypoint;
  */
 public class IntentUtils {
 
+    private final static String TAG = IntentUtils.class.getCanonicalName();
+
     private IntentUtils() {
     }
 
@@ -49,11 +61,17 @@ public class IntentUtils {
         return new Intent(context, cls).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
     }
 
+    private static final String JPEG_EXTENSION = "jpeg";
+
+    public static Intent newShowCoordinateOnMapIntent(Waypoint waypoint) {
+        return newShowCoordinateOnMapIntent(waypoint.getLocation().getLatitude(), waypoint.getLocation().getLongitude(), waypoint.getName());
+    }
+
     /**
      * Creates an intent to share a track file with an app.
      *
-     * @param context         the context
-     * @param trackId         the track id
+     * @param context the context
+     * @param trackId the track id
      */
     public static Intent newShareFileIntent(Context context, long trackId) {
         Track track = ContentProviderUtils.Factory.get(context).getTrack(trackId);
@@ -69,18 +87,57 @@ public class IntentUtils {
                 .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
     }
 
-    public static Intent newShowCoordinateOnMapIntent(Waypoint waypoint) {
-        return newShowCoordinateOnMapIntent(waypoint.getLocation().getLatitude(), waypoint.getLocation().getLongitude(), waypoint.getName());
-    }
-
     public static Intent newShowCoordinateOnMapIntent(double latitude, double longitude, String label) {
         //SEE https://developer.android.com/guide/components/intents-common.html#Maps
-        Intent intent = new Intent(Intent.ACTION_VIEW);
         String uri = "geo:0,0?q=" + latitude + "," + longitude;
         if (label != null && label.length() > 0) {
             uri += "(" + label + ")";
         }
+        Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(uri));
         return intent;
+    }
+
+    /**
+     * Send intent to show tracks on a map (needs an another app).
+     *
+     * @param context  the context
+     * @param trackIds the track ids
+     */
+    public static void showTrackOnMap(Context context, long[] trackIds) {
+        if (trackIds.length == 0) {
+            return;
+        }
+
+        Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(trackIds);
+        Intent intent = new Intent();
+        intent.setAction(android.content.Intent.ACTION_VIEW);
+        intent.setDataAndType(uriAndMime.first, uriAndMime.second);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        try {
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(context, "No app installed that can show the tracks on a map.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Sends a take picture request to the camera app.
+     * The picture is then stored in the track's folder.
+     *
+     * @param context the context
+     * @param trackId the track id
+     */
+    public static Intent createTakePictureIntent(Context context, long trackId) {
+        File dir = FileUtils.getPhotoDir(trackId);
+        FileUtils.ensureDirectoryExists(dir);
+
+        String fileName = SimpleDateFormat.getDateTimeInstance().format(new Date());
+        File file = new File(dir, FileUtils.buildUniqueFileName(dir, fileName, JPEG_EXTENSION));
+
+        Uri photoUri = FileProvider.getUriForFile(context, FileUtils.FILEPROVIDER, file);
+        Log.d(TAG, "Taking photo to URI: " + photoUri);
+        return new Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                .putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
     }
 }

@@ -24,7 +24,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,12 +35,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.FileProvider;
 import androidx.viewpager.widget.ViewPager;
-
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.Track;
@@ -78,7 +72,6 @@ public class TrackDetailActivity extends AbstractTrackActivity implements Choose
     private static final String CURRENT_TAB_TAG_KEY = "current_tab_tag_key";
     private static final String PHOTO_URI_KEY = "photo_uri_key";
     private static final String HAS_PHOTO_KEY = "has_photo_key";
-    private static final String JPEG_EXTENSION = "jpeg";
 
     private static final int CAMERA_REQUEST_CODE = 5;
     private static final int EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE = 6;
@@ -335,7 +328,7 @@ public class TrackDetailActivity extends AbstractTrackActivity implements Choose
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
                     return false;
                 }
-                takePicture();
+                startActivityForResult(IntentUtils.createTakePictureIntent(this, trackId), CAMERA_REQUEST_CODE);
                 return true;
             case R.id.track_detail_markers:
                 intent = IntentUtils.newIntent(this, MarkerListActivity.class)
@@ -367,27 +360,13 @@ public class TrackDetailActivity extends AbstractTrackActivity implements Choose
         }
     }
 
-    private void takePicture() {
-        File dir = FileUtils.getPhotoDir(trackId);
-        FileUtils.ensureDirectoryExists(dir);
-
-        String fileName = SimpleDateFormat.getDateTimeInstance().format(new Date());
-        File file = new File(dir, FileUtils.buildUniqueFileName(dir, fileName, JPEG_EXTENSION));
-
-        photoUri = FileProvider.getUriForFile(this, FileUtils.FILEPROVIDER, file);
-        Log.d(TAG, "Taking photo to URI: " + photoUri);
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                .putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-        startActivityForResult(intent, CAMERA_REQUEST_CODE);
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                 Toast.makeText(this, R.string.external_storage_not_writable, Toast.LENGTH_LONG).show();
             } else {
-                takePicture();
+                startActivityForResult(IntentUtils.createTakePictureIntent(this, trackId), CAMERA_REQUEST_CODE);
             }
             return;
         }
