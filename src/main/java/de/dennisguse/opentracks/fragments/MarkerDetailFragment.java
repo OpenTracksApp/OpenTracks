@@ -39,6 +39,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import de.dennisguse.opentracks.MarkerEditActivity;
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.content.Waypoint;
@@ -48,7 +49,6 @@ import de.dennisguse.opentracks.util.ListItemUtils;
 import de.dennisguse.opentracks.util.StatsUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
-import de.dennisguse.opentracks.R;
 
 /**
  * A fragment to show marker details.
@@ -190,7 +190,7 @@ public class MarkerDetailFragment extends Fragment {
         Intent intent;
         switch (item.getItemId()) {
             case R.id.marker_detail_show_on_map:
-                intent = IntentUtils.newShowOnMapIntent(waypoint);
+                intent = IntentUtils.newShowCoordinateOnMapIntent(waypoint);
                 startActivity(intent);
                 return true;
             case R.id.marker_detail_edit:

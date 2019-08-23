@@ -306,8 +306,7 @@ public class TrackDetailActivity extends AbstractTrackActivity implements Choose
 
         shareMenuItem = menu.findItem(R.id.track_detail_share);
         ShareActionProvider shareActionProvider = (ShareActionProvider) shareMenuItem.getActionProvider();
-        //TODO: Share the actual track when track is finished? How to get the file path or create a new file?
-        shareActionProvider.setShareIntent(IntentUtils.newShareFileIntent(this, trackId, "", TrackFileFormat.KML));
+        shareActionProvider.setShareIntent(IntentUtils.newShareFileIntent(this, trackId, TrackFileFormat.KML));
 
         voiceFrequencyMenuItem = menu.findItem(R.id.track_detail_voice_frequency);
         splitFrequencyMenuItem = menu.findItem(R.id.track_detail_split_frequency);

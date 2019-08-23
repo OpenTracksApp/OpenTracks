@@ -316,7 +316,7 @@ public class SearchListActivity extends AbstractTrackActivity implements DeleteM
                 Log.e(TAG, "Not implemented");
                 return true;
             case R.id.list_context_menu_show_on_map:
-                intent = IntentUtils.newShowOnMapIntent((double) item.get(MARKER_LATITUDE_FIELD), (double) item.get(MARKER_LONGITUDE_FIELD), item.get(NAME_FIELD) + "");
+                intent = IntentUtils.newShowCoordinateOnMapIntent((double) item.get(MARKER_LATITUDE_FIELD), (double) item.get(MARKER_LONGITUDE_FIELD), item.get(NAME_FIELD) + "");
                 startActivity(intent);
                 return true;
             case R.id.list_context_menu_edit:

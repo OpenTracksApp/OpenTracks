@@ -20,11 +20,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
-import java.io.File;
-
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.DescriptionGeneratorImpl;
+import de.dennisguse.opentracks.content.ShareContentProvider;
 import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.content.Waypoint;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
@@ -55,26 +54,25 @@ public class IntentUtils {
      *
      * @param context         the context
      * @param trackId         the track id
-     * @param filePath        the file path
      * @param trackFileFormat the track file format
      */
-    public static Intent newShareFileIntent(Context context, long trackId, String filePath, TrackFileFormat trackFileFormat) {
+    public static Intent newShareFileIntent(Context context, long trackId, TrackFileFormat trackFileFormat) {
         Track track = ContentProviderUtils.Factory.get(context).getTrack(trackId);
         String trackDescription = track == null ? "" : new DescriptionGeneratorImpl(context).generateTrackDescription(track, false);
 
         return new Intent(Intent.ACTION_SEND)
-                .putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(filePath)))
+                .putExtra(Intent.EXTRA_STREAM, ShareContentProvider.createURI(new long[]{trackId}))
                 .putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.share_track_subject))
                 .putExtra(Intent.EXTRA_TEXT, context.getString(R.string.share_track_share_file_body, trackDescription))
-                .putExtra(context.getString(R.string.track_id_broadcast_extra), trackId)
-                .setType(trackFileFormat.getMimeType());
+                .setType(trackFileFormat.getMimeType())
+                .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
     }
 
-    public static Intent newShowOnMapIntent(Waypoint waypoint) {
-        return newShowOnMapIntent(waypoint.getLocation().getLatitude(), waypoint.getLocation().getLongitude(), waypoint.getName());
+    public static Intent newShowCoordinateOnMapIntent(Waypoint waypoint) {
+        return newShowCoordinateOnMapIntent(waypoint.getLocation().getLatitude(), waypoint.getLocation().getLongitude(), waypoint.getName());
     }
 
-    public static Intent newShowOnMapIntent(double latitude, double longitude, String label) {
+    public static Intent newShowCoordinateOnMapIntent(double latitude, double longitude, String label) {
         //SEE https://developer.android.com/guide/components/intents-common.html#Maps
         Intent intent = new Intent(Intent.ACTION_VIEW);
         String uri = "geo:0,0?q=" + latitude + "," + longitude;
