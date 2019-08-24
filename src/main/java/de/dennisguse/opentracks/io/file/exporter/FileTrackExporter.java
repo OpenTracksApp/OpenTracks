@@ -20,6 +20,8 @@ import android.database.Cursor;
 import android.location.Location;
 import android.util.Log;
 
+import java.io.OutputStream;
+
 import de.dennisguse.opentracks.Constants;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.ContentProviderUtils.LocationIterator;
@@ -27,8 +29,6 @@ import de.dennisguse.opentracks.content.SensorDataSetLocation;
 import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.content.Waypoint;
 import de.dennisguse.opentracks.util.LocationUtils;
-
-import java.io.OutputStream;
 
 /**
  * Track Writer for writing tracks to an {@link OutputStream}.
@@ -49,11 +49,11 @@ public class FileTrackExporter implements TrackExporter {
      * Constructor.
      *
      * @param contentProviderUtils  the content provider utils
-     * @param tracks                the tracks
      * @param trackWriter           the track writer
+     * @param tracks                the tracks
      * @param trackExporterListener the track export listener
      */
-    public FileTrackExporter(ContentProviderUtils contentProviderUtils, Track[] tracks, TrackWriter trackWriter, TrackExporterListener trackExporterListener) {
+    public FileTrackExporter(ContentProviderUtils contentProviderUtils, TrackWriter trackWriter, Track[] tracks, TrackExporterListener trackExporterListener) {
         this.contentProviderUtils = contentProviderUtils;
         this.tracks = tracks;
         this.trackWriter = trackWriter;

@@ -67,7 +67,7 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     /**
      * Creates an AsyncTask.
      *
-     * @param exportActivity    the activity currently associated with this task
+     * @param exportActivity  the activity currently associated with this task
      * @param trackFileFormat the track file format
      * @param directory       the directory to write the file
      */
@@ -154,23 +154,20 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
             return false;
         }
 
-        FileTrackExporter fileTrackExporter = new FileTrackExporter(contentProviderUtils, tracks,
-                trackFileFormat.newTrackWriter(context, tracks.length > 1),
-                new TrackExporterListener() {
-                    @Override
-                    public void onProgressUpdate(int number, int max) {
-                        //Update the progress dialog once every 500 points.
-                        if (number % 500 == 0) {
-                            publishProgress(number, max);
-                        }
-                    }
-                });
-        boolean useKmz = trackFileFormat == TrackFileFormat.KMZ;
-        String extension = useKmz ? KmzTrackExporter.KMZ_EXTENSION : trackFileFormat.getExtension();
-        TrackExporter trackExporter = useKmz ? new KmzTrackExporter(contentProviderUtils, fileTrackExporter, tracks) : fileTrackExporter;
+        TrackExporterListener trackExporterListener = new TrackExporterListener() {
+            @Override
+            public void onProgressUpdate(int number, int max) {
+                //Update the progress dialog once every 500 points.
+                if (number % 500 == 0) {
+                    publishProgress(number, max);
+                }
+            }
+        };
+
+        TrackExporter trackExporter = trackFileFormat.newTrackExporter(context, tracks, trackExporterListener);
 
         Track track = tracks[0];
-        String fileName = FileUtils.buildUniqueFileName(directory, track.getName(), extension);
+        String fileName = FileUtils.buildUniqueFileName(directory, track.getName(), trackFileFormat.getExtension());
         File file = new File(directory, fileName);
 
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {

@@ -7,8 +7,14 @@ import android.os.Parcelable;
 import java.util.Locale;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.ContentProviderUtils;
+import de.dennisguse.opentracks.content.Track;
+import de.dennisguse.opentracks.io.file.exporter.FileTrackExporter;
 import de.dennisguse.opentracks.io.file.exporter.GpxTrackWriter;
 import de.dennisguse.opentracks.io.file.exporter.KmlTrackWriter;
+import de.dennisguse.opentracks.io.file.exporter.KmzTrackExporter;
+import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
+import de.dennisguse.opentracks.io.file.exporter.TrackExporterListener;
 import de.dennisguse.opentracks.io.file.exporter.TrackWriter;
 
 /**
@@ -35,6 +41,15 @@ public enum TrackFileFormat implements Parcelable {
         @Override
         public String getMimeType() {
             return "application/vnd.google-earth.kmz";
+        }
+
+        public TrackExporter newTrackExporter(Context context, Track[] tracks, TrackExporterListener trackExporterListener) {
+            ContentProviderUtils contentProviderUtils = ContentProviderUtils.Factory.get(context);
+            TrackWriter trackWriter = this.newTrackWriter(context, tracks.length > 1);
+
+            FileTrackExporter fileTrackExporter = new FileTrackExporter(contentProviderUtils, trackWriter, tracks, trackExporterListener);
+
+            return new KmzTrackExporter(contentProviderUtils, fileTrackExporter, tracks);
         }
     },
     GPX {
@@ -78,6 +93,12 @@ public enum TrackFileFormat implements Parcelable {
      * @param multiple  true for writing multiple tracks
      */
     public abstract TrackWriter newTrackWriter(Context context, boolean multiple);
+
+    public TrackExporter newTrackExporter(Context context, Track[] tracks, TrackExporterListener trackExporterListener) {
+        ContentProviderUtils contentProviderUtils = ContentProviderUtils.Factory.get(context);
+        TrackWriter trackWriter = this.newTrackWriter(context, tracks.length > 1);
+        return new FileTrackExporter(contentProviderUtils, trackWriter, tracks, trackExporterListener);
+    }
 
     /**
      * Returns the mime type for each format.

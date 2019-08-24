@@ -22,8 +22,7 @@ import java.util.Arrays;
 
 import de.dennisguse.opentracks.android.IContentResolver;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
-import de.dennisguse.opentracks.io.file.exporter.FileTrackExporter;
-import de.dennisguse.opentracks.io.file.exporter.TrackWriter;
+import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
 
 /**
  * A content provider that mimics the behavior of {@link androidx.core.content.FileProvider}, which shares virtual (non-existing) KML-files.
@@ -176,14 +175,13 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
             tracks[i] = contentProviderUtils.getTrack(trackIds[i]);
         }
 
-        TrackWriter kmlTrackWriter = TrackFileFormat.KML.newTrackWriter(getContext(), false);
-        final FileTrackExporter fileTrackExporter = new FileTrackExporter(contentProviderUtils, tracks, kmlTrackWriter, null);
+        final TrackExporter trackExporter = getTrackFileFormat(uri).newTrackExporter(getContext(), tracks, null);
 
         PipeDataWriter pipeDataWriter = new PipeDataWriter<String>() {
             @Override
             public void writeDataToPipe(@NonNull ParcelFileDescriptor output, @NonNull Uri uri, @NonNull String mimeType, @Nullable Bundle opts, @Nullable String args) {
                 try (FileOutputStream fileOutputStream = new FileOutputStream(output.getFileDescriptor())) {
-                    fileTrackExporter.writeTrack(fileOutputStream);
+                    trackExporter.writeTrack(fileOutputStream);
                 } catch (IOException e) {
                     Log.w(TAG, "there occurred an error while sharing a file: " + e);
                 }
