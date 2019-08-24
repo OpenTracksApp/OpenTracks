@@ -71,7 +71,6 @@ public class FileTypeDialogFragment extends AbstractDialogFragment {
                     FileUtils.getPathDisplayName(trackFileFormat.getExtension()));
         }
         return new AlertDialog.Builder(getActivity())
-                .setCancelable(true)
                 .setNegativeButton(R.string.generic_cancel, new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -87,13 +86,12 @@ public class FileTypeDialogFragment extends AbstractDialogFragment {
                 })
                 .setSingleChoiceItems(choices, 0, null)
                 .setTitle(titleId)
-                .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        onDismissed();
-                    }
-                })
                 .create();
+    }
+
+    @Override
+    public void onCancel(DialogInterface dialog) {
+        onDismissed();
     }
 
     protected void onDismissed() {
