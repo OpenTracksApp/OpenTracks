@@ -30,8 +30,8 @@ limitations under the License.
         android:title="@string/menu_split_frequency" />
     <ListPreference
         android:defaultValue="@string/settings_recording_track_name_date_iso_8601_value"
-        android:entries="@array/stats_units_options"
-        android:entryValues="@array/stats_units_values"
+        android:entries="@array/track_name_options"
+        android:entryValues="@array/track_name_values"
         android:key="@string/track_name_key"
         android:summary="%s"
         android:title="@string/settings_recording_track_name_title" />
