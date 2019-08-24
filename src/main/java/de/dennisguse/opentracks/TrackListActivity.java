@@ -41,6 +41,7 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.ShareActionProvider;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -114,6 +115,13 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             boolean isSingleSelection = ids.length == 1;
 
             menu.findItem(R.id.list_context_menu_share).setVisible(!isRecording && isSingleSelection);
+            Intent shareIntent = null;
+            if (isSingleSelection) {
+                shareIntent = IntentUtils.newShareFileIntent(TrackListActivity.this, ids[0]);
+            }
+            ShareActionProvider shareActionProvider = (ShareActionProvider) menu.findItem(R.id.list_context_menu_share).getActionProvider();
+            shareActionProvider.setShareIntent(shareIntent);
+
             menu.findItem(R.id.list_context_menu_edit).setVisible(isSingleSelection);
             menu.findItem(R.id.list_context_menu_select_all).setVisible(showSelectAll);
         }
@@ -456,8 +464,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         getMenuInflater().inflate(R.menu.list_context_menu, menu);
 
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
-        contextualActionModeCallback.onPrepare(
-                menu, new int[]{info.position}, new long[]{info.id}, false);
+        contextualActionModeCallback.onPrepare(menu, new int[]{info.position}, new long[]{info.id}, false);
     }
 
     @Override
@@ -564,10 +571,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         switch (itemId) {
             case R.id.list_context_menu_show_on_map:
                 IntentUtils.showTrackOnMap(this, trackIds);
-                return true;
-            case R.id.list_context_menu_share:
-                //TODO
-                Log.e(TAG, "Not implemented");
                 return true;
             case R.id.list_context_menu_edit:
                 Intent intent = IntentUtils.newIntent(this, TrackEditActivity.class)

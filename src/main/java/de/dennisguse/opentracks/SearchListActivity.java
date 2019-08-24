@@ -100,11 +100,6 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
     // Callback when an item is selected in the contextual action mode
     private ContextualActionModeCallback contextualActionModeCallback = new ContextualActionModeCallback() {
         @Override
-        public boolean onClick(int itemId, int[] positions, long[] ids) {
-            return handleContextItem(itemId, positions);
-        }
-
-        @Override
         public void onPrepare(Menu menu, int[] positions, long[] ids, boolean showSelectAll) {
             boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
             boolean isSingleSelection = positions.length == 1;
@@ -130,6 +125,11 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
             menu.findItem(R.id.list_context_menu_delete).setVisible(isSingleSelection && (isSingleSelectionTrack));
             // Disable select all, no action is available for multiple selection
             menu.findItem(R.id.list_context_menu_select_all).setVisible(false);
+        }
+
+        @Override
+        public boolean onClick(int itemId, int[] positions, long[] ids) {
+            return handleContextItem(itemId, positions);
         }
     };
     private boolean recordingTrackPaused = PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT;
