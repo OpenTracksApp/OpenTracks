@@ -31,7 +31,6 @@ import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 import de.dennisguse.opentracks.content.WaypointCreationRequest;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.util.TrackRecordingServiceConnectionUtils;
-import de.dennisguse.opentracks.R;
 
 /**
  * An activity to add/edit a marker.
@@ -121,6 +120,7 @@ public class MarkerEditActivity extends AbstractActivity {
                 } else {
                     saveMarker();
                 }
+                finish();
             }
         });
 
@@ -168,8 +168,7 @@ public class MarkerEditActivity extends AbstractActivity {
                 waypointDescription.getText().toString(),
                 null,
                 null);
-        TrackRecordingServiceConnectionUtils.addMarker(
-                this, trackRecordingServiceConnection, waypointCreationRequest);
+        TrackRecordingServiceConnectionUtils.addMarker(this, trackRecordingServiceConnection, waypointCreationRequest);
     }
 
     /**
