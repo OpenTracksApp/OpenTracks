@@ -21,35 +21,88 @@ import de.dennisguse.opentracks.io.file.exporter.TrackWriter;
  * Definition of all possible track formats.
  */
 public enum TrackFileFormat implements Parcelable {
-    KML {
+
+    KML_ONLY_TRACK {
         @Override
         public TrackWriter newTrackWriter(Context context, boolean multiple) {
-            return new KmlTrackWriter(context, multiple, false);
+            return new KmlTrackWriter(context, multiple, false, false, false);
         }
 
         @Override
         public String getMimeType() {
-            return "application/vnd.google-earth.kml+xml";
+            return MIME_KML;
+        }
+
+        public String getExtension() {
+            return "kml";
         }
     },
-    KMZ {
+    KML_WITH_SENSORDATA {
         @Override
         public TrackWriter newTrackWriter(Context context, boolean multiple) {
-            return new KmlTrackWriter(context, multiple, true);
+            return new KmlTrackWriter(context, multiple, true, true, false);
         }
 
         @Override
         public String getMimeType() {
-            return "application/vnd.google-earth.kmz";
+            return MIME_KML;
+        }
+
+        public String getExtension() {
+            return "kml";
+        }
+    },
+    KMZ_ONLY_TRACK {
+        @Override
+        public TrackWriter newTrackWriter(Context context, boolean multiple) {
+            return new KmlTrackWriter(context, multiple, false, false, false);
+        }
+
+        @Override
+        public String getMimeType() {
+            return MIME_KMZ;
+        }
+
+        public String getExtension() {
+            return "kmz";
+        }
+    },
+    KMZ_WITH_SENSORDATA {
+        @Override
+        public TrackWriter newTrackWriter(Context context, boolean multiple) {
+            return new KmlTrackWriter(context, multiple, true, true, false);
+        }
+
+        @Override
+        public String getMimeType() {
+            return MIME_KMZ;
         }
 
         public TrackExporter newTrackExporter(Context context, Track[] tracks, TrackExporterListener trackExporterListener) {
-            ContentProviderUtils contentProviderUtils = ContentProviderUtils.Factory.get(context);
-            TrackWriter trackWriter = this.newTrackWriter(context, tracks.length > 1);
+            return newKmzTrackExporter(context, this.newTrackWriter(context, tracks.length > 1), tracks, trackExporterListener);
+        }
 
-            FileTrackExporter fileTrackExporter = new FileTrackExporter(contentProviderUtils, trackWriter, tracks, trackExporterListener);
+        public String getExtension() {
+            return "kmz";
+        }
+    },
+    KMZ_WITH_SENSORDATA_AND_PICTURES {
+        @Override
+        public TrackWriter newTrackWriter(Context context, boolean multiple) {
+            return new KmlTrackWriter(context, multiple, true, true, true);
+        }
 
-            return new KmzTrackExporter(contentProviderUtils, fileTrackExporter, tracks);
+        @Override
+        public String getMimeType() {
+            return MIME_KMZ;
+        }
+
+        public TrackExporter newTrackExporter(Context context, Track[] tracks, TrackExporterListener trackExporterListener) {
+            return newKmzTrackExporter(context, this.newTrackWriter(context, tracks.length > 1), tracks, trackExporterListener);
+        }
+
+        public String getExtension() {
+            return "kmz";
         }
     },
     GPX {
@@ -62,8 +115,13 @@ public enum TrackFileFormat implements Parcelable {
         public String getMimeType() {
             return "application/gpx+xml";
         }
+
+        public String getExtension() {
+            return "gpx";
+        }
     };
 
+    @Deprecated
     public static final Creator<TrackFileFormat> CREATOR = new Creator<TrackFileFormat>() {
         @Override
         public TrackFileFormat createFromParcel(final Parcel source) {
@@ -86,13 +144,7 @@ public enum TrackFileFormat implements Parcelable {
         dest.writeInt(ordinal());
     }
 
-    /**
-     * Creates a new track writer for the format.
-     *
-     * @param context   the context
-     * @param multiple  true for writing multiple tracks
-     */
-    public abstract TrackWriter newTrackWriter(Context context, boolean multiple);
+    private static final String MIME_KML = "application/vnd.google-earth.kml+xml";
 
     public TrackExporter newTrackExporter(Context context, Track[] tracks, TrackExporterListener trackExporterListener) {
         ContentProviderUtils contentProviderUtils = ContentProviderUtils.Factory.get(context);
@@ -105,10 +157,33 @@ public enum TrackFileFormat implements Parcelable {
      */
     public abstract String getMimeType();
 
+    private static final String MIME_KMZ = "application/vnd.google-earth.kml+xml";
+
+    private static TrackExporter newKmzTrackExporter(Context context, TrackWriter trackWriter, Track[] tracks, TrackExporterListener trackExporterListener) {
+        ContentProviderUtils contentProviderUtils = ContentProviderUtils.Factory.get(context);
+
+        FileTrackExporter fileTrackExporter = new FileTrackExporter(contentProviderUtils, trackWriter, tracks, trackExporterListener);
+
+        return new KmzTrackExporter(contentProviderUtils, fileTrackExporter, tracks);
+    }
+
+    /**
+     * Creates a new track writer for the format.
+     *
+     * @param context  the context
+     * @param multiple true for writing multiple tracks
+     */
+    public abstract TrackWriter newTrackWriter(Context context, boolean multiple);
+
     /**
      * Returns the file extension for each format.
      */
-    public String getExtension() {
+    public abstract String getExtension();
+
+    /**
+     * Returns the name of for each format.
+     */
+    public String getName() {
         return this.name().toLowerCase(Locale.US);
     }
 }

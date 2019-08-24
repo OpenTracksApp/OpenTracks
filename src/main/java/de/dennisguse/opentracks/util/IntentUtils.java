@@ -80,7 +80,7 @@ public class IntentUtils {
             Track track = ContentProviderUtils.Factory.get(context).getTrack(trackIds[0]);
             trackDescription = track == null ? "" : new DescriptionGeneratorImpl(context).generateTrackDescription(track, false);
         }
-        Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(trackIds, TrackFileFormat.KML);
+        Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(trackIds, TrackFileFormat.KMZ_WITH_SENSORDATA_AND_PICTURES);
 
         return new Intent(Intent.ACTION_SEND)
                 .putExtra(Intent.EXTRA_STREAM, uriAndMime.first)
@@ -112,7 +112,7 @@ public class IntentUtils {
             return;
         }
 
-        Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(trackIds, TrackFileFormat.KML);
+        Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(trackIds, TrackFileFormat.KMZ_ONLY_TRACK);
         Intent intent = new Intent();
         intent.setAction(android.content.Intent.ACTION_VIEW);
         intent.setDataAndType(uriAndMime.first, uriAndMime.second);

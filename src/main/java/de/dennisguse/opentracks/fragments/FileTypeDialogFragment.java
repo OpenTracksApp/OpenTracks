@@ -63,12 +63,11 @@ public class FileTypeDialogFragment extends AbstractDialogFragment {
     protected Dialog createDialog() {
         int optionId = getArguments().getInt(KEY_OPTION_ID);
         final int titleId = getArguments().getInt(KEY_TITLE_ID);
-        TrackFileFormat[] trackFileFormats = TrackFileFormat.values();
+        final TrackFileFormat[] trackFileFormats = {TrackFileFormat.KML_WITH_SENSORDATA, TrackFileFormat.KMZ_WITH_SENSORDATA_AND_PICTURES, TrackFileFormat.GPX};
         String[] choices = new String[trackFileFormats.length];
         for (int i = 0; i < choices.length; i++) {
             TrackFileFormat trackFileFormat = trackFileFormats[i];
-            choices[i] = getString(optionId, trackFileFormat.name(),
-                    FileUtils.getPathDisplayName(trackFileFormat.getExtension()));
+            choices[i] = getString(optionId, trackFileFormat.getExtension().toUpperCase(), FileUtils.getPathDisplayName(trackFileFormat.getExtension()));
         }
         return new AlertDialog.Builder(getActivity())
                 .setNegativeButton(R.string.generic_cancel, new OnClickListener() {
@@ -81,7 +80,7 @@ public class FileTypeDialogFragment extends AbstractDialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         int position = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-                        caller.onFileTypeDone(TrackFileFormat.values()[position]);
+                        caller.onFileTypeDone(trackFileFormats[position]);
                     }
                 })
                 .setSingleChoiceItems(choices, 0, null)

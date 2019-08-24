@@ -42,17 +42,23 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
 
     public static final String TAG = ShareContentProvider.class.getCanonicalName();
 
-    private static final int URI_KML = 1;
-    private static final int URI_KMZ = 2;
-    private static final int URI_GPX = 3;
+    private static final int URI_GPX = 0;
+    private static final int URI_KML_ONLY = 1;
+    private static final int URI_KML_WITH_SENSORDATA = 2;
+    private static final int URI_KMZ_ONLY_TRACK = 3;
+    private static final int URI_KMZ_WITH_SENSORDATA = 4;
+    private static final int URI_KMZ_WITH_SENSORDATA_AND_PICTURES = 5;
 
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     private static final String TRACKID_DELIMITER = "_";
 
     static {
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/kml/*", URI_KML);
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/kmz/*", URI_KMZ);
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/gpx/*", URI_GPX);
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KML_ONLY_TRACK.getName() + "/*", URI_KML_ONLY);
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KML_WITH_SENSORDATA.getName() + "/*", URI_KML_WITH_SENSORDATA);
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KMZ_ONLY_TRACK.getName() + "/*", URI_KMZ_ONLY_TRACK);
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KMZ_WITH_SENSORDATA.getName() + "/*", URI_KMZ_WITH_SENSORDATA);
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KMZ_WITH_SENSORDATA_AND_PICTURES.getName() + "/*", URI_KMZ_WITH_SENSORDATA_AND_PICTURES);
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.GPX.getName() + "/*", URI_GPX);
     }
 
     public static Pair<Uri, String> createURI(long[] trackIds, @NonNull TrackFileFormat trackFileFormat) {
@@ -66,7 +72,7 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
         }
         builder.deleteCharAt(builder.lastIndexOf(TRACKID_DELIMITER));
 
-        Uri uri = Uri.parse(ContentProviderUtils.CONTENT_BASE_URI + "/" + TracksColumns.TABLE_NAME + "/" + trackFileFormat.getExtension() + "/" + builder + "." + trackFileFormat.getExtension());
+        Uri uri = Uri.parse(ContentProviderUtils.CONTENT_BASE_URI + "/" + TracksColumns.TABLE_NAME + "/" + trackFileFormat.getName() + "/" + builder + "." + trackFileFormat.getExtension());
         String mime = getTypeMime(uri);
         return new Pair<>(uri, mime);
     }
@@ -105,9 +111,33 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
         }
     }
 
+    private static TrackFileFormat getTrackFileFormat(@NonNull Uri uri) {
+        switch (uriMatcher.match(uri)) {
+            case URI_GPX:
+                return TrackFileFormat.GPX;
+            case URI_KML_ONLY:
+                return TrackFileFormat.KML_ONLY_TRACK;
+            case URI_KML_WITH_SENSORDATA:
+                return TrackFileFormat.KML_WITH_SENSORDATA;
+            case URI_KMZ_ONLY_TRACK:
+                return TrackFileFormat.KMZ_ONLY_TRACK;
+            case URI_KMZ_WITH_SENSORDATA:
+                return TrackFileFormat.KMZ_WITH_SENSORDATA;
+            case URI_KMZ_WITH_SENSORDATA_AND_PICTURES:
+                return TrackFileFormat.KMZ_WITH_SENSORDATA_AND_PICTURES;
+            default: //URI_KML_ONLY
+                return TrackFileFormat.KMZ_ONLY_TRACK;
+        }
+    }
+
+    @Nullable
+    public static String getTypeMime(@NonNull Uri uri) {
+        return getTrackFileFormat(uri).getMimeType();
+    }
+
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
-        if (uriMatcher.match(uri) != URI_KML) {
+        if (uriMatcher.match(uri) != URI_KML_ONLY) {
             return super.query(uri, projection, selection, selectionArgs, sortOrder);
         }
 
@@ -135,22 +165,6 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
         final MatrixCursor cursor = new MatrixCursor(cols, 1);
         cursor.addRow(values);
         return cursor;
-    }
-
-    @Nullable
-    public static String getTypeMime(@NonNull Uri uri) {
-        return getTrackFileFormat(uri).getMimeType();
-    }
-
-    private static TrackFileFormat getTrackFileFormat(@NonNull Uri uri) {
-        switch (uriMatcher.match(uri)) {
-            case URI_KMZ:
-                return TrackFileFormat.KMZ;
-            case URI_GPX:
-                return TrackFileFormat.GPX;
-            default: //URI_KML
-                return TrackFileFormat.KML;
-        }
     }
 
     @Nullable

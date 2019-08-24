@@ -17,10 +17,10 @@ package de.dennisguse.opentracks.io.file.exporter;
 
 import android.location.Location;
 
+import java.io.OutputStream;
+
 import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.content.Waypoint;
-
-import java.io.OutputStream;
 
 /**
  * Interface for writing tracks to a file. The expected sequence of calls is:
@@ -50,11 +50,6 @@ import java.io.OutputStream;
  * @author Rodrigo Damazio
  */
 public interface TrackWriter {
-
-    /**
-     * Gets the file extension (e.g, gpx, kml, ...).
-     */
-    String getExtension();
 
     /**
      * Prepares the output stream.

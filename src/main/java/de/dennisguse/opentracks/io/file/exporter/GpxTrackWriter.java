@@ -18,15 +18,14 @@ package de.dennisguse.opentracks.io.file.exporter;
 
 import android.location.Location;
 
-import de.dennisguse.opentracks.content.Track;
-import de.dennisguse.opentracks.content.Waypoint;
-import de.dennisguse.opentracks.io.file.TrackFileFormat;
-import de.dennisguse.opentracks.util.StringUtils;
-
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.NumberFormat;
 import java.util.Locale;
+
+import de.dennisguse.opentracks.content.Track;
+import de.dennisguse.opentracks.content.Waypoint;
+import de.dennisguse.opentracks.util.StringUtils;
 
 /**
  * Write track as GPX to a file.
@@ -60,11 +59,6 @@ public class GpxTrackWriter implements TrackWriter {
     }
 
     @Override
-    public String getExtension() {
-        return TrackFileFormat.GPX.getExtension();
-    }
-
-    @Override
     public void prepare(OutputStream outputStream) {
         this.printWriter = new PrintWriter(outputStream);
     }
@@ -83,11 +77,9 @@ public class GpxTrackWriter implements TrackWriter {
             printWriter.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             printWriter.println("<gpx");
             printWriter.println("version=\"1.1\"");
-            printWriter.println(
-                    "creator=\"" + creator + "\"");
+            printWriter.println("creator=\"" + creator + "\"");
             printWriter.println("xmlns=\"http://www.topografix.com/GPX/1/1\"");
-            printWriter.println(
-                    "xmlns:topografix=\"http://www.topografix.com/GPX/Private/TopoGrafix/0/1\"");
+            printWriter.println("xmlns:topografix=\"http://www.topografix.com/GPX/Private/TopoGrafix/0/1\"");
             printWriter.println("xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
             printWriter.println("xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1"
                     + " http://www.topografix.com/GPX/1/1/gpx.xsd"

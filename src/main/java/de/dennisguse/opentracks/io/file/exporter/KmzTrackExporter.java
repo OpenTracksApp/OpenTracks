@@ -37,8 +37,6 @@ import de.dennisguse.opentracks.content.Waypoint;
  * @author Jimmy Shih
  */
 public class KmzTrackExporter implements TrackExporter {
-
-    public static final String KMZ_EXTENSION = "kmz";
     public static final String KMZ_IMAGES_DIR = "images";
     public static final String KMZ_KML_FILE = "doc.kml";
 

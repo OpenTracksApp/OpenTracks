@@ -24,7 +24,6 @@ import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +32,6 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
-import de.dennisguse.opentracks.io.file.exporter.KmzTrackExporter;
 import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.SystemUtils;
@@ -107,11 +105,8 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         try {
             Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
             // Get the wake lock if not recording or paused
-            boolean isRecording =
-                    PreferencesUtils.getLong(importActivity, R.string.recording_track_id_key)
-                            != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
-            boolean isPaused = PreferencesUtils.getBoolean(importActivity,
-                    R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+            boolean isRecording = PreferencesUtils.getLong(importActivity, R.string.recording_track_id_key) != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+            boolean isPaused = PreferencesUtils.getBoolean(importActivity, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
             if (!isRecording || isPaused) {
                 wakeLock = SystemUtils.acquireWakeLock(importActivity, wakeLock);
             }
@@ -169,37 +164,28 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
      * @param file the file
      */
     private boolean importFile(final File file) {
-        FileInputStream fileInputStream = null;
-        try {
-            TrackImporter trackImporter;
-            if (trackFileFormat == TrackFileFormat.KML) {
-                String extension = FileUtils.getExtension(file.getName());
-                if (TrackFileFormat.KML.getExtension().equals(extension)) {
-                    trackImporter = new KmlFileTrackImporter(context, -1L);
-                } else {
-                    ContentProviderUtils contentProviderUtils = ContentProviderUtils.Factory.get(context);
-                    Uri uri = contentProviderUtils.insertTrack(new Track());
-                    long newId = Long.parseLong(uri.getLastPathSegment());
-
-                    trackImporter = new KmzTrackImporter(context, newId);
-                }
+        TrackImporter trackImporter;
+        if (trackFileFormat == TrackFileFormat.GPX) {
+            trackImporter = new GpxFileTrackImporter(context);
+        } else { //KML or KMZ
+            String extension = FileUtils.getExtension(file.getName());
+            if (TrackFileFormat.KML_ONLY_TRACK.getExtension().equals(extension)) {
+                trackImporter = new KmlFileTrackImporter(context, -1L);
             } else {
-                trackImporter = new GpxFileTrackImporter(context);
+                ContentProviderUtils contentProviderUtils = ContentProviderUtils.Factory.get(context);
+                Uri uri = contentProviderUtils.insertTrack(new Track());
+                long newId = Long.parseLong(uri.getLastPathSegment());
+
+                trackImporter = new KmzTrackImporter(context, newId);
             }
-            fileInputStream = new FileInputStream(file);
+        }
+
+        try (FileInputStream fileInputStream = new FileInputStream(file)) {
             trackId = trackImporter.importFile(fileInputStream);
             return trackId != -1L;
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             Log.e(TAG, "Unable to import file", e);
             return false;
-        } finally {
-            if (fileInputStream != null) {
-                try {
-                    fileInputStream.close();
-                } catch (IOException e) {
-                    Log.e(TAG, "Unable to close file input stream", e);
-                }
-            }
         }
     }
 
@@ -213,21 +199,17 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         File file = new File(path);
 
         File[] candidates = file.listFiles();
-        if (candidates != null) {
-            for (File candidate : candidates) {
-                if (!FileUtils.isDirectory(candidate)) {
-                    String extension = FileUtils.getExtension(candidate.getName());
-                    if (trackFileFormat == TrackFileFormat.KML
-                            && (TrackFileFormat.KML.getExtension().equals(extension)
-                            || KmzTrackExporter.KMZ_EXTENSION.equals(extension))) {
-                        files.add(candidate);
-                    } else if (trackFileFormat == TrackFileFormat.GPX && TrackFileFormat.GPX.getExtension().equals(extension)) {
-                        files.add(candidate);
-                    }
+        if (candidates == null) {
+            return files;
+        }
+        for (File candidate : candidates) {
+            if (!FileUtils.isDirectory(candidate)) {
+                String extension = FileUtils.getExtension(candidate.getName());
+                if (trackFileFormat.getExtension().equals(extension)) {
+                    files.add(candidate);
                 }
             }
         }
-
 
         return files;
     }

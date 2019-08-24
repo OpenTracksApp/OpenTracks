@@ -20,7 +20,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -70,11 +69,6 @@ public class ImportActivity extends FragmentActivity implements FileTypeDialogFr
 
     @Override
     public void onFileTypeDone(TrackFileFormat trackFileFormat) {
-        Intent intent = getIntent();
-        if (trackFileFormat == null) {
-            trackFileFormat = TrackFileFormat.GPX;
-        }
-
         if (!FileUtils.isExternalStorageAvailable()) {
             Toast.makeText(this, R.string.external_storage_not_available, Toast.LENGTH_LONG).show();
             finish();
@@ -84,8 +78,7 @@ public class ImportActivity extends FragmentActivity implements FileTypeDialogFr
         directoryDisplayName = FileUtils.getPathDisplayName(trackFileFormat.getExtension());
         String directoryPath = FileUtils.getPath(trackFileFormat.getExtension());
         if (!FileUtils.isDirectory(new File(directoryPath))) {
-            Toast.makeText(
-                    this, getString(R.string.import_no_directory, directoryDisplayName), Toast.LENGTH_LONG)
+            Toast.makeText(this, getString(R.string.import_no_directory, directoryDisplayName), Toast.LENGTH_LONG)
                     .show();
             finish();
             return;
