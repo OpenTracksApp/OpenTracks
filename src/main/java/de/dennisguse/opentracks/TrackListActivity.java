@@ -110,17 +110,12 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     private final ContextualActionModeCallback contextualActionModeCallback = new ContextualActionModeCallback() {
 
         @Override
-        public void onPrepare(Menu menu, int[] positions, long[] ids, boolean showSelectAll) {
-            boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
-            boolean isSingleSelection = ids.length == 1;
+        public void onPrepare(Menu menu, int[] positions, long[] trackIds, boolean showSelectAll) {
+            boolean isSingleSelection = trackIds.length == 1;
 
-            menu.findItem(R.id.list_context_menu_share).setVisible(!isRecording && isSingleSelection);
-            Intent shareIntent = null;
-            if (isSingleSelection) {
-                shareIntent = IntentUtils.newShareFileIntent(TrackListActivity.this, ids[0]);
-            }
-            ShareActionProvider shareActionProvider = (ShareActionProvider) menu.findItem(R.id.list_context_menu_share).getActionProvider();
-            shareActionProvider.setShareIntent(shareIntent);
+            MenuItem shareMenuItem = menu.findItem(R.id.list_context_menu_share);
+            ShareActionProvider shareActionProvider = (ShareActionProvider) shareMenuItem.getActionProvider();
+            shareActionProvider.setShareIntent(trackIds.length == 0 ? null : IntentUtils.newShareFileIntent(TrackListActivity.this, trackIds));
 
             menu.findItem(R.id.list_context_menu_edit).setVisible(isSingleSelection);
             menu.findItem(R.id.list_context_menu_select_all).setVisible(showSelectAll);

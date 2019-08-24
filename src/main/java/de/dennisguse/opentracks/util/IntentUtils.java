@@ -37,6 +37,7 @@ import de.dennisguse.opentracks.content.DescriptionGeneratorImpl;
 import de.dennisguse.opentracks.content.ShareContentProvider;
 import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.content.Waypoint;
+import de.dennisguse.opentracks.io.file.TrackFileFormat;
 
 /**
  * Utilities for creating intents.
@@ -71,13 +72,15 @@ public class IntentUtils {
      * Creates an intent to share a track file with an app.
      *
      * @param context the context
-     * @param trackId the track id
+     * @param trackIds the track ids
      */
-    public static Intent newShareFileIntent(Context context, long trackId) {
-        Track track = ContentProviderUtils.Factory.get(context).getTrack(trackId);
-        String trackDescription = track == null ? "" : new DescriptionGeneratorImpl(context).generateTrackDescription(track, false);
-
-        Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(new long[]{trackId});
+    public static Intent newShareFileIntent(Context context, long[] trackIds) {
+        String trackDescription = "";
+        if (trackIds.length == 1) {
+            Track track = ContentProviderUtils.Factory.get(context).getTrack(trackIds[0]);
+            trackDescription = track == null ? "" : new DescriptionGeneratorImpl(context).generateTrackDescription(track, false);
+        }
+        Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(trackIds, TrackFileFormat.KML);
 
         return new Intent(Intent.ACTION_SEND)
                 .putExtra(Intent.EXTRA_STREAM, uriAndMime.first)
@@ -109,7 +112,7 @@ public class IntentUtils {
             return;
         }
 
-        Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(trackIds);
+        Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(trackIds, TrackFileFormat.KML);
         Intent intent = new Intent();
         intent.setAction(android.content.Intent.ACTION_VIEW);
         intent.setDataAndType(uriAndMime.first, uriAndMime.second);

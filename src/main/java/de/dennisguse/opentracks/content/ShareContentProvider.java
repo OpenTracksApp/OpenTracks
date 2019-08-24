@@ -11,7 +11,6 @@ import android.os.ParcelFileDescriptor;
 import android.provider.OpenableColumns;
 import android.util.Log;
 import android.util.Pair;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,26 +44,48 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
     public static final String TAG = ShareContentProvider.class.getCanonicalName();
 
     private static final int URI_KML = 1;
+    private static final int URI_KMZ = 2;
+    private static final int URI_GPX = 3;
+
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+    private static final String TRACKID_DELIMITER = "_";
 
     static {
         uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/kml/*", URI_KML);
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/kmz/*", URI_KMZ);
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/gpx/*", URI_GPX);
     }
 
-    public static Pair<Uri, String> createURI(long[] trackIds) {
+    public static Pair<Uri, String> createURI(long[] trackIds, @NonNull TrackFileFormat trackFileFormat) {
         if (trackIds.length == 0) {
             throw new UnsupportedOperationException();
         }
 
         StringBuilder builder = new StringBuilder();
         for (long trackId : trackIds) {
-            builder.append(trackId).append(",");
+            builder.append(trackId).append(TRACKID_DELIMITER);
         }
-        builder.deleteCharAt(builder.lastIndexOf(","));
+        builder.deleteCharAt(builder.lastIndexOf(TRACKID_DELIMITER));
 
-        Uri uri = Uri.parse(ContentProviderUtils.CONTENT_BASE_URI + "/" + TracksColumns.TABLE_NAME + "/kml/" + builder + ".kml");
+        Uri uri = Uri.parse(ContentProviderUtils.CONTENT_BASE_URI + "/" + TracksColumns.TABLE_NAME + "/" + trackFileFormat.getExtension() + "/" + builder + "." + trackFileFormat.getExtension());
         String mime = getTypeMime(uri);
         return new Pair<>(uri, mime);
+    }
+
+    private static long[] parseURI(Uri uri) {
+        String lastPathSegment = uri.getLastPathSegment();
+        if (lastPathSegment == null) {
+            return new long[]{};
+        }
+
+        String fileExtension = "." + getTrackFileFormat(uri).getExtension();
+        String[] lastPathSegmentSplit = lastPathSegment.replace(fileExtension, "").split(TRACKID_DELIMITER);
+
+        long[] trackIds = new long[lastPathSegmentSplit.length];
+        for (int i = 0; i < trackIds.length; i++) {
+            trackIds[i] = Long.valueOf(lastPathSegmentSplit[i]);
+        }
+        return trackIds;
     }
 
     /**
@@ -83,20 +104,6 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
         if (!info.grantUriPermissions) {
             throw new SecurityException("Provider must grant uri permissions");
         }
-    }
-
-    private static long[] parseURI(Uri uri) {
-        String lastPathSegment = uri.getLastPathSegment();
-        if (lastPathSegment == null) {
-            return new long[]{};
-        }
-
-        String[] lastPathSegmentSplit = lastPathSegment.replace(".kml", "").split(",");
-        long[] trackIds = new long[lastPathSegmentSplit.length];
-        for (int i = 0; i < trackIds.length; i++) {
-            trackIds[i] = Long.valueOf(lastPathSegmentSplit[i]);
-        }
-        return trackIds;
     }
 
     @Override
@@ -133,12 +140,18 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
 
     @Nullable
     public static String getTypeMime(@NonNull Uri uri) {
-        switch (uriMatcher.match(uri)) {
-            case URI_KML:
-                return TrackFileFormat.KML.getMimeType();
-        }
+        return getTrackFileFormat(uri).getMimeType();
+    }
 
-        return null;
+    private static TrackFileFormat getTrackFileFormat(@NonNull Uri uri) {
+        switch (uriMatcher.match(uri)) {
+            case URI_KMZ:
+                return TrackFileFormat.KMZ;
+            case URI_GPX:
+                return TrackFileFormat.GPX;
+            default: //URI_KML
+                return TrackFileFormat.KML;
+        }
     }
 
     @Nullable
@@ -172,8 +185,7 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
                 try (FileOutputStream fileOutputStream = new FileOutputStream(output.getFileDescriptor())) {
                     fileTrackExporter.writeTrack(fileOutputStream);
                 } catch (IOException e) {
-                    Log.w(TAG, "Oops closing " + e);
-                    Toast.makeText(getContext(), "", Toast.LENGTH_SHORT).show();
+                    Log.w(TAG, "there occurred an error while sharing a file: " + e);
                 }
             }
         };

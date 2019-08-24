@@ -298,7 +298,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
 
         shareMenuItem = menu.findItem(R.id.track_detail_share);
         ShareActionProvider shareActionProvider = (ShareActionProvider) shareMenuItem.getActionProvider();
-        shareActionProvider.setShareIntent(IntentUtils.newShareFileIntent(this, trackId));
+        shareActionProvider.setShareIntent(IntentUtils.newShareFileIntent(this, new long[]{trackId}));
 
         voiceFrequencyMenuItem = menu.findItem(R.id.track_detail_voice_frequency);
         splitFrequencyMenuItem = menu.findItem(R.id.track_detail_split_frequency);
