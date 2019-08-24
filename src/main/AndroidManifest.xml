@@ -180,8 +180,6 @@ limitations under the License.
             android:authorities="${applicationId}.content"
             android:exported="false"
             android:grantUriPermissions="true" />
-        <!-- Search suggestion provider -->
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
