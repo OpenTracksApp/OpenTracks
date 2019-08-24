@@ -330,6 +330,9 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
                 }
                 startActivityForResult(IntentUtils.createTakePictureIntent(this, trackId), CAMERA_REQUEST_CODE);
                 return true;
+            case R.id.track_detail_menu_show_on_map:
+                IntentUtils.showTrackOnMap(this, new long[]{trackId});
+                return true;
             case R.id.track_detail_markers:
                 intent = IntentUtils.newIntent(this, MarkerListActivity.class)
                         .putExtra(MarkerListActivity.EXTRA_TRACK_ID, trackId);
