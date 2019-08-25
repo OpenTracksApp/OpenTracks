@@ -64,10 +64,6 @@ public class IntentUtils {
 
     private static final String JPEG_EXTENSION = "jpeg";
 
-    public static Intent newShowCoordinateOnMapIntent(Waypoint waypoint) {
-        return newShowCoordinateOnMapIntent(waypoint.getLocation().getLatitude(), waypoint.getLocation().getLongitude(), waypoint.getName());
-    }
-
     /**
      * Creates an intent to share a track file with an app.
      *
@@ -90,7 +86,11 @@ public class IntentUtils {
                 .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
     }
 
-    public static Intent newShowCoordinateOnMapIntent(double latitude, double longitude, String label) {
+    public static void showCoordinateOnMap(Context context, Waypoint waypoint) {
+        showCoordinateOnMap(context, waypoint.getLocation().getLatitude(), waypoint.getLocation().getLongitude(), waypoint.getName());
+    }
+
+    public static void showCoordinateOnMap(Context context, double latitude, double longitude, String label) {
         //SEE https://developer.android.com/guide/components/intents-common.html#Maps
         String uri = "geo:0,0?q=" + latitude + "," + longitude;
         if (label != null && label.length() > 0) {
@@ -98,7 +98,12 @@ public class IntentUtils {
         }
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(uri));
-        return intent;
+
+        try {
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(context, context.getString(R.string.app_not_installed_show_on_map), Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -120,7 +125,7 @@ public class IntentUtils {
         try {
             context.startActivity(intent);
         } catch (ActivityNotFoundException e) {
-            Toast.makeText(context, "No app installed that can show the tracks on a map.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, context.getString(R.string.app_not_installed_show_on_map), Toast.LENGTH_SHORT).show();
         }
     }
 

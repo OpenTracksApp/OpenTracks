@@ -316,8 +316,7 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
                 Log.e(TAG, "Not implemented");
                 return true;
             case R.id.list_context_menu_show_on_map:
-                intent = IntentUtils.newShowCoordinateOnMapIntent((double) item.get(MARKER_LATITUDE_FIELD), (double) item.get(MARKER_LONGITUDE_FIELD), item.get(NAME_FIELD) + "");
-                startActivity(intent);
+                IntentUtils.showCoordinateOnMap(this, (double) item.get(MARKER_LATITUDE_FIELD), (double) item.get(MARKER_LONGITUDE_FIELD), item.get(NAME_FIELD) + "");
                 return true;
             case R.id.list_context_menu_edit:
                 if (markerId != null) {

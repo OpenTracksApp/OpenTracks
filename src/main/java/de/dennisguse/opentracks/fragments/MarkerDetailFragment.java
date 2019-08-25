@@ -190,8 +190,7 @@ public class MarkerDetailFragment extends Fragment {
         Intent intent;
         switch (item.getItemId()) {
             case R.id.marker_detail_show_on_map:
-                intent = IntentUtils.newShowCoordinateOnMapIntent(waypoint);
-                startActivity(intent);
+                IntentUtils.showCoordinateOnMap(getContext(), waypoint);
                 return true;
             case R.id.marker_detail_edit:
                 intent = IntentUtils.newIntent(fragmentActivity, MarkerEditActivity.class)

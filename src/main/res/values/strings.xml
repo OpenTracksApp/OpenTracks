@@ -304,7 +304,11 @@ limitations under the License.
     wind surfing
   </string>
 
-    <!-- Description -->
+  <string name="app_not_installed_show_on_map" translation_description="When 'show on map' is used and no app with this functionality is installed.">
+      Please install an app that supports presenting map data.
+    </string>
+
+  <!-- Description -->
     <string name="description_activity_type" translation_description="Activity type description.
 
       %1$s activity type. E.g., 'hiking'.">
@@ -985,6 +989,7 @@ limitations under the License.
       what will be searched for.">
     Speak the name of a track or marker
   </string>
+
     <!-- Sensor State -->
     <string name="sensor_state_battery" translation_description="In the 'Sensor state' page, the label for the battery level on the bike
       sensor. E.g., 'Battery level: 50 %'.">

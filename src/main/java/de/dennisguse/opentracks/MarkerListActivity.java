@@ -42,7 +42,6 @@ import androidx.loader.content.Loader;
 
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.Track;
-import de.dennisguse.opentracks.content.Waypoint;
 import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 import de.dennisguse.opentracks.content.WaypointsColumns;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment;
@@ -284,9 +283,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         switch (itemId) {
             case R.id.list_context_menu_show_on_map:
                 if (markerIds.length == 1) {
-                    Waypoint marker = contentProviderUtils.getWaypoint(markerIds[0]);
-                    intent = IntentUtils.newShowCoordinateOnMapIntent(marker);
-                    startActivity(intent);
+                    IntentUtils.showCoordinateOnMap(this, contentProviderUtils.getWaypoint(markerIds[0]));
                 }
                 return true;
             case R.id.list_context_menu_edit:
