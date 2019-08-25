@@ -74,6 +74,9 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
 
         Uri uri = Uri.parse(ContentProviderUtils.CONTENT_BASE_URI + "/" + TracksColumns.TABLE_NAME + "/" + trackFileFormat.getName() + "/" + builder + "." + trackFileFormat.getExtension());
         String mime = getTypeMime(uri);
+
+        Log.d(TAG, "Created uri " + uri.toString() + " with MIME " + mime);
+
         return new Pair<>(uri, mime);
     }
 
@@ -137,7 +140,7 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
 
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
-        if (uriMatcher.match(uri) != URI_KML_ONLY) {
+        if (uriMatcher.match(uri) == -1) {
             return super.query(uri, projection, selection, selectionArgs, sortOrder);
         }
 

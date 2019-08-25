@@ -144,6 +144,8 @@ public enum TrackFileFormat implements Parcelable {
         dest.writeInt(ordinal());
     }
 
+    private static final String MIME_KMZ = "application/vnd.google-earth.kmz";
+
     private static final String MIME_KML = "application/vnd.google-earth.kml+xml";
 
     public TrackExporter newTrackExporter(Context context, Track[] tracks, TrackExporterListener trackExporterListener) {
@@ -156,8 +158,6 @@ public enum TrackFileFormat implements Parcelable {
      * Returns the mime type for each format.
      */
     public abstract String getMimeType();
-
-    private static final String MIME_KMZ = "application/vnd.google-earth.kml+xml";
 
     private static TrackExporter newKmzTrackExporter(Context context, TrackWriter trackWriter, Track[] tracks, TrackExporterListener trackExporterListener) {
         ContentProviderUtils contentProviderUtils = ContentProviderUtils.Factory.get(context);
