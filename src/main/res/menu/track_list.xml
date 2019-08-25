@@ -27,7 +27,6 @@ limitations under the License.
     <item
         android:id="@+id/track_list_markers"
         android:icon="@drawable/ic_menu_insert_marker"
-        android:orderInCategory="5"
         android:showAsAction="ifRoom"
         android:title="@string/menu_markers" />
     <item
