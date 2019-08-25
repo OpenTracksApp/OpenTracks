@@ -45,7 +45,8 @@ public class CustomContentProviderTest {
     public void setUp() {
         context.deleteDatabase(DATABASE_NAME);
         db = (new DatabaseHelper(context, DATABASE_NAME)).getWritableDatabase();
-        customContentProvider = new CustomContentProvider();
+        customContentProvider = new CustomContentProvider() {
+        };
     }
 
     /**

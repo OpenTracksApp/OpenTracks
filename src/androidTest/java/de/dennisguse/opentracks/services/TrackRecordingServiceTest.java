@@ -16,6 +16,7 @@
 package de.dennisguse.opentracks.services;
 
 import android.content.BroadcastReceiver;
+import android.content.ContentProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -66,7 +67,8 @@ public class TrackRecordingServiceTest {
     @Before
     public void setUp() throws Exception {
         // Set up the mock content resolver
-        CustomContentProvider customContentProvider = new CustomContentProvider();
+        ContentProvider customContentProvider = new CustomContentProvider() {
+        };
         customContentProvider.attachInfo(context, null);
 
         providerUtils = ContentProviderUtils.Factory.get(context);
