@@ -107,6 +107,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
                         WaypointCreationRequest waypointCreationRequest = new WaypointCreationRequest(WaypointType.WAYPOINT, false, null, null, null, null, photoUri.toString());
                         long markerId = TrackRecordingServiceConnectionUtils.addMarker(TrackDetailActivity.this, trackRecordingServiceConnection, waypointCreationRequest);
                         if (markerId != -1L) {
+                            //TODO: Make configurable.
                             FileUtils.updateMediaScanner(TrackDetailActivity.this, photoUri);
                         }
                     }
@@ -265,14 +266,6 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
                 return;
             }
             hasPhoto = resultCode == RESULT_OK;
-
-            if (hasPhoto) {
-                //Register photo in media scanner
-                Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-                mediaScanIntent.setData(photoUri);
-                this.sendBroadcast(mediaScanIntent);
-                return;
-            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
