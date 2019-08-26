@@ -136,7 +136,7 @@ public class IntentUtils {
      * @param context the context
      * @param trackId the track id
      */
-    public static Intent createTakePictureIntent(Context context, long trackId) {
+    public static Pair<Intent, Uri> createTakePictureIntent(Context context, long trackId) {
         File dir = FileUtils.getPhotoDir(trackId);
         FileUtils.ensureDirectoryExists(dir);
 
@@ -145,7 +145,8 @@ public class IntentUtils {
 
         Uri photoUri = FileProvider.getUriForFile(context, FileUtils.FILEPROVIDER, file);
         Log.d(TAG, "Taking photo to URI: " + photoUri);
-        return new Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 .putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+        return new Pair<>(intent, photoUri);
     }
 }

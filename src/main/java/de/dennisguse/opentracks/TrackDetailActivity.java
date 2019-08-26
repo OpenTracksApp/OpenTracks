@@ -24,6 +24,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -321,7 +322,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
                     return false;
                 }
-                startActivityForResult(IntentUtils.createTakePictureIntent(this, trackId), CAMERA_REQUEST_CODE);
+                createWaypointWithPicture();
                 return true;
             case R.id.track_detail_menu_show_on_map:
                 IntentUtils.showTrackOnMap(this, new long[]{trackId});
@@ -362,7 +363,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                 Toast.makeText(this, R.string.external_storage_not_writable, Toast.LENGTH_LONG).show();
             } else {
-                startActivityForResult(IntentUtils.createTakePictureIntent(this, trackId), CAMERA_REQUEST_CODE);
+                createWaypointWithPicture();
             }
             return;
         }
@@ -449,6 +450,12 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
             title = track != null ? track.getName() : "";
         }
         setTitle(title);
+    }
+
+    private void createWaypointWithPicture() {
+        Pair<Intent, Uri> intentAndPhotoUri = IntentUtils.createTakePictureIntent(this, trackId);
+        photoUri = intentAndPhotoUri.second;
+        startActivityForResult(intentAndPhotoUri.first, CAMERA_REQUEST_CODE);
     }
 
     public void chooseActivityType(String category) {
