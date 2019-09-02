@@ -67,7 +67,7 @@ limitations under the License.
         android:title="@string/settings_recording_auto_resume_track_timeout_title" />
     <CheckBoxPreference
         android:defaultValue="false"
-        android:key="@string/trackdetail_show_on_lockscreen_while_recording"
+        android:key="@string/trackdetail_show_on_lockscreen_while_recording_key"
         android:summary="@string/settings_recording_show_on_lockscreen_while_recording_summary"
         android:title="@string/settings_recording_show_on_lockscreen_while_recording_title" />
     <de.dennisguse.opentracks.settings.ActivityTypePreference

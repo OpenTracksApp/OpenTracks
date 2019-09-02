@@ -136,8 +136,8 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
                 recordingTrackPaused = PreferencesUtils.getBoolean(TrackDetailActivity.this, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
             }
 
-            if (key == null || key.equals(PreferencesUtils.getKey(TrackDetailActivity.this, R.string.trackdetail_show_on_lockscreen_while_recording))) {
-                showOnLockScreen = PreferencesUtils.getBoolean(TrackDetailActivity.this, R.string.trackdetail_show_on_lockscreen_while_recording, PreferencesUtils.SHOW_TRACKDETAIL_WHILE_RECORDING_ON_LOCKSCREEN);
+            if (key == null || key.equals(PreferencesUtils.getKey(TrackDetailActivity.this, R.string.trackdetail_show_on_lockscreen_while_recording_key))) {
+                showOnLockScreen = PreferencesUtils.getBoolean(TrackDetailActivity.this, R.string.trackdetail_show_on_lockscreen_while_recording_key, PreferencesUtils.SHOW_TRACKDETAIL_WHILE_RECORDING_ON_LOCKSCREEN);
                 setLockscreenPolicy();
             }
 
