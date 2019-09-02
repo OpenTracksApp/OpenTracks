@@ -16,13 +16,17 @@
 
 package de.dennisguse.opentracks.io.file.importer;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import java.io.File;
@@ -41,7 +45,8 @@ import de.dennisguse.opentracks.util.FileUtils;
  */
 public class ImportActivity extends FragmentActivity implements FileTypeDialogFragment.FileTypeCaller {
 
-    private static final String TAG = ImportActivity.class.getSimpleName();
+    private static final int EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE = 6;
+
     private static final int DIALOG_PROGRESS_ID = 0;
     private static final int DIALOG_RESULT_ID = 1;
 
@@ -61,11 +66,31 @@ public class ImportActivity extends FragmentActivity implements FileTypeDialogFr
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (!FileUtils.isExternalStorageWriteable() || ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
+        } else {
+            fileTypeDialogStart();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                Toast.makeText(this, R.string.external_storage_not_readable, Toast.LENGTH_LONG).show();
+            } else {
+                fileTypeDialogStart();
+            }
+            return;
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    private void fileTypeDialogStart() {
         FileTypeDialogFragment
                 .newInstance(R.string.import_selection_title, R.string.import_selection_option)
                 .show(getSupportFragmentManager(), FileTypeDialogFragment.FILE_TYPE_DIALOG_TAG);
     }
-
 
     @Override
     public void onFileTypeDone(TrackFileFormat trackFileFormat) {

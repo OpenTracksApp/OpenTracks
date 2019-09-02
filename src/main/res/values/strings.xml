@@ -509,6 +509,9 @@ limitations under the License.
     <string name="external_storage_not_writable">
     External storage not writable
   </string>
+  <string name="external_storage_not_readable">
+    External storage not readable
+  </string>
 
     <!-- Files -->
     <string name="files_few" translation_description="The phrase for 'few' files. This is used when the language requires
