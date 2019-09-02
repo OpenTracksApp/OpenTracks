@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Pair;
@@ -29,6 +30,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.ShareActionProvider;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
@@ -94,6 +96,8 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
     // Preferences
     private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
     private boolean recordingTrackPaused = PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT;
+    private boolean showOnLockScreen = PreferencesUtils.SHOW_TRACKDETAIL_WHILE_RECORDING_ON_LOCKSCREEN;
+
     private final Runnable bindChangedCallback = new Runnable() {
         @Override
         public void run() {
@@ -130,6 +134,11 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
 
             if (key == null || key.equals(PreferencesUtils.getKey(TrackDetailActivity.this, R.string.recording_track_paused_key))) {
                 recordingTrackPaused = PreferencesUtils.getBoolean(TrackDetailActivity.this, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+            }
+
+            if (key == null || key.equals(PreferencesUtils.getKey(TrackDetailActivity.this, R.string.trackdetail_show_on_lockscreen_while_recording))) {
+                showOnLockScreen = PreferencesUtils.getBoolean(TrackDetailActivity.this, R.string.trackdetail_show_on_lockscreen_while_recording, PreferencesUtils.SHOW_TRACKDETAIL_WHILE_RECORDING_ON_LOCKSCREEN);
+                setLockscreenPolicy();
             }
 
             if (key == null) return;
@@ -212,6 +221,22 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
         }
 
         trackController = new TrackController(this, trackRecordingServiceConnection, false, recordListener, stopListener);
+    }
+
+    @Override
+    public void onAttachedToWindow() {
+        setLockscreenPolicy();
+        super.onAttachedToWindow();
+    }
+
+    private void setLockscreenPolicy() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            setShowWhenLocked(showOnLockScreen);
+        } else {
+            if (showOnLockScreen)
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+            else getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+        }
     }
 
     @Override

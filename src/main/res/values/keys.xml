@@ -28,10 +28,12 @@ limitations under the License.
     <string name="recording_distance_interval_key" translatable="false">recordingDistanceInterval</string>
     <string name="recording_gps_accuracy_key" translatable="false">recordingGpsAccuracy</string>
     <string name="split_frequency_key" translatable="false">splitFrequency</string>
+
     <string name="stats_rate_key" translatable="false">statsRate</string>
     <string name="stats_show_coordinate_key" translatable="false">statsShowCoordinate</string>
     <string name="stats_show_grade_elevation_key" translatable="false">statsShowGradeElevation</string>
     <string name="stats_units_key" translatable="false">statsUnits</string>
+    <string name="trackdetail_show_on_lockscreen_while_recording" translatable="false">trackdetail_show_on_lockscreen_while_recording</string>
     <string name="track_name_key" translatable="false">trackName</string>
     <string name="track_widget_item1" translatable="false">trackWidgetItem1</string>
     <string name="track_widget_item2" translatable="false">trackWidgetItem2</string>

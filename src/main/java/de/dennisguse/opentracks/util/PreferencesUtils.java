@@ -83,6 +83,8 @@ public class PreferencesUtils {
 
     public static final String TRACK_NAME_DEFAULT = "DATE_ISO_8601";
 
+    public static final boolean SHOW_TRACKDETAIL_WHILE_RECORDING_ON_LOCKSCREEN = false;
+
     // Track widget
     public static final int TRACK_WIDGET_ITEM1_DEFAULT = 3; // moving time
     public static final int TRACK_WIDGET_ITEM2_DEFAULT = 0; // distance

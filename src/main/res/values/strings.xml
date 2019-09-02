@@ -1085,10 +1085,16 @@ limitations under the License.
     X axis
   </string>
 
-    <!-- Settings Map -->
-
     <!-- Settings Recording -->
-    <string name="settings_recording" translation_description="In the 'Settings' page, the option to change the recording settings.
+  <string name="settings_recording_show_on_lockscreen_while_recording_title" translation_description="In the 'Settings' page, the option to change the 'show on lockscreen' behavior while recording.">
+    Show statistics on lockscreen
+  </string>
+
+  <string name="settings_recording_show_on_lockscreen_while_recording_summary" translation_description="In the 'Settings' page, the option to change the 'show on lockscreen' behavior while recording.">
+    While recording, show statistics without unlocking the device.
+  </string>
+
+  <string name="settings_recording" translation_description="In the 'Settings' page, the option to change the recording settings.
 
       Character limit: ~26 (1 line)">
     Recording

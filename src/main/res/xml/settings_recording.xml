@@ -35,11 +35,6 @@ limitations under the License.
         android:key="@string/track_name_key"
         android:summary="%s"
         android:title="@string/settings_recording_track_name_title" />
-    <de.dennisguse.opentracks.settings.ActivityTypePreference
-        android:defaultValue="@string/activity_type_running"
-        android:key="@string/default_activity_key"
-        android:summary="%s"
-        android:title="@string/settings_recording_default_activity_title" />
     <ListPreference
         android:defaultValue="0"
         android:entryValues="@array/min_recording_interval_values"
@@ -70,4 +65,14 @@ limitations under the License.
         android:key="@string/auto_resume_track_timeout_key"
         android:summary="%s"
         android:title="@string/settings_recording_auto_resume_track_timeout_title" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="@string/trackdetail_show_on_lockscreen_while_recording"
+        android:summary="@string/settings_recording_show_on_lockscreen_while_recording_summary"
+        android:title="@string/settings_recording_show_on_lockscreen_while_recording_title" />
+    <de.dennisguse.opentracks.settings.ActivityTypePreference
+        android:defaultValue="@string/activity_type_running"
+        android:key="@string/default_activity_key"
+        android:summary="%s"
+        android:title="@string/settings_recording_default_activity_title" />
 </PreferenceScreen>
