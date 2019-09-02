@@ -84,7 +84,7 @@ public class ImportActivity extends FragmentActivity implements FileTypeDialogFr
             return;
         }
 
-        //TODO (still needed?): getLastNonConfiguration instance returned SaveAsyncTask before
+        //TODO (still needed?): getLastNonConfiguration instance returned ExportAsyncTask before
 //        Object retained = getLastNonConfigurationInstance();
 //        if (retained instanceof ImportAsyncTask) {
 //            importAsyncTask = (ImportAsyncTask) retained;

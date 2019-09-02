@@ -46,7 +46,7 @@ public class ExportActivity extends FragmentActivity implements FileTypeDialogFr
 
     private String directoryDisplayName;
 
-    private SaveAsyncTask saveAsyncTask;
+    private ExportAsyncTask exportAsyncTask;
     private ProgressDialog progressDialog;
 
     // the number of tracks successfully saved
@@ -81,14 +81,14 @@ public class ExportActivity extends FragmentActivity implements FileTypeDialogFr
 
         directoryDisplayName = FileUtils.getPathDisplayName(trackFileFormat.getExtension());
 
-        //TODO (still needed?): getLastNonConfiguration instance returned SaveAsyncTask before
+        //TODO (still needed?): getLastNonConfiguration instance returned ExportAsyncTask before
 //        Object retained = getLastNonConfigurationInstance();
-//        if (retained instanceof SaveAsyncTask) {
-//            saveAsyncTask = (SaveAsyncTask) retained;
-//            saveAsyncTask.setActivity(this);
+//        if (retained instanceof ExportAsyncTask) {
+//            exportAsyncTask = (ExportAsyncTask) retained;
+//            exportAsyncTask.setActivity(this);
 //        } else {
-        saveAsyncTask = new SaveAsyncTask(this, trackFileFormat, directory);
-        saveAsyncTask.execute();
+        exportAsyncTask = new ExportAsyncTask(this, trackFileFormat, directory);
+        exportAsyncTask.execute();
 //        }
     }
 
@@ -106,7 +106,7 @@ public class ExportActivity extends FragmentActivity implements FileTypeDialogFr
                         new DialogInterface.OnCancelListener() {
                             @Override
                             public void onCancel(DialogInterface dialog) {
-                                saveAsyncTask.cancel(true);
+                                exportAsyncTask.cancel(true);
                                 dialog.dismiss();
                                 onDismissed();
                             }

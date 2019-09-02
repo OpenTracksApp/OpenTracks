@@ -42,9 +42,9 @@ import de.dennisguse.opentracks.util.SystemUtils;
  * @author Jimmy Shih
  */
 //TODO Make independent from ExportActivity?
-public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
+public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
-    private static final String TAG = SaveAsyncTask.class.getSimpleName();
+    private static final String TAG = ExportAsyncTask.class.getSimpleName();
     private final TrackFileFormat trackFileFormat;
     private final File directory;
     private final Context context;
@@ -71,7 +71,7 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
      * @param trackFileFormat the track file format
      * @param directory       the directory to write the file
      */
-    public SaveAsyncTask(ExportActivity exportActivity, TrackFileFormat trackFileFormat, File directory) {
+    public ExportAsyncTask(ExportActivity exportActivity, TrackFileFormat trackFileFormat, File directory) {
         this.exportActivity = exportActivity;
         this.trackFileFormat = trackFileFormat;
         this.directory = directory;
