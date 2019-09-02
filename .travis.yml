@@ -6,6 +6,9 @@ android:
     - build-tools-29.0.2
     - android-29
 
+before_install:
+  - yes | sdkmanager "platforms;android-29"
+
 script:
   - ./gradlew build
   #TODO: When all tests are passing, CI should also execute them.
