@@ -40,7 +40,7 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
 
     private static final String[] COLUMNS = {OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE};
 
-    public static final String TAG = ShareContentProvider.class.getCanonicalName();
+    public static final String TAG = ShareContentProvider.class.getSimpleName();
 
     private static final int URI_GPX = 0;
     private static final int URI_KML_ONLY = 1;

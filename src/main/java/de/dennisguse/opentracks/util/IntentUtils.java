@@ -46,7 +46,7 @@ import de.dennisguse.opentracks.io.file.TrackFileFormat;
  */
 public class IntentUtils {
 
-    private final static String TAG = IntentUtils.class.getCanonicalName();
+    private final static String TAG = IntentUtils.class.getSimpleName();
 
     private IntentUtils() {
     }
