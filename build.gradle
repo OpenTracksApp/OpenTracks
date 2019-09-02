@@ -52,7 +52,8 @@ android {
         applicationId "de.dennisguse.opentracks"
         //Useful for debugging.
         //versionCode getVersionCode()
-        //versionName getVersionName()
+
+        buildConfigField "String", "VERSION_NAME_FULL", "\"${getVersionName()}\""
 
         minSdkVersion 21
         targetSdkVersion 29

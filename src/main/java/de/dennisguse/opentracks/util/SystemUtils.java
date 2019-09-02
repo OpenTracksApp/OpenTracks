@@ -49,7 +49,7 @@ public class SystemUtils {
     public static String getAppVersionName(Context context) {
         try {
             PackageInfo pi = context.getPackageManager().getPackageInfo(BuildConfig.APPLICATION_ID, PackageManager.GET_META_DATA);
-            return pi.versionName;
+            return pi.versionName + "/" + BuildConfig.VERSION_NAME_FULL;
         } catch (NameNotFoundException e) {
             Log.w(TAG, "Failed to get version info.", e);
             return "";

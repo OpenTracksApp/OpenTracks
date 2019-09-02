@@ -15,7 +15,7 @@ public class Startup extends Application {
         super.onCreate();
 
         //Include version information into stack traces.
-        Log.i(TAG, BuildConfig.APPLICATION_ID + "; BuildType: " + BuildConfig.BUILD_TYPE + "; VersionName: " + BuildConfig.VERSION_NAME + " VersionCode: " + BuildConfig.VERSION_CODE);
+        Log.i(TAG, BuildConfig.APPLICATION_ID + "; BuildType: " + BuildConfig.BUILD_TYPE + "; VersionName: " + BuildConfig.VERSION_NAME + "/" + BuildConfig.VERSION_NAME_FULL + " VersionCode: " + BuildConfig.VERSION_CODE);
 
         //Set default values of preferences on first start.
         PreferencesUtils.resetPreferences(this, false);
