@@ -67,7 +67,7 @@ android {
         }
 
         release {
-            minifyEnabled true
+            minifyEnabled false
         }
     }
 
