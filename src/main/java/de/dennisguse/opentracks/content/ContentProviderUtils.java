@@ -294,11 +294,9 @@ public interface ContentProviderUtils {
      * @param trackId           the track id
      * @param startTrackPointId the starting track point id. -1L to ignore
      * @param maxLocations      maximum number of locations to return. -1 for no limit
-     * @param descending        true to sort the result in descending order (latest
-     *                          location first)
+     * @param descending        true to sort the result in descending order (latest location first)
      */
-    Cursor getTrackPointCursor(
-            long trackId, long startTrackPointId, int maxLocations, boolean descending);
+    Cursor getTrackPointCursor(long trackId, long startTrackPointId, int maxLocations, boolean descending);
 
     /**
      * Creates a new read-only iterator over a given track's points. It provides a
@@ -317,8 +315,7 @@ public interface ContentProviderUtils {
      *                          location first)
      * @param locationFactory   the location factory
      */
-    LocationIterator getTrackPointLocationIterator(
-            long trackId, long startTrackPointId, boolean descending, LocationFactory locationFactory);
+    LocationIterator getTrackPointLocationIterator(long trackId, long startTrackPointId, boolean descending, LocationFactory locationFactory);
 
     /**
      * Inserts a track point.

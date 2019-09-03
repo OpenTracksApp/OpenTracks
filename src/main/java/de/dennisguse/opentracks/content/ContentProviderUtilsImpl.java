@@ -851,8 +851,7 @@ public class ContentProviderUtilsImpl implements ContentProviderUtils {
     }
 
     @Override
-    public Cursor getTrackPointCursor(
-            long trackId, long startTrackPointId, int maxLocations, boolean descending) {
+    public Cursor getTrackPointCursor(long trackId, long startTrackPointId, int maxLocations, boolean descending) {
         if (trackId < 0) {
             return null;
         }
