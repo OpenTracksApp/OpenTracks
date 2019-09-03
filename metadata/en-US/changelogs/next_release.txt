@@ -1,12 +1,10 @@
 (tbd): OpenTracks
 
 Changes:
-- Added show track in map apps (tested with OsmAnd and Maps.ME)
-- Removed landscape mode for track detail view (was buggy)
-- Removed search suggestions history
+-
 
 Bugfix:
 -
 
 Developer:
--
+- Fixed (some) test cases

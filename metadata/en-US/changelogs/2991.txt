@@ -1,0 +1,14 @@
+v3.1.0: OpenTracks
+
+Changes:
+- Added show track in map apps (tested with OsmAnd and Maps.ME)
+- Added while tracking, show track statistics without unlocking the device
+- Removed landscape mode for track detail view (was buggy)
+- Removed search suggestions history
+
+Bugfix:
+- Request storage permission for import all/export all
+
+Developer:
+- Upgrade to Gradle 5.6
+- Do not minify release builds
