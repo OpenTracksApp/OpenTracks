@@ -65,7 +65,7 @@ public class TrackRecordingServiceTest {
     private Context context = ApplicationProvider.getApplicationContext();
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         // Set up the mock content resolver
         ContentProvider customContentProvider = new CustomContentProvider() {
         };
@@ -86,7 +86,6 @@ public class TrackRecordingServiceTest {
     @SmallTest
     @Test
     public void testStartable() throws TimeoutException {
-        Intent intent = new Intent(context, TrackRecordingService.class);
         mServiceRule.startService(createStartIntent());
         Assert.assertNotNull(mServiceRule.bindService(createStartIntent()));
     }

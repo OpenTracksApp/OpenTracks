@@ -44,6 +44,7 @@ public class DataSourceManager {
     private final WaypointsTableObserver waypointsTableObserver;
     private final TrackPointsTableObserver trackPointsTableObserver;
     private final PreferenceListener preferenceListener;
+
     public DataSourceManager(DataSource dataSource, DataSourceListener dataSourceListener) {
         this.dataSource = dataSource;
         this.dataSourceListener = dataSourceListener;
