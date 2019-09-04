@@ -25,7 +25,9 @@ import androidx.test.rule.ServiceTestRule;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.concurrent.TimeoutException;
 
@@ -40,15 +42,16 @@ import static org.mockito.Mockito.when;
  *
  * @author Youtao Liu
  */
+@RunWith(MockitoJUnitRunner.class)
 public class ControlRecordingServiceTest {
+
+    private Context context = ApplicationProvider.getApplicationContext();
 
     @Rule
     public final ServiceTestRule mServiceRule = new ServiceTestRule();
 
     @Rule
     public GrantPermissionRule mRuntimePermissionRule = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION);
-
-    private Context context = ApplicationProvider.getApplicationContext();
 
     @Mock
     private ITrackRecordingService iTrackRecordingServiceMock;
@@ -68,7 +71,7 @@ public class ControlRecordingServiceTest {
 
         when(iTrackRecordingServiceMock.startNewTrack()).thenReturn(1L);
         subject.onHandleIntent(intent, iTrackRecordingServiceMock);
-        verify(iTrackRecordingServiceMock);
+        verify(iTrackRecordingServiceMock).startNewTrack();
     }
 
     /**
@@ -79,10 +82,9 @@ public class ControlRecordingServiceTest {
     @Test
     public void testStopRecording() throws TimeoutException {
         Intent intent = startControlRecordingService(context.getString(R.string.track_action_end));
-        iTrackRecordingServiceMock.endCurrentTrack();
 
         subject.onHandleIntent(intent, iTrackRecordingServiceMock);
-        verify(iTrackRecordingServiceMock);
+        verify(iTrackRecordingServiceMock).endCurrentTrack();
     }
 
     /**
@@ -94,7 +96,7 @@ public class ControlRecordingServiceTest {
         Intent intent = new Intent(context, ControlRecordingService.class);
         intent.setAction(action);
         mServiceRule.startService(intent);
-        subject = ((ControlRecordingService) mServiceRule.bindService(intent));
+        subject = ((ControlRecordingService.LocalBinder) mServiceRule.bindService(intent)).getService();
         return intent;
     }
 }

@@ -20,12 +20,14 @@ import android.app.IntentService;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Binder;
 import android.os.IBinder;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
-import de.dennisguse.opentracks.widgets.TrackWidgetProvider;
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.widgets.TrackWidgetProvider;
 
 /**
  * A service to control starting and stopping of a recording. This service,
@@ -55,6 +57,39 @@ public class ControlRecordingService extends IntentService implements ServiceCon
         Intent newIntent = new Intent(this, TrackRecordingService.class);
         startService(newIntent);
         bindService(newIntent, this, 0);
+    }
+
+    @VisibleForTesting
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return new LocalBinder();
+    }
+
+    /**
+     * Handles the intent to start or stop a recording.
+     *
+     * @param intent  to be handled
+     * @param service the trackRecordingService
+     */
+    @VisibleForTesting
+    void onHandleIntent(Intent intent, ITrackRecordingService service) {
+        String action = intent.getAction();
+        if (action != null) {
+            if (action.equals(getString(R.string.track_action_start))) {
+                service.startNewTrack();
+            } else if (action.equals(getString(R.string.track_action_end))) {
+                service.endCurrentTrack();
+            } else if (action.equals(getString(R.string.track_action_pause))) {
+                service.pauseCurrentTrack();
+            } else if (action.equals(getString(R.string.track_action_resume))) {
+                service.resumeCurrentTrack();
+            }
+        }
+        if (connected) {
+            unbindService(this);
+            connected = false;
+        }
     }
 
     @Override
@@ -97,30 +132,13 @@ public class ControlRecordingService extends IntentService implements ServiceCon
         onHandleIntent(intent, trackRecordingService);
     }
 
-
-    /**
-     * Handles the intent to start or stop a recording.
-     *
-     * @param intent  to be handled
-     * @param service the trackRecordingService
-     */
     @VisibleForTesting
-    void onHandleIntent(Intent intent, ITrackRecordingService service) {
-        String action = intent.getAction();
-        if (action != null) {
-            if (action.equals(getString(R.string.track_action_start))) {
-                service.startNewTrack();
-            } else if (action.equals(getString(R.string.track_action_end))) {
-                service.endCurrentTrack();
-            } else if (action.equals(getString(R.string.track_action_pause))) {
-                service.pauseCurrentTrack();
-            } else if (action.equals(getString(R.string.track_action_resume))) {
-                service.resumeCurrentTrack();
-            }
+    public class LocalBinder extends Binder {
+        ControlRecordingService getService() {
+            return ControlRecordingService.this;
         }
-        unbindService(this);
-        connected = false;
     }
+
 
     @Override
     public void onDestroy() {
