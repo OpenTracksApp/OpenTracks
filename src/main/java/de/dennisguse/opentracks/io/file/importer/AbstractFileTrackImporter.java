@@ -22,6 +22,22 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.util.Log;
 
+import org.xml.sax.Locator;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.ContentProviderUtils.LocationIterator;
 import de.dennisguse.opentracks.content.DescriptionGeneratorImpl;
@@ -37,22 +53,6 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
-import de.dennisguse.opentracks.R;
-
-import org.xml.sax.Locator;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 
 /**
  * Abstract class for various file track importers like {@link GpxFileTrackImporter} and
@@ -139,15 +139,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
                 return -1L;
             }
             return trackIds.get(0);
-        } catch (IOException e) {
-            Log.e(TAG, "Unable to import file", e);
-            cleanImport();
-            return -1L;
-        } catch (ParserConfigurationException e) {
-            Log.e(TAG, "Unable to import file", e);
-            cleanImport();
-            return -1L;
-        } catch (SAXException e) {
+        } catch (IOException | SAXException | ParserConfigurationException e) {
             Log.e(TAG, "Unable to import file", e);
             cleanImport();
             return -1L;

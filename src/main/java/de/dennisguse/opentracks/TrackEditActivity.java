@@ -36,7 +36,6 @@ import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.TrackRecordingServiceConnectionUtils;
 import de.dennisguse.opentracks.util.TrackUtils;
-import de.dennisguse.opentracks.R;
 
 /**
  * An activity that let's the user see and edit the user editable track meta
@@ -67,7 +66,7 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
         super.onCreate(bundle);
 
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
-        Long trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1L);
+        long trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1L);
         if (trackId == -1L) {
             Log.e(TAG, "invalid trackId");
             finish();

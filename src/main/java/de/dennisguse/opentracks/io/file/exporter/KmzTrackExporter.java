@@ -80,10 +80,7 @@ public class KmzTrackExporter implements TrackExporter {
             // Add photos
             addImages(zipOutputStream);
             return true;
-        } catch (InterruptedException e) {
-            Log.e(TAG, "Unable to write track", e);
-            return false;
-        } catch (IOException e) {
+        } catch (InterruptedException | IOException e) {
             Log.e(TAG, "Unable to write track", e);
             return false;
         } finally {

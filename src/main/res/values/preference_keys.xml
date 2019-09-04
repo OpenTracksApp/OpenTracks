@@ -46,11 +46,8 @@ limitations under the License.
     <string name="recording_track_id_key" translatable="false">recordingTrackId</string>
     <string name="recording_track_paused_key" translatable="false">recordingTrackPaused</string>
     <!-- Keys for non-persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
-    <string name="settings_advanced_key" translatable="false">settingsAdvanced</string>
-    <string name="settings_chart_key" translatable="false">settingsChart</string>
     <string name="settings_recording_key" translatable="false">settingsRecording</string>
     <string name="settings_reset_key" translatable="false">settingsReset</string>
-    <string name="settings_sensor_key" translatable="false">settingsSensor</string>
     <string name="settings_sensor_bluetooth_key" translatable="false">settingsSensorBluetooth</string>
     <string name="settings_sensor_bluetooth_pairing_key" translatable="false">settingsSensorBluetoothPairing</string>
     <string name="settings_sensor_root_key" translatable="false">settingsSensorRoot</string>

@@ -31,6 +31,7 @@ import android.widget.RemoteViews;
 
 import androidx.core.app.TaskStackBuilder;
 
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackDetailActivity;
 import de.dennisguse.opentracks.TrackListActivity;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
@@ -40,7 +41,6 @@ import de.dennisguse.opentracks.stats.TripStatistics;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
-import de.dennisguse.opentracks.R;
 
 /**
  * A track widget to start/stop/pause/resume recording, launch the main activity, and
@@ -318,7 +318,7 @@ public class TrackWidgetProvider extends AppWidgetProvider {
                 reportSpeed ? R.string.stats_average_speed : R.string.stats_average_pace);
         remoteViews.setTextViewText(ids[0], averageSpeedLabel);
 
-        Double speed = tripStatistics == null ? Double.NaN : tripStatistics.getAverageSpeed();
+        double speed = tripStatistics == null ? Double.NaN : tripStatistics.getAverageSpeed();
         String[] speedParts = StringUtils.getSpeedParts(context, speed, metricUnits, reportSpeed);
 
         if (speedParts[0] == null) {
@@ -362,7 +362,7 @@ public class TrackWidgetProvider extends AppWidgetProvider {
                 reportSpeed ? R.string.stats_average_moving_speed : R.string.stats_average_moving_pace);
         remoteViews.setTextViewText(ids[0], averageMovingSpeedLabel);
 
-        Double speed = tripStatistics == null ? Double.NaN : tripStatistics.getAverageMovingSpeed();
+        double speed = tripStatistics == null ? Double.NaN : tripStatistics.getAverageMovingSpeed();
         String[] speedParts = StringUtils.getSpeedParts(context, speed, metricUnits, reportSpeed);
 
         if (speedParts[0] == null) {
