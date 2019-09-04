@@ -1097,9 +1097,10 @@ public class TrackRecordingService extends Service {
             return trackRecordingService.insertWaypoint(waypointCreationRequest);
         }
 
+        @VisibleForTesting
         @Override
         public void insertTrackPoint(Location location) {
-            //TODO trackRecordingService.locationListener.onLocationChanged(location);
+            trackRecordingService.onLocationChangedAsync(location);
         }
 
         @Override

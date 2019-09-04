@@ -27,13 +27,14 @@ import de.dennisguse.opentracks.content.Waypoint.WaypointType;
  */
 public class WaypointCreationRequest implements Parcelable {
 
-    public final static WaypointCreationRequest DEFAULT_WAYPOINT = new WaypointCreationRequest(
-            WaypointType.WAYPOINT, false);
-    public final static WaypointCreationRequest DEFAULT_STATISTICS = new WaypointCreationRequest(
-            WaypointType.STATISTICS, false);
-    public final static WaypointCreationRequest DEFAULT_START_TRACK = new WaypointCreationRequest(
-            WaypointType.STATISTICS, true);
+    public final static WaypointCreationRequest DEFAULT_WAYPOINT = new WaypointCreationRequest(WaypointType.WAYPOINT, false);
+
+    public final static WaypointCreationRequest DEFAULT_STATISTICS = new WaypointCreationRequest(WaypointType.STATISTICS, false);
+
+    public final static WaypointCreationRequest DEFAULT_START_TRACK = new WaypointCreationRequest(WaypointType.STATISTICS, true);
+
     public static final Creator CREATOR = new Creator();
+
     private WaypointType type;
     // true if this marker contains the track statistics
     private boolean isTrackStatistics;
@@ -47,8 +48,7 @@ public class WaypointCreationRequest implements Parcelable {
         this(type, isTrackStatistics, null, null, null, null, null);
     }
 
-    public WaypointCreationRequest(WaypointType type, boolean isTrackStatistics, String name,
-                                   String category, String description, String iconUrl, String photoUrl) {
+    public WaypointCreationRequest(WaypointType type, boolean isTrackStatistics, String name, String category, String description, String iconUrl, String photoUrl) {
         this.type = type;
         this.isTrackStatistics = isTrackStatistics;
         this.name = name;

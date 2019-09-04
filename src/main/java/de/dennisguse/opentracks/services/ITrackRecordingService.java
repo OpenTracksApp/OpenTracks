@@ -88,6 +88,8 @@ public interface ITrackRecordingService {
     long insertWaypoint(WaypointCreationRequest request);
 
     /**
+     * ONLY FOR TESTING
+     *
      * Inserts a track point in the current recording track.
      * <p>
      * When recording a track, GPS locations are automatically inserted. This is used for
