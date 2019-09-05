@@ -351,8 +351,7 @@ public class TrackRecordingServiceTest {
         Assert.assertFalse(service.isRecording());
 
         /*
-         * Ending the current track when there is no recording should not result in
-         * any error.
+         * Ending the current track when there is no recording should not result in any error.
          */
         service.endCurrentTrack();
 
@@ -381,12 +380,12 @@ public class TrackRecordingServiceTest {
     @MediumTest
     @Test
     public void testInsertStatisticsMarker_validLocation() throws Exception {
-        Track track = createDummyTrack(trackId, -1L, true);
+        createDummyTrack(trackId, -1L, true);
 
         ITrackRecordingService service = ((ITrackRecordingService) mServiceRule.bindService(createStartIntent()));
         Assert.assertTrue(service.isRecording());
         Assert.assertFalse(service.isPaused());
-        insertLocation(track, service);
+        insertLocation(service);
 
         long waypointId1 = service.insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS);
         Assert.assertNotEquals(-1L, waypointId1);
@@ -419,11 +418,11 @@ public class TrackRecordingServiceTest {
     @MediumTest
     @Test
     public void testInsertWaypointMarker_validWaypoint() throws Exception {
-        Track track = createDummyTrack(trackId, -1L, true);
+        createDummyTrack(trackId, -1L, true);
 
         ITrackRecordingService service = ((ITrackRecordingService) mServiceRule.bindService(createStartIntent()));
         Assert.assertTrue(service.isRecording());
-        insertLocation(track, service);
+        insertLocation(service);
 
         long waypointId = service.insertWaypoint(WaypointCreationRequest.DEFAULT_WAYPOINT);
         Assert.assertNotEquals(-1L, waypointId);
@@ -628,7 +627,7 @@ public class TrackRecordingServiceTest {
     /**
      * Inserts a location and waits for 100ms.
      */
-    private void insertLocation(Track track, ITrackRecordingService trackRecordingService) throws InterruptedException {
+    private void insertLocation(ITrackRecordingService trackRecordingService) throws InterruptedException {
         Location location = new Location("gps");
         location.setLongitude(35.0f);
         location.setLatitude(45.0f);

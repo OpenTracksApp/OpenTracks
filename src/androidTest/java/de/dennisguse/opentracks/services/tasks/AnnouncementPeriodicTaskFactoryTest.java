@@ -17,11 +17,14 @@
 package de.dennisguse.opentracks.services.tasks;
 
 import android.content.Context;
+import android.os.Looper;
 
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -35,6 +38,17 @@ import org.junit.runner.RunWith;
 public class AnnouncementPeriodicTaskFactoryTest {
 
     private Context context = ApplicationProvider.getApplicationContext();
+
+    @BeforeClass
+    public static void preSetUp() {
+        // Prepare looper for Android's message queue
+        Looper.prepare();
+    }
+
+    @AfterClass
+    public static void finalTearDown() {
+        if (Looper.myLooper() != null) Looper.myLooper().quit();
+    }
 
     @Test
     public void testCreate() {

@@ -16,6 +16,7 @@
 package de.dennisguse.opentracks.services.tasks;
 
 import android.content.Context;
+import android.os.Looper;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
 import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
@@ -25,8 +26,10 @@ import android.telephony.TelephonyManager;
 import androidx.test.core.app.ApplicationProvider;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -73,9 +76,16 @@ public class AnnouncementPeriodicTaskTest {
     @Mock
     private TextToSpeechInterface tts;
 
-//    @UsesMocks({
-//            StringUtils.class,
-//    })
+    @BeforeClass
+    public static void preSetUp() {
+        // Prepare looper for Android's message queue
+        Looper.prepare();
+    }
+
+    @AfterClass
+    public static void finalTearDown() {
+        if (Looper.myLooper() != null) Looper.myLooper().quit();
+    }
 
     @Before
     public void setUp() throws Exception {
