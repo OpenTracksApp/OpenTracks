@@ -79,7 +79,7 @@ public class AnnouncementPeriodicTaskTest {
     @BeforeClass
     public static void preSetUp() {
         // Prepare looper for Android's message queue
-        Looper.prepare();
+        if (Looper.myLooper() == null) Looper.prepare();
     }
 
     @AfterClass
@@ -291,7 +291,7 @@ public class AnnouncementPeriodicTaskTest {
      */
     @Test
     public void testGetAnnounceTime_time_one() {
-        long time = 1 * 1000; // 1 second
+        long time = 1000; // 1 second
         Assert.assertEquals("0 minutes 1 second", task.getAnnounceTime(time));
     }
 
@@ -301,7 +301,7 @@ public class AnnouncementPeriodicTaskTest {
      */
     @Test
     public void testGetAnnounceTime_singular_has_hour() {
-        long time = (1 * 60 * 60 * 1000) + (1 * 60 * 1000) + (1 * 1000); // 1 hour 1 minute 1 second
+        long time = (60 * 60 * 1000) + (60 * 1000) + (1000); // 1 hour 1 minute 1 second
         Assert.assertEquals("1 hour 1 minute 1 second", task.getAnnounceTime(time));
     }
 
@@ -377,10 +377,7 @@ public class AnnouncementPeriodicTaskTest {
         int playEarcon(String earcon, int queueMode,
                        HashMap<String, String> params);
 
-        int playSilence(long durationInMs, int queueMode,
-                        HashMap<String, String> params);
-
-        int setEngineByPackageName(String enginePackageName);
+        int playSilence(long durationInMs, int queueMode, HashMap<String, String> params);
 
         int setLanguage(Locale loc);
 
@@ -396,8 +393,7 @@ public class AnnouncementPeriodicTaskTest {
 
         int stop();
 
-        int synthesizeToFile(String text, HashMap<String, String> params,
-                             String filename);
+        int synthesizeToFile(String text, HashMap<String, String> params, String filename);
     }
 
     /**

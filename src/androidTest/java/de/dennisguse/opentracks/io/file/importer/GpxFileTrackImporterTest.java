@@ -222,8 +222,7 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
     private void testInvalidGpx(String xml) {
         when(contentProviderUtils.insertTrack((Track) any())).thenReturn(TRACK_ID_0_URI);
 
-        // For the following, use StubReturn since we don't care whether they are
-        // invoked or not.
+        // For the following, use StubReturn since we don't care whether they are invoked or not.
         when(contentProviderUtils.bulkInsertTrackPoint((Location[]) any(), anyInt(), anyLong())).thenReturn(1);
         when(contentProviderUtils.getFirstTrackPointId(TRACK_ID_0)).thenReturn(TRACK_POINT_ID_0);
         when(contentProviderUtils.getLastTrackPointId(TRACK_ID_0)).thenReturn(TRACK_POINT_ID_0);
@@ -234,6 +233,5 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
         GpxFileTrackImporter gpxFileTrackImporter = new GpxFileTrackImporter(context, contentProviderUtils);
         long trackId = gpxFileTrackImporter.importFile(inputStream);
         Assert.assertEquals(-1L, trackId);
-        verify(contentProviderUtils);
     }
 }

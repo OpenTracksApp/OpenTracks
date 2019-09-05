@@ -23,8 +23,8 @@ import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 
 /**
- * Commons utilities for creating stubs of track, location. The class will be
- * enriched if needs more similar stubs for test.
+ * Commons utilities for creating stubs of track, location.
+ * The class will be enriched if needs more similar stubs for test.
  *
  * @author Youtao Liu
  */
@@ -85,5 +85,4 @@ public class TrackStubUtils {
 
         return new SensorDataSetLocation(loc, sd);
     }
-
 }

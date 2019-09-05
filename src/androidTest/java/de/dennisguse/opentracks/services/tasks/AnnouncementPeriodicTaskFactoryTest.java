@@ -42,7 +42,7 @@ public class AnnouncementPeriodicTaskFactoryTest {
     @BeforeClass
     public static void preSetUp() {
         // Prepare looper for Android's message queue
-        Looper.prepare();
+        if (Looper.myLooper() == null) Looper.prepare();
     }
 
     @AfterClass

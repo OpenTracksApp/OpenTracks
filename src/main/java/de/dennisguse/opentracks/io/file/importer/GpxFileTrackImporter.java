@@ -21,11 +21,11 @@ import android.location.Location;
 
 import androidx.annotation.VisibleForTesting;
 
-import de.dennisguse.opentracks.content.ContentProviderUtils;
-import de.dennisguse.opentracks.content.Waypoint.WaypointType;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
+
+import de.dennisguse.opentracks.content.ContentProviderUtils;
+import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 
 /**
  * Imports a GPX file.
