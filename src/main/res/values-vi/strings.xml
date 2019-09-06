@@ -107,7 +107,7 @@
     <string name="export_external_storage_option">dưới dạng %1$s sang %2$s</string>
     <string name="export_external_storage_progress_message">Đang xuất sang %1$s…</string>
     <string name="export_external_storage_success">Đã xuất %1$s sang %2$s</string>
-    <string name="export_title">Xuất sang...</string>
+    <string name="export_title">Xuất sang…</string>
     <string name="external_storage_not_available">Bộ nhớ ngoài không có sẵn</string>
     <string name="external_storage_not_writable">Bộ nhớ ngoài không thể ghi được</string>
     <string name="files_few">%1$d tệp</string>
@@ -128,7 +128,7 @@
     <string name="generic_no">Không</string>
     <string name="generic_ok">OK</string>
     <string name="generic_paused">Đã tạm dừng</string>
-    <string name="generic_progress_title">Vui lòng đợi...</string>
+    <string name="generic_progress_title">Vui lòng đợi…</string>
     <string name="generic_recording">Đang ghi…</string>
     <string name="generic_save">Lưu</string>
     <string name="generic_success_title">Thành công</string>
@@ -297,7 +297,7 @@
     <string name="track_delete_one_confirm_message">Tuyến đường và các điểm đánh dấu của nó sẽ bị xóa vĩnh viễn khỏi thiết bị.</string>
     <string name="track_delete_one_confirm_title">Xóa tuyến đường</string>
     <string name="track_delete_multiple_confirm_message">Các tuyến đường được chọn và điểm đánh dấu của chúng sẽ bị xóa vĩnh viễn khỏi thiết bị.</string>
-    <string name="track_delete_progress_message">Đang xóa...</string>
+    <string name="track_delete_progress_message">Đang xóa…</string>
     <string name="track_detail_chart_tab">Biểu đồ</string>
     <string name="track_detail_stats_tab">Thống kê</string>
     <string name="track_edit_activity_type">Loại hoạt động (ví dụ: đi bộ đường dài)</string>

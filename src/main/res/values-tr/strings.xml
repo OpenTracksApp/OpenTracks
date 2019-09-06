@@ -129,7 +129,7 @@
     <string name="generic_ok">Tamam</string>
     <string name="generic_paused">Duraklatıldı</string>
     <string name="generic_progress_title">Lütfen bekleyin…</string>
-    <string name="generic_recording">Kaydediliyor...</string>
+    <string name="generic_recording">Kaydediliyor…</string>
     <string name="generic_save">Kaydet</string>
     <string name="generic_success_title">Başarılı</string>
     <string name="generic_tracks">Parkurlar</string>
@@ -292,12 +292,12 @@
     <string name="stats_distance">Mesafe</string>
     <string name="stats_total_time">Toplam süre</string>
     <string name="track_name_format">Parkur %1$d</string>
-    <string name="track_record_notification">Parkurunuz kaydediliyor...</string>
+    <string name="track_record_notification">Parkurunuz kaydediliyor…</string>
     <string name="track_markers">%1$s İşaretçileri</string>
     <string name="track_delete_one_confirm_message">Parkur ve işaretçileri cihazdan kalıcı olarak silinecek.</string>
     <string name="track_delete_one_confirm_title">Parkur silinsin mi?</string>
     <string name="track_delete_multiple_confirm_message">Seçilen parkurlar ve işaretçileri cihazdan kalıcı olarak silinecek.</string>
-    <string name="track_delete_progress_message">Siliniyor...</string>
+    <string name="track_delete_progress_message">Siliniyor…</string>
     <string name="track_detail_chart_tab">Grafik</string>
     <string name="track_detail_stats_tab">İstatistikler</string>
     <string name="track_edit_activity_type">Aktivite türü (ör. yürüyüş)</string>

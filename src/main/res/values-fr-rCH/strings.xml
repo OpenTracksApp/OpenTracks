@@ -128,8 +128,8 @@
     <string name="generic_no">Non</string>
     <string name="generic_ok">OK</string>
     <string name="generic_paused">En pause</string>
-    <string name="generic_progress_title">Veuillez patienter...</string>
-    <string name="generic_recording">Enregistrement...</string>
+    <string name="generic_progress_title">Veuillez patienter…</string>
+    <string name="generic_recording">Enregistrement…</string>
     <string name="generic_save">Enregistrer</string>
     <string name="generic_success_title">Opération réussie</string>
     <string name="generic_tracks">Parcours</string>
@@ -218,14 +218,14 @@
     <string name="sensor_state_cadence">Cadence</string>
     <string name="sensor_state_cadence_value">%1$d tr/min</string>
     <string name="sensor_state_connected">Connecté</string>
-    <string name="sensor_state_connecting">Connexion en cours...</string>
+    <string name="sensor_state_connecting">Connexion en cours…</string>
     <string name="sensor_state_disconnected">Déconnecté</string>
     <string name="sensor_state_heart_rate">Fréquence cardiaque</string>
     <string name="sensor_state_heart_rate_value">%1$d bpm</string>
     <string name="sensor_state_last_sensor_time">Heure de la dernière transmission du capteur</string>
     <string name="sensor_state_power">Puissance</string>
     <string name="sensor_state_power_value">%1$d W</string>
-    <string name="sensor_state_sending">Envoi en cours...</string>
+    <string name="sensor_state_sending">Envoi en cours…</string>
     <string name="settings_not_while_recording">Non disponible pendant l\'enregistrement d\'un parcours.</string>
     <string name="settings_show">Afficher</string>
     <string name="settings_advanced">Avancé</string>
@@ -293,7 +293,7 @@
     <string name="stats_distance">Distance</string>
     <string name="stats_total_time">Durée totale</string>
     <string name="track_name_format">Parcours %1$d</string>
-    <string name="track_record_notification">Enregistrement du parcours...</string>
+    <string name="track_record_notification">Enregistrement du parcours…</string>
     <string name="track_markers">Repères pour le parcours %1$s</string>
     <string name="track_delete_one_confirm_message">Ce parcours et ses repères vont être définitivement effacés de l\'appareil.</string>
     <string name="track_delete_one_confirm_title">Supprimer le parcours ?</string>

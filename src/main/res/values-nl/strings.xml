@@ -128,8 +128,8 @@
     <string name="generic_no">Nee</string>
     <string name="generic_ok">OK</string>
     <string name="generic_paused">Onderbroken</string>
-    <string name="generic_progress_title">Een ogenblik geduld...</string>
-    <string name="generic_recording">Opnemen...</string>
+    <string name="generic_progress_title">Een ogenblik geduld…</string>
+    <string name="generic_recording">Opnemen…</string>
     <string name="generic_save">Opslaan</string>
     <string name="generic_success_title">Geslaagd</string>
     <string name="generic_tracks">Routes</string>
@@ -291,12 +291,12 @@
     <string name="stats_distance">Afstand</string>
     <string name="stats_total_time">Totale tijd</string>
     <string name="track_name_format">Route %1$d</string>
-    <string name="track_record_notification">Uw route wordt opgenomen...</string>
+    <string name="track_record_notification">Uw route wordt opgenomen…</string>
     <string name="track_markers">Markeringen voor %1$s</string>
     <string name="track_delete_one_confirm_message">De route en de bijbehorende markeringen worden definitief verwijderd van het apparaat.</string>
     <string name="track_delete_one_confirm_title">Route verwijderen?</string>
     <string name="track_delete_multiple_confirm_message">De geselecteerde routes en de bijbehorende markeringen worden definitief verwijderd van het apparaat.</string>
-    <string name="track_delete_progress_message">Verwijderen...</string>
+    <string name="track_delete_progress_message">Verwijderen…</string>
     <string name="track_detail_chart_tab">Grafiek</string>
     <string name="track_detail_stats_tab">Statistieken</string>
     <string name="track_edit_activity_type">Type activiteit (bijv. trektocht)</string>

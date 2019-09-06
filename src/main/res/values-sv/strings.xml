@@ -105,9 +105,9 @@
     <string name="export_external_storage">Extern lagringsenhet</string>
     <string name="export_external_storage_error">Exporterade %1$d av %2$s till %3$s</string>
     <string name="export_external_storage_option">som %1$s till %2$s</string>
-    <string name="export_external_storage_progress_message">Exporterar till %1$s ...</string>
+    <string name="export_external_storage_progress_message">Exporterar till %1$s …</string>
     <string name="export_external_storage_success">Exporterade %1$s till %2$s</string>
-    <string name="export_title">Exportera till ...</string>
+    <string name="export_title">Exportera till …</string>
     <string name="external_storage_not_available">Extern lagring är inte tillgänglig</string>
     <string name="external_storage_not_writable">Extern lagring inte skrivbar</string>
     <string name="files_few">%1$d filer</string>
@@ -129,7 +129,7 @@
     <string name="generic_ok">OK</string>
     <string name="generic_paused">Pausat</string>
     <string name="generic_progress_title">Vänta…</string>
-    <string name="generic_recording">Spelar in...</string>
+    <string name="generic_recording">Spelar in…</string>
     <string name="generic_save">Spara</string>
     <string name="generic_success_title">Klart</string>
     <string name="generic_tracks">Spår</string>
@@ -159,7 +159,7 @@
     <string name="import_no_directory">%1$s finns inte</string>
     <string name="import_no_file">Det fanns inga filer att importera. Anslut enheten till datorn och lägg filerna som ska importeras i %1$s.</string>
     <string name="import_no_file_title">Importera filer</string>
-    <string name="import_progress_message">Importerar från %1$s...</string>
+    <string name="import_progress_message">Importerar från %1$s…</string>
     <string name="import_selection_option">Alla %1$s från %2$s</string>
     <string name="import_selection_title">Importera från extern lagringsenhet</string>
     <string name="import_success">Importerade %1$s från %2$s</string>
@@ -291,12 +291,12 @@
     <string name="stats_distance">Avstånd</string>
     <string name="stats_total_time">Total tid</string>
     <string name="track_name_format">Spår %1$d</string>
-    <string name="track_record_notification">Spelar in ditt spår...</string>
+    <string name="track_record_notification">Spelar in ditt spår…</string>
     <string name="track_markers">%1$s markörer</string>
     <string name="track_delete_one_confirm_message">Spåret och dess markörer tas bort permanent från enheten.</string>
     <string name="track_delete_one_confirm_title">Ta bort spår?</string>
     <string name="track_delete_multiple_confirm_message">De valda spåren och deras markörer tas permanent bort från enheten.</string>
-    <string name="track_delete_progress_message">Tar bort ...</string>
+    <string name="track_delete_progress_message">Tar bort …</string>
     <string name="track_detail_chart_tab">Diagram</string>
     <string name="track_detail_stats_tab">Statistik</string>
     <string name="track_edit_activity_type">Aktivitetstyp (t.ex. vandring)</string>

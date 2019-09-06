@@ -105,9 +105,9 @@
     <string name="export_external_storage">حافظه خارجی</string>
     <string name="export_external_storage_error">%1$d مسیر از %2$s مسیر به %3$s صادر شد</string>
     <string name="export_external_storage_option">به عنوان %1$s به %2$s</string>
-    <string name="export_external_storage_progress_message">در حال صادر کردن به %1$s...</string>
+    <string name="export_external_storage_progress_message">در حال صادر کردن به %1$s…</string>
     <string name="export_external_storage_success">%1$s مسیر به %2$s صادر شد</string>
-    <string name="export_title">صادر کردن به...</string>
+    <string name="export_title">صادر کردن به…</string>
     <string name="external_storage_not_available">حافظه خارجی در دسترس نیست</string>
     <string name="external_storage_not_writable">ذخیره کردن در حافظه خارجی امکان‌پذیر نیست</string>
     <string name="files_few">%1$d فایل</string>
@@ -128,7 +128,7 @@
     <string name="generic_no">نه</string>
     <string name="generic_ok">تأیید</string>
     <string name="generic_paused">در حال مکث</string>
-    <string name="generic_progress_title">لطفاً منتظر بمانید...</string>
+    <string name="generic_progress_title">لطفاً منتظر بمانید…</string>
     <string name="generic_recording">در حال ضبط…</string>
     <string name="generic_save">ذخیره</string>
     <string name="generic_success_title">موفقیت‌آمیز بود</string>
@@ -159,7 +159,7 @@
     <string name="import_no_directory">%1$s وجود ندارد</string>
     <string name="import_no_file">هیچ فایلی برای وارد کردن وجود نداشت. دستگاه‌تان را به رایانه‌تان وصل کنید و فایل‌هایی که می خواهید وارد کنید در %1$s قرار دهید.</string>
     <string name="import_no_file_title">وارد کردن فایل‌ها</string>
-    <string name="import_progress_message">در حال وارد کردن از %1$s...</string>
+    <string name="import_progress_message">در حال وارد کردن از %1$s…</string>
     <string name="import_selection_option">همه %1$s از %2$s</string>
     <string name="import_selection_title">وارد کردن از حافظه خارجی</string>
     <string name="import_success">%1$s فایل از %2$s وارد شد</string>
@@ -296,7 +296,7 @@
     <string name="track_delete_one_confirm_message">گذر و نشانگرهایش برای همیشه از روی دستگاه حذف خواهند شد.</string>
     <string name="track_delete_one_confirm_title">مسیر حذف شود؟</string>
     <string name="track_delete_multiple_confirm_message">گذرهای انتخاب شده و نشانگرهایشان برای همیشه از دستگاه حذف خواهند شد.</string>
-    <string name="track_delete_progress_message">در حال حذف...</string>
+    <string name="track_delete_progress_message">در حال حذف…</string>
     <string name="track_detail_chart_tab">نمودار</string>
     <string name="track_detail_stats_tab">آمار</string>
     <string name="track_edit_activity_type">نوع فعالیت (برای مثال پیاده‌روی)</string>

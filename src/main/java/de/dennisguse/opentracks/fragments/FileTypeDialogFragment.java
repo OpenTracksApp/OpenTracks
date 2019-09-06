@@ -23,6 +23,8 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 
+import java.util.Locale;
+
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.util.FileUtils;
@@ -67,7 +69,8 @@ public class FileTypeDialogFragment extends AbstractDialogFragment {
         String[] choices = new String[trackFileFormats.length];
         for (int i = 0; i < choices.length; i++) {
             TrackFileFormat trackFileFormat = trackFileFormats[i];
-            choices[i] = getString(optionId, trackFileFormat.getExtension().toUpperCase(), FileUtils.getPathDisplayName(trackFileFormat.getExtension()));
+            String trackFileFormatUpperCase = trackFileFormat.getExtension().toUpperCase(Locale.US); //ASCII upper case
+            choices[i] = getString(optionId, trackFileFormatUpperCase, FileUtils.getPathDisplayName(trackFileFormat.getExtension()));
         }
         return new AlertDialog.Builder(getActivity())
                 .setNegativeButton(R.string.generic_cancel, new OnClickListener() {

@@ -105,9 +105,9 @@
     <string name="export_external_storage">외부 저장소</string>
     <string name="export_external_storage_error">%2$s개 중 %1$d개를 %3$s(으)로 내보냈습니다.</string>
     <string name="export_external_storage_option">%1$s 형식으로 %2$s(으)로</string>
-    <string name="export_external_storage_progress_message">%1$s(으)로 내보내기 중...</string>
+    <string name="export_external_storage_progress_message">%1$s(으)로 내보내기 중…</string>
     <string name="export_external_storage_success">%1$s개를 %2$s(으)로 내보냈습니다.</string>
-    <string name="export_title">내보내기...</string>
+    <string name="export_title">내보내기…</string>
     <string name="external_storage_not_available">외부 저장소를 사용할 수 없습니다.</string>
     <string name="external_storage_not_writable">외부 저장소에 쓸 수 없습니다.</string>
     <string name="files_few">파일 %1$d개</string>
@@ -128,8 +128,8 @@
     <string name="generic_no">아니오</string>
     <string name="generic_ok">확인</string>
     <string name="generic_paused">일시중지됨</string>
-    <string name="generic_progress_title">잠시 기다려 주세요...</string>
-    <string name="generic_recording">기록 중...</string>
+    <string name="generic_progress_title">잠시 기다려 주세요…</string>
+    <string name="generic_recording">기록 중…</string>
     <string name="generic_save">저장</string>
     <string name="generic_success_title">완료</string>
     <string name="generic_tracks">운동기록</string>
@@ -161,7 +161,7 @@
     <string name="import_no_directory">%1$s(이)가 없습니다.</string>
     <string name="import_no_file">가져올 파일이 없습니다. 기기를 컴퓨터에 연결하고 %1$s에 가져올 파일을 가져다 놓으세요.</string>
     <string name="import_no_file_title">파일 가져오기</string>
-    <string name="import_progress_message">%1$s에서 가져오기...</string>
+    <string name="import_progress_message">%1$s에서 가져오기…</string>
     <string name="import_selection_option">%2$s에 있는 모든 %1$s 파일</string>
     <string name="import_selection_title">외부 저장소에서 가져오기</string>
     <string name="import_success">%2$s에서 %1$s개를 가져왔습니다.</string>
@@ -293,12 +293,12 @@
     <string name="stats_distance">거리</string>
     <string name="stats_total_time">총 시간</string>
     <string name="track_name_format">운동기록 %1$d</string>
-    <string name="track_record_notification">내 운동기록을 기록 중...</string>
+    <string name="track_record_notification">내 운동기록을 기록 중…</string>
     <string name="track_markers">%1$s 마커</string>
     <string name="track_delete_one_confirm_message">운동기록과 아이콘이 기기에서 영구적으로 삭제됩니다.</string>
     <string name="track_delete_one_confirm_title">운동기록을 삭제하시겠습니까?</string>
     <string name="track_delete_multiple_confirm_message">선택된 운동기록과 아이콘이 기기에서 영구적으로 삭제됩니다.</string>
-    <string name="track_delete_progress_message">삭제 중...</string>
+    <string name="track_delete_progress_message">삭제 중…</string>
     <string name="track_detail_chart_tab">도표</string>
     <string name="track_detail_stats_tab">통계</string>
     <string name="track_edit_activity_type">운동 유형(예: 하이킹)</string>

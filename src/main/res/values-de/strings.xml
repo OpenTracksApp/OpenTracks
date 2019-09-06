@@ -217,7 +217,7 @@
     <string name="sensor_state_cadence">Trittfrequenz</string>
     <string name="sensor_state_cadence_value">%1$d Umdrehungen pro Minute</string>
     <string name="sensor_state_connected">Verbunden</string>
-    <string name="sensor_state_connecting">Verbindung wird hergestellt...</string>
+    <string name="sensor_state_connecting">Verbindung wird hergestellt…</string>
     <string name="sensor_state_disconnected">Nicht verbunden</string>
     <string name="sensor_state_heart_rate">Herzfrequenz</string>
     <string name="sensor_state_heart_rate_value">%1$d Schläge pro Minute</string>
@@ -292,12 +292,12 @@
     <string name="stats_distance">Entfernung</string>
     <string name="stats_total_time">Gesamtzeit</string>
     <string name="track_name_format">Track %1$d</string>
-    <string name="track_record_notification">Der Track wird aufgezeichnet...</string>
+    <string name="track_record_notification">Der Track wird aufgezeichnet…</string>
     <string name="track_markers">Markierungen für %1$s</string>
     <string name="track_delete_one_confirm_message">Der Track und seine Markierungen werden endgültig aus dem Gerät gelöscht.</string>
     <string name="track_delete_one_confirm_title">Track löschen?</string>
     <string name="track_delete_multiple_confirm_message">Die ausgewählten Tracks und ihre Markierungen werden endgültig aus dem Gerät gelöscht.</string>
-    <string name="track_delete_progress_message">Löschen...</string>
+    <string name="track_delete_progress_message">Löschen…</string>
     <string name="track_detail_chart_tab">Diagramm</string>
     <string name="track_detail_stats_tab">Statistik</string>
     <string name="track_edit_activity_type">Art der Aktivität, z. B. Wandern</string>

@@ -107,7 +107,7 @@
     <string name="export_external_storage_option">כ-%1$s אל %2$s</string>
     <string name="export_external_storage_progress_message">מייצא אל %1$s…</string>
     <string name="export_external_storage_success">יוצאו %1$s אל %2$s</string>
-    <string name="export_title">ייצא אל...</string>
+    <string name="export_title">ייצא אל…</string>
     <string name="external_storage_not_available">שטח אחסון חיצוני לא זמין</string>
     <string name="external_storage_not_writable">לא ניתן לכתוב בשטח האחסון החיצוני</string>
     <string name="files_few">%1$d קבצים</string>
@@ -129,7 +129,7 @@
     <string name="generic_ok">אישור</string>
     <string name="generic_paused">מושהה</string>
     <string name="generic_progress_title">אנא המתן…</string>
-    <string name="generic_recording">מקליט...</string>
+    <string name="generic_recording">מקליט…</string>
     <string name="generic_save">שמור</string>
     <string name="generic_success_title">הצלחה</string>
     <string name="generic_tracks">מסלולים</string>
@@ -161,7 +161,7 @@
     <string name="import_no_directory">%1$s לא קיים</string>
     <string name="import_no_file">לא היו קבצים לייבוא. חבר את המכשיר למחשב שלך והוסף ל-%1$s את הקבצים שברצונך לייבא.</string>
     <string name="import_no_file_title">ייבא קבצים</string>
-    <string name="import_progress_message">מייבא מ-%1$s...</string>
+    <string name="import_progress_message">מייבא מ-%1$s…</string>
     <string name="import_selection_option">הכל %1$s מ-%2$s</string>
     <string name="import_selection_title">ייבא מאחסון חיצוני</string>
     <string name="import_success">%1$s יובא מ-%2$s</string>
@@ -293,12 +293,12 @@
     <string name="stats_distance">מרחק</string>
     <string name="stats_total_time">זמן כולל</string>
     <string name="track_name_format">מסלול %1$d</string>
-    <string name="track_record_notification">מקליט את המסלול שלך...</string>
+    <string name="track_record_notification">מקליט את המסלול שלך…</string>
     <string name="track_markers">סמני %1$s</string>
     <string name="track_delete_one_confirm_message">המסלול והסמנים שלו יימחקו לצמיתות מהמכשיר.</string>
     <string name="track_delete_one_confirm_title">למחוק את המסלול?</string>
     <string name="track_delete_multiple_confirm_message">המסלולים שנבחרו והסמנים שלהם יימחקו לצמיתות מהמכשיר.</string>
-    <string name="track_delete_progress_message">מוחק...</string>
+    <string name="track_delete_progress_message">מוחק…</string>
     <string name="track_detail_chart_tab">תרשים</string>
     <string name="track_detail_stats_tab">סטטיסטיקה</string>
     <string name="track_edit_activity_type">סוג פעילות (כגון הליכה)</string>

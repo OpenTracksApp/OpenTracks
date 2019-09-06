@@ -107,7 +107,7 @@
     <string name="export_external_storage_option">vo formáte %1$s do adresára %2$s</string>
     <string name="export_external_storage_progress_message">Prebieha exportovanie do adresára %1$s…</string>
     <string name="export_external_storage_success">Do adresára %2$s bol exportovaný nasledujúci počet trás: %1$s</string>
-    <string name="export_title">Exportovať do...</string>
+    <string name="export_title">Exportovať do…</string>
     <string name="external_storage_not_available">Externé úložisko nie je k dispozícii</string>
     <string name="external_storage_not_writable">Do externého úložiska nie je možné zapisovať údaje</string>
     <string name="files_few">%1$d súbory</string>
@@ -128,8 +128,8 @@
     <string name="generic_no">Nie</string>
     <string name="generic_ok">OK</string>
     <string name="generic_paused">Pozastavené</string>
-    <string name="generic_progress_title">Počkajte...</string>
-    <string name="generic_recording">Zaznamenáva sa...</string>
+    <string name="generic_progress_title">Počkajte…</string>
+    <string name="generic_recording">Zaznamenáva sa…</string>
     <string name="generic_save">Uložiť</string>
     <string name="generic_success_title">Úspech</string>
     <string name="generic_tracks">Trasy</string>
@@ -159,7 +159,7 @@
     <string name="import_no_directory">Adresár %1$s neexistuje</string>
     <string name="import_no_file">Neboli nájdené žiadne súbory na importovanie. Pripojte svoje zariadenie k počítaču a súbory určené na importovanie umiestnite do adresára %1$s.</string>
     <string name="import_no_file_title">Importovať súbory</string>
-    <string name="import_progress_message">Prebieha import z úložiska %1$s...</string>
+    <string name="import_progress_message">Prebieha import z úložiska %1$s…</string>
     <string name="import_selection_option">Všetky súbory vo formáte %1$s z adresára %2$s</string>
     <string name="import_selection_title">Importovať z externého úložiska</string>
     <string name="import_success">Z adresára %2$s bol importovaný nasledujúci počet súborov: %1$s</string>
@@ -176,7 +176,7 @@
     <string name="marker_split_name_format">Rozdeliť %1$d</string>
     <string name="marker_title">%1$d z %2$d</string>
     <string name="marker_detail_statistics_title">Od poslednej rozdeľovacej značky:</string>
-    <string name="marker_edit_marker_type">Typ značky (napr. vodopád...)</string>
+    <string name="marker_edit_marker_type">Typ značky (napr. vodopád…)</string>
     <string name="marker_edit_marker_type_hint">Typ značky</string>
     <string name="marker_list_empty_message">Nemáte žiadne značky</string>
     <string name="menu_aggregated_statistics">Súhrnné štatistiky</string>
@@ -291,12 +291,12 @@
     <string name="stats_distance">Vzdialenosť</string>
     <string name="stats_total_time">Celkový čas</string>
     <string name="track_name_format">Trasa %1$d</string>
-    <string name="track_record_notification">Vaša trasa sa zaznamenáva...</string>
+    <string name="track_record_notification">Vaša trasa sa zaznamenáva…</string>
     <string name="track_markers">Značky pre %1$s</string>
     <string name="track_delete_one_confirm_message">Trasa a jej značky sa natrvalo odstránia zo zariadenia.</string>
     <string name="track_delete_one_confirm_title">Odstrániť trasu?</string>
     <string name="track_delete_multiple_confirm_message">Zvolené trasy a ich značky budú zo zariadenia natrvalo odstránené.</string>
-    <string name="track_delete_progress_message">Prebieha odstraňovanie...</string>
+    <string name="track_delete_progress_message">Prebieha odstraňovanie…</string>
     <string name="track_detail_chart_tab">Graf</string>
     <string name="track_detail_stats_tab">Štatistiky</string>
     <string name="track_edit_activity_type">Typ aktivity (napr. turistika)</string>

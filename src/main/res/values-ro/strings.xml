@@ -105,9 +105,9 @@
     <string name="export_external_storage">Stocarea externă</string>
     <string name="export_external_storage_error">S-a(u) exportat %1$d din %2$s în %3$s</string>
     <string name="export_external_storage_option">ca %1$s în %2$s</string>
-    <string name="export_external_storage_progress_message">Se exportă în %1$s...</string>
+    <string name="export_external_storage_progress_message">Se exportă în %1$s…</string>
     <string name="export_external_storage_success">S-a(u) exportat %1$s în %2$s</string>
-    <string name="export_title">Exportați în...</string>
+    <string name="export_title">Exportați în…</string>
     <string name="external_storage_not_available">Stocarea externă nu este disponibilă</string>
     <string name="external_storage_not_writable">Nu se poate scrie în stocarea externă</string>
     <string name="files_few">%1$d fișiere</string>
@@ -128,8 +128,8 @@
     <string name="generic_no">Nu</string>
     <string name="generic_ok">OK</string>
     <string name="generic_paused">Oprit temporar</string>
-    <string name="generic_progress_title">Așteptați...</string>
-    <string name="generic_recording">Se înregistrează...</string>
+    <string name="generic_progress_title">Așteptați…</string>
+    <string name="generic_recording">Se înregistrează…</string>
     <string name="generic_save">Salvaţi</string>
     <string name="generic_success_title">Aţi reuşit</string>
     <string name="generic_tracks">Trasee</string>
@@ -160,7 +160,7 @@
     <string name="import_no_file">Nu există niciun fișier de importat. Conectați dispozitivul la computer și plasați fișierele
     de importat în %1$s.</string>
     <string name="import_no_file_title">Importați fișierele</string>
-    <string name="import_progress_message">Se importă din %1$s ...</string>
+    <string name="import_progress_message">Se importă din %1$s …</string>
     <string name="import_selection_option">Toate fișierele de format %1$s din %2$s</string>
     <string name="import_selection_title">Importați din stocarea externă</string>
     <string name="import_success">S-a(u) importat %1$s din %2$s</string>
@@ -292,12 +292,12 @@
     <string name="stats_distance">Distanţa</string>
     <string name="stats_total_time">Durata totală</string>
     <string name="track_name_format">Traseul %1$d</string>
-    <string name="track_record_notification">Se înregistrează traseul dvs...</string>
+    <string name="track_record_notification">Se înregistrează traseul dvs…</string>
     <string name="track_markers">Marcatori %1$s</string>
     <string name="track_delete_one_confirm_message">Traseul și marcatorii săi vor fi șterși definitiv de pe dispozitiv.</string>
     <string name="track_delete_one_confirm_title">Ștergeți traseul?</string>
     <string name="track_delete_multiple_confirm_message">Traseele selectate și marcatorii lor vor fi șterși definitiv de pe dispozitiv.</string>
-    <string name="track_delete_progress_message">Se șterge...</string>
+    <string name="track_delete_progress_message">Se șterge…</string>
     <string name="track_detail_chart_tab">Diagramă</string>
     <string name="track_detail_stats_tab">Statistici</string>
     <string name="track_edit_activity_type">Tipul de activitate (de exemplu: drumeții)</string>

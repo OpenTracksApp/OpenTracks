@@ -128,8 +128,8 @@
     <string name="generic_no">Не</string>
     <string name="generic_ok">Потврди</string>
     <string name="generic_paused">Паузирано</string>
-    <string name="generic_progress_title">Сачекајте...</string>
-    <string name="generic_recording">Снимање...</string>
+    <string name="generic_progress_title">Сачекајте…</string>
+    <string name="generic_recording">Снимање…</string>
     <string name="generic_save">Сачувај</string>
     <string name="generic_success_title">Успело je</string>
     <string name="generic_tracks">Праћења</string>
@@ -291,12 +291,12 @@
     <string name="stats_distance">Раздаљина</string>
     <string name="stats_total_time">Укупно време</string>
     <string name="track_name_format">Праћење %1$d</string>
-    <string name="track_record_notification">Снимање праћења...</string>
+    <string name="track_record_notification">Снимање праћења…</string>
     <string name="track_markers">%1$s – означивачи</string>
     <string name="track_delete_one_confirm_message">Праћење и његови означивачи ће бити трајно избрисани са уређаја.</string>
     <string name="track_delete_one_confirm_title">Желите да избришете праћење?</string>
     <string name="track_delete_multiple_confirm_message">Изабрана праћења и њихови означивачи ће бити трајно избрисани са уређаја.</string>
-    <string name="track_delete_progress_message">Брисање...</string>
+    <string name="track_delete_progress_message">Брисање…</string>
     <string name="track_detail_chart_tab">Графикон</string>
     <string name="track_detail_stats_tab">Статистика</string>
     <string name="track_edit_activity_type">Тип активности (нпр. пешачење)</string>

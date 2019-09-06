@@ -105,9 +105,9 @@
     <string name="export_external_storage">وحدة التخزين الخارجية</string>
     <string name="export_external_storage_error">تم تصدير %1$d‏ من %2$s‏ إلى %3$s</string>
     <string name="export_external_storage_option">كـ ‏%1$s‏ إلى‏ %2$s</string>
-    <string name="export_external_storage_progress_message">جارٍ التصدير إلى‏ %1$s‏...</string>
+    <string name="export_external_storage_progress_message">جارٍ التصدير إلى‏ %1$s‏…</string>
     <string name="export_external_storage_success">تم تصدير‏ %1$s‏ إلى‏ %2$s</string>
-    <string name="export_title">تصدير إلى...</string>
+    <string name="export_title">تصدير إلى…</string>
     <string name="external_storage_not_available">لا تتوفر وحدة تخزين خارجية</string>
     <string name="external_storage_not_writable">وحدة التخزين الخارجية غير قابلة للكتابة</string>
     <string name="files_few">%1$d‏ ملفات</string>
@@ -129,7 +129,7 @@
     <string name="generic_ok">موافق</string>
     <string name="generic_paused">متوقف مؤقتًا</string>
     <string name="generic_progress_title">الرجاء الانتظار…</string>
-    <string name="generic_recording">جارٍ التسجيل...</string>
+    <string name="generic_recording">جارٍ التسجيل…</string>
     <string name="generic_save">حفظ</string>
     <string name="generic_success_title">تم بنجاح</string>
     <string name="generic_tracks">المسارات</string>
@@ -291,12 +291,12 @@
     <string name="stats_distance">المسافة</string>
     <string name="stats_total_time">الوقت الإجمالي</string>
     <string name="track_name_format">المسار %1$d</string>
-    <string name="track_record_notification">جارٍ تسجيل مسارك...</string>
+    <string name="track_record_notification">جارٍ تسجيل مسارك…</string>
     <string name="track_markers">%1$s علامات</string>
     <string name="track_delete_one_confirm_message">سيتم حذف المسار والعلامات نهائيًا من الجهاز.</string>
     <string name="track_delete_one_confirm_title">حذف المسار؟</string>
     <string name="track_delete_multiple_confirm_message">سيتم حذف المسارات المحددة وعلاماتها نهائيًا من الجهاز.</string>
-    <string name="track_delete_progress_message">جارٍ الحذف...</string>
+    <string name="track_delete_progress_message">جارٍ الحذف…</string>
     <string name="track_detail_chart_tab">الرسم البياني</string>
     <string name="track_detail_stats_tab">الإحصاءات</string>
     <string name="track_edit_activity_type">نوع النشاط (على سبيل المثال المشي)</string>

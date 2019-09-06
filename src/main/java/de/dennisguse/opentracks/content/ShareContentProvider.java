@@ -122,13 +122,11 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
                 return TrackFileFormat.KML_ONLY_TRACK;
             case URI_KML_WITH_SENSORDATA:
                 return TrackFileFormat.KML_WITH_SENSORDATA;
-            case URI_KMZ_ONLY_TRACK:
-                return TrackFileFormat.KMZ_ONLY_TRACK;
             case URI_KMZ_WITH_SENSORDATA:
                 return TrackFileFormat.KMZ_WITH_SENSORDATA;
             case URI_KMZ_WITH_SENSORDATA_AND_PICTURES:
                 return TrackFileFormat.KMZ_WITH_SENSORDATA_AND_PICTURES;
-            default: //URI_KML_ONLY
+            default: //URI_KMZ_ONLY_TRACK
                 return TrackFileFormat.KMZ_ONLY_TRACK;
         }
     }

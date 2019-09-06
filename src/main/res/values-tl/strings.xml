@@ -107,7 +107,7 @@
     <string name="export_external_storage_option">bilang %1$s patungo sa %2$s</string>
     <string name="export_external_storage_progress_message">Ine-export sa %1$s…</string>
     <string name="export_external_storage_success">In-export ang %1$s patungo sa %2$s</string>
-    <string name="export_title">I-export sa...</string>
+    <string name="export_title">I-export sa…</string>
     <string name="external_storage_not_available">Hindi available ang panlabas na storage</string>
     <string name="external_storage_not_writable">Hindi writable ang panlabas na storage</string>
     <string name="files_few">%1$d (na) file</string>
@@ -129,7 +129,7 @@
     <string name="generic_ok">OK</string>
     <string name="generic_paused">Naka-pause</string>
     <string name="generic_progress_title">Mangyaring maghintay…</string>
-    <string name="generic_recording">Nagre-record...</string>
+    <string name="generic_recording">Nagre-record…</string>
     <string name="generic_save">I-save</string>
     <string name="generic_success_title">Tagumpay</string>
     <string name="generic_tracks">Mga Track</string>
@@ -159,7 +159,7 @@
     <string name="import_no_directory">Hindi umiiral ang %1$s</string>
     <string name="import_no_file">Walang mga file na ii-import. Ikonekta ang iyong device sa iyong computer at ilagay ang mga ii-import na file sa %1$s.</string>
     <string name="import_no_file_title">Mag-import ng mga file</string>
-    <string name="import_progress_message">Ini-import mula sa %1$s...</string>
+    <string name="import_progress_message">Ini-import mula sa %1$s…</string>
     <string name="import_selection_option">Lahat ng %1$s mula sa %2$s</string>
     <string name="import_selection_title">Mag-import mula sa panlabas na storage</string>
     <string name="import_success">In-import ang %1$s mula sa %2$s</string>
@@ -291,12 +291,12 @@
     <string name="stats_distance">Layo</string>
     <string name="stats_total_time">Kabuuang oras</string>
     <string name="track_name_format">Track bilang %1$d</string>
-    <string name="track_record_notification">Nire-rekord ang iyong track...</string>
+    <string name="track_record_notification">Nire-rekord ang iyong track…</string>
     <string name="track_markers">%1$s Mga Marker</string>
     <string name="track_delete_one_confirm_message">Ang track at ang mga marker nito ay permanenteng tatanggalin mula sa device.</string>
     <string name="track_delete_one_confirm_title">Tanggalin ang track?</string>
     <string name="track_delete_multiple_confirm_message">Ang mga napiling track at mga marker nito ay permanenteng matatanggal mula sa device.</string>
-    <string name="track_delete_progress_message">Tinatanggal...</string>
+    <string name="track_delete_progress_message">Tinatanggal…</string>
     <string name="track_detail_chart_tab">Chart</string>
     <string name="track_detail_stats_tab">Mga Istatistika</string>
     <string name="track_edit_activity_type">Uri ng gawain (hal. hiking)</string>

@@ -128,8 +128,8 @@
     <string name="generic_no">Non</string>
     <string name="generic_ok">OK</string>
     <string name="generic_paused">Suspendue</string>
-    <string name="generic_progress_title">Veuillez patienter...</string>
-    <string name="generic_recording">Enregistrement en cours...</string>
+    <string name="generic_progress_title">Veuillez patienter…</string>
+    <string name="generic_recording">Enregistrement en cours…</string>
     <string name="generic_save">Enregistrer</string>
     <string name="generic_success_title">Opération réussie</string>
     <string name="generic_tracks">Parcours</string>
@@ -142,9 +142,9 @@
     <string name="gps_not_found">GPS introuvable sur l\'appareil</string>
     <string name="gps_starting">Lancement du GPS en cours…</string>
     <string name="gps_starting_error">Impossible de lancer le GPS</string>
-    <string name="gps_stopping">Arrêt du GPS en cours...</string>
+    <string name="gps_stopping">Arrêt du GPS en cours…</string>
     <string name="gps_wait_for_better_signal">En attente d\'un signal GPS de meilleure qualité…</string>
-    <string name="gps_wait_for_signal">En attente du signal GPS...</string>
+    <string name="gps_wait_for_signal">En attente du signal GPS…</string>
     <string name="image_application">Application</string>
     <string name="image_arrow">Flèche</string>
     <string name="image_marker">Repère</string>
@@ -291,12 +291,12 @@
     <string name="stats_distance">Distance</string>
     <string name="stats_total_time">Durée totale</string>
     <string name="track_name_format">Piste %1$d</string>
-    <string name="track_record_notification">Enregistrement de la piste...</string>
+    <string name="track_record_notification">Enregistrement de la piste…</string>
     <string name="track_markers">Repères pour le parcours %1$s</string>
     <string name="track_delete_one_confirm_message">Ce parcours et ses repères seront définitivement supprimés de l\'appareil.</string>
     <string name="track_delete_one_confirm_title">Supprimer le parcours?</string>
     <string name="track_delete_multiple_confirm_message">Les parcours sélectionnés et leurs repères respectifs seront définitivement effacés de l\'appareil.</string>
-    <string name="track_delete_progress_message">Suppression en cours...</string>
+    <string name="track_delete_progress_message">Suppression en cours…</string>
     <string name="track_detail_chart_tab">Tableau</string>
     <string name="track_detail_stats_tab">Statistiques</string>
     <string name="track_edit_activity_type">Type d\'activité (p. ex. : randonnée)</string>

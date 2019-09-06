@@ -105,9 +105,9 @@
     <string name="export_external_storage">Emmagatzematge extern</string>
     <string name="export_external_storage_error">S\'han exportat %1$d de %2$s a %3$s.</string>
     <string name="export_external_storage_option">com a %1$s a %2$s</string>
-    <string name="export_external_storage_progress_message">S\'està exportant a %1$s...</string>
+    <string name="export_external_storage_progress_message">S\'està exportant a %1$s…</string>
     <string name="export_external_storage_success">S\'han exportat %1$s a %2$s.</string>
-    <string name="export_title">Exportació a...</string>
+    <string name="export_title">Exportació a…</string>
     <string name="external_storage_not_available">L\'emmagatzematge extern no està disponible.</string>
     <string name="external_storage_not_writable">L\'emmagatzematge extern no es pot modificar.</string>
     <string name="files_few">%1$d fitxers</string>
@@ -128,8 +128,8 @@
     <string name="generic_no">No</string>
     <string name="generic_ok">D\'acord</string>
     <string name="generic_paused">En pausa</string>
-    <string name="generic_progress_title">Espereu...</string>
-    <string name="generic_recording">S\'està enregistrant...</string>
+    <string name="generic_progress_title">Espereu…</string>
+    <string name="generic_recording">S\'està enregistrant…</string>
     <string name="generic_save">Desa</string>
     <string name="generic_success_title">Correcte</string>
     <string name="generic_tracks">Rutes</string>
@@ -162,7 +162,7 @@ es vegi el cel. Torneu-ho a provar més tard.</string>
     <string name="import_no_file">No s\'ha trobat cap fitxer per importar. Connecteu el dispositiu a l\'ordinador i col·loqueu a %1$s
     els fitxers que vulgueu importar.</string>
     <string name="import_no_file_title">Importació de fitxers</string>
-    <string name="import_progress_message">S\'està important des de %1$s...</string>
+    <string name="import_progress_message">S\'està important des de %1$s…</string>
     <string name="import_selection_option">Tots els %1$s de %2$s</string>
     <string name="import_selection_title">Importació de la unitat d\'emmagatzematge extern</string>
     <string name="import_success">S\'han importat %1$s del directori %2$s.</string>
@@ -294,12 +294,12 @@ es vegi el cel. Torneu-ho a provar més tard.</string>
     <string name="stats_distance">Distància</string>
     <string name="stats_total_time">Temps total</string>
     <string name="track_name_format">Ruta %1$d</string>
-    <string name="track_record_notification">S\'està enregistrant la ruta...</string>
+    <string name="track_record_notification">S\'està enregistrant la ruta…</string>
     <string name="track_markers">Marcadors de %1$s</string>
     <string name="track_delete_one_confirm_message">La ruta i els seus marcadors se suprimiran definitivament del dispositiu.</string>
     <string name="track_delete_one_confirm_title">Voleu suprimir la ruta?</string>
     <string name="track_delete_multiple_confirm_message">Les rutes seleccionades i els seus marcadors se suprimiran definitivament del dispositiu.</string>
-    <string name="track_delete_progress_message">S\'està suprimint...</string>
+    <string name="track_delete_progress_message">S\'està suprimint…</string>
     <string name="track_detail_chart_tab">Diagrama</string>
     <string name="track_detail_stats_tab">Estadístiques</string>
     <string name="track_edit_activity_type">Tipus d\'activitat (p. ex. senderisme)</string>

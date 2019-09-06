@@ -128,8 +128,8 @@
     <string name="generic_no">Ne</string>
     <string name="generic_ok">OK</string>
     <string name="generic_paused">Pozastaveno</string>
-    <string name="generic_progress_title">Počkejte prosím...</string>
-    <string name="generic_recording">Nahrávání...</string>
+    <string name="generic_progress_title">Počkejte prosím…</string>
+    <string name="generic_recording">Nahrávání…</string>
     <string name="generic_save">Uložit</string>
     <string name="generic_success_title">Úspěch</string>
     <string name="generic_tracks">Trasy</string>
@@ -176,7 +176,7 @@
     <string name="marker_split_name_format">Dělicí značka %1$d</string>
     <string name="marker_title">%1$d z %2$d</string>
     <string name="marker_detail_statistics_title">Od poslední dělicí značky:</string>
-    <string name="marker_edit_marker_type">Typ značky (například vodopád...)</string>
+    <string name="marker_edit_marker_type">Typ značky (například vodopád…)</string>
     <string name="marker_edit_marker_type_hint">Typ značky</string>
     <string name="marker_list_empty_message">Nemáte žádné značky.</string>
     <string name="menu_aggregated_statistics">Souhrnná statistika</string>
@@ -291,7 +291,7 @@
     <string name="stats_distance">Vzdálenost</string>
     <string name="stats_total_time">Celková doba</string>
     <string name="track_name_format">Trasa %1$d</string>
-    <string name="track_record_notification">Záznam trasy...</string>
+    <string name="track_record_notification">Záznam trasy…</string>
     <string name="track_markers">Značky na trase %1$s</string>
     <string name="track_delete_one_confirm_message">Trasa a související značky budou trvale smazány ze zařízení.</string>
     <string name="track_delete_one_confirm_title">Smazat trasu?</string>
@@ -299,7 +299,7 @@
     <string name="track_delete_progress_message">Mazání…</string>
     <string name="track_detail_chart_tab">Graf</string>
     <string name="track_detail_stats_tab">Statistika</string>
-    <string name="track_edit_activity_type">Typ aktivity (například chůze...)</string>
+    <string name="track_edit_activity_type">Typ aktivity (například chůze…)</string>
     <string name="track_edit_activity_type_hint">Typ aktivity</string>
     <string name="track_edit_new_track_title">Nová trasa</string>
     <string name="track_list_empty_message">Zde zaznamenejte příští výpravu</string>

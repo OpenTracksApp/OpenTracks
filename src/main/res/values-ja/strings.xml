@@ -107,7 +107,7 @@
     <string name="export_external_storage_option">%1$s形式で%2$sへ</string>
     <string name="export_external_storage_progress_message">%1$sにエクスポート中…</string>
     <string name="export_external_storage_success">%1$sを「%2$s」にエクスポートしました</string>
-    <string name="export_title">エクスポート先...</string>
+    <string name="export_title">エクスポート先…</string>
     <string name="external_storage_not_available">外部ストレージをご利用いただけません</string>
     <string name="external_storage_not_writable">外部ストレージは書き込み可能ではありません</string>
     <string name="files_few">%1$d個のファイル</string>
@@ -129,7 +129,7 @@
     <string name="generic_ok">OK</string>
     <string name="generic_paused">一時停止</string>
     <string name="generic_progress_title">お待ちください…</string>
-    <string name="generic_recording">記録中...</string>
+    <string name="generic_recording">記録中…</string>
     <string name="generic_save">保存</string>
     <string name="generic_success_title">完了しました</string>
     <string name="generic_tracks">トラック</string>
@@ -162,7 +162,7 @@
     <string name="import_no_file">インポートするファイルがありませんでした。端末をパソコンに接続して、インポートするファイルを
     「%1$s」に置きます。</string>
     <string name="import_no_file_title">ファイルのインポート</string>
-    <string name="import_progress_message">%1$sからインポート中...</string>
+    <string name="import_progress_message">%1$sからインポート中…</string>
     <string name="import_selection_option">「%2$s」のすべての%1$s</string>
     <string name="import_selection_title">外部ストレージからインポート</string>
     <string name="import_success">「%2$s」から%1$sをインポートしました</string>
@@ -294,12 +294,12 @@
     <string name="stats_distance">距離</string>
     <string name="stats_total_time">合計時間</string>
     <string name="track_name_format">トラック%1$d</string>
-    <string name="track_record_notification">トラックを記録中...</string>
+    <string name="track_record_notification">トラックを記録中…</string>
     <string name="track_markers">%1$sのマーカー</string>
     <string name="track_delete_one_confirm_message">トラックとマーカーが端末から完全に削除されます。</string>
     <string name="track_delete_one_confirm_title">トラックを削除しますか？</string>
     <string name="track_delete_multiple_confirm_message">選択したトラックとマーカーが端末から完全に削除されます。</string>
-    <string name="track_delete_progress_message">削除中...</string>
+    <string name="track_delete_progress_message">削除中…</string>
     <string name="track_detail_chart_tab">グラフ</string>
     <string name="track_detail_stats_tab">統計情報</string>
     <string name="track_edit_activity_type">活動タイプ（例: ハイキング）</string>

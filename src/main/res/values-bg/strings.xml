@@ -128,7 +128,7 @@
     <string name="generic_no">Не</string>
     <string name="generic_ok">OK</string>
     <string name="generic_paused">На пауза</string>
-    <string name="generic_progress_title">Моля, изчакайте...</string>
+    <string name="generic_progress_title">Моля, изчакайте…</string>
     <string name="generic_recording">Записва се…</string>
     <string name="generic_save">Запазване</string>
     <string name="generic_success_title">Успех</string>
@@ -293,7 +293,7 @@
     <string name="stats_distance">Разстояние</string>
     <string name="stats_total_time">Общо време</string>
     <string name="track_name_format">Път %1$d</string>
-    <string name="track_record_notification">Маршрутът ви се записва...</string>
+    <string name="track_record_notification">Маршрутът ви се записва…</string>
     <string name="track_markers">Маркери за %1$s</string>
     <string name="track_delete_one_confirm_message">Маршрутът и маркерите му ще бъдат изтрити за постоянно от устройството.</string>
     <string name="track_delete_one_confirm_title">Да се изтрие ли маршрутът?</string>

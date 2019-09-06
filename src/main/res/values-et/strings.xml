@@ -128,8 +128,8 @@
     <string name="generic_no">Ei</string>
     <string name="generic_ok">OK</string>
     <string name="generic_paused">Peatatud</string>
-    <string name="generic_progress_title">Oodake ...</string>
-    <string name="generic_recording">Salvestamine...</string>
+    <string name="generic_progress_title">Oodake …</string>
+    <string name="generic_recording">Salvestamine…</string>
     <string name="generic_save">Salvesta</string>
     <string name="generic_success_title">Õnnestus</string>
     <string name="generic_tracks">Rajad</string>
@@ -291,12 +291,12 @@
     <string name="stats_distance">Kaugus</string>
     <string name="stats_total_time">Aeg kokku</string>
     <string name="track_name_format">Rada %1$d</string>
-    <string name="track_record_notification">Raja salvestamine...</string>
+    <string name="track_record_notification">Raja salvestamine…</string>
     <string name="track_markers">Raja %1$s markerid</string>
     <string name="track_delete_one_confirm_message">Rada ja selle markerid kustutatakse seadmest jäädavalt.</string>
     <string name="track_delete_one_confirm_title">Kas kustutada rada?</string>
     <string name="track_delete_multiple_confirm_message">Valitud rajad ja nende markerid kustutatakse seadmest jäädavalt.</string>
-    <string name="track_delete_progress_message">Kustutamine...</string>
+    <string name="track_delete_progress_message">Kustutamine…</string>
     <string name="track_detail_chart_tab">Diagramm</string>
     <string name="track_detail_stats_tab">Statistika</string>
     <string name="track_edit_activity_type">Tegevus (nt matkamine)</string>

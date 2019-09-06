@@ -291,12 +291,12 @@
     <string name="stats_distance">दूरी</string>
     <string name="stats_total_time">कुल समय</string>
     <string name="track_name_format">ट्रैक %1$d</string>
-    <string name="track_record_notification">आपका ट्रैक रिकॉर्ड कर रहा है...</string>
+    <string name="track_record_notification">आपका ट्रैक रिकॉर्ड कर रहा है…</string>
     <string name="track_markers">%1$s मार्कर</string>
     <string name="track_delete_one_confirm_message">ट्रैक और इसके मार्कर को उपकरण से स्थायी रूप से हटा दिया जाएगा.</string>
     <string name="track_delete_one_confirm_title">ट्रैक हटाएं?</string>
     <string name="track_delete_multiple_confirm_message">चयनित ट्रैक और उनके मार्कर को उपकरण से स्थायी रूप से हटा दिया जाएगा.</string>
-    <string name="track_delete_progress_message">हटा रहा है...</string>
+    <string name="track_delete_progress_message">हटा रहा है…</string>
     <string name="track_detail_chart_tab">चार्ट</string>
     <string name="track_detail_stats_tab">आंकड़े</string>
     <string name="track_edit_activity_type">गतिविधि प्रकार (उदा. हाइकिंग)</string>

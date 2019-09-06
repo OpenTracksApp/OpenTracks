@@ -128,8 +128,8 @@
     <string name="generic_no">Ez</string>
     <string name="generic_ok">Ados</string>
     <string name="generic_paused">Etenda</string>
-    <string name="generic_progress_title">Itxaron, mesedez...</string>
-    <string name="generic_recording">Grabatzen...</string>
+    <string name="generic_progress_title">Itxaron, mesedez…</string>
+    <string name="generic_recording">Grabatzen…</string>
     <string name="generic_save">Gorde</string>
     <string name="generic_success_title">Behar bezala burutu da</string>
     <string name="generic_tracks">Ibilbideak</string>
@@ -291,7 +291,7 @@
     <string name="stats_distance">Distantzia</string>
     <string name="stats_total_time">Denbora, guztira</string>
     <string name="track_name_format">%1$d. bidea</string>
-    <string name="track_record_notification">Ibilbidea grabatzen...</string>
+    <string name="track_record_notification">Ibilbidea grabatzen…</string>
     <string name="track_markers">%1$s ibilbideko markatzaileak</string>
     <string name="track_delete_one_confirm_message">Bidea eta bideko markatzaileak behin betiko ezabatuko dira gailutik.</string>
     <string name="track_delete_one_confirm_title">Ibilbidea ezabatu nahi duzu?</string>

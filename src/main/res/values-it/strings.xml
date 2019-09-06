@@ -107,7 +107,7 @@
     <string name="export_external_storage_option">come %1$s su %2$s</string>
     <string name="export_external_storage_progress_message">Esportazioni su %1$s…</string>
     <string name="export_external_storage_success">Esportati %1$s in %2$s.</string>
-    <string name="export_title">Esporta in...</string>
+    <string name="export_title">Esporta in…</string>
     <string name="external_storage_not_available">Dispositivo di memorizzazione esterno non disponibile</string>
     <string name="external_storage_not_writable">Dispositivo di memorizzazione esterno non scrivibile</string>
     <string name="files_few">%1$d file</string>
@@ -129,7 +129,7 @@
     <string name="generic_ok">OK</string>
     <string name="generic_paused">In pausa</string>
     <string name="generic_progress_title">Attendere…</string>
-    <string name="generic_recording">Registrazione...</string>
+    <string name="generic_recording">Registrazione…</string>
     <string name="generic_save">Salva</string>
     <string name="generic_success_title">Riuscito</string>
     <string name="generic_tracks">Percorsi</string>
@@ -295,12 +295,12 @@
     <string name="stats_distance">Distanza</string>
     <string name="stats_total_time">Tempo totale</string>
     <string name="track_name_format">Percorso %1$d</string>
-    <string name="track_record_notification">Registrazione del percorso...</string>
+    <string name="track_record_notification">Registrazione del percorso…</string>
     <string name="track_markers">Indicatori %1$s</string>
     <string name="track_delete_one_confirm_message">Questo percorso e i suoi marcatori verranno eliminati definitivamente dal dispositivo.</string>
     <string name="track_delete_one_confirm_title">Eliminare percorso?</string>
     <string name="track_delete_multiple_confirm_message">I percorsi selezionati e i loro marcatori verranno eliminati definitivamente dal dispositivo.</string>
-    <string name="track_delete_progress_message">Eliminazione in corso...</string>
+    <string name="track_delete_progress_message">Eliminazione in corso…</string>
     <string name="track_detail_chart_tab">Grafico</string>
     <string name="track_detail_stats_tab">Statistiche</string>
     <string name="track_edit_activity_type">Tipo di attività (ad es. escursionismo)</string>

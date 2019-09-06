@@ -105,9 +105,9 @@
     <string name="export_external_storage">外部儲存空間</string>
     <string name="export_external_storage_error">已將 %2$s 中的 %1$d 個匯出至 %3$s</string>
     <string name="export_external_storage_option">以 %1$s 格式匯出至 %2$s</string>
-    <string name="export_external_storage_progress_message">正在匯出至 %1$s...</string>
+    <string name="export_external_storage_progress_message">正在匯出至 %1$s…</string>
     <string name="export_external_storage_success">已將 %1$s 匯出至 %2$s</string>
-    <string name="export_title">匯出至...</string>
+    <string name="export_title">匯出至…</string>
     <string name="external_storage_not_available">無法使用外部儲存空間</string>
     <string name="external_storage_not_writable">無法寫入外部儲存空間</string>
     <string name="files_few">%1$d 個檔案</string>
@@ -299,7 +299,7 @@
     <string name="track_delete_one_confirm_message">系統將永久刪除裝置上儲存的這個足跡與其中的標記。</string>
     <string name="track_delete_one_confirm_title">確定要刪除足跡？</string>
     <string name="track_delete_multiple_confirm_message">系統將永久刪除您在裝置上所選的足跡與其中的標記。</string>
-    <string name="track_delete_progress_message">刪除中...</string>
+    <string name="track_delete_progress_message">刪除中…</string>
     <string name="track_detail_chart_tab">圖表</string>
     <string name="track_detail_stats_tab">統計資料</string>
     <string name="track_edit_activity_type">活動類型 (例如健行)</string>

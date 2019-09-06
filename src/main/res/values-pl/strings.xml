@@ -129,7 +129,7 @@
     <string name="generic_ok">OK</string>
     <string name="generic_paused">Wstrzymano</string>
     <string name="generic_progress_title">Czekaj…</string>
-    <string name="generic_recording">Rejestrowanie...</string>
+    <string name="generic_recording">Rejestrowanie…</string>
     <string name="generic_save">Zapisz</string>
     <string name="generic_success_title">Udało się</string>
     <string name="generic_tracks">Trasy</string>
@@ -295,7 +295,7 @@
     <string name="stats_distance">Odległość</string>
     <string name="stats_total_time">Łączny czas</string>
     <string name="track_name_format">Trasa %1$d</string>
-    <string name="track_record_notification">Rejestrowanie Twojej trasy...</string>
+    <string name="track_record_notification">Rejestrowanie Twojej trasy…</string>
     <string name="track_markers">Znaczniki: %1$s</string>
     <string name="track_delete_one_confirm_message">Trasa wraz ze znacznikami zostanie trwale usunięta z urządzenia.</string>
     <string name="track_delete_one_confirm_title">Usunąć trasę?</string>

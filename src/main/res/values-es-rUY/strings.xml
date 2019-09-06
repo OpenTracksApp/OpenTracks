@@ -128,8 +128,8 @@
     <string name="generic_no">No</string>
     <string name="generic_ok">Aceptar</string>
     <string name="generic_paused">En pausa</string>
-    <string name="generic_progress_title">Espera...</string>
-    <string name="generic_recording">Grabando...</string>
+    <string name="generic_progress_title">Espera…</string>
+    <string name="generic_recording">Grabando…</string>
     <string name="generic_save">Guardar</string>
     <string name="generic_success_title">Éxito</string>
     <string name="generic_tracks">Rutas</string>
@@ -159,7 +159,7 @@
     <string name="import_no_directory">%1$s no existe.</string>
     <string name="import_no_file">No hay archivos para importar. Conecta la unidad a la computadora y pasa los archivos que deseas importar a %1$s.</string>
     <string name="import_no_file_title">Importar archivos</string>
-    <string name="import_progress_message">Importando desde %1$s...</string>
+    <string name="import_progress_message">Importando desde %1$s…</string>
     <string name="import_selection_option">Todos los archivos %1$s de %2$s</string>
     <string name="import_selection_title">Importar desde la unidad de almacenamiento externa</string>
     <string name="import_success">Se importaron %1$s desde %2$s.</string>
@@ -291,12 +291,12 @@
     <string name="stats_distance">Distancia</string>
     <string name="stats_total_time">Tiempo total</string>
     <string name="track_name_format">Recorrido %1$d</string>
-    <string name="track_record_notification">Grabando tu recorrido...</string>
+    <string name="track_record_notification">Grabando tu recorrido…</string>
     <string name="track_markers">Marcadores de %1$s</string>
     <string name="track_delete_one_confirm_message">El recorrido y sus marcadores se eliminarán del dispositivo permanentemente.</string>
     <string name="track_delete_one_confirm_title">¿Eliminar ruta?</string>
     <string name="track_delete_multiple_confirm_message">Los recorridos seleccionados y sus respectivos marcadores se eliminarán del dispositivo permanentemente.</string>
-    <string name="track_delete_progress_message">Eliminando...</string>
+    <string name="track_delete_progress_message">Eliminando…</string>
     <string name="track_detail_chart_tab">Gráfico</string>
     <string name="track_detail_stats_tab">Estadísticas</string>
     <string name="track_edit_activity_type">Tipo de actividad (p. ej., senderismo)</string>

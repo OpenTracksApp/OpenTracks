@@ -105,9 +105,9 @@
     <string name="export_external_storage">Eksternt lager</string>
     <string name="export_external_storage_error">%1$d af %2$s blev eksporteret til %3$s</string>
     <string name="export_external_storage_option">som %1$s til %2$s</string>
-    <string name="export_external_storage_progress_message">Eksporterer til %1$s...</string>
+    <string name="export_external_storage_progress_message">Eksporterer til %1$s…</string>
     <string name="export_external_storage_success">%1$s blev eksporteret til %2$s</string>
-    <string name="export_title">Eksportér til...</string>
+    <string name="export_title">Eksportér til…</string>
     <string name="external_storage_not_available">Det eksterne lager er ikke tilgængeligt</string>
     <string name="external_storage_not_writable">Det eksterne lager er ikke skrivbart</string>
     <string name="files_few">%1$d filer</string>
@@ -128,8 +128,8 @@
     <string name="generic_no">Nej</string>
     <string name="generic_ok">OK</string>
     <string name="generic_paused">Midlertidigt afbrudt</string>
-    <string name="generic_progress_title">Vent...</string>
-    <string name="generic_recording">Registrerer...</string>
+    <string name="generic_progress_title">Vent…</string>
+    <string name="generic_recording">Registrerer…</string>
     <string name="generic_save">Gem</string>
     <string name="generic_success_title">Gennemført</string>
     <string name="generic_tracks">Ruter</string>
@@ -162,7 +162,7 @@
     <string name="import_no_file">Der var ingen filer at importere. Slut din enhed til din computer, og placer filer, der skal
     importeres, i %1$s.</string>
     <string name="import_no_file_title">Importér filer</string>
-    <string name="import_progress_message">Importerer fra %1$s...</string>
+    <string name="import_progress_message">Importerer fra %1$s…</string>
     <string name="import_selection_option">Alle %1$s fra %2$s</string>
     <string name="import_selection_title">Importér fra eksternt lager</string>
     <string name="import_success">%1$s er importeret fra %2$s</string>
@@ -295,12 +295,12 @@
     <string name="stats_distance">Afstand</string>
     <string name="stats_total_time">Samlet tid</string>
     <string name="track_name_format">Rute %1$d</string>
-    <string name="track_record_notification">Registrerer din rute...</string>
+    <string name="track_record_notification">Registrerer din rute…</string>
     <string name="track_markers">Markører på %1$s</string>
     <string name="track_delete_one_confirm_message">Ruten og de tilhørende markører slettes permanent fra enheden.</string>
     <string name="track_delete_one_confirm_title">Vil du slette ruten?</string>
     <string name="track_delete_multiple_confirm_message">De valgte ruter og tilhørende markører slettes permanent fra enheden.</string>
-    <string name="track_delete_progress_message">Sletter...</string>
+    <string name="track_delete_progress_message">Sletter…</string>
     <string name="track_detail_chart_tab">Diagram</string>
     <string name="track_detail_stats_tab">Statistik</string>
     <string name="track_edit_activity_type">Aktivitetstype (f.eks. vandretur)</string>

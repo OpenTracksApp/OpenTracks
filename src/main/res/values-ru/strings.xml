@@ -128,8 +128,8 @@
     <string name="generic_no">Нет</string>
     <string name="generic_ok">ОК</string>
     <string name="generic_paused">Пауза</string>
-    <string name="generic_progress_title">Подождите...</string>
-    <string name="generic_recording">Запись...</string>
+    <string name="generic_progress_title">Подождите…</string>
+    <string name="generic_recording">Запись…</string>
     <string name="generic_save">Сохранить</string>
     <string name="generic_success_title">Готово</string>
     <string name="generic_tracks">Треки</string>
@@ -216,7 +216,7 @@
     <string name="sensor_state_cadence">Вращение педалей</string>
     <string name="sensor_state_cadence_value">%1$d об/мин</string>
     <string name="sensor_state_connected">Подключено</string>
-    <string name="sensor_state_connecting">Подключение...</string>
+    <string name="sensor_state_connecting">Подключение…</string>
     <string name="sensor_state_disconnected">Отключено</string>
     <string name="sensor_state_heart_rate">Пульс</string>
     <string name="sensor_state_heart_rate_value">%1$d уд/мин</string>
@@ -291,7 +291,7 @@
     <string name="stats_distance">Расстояние</string>
     <string name="stats_total_time">Общее время</string>
     <string name="track_name_format">Трек %1$d</string>
-    <string name="track_record_notification">Запись трека...</string>
+    <string name="track_record_notification">Запись трека…</string>
     <string name="track_markers">%1$s – маркеры</string>
     <string name="track_delete_one_confirm_message">Трек и связанные с ним маркеры будут удалены без возможности восстановления.</string>
     <string name="track_delete_one_confirm_title">Удалить трек?</string>

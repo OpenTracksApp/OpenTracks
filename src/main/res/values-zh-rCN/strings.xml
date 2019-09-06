@@ -129,7 +129,7 @@
     <string name="generic_ok">确定</string>
     <string name="generic_paused">已暂停</string>
     <string name="generic_progress_title">请稍候…</string>
-    <string name="generic_recording">正在记录...</string>
+    <string name="generic_recording">正在记录…</string>
     <string name="generic_save">保存</string>
     <string name="generic_success_title">成功</string>
     <string name="generic_tracks">路线</string>
@@ -162,7 +162,7 @@
     <string name="import_no_file">没有可以导入的文件。请将设备连接到计算机，然后将要导入的文件
     放入 %1$s。</string>
     <string name="import_no_file_title">导入文件</string>
-    <string name="import_progress_message">正在从 %1$s 导入...</string>
+    <string name="import_progress_message">正在从 %1$s 导入…</string>
     <string name="import_selection_option">%2$s 中的所有 %1$s</string>
     <string name="import_selection_title">从外部存储设备导入</string>
     <string name="import_success">已从%2$s导入%1$s</string>
@@ -295,7 +295,7 @@
     <string name="stats_distance">距离</string>
     <string name="stats_total_time">总时间</string>
     <string name="track_name_format">路线 %1$d</string>
-    <string name="track_record_notification">正在记录路线...</string>
+    <string name="track_record_notification">正在记录路线…</string>
     <string name="track_markers">%1$s标记</string>
     <string name="track_delete_one_confirm_message">系统将从设备中永久删除路线及其标记。</string>
     <string name="track_delete_one_confirm_title">删除路线？</string>

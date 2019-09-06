@@ -105,9 +105,9 @@
     <string name="export_external_storage">Penyimpanan eksternal</string>
     <string name="export_external_storage_error">%1$d dari %2$s diekspor ke %3$s.</string>
     <string name="export_external_storage_option">sebagai %1$s ke %2$s</string>
-    <string name="export_external_storage_progress_message">Mengekspor ke %1$s...</string>
+    <string name="export_external_storage_progress_message">Mengekspor ke %1$s…</string>
     <string name="export_external_storage_success">%1$s dari %2$s terekspor.</string>
-    <string name="export_title">Ekspor ke...</string>
+    <string name="export_title">Ekspor ke…</string>
     <string name="external_storage_not_available">Penyimpanan eksternal tidak tersedia.</string>
     <string name="external_storage_not_writable">Penyimpanan eksternal tidak dapat ditulis.</string>
     <string name="files_few">%1$d file</string>
@@ -129,7 +129,7 @@
     <string name="generic_ok">Oke</string>
     <string name="generic_paused">Dijeda</string>
     <string name="generic_progress_title">Harap tunggu…</string>
-    <string name="generic_recording">Merekam...</string>
+    <string name="generic_recording">Merekam…</string>
     <string name="generic_save">Simpan</string>
     <string name="generic_success_title">Berhasil</string>
     <string name="generic_tracks">Lintasan</string>
@@ -293,12 +293,12 @@
     <string name="stats_distance">Jarak</string>
     <string name="stats_total_time">Waktu total</string>
     <string name="track_name_format">Lintasan %1$d</string>
-    <string name="track_record_notification">Merekam lintasan Anda...</string>
+    <string name="track_record_notification">Merekam lintasan Anda…</string>
     <string name="track_markers">Penanda %1$s</string>
     <string name="track_delete_one_confirm_message">Jalur dan penandanya akan dihapus secara permanen dari perangkat.</string>
     <string name="track_delete_one_confirm_title">Hapus lintasan?</string>
     <string name="track_delete_multiple_confirm_message">Jalur dipilih dan penandanya akan dihapus secara permanen dari perangkat.</string>
-    <string name="track_delete_progress_message">Menghapus...</string>
+    <string name="track_delete_progress_message">Menghapus…</string>
     <string name="track_detail_chart_tab">Bagan</string>
     <string name="track_detail_stats_tab">Statistik</string>
     <string name="track_edit_activity_type">Jenis aktivitas (misal: mendaki gunung)</string>

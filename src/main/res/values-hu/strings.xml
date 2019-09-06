@@ -105,9 +105,9 @@
     <string name="export_external_storage">Külső tárhely</string>
     <string name="export_external_storage_error">%1$d/%2$s exportálva ide: %3$s</string>
     <string name="export_external_storage_option">%1$s formátumban ide: %2$s</string>
-    <string name="export_external_storage_progress_message">Exportálás ide: %1$s...</string>
+    <string name="export_external_storage_progress_message">Exportálás ide: %1$s…</string>
     <string name="export_external_storage_success">%1$s exportálva ide: %2$s</string>
-    <string name="export_title">Exportálás ide:...</string>
+    <string name="export_title">Exportálás ide:…</string>
     <string name="external_storage_not_available">Külső tároló nem érhető el</string>
     <string name="external_storage_not_writable">Külső tároló nem írható</string>
     <string name="files_few">%1$d fájl</string>
@@ -128,7 +128,7 @@
     <string name="generic_no">Nem</string>
     <string name="generic_ok">OK</string>
     <string name="generic_paused">Szüneteltetett</string>
-    <string name="generic_progress_title">Kis türelmet...</string>
+    <string name="generic_progress_title">Kis türelmet…</string>
     <string name="generic_recording">Rögzítés</string>
     <string name="generic_save">Mentés</string>
     <string name="generic_success_title">Sikerült</string>
@@ -292,12 +292,12 @@
     <string name="stats_distance">Távolság</string>
     <string name="stats_total_time">Összes idő</string>
     <string name="track_name_format">%1$d. pálya</string>
-    <string name="track_record_notification">Útvonal rögzítése...</string>
+    <string name="track_record_notification">Útvonal rögzítése…</string>
     <string name="track_markers">%1$s jelölői</string>
     <string name="track_delete_one_confirm_message">Az útvonal és a jelölők véglegesen törlődnek az eszközről.</string>
     <string name="track_delete_one_confirm_title">Törli az útvonalat?</string>
     <string name="track_delete_multiple_confirm_message">Az kiválasztott útvonalak és a jelölőik véglegesen törlődnek az eszközről.</string>
-    <string name="track_delete_progress_message">Törlés folyamatban...</string>
+    <string name="track_delete_progress_message">Törlés folyamatban…</string>
     <string name="track_detail_chart_tab">Grafikon</string>
     <string name="track_detail_stats_tab">Statisztikák</string>
     <string name="track_edit_activity_type">Tevékenység típusa (pl. túrázás)</string>

@@ -129,7 +129,7 @@
     <string name="generic_ok">OK</string>
     <string name="generic_paused">Keskeytetty</string>
     <string name="generic_progress_title">Odota…</string>
-    <string name="generic_recording">Tallennetaan...</string>
+    <string name="generic_recording">Tallennetaan…</string>
     <string name="generic_save">Tallenna</string>
     <string name="generic_success_title">Onnistui</string>
     <string name="generic_tracks">Reitit</string>
@@ -295,7 +295,7 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="stats_distance">Etäisyys</string>
     <string name="stats_total_time">Kokonaisaika</string>
     <string name="track_name_format">Reitti %1$d</string>
-    <string name="track_record_notification">Reittiä tallennetaan...</string>
+    <string name="track_record_notification">Reittiä tallennetaan…</string>
     <string name="track_markers">Reitin %1$s merkit</string>
     <string name="track_delete_one_confirm_message">Reitti ja sen merkitsimet poistetaan laitteesta pysyvästi.</string>
     <string name="track_delete_one_confirm_title">Poistetaanko reitti?</string>

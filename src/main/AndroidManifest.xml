@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="de.dennisguse.opentracks"
     android:installLocation="auto"
     android:versionCode="2991"
@@ -75,8 +74,7 @@ limitations under the License.
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_logo"
         android:label="@string/app_name"
-        android:theme="@style/ThemeCustom"
-        tools:replace="android:label">
+        android:theme="@style/ThemeCustom">
         <!-- Activities -->
         <activity android:name=".AboutActivity" />
         <activity

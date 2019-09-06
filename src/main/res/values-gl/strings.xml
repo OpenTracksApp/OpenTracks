@@ -128,8 +128,8 @@
     <string name="generic_no">Non</string>
     <string name="generic_ok">Aceptar</string>
     <string name="generic_paused">En pausa</string>
-    <string name="generic_progress_title">Agarda...</string>
-    <string name="generic_recording">Gravando...</string>
+    <string name="generic_progress_title">Agarda…</string>
+    <string name="generic_recording">Gravando…</string>
     <string name="generic_save">Gardar</string>
     <string name="generic_success_title">Correcto</string>
     <string name="generic_tracks">Traxectos</string>
@@ -291,12 +291,12 @@
     <string name="stats_distance">Distancia</string>
     <string name="stats_total_time">Tempo total</string>
     <string name="track_name_format">Pista %1$d</string>
-    <string name="track_record_notification">Gravando o teu traxecto...</string>
+    <string name="track_record_notification">Gravando o teu traxecto…</string>
     <string name="track_markers">Marcadores de %1$s</string>
     <string name="track_delete_one_confirm_message">A ruta e os seus marcadores eliminaranse permanentemente do dispositivo.</string>
     <string name="track_delete_one_confirm_title">Eliminar o traxecto?</string>
     <string name="track_delete_multiple_confirm_message">As rutas seleccionadas e os seus marcadores eliminaranse permanentemente do dispositivo.</string>
-    <string name="track_delete_progress_message">Eliminando...</string>
+    <string name="track_delete_progress_message">Eliminando…</string>
     <string name="track_detail_chart_tab">Táboa</string>
     <string name="track_detail_stats_tab">Estatísticas</string>
     <string name="track_edit_activity_type">Tipo de actividade (por exemplo, sendeirismo)</string>

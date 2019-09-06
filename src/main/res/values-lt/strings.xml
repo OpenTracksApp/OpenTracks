@@ -105,9 +105,9 @@
     <string name="export_external_storage">Išorinė saugykla</string>
     <string name="export_external_storage_error">Eksportuota: %1$d iš %2$s į %3$s.</string>
     <string name="export_external_storage_option">kaip %1$s į %2$s</string>
-    <string name="export_external_storage_progress_message">Eksportuojama į %1$s...</string>
+    <string name="export_external_storage_progress_message">Eksportuojama į %1$s…</string>
     <string name="export_external_storage_success">Eksportuota: %1$s į %2$s.</string>
-    <string name="export_title">Eksportuoti į...</string>
+    <string name="export_title">Eksportuoti į…</string>
     <string name="external_storage_not_available">Išorinė saugykla nepasiekiama</string>
     <string name="external_storage_not_writable">Išorinė saugykla neįrašoma</string>
     <string name="files_few">%1$d failai</string>
@@ -128,8 +128,8 @@
     <string name="generic_no">Ne</string>
     <string name="generic_ok">Gerai</string>
     <string name="generic_paused">Pristabdyta</string>
-    <string name="generic_progress_title">Palaukite...</string>
-    <string name="generic_recording">Įrašoma...</string>
+    <string name="generic_progress_title">Palaukite…</string>
+    <string name="generic_recording">Įrašoma…</string>
     <string name="generic_save">Išsaugoti</string>
     <string name="generic_success_title">Pavyko</string>
     <string name="generic_tracks">Maršrutai</string>
@@ -162,7 +162,7 @@
     <string name="import_no_file">Nebuvo importuoti skirtų failų. Prijunkite savo įrenginį prie kompiuterio ir įdėkite failus
     importuoti į %1$s.</string>
     <string name="import_no_file_title">Importuoti failus</string>
-    <string name="import_progress_message">Importuojama iš %1$s...</string>
+    <string name="import_progress_message">Importuojama iš %1$s…</string>
     <string name="import_selection_option">Visi %1$s iš %2$s</string>
     <string name="import_selection_title">Importuoti iš išorinės saugyklos</string>
     <string name="import_success">Importuota %1$s iš %2$s</string>
@@ -295,12 +295,12 @@
     <string name="stats_distance">Atstumas</string>
     <string name="stats_total_time">Bendras laikas</string>
     <string name="track_name_format">Maršrutas %1$d</string>
-    <string name="track_record_notification">Jūsų maršrutas įrašomas...</string>
+    <string name="track_record_notification">Jūsų maršrutas įrašomas…</string>
     <string name="track_markers">„%1$s“ žymekliai</string>
     <string name="track_delete_one_confirm_message">Maršrutas ir jo žymekliai bus visam laikui ištrinti iš įrenginio.</string>
     <string name="track_delete_one_confirm_title">Ištrinti maršrutą?</string>
     <string name="track_delete_multiple_confirm_message">Pasirinkti maršrutai ir jų žymekliai bus visam laikui ištrinti iš įrenginio.</string>
-    <string name="track_delete_progress_message">Trinama...</string>
+    <string name="track_delete_progress_message">Trinama…</string>
     <string name="track_detail_chart_tab">Diagrama</string>
     <string name="track_detail_stats_tab">Statistika</string>
     <string name="track_edit_activity_type">Veiklos tipas (pvz., iškylavimas)</string>

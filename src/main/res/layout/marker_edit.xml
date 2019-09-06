@@ -41,7 +41,8 @@ limitations under the License.
                     style="@style/EditNameMarker"
                     android:drawableLeft="@drawable/ic_marker_yellow_pushpin"
                     android:hint="@string/generic_name"
-                    android:imeOptions="actionDone" />
+                    android:imeOptions="actionDone"
+                    android:importantForAutofill="no" />
             </LinearLayout>
 
             <LinearLayout
@@ -55,7 +56,8 @@ limitations under the License.
                     style="@style/EditNameMarker"
                     android:drawableLeft="@drawable/ic_marker_blue_pushpin"
                     android:hint="@string/generic_name"
-                    android:imeOptions="actionNext" />
+                    android:imeOptions="actionNext"
+                    android:importantForAutofill="no" />
 
                 <TextView
                     style="@style/EditLabel.WithPaddingTop"
@@ -76,7 +78,8 @@ limitations under the License.
                     android:id="@+id/marker_edit_waypoint_description"
                     style="@style/EditDescription"
                     android:hint="@string/generic_description"
-                    android:imeOptions="actionDone" />
+                    android:imeOptions="actionDone"
+                    android:importantForAutofill="no" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

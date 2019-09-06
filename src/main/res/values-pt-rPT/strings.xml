@@ -105,9 +105,9 @@
     <string name="export_external_storage">Armazenamento externo</string>
     <string name="export_external_storage_error">%1$d de %2$s exportados para %3$s</string>
     <string name="export_external_storage_option">como %1$s para %2$s</string>
-    <string name="export_external_storage_progress_message">A exportar para %1$s ...</string>
+    <string name="export_external_storage_progress_message">A exportar para %1$s …</string>
     <string name="export_external_storage_success">%1$s exportados para %2$s</string>
-    <string name="export_title">Exportar para...</string>
+    <string name="export_title">Exportar para…</string>
     <string name="external_storage_not_available">Armazenamento externo indisponível</string>
     <string name="external_storage_not_writable">Armazenamento externo não regravável</string>
     <string name="files_few">%1$d ficheiros</string>
@@ -128,8 +128,8 @@
     <string name="generic_no">Não</string>
     <string name="generic_ok">OK</string>
     <string name="generic_paused">Parado</string>
-    <string name="generic_progress_title">Aguarde...</string>
-    <string name="generic_recording">A gravar...</string>
+    <string name="generic_progress_title">Aguarde…</string>
+    <string name="generic_recording">A gravar…</string>
     <string name="generic_save">Guardar</string>
     <string name="generic_success_title">Êxito</string>
     <string name="generic_tracks">Percursos</string>
@@ -160,7 +160,7 @@
     <string name="import_no_directory">%1$s não existe</string>
     <string name="import_no_file">Não foi encontrado nenhum ficheiro para importar. Ligue o seu dispositivo ao computador e coloque os ficheiros para importar em %1$s .</string>
     <string name="import_no_file_title">Importar ficheiros</string>
-    <string name="import_progress_message">A importar de %1$s...</string>
+    <string name="import_progress_message">A importar de %1$s…</string>
     <string name="import_selection_option">Todos os %1$s de %2$s</string>
     <string name="import_selection_title">Importar de um armazenamento externo</string>
     <string name="import_success">%1$s importados de %2$s</string>
@@ -292,12 +292,12 @@
     <string name="stats_distance">Distância</string>
     <string name="stats_total_time">Tempo total</string>
     <string name="track_name_format">Trajeto %1$d</string>
-    <string name="track_record_notification">A gravar o seu percurso...</string>
+    <string name="track_record_notification">A gravar o seu percurso…</string>
     <string name="track_markers">Marcadores %1$s</string>
     <string name="track_delete_one_confirm_message">O percurso e respetivos marcadores são eliminados permanentemente do dispositivo.</string>
     <string name="track_delete_one_confirm_title">Eliminar percurso?</string>
     <string name="track_delete_multiple_confirm_message">Os percursos selecionados e respetivos marcadores serão eliminados permanentemente do dispositivo.</string>
-    <string name="track_delete_progress_message">A eliminar...</string>
+    <string name="track_delete_progress_message">A eliminar…</string>
     <string name="track_detail_chart_tab">Carta</string>
     <string name="track_detail_stats_tab">Estatísticas</string>
     <string name="track_edit_activity_type">Tipo de atividade (por exemplo, caminhada)</string>

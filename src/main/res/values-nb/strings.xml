@@ -129,7 +129,7 @@
     <string name="generic_ok">OK</string>
     <string name="generic_paused">Midlertidig stoppet</string>
     <string name="generic_progress_title">Vent litt …</string>
-    <string name="generic_recording">Tar opp ...</string>
+    <string name="generic_recording">Tar opp …</string>
     <string name="generic_save">Lagre</string>
     <string name="generic_success_title">Vellykket</string>
     <string name="generic_tracks">Spor</string>

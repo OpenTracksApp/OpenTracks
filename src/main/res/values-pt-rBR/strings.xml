@@ -129,7 +129,7 @@
     <string name="generic_ok">OK</string>
     <string name="generic_paused">Pausada</string>
     <string name="generic_progress_title">Aguarde…</string>
-    <string name="generic_recording">Gravando...</string>
+    <string name="generic_recording">Gravando…</string>
     <string name="generic_save">Salvar</string>
     <string name="generic_success_title">Sucesso</string>
     <string name="generic_tracks">Rotas</string>
@@ -295,7 +295,7 @@
     <string name="stats_distance">Distância</string>
     <string name="stats_total_time">Tempo total</string>
     <string name="track_name_format">Trilha %1$d</string>
-    <string name="track_record_notification">Gravando sua trilha...</string>
+    <string name="track_record_notification">Gravando sua trilha…</string>
     <string name="track_markers">Marcadores de %1$s</string>
     <string name="track_delete_one_confirm_message">A trilha e seus marcadores serão excluídos permanentemente do dispositivo.</string>
     <string name="track_delete_one_confirm_title">Excluir rota?</string>

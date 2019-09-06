@@ -34,7 +34,8 @@ limitations under the License.
                 android:id="@+id/track_edit_name"
                 style="@style/EditNameTrack"
                 android:hint="@string/generic_name"
-                android:imeOptions="actionNext" />
+                android:imeOptions="actionNext"
+                android:importantForAutofill="no" />
 
             <TextView
                 style="@style/EditLabel.WithPaddingTop"
@@ -68,7 +69,8 @@ limitations under the License.
                 android:id="@+id/track_edit_description"
                 style="@style/EditDescription"
                 android:hint="@string/generic_description"
-                android:imeOptions="actionDone" />
+                android:imeOptions="actionDone"
+                android:importantForAutofill="no" />
         </LinearLayout>
     </ScrollView>
 

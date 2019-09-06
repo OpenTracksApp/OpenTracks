@@ -107,7 +107,7 @@
     <string name="export_external_storage_option">kā %1$s uz %2$s</string>
     <string name="export_external_storage_progress_message">Notiek eksportēšana uz %1$s…</string>
     <string name="export_external_storage_success">Mapē %2$s eksportēts(-i) %1$s maršruts(-i)</string>
-    <string name="export_title">Eksportēšana uz...</string>
+    <string name="export_title">Eksportēšana uz…</string>
     <string name="external_storage_not_available">Ārējā atmiņa nav pieejama</string>
     <string name="external_storage_not_writable">Ārējā atmiņā nav iespējams rakstīt</string>
     <string name="files_few">%1$d faili</string>
@@ -128,7 +128,7 @@
     <string name="generic_no">Nē</string>
     <string name="generic_ok">Labi</string>
     <string name="generic_paused">Apturēts</string>
-    <string name="generic_progress_title">Lūdzu, gaidiet...</string>
+    <string name="generic_progress_title">Lūdzu, gaidiet…</string>
     <string name="generic_recording">Notiek ierakstīšana…</string>
     <string name="generic_save">Saglabāt</string>
     <string name="generic_success_title">Paveikts</string>
@@ -297,7 +297,7 @@
     <string name="track_delete_one_confirm_message">Maršruts un tā marķieri tiks neatgriezeniski dzēsti no ierīces.</string>
     <string name="track_delete_one_confirm_title">Vai dzēst maršrutu?</string>
     <string name="track_delete_multiple_confirm_message">Atlasītie maršruti un to marķieri tiks neatgriezeniski dzēsti no ierīces.</string>
-    <string name="track_delete_progress_message">Notiek dzēšana...</string>
+    <string name="track_delete_progress_message">Notiek dzēšana…</string>
     <string name="track_detail_chart_tab">Diagramma</string>
     <string name="track_detail_stats_tab">Statistika</string>
     <string name="track_edit_activity_type">Aktivitātes veids (piemēram, došanās pārgājienā)</string>
