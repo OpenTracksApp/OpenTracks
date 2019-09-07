@@ -29,10 +29,10 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Spinner;
 
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.util.DialogUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
-import de.dennisguse.opentracks.R;
 
 /**
  * For entering the default activity type.
@@ -64,14 +64,12 @@ public class ActivityTypePreference extends DialogPreference {
                 getContext(), R.string.default_activity_key, PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT);
         textView.setText(category);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                getContext(), R.array.activity_types, android.R.layout.simple_dropdown_item_1line);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.activity_types, android.R.layout.simple_dropdown_item_1line);
         textView.setAdapter(adapter);
         textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                String iconValue = TrackIconUtils.getIconValue(
-                        getContext(), (String) textView.getAdapter().getItem(position));
+                String iconValue = TrackIconUtils.getIconValue(getContext(), (String) textView.getAdapter().getItem(position));
                 TrackIconUtils.setIconSpinner(spinner, iconValue);
             }
         });

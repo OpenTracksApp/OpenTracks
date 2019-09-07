@@ -22,7 +22,6 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Spinner;
@@ -99,20 +98,18 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
         Spinner activityTypeIcon = getView().findViewById(R.id.stats_activity_type_icon);
         activityTypeIcon.setAdapter(TrackIconUtils.getIconSpinnerAdapter(getActivity(), ""));
-        activityTypeIcon.setOnTouchListener(new View.OnTouchListener() {
+        activityTypeIcon.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    ((TrackDetailActivity) getActivity()).chooseActivityType(category);
-                }
-                return true;
+            public void onClick(View view) {
+                ((TrackDetailActivity) getActivity()).chooseActivityType(category);
             }
         });
         activityTypeIcon.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
-                    ((TrackDetailActivity) getActivity()).chooseActivityType(category);
+                    v.performClick();
                 }
                 return true;
             }
