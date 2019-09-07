@@ -26,8 +26,7 @@ import org.junit.runner.RunWith;
 import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 
 /**
- * Tests for the WaypointCreationRequest class.
- * {@link WaypointCreationRequest}
+ * Tests for the {@link WaypointCreationRequest} class.
  *
  * @author Sandor Dornbush
  */

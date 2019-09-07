@@ -52,8 +52,10 @@ import static org.mockito.Mockito.when;
 
 /**
  * Tests for {@link AnnouncementPeriodicTask}.
- * WARNING: I'm not responsible if your eyes start bleeding while reading this
- * code. You have been warned. It's still better than no test, though.
+ *
+ * WARNING: I'm not responsible if your eyes start bleeding while reading this code.
+ * You have been warned.
+ * It's still better than no test, though.
  *
  * @author Rodrigo Damazio
  */

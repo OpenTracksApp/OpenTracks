@@ -17,9 +17,7 @@
 package de.dennisguse.opentracks.services;
 
 /**
- * This is an interface for classes that will manage the location listener
- * policy. Different policy options are: {@link AbsoluteLocationListenerPolicy}
- * and {@link AdaptiveLocationListenerPolicy}.
+ * This is an interface for classes that will manage the location listener policy.
  *
  * @author Sandor Dornbush
  */
@@ -35,13 +33,12 @@ public interface LocationListenerPolicy {
     /**
      * Returns the minimum distance between updates.
      */
-    int getMinDistance();
+    int getMinDistance_m();
 
     /**
      * Notifies the amount of time the user has been idle at his current location.
      *
-     * @param idleTime the time that the user has been idle at his current
-     *                 location
+     * @param idleTime the time that the user has been idle at his current location
      */
     void updateIdleTime(long idleTime);
 }

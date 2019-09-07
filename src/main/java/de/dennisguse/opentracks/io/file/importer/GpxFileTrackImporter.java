@@ -64,8 +64,7 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
     }
 
     @Override
-    public void startElement(String uri, String localName, String tag, Attributes attributes)
-            throws SAXException {
+    public void startElement(String uri, String localName, String tag, Attributes attributes) throws SAXException {
         switch (tag) {
             case TAG_WAYPOINT:
                 onWaypointStart(attributes);
@@ -185,7 +184,6 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
      * On waypoint end.
      */
     private void onWaypointEnd() throws SAXException {
-        addWaypoint(WaypointType.STATISTICS.name().equals(waypointType) ? WaypointType.STATISTICS
-                : WaypointType.WAYPOINT);
+        addWaypoint(WaypointType.STATISTICS.name().equals(waypointType) ? WaypointType.STATISTICS : WaypointType.WAYPOINT);
     }
 }

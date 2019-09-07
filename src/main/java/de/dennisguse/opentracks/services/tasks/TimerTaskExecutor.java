@@ -16,19 +16,19 @@
 
 package de.dennisguse.opentracks.services.tasks;
 
-import de.dennisguse.opentracks.services.TrackRecordingService;
-import de.dennisguse.opentracks.stats.TripStatistics;
-
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import de.dennisguse.opentracks.services.TrackRecordingService;
+import de.dennisguse.opentracks.stats.TripStatistics;
 
 /**
  * This class will periodically perform a task.
  *
  * @author Sandor Dornbush
  */
-public class TimerTaskExecutor {
+class TimerTaskExecutor {
 
     private final PeriodicTask periodicTask;
     private final TrackRecordingService trackRecordingService;
@@ -42,12 +42,12 @@ public class TimerTaskExecutor {
     }
 
     /**
-     * Schedules the periodic task at an interval.
+     * Schedules the periodic task in milliseconds.
      *
-     * @param interval the interval in milliseconds
+     * @param interval_ms the interval_ms
      */
-    public void scheduleTask(long interval) {
-        if (interval <= 0) {
+    void scheduleTask(long interval_ms) {
+        if (interval_ms <= 0) {
             return;
         }
 
@@ -69,14 +69,11 @@ public class TimerTaskExecutor {
             }
         };
         timer = new Timer(TimerTaskExecutor.class.getSimpleName());
-        long next = System.currentTimeMillis() + interval - (tripStatistics.getTotalTime() % interval);
-        timer.scheduleAtFixedRate(timerTask, new Date(next), interval);
+        long next = System.currentTimeMillis() + interval_ms - (tripStatistics.getTotalTime() % interval_ms);
+        timer.scheduleAtFixedRate(timerTask, new Date(next), interval_ms);
     }
 
-    /**
-     * Shuts down.
-     */
-    public void shutdown() {
+    void shutdown() {
         if (timerTask != null) {
             timerTask.cancel();
             timerTask = null;

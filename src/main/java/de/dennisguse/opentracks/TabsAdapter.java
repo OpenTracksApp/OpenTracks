@@ -97,9 +97,8 @@ public class TabsAdapter extends FragmentPagerAdapter implements TabHost.OnTabCh
     @Override
     public void onPageSelected(int position) {
         /*
-         * Unfortunately when TabHost changes the current tab, it kindly also takes
-         * care of putting focus on it when not in touch mode. The jerk. This hack
-         * tries to prevent this from pulling focus out of our ViewPager.
+         * Unfortunately when TabHost changes the current tab, it kindly also takes care of putting focus on it when not in touch mode.
+         * The jerk. This hack  tries to prevent this from pulling focus out of our ViewPager.
          */
         TabWidget tabWidget = tabHost.getTabWidget();
         int oldFocusability = tabWidget.getDescendantFocusability();
@@ -122,15 +121,14 @@ public class TabsAdapter extends FragmentPagerAdapter implements TabHost.OnTabCh
         private final Class<?> clss;
         private final Bundle bundle;
 
-        public TabInfo(Class<?> clss, Bundle bunlde) {
+        TabInfo(Class<?> clss, Bundle bundle) {
             this.clss = clss;
-            this.bundle = bunlde;
+            this.bundle = bundle;
         }
     }
 
     /**
-     * A dummy {@link TabContentFactory} that creates an empty view to satisfy the
-     * {@link TabHost} API.
+     * A dummy {@link TabContentFactory} that creates an empty view to satisfy the {@link TabHost} API.
      *
      * @author Jimmy Shih
      */
@@ -138,7 +136,7 @@ public class TabsAdapter extends FragmentPagerAdapter implements TabHost.OnTabCh
 
         private final Context context;
 
-        public DummyTabFactory(Context context) {
+        DummyTabFactory(Context context) {
             this.context = context;
         }
 

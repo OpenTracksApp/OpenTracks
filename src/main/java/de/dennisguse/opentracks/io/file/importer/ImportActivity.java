@@ -56,11 +56,9 @@ public class ImportActivity extends FragmentActivity implements FileTypeDialogFr
     // the path on the external storage to import
     private String directoryDisplayName;
 
-    // the number of files successfully imported
-    private int successCount;
+    private int importedTrackCount;
 
-    // the number of files to import
-    private int totalCount;
+    private int totalTrackCount;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -144,9 +142,9 @@ public class ImportActivity extends FragmentActivity implements FileTypeDialogFr
                 int titleId;
                 String message;
                 String totalFiles = getResources()
-                        .getQuantityString(R.plurals.files, totalCount, totalCount);
-                if (successCount == totalCount) {
-                    if (totalCount == 0) {
+                        .getQuantityString(R.plurals.files, totalTrackCount, totalTrackCount);
+                if (importedTrackCount == totalTrackCount) {
+                    if (totalTrackCount == 0) {
                         iconId = android.R.drawable.ic_dialog_info;
                         titleId = R.string.import_no_file_title;
                         message = getString(R.string.import_no_file, directoryDisplayName);
@@ -159,7 +157,7 @@ public class ImportActivity extends FragmentActivity implements FileTypeDialogFr
                     iconId = android.R.drawable.ic_dialog_alert;
                     titleId = R.string.generic_error_title;
                     message = getString(
-                            R.string.import_error, successCount, totalFiles, directoryDisplayName);
+                            R.string.import_error, importedTrackCount, totalFiles, directoryDisplayName);
                 }
                 final Dialog dialog = new AlertDialog.Builder(this).setCancelable(true).setIcon(iconId)
                         .setMessage(message).setOnCancelListener(new DialogInterface.OnCancelListener() {
@@ -195,8 +193,8 @@ public class ImportActivity extends FragmentActivity implements FileTypeDialogFr
      * @param aTotalCount   the number of files to import
      */
     public void onAsyncTaskCompleted(int aSuccessCount, int aTotalCount) {
-        successCount = aSuccessCount;
-        totalCount = aTotalCount;
+        importedTrackCount = aSuccessCount;
+        totalTrackCount = aTotalCount;
         removeDialog(DIALOG_PROGRESS_ID);
         showDialog(DIALOG_RESULT_ID);
     }

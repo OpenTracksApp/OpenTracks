@@ -52,17 +52,10 @@ public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     private ExportActivity exportActivity;
     private WakeLock wakeLock;
 
-    // true if the AsyncTask has completed
     private boolean completed;
 
-    // the number of tracks successfully saved
-    private int successCount;
-
-    // the number of tracks to save
-    private int totalCount;
-
-    // the last successfully saved path
-    private String savedPath;
+    private int processedTrackCount;
+    private int totalTrackCount;
 
     /**
      * Creates an AsyncTask.
@@ -79,9 +72,8 @@ public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         contentProviderUtils = ContentProviderUtils.Factory.get(context);
 
         completed = false;
-        successCount = 0;
-        totalCount = 0;
-        savedPath = null;
+        processedTrackCount = 0;
+        totalTrackCount = 0;
     }
 
     /**
@@ -92,7 +84,7 @@ public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     public void setActivity(ExportActivity exportActivity) {
         this.exportActivity = exportActivity;
         if (completed && exportActivity != null) {
-            exportActivity.onAsyncTaskCompleted(successCount, totalCount);
+            exportActivity.onAsyncTaskCompleted(processedTrackCount, totalTrackCount);
         }
     }
 
@@ -132,7 +124,7 @@ public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     protected void onPostExecute(Boolean result) {
         completed = true;
         if (exportActivity != null) {
-            exportActivity.onAsyncTaskCompleted(successCount, totalCount);
+            exportActivity.onAsyncTaskCompleted(processedTrackCount, totalTrackCount);
         }
     }
 
@@ -140,7 +132,7 @@ public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     protected void onCancelled() {
         completed = true;
         if (exportActivity != null) {
-            exportActivity.onAsyncTaskCompleted(successCount, totalCount);
+            exportActivity.onAsyncTaskCompleted(processedTrackCount, totalTrackCount);
         }
     }
 
@@ -172,7 +164,6 @@ public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             if (trackExporter.writeTrack(fileOutputStream)) {
-                savedPath = file.getAbsolutePath();
                 return true;
             } else {
                 if (!file.delete()) {
@@ -198,17 +189,17 @@ public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
             if (cursor == null) {
                 return false;
             }
-            totalCount = cursor.getCount();
-            for (int i = 0; i < totalCount; i++) {
+            totalTrackCount = cursor.getCount();
+            for (int i = 0; i < totalTrackCount; i++) {
                 if (isCancelled()) {
                     return false;
                 }
                 cursor.moveToPosition(i);
                 Track track = contentProviderUtils.createTrack(cursor);
                 if (track != null && saveTracks(new Track[]{track})) {
-                    successCount++;
+                    processedTrackCount++;
                 }
-                publishProgress(i + 1, totalCount);
+                publishProgress(i + 1, totalTrackCount);
             }
             return true;
         }

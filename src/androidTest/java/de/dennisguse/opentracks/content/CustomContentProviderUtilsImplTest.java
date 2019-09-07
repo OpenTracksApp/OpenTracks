@@ -137,8 +137,7 @@ public class CustomContentProviderUtilsImplTest {
         long lastPointId = initializeTrack(trackId, numPoints);
         ((ContentProviderUtilsImpl) providerUtils).setDefaultCursorBatchSize(batchSize);
         List<Location> locations = new ArrayList<Location>(numPoints);
-        LocationIterator it = providerUtils.getTrackPointLocationIterator(trackId, -1L, descending, locationFactory);
-        try {
+        try (LocationIterator it = providerUtils.getTrackPointLocationIterator(trackId, -1L, descending, locationFactory)) {
             while (it.hasNext()) {
                 Location loc = it.next();
                 Assert.assertNotNull(loc);
@@ -148,8 +147,6 @@ public class CustomContentProviderUtilsImplTest {
                         : lastPointId - numPoints + locations.size(), it.getLocationId());
             }
             Assert.assertEquals(numPoints, locations.size());
-        } finally {
-            it.close();
         }
         return locations;
     }
@@ -177,15 +174,12 @@ public class CustomContentProviderUtilsImplTest {
         // Load all inserted locations.
         long lastPointId = -1;
         int counter = 0;
-        LocationIterator it = providerUtils.getTrackPointLocationIterator(id, -1L, false, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
-        try {
+        try (LocationIterator it = providerUtils.getTrackPointLocationIterator(id, -1L, false, ContentProviderUtils.DEFAULT_LOCATION_FACTORY)) {
             while (it.hasNext()) {
                 it.next();
                 lastPointId = it.getLocationId();
                 counter++;
             }
-        } finally {
-            it.close();
         }
 
         Assert.assertTrue(numPoints == 0 || lastPointId > 0);
@@ -270,26 +264,20 @@ public class CustomContentProviderUtilsImplTest {
         providerUtils.insertWaypoint(waypoint);
 
         ContentResolver contentResolver = context.getContentResolver();
-        Cursor tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null,
-                TracksColumns._ID);
+        Cursor tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
         Assert.assertEquals(3, tracksCursor.getCount());
-        Cursor tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI, null, null,
-                null, TrackPointsColumns._ID);
+        Cursor tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI, null, null, null, TrackPointsColumns._ID);
         Assert.assertEquals(20, tracksPointsCursor.getCount());
-        Cursor waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null,
-                null, WaypointsColumns._ID);
+        Cursor waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null, null, WaypointsColumns._ID);
         Assert.assertEquals(1, waypointCursor.getCount());
         // Delete one track.
         providerUtils.deleteTrack(context, trackId);
         // Check whether all data of a track has been deleted.
-        tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null,
-                TracksColumns._ID);
+        tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
         Assert.assertEquals(2, tracksCursor.getCount());
-        tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI, null, null,
-                null, TrackPointsColumns._ID);
+        tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI, null, null, null, TrackPointsColumns._ID);
         Assert.assertEquals(20, tracksPointsCursor.getCount());
-        waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null,
-                null, WaypointsColumns._ID);
+        waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null, null, WaypointsColumns._ID);
         Assert.assertEquals(0, waypointCursor.getCount());
     }
 
@@ -374,12 +362,12 @@ public class CustomContentProviderUtilsImplTest {
         waypoint.setType(WaypointType.STATISTICS);
         waypoint.setTripStatistics(statistics);
 
-        Location loc = new Location("test");
-        loc.setLatitude(22);
-        loc.setLongitude(22);
-        loc.setAccuracy((float) 1 / 100.0f);
-        loc.setAltitude(2.5);
-        waypoint.setLocation(loc);
+        Location location = new Location("test");
+        location.setLatitude(22);
+        location.setLongitude(22);
+        location.setAccuracy((float) 1 / 100.0f);
+        location.setAltitude(2.5);
+        waypoint.setLocation(location);
         providerUtils.insertWaypoint(waypoint);
 
         ContentProviderUtilsImpl contentProviderUtils = new ContentProviderUtilsImpl(contentResolverMock);
@@ -780,9 +768,7 @@ public class CustomContentProviderUtilsImplTest {
     }
 
     /**
-     * Tests the method
-     * {@link ContentProviderUtilsImpl#getTrackPointCursor(long, long, int, boolean)}
-     * in descending.
+     * Tests the method {@link ContentProviderUtilsImpl#getTrackPointCursor(long, long, int, boolean)} in descending.
      */
     @Test
     public void testGetTrackPointCursor_desc() {
@@ -801,9 +787,7 @@ public class CustomContentProviderUtilsImplTest {
     }
 
     /**
-     * Tests the method
-     * {@link ContentProviderUtilsImpl#getTrackPointCursor(long, long, int, boolean)}
-     * in ascending.
+     * Tests the method {@link ContentProviderUtilsImpl#getTrackPointCursor(long, long, int, boolean)} in ascending.
      */
     @Test
     public void testGetTrackPointCursor_asc() {
@@ -849,9 +833,7 @@ public class CustomContentProviderUtilsImplTest {
     }
 
     /**
-     * Tests the method
-     * {@link ContentProviderUtilsImpl#getTrackPointLocationIterator(long, long, boolean, LocationFactory)}
-     * in ascending.
+     * Tests the method {@link ContentProviderUtilsImpl#getTrackPointLocationIterator(long, long, boolean, LocationFactory)} in ascending.
      */
     @Test
     public void testGetTrackPointLocationIterator_asc() {
@@ -914,8 +896,7 @@ public class CustomContentProviderUtilsImplTest {
     /**
      * Checks the value of a location.
      *
-     * @param i        the index of this location which created in the method
-     *                 {@link CustomContentProviderUtilsImplTest#getTrack(long, int)}
+     * @param i        the index of this location which created in the method {@link CustomContentProviderUtilsImplTest#getTrack(long, int)}
      * @param location the location to be checked
      */
     private void checkLocation(int i, Location location) {

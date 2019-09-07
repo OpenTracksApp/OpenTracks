@@ -32,7 +32,7 @@ import de.dennisguse.opentracks.util.StringUtils;
  *
  * @author Sandor Dornbush
  */
-//TODO Can we export Sensor.Data in GPX?
+//TODO Can we export SensorData in GPX?
 public class GpxTrackWriter implements TrackWriter {
 
     private static final NumberFormat ELEVATION_FORMAT = NumberFormat.getInstance(Locale.US);
@@ -188,7 +188,6 @@ public class GpxTrackWriter implements TrackWriter {
      * @param location the location
      */
     private String formatLocation(Location location) {
-        return "lat=\"" + COORDINATE_FORMAT.format(location.getLatitude()) + "\" lon=\""
-                + COORDINATE_FORMAT.format(location.getLongitude()) + "\"";
+        return "lat=\"" + COORDINATE_FORMAT.format(location.getLatitude()) + "\" lon=\"" + COORDINATE_FORMAT.format(location.getLongitude()) + "\"";
     }
 }

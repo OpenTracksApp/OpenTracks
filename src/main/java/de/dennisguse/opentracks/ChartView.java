@@ -565,7 +565,7 @@ public class ChartView extends View {
      * @param canvas the canvas
      */
     private void drawSeriesTitles(Canvas canvas) {
-        int[] titleDimensions = getTitleDimenions();
+        int[] titleDimensions = getTitleDimensions();
         int lines = titleDimensions[0];
         int lineHeight = titleDimensions[1];
         int count = 0;
@@ -583,10 +583,10 @@ public class ChartView extends View {
     }
 
     /**
-     * Gets the title dimensions. Returns an array of 2 integers, first element is
-     * the number of lines and the second element is the line height.
+     * Gets the title dimensions.
+     * Returns an array of 2 integers, first element is the number of lines and the second element is the line height.
      */
-    private int[] getTitleDimenions() {
+    private int[] getTitleDimensions() {
         int lines = 0;
         int lineHeight = 0;
         for (int i = 0; i < series.length; i++) {
@@ -763,8 +763,7 @@ public class ChartView extends View {
     }
 
     /**
-     * Updates paths. The path needs to be updated any time after the data or the
-     * dimensions change.
+     * Updates paths. The path needs to be updated any time after the data or the dimensions change.
      */
     private void updatePaths() {
         synchronized (chartData) {
@@ -862,7 +861,7 @@ public class ChartView extends View {
         }
 
         leftBorder = (int) (density * BORDER + markerLength);
-        int[] titleDimensions = getTitleDimenions();
+        int[] titleDimensions = getTitleDimensions();
         topBorder = (int) (density * BORDER + titleDimensions[0] * (titleDimensions[1] + spacer));
         Rect xAxisLabelRect = getRect(axisPaint, getXAxisLabel());
         // border + x axis marker + spacer + .5 x axis label

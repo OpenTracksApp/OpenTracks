@@ -78,13 +78,10 @@ public abstract class RemoteSensorManager {
                             setUpChannel();
                         }
                         break;
-                    case NONE:
                     case DISCONNECTED:
                         setUpChannel();
                         break;
-                    default:
-                        // CONNECTED or SENDING
-                        break;
+                    default: // NONE, CONNECTED or SENDING
                 }
             }
         };

@@ -31,8 +31,8 @@ import de.dennisguse.opentracks.R;
 public class PreferencesUtils {
 
     /*
-     * Preferences values. The defaults need to match the defaults in the xml
-     * files.
+     * Preferences values.
+     * The defaults need to match the defaults in the xml files.
      */
     public static final int AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT = 0;
 
@@ -48,7 +48,10 @@ public class PreferencesUtils {
     public static final boolean CHART_SHOW_HEART_RATE_DEFAULT = true;
     public static final boolean CHART_SHOW_POWER_DEFAULT = true;
     public static final boolean CHART_SHOW_SPEED_DEFAULT = true;
-    public static final String CHART_X_AXIS_DEFAULT = "DISTANCE";
+    @Deprecated
+    //NOTE: is at the moment still used to determine if a track is currently recorded; better ask the service directly.
+    //NOTE: This is also used to recover from a reboot, but this data should not be exposed to the whole application.
+    public static final long RECORDING_TRACK_ID_DEFAULT = -1L;
 
     public static final String DEFAULT_ACTIVITY_DEFAULT = "";
 
@@ -68,20 +71,16 @@ public class PreferencesUtils {
     public static final int RECORDING_GPS_ACCURACY_DEFAULT = 50;
     public static final int RECORDING_GPS_ACCURACY_EXCELLENT = 10;
     public static final int RECORDING_GPS_ACCURACY_POOR = 2000;
-
-    @Deprecated //NOTE: is at the moment still used to determine if a track is currently recorded; better ask the service directly.
-    public static final long RECORDING_TRACK_ID_DEFAULT = -1L;
+    static final boolean STATS_SHOW_COORDINATE_DEFAULT = false;
     public static final boolean RECORDING_TRACK_PAUSED_DEFAULT = true;
 
     public static final int SPLIT_FREQUENCY_DEFAULT = 0;
-
-    // Stats
-    public static final String STATS_RATE_DEFAULT = "SPEED";
-    public static final boolean STATS_SHOW_COORDINATE_DEFAULT = false;
-    public static final boolean STATS_SHOW_ELEVATION_DEFAULT = false;
+    static final boolean STATS_SHOW_ELEVATION_DEFAULT = false;
+    static final String TRACK_NAME_DEFAULT = "DATE_ISO_8601";
+    private static final String CHART_X_AXIS_DEFAULT = "DISTANCE";
     public static final String STATS_UNITS_DEFAULT = "METRIC";
-
-    public static final String TRACK_NAME_DEFAULT = "DATE_ISO_8601";
+    // Stats
+    private static final String STATS_RATE_DEFAULT = "SPEED";
 
     public static final boolean SHOW_TRACKDETAIL_WHILE_RECORDING_ON_LOCKSCREEN = false;
 

@@ -36,7 +36,6 @@ import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-
 /**
  * Tests for {@link KmlFileTrackImporter}.
  *
@@ -45,13 +44,11 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class KmlFileTrackImporterTest extends AbstractTestFileTrackImporter {
 
-    private static final String VALID_ONE_TRACK_ONE_SEGMENT_GPX =
-            "<kml xmlns:gx=\"http://www.google.com/kml/ext/2.2\"><Placemark>"
+    private static final String VALID_ONE_TRACK_ONE_SEGMENT_GPX = "<kml xmlns:gx=\"http://www.google.com/kml/ext/2.2\"><Placemark>"
                     + getNameAndDescription(TRACK_NAME_0, TRACK_DESCRIPTION_0) + "<gx:MultiTrack><gx:Track>"
                     + getTrackPoint(0, TRACK_TIME_0) + getTrackPoint(1, TRACK_TIME_1)
                     + "</gx:Track></gx:MultiTrack></Placemark></kml>";
-    private static final String VALID_ONE_TRACK_TWO_SEGMENTS_GPX =
-            "<kml xmlns:gx=\"http://www.google.com/kml/ext/2.2\"><Placemark>"
+    private static final String VALID_ONE_TRACK_TWO_SEGMENTS_GPX = "<kml xmlns:gx=\"http://www.google.com/kml/ext/2.2\"><Placemark>"
                     + getNameAndDescription(TRACK_NAME_0, TRACK_DESCRIPTION_0) + "<gx:MultiTrack><gx:Track>"
                     + getTrackPoint(0, TRACK_TIME_0) + getTrackPoint(1, TRACK_TIME_1) + "</gx:Track><gx:Track>"
                     + getTrackPoint(2, TRACK_TIME_2) + getTrackPoint(3, TRACK_TIME_3)
@@ -66,14 +63,9 @@ public class KmlFileTrackImporterTest extends AbstractTestFileTrackImporter {
         String latitude = Double.toString(TRACK_LATITUDE + index);
         String longitude = Double.toString(TRACK_LONGITUDE + index);
         String altitude = Double.toString(TRACK_ELEVATION + index);
-        StringBuilder buffer = new StringBuilder();
-        buffer.append("<when>" + time + "</when>" + "<gx:coord>" + longitude + " " + latitude + " " + altitude + "</gx:coord>");
-        return buffer.toString();
+        return "<when>" + time + "</when>" + "<gx:coord>" + longitude + " " + latitude + " " + altitude + "</gx:coord>";
     }
 
-    /**
-     * Tests one track with one segment.
-     */
     @Test
     public void testOneTrackOneSegment() throws Exception {
         ArgumentCaptor<Track> trackCaptor = ArgumentCaptor.forClass(Track.class);
@@ -102,9 +94,6 @@ public class KmlFileTrackImporterTest extends AbstractTestFileTrackImporter {
         verifyTrack(trackCaptor.getValue(), TRACK_NAME_0, TRACK_DESCRIPTION_0, time0);
     }
 
-    /**
-     * Tests one track with two segments.
-     */
     @Test
     public void testOneTrackTwoSegments() throws Exception {
         ArgumentCaptor<Track> trackCaptor = ArgumentCaptor.forClass(Track.class);

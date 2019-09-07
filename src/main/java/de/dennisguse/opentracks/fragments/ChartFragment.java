@@ -29,7 +29,11 @@ import androidx.annotation.VisibleForTesting;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import java.util.ArrayList;
+import java.util.EnumSet;
+
 import de.dennisguse.opentracks.ChartView;
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackDetailActivity;
 import de.dennisguse.opentracks.content.SensorDataSetLocation;
 import de.dennisguse.opentracks.content.Track;
@@ -43,10 +47,6 @@ import de.dennisguse.opentracks.stats.TripStatisticsUpdater;
 import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
-import de.dennisguse.opentracks.R;
-
-import java.util.ArrayList;
-import java.util.EnumSet;
 
 /**
  * A fragment to display track chart to the user.
@@ -79,8 +79,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     private ZoomControls zoomControls;
 
     /**
-     * A runnable that will enable/disable zoom controls and orange pointer as
-     * appropriate and redraw.
+     * A runnable that will enable/disable zoom controls and orange pointer as appropriate and redraw.
      */
     private final Runnable updateChart = new Runnable() {
         @Override
@@ -101,15 +100,13 @@ public class ChartFragment extends Fragment implements TrackDataListener {
         super.onCreate(savedInstanceState);
 
         /*
-         * Create a chartView here to store data thus won't need to reload all the
-         * data on every onStart or onResume.
+         * Create a chartView here to store data thus won't need to reload all the data on every onStart or onResume.
          */
         chartView = new ChartView(getActivity());
     }
 
     @Override
-    public View onCreateView(
-            @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.chart, container, false);
         zoomControls = view.findViewById(R.id.chart_zoom_controls);
         zoomControls.setOnZoomInClickListener(new View.OnClickListener() {
@@ -131,8 +128,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     public void onStart() {
         super.onStart();
         ViewGroup layout = getActivity().findViewById(R.id.chart_view_layout);
-        LayoutParams layoutParams = new LayoutParams(
-                LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         layout.addView(chartView, layoutParams);
     }
 
@@ -350,9 +346,9 @@ public class ChartFragment extends Fragment implements TrackDataListener {
             chartShow[index] = value;
             chartView.setChartValueSeriesEnabled(index, value);
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**

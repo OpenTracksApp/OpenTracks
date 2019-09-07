@@ -34,13 +34,13 @@ public class FileUtils {
     /**
      * Used to transfer picture from the camera.
      */
-    public static final String FILEPROVIDER = BuildConfig.APPLICATION_ID + ".fileprovider";
+    static final String FILEPROVIDER = BuildConfig.APPLICATION_ID + ".fileprovider";
 
     /**
      * Our external storage directory.
      */
     static final String SDCARD_TOP_DIR = "OpenTracks";
-    static final String TRACK_PREFIX = "OpenTracks";
+    private static final String TRACK_PREFIX = "OpenTracks";
     /**
      * The maximum FAT32 path length. See the FAT32 spec at
      * http://msdn.microsoft.com/en-us/windows/hardware/gg463080
@@ -127,16 +127,14 @@ public class FileUtils {
     }
 
     /**
-     * Builds a filename with the given base name (prefix) and the given
-     * extension, possibly adding a suffix to ensure the file doesn't exist.
+     * Builds a filename with the given base name (prefix) and the given extension, possibly adding a suffix to ensure the file doesn't exist.
      *
      * @param directory    the directory the file will live in
      * @param fileBaseName the prefix for the file name
      * @param extension    the file's extension
      * @return the complete file name, without the directory
      */
-    public static synchronized String buildUniqueFileName(
-            File directory, String fileBaseName, String extension) {
+    public static synchronized String buildUniqueFileName(File directory, String fileBaseName, String extension) {
         return buildUniqueFileName(directory, fileBaseName, extension, 0);
     }
 
@@ -154,7 +152,8 @@ public class FileUtils {
     }
 
     /**
-     * Gets the extension from a file name. Returns null if there is no extension.
+     * Gets the extension from a file name.
+     * Returns null if there is no extension.
      *
      * @param fileName the file name
      */
@@ -173,8 +172,7 @@ public class FileUtils {
     }
 
     /**
-     * Builds a filename with the given base and the given extension, possibly
-     * adding a suffix to ensure the file doesn't exist.
+     * Builds a filename with the given base and the given extension, possibly adding a suffix to ensure the file doesn't exist.
      *
      * @param directory the directory the filename will be located in
      * @param base      the base for the filename
@@ -182,8 +180,7 @@ public class FileUtils {
      * @param suffix    the first numeric suffix to try to use, or 0 for none
      * @return the complete filename, without the directory
      */
-    private static String buildUniqueFileName(
-            File directory, String base, String extension, int suffix) {
+    private static String buildUniqueFileName(File directory, String base, String extension, int suffix) {
         String suffixName = "";
         if (suffix > 0) {
             suffixName += "(" + suffix + ")";
@@ -201,10 +198,9 @@ public class FileUtils {
     }
 
     /**
-     * Sanitizes the name as a valid fat32 filename. For simplicity, fat32
-     * filename characters may be any combination of letters, digits, or
-     * characters with code point values greater than 127. Replaces the invalid
-     * characters with "_" and collapses multiple "_" together.
+     * Sanitizes the name as a valid fat32 filename.
+     * For simplicity, fat32 filename characters may be any combination of letters, digits, or characters with code point values greater than 127.
+     * Replaces the invalid characters with "_" and collapses multiple "_" together.
      *
      * @param name name
      */
@@ -260,8 +256,7 @@ public class FileUtils {
     }
 
     /**
-     * Truncates the name if necessary so the filename path length (directory +
-     * name + suffix) meets the Fat32 path limit.
+     * Truncates the name if necessary so the filename path length (directory + name + suffix) meets the Fat32 path limit.
      *
      * @param directory directory
      * @param name      name
@@ -273,8 +268,8 @@ public class FileUtils {
         if (name.length() + requiredLength > MAX_FAT32_PATH_LENGTH) {
             int limit = MAX_FAT32_PATH_LENGTH - requiredLength;
             return name.substring(0, limit);
-        } else {
-            return name;
         }
+
+        return name;
     }
 }

@@ -30,12 +30,12 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
  *
  * @author Rodrigo Damazio
  */
-public class DataSource {
+class DataSource {
 
     private final ContentResolver contentResolver;
     private final SharedPreferences sharedPreferences;
 
-    public DataSource(Context context) {
+    DataSource(Context context) {
         contentResolver = context.getContentResolver();
         sharedPreferences = PreferencesUtils.getSharedPreferences(context);
     }
@@ -46,7 +46,7 @@ public class DataSource {
      * @param uri      the uri
      * @param observer the observer
      */
-    public void registerContentObserver(Uri uri, ContentObserver observer) {
+    void registerContentObserver(Uri uri, ContentObserver observer) {
         contentResolver.registerContentObserver(uri, false, observer);
     }
 
@@ -55,7 +55,7 @@ public class DataSource {
      *
      * @param observer the observer
      */
-    public void unregisterContentObserver(ContentObserver observer) {
+    void unregisterContentObserver(ContentObserver observer) {
         contentResolver.unregisterContentObserver(observer);
     }
 
@@ -64,7 +64,7 @@ public class DataSource {
      *
      * @param listener the listener
      */
-    public void registerOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener listener) {
+    void registerOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener listener) {
         sharedPreferences.registerOnSharedPreferenceChangeListener(listener);
     }
 
@@ -73,8 +73,7 @@ public class DataSource {
      *
      * @param listener the listener
      */
-    public void unregisterOnSharedPreferenceChangeListener(
-            OnSharedPreferenceChangeListener listener) {
+    void unregisterOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener listener) {
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener);
     }
 }

@@ -40,9 +40,8 @@ import de.dennisguse.opentracks.stats.TripStatistics;
 
 /**
  * Tests for {@link SearchEngine}.
- * These are not meant to be quality tests, but instead feature-by-feature tests
- * (in other words, they don't test the mixing of different score boostings, just
- * each boosting separately)
+ * These are not meant to be quality tests, but instead feature-by-feature tests.
+ * In other words, they don't test the mixing of different score boostings, just each boosting separately.
  *
  * @author Rodrigo Damazio
  */
@@ -50,7 +49,7 @@ import de.dennisguse.opentracks.stats.TripStatistics;
 public class SearchEngineTest {
 
     private static final Location HERE = new Location("gps");
-    private static final long NOW = 1234567890000L;  // After OLDEST_ALLOWED_TIMESTAMP
+    private static final long NOW = SearchEngine.OLDEST_ALLOWED_TIMESTAMP + 1000;  // After OLDEST_ALLOWED_TIMESTAMP
     private ContentProviderUtils providerUtils;
     private SearchEngine engine;
 

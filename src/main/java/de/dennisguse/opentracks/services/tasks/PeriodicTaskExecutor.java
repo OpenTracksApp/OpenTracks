@@ -36,9 +36,10 @@ public class PeriodicTaskExecutor {
     private final PeriodicTaskFactory periodicTaskFactory;
 
     /**
-     * The task frequency. A positive value is a time frequency (minutes). A
-     * negative value is a distance frequency (km or mi). A zero value is to turn
-     * off periodic task.
+     * The task frequency.
+     * A positive value is a time frequency (minutes).
+     * A negative value is a distance frequency (km or mi).
+     * A zero value is to turn off periodic task.
      */
     private int taskFrequency = PreferencesUtils.FREQUENCY_OFF;
 
@@ -52,8 +53,7 @@ public class PeriodicTaskExecutor {
     // The next distance for the distance periodic task
     private double nextTaskDistance = Double.MAX_VALUE;
 
-    public PeriodicTaskExecutor(
-            TrackRecordingService trackRecordingService, PeriodicTaskFactory periodicTaskFactory) {
+    public PeriodicTaskExecutor(TrackRecordingService trackRecordingService, PeriodicTaskFactory periodicTaskFactory) {
         this.trackRecordingService = trackRecordingService;
         this.periodicTaskFactory = periodicTaskFactory;
     }
@@ -67,11 +67,9 @@ public class PeriodicTaskExecutor {
             return;
         }
 
-        if (!isTimeFrequency()) {
-            if (timerTaskExecutor != null) {
-                timerTaskExecutor.shutdown();
-                timerTaskExecutor = null;
-            }
+        if (!isTimeFrequency() && timerTaskExecutor != null) {
+            timerTaskExecutor.shutdown();
+            timerTaskExecutor = null;
         }
         if (taskFrequency == PreferencesUtils.FREQUENCY_OFF) {
             Log.d(TAG, "Task frequency is off.");
@@ -119,12 +117,13 @@ public class PeriodicTaskExecutor {
         if (!isDistanceFrequency() || periodicTask == null) {
             return;
         }
+
         TripStatistics tripStatistics = trackRecordingService.getTripStatistics();
         if (tripStatistics == null) {
             return;
         }
-        double distance = tripStatistics.getTotalDistance()
-                * UnitConversions.M_TO_KM;
+
+        double distance = tripStatistics.getTotalDistance() * UnitConversions.M_TO_KM;
         if (!metricUnits) {
             distance *= UnitConversions.KM_TO_MI;
         }
@@ -159,8 +158,7 @@ public class PeriodicTaskExecutor {
      * Calculates the next distance for the distance periodic task.
      */
     private void calculateNextTaskDistance() {
-        if (!trackRecordingService.isRecording() || trackRecordingService.isPaused()
-                || periodicTask == null) {
+        if (!trackRecordingService.isRecording() || trackRecordingService.isPaused() || periodicTask == null) {
             return;
         }
 
@@ -175,11 +173,11 @@ public class PeriodicTaskExecutor {
             return;
         }
 
-        double distance = tripStatistics.getTotalDistance()
-                * UnitConversions.M_TO_KM;
+        double distance = tripStatistics.getTotalDistance() * UnitConversions.M_TO_KM;
         if (!metricUnits) {
             distance *= UnitConversions.KM_TO_MI;
         }
+
         // The index will be negative since the frequency is negative.
         int index = (int) (distance / taskFrequency);
         index -= 1;

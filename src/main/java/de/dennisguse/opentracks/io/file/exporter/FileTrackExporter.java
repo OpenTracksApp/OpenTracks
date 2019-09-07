@@ -22,7 +22,6 @@ import android.util.Log;
 
 import java.io.OutputStream;
 
-import de.dennisguse.opentracks.Constants;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.ContentProviderUtils.LocationIterator;
 import de.dennisguse.opentracks.content.SensorDataSetLocation;
@@ -89,17 +88,13 @@ public class FileTrackExporter implements TrackExporter {
      */
     private void writeWaypoints(Track track) throws InterruptedException {
         /*
-         * TODO: Stream through the waypoints in chunks. I am leaving the number of
-         * waypoints very high which should not be a problem because we don't try to
-         * load them into objects all at the same time.
+         * TODO: Stream through the waypoints in chunks.
+         *  I am leaving the number of waypoints very high which should not be a problem, because we don't try to load them into objects all at the same time.
          */
         boolean hasWaypoints = false;
-        try (Cursor cursor = contentProviderUtils.getWaypointCursor(track.getId(), -1L, Constants.MAX_LOADED_WAYPOINTS_POINTS)) {
+        try (Cursor cursor = contentProviderUtils.getWaypointCursor(track.getId(), -1L, ContentProviderUtils.MAX_LOADED_WAYPOINTS_POINTS)) {
             if (cursor != null && cursor.moveToFirst()) {
-                /*
-                 * Yes, this will skip the first waypoint and that is intentional as the
-                 * first waypoint holds the stats for the track.
-                 */
+                // Intentionally skip first waypoint (contains statistics).
                 while (cursor.moveToNext()) {
                     if (Thread.interrupted()) {
                         throw new InterruptedException();
@@ -127,10 +122,8 @@ public class FileTrackExporter implements TrackExporter {
         boolean isLastLocationValid = false;
         TrackWriterLocationFactory locationFactory = new TrackWriterLocationFactory();
         int locationNumber = 0;
-        LocationIterator locationIterator = null;
 
-        try {
-            locationIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), -1L, false, locationFactory);
+        try (LocationIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), -1L, false, locationFactory)) {
 
             while (locationIterator.hasNext()) {
                 if (Thread.interrupted()) {
@@ -188,10 +181,6 @@ public class FileTrackExporter implements TrackExporter {
                 trackWriter.writeBeginTrack(track, null);
                 trackWriter.writeEndTrack(track, null);
             }
-        } finally {
-            if (locationIterator != null) {
-                locationIterator.close();
-            }
         }
     }
 
@@ -224,7 +213,7 @@ public class FileTrackExporter implements TrackExporter {
             return currentLocation;
         }
 
-        public void swapLocations() {
+        void swapLocations() {
             Location tempLocation = lastLocation;
             lastLocation = currentLocation;
             currentLocation = tempLocation;

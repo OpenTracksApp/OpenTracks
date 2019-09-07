@@ -69,6 +69,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     private Location lastLocation = null;
     private TripStatistics lastTripStatistics = null;
     private SensorDataSet sensorDataSet = null;
+
     private final Runnable updateUIeachSecond = new Runnable() {
         public void run() {
             if (isResumed() && isSelectedTrackRecording()) {

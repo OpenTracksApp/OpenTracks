@@ -57,7 +57,6 @@ import de.dennisguse.opentracks.content.Waypoint;
 import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 import de.dennisguse.opentracks.content.WaypointCreationRequest;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
-import de.dennisguse.opentracks.content.sensor.SensorState;
 import de.dennisguse.opentracks.services.sensors.RemoteSensorManager;
 import de.dennisguse.opentracks.services.sensors.RemoteSensorManagerFactory;
 import de.dennisguse.opentracks.services.tasks.AnnouncementPeriodicTaskFactory;
@@ -947,7 +946,7 @@ public class TrackRecordingService extends Service {
         }
         try {
             long interval = locationListenerPolicy.getDesiredPollingInterval();
-            locationManagerConnector.requestLocationUpdates(interval, locationListenerPolicy.getMinDistance(), locationListener);
+            locationManagerConnector.requestLocationUpdates(interval, locationListenerPolicy.getMinDistance_m(), locationListener);
             currentRecordingInterval = interval;
         } catch (RuntimeException e) {
             Log.e(TAG, "Could not register location listener.", e);
@@ -1114,15 +1113,6 @@ public class TrackRecordingService extends Service {
                 return null;
             }
             return trackRecordingService.remoteSensorManager.getSensorDataSet();
-        }
-
-        @Override
-        public SensorState getSensorState() {
-            if (trackRecordingService.remoteSensorManager == null) {
-                Log.d(TAG, "remoteSensorManager is null.");
-                return SensorState.NONE;
-            }
-            return trackRecordingService.remoteSensorManager.getSensorState();
         }
 
         /**

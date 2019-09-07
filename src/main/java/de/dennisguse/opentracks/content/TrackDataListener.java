@@ -57,10 +57,8 @@ public interface TrackDataListener {
     void onSegmentSplit(Location location);
 
     /**
-     * Called when finish sending new track points. This gets called after every
-     * batch of calls to {@link #onSampledInTrackPoint(Location)},
-     * {@link #onSampledOutTrackPoint(Location)} and
-     * {@link #onSegmentSplit(Location)}.
+     * Called when finish sending new track points.
+     * This gets called after every batch of calls to {@link #onSampledInTrackPoint(Location)}, {@link #onSampledOutTrackPoint(Location)} and {@link #onSegmentSplit(Location)}.
      */
     void onNewTrackPointsDone();
 
@@ -77,9 +75,8 @@ public interface TrackDataListener {
     void onNewWaypoint(Waypoint waypoint);
 
     /**
-     * Called when finish sending new waypoints. This gets called after every
-     * batch of calls to {@link #clearWaypoints()} and
-     * {@link #onNewWaypoint(Waypoint)}.
+     * Called when finish sending new waypoints.
+     * This gets called after every batch of calls to {@link #clearWaypoints()} and {@link #onNewWaypoint(Waypoint)}.
      */
     void onNewWaypointsDone();
 

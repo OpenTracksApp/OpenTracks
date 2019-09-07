@@ -48,12 +48,13 @@ public class IntentUtils {
 
     private final static String TAG = IntentUtils.class.getSimpleName();
 
+    private static final String JPEG_EXTENSION = "jpeg";
+
     private IntentUtils() {
     }
 
     /**
-     * Creates an intent with {@link Intent#FLAG_ACTIVITY_CLEAR_TOP} and
-     * {@link Intent#FLAG_ACTIVITY_NEW_TASK}.
+     * Creates an intent with {@link Intent#FLAG_ACTIVITY_CLEAR_TOP} and {@link Intent#FLAG_ACTIVITY_NEW_TASK}.
      *
      * @param context the context
      * @param cls     the class
@@ -62,12 +63,10 @@ public class IntentUtils {
         return new Intent(context, cls).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
     }
 
-    private static final String JPEG_EXTENSION = "jpeg";
-
     /**
      * Creates an intent to share a track file with an app.
      *
-     * @param context the context
+     * @param context  the context
      * @param trackIds the track ids
      */
     public static Intent newShareFileIntent(Context context, long[] trackIds) {
@@ -90,6 +89,14 @@ public class IntentUtils {
         showCoordinateOnMap(context, waypoint.getLocation().getLatitude(), waypoint.getLocation().getLongitude(), waypoint.getName());
     }
 
+    /**
+     * Send intent to show coordinates on a map (needs an another app).
+     *
+     * @param context   the context
+     * @param latitude  the latitude
+     * @param longitude the longitude
+     * @param label     the label
+     */
     public static void showCoordinateOnMap(Context context, double latitude, double longitude, String label) {
         //SEE https://developer.android.com/guide/components/intents-common.html#Maps
         String uri = "geo:0,0?q=" + latitude + "," + longitude;

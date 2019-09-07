@@ -48,8 +48,6 @@ limitations under the License.
     <!-- Keys for non-persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
     <string name="settings_recording_key" translatable="false">settingsRecording</string>
     <string name="settings_reset_key" translatable="false">settingsReset</string>
-    <string name="settings_sensor_bluetooth_key" translatable="false">settingsSensorBluetooth</string>
     <string name="settings_sensor_bluetooth_pairing_key" translatable="false">settingsSensorBluetoothPairing</string>
-    <string name="settings_sensor_root_key" translatable="false">settingsSensorRoot</string>
     <string name="settings_stats_key" translatable="false">settingsStats</string>
 </resources>

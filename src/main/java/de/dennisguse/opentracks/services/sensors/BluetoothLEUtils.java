@@ -2,12 +2,12 @@ package de.dennisguse.opentracks.services.sensors;
 
 import android.bluetooth.BluetoothGattCharacteristic;
 
-public final class BluetoothLEUtils {
+final class BluetoothLEUtils {
 
     private BluetoothLEUtils() {
     }
 
-    public static int parseHeartRate(BluetoothGattCharacteristic characteristic) {
+    static int parseHeartRate(BluetoothGattCharacteristic characteristic) {
         //DOCUMENTATION https://www.bluetooth.com/specifications/gatt/characteristics/
         byte[] raw = characteristic.getValue();
         int index = ((raw[0] & 0x1) == 1) ? 2 : 1;

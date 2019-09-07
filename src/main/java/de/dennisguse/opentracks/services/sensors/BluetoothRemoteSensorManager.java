@@ -34,7 +34,6 @@ import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
  * Bluetooth sensor manager.
- * <p>
  * TODO: Handle a BluetoothGatt.STATE_DISCONNECTED
  *
  * @author Sandor Dornbush
@@ -42,10 +41,15 @@ import de.dennisguse.opentracks.util.UnitConversions;
 public class BluetoothRemoteSensorManager extends RemoteSensorManager {
 
     private static final String TAG = BluetoothConnectionManager.class.getSimpleName();
+
     private static final BluetoothAdapter bluetoothAdapter = getDefaultBluetoothAdapter();
+
     private final Context context;
+
     private final BluetoothConnectionManager bluetoothConnectionManager;
+
     private SensorDataSet sensorDataSet = null;
+
     // Handler that gets information back from the bluetoothConnectionManager
     private final Handler messageHandler = new Handler(Looper.getMainLooper()) {
         @Override
@@ -71,7 +75,7 @@ public class BluetoothRemoteSensorManager extends RemoteSensorManager {
     /**
      * @param context the context
      */
-    public BluetoothRemoteSensorManager(Context context) {
+    BluetoothRemoteSensorManager(Context context) {
         this.context = context;
         bluetoothConnectionManager = new BluetoothConnectionManager(context, messageHandler);
     }
@@ -109,7 +113,6 @@ public class BluetoothRemoteSensorManager extends RemoteSensorManager {
 
         if (adapters.get(0) == null) {
             Log.w(TAG, "No bluetooth adapter found.");
-            return null;
         }
         return adapters.get(0);
     }
@@ -125,6 +128,7 @@ public class BluetoothRemoteSensorManager extends RemoteSensorManager {
             Log.w(TAG, "Bluetooth not enabled.");
             return;
         }
+
         String address = PreferencesUtils.getString(context, R.string.bluetooth_sensor_key, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT);
         if (PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT.equals(address)) {
             Log.w(TAG, "No bluetooth address.");

@@ -61,11 +61,7 @@ public class ListItemUtils {
      * @param description              the description value
      * @param photoUrl                 the photo url
      */
-    public static void setListItem(Activity activity, View view, boolean isRecording,
-                                   boolean isPaused, int iconId, int iconContentDescriptionId, String name,
-                                   String totalTime, String totalDistance, int markerCount, long startTime,
-                                   boolean useRelativeTime, String category, String description, String photoUrl) {
-
+    public static void setListItem(Activity activity, View view, boolean isRecording, boolean isPaused, int iconId, int iconContentDescriptionId, String name, String totalTime, String totalDistance, int markerCount, long startTime, boolean useRelativeTime, String category, String description, String photoUrl) {
         // Set photo
         ImageView photo = view.findViewById(R.id.list_item_photo);
         ImageView textGradient = view.findViewById(R.id.list_item_text_gradient);
@@ -134,17 +130,11 @@ public class ListItemUtils {
         setTextView(activity, timeTextView, dateTime[1], hasPhoto);
 
         // Set category and description
-        TextView categoryDescriptionTextView = view.findViewById(
-                R.id.list_item_category_description);
-        String categoryDescription = isRecording ? null
-                : StringUtils.getCategoryDescription(category, description);
+        TextView categoryDescriptionTextView = view.findViewById(R.id.list_item_category_description);
+        String categoryDescription = isRecording ? null : StringUtils.getCategoryDescription(category, description);
 
-        /*
-         * Place categoryDescription in either ownerTimeDistanceTextView or
-         * categoryDescriptionTextView
-         */
-        if (timeDistanceTextView.getVisibility() == View.GONE
-                && markerCountIcon.getVisibility() == View.GONE) {
+        // Place categoryDescription in either ownerTimeDistanceTextView or categoryDescriptionTextView
+        if (timeDistanceTextView.getVisibility() == View.GONE && markerCountIcon.getVisibility() == View.GONE) {
             setTextView(activity, categoryDescriptionTextView, null, hasPhoto);
             // Match list_item_category_description in list_item.xml
             timeDistanceTextView.setSingleLine(false);
@@ -158,8 +148,7 @@ public class ListItemUtils {
 
         // Adjust iconImageView layout gravity
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) iconImageView.getLayoutParams();
-        params.gravity = timeDistanceTextView.getVisibility() == View.GONE
-                && markerCountIcon.getVisibility() == View.GONE ? Gravity.TOP : Gravity.CENTER_VERTICAL;
+        params.gravity = timeDistanceTextView.getVisibility() == View.GONE && markerCountIcon.getVisibility() == View.GONE ? Gravity.TOP : Gravity.CENTER_VERTICAL;
     }
 
     /**
@@ -196,22 +185,17 @@ public class ListItemUtils {
         if (isRecording || time == 0L) {
             return new String[]{null, null};
         }
+
         boolean isToday = DateUtils.isToday(time);
         int timeFlags = DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL;
 
-        if (isToday) {
-            if (useRelativeTime) {
-                return new String[]{DateUtils.getRelativeTimeSpanString(
-                        time, System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS,
-                        DateUtils.FORMAT_ABBREV_RELATIVE).toString(), null};
-            } else {
-                return new String[]{DateUtils.formatDateTime(context, time, timeFlags), null};
-            }
+        if (isToday && useRelativeTime) {
+            return new String[]{DateUtils.getRelativeTimeSpanString(time, System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE).toString(), null};
+        } else if (isToday) {
+            return new String[]{DateUtils.formatDateTime(context, time, timeFlags), null};
         }
 
-        return new String[]{DateUtils.formatDateTime(
-                context, time, DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL),
-                DateUtils.formatDateTime(context, time, timeFlags)};
+        return new String[]{DateUtils.formatDateTime(context, time, DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL), DateUtils.formatDateTime(context, time, timeFlags)};
     }
 
     /**
@@ -225,14 +209,15 @@ public class ListItemUtils {
     public static void setTextView(Context context, TextView textView, String value, boolean addShadow) {
         if (value == null || value.length() == 0) {
             textView.setVisibility(View.GONE);
+            return;
+        }
+
+        textView.setVisibility(View.VISIBLE);
+        textView.setText(value);
+        if (addShadow) {
+            textView.setShadowLayer(5, 0, 2, context.getResources().getColor(android.R.color.black));
         } else {
-            textView.setVisibility(View.VISIBLE);
-            textView.setText(value);
-            if (addShadow) {
-                textView.setShadowLayer(5, 0, 2, context.getResources().getColor(android.R.color.black));
-            } else {
-                textView.setShadowLayer(0, 0, 0, 0);
-            }
+            textView.setShadowLayer(0, 0, 0, 0);
         }
     }
 

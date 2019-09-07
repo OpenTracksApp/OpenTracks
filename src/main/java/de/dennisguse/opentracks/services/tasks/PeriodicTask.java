@@ -24,6 +24,7 @@ import de.dennisguse.opentracks.services.TrackRecordingService;
  * @author Sandor Dornbush
  */
 public interface PeriodicTask {
+
     /**
      * Sets up this task for subsequent calls to the run method.
      */

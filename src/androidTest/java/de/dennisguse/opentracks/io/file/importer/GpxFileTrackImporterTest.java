@@ -38,7 +38,6 @@ import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-
 /**
  * Tests for {@link GpxFileTrackImporter}.
  *
@@ -58,6 +57,7 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
             + getNameAndDescription(TRACK_NAME_0, TRACK_DESCRIPTION_0) + "<trkseg>"
             + getTrackPoint(0, null) + getTrackPoint(1, null) + "</trkseg><trkseg>"
             + getTrackPoint(2, null) + getTrackPoint(3, null) + "</trkseg></trk></gpx>";
+
     private static final String INVALID_XML_GPX = VALID_ONE_TRACK_ONE_SEGMENT_GPX.substring(0, VALID_ONE_TRACK_ONE_SEGMENT_GPX.length() - 50);
     private static final String INVALID_LOCATION_GPX = VALID_ONE_TRACK_ONE_SEGMENT_GPX.replaceAll(Double.toString(TRACK_LATITUDE), "1000.0");
     private static final String INVALID_TIME_GPX = VALID_ONE_TRACK_ONE_SEGMENT_GPX.replaceAll(TRACK_TIME_0, "invalid");
@@ -82,9 +82,6 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
         return buffer.toString();
     }
 
-    /**
-     * Tests one track with one segment.
-     */
     @Test
     public void testOneTrackOneSegment() throws Exception {
         ArgumentCaptor<Track> trackCaptor = ArgumentCaptor.forClass(Track.class);
@@ -113,9 +110,6 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
         verifyTrack(trackCaptor.getValue(), TRACK_NAME_0, TRACK_DESCRIPTION_0, time0);
     }
 
-    /**
-     * Tests one track with two segments.
-     */
     @Test
     public void testOneTrackTwoSegments() throws Exception {
         ArgumentCaptor<Track> trackCaptor = ArgumentCaptor.forClass(Track.class);
@@ -145,9 +139,6 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
         verifyTrack(trackCaptor.getValue(), TRACK_NAME_0, TRACK_DESCRIPTION_0, DATE_FORMAT_0.parse(TRACK_TIME_0).getTime());
     }
 
-    /**
-     * Tests one track with two segments, but no time in the track points.
-     */
     @Test
     public void testOneTrackTwoSegmentsNoTime() {
         ArgumentCaptor<Track> trackCaptor = ArgumentCaptor.forClass(Track.class);
@@ -171,49 +162,31 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
         verifyTrack(trackCaptor.getValue(), TRACK_NAME_0, TRACK_DESCRIPTION_0, -1L);
     }
 
-    /**
-     * Test an invalid xml input.
-     */
     @Test
     public void testInvalidXml() {
         testInvalidGpx(INVALID_XML_GPX);
     }
 
-    /**
-     * Test an invalid location.
-     */
     @Test
     public void testInvalidLocation() {
         testInvalidGpx(INVALID_LOCATION_GPX);
     }
 
-    /**
-     * Test an invalid time.
-     */
     @Test
     public void testInvalidTime() {
         testInvalidGpx(INVALID_TIME_GPX);
     }
 
-    /**
-     * Test an invalid altitude.
-     */
     @Test
     public void testInvalidAltitude() {
         testInvalidGpx(INVALID_ALTITUDE_GPX);
     }
 
-    /**
-     * Test an invalid latitude.
-     */
     @Test
     public void testInvalidLatitude() {
         testInvalidGpx(INVALID_LATITUDE_GPX);
     }
 
-    /**
-     * Test an invalid longitude.
-     */
     @Test
     public void testInvalidLongitude() {
         testInvalidGpx(INVALID_LONGITUDE_GPX);

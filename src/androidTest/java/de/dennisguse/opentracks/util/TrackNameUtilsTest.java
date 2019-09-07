@@ -45,8 +45,7 @@ public class TrackNameUtilsTest {
     private static final Context CONTEXT = ApplicationProvider.getApplicationContext();
 
     /**
-     * Tests when the track_name_key is
-     * settings_recording_track_name_date_local_value.
+     * Tests when the track_name_key is settings_recording_track_name_date_local_value.
      */
     @Test
     public void testTrackName_date_local() {
@@ -55,8 +54,7 @@ public class TrackNameUtilsTest {
     }
 
     /**
-     * Tests when the track_name_key is
-     * settings_recording_track_name_date_iso_8601_value.
+     * Tests when the track_name_key is settings_recording_track_name_date_iso_8601_value.
      */
     @Test
     public void testTrackName_date_iso_8601() {
@@ -66,8 +64,7 @@ public class TrackNameUtilsTest {
     }
 
     /**
-     * Tests when the track_name_key is
-     * settings_recording_track_name_number_value.
+     * Tests when the track_name_key is settings_recording_track_name_number_value.
      */
     @Test
     public void testTrackName_number() {

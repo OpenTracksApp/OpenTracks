@@ -40,9 +40,7 @@ public class AdaptiveLocationListenerPolicyTest extends TestCase {
     }
 
     /**
-     * Tests the
-     * {@link AdaptiveLocationListenerPolicy#getDesiredPollingInterval()} in four
-     * situations.
+     * Tests the {@link AdaptiveLocationListenerPolicy#getDesiredPollingInterval()} in four situations.
      * <ul>
      * <li>The newIdleTime is bigger than max interval.</li>
      * <li>The newIdleTime is between min and max interval.</li>
@@ -68,9 +66,9 @@ public class AdaptiveLocationListenerPolicyTest extends TestCase {
     }
 
     /**
-     * Tests the method {@link AdaptiveLocationListenerPolicy#getMinDistance()}.
+     * Tests the method {@link AdaptiveLocationListenerPolicy#getMinDistance_m()}.
      */
     public void testGetMinDistance() {
-        assertEquals(MIN_DISTANCE, adocationListenerPolicy.getMinDistance());
+        assertEquals(MIN_DISTANCE, adocationListenerPolicy.getMinDistance_m());
     }
 }

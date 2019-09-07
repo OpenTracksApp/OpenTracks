@@ -71,7 +71,9 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
 
     public static final String EXTRA_TRACK_ID = "track_id";
     public static final String EXTRA_MARKER_ID = "marker_id";
+
     private static final String TAG = TrackDetailActivity.class.getSimpleName();
+
     private static final String CURRENT_TAB_TAG_KEY = "current_tab_tag_key";
     private static final String PHOTO_URI_KEY = "photo_uri_key";
     private static final String HAS_PHOTO_KEY = "has_photo_key";
@@ -101,8 +103,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
     private final Runnable bindChangedCallback = new Runnable() {
         @Override
         public void run() {
-            // After binding changes (is available), update the total time in
-            // trackController.
+            // After binding changes (is available), update the total time in trackController.
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -153,12 +154,14 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
             });
         }
     };
+
     private MenuItem insertMarkerMenuItem;
     private MenuItem insertPhotoMenuItem;
     private MenuItem markerListMenuItem;
     private MenuItem shareMenuItem;
     private MenuItem voiceFrequencyMenuItem;
     private MenuItem splitFrequencyMenuItem;
+
     private final OnClickListener recordListener = new OnClickListener() {
         @Override
         public void onClick(View v) {

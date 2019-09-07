@@ -45,8 +45,10 @@ public class TrackRecordingServiceTestLooper {
 
     @Rule
     public final ServiceTestRule mServiceRule = ServiceTestRule.withTimeout(5, TimeUnit.SECONDS);
-    private ContentProviderUtils providerUtils;
+
     private Context context = ApplicationProvider.getApplicationContext();
+
+    private ContentProviderUtils providerUtils;
 
     @BeforeClass
     public static void preSetUp() {
@@ -93,28 +95,28 @@ public class TrackRecordingServiceTestLooper {
 
     @MediumTest
     @Test
-    public void testWithProperties_minRequiredAccuracy() throws Exception {
+    public void testWithProperties_minRequiredAccuracy() throws TimeoutException {
         PreferencesUtils.setInt(context, R.string.recording_gps_accuracy_key, 500);
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
-    public void testWithProperties_voiceFrequencyDefault() throws Exception {
+    public void testWithProperties_voiceFrequencyDefault() throws TimeoutException {
         PreferencesUtils.setInt(context, R.string.voice_frequency_key, PreferencesUtils.VOICE_FREQUENCY_DEFAULT);
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
-    public void testWithProperties_voiceFrequencyByDistance() throws Exception {
+    public void testWithProperties_voiceFrequencyByDistance() throws TimeoutException {
         PreferencesUtils.setInt(context, R.string.voice_frequency_key, -1);
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
-    public void testWithProperties_voiceFrequencyByTime() throws Exception {
+    public void testWithProperties_voiceFrequencyByTime() throws TimeoutException {
         PreferencesUtils.setInt(context, R.string.voice_frequency_key, 1);
         fullRecordingSession();
     }
@@ -122,97 +124,97 @@ public class TrackRecordingServiceTestLooper {
 
     @MediumTest
     @Test
-    public void testWithProperties_maxRecordingDistanceDefault() throws Exception {
+    public void testWithProperties_maxRecordingDistanceDefault() throws TimeoutException {
         PreferencesUtils.setInt(context, R.string.max_recording_distance_key, PreferencesUtils.MAX_RECORDING_DISTANCE_DEFAULT);
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
-    public void testWithProperties_maxRecordingDistance() throws Exception {
+    public void testWithProperties_maxRecordingDistance() throws TimeoutException {
         PreferencesUtils.setInt(context, R.string.max_recording_distance_key, 50);
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
-    public void testWithProperties_minRecordingDistanceDefault() throws Exception {
+    public void testWithProperties_minRecordingDistanceDefault() throws TimeoutException {
         PreferencesUtils.setInt(context, R.string.recording_distance_interval_key, PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT);
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
-    public void testWithProperties_minRecordingDistance() throws Exception {
+    public void testWithProperties_minRecordingDistance() throws TimeoutException {
         PreferencesUtils.setInt(context, R.string.recording_distance_interval_key, 2);
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
-    public void testWithProperties_splitFrequencyDefault() throws Exception {
+    public void testWithProperties_splitFrequencyDefault() throws TimeoutException {
         PreferencesUtils.setInt(context, R.string.split_frequency_key, PreferencesUtils.SPLIT_FREQUENCY_DEFAULT);
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
-    public void testWithProperties_splitFrequencyByDistance() throws Exception {
+    public void testWithProperties_splitFrequencyByDistance() throws TimeoutException {
         PreferencesUtils.setInt(context, R.string.split_frequency_key, -1);
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
-    public void testWithProperties_splitFrequencyByTime() throws Exception {
+    public void testWithProperties_splitFrequencyByTime() throws TimeoutException {
         PreferencesUtils.setInt(context, R.string.split_frequency_key, 1);
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
-    public void testWithProperties_metricUnitsDefault() throws Exception {
+    public void testWithProperties_metricUnitsDefault() throws TimeoutException {
         PreferencesUtils.setString(context, R.string.stats_units_key, PreferencesUtils.STATS_UNITS_DEFAULT);
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
-    public void testWithProperties_metricUnitsDisabled() throws Exception {
+    public void testWithProperties_metricUnitsDisabled() throws TimeoutException {
         PreferencesUtils.setString(context, R.string.stats_units_key, context.getString(R.string.stats_units_imperial));
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
-    public void testWithProperties_minRecordingIntervalDefault() throws Exception {
+    public void testWithProperties_minRecordingIntervalDefault() throws TimeoutException {
         PreferencesUtils.setInt(context, R.string.min_recording_interval_key, PreferencesUtils.MIN_RECORDING_INTERVAL_DEFAULT);
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
-    public void testWithProperties_minRecordingInterval() throws Exception {
+    public void testWithProperties_minRecordingInterval() throws TimeoutException {
         PreferencesUtils.setInt(context, R.string.min_recording_interval_key, 2);
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
-    public void testWithProperties_minRequiredAccuracyDefault() throws Exception {
+    public void testWithProperties_minRequiredAccuracyDefault() throws TimeoutException {
         PreferencesUtils.setInt(context, R.string.recording_gps_accuracy_key, PreferencesUtils.RECORDING_GPS_ACCURACY_DEFAULT);
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
-    public void testIntegration_completeRecordingSession() throws Exception {
+    public void testIntegration_completeRecordingSession() throws TimeoutException {
         List<Track> tracks = providerUtils.getAllTracks();
         Assert.assertTrue(tracks.isEmpty());
         fullRecordingSession();
     }
 
-    private void fullRecordingSession() throws Exception {
+    private void fullRecordingSession() throws TimeoutException {
         ITrackRecordingService service = ((ITrackRecordingService) mServiceRule.bindService(TrackRecordingServiceTest.createStartIntent(context)));
         Assert.assertFalse(service.isRecording());
 

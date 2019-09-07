@@ -8,6 +8,9 @@ import android.net.Uri;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+/**
+ * Wraps a {@link ContentResolver} and provides access as {@link IContentResolver}.
+ */
 public class ContentResolverWrapper implements IContentResolver {
 
     private ContentResolver contentResolver;

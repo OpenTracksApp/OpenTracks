@@ -24,6 +24,7 @@ public class UnitConversions {
 
     // multiplication factor to convert seconds to milliseconds
     public static final double S_TO_MS = 1000.0;
+
     // Time
     // 1 second in milliseconds
     public static final long ONE_SECOND = (long) UnitConversions.S_TO_MS;

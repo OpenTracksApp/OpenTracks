@@ -25,12 +25,13 @@ import android.os.IBinder.DeathRecipient;
 import android.os.RemoteException;
 import android.util.Log;
 
-import de.dennisguse.opentracks.util.TrackRecordingServiceConnectionUtils;
 import de.dennisguse.opentracks.BuildConfig;
+import de.dennisguse.opentracks.util.TrackRecordingServiceConnectionUtils;
 
 /**
- * Wrapper for the track recording service. This handles service
- * start/bind/unbind/stop. The service must be started before it can be bound.
+ * Wrapper for the track recording service.
+ * This handles service start/bind/unbind/stop.
+ * The service must be started before it can be bound.
  * Returns the service if it is started and bound.
  *
  * @author Rodrigo Damazio
@@ -38,8 +39,10 @@ import de.dennisguse.opentracks.BuildConfig;
 public class TrackRecordingServiceConnection {
 
     private static final String TAG = TrackRecordingServiceConnection.class.getSimpleName();
+
     private final Context context;
     private final Runnable callback;
+
     private ITrackRecordingService trackRecordingService;
     private final DeathRecipient deathRecipient = new DeathRecipient() {
         @Override
@@ -48,6 +51,7 @@ public class TrackRecordingServiceConnection {
             setTrackRecordingService(null);
         }
     };
+
     private final ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName className, IBinder service) {
@@ -130,8 +134,7 @@ public class TrackRecordingServiceConnection {
             return;
         }
 
-        if (!startIfNeeded
-                && !TrackRecordingServiceConnectionUtils.isRecordingServiceRunning(context)) {
+        if (!startIfNeeded && !TrackRecordingServiceConnectionUtils.isRecordingServiceRunning(context)) {
             Log.d(TAG, "Service is not started. Not binding it.");
             return;
         }

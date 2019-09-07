@@ -26,6 +26,8 @@ import android.content.Context;
 public class RemoteSensorManagerFactory {
 
     private static RemoteSensorManager remoteSensorManagerSystem = null;
+
+    //TODO Check if still needed? Is there a missing features?
     private static RemoteSensorManager remoteSensorManagerTemporary = null;
 
     private RemoteSensorManagerFactory() {
@@ -70,7 +72,7 @@ public class RemoteSensorManagerFactory {
     /**
      * Releases the temp sensor manager.
      */
-    public static void releaseSensorManagerTemporary() {
+    private static void releaseSensorManagerTemporary() {
         if (remoteSensorManagerTemporary != null) {
             remoteSensorManagerTemporary.stopSensor();
         }

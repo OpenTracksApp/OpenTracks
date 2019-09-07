@@ -59,10 +59,7 @@ public class StatsSettingsActivity extends PreferenceActivity {
         listPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference pref, Object newValue) {
-                if (listener != null) {
-                    listener.onPreferenceChange(pref, newValue);
-                }
-                return true;
+                return listener.onPreferenceChange(pref, newValue);
             }
         });
     }

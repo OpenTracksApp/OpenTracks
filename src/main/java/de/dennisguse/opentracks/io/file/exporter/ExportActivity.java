@@ -38,8 +38,8 @@ import de.dennisguse.opentracks.util.DialogUtils;
 import de.dennisguse.opentracks.util.FileUtils;
 
 /**
- * An activity for saving tracks to the external storage. If saving a specific
- * track, option to save it to a temp directory and play the track afterward.
+ * An activity for saving tracks to the external storage.
+ * If saving a specific track, option to save it to a temp directory and play the track afterward.
  *
  * @author Rodrigo Damazio
  */
@@ -53,13 +53,11 @@ public class ExportActivity extends FragmentActivity implements FileTypeDialogFr
     private String directoryDisplayName;
 
     private ExportAsyncTask exportAsyncTask;
+
     private ProgressDialog progressDialog;
 
-    // the number of tracks successfully saved
-    private int successCount;
-
-    // the number of tracks to save
-    private int totalCount;
+    private int processedTrackCount;
+    private int totalTrackCount;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -144,8 +142,8 @@ public class ExportActivity extends FragmentActivity implements FileTypeDialogFr
                 int titleId;
                 String message;
                 String totalTracks = getResources()
-                        .getQuantityString(R.plurals.tracks, totalCount, totalCount);
-                if (successCount == totalCount) {
+                        .getQuantityString(R.plurals.tracks, totalTrackCount, totalTrackCount);
+                if (processedTrackCount == totalTrackCount) {
                     iconId = R.drawable.ic_dialog_success;
                     titleId = R.string.generic_success_title;
                     message = getString(
@@ -153,7 +151,7 @@ public class ExportActivity extends FragmentActivity implements FileTypeDialogFr
                 } else {
                     iconId = android.R.drawable.ic_dialog_alert;
                     titleId = R.string.generic_error_title;
-                    message = getString(R.string.export_external_storage_error, successCount, totalTracks,
+                    message = getString(R.string.export_external_storage_error, processedTrackCount, totalTracks,
                             directoryDisplayName);
                 }
                 AlertDialog.Builder builder = new AlertDialog.Builder(this).setCancelable(true)
@@ -192,8 +190,8 @@ public class ExportActivity extends FragmentActivity implements FileTypeDialogFr
      * @param aTotalCount   the number of tracks to save
      */
     public void onAsyncTaskCompleted(int aSuccessCount, int aTotalCount) {
-        successCount = aSuccessCount;
-        totalCount = aTotalCount;
+        processedTrackCount = aSuccessCount;
+        totalTrackCount = aTotalCount;
         removeDialog(DIALOG_PROGRESS_ID);
         showDialog(DIALOG_RESULT_ID);
     }

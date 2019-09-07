@@ -21,8 +21,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
-import de.dennisguse.opentracks.util.DialogUtils;
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.util.DialogUtils;
 
 /**
  * A DialogFragment to confirm delete.
@@ -38,8 +38,7 @@ public class ConfirmDeleteDialogFragment extends AbstractDialogFragment {
     /**
      * Create a new instance.
      *
-     * @param trackIds list of track ids to delete. To delete all, set to size 1
-     *                 with trackIds[0] == -1L
+     * @param trackIds list of track ids to delete. To delete all, set to size 1 with trackIds[0] == -1L
      */
     public static ConfirmDeleteDialogFragment newInstance(long[] trackIds) {
         Bundle bundle = new Bundle();
@@ -65,10 +64,8 @@ public class ConfirmDeleteDialogFragment extends AbstractDialogFragment {
         final long[] trackIds = getArguments().getLongArray(KEY_TRACK_IDS);
         int titleId;
         int messageId;
-        titleId = trackIds.length > 1 ? R.string.generic_delete_selected_confirm_title
-                : R.string.track_delete_one_confirm_title;
-        messageId = trackIds.length > 1 ? R.string.track_delete_multiple_confirm_message
-                : R.string.track_delete_one_confirm_message;
+        titleId = trackIds.length > 1 ? R.string.generic_delete_selected_confirm_title : R.string.track_delete_one_confirm_title;
+        messageId = trackIds.length > 1 ? R.string.track_delete_multiple_confirm_message : R.string.track_delete_one_confirm_message;
         return DialogUtils.createConfirmationDialog(
                 getActivity(), titleId, getString(messageId), new DialogInterface.OnClickListener() {
                     @Override

@@ -35,24 +35,25 @@ import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
- * Track data hub. Receives data from {@link DataSource} and distributes it to
- * {@link TrackDataListener} after some processing.
+ * Track data hub. Receives data from {@link DataSource} and distributes it to {@link TrackDataListener} after some processing.
  *
  * @author Rodrigo Damazio
  */
 public class TrackDataHub implements DataSourceListener {
 
     /**
-     * Target number of track points displayed by the map overlay. We may display
-     * more than this number of points.
+     * Target number of track points displayed by the map overlay.
+     * We may display more than this number of points.
      */
-    public static final int TARGET_DISPLAYED_TRACK_POINTS = 5000;
+    static final int TARGET_DISPLAYED_TRACK_POINTS = 5000;
+
     /**
      * Maximum number of waypoints to displayed.
      */
     @VisibleForTesting
-    static final int MAX_DISPLAYED_WAYPOINTS = 128;
+    private static final int MAX_DISPLAYED_WAYPOINTS = 128;
     private static final String TAG = TrackDataHub.class.getSimpleName();
+
     private final Context context;
     private final TrackDataManager trackDataManager;
     private final ContentProviderUtils contentProviderUtils;
@@ -87,8 +88,7 @@ public class TrackDataHub implements DataSourceListener {
      * @param targetNumPoints      the target number of points
      */
     @VisibleForTesting
-    TrackDataHub(Context context, TrackDataManager trackDataManager,
-                 ContentProviderUtils contentProviderUtils, int targetNumPoints) {
+    private TrackDataHub(Context context, TrackDataManager trackDataManager, ContentProviderUtils contentProviderUtils, int targetNumPoints) {
         this.context = context;
         this.trackDataManager = trackDataManager;
         this.contentProviderUtils = contentProviderUtils;
@@ -96,17 +96,11 @@ public class TrackDataHub implements DataSourceListener {
         resetSamplingState();
     }
 
-    /**
-     * Creates a new instance.
-     */
     public synchronized static TrackDataHub newInstance(Context context) {
         return new TrackDataHub(context, new TrackDataManager(), ContentProviderUtils.Factory.get(
                 context), TARGET_DISPLAYED_TRACK_POINTS);
     }
 
-    /**
-     * Starts.
-     */
     public void start() {
         if (started) {
             Log.i(TAG, "TrackDataHub already started, ignoring start.");
@@ -131,9 +125,6 @@ public class TrackDataHub implements DataSourceListener {
         });
     }
 
-    /**
-     * Stops.
-     */
     public void stop() {
         if (!started) {
             Log.i(TAG, "TrackDataHub not started, ignoring stop.");
@@ -151,11 +142,6 @@ public class TrackDataHub implements DataSourceListener {
         dataSourceManager = null;
     }
 
-    /**
-     * Loads a track.
-     *
-     * @param trackId the track id
-     */
     public void loadTrack(final long trackId) {
         runInHandlerThread(new Runnable() {
             @Override
@@ -222,8 +208,7 @@ public class TrackDataHub implements DataSourceListener {
      * Returns true if the selected track is recording.
      */
     public boolean isSelectedTrackRecording() {
-        return selectedTrackId == recordingTrackId
-                && recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+        return selectedTrackId == recordingTrackId && recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
     }
 
     /**
@@ -258,8 +243,7 @@ public class TrackDataHub implements DataSourceListener {
         runInHandlerThread(new Runnable() {
             @Override
             public void run() {
-                notifyTrackPointsTableUpdate(
-                        true, trackDataManager.getListeners(TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE),
+                notifyTrackPointsTableUpdate(true, trackDataManager.getListeners(TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE),
                         trackDataManager.getListeners(TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE));
             }
         });
@@ -270,47 +254,36 @@ public class TrackDataHub implements DataSourceListener {
         runInHandlerThread(new Runnable() {
             @Override
             public void run() {
-                if (key == null
-                        || key.equals(PreferencesUtils.getKey(context, R.string.recording_track_id_key))) {
+                if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.recording_track_id_key))) {
                     recordingTrackId = PreferencesUtils.getLong(context, R.string.recording_track_id_key);
                 }
-                if (key == null
-                        || key.equals(PreferencesUtils.getKey(context, R.string.recording_track_paused_key))) {
-                    recordingTrackPaused = PreferencesUtils.getBoolean(
-                            context, R.string.recording_track_paused_key,
-                            PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+                if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.recording_track_paused_key))) {
+                    recordingTrackPaused = PreferencesUtils.getBoolean(context, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
                 }
-                if (key == null
-                        || key.equals(PreferencesUtils.getKey(context, R.string.stats_units_key))) {
+                if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.stats_units_key))) {
                     metricUnits = PreferencesUtils.isMetricUnits(context);
                     if (key != null) {
-                        for (TrackDataListener trackDataListener :
-                                trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
+                        for (TrackDataListener trackDataListener : trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
                             if (trackDataListener.onMetricUnitsChanged(metricUnits)) {
                                 loadDataForListener(trackDataListener);
                             }
                         }
                     }
                 }
-                if (key == null
-                        || key.equals(PreferencesUtils.getKey(context, R.string.stats_rate_key))) {
+                if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.stats_rate_key))) {
                     reportSpeed = PreferencesUtils.isReportSpeed(context);
                     if (key != null) {
-                        for (TrackDataListener trackDataListener :
-                                trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
+                        for (TrackDataListener trackDataListener : trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
                             if (trackDataListener.onReportSpeedChanged(reportSpeed)) {
                                 loadDataForListener(trackDataListener);
                             }
                         }
                     }
                 }
-                if (key == null
-                        || key.equals(PreferencesUtils.getKey(context, R.string.recording_gps_accuracy_key))) {
-                    recordingGpsAccuracy = PreferencesUtils.getInt(context, R.string.recording_gps_accuracy_key,
-                            PreferencesUtils.RECORDING_GPS_ACCURACY_DEFAULT);
+                if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.recording_gps_accuracy_key))) {
+                    recordingGpsAccuracy = PreferencesUtils.getInt(context, R.string.recording_gps_accuracy_key, PreferencesUtils.RECORDING_GPS_ACCURACY_DEFAULT);
                     if (key != null) {
-                        for (TrackDataListener trackDataListener :
-                                trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
+                        for (TrackDataListener trackDataListener : trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
                             if (trackDataListener.onRecordingGpsAccuracy(recordingGpsAccuracy)) {
                                 loadDataForListener(trackDataListener);
                             }
@@ -359,7 +332,7 @@ public class TrackDataHub implements DataSourceListener {
     }
 
     /**
-     * Loads data for a listener. To be run in the {@link #handler} thread.
+     * Loads data for a listener; to be run in the {@link #handler} thread.
      *
      * @param trackDataListener the track data listener.
      */
@@ -386,8 +359,7 @@ public class TrackDataHub implements DataSourceListener {
             if (isOnlyListener) {
                 resetSamplingState();
             }
-            Set<TrackDataListener> sampledOutListeners = hasSampledOut ? trackDataListeners
-                    : Collections.<TrackDataListener>emptySet();
+            Set<TrackDataListener> sampledOutListeners = hasSampledOut ? trackDataListeners : Collections.<TrackDataListener>emptySet();
             notifyTrackPointsTableUpdate(isOnlyListener, trackDataListeners, sampledOutListeners);
         }
 
@@ -397,7 +369,7 @@ public class TrackDataHub implements DataSourceListener {
     }
 
     /**
-     * Notifies track table update. To be run in the {@link #handler} thread.
+     * Notifies track table update; to be run in the {@link #handler} thread.
      *
      * @param trackDataListeners the track data listeners to notify
      */
@@ -412,9 +384,8 @@ public class TrackDataHub implements DataSourceListener {
     }
 
     /**
-     * Notifies waypoint table update. Currently, reloads all the waypoints up to
-     * {@link #MAX_DISPLAYED_WAYPOINTS}. To be run in the {@link #handler}
-     * thread.
+     * Notifies waypoint table update.
+     * Currently, reloads all the waypoints up to {@link #MAX_DISPLAYED_WAYPOINTS}. To be run in the {@link #handler} thread.
      *
      * @param trackDataListeners the track data listeners to notify
      */
@@ -448,18 +419,17 @@ public class TrackDataHub implements DataSourceListener {
     }
 
     /**
-     * Notifies track points table update. To be run in the {@link #handler}
-     * thread.
+     * Notifies track points table update; to be run in the {@link #handler} thread.
      *
      * @param updateSamplingState true to update the sampling state
      * @param sampledInListeners  the sampled-in listeners
      * @param sampledOutListeners the sampled-out listeners
      */
-    private void notifyTrackPointsTableUpdate(boolean updateSamplingState,
-                                              Set<TrackDataListener> sampledInListeners, Set<TrackDataListener> sampledOutListeners) {
+    private void notifyTrackPointsTableUpdate(boolean updateSamplingState, Set<TrackDataListener> sampledInListeners, Set<TrackDataListener> sampledOutListeners) {
         if (sampledInListeners.isEmpty() && sampledOutListeners.isEmpty()) {
             return;
         }
+
         if (updateSamplingState && numLoadedPoints >= targetNumPoints) {
             // Reload and resample the track at a lower frequency.
             Log.i(TAG, "Resampling track after " + numLoadedPoints + " points.");
@@ -477,11 +447,8 @@ public class TrackDataHub implements DataSourceListener {
         long lastTrackPointId = contentProviderUtils.getLastTrackPointId(selectedTrackId);
         int samplingFrequency = -1;
         boolean includeNextPoint = false;
-        LocationIterator locationIterator = null;
 
-        try {
-            locationIterator = contentProviderUtils.getTrackPointLocationIterator(selectedTrackId,
-                    localLastSeenLocationId + 1, false, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
+        try (LocationIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(selectedTrackId, localLastSeenLocationId + 1, false, ContentProviderUtils.DEFAULT_LOCATION_FACTORY)) {
 
             while (locationIterator.hasNext()) {
                 Location location = locationIterator.next();
@@ -509,8 +476,7 @@ public class TrackDataHub implements DataSourceListener {
                     }
                 } else {
                     // Also include the last point if the selected track is not recording.
-                    if (includeNextPoint || (localNumLoadedPoints % samplingFrequency == 0)
-                            || (locationId == lastTrackPointId && !isSelectedTrackRecording())) {
+                    if (includeNextPoint || (localNumLoadedPoints % samplingFrequency == 0) || (locationId == lastTrackPointId && !isSelectedTrackRecording())) {
                         includeNextPoint = false;
                         for (TrackDataListener trackDataListener : sampledInListeners) {
                             trackDataListener.onSampledInTrackPoint(location);
@@ -524,10 +490,6 @@ public class TrackDataHub implements DataSourceListener {
 
                 localNumLoadedPoints++;
                 localLastSeenLocationId = locationId;
-            }
-        } finally {
-            if (locationIterator != null) {
-                locationIterator.close();
             }
         }
 
@@ -555,7 +517,7 @@ public class TrackDataHub implements DataSourceListener {
      * Creates a {@link DataSource}.
      */
     @VisibleForTesting
-    protected DataSource newDataSource() {
+    private DataSource newDataSource() {
         return new DataSource(context);
     }
 
@@ -565,7 +527,7 @@ public class TrackDataHub implements DataSourceListener {
      * @param runnable the runnable
      */
     @VisibleForTesting
-    protected void runInHandlerThread(Runnable runnable) {
+    private void runInHandlerThread(Runnable runnable) {
         if (handler == null) {
             // Use a Throwable to ensure the stack trace is logged.
             Log.d(TAG, "handler is null.", new Throwable());

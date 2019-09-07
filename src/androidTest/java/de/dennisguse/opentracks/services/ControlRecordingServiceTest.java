@@ -59,9 +59,7 @@ public class ControlRecordingServiceTest {
     private ControlRecordingService subject;
 
     /**
-     * Tests the start of {@link ControlRecordingService} and tests the method
-     * {@link ControlRecordingService#onHandleIntent(Intent, ITrackRecordingService)}
-     * to start a track recording.
+     * Tests the start of {@link ControlRecordingService} and tests the method {@link ControlRecordingService#onHandleIntent(Intent, ITrackRecordingService)} to start a track recording.
      */
     @Test
     public void testStartRecording() throws TimeoutException {
@@ -75,9 +73,7 @@ public class ControlRecordingServiceTest {
     }
 
     /**
-     * Tests the method
-     * {@link ControlRecordingService#onHandleIntent(Intent, ITrackRecordingService)}
-     * to stop a track recording.
+     * Tests the method {@link ControlRecordingService#onHandleIntent(Intent, ITrackRecordingService)} to stop a track recording.
      */
     @Test
     public void testStopRecording() throws TimeoutException {

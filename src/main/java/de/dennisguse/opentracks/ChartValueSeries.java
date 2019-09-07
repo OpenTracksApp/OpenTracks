@@ -25,16 +25,16 @@ import android.graphics.Path;
 
 import androidx.annotation.VisibleForTesting;
 
-import de.dennisguse.opentracks.stats.ExtremityMonitor;
-
 import java.text.NumberFormat;
+
+import de.dennisguse.opentracks.stats.ExtremityMonitor;
 
 /**
  * This class encapsulates the meta data for one series of the chart values.
  *
  * @author Sandor Dornbush
  */
-public class ChartValueSeries {
+class ChartValueSeries {
 
     private static final float STROKE_WIDTH = 2f;
 
@@ -68,8 +68,7 @@ public class ChartValueSeries {
      * @param fillColor       the fill color
      * @param strokeColor     the stroke color
      */
-    public ChartValueSeries(Context context, int absoluteMin, int absoluteMax, int[] intervalValues,
-                            int metricTitleId, int imperialTitleId, int fillColor, int strokeColor) {
+    ChartValueSeries(Context context, int absoluteMin, int absoluteMax, int[] intervalValues, int metricTitleId, int imperialTitleId, int fillColor, int strokeColor) {
         this.absoluteMin = absoluteMin;
         this.absoluteMax = absoluteMax;
         this.intervalValues = intervalValues;
@@ -108,7 +107,7 @@ public class ChartValueSeries {
     /**
      * Returns true if the series is enabled.
      */
-    public boolean isEnabled() {
+    boolean isEnabled() {
         return enabled;
     }
 
@@ -117,14 +116,14 @@ public class ChartValueSeries {
      *
      * @param enabled true to enable
      */
-    public void setEnabled(boolean enabled) {
+    void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 
     /**
      * Returns true if the series has data.
      */
-    public boolean hasData() {
+    boolean hasData() {
         return extremityMonitor.hasData();
     }
 
@@ -133,14 +132,14 @@ public class ChartValueSeries {
      *
      * @param value the new value
      */
-    public void update(double value) {
+    void update(double value) {
         extremityMonitor.update(value);
     }
 
     /**
      * Gets the path.
      */
-    public Path getPath() {
+    Path getPath() {
         return path;
     }
 
@@ -149,7 +148,7 @@ public class ChartValueSeries {
      *
      * @param canvas the canvas
      */
-    public void drawPath(Canvas canvas) {
+    void drawPath(Canvas canvas) {
         canvas.drawPath(path, fillPaint);
         canvas.drawPath(path, strokePaint);
     }
@@ -157,7 +156,7 @@ public class ChartValueSeries {
     /**
      * Updates the y axis dimension.
      */
-    public void updateDimension() {
+    void updateDimension() {
         double min = hasData() ? extremityMonitor.getMin() : 0.0;
         double max = hasData() ? extremityMonitor.getMax() : 1.0;
         min = Math.max(min, absoluteMin);
@@ -204,14 +203,15 @@ public class ChartValueSeries {
     /**
      * Gets the interval value.
      */
-    public int getInterval() {
+    @VisibleForTesting
+    int getInterval() {
         return interval;
     }
 
     /**
      * Gets the min marker value.
      */
-    public int getMinMarkerValue() {
+    int getMinMarkerValue() {
         return minMarkerValue;
     }
 
@@ -226,28 +226,28 @@ public class ChartValueSeries {
     /**
      * Gets the title id.
      */
-    public int getTitleId(boolean metricUnits) {
+    int getTitleId(boolean metricUnits) {
         return metricUnits ? metricTitleId : imperialTitleId;
     }
 
     /**
      * Gets the title paint.
      */
-    public Paint getTitlePaint() {
+    Paint getTitlePaint() {
         return titlePaint;
     }
 
     /**
      * Gets the marker paint.
      */
-    public Paint getMarkerPaint() {
+    Paint getMarkerPaint() {
         return markerPaint;
     }
 
     /**
      * Gets the largest marker.
      */
-    public String getLargestMarker() {
+    String getLargestMarker() {
         String minMarker = numberFormat.format(getMinMarkerValue());
         String maxMarker = numberFormat.format(getMaxMarkerValue());
         return minMarker.length() >= maxMarker.length() ? minMarker : maxMarker;
@@ -258,7 +258,7 @@ public class ChartValueSeries {
      *
      * @param value the value
      */
-    public String formatMarker(int value) {
+    String formatMarker(int value) {
         return numberFormat.format(value);
     }
 }

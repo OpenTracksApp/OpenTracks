@@ -17,9 +17,10 @@ package de.dennisguse.opentracks.services;
 
 import android.location.Location;
 
+import androidx.annotation.VisibleForTesting;
+
 import de.dennisguse.opentracks.content.WaypointCreationRequest;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
-import de.dennisguse.opentracks.content.sensor.SensorState;
 
 /**
  * App's service.
@@ -97,6 +98,7 @@ public interface ITrackRecordingService {
      *
      * @param location the track point to be inserted
      */
+    @VisibleForTesting
     void insertTrackPoint(Location location);
 
     /**
@@ -105,11 +107,4 @@ public interface ITrackRecordingService {
      * @return SensorDataSet object.
      */
     SensorDataSet getSensorData();
-
-    /**
-     * Gets the current sensor manager state.
-     * <p>
-     * return a Sensor.SensorState enum value.
-     */
-    SensorState getSensorState();
 }

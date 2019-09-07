@@ -22,15 +22,15 @@ import android.net.Uri;
 
 import androidx.annotation.VisibleForTesting;
 
-import de.dennisguse.opentracks.content.ContentProviderUtils;
-import de.dennisguse.opentracks.content.SensorDataSetLocation;
-import de.dennisguse.opentracks.content.Waypoint.WaypointType;
-import de.dennisguse.opentracks.content.sensor.SensorDataSet;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 import java.util.ArrayList;
+
+import de.dennisguse.opentracks.content.ContentProviderUtils;
+import de.dennisguse.opentracks.content.SensorDataSetLocation;
+import de.dennisguse.opentracks.content.Waypoint.WaypointType;
+import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 
 /**
  * Imports a KML file.
@@ -82,8 +82,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
     }
 
     @VisibleForTesting
-    KmlFileTrackImporter(
-            Context context, long importTrackId, ContentProviderUtils contentProviderUtils) {
+    KmlFileTrackImporter(Context context, long importTrackId, ContentProviderUtils contentProviderUtils) {
         super(context, importTrackId, contentProviderUtils);
     }
 
@@ -93,11 +92,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
         switch (tag) {
             case TAG_PLACEMARK:
             case TAG_PHOTO_OVERLAY:
-                /*
-                 * Note that a track is contained in a Placemark, calling onWaypointStart
-                 * will clear various track variables like name, category, and
-                 * description.
-                 */
+                // Note that a track is contained in a Placemark, calling onWaypointStart will clear various track variables like name, category, and description.
                 onWaypointStart();
                 break;
             case TAG_GX_MULTI_TRACK:
@@ -118,13 +113,11 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
 
     @Override
     public void endElement(String uri, String localName, String tag) throws SAXException {
+        //TODO Check if order is relevant (uses localname and tag); and convert to switch statement
         if (tag.equals(TAG_KML)) {
             onFileEnd();
         } else if (tag.equals(TAG_PLACEMARK) || tag.equals(TAG_PHOTO_OVERLAY)) {
-            /*
-             * Note that a track is contained in a Placemark, calling onWaypointend is
-             * save since waypointType is not set for a track.
-             */
+            // Note that a track is contained in a Placemark, calling onWaypointend is save since waypointType is not set for a track.
             onWaypointEnd();
         } else if (localName.equals(TAG_COORDINATES)) {
             onWaypointLocationEnd();
@@ -187,19 +180,23 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
      */
     private void onWaypointEnd() throws SAXException {
         // Add a waypoint if the waypointType matches
-        WaypointType type = null;
-        if (WAYPOINT_STYLE.equals(waypointType)) {
-            type = WaypointType.WAYPOINT;
-        } else if (STATISTICS_STYLE.equals(waypointType)) {
-            type = WaypointType.STATISTICS;
+        WaypointType type;
+        switch (waypointType) {
+            case WAYPOINT_STYLE:
+                type = WaypointType.WAYPOINT;
+                break;
+            case STATISTICS_STYLE:
+                type = WaypointType.STATISTICS;
+                break;
+            default:
+                return;
         }
-        if (type == null) {
-            return;
-        }
+
         if (photoUrl != null) {
             Uri uri = Uri.parse(photoUrl);
             photoUrl = getPhotoUrl(uri.getLastPathSegment());
         }
+
         addWaypoint(type);
     }
 

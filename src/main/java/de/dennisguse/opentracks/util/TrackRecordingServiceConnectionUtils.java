@@ -24,14 +24,14 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.List;
+
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackEditActivity;
 import de.dennisguse.opentracks.content.WaypointCreationRequest;
 import de.dennisguse.opentracks.services.ITrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
-import de.dennisguse.opentracks.R;
-
-import java.util.List;
 
 /**
  * Utilities for {@link TrackRecordingServiceConnection}.
@@ -52,6 +52,11 @@ public class TrackRecordingServiceConnectionUtils {
      */
     public static boolean isRecordingServiceRunning(Context context) {
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        if (activityManager == null) {
+            return false;
+        }
+
+        //TODO This approach is deprecated as of API level 26 and should be replaced.
         List<RunningServiceInfo> services = activityManager.getRunningServices(Integer.MAX_VALUE);
 
         for (RunningServiceInfo serviceInfo : services) {
@@ -99,13 +104,12 @@ public class TrackRecordingServiceConnectionUtils {
      */
     public static void stopRecording(Context context, TrackRecordingServiceConnection trackRecordingServiceConnection, boolean showEditor) {
         ITrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
-        if (trackRecordingService != null) {
+        if (trackRecordingService == null) {
+            resetRecordingState(context);
+        } else {
             try {
                 if (showEditor) {
-                    /*
-                     * Need to remember the recordingTrackId before calling
-                     * endCurrentTrack. endCurrentTrack sets the value to -1L.
-                     */
+                    // Need to remember the recordingTrackId before calling endCurrentTrack() as endCurrentTrack() sets the value to -1L.
                     long recordingTrackId = PreferencesUtils.getLong(context, R.string.recording_track_id_key);
                     trackRecordingService.endCurrentTrack();
                     if (recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
@@ -118,10 +122,9 @@ public class TrackRecordingServiceConnectionUtils {
                     trackRecordingService.endCurrentTrack();
                 }
             } catch (Exception e) {
+                //TODO What exception are we catching here? Should be removed...
                 Log.e(TAG, "Unable to stop recording.", e);
             }
-        } else {
-            resetRecordingState(context);
         }
         trackRecordingServiceConnection.unbindAndStop();
     }
@@ -130,8 +133,7 @@ public class TrackRecordingServiceConnectionUtils {
      * Resumes the track recording service connection.
      *
      * @param context                         the context
-     * @param trackRecordingServiceConnection the track recording service
-     *                                        connection
+     * @param trackRecordingServiceConnection the track recording service connection
      */
     public static void startConnection(Context context, TrackRecordingServiceConnection trackRecordingServiceConnection) {
         trackRecordingServiceConnection.bindIfStarted();
@@ -143,25 +145,19 @@ public class TrackRecordingServiceConnectionUtils {
     private static void resetRecordingState(Context context) {
         long recordingTrackId = PreferencesUtils.getLong(context, R.string.recording_track_id_key);
         if (recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
-            PreferencesUtils.setLong(
-                    context, R.string.recording_track_id_key, PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
+            PreferencesUtils.setLong(context, R.string.recording_track_id_key, PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
         }
-        boolean recordingTrackPaused = PreferencesUtils.getBoolean(context,
-                R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+        boolean recordingTrackPaused = PreferencesUtils.getBoolean(context, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
         if (!recordingTrackPaused) {
-            PreferencesUtils.setBoolean(context, R.string.recording_track_paused_key,
-                    PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+            PreferencesUtils.setBoolean(context, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
         }
     }
 
     /**
      * Adds a marker.
      */
-    public static long addMarker(Context context,
-                                 TrackRecordingServiceConnection trackRecordingServiceConnection,
-                                 WaypointCreationRequest waypointCreationRequest) {
-        ITrackRecordingService trackRecordingService = trackRecordingServiceConnection
-                .getServiceIfBound();
+    public static long addMarker(Context context, TrackRecordingServiceConnection trackRecordingServiceConnection, WaypointCreationRequest waypointCreationRequest) {
+        ITrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
         if (trackRecordingService == null) {
             Log.d(TAG, "Unable to add marker, no track recording service");
         } else {
@@ -175,6 +171,7 @@ public class TrackRecordingServiceConnectionUtils {
                 Log.e(TAG, "Unable to add marker.", e);
             }
         }
+
         Toast.makeText(context, R.string.marker_add_error, Toast.LENGTH_LONG).show();
         return -1L;
     }

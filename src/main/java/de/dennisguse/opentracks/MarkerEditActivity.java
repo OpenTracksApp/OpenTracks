@@ -41,6 +41,7 @@ public class MarkerEditActivity extends AbstractActivity {
 
     public static final String EXTRA_TRACK_ID = "track_id";
     public static final String EXTRA_MARKER_ID = "marker_id";
+
     private static final String TAG = MarkerEditActivity.class.getSimpleName();
     private long trackId;
     private long markerId;
@@ -127,8 +128,7 @@ public class MarkerEditActivity extends AbstractActivity {
         if (newMarker) {
             statisticsSection.setVisibility(View.GONE);
             waypointSection.setVisibility(View.VISIBLE);
-            int nextWaypointNumber = trackId == -1L ? -1
-                    : ContentProviderUtils.Factory.get(this).getNextWaypointNumber(trackId, WaypointType.WAYPOINT);
+            int nextWaypointNumber = trackId == -1L ? -1 : ContentProviderUtils.Factory.get(this).getNextWaypointNumber(trackId, WaypointType.WAYPOINT);
             if (nextWaypointNumber == -1) {
                 nextWaypointNumber = 0;
             }

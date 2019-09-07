@@ -36,8 +36,10 @@ public class WaypointCreationRequest implements Parcelable {
     public static final Creator CREATOR = new Creator();
 
     private WaypointType type;
+
     // true if this marker contains the track statistics
     private boolean isTrackStatistics;
+
     private String name;
     private String category;
     private String description;

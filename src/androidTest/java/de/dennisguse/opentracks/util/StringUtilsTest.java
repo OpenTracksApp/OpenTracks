@@ -161,8 +161,7 @@ public class StringUtilsTest {
     }
 
     /**
-     * Asserts the {@link StringUtils#getTime(String)} returns the expected
-     * values.
+     * Asserts the {@link StringUtils#getTime(String)} returns the expected values.
      *
      * @param xmlDateTime the xml date time string
      * @param year        the expected year
@@ -173,8 +172,7 @@ public class StringUtilsTest {
      * @param second      the expected second
      * @param millisecond the expected milliseconds
      */
-    private void assertGetTime(String xmlDateTime, int year, int month, int day, int hour, int minute,
-                               int second, int millisecond) {
+    private void assertGetTime(String xmlDateTime, int year, int month, int day, int hour, int minute, int second, int millisecond) {
         GregorianCalendar calendar = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
         calendar.set(year, month - 1, day, hour, minute, second);
         calendar.set(GregorianCalendar.MILLISECOND, millisecond);

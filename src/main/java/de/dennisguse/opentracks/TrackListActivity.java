@@ -76,9 +76,11 @@ import de.dennisguse.opentracks.util.TrackUtils;
 public class TrackListActivity extends AbstractListActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller {
 
     private static final String TAG = TrackListActivity.class.getSimpleName();
+
     private static final String[] PROJECTION = new String[]{TracksColumns._ID, TracksColumns.NAME,
             TracksColumns.DESCRIPTION, TracksColumns.CATEGORY, TracksColumns.STARTTIME,
             TracksColumns.TOTALDISTANCE, TracksColumns.TOTALTIME, TracksColumns.ICON};
+
     // The following are set in onCreate
     private ContentProviderUtils contentProviderUtils;
     private SharedPreferences sharedPreferences;
@@ -86,6 +88,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     private TrackController trackController;
     private ListView listView;
     private ResourceCursorAdapter resourceCursorAdapter;
+
     private final LoaderCallbacks<Cursor> loaderCallbacks = new LoaderCallbacks<Cursor>() {
         @Override
         public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
@@ -103,9 +106,11 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             resourceCursorAdapter.swapCursor(null);
         }
     };
+
     // Preferences
     private boolean metricUnits = true;
     private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+
     // Callback when an item is selected in the contextual action mode
     private final ContextualActionModeCallback contextualActionModeCallback = new ContextualActionModeCallback() {
 
@@ -126,7 +131,9 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             return handleContextItem(itemId, ids);
         }
     };
+
     private boolean recordingTrackPaused = PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT;
+
     /*
      * Note that sharedPreferenceChangeListener cannot be an anonymous inner class.
      * Anonymous inner class will get garbage collected.
@@ -165,11 +172,13 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             }
         }
     };
+
     // Menu items
     private MenuItem searchMenuItem;
     private MenuItem startGpsMenuItem;
     private MenuItem aggregatedStatisticsMenuItem;
     private MenuItem deleteAllMenuItem;
+
     private final OnClickListener stopListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -178,15 +187,17 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                     TrackListActivity.this, trackRecordingServiceConnection, true);
         }
     };
+
     private boolean startGps = false; // true to start gps
+
     private boolean startNewRecording = false; // true to start a new recording
+
     // Callback when the trackRecordingServiceConnection binding changes.
     private final Runnable bindChangedCallback = new Runnable() {
         @Override
         public void run() {
             /*
-             * After binding changes (e.g., becomes available), update the total time
-             * in trackController.
+             * After binding changes (e.g., becomes available), update the total time in trackController.
              */
             runOnUiThread(new Runnable() {
                 @Override
@@ -212,8 +223,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                 Intent intent = IntentUtils.newIntent(TrackListActivity.this, TrackDetailActivity.class)
                         .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);
                 startActivity(intent);
-                Toast.makeText(
-                        TrackListActivity.this, R.string.track_list_record_success, Toast.LENGTH_SHORT)
+                Toast.makeText(TrackListActivity.this, R.string.track_list_record_success, Toast.LENGTH_SHORT)
                         .show();
             }
             if (startGps) {
@@ -222,6 +232,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             }
         }
     };
+
     private final OnClickListener recordListener = new OnClickListener() {
         public void onClick(View v) {
             if (recordingTrackId == PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
@@ -255,14 +266,17 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         trackController = new TrackController(this, trackRecordingServiceConnection, true, recordListener, stopListener);
 
         setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
+
         // Show trackController when search dialog is dismissed
         SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
-        searchManager.setOnDismissListener(new SearchManager.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                trackController.show();
-            }
-        });
+        if (searchManager != null) {
+            searchManager.setOnDismissListener(new SearchManager.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    trackController.show();
+                }
+            });
+        }
 
         listView = findViewById(R.id.track_list);
         listView.setEmptyView(findViewById(R.id.track_list_empty_view));
@@ -274,6 +288,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                 startActivity(newIntent);
             }
         });
+
         resourceCursorAdapter = new ResourceCursorAdapter(this, R.layout.list_item, null, 0) {
             @Override
             public void bindView(View view, Context context, Cursor cursor) {
@@ -395,7 +410,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         switch (item.getItemId()) {
             case R.id.track_list_start_gps:
                 LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                if (locationManager != null && !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                     intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                     startActivity(intent);
                 } else {

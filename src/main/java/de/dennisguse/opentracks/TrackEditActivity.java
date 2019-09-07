@@ -37,8 +37,7 @@ import de.dennisguse.opentracks.util.TrackRecordingServiceConnectionUtils;
 import de.dennisguse.opentracks.util.TrackUtils;
 
 /**
- * An activity that let's the user see and edit the user editable track meta
- * data such as track name, activity type, and track description.
+ * An activity that let's the user see and edit the user editable track meta data such as track name, activity type, and track description.
  *
  * @author Leif Hendrik Wilden
  */
@@ -48,6 +47,7 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
     public static final String EXTRA_NEW_TRACK = "new_track";
 
     private static final String TAG = TrackEditActivity.class.getSimpleName();
+
     private static final String ICON_VALUE_KEY = "icon_value_key";
 
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
@@ -55,7 +55,7 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
     private Track track;
     private String iconValue;
 
-    private EditText name;
+    private EditText nameEditText;
     private AutoCompleteTextView activityType;
     private Spinner activityTypeIcon;
     private EditText description;
@@ -80,14 +80,13 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
             return;
         }
 
-        name = findViewById(R.id.track_edit_name);
-        name.setText(track.getName());
+        nameEditText = findViewById(R.id.track_edit_name);
+        nameEditText.setText(track.getName());
 
         activityType = findViewById(R.id.track_edit_activity_type);
         activityType.setText(track.getCategory());
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this, R.array.activity_types, android.R.layout.simple_dropdown_item_1line);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.activity_types, android.R.layout.simple_dropdown_item_1line);
         activityType.setAdapter(adapter);
         activityType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -139,11 +138,11 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
         description = findViewById(R.id.track_edit_description);
         description.setText(track.getDescription());
 
-        Button save = findViewById(R.id.track_edit_save);
-        save.setOnClickListener(new View.OnClickListener() {
+        Button saveButton = findViewById(R.id.track_edit_save);
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TrackUtils.updateTrack(TrackEditActivity.this, track, name.getText().toString(),
+                TrackUtils.updateTrack(TrackEditActivity.this, track, nameEditText.getText().toString(),
                         activityType.getText().toString(), description.getText().toString(),
                         contentProviderUtils);
                 finish();

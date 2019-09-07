@@ -6,6 +6,12 @@ import android.util.Log;
 
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
+/**
+ * Code that is executed when the application starts.
+ * <p>
+ * NOTE: How often actual application startup happens depends on the OS.
+ * Not every start of an activity will trigger this.
+ */
 public class Startup extends Application {
 
     private final static String TAG = Startup.class.getSimpleName();

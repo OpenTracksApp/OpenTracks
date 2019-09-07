@@ -20,9 +20,10 @@ import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import de.dennisguse.opentracks.stats.TripStatistics;
-
 import java.util.ArrayList;
+import java.util.List;
+
+import de.dennisguse.opentracks.stats.TripStatistics;
 
 /**
  * A track.
@@ -43,22 +44,26 @@ public class Track implements Parcelable {
             return new Track[size];
         }
     };
+
     private long id = -1L;
     private String name = "";
     private String description = "";
     private String category = "";
     private long startId = -1L;
     private long stopId = -1L;
+
     /*
-     * The number of location points (present even if the points themselves are
-     * not loaded)
+     * The number of location points (present even if the points themselves are not loaded)
      */
     private int numberOfPoints = 0;
     private String icon = "";
+
+    @Deprecated //TODO Is this still used or a left over from Google Drive integration?
     private long modifiedTime = -1L;
     private TripStatistics tripStatistics = new TripStatistics();
+
     // Location points (which may not have been loaded)
-    private ArrayList<Location> locations = new ArrayList<>();
+    private List<Location> locations = new ArrayList<>();
 
     public Track() {
     }
@@ -190,7 +195,7 @@ public class Track implements Parcelable {
         locations.add(location);
     }
 
-    public ArrayList<Location> getLocations() {
+    public List<Location> getLocations() {
         return locations;
     }
 

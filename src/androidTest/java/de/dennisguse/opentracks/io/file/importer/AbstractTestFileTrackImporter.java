@@ -49,40 +49,32 @@ import static org.mockito.Mockito.when;
  */
 public abstract class AbstractTestFileTrackImporter {
 
-    protected static final String TRACK_NAME_0 = "blablub";
-    protected static final String TRACK_DESCRIPTION_0 = "s'Laebe isch koi Schlotzer";
+    static final String TRACK_NAME_0 = "blablub";
+    static final String TRACK_DESCRIPTION_0 = "s'Laebe isch koi Schlotzer";
 
-    protected static final String TRACK_NAME_1 = "another track";
-    protected static final String TRACK_DESCRIPTION_1 = "another description";
+    static final double TRACK_LATITUDE = 48.768364;
+    static final double TRACK_LONGITUDE = 9.177886;
+    static final double TRACK_ELEVATION = 324.0;
 
-    protected static final double TRACK_LATITUDE = 48.768364;
-    protected static final double TRACK_LONGITUDE = 9.177886;
-    protected static final double TRACK_ELEVATION = 324.0;
+    static final String TRACK_TIME_0 = "2010-04-22T18:21:00Z";
+    static final String TRACK_TIME_1 = "2010-04-22T18:21:50.123";
+    static final String TRACK_TIME_2 = "2010-04-22T18:23:00.123";
+    static final String TRACK_TIME_3 = "2010-04-22T18:24:50.123";
 
-    protected static final String TRACK_TIME_0 = "2010-04-22T18:21:00Z";
-    protected static final String TRACK_TIME_1 = "2010-04-22T18:21:50.123";
-    protected static final String TRACK_TIME_2 = "2010-04-22T18:23:00.123";
-    protected static final String TRACK_TIME_3 = "2010-04-22T18:24:50.123";
-
-    protected static final SimpleDateFormat DATE_FORMAT_0 = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'", Locale.US);
-    protected static final SimpleDateFormat DATE_FORMAT_1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US);
-    protected static final long TRACK_ID_0 = 1;
-    protected static final long TRACK_ID_1 = 2;
-    protected static final long TRACK_POINT_ID_0 = 1;
-    protected static final long TRACK_POINT_ID_1 = 2;
-    protected static final long TRACK_POINT_ID_3 = 4;
-    protected static final long WAYPOINT_ID_0 = 1;
-    protected static final Uri TRACK_ID_0_URI = ContentUris.appendId(TracksColumns.CONTENT_URI.buildUpon(), TRACK_ID_0).build();
-    protected static final Uri TRACK_ID_1_URI = ContentUris.appendId(TracksColumns.CONTENT_URI.buildUpon(), TRACK_ID_1).build();
-    protected static final Uri WAYPOINT_ID_O_URI = ContentUris.appendId(WaypointsColumns.CONTENT_URI.buildUpon(), WAYPOINT_ID_0).build();
+    static final SimpleDateFormat DATE_FORMAT_0 = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'", Locale.US);
+    static final SimpleDateFormat DATE_FORMAT_1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US);
+    static final long TRACK_ID_0 = 1;
+    static final long TRACK_POINT_ID_0 = 1;
+    static final long TRACK_POINT_ID_1 = 2;
+    static final long TRACK_POINT_ID_3 = 4;
+    static final Uri TRACK_ID_0_URI = ContentUris.appendId(TracksColumns.CONTENT_URI.buildUpon(), TRACK_ID_0).build();
+    private static final long WAYPOINT_ID_0 = 1;
+    private static final Uri WAYPOINT_ID_O_URI = ContentUris.appendId(WaypointsColumns.CONTENT_URI.buildUpon(), WAYPOINT_ID_0).build();
 
     protected final Context context = ApplicationProvider.getApplicationContext();
 
     static {
-        /*
-         * We can't omit the timezones in the test, otherwise it'll use the local
-         * timezone and fail depending on where the test runner is.
-         */
+        // We can't omit the timezones in the test, otherwise it'll use the local timezone and fail depending on where the test runner is.
         SimpleTimeZone utc = new SimpleTimeZone(0, "UTC");
         DATE_FORMAT_0.setTimeZone(utc);
         DATE_FORMAT_1.setTimeZone(utc);
@@ -91,7 +83,7 @@ public abstract class AbstractTestFileTrackImporter {
     @Mock
     public ContentProviderUtils contentProviderUtils;
 
-    protected Location createLocation(int index, long time) {
+    Location createLocation(int index, long time) {
         Location location = new Location(LocationManager.GPS_PROVIDER);
         location.setLatitude(TRACK_LATITUDE + index);
         location.setLongitude(TRACK_LONGITUDE + index);

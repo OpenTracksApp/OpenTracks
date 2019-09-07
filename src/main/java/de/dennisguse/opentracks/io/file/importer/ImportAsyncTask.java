@@ -53,11 +53,9 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     // true if the AsyncTask has completed
     private boolean completed;
 
-    // the number of files successfully imported
-    private int successCount;
+    private int importTrackCount;
 
-    // the number of files to import
-    private int totalCount;
+    private int totalTrackCount;
 
     // the last successfully imported track id
     private long trackId;
@@ -76,8 +74,8 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         context = importActivity.getApplicationContext();
 
         completed = false;
-        successCount = 0;
-        totalCount = 0;
+        importTrackCount = 0;
+        totalTrackCount = 0;
         trackId = -1L;
     }
 
@@ -89,7 +87,7 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     public void setActivity(ImportActivity importActivity) {
         this.importActivity = importActivity;
         if (completed && importActivity != null) {
-            importActivity.onAsyncTaskCompleted(successCount, totalCount);
+            importActivity.onAsyncTaskCompleted(importTrackCount, totalTrackCount);
         }
     }
 
@@ -112,20 +110,20 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
             }
 
             List<File> files = getFiles();
-            totalCount = files.size();
-            if (totalCount == 0) {
+            totalTrackCount = files.size();
+            if (totalTrackCount == 0) {
                 return true;
             }
 
-            for (int i = 0; i < totalCount; i++) {
+            for (int i = 0; i < totalTrackCount; i++) {
                 if (isCancelled()) {
                     // If cancelled, return true to show the number of files imported
                     return true;
                 }
                 if (importFile(files.get(i))) {
-                    successCount++;
+                    importTrackCount++;
                 }
-                publishProgress(i + 1, totalCount);
+                publishProgress(i + 1, totalTrackCount);
             }
             return true;
         } finally {
@@ -146,7 +144,7 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     protected void onPostExecute(Boolean result) {
         completed = true;
         if (importActivity != null) {
-            importActivity.onAsyncTaskCompleted(successCount, totalCount);
+            importActivity.onAsyncTaskCompleted(importTrackCount, totalTrackCount);
         }
     }
 
@@ -154,7 +152,7 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     protected void onCancelled() {
         completed = true;
         if (importActivity != null) {
-            importActivity.onAsyncTaskCompleted(successCount, totalCount);
+            importActivity.onAsyncTaskCompleted(importTrackCount, totalTrackCount);
         }
     }
 
@@ -190,9 +188,9 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     }
 
     /**
-     * Gets a list of files. If importAll is true, returns a list of the files
-     * under the path directory. If importAll is false, returns a list containing
-     * just the path file.
+     * Gets a list of files.
+     * If importAll is true, returns a list of the files under the path directory.
+     * If importAll is false, returns a list containing just the path file.
      */
     private List<File> getFiles() {
         List<File> files = new ArrayList<>();

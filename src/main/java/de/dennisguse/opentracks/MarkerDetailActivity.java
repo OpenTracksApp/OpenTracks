@@ -25,13 +25,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import java.util.ArrayList;
+
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.Waypoint;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
 import de.dennisguse.opentracks.fragments.MarkerDetailFragment;
-import de.dennisguse.opentracks.R;
-
-import java.util.ArrayList;
 
 /**
  * An activity to display marker detail info.
@@ -41,6 +40,7 @@ import java.util.ArrayList;
 public class MarkerDetailActivity extends AbstractActivity implements DeleteMarkerCaller {
 
     public static final String EXTRA_MARKER_ID = "marker_id";
+
     private static final String TAG = MarkerDetailActivity.class.getSimpleName();
 
     private ArrayList<Long> markerIds;
@@ -108,7 +108,7 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
      */
     private class MarkerDetailPagerAdapter extends FragmentStatePagerAdapter {
 
-        public MarkerDetailPagerAdapter(FragmentManager fragmentManager) {
+        MarkerDetailPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
         }
 

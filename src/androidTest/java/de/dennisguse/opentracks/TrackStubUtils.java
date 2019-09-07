@@ -24,7 +24,6 @@ import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 
 /**
  * Commons utilities for creating stubs of track, location.
- * The class will be enriched if needs more similar stubs for test.
  *
  * @author Youtao Liu
  */
@@ -50,8 +49,7 @@ public class TrackStubUtils {
     public static Track createTrack(int numberOfLocations) {
         Track track = new Track();
         for (int i = 0; i < numberOfLocations; i++) {
-            track.addLocation(createSensorDataSetLocation(INITIAL_LATITUDE + i * DIFFERENCE, INITIAL_LONGITUDE
-                    + i * DIFFERENCE, INITIAL_ALTITUDE + i * DIFFERENCE));
+            track.addLocation(createSensorDataSetLocation(INITIAL_LATITUDE + i * DIFFERENCE, INITIAL_LONGITUDE + i * DIFFERENCE, INITIAL_ALTITUDE + i * DIFFERENCE));
         }
 
         return track;
@@ -71,7 +69,7 @@ public class TrackStubUtils {
      *
      * @return a SensorDataSetLocation stub.
      */
-    public static SensorDataSetLocation createSensorDataSetLocation(double latitude, double longitude, double altitude) {
+    private static SensorDataSetLocation createSensorDataSetLocation(double latitude, double longitude, double altitude) {
         // Initial Location
         Location loc = new Location(LOCATION_PROVIDER);
         loc.setLatitude(latitude);

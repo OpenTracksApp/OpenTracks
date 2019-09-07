@@ -26,17 +26,19 @@ import java.util.EnumSet;
 import java.util.Set;
 
 /**
- * Data source manager. Creates observers/listeners and manages their
- * registration with {@link DataSource}. The observers/listeners calls
- * {@link DataSourceListener} when data changes.
+ * Creates observers/listeners and manages their registration with {@link DataSource}.
+ * The observers/listeners calls {@link DataSourceListener} when data changes.
  *
  * @author Rodrigo Damazio
  */
-public class DataSourceManager {
+class DataSourceManager {
 
     private static final String TAG = DataSourceManager.class.getSimpleName();
+
     private final DataSource dataSource;
+
     private final DataSourceListener dataSourceListener;
+
     // Registered listeners
     private final Set<TrackDataType> registeredListeners = EnumSet.noneOf(TrackDataType.class);
     private final Handler handler;
@@ -45,7 +47,7 @@ public class DataSourceManager {
     private final TrackPointsTableObserver trackPointsTableObserver;
     private final PreferenceListener preferenceListener;
 
-    public DataSourceManager(DataSource dataSource, DataSourceListener dataSourceListener) {
+    DataSourceManager(DataSource dataSource, DataSourceListener dataSourceListener) {
         this.dataSource = dataSource;
         this.dataSourceListener = dataSourceListener;
 
@@ -61,7 +63,7 @@ public class DataSourceManager {
      *
      * @param listeners the listeners
      */
-    public void updateListeners(EnumSet<TrackDataType> listeners) {
+    void updateListeners(EnumSet<TrackDataType> listeners) {
         EnumSet<TrackDataType> neededListeners = EnumSet.copyOf(listeners);
 
         /*
@@ -156,7 +158,7 @@ public class DataSourceManager {
     /**
      * Unregisters all listeners with data source.
      */
-    public void unregisterAllListeners() {
+    void unregisterAllListeners() {
         for (TrackDataType trackDataType : TrackDataType.values()) {
             unregisterListener(trackDataType);
         }
@@ -169,7 +171,7 @@ public class DataSourceManager {
      */
     private class TracksTableObserver extends ContentObserver {
 
-        public TracksTableObserver() {
+        TracksTableObserver() {
             super(handler);
         }
 
@@ -186,7 +188,7 @@ public class DataSourceManager {
      */
     private class WaypointsTableObserver extends ContentObserver {
 
-        public WaypointsTableObserver() {
+        WaypointsTableObserver() {
             super(handler);
         }
 
@@ -203,7 +205,7 @@ public class DataSourceManager {
      */
     private class TrackPointsTableObserver extends ContentObserver {
 
-        public TrackPointsTableObserver() {
+        TrackPointsTableObserver() {
             super(handler);
         }
 

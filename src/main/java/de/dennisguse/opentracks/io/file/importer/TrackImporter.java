@@ -28,7 +28,7 @@ public interface TrackImporter {
      * Import a file.
      *
      * @param inputStream the file's input stream
-     * @return the imported track id or -1L.
+     * @return the imported track id or RECORDING_TRACK_ID_DEFAULT.
      */
     long importFile(InputStream inputStream);
 }

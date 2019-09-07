@@ -65,8 +65,11 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
             WaypointsColumns.NAME, WaypointsColumns.DESCRIPTION, WaypointsColumns.CATEGORY,
             WaypointsColumns.TYPE, WaypointsColumns.TIME, WaypointsColumns.PHOTOURL,
             WaypointsColumns.LATITUDE, WaypointsColumns.LONGITUDE};
+
     private ContentProviderUtils contentProviderUtils;
+
     private SharedPreferences sharedPreferences;
+
     private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
     private boolean recordingTrackPaused = PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT;
     /*

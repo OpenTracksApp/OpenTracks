@@ -22,20 +22,19 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
-import de.dennisguse.opentracks.R;
 
 /**
  * An activity for accessing recording settings.
  *
  * @author Jimmy Shih
  */
-public class RecordingSettingsActivity extends PreferenceActivity
-        implements ChooseActivityTypeCaller {
+public class RecordingSettingsActivity extends PreferenceActivity implements ChooseActivityTypeCaller {
 
     private static final int DIALOG_CHOOSE_ACTIVITY = 0;
 
@@ -51,13 +50,10 @@ public class RecordingSettingsActivity extends PreferenceActivity
         configFrequencyPreference(R.string.voice_frequency_key, metricUnits);
         configFrequencyPreference(R.string.split_frequency_key, metricUnits);
         configDefaultActivity();
-        configListPreference(R.string.min_recording_interval_key, R.array.min_recording_interval_values,
-                metricUnits);
+        configListPreference(R.string.min_recording_interval_key, R.array.min_recording_interval_values, metricUnits);
         configListPreference(R.string.recording_distance_interval_key, R.array.recording_distance_interval_values, metricUnits);
-        configListPreference(R.string.max_recording_distance_key,  R.array.max_recording_distance_values,
-                metricUnits);
-        configListPreference(R.string.recording_gps_accuracy_key, R.array.recording_gps_accuracy_values,
-                metricUnits);
+        configListPreference(R.string.max_recording_distance_key, R.array.max_recording_distance_values, metricUnits);
+        configListPreference(R.string.recording_gps_accuracy_key, R.array.recording_gps_accuracy_values, metricUnits);
         configListPreference(R.string.auto_resume_track_timeout_key, R.array.auto_resume_track_timeout_values, metricUnits);
     }
 
@@ -80,31 +76,25 @@ public class RecordingSettingsActivity extends PreferenceActivity
     }
 
     private void configDefaultActivity() {
-        activityTypePreference = (ActivityTypePreference) findPreference(
-                getString(R.string.default_activity_key));
+        activityTypePreference = (ActivityTypePreference) findPreference(getString(R.string.default_activity_key));
         String defaultActivity = PreferencesUtils.getString(
                 this, R.string.default_activity_key, PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT);
-        activityTypePreference.setOnPreferenceChangeListener(
-                new Preference.OnPreferenceChangeListener() {
-                    @Override
-                    public boolean onPreferenceChange(Preference pref, Object newValue) {
-                        String stringValue = (String) newValue;
-                        pref.setSummary(stringValue != null
-                                && !stringValue.equals(PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT) ? stringValue
-                                : getString(R.string.value_unknown));
-                        return true;
-                    }
-                });
-        activityTypePreference.setSummary(defaultActivity != null
-                && !defaultActivity.equals(PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT) ? defaultActivity
-                : getString(R.string.value_unknown));
+        activityTypePreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference pref, Object newValue) {
+                String stringValue = (String) newValue;
+                pref.setSummary(stringValue != null && !stringValue.equals(PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT) ? stringValue : getString(R.string.value_unknown));
+                return true;
+            }
+        });
+        activityTypePreference.setSummary(defaultActivity != null && !defaultActivity.equals(PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT) ? defaultActivity : getString(R.string.value_unknown));
         activityTypePreference.setRecordingSettingsActivity(this);
     }
 
     private void configListPreference(int key, int valueArray, boolean metricUnits) {
         ListPreference preference = (ListPreference) findPreference(getString(key));
 
-        @Deprecated
+        @Deprecated //TODO Can we make values an int array?
         String[] values = getResources().getStringArray(valueArray);
         String[] options = new String[values.length];
         switch (key) {

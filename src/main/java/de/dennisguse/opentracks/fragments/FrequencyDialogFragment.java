@@ -23,9 +23,9 @@ import android.os.Bundle;
 
 import androidx.fragment.app.FragmentActivity;
 
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
-import de.dennisguse.opentracks.R;
 
 /**
  * A DialogFragment to configure frequency.
@@ -82,8 +82,8 @@ public class FrequencyDialogFragment extends AbstractDialogFragment {
     }
 
     /**
-     * Gets the list index for a frequency value. Returns 0 if the value is not on
-     * the list.
+     * Gets the list index for a frequency value.
+     * Returns 0 if the value is not on the list.
      */
     private int getListIndex(int frequencyValue) {
         String[] values = getResources().getStringArray(R.array.frequency_values);

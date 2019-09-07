@@ -30,7 +30,6 @@ import org.junit.runner.RunWith;
 
 /**
  * Tests for {@link AnnouncementPeriodicTaskFactory}.
- * These tests require Donut+ to run.
  *
  * @author Rodrigo Damazio
  */

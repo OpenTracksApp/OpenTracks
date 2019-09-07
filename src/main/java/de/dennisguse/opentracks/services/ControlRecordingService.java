@@ -30,12 +30,10 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.widgets.TrackWidgetProvider;
 
 /**
- * A service to control starting and stopping of a recording. This service,
- * through the AndroidManifest.xml, is configured to only allow components of
- * the same application to invoke it. Thus this service can be used my the
- * app widget, {@link TrackWidgetProvider}, but not by other applications. This
- * application delegates starting and stopping a recording to
- * {@link TrackRecordingService} using RPC calls.
+ * A service to control starting and stopping of a recording.
+ * This service, through the AndroidManifest.xml, is configured to only allow components of the same application to invoke it.
+ * Thus this service can be used by the app widget, {@link TrackWidgetProvider}, but not by other applications.
+ * This application delegates starting and stopping a recording to {@link TrackRecordingService} using RPC calls.
  *
  * @author Jimmy Shih
  */
@@ -60,9 +58,8 @@ public class ControlRecordingService extends IntentService implements ServiceCon
     }
 
     @VisibleForTesting
-    @Nullable
     @Override
-    public IBinder onBind(Intent intent) {
+    public IBinder onBind(@Nullable Intent intent) {
         return new LocalBinder();
     }
 
@@ -104,8 +101,7 @@ public class ControlRecordingService extends IntentService implements ServiceCon
     }
 
     /**
-     * Notifies all threads that connection to {@link TrackRecordingService} is
-     * available.
+     * Notifies all threads that connection to {@link TrackRecordingService} is available.
      */
     private synchronized void notifyConnected() {
         connected = true;
@@ -120,7 +116,6 @@ public class ControlRecordingService extends IntentService implements ServiceCon
             try {
                 wait();
             } catch (InterruptedException e) {
-
                 // can safely ignore
             }
         }
@@ -133,7 +128,7 @@ public class ControlRecordingService extends IntentService implements ServiceCon
     }
 
     @VisibleForTesting
-    public class LocalBinder extends Binder {
+    class LocalBinder extends Binder {
         ControlRecordingService getService() {
             return ControlRecordingService.this;
         }

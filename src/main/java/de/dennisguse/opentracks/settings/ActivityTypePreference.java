@@ -77,8 +77,7 @@ public class ActivityTypePreference extends DialogPreference {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    String iconValue = TrackIconUtils.getIconValue(
-                            getContext(), textView.getText().toString());
+                    String iconValue = TrackIconUtils.getIconValue(getContext(), textView.getText().toString());
                     TrackIconUtils.setIconSpinner(spinner, iconValue);
                 }
             }
@@ -136,7 +135,7 @@ public class ActivityTypePreference extends DialogPreference {
      *
      * @param activity the activity
      */
-    public void setRecordingSettingsActivity(RecordingSettingsActivity activity) {
+    void setRecordingSettingsActivity(RecordingSettingsActivity activity) {
         recordingSettingsActivity = activity;
     }
 
@@ -145,10 +144,9 @@ public class ActivityTypePreference extends DialogPreference {
      *
      * @param iconValue the icon value
      */
-    public void updateValue(String iconValue) {
+    void updateValue(String iconValue) {
         TrackIconUtils.setIconSpinner(spinner, iconValue);
-        textView.setText(
-                recordingSettingsActivity.getString(TrackIconUtils.getIconActivityType(iconValue)));
+        textView.setText(recordingSettingsActivity.getString(TrackIconUtils.getIconActivityType(iconValue)));
         textView.clearFocus();
     }
 }

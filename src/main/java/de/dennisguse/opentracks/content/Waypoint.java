@@ -42,6 +42,7 @@ public final class Waypoint implements Parcelable {
             return new Waypoint[size];
         }
     };
+
     private long id = -1L;
     private String name = "";
     private String description = "";
@@ -60,9 +61,7 @@ public final class Waypoint implements Parcelable {
     public Waypoint() {
     }
 
-    public Waypoint(String name, String description, String category, String icon, long trackId,
-                    WaypointType type, double length, long duration, long startId, long stopId, Location location,
-                    TripStatistics tripStatistics, String photoUrl) {
+    public Waypoint(String name, String description, String category, String icon, long trackId, WaypointType type, double length, long duration, long startId, long stopId, Location location, TripStatistics tripStatistics, String photoUrl) {
         this.name = name;
         this.description = description;
         this.category = category;

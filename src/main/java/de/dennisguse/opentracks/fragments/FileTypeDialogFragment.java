@@ -96,7 +96,7 @@ public class FileTypeDialogFragment extends AbstractDialogFragment {
         onDismissed();
     }
 
-    protected void onDismissed() {
+    private void onDismissed() {
         dismiss();
         caller.onDismissed();
     }

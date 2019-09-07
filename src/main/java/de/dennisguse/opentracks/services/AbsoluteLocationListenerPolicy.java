@@ -17,8 +17,7 @@
 package de.dennisguse.opentracks.services;
 
 /**
- * This is a simple location listener policy that will always dictate the same
- * polling interval.
+ * This is a simple location listener policy that will always dictate the same polling interval.
  *
  * @author Sandor Dornbush
  */
@@ -41,7 +40,7 @@ public class AbsoluteLocationListenerPolicy implements LocationListenerPolicy {
     }
 
     @Override
-    public int getMinDistance() {
+    public int getMinDistance_m() {
         return 0;
     }
 

@@ -41,7 +41,7 @@ public class ChooseActivityTypeImageAdapter extends BaseAdapter {
     private final int padding;
     private int selected = -1;
 
-    public ChooseActivityTypeImageAdapter(Context context, List<Integer> imageIds, int width, int height, int padding) {
+    ChooseActivityTypeImageAdapter(Context context, List<Integer> imageIds, int width, int height, int padding) {
         this.context = context;
         this.imageIds = imageIds;
         this.width = width;

@@ -87,6 +87,8 @@ public class BootReceiverTest {
      */
     private boolean isServiceExisted(Context context) {
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        Assert.assertNotNull(activityManager);
+
         List<ActivityManager.RunningServiceInfo> serviceList = activityManager.getRunningServices(Integer.MAX_VALUE);
 
         for (int i = 0; i < serviceList.size(); i++) {

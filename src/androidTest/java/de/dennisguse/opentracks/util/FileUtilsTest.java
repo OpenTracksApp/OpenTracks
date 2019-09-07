@@ -32,16 +32,13 @@ public class FileUtilsTest extends TestCase {
      * Tests {@link FileUtils#getPath(String...)}.
      */
     public void testBuildExternalDirectoryPath() {
-        String expectedName = Environment.getExternalStorageDirectory() + File.separator
-                + FileUtils.SDCARD_TOP_DIR + File.separator + "a" + File.separator + "b" + File.separator
-                + "c";
+        String expectedName = Environment.getExternalStorageDirectory() + File.separator + FileUtils.SDCARD_TOP_DIR + File.separator + "a" + File.separator + "b" + File.separator + "c";
         String dirName = FileUtils.getPath("a", "b", "c");
         assertEquals(expectedName, dirName);
     }
 
     /**
-     * Tests {@link FileUtils#buildUniqueFileName(File, String, String)} when the
-     * file is new.
+     * Tests {@link FileUtils#buildUniqueFileName(File, String, String)} when the file is new.
      */
     public void testBuildUniqueFileName_new() {
         String filename = FileUtils.buildUniqueFileName(new File("/dir"), "Filename", "ext");
@@ -49,8 +46,7 @@ public class FileUtilsTest extends TestCase {
     }
 
     /**
-     * Tests {@link FileUtils#buildUniqueFileName(File, String, String)} when the
-     * file exists already.
+     * Tests {@link FileUtils#buildUniqueFileName(File, String, String)} when the file exists already.
      */
     public void testBuildUniqueFileName_exist() {
         // Expect "/default.prop" to exist on the phone/emulator
@@ -69,8 +65,8 @@ public class FileUtilsTest extends TestCase {
     }
 
     /**
-     * Tests {@link FileUtils#sanitizeFileName(String)} with i18n characters (in
-     * Chinese and Russian). Verifies that they are allowed.
+     * Tests {@link FileUtils#sanitizeFileName(String)} with i18n characters (in Chinese and Russian).
+     * Verifies that they are allowed.
      */
     public void testSanitizeFileName_i18n() {
         String name = "您好-привет";
@@ -79,8 +75,8 @@ public class FileUtilsTest extends TestCase {
     }
 
     /**
-     * Tests {@link FileUtils#sanitizeFileName(String)} with special FAT32
-     * characters. Verifies that they are allowed.
+     * Tests {@link FileUtils#sanitizeFileName(String)} with special FAT32 characters.
+     * Verifies that they are allowed.
      */
     public void testSanitizeFileName_special_characters() {
         String name = "$%'-_@~`!(){}^#&+,;=[] ";
@@ -89,8 +85,8 @@ public class FileUtilsTest extends TestCase {
     }
 
     /**
-     * Tests {@link FileUtils#sanitizeFileName(String)} with multiple escaped
-     * characters in a row. Verifies that they are collapsed into one underscore.
+     * Tests {@link FileUtils#sanitizeFileName(String)} with multiple escaped characters in a row.
+     * Verifies that they are collapsed into one underscore.
      */
     public void testSanitizeFileName_collapse() {
         String name = "hello//there";
@@ -99,8 +95,8 @@ public class FileUtilsTest extends TestCase {
     }
 
     /**
-     * Tests {@link FileUtils#truncateFileName(File, String, String)}. Verifies
-     * the a long file name is truncated.
+     * Tests {@link FileUtils#truncateFileName(File, String, String)}.
+     * Verifies the a long file name is truncated.
      */
     public void testTruncateFileName() {
         File directory = new File("/dir1/dir2/");
@@ -115,7 +111,6 @@ public class FileUtilsTest extends TestCase {
         for (int i = 0; i < truncated.length(); i++) {
             assertEquals('a', truncated.charAt(i));
         }
-        assertEquals(FileUtils.MAX_FAT32_PATH_LENGTH,
-                new File(directory, truncated + suffix).getPath().length());
+        assertEquals(FileUtils.MAX_FAT32_PATH_LENGTH, new File(directory, truncated + suffix).getPath().length());
     }
 }

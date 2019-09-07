@@ -27,25 +27,9 @@ import android.provider.BaseColumns;
 public interface TracksColumns extends BaseColumns {
 
     String TABLE_NAME = "tracks";
-
-    /**
-     * Tracks provider uri.
-     */
     Uri CONTENT_URI = Uri.parse(ContentProviderUtils.CONTENT_BASE_URI + "/tracks");
-
-    /**
-     * Track content type.
-     */
     String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.de.dennisguse.track";
-
-    /**
-     * Track id content type.
-     */
     String CONTENT_ITEMTYPE = "vnd.android.cursor.item/vnd.de.dennisguse.track";
-
-    /**
-     * Tracks table default sort order.
-     */
     String DEFAULT_SORT_ORDER = "_id";
 
     // Columns

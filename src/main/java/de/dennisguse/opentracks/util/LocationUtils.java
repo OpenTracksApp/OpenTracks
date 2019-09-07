@@ -18,30 +18,30 @@ package de.dennisguse.opentracks.util;
 import android.location.Location;
 import android.util.Log;
 
-import de.dennisguse.opentracks.content.Track;
-
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
+
+import de.dennisguse.opentracks.content.Track;
 
 /**
  * Utility class for decimating tracks at a given level of precision.
  *
  * @author Leif Hendrik Wilden
  */
+//TODO Cleanup: rename variables
 public class LocationUtils {
 
     private static final String TAG = LocationUtils.class.getSimpleName();
 
     // 1 minute in milliseconds
-    private static final long MAX_LOCATION_AGE_MS = (long) (UnitConversions.MIN_TO_S
-            * UnitConversions.S_TO_MS);
+    private static final long MAX_LOCATION_AGE_MS = (long) (UnitConversions.MIN_TO_S * UnitConversions.S_TO_MS);
 
     private LocationUtils() {
     }
 
     /**
-     * Computes the distance on the two sphere between the point c0 and the line
-     * segment c1 to c2.
+     * Computes the distance on the two sphere between the point c0 and the line segment c1 to c2.
      *
      * @param c0 the first coordinate
      * @param c1 the beginning of the line segment
@@ -64,31 +64,36 @@ public class LocationUtils {
         double s2s1lng = s2lng - s1lng;
         final double u = ((s0lat - s1lat) * s2s1lat + (s0lng - s1lng) * s2s1lng)
                 / (s2s1lat * s2s1lat + s2s1lng * s2s1lng);
+
         if (u <= 0) {
             return c0.distanceTo(c1);
         }
+
         if (u >= 1) {
             return c0.distanceTo(c2);
         }
+
         Location sa = new Location("");
         sa.setLatitude(c0.getLatitude() - c1.getLatitude());
         sa.setLongitude(c0.getLongitude() - c1.getLongitude());
+
         Location sb = new Location("");
         sb.setLatitude(u * (c2.getLatitude() - c1.getLatitude()));
         sb.setLongitude(u * (c2.getLongitude() - c1.getLongitude()));
+
         return sa.distanceTo(sb);
     }
 
     /**
-     * Decimates the given locations for a given zoom level. This uses a
-     * Douglas-Peucker decimation algorithm.
+     * Decimates the given locations for a given zoom level.
+     * This uses a Douglas-Peucker decimation algorithm.
      *
      * @param tolerance in meters
      * @param locations input
      * @param decimated output
      */
-    private static void decimate(
-            double tolerance, ArrayList<Location> locations, ArrayList<Location> decimated) {
+    //TODO What was it used for? Sharing data with other apps?
+    private static void decimate(double tolerance, List<Location> locations, List<Location> decimated) {
         final int n = locations.size();
         if (n < 1) {
             return;
@@ -153,16 +158,16 @@ public class LocationUtils {
     }
 
     /**
-     * Checks if a given location is a valid (i.e. physically possible) location
-     * on Earth. Note: The special separator locations (which have latitude = 100)
-     * will not qualify as valid. Neither will locations with lat=0 and lng=0 as
-     * these are most likely "bad" measurements which often cause trouble.
+     * Checks if a given location is a valid (i.e. physically possible) locationon Earth.
+     * Note: The special separator locations (which have latitude = 100) will not qualify as valid.
+     * Neither will locations with lat=0 and lng=0 as these are most likely "bad" measurements which often cause trouble.
      *
      * @param location the location to test
      * @return true if the location is a valid location.
      */
     public static boolean isValidLocation(Location location) {
-        return location != null && Math.abs(location.getLatitude()) <= 90
+        return location != null
+                && Math.abs(location.getLatitude()) <= 90
                 && Math.abs(location.getLongitude()) <= 180;
     }
 
@@ -172,7 +177,6 @@ public class LocationUtils {
      * @param location the location
      */
     public static boolean isLocationOld(Location location) {
-        return !LocationUtils.isValidLocation(location)
-                || (System.currentTimeMillis() - location.getTime() > MAX_LOCATION_AGE_MS);
+        return !LocationUtils.isValidLocation(location) || (System.currentTimeMillis() - location.getTime() > MAX_LOCATION_AGE_MS);
     }
 }

@@ -23,6 +23,7 @@ import androidx.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Locale;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -97,34 +98,35 @@ public class SearchEngine {
     /**
      * Oldest timestamp for which we rank based on time (2000-01-01 00:00:00.000)
      */
-    private static final long OLDEST_ALLOWED_TIMESTAMP = 946692000000L;
+    public static final long OLDEST_ALLOWED_TIMESTAMP = 946692000000L;
+
     /**
      * Comparador for scored results.
      */
-    private static final Comparator<ScoredResult> SCORED_RESULT_COMPARATOR =
-            new Comparator<ScoredResult>() {
-                @Override
-                public int compare(ScoredResult r1, ScoredResult r2) {
-                    // Score ordering.
-                    int scoreDiff = Double.compare(r2.score, r1.score);
-                    if (scoreDiff != 0) {
-                        return scoreDiff;
-                    }
+    private static final Comparator<ScoredResult> SCORED_RESULT_COMPARATOR = new Comparator<ScoredResult>() {
+        @Override
+        public int compare(ScoredResult r1, ScoredResult r2) {
+            // Score ordering.
+            int scoreDiff = Double.compare(r2.score, r1.score);
+            if (scoreDiff != 0) {
+                return scoreDiff;
+            }
 
-                    // Make tracks come before waypoints.
-                    if (r1.waypoint != null && r2.track != null) {
-                        return 1;
-                    } else if (r1.track != null && r2.waypoint != null) {
-                        return -1;
-                    }
+            // Make tracks come before waypoints.
+            if (r1.waypoint != null && r2.track != null) {
+                return 1;
+            } else if (r1.track != null && r2.waypoint != null) {
+                return -1;
+            }
 
-                    // Finally, use arbitrary ordering, by ID.
-                    long id1 = r1.track != null ? r1.track.getId() : r1.waypoint.getId();
-                    long id2 = r2.track != null ? r2.track.getId() : r2.waypoint.getId();
-                    long idDiff = id2 - id1;
-                    return Long.signum(idDiff);
-                }
-            };
+            // Finally, use arbitrary ordering, by ID.
+            long id1 = r1.track != null ? r1.track.getId() : r1.waypoint.getId();
+            long id2 = r2.track != null ? r2.track.getId() : r2.waypoint.getId();
+            long idDiff = id2 - id1;
+            return Long.signum(idDiff);
+        }
+    };
+
     private final ContentProviderUtils providerUtils;
 
     public SearchEngine(ContentProviderUtils providerUtils) {
@@ -134,6 +136,7 @@ public class SearchEngine {
     /**
      * Squashes a number by calculating 1 / log (1 + x).
      */
+    //TODO Why is this done?
     private static double squash(double x) {
         return 1.0 / Math.log1p(x);
     }
@@ -145,15 +148,10 @@ public class SearchEngine {
      * @return a set of results, sorted according to their score
      */
     public SortedSet<ScoredResult> search(SearchQuery query) {
-        ArrayList<Track> tracks = new ArrayList<>();
-        ArrayList<Waypoint> waypoints = new ArrayList<>();
         TreeSet<ScoredResult> scoredResults = new TreeSet<>(SCORED_RESULT_COMPARATOR);
 
-        retrieveTracks(query, tracks);
-        retrieveWaypoints(query, waypoints);
-
-        scoreTrackResults(tracks, query, scoredResults);
-        scoreWaypointResults(waypoints, query, scoredResults);
+        scoreTrackResults(retrieveTracks(query), query, scoredResults);
+        scoreWaypointResults(retrieveWaypoints(query), query, scoredResults);
 
         return scoredResults;
     }
@@ -161,18 +159,19 @@ public class SearchEngine {
     /**
      * Retrieves tracks matching the given query from the database.
      *
-     * @param query  the query to retrieve for
-     * @param tracks list to fill with the resulting tracks
+     * @param query the query to retrieve for
      */
-    private void retrieveTracks(SearchQuery query, ArrayList<Track> tracks) {
+    private List<Track> retrieveTracks(SearchQuery query) {
+        ArrayList<Track> tracks = new ArrayList<>();
+
         String queryLikeSelection = "%" + query.textQuery + "%";
         String[] trackSelectionArgs = new String[]{
                 queryLikeSelection,
                 queryLikeSelection,
-                queryLikeSelection};
+                queryLikeSelection
+        };
 
-        try (Cursor cursor = providerUtils.getTrackCursor(
-                TRACK_SELECTION_QUERY, trackSelectionArgs, TRACK_SELECTION_ORDER)) {
+        try (Cursor cursor = providerUtils.getTrackCursor(TRACK_SELECTION_QUERY, trackSelectionArgs, TRACK_SELECTION_ORDER)) {
             if (cursor != null) {
                 tracks.ensureCapacity(cursor.getCount());
                 while (cursor.moveToNext()) {
@@ -180,22 +179,26 @@ public class SearchEngine {
                 }
             }
         }
+
+        return tracks;
     }
 
     /**
      * Retrieves waypoints matching the given query from the database.
      *
-     * @param query     the query to retrieve for
-     * @param waypoints list to fill with the resulting waypoints
+     * @param query the query to retrieve for
      */
-    private void retrieveWaypoints(SearchQuery query, ArrayList<Waypoint> waypoints) {
+    private List<Waypoint> retrieveWaypoints(SearchQuery query) {
+        ArrayList<Waypoint> waypoints = new ArrayList<>();
+
         String queryLikeSelection2 = "%" + query.textQuery + "%";
         String[] waypointSelectionArgs = new String[]{
                 queryLikeSelection2,
                 queryLikeSelection2,
-                queryLikeSelection2};
-        try (Cursor cursor = providerUtils.getWaypointCursor(WAYPOINT_SELECTION_QUERY, waypointSelectionArgs,
-                WAYPOINT_SELECTION_ORDER, MAX_SCORED_WAYPOINTS)) {
+                queryLikeSelection2
+        };
+
+        try (Cursor cursor = providerUtils.getWaypointCursor(WAYPOINT_SELECTION_QUERY, waypointSelectionArgs, WAYPOINT_SELECTION_ORDER, MAX_SCORED_WAYPOINTS)) {
             if (cursor != null) {
                 waypoints.ensureCapacity(cursor.getCount());
                 while (cursor.moveToNext()) {
@@ -206,6 +209,8 @@ public class SearchEngine {
                 }
             }
         }
+
+        return waypoints;
     }
 
     /**
@@ -238,7 +243,6 @@ public class SearchEngine {
         score *= getTitleBoost(query, track.getName(), track.getDescription(), track.getCategory());
 
         TripStatistics statistics = track.getTripStatistics();
-        // TODO: Also boost for proximity to the currently-centered position on the map.
         score *= getDistanceBoost(query, statistics.getMeanLatitude(), statistics.getMeanLongitude());
 
         long meanTimestamp = (statistics.getStartTime() + statistics.getStopTime()) / 2L;
@@ -281,7 +285,6 @@ public class SearchEngine {
 
         Location location = waypoint.getLocation();
         score *= getTitleBoost(query, waypoint.getName(), waypoint.getDescription(), waypoint.getCategory());
-        // TODO: Also boost for proximity to the currently-centered position on the map.
         score *= getDistanceBoost(query, location.getLatitude(), location.getLongitude());
         score *= getTimeBoost(query, location.getTime());
 
@@ -302,8 +305,7 @@ public class SearchEngine {
      * @param category    the category of the track or waypoint
      * @return the total boost to be applied to the result
      */
-    private double getTitleBoost(SearchQuery query,
-                                 String name, String description, String category) {
+    private double getTitleBoost(SearchQuery query, String name, String description, String category) {
         // Title boost: track name > description > category.
         double boost = 1.0;
         if (name.toLowerCase(Locale.getDefault()).contains(query.textQuery)) {
@@ -332,8 +334,7 @@ public class SearchEngine {
         }
 
         // Score recent tracks higher.
-        long timeAgoHours = (long) ((query.currentTimestamp - timestamp) * UnitConversions.MS_TO_S
-                * UnitConversions.S_TO_MIN * UnitConversions.MIN_TO_HR);
+        long timeAgoHours = (long) ((query.currentTimestamp - timestamp) * UnitConversions.MS_TO_S * UnitConversions.S_TO_MIN * UnitConversions.MIN_TO_HR);
         if (timeAgoHours > 0L) {
             return squash(timeAgoHours);
         } else {
@@ -364,6 +365,7 @@ public class SearchEngine {
 
         // Score tracks close to the current location higher.
         double distanceKm = distanceResults[0] * UnitConversions.M_TO_KM;
+
         if (distanceKm > 0.0) {
             // Use the inverse of the amortized distance.
             return squash(distanceKm);
@@ -377,13 +379,12 @@ public class SearchEngine {
      * Description of a search query, along with all contextual data needed to execute it.
      */
     public static class SearchQuery {
-        public final String textQuery;
-        public final Location currentLocation;
-        public final long currentTrackId;
-        public final long currentTimestamp;
+        final String textQuery;
+        final Location currentLocation;
+        final long currentTrackId;
+        final long currentTimestamp;
 
-        public SearchQuery(String textQuery, Location currentLocation, long currentTrackId,
-                           long currentTimestamp) {
+        public SearchQuery(String textQuery, Location currentLocation, long currentTrackId, long currentTimestamp) {
             this.textQuery = textQuery.toLowerCase(Locale.getDefault());
             this.currentLocation = currentLocation;
             this.currentTrackId = currentTrackId;
@@ -397,7 +398,7 @@ public class SearchEngine {
     public static class ScoredResult {
         public final Track track;
         public final Waypoint waypoint;
-        public final double score;
+        final double score;
 
         ScoredResult(Track track, double score) {
             this.track = track;

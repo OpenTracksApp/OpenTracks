@@ -27,9 +27,9 @@ import static de.dennisguse.opentracks.services.TrackRecordingService.MAX_NO_MOV
 import static de.dennisguse.opentracks.services.TrackRecordingService.PAUSE_LATITUDE;
 
 /**
- * Updater for {@link TripStatistics}. For updating track trip statistics as new
- * locations are added. Note that some of the locations represent pause/resume
- * separator.
+ * Updater for {@link TripStatistics}.
+ * For updating track trip statistics as new locations are added.
+ * NOTE:Some of the locations represent pause/resume separator.
  *
  * @author Sandor Dornbush
  * @author Rodrigo Damazio
@@ -45,28 +45,30 @@ public class TripStatisticsUpdater {
      * signal.
      */
     @VisibleForTesting
-    static final int ELEVATION_SMOOTHING_FACTOR = 25;
+    private static final int ELEVATION_SMOOTHING_FACTOR = 25;
 
     /**
      * The number of run readings to smooth for calculating grade.
      */
     @VisibleForTesting
-    static final int RUN_SMOOTHING_FACTOR = 25;
+    private static final int RUN_SMOOTHING_FACTOR = 25;
     /**
      * The number of speed reading to smooth to get a somewhat accurate signal.
      */
     @VisibleForTesting
-    static final int SPEED_SMOOTHING_FACTOR = 25;
+    private static final int SPEED_SMOOTHING_FACTOR = 25;
+
     private static final String TAG = TripStatisticsUpdater.class.getSimpleName();
     /**
-     * Ignore any acceleration faster than this. Will ignore any speeds that imply
-     * acceleration greater than 2g's 2g = 19.6 m/s^2 = 0.0002 m/ms^2 = 0.02
-     * m/(m*ms)
+     * Ignore any acceleration faster than this.
+     * Will ignore any speeds that imply acceleration greater than 2g's
+     * 2g = 19.6 m/s^2 = 0.0002 m/ms^2 = 0.02 m/(m*ms)
      */
     private static final double MAX_ACCELERATION = 0.02;
 
     // The track's trip statistics
     private final TripStatistics tripStatistics;
+
     // A buffer of the recent elevation readings (m)
     private final DoubleBuffer elevationBuffer = new DoubleBuffer(ELEVATION_SMOOTHING_FACTOR);
     // A buffer of the recent run readings (m) for calculating grade
@@ -75,6 +77,7 @@ public class TripStatisticsUpdater {
     private final DoubleBuffer gradeBuffer = new DoubleBuffer(GRADE_SMOOTHING_FACTOR);
     // A buffer of the recent speed readings (m/s) for calculating max speed
     private final DoubleBuffer speedBuffer = new DoubleBuffer(SPEED_SMOOTHING_FACTOR);
+
     // The current segment's trip statistics
     private TripStatistics currentSegment;
     // Current segment's last location.
@@ -108,7 +111,8 @@ public class TripStatisticsUpdater {
     }
 
     /**
-     * Adds a location. TODO: This assume location has a valid time.
+     * Adds a location.
+     * TODO: This assume location has a valid time.
      *
      * @param location             the location
      * @param minRecordingDistance the min recording distance
@@ -119,8 +123,7 @@ public class TripStatisticsUpdater {
         if (!LocationUtils.isValidLocation(location)) {
             // Either pause or resume marker
             if (location.getLatitude() == PAUSE_LATITUDE) {
-                if (lastLocation != null && lastMovingLocation != null
-                        && lastLocation != lastMovingLocation) {
+                if (lastLocation != null && lastMovingLocation != null && lastLocation != lastMovingLocation) {
                     currentSegment.addTotalDistance(lastMovingLocation.distanceTo(lastLocation));
                 }
                 tripStatistics.merge(currentSegment);
@@ -134,11 +137,12 @@ public class TripStatisticsUpdater {
             speedBuffer.reset();
             return;
         }
+
         currentSegment.updateLatitudeExtremities(location.getLatitude());
         currentSegment.updateLongitudeExtremities(location.getLongitude());
 
-        double elevationDifference = location.hasAltitude() ? updateElevation(location.getAltitude())
-                : 0.0;
+        //TODO Use Barometer to compute elevation gain.
+        double elevationDifference = location.hasAltitude() ? updateElevation(location.getAltitude()) : 0.0;
 
         if (lastLocation == null || lastMovingLocation == null) {
             lastLocation = location;
@@ -147,8 +151,7 @@ public class TripStatisticsUpdater {
         }
 
         double movingDistance = lastMovingLocation.distanceTo(location);
-        if (movingDistance < minRecordingDistance
-                && (!location.hasSpeed() || location.getSpeed() < MAX_NO_MOVEMENT_SPEED)) {
+        if (movingDistance < minRecordingDistance && (!location.hasSpeed() || location.getSpeed() < MAX_NO_MOVEMENT_SPEED)) {
             speedBuffer.reset();
             lastLocation = location;
             return;
@@ -171,8 +174,7 @@ public class TripStatisticsUpdater {
 
         // Update max speed
         if (location.hasSpeed() && lastLocation.hasSpeed()) {
-            updateSpeed(
-                    location.getTime(), location.getSpeed(), lastLocation.getTime(), lastLocation.getSpeed());
+            updateSpeed(location.getTime(), location.getSpeed(), lastLocation.getTime(), lastLocation.getSpeed());
         }
 
         lastLocation = location;
@@ -180,9 +182,8 @@ public class TripStatisticsUpdater {
     }
 
     /**
-     * Gets the smoothed elevation over several readings. The elevation readings
-     * is noisy so the smoothed elevation is better than the raw elevation for
-     * many tasks.
+     * Gets the smoothed elevation over several readings.
+     * The elevation readings is noisy so the smoothed elevation is better than the raw elevation for many tasks.
      */
     public double getSmoothedElevation() {
         return elevationBuffer.getAverage();
@@ -193,7 +194,7 @@ public class TripStatisticsUpdater {
     }
 
     /**
-     * Updates a speed reading. Assumes the user is moving.
+     * Updates a speed reading while assuming the user is moving.
      *
      * @param time              the time
      * @param speed             the speed
@@ -201,7 +202,7 @@ public class TripStatisticsUpdater {
      * @param lastLocationSpeed the last location speed
      */
     @VisibleForTesting
-    void updateSpeed(long time, double speed, long lastLocationTime, double lastLocationSpeed) {
+    private void updateSpeed(long time, double speed, long lastLocationTime, double lastLocationSpeed) {
         if (speed < MAX_NO_MOVEMENT_SPEED) {
             speedBuffer.reset();
         } else if (isValidSpeed(time, speed, lastLocationTime, lastLocationSpeed)) {
@@ -220,7 +221,7 @@ public class TripStatisticsUpdater {
      * @param elevation the elevation
      */
     @VisibleForTesting
-    double updateElevation(double elevation) {
+    private double updateElevation(double elevation) {
         // Update elevation using the smoothed average
         double oldAverage = elevationBuffer.getAverage();
         elevationBuffer.setNext(elevation);
@@ -241,15 +242,12 @@ public class TripStatisticsUpdater {
      * @param rise the rise
      */
     @VisibleForTesting
-    void updateGrade(double run, double rise) {
+    private void updateGrade(double run, double rise) {
         runBuffer.setNext(run);
 
         double smoothedRun = runBuffer.getAverage();
 
-        /*
-         * With the error in the altitude measurement it is dangerous to divide by
-         * anything less than 5.
-         */
+        // With the error in the altitude measurement, it is dangerous to divide by * anything less than 5.
         if (smoothedRun < 5.0) {
             return;
         }
@@ -272,46 +270,31 @@ public class TripStatisticsUpdater {
      * @param lastLocationTime  the last location time
      * @param lastLocationSpeed the last location speed
      */
-    private boolean isValidSpeed(
-            long time, double speed, long lastLocationTime, double lastLocationSpeed) {
-
-        /*
-         * There are a lot of noisy speed readings. Do the cheapest checks first,
-         * most expensive last.
-         */
+    private boolean isValidSpeed(long time, double speed, long lastLocationTime, double lastLocationSpeed) {
+        // There are a lot of noisy speed readings. Do the cheapest checks first, most expensive last.
         if (speed == 0) {
             return false;
         }
 
-        /*
-         * The following code will ignore unlikely readings. 128 m/s seems to be an
-         * internal android error code.
-         */
+        // The following code will ignore unlikely readings. 128 m/s seems to be an internal android error code.
         if (Math.abs(speed - 128) < 1) {
             return false;
         }
 
-        /*
-         * See if the speed seems physically likely. Ignore any speeds that imply
-         * acceleration greater than 2g.
-         */
+        // See if the speed seems physically likely. Ignore any speeds that imply acceleration greater than 2g.
         long timeDifference = time - lastLocationTime;
         double speedDifference = Math.abs(lastLocationSpeed - speed);
         if (speedDifference > MAX_ACCELERATION * timeDifference) {
             return false;
         }
 
-        /*
-         * Only check if the speed buffer is full. Check that the speed is less than
-         * 10X the smoothed average and the speed difference doesn't imply 2g
-         * acceleration.
-         */
+        // Only check if the speed buffer is full. Check that the speed is less than 10X the smoothed average and the speed difference doesn't imply 2g acceleration.
         if (speedBuffer.isFull()) {
             double average = speedBuffer.getAverage();
             double diff = Math.abs(average - speed);
             return (speed < average * 10) && (diff < MAX_ACCELERATION * timeDifference);
-        } else {
-            return true;
         }
+
+        return true;
     }
 }

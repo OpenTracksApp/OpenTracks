@@ -24,12 +24,12 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import de.dennisguse.opentracks.util.PreferencesUtils;
-import de.dennisguse.opentracks.R;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
  * Activity to configure the track widget.
@@ -67,34 +67,22 @@ public class TrackWidgetConfigActivity extends Activity {
         addItem(list, R.string.stats_total_time);
         addItem(list, reportSpeed ? R.string.stats_average_speed : R.string.stats_average_pace);
         addItem(list, R.string.stats_moving_time);
-        addItem(list,
-                reportSpeed ? R.string.stats_average_moving_speed : R.string.stats_average_moving_pace);
+        addItem(list, reportSpeed ? R.string.stats_average_moving_speed : R.string.stats_average_moving_pace);
 
-        configSpinner(item1, list, PreferencesUtils.getInt(
-                this, R.string.track_widget_item1, PreferencesUtils.TRACK_WIDGET_ITEM1_DEFAULT));
-        configSpinner(item2, list, PreferencesUtils.getInt(
-                this, R.string.track_widget_item2, PreferencesUtils.TRACK_WIDGET_ITEM2_DEFAULT));
-        configSpinner(item3, list, PreferencesUtils.getInt(
-                this, R.string.track_widget_item3, PreferencesUtils.TRACK_WIDGET_ITEM3_DEFAULT));
-        configSpinner(item4, list, PreferencesUtils.getInt(
-                this, R.string.track_widget_item4, PreferencesUtils.TRACK_WIDGET_ITEM4_DEFAULT));
+        configSpinner(item1, list, PreferencesUtils.getInt(this, R.string.track_widget_item1, PreferencesUtils.TRACK_WIDGET_ITEM1_DEFAULT));
+        configSpinner(item2, list, PreferencesUtils.getInt(this, R.string.track_widget_item2, PreferencesUtils.TRACK_WIDGET_ITEM2_DEFAULT));
+        configSpinner(item3, list, PreferencesUtils.getInt(this, R.string.track_widget_item3, PreferencesUtils.TRACK_WIDGET_ITEM3_DEFAULT));
+        configSpinner(item4, list, PreferencesUtils.getInt(this, R.string.track_widget_item4, PreferencesUtils.TRACK_WIDGET_ITEM4_DEFAULT));
 
         findViewById(R.id.track_widget_config_add).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
                 // Push widget update to surface with newly set prefix
-                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(
-                        TrackWidgetConfigActivity.this);
-                TrackWidgetProvider.updateAppWidget(
-                        TrackWidgetConfigActivity.this, appWidgetManager, appWidgetId, -1L);
-                PreferencesUtils.setInt(TrackWidgetConfigActivity.this, R.string.track_widget_item1,
-                        item1.getSelectedItemPosition());
-                PreferencesUtils.setInt(TrackWidgetConfigActivity.this, R.string.track_widget_item2,
-                        item2.getSelectedItemPosition());
-                PreferencesUtils.setInt(TrackWidgetConfigActivity.this, R.string.track_widget_item3,
-                        item3.getSelectedItemPosition());
-                PreferencesUtils.setInt(TrackWidgetConfigActivity.this, R.string.track_widget_item4,
-                        item4.getSelectedItemPosition());
+                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(TrackWidgetConfigActivity.this);
+                TrackWidgetProvider.updateAppWidget(TrackWidgetConfigActivity.this, appWidgetManager, appWidgetId, -1L);
+                PreferencesUtils.setInt(TrackWidgetConfigActivity.this, R.string.track_widget_item1, item1.getSelectedItemPosition());
+                PreferencesUtils.setInt(TrackWidgetConfigActivity.this, R.string.track_widget_item2, item2.getSelectedItemPosition());
+                PreferencesUtils.setInt(TrackWidgetConfigActivity.this, R.string.track_widget_item3, item3.getSelectedItemPosition());
+                PreferencesUtils.setInt(TrackWidgetConfigActivity.this, R.string.track_widget_item4, item4.getSelectedItemPosition());
 
                 // Make sure we pass back the original appWidgetId
                 Intent resultValue = new Intent();
@@ -113,9 +101,7 @@ public class TrackWidgetConfigActivity extends Activity {
         // Find the app widget id from the intent.
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
-        appWidgetId = extras != null ? extras.getInt(
-                AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
-                : AppWidgetManager.INVALID_APPWIDGET_ID;
+        appWidgetId = extras != null ? extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID) : AppWidgetManager.INVALID_APPWIDGET_ID;
 
         // If they gave us an intent without the widget id, just bail.
         if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
@@ -128,8 +114,7 @@ public class TrackWidgetConfigActivity extends Activity {
     }
 
     private void configSpinner(Spinner spinner, List<CharSequence> list, int position) {
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item, list);
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setSelection(position);

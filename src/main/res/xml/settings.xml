@@ -59,10 +59,8 @@ limitations under the License.
         android:title="@string/settings_recording" />
 
     <PreferenceScreen
-        android:key="@string/settings_sensor_root_key"
         android:title="@string/settings_sensor">
         <PreferenceCategory
-            android:key="@string/settings_sensor_bluetooth_key"
             android:title="@string/settings_sensor_bluetooth">
             <Preference
                 android:key="@string/settings_sensor_bluetooth_pairing_key"

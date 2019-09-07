@@ -19,9 +19,9 @@ package de.dennisguse.opentracks.stats;
 import androidx.annotation.NonNull;
 
 /**
- * This class maintains a buffer of doubles. This buffer is a convenient class
- * for storing a series of doubles and calculating information about them. This
- * is a FIFO buffer.
+ * This class maintains a buffer of doubles.
+ * This buffer is a convenient class for storing a series of doubles and calculating information about them.
+ * This is a FIFO buffer.
  *
  * @author Sandor Dornbush
  */
@@ -29,8 +29,10 @@ public class DoubleBuffer {
 
     // The sliding buffer of doubles.
     private final double[] buffer;
+
     // The location that the next write will occur at.
     private int index;
+
     // True if the buffer is full
     private boolean isFull;
 
@@ -39,7 +41,7 @@ public class DoubleBuffer {
      *
      * @param size the size
      */
-    public DoubleBuffer(int size) {
+    DoubleBuffer(int size) {
         if (size < 1) {
             throw new IllegalArgumentException("The buffer size must be greater than 1.");
         }
@@ -58,7 +60,7 @@ public class DoubleBuffer {
     /**
      * Returns true if the buffer is full.
      */
-    public boolean isFull() {
+    boolean isFull() {
         return isFull;
     }
 
@@ -78,8 +80,8 @@ public class DoubleBuffer {
     }
 
     /**
-     * Adds a double to the buffer. If the buffer is full the oldest element is
-     * overwritten.
+     * Adds a double to the buffer.
+     * If the buffer is full the oldest element is overwritten.
      *
      * @param value the double to add
      */

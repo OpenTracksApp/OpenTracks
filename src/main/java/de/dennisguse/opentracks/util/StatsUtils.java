@@ -47,10 +47,8 @@ public class StatsUtils {
      * Sets the location values.
      *
      * @param context     the context
-     * @param activity    the activity for finding views. If null, the view cannot be
-     *                    null
-     * @param view        the containing view for finding views. If null, the activity
-     *                    cannot be null
+     * @param activity    the activity for finding views. If null, the view cannot be null
+     * @param view        the containing view for finding views. If null, the activity cannot be null
      * @param location    the location
      * @param isRecording true if recording
      */
@@ -96,19 +94,17 @@ public class StatsUtils {
     }
 
     public static void setSensorData(Context context, Activity activity, SensorDataSet sensorDataSet, boolean isRecording) {
-        {
-            // SensorDataSet: heart rate
-            int isVisible = View.VISIBLE;
-            if (!isRecording || PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT.equals(PreferencesUtils.getString(context, R.string.bluetooth_sensor_key, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT))) {
-                isVisible = View.INVISIBLE;
-            }
-            getView(activity, null, R.id.stats_sensor_container).setVisibility(isVisible);
+        // SensorDataSet: heart rate
+        int isVisible = View.VISIBLE;
+        if (!isRecording || PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT.equals(PreferencesUtils.getString(context, R.string.bluetooth_sensor_key, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT))) {
+            isVisible = View.INVISIBLE;
+        }
+        getView(activity, null, R.id.stats_sensor_container).setVisibility(isVisible);
 
-            View viewValue = getView(activity, null, R.id.stats_sensor_heart_rate_value);
-            View viewSensor = getView(activity, null, R.id.stats_sensor_heart_rate_sensor);
-            if (isRecording) {
-                setHeartRateData(context, viewValue, viewSensor, sensorDataSet);
-            }
+        View viewValue = getView(activity, null, R.id.stats_sensor_heart_rate_value);
+        View viewSensor = getView(activity, null, R.id.stats_sensor_heart_rate_sensor);
+        if (isRecording) {
+            setHeartRateData(context, viewValue, viewSensor, sensorDataSet);
         }
     }
 
@@ -126,13 +122,10 @@ public class StatsUtils {
      * Sets the trip statistics values.
      *
      * @param context        the context
-     * @param activity       the activity for finding views. If null, then view cannot
-     *                       be null
-     * @param view           the containing view for finding views. If null, the activity
-     *                       cannot be null
+     * @param activity       the activity for finding views. If null, then view cannot be null
+     * @param view           the containing view for finding views. If null, the activity cannot be null
      * @param tripStatistics the trip statistics
-     * @param trackIconValue the track icon value or null to hide the track icon
-     *                       spinner
+     * @param trackIconValue the track icon value or null to hide the track icon spinner
      */
     public static void setTripStatisticsValues(Context context, Activity activity, View view, TripStatistics tripStatistics, String trackIconValue) {
         boolean metricUnits = PreferencesUtils.isMetricUnits(context);
@@ -265,8 +258,7 @@ public class StatsUtils {
      * @param grade   the grade in fraction between 0 and 1
      */
     private static void setGradeValue(Context context, View view, int labelId, double grade) {
-        String value = Double.isNaN(grade) || Double.isInfinite(grade) ? null
-                : String.format(Locale.getDefault(), GRADE_FORMAT, Math.round(grade * 100));
+        String value = Double.isNaN(grade) || Double.isInfinite(grade) ? null : String.format(Locale.getDefault(), GRADE_FORMAT, Math.round(grade * 100));
         setItem(context, view, labelId, value, GRADE_PERCENTAGE);
     }
 
@@ -279,8 +271,7 @@ public class StatsUtils {
      * @param coordinate the coordinate in degrees
      */
     private static void setCoordinateValue(Context context, View view, int labelId, double coordinate) {
-        String value = Double.isNaN(coordinate) || Double.isInfinite(coordinate) ? null
-                : StringUtils.formatCoordinate(coordinate);
+        String value = Double.isNaN(coordinate) || Double.isInfinite(coordinate) ? null : StringUtils.formatCoordinate(coordinate);
         setItem(context, view, labelId, value, null);
     }
 

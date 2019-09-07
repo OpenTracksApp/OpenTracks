@@ -52,7 +52,7 @@ public class ChartFragmentTest {
     }
 
     /**
-     * Tests the logic to get the incorrect values of sensor in {@link ChartFragment#fillDataPoint(Location, double[])}
+     * Tests the logic to get the incorrect values of sensor in {@link ChartFragment#fillDataPoint(Location, double[])}.
      */
     @Test
     public void testFillDataPoint_sensorIncorrect() {
@@ -161,12 +161,11 @@ public class ChartFragmentTest {
         point = fillDataPointTestHelper(sensorDataSetLocation2);
 
         /*
-         * Computes the distance between Latitude 22 and 23. And for we set using
-         * imperial, the distance should be multiplied by UnitConversions.KM_TO_MI.
+         * Computes the distance between Latitude 22 and 23.
+         * And for we set using * imperial, the distance should be multiplied by UnitConversions.KM_TO_MI.
          */
         float[] results = new float[4];
-        Location.distanceBetween(sensorDataSetLocation1.getLatitude(), sensorDataSetLocation1.getLongitude(),
-                sensorDataSetLocation2.getLatitude(), sensorDataSetLocation2.getLongitude(), results);
+        Location.distanceBetween(sensorDataSetLocation1.getLatitude(), sensorDataSetLocation1.getLongitude(), sensorDataSetLocation2.getLatitude(), sensorDataSetLocation2.getLongitude(), results);
         double distance1 = results[0] * UnitConversions.M_TO_KM * UnitConversions.KM_TO_MI;
         Assert.assertEquals(distance1, point[0], 0.01);
 
@@ -176,11 +175,10 @@ public class ChartFragmentTest {
         point = fillDataPointTestHelper(sensorDataSetLocation3);
 
         /*
-         * Computes the distance between Latitude 23 and 24. And for we set using
-         * imperial, the distance should be multiplied by UnitConversions.KM_TO_MI.
+         * Computes the distance between Latitude 23 and 24.
+         * And for we set using * imperial, the distance should be multiplied by UnitConversions.KM_TO_MI.
          */
-        Location.distanceBetween(sensorDataSetLocation2.getLatitude(), sensorDataSetLocation2.getLongitude(),
-                sensorDataSetLocation3.getLatitude(), sensorDataSetLocation3.getLongitude(), results);
+        Location.distanceBetween(sensorDataSetLocation2.getLatitude(), sensorDataSetLocation2.getLongitude(), sensorDataSetLocation3.getLatitude(), sensorDataSetLocation3.getLongitude(), results);
         double distance2 = results[0] * UnitConversions.M_TO_KM * UnitConversions.KM_TO_MI;
         Assert.assertEquals(distance1 + distance2, point[0], 0.01);
     }
@@ -210,15 +208,14 @@ public class ChartFragmentTest {
         SensorDataSetLocation sensorDataSetLocation1 = TrackStubUtils.createSensorDataSetLocation();
 
         /*
-         * At first, clear old points of elevation, so give true to the second
-         * parameter. Then only one value INITIALLONGTITUDE in buffer.
+         * At first, clear old points of elevation, so give true to the second parameter.
+         * Then only one value INITIAL_ALTITUDE in buffer.
          */
         double[] point = fillDataPointTestHelper(sensorDataSetLocation1);
         Assert.assertEquals(TrackStubUtils.INITIAL_ALTITUDE, point[ChartView.ELEVATION_SERIES + 1], 0.01);
 
         /*
-         * Send another value to buffer, now there are two values, INITIALALTITUDE
-         * and INITIALALTITUDE * 2.
+         * Send another value to buffer, now there are two values, INITIAL_ALTITUDE and INITIAL_ALTITUDE * 2.
          */
         SensorDataSetLocation sensorDataSetLocation2 = TrackStubUtils.createSensorDataSetLocation();
         sensorDataSetLocation2.setAltitude(TrackStubUtils.INITIAL_ALTITUDE * 2);
@@ -235,8 +232,8 @@ public class ChartFragmentTest {
     @Test
     public void testFillDataPoint_speed() {
         /*
-         * At first, clear old points of speed, so give true to the second
-         * parameter. It will not be filled in to the speed buffer.
+         * At first, clear old points of speed, so give true to the second parameter.
+         * It will not be filled in to the speed buffer.
          */
         SensorDataSetLocation sensorDataSetLocation1 = TrackStubUtils.createSensorDataSetLocation();
         sensorDataSetLocation1.setSpeed(128.5f);
@@ -244,14 +241,13 @@ public class ChartFragmentTest {
         Assert.assertEquals(0.0, point[ChartView.SPEED_SERIES + 1], 0.01);
 
         /*
-         * Tests the logic when both metricUnits and reportSpeed are true.This
-         * location will be filled into speed buffer.
+         * Tests the logic when both metricUnits and reportSpeed are true.
+         * This location will be filled into speed buffer.
          */
         SensorDataSetLocation sensorDataSetLocation2 = TrackStubUtils.createSensorDataSetLocation();
 
         /*
-         * Add a time span here to make sure the second point is valid, the value
-         * 222 here is doesn't matter.
+         * Add a time span here to make sure the second point is valid, the value 222 here is doesn't matter.
          */
         sensorDataSetLocation2.setTime(sensorDataSetLocation1.getTime() + 222);
         sensorDataSetLocation2.setSpeed(130);
@@ -276,9 +272,8 @@ public class ChartFragmentTest {
         SensorDataSetLocation sensorDataSetLocation2 = TrackStubUtils.createSensorDataSetLocation();
 
         /*
-         * Add a time span here to make sure the second point is valid and the speed
-         * is valid. Speed is valid if: speedDifference > Constants.MAX_ACCELERATION
-         * * timeDifference speedDifference = 102 -100 timeDifference = 222
+         * Add a time span here to make sure the second point and the speed is valid.
+         * Speed is valid if: speedDifference > Constants.MAX_ACCELERATION * timeDifference speedDifference = 102 -100 timeDifference = 222
          */
         sensorDataSetLocation2.setTime(sensorDataSetLocation2.getTime() + 222);
         sensorDataSetLocation2.setSpeed(102);
@@ -303,9 +298,8 @@ public class ChartFragmentTest {
         SensorDataSetLocation sensorDataSetLocation2 = TrackStubUtils.createSensorDataSetLocation();
 
         /*
-         * Add a time span here to make sure the second point is valid and the speed
-         * is valid. Speed is valid if: speedDifference > Constants.MAX_ACCELERATION
-         * * timeDifference speedDifference = 102 -100 timeDifference = 222
+         * Add a time span here to make sure the second point and the speed is valid.
+         * Speed is valid if: speedDifference > Constants.MAX_ACCELERATION * timeDifference speedDifference = 102 -100 timeDifference = 222
          */
         sensorDataSetLocation2.setTime(sensorDataSetLocation2.getTime() + 222);
         sensorDataSetLocation2.setSpeed(102);
@@ -314,8 +308,7 @@ public class ChartFragmentTest {
     }
 
     /**
-     * Tests the logic to get pace value when reportSpeed is false and average
-     * speed is zero.
+     * Tests the logic to get pace value when reportSpeed is false and average speed is zero.
      */
     @Test
     public void testFillDataPoint_pace_zeroSpeed() {

@@ -17,12 +17,8 @@ package de.dennisguse.opentracks.util;
 
 import android.content.Context;
 import android.location.Location;
-import android.text.Html;
-import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
-
-import de.dennisguse.opentracks.R;
 
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
@@ -31,6 +27,8 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import de.dennisguse.opentracks.R;
 
 /**
  * Various string manipulation methods.
@@ -41,17 +39,16 @@ import java.util.regex.Pattern;
 public class StringUtils {
 
     private static final String COORDINATE_DEGREE = "\u00B0";
-    private static final SimpleDateFormat ISO_8601_DATE_TIME_FORMAT = new SimpleDateFormat(
-            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
-    private static final SimpleDateFormat ISO_8601_BASE = new SimpleDateFormat(
-            "yyyy-MM-dd'T'HH:mm:ss", Locale.US);
-    private static final Pattern ISO_8601_EXTRAS = Pattern.compile(
-            "^(\\.\\d+)?(?:Z|([+-])(\\d{2}):(\\d{2}))?$");
+
+    private static final SimpleDateFormat ISO_8601_DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
+    private static final SimpleDateFormat ISO_8601_BASE = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US);
+    private static final Pattern ISO_8601_EXTRAS = Pattern.compile("^(\\.\\d+)?(?:Z|([+-])(\\d{2}):(\\d{2}))?$");
 
     static {
         ISO_8601_DATE_TIME_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
         ISO_8601_BASE.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
+
 
     private StringUtils() {
     }
@@ -63,9 +60,8 @@ public class StringUtils {
      * @param time    the time in milliseconds
      */
     public static String formatDateTime(Context context, long time) {
-        return DateUtils.formatDateTime(
-                context, time, DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE) + " "
-                + DateUtils.formatDateTime(context, time, DateUtils.FORMAT_SHOW_TIME);
+        return DateUtils.formatDateTime(context, time, DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE)
+                + " " + DateUtils.formatDateTime(context, time, DateUtils.FORMAT_SHOW_TIME);
     }
 
     /**
@@ -80,19 +76,20 @@ public class StringUtils {
 
     /**
      * Formats the elapsed timed in the form "MM:SS" or "H:MM:SS".
+     * TODO Remove as min API level is now 21; replace with DateUtils.formatElapsedTime(time * MS_TO_S).
      *
      * @param time the time in milliseconds
      */
     public static String formatElapsedTime(long time) {
+        DateUtils.formatElapsedTime(1);
         /*
-         * TODO
-         * Temporary workaround for DateUtils.formatElapsedTime(time * MS_TO_S). In API
-         * level 17, it returns strings like "1:0:00" instead of "1:00:00", which
-         * breaks several unit tests.
+         * Temporary workaround for DateUtils.formatElapsedTime(time * MS_TO_S).
+         * In API level 17, it returns strings like "1:0:00" instead of "1:00:00", which breaks several unit tests.
          */
         if (time < 0) {
             return "-";
         }
+
         long hours = 0;
         long minutes = 0;
         long elapsedSeconds = (long) (time * UnitConversions.MS_TO_S);
@@ -135,6 +132,7 @@ public class StringUtils {
         if (Double.isNaN(distance) || Double.isInfinite(distance)) {
             return context.getString(R.string.value_unknown);
         }
+
         if (metricUnits) {
             if (distance > 500.0) {
                 distance *= UnitConversions.M_TO_KM;
@@ -153,11 +151,11 @@ public class StringUtils {
         }
     }
 
-    public static String formatDecimal(double value) {
+    static String formatDecimal(double value) {
         return StringUtils.formatDecimal(value, 2);
     }
 
-    public static String formatDecimal(double value, int decimalPlaces) {
+    static String formatDecimal(double value, int decimalPlaces) {
         String result = String.format(Locale.getDefault(), "%1$,." + decimalPlaces + "f", value);
         return result.replaceAll("[0]*$", "").replaceAll("\\.$", "");
     }
@@ -172,14 +170,16 @@ public class StringUtils {
     }
 
     /**
-     * Gets the distance in an array of two strings. The first string is the
-     * distance. The second string is the unit. The first string is null if the
-     * distance is invalid.
+     * Gets the distance in an array of two strings.
+     * The first string is the distance.
+     * The second string is the unit.
+     * The first string is null if the distance is invalid.
      *
      * @param context     the context
      * @param distance    the distance
      * @param metricUnits true to use metric unit
      */
+    //TODO Return Pair<Distance, Unit>
     public static String[] getDistanceParts(Context context, double distance, boolean metricUnits) {
         String[] result = new String[2];
         if (Double.isNaN(distance) || Double.isInfinite(distance)) {
@@ -211,17 +211,18 @@ public class StringUtils {
     }
 
     /**
-     * Gets the speed in an array of two strings. The first string is the speed.
-     * The second string is the unit. The first string is null if speed is
-     * invalid.
+     * Gets the speed in an array of two strings.
+     * The first string is the speed.
+     * The second string is the unit.
+     * The first string is null if speed is invalid.
      *
      * @param context     the context
      * @param speed       the speed
      * @param metricUnits true to use metric unit
      * @param reportSpeed true to report speed
      */
-    public static String[] getSpeedParts(
-            Context context, double speed, boolean metricUnits, boolean reportSpeed) {
+    //TODO Return Pair<Distance, Unit>
+    public static String[] getSpeedParts(Context context, double speed, boolean metricUnits, boolean reportSpeed) {
         String[] result = new String[2];
         int unitId;
         if (metricUnits) {
@@ -268,7 +269,7 @@ public class StringUtils {
      * @param category    the category
      * @param description the description
      */
-    public static String getCategoryDescription(String category, String description) {
+    static String getCategoryDescription(String category, String description) {
         if (category == null || category.length() == 0) {
             return description;
         }
@@ -282,9 +283,9 @@ public class StringUtils {
     }
 
     /**
-     * Formats the given text as a XML CDATA element. This includes adding the
-     * starting and ending CDATA tags. Please notice that this may result in
-     * multiple consecutive CDATA tags.
+     * Formats the given text as a XML CDATA element.
+     * This includes adding the starting and ending CDATA tags.
+     * NOTE: This may result in multiple consecutive CDATA tags.
      *
      * @param text the given text
      */
@@ -293,25 +294,23 @@ public class StringUtils {
     }
 
     /**
-     * Gets the time, in milliseconds, from an XML date time string as defined at
-     * http://www.w3.org/TR/xmlschema-2/#dateTime
+     * Gets the time, in milliseconds, from an XML date time string as defined at http://www.w3.org/TR/xmlschema-2/#dateTime
      *
      * @param xmlDateTime the XML date time string
      */
+    //TODO Can this be replaced using java.time?
     public static long getTime(String xmlDateTime) {
         // Parse the date time base
         ParsePosition position = new ParsePosition(0);
         Date date = ISO_8601_BASE.parse(xmlDateTime, position);
         if (date == null) {
-            throw new IllegalArgumentException("Invalid XML dateTime value: " + xmlDateTime
-                    + " (at position " + position.getErrorIndex() + ")");
+            throw new IllegalArgumentException("Invalid XML dateTime value: " + xmlDateTime + " (at position " + position.getErrorIndex() + ")");
         }
 
         // Parse the date time extras
         Matcher matcher = ISO_8601_EXTRAS.matcher(xmlDateTime.substring(position.getIndex()));
         if (!matcher.matches()) {
-            // This will match even an empty string as all groups are optional. Thus a
-            // non-match means invalid content.
+            // This will match even an empty string as all groups are optional. Thus a non-match means invalid content.
             throw new IllegalArgumentException("Invalid XML dateTime value: " + xmlDateTime);
         }
 
@@ -354,9 +353,8 @@ public class StringUtils {
     }
 
     /**
-     * Gets the time as an array of three integers. Index 0 contains the number of
-     * seconds, index 1 contains the number of minutes, and index 2 contains the
-     * number of hours.
+     * Gets the time as an array of three integers.
+     * Index 0 contains the number of seconds, index 1 contains the number of minutes, and index 2 contains the number of hours.
      *
      * @param time the time in milliseconds
      * @return an array of 3 elements.
@@ -380,22 +378,6 @@ public class StringUtils {
     }
 
     /**
-     * Gets the html.
-     *
-     * @param context    the context
-     * @param resId      the string resource id
-     * @param formatArgs the string resource ids of the format arguments
-     */
-    public static Spanned getHtml(Context context, int resId, Object... formatArgs) {
-        Object[] args = new Object[formatArgs.length];
-        for (int i = 0; i < formatArgs.length; i++) {
-            String url = context.getString((Integer) formatArgs[i]);
-            args[i] = " <a href='" + url + "'>" + url + "</a> ";
-        }
-        return Html.fromHtml(context.getString(resId, args));
-    }
-
-    /**
      * Gets the frequency display options.
      *
      * @param context     the context
@@ -409,9 +391,7 @@ public class StringUtils {
             if (value == PreferencesUtils.FREQUENCY_OFF) {
                 options[i] = context.getString(R.string.value_off);
             } else if (value < 0) {
-                options[i] = context.getString(
-                        metricUnits ? R.string.value_integer_kilometer : R.string.value_integer_mile,
-                        Math.abs(value));
+                options[i] = context.getString(metricUnits ? R.string.value_integer_kilometer : R.string.value_integer_mile, Math.abs(value));
             } else {
                 options[i] = context.getString(R.string.value_integer_minute, value);
             }

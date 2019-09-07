@@ -27,7 +27,6 @@ import de.dennisguse.opentracks.services.ITrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
-import de.dennisguse.opentracks.R;
 
 /**
  * Track controller for record, pause, resume, and stop.
@@ -67,7 +66,7 @@ public class TrackController {
         }
     };
 
-    public TrackController(Activity activity, TrackRecordingServiceConnection trackRecordingServiceConnection, boolean alwaysShow, OnClickListener recordListener, OnClickListener stopListener) {
+    TrackController(Activity activity, TrackRecordingServiceConnection trackRecordingServiceConnection, boolean alwaysShow, OnClickListener recordListener, OnClickListener stopListener) {
         this.activity = activity;
         this.trackRecordingServiceConnection = trackRecordingServiceConnection;
         this.alwaysShow = alwaysShow;
@@ -121,21 +120,21 @@ public class TrackController {
         }
     }
 
-    public void onResume(boolean recording, boolean paused) {
+    void onResume(boolean recording, boolean paused) {
         isResumed = true;
         update(recording, paused);
     }
 
-    public void onPause() {
+    void onPause() {
         isResumed = false;
         handlerUpdateTotalTime.removeCallbacks(updateTotalTimeRunnable);
     }
 
-    public void hide() {
+    void hide() {
         containerView.setVisibility(View.GONE);
     }
 
-    public void show() {
+    void show() {
         containerView.setVisibility(View.VISIBLE);
     }
 

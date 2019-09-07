@@ -35,8 +35,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 /**
- * A {@link ContentProvider} that handles access to track points, tracks, and
- * waypoints tables.
+ * A {@link ContentProvider} that handles access to track points, tracks, and waypoints tables.
  *
  * @author Leif Hendrik Wilden
  */
@@ -44,10 +43,14 @@ public abstract class CustomContentProvider extends ContentProvider {
 
     @VisibleForTesting
     static final int DATABASE_VERSION = 23;
+
     @VisibleForTesting
     static final String DATABASE_NAME = "database.db";
+
     private static final String TAG = CustomContentProvider.class.getSimpleName();
+
     private final UriMatcher uriMatcher;
+
     private SQLiteDatabase db;
 
     public CustomContentProvider() {

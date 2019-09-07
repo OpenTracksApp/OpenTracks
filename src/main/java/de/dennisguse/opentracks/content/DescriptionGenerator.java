@@ -18,8 +18,7 @@ package de.dennisguse.opentracks.content;
 import de.dennisguse.opentracks.stats.TripStatistics;
 
 /**
- * An interface for an object that can generate descriptions of track and
- * waypoint.
+ * An interface for an object that can generate descriptions of track and waypoint.
  *
  * @author Sandor Dornbush
  */

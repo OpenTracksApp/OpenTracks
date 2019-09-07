@@ -49,7 +49,7 @@ public class DescriptionGeneratorImplTest {
     }
 
     /**
-     * Tests {@link DescriptionGeneratorImpl#generateTrackDescription(Track, java.util.Vector, java.util.Vector, boolean)}.
+     * Tests {@link DescriptionGeneratorImpl#generateTrackDescription(Track, boolean)}.
      */
     @Test
     public void testGenerateTrackDescription() {
@@ -128,8 +128,7 @@ public class DescriptionGeneratorImplTest {
     }
 
     /**
-     * Tests {@link DescriptionGeneratorImpl#writeDistance(double, StringBuilder,
-     * int, String)}.
+     * Tests {@link DescriptionGeneratorImpl#writeDistance(double, StringBuilder, int, String)}.
      */
     @Test
     public void testWriteDistance() {
@@ -139,8 +138,7 @@ public class DescriptionGeneratorImplTest {
     }
 
     /**
-     * Tests {@link DescriptionGeneratorImpl#writeTime(long, StringBuilder, int,
-     * String)}.
+     * Tests {@link DescriptionGeneratorImpl#writeTime(long, StringBuilder, int, String)}.
      */
     @Test
     public void testWriteTime() {
@@ -150,8 +148,7 @@ public class DescriptionGeneratorImplTest {
     }
 
     /**
-     * Tests {@link DescriptionGeneratorImpl#writeSpeed(double, StringBuilder,
-     * int, String)}.
+     * Tests {@link DescriptionGeneratorImpl#writeSpeed(double, StringBuilder, int, String)}.
      */
     @Test
     public void testWriteSpeed() {
@@ -161,8 +158,7 @@ public class DescriptionGeneratorImplTest {
     }
 
     /**
-     * Tests {@link DescriptionGeneratorImpl#writeElevation(double, StringBuilder,
-     * int, String)}.
+     * Tests {@link DescriptionGeneratorImpl#writeElevation(double, StringBuilder, int, String)}.
      */
     @Test
     public void testWriteElevation() {
@@ -172,8 +168,7 @@ public class DescriptionGeneratorImplTest {
     }
 
     /**
-     * Tests {@link DescriptionGeneratorImpl#writePace(double, StringBuilder, int,
-     * String)}.
+     * Tests {@link DescriptionGeneratorImpl#writePace(double, StringBuilder, int, String)}.
      */
     @Test
     public void testWritePace() {
@@ -183,8 +178,7 @@ public class DescriptionGeneratorImplTest {
     }
 
     /**
-     * Tests {@link DescriptionGeneratorImpl#writeGrade(double, StringBuilder,
-     * int, String)}.
+     * Tests {@link DescriptionGeneratorImpl#writeGrade(double, StringBuilder, int, String)}.
      */
     @Test
     public void testWriteGrade() {
@@ -194,8 +188,7 @@ public class DescriptionGeneratorImplTest {
     }
 
     /**
-     * Tests {@link DescriptionGeneratorImpl#writeGrade(double, StringBuilder,
-     * int, String)} with a NaN.
+     * Tests {@link DescriptionGeneratorImpl#writeGrade(double, StringBuilder, int, String)} with a NaN.
      */
     @Test
     public void testWriteGrade_nan() {
@@ -205,8 +198,7 @@ public class DescriptionGeneratorImplTest {
     }
 
     /**
-     * Tests {@link DescriptionGeneratorImpl#writeGrade(double, StringBuilder,
-     * int, String)} with an infinite number.
+     * Tests {@link DescriptionGeneratorImpl#writeGrade(double, StringBuilder, int, String)} with an infinite number.
      */
     @Test
     public void testWriteGrade_infinite() {

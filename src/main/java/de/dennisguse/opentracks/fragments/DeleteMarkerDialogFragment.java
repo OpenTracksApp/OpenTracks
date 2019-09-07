@@ -23,10 +23,10 @@ import android.os.Bundle;
 
 import androidx.fragment.app.FragmentActivity;
 
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.DescriptionGeneratorImpl;
 import de.dennisguse.opentracks.util.DialogUtils;
-import de.dennisguse.opentracks.R;
 
 /**
  * A DialogFragment to delete marker.
@@ -68,10 +68,8 @@ public class DeleteMarkerDialogFragment extends AbstractDialogFragment {
             titleId = R.string.generic_delete_all_confirm_title;
             messageId = R.string.marker_delete_all_confirm_message;
         } else {
-            titleId = markerIds.length > 1 ? R.string.generic_delete_selected_confirm_title
-                    : R.string.marker_delete_one_confirm_title;
-            messageId = markerIds.length > 1 ? R.string.marker_delete_multiple_confirm_message
-                    : R.string.marker_delete_one_confirm_message;
+            titleId = markerIds.length > 1 ? R.string.generic_delete_selected_confirm_title : R.string.marker_delete_one_confirm_title;
+            messageId = markerIds.length > 1 ? R.string.marker_delete_multiple_confirm_message : R.string.marker_delete_one_confirm_message;
         }
         return DialogUtils.createConfirmationDialog(
                 fragmentActivity, titleId, getString(messageId), new DialogInterface.OnClickListener() {

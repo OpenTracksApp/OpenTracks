@@ -27,14 +27,14 @@ import android.util.Log;
 
 import androidx.annotation.VisibleForTesting;
 
+import java.util.Locale;
+
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.stats.TripStatistics;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
-import de.dennisguse.opentracks.R;
-
-import java.util.Locale;
 
 /**
  * This class will periodically announce the user's trip statistics.
@@ -50,7 +50,9 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
     static final float TTS_SPEECH_RATE = 0.9f;
 
     private static final String TAG = AnnouncementPeriodicTask.class.getSimpleName();
+
     private final Context context;
+
     private final AudioManager audioManager;
     private final UtteranceProgressListener utteranceListener = new UtteranceProgressListener() {
         @Override
@@ -69,13 +71,16 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
         public void onError(String utteranceId) {
         }
     };
+
     private TextToSpeech tts;
     // Response from TTS after its initialization
     private int initStatus = TextToSpeech.ERROR;
-    // True if TTS engine is ready
-    private boolean ready = false;
+
+    private boolean ttsReady = false;
+
     // True if speech is allowed
     private boolean speechAllowed;
+
     /**
      * Listener which updates {@link #speechAllowed} when the phone state changes.
      */
@@ -90,7 +95,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
         }
     };
 
-    public AnnouncementPeriodicTask(Context context) {
+    AnnouncementPeriodicTask(Context context) {
         this.context = context;
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
     }
@@ -131,13 +136,13 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
         }
 
         synchronized (this) {
-            if (!ready) {
-                ready = initStatus == TextToSpeech.SUCCESS;
-                if (ready) {
+            if (!ttsReady) {
+                ttsReady = initStatus == TextToSpeech.SUCCESS;
+                if (ttsReady) {
                     onTtsReady();
                 }
             }
-            if (!ready) {
+            if (!ttsReady) {
                 Log.i(TAG, "TTS not ready.");
                 return;
             }
@@ -170,9 +175,8 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
             Log.w(TAG, "Default locale not available, use English.");
             locale = Locale.ENGLISH;
             /*
-             * TODO: instead of using english, load the language if missing and show a
-             * toast if not supported. Not able to change the resource strings to
-             * English.
+             * TODO: instead of using english, load the language if missing and show a toast if not supported.
+             *  Not able to change the resource strings to English.
              */
         }
         tts.setLanguage(locale);
@@ -189,8 +193,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
      * @param announcement the announcement
      */
     private void speakAnnouncement(String announcement) {
-        int result = audioManager.requestAudioFocus(
-                null, TextToSpeech.Engine.DEFAULT_STREAM, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
+        int result = audioManager.requestAudioFocus(null, TextToSpeech.Engine.DEFAULT_STREAM, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
         if (result == AudioManager.AUDIOFOCUS_REQUEST_FAILED) {
             Log.w(TAG, "Failed to request audio focus.");
         }
@@ -223,7 +226,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
         boolean metricUnits = PreferencesUtils.isMetricUnits(context);
         boolean reportSpeed = PreferencesUtils.isReportSpeed(context);
         double distance = tripStatistics.getTotalDistance() * UnitConversions.M_TO_KM;
-        double speed = tripStatistics.getAverageMovingSpeed() * UnitConversions.MS_TO_KMH;
+        double distancePerTime = tripStatistics.getAverageMovingSpeed() * UnitConversions.MS_TO_KMH;
 
         if (distance == 0) {
             return context.getString(R.string.voice_total_distance_zero);
@@ -231,26 +234,22 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
 
         if (!metricUnits) {
             distance *= UnitConversions.KM_TO_MI;
-            speed *= UnitConversions.KM_TO_MI;
+            distancePerTime *= UnitConversions.KM_TO_MI;
         }
 
         String rate;
         if (reportSpeed) {
-            int speedId = metricUnits ? R.plurals.voiceSpeedKilometersPerHour
-                    : R.plurals.voiceSpeedMilesPerHour;
-            rate = context.getResources().getQuantityString(speedId, getQuantityCount(speed), speed);
+            int speedId = metricUnits ? R.plurals.voiceSpeedKilometersPerHour : R.plurals.voiceSpeedMilesPerHour;
+            rate = context.getResources().getQuantityString(speedId, getQuantityCount(distancePerTime), distancePerTime);
         } else {
-            speed = speed == 0 ? 0.0 : 1 / speed;
+            double timePerDistance = distancePerTime == 0 ? 0.0 : 1 / distancePerTime;
             int paceId = metricUnits ? R.string.voice_pace_per_kilometer : R.string.voice_pace_per_mile;
-            long time = Math.round(
-                    speed * UnitConversions.HR_TO_MIN * UnitConversions.MIN_TO_S * UnitConversions.S_TO_MS);
+            long time = Math.round(timePerDistance * UnitConversions.HR_TO_MIN * UnitConversions.MIN_TO_S * UnitConversions.S_TO_MS);
             rate = context.getString(paceId, getAnnounceTime(time));
         }
 
-        int totalDistanceId = metricUnits ? R.plurals.voiceTotalDistanceKilometers
-                : R.plurals.voiceTotalDistanceMiles;
-        String totalDistance = context.getResources()
-                .getQuantityString(totalDistanceId, getQuantityCount(distance), distance);
+        int totalDistanceId = metricUnits ? R.plurals.voiceTotalDistanceKilometers : R.plurals.voiceTotalDistanceMiles;
+        String totalDistance = context.getResources().getQuantityString(totalDistanceId, getQuantityCount(distance), distance);
 
         return context.getString(R.string.voice_template, totalDistance,
                 getAnnounceTime(tripStatistics.getMovingTime()), rate);
@@ -264,8 +263,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
      */
     @VisibleForTesting
     protected void listenToPhoneState(PhoneStateListener listener, int events) {
-        TelephonyManager telephony = (TelephonyManager) context.getSystemService(
-                Context.TELEPHONY_SERVICE);
+        TelephonyManager telephony = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         if (telephony != null) {
             telephony.listen(listener, events);
         }
@@ -297,15 +295,13 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
     }
 
     /**
-     * Gets the plural count to be used by getQuantityString. getQuantityString
-     * only supports integer quantities, not a double quantity like "2.2".
+     * Gets the plural count to be used by getQuantityString.
+     * getQuantityString only supports integer quantities, not a double quantity like "2.2".
      * <p>
-     * As a temporary workaround, we convert a double quantity to an integer
-     * quantity. If the double quantity is exactly 0, 1, or 2, then we can return
-     * these integer quantities. Otherwise, we cast the double quantity to an
-     * integer quantity. However, we need to make sure that if the casted value is
-     * 0, 1, or 2, we don't return those, instead, return the next biggest integer
-     * 3.
+     * As a temporary workaround, we convert a double quantity to an integer quantity.
+     * If the double quantity is exactly 0, 1, or 2, then we can return these integer quantities.
+     * Otherwise, we cast the double quantity to an integer quantity.
+     * However, we need to make sure that if the casted value is 0, 1, or 2, we don't return those, instead, return the next biggest integer 3.
      *
      * @param d the double value
      */
@@ -317,6 +313,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
         } else if (d == 2) {
             return 2;
         } else {
+            //TODO This seems weird; why not use Math.round(d) or Math.ceil()?
             int count = (int) d;
             return count < 3 ? 3 : count;
         }
