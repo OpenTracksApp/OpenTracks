@@ -73,25 +73,21 @@ import de.dennisguse.opentracks.util.TrackNameUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
- * A background service that registers a location listener and records track
- * points. Track points are saved to the {@link CustomContentProvider}.
+ * A background service that registers a location listener and records track points.
+ * Track points are saved to the {@link CustomContentProvider}.
  *
  * @author Leif Hendrik Wilden
  */
 public class TrackRecordingService extends Service {
 
-    /**
-     * The name of extra intent property to indicate whether we want to resume a
-     * previously recorded track.
-     */
+    // The name of extra intent property to indicate whether we want to resume a previously recorded track.
     public static final String RESUME_TRACK_EXTRA_NAME = "de.dennisguse.opentracks.RESUME_TRACK";
 
     public static final double PAUSE_LATITUDE = 100.0;
     public static final double RESUME_LATITUDE = 200.0;
 
-    /**
-     * Anything faster than that (in meters per second) will be considered moving.
-     */
+    // Anything faster than that (in meters per second) will be considered moving.
+
     public static final double MAX_NO_MOVEMENT_SPEED = 0.224;
     @VisibleForTesting
     static final int MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS = 3;
@@ -118,19 +114,13 @@ public class TrackRecordingService extends Service {
 
     // The following variables are set when recording:
     private TripStatisticsUpdater trackTripStatisticsUpdater;
-    /*
-     * Note that sharedPreferenceChangeListener cannot be an anonymous inner
-     * class. Anonymous inner class will get garbage collected.
-     */
+    // Note that sharedPreferenceChangeListener cannot be an anonymous inner class; anonymous inner class will get garbage collected.
     private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
             if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.recording_track_id_key))) {
                 long trackId = PreferencesUtils.getLong(context, R.string.recording_track_id_key);
-                /*
-                 * Only through the TrackRecordingService can one stop a recording
-                 * and set the recordingTrackId to -1L.
-                 */
+                // Only through the TrackRecordingService can one stop a recording and set the recordingTrackId to -1L.
                 if (trackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
                     recordingTrackId = trackId;
                 }
@@ -250,10 +240,7 @@ public class TrackRecordingService extends Service {
 
         handler.post(registerLocationRunnable);
 
-        /*
-         * Try to restart the previous recording track in case the service has been
-         * restarted by the system, which can sometimes happen.
-         */
+        // Try to restart the previous recording track in case the service has been restarted by the system, which can sometimes happen.
         Track track = contentProviderUtils.getTrack(recordingTrackId);
         if (track != null) {
             restartTrack(track);
@@ -314,10 +301,7 @@ public class TrackRecordingService extends Service {
         // This should be the next to last operation
         releaseWakeLock();
 
-        /*
-         * Shutdown the executorService last to avoid sending events to a dead
-         * executor.
-         */
+        // Shutdown the executorService last to avoid sending events to a dead executor.
         executorService.shutdown();
         super.onDestroy();
     }
@@ -432,8 +416,9 @@ public class TrackRecordingService extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel notificationChannel = new NotificationChannel(getString(R.string.app_name), getString(R.string.app_name), NotificationManager.IMPORTANCE_DEFAULT);
             NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            assert manager != null;
-            manager.createNotificationChannel(notificationChannel);
+            if (manager != null) {
+                manager.createNotificationChannel(notificationChannel);
+            }
         }
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, getString(R.string.app_name))
                 .setContentIntent(pendingIntent)
@@ -479,6 +464,7 @@ public class TrackRecordingService extends Service {
             Log.d(TAG, "Not resuming. Track is null.");
             return false;
         }
+
         int retries = PreferencesUtils.getInt(this, R.string.auto_resume_track_current_retry_key, PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT);
         if (retries >= MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS) {
             Log.d(TAG, "Not resuming. Exceeded maximum retry attempts.");
@@ -561,9 +547,7 @@ public class TrackRecordingService extends Service {
         }
         markerTripStatisticsUpdater = new TripStatisticsUpdater(markerStartTime);
 
-        LocationIterator locationIterator = null;
-        try {
-            locationIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), -1L, false, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
+        try (LocationIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), -1L, false, ContentProviderUtils.DEFAULT_LOCATION_FACTORY)) {
 
             while (locationIterator.hasNext()) {
                 Location location = locationIterator.next();
@@ -574,10 +558,6 @@ public class TrackRecordingService extends Service {
             }
         } catch (RuntimeException e) {
             Log.e(TAG, "RuntimeException", e);
-        } finally {
-            if (locationIterator != null) {
-                locationIterator.close();
-            }
         }
         startRecording(true);
     }
@@ -739,10 +719,10 @@ public class TrackRecordingService extends Service {
     }
 
     /**
-     * Gets the last valid track point in the current segment. Returns null if not
-     * available.
+     * Gets the last valid track point in the current segment.
      *
      * @param trackId the track id
+     * @return the location or null
      */
     private Location getLastValidTrackPointInCurrentSegment(long trackId) {
         if (!currentSegmentHasLocation) {
@@ -894,9 +874,8 @@ public class TrackRecordingService extends Service {
             updateRecordingTrack(track, trackPointId, LocationUtils.isValidLocation(location));
         } catch (SQLiteException e) {
             /*
-             * Insert failed, most likely because of SqlLite error code 5
-             * (SQLite_BUSY). This is expected to happen extremely rarely (if our
-             * listener gets invoked twice at about the same time).
+             * Insert failed, most likely because of SqlLite error code 5 (SQLite_BUSY).
+             * This is expected to happen extremely rarely (if our listener gets invoked twice at about the same time).
              */
             Log.w(TAG, "SQLiteException", e);
         }
@@ -906,7 +885,7 @@ public class TrackRecordingService extends Service {
     }
 
     /**
-     * Updates the recording track time. Also updates the startId and the stopId.
+     * Updates the recording track time as well as the startId and the stopId.
      * Increase the number of points if it is a new and valid track point.
      *
      * @param track                  the track
