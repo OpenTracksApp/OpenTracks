@@ -16,25 +16,15 @@
 
 package de.dennisguse.opentracks.stats;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import androidx.annotation.NonNull;
 
 /**
- * Statistical data about a trip. The data in this class should be filled out by
- * TripStatisticsBuilder.
- * <p>
- * TODO: hashCode and equals
+ * Statistical data about a trip.
+ * The data in this class should be filled out by TripStatisticsBuilder.
  *
  * @author Rodrigo Damazio
  */
-public class TripStatistics implements Parcelable {
-
-    /**
-     * Creator of {@link TripStatistics} from parcels.
-     */
-    public static final Creator CREATOR = new Creator();
+public class TripStatistics {
 
     // The min and max latitude seen in this trip.
     private final ExtremityMonitor latitudeExtremities = new ExtremityMonitor();
@@ -60,9 +50,6 @@ public class TripStatistics implements Parcelable {
     // The total elevation gained (meters).
     private double totalElevationGain;
 
-    /**
-     * Default constructor.
-     */
     public TripStatistics() {
     }
 
@@ -86,8 +73,8 @@ public class TripStatistics implements Parcelable {
     }
 
     /**
-     * Combines these statistics with those from another object. This assumes that
-     * the time periods covered by each do not intersect.
+     * Combines these statistics with those from another object.
+     * This assumes that the time periods covered by each do not intersect.
      *
      * @param other another statistics data object
      */
@@ -477,72 +464,5 @@ public class TripStatistics implements Parcelable {
                 + "; Min Elevation: " + getMinElevation() + "; Max Elevation: " + getMaxElevation()
                 + "; Elevation Gain: " + getTotalElevationGain() + "; Min Grade: " + getMinGrade()
                 + "; Max Grade: " + getMaxGrade() + "}";
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(startTime);
-        dest.writeLong(stopTime);
-        dest.writeDouble(totalDistance);
-        dest.writeLong(totalTime);
-        dest.writeLong(movingTime);
-        dest.writeDouble(latitudeExtremities.getMin());
-        dest.writeDouble(latitudeExtremities.getMax());
-        dest.writeDouble(longitudeExtremities.getMin());
-        dest.writeDouble(longitudeExtremities.getMax());
-        dest.writeDouble(maxSpeed);
-        dest.writeDouble(elevationExtremities.getMin());
-        dest.writeDouble(elevationExtremities.getMax());
-        dest.writeDouble(totalElevationGain);
-        dest.writeDouble(gradeExtremities.getMin());
-        dest.writeDouble(gradeExtremities.getMax());
-    }
-
-    /**
-     * Creator of statistics data from parcels.
-     */
-    public static class Creator implements Parcelable.Creator<TripStatistics> {
-
-        @Override
-        public TripStatistics createFromParcel(Parcel source) {
-            TripStatistics data = new TripStatistics();
-
-            data.startTime = source.readLong();
-            data.stopTime = source.readLong();
-            data.totalDistance = source.readDouble();
-            data.totalTime = source.readLong();
-            data.movingTime = source.readLong();
-
-            double minLat = source.readDouble();
-            double maxLat = source.readDouble();
-            data.latitudeExtremities.set(minLat, maxLat);
-
-            double minLong = source.readDouble();
-            double maxLong = source.readDouble();
-            data.longitudeExtremities.set(minLong, maxLong);
-
-            data.maxSpeed = source.readDouble();
-
-            double minElev = source.readDouble();
-            double maxElev = source.readDouble();
-            data.elevationExtremities.set(minElev, maxElev);
-            data.totalElevationGain = source.readDouble();
-
-            double minGrade = source.readDouble();
-            double maxGrade = source.readDouble();
-            data.gradeExtremities.set(minGrade, maxGrade);
-
-            return data;
-        }
-
-        @Override
-        public TripStatistics[] newArray(int size) {
-            return new TripStatistics[size];
-        }
     }
 }

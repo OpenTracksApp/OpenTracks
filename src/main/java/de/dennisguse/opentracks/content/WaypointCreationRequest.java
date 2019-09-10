@@ -15,9 +15,6 @@
  */
 package de.dennisguse.opentracks.content;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 
 /**
@@ -25,15 +22,13 @@ import de.dennisguse.opentracks.content.Waypoint.WaypointType;
  *
  * @author Sandor Dornbush
  */
-public class WaypointCreationRequest implements Parcelable {
+public class WaypointCreationRequest {
 
     public final static WaypointCreationRequest DEFAULT_WAYPOINT = new WaypointCreationRequest(WaypointType.WAYPOINT, false);
 
     public final static WaypointCreationRequest DEFAULT_STATISTICS = new WaypointCreationRequest(WaypointType.STATISTICS, false);
 
     public final static WaypointCreationRequest DEFAULT_START_TRACK = new WaypointCreationRequest(WaypointType.STATISTICS, true);
-
-    public static final Creator CREATOR = new Creator();
 
     private WaypointType type;
 
@@ -58,22 +53,6 @@ public class WaypointCreationRequest implements Parcelable {
         this.description = description;
         this.iconUrl = iconUrl;
         this.photoUrl = photoUrl;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int arg1) {
-        parcel.writeInt(type.ordinal());
-        parcel.writeByte((byte) (isTrackStatistics ? 1 : 0));
-        parcel.writeString(name);
-        parcel.writeString(category);
-        parcel.writeString(description);
-        parcel.writeString(iconUrl);
-        parcel.writeString(photoUrl);
     }
 
     public WaypointType getType() {
@@ -102,24 +81,5 @@ public class WaypointCreationRequest implements Parcelable {
 
     public String getPhotoUrl() {
         return photoUrl;
-    }
-
-    public static class Creator implements Parcelable.Creator<WaypointCreationRequest> {
-
-        @Override
-        public WaypointCreationRequest createFromParcel(Parcel source) {
-            return new WaypointCreationRequest(
-                    WaypointType.values()[source.readInt()],
-                    source.readByte() == 1,
-                    source.readString(),
-                    source.readString(),
-                    source.readString(),
-                    source.readString(),
-                    source.readString());
-        }
-
-        public WaypointCreationRequest[] newArray(int size) {
-            return new WaypointCreationRequest[size];
-        }
     }
 }

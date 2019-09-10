@@ -17,8 +17,6 @@
 package de.dennisguse.opentracks.content;
 
 import android.location.Location;
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,19 +29,7 @@ import de.dennisguse.opentracks.stats.TripStatistics;
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
-public class Track implements Parcelable {
-
-    public static final Parcelable.Creator<Track> CREATOR = new Parcelable.Creator<Track>() {
-        @Override
-        public Track createFromParcel(Parcel in) {
-            return new Track(in);
-        }
-
-        @Override
-        public Track[] newArray(int size) {
-            return new Track[size];
-        }
-    };
+public class Track {
 
     private long id = -1L;
     private String name = "";
@@ -64,47 +50,6 @@ public class Track implements Parcelable {
     private List<Location> locations = new ArrayList<>();
 
     public Track() {
-    }
-
-    private Track(Parcel in) {
-        id = in.readLong();
-        name = in.readString();
-        description = in.readString();
-        category = in.readString();
-        startId = in.readLong();
-        stopId = in.readLong();
-        numberOfPoints = in.readInt();
-        icon = in.readString();
-
-        ClassLoader classLoader = getClass().getClassLoader();
-        tripStatistics = in.readParcelable(classLoader);
-
-        for (int i = 0; i < numberOfPoints; ++i) {
-            Location location = in.readParcelable(classLoader);
-            locations.add(location);
-        }
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeString(name);
-        dest.writeString(description);
-        dest.writeString(category);
-        dest.writeLong(startId);
-        dest.writeLong(stopId);
-        dest.writeInt(numberOfPoints);
-        dest.writeString(icon);
-
-        dest.writeParcelable(tripStatistics, 0);
-        for (int i = 0; i < numberOfPoints; ++i) {
-            dest.writeParcelable(locations.get(i), 0);
-        }
     }
 
     public long getId() {

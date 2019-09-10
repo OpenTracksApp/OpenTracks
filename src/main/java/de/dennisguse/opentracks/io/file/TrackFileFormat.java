@@ -1,8 +1,6 @@
 package de.dennisguse.opentracks.io.file;
 
 import android.content.Context;
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import java.util.Locale;
 
@@ -20,7 +18,7 @@ import de.dennisguse.opentracks.io.file.exporter.TrackWriter;
 /**
  * Definition of all possible track formats.
  */
-public enum TrackFileFormat implements Parcelable {
+public enum TrackFileFormat {
 
     KML_ONLY_TRACK {
         @Override
@@ -120,29 +118,6 @@ public enum TrackFileFormat implements Parcelable {
             return "gpx";
         }
     };
-
-    @Deprecated
-    public static final Creator<TrackFileFormat> CREATOR = new Creator<TrackFileFormat>() {
-        @Override
-        public TrackFileFormat createFromParcel(final Parcel source) {
-            return TrackFileFormat.values()[source.readInt()];
-        }
-
-        @Override
-        public TrackFileFormat[] newArray(final int size) {
-            return new TrackFileFormat[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeInt(ordinal());
-    }
 
     private static final String MIME_KMZ = "application/vnd.google-earth.kmz";
 

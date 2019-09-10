@@ -18,8 +18,6 @@ package de.dennisguse.opentracks.content;
 
 import android.location.Location;
 import android.net.Uri;
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import de.dennisguse.opentracks.stats.TripStatistics;
 
@@ -29,19 +27,7 @@ import de.dennisguse.opentracks.stats.TripStatistics;
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
-public final class Waypoint implements Parcelable {
-
-    public static final Parcelable.Creator<Waypoint> CREATOR = new Parcelable.Creator<Waypoint>() {
-        @Override
-        public Waypoint createFromParcel(Parcel in) {
-            return new Waypoint(in);
-        }
-
-        @Override
-        public Waypoint[] newArray(int size) {
-            return new Waypoint[size];
-        }
-    };
+public final class Waypoint {
 
     private long id = -1L;
     private String name = "";
@@ -75,60 +61,6 @@ public final class Waypoint implements Parcelable {
         this.location = location;
         this.tripStatistics = tripStatistics;
         this.photoUrl = photoUrl;
-    }
-
-    private Waypoint(Parcel source) {
-        id = source.readLong();
-        name = source.readString();
-        description = source.readString();
-        category = source.readString();
-        icon = source.readString();
-        trackId = source.readLong();
-        type = WaypointType.values()[source.readInt()];
-        length = source.readDouble();
-        duration = source.readLong();
-        startId = source.readLong();
-        stopId = source.readLong();
-
-        ClassLoader classLoader = getClass().getClassLoader();
-        byte hasLocation = source.readByte();
-        if (hasLocation > 0) {
-            location = source.readParcelable(classLoader);
-        }
-        byte hasStats = source.readByte();
-        if (hasStats > 0) {
-            tripStatistics = source.readParcelable(classLoader);
-        }
-        photoUrl = source.readString();
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeString(name);
-        dest.writeString(description);
-        dest.writeString(category);
-        dest.writeString(icon);
-        dest.writeLong(trackId);
-        dest.writeInt(type.ordinal());
-        dest.writeDouble(length);
-        dest.writeLong(duration);
-        dest.writeLong(startId);
-        dest.writeLong(stopId);
-        dest.writeByte(location == null ? (byte) 0 : (byte) 1);
-        if (location != null) {
-            dest.writeParcelable(location, 0);
-        }
-        dest.writeByte(tripStatistics == null ? (byte) 0 : (byte) 1);
-        if (tripStatistics != null) {
-            dest.writeParcelable(tripStatistics, 0);
-        }
-        dest.writeString(photoUrl);
     }
 
     public long getId() {

@@ -8,4 +8,5 @@ Bugfix:
 
 Developer:
 - Fixed (some) test cases
+- Removed unused parcelable functionality
 - Major cleanup and reformatting
