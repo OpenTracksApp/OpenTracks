@@ -64,12 +64,14 @@ public class ActivityTypePreference extends DialogPreference {
                 getContext(), R.string.default_activity_key, PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT);
         textView.setText(category);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.activity_types, android.R.layout.simple_dropdown_item_1line);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                getContext(), R.array.activity_types, android.R.layout.simple_dropdown_item_1line);
         textView.setAdapter(adapter);
         textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                String iconValue = TrackIconUtils.getIconValue(getContext(), (String) textView.getAdapter().getItem(position));
+                String iconValue = TrackIconUtils.getIconValue(
+                        getContext(), (String) textView.getAdapter().getItem(position));
                 TrackIconUtils.setIconSpinner(spinner, iconValue);
             }
         });

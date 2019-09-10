@@ -449,7 +449,8 @@ public class ChartView extends View {
                     synchronized (waypoints) {
                         for (int i = 0; i < waypoints.size(); i++) {
                             Waypoint waypoint = waypoints.get(i);
-                            int distance = Math.abs(getX(getWaypointXValue(waypoint)) - (int) event.getX() - getScrollX());
+                            int distance = Math.abs(
+                                    getX(getWaypointXValue(waypoint)) - (int) event.getX() - getScrollX());
                             if (distance < minDistance) {
                                 minDistance = distance;
                                 nearestWaypoint = waypoint;
@@ -481,7 +482,8 @@ public class ChartView extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        updateEffectiveDimensionsIfChanged(View.MeasureSpec.getSize(widthMeasureSpec), View.MeasureSpec.getSize(heightMeasureSpec));
+        updateEffectiveDimensionsIfChanged(
+                View.MeasureSpec.getSize(widthMeasureSpec), View.MeasureSpec.getSize(heightMeasureSpec));
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
@@ -631,7 +633,8 @@ public class ChartView extends View {
     private String getXAxisLabel() {
         Context context = getContext();
         if (chartByDistance) {
-            return metricUnits ? context.getString(R.string.unit_kilometer) : context.getString(R.string.unit_mile);
+            return metricUnits ? context.getString(R.string.unit_kilometer)
+                    : context.getString(R.string.unit_mile);
         } else {
             return context.getString(R.string.description_time);
         }
@@ -716,7 +719,8 @@ public class ChartView extends View {
         int interval = chartValueSeries.getInterval();
         float maxMarkerWidth = 0;
         for (int i = 0; i <= Y_AXIS_INTERVALS; i++) {
-            maxMarkerWidth = Math.max(maxMarkerWidth, drawYAxisMarker(chartValueSeries, canvas, xPosition, i * interval + chartValueSeries.getMinMarkerValue()));
+            maxMarkerWidth = Math.max(maxMarkerWidth, drawYAxisMarker(chartValueSeries, canvas, xPosition,
+                    i * interval + chartValueSeries.getMinMarkerValue()));
         }
         return maxMarkerWidth;
     }
@@ -730,7 +734,8 @@ public class ChartView extends View {
      * @param yValue           the y value
      * @return the marker width.
      */
-    private float drawYAxisMarker(ChartValueSeries chartValueSeries, Canvas canvas, int xPosition, int yValue) {
+    private float drawYAxisMarker(
+            ChartValueSeries chartValueSeries, Canvas canvas, int xPosition, int yValue) {
         String marker = chartValueSeries.formatMarker(yValue);
         Paint paint = chartValueSeries.getMarkerPaint();
         Rect rect = getRect(paint, marker);

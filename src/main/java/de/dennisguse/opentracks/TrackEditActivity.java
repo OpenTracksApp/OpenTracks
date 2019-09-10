@@ -19,6 +19,7 @@ package de.dennisguse.opentracks;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -115,12 +116,15 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
 
         activityTypeIcon = findViewById(R.id.track_edit_activity_type_icon);
         activityTypeIcon.setAdapter(TrackIconUtils.getIconSpinnerAdapter(this, iconValue));
-        activityTypeIcon.setOnClickListener(new View.OnClickListener() {
+        activityTypeIcon.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View view) {
-                ChooseActivityTypeDialogFragment.newInstance(activityType.getText().toString()).show(
-                        getSupportFragmentManager(),
-                        ChooseActivityTypeDialogFragment.CHOOSE_ACTIVITY_TYPE_DIALOG_TAG);
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    ChooseActivityTypeDialogFragment.newInstance(activityType.getText().toString()).show(
+                            getSupportFragmentManager(),
+                            ChooseActivityTypeDialogFragment.CHOOSE_ACTIVITY_TYPE_DIALOG_TAG);
+                }
+                return true;
             }
         });
         activityTypeIcon.setOnKeyListener(new View.OnKeyListener() {
