@@ -353,11 +353,7 @@ public interface ContentProviderUtils {
     /**
      * A factory which can produce instances of {@link ContentProviderUtils}, and can be overridden for testing.
      */
-    //TODO Is this still used? From a quick glance, it doesn't looks like it; probably a left over from testing.
-    @Deprecated
     class Factory {
-
-        private static Factory instance = new Factory();
 
         /**
          * Creates an instance of {@link ContentProviderUtils}.
@@ -365,33 +361,6 @@ public interface ContentProviderUtils {
          * @param context the context
          */
         public static ContentProviderUtils get(Context context) {
-            return instance.newForContext(context);
-        }
-
-        /**
-         * Returns the factory instance.
-         */
-        public static Factory getInstance() {
-            return instance;
-        }
-
-        /**
-         * Overrides the factory instance for testing.
-         * Don't forget to set it back to the original value after testing.
-         *
-         * @param factory the factory
-         */
-        public static void overrideInstance(Factory factory) {
-            instance = factory;
-        }
-
-        /**
-         * Creates an instance of {@link ContentProviderUtils}. Allows subclasses
-         * to override for testing.
-         *
-         * @param context the context
-         */
-        private ContentProviderUtils newForContext(Context context) {
             return new ContentProviderUtilsImpl(context.getContentResolver());
         }
     }
