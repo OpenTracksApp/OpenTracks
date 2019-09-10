@@ -17,6 +17,7 @@
 package de.dennisguse.opentracks.content;
 
 import android.content.Context;
+import android.util.Pair;
 
 import androidx.annotation.VisibleForTesting;
 
@@ -95,8 +96,7 @@ public class DescriptionGeneratorImpl implements DescriptionGenerator {
         StringBuilder builder = new StringBuilder();
 
         // Total distance
-        writeDistance(
-                stats.getTotalDistance(), builder, R.string.description_total_distance, lineBreak);
+        writeDistance(stats.getTotalDistance(), builder, R.string.description_total_distance, lineBreak);
 
         // Total time
         writeTime(stats.getTotalTime(), builder, R.string.description_total_time, lineBreak);
@@ -108,8 +108,7 @@ public class DescriptionGeneratorImpl implements DescriptionGenerator {
         writeSpeed(stats.getAverageSpeed(), builder, R.string.description_average_speed, lineBreak);
 
         // Average moving speed
-        writeSpeed(stats.getAverageMovingSpeed(), builder, R.string.description_average_moving_speed,
-                lineBreak);
+        writeSpeed(stats.getAverageMovingSpeed(), builder, R.string.description_average_moving_speed, lineBreak);
 
         // Max speed
         writeSpeed(stats.getMaxSpeed(), builder, R.string.description_max_speed, lineBreak);
@@ -118,8 +117,7 @@ public class DescriptionGeneratorImpl implements DescriptionGenerator {
         writePace(stats.getAverageSpeed(), builder, R.string.description_average_pace_in_minute, lineBreak);
 
         // Average moving pace
-        writePace(stats.getAverageMovingSpeed(), builder,
-                R.string.description_average_moving_pace_in_minute, lineBreak);
+        writePace(stats.getAverageMovingSpeed(), builder, R.string.description_average_moving_pace_in_minute, lineBreak);
 
         // Fastest pace
         writePace(stats.getMaxSpeed(), builder, R.string.description_fastest_pace_in_minute, lineBreak);
@@ -187,8 +185,7 @@ public class DescriptionGeneratorImpl implements DescriptionGenerator {
      * @param lineBreak line break string
      */
     @VisibleForTesting
-    void writeSpeed(
-            double speed, StringBuilder builder, int resId, String lineBreak) {
+    void writeSpeed(double speed, StringBuilder builder, int resId, String lineBreak) {
         double speedInKmHr = speed * UnitConversions.MS_TO_KMH;
         double speedInMiHr = speedInKmHr * UnitConversions.KM_TO_MI;
         builder.append(context.getString(resId, speedInKmHr, speedInMiHr));
@@ -205,18 +202,13 @@ public class DescriptionGeneratorImpl implements DescriptionGenerator {
      */
     @VisibleForTesting
     void writePace(double speed, StringBuilder builder, int resId, String lineBreak) {
-        String[] paceInMetrics = StringUtils.getSpeedParts(context, speed, true, false);
-        String[] paceInImperial = StringUtils.getSpeedParts(context, speed, false, false);
+        Pair<String, String> paceInMetrics = StringUtils.getSpeedParts(context, speed, true, false);
+        Pair<String, String> paceInImperial = StringUtils.getSpeedParts(context, speed, false, false);
 
-        if (paceInMetrics[0] == null) {
-            paceInMetrics[0] = context.getString(R.string.value_unknown);
-        }
+        String formattedPaceMetrics = paceInMetrics.first != null ? paceInMetrics.first : context.getString(R.string.value_unknown);
+        String formattedPaceImperial = paceInImperial.first != null ? paceInImperial.first : context.getString(R.string.value_unknown);
 
-        if (paceInImperial[0] == null) {
-            paceInImperial[0] = context.getString(R.string.value_unknown);
-        }
-
-        builder.append(context.getString(resId, paceInMetrics[0], paceInImperial[0]));
+        builder.append(context.getString(resId, formattedPaceMetrics, formattedPaceImperial));
         builder.append(lineBreak);
     }
 
@@ -229,8 +221,7 @@ public class DescriptionGeneratorImpl implements DescriptionGenerator {
      * @param lineBreak line break string
      */
     @VisibleForTesting
-    void writeElevation(
-            double elevation, StringBuilder builder, int resId, String lineBreak) {
+    void writeElevation(double elevation, StringBuilder builder, int resId, String lineBreak) {
         long elevationInM = Math.round(elevation);
         long elevationInFt = Math.round(elevation * UnitConversions.M_TO_FT);
         builder.append(context.getString(resId, elevationInM, elevationInFt));
@@ -247,8 +238,7 @@ public class DescriptionGeneratorImpl implements DescriptionGenerator {
      */
     @VisibleForTesting
     void writeGrade(double grade, StringBuilder builder, int resId, String lineBreak) {
-        long gradeInPercent = Double.isNaN(grade) || Double.isInfinite(grade) ? 0L
-                : Math.round(grade * 100);
+        long gradeInPercent = Double.isNaN(grade) || Double.isInfinite(grade) ? 0L : Math.round(grade * 100);
         builder.append(context.getString(resId, gradeInPercent));
         builder.append(lineBreak);
     }

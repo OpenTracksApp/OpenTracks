@@ -19,6 +19,7 @@ package de.dennisguse.opentracks.util;
 import android.app.Activity;
 import android.content.Context;
 import android.location.Location;
+import android.util.Pair;
 import android.view.View;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -191,8 +192,8 @@ public class StatsUtils {
      * @param reportSpeed  true if report speed
      */
     private static void setSpeed(Context context, View view, int speedLabelId, int paceLabelId, double speed, boolean metricUnits, boolean reportSpeed) {
-        String[] parts = StringUtils.getSpeedParts(context, speed, metricUnits, reportSpeed);
-        setItem(context, view, reportSpeed ? speedLabelId : paceLabelId, parts[0], parts[1]);
+        Pair<String, String> parts = StringUtils.getSpeedParts(context, speed, metricUnits, reportSpeed);
+        setItem(context, view, reportSpeed ? speedLabelId : paceLabelId, parts.first, parts.second);
     }
 
     /**
@@ -204,8 +205,8 @@ public class StatsUtils {
      * @param metricUnits true if metric units
      */
     private static void setDistanceValue(Context context, View view, double distance, boolean metricUnits) {
-        String[] parts = StringUtils.getDistanceParts(context, distance, metricUnits);
-        setItem(context, view, R.string.stats_distance, parts[0], parts[1]);
+        Pair<String, String> parts = StringUtils.getDistanceParts(context, distance, metricUnits);
+        setItem(context, view, R.string.stats_distance, parts.first, parts.second);
     }
 
     /**

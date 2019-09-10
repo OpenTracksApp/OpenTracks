@@ -19,6 +19,7 @@ import android.content.Context;
 import android.location.Location;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
+import android.util.Pair;
 
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
@@ -142,22 +143,16 @@ public class StringUtils {
     }
 
     /**
-     * Gets the distance in an array of two strings.
-     * The first string is the distance.
-     * The second string is the unit.
-     * The first string is null if the distance is invalid.
+     * Get the formatted distance with unit.
      *
      * @param context     the context
      * @param distance    the distance
      * @param metricUnits true to use metric unit
+     * @return the formatted distance (or null) and it's unit as {@link Pair}
      */
-    //TODO Return Pair<Distance, Unit>
-    public static String[] getDistanceParts(Context context, double distance, boolean metricUnits) {
-        String[] result = new String[2];
+    static Pair<String, String> getDistanceParts(Context context, double distance, boolean metricUnits) {
         if (Double.isNaN(distance) || Double.isInfinite(distance)) {
-            result[0] = null;
-            result[1] = context.getString(metricUnits ? R.string.unit_meter : R.string.unit_feet);
-            return result;
+            return new Pair<>(null, context.getString(metricUnits ? R.string.unit_meter : R.string.unit_feet));
         }
 
         int unitId;
@@ -177,50 +172,45 @@ public class StringUtils {
                 unitId = R.string.unit_feet;
             }
         }
-        result[0] = formatDecimal(distance);
-        result[1] = context.getString(unitId);
-        return result;
+        return new Pair<>(formatDecimal(distance), context.getString(unitId));
     }
 
     /**
-     * Gets the speed in an array of two strings.
-     * The first string is the speed.
-     * The second string is the unit.
-     * The first string is null if speed is invalid.
+     * Gets the formatted speed with unit.
      *
      * @param context     the context
-     * @param speed       the speed
+     * @param speed_mps   the speed
      * @param metricUnits true to use metric unit
-     * @param reportSpeed true to report speed
+     * @param reportSpeed true to report speed; false for pace
+     * @return the formatted speed (or null) and it's unit as {@link Pair}
      */
-    //TODO Return Pair<Distance, Unit>
-    public static String[] getSpeedParts(Context context, double speed, boolean metricUnits, boolean reportSpeed) {
-        String[] result = new String[2];
+    public static Pair<String, String> getSpeedParts(Context context, double speed_mps, boolean metricUnits, boolean reportSpeed) {
         int unitId;
         if (metricUnits) {
             unitId = reportSpeed ? R.string.unit_kilometer_per_hour : R.string.unit_minute_per_kilometer;
         } else {
             unitId = reportSpeed ? R.string.unit_mile_per_hour : R.string.unit_minute_per_mile;
         }
-        result[1] = context.getString(unitId);
-        if (Double.isNaN(speed) || Double.isInfinite(speed)) {
-            result[0] = null;
-            return result;
+        String unitString = context.getString(unitId);
+
+        if (Double.isNaN(speed_mps) || Double.isInfinite(speed_mps)) {
+            return new Pair<>(null, unitString);
         }
-        speed *= UnitConversions.MS_TO_KMH;
+
+        speed_mps *= UnitConversions.MS_TO_KMH;
         if (!metricUnits) {
-            speed *= UnitConversions.KM_TO_MI;
+            speed_mps *= UnitConversions.KM_TO_MI;
         }
+
         if (reportSpeed) {
-            result[0] = StringUtils.formatDecimal(speed);
-        } else {
-            // convert from hours to minutes
-            double pace = speed == 0 ? 0.0 : 60.0 / speed;
-            int minutes = (int) pace;
-            int seconds = (int) Math.round((pace - minutes) * 60.0);
-            result[0] = String.format(Locale.US, "%d:%02d", minutes, seconds);
+            return new Pair<>(StringUtils.formatDecimal(speed_mps), unitString);
         }
-        return result;
+
+        // convert from hours to minutes
+        double pace = speed_mps == 0 ? 0.0 : 60.0 / speed_mps;
+        int minutes = (int) pace;
+        int seconds = (int) Math.round((pace - minutes) * 60.0);
+        return new Pair<>(String.format(Locale.US, "%d:%02d", minutes, seconds), unitString);
     }
 
     /**
