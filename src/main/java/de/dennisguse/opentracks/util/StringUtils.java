@@ -54,99 +54,71 @@ public class StringUtils {
     }
 
     /**
-     * Formats the date and time based on user's phone date/time preferences.
+     * Formats the date and time_ms based on user's phone date/time_ms preferences.
      *
      * @param context the context
-     * @param time    the time in milliseconds
+     * @param time_ms the time_ms in milliseconds
      */
-    public static String formatDateTime(Context context, long time) {
-        return DateUtils.formatDateTime(context, time, DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE)
-                + " " + DateUtils.formatDateTime(context, time, DateUtils.FORMAT_SHOW_TIME);
+    public static String formatDateTime(Context context, long time_ms) {
+        return DateUtils.formatDateTime(context, time_ms, DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE)
+                + " " + DateUtils.formatDateTime(context, time_ms, DateUtils.FORMAT_SHOW_TIME);
     }
 
     /**
-     * Formats the time using the ISO 8601 date time format with fractional
+     * Formats the time using the ISO 8601 date time_ms format with fractional
      * seconds in UTC time zone.
      *
-     * @param time the time in milliseconds
+     * @param time_ms the time in milliseconds
      */
-    public static String formatDateTimeIso8601(long time) {
-        return ISO_8601_DATE_TIME_FORMAT.format(time);
+    public static String formatDateTimeIso8601(long time_ms) {
+        return ISO_8601_DATE_TIME_FORMAT.format(time_ms);
     }
 
     /**
      * Formats the elapsed timed in the form "MM:SS" or "H:MM:SS".
-     * TODO Remove as min API level is now 21; replace with DateUtils.formatElapsedTime(time * MS_TO_S).
      *
-     * @param time the time in milliseconds
+     * @param time_ms the time in milliseconds
      */
-    public static String formatElapsedTime(long time) {
-        DateUtils.formatElapsedTime(1);
-        /*
-         * Temporary workaround for DateUtils.formatElapsedTime(time * MS_TO_S).
-         * In API level 17, it returns strings like "1:0:00" instead of "1:00:00", which breaks several unit tests.
-         */
-        if (time < 0) {
-            return "-";
-        }
-
-        long hours = 0;
-        long minutes = 0;
-        long elapsedSeconds = (long) (time * UnitConversions.MS_TO_S);
-
-        if (elapsedSeconds >= 3600) {
-            hours = elapsedSeconds / 3600;
-            elapsedSeconds -= hours * 3600;
-        }
-        if (elapsedSeconds >= 60) {
-            minutes = elapsedSeconds / 60;
-            elapsedSeconds -= minutes * 60;
-        }
-        long seconds = elapsedSeconds;
-
-        if (hours > 0) {
-            return String.format(Locale.US, "%d:%02d:%02d", hours, minutes, seconds);
-        } else {
-            return String.format(Locale.US, "%02d:%02d", minutes, seconds);
-        }
+    public static String formatElapsedTime(long time_ms) {
+        return DateUtils.formatElapsedTime((long) (time_ms * UnitConversions.MS_TO_S));
     }
 
     /**
      * Formats the elapsed time in the form "H:MM:SS".
      *
-     * @param time the time in milliseconds
+     * @param time_ms the time in milliseconds
      */
-    public static String formatElapsedTimeWithHour(long time) {
-        String value = formatElapsedTime(time);
+    public static String formatElapsedTimeWithHour(long time_ms) {
+        String value = formatElapsedTime(time_ms);
         return TextUtils.split(value, ":").length == 2 ? "0:" + value : value;
     }
 
     /**
-     * Formats the distance.
+     * Formats the distance in meters.
      *
      * @param context     the context
-     * @param distance    the distance in meters
+     * @param distance_m  the distance_m
      * @param metricUnits true to use metric units. False to use imperial units
      */
-    public static String formatDistance(Context context, double distance, boolean metricUnits) {
-        if (Double.isNaN(distance) || Double.isInfinite(distance)) {
+    public static String formatDistance(Context context, double distance_m, boolean metricUnits) {
+        if (Double.isNaN(distance_m) || Double.isInfinite(distance_m)) {
             return context.getString(R.string.value_unknown);
         }
 
         if (metricUnits) {
-            if (distance > 500.0) {
-                distance *= UnitConversions.M_TO_KM;
-                return context.getString(R.string.value_float_kilometer, distance);
+            if (distance_m > 500.0) {
+                distance_m *= UnitConversions.M_TO_KM;
+                return context.getString(R.string.value_float_kilometer, distance_m);
             } else {
-                return context.getString(R.string.value_float_meter, distance);
+                return context.getString(R.string.value_float_meter, distance_m);
             }
         } else {
-            if (distance * UnitConversions.M_TO_MI > 0.5) {
-                distance *= UnitConversions.M_TO_MI;
-                return context.getString(R.string.value_float_mile, distance);
+            if (distance_m * UnitConversions.M_TO_MI > 0.5) {
+                distance_m *= UnitConversions.M_TO_MI;
+                return context.getString(R.string.value_float_mile, distance_m);
             } else {
-                distance *= UnitConversions.M_TO_FT;
-                return context.getString(R.string.value_float_feet, distance);
+                distance_m *= UnitConversions.M_TO_FT;
+                return context.getString(R.string.value_float_feet, distance_m);
             }
         }
     }
