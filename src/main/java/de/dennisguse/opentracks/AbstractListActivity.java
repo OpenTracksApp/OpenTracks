@@ -18,8 +18,10 @@ package de.dennisguse.opentracks;
 
 import android.app.Activity;
 import android.app.SearchManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -49,6 +51,8 @@ import de.dennisguse.opentracks.util.TrackRecordingServiceConnectionUtils;
  * @author Jimmy Shih
  */
 public abstract class AbstractListActivity extends AbstractActivity implements ConfirmDeleteCaller {
+
+    private static final String TAG = AbstractListActivity.class.getSimpleName();
 
     protected static final int GPS_REQUEST_CODE = 6;
     private static final int DELETE_REQUEST_CODE = 3;
@@ -111,15 +115,21 @@ public abstract class AbstractListActivity extends AbstractActivity implements C
     }
 
     public static void configureSearchWidget(Activity activity, final MenuItem menuItem, final TrackController trackController) {
+        final SearchView searchView = (SearchView) menuItem.getActionView();
         SearchManager searchManager = (SearchManager) activity.getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menuItem.getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(activity.getComponentName()));
+        if (searchManager != null) {
+            //NOTE: for some reason activity.getComponentName() did not trigger the SearchListActivity
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(activity, SearchListActivity.class)));
+        } else {
+            Log.w(TAG, "Could not retrieve SearchManager.");
+        }
         searchView.setQueryRefinementEnabled(true);
+        searchView.setSubmitButtonEnabled(true);
         searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
 
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                // Hide and show trackController when search widget has focus/no focus
+                // Hide and show trackController when searchable widget has focus/no focus
                 if (trackController != null) {
                     if (hasFocus) {
                         trackController.hide();

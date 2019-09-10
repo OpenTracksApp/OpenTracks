@@ -142,7 +142,7 @@ public class SearchEngine {
     }
 
     /**
-     * Executes a search query and returns a set of sorted results.
+     * Executes a searchable query and returns a set of sorted results.
      *
      * @param query the query to execute
      * @return a set of results, sorted according to their score
@@ -376,7 +376,7 @@ public class SearchEngine {
     }
 
     /**
-     * Description of a search query, along with all contextual data needed to execute it.
+     * Description of a searchable query, along with all contextual data needed to execute it.
      */
     public static class SearchQuery {
         final String textQuery;
@@ -393,7 +393,7 @@ public class SearchEngine {
     }
 
     /**
-     * Description of a search result which has been retrieved and scored.
+     * Description of a searchable result which has been retrieved and scored.
      */
     public static class ScoredResult {
         public final Track track;

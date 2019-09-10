@@ -63,11 +63,11 @@ import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.TrackRecordingServiceConnectionUtils;
 
 /**
- * An activity to display a list of search results.
+ * An activity to display a list of searchable results.
  *
  * @author Rodrigo Damazio
  * <p>
- * TODO: allow to refine search (present search in context menu)
+ * TODO: allow to refine searchable (present searchable in context menu)
  */
 public class SearchListActivity extends AbstractListActivity implements DeleteMarkerCaller, ConfirmDeleteDialogFragment.ConfirmDeleteCaller {
 
@@ -333,7 +333,7 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
                 }
                 startActivity(intent);
 
-                // Close the search result since its content can change after edit.
+                // Close the searchable result since its content can change after edit.
                 finish();
                 return true;
             case R.id.list_context_menu_delete:
@@ -367,7 +367,7 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
     }
 
     /**
-     * Do the search.
+     * Do the searchable.
      *
      * @param textQuery the query
      */
@@ -414,7 +414,7 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
     private Map<String, Object> prepareMarkerForDisplay(Waypoint waypoint) {
         Map<String, Object> resultMap = new HashMap<>();
 
-        //TODO: It may be more appropriate to obtain the track name as a join in the retrieval phase of the search.
+        //TODO: It may be more appropriate to obtain the track name as a join in the retrieval phase of the searchable.
         String trackName = null;
         long trackId = waypoint.getTrackId();
         if (trackId != -1L) {

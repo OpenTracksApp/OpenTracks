@@ -4,7 +4,7 @@ Changes:
 - Removed Widget
 
 Bugfix:
--
+- Fixed search functionality
 
 Developer:
 - Fixed (some) test cases

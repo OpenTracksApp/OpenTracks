@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <searchable xmlns:android="http://schemas.android.com/apk/res/android"
     android:hint="@string/menu_search"
-    android:imeOptions="actionSearch"
     android:includeInGlobalSearch="false"
     android:label="@string/app_name"
     android:queryAfterZeroResults="true"
-    android:searchSettingsDescription="@string/search_global_description"
-    android:voicePromptText="@string/search_voice_prompt"
-    android:voiceSearchMode="showVoiceSearchButton|launchRecognizer" />
+    android:searchSettingsDescription="@string/search_global_description" />

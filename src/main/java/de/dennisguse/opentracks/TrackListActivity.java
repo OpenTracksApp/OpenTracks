@@ -550,10 +550,9 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         trackRecordingServiceConnection.startAndBind();
 
         /*
-         * If the binding has happened, then invoke the callback to start a new
-         * recording. If the binding hasn't happened, then invoking the callback
-         * will have no effect. But when the binding occurs, the callback will get
-         * invoked.
+         * If the binding has happened, then invoke the callback to start a new recording.
+         * If the binding hasn't happened, then invoking the callback will have no effect.
+         * But when the binding occurs, the callback will get invoked.
          */
         bindChangedCallback.run();
     }
