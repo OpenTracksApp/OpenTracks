@@ -19,7 +19,6 @@ import android.content.BroadcastReceiver;
 import android.content.ContentProvider;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.IBinder;
@@ -274,43 +273,6 @@ public class TrackRecordingServiceTest {
 
     @MediumTest
     @Test
-    public void testStartNewTrack_noRecording() throws Exception {
-        // NOTICE: due to the way Android permissions work, if this fails, uninstall the test apk then retry.
-        // The test must be installed *after* the app (go figure).
-        // Reference: http://code.google.com/p/android/issues/detail?id=5521
-        BlockingBroadcastReceiver startReceiver = new BlockingBroadcastReceiver();
-        String startAction = context.getString(R.string.track_started_broadcast_action);
-        context.registerReceiver(startReceiver, new IntentFilter(startAction));
-
-        List<Track> tracks = providerUtils.getAllTracks();
-        Assert.assertTrue(tracks.isEmpty());
-
-        ITrackRecordingService service = ((ITrackRecordingService) mServiceRule.bindService(createStartIntent(context)));
-        Assert.assertFalse(service.isRecording());
-
-        long newTrackId = service.startNewTrack();
-        Assert.assertTrue(newTrackId >= 0);
-        Assert.assertTrue(service.isRecording());
-        Track track = providerUtils.getTrack(newTrackId);
-        Assert.assertNotNull(track);
-        Assert.assertEquals(newTrackId, track.getId());
-        Assert.assertEquals(PreferencesUtils.getString(context, R.string.default_activity_key, PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT), track.getCategory());
-        Assert.assertEquals(newTrackId, PreferencesUtils.getLong(context, R.string.recording_track_id_key));
-        Assert.assertEquals(newTrackId, service.getRecordingTrackId());
-
-        // Verify that the start broadcast was received.
-        Assert.assertTrue(startReceiver.waitUntilReceived(1));
-        List<Intent> receivedIntents = startReceiver.getReceivedIntents();
-        Assert.assertEquals(1, receivedIntents.size());
-        Intent broadcastIntent = receivedIntents.get(0);
-        Assert.assertEquals(startAction, broadcastIntent.getAction());
-        Assert.assertEquals(newTrackId, broadcastIntent.getLongExtra(context.getString(R.string.track_id_broadcast_extra), -1L));
-
-        context.unregisterReceiver(startReceiver);
-    }
-
-    @MediumTest
-    @Test
     public void testStartNewTrack_alreadyRecording() throws Exception {
         createDummyTrack(trackId, -1L, true);
 
@@ -322,36 +284,6 @@ public class TrackRecordingServiceTest {
 
         Assert.assertEquals(trackId, PreferencesUtils.getLong(context, R.string.recording_track_id_key));
         Assert.assertEquals(trackId, service.getRecordingTrackId());
-    }
-
-    @MediumTest
-    @Test
-    public void testEndCurrentTrack_alreadyRecording() throws Exception {
-        // See comment above if this fails randomly.
-        BlockingBroadcastReceiver stopReceiver = new BlockingBroadcastReceiver();
-        String stopAction = context.getString(R.string.track_stopped_broadcast_action);
-        context.registerReceiver(stopReceiver, new IntentFilter(stopAction));
-
-        createDummyTrack(trackId, -1L, true);
-
-        ITrackRecordingService service = ((ITrackRecordingService) mServiceRule.bindService(createStartIntent(context)));
-        Assert.assertTrue(service.isRecording());
-
-        // End the current track.
-        service.endCurrentTrack();
-        Assert.assertFalse(service.isRecording());
-        Assert.assertEquals(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, PreferencesUtils.getLong(context, R.string.recording_track_id_key));
-        Assert.assertEquals(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, service.getRecordingTrackId());
-
-        // Verify that the stop broadcast was received.
-        Assert.assertTrue(stopReceiver.waitUntilReceived(1));
-        List<Intent> receivedIntents = stopReceiver.getReceivedIntents();
-        Assert.assertEquals(1, receivedIntents.size());
-        Intent broadcastIntent = receivedIntents.get(0);
-        Assert.assertEquals(stopAction, broadcastIntent.getAction());
-        Assert.assertEquals(trackId, broadcastIntent.getLongExtra(context.getString(R.string.track_id_broadcast_extra), -1L));
-
-        context.unregisterReceiver(stopReceiver);
     }
 
     @MediumTest

@@ -21,7 +21,6 @@ limitations under the License.
     <string name="third_party_libraries" translatable="false"><a href="https://developer.android.com/topic/libraries/support-library/">Google\'s androidX support</a> (Apache License, Version 2.0)</string>
     <string name="marker_statistics_icon_url" translatable="false">http://maps.google.com/mapfiles/ms/micons/ylw-pushpin.png</string>
     <string name="marker_waypoint_icon_url" translatable="false">http://maps.google.com/mapfiles/ms/micons/blue-pushpin.png</string>
-    <string name="permission_notification_value" translatable="false">de.dennisguse.opentracks.MYTRACKS_NOTIFICATIONS</string>
     <string name="sensor_type_value_none" translatable="false">NONE</string>
     <string name="sensor_unit_beats_per_minute" translatable="false">BPM</string>
     <string name="settings_recording_track_name_date_iso_8601_value" translatable="false">DATE_ISO_8601</string>
@@ -31,9 +30,5 @@ limitations under the License.
     <string name="stats_rate_speed" translatable="false">SPEED</string>
     <string name="stats_units_imperial" translatable="false">IMPERIAL</string>
     <string name="stats_units_metric" translatable="false">METRIC</string>
-    <string name="track_action_end" translatable="false">de.dennisguse.opentracks.END_CURRENT_TRACK</string>
-    <string name="track_action_pause" translatable="false">de.dennisguse.opentracks.PAUSE_CURRENT_TRACK</string>
-    <string name="track_action_resume" translatable="false">de.dennisguse.opentracks.RESUME_CURRENT_TRACK</string>
-    <string name="track_action_start" translatable="false">de.dennisguse.opentracks.START_NEW_TRACK</string>
     <string name="value_unknown" translatable="false">-</string>
 </resources>

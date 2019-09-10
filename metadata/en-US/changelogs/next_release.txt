@@ -10,3 +10,4 @@ Developer:
 - Fixed (some) test cases
 - Removed unused parcelable functionality
 - Major cleanup and reformatting
+- Do not use broadcast for app to widget communication

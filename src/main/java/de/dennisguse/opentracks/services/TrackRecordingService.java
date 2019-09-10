@@ -602,7 +602,6 @@ public class TrackRecordingService extends Service {
         isIdle = false;
 
         startGps();
-        sendTrackBroadcast(trackStarted ? R.string.track_started_broadcast_action : R.string.track_resumed_broadcast_action, recordingTrackId);
 
         // Restore periodic tasks
         voiceExecutor.restore();
@@ -700,7 +699,6 @@ public class TrackRecordingService extends Service {
         }
         lastLocation = null;
 
-        sendTrackBroadcast(trackStopped ? R.string.track_stopped_broadcast_action : R.string.track_paused_broadcast_action, trackId);
         stopGps(trackStopped);
     }
 
@@ -881,7 +879,6 @@ public class TrackRecordingService extends Service {
         }
         voiceExecutor.update();
         splitExecutor.update();
-        sendTrackBroadcast(R.string.track_update_broadcast_action, track.getId());
     }
 
     /**
@@ -981,17 +978,6 @@ public class TrackRecordingService extends Service {
                 stopForegroundService();
             }
         }
-    }
-
-    /**
-     * Sends track broadcast.
-     *
-     * @param actionId the intent action id
-     * @param trackId  the track id
-     */
-    private void sendTrackBroadcast(int actionId, long trackId) {
-        Intent intent = new Intent().setAction(getString(actionId)).putExtra(getString(R.string.track_id_broadcast_extra), trackId);
-        sendBroadcast(intent, getString(R.string.permission_notification_value));
     }
 
     /**
