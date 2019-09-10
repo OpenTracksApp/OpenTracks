@@ -75,11 +75,6 @@ android {
     applicationVariants.all { variant ->
         variant.resValue "string", "applicationId", variant.applicationId
     }
-
-    //TODO: Should be removed (when LINT does not throw any errors).
-    lintOptions {
-        abortOnError false
-    }
 }
 
 dependencies {
