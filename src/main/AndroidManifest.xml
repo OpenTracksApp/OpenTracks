@@ -19,55 +19,6 @@ limitations under the License.
     android:versionCode="2991"
     android:versionName="v3.1.0"> <!-- For FDroid. -->
     <!-- Permission to initialize services -->
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <!-- Permissions to record locations -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <!-- Permissions to access sensors -->
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <!-- Permission to read phone state so voice announcement will not interrupt ongoing calls -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!-- Permission to read/write external storage -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!-- Required features -->
-    <uses-feature
-        android:name="android.hardware.location.gps"
-        android:required="true" />
-    <!-- Optional features -->
-    <uses-feature
-        android:name="android.hardware.bluetooth"
-        android:required="false" />
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
-    <uses-feature
-        android:name="android.hardware.faketouch"
-        android:required="false" />
-    <uses-feature
-        android:name="android.hardware.sensor.compass"
-        android:required="false" />
-    <uses-feature
-        android:name="android.hardware.telephony"
-        android:required="false" />
-    <uses-feature
-        android:name="android.hardware.telephony.gsm"
-        android:required="false" />
-    <uses-feature
-        android:name="android.hardware.touchscreen"
-        android:required="false" />
-    <uses-feature
-        android:name="android.hardware.touchscreen.multitouch"
-        android:required="false" />
-
-    <supports-screens
-        android:anyDensity="true"
-        android:largeScreens="true"
-        android:normalScreens="true"
-        android:smallScreens="true"
-        android:xlargeScreens="true" />
     <application
         android:name=".Startup"
         android:allowBackup="false"
@@ -75,12 +26,16 @@ limitations under the License.
         android:icon="@drawable/ic_logo"
         android:label="@string/app_name"
         android:theme="@style/ThemeCustom">
+
         <!-- Activities -->
         <activity android:name=".AboutActivity" />
+
         <activity
             android:name=".AggregatedStatsActivity"
             android:label="@string/menu_aggregated_statistics" />
+
         <activity android:name=".DeleteActivity" />
+
         <activity
             android:name=".io.file.importer.ImportActivity"
             android:theme="@style/ThemeCustomTransparent">
@@ -98,8 +53,11 @@ limitations under the License.
                 <data android:scheme="file" />
             </intent-filter>
         </activity>
+
         <activity android:name=".MarkerEditActivity" />
+
         <activity android:name=".MarkerDetailActivity" />
+
         <activity
             android:name=".MarkerListActivity"
             android:label="@string/menu_markers">
@@ -107,6 +65,7 @@ limitations under the License.
                 android:name="android.app.default_searchable"
                 android:value=".SearchListActivity" />
         </activity>
+
         <activity
             android:name=".SearchListActivity"
             android:launchMode="singleTop">
@@ -115,12 +74,15 @@ limitations under the License.
             </intent-filter>
             <meta-data
                 android:name="android.app.searchable"
-                android:resource="@xml/search" />
+                android:resource="@xml/searchable" />
         </activity>
+
         <activity
             android:name=".TrackDetailActivity"
             android:screenOrientation="userPortrait" />
+
         <activity android:name=".TrackEditActivity" />
+
         <activity android:name=".TrackListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -130,34 +92,24 @@ limitations under the License.
                 android:name="android.app.default_searchable"
                 android:value=".SearchListActivity" />
         </activity>
+
         <activity
             android:name=".io.file.exporter.ExportActivity"
             android:theme="@style/ThemeCustomTransparent" />
+
         <activity android:name=".settings.RecordingSettingsActivity" />
+
         <activity android:name=".settings.SettingsActivity" />
+
         <activity android:name=".settings.StatsSettingsActivity" />
 
-        <service
-            android:name=".services.ControlRecordingService"
-            android:exported="false" />
-        <service
-            android:name=".services.TrackRecordingService"
-            android:enabled="true"
-            android:exported="false"
-            android:icon="@drawable/ic_arrow_320"
-            android:label="@string/recording_service" />
-        <!-- Receivers -->
-        <receiver android:name=".BootReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-        <!-- Providers -->
+        <!-- Services -->
         <provider
             android:name=".content.ShareContentProvider"
             android:authorities="${applicationId}.content"
             android:exported="false"
             android:grantUriPermissions="true" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -167,5 +119,75 @@ limitations under the License.
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <!-- Receivers -->
+        <receiver android:name=".BootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Providers -->
+        <service
+            android:name=".services.ControlRecordingService"
+            android:exported="false" />
+
+        <service
+            android:name=".services.TrackRecordingService"
+            android:enabled="true"
+            android:exported="false"
+            android:icon="@drawable/ic_arrow_320"
+            android:label="@string/recording_service" />
     </application>
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+    <!-- Permissions to record locations -->
+    <uses-feature
+        android:name="android.hardware.location.gps"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.bluetooth"
+        android:required="false" />
+    <!-- Permissions to access sensors -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.faketouch"
+        android:required="false" />
+    <!-- Permission to read phone state so voice announcement will not interrupt ongoing calls -->
+    <uses-feature
+        android:name="android.hardware.sensor.compass"
+        android:required="false" />
+    <!-- Permission to read/write external storage -->
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.telephony.gsm"
+        android:required="false" />
+    <!-- Required features -->
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+    <!-- Optional features -->
+    <uses-feature
+        android:name="android.hardware.touchscreen.multitouch"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 </manifest>
