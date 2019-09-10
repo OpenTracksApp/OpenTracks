@@ -136,13 +136,6 @@ limitations under the License.
         <activity android:name=".settings.RecordingSettingsActivity" />
         <activity android:name=".settings.SettingsActivity" />
         <activity android:name=".settings.StatsSettingsActivity" />
-        <activity
-            android:name=".widgets.TrackWidgetConfigActivity"
-            android:label="@string/track_widget_config_title">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
-            </intent-filter>
-        </activity>
 
         <service
             android:name=".services.ControlRecordingService"
@@ -158,19 +151,6 @@ limitations under the License.
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
-        </receiver>
-        <receiver android:name=".widgets.TrackWidgetProvider">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="TRACK_PAUSED" />
-                <action android:name="TRACK_RESUMED" />
-                <action android:name="TRACK_STARTED" />
-                <action android:name="TRACK_STOPPED" />
-                <action android:name="TRACK_UPDATE" />
-            </intent-filter>
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/track_widget_info" />
         </receiver>
         <!-- Providers -->
         <provider

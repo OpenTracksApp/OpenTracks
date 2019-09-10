@@ -35,10 +35,6 @@ limitations under the License.
     <string name="stats_units_key" translatable="false">statsUnits</string>
     <string name="trackdetail_show_on_lockscreen_while_recording_key" translatable="false">trackdetail_show_on_lockscreen_while_recording</string>
     <string name="track_name_key" translatable="false">trackName</string>
-    <string name="track_widget_item1" translatable="false">trackWidgetItem1</string>
-    <string name="track_widget_item2" translatable="false">trackWidgetItem2</string>
-    <string name="track_widget_item3" translatable="false">trackWidgetItem3</string>
-    <string name="track_widget_item4" translatable="false">trackWidgetItem4</string>
     <string name="voice_frequency_key" translatable="false">voiceFrequency</string>
     <!-- Keys for persistend preferences. But they should not get backed up or restored. -->
     <string name="auto_resume_track_current_retry_key" translatable="false">autoResumeTrackCurrentRetry</string>

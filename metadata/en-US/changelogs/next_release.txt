@@ -1,10 +1,11 @@
 (tbd): OpenTracks
 
 Changes:
--
+- Removed Widget
 
 Bugfix:
 -
 
 Developer:
 - Fixed (some) test cases
+- Major cleanup and reformatting

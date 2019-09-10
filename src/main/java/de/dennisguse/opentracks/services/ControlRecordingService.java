@@ -27,12 +27,10 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.widgets.TrackWidgetProvider;
 
 /**
  * A service to control starting and stopping of a recording.
  * This service, through the AndroidManifest.xml, is configured to only allow components of the same application to invoke it.
- * Thus this service can be used by the app widget, {@link TrackWidgetProvider}, but not by other applications.
  * This application delegates starting and stopping a recording to {@link TrackRecordingService} using RPC calls.
  *
  * @author Jimmy Shih
