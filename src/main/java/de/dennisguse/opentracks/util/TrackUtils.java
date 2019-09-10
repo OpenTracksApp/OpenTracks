@@ -46,7 +46,6 @@ public class TrackUtils {
         if (description != null) {
             track.setDescription(description);
         }
-        track.setModifiedTime(System.currentTimeMillis());
         contentProviderUtils.updateTrack(track);
     }
 }

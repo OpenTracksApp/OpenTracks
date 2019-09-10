@@ -58,8 +58,6 @@ public class Track implements Parcelable {
     private int numberOfPoints = 0;
     private String icon = "";
 
-    @Deprecated //TODO Is this still used or a left over from Google Drive integration?
-    private long modifiedTime = -1L;
     private TripStatistics tripStatistics = new TripStatistics();
 
     // Location points (which may not have been loaded)
@@ -77,7 +75,6 @@ public class Track implements Parcelable {
         stopId = in.readLong();
         numberOfPoints = in.readInt();
         icon = in.readString();
-        modifiedTime = in.readLong();
 
         ClassLoader classLoader = getClass().getClassLoader();
         tripStatistics = in.readParcelable(classLoader);
@@ -103,7 +100,6 @@ public class Track implements Parcelable {
         dest.writeLong(stopId);
         dest.writeInt(numberOfPoints);
         dest.writeString(icon);
-        dest.writeLong(modifiedTime);
 
         dest.writeParcelable(tripStatistics, 0);
         for (int i = 0; i < numberOfPoints; ++i) {
@@ -173,14 +169,6 @@ public class Track implements Parcelable {
 
     public void setIcon(String icon) {
         this.icon = icon;
-    }
-
-    public long getModifiedTime() {
-        return modifiedTime;
-    }
-
-    public void setModifiedTime(long modifiedTime) {
-        this.modifiedTime = modifiedTime;
     }
 
     public TripStatistics getTripStatistics() {
