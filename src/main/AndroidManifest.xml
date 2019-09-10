@@ -128,9 +128,6 @@ limitations under the License.
         </receiver>
 
         <!-- Providers -->
-        <service
-            android:name=".services.ControlRecordingService"
-            android:exported="false" />
 
         <service
             android:name=".services.TrackRecordingService"
