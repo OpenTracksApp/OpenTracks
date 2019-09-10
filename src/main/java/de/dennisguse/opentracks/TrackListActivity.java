@@ -65,7 +65,6 @@ import de.dennisguse.opentracks.util.ListItemUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
-import de.dennisguse.opentracks.util.TrackRecordingServiceConnectionUtils;
 import de.dennisguse.opentracks.util.TrackUtils;
 
 /**
@@ -183,8 +182,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         @Override
         public void onClick(View v) {
             updateMenuItems(false, false);
-            TrackRecordingServiceConnectionUtils.stopRecording(
-                    TrackListActivity.this, trackRecordingServiceConnection, true);
+            TrackRecordingServiceConnection.stopRecording(TrackListActivity.this, trackRecordingServiceConnection, true);
         }
     };
 
@@ -243,12 +241,12 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                 if (recordingTrackPaused) {
                     // Paused -> Resume
                     updateMenuItems(false, true);
-                    TrackRecordingServiceConnectionUtils.resumeTrack(trackRecordingServiceConnection);
+                    TrackRecordingServiceConnection.resumeTrack(trackRecordingServiceConnection);
                     trackController.update(true, false);
                 } else {
                     // Recording -> Paused
                     updateMenuItems(false, true);
-                    TrackRecordingServiceConnectionUtils.pauseTrack(trackRecordingServiceConnection);
+                    TrackRecordingServiceConnection.pauseTrack(trackRecordingServiceConnection);
                     trackController.update(true, true);
                 }
             }
@@ -331,7 +329,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
 
         sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
         sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
-        TrackRecordingServiceConnectionUtils.startConnection(this, trackRecordingServiceConnection);
+        TrackRecordingServiceConnection.startConnection(this, trackRecordingServiceConnection);
     }
 
     @Override
@@ -393,7 +391,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        boolean isGpsStarted = TrackRecordingServiceConnectionUtils.isRecordingServiceRunning(this);
+        boolean isGpsStarted = TrackRecordingServiceConnection.isRecordingServiceRunning(this);
         boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
         updateMenuItems(isGpsStarted, isRecording);
 
@@ -414,7 +412,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                     intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                     startActivity(intent);
                 } else {
-                    startGps = !TrackRecordingServiceConnectionUtils.isRecordingServiceRunning(this);
+                    startGps = !TrackRecordingServiceConnection.isRecordingServiceRunning(this);
 
                     // Show toast
                     Toast toast = Toast.makeText(this, startGps ? R.string.gps_starting : R.string.gps_stopping, Toast.LENGTH_SHORT);

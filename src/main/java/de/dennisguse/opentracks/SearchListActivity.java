@@ -60,7 +60,6 @@ import de.dennisguse.opentracks.util.ListItemUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
-import de.dennisguse.opentracks.util.TrackRecordingServiceConnectionUtils;
 
 /**
  * An activity to display a list of searchable results.
@@ -232,7 +231,7 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
         super.onStart();
         sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
         sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
-        TrackRecordingServiceConnectionUtils.startConnection(this, trackRecordingServiceConnection);
+        TrackRecordingServiceConnection.startConnection(this, trackRecordingServiceConnection);
     }
 
     @Override

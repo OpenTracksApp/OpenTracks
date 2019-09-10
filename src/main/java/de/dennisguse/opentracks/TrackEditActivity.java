@@ -34,7 +34,6 @@ import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.util.TrackIconUtils;
-import de.dennisguse.opentracks.util.TrackRecordingServiceConnectionUtils;
 import de.dennisguse.opentracks.util.TrackUtils;
 
 /**
@@ -173,7 +172,7 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
     @Override
     protected void onStart() {
         super.onStart();
-        TrackRecordingServiceConnectionUtils.startConnection(this, trackRecordingServiceConnection);
+        TrackRecordingServiceConnection.startConnection(this, trackRecordingServiceConnection);
     }
 
     @Override

@@ -16,6 +16,7 @@
 
 package de.dennisguse.opentracks.services;
 
+import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -24,9 +25,16 @@ import android.os.IBinder;
 import android.os.IBinder.DeathRecipient;
 import android.os.RemoteException;
 import android.util.Log;
+import android.widget.Toast;
+
+import java.util.List;
 
 import de.dennisguse.opentracks.BuildConfig;
-import de.dennisguse.opentracks.util.TrackRecordingServiceConnectionUtils;
+import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.TrackEditActivity;
+import de.dennisguse.opentracks.content.WaypointCreationRequest;
+import de.dennisguse.opentracks.util.IntentUtils;
+import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
  * Wrapper for the track recording service.
@@ -36,7 +44,7 @@ import de.dennisguse.opentracks.util.TrackRecordingServiceConnectionUtils;
  *
  * @author Rodrigo Damazio
  */
-public class TrackRecordingServiceConnection {
+public class TrackRecordingServiceConnection implements ServiceConnection, DeathRecipient {
 
     private static final String TAG = TrackRecordingServiceConnection.class.getSimpleName();
 
@@ -44,32 +52,6 @@ public class TrackRecordingServiceConnection {
     private final Runnable callback;
 
     private ITrackRecordingService trackRecordingService;
-    private final DeathRecipient deathRecipient = new DeathRecipient() {
-        @Override
-        public void binderDied() {
-            Log.d(TAG, "Service died.");
-            setTrackRecordingService(null);
-        }
-    };
-
-    private final ServiceConnection serviceConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName className, IBinder service) {
-            Log.i(TAG, "Connected to the service.");
-            try {
-                service.linkToDeath(deathRecipient, 0);
-            } catch (RemoteException e) {
-                Log.e(TAG, "Failed to bind a death recipient.", e);
-            }
-            setTrackRecordingService((ITrackRecordingService) service);
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName className) {
-            Log.i(TAG, "Disconnected from the service.");
-            setTrackRecordingService(null);
-        }
-    };
 
     /**
      * Constructor.
@@ -105,22 +87,58 @@ public class TrackRecordingServiceConnection {
     }
 
     /**
+     * Gets the track recording service if bound. Returns null otherwise
+     */
+    public ITrackRecordingService getServiceIfBound() {
+        return trackRecordingService;
+    }
+
+
+    /**
+     * Sets the trackRecordingService.
+     *
+     * @param value the value
+     */
+    private void setTrackRecordingService(ITrackRecordingService value) {
+        trackRecordingService = value;
+        if (callback != null) {
+            callback.run();
+        }
+    }
+
+    /**
      * Unbinds the service (but leave it running).
      */
     public void unbind() {
         try {
-            context.unbindService(serviceConnection);
+            context.unbindService(this);
         } catch (IllegalArgumentException e) {
             // Means not bound to the service. OK to ignore.
         }
         setTrackRecordingService(null);
     }
 
-    /**
-     * Gets the track recording service if bound. Returns null otherwise
-     */
-    public ITrackRecordingService getServiceIfBound() {
-        return trackRecordingService;
+    @Override
+    public void onServiceConnected(ComponentName className, IBinder service) {
+        Log.i(TAG, "Connected to the service.");
+        try {
+            service.linkToDeath(this, 0);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Failed to bind a death recipient.", e);
+        }
+        setTrackRecordingService((ITrackRecordingService) service);
+    }
+
+    @Override
+    public void onServiceDisconnected(ComponentName className) {
+        Log.i(TAG, "Disconnected from the service.");
+        setTrackRecordingService(null);
+    }
+
+    @Override
+    public void binderDied() {
+        Log.d(TAG, "Service died.");
+        setTrackRecordingService(null);
     }
 
     /**
@@ -134,7 +152,7 @@ public class TrackRecordingServiceConnection {
             return;
         }
 
-        if (!startIfNeeded && !TrackRecordingServiceConnectionUtils.isRecordingServiceRunning(context)) {
+        if (!startIfNeeded && !isRecordingServiceRunning(context)) {
             Log.d(TAG, "Service is not started. Not binding it.");
             return;
         }
@@ -146,18 +164,139 @@ public class TrackRecordingServiceConnection {
 
         Log.i(TAG, "Binding the service.");
         int flags = BuildConfig.DEBUG ? Context.BIND_DEBUG_UNBIND : 0;
-        context.bindService(new Intent(context, TrackRecordingService.class), serviceConnection, flags);
+        context.bindService(new Intent(context, TrackRecordingService.class), this, flags);
     }
 
     /**
-     * Sets the trackRecordingService.
+     * Returns true if the recording service is running.
      *
-     * @param value the value
+     * @param context the current context
      */
-    private void setTrackRecordingService(ITrackRecordingService value) {
-        trackRecordingService = value;
-        if (callback != null) {
-            callback.run();
+    @Deprecated
+    public static boolean isRecordingServiceRunning(Context context) {
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        if (activityManager == null) {
+            return false;
+        }
+
+        //TODO This approach is deprecated as of API level 26 and should be replaced.
+        List<ActivityManager.RunningServiceInfo> services = activityManager.getRunningServices(Integer.MAX_VALUE);
+
+        for (ActivityManager.RunningServiceInfo serviceInfo : services) {
+            ComponentName componentName = serviceInfo.service;
+            String serviceName = componentName.getClassName();
+            if (TrackRecordingService.class.getName().equals(serviceName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Resumes the track recording service connection.
+     *
+     * @param context                         the context
+     * @param trackRecordingServiceConnection the track recording service connection
+     */
+    public static void startConnection(Context context, TrackRecordingServiceConnection trackRecordingServiceConnection) {
+        trackRecordingServiceConnection.bindIfStarted();
+        if (!isRecordingServiceRunning(context)) {
+            resetRecordingState(context);
+        }
+    }
+
+    /**
+     * Resumes the recording track.
+     *
+     * @param trackRecordingServiceConnection the track recording service
+     */
+    public static void resumeTrack(TrackRecordingServiceConnection trackRecordingServiceConnection) {
+        ITrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
+        if (service != null) {
+            service.resumeCurrentTrack();
+        }
+    }
+
+    /**
+     * Pauses the recording track.
+     *
+     * @param trackRecordingServiceConnection the track recording service
+     *                                        connection
+     */
+    public static void pauseTrack(TrackRecordingServiceConnection trackRecordingServiceConnection) {
+        ITrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
+        if (service != null) {
+            service.pauseCurrentTrack();
+        }
+    }
+
+    /**
+     * Stops the recording.
+     *
+     * @param context                         the context
+     * @param trackRecordingServiceConnection the track recording service connection
+     * @param showEditor                      true to show the editor
+     */
+    public static void stopRecording(Context context, TrackRecordingServiceConnection trackRecordingServiceConnection, boolean showEditor) {
+        ITrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
+        if (trackRecordingService == null) {
+            resetRecordingState(context);
+        } else {
+            try {
+                if (showEditor) {
+                    // Need to remember the recordingTrackId before calling endCurrentTrack() as endCurrentTrack() sets the value to -1L.
+                    long recordingTrackId = PreferencesUtils.getLong(context, R.string.recording_track_id_key);
+                    trackRecordingService.endCurrentTrack();
+                    if (recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
+                        Intent intent = IntentUtils.newIntent(context, TrackEditActivity.class)
+                                .putExtra(TrackEditActivity.EXTRA_TRACK_ID, recordingTrackId)
+                                .putExtra(TrackEditActivity.EXTRA_NEW_TRACK, true);
+                        context.startActivity(intent);
+                    }
+                } else {
+                    trackRecordingService.endCurrentTrack();
+                }
+            } catch (Exception e) {
+                //TODO What exception are we catching here? Should be removed...
+                Log.e(TAG, "Unable to stop recording.", e);
+            }
+        }
+        trackRecordingServiceConnection.unbindAndStop();
+    }
+
+    /**
+     * Adds a marker.
+     *
+     * @return the id of the marker or -1L if none could be created.
+     */
+    public static long addMarker(Context context, TrackRecordingServiceConnection trackRecordingServiceConnection, WaypointCreationRequest waypointCreationRequest) {
+        ITrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
+        if (trackRecordingService == null) {
+            Log.d(TAG, "Unable to add marker, no track recording service");
+        } else {
+            try {
+                long markerId = trackRecordingService.insertWaypoint(waypointCreationRequest);
+                if (markerId != -1L) {
+                    Toast.makeText(context, R.string.marker_add_success, Toast.LENGTH_SHORT).show();
+                    return markerId;
+                }
+            } catch (IllegalStateException e) {
+                Log.e(TAG, "Unable to add marker.", e);
+            }
+        }
+
+        Toast.makeText(context, R.string.marker_add_error, Toast.LENGTH_LONG).show();
+        return -1L;
+    }
+
+    private static void resetRecordingState(Context context) {
+        long recordingTrackId = PreferencesUtils.getLong(context, R.string.recording_track_id_key);
+        if (recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
+            PreferencesUtils.setLong(context, R.string.recording_track_id_key, PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
+        }
+        boolean recordingTrackPaused = PreferencesUtils.getBoolean(context, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+        if (!recordingTrackPaused) {
+            PreferencesUtils.setBoolean(context, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
         }
     }
 }

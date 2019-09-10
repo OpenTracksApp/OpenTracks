@@ -58,7 +58,6 @@ import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
-import de.dennisguse.opentracks.util.TrackRecordingServiceConnectionUtils;
 import de.dennisguse.opentracks.util.TrackUtils;
 
 /**
@@ -111,7 +110,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
                     if (hasPhoto && photoUri != null) {
                         hasPhoto = false;
                         WaypointCreationRequest waypointCreationRequest = new WaypointCreationRequest(WaypointType.WAYPOINT, false, null, null, null, null, photoUri.toString());
-                        long markerId = TrackRecordingServiceConnectionUtils.addMarker(TrackDetailActivity.this, trackRecordingServiceConnection, waypointCreationRequest);
+                        long markerId = TrackRecordingServiceConnection.addMarker(TrackDetailActivity.this, trackRecordingServiceConnection, waypointCreationRequest);
                         if (markerId != -1L) {
                             //TODO: Make configurable.
                             FileUtils.updateMediaScanner(TrackDetailActivity.this, photoUri);
@@ -168,12 +167,12 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
             if (recordingTrackPaused) {
                 // Paused -> Resume
                 updateMenuItems(false);
-                TrackRecordingServiceConnectionUtils.resumeTrack(trackRecordingServiceConnection);
+                TrackRecordingServiceConnection.resumeTrack(trackRecordingServiceConnection);
                 trackController.update(true, false);
             } else {
                 // Recording -> Paused
                 updateMenuItems(true);
-                TrackRecordingServiceConnectionUtils.pauseTrack(trackRecordingServiceConnection);
+                TrackRecordingServiceConnection.pauseTrack(trackRecordingServiceConnection);
                 trackController.update(true, true);
             }
         }
@@ -182,7 +181,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
     private final OnClickListener stopListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            TrackRecordingServiceConnectionUtils.stopRecording(TrackDetailActivity.this, trackRecordingServiceConnection, true);
+            TrackRecordingServiceConnection.stopRecording(TrackDetailActivity.this, trackRecordingServiceConnection, true);
             updateMenuItems(true);
         }
     };
@@ -249,7 +248,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
         sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
         sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
 
-        TrackRecordingServiceConnectionUtils.startConnection(this, trackRecordingServiceConnection);
+        TrackRecordingServiceConnection.startConnection(this, trackRecordingServiceConnection);
         trackDataHub.start();
     }
 

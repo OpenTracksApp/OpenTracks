@@ -49,7 +49,6 @@ import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StatsUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
-import de.dennisguse.opentracks.util.TrackRecordingServiceConnectionUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
@@ -96,7 +95,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
         super.onActivityCreated(savedInstanceState);
         handlerUpdateUI = new Handler();
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(getContext(), null);
-        TrackRecordingServiceConnectionUtils.startConnection(getContext(), trackRecordingServiceConnection);
+        TrackRecordingServiceConnection.startConnection(getContext(), trackRecordingServiceConnection);
 
         Spinner activityTypeIcon = getView().findViewById(R.id.stats_activity_type_icon);
         activityTypeIcon.setAdapter(TrackIconUtils.getIconSpinnerAdapter(getActivity(), ""));

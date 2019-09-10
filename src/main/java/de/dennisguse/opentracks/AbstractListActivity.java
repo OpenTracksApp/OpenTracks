@@ -38,7 +38,6 @@ import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment.ConfirmDel
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
-import de.dennisguse.opentracks.util.TrackRecordingServiceConnectionUtils;
 
 /**
  * An abstract class for the following common tasks across
@@ -200,7 +199,7 @@ public abstract class AbstractListActivity extends AbstractActivity implements C
             }
         }
         if (stopRecording) {
-            TrackRecordingServiceConnectionUtils.stopRecording(this, getTrackRecordingServiceConnection(), false);
+            TrackRecordingServiceConnection.stopRecording(this, getTrackRecordingServiceConnection(), false);
         }
         Intent intent = IntentUtils.newIntent(this, DeleteActivity.class);
         intent.putExtra(DeleteActivity.EXTRA_TRACK_IDS, trackIds);

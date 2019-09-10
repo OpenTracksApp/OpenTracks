@@ -30,7 +30,6 @@ import de.dennisguse.opentracks.content.Waypoint;
 import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 import de.dennisguse.opentracks.content.WaypointCreationRequest;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
-import de.dennisguse.opentracks.util.TrackRecordingServiceConnectionUtils;
 
 /**
  * An activity to add/edit a marker.
@@ -91,7 +90,7 @@ public class MarkerEditActivity extends AbstractActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        TrackRecordingServiceConnectionUtils.startConnection(this, trackRecordingServiceConnection);
+        TrackRecordingServiceConnection.startConnection(this, trackRecordingServiceConnection);
     }
 
     @Override
@@ -168,7 +167,7 @@ public class MarkerEditActivity extends AbstractActivity {
                 waypointDescription.getText().toString(),
                 null,
                 null);
-        TrackRecordingServiceConnectionUtils.addMarker(this, trackRecordingServiceConnection, waypointCreationRequest);
+        TrackRecordingServiceConnection.addMarker(this, trackRecordingServiceConnection, waypointCreationRequest);
     }
 
     /**
