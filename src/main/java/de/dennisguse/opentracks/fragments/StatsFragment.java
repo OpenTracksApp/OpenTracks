@@ -95,7 +95,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
         super.onActivityCreated(savedInstanceState);
         handlerUpdateUI = new Handler();
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(getContext(), null);
-        TrackRecordingServiceConnection.startConnection(getContext(), trackRecordingServiceConnection);
+        trackRecordingServiceConnection.startConnection(getContext());
 
         Spinner activityTypeIcon = getView().findViewById(R.id.stats_activity_type_icon);
         activityTypeIcon.setAdapter(TrackIconUtils.getIconSpinnerAdapter(getActivity(), ""));

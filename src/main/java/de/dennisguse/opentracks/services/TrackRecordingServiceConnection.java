@@ -27,6 +27,8 @@ import android.os.RemoteException;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import java.util.List;
 
 import de.dennisguse.opentracks.BuildConfig;
@@ -195,11 +197,10 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
     /**
      * Resumes the track recording service connection.
      *
-     * @param context                         the context
-     * @param trackRecordingServiceConnection the track recording service connection
+     * @param context the context
      */
-    public static void startConnection(Context context, TrackRecordingServiceConnection trackRecordingServiceConnection) {
-        trackRecordingServiceConnection.bindIfStarted();
+    public void startConnection(@NonNull Context context) {
+        bindIfStarted();
         if (!isRecordingServiceRunning(context)) {
             resetRecordingState(context);
         }
@@ -207,11 +208,9 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
 
     /**
      * Resumes the recording track.
-     *
-     * @param trackRecordingServiceConnection the track recording service
      */
-    public static void resumeTrack(TrackRecordingServiceConnection trackRecordingServiceConnection) {
-        ITrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
+    public void resumeTrack() {
+        ITrackRecordingService service = getServiceIfBound();
         if (service != null) {
             service.resumeCurrentTrack();
         }
@@ -219,12 +218,9 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
 
     /**
      * Pauses the recording track.
-     *
-     * @param trackRecordingServiceConnection the track recording service
-     *                                        connection
      */
-    public static void pauseTrack(TrackRecordingServiceConnection trackRecordingServiceConnection) {
-        ITrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
+    public void pauseTrack() {
+        ITrackRecordingService service = getServiceIfBound();
         if (service != null) {
             service.pauseCurrentTrack();
         }
@@ -233,12 +229,11 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
     /**
      * Stops the recording.
      *
-     * @param context                         the context
-     * @param trackRecordingServiceConnection the track recording service connection
-     * @param showEditor                      true to show the editor
+     * @param context    the context
+     * @param showEditor true to show the editor
      */
-    public static void stopRecording(Context context, TrackRecordingServiceConnection trackRecordingServiceConnection, boolean showEditor) {
-        ITrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
+    public void stopRecording(@NonNull Context context, boolean showEditor) {
+        ITrackRecordingService trackRecordingService = getServiceIfBound();
         if (trackRecordingService == null) {
             resetRecordingState(context);
         } else {
@@ -261,7 +256,7 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
                 Log.e(TAG, "Unable to stop recording.", e);
             }
         }
-        trackRecordingServiceConnection.unbindAndStop();
+        unbindAndStop();
     }
 
     /**
@@ -269,8 +264,8 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
      *
      * @return the id of the marker or -1L if none could be created.
      */
-    public static long addMarker(Context context, TrackRecordingServiceConnection trackRecordingServiceConnection, WaypointCreationRequest waypointCreationRequest) {
-        ITrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
+    public long addMarker(Context context, WaypointCreationRequest waypointCreationRequest) {
+        ITrackRecordingService trackRecordingService = getServiceIfBound();
         if (trackRecordingService == null) {
             Log.d(TAG, "Unable to add marker, no track recording service");
         } else {

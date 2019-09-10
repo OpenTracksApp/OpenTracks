@@ -182,7 +182,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         @Override
         public void onClick(View v) {
             updateMenuItems(false, false);
-            TrackRecordingServiceConnection.stopRecording(TrackListActivity.this, trackRecordingServiceConnection, true);
+            trackRecordingServiceConnection.stopRecording(TrackListActivity.this, true);
         }
     };
 
@@ -241,12 +241,12 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                 if (recordingTrackPaused) {
                     // Paused -> Resume
                     updateMenuItems(false, true);
-                    TrackRecordingServiceConnection.resumeTrack(trackRecordingServiceConnection);
+                    trackRecordingServiceConnection.resumeTrack();
                     trackController.update(true, false);
                 } else {
                     // Recording -> Paused
                     updateMenuItems(false, true);
-                    TrackRecordingServiceConnection.pauseTrack(trackRecordingServiceConnection);
+                    trackRecordingServiceConnection.pauseTrack();
                     trackController.update(true, true);
                 }
             }
@@ -329,7 +329,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
 
         sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
         sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
-        TrackRecordingServiceConnection.startConnection(this, trackRecordingServiceConnection);
+        trackRecordingServiceConnection.startConnection(this);
     }
 
     @Override

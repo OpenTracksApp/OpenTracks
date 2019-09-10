@@ -90,7 +90,7 @@ public class MarkerEditActivity extends AbstractActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        TrackRecordingServiceConnection.startConnection(this, trackRecordingServiceConnection);
+        trackRecordingServiceConnection.startConnection(this);
     }
 
     @Override
@@ -167,7 +167,7 @@ public class MarkerEditActivity extends AbstractActivity {
                 waypointDescription.getText().toString(),
                 null,
                 null);
-        TrackRecordingServiceConnection.addMarker(this, trackRecordingServiceConnection, waypointCreationRequest);
+        trackRecordingServiceConnection.addMarker(this, waypointCreationRequest);
     }
 
     /**

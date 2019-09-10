@@ -172,7 +172,7 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
     @Override
     protected void onStart() {
         super.onStart();
-        TrackRecordingServiceConnection.startConnection(this, trackRecordingServiceConnection);
+        trackRecordingServiceConnection.startConnection(this);
     }
 
     @Override

@@ -110,7 +110,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
                     if (hasPhoto && photoUri != null) {
                         hasPhoto = false;
                         WaypointCreationRequest waypointCreationRequest = new WaypointCreationRequest(WaypointType.WAYPOINT, false, null, null, null, null, photoUri.toString());
-                        long markerId = TrackRecordingServiceConnection.addMarker(TrackDetailActivity.this, trackRecordingServiceConnection, waypointCreationRequest);
+                        long markerId = trackRecordingServiceConnection.addMarker(TrackDetailActivity.this, waypointCreationRequest);
                         if (markerId != -1L) {
                             //TODO: Make configurable.
                             FileUtils.updateMediaScanner(TrackDetailActivity.this, photoUri);
@@ -167,12 +167,12 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
             if (recordingTrackPaused) {
                 // Paused -> Resume
                 updateMenuItems(false);
-                TrackRecordingServiceConnection.resumeTrack(trackRecordingServiceConnection);
+                trackRecordingServiceConnection.resumeTrack();
                 trackController.update(true, false);
             } else {
                 // Recording -> Paused
                 updateMenuItems(true);
-                TrackRecordingServiceConnection.pauseTrack(trackRecordingServiceConnection);
+                trackRecordingServiceConnection.pauseTrack();
                 trackController.update(true, true);
             }
         }
@@ -181,7 +181,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
     private final OnClickListener stopListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            TrackRecordingServiceConnection.stopRecording(TrackDetailActivity.this, trackRecordingServiceConnection, true);
+            trackRecordingServiceConnection.stopRecording(TrackDetailActivity.this, true);
             updateMenuItems(true);
         }
     };
@@ -248,7 +248,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
         sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
         sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
 
-        TrackRecordingServiceConnection.startConnection(this, trackRecordingServiceConnection);
+        trackRecordingServiceConnection.startConnection(this);
         trackDataHub.start();
     }
 

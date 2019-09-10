@@ -31,6 +31,8 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.SearchView;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
@@ -199,7 +201,7 @@ public abstract class AbstractListActivity extends AbstractActivity implements C
             }
         }
         if (stopRecording) {
-            TrackRecordingServiceConnection.stopRecording(this, getTrackRecordingServiceConnection(), false);
+            getTrackRecordingServiceConnection().stopRecording(this, false);
         }
         Intent intent = IntentUtils.newIntent(this, DeleteActivity.class);
         intent.putExtra(DeleteActivity.EXTRA_TRACK_IDS, trackIds);
@@ -210,6 +212,7 @@ public abstract class AbstractListActivity extends AbstractActivity implements C
      * Gets the track recording service connection. For stopping the current
      * recording if need to delete the current recording track.
      */
+    @NonNull
     abstract protected TrackRecordingServiceConnection getTrackRecordingServiceConnection();
 
     /**

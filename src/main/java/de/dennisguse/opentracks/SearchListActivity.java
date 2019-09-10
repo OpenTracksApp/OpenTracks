@@ -231,7 +231,7 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
         super.onStart();
         sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
         sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
-        TrackRecordingServiceConnection.startConnection(this, trackRecordingServiceConnection);
+        trackRecordingServiceConnection.startConnection(this);
     }
 
     @Override
