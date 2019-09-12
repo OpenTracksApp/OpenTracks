@@ -144,12 +144,12 @@ public class ExportActivity extends FragmentActivity implements FileTypeDialogFr
                 String totalTracks = getResources()
                         .getQuantityString(R.plurals.tracks, totalTrackCount, totalTrackCount);
                 if (processedTrackCount == totalTrackCount) {
-                    iconId = R.drawable.ic_dialog_success;
+                    iconId = R.drawable.ic_dialog_success_24dp;
                     titleId = R.string.generic_success_title;
                     message = getString(
                             R.string.export_external_storage_success, totalTracks, directoryDisplayName);
                 } else {
-                    iconId = android.R.drawable.ic_dialog_alert;
+                    iconId = R.drawable.ic_dialog_error_24dp;
                     titleId = R.string.generic_error_title;
                     message = getString(R.string.export_external_storage_error, processedTrackCount, totalTracks,
                             directoryDisplayName);

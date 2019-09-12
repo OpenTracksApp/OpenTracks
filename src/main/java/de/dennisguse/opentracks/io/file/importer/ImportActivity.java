@@ -145,16 +145,16 @@ public class ImportActivity extends FragmentActivity implements FileTypeDialogFr
                         .getQuantityString(R.plurals.files, totalTrackCount, totalTrackCount);
                 if (importedTrackCount == totalTrackCount) {
                     if (totalTrackCount == 0) {
-                        iconId = android.R.drawable.ic_dialog_info;
+                        iconId = R.drawable.ic_dialog_info_24dp;
                         titleId = R.string.import_no_file_title;
                         message = getString(R.string.import_no_file, directoryDisplayName);
                     } else {
-                        iconId = R.drawable.ic_dialog_success;
+                        iconId = R.drawable.ic_dialog_success_24dp;
                         titleId = R.string.generic_success_title;
                         message = getString(R.string.import_success, totalFiles, directoryDisplayName);
                     }
                 } else {
-                    iconId = android.R.drawable.ic_dialog_alert;
+                    iconId = R.drawable.ic_dialog_error_24dp;
                     titleId = R.string.generic_error_title;
                     message = getString(
                             R.string.import_error, importedTrackCount, totalFiles, directoryDisplayName);

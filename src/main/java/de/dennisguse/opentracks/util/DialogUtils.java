@@ -100,7 +100,7 @@ public class DialogUtils {
         final ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setCancelable(true);
         progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.setIcon(android.R.drawable.ic_dialog_info);
+        progressDialog.setIcon(R.drawable.ic_dialog_info_24dp);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage(context.getString(messageId, formatArgs));
         progressDialog.setOnCancelListener(onCancelListener);
