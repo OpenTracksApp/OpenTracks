@@ -197,7 +197,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
                                 lastLocation = null;
                             }
                         }
-                        StatsUtils.setLocationValues(getActivity(), getActivity(), null, lastLocation, isSelectedTrackRecording());
+                        StatsUtils.setLocationValues(getActivity(), lastLocation, isSelectedTrackRecording());
                     }
                 }
             });
@@ -318,8 +318,8 @@ public class StatsFragment extends Fragment implements TrackDataListener {
      */
     private void updateUi(FragmentActivity activity) {
         String trackIconValue = TrackIconUtils.getIconValue(activity, category);
-        StatsUtils.setTripStatisticsValues(activity, activity, null, lastTripStatistics, trackIconValue);
-        StatsUtils.setLocationValues(activity, activity, null, lastLocation, isSelectedTrackRecording());
+        StatsUtils.setTripStatisticsValues(activity, lastTripStatistics, trackIconValue);
+        StatsUtils.setLocationValues(activity, lastLocation, isSelectedTrackRecording());
         updateSensorDataUI();
     }
 }

@@ -18,13 +18,12 @@ package de.dennisguse.opentracks;
 
 import android.os.Bundle;
 
+import java.util.List;
+
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.stats.TripStatistics;
 import de.dennisguse.opentracks.util.StatsUtils;
-import de.dennisguse.opentracks.R;
-
-import java.util.List;
 
 /**
  * An activity to view aggregated stats from all recorded tracks.
@@ -36,8 +35,8 @@ public class AggregatedStatsActivity extends AbstractActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatsUtils.setTripStatisticsValues(this, this, null, getTripStatistics(), null);
-        StatsUtils.setLocationValues(this, this, null, null, false);
+        StatsUtils.setTripStatisticsValues(this, getTripStatistics(), null);
+        StatsUtils.setLocationValues(this, null, false);
     }
 
     @Override

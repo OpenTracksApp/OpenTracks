@@ -259,8 +259,8 @@ public class MarkerDetailFragment extends Fragment {
             setLocation(R.id.marker_detail_statistics_location, false);
 
             Track track = contentProviderUtils.getTrack(waypoint.getTrackId());
-            StatsUtils.setTripStatisticsValues(getActivity(), null, getView(), waypoint.getTripStatistics(), null);
-            StatsUtils.setLocationValues(getActivity(), null, getView(), waypoint.getLocation(), false);
+            StatsUtils.setTripStatisticsValues(getActivity(), waypoint.getTripStatistics(), null);
+            StatsUtils.setLocationValues(getActivity(), waypoint.getLocation(), false);
         }
     }
 
