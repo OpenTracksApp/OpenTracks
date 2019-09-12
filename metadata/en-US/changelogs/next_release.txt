@@ -2,6 +2,7 @@
 
 Changes:
 - Removed Widget
+- Introduced material design icons
 
 Bugfix:
 - Fixed search functionality

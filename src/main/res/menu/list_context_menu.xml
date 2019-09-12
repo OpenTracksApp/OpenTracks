@@ -21,22 +21,22 @@ limitations under the License.
         android:title="@string/menu_share" />
     <item
         android:id="@+id/list_context_menu_show_on_map"
-        android:icon="@drawable/ic_menu_show_on_map"
+        android:icon="@drawable/ic_map_24dp"
         android:showAsAction="ifRoom"
         android:title="@string/menu_show_on_map" />
     <item
         android:id="@+id/list_context_menu_edit"
-        android:icon="@drawable/ic_menu_edit"
+        android:icon="@drawable/ic_edit_24dp"
         android:showAsAction="ifRoom"
         android:title="@string/menu_edit" />
     <item
         android:id="@+id/list_context_menu_delete"
-        android:icon="@drawable/ic_menu_delete"
+        android:icon="@drawable/ic_delete_forever_24dp"
         android:showAsAction="ifRoom"
         android:title="@string/menu_delete" />
     <item
         android:id="@+id/list_context_menu_select_all"
-        android:icon="@drawable/ic_menu_select_all"
+        android:icon="@drawable/ic_select_all_24dp"
         android:showAsAction="ifRoom"
         android:title="@string/menu_select_all" />
 </menu>

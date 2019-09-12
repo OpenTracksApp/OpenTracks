@@ -515,8 +515,7 @@ public class TrackRecordingService extends Service {
         track.setId(trackId);
         track.setName(TrackNameUtils.getTrackName(this, trackId, now));
 
-        String category = PreferencesUtils.getString(
-                this, R.string.default_activity_key, PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT);
+        String category = PreferencesUtils.getString(this, R.string.default_activity_key, PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT);
         track.setCategory(category);
         track.setIcon(TrackIconUtils.getIconValue(this, category));
         track.setTripStatistics(trackTripStatisticsUpdater.getTripStatistics());

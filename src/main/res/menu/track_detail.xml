@@ -16,19 +16,19 @@ limitations under the License.
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/track_detail_insert_marker"
-        android:icon="@drawable/ic_menu_insert_marker"
+        android:icon="@drawable/ic_marker_add_24dp"
         android:orderInCategory="1"
         android:showAsAction="ifRoom"
         android:title="@string/menu_insert_marker" />
     <item
         android:id="@+id/track_detail_insert_photo"
-        android:icon="@drawable/ic_menu_insert_photo"
+        android:icon="@drawable/ic_camera_24dp"
         android:orderInCategory="2"
         android:showAsAction="ifRoom"
         android:title="@string/menu_insert_photo" />
     <item
         android:id="@+id/track_detail_menu_show_on_map"
-        android:icon="@drawable/ic_menu_show_on_map"
+        android:icon="@drawable/ic_map_24dp"
         android:showAsAction="ifRoom"
         android:title="@string/menu_show_on_map" />
     <item
@@ -39,18 +39,18 @@ limitations under the License.
         android:title="@string/menu_share" />
     <item
         android:id="@+id/track_detail_markers"
-        android:icon="@drawable/ic_menu_insert_marker"
+        android:icon="@drawable/ic_marker_show_24dp"
         android:orderInCategory="5"
         android:showAsAction="ifRoom"
         android:title="@string/menu_markers" />
     <item
         android:id="@+id/track_detail_edit"
-        android:icon="@drawable/ic_menu_edit"
+        android:icon="@drawable/ic_edit_24dp"
         android:orderInCategory="9"
         android:title="@string/menu_edit" />
     <item
         android:id="@+id/track_detail_delete"
-        android:icon="@drawable/ic_menu_delete"
+        android:icon="@drawable/ic_delete_forever_24dp"
         android:orderInCategory="10"
         android:title="@string/menu_delete" />
     <item
@@ -60,12 +60,12 @@ limitations under the License.
         android:title="@string/menu_voice_frequency" />
     <item
         android:id="@+id/track_detail_split_frequency"
-        android:icon="@drawable/ic_menu_split_frequency"
+        android:icon="@drawable/ic_split_frequency_24dp"
         android:orderInCategory="12"
         android:title="@string/menu_split_frequency" />
     <item
         android:id="@+id/track_detail_settings"
-        android:icon="@drawable/ic_menu_settings"
+        android:icon="@drawable/ic_settings_24dp"
         android:orderInCategory="13"
         android:title="@string/menu_settings" />
 </menu>

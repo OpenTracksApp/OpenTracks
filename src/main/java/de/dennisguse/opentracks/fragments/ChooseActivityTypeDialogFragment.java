@@ -21,8 +21,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.BitmapFactory;
-import android.graphics.BitmapFactory.Options;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -68,15 +66,7 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
             imageIds.add(TrackIconUtils.getIconDrawable(iconValue));
         }
 
-        Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(activity.getResources(), R.drawable.ic_track_airplane, options);
-        int padding = 32;
-        int width = options.outWidth + 2 * padding;
-        int height = options.outHeight + 2 * padding;
-        gridView.setColumnWidth(width);
-
-        final ChooseActivityTypeImageAdapter imageAdapter = new ChooseActivityTypeImageAdapter(activity, imageIds, width, height, padding);
+        final ChooseActivityTypeImageAdapter imageAdapter = new ChooseActivityTypeImageAdapter(imageIds);
         gridView.setAdapter(imageAdapter);
 
         final AlertDialog alertDialog = new AlertDialog.Builder(activity).setTitle(R.string.track_edit_activity_type_hint).setView(view).create();

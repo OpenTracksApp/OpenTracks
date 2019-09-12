@@ -16,7 +16,7 @@ limitations under the License.
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/marker_list_insert_marker"
-        android:icon="@drawable/ic_menu_insert_marker"
+        android:icon="@drawable/ic_marker_show_24dp"
         android:showAsAction="ifRoom"
         android:title="@string/menu_insert_marker" />
     <item

@@ -16,7 +16,6 @@
 
 package de.dennisguse.opentracks.fragments;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +25,7 @@ import android.widget.ImageView;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.util.ResourceUtils;
 
 /**
  * Image adapter for choosing an activity type.
@@ -34,19 +34,11 @@ import de.dennisguse.opentracks.R;
  */
 public class ChooseActivityTypeImageAdapter extends BaseAdapter {
 
-    private final Context context;
     private final List<Integer> imageIds;
-    private final int width;
-    private final int height;
-    private final int padding;
     private int selected = -1;
 
-    ChooseActivityTypeImageAdapter(Context context, List<Integer> imageIds, int width, int height, int padding) {
-        this.context = context;
+    ChooseActivityTypeImageAdapter(List<Integer> imageIds) {
         this.imageIds = imageIds;
-        this.width = width;
-        this.height = height;
-        this.padding = padding;
     }
 
     @Override
@@ -76,19 +68,23 @@ public class ChooseActivityTypeImageAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView;
         if (convertView == null) {
-            imageView = new ImageView(context);
+            imageView = new ImageView(parent.getContext());
+            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            imageView.setAdjustViewBounds(true);
+
+            int padding = ResourceUtils.dpToPx(parent.getContext(), 8);
+            imageView.setPaddingRelative(padding, padding, padding, padding);
         } else {
             imageView = (ImageView) convertView;
         }
+
         if (position == selected) {
             imageView.setBackgroundResource(R.drawable.list_selector_background_transition_holo_dark);
         } else {
             imageView.setBackgroundColor(Color.TRANSPARENT);
         }
+
         imageView.setImageResource(imageIds.get(position));
-        imageView.setMinimumHeight(height);
-        imageView.setMinimumWidth(width);
-        imageView.setPadding(padding, padding, padding, padding);
         return imageView;
     }
 }

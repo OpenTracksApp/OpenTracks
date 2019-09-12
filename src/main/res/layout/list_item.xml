@@ -104,7 +104,7 @@ limitations under the License.
                                 android:layout_marginBottom="1dp"
                                 android:contentDescription="@string/image_marker_count"
                                 android:scaleType="centerInside"
-                                android:src="@drawable/ic_menu_insert_marker" />
+                                android:src="@drawable/ic_marker_show_24dp" />
 
                             <TextView
                                 android:id="@+id/list_item_marker_count"

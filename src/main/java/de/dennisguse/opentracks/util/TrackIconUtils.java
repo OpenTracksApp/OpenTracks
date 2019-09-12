@@ -17,15 +17,7 @@
 package de.dennisguse.opentracks.util;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.Drawable;
 import android.util.Pair;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -67,14 +59,14 @@ public class TrackIconUtils {
     private static final LinkedHashMap<String, Pair<Integer, Integer>> MAP = new LinkedHashMap<>();
 
     static {
-        MAP.put(RUN, new Pair<>(R.string.activity_type_running, R.drawable.ic_track_run));
-        MAP.put(WALK, new Pair<>(R.string.activity_type_walking, R.drawable.ic_track_walk));
-        MAP.put(BIKE, new Pair<>(R.string.activity_type_biking, R.drawable.ic_track_bike));
-        MAP.put(DRIVE, new Pair<>(R.string.activity_type_driving, R.drawable.ic_track_drive));
+        MAP.put(RUN, new Pair<>(R.string.activity_type_running, R.drawable.ic_activity_run_24dp));
+        MAP.put(WALK, new Pair<>(R.string.activity_type_walking, R.drawable.ic_activity_walk_24dp));
+        MAP.put(BIKE, new Pair<>(R.string.activity_type_biking, R.drawable.ic_activity_bike_24dp));
+        MAP.put(DRIVE, new Pair<>(R.string.activity_type_driving, R.drawable.ic_activity_drive_24dp));
         MAP.put(SKI, new Pair<>(R.string.activity_type_skiing, R.drawable.ic_track_ski));
         MAP.put(SNOW_BOARDING, new Pair<>(R.string.activity_type_snow_boarding, R.drawable.ic_track_snow_boarding));
-        MAP.put(AIRPLANE, new Pair<>(R.string.activity_type_airplane, R.drawable.ic_track_airplane));
-        MAP.put(BOAT, new Pair<>(R.string.activity_type_boat, R.drawable.ic_track_boat));
+        MAP.put(AIRPLANE, new Pair<>(R.string.activity_type_airplane, R.drawable.ic_activity_flight_24dp));
+        MAP.put(BOAT, new Pair<>(R.string.activity_type_boat, R.drawable.ic_activity_boat_24dp));
     }
 
     private TrackIconUtils() {
@@ -163,10 +155,17 @@ public class TrackIconUtils {
             @NonNull
             @Override
             public View getView(int position, View convertView, @NonNull android.view.ViewGroup parent) {
-                ImageView imageView = convertView != null ? (ImageView) convertView : new ImageView(getContext());
-                Bitmap source = BitmapFactory.decodeResource(context.getResources(), TrackIconUtils.getIconDrawable(getItem(position) + ""));
-                imageView.setImageBitmap(source);
-                imageView.setPadding(4, 4, -4, -4);
+                ImageView imageView;
+                if (convertView != null) {
+                    imageView = (ImageView) convertView;
+                } else {
+                    imageView = new ImageView(getContext());
+                }
+
+                imageView.setImageResource(TrackIconUtils.getIconDrawable(getItem(position) + ""));
+
+                int padding = ResourceUtils.dpToPx(getContext(), 1);
+                imageView.setPaddingRelative(padding, padding, padding, -padding);
                 return imageView;
             }
         };
@@ -186,39 +185,5 @@ public class TrackIconUtils {
             }
         }
         return false;
-    }
-
-    /**
-     * Sets the menu icon color.
-     *
-     * @param menu the menu
-     */
-    public static void setMenuIconColor(Menu menu) {
-        for (int i = 0; i < menu.size(); i++) {
-            MenuItem menuitem = menu.getItem(i);
-            setMenuIconColor(menuitem);
-        }
-    }
-
-    /**
-     * Sets the menu icon color.
-     *
-     * @param menuitem the menu item
-     */
-    public static void setMenuIconColor(MenuItem menuitem) {
-        revertMenuIconColor(menuitem);
-    }
-
-    /**
-     * Reverts the menu icon color.
-     *
-     * @param menuitem the menu item
-     */
-    private static void revertMenuIconColor(MenuItem menuitem) {
-        Drawable drawable = menuitem.getIcon();
-        if (drawable != null) {
-            final PorterDuffColorFilter colorFilter = new PorterDuffColorFilter(Color.rgb(255, 255, 255), PorterDuff.Mode.MULTIPLY);
-            drawable.setColorFilter(colorFilter);
-        }
     }
 }

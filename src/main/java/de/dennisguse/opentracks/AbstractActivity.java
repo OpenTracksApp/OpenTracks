@@ -18,11 +18,8 @@ package de.dennisguse.opentracks;
 
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
-import android.view.Menu;
 
 import androidx.fragment.app.FragmentActivity;
-
-import de.dennisguse.opentracks.util.TrackIconUtils;
 
 /**
  * @author Jimmy Shih
@@ -43,10 +40,4 @@ public abstract class AbstractActivity extends FragmentActivity {
      * Gets the layout resource id.
      */
     protected abstract int getLayoutResId();
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        TrackIconUtils.setMenuIconColor(menu);
-        return super.onCreateOptionsMenu(menu);
-    }
 }

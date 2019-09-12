@@ -48,7 +48,6 @@ import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.ListItemUtils;
 import de.dennisguse.opentracks.util.StatsUtils;
 import de.dennisguse.opentracks.util.StringUtils;
-import de.dennisguse.opentracks.util.TrackIconUtils;
 
 /**
  * A fragment to show marker details.
@@ -179,8 +178,6 @@ public class MarkerDetailFragment extends Fragment {
         inflater.inflate(R.menu.marker_detail, menu);
 
         updateWaypoint(false);
-
-        TrackIconUtils.setMenuIconColor(menu);
     }
 
     @Override
