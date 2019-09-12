@@ -133,7 +133,7 @@ limitations under the License.
             android:name=".services.TrackRecordingService"
             android:enabled="true"
             android:exported="false"
-            android:icon="@drawable/ic_arrow_320"
+            android:icon="@drawable/ic_logo"
             android:label="@string/recording_service" />
     </application>
     <supports-screens
