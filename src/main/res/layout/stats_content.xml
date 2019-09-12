@@ -135,10 +135,10 @@ limitations under the License.
         android:layout_height="wrap_content">
 
         <!-- Speed max -->
-        <TextView
-            android:id="@+id/stats_max_speed_label"
-            style="@style/StatsSmallLabel" />
         <LinearLayout style="@style/StatsSmallItemContainer">
+            <TextView
+                android:id="@+id/stats_max_speed_label"
+                style="@style/StatsSmallLabel" />
 
             <LinearLayout style="@style/StatsSmallValueContainer">
 
