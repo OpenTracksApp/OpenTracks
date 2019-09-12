@@ -75,6 +75,10 @@ android {
     applicationVariants.all { variant ->
         variant.resValue "string", "applicationId", variant.applicationId
     }
+
+    lintOptions {
+        disable "AppCompatResource" // TODO Disable complaint to use androidx's SearchView as it is null.
+    }
 }
 
 dependencies {
@@ -90,6 +94,4 @@ dependencies {
 
     testImplementation 'androidx.test:core:1.2.0'
     testImplementation 'org.mockito:mockito-core:3.0.0'
-
-
 }
