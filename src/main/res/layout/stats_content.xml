@@ -207,7 +207,7 @@ limitations under the License.
 
                     <LinearLayout
                         style="@style/StatsSmallValueContainer"
-                        android:layout_gravity="left|bottom">
+                        android:layout_gravity="start|bottom">
 
                         <TextView
                             style="@style/StatsSmallValue"
@@ -216,12 +216,13 @@ limitations under the License.
                         <TextView
                             android:id="@+id/stats_elevation_current_label"
                             style="@style/StatsSmallLabel"
-                            android:paddingLeft="8dp" />
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp" />
                     </LinearLayout>
 
                     <LinearLayout
                         style="@style/StatsSmallValueContainer"
-                        android:layout_gravity="left|bottom">
+                        android:layout_gravity="start|bottom">
 
                         <TextView
                             android:id="@+id/stats_elevation_current_value"
@@ -242,7 +243,7 @@ limitations under the License.
 
                     <LinearLayout
                         style="@style/StatsSmallValueContainer"
-                        android:layout_gravity="right|bottom">
+                        android:layout_gravity="start|bottom">
 
                         <TextView
                             android:id="@+id/stats_elevation_min_value"
@@ -256,7 +257,7 @@ limitations under the License.
 
                     <LinearLayout
                         style="@style/StatsSmallValueContainer"
-                        android:layout_gravity="left|bottom">
+                        android:layout_gravity="start|bottom">
 
                         <TextView
                             style="@style/StatsSmallValue"
@@ -265,7 +266,8 @@ limitations under the License.
                         <TextView
                             style="@style/StatsSmallLabel"
                             android:layout_gravity="bottom"
-                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
                             android:text="@string/stats_min" />
 
                     </LinearLayout>
@@ -278,7 +280,7 @@ limitations under the License.
 
                     <LinearLayout
                         style="@style/StatsSmallValueContainer"
-                        android:layout_gravity="right|bottom">
+                        android:layout_gravity="start|bottom">
 
                         <TextView
                             android:id="@+id/stats_elevation_max_value"
@@ -292,7 +294,7 @@ limitations under the License.
 
                     <LinearLayout
                         style="@style/StatsSmallValueContainer"
-                        android:layout_gravity="left|bottom">
+                        android:layout_gravity="start|bottom">
 
                         <TextView
                             style="@style/StatsSmallValue"
@@ -301,7 +303,8 @@ limitations under the License.
                         <TextView
                             style="@style/StatsSmallLabel"
                             android:layout_gravity="bottom"
-                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
                             android:text="@string/stats_max" />
 
                     </LinearLayout>
