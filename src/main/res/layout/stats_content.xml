@@ -18,57 +18,163 @@ limitations under the License.
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <!-- Distance -->
+        <LinearLayout style="@style/StatsLargeItemContainer">
 
-        <include
-            android:id="@+id/stats_distance"
-            layout="@layout/stats_large_item" />
+            <TextView
+                style="@style/StatsLargeLabel"
+                android:text="@string/stats_distance" />
 
+            <LinearLayout style="@style/StatsLargeValueContainer">
+
+                <TextView
+                    android:id="@+id/stats_distance_value"
+                    style="@style/StatsLargeValue"
+                    android:value="@string/value_unknown" />
+
+                <TextView
+                    android:id="@+id/stats_distance_unit"
+                    style="@style/StatsUnit" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Activity type -->
         <include
             android:id="@+id/stats_activity_type"
             layout="@layout/stats_activity_type" />
     </LinearLayout>
+
     <!-- Total time and moving time -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <include
-            android:id="@+id/stats_total_time"
-            layout="@layout/stats_large_item" />
+        <!-- Total time -->
+        <LinearLayout style="@style/StatsLargeItemContainer">
 
-        <include
-            android:id="@+id/stats_moving_time"
-            layout="@layout/stats_large_item" />
+            <TextView
+                style="@style/StatsLargeLabel"
+                android:text="@string/stats_total_time" />
+
+            <TextView
+                android:id="@+id/stats_total_time_value"
+                style="@style/StatsLargeValue" />
+
+        </LinearLayout>
+
+        <!-- Moving time -->
+        <LinearLayout style="@style/StatsLargeItemContainer">
+
+            <TextView
+                style="@style/StatsLargeLabel"
+                android:text="@string/stats_moving_time" />
+
+            <TextView
+                android:id="@+id/stats_moving_time_value"
+                style="@style/StatsLargeValue"
+                android:value="@string/value_unknown" />
+
+        </LinearLayout>
     </LinearLayout>
+
     <!-- Horizontal line -->
     <View style="@style/StatsHorizontalLine" />
-    <!-- Speed and average speed -->
+
+    <!-- Speed/pace and average -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <include
+        <!-- Speed/pace -->
+        <LinearLayout
             android:id="@+id/stats_speed"
-            layout="@layout/stats_small_item" />
+            style="@style/StatsSmallItemContainer">
 
-        <include
-            android:id="@+id/stats_average_speed"
-            layout="@layout/stats_small_item" />
+            <TextView
+                android:id="@+id/stats_speed_label"
+                style="@style/StatsSmallLabel" />
+
+            <LinearLayout style="@style/StatsSmallValueContainer">
+
+                <TextView
+                    android:id="@+id/stats_speed_value"
+                    style="@style/StatsSmallValue"
+                    android:value="@string/value_unknown" />
+
+                <TextView
+                    android:id="@+id/stats_speed_unit"
+                    style="@style/StatsUnit" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Average -->
+        <LinearLayout style="@style/StatsSmallItemContainer">
+
+            <TextView
+                android:id="@+id/stats_average_speed_label"
+                style="@style/StatsSmallLabel" />
+
+            <LinearLayout style="@style/StatsSmallValueContainer">
+
+                <TextView
+                    android:id="@+id/stats_average_speed_value"
+                    style="@style/StatsSmallValue"
+                    android:value="@string/value_unknown" />
+
+                <TextView
+                    android:id="@+id/stats_average_speed_unit"
+                    style="@style/StatsUnit" />
+
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
-    <!-- Max speed and average moving speed -->
+
+    <!-- Speed max and moving -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <include
-            android:id="@+id/stats_max_speed"
-            layout="@layout/stats_small_item" />
+        <!-- Speed max -->
+        <TextView
+            android:id="@+id/stats_max_speed_label"
+            style="@style/StatsSmallLabel" />
+        <LinearLayout style="@style/StatsSmallItemContainer">
 
-        <include
-            android:id="@+id/stats_average_moving_speed"
-            layout="@layout/stats_small_item" />
+            <LinearLayout style="@style/StatsSmallValueContainer">
+
+                <TextView
+                    android:id="@+id/stats_max_speed_value"
+                    style="@style/StatsSmallValue"
+                    android:value="@string/value_unknown" />
+
+                <TextView
+                    android:id="@+id/stats_max_speed_unit"
+                    style="@style/StatsUnit" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Speed moving -->
+        <LinearLayout style="@style/StatsSmallItemContainer">
+
+            <TextView
+                android:id="@+id/stats_moving_speed_label"
+                style="@style/StatsSmallLabel" />
+
+            <LinearLayout style="@style/StatsSmallValueContainer">
+
+                <TextView
+                    android:id="@+id/stats_moving_speed_value"
+                    style="@style/StatsSmallValue"
+                    android:value="@string/value_unknown" />
+
+                <TextView
+                    android:id="@+id/stats_moving_speed_unit"
+                    style="@style/StatsUnit" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
-    <!-- Horizontal line -->
+
     <View
         android:id="@+id/stats_elevation_separator"
         style="@style/StatsHorizontalLine" />
@@ -77,12 +183,13 @@ limitations under the License.
         android:id="@+id/stats_elevation_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout style="@style/StatsSmallGroupContainer">
             <!-- This is a placeholder -->
         </LinearLayout>
+
         <!-- Elevation -->
         <LinearLayout style="@style/StatsSmallGroupContainer">
-            <!-- Elevation label -->
             <TextView
                 style="@style/StatsSmallLabel"
                 android:text="@string/stats_elevation" />
@@ -91,67 +198,196 @@ limitations under the License.
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center">
-                <!-- Elevation -->
-                <include
+
+                <!-- Current elevation -->
+                <TableRow
                     android:id="@+id/stats_elevation"
-                    layout="@layout/stats_small_group_item" />
-                <!-- Elevation gain -->
-                <!-- TODO DISABLED AS computation from GPS is not precise enough, go for getAltitude(RemoteSensorManager.PRESSURE_STANDARD_ATMOSPHERE, pressure) -->
-                <!--<include-->
-                <!--android:id="@+id/stats_elevation_gain"-->
-                <!--layout="@layout/stats_small_group_item" />-->
-                <include
-                    android:id="@+id/stats_elevation_min"
-                    layout="@layout/stats_small_group_item" />
-                <include
-                    android:id="@+id/stats_elevation_max"
-                    layout="@layout/stats_small_group_item" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        style="@style/StatsSmallValueContainer"
+                        android:layout_gravity="left|bottom">
+
+                        <TextView
+                            style="@style/StatsSmallValue"
+                            android:visibility="invisible" />
+
+                        <TextView
+                            android:id="@+id/stats_elevation_current_label"
+                            style="@style/StatsSmallLabel"
+                            android:paddingLeft="8dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/StatsSmallValueContainer"
+                        android:layout_gravity="left|bottom">
+
+                        <TextView
+                            android:id="@+id/stats_elevation_current_value"
+                            style="@style/StatsSmallValue"
+                            android:value="@string/value_unknown" />
+
+                        <TextView
+                            android:id="@+id/stats_elevation_current_unit"
+                            style="@style/StatsUnit" />
+                    </LinearLayout>
+
+                </TableRow>
+
+                <!-- Minimal elevation -->
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        style="@style/StatsSmallValueContainer"
+                        android:layout_gravity="right|bottom">
+
+                        <TextView
+                            android:id="@+id/stats_elevation_min_value"
+                            style="@style/StatsSmallValue"
+                            android:value="@string/value_unknown" />
+
+                        <TextView
+                            android:id="@+id/stats_elevation_min_unit"
+                            style="@style/StatsUnit" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/StatsSmallValueContainer"
+                        android:layout_gravity="left|bottom">
+
+                        <TextView
+                            style="@style/StatsSmallValue"
+                            android:visibility="invisible" />
+
+                        <TextView
+                            style="@style/StatsSmallLabel"
+                            android:layout_gravity="bottom"
+                            android:paddingLeft="8dp"
+                            android:text="@string/stats_min" />
+
+                    </LinearLayout>
+                </TableRow>
+
+                <!-- Maximal elevation -->
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        style="@style/StatsSmallValueContainer"
+                        android:layout_gravity="right|bottom">
+
+                        <TextView
+                            android:id="@+id/stats_elevation_max_value"
+                            style="@style/StatsSmallValue" />
+
+                        <TextView
+                            android:id="@+id/stats_elevation_max_unit"
+                            style="@style/StatsUnit" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/StatsSmallValueContainer"
+                        android:layout_gravity="left|bottom">
+
+                        <TextView
+                            style="@style/StatsSmallValue"
+                            android:visibility="invisible" />
+
+                        <TextView
+                            style="@style/StatsSmallLabel"
+                            android:layout_gravity="bottom"
+                            android:paddingLeft="8dp"
+                            android:text="@string/stats_max" />
+
+                    </LinearLayout>
+                </TableRow>
             </TableLayout>
         </LinearLayout>
     </LinearLayout>
+
     <!-- Horizontal line -->
     <View
         android:id="@+id/stats_coordinate_separator"
         style="@style/StatsHorizontalLine" />
+
     <!-- Latitude and longitude -->
     <LinearLayout
         android:id="@+id/stats_coordinate_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <include
-            android:id="@+id/stats_latitude"
-            layout="@layout/stats_small_item" />
+        <LinearLayout style="@style/StatsSmallItemContainer">
 
-        <include
-            android:id="@+id/stats_longitude"
-            layout="@layout/stats_small_item" />
+            <TextView
+                style="@style/StatsSmallLabel"
+                android:text="@string/stats_latitude" />
+
+            <TextView
+                android:id="@+id/stats_latitude_value"
+                style="@style/StatsSmallValue" />
+
+        </LinearLayout>
+
+        <LinearLayout style="@style/StatsSmallItemContainer">
+
+            <TextView
+                style="@style/StatsSmallLabel"
+                android:text="@string/stats_longitude" />
+
+            <TextView
+                android:id="@+id/stats_longitude_value"
+                style="@style/StatsSmallValue"
+                android:value="@string/value_unknown" />
+
+        </LinearLayout>
     </LinearLayout>
-    <!-- Sensor data: heart rate-->
+
     <View
         android:id="@+id/stats_sensor_separator"
         style="@style/StatsHorizontalLine" />
 
+    <!-- Sensor data: heart rate-->
     <LinearLayout
         android:id="@+id/stats_sensor_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <include
-            android:id="@+id/stats_sensor_heart_rate_value"
-            layout="@layout/stats_large_item" />
+        <LinearLayout style="@style/StatsLargeItemContainer">
 
+            <TextView
+                android:id="@+id/stats_sensor_heart_rate_label"
+                style="@style/StatsLargeLabel"
+                android:text="@string/sensor_state_heart_rate" />
+
+            <LinearLayout style="@style/StatsLargeValueContainer">
+
+                <TextView
+                    android:id="@+id/stats_sensor_heart_rate_value"
+                    style="@style/StatsLargeValue"
+                    android:value="@string/value_unknown" />
+
+                <TextView
+                    style="@style/StatsUnit"
+                    android:text="@string/sensor_unit_beats_per_minute" />
+
+            </LinearLayout>
+        </LinearLayout>
         <LinearLayout style="@style/StatsSmallGroupContainer">
 
-            <TableLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center">
+            <TextView
+                style="@style/StatsSmallLabel"
+                android:text="@string/settings_sensor_bluetooth_sensor" />
 
-                <include
-                    android:id="@+id/stats_sensor_heart_rate_sensor"
-                    layout="@layout/stats_tiny_item" />
-            </TableLayout>
+            <TextView
+                android:id="@+id/stats_sensor_heart_rate_sensor_value"
+                style="@style/StatsTinyValue"
+                android:value="@string/value_unknown" />
+
         </LinearLayout>
     </LinearLayout>
 </merge>

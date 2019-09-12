@@ -262,8 +262,8 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     }
 
     /**
-     * Resumes the trackDataHub. Needs to be synchronized because trackDataHub can
-     * be accessed by multiple threads.
+     * Resumes the trackDataHub.
+     * Needs to be synchronized because trackDataHub can be accessed by multiple threads.
      */
     private synchronized void resumeTrackDataHub() {
         trackDataHub = ((TrackDetailActivity) getActivity()).getTrackDataHub();
@@ -273,8 +273,8 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     }
 
     /**
-     * Pauses the trackDataHub. Needs to be synchronized because trackDataHub can
-     * be accessed by multiple threads.
+     * Pauses the trackDataHub.
+     * Needs to be synchronized because trackDataHub can be accessed by multiple threads.
      */
     private synchronized void pauseTrackDataHub() {
         trackDataHub.unregisterTrackDataListener(this);
@@ -282,16 +282,16 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     }
 
     /**
-     * Returns true if the selected track is recording. Needs to be synchronized
-     * because trackDataHub can be accessed by multiple threads.
+     * Returns true if the selected track is recording.
+     * Needs to be synchronized because trackDataHub can be accessed by multiple threads.
      */
     private synchronized boolean isSelectedTrackRecording() {
         return trackDataHub != null && trackDataHub.isSelectedTrackRecording();
     }
 
     /**
-     * Returns true if the selected track is paused. Needs to be synchronized
-     * because trackDataHub can be accessed by multiple threads.
+     * Returns true if the selected track is paused.
+     * Needs to be synchronized because trackDataHub can be accessed by multiple threads.
      */
     private synchronized boolean isSelectedTrackPaused() {
         return trackDataHub != null && trackDataHub.isSelectedTrackPaused();
@@ -310,7 +310,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
             sensorDataSet = trackRecordingService.getSensorData();
         }
 
-        StatsUtils.setSensorData(getActivity(), getActivity(), sensorDataSet, isSelectedTrackRecording());
+        StatsUtils.setSensorData(getActivity(), sensorDataSet, isSelectedTrackRecording());
     }
 
     /**

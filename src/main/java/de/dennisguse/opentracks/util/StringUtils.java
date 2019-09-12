@@ -193,8 +193,9 @@ public class StringUtils {
         }
         String unitString = context.getString(unitId);
 
+
         if (Double.isNaN(speed_mps) || Double.isInfinite(speed_mps)) {
-            return new Pair<>(null, unitString);
+            speed_mps = 0;
         }
 
         speed_mps *= UnitConversions.MS_TO_KMH;

@@ -15,18 +15,15 @@ limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/StatsLargeItemContainer">
-    <!-- Label -->
+
     <TextView
         android:id="@+id/stats_activity_type_label"
         style="@style/StatsLargeLabel"
         android:text="@string/track_edit_activity_type_hint" />
-    <!-- Value container -->
-    <LinearLayout style="@style/StatsLargeValueContainer">
 
-        <Spinner
-            android:id="@+id/stats_activity_type_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp" />
-    </LinearLayout>
+    <Spinner
+        android:id="@+id/stats_activity_type_icon"
+        style="@style/StatsLargeValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </LinearLayout>

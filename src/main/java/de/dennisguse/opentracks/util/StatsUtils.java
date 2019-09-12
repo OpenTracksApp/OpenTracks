@@ -24,8 +24,6 @@ import android.view.View;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.util.Locale;
-
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.services.sensors.RemoteSensorManager;
@@ -58,54 +56,78 @@ public class StatsUtils {
         boolean reportSpeed = PreferencesUtils.isReportSpeed(context);
 
         // Set speed/pace
-        View speed = getView(activity, view, R.id.stats_speed);
-        speed.setVisibility(isRecording ? View.VISIBLE : View.INVISIBLE);
-
+        View speedContainer = activity.findViewById(R.id.stats_speed);
+        speedContainer.setVisibility(isRecording ? View.VISIBLE : View.INVISIBLE);
         if (isRecording) {
-            double value = isRecording && location != null && location.hasSpeed() ? location.getSpeed() : Double.NaN;
-            setSpeed(context, speed, R.string.stats_speed, R.string.stats_pace, value, metricUnits, reportSpeed);
+            TextView speedLabel = activity.findViewById(R.id.stats_speed_label);
+            speedLabel.setText(reportSpeed ? R.string.stats_speed : R.string.stats_pace);
+
+            double speed = location != null && location.hasSpeed() ? location.getSpeed() : Double.NaN;
+            Pair<String, String> parts = StringUtils.getSpeedParts(context, speed, metricUnits, reportSpeed);
+
+            TextView speedValue = activity.findViewById(R.id.stats_speed_value);
+            speedValue.setText(parts.first);
+
+            TextView speedUnit = activity.findViewById(R.id.stats_speed_unit);
+            speedUnit.setText(parts.second);
         }
 
         // Set elevation
         boolean showGradeElevation = PreferencesUtils.getBoolean(context, R.string.stats_show_grade_elevation_key, PreferencesUtils.STATS_SHOW_ELEVATION_DEFAULT) && isRecording;
-        View elevation = getView(activity, view, R.id.stats_elevation);
-        elevation.setVisibility(showGradeElevation ? View.VISIBLE : View.GONE);
+        View elevationContainer = getView(activity, view, R.id.stats_elevation);
+        elevationContainer.setVisibility(showGradeElevation ? View.VISIBLE : View.GONE);
 
         if (showGradeElevation) {
             double altitude = location != null && location.hasAltitude() ? location.getAltitude() : Double.NaN;
-            setElevationValue(context, elevation, -1, altitude, metricUnits);
+            Pair<String, String> parts = formatElevation(context, altitude, metricUnits);
+
+            TextView elevationValue = activity.findViewById(R.id.stats_elevation_current_value);
+            elevationValue.setText(parts.first);
+            TextView elevationUnit = activity.findViewById(R.id.stats_elevation_current_unit);
+            elevationUnit.setText(parts.second);
         }
 
         // Set coordinate
         boolean showCoordinate = isRecording && PreferencesUtils.getBoolean(context, R.string.stats_show_coordinate_key, PreferencesUtils.STATS_SHOW_COORDINATE_DEFAULT);
+
         View coordinateSeparator = getView(activity, view, R.id.stats_coordinate_separator);
+        coordinateSeparator.setVisibility(showCoordinate ? View.VISIBLE : View.GONE);
+
         View coordinateContainer = getView(activity, view, R.id.stats_coordinate_container);
-
-        if (coordinateSeparator != null) {
-            coordinateSeparator.setVisibility(showCoordinate ? View.VISIBLE : View.GONE);
-        }
         coordinateContainer.setVisibility(showCoordinate ? View.VISIBLE : View.GONE);
-
         if (showCoordinate) {
             double latitude = location != null ? location.getLatitude() : Double.NaN;
+            String latitudeText = Double.isNaN(latitude) || Double.isInfinite(latitude) ? activity.getString(R.string.value_unknown) : StringUtils.formatCoordinate(latitude);
+            TextView latitudeValue = activity.findViewById(R.id.stats_latitude_value);
+            latitudeValue.setText(latitudeText);
+
             double longitude = location != null ? location.getLongitude() : Double.NaN;
-            setCoordinateValue(context, getView(activity, view, R.id.stats_latitude), R.string.stats_latitude, latitude);
-            setCoordinateValue(context, getView(activity, view, R.id.stats_longitude), R.string.stats_longitude, longitude);
+            String longitudeText = Double.isNaN(longitude) || Double.isInfinite(longitude) ? activity.getString(R.string.value_unknown) : StringUtils.formatCoordinate(longitude);
+            TextView longitudeValue = activity.findViewById(R.id.stats_longitude_value);
+            longitudeValue.setText(longitudeText);
         }
     }
 
-    public static void setSensorData(Context context, Activity activity, SensorDataSet sensorDataSet, boolean isRecording) {
-        // SensorDataSet: heart rate
+    public static void setSensorData(Activity activity, SensorDataSet sensorDataSet, boolean isRecording) {
+        // heart rate
         int isVisible = View.VISIBLE;
-        if (!isRecording || PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT.equals(PreferencesUtils.getString(context, R.string.bluetooth_sensor_key, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT))) {
+        if (!isRecording || PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT.equals(PreferencesUtils.getString(activity, R.string.bluetooth_sensor_key, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT))) {
             isVisible = View.INVISIBLE;
         }
-        getView(activity, null, R.id.stats_sensor_container).setVisibility(isVisible);
+        activity.findViewById(R.id.stats_sensor_container).setVisibility(isVisible);
 
-        View viewValue = getView(activity, null, R.id.stats_sensor_heart_rate_value);
-        View viewSensor = getView(activity, null, R.id.stats_sensor_heart_rate_sensor);
         if (isRecording) {
-            setHeartRateData(context, viewValue, viewSensor, sensorDataSet);
+            TextView heartRateValue = activity.findViewById(R.id.stats_sensor_heart_rate_value);
+            TextView heartRateSensor = activity.findViewById(R.id.stats_sensor_heart_rate_sensor_value);
+            String heartRate = activity.getString(R.string.value_unknown);
+            String sensor = activity.getString(R.string.value_unknown);
+            if (sensorDataSet != null && sensorDataSet.hasHeartRate() && sensorDataSet.isRecent(RemoteSensorManager.MAX_SENSOR_DATE_SET_AGE)) {
+                heartRate = StringUtils.formatDecimal(sensorDataSet.getHeartRate(), 0);
+                sensor = sensorDataSet.getSensorName();
+            }
+
+            heartRateValue.setText(heartRate);
+            heartRateSensor.setText(sensor);
         }
     }
 
@@ -116,7 +138,8 @@ public class StatsUtils {
      * @param totalTime the total time
      */
     public static void setTotalTimeValue(Activity activity, long totalTime) {
-        setTimeValue(activity, activity.findViewById(R.id.stats_total_time), R.string.stats_total_time, totalTime);
+        TextView totalTimeValue = activity.findViewById(R.id.stats_total_time_value);
+        totalTimeValue.setText(StringUtils.formatElapsedTime(totalTime));
     }
 
     /**
@@ -133,205 +156,145 @@ public class StatsUtils {
         boolean reportSpeed = PreferencesUtils.isReportSpeed(context);
 
         // Set total distance
-        double totalDistance = tripStatistics == null ? Double.NaN : tripStatistics.getTotalDistance();
-        setDistanceValue(context, getView(activity, view, R.id.stats_distance), totalDistance, metricUnits);
+        {
+            double totalDistance = tripStatistics == null ? Double.NaN : tripStatistics.getTotalDistance();
+            Pair<String, String> parts = StringUtils.getDistanceParts(context, totalDistance, metricUnits);
+
+            TextView distanceValue = activity.findViewById(R.id.stats_distance_value);
+            distanceValue.setText(parts.first);
+
+            TextView distanceUnit = activity.findViewById(R.id.stats_distance_unit);
+            distanceUnit.setText(parts.second);
+        }
 
         // Set activity type
-        getView(activity, null, R.id.stats_activity_type_label).setVisibility(trackIconValue != null ? View.VISIBLE : View.GONE);
+        {
+            activity.findViewById(R.id.stats_activity_type_label).setVisibility(trackIconValue != null ? View.VISIBLE : View.GONE);
 
-        Spinner spinner = (Spinner) getView(activity, view, R.id.stats_activity_type_icon);
-        spinner.setVisibility(trackIconValue != null ? View.VISIBLE : View.GONE);
-        if (trackIconValue != null) {
-            TrackIconUtils.setIconSpinner(spinner, trackIconValue);
+            Spinner spinner = (Spinner) getView(activity, view, R.id.stats_activity_type_icon);
+            spinner.setVisibility(trackIconValue != null ? View.VISIBLE : View.GONE);
+            if (trackIconValue != null) {
+                TrackIconUtils.setIconSpinner(spinner, trackIconValue);
+            }
         }
 
-        // Set total time
-        setTimeValue(context, getView(activity, view, R.id.stats_total_time), R.string.stats_total_time, tripStatistics != null ? tripStatistics.getTotalTime() : -1L);
+        // Set time
+        if (tripStatistics != null) {
+            setTotalTimeValue(activity, tripStatistics.getTotalTime());
 
-        // Set moving time
-        setTimeValue(context, getView(activity, view, R.id.stats_moving_time), R.string.stats_moving_time, tripStatistics != null ? tripStatistics.getMovingTime() : -1L);
+            TextView movingTimeValue = activity.findViewById(R.id.stats_moving_time_value);
+            movingTimeValue.setText(StringUtils.formatElapsedTime(tripStatistics.getMovingTime()));
+        }
 
         // Set average speed/pace
-        double averageSpeed = tripStatistics != null ? tripStatistics.getAverageSpeed() : Double.NaN;
-        setSpeed(context, getView(activity, view, R.id.stats_average_speed), R.string.stats_average_speed, R.string.stats_average_pace, averageSpeed, metricUnits, reportSpeed);
+        {
+            double speed = tripStatistics != null ? tripStatistics.getAverageSpeed() : Double.NaN;
+            TextView speedLabel = activity.findViewById(R.id.stats_average_speed_label);
+            speedLabel.setText(reportSpeed ? R.string.stats_average_speed : R.string.stats_average_pace);
+
+            Pair<String, String> parts = StringUtils.getSpeedParts(context, speed, metricUnits, reportSpeed);
+            TextView speedValue = activity.findViewById(R.id.stats_average_speed_value);
+            speedValue.setText(parts.first);
+            TextView speedUnit = activity.findViewById(R.id.stats_average_speed_unit);
+            speedUnit.setText(parts.second);
+        }
 
         // Set max speed/pace
-        double maxSpeed = tripStatistics == null ? Double.NaN : tripStatistics.getMaxSpeed();
-        setSpeed(context, getView(activity, view, R.id.stats_max_speed), R.string.stats_max_speed, R.string.stats_fastest_pace, maxSpeed, metricUnits, reportSpeed);
+        {
+            double speed = tripStatistics == null ? Double.NaN : tripStatistics.getMaxSpeed();
 
-        // Set average moving speed/pace
-        double averageMovingSpeed = tripStatistics != null ? tripStatistics.getAverageMovingSpeed() : Double.NaN;
-        setSpeed(context, getView(activity, view, R.id.stats_average_moving_speed), R.string.stats_average_moving_speed, R.string.stats_average_moving_pace, averageMovingSpeed, metricUnits, reportSpeed);
+            TextView speedLabel = activity.findViewById(R.id.stats_max_speed_label);
+            speedLabel.setText(reportSpeed ? R.string.stats_max_speed : R.string.stats_fastest_pace);
 
-        // Set grade/elevation
-        boolean showElevation = PreferencesUtils.getBoolean(context, R.string.stats_show_grade_elevation_key, PreferencesUtils.STATS_SHOW_ELEVATION_DEFAULT);
-        View gradeElevationSeparator = getView(activity, view, R.id.stats_elevation_separator);
-        gradeElevationSeparator.setVisibility(showElevation ? View.VISIBLE : View.GONE);
-
-        View gradeElevationContainer = getView(activity, view, R.id.stats_elevation_container);
-        gradeElevationContainer.setVisibility(showElevation ? View.VISIBLE : View.GONE);
-
-        if (showElevation) {
-            // Set elevation
-            double minElevation = tripStatistics == null ? Double.NaN : tripStatistics.getMinElevation();
-            setElevationValue(context, getView(activity, view, R.id.stats_elevation_min), R.string.stats_min, minElevation, metricUnits);
-            double maxElevation = tripStatistics == null ? Double.NaN : tripStatistics.getMaxElevation();
-            setElevationValue(context, getView(activity, view, R.id.stats_elevation_max), R.string.stats_max, maxElevation, metricUnits);
+            Pair<String, String> parts = StringUtils.getSpeedParts(context, speed, metricUnits, reportSpeed);
+            TextView speedValue = activity.findViewById(R.id.stats_max_speed_value);
+            speedValue.setText(parts.first);
+            TextView speedUnit = activity.findViewById(R.id.stats_max_speed_unit);
+            speedUnit.setText(parts.second);
         }
-    }
 
-    /**
-     * Sets speed.
-     *
-     * @param context      the context
-     * @param view         the containing view
-     * @param speedLabelId the speed label id
-     * @param paceLabelId  the pace label id
-     * @param speed        the speed in meters per second
-     * @param metricUnits  true if metric units
-     * @param reportSpeed  true if report speed
-     */
-    private static void setSpeed(Context context, View view, int speedLabelId, int paceLabelId, double speed, boolean metricUnits, boolean reportSpeed) {
-        Pair<String, String> parts = StringUtils.getSpeedParts(context, speed, metricUnits, reportSpeed);
-        setItem(context, view, reportSpeed ? speedLabelId : paceLabelId, parts.first, parts.second);
-    }
+        // Set average speed/pace
+        {
+            double speed = tripStatistics != null ? tripStatistics.getAverageSpeed() : Double.NaN;
 
-    /**
-     * Sets distance value.
-     *
-     * @param context     the context
-     * @param view        the containing view
-     * @param distance    the distance in meters
-     * @param metricUnits true if metric units
-     */
-    private static void setDistanceValue(Context context, View view, double distance, boolean metricUnits) {
-        Pair<String, String> parts = StringUtils.getDistanceParts(context, distance, metricUnits);
-        setItem(context, view, R.string.stats_distance, parts.first, parts.second);
-    }
+            TextView speedLabel = activity.findViewById(R.id.stats_average_speed_label);
+            speedLabel.setText(reportSpeed ? R.string.stats_average_speed : R.string.stats_average_pace);
 
-    /**
-     * Sets a time value.
-     *
-     * @param context the context
-     * @param view    the containing view
-     * @param labelId the label id
-     * @param time    the time
-     */
-    private static void setTimeValue(Context context, View view, int labelId, long time) {
-        String value = time == -1L ? null : StringUtils.formatElapsedTime(time);
-        setItem(context, view, labelId, value, null);
+            Pair<String, String> parts = StringUtils.getSpeedParts(context, speed, metricUnits, reportSpeed);
+            TextView speedValue = activity.findViewById(R.id.stats_average_speed_value);
+            speedValue.setText(parts.first);
+            TextView speedUnit = activity.findViewById(R.id.stats_average_speed_unit);
+            speedUnit.setText(parts.second);
+        }
+
+        // Set moving speed/pace
+        {
+            double speed = tripStatistics != null ? tripStatistics.getAverageMovingSpeed() : Double.NaN;
+
+            TextView speedLabel = activity.findViewById(R.id.stats_moving_speed_label);
+            speedLabel.setText(reportSpeed ? R.string.stats_average_moving_speed : R.string.stats_average_moving_pace);
+
+            Pair<String, String> parts = StringUtils.getSpeedParts(context, speed, metricUnits, reportSpeed);
+            TextView speedValue = activity.findViewById(R.id.stats_moving_speed_value);
+            speedValue.setText(parts.first);
+            TextView speedUnit = activity.findViewById(R.id.stats_moving_speed_unit);
+            speedUnit.setText(parts.second);
+        }
+
+
+        // Set elevation
+        {
+            boolean showElevation = PreferencesUtils.getBoolean(context, R.string.stats_show_grade_elevation_key, PreferencesUtils.STATS_SHOW_ELEVATION_DEFAULT);
+            View gradeElevationSeparator = getView(activity, view, R.id.stats_elevation_separator);
+            gradeElevationSeparator.setVisibility(showElevation ? View.VISIBLE : View.GONE);
+
+            View gradeElevationContainer = getView(activity, view, R.id.stats_elevation_container);
+            gradeElevationContainer.setVisibility(showElevation ? View.VISIBLE : View.GONE);
+
+            if (showElevation) {
+                {
+                    double elevation = tripStatistics == null ? Double.NaN : tripStatistics.getMinElevation();
+                    Pair<String, String> parts = formatElevation(context, elevation, metricUnits);
+
+                    TextView elevationValue = activity.findViewById(R.id.stats_elevation_min_value);
+                    elevationValue.setText(parts.first);
+                    TextView elevationUnit = activity.findViewById(R.id.stats_elevation_min_unit);
+                    elevationUnit.setText(parts.second);
+                }
+
+                {
+                    double elevation = tripStatistics == null ? Double.NaN : tripStatistics.getMaxElevation();
+                    Pair<String, String> parts = formatElevation(context, elevation, metricUnits);
+
+                    TextView elevationValue = activity.findViewById(R.id.stats_elevation_max_value);
+                    elevationValue.setText(parts.first);
+                    TextView elevationUnit = activity.findViewById(R.id.stats_elevation_max_unit);
+                    elevationUnit.setText(parts.second);
+                }
+            }
+        }
     }
 
     /**
      * Sets an elevation value.
      *
      * @param context     the context
-     * @param view        the containing view
-     * @param labelId     the label id
      * @param elevation   the elevation in meters
      * @param metricUnits true if metric units
+     * @return the formatted elevation (or null) and it's unit as {@link Pair}
      */
-    private static void setElevationValue(Context context, View view, int labelId, double elevation, boolean metricUnits) {
-        String value;
-        String unit;
-        if (Double.isNaN(elevation) || Double.isInfinite(elevation)) {
-            value = null;
-            unit = null;
-        } else {
+    // TODO Move to StringUtils
+    private static Pair<String, String> formatElevation(Context context, double elevation, boolean metricUnits) {
+        String value = context.getString(R.string.value_unknown);
+        String unit = context.getString(metricUnits ? R.string.unit_meter : R.string.unit_feet);
+        if (!Double.isNaN(elevation) && !Double.isInfinite(elevation)) {
             if (metricUnits) {
                 value = StringUtils.formatDecimal(elevation);
-                unit = context.getString(R.string.unit_meter);
             } else {
-                elevation *= UnitConversions.M_TO_FT;
-                value = StringUtils.formatDecimal(elevation);
-                unit = context.getString(R.string.unit_feet);
+                value = StringUtils.formatDecimal(elevation * UnitConversions.M_TO_FT);
             }
         }
-        setItem(context, view, labelId, value, unit);
-    }
-
-    /**
-     * Sets a grade value.
-     *
-     * @param context the context
-     * @param view    the containing view
-     * @param labelId the label id
-     * @param grade   the grade in fraction between 0 and 1
-     */
-    private static void setGradeValue(Context context, View view, int labelId, double grade) {
-        String value = Double.isNaN(grade) || Double.isInfinite(grade) ? null : String.format(Locale.getDefault(), GRADE_FORMAT, Math.round(grade * 100));
-        setItem(context, view, labelId, value, GRADE_PERCENTAGE);
-    }
-
-    /**
-     * Sets a coordinate value.
-     *
-     * @param context    the context
-     * @param view       the containing view
-     * @param labelId    the label id
-     * @param coordinate the coordinate in degrees
-     */
-    private static void setCoordinateValue(Context context, View view, int labelId, double coordinate) {
-        String value = Double.isNaN(coordinate) || Double.isInfinite(coordinate) ? null : StringUtils.formatCoordinate(coordinate);
-        setItem(context, view, labelId, value, null);
-    }
-
-    /**
-     * Sets a heart rate value (sensor)
-     *
-     * @param context       the context
-     * @param viewValue     the containing view
-     * @param sensorDataSet the sensorDataSet
-     */
-    private static void setHeartRateData(Context context, View viewValue, View viewSensor, SensorDataSet sensorDataSet) {
-        String heartRate = context.getString(R.string.value_unknown);
-        String sensor = context.getString(R.string.value_unknown);
-        if (sensorDataSet != null && sensorDataSet.hasHeartRate() && sensorDataSet.isRecent(RemoteSensorManager.MAX_SENSOR_DATE_SET_AGE)) {
-            heartRate = StringUtils.formatDecimal(sensorDataSet.getHeartRate(), 0);
-            sensor = sensorDataSet.getSensorName();
-        }
-        setItem(context, viewValue, R.string.sensor_state_heart_rate, heartRate, context.getString(R.string.sensor_unit_beats_per_minute));
-        setItem(context, viewSensor, R.string.settings_sensor_bluetooth_sensor, sensor, null);
-    }
-
-    /**
-     * Sets an item.
-     *
-     * @param context the context
-     * @param view    the containing view
-     * @param labelId the label id. -1 to hide the label
-     * @param value   the value, can be null
-     * @param unit    the unit. Null to hide the unit
-     */
-    private static void setItem(Context context, View view, int labelId, CharSequence value, CharSequence unit) {
-        TextView labelTextView = view.findViewById(R.id.stats_label);
-        if (labelTextView != null) {
-            if (labelId == -1) {
-                labelTextView.setVisibility(View.GONE);
-            } else {
-                labelTextView.setVisibility(View.VISIBLE);
-                labelTextView.setText(labelId);
-            }
-        }
-
-        TextView valueTextView = view.findViewById(R.id.stats_value);
-        TextView unitTextView = view.findViewById(R.id.stats_unit);
-        if (valueTextView == null || unitTextView == null) {
-            return;
-        }
-
-        if (value == null) {
-            value = context.getString(R.string.value_unknown);
-            unitTextView.setVisibility(View.GONE);
-        } else {
-            if (unit == null) {
-                unitTextView.setVisibility(View.GONE);
-            } else {
-                unitTextView.setVisibility(View.VISIBLE);
-                unitTextView.setText(unit);
-            }
-        }
-        valueTextView.setText(value);
+        return new Pair<>(value, unit);
     }
 
     /**

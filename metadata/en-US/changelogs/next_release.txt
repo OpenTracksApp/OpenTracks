@@ -11,3 +11,4 @@ Developer:
 - Removed unused parcelable functionality
 - Major cleanup and reformatting
 - Do not use broadcast for app to widget communication
+- stats_content.xml is does not include other files
