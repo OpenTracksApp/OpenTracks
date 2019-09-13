@@ -45,6 +45,7 @@ public class TrackIconUtils {
     private static final String RUN = "RUN";
     private static final String SKI = "SKI";
     private static final String SNOW_BOARDING = "SNOW_BOARDING";
+    private static final String UNKNOWN = "UNKNOWN";
     private static final String WALK = "WALK";
 
     private static final int[] AIRPLANE_LIST = new int[]{R.string.activity_type_airplane, R.string.activity_type_commercial_airplane, R.string.activity_type_rc_airplane};
@@ -59,6 +60,7 @@ public class TrackIconUtils {
     private static final LinkedHashMap<String, Pair<Integer, Integer>> MAP = new LinkedHashMap<>();
 
     static {
+        //Reflects order in ChooseActivityTypeDialogFragment
         MAP.put(RUN, new Pair<>(R.string.activity_type_running, R.drawable.ic_activity_run_24dp));
         MAP.put(WALK, new Pair<>(R.string.activity_type_walking, R.drawable.ic_activity_walk_24dp));
         MAP.put(BIKE, new Pair<>(R.string.activity_type_biking, R.drawable.ic_activity_bike_24dp));
@@ -92,10 +94,10 @@ public class TrackIconUtils {
      */
     public static int getIconActivityType(String iconValue) {
         if (iconValue == null || iconValue.equals("")) {
-            return R.string.activity_type_walking;
+            return R.string.activity_type_unknown;
         }
         Pair<Integer, Integer> pair = MAP.get(iconValue);
-        return pair == null ? R.string.activity_type_walking : pair.first;
+        return pair == null ? R.string.activity_type_unknown : pair.first;
     }
 
     /**
@@ -113,7 +115,7 @@ public class TrackIconUtils {
      */
     public static String getIconValue(Context context, String activityType) {
         if (activityType == null || activityType.equals("")) {
-            return "";
+            return UNKNOWN;
         }
         if (inList(context, activityType, AIRPLANE_LIST)) {
             return AIRPLANE;
@@ -139,7 +141,7 @@ public class TrackIconUtils {
         if (inList(context, activityType, WALK_LIST)) {
             return WALK;
         }
-        return "";
+        return UNKNOWN;
     }
 
     public static void setIconSpinner(Spinner spinner, String iconValue) {
