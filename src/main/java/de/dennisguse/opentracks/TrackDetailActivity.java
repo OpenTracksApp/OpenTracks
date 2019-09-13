@@ -201,7 +201,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, bindChangedCallback);
         trackDataHub = TrackDataHub.newInstance(this);
 
-        tabHost = findViewById(android.R.id.tabhost);
+        tabHost = findViewById(R.id.tackdetail_tabhost);
         tabHost.setup();
 
         ViewPager viewPager = findViewById(R.id.pager);
