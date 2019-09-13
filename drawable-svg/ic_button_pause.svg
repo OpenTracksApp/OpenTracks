@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg xmlns:cc="http://creativecommons.org/ns#"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+    height="125"
+    id="svg2"
+    version="1.1"
+    viewBox="0 0 125 125"
+    width="125"
+    xmlns="http://www.w3.org/2000/svg"
+    inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+    sodipodi:docname="ic_button_pause.svg">
+    <defs id="defs6" />
+    <g
+        id="layer1"
+        inkscape:groupmode="layer"
+        inkscape:label="Layer 1">
+        <circle
+            style="fill:none;fill-opacity:1;stroke:#a31a1f;stroke-width:5.03185225;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+            cx="62.5"
+            cy="62.5"
+            id="path12"
+            r="59.984074" />
+        <rect
+            style="fill:#efefef;fill-opacity:0.87843137;stroke:none;stroke-width:4.82273912;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+            height="17.940611"
+            id="rect837"
+            width="5"
+            x="54"
+            y="54.059391" />
+        <rect
+            style="fill:#efefef;fill-opacity:0.87843137;stroke:none;stroke-width:4.82273865;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+            height="17.940611"
+            id="rect837-3"
+            width="5"
+            x="66"
+            y="54" />
+    </g>
+    <metadata id="metadata8">
+        <rdf:RDF>
+            <cc:Work rdf:about="">
+                <dc:format>image/svg+xml</dc:format>
+                <dc:title></dc:title>
+                <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+            </cc:Work>
+        </rdf:RDF>
+    </metadata>
+    <sodipodi:namedview
+        bordercolor="#666666"
+        borderopacity="1"
+        gridtolerance="10"
+        guidetolerance="10"
+        id="namedview4"
+        objecttolerance="10"
+        pagecolor="#ffffff"
+        showgrid="false"
+        inkscape:current-layer="layer1"
+        inkscape:cx="75.030293"
+        inkscape:cy="72.881196"
+        inkscape:pageopacity="0"
+        inkscape:pageshadow="2"
+        inkscape:window-height="1152"
+        inkscape:window-maximized="0"
+        inkscape:window-width="2048"
+        inkscape:window-x="0"
+        inkscape:window-y="0"
+        inkscape:zoom="5.3400704" />
+</svg>
