@@ -191,7 +191,7 @@ public class ChartView extends View {
         markerPaint.setColor(context.getResources().getColor(android.R.color.darker_gray));
         markerPaint.setAntiAlias(false);
 
-        pointer = context.getResources().getDrawable(R.drawable.ic_logo);
+        pointer = context.getResources().getDrawable(R.drawable.ic_logo_color_24dp);
         pointer.setBounds(0, 0, pointer.getIntrinsicWidth(), pointer.getIntrinsicHeight());
 
         Drawable statisticsMarker = getResources().getDrawable(R.drawable.ic_marker_yellow_pushpin);

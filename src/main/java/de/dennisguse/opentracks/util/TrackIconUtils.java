@@ -79,10 +79,10 @@ public class TrackIconUtils {
      */
     public static int getIconDrawable(String iconValue) {
         if (iconValue == null || iconValue.equals("")) {
-            return R.drawable.ic_track_generic;
+            return R.drawable.ic_logo_24dp;
         }
         Pair<Integer, Integer> pair = MAP.get(iconValue);
-        return pair == null ? R.drawable.ic_track_generic : pair.second;
+        return pair == null ? R.drawable.ic_logo_24dp : pair.second;
     }
 
     /**

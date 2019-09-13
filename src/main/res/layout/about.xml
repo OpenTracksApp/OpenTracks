@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="239dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_logo" />
+        android:src="@drawable/ic_logo_color_24dp" />
 
     <TextView
         style="@style/TextLarge"

@@ -425,7 +425,7 @@ public class TrackRecordingService extends Service {
                 .setContentText(getString(messageId))
                 .setContentTitle(getString(R.string.app_name))
                 .setOngoing(true)
-                .setSmallIcon(R.drawable.ic_logo)
+                .setSmallIcon(R.drawable.ic_logo_color_24dp)
                 .setCategory(Notification.CATEGORY_SERVICE)
                 .setWhen(System.currentTimeMillis());
         startForeground(1, builder.build());
