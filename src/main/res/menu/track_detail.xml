@@ -55,7 +55,6 @@ limitations under the License.
         android:title="@string/menu_delete" />
     <item
         android:id="@+id/track_detail_voice_frequency"
-        android:icon="@drawable/ic_menu_voice_frequency"
         android:orderInCategory="11"
         android:title="@string/menu_voice_frequency" />
     <item
