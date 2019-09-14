@@ -960,8 +960,7 @@ public class ContentProviderUtilsImpl implements ContentProviderUtils {
 
     @Override
     public Uri insertTrackPoint(Location location, long trackId) {
-        return contentResolver.insert(
-                TrackPointsColumns.CONTENT_URI, createContentValues(location, trackId));
+        return contentResolver.insert(TrackPointsColumns.CONTENT_URI, createContentValues(location, trackId));
     }
 
     /**
@@ -1071,10 +1070,8 @@ public class ContentProviderUtilsImpl implements ContentProviderUtils {
      * @param selectionArgs the selection arguments
      * @param sortOrder     the sort order
      */
-    private Cursor getTrackPointCursor(
-            String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        return contentResolver.query(
-                TrackPointsColumns.CONTENT_URI, projection, selection, selectionArgs, sortOrder);
+    private Cursor getTrackPointCursor(String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        return contentResolver.query(TrackPointsColumns.CONTENT_URI, projection, selection, selectionArgs, sortOrder);
     }
 
     /**

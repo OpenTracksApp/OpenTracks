@@ -196,7 +196,7 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
             @Override
             public void writeDataToPipe(@NonNull ParcelFileDescriptor output, @NonNull Uri uri, @NonNull String mimeType, @Nullable Bundle opts, @Nullable String args) {
                 try (FileOutputStream fileOutputStream = new FileOutputStream(output.getFileDescriptor())) {
-                    trackExporter.writeTrack(fileOutputStream);
+                    trackExporter.writeTrack(getContext(), fileOutputStream);
                 } catch (IOException e) {
                     Log.w(TAG, "there occurred an error while sharing a file: " + e);
                 }

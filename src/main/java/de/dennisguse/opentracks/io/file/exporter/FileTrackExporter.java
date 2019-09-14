@@ -16,9 +16,12 @@
 
 package de.dennisguse.opentracks.io.file.exporter;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.location.Location;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import java.io.OutputStream;
 
@@ -60,7 +63,7 @@ public class FileTrackExporter implements TrackExporter {
     }
 
     @Override
-    public boolean writeTrack(OutputStream outputStream) {
+    public boolean writeTrack(Context context, @NonNull OutputStream outputStream) {
         try {
             trackWriter.prepare(outputStream);
             trackWriter.writeHeader(tracks);
@@ -76,6 +79,7 @@ public class FileTrackExporter implements TrackExporter {
             trackWriter.writeEndTracks();
             trackWriter.writeFooter();
             trackWriter.close();
+
             return true;
         } catch (InterruptedException e) {
             Log.e(TAG, "Thread interrupted", e);

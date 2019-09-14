@@ -16,13 +16,17 @@
 
 package de.dennisguse.opentracks.io.file.exporter;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import java.io.File;
-import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -30,6 +34,7 @@ import java.util.zip.ZipOutputStream;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.content.Waypoint;
+import de.dennisguse.opentracks.util.FileUtils;
 
 /**
  * KMZ track exporter.
@@ -61,7 +66,7 @@ public class KmzTrackExporter implements TrackExporter {
     }
 
     @Override
-    public boolean writeTrack(OutputStream outputStream) {
+    public boolean writeTrack(@NonNull Context context, @NonNull OutputStream outputStream) {
         ZipOutputStream zipOutputStream = null;
         try {
             zipOutputStream = new ZipOutputStream(outputStream);
@@ -70,7 +75,7 @@ public class KmzTrackExporter implements TrackExporter {
             ZipEntry zipEntry = new ZipEntry(KMZ_KML_FILE);
             zipOutputStream.putNextEntry(zipEntry);
 
-            boolean success = fileTrackExporter.writeTrack(zipOutputStream);
+            boolean success = fileTrackExporter.writeTrack(context, zipOutputStream);
             zipOutputStream.closeEntry();
             if (!success) {
                 Log.e(TAG, "Unable to write kml in kmz");
@@ -78,7 +83,7 @@ public class KmzTrackExporter implements TrackExporter {
             }
 
             // Add photos
-            addImages(zipOutputStream);
+            addImages(context, zipOutputStream);
             return true;
         } catch (InterruptedException | IOException e) {
             Log.e(TAG, "Unable to write track", e);
@@ -94,7 +99,7 @@ public class KmzTrackExporter implements TrackExporter {
         }
     }
 
-    private void addImages(ZipOutputStream zipOutputStream) throws InterruptedException, IOException {
+    private void addImages(Context context, ZipOutputStream zipOutputStream) throws InterruptedException, IOException {
         for (Track track : tracks) {
             try (Cursor cursor = contentProviderUtils.getWaypointCursor(track.getId(), -1L, -1)) {
                 if (cursor != null && cursor.moveToFirst()) {
@@ -108,7 +113,7 @@ public class KmzTrackExporter implements TrackExporter {
                         }
                         Waypoint waypoint = contentProviderUtils.createWaypoint(cursor);
                         if (waypoint.hasPhoto()) {
-                            addImage(zipOutputStream, waypoint.getPhotoUrl());
+                            addImage(context, zipOutputStream, waypoint.getPhotoUrl());
                         }
                     }
                 }
@@ -116,28 +121,29 @@ public class KmzTrackExporter implements TrackExporter {
         }
     }
 
-    private void addImage(ZipOutputStream zipOutputStream, String photoUrl) throws IOException {
+    private void addImage(Context context, ZipOutputStream zipOutputStream, String photoUrl) throws IOException {
         Uri uri = Uri.parse(photoUrl);
-        File file = new File(uri.getPath());
-        if (!file.exists()) {
-            Log.e(TAG, "file not found " + photoUrl);
-            return;
+
+        try (InputStream inputStream = context.getContentResolver().openInputStream(uri)) {
+            ZipEntry zipEntry = new ZipEntry(KMZ_IMAGES_DIR + File.separatorChar + FileUtils.sanitizeFileName(uri.getLastPathSegment()));
+            zipOutputStream.putNextEntry(zipEntry);
+
+            if (inputStream == null) throw new FileNotFoundException();
+
+            readToOutputStream(inputStream, zipOutputStream);
+            zipOutputStream.closeEntry();
+
+            Log.i(TAG, "added an image to zip");
+        } catch (FileNotFoundException e) {
+            Log.e(TAG, "could not get image via FileProvider via uri " + uri);
         }
-
-        ZipEntry zipEntry = new ZipEntry(KMZ_IMAGES_DIR + File.separatorChar + uri.getLastPathSegment());
-        zipOutputStream.putNextEntry(zipEntry);
-
-        readFromFile(zipOutputStream, uri);
-        zipOutputStream.closeEntry();
     }
 
-    private void readFromFile(ZipOutputStream zipOutputStream, Uri uri) throws IOException {
-        try (FileInputStream fileInputStream = new FileInputStream(new File(uri.getPath()))) {
-            byte[] buffer = new byte[BUFFER_SIZE];
-            int byteCount;
-            while ((byteCount = fileInputStream.read(buffer)) != -1) {
-                zipOutputStream.write(buffer, 0, byteCount);
-            }
+    private void readToOutputStream(InputStream inputStream, OutputStream outputStream) throws IOException {
+        byte[] buffer = new byte[BUFFER_SIZE];
+        int byteCount;
+        while ((byteCount = inputStream.read(buffer)) != -1) {
+            outputStream.write(buffer, 0, byteCount);
         }
     }
 }

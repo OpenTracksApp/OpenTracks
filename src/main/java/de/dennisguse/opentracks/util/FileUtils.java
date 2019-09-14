@@ -204,7 +204,7 @@ public class FileUtils {
      *
      * @param name name
      */
-    static String sanitizeFileName(String name) {
+    public static String sanitizeFileName(String name) {
         StringBuilder builder = new StringBuilder(name.length());
         for (int i = 0; i < name.length(); i++) {
             int codePoint = name.codePointAt(i);

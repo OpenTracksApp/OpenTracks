@@ -163,7 +163,7 @@ public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         File file = new File(directory, fileName);
 
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
-            if (trackExporter.writeTrack(fileOutputStream)) {
+            if (trackExporter.writeTrack(context, fileOutputStream)) {
                 return true;
             } else {
                 if (!file.delete()) {
