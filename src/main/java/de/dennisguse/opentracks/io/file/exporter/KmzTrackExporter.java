@@ -103,11 +103,7 @@ public class KmzTrackExporter implements TrackExporter {
         for (Track track : tracks) {
             try (Cursor cursor = contentProviderUtils.getWaypointCursor(track.getId(), -1L, -1)) {
                 if (cursor != null && cursor.moveToFirst()) {
-                    /*
-                     * Yes, this will skip the first waypoint and that is intentional as
-                     * the first waypoint holds the stats for the track.
-                     */
-                    while (cursor.moveToNext()) {
+                    for (int i = 0; i < cursor.getCount(); i++) {
                         if (Thread.interrupted()) {
                             throw new InterruptedException();
                         }
@@ -115,6 +111,8 @@ public class KmzTrackExporter implements TrackExporter {
                         if (waypoint.hasPhoto()) {
                             addImage(context, zipOutputStream, waypoint.getPhotoUrl());
                         }
+
+                        cursor.moveToNext();
                     }
                 }
             }

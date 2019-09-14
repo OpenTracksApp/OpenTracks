@@ -99,7 +99,7 @@ public class FileTrackExporter implements TrackExporter {
         try (Cursor cursor = contentProviderUtils.getWaypointCursor(track.getId(), -1L, ContentProviderUtils.MAX_LOADED_WAYPOINTS_POINTS)) {
             if (cursor != null && cursor.moveToFirst()) {
                 // Intentionally skip first waypoint (contains statistics).
-                while (cursor.moveToNext()) {
+                for (int i = 0; i < cursor.getCount(); i++) {
                     if (Thread.interrupted()) {
                         throw new InterruptedException();
                     }
@@ -108,7 +108,11 @@ public class FileTrackExporter implements TrackExporter {
                         hasWaypoints = true;
                     }
                     Waypoint waypoint = contentProviderUtils.createWaypoint(cursor);
-                    trackWriter.writeWaypoint(waypoint);
+                    if (!waypoint.isTripStatistics()) {
+                        trackWriter.writeWaypoint(waypoint);
+                    }
+
+                    cursor.moveToNext();
                 }
             }
         }

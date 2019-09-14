@@ -159,6 +159,10 @@ public final class Waypoint {
         this.location = location;
     }
 
+    public boolean isTripStatistics() {
+        return tripStatistics != null;
+    }
+
     public TripStatistics getTripStatistics() {
         return tripStatistics;
     }

@@ -20,12 +20,14 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.Waypoint;
@@ -35,6 +37,8 @@ import de.dennisguse.opentracks.fragments.MarkerDetailFragment;
 /**
  * An activity to display marker detail info.
  *
+ * Allows to swipe to the next and previous marker.
+ *
  * @author Leif Hendrik Wilden
  */
 public class MarkerDetailActivity extends AbstractActivity implements DeleteMarkerCaller {
@@ -43,7 +47,7 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
 
     private static final String TAG = MarkerDetailActivity.class.getSimpleName();
 
-    private ArrayList<Long> markerIds;
+    private List<Long> markerIds;
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -64,17 +68,17 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
 
         try (Cursor cursor = contentProviderUtils.getWaypointCursor(waypoint.getTrackId(), -1L, -1)) {
             if (cursor != null && cursor.moveToFirst()) {
-                /*
-                 * Yes, this will skip the first waypoint and that is intentional as the
-                 * first waypoint holds the stats for the track.
-                 */
-                while (cursor.moveToNext()) {
-                    Waypoint current = contentProviderUtils.createWaypoint(cursor);
+                for (int i = 0; i < cursor.getCount(); i++) {
+                    Waypoint currentMarker = contentProviderUtils.createWaypoint(cursor);
 
-                    markerIds.add(current.getId());
-                    if (current.getId() == markerId) {
-                        markerIndex = markerIds.size() - 1;
+                    if (!currentMarker.isTripStatistics()) {
+                        markerIds.add(currentMarker.getId());
+                        if (currentMarker.getId() == markerId) {
+                            markerIndex = markerIds.size() - 1;
+                        }
                     }
+
+                    cursor.moveToNext();
                 }
             }
         }
@@ -113,6 +117,7 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
         }
 
         @Override
+        @NonNull
         public Fragment getItem(int position) {
             String title = getString(R.string.marker_title, position + 1, getCount());
             return MarkerDetailFragment.newInstance(markerIds.get(position), title);
