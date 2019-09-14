@@ -23,11 +23,11 @@ package de.dennisguse.opentracks.util;
 public class UnitConversions {
 
     // multiplication factor to convert seconds to milliseconds
-    public static final double S_TO_MS = 1000.0;
+    public static final long S_TO_MS = 1000;
 
     // Time
     // 1 second in milliseconds
-    public static final long ONE_SECOND = (long) UnitConversions.S_TO_MS;
+    public static final long ONE_SECOND = UnitConversions.S_TO_MS;
     // multiplication factor to convert milliseconds to seconds
     public static final double MS_TO_S = 1 / S_TO_MS;
     // multiplication factor to convert minutes to seconds

@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -36,7 +37,7 @@ import de.dennisguse.opentracks.fragments.MarkerDetailFragment;
 
 /**
  * An activity to display marker detail info.
- *
+ * <p>
  * Allows to swipe to the next and previous marker.
  *
  * @author Leif Hendrik Wilden
@@ -83,11 +84,25 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
             }
         }
 
-        ViewPager viewPager = findViewById(R.id.maker_detail_activity_view_pager);
-        viewPager.setAdapter(new MarkerDetailPagerAdapter(getSupportFragmentManager()));
-        if (markerIndex != -1) {
-            viewPager.setCurrentItem(markerIndex);
-        }
+        final ViewPager viewPager = findViewById(R.id.maker_detail_activity_view_pager);
+        final MarkerDetailPagerAdapter markerAdapter = new MarkerDetailPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(markerAdapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                setTitle(markerAdapter.getPageTitle(position));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
+        viewPager.setCurrentItem(markerIndex == -1 ? 0 : markerIndex);
     }
 
     @Override
@@ -119,8 +134,13 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
         @Override
         @NonNull
         public Fragment getItem(int position) {
-            String title = getString(R.string.marker_title, position + 1, getCount());
-            return MarkerDetailFragment.newInstance(markerIds.get(position), title);
+            return MarkerDetailFragment.newInstance(markerIds.get(position));
+        }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return getString(R.string.marker_title, position + 1, getCount());
         }
 
         @Override

@@ -48,6 +48,7 @@ import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.ListItemUtils;
 import de.dennisguse.opentracks.util.StatsUtils;
 import de.dennisguse.opentracks.util.StringUtils;
+import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
  * A fragment to show marker details.
@@ -58,8 +59,7 @@ public class MarkerDetailFragment extends Fragment {
 
     private static final String TAG = MarkerDetailFragment.class.getSimpleName();
     private static final String KEY_MARKER_ID = "markerId";
-    private static final String KEY_TITLE = "title";
-    private static final long HIDE_TEXT_DELAY = 4000L; // 4 seconds
+    private static final long HIDE_TEXT_DELAY = 4 * UnitConversions.ONE_SECOND;
     private ContentProviderUtils contentProviderUtils;
     private Handler handler;
     private ImageView photo;
@@ -91,10 +91,9 @@ public class MarkerDetailFragment extends Fragment {
         }
     };
 
-    public static MarkerDetailFragment newInstance(long markerId, String title) {
+    public static MarkerDetailFragment newInstance(long markerId) {
         Bundle bundle = new Bundle();
         bundle.putLong(KEY_MARKER_ID, markerId);
-        bundle.putString(KEY_TITLE, title);
 
         MarkerDetailFragment fragment = new MarkerDetailFragment();
         fragment.setArguments(bundle);
@@ -119,8 +118,6 @@ public class MarkerDetailFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.marker_detail_fragment, container, false);
-
-        getActivity().setTitle(getArguments().getString(KEY_TITLE));
 
         photo = view.findViewById(R.id.marker_detail_waypoint_photo);
         textGradient = view.findViewById(R.id.marker_detail_waypoint_text_gradient);
