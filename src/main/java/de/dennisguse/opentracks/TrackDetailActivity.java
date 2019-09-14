@@ -207,10 +207,10 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
         ViewPager viewPager = findViewById(R.id.pager);
         TabsAdapter tabsAdapter = new TabsAdapter(this, tabHost, viewPager);
 
-        TabSpec statsTabSpec = tabHost.newTabSpec(StatsFragment.STATS_FRAGMENT_TAG).setIndicator(getString(R.string.track_detail_stats_tab), getResources().getDrawable(R.drawable.ic_tab_stats));
+        TabSpec statsTabSpec = tabHost.newTabSpec(StatsFragment.STATS_FRAGMENT_TAG).setIndicator(getString(R.string.track_detail_stats_tab));
         tabsAdapter.addTab(statsTabSpec, StatsFragment.class, null);
 
-        TabSpec chartTabSpec = tabHost.newTabSpec(ChartFragment.CHART_FRAGMENT_TAG).setIndicator(getString(R.string.track_detail_chart_tab), getResources().getDrawable(R.drawable.ic_tab_chart));
+        TabSpec chartTabSpec = tabHost.newTabSpec(ChartFragment.CHART_FRAGMENT_TAG).setIndicator(getString(R.string.track_detail_chart_tab));
         tabsAdapter.addTab(chartTabSpec, ChartFragment.class, null);
 
         if (savedInstanceState != null) {
