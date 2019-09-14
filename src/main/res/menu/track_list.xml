@@ -19,6 +19,7 @@ limitations under the License.
         android:actionViewClass="android.widget.SearchView"
         android:showAsAction="ifRoom"
         android:title="@string/menu_search" />
+    <!-- Icon and title is overwritten by TrackListActivity -->
     <item
         android:id="@+id/track_list_start_gps"
         android:icon="@drawable/ic_gps_off_24dp"

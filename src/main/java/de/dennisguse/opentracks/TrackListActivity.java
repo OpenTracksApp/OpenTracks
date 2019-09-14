@@ -528,7 +528,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             startGpsMenuItem.setVisible(!isRecording);
             if (!isRecording) {
                 startGpsMenuItem.setTitle(isGpsStarted ? R.string.menu_stop_gps : R.string.menu_start_gps);
-                startGpsMenuItem.setIcon(isGpsStarted ? R.drawable.ic_gps_off_24dp : R.drawable.ic_gps_fixed_24dp);
+                startGpsMenuItem.setIcon(isGpsStarted ? R.drawable.ic_gps_fixed_24dp : R.drawable.ic_gps_off_24dp);
             }
         }
         if (aggregatedStatisticsMenuItem != null) {
