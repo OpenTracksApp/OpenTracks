@@ -48,6 +48,8 @@ public class TrackIconUtils {
     private static final String UNKNOWN = "UNKNOWN";
     private static final String WALK = "WALK";
 
+    private static final int ACTIVITY_UNKNOWN_LOGO = R.drawable.ic_logo_24dp;
+
     private static final int[] AIRPLANE_LIST = new int[]{R.string.activity_type_airplane, R.string.activity_type_commercial_airplane, R.string.activity_type_rc_airplane};
     private static final int[] BIKE_LIST = new int[]{R.string.activity_type_biking, R.string.activity_type_cycling, R.string.activity_type_dirt_bike, R.string.activity_type_motor_bike, R.string.activity_type_mountain_biking, R.string.activity_type_road_biking, R.string.activity_type_track_cycling};
     private static final int[] BOAT_LIST = new int[]{R.string.activity_type_boat, R.string.activity_type_ferry, R.string.activity_type_motor_boating, R.string.activity_type_rc_boat};
@@ -61,12 +63,14 @@ public class TrackIconUtils {
 
     static {
         //Reflects order in ChooseActivityTypeDialogFragment
+        MAP.put(UNKNOWN, new Pair<>(R.string.activity_type_unknown, ACTIVITY_UNKNOWN_LOGO));
         MAP.put(RUN, new Pair<>(R.string.activity_type_running, R.drawable.ic_activity_run_24dp));
         MAP.put(WALK, new Pair<>(R.string.activity_type_walking, R.drawable.ic_activity_walk_24dp));
         MAP.put(BIKE, new Pair<>(R.string.activity_type_biking, R.drawable.ic_activity_bike_24dp));
         MAP.put(DRIVE, new Pair<>(R.string.activity_type_driving, R.drawable.ic_activity_drive_24dp));
-        MAP.put(SKI, new Pair<>(R.string.activity_type_skiing, R.drawable.ic_track_ski));
-        MAP.put(SNOW_BOARDING, new Pair<>(R.string.activity_type_snow_boarding, R.drawable.ic_track_snow_boarding));
+        // TODO Need new icons
+//        MAP.put(SKI, new Pair<>(R.string.activity_type_skiing, R.drawable.ic_track_ski));
+//        MAP.put(SNOW_BOARDING, new Pair<>(R.string.activity_type_snow_boarding, R.drawable.ic_track_snow_boarding));
         MAP.put(AIRPLANE, new Pair<>(R.string.activity_type_airplane, R.drawable.ic_activity_flight_24dp));
         MAP.put(BOAT, new Pair<>(R.string.activity_type_boat, R.drawable.ic_activity_boat_24dp));
     }
@@ -81,10 +85,10 @@ public class TrackIconUtils {
      */
     public static int getIconDrawable(String iconValue) {
         if (iconValue == null || iconValue.equals("")) {
-            return R.drawable.ic_logo_24dp;
+            return ACTIVITY_UNKNOWN_LOGO;
         }
         Pair<Integer, Integer> pair = MAP.get(iconValue);
-        return pair == null ? R.drawable.ic_logo_24dp : pair.second;
+        return pair == null ? ACTIVITY_UNKNOWN_LOGO : pair.second;
     }
 
     /**
@@ -132,12 +136,12 @@ public class TrackIconUtils {
         if (inList(context, activityType, RUN_LIST)) {
             return RUN;
         }
-        if (inList(context, activityType, SKI_LIST)) {
-            return SKI;
-        }
-        if (inList(context, activityType, SNOW_BOARDING_LIST)) {
-            return SNOW_BOARDING;
-        }
+//        if (inList(context, activityType, SKI_LIST)) {
+//            return SKI;
+//        }
+//        if (inList(context, activityType, SNOW_BOARDING_LIST)) {
+//            return SNOW_BOARDING;
+//        }
         if (inList(context, activityType, WALK_LIST)) {
             return WALK;
         }

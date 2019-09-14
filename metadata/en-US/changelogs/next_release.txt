@@ -3,6 +3,7 @@
 Changes:
 - Removed Widget
 - Introduced material design icons
+- Removed snowboarding and skiing (need new icons)
 
 Bugfix:
 - Fixed search functionality
