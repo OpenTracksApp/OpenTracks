@@ -56,6 +56,10 @@ public enum TrackFileFormat {
             return new KmlTrackWriter(context, multiple, false, false, false);
         }
 
+        public TrackExporter newTrackExporter(Context context, Track[] tracks, TrackExporterListener trackExporterListener) {
+            return newKmzTrackExporter(context, this.newTrackWriter(context, tracks.length > 1), tracks, trackExporterListener);
+        }
+
         @Override
         public String getMimeType() {
             return MIME_KMZ;
