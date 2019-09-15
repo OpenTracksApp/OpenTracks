@@ -44,21 +44,28 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
 
     private static final int URI_GPX = 0;
     private static final int URI_KML_ONLY = 1;
-    private static final int URI_KML_WITH_SENSORDATA = 2;
-    private static final int URI_KMZ_ONLY_TRACK = 3;
-    private static final int URI_KMZ_WITH_SENSORDATA = 4;
-    private static final int URI_KMZ_WITH_SENSORDATA_AND_PICTURES = 5;
+    private static final int URI_KML_WITH_TRACKDETAIL = 2;
+    private static final int URI_KML_WITH_TRACKDETAIL_SENSORDATA = 3;
+
+    private static final int URI_KMZ_ONLY_TRACK = 4;
+    private static final int URI_KMZ_WITH_TRACKDETAIL = 5;
+    private static final int URI_KMZ_WITH_TRACKDETAIL_AND_SENSORDATA = 6;
+    private static final int URI_KMZ_WITH_TRACKDETAIL_SENSORDATA_AND_PICTURES = 7;
 
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     private static final String TRACKID_DELIMITER = "_";
 
     static {
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KML_ONLY_TRACK.getName() + "/*", URI_KML_ONLY);
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KML_WITH_SENSORDATA.getName() + "/*", URI_KML_WITH_SENSORDATA);
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KMZ_ONLY_TRACK.getName() + "/*", URI_KMZ_ONLY_TRACK);
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KMZ_WITH_SENSORDATA.getName() + "/*", URI_KMZ_WITH_SENSORDATA);
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KMZ_WITH_SENSORDATA_AND_PICTURES.getName() + "/*", URI_KMZ_WITH_SENSORDATA_AND_PICTURES);
         uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.GPX.getName() + "/*", URI_GPX);
+
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KML_ONLY_TRACK.getName() + "/*", URI_KML_ONLY);
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KML_WITH_TRACKDETAIL.getName() + "/*", URI_KML_WITH_TRACKDETAIL);
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.getName() + "/*", URI_KML_WITH_TRACKDETAIL_SENSORDATA);
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KMZ_ONLY_TRACK.getName() + "/*", URI_KMZ_ONLY_TRACK);
+
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KMZ_WITH_TRACKDETAIL.getName() + "/*", URI_KMZ_WITH_TRACKDETAIL);
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA.getName() + "/*", URI_KMZ_WITH_TRACKDETAIL_AND_SENSORDATA);
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES.getName() + "/*", URI_KMZ_WITH_TRACKDETAIL_SENSORDATA_AND_PICTURES);
     }
 
     public static Pair<Uri, String> createURI(long[] trackIds, @NonNull TrackFileFormat trackFileFormat) {
@@ -118,16 +125,25 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
         switch (uriMatcher.match(uri)) {
             case URI_GPX:
                 return TrackFileFormat.GPX;
+
             case URI_KML_ONLY:
                 return TrackFileFormat.KML_ONLY_TRACK;
-            case URI_KML_WITH_SENSORDATA:
-                return TrackFileFormat.KML_WITH_SENSORDATA;
-            case URI_KMZ_WITH_SENSORDATA:
-                return TrackFileFormat.KMZ_WITH_SENSORDATA;
-            case URI_KMZ_WITH_SENSORDATA_AND_PICTURES:
-                return TrackFileFormat.KMZ_WITH_SENSORDATA_AND_PICTURES;
-            default: //URI_KMZ_ONLY_TRACK
+            case URI_KML_WITH_TRACKDETAIL:
+                return TrackFileFormat.KML_WITH_TRACKDETAIL;
+            case URI_KML_WITH_TRACKDETAIL_SENSORDATA:
+                return TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA;
+
+            case URI_KMZ_ONLY_TRACK:
                 return TrackFileFormat.KMZ_ONLY_TRACK;
+            case URI_KMZ_WITH_TRACKDETAIL:
+                return TrackFileFormat.KMZ_WITH_TRACKDETAIL;
+            case URI_KMZ_WITH_TRACKDETAIL_AND_SENSORDATA:
+                return TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA;
+            case URI_KMZ_WITH_TRACKDETAIL_SENSORDATA_AND_PICTURES:
+                return TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES;
+
+            default:
+                throw new RuntimeException("Could not derive TrackFileFormat from Uri " + uri);
         }
     }
 

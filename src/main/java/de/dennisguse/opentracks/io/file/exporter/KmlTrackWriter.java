@@ -23,6 +23,7 @@ import android.net.Uri;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
@@ -60,16 +61,16 @@ public class KmlTrackWriter implements TrackWriter {
 
     private final Context context;
     private final boolean hasMultipleTracks;
-    private final boolean exportPictures;
-    private final boolean exportTrackDetails;
+    private final boolean exportPhotos;
+    private final boolean exportTrackDetail;
     private final boolean exportSensorData;
     private final DescriptionGenerator descriptionGenerator;
     private final ContentProviderUtils contentProviderUtils;
 
     private PrintWriter printWriter;
-    private ArrayList<Float> powerList = new ArrayList<>();
-    private ArrayList<Float> cadenceList = new ArrayList<>();
-    private ArrayList<Float> heartRateList = new ArrayList<>();
+    private List<Float> powerList = new ArrayList<>();
+    private List<Float> cadenceList = new ArrayList<>();
+    private List<Float> heartRateList = new ArrayList<>();
     private boolean hasPower;
     private boolean hasCadence;
     private boolean hasHeartRate;
@@ -79,16 +80,16 @@ public class KmlTrackWriter implements TrackWriter {
     /**
      * @param context            the context
      * @param hasMultipleTracks  should encode multiple tracks into one file?
-     * @param exportPictures     should pictures be exported (if true: exports to KMZ)?
-     * @param exportTrackDetails should detailed information about the track be exported (e.g., title, description, waypoints, timing)?
+     * @param exportTrackDetail should detailed information about the track be exported (e.g., title, description, waypoints, timing)?
      * @param exportSensorData   should {@link SensorDataSet} be exported?
+     * @param exportPhotos       should pictures be exported (if true: exports to KMZ)?
      */
-    public KmlTrackWriter(Context context, boolean hasMultipleTracks, boolean exportTrackDetails, boolean exportSensorData, boolean exportPictures) {
+    public KmlTrackWriter(Context context, boolean hasMultipleTracks, boolean exportTrackDetail, boolean exportSensorData, boolean exportPhotos) {
         this.context = context;
         this.hasMultipleTracks = hasMultipleTracks;
-        this.exportTrackDetails = exportTrackDetails;
+        this.exportTrackDetail = exportTrackDetail;
         this.exportSensorData = exportSensorData;
-        this.exportPictures = exportPictures;
+        this.exportPhotos = exportPhotos;
         this.descriptionGenerator = new DescriptionGeneratorImpl(context);
         this.contentProviderUtils = ContentProviderUtils.Factory.get(context);
     }
@@ -117,12 +118,12 @@ public class KmlTrackWriter implements TrackWriter {
             printWriter.println("<open>1</open>");
             printWriter.println("<visibility>1</visibility>");
 
-            if (exportTrackDetails) {
+            if (exportTrackDetail) {
                 Track track = tracks[0];
                 printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
+                printWriter.println("<atom:author><atom:name>" + StringUtils.formatCData(context.getString(R.string.app_name)) + "</atom:name></atom:author>");
             }
 
-            printWriter.println("<atom:author><atom:name>" + StringUtils.formatCData(context.getString(R.string.app_name)) + "</atom:name></atom:author>");
             writeTrackStyle();
             writePlacemarkerStyle(START_STYLE, START_ICON, 32, 1);
             writePlacemarkerStyle(END_STYLE, END_ICON, 32, 1);
@@ -151,7 +152,7 @@ public class KmlTrackWriter implements TrackWriter {
     public void writeBeginWaypoints(Track track) {
         if (printWriter != null) {
             printWriter.println("<Folder>");
-            if (exportTrackDetails) {
+            if (exportTrackDetail) {
                 printWriter.println("<name>" + StringUtils.formatCData(context.getString(R.string.track_markers, track.getName())) + "</name>");
             }
             printWriter.println("<open>1</open>");
@@ -167,9 +168,10 @@ public class KmlTrackWriter implements TrackWriter {
 
     @Override
     public void writeWaypoint(Waypoint waypoint) {
-        if (printWriter != null && exportTrackDetails) {
+        if (printWriter != null && exportTrackDetail) {
             String styleName = waypoint.getType() == WaypointType.STATISTICS ? STATISTICS_STYLE : WAYPOINT_STYLE;
-            if (waypoint.hasPhoto()) {
+
+            if (waypoint.hasPhoto() && exportPhotos) {
                 float heading = getHeading(waypoint.getTrackId(), waypoint.getLocation());
                 writePhotoOverlay(waypoint.getName(), waypoint.getCategory(), waypoint.getDescription(), styleName, waypoint.getLocation(), waypoint.getPhotoUrl(), heading);
             } else {
@@ -201,8 +203,12 @@ public class KmlTrackWriter implements TrackWriter {
             String name = context.getString(R.string.marker_label_start, track.getName());
             writePlacemark(name, "", "", START_STYLE, startLocation);
             printWriter.println("<Placemark>");
-            printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
-            printWriter.println("<description>" + StringUtils.formatCData(track.getDescription()) + "</description>");
+
+            if (exportTrackDetail) {
+                printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
+                printWriter.println("<description>" + StringUtils.formatCData(track.getDescription()) + "</description>");
+            }
+
             printWriter.println("<styleUrl>#" + TRACK_STYLE + "</styleUrl>");
             writeCategory(track.getCategory());
             printWriter.println("<gx:MultiTrack>");
@@ -216,9 +222,12 @@ public class KmlTrackWriter implements TrackWriter {
         if (printWriter != null) {
             printWriter.println("</gx:MultiTrack>");
             printWriter.println("</Placemark>");
-            String name = context.getString(R.string.marker_label_end, track.getName());
-            String description = descriptionGenerator.generateTrackDescription(track, false);
-            writePlacemark(name, "", description, END_STYLE, endLocation);
+
+            if (exportTrackDetail) {
+                String name = context.getString(R.string.marker_label_end, track.getName());
+                String description = descriptionGenerator.generateTrackDescription(track, false);
+                writePlacemark(name, "", description, END_STYLE, endLocation);
+            }
         }
     }
 
@@ -260,7 +269,7 @@ public class KmlTrackWriter implements TrackWriter {
     @Override
     public void writeLocation(Location location) {
         if (printWriter != null) {
-            if (exportTrackDetails) {
+            if (exportTrackDetail) {
                 printWriter.println("<when>" + getTime(location) + "</when>");
             }
 
@@ -289,7 +298,7 @@ public class KmlTrackWriter implements TrackWriter {
      * @param list a list of sensor data
      * @param name the name of the sensor data
      */
-    private void writeSensorData(ArrayList<Float> list, String name) {
+    private void writeSensorData(List<Float> list, String name) {
         printWriter.println("<gx:SimpleArrayData name=\"" + name + "\">");
         for (int i = 0; i < list.size(); i++) {
             printWriter.println("<gx:value>" + list.get(i) + "</gx:value>");
@@ -307,7 +316,7 @@ public class KmlTrackWriter implements TrackWriter {
      * @param location    the location
      */
     private void writePlacemark(String name, String category, String description, String styleName, Location location) {
-        if (location != null && exportTrackDetails) {
+        if (location != null && exportTrackDetail) {
             printWriter.println("<Placemark>");
             printWriter.println("<name>" + StringUtils.formatCData(name) + "</name>");
             printWriter.println("<description>" + StringUtils.formatCData(description) + "</description>");
@@ -333,7 +342,7 @@ public class KmlTrackWriter implements TrackWriter {
      * @param heading     the heading
      */
     private void writePhotoOverlay(String name, String category, String description, String styleName, Location location, String photoUrl, float heading) {
-        if (location != null && exportTrackDetails) {
+        if (location != null && exportTrackDetail) {
             printWriter.println("<PhotoOverlay>");
             printWriter.println("<name>" + StringUtils.formatCData(name) + "</name>");
             printWriter.println("<description>" + StringUtils.formatCData(description) + "</description>");
@@ -348,7 +357,7 @@ public class KmlTrackWriter implements TrackWriter {
             printWriter.println("<styleUrl>#" + styleName + "</styleUrl>");
             writeCategory(category);
 
-            if (exportPictures) {
+            if (exportPhotos) {
                 printWriter.println("<Icon><href>" + Uri.decode(photoUrl) + "</href></Icon>");
             }
 
@@ -367,12 +376,12 @@ public class KmlTrackWriter implements TrackWriter {
     }
 
     /**
-     * Returns the formatted time of the location; either absolute or relative depending exportTrackDetails.
+     * Returns the formatted time of the location; either absolute or relative depending exportTrackDetail.
      *
      * @param location the location
      */
     private String getTime(Location location) {
-        if (exportTrackDetails) {
+        if (exportTrackDetail) {
             return StringUtils.formatDateTimeIso8601(location.getTime());
         } else {
             return StringUtils.formatDateTimeIso8601(location.getTime() - startLocation.getTime());

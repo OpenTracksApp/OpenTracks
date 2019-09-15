@@ -49,20 +49,23 @@ public class KmzTrackExporter implements TrackExporter {
     private static final int BUFFER_SIZE = 4096;
 
     private final ContentProviderUtils contentProviderUtils;
-    private final FileTrackExporter fileTrackExporter;
+    private final TrackExporter fileTrackExporter;
     private final Track[] tracks;
+
+    private boolean exportPhotos;
 
     /**
      * Constructor.
      *
      * @param contentProviderUtils the content provider utils
-     * @param fileTrackExporter    the file track exporter
+     * @param trackExporter    the file track exporter
      * @param tracks               the tracks to export
      */
-    public KmzTrackExporter(ContentProviderUtils contentProviderUtils, FileTrackExporter fileTrackExporter, Track[] tracks) {
+    public KmzTrackExporter(ContentProviderUtils contentProviderUtils, TrackExporter trackExporter, Track[] tracks, boolean exportPhotos) {
         this.contentProviderUtils = contentProviderUtils;
-        this.fileTrackExporter = fileTrackExporter;
+        this.fileTrackExporter = trackExporter;
         this.tracks = tracks;
+        this.exportPhotos = exportPhotos;
     }
 
     @Override
@@ -83,7 +86,7 @@ public class KmzTrackExporter implements TrackExporter {
             }
 
             // Add photos
-            addImages(context, zipOutputStream);
+            if (exportPhotos) addImages(context, zipOutputStream);
             return true;
         } catch (InterruptedException | IOException e) {
             Log.e(TAG, "Unable to write track", e);
