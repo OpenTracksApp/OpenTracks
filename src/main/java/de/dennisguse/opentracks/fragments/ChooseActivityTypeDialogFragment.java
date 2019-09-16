@@ -34,7 +34,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.util.DialogUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 
 /**
@@ -78,7 +77,6 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
                     imageAdapter.setSelected(position);
                     imageAdapter.notifyDataSetChanged();
                 }
-                DialogUtils.setDialogTitleDivider(context, alertDialog);
             }
         });
 

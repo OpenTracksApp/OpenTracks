@@ -169,15 +169,7 @@ public class ExportActivity extends FragmentActivity implements FileTypeDialogFr
                                 onDismissed();
                             }
                         }).setTitle(titleId);
-                final Dialog dialog = builder.create();
-                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-
-                    @Override
-                    public void onShow(DialogInterface dialogInterface) {
-                        DialogUtils.setDialogTitleDivider(ExportActivity.this, dialog);
-                    }
-                });
-                return dialog;
+                return builder.create();
             default:
                 return null;
         }

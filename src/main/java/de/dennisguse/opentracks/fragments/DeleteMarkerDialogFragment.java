@@ -21,6 +21,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 
 import de.dennisguse.opentracks.R;
@@ -33,7 +35,7 @@ import de.dennisguse.opentracks.util.DialogUtils;
  *
  * @author Jimmy Shih
  */
-public class DeleteMarkerDialogFragment extends AbstractDialogFragment {
+public class DeleteMarkerDialogFragment extends DialogFragment {
 
     public static final String DELETE_MARKER_DIALOG_TAG = "deleteMarkerDialog";
     private static final String KEY_MARKER_IDS = "markerIds";
@@ -49,7 +51,7 @@ public class DeleteMarkerDialogFragment extends AbstractDialogFragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
             caller = (DeleteMarkerCaller) context;
@@ -59,7 +61,8 @@ public class DeleteMarkerDialogFragment extends AbstractDialogFragment {
     }
 
     @Override
-    protected Dialog createDialog() {
+    @NonNull
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
         final FragmentActivity fragmentActivity = getActivity();
         final long[] markerIds = getArguments().getLongArray(KEY_MARKER_IDS);
         int titleId;

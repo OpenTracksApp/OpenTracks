@@ -17,7 +17,6 @@
 package de.dennisguse.opentracks.settings;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
@@ -30,7 +29,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Spinner;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.util.DialogUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 
@@ -104,12 +102,6 @@ public class ActivityTypePreference extends DialogPreference {
             }
         });
         return view;
-    }
-
-    @Override
-    protected void showDialog(Bundle state) {
-        super.showDialog(state);
-        DialogUtils.setDialogTitleDivider(getContext(), getDialog());
     }
 
     @Override

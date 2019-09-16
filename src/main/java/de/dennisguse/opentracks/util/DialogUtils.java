@@ -21,10 +21,6 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import de.dennisguse.opentracks.R;
 
@@ -47,21 +43,13 @@ public class DialogUtils {
      * @param okListener the listener when OK is clicked
      */
     public static Dialog createConfirmationDialog(final Context context, int titleId, String message, DialogInterface.OnClickListener okListener) {
-        final AlertDialog alertDialog = new AlertDialog.Builder(context)
+        return new AlertDialog.Builder(context)
                 .setCancelable(true)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setMessage(message)
                 .setNegativeButton(R.string.generic_no, null)
                 .setPositiveButton(R.string.generic_yes, okListener)
                 .setTitle(titleId).create();
-        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-
-            @Override
-            public void onShow(DialogInterface dialog) {
-                setDialogTitleDivider(context, alertDialog);
-            }
-        });
-        return alertDialog;
     }
 
     /**
@@ -106,51 +94,6 @@ public class DialogUtils {
         progressDialog.setOnCancelListener(onCancelListener);
         progressDialog.setProgressStyle(spinner ? ProgressDialog.STYLE_SPINNER : ProgressDialog.STYLE_HORIZONTAL);
         progressDialog.setTitle(R.string.generic_progress_title);
-        progressDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-
-            @Override
-            public void onShow(DialogInterface dialog) {
-                setDialogTitleDivider(context, progressDialog);
-            }
-        });
         return progressDialog;
-    }
-
-    /**
-     * Sets the dialog title divider.
-     *
-     * @param context the context
-     * @param dialog  the dialog
-     */
-    public static void setDialogTitleDivider(Context context, Dialog dialog) {
-        try {
-            ViewGroup decorView = (ViewGroup) dialog.getWindow().getDecorView();
-            if (decorView == null) {
-                return;
-            }
-            FrameLayout windowContentView = (FrameLayout) decorView.getChildAt(0);
-            if (windowContentView == null) {
-                return;
-            }
-            FrameLayout contentView = (FrameLayout) windowContentView.getChildAt(0);
-            if (contentView == null) {
-                return;
-            }
-            LinearLayout parentPanel = (LinearLayout) contentView.getChildAt(0);
-            if (parentPanel == null) {
-                return;
-            }
-            LinearLayout topPanel = (LinearLayout) parentPanel.getChildAt(0);
-            if (topPanel == null) {
-                return;
-            }
-            View titleDivider = topPanel.getChildAt(2);
-            if (titleDivider == null) {
-                return;
-            }
-            titleDivider.setBackgroundColor(context.getResources().getColor(R.color.holo_orange_dark));
-        } catch (Exception e) {
-            // Can safely ignore
-        }
     }
 }

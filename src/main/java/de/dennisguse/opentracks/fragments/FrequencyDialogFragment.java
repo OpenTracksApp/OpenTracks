@@ -21,6 +21,8 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 
 import de.dennisguse.opentracks.R;
@@ -32,7 +34,7 @@ import de.dennisguse.opentracks.util.StringUtils;
  *
  * @author Jimmy Shih
  */
-public class FrequencyDialogFragment extends AbstractDialogFragment {
+public class FrequencyDialogFragment extends DialogFragment {
 
     public static final String FREQUENCY_DIALOG_TAG = "frequencyDialog";
 
@@ -40,8 +42,7 @@ public class FrequencyDialogFragment extends AbstractDialogFragment {
     private static final String KEY_DEFAULT_VALUE = "defaultValue";
     private static final String KEY_TITLE_ID = "titleId";
 
-    public static FrequencyDialogFragment newInstance(
-            int preferenceId, int defaultValue, int titleId) {
+    public static FrequencyDialogFragment newInstance(int preferenceId, int defaultValue, int titleId) {
         Bundle bundle = new Bundle();
         bundle.putInt(KEY_PREFERENCE_ID, preferenceId);
         bundle.putInt(KEY_DEFAULT_VALUE, defaultValue);
@@ -53,7 +54,8 @@ public class FrequencyDialogFragment extends AbstractDialogFragment {
     }
 
     @Override
-    protected Dialog createDialog() {
+    @NonNull
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
         FragmentActivity fragmentActivity = getActivity();
 
         final int preferenceId = getArguments().getInt(KEY_PREFERENCE_ID);

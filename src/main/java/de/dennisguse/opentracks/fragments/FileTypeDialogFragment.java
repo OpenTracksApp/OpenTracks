@@ -23,6 +23,9 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+
 import java.util.Locale;
 
 import de.dennisguse.opentracks.R;
@@ -34,7 +37,7 @@ import de.dennisguse.opentracks.util.FileUtils;
  *
  * @author Jimmy Shih
  */
-public class FileTypeDialogFragment extends AbstractDialogFragment {
+public class FileTypeDialogFragment extends DialogFragment {
 
     public static final String FILE_TYPE_DIALOG_TAG = "fileType";
     private static final String KEY_TITLE_ID = "titleId";
@@ -52,7 +55,7 @@ public class FileTypeDialogFragment extends AbstractDialogFragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
             caller = (FileTypeCaller) context;
@@ -62,7 +65,8 @@ public class FileTypeDialogFragment extends AbstractDialogFragment {
     }
 
     @Override
-    protected Dialog createDialog() {
+    @NonNull
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
         int optionId = getArguments().getInt(KEY_OPTION_ID);
         final int titleId = getArguments().getInt(KEY_TITLE_ID);
         final TrackFileFormat[] trackFileFormats = {TrackFileFormat.KML_WITH_TRACKDETAIL, TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA, TrackFileFormat.GPX};

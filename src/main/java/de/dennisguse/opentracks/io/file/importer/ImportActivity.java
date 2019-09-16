@@ -159,7 +159,7 @@ public class ImportActivity extends FragmentActivity implements FileTypeDialogFr
                     message = getString(
                             R.string.import_error, importedTrackCount, totalFiles, directoryDisplayName);
                 }
-                final Dialog dialog = new AlertDialog.Builder(this).setCancelable(true).setIcon(iconId)
+                return new AlertDialog.Builder(this).setCancelable(true).setIcon(iconId)
                         .setMessage(message).setOnCancelListener(new DialogInterface.OnCancelListener() {
                             @Override
                             public void onCancel(DialogInterface dialogInterface) {
@@ -173,14 +173,6 @@ public class ImportActivity extends FragmentActivity implements FileTypeDialogFr
                                 onDismissed();
                             }
                         }).setTitle(titleId).create();
-                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-
-                    @Override
-                    public void onShow(DialogInterface dialogInterface) {
-                        DialogUtils.setDialogTitleDivider(ImportActivity.this, dialog);
-                    }
-                });
-                return dialog;
             default:
                 return null;
         }

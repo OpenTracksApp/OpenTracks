@@ -21,6 +21,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.util.DialogUtils;
 
@@ -29,7 +32,7 @@ import de.dennisguse.opentracks.util.DialogUtils;
  *
  * @author Jimmy Shih
  */
-public class ConfirmDeleteDialogFragment extends AbstractDialogFragment {
+public class ConfirmDeleteDialogFragment extends DialogFragment {
 
     public static final String CONFIRM_DELETE_DIALOG_TAG = "confirmDeleteDialog";
     private static final String KEY_TRACK_IDS = "trackIds";
@@ -50,7 +53,7 @@ public class ConfirmDeleteDialogFragment extends AbstractDialogFragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
             caller = (ConfirmDeleteCaller) context;
@@ -59,8 +62,10 @@ public class ConfirmDeleteDialogFragment extends AbstractDialogFragment {
         }
     }
 
+
     @Override
-    protected Dialog createDialog() {
+    @NonNull
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
         final long[] trackIds = getArguments().getLongArray(KEY_TRACK_IDS);
         int titleId;
         int messageId;
