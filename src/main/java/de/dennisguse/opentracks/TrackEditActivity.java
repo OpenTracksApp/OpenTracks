@@ -28,6 +28,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import androidx.annotation.NonNull;
+
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
@@ -119,9 +121,7 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    ChooseActivityTypeDialogFragment.newInstance(activityType.getText().toString()).show(
-                            getSupportFragmentManager(),
-                            ChooseActivityTypeDialogFragment.CHOOSE_ACTIVITY_TYPE_DIALOG_TAG);
+                    ChooseActivityTypeDialogFragment.showDialog(getSupportFragmentManager(), activityType.getText().toString());
                 }
                 return true;
             }
@@ -130,9 +130,7 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
-                    ChooseActivityTypeDialogFragment.newInstance(activityType.getText().toString()).show(
-                            getSupportFragmentManager(),
-                            ChooseActivityTypeDialogFragment.CHOOSE_ACTIVITY_TYPE_DIALOG_TAG);
+                    ChooseActivityTypeDialogFragment.showDialog(getSupportFragmentManager(), activityType.getText().toString());
                 }
                 return true;
             }
@@ -182,7 +180,7 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(ICON_VALUE_KEY, iconValue);
     }

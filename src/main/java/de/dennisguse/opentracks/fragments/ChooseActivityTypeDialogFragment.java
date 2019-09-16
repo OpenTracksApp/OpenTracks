@@ -16,19 +16,19 @@
 
 package de.dennisguse.opentracks.fragments;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,52 +43,18 @@ import de.dennisguse.opentracks.util.TrackIconUtils;
  */
 public class ChooseActivityTypeDialogFragment extends DialogFragment {
 
-    public static final String CHOOSE_ACTIVITY_TYPE_DIALOG_TAG = "chooseActivityType";
-    private static final String KEY_CATEGORY = "category";
+    private static final String CHOOSE_ACTIVITY_TYPE_DIALOG_TAG = "chooseActivityType";
+    private final String preselectedCategory;
+
+    private ChooseActivityTypeDialogFragment(String preselectedCategory) {
+        this.preselectedCategory = preselectedCategory;
+    }
+
+    public static void showDialog(FragmentManager fragmentManager, String preselectedCategory) {
+        new ChooseActivityTypeDialogFragment(preselectedCategory).show(fragmentManager, ChooseActivityTypeDialogFragment.CHOOSE_ACTIVITY_TYPE_DIALOG_TAG);
+    }
+
     private ChooseActivityTypeCaller caller;
-
-    public static ChooseActivityTypeDialogFragment newInstance(String category) {
-        Bundle bundle = new Bundle();
-        bundle.putString(KEY_CATEGORY, category);
-
-        ChooseActivityTypeDialogFragment fragment = new ChooseActivityTypeDialogFragment();
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
-    public static Dialog getDialog(final Context context, final String category, final ChooseActivityTypeCaller caller) {
-        View view = LayoutInflater.from(context).inflate(R.layout.choose_activity_type, null);
-        GridView gridView = view.findViewById(R.id.choose_activity_type_grid_view);
-
-        List<Integer> imageIds = new ArrayList<>();
-        for (String iconValue : TrackIconUtils.getAllIconValues()) {
-            imageIds.add(TrackIconUtils.getIconDrawable(iconValue));
-        }
-
-        final ChooseActivityTypeImageAdapter imageAdapter = new ChooseActivityTypeImageAdapter(imageIds);
-        gridView.setAdapter(imageAdapter);
-
-        final AlertDialog alertDialog = new AlertDialog.Builder(context).setTitle(R.string.track_edit_activity_type_hint).setView(view).create();
-        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialog) {
-                int position = getPosition(context, category);
-                if (position != -1) {
-                    imageAdapter.setSelected(position);
-                    imageAdapter.notifyDataSetChanged();
-                }
-            }
-        });
-
-        gridView.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                caller.onChooseActivityTypeDone(TrackIconUtils.getAllIconValues().get(position));
-                alertDialog.dismiss();
-            }
-        });
-        return alertDialog;
-    }
 
     private static int getPosition(Context context, String category) {
         if (category == null) {
@@ -112,7 +78,39 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        return getDialog(getActivity(), getArguments().getString(KEY_CATEGORY), caller);
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+
+        dialog.setTitle(R.string.track_edit_activity_type_hint);
+        return dialog;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.choose_activity_type, container);
+        GridView gridView = view.findViewById(R.id.choose_activity_type_grid_view);
+
+        List<Integer> imageIds = new ArrayList<>();
+        for (String iconValue : TrackIconUtils.getAllIconValues()) {
+            imageIds.add(TrackIconUtils.getIconDrawable(iconValue));
+        }
+
+        final ChooseActivityTypeImageAdapter imageAdapter = new ChooseActivityTypeImageAdapter(imageIds);
+        gridView.setAdapter(imageAdapter);
+
+        int position = getPosition(getContext(), preselectedCategory);
+        if (position != -1) {
+            imageAdapter.setSelected(position);
+            imageAdapter.notifyDataSetChanged();
+        }
+
+        gridView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                caller.onChooseActivityTypeDone(TrackIconUtils.getAllIconValues().get(position));
+                dismiss();
+            }
+        });
+        return view;
     }
 
     /**
@@ -126,5 +124,7 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
          * Called when choose activity type is done.
          */
         void onChooseActivityTypeDone(String iconValue);
+
     }
+
 }

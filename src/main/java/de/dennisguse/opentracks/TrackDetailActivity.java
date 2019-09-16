@@ -487,7 +487,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
     }
 
     public void chooseActivityType(String category) {
-        ChooseActivityTypeDialogFragment.newInstance(category).show(getSupportFragmentManager(), ChooseActivityTypeDialogFragment.CHOOSE_ACTIVITY_TYPE_DIALOG_TAG);
+        ChooseActivityTypeDialogFragment.showDialog(getSupportFragmentManager(), category);
     }
 
     @Override

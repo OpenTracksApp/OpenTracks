@@ -23,7 +23,6 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
@@ -57,17 +56,6 @@ public class RecordingSettingsActivity extends PreferenceActivity implements Cho
         configListPreference(R.string.auto_resume_track_timeout_key, R.array.auto_resume_track_timeout_values, metricUnits);
     }
 
-    @Override
-    protected Dialog onCreateDialog(int id, Bundle bundle) {
-        if (id != DIALOG_CHOOSE_ACTIVITY) {
-            return null;
-        }
-
-        String category = PreferencesUtils.getString(
-                this, R.string.default_activity_key, PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT);
-        return ChooseActivityTypeDialogFragment.getDialog(this, category, this);
-    }
-
     private void configFrequencyPreference(int key, boolean metricUnits) {
         ListPreference preference = (ListPreference) findPreference(getString(key));
 
@@ -95,7 +83,7 @@ public class RecordingSettingsActivity extends PreferenceActivity implements Cho
         ListPreference preference = (ListPreference) findPreference(getString(key));
 
         @Deprecated //TODO Can we make values an int array?
-        String[] values = getResources().getStringArray(valueArray);
+                String[] values = getResources().getStringArray(valueArray);
         String[] options = new String[values.length];
         switch (key) {
             case R.string.min_recording_interval_key:
@@ -294,6 +282,18 @@ public class RecordingSettingsActivity extends PreferenceActivity implements Cho
             // Can safely ignore.
         }
         showDialog(DIALOG_CHOOSE_ACTIVITY);
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int id, Bundle bundle) {
+        if (id != DIALOG_CHOOSE_ACTIVITY) {
+            return null;
+        }
+
+        String category = PreferencesUtils.getString(this, R.string.default_activity_key, PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT);
+        //TODO ATTENTION: Need to switch to FragmentActivity before this can be used.
+        // ChooseActivityTypeDialogFragment.showDialog(getSupportFragmentManager(), category);
+        return null;
     }
 
     @Override
