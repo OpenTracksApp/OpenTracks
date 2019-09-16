@@ -24,6 +24,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.util.PreferencesUtils;
@@ -36,21 +37,19 @@ import de.dennisguse.opentracks.util.StringUtils;
  */
 public class FrequencyDialogFragment extends DialogFragment {
 
-    public static final String FREQUENCY_DIALOG_TAG = "frequencyDialog";
+    private static final String FREQUENCY_DIALOG_TAG = "frequencyDialog";
+    private int preferenceId;
+    private int defaultValue;
+    private int titleId;
 
-    private static final String KEY_PREFERENCE_ID = "preferenceId";
-    private static final String KEY_DEFAULT_VALUE = "defaultValue";
-    private static final String KEY_TITLE_ID = "titleId";
+    public FrequencyDialogFragment(int preferenceId, int defaultValue, int titleId) {
+        this.preferenceId = preferenceId;
+        this.defaultValue = defaultValue;
+        this.titleId = titleId;
+    }
 
-    public static FrequencyDialogFragment newInstance(int preferenceId, int defaultValue, int titleId) {
-        Bundle bundle = new Bundle();
-        bundle.putInt(KEY_PREFERENCE_ID, preferenceId);
-        bundle.putInt(KEY_DEFAULT_VALUE, defaultValue);
-        bundle.putInt(KEY_TITLE_ID, titleId);
-
-        FrequencyDialogFragment frequencyDialogFragment = new FrequencyDialogFragment();
-        frequencyDialogFragment.setArguments(bundle);
-        return frequencyDialogFragment;
+    public static void showDialog(FragmentManager fragmentManager, int preferenceId, int defaultValue, int titleId) {
+        new FrequencyDialogFragment(preferenceId, defaultValue, titleId).show(fragmentManager, FREQUENCY_DIALOG_TAG);
     }
 
     @Override
@@ -58,9 +57,6 @@ public class FrequencyDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         FragmentActivity fragmentActivity = getActivity();
 
-        final int preferenceId = getArguments().getInt(KEY_PREFERENCE_ID);
-        int defaultValue = getArguments().getInt(KEY_DEFAULT_VALUE);
-        int titleId = getArguments().getInt(KEY_TITLE_ID);
         int frequencyValue = PreferencesUtils.getInt(fragmentActivity, preferenceId, defaultValue);
 
         return new AlertDialog.Builder(fragmentActivity).setPositiveButton(

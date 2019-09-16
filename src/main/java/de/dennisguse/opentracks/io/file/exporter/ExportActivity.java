@@ -84,9 +84,7 @@ public class ExportActivity extends FragmentActivity implements FileTypeDialogFr
     }
 
     private void fileTypeDialogStart() {
-        FileTypeDialogFragment
-                .newInstance(R.string.export_all_title, R.string.export_all_option)
-                .show(getSupportFragmentManager(), FileTypeDialogFragment.FILE_TYPE_DIALOG_TAG);
+        FileTypeDialogFragment.showDialog(getSupportFragmentManager(), R.string.export_all_title, R.string.export_all_option);
     }
 
     @Override

@@ -300,8 +300,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
                 if (markerIds.length > 1 && markerIds.length == listView.getCount()) {
                     markerIds = new long[]{-1L};
                 }
-                DeleteMarkerDialogFragment.newInstance(markerIds)
-                        .show(getSupportFragmentManager(), DeleteMarkerDialogFragment.DELETE_MARKER_DIALOG_TAG);
+                DeleteMarkerDialogFragment.showDialog(getSupportFragmentManager(), markerIds);
                 return true;
             case R.id.list_context_menu_select_all:
                 int size = listView.getCount();

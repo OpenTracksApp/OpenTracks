@@ -182,8 +182,7 @@ public abstract class AbstractListActivity extends AbstractActivity implements C
      * @param trackIds the track ids
      */
     protected void deleteTracks(long[] trackIds) {
-        ConfirmDeleteDialogFragment.newInstance(trackIds)
-                .show(getSupportFragmentManager(), ConfirmDeleteDialogFragment.CONFIRM_DELETE_DIALOG_TAG);
+        ConfirmDeleteDialogFragment.showDialog(getSupportFragmentManager(), trackIds);
     }
 
     @Override

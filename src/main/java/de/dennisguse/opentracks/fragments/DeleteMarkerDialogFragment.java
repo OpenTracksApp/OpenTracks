@@ -24,6 +24,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
@@ -37,17 +38,17 @@ import de.dennisguse.opentracks.util.DialogUtils;
  */
 public class DeleteMarkerDialogFragment extends DialogFragment {
 
-    public static final String DELETE_MARKER_DIALOG_TAG = "deleteMarkerDialog";
-    private static final String KEY_MARKER_IDS = "markerIds";
+    private static final String DELETE_MARKER_DIALOG_TAG = "deleteMarkerDialog";
+    private long[] markerIds;
+
     private DeleteMarkerCaller caller;
 
-    public static DeleteMarkerDialogFragment newInstance(long[] markerIds) {
-        Bundle bundle = new Bundle();
-        bundle.putLongArray(KEY_MARKER_IDS, markerIds);
+    public DeleteMarkerDialogFragment(long[] markerIds) {
+        this.markerIds = markerIds;
+    }
 
-        DeleteMarkerDialogFragment deleteMarkerDialogFragment = new DeleteMarkerDialogFragment();
-        deleteMarkerDialogFragment.setArguments(bundle);
-        return deleteMarkerDialogFragment;
+    public static void showDialog(FragmentManager fragmentManager, long[] markerIds) {
+        new DeleteMarkerDialogFragment(markerIds).show(fragmentManager, DELETE_MARKER_DIALOG_TAG);
     }
 
     @Override
@@ -64,7 +65,6 @@ public class DeleteMarkerDialogFragment extends DialogFragment {
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final FragmentActivity fragmentActivity = getActivity();
-        final long[] markerIds = getArguments().getLongArray(KEY_MARKER_IDS);
         int titleId;
         int messageId;
         if (markerIds.length == 1 && markerIds[0] == -1L) {
@@ -81,8 +81,7 @@ public class DeleteMarkerDialogFragment extends DialogFragment {
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                ContentProviderUtils contentProviderUtils = ContentProviderUtils.Factory.get(
-                                        fragmentActivity);
+                                ContentProviderUtils contentProviderUtils = ContentProviderUtils.Factory.get(fragmentActivity);
                                 for (long markerId : markerIds) {
                                     contentProviderUtils.deleteWaypoint(fragmentActivity,
                                             markerId, new DescriptionGeneratorImpl(fragmentActivity));

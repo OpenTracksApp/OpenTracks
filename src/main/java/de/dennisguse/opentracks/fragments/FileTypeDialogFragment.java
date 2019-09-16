@@ -25,6 +25,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 
 import java.util.Locale;
 
@@ -39,19 +40,19 @@ import de.dennisguse.opentracks.util.FileUtils;
  */
 public class FileTypeDialogFragment extends DialogFragment {
 
-    public static final String FILE_TYPE_DIALOG_TAG = "fileType";
-    private static final String KEY_TITLE_ID = "titleId";
-    private static final String KEY_OPTION_ID = "optionId";
+    private static final String FILE_TYPE_DIALOG_TAG = "fileType";
+    private int titleId;
+
     private FileTypeCaller caller;
+    private int optionId;
 
-    public static FileTypeDialogFragment newInstance(int titleId, int optionId) {
-        Bundle bundle = new Bundle();
-        bundle.putInt(KEY_TITLE_ID, titleId);
-        bundle.putInt(KEY_OPTION_ID, optionId);
+    public FileTypeDialogFragment(int titleId, int optionId) {
+        this.titleId = titleId;
+        this.optionId = optionId;
+    }
 
-        FileTypeDialogFragment fileTypeDialogFragment = new FileTypeDialogFragment();
-        fileTypeDialogFragment.setArguments(bundle);
-        return fileTypeDialogFragment;
+    public static void showDialog(FragmentManager fragmentManager, int titleId, int optionId) {
+        new FileTypeDialogFragment(titleId, optionId).show(fragmentManager, FILE_TYPE_DIALOG_TAG);
     }
 
     @Override
@@ -67,8 +68,6 @@ public class FileTypeDialogFragment extends DialogFragment {
     @Override
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        int optionId = getArguments().getInt(KEY_OPTION_ID);
-        final int titleId = getArguments().getInt(KEY_TITLE_ID);
         final TrackFileFormat[] trackFileFormats = {TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES, TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA, TrackFileFormat.GPX};
         String[] choices = new String[trackFileFormats.length];
         for (int i = 0; i < choices.length; i++) {
@@ -96,7 +95,7 @@ public class FileTypeDialogFragment extends DialogFragment {
     }
 
     @Override
-    public void onCancel(DialogInterface dialog) {
+    public void onCancel(@NonNull DialogInterface dialog) {
         onDismissed();
     }
 

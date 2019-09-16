@@ -361,12 +361,10 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
                 startActivity(intent);
                 return true;
             case R.id.track_detail_voice_frequency:
-                FrequencyDialogFragment.newInstance(R.string.voice_frequency_key, PreferencesUtils.VOICE_FREQUENCY_DEFAULT, R.string.menu_voice_frequency)
-                        .show(getSupportFragmentManager(), FrequencyDialogFragment.FREQUENCY_DIALOG_TAG);
+                FrequencyDialogFragment.showDialog(getSupportFragmentManager(), R.string.voice_frequency_key, PreferencesUtils.VOICE_FREQUENCY_DEFAULT, R.string.menu_voice_frequency);
                 return true;
             case R.id.track_detail_split_frequency:
-                FrequencyDialogFragment.newInstance(R.string.split_frequency_key, PreferencesUtils.SPLIT_FREQUENCY_DEFAULT, R.string.menu_split_frequency)
-                        .show(getSupportFragmentManager(), FrequencyDialogFragment.FREQUENCY_DIALOG_TAG);
+                FrequencyDialogFragment.showDialog(getSupportFragmentManager(), R.string.split_frequency_key, PreferencesUtils.SPLIT_FREQUENCY_DEFAULT, R.string.menu_split_frequency);
                 return true;
             case R.id.track_detail_edit:
                 intent = IntentUtils.newIntent(this, TrackEditActivity.class)

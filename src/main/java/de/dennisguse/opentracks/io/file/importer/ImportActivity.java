@@ -85,9 +85,7 @@ public class ImportActivity extends FragmentActivity implements FileTypeDialogFr
     }
 
     private void fileTypeDialogStart() {
-        FileTypeDialogFragment
-                .newInstance(R.string.import_selection_title, R.string.import_selection_option)
-                .show(getSupportFragmentManager(), FileTypeDialogFragment.FILE_TYPE_DIALOG_TAG);
+        FileTypeDialogFragment.showDialog(getSupportFragmentManager(), R.string.import_selection_title, R.string.import_selection_option);
     }
 
     @Override

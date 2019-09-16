@@ -192,8 +192,7 @@ public class MarkerDetailFragment extends Fragment {
                 startActivity(intent);
                 return true;
             case R.id.marker_detail_delete:
-                DeleteMarkerDialogFragment.newInstance(new long[]{markerId})
-                        .show(getChildFragmentManager(), DeleteMarkerDialogFragment.DELETE_MARKER_DIALOG_TAG);
+                DeleteMarkerDialogFragment.showDialog(getChildFragmentManager(), new long[]{markerId});
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

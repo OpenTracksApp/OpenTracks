@@ -323,7 +323,7 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
                 return true;
             case R.id.list_context_menu_delete:
                 if (markerId != null) {
-                    DeleteMarkerDialogFragment.newInstance(new long[]{markerId}).show(getSupportFragmentManager(), DeleteMarkerDialogFragment.DELETE_MARKER_DIALOG_TAG);
+                    DeleteMarkerDialogFragment.showDialog(getSupportFragmentManager(), new long[]{markerId});
                 } else {
                     deleteTracks(new long[]{trackId});
                 }
