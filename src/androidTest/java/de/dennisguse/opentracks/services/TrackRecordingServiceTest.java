@@ -28,6 +28,7 @@ import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.MediumTest;
 import androidx.test.filters.SmallTest;
+import androidx.test.rule.GrantPermissionRule;
 import androidx.test.rule.ServiceTestRule;
 
 import org.junit.After;
@@ -57,7 +58,7 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
  * Tests for the track recording service.
  *
  * @author Bartlomiej Niechwiej
- *
+ * <p>
  * ATTENTION: This tests deletes all stored tracks in the database.
  * So, if it is executed on a real device, data might be lost.
  */
@@ -66,6 +67,9 @@ public class TrackRecordingServiceTest {
 
     @Rule
     public final ServiceTestRule mServiceRule = ServiceTestRule.withTimeout(5, TimeUnit.SECONDS);
+
+    @Rule
+    public GrantPermissionRule mRuntimePermissionRule = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION);
 
     private Context context = ApplicationProvider.getApplicationContext();
     private ContentProviderUtils providerUtils;
