@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="239dp"
         android:scaleType="fitCenter"
+        android:contentDescription="@string/app_name"
         android:src="@drawable/ic_logo_color_24dp" />
 
     <TextView

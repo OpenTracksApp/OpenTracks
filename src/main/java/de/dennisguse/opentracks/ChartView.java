@@ -449,8 +449,7 @@ public class ChartView extends View {
                     synchronized (waypoints) {
                         for (int i = 0; i < waypoints.size(); i++) {
                             Waypoint waypoint = waypoints.get(i);
-                            int distance = Math.abs(
-                                    getX(getWaypointXValue(waypoint)) - (int) event.getX() - getScrollX());
+                            int distance = Math.abs(getX(getWaypointXValue(waypoint)) - (int) event.getX() - getScrollX());
                             if (distance < minDistance) {
                                 minDistance = distance;
                                 nearestWaypoint = waypoint;

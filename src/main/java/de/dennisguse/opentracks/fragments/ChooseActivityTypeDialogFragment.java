@@ -16,12 +16,12 @@
 
 package de.dennisguse.opentracks.fragments;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -57,8 +57,8 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
         return fragment;
     }
 
-    public static Dialog getDialog(final Activity activity, final String category, final ChooseActivityTypeCaller caller) {
-        View view = activity.getLayoutInflater().inflate(R.layout.choose_activity_type, null);
+    public static Dialog getDialog(final Context context, final String category, final ChooseActivityTypeCaller caller) {
+        View view = LayoutInflater.from(context).inflate(R.layout.choose_activity_type, null);
         GridView gridView = view.findViewById(R.id.choose_activity_type_grid_view);
 
         List<Integer> imageIds = new ArrayList<>();
@@ -69,16 +69,16 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
         final ChooseActivityTypeImageAdapter imageAdapter = new ChooseActivityTypeImageAdapter(imageIds);
         gridView.setAdapter(imageAdapter);
 
-        final AlertDialog alertDialog = new AlertDialog.Builder(activity).setTitle(R.string.track_edit_activity_type_hint).setView(view).create();
+        final AlertDialog alertDialog = new AlertDialog.Builder(context).setTitle(R.string.track_edit_activity_type_hint).setView(view).create();
         alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialog) {
-                int position = getPosition(activity, category);
+                int position = getPosition(context, category);
                 if (position != -1) {
                     imageAdapter.setSelected(position);
                     imageAdapter.notifyDataSetChanged();
                 }
-                DialogUtils.setDialogTitleDivider(activity, alertDialog);
+                DialogUtils.setDialogTitleDivider(context, alertDialog);
             }
         });
 
@@ -92,25 +92,17 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
         return alertDialog;
     }
 
-    private static int getPosition(Activity activity, String category) {
+    private static int getPosition(Context context, String category) {
         if (category == null) {
             return -1;
         }
-        String iconValue = TrackIconUtils.getIconValue(activity, category);
-        if (iconValue.equals("")) {
-            return -1;
-        }
-        List<String> iconValues = TrackIconUtils.getAllIconValues();
-        for (int i = 0; i < iconValues.size(); i++) {
-            if (iconValues.get(i).equals(iconValue)) {
-                return i;
-            }
-        }
-        return -1;
+        String iconValue = TrackIconUtils.getIconValue(context, category);
+
+        return TrackIconUtils.getAllIconValues().indexOf(iconValue);
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
             caller = (ChooseActivityTypeCaller) context;
