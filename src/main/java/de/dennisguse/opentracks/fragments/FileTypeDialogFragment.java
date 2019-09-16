@@ -69,7 +69,7 @@ public class FileTypeDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         int optionId = getArguments().getInt(KEY_OPTION_ID);
         final int titleId = getArguments().getInt(KEY_TITLE_ID);
-        final TrackFileFormat[] trackFileFormats = {TrackFileFormat.KML_WITH_TRACKDETAIL, TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA, TrackFileFormat.GPX};
+        final TrackFileFormat[] trackFileFormats = {TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES, TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA, TrackFileFormat.GPX};
         String[] choices = new String[trackFileFormats.length];
         for (int i = 0; i < choices.length; i++) {
             TrackFileFormat trackFileFormat = trackFileFormats[i];
