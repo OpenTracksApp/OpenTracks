@@ -16,8 +16,8 @@ limitations under the License.
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.dennisguse.opentracks"
     android:installLocation="auto"
-    android:versionCode="2991"
-    android:versionName="v3.1.0"> <!-- For FDroid. -->
+    android:versionCode="3054"
+    android:versionName="v3.2.0"> <!-- For FDroid. -->
     <!-- Permission to initialize services -->
     <application
         android:name=".Startup"
