@@ -149,8 +149,7 @@ public class StringUtilsTest {
     }
 
     /**
-     * Tests {@link StringUtils#getTime(String)} with fractional seconds and time
-     * zone.
+     * Tests {@link StringUtils#getTime(String)} with fractional seconds and time zone.
      */
     @Test
     public void testGetTime_fractionalAndTimezone() {
@@ -183,7 +182,7 @@ public class StringUtilsTest {
      * Tests {@link StringUtils#getTimeParts(long)} with a positive number.
      */
     @Test
-    public void testGetTimeParts_postive() {
+    public void testGetTimeParts_positive() {
         int[] parts = StringUtils.getTimeParts(61000);
         Assert.assertEquals(1, parts[0]);
         Assert.assertEquals(1, parts[1]);

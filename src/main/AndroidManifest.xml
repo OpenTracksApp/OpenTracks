@@ -97,11 +97,7 @@ limitations under the License.
             android:name=".io.file.exporter.ExportActivity"
             android:theme="@style/ThemeCustomTransparent" />
 
-        <activity android:name=".settings.RecordingSettingsActivity" />
-
         <activity android:name=".settings.SettingsActivity" />
-
-        <activity android:name=".settings.StatsSettingsActivity" />
 
         <!-- Services -->
         <provider
@@ -128,7 +124,6 @@ limitations under the License.
         </receiver>
 
         <!-- Providers -->
-
         <service
             android:name=".services.TrackRecordingService"
             android:enabled="true"

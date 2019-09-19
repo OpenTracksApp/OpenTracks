@@ -119,10 +119,9 @@ public class TrackRecordingService extends Service {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
             if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.recording_track_id_key))) {
-                long trackId = PreferencesUtils.getLong(context, R.string.recording_track_id_key);
                 // Only through the TrackRecordingService can one stop a recording and set the recordingTrackId to -1L.
-                if (trackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
-                    recordingTrackId = trackId;
+                if (PreferencesUtils.isRecording(context)) {
+                    recordingTrackId = PreferencesUtils.getLong(context, R.string.recording_track_id_key);
                 }
             }
             if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.recording_track_paused_key))) {
@@ -310,7 +309,7 @@ public class TrackRecordingService extends Service {
      * Returns true if the service is recording.
      */
     public boolean isRecording() {
-        return recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+        return PreferencesUtils.isRecording(recordingTrackId);
     }
 
     /**

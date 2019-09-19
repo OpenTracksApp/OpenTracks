@@ -15,7 +15,36 @@ limitations under the License.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="@string/menu_settings">
-    <PreferenceScreen android:title="@string/track_detail_chart_tab">
+
+    <PreferenceCategory android:title="@string/track_detail_stats_tab">
+        <ListPreference
+            android:defaultValue="@string/stats_units_metric"
+            android:entries="@array/stats_units_options"
+            android:entryValues="@array/stats_units_values"
+            android:key="@string/stats_units_key"
+            android:summary="%s"
+            android:title="@string/settings_stats_units_title" />
+        <ListPreference
+            android:defaultValue="@string/stats_rate_speed"
+            android:entries="@array/stats_rate_metric_options"
+            android:entryValues="@array/stats_rate_values"
+            android:key="@string/stats_rate_key"
+            android:summary="%s"
+            android:title="@string/settings_stats_rate_title" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_show">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="@string/stats_show_grade_elevation_key"
+            android:title="@string/settings_stats_grade_elevation" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="@string/stats_show_coordinate_key"
+            android:title="@string/settings_stats_coordinate" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/track_detail_chart_tab">
         <ListPreference
             android:defaultValue="@string/chart_x_axis_distance"
             android:entries="@array/chart_x_axis_options"
@@ -23,57 +52,97 @@ limitations under the License.
             android:key="@string/chart_x_axis_key"
             android:summary="%s"
             android:title="@string/settings_chart_x_axis" />
-        <PreferenceCategory android:title="@string/settings_show">
-            <CheckBoxPreference
-                android:defaultValue="true"
-                android:key="@string/chart_show_elevation_key"
-                android:title="@string/stats_elevation" />
-            <CheckBoxPreference
-                android:defaultValue="true"
-                android:key="@string/chart_show_speed_key" />
-            <CheckBoxPreference
-                android:defaultValue="true"
-                android:key="@string/chart_show_heart_rate_key"
-                android:title="@string/sensor_state_heart_rate" />
-            <!--
-            TODO: Sensors are not implemented.
-                <CheckBoxPreference
-                  android:defaultValue="true"
-                  android:key="@string/chart_show_cadence_key"
-                  android:title="@string/sensor_state_cadence" />
-                <CheckBoxPreference
-                  android:defaultValue="true"
-                  android:key="@string/chart_show_power_key"
-                  android:title="@string/sensor_state_power" />
-            -->
-        </PreferenceCategory>
-    </PreferenceScreen>
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/chart_show_elevation_key"
+            android:title="@string/stats_elevation" />
+        <!-- title set in code -->
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/chart_show_speed_key" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/chart_show_heart_rate_key"
+            android:title="@string/sensor_state_heart_rate" />
+    </PreferenceCategory>
 
-    <Preference
-        android:key="@string/settings_stats_key"
-        android:persistent="false"
-        android:title="@string/track_detail_stats_tab" />
-    <Preference
-        android:key="@string/settings_recording_key"
-        android:persistent="false"
-        android:title="@string/settings_recording" />
+    <PreferenceCategory android:title="@string/settings_recording">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="@string/trackdetail_show_on_lockscreen_while_recording_key"
+            android:summary="@string/settings_recording_show_on_lockscreen_while_recording_summary"
+            android:title="@string/settings_recording_show_on_lockscreen_while_recording_title" />
+        <ListPreference
+            android:defaultValue="0"
+            android:entryValues="@array/frequency_values"
+            android:key="@string/voice_frequency_key"
+            android:summary="%s"
+            android:title="@string/menu_voice_frequency" />
+        <ListPreference
+            android:defaultValue="0"
+            android:entryValues="@array/frequency_values"
+            android:key="@string/split_frequency_key"
+            android:summary="%s"
+            android:title="@string/menu_split_frequency" />
+        <ListPreference
+            android:defaultValue="@string/settings_recording_track_name_date_iso_8601_value"
+            android:entries="@array/track_name_options"
+            android:entryValues="@array/track_name_values"
+            android:key="@string/track_name_key"
+            android:summary="%s"
+            android:title="@string/settings_recording_track_name_title" />
+        <ListPreference
+            android:defaultValue="0"
+            android:entryValues="@array/min_recording_interval_values"
+            android:key="@string/min_recording_interval_key"
+            android:summary="%s"
+            android:title="@string/settings_recording_min_recording_interval_title" />
+        <ListPreference
+            android:defaultValue="10"
+            android:entryValues="@array/recording_distance_interval_values"
+            android:key="@string/recording_distance_interval_key"
+            android:summary="%s"
+            android:title="@string/settings_recording_min_recording_distance_title" />
+        <ListPreference
+            android:defaultValue="200"
+            android:entryValues="@array/max_recording_distance_values"
+            android:key="@string/max_recording_distance_key"
+            android:summary="%s"
+            android:title="@string/settings_recording_max_recording_distance_title" />
+        <ListPreference
+            android:defaultValue="50"
+            android:entryValues="@array/recording_gps_accuracy_values"
+            android:key="@string/recording_gps_accuracy_key"
+            android:summary="%s"
+            android:title="@string/settings_recording_min_required_accuracy_title" />
+        <ListPreference
+            android:defaultValue="10"
+            android:entries="@array/auto_resume_track_timeout_values"
+            android:entryValues="@array/auto_resume_track_timeout_values"
+            android:key="@string/auto_resume_track_timeout_key"
+            android:summary="%s"
+            android:title="@string/settings_recording_auto_resume_track_timeout_title" />
+        <de.dennisguse.opentracks.settings.ActivityTypePreference
+            android:defaultValue="@string/activity_type_running"
+            android:key="@string/default_activity_key"
+            android:title="@string/settings_recording_default_activity_title" />
+    </PreferenceCategory>
 
-    <PreferenceScreen
+    <PreferenceCategory
         android:title="@string/settings_sensor">
-        <PreferenceCategory
-            android:title="@string/settings_sensor_bluetooth">
-            <Preference
-                android:key="@string/settings_sensor_bluetooth_pairing_key"
-                android:persistent="false"
-                android:summary="@string/settings_sensor_bluetooth_pairing_summary"
-                android:title="@string/settings_sensor_bluetooth_pairing" />
-            <ListPreference
-                android:defaultValue="@string/sensor_type_value_none"
-                android:key="@string/bluetooth_sensor_key"
-                android:summary="%s"
-                android:title="@string/settings_sensor_bluetooth_sensor" />
-        </PreferenceCategory>
-    </PreferenceScreen>
+        <ListPreference
+            android:defaultValue="@string/sensor_type_value_none"
+            android:key="@string/bluetooth_sensor_key"
+            android:summary="%s"
+            android:title="@string/settings_sensor_bluetooth_sensor" />
+        <Preference
+            android:key="@string/settings_sensor_bluetooth_pairing_key"
+            android:persistent="false"
+            android:summary="@string/settings_sensor_bluetooth_pairing_summary"
+            android:title="@string/settings_sensor_bluetooth_pairing">
+            <intent android:action="android.settings.BLUETOOTH_SETTINGS" />
+        </Preference>
+    </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/generic_tracks">
         <Preference android:title="@string/menu_import_all">
@@ -90,14 +159,15 @@ limitations under the License.
 
     <PreferenceCategory android:title="@string/settings_reset">
         <de.dennisguse.opentracks.settings.ResetDialogPreference
-            android:dialogMessage="@string/settings_reset_confirm_message"
             android:dialogTitle="@string/settings_reset_confirm_title"
+            android:dialogMessage="@string/settings_reset_confirm_message"
             android:key="@string/settings_reset_key"
             android:negativeButtonText="@string/generic_cancel"
             android:persistent="false"
             android:positiveButtonText="@string/generic_yes"
             android:title="@string/settings_reset" />
     </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/about_preference_title">
         <Preference android:title="@string/about_preference_title">
             <intent

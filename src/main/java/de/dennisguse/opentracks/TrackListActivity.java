@@ -148,7 +148,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                     PreferencesUtils.getKey(TrackListActivity.this, R.string.recording_track_id_key))) {
                 recordingTrackId = PreferencesUtils.getLong(
                         TrackListActivity.this, R.string.recording_track_id_key);
-                if (key != null && recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
+                if (key != null && PreferencesUtils.isRecording(recordingTrackId)) {
                     trackRecordingServiceConnection.startAndBind();
                 }
             }
@@ -164,7 +164,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                     public void run() {
                         TrackListActivity.this.invalidateOptionsMenu();
                         LoaderManager.getInstance(TrackListActivity.this).restartLoader(0, null, loaderCallbacks);
-                        boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+                        boolean isRecording = PreferencesUtils.isRecording(recordingTrackId);
                         trackController.update(isRecording, recordingTrackPaused);
                     }
                 });
@@ -200,7 +200,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    trackController.update(recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, recordingTrackPaused);
+                    trackController.update(PreferencesUtils.isRecording(recordingTrackId), recordingTrackPaused);
                 }
             });
 
@@ -339,8 +339,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         // Update UI
         this.invalidateOptionsMenu();
         LoaderManager.getInstance(this).restartLoader(0, null, loaderCallbacks);
-        boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
-        trackController.onResume(isRecording, recordingTrackPaused);
+        trackController.onResume(PreferencesUtils.isRecording(recordingTrackId), recordingTrackPaused);
     }
 
     @Override
@@ -392,7 +391,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         boolean isGpsStarted = TrackRecordingServiceConnection.isRecordingServiceRunning(this);
-        boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+        boolean isRecording = PreferencesUtils.isRecording(recordingTrackId);
         updateMenuItems(isGpsStarted, isRecording);
 
         View searchView = searchMenuItem.getActionView();

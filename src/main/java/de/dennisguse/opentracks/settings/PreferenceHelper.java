@@ -2,7 +2,8 @@ package de.dennisguse.opentracks.settings;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
-import android.preference.ListPreference;
+
+import androidx.preference.ListPreference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -183,7 +184,7 @@ final class PreferenceHelper {
     /**
      * Configures the bluetooth sensor.
      */
-    static void configBluetoothSensor(ListPreference preference) {
+    static void configureBluetoothSensorList(ListPreference preference) {
         Context context = preference.getContext();
 
         String value = PreferencesUtils.getString(context, R.string.bluetooth_sensor_key, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT);

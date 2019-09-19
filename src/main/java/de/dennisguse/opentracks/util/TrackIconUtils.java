@@ -62,7 +62,7 @@ public class TrackIconUtils {
     private static final LinkedHashMap<String, Pair<Integer, Integer>> MAP = new LinkedHashMap<>();
 
     static {
-        //Reflects order in ChooseActivityTypeDialogFragment
+        //Reflects order in ChooseActivityTypeDialogFragmentActivity
         MAP.put(UNKNOWN, new Pair<>(R.string.activity_type_unknown, ACTIVITY_UNKNOWN_LOGO));
         MAP.put(RUN, new Pair<>(R.string.activity_type_running, R.drawable.ic_activity_run_24dp));
         MAP.put(WALK, new Pair<>(R.string.activity_type_walking, R.drawable.ic_activity_walk_24dp));

@@ -99,7 +99,7 @@ public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     protected Boolean doInBackground(Void... params) {
         try {
             Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
-            boolean isRecording = PreferencesUtils.getLong(exportActivity, R.string.recording_track_id_key) != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+            boolean isRecording = PreferencesUtils.isRecording(exportActivity);
             boolean isPaused = PreferencesUtils.getBoolean(exportActivity, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
             // Get the wake lock if not recording or paused
             if (!isRecording || isPaused) {

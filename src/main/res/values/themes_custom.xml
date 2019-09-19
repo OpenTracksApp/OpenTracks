@@ -30,6 +30,7 @@ limitations under the License.
         <item name="android:actionBarStyle">@style/ActionBarStyleCustom</item>
         <item name="android:actionModeBackground">@drawable/custom_action_mode_background</item>
         <item name="android:alertDialogTheme">@style/CustomAlertDialogTheme</item>
+        <item name="android:colorAccent">@color/holo_orange_dark</item>
     </style>
 
     <style name="ThemeCustomTransparent" parent="ThemeCustom">

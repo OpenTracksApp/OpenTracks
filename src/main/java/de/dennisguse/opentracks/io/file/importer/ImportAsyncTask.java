@@ -103,7 +103,7 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         try {
             Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
             // Get the wake lock if not recording or paused
-            boolean isRecording = PreferencesUtils.getLong(importActivity, R.string.recording_track_id_key) != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+            boolean isRecording = PreferencesUtils.isRecording(importActivity);
             boolean isPaused = PreferencesUtils.getBoolean(importActivity, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
             if (!isRecording || isPaused) {
                 wakeLock = SystemUtils.acquireWakeLock(importActivity, wakeLock);

@@ -33,7 +33,6 @@ import androidx.annotation.NonNull;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
-import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.TrackUtils;
@@ -43,7 +42,7 @@ import de.dennisguse.opentracks.util.TrackUtils;
  *
  * @author Leif Hendrik Wilden
  */
-public class TrackEditActivity extends AbstractActivity implements ChooseActivityTypeCaller {
+public class TrackEditActivity extends AbstractActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller {
 
     public static final String EXTRA_TRACK_ID = "track_id";
     public static final String EXTRA_NEW_TRACK = "new_track";

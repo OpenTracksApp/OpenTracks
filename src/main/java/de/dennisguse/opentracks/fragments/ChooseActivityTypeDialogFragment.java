@@ -1,21 +1,6 @@
-/*
- * Copyright 2013 Google Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
- */
-
 package de.dennisguse.opentracks.fragments;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -23,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
 import androidx.annotation.NonNull;
@@ -38,23 +22,14 @@ import de.dennisguse.opentracks.util.TrackIconUtils;
 
 /**
  * A DialogFragment to choose an activity type.
- *
- * @author apoorvn
  */
-public class ChooseActivityTypeDialogFragment extends DialogFragment {
+public class ChooseActivityTypeDialogFragment extends DialogFragment implements AdapterView.OnItemClickListener {
 
     private static final String CHOOSE_ACTIVITY_TYPE_DIALOG_TAG = "chooseActivityType";
-    private final String preselectedCategory;
-
-    private ChooseActivityTypeDialogFragment(String preselectedCategory) {
-        this.preselectedCategory = preselectedCategory;
-    }
 
     public static void showDialog(FragmentManager fragmentManager, String preselectedCategory) {
         new ChooseActivityTypeDialogFragment(preselectedCategory).show(fragmentManager, ChooseActivityTypeDialogFragment.CHOOSE_ACTIVITY_TYPE_DIALOG_TAG);
     }
-
-    private ChooseActivityTypeCaller caller;
 
     private static int getPosition(Context context, String category) {
         if (category == null) {
@@ -65,21 +40,18 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
         return TrackIconUtils.getAllIconValues().indexOf(iconValue);
     }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        try {
-            caller = (ChooseActivityTypeCaller) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context + " must implement " + ChooseActivityTypeCaller.class.getSimpleName());
-        }
+    private String preselectedCategory;
+
+    private ChooseActivityTypeCaller chooseActivityTypeCaller;
+
+    private ChooseActivityTypeDialogFragment(String preselectedCategory) {
+        this.preselectedCategory = preselectedCategory;
     }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
-
         dialog.setTitle(R.string.track_edit_activity_type_hint);
         return dialog;
     }
@@ -103,28 +75,44 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment {
             imageAdapter.notifyDataSetChanged();
         }
 
-        gridView.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                caller.onChooseActivityTypeDone(TrackIconUtils.getAllIconValues().get(position));
-                dismiss();
-            }
-        });
+        gridView.setOnItemClickListener(this);
         return view;
     }
 
     /**
-     * Interface for caller of this dialog fragment.
-     *
-     * @author apoorvn
+     * TODO: Only used by obsolete Androidx preferences. Remove when onAttach(Context) is called.
+     */
+    @Override
+    public void onAttach(@NonNull Activity activity) {
+        super.onAttach(activity);
+        try {
+            chooseActivityTypeCaller = (ChooseActivityTypeCaller) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity + " must implement " + ChooseActivityTypeCaller.class.getSimpleName());
+        }
+    }
+
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            chooseActivityTypeCaller = (ChooseActivityTypeCaller) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context + " must implement " + ChooseActivityTypeCaller.class.getSimpleName());
+        }
+    }
+
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+        chooseActivityTypeCaller.onChooseActivityTypeDone(TrackIconUtils.getAllIconValues().get(position));
+        dismiss();
+    }
+
+    /**
+     * Interface for chooseActivityTypeCaller of this dialog fragment.
      */
     public interface ChooseActivityTypeCaller {
 
-        /**
-         * Called when choose activity type is done.
-         */
         void onChooseActivityTypeDone(String iconValue);
-
     }
-
 }

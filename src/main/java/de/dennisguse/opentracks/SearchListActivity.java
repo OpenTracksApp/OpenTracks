@@ -109,7 +109,7 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
     private ContextualActionModeCallback contextualActionModeCallback = new ContextualActionModeCallback() {
         @Override
         public void onPrepare(Menu menu, int[] positions, long[] ids, boolean showSelectAll) {
-            boolean isRecording = recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+            boolean isRecording = PreferencesUtils.isRecording(recordingTrackId);
             boolean isSingleSelection = positions.length == 1;
             boolean isSingleSelectionTrack;
             if (isSingleSelection) {

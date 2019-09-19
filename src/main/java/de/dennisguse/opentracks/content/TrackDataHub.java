@@ -208,7 +208,7 @@ public class TrackDataHub implements DataSourceListener {
      * Returns true if the selected track is recording.
      */
     public boolean isSelectedTrackRecording() {
-        return selectedTrackId == recordingTrackId && recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+        return selectedTrackId == recordingTrackId && PreferencesUtils.isRecording(recordingTrackId);
     }
 
     /**

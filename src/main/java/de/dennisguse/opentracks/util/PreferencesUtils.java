@@ -19,7 +19,8 @@ package de.dennisguse.opentracks.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.preference.PreferenceManager;
+
+import androidx.preference.PreferenceManager;
 
 import de.dennisguse.opentracks.R;
 
@@ -252,9 +253,16 @@ public class PreferencesUtils {
         return CHART_X_AXIS_DEFAULT.equals(getString(context, R.string.chart_x_axis_key, CHART_X_AXIS_DEFAULT));
     }
 
+    public static boolean isRecording(Context context) {
+        long recordingTrackId = PreferencesUtils.getLong(context, R.string.recording_track_id_key);
+        return recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+    }
+
+    public static boolean isRecording(long recordingTrackId) {
+        return recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+    }
+
     public static void resetPreferences(Context context, boolean readAgain) {
         PreferenceManager.setDefaultValues(context, R.xml.settings, readAgain);
-        PreferenceManager.setDefaultValues(context, R.xml.settings_recording, readAgain);
-        PreferenceManager.setDefaultValues(context, R.xml.settings_statistics, readAgain);
     }
 }

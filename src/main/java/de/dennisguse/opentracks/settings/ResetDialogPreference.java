@@ -1,10 +1,12 @@
 package de.dennisguse.opentracks.settings;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.preference.DialogPreference;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.widget.Toast;
+
+import androidx.preference.DialogPreference;
+import androidx.preference.PreferenceDialogFragment;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.util.PreferencesUtils;
@@ -15,13 +17,24 @@ public class ResetDialogPreference extends DialogPreference {
         super(context, attrs);
     }
 
-    @Override
-    public void onClick(DialogInterface dialog, int which) {
-        super.onClick(dialog, which);
-        if (which == DialogInterface.BUTTON_POSITIVE) {
-            PreferencesUtils.resetPreferences(getContext(), true);
+    public static class ResetPreferenceDialog extends PreferenceDialogFragment {
 
-            Toast.makeText(getContext(), R.string.settings_reset_done, Toast.LENGTH_SHORT).show();
+        static PreferenceDialogFragment newInstance(String preferenceKey) {
+            ResetPreferenceDialog dialog = new ResetPreferenceDialog();
+            final Bundle bundle = new Bundle(1);
+            bundle.putString(PreferenceDialogFragment.ARG_KEY, preferenceKey);
+            dialog.setArguments(bundle);
+
+            return dialog;
+        }
+
+        @Override
+        public void onDialogClosed(boolean positiveResult) {
+            if (positiveResult) {
+                PreferencesUtils.resetPreferences(getActivity(), true);
+
+                Toast.makeText(getActivity(), R.string.settings_reset_done, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

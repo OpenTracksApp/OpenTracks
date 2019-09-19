@@ -1,10 +1,10 @@
 (tbd): OpenTracks
 
 Changes:
--
+- Settings are now on a single page
 
 Bugfix:
 -
 
 Developer:
--
+- Settings moved to Androidx compat (uses fragments)

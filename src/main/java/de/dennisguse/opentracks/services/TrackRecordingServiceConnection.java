@@ -226,37 +226,14 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
         }
     }
 
-    /**
-     * Stops the recording.
-     *
-     * @param context    the context
-     * @param showEditor true to show the editor
-     */
-    public void stopRecording(@NonNull Context context, boolean showEditor) {
-        ITrackRecordingService trackRecordingService = getServiceIfBound();
-        if (trackRecordingService == null) {
-            resetRecordingState(context);
-        } else {
-            try {
-                if (showEditor) {
-                    // Need to remember the recordingTrackId before calling endCurrentTrack() as endCurrentTrack() sets the value to -1L.
-                    long recordingTrackId = PreferencesUtils.getLong(context, R.string.recording_track_id_key);
-                    trackRecordingService.endCurrentTrack();
-                    if (recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
-                        Intent intent = IntentUtils.newIntent(context, TrackEditActivity.class)
-                                .putExtra(TrackEditActivity.EXTRA_TRACK_ID, recordingTrackId)
-                                .putExtra(TrackEditActivity.EXTRA_NEW_TRACK, true);
-                        context.startActivity(intent);
-                    }
-                } else {
-                    trackRecordingService.endCurrentTrack();
-                }
-            } catch (Exception e) {
-                //TODO What exception are we catching here? Should be removed...
-                Log.e(TAG, "Unable to stop recording.", e);
-            }
+    private static void resetRecordingState(Context context) {
+        if (PreferencesUtils.isRecording(context)) {
+            PreferencesUtils.setLong(context, R.string.recording_track_id_key, PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
         }
-        unbindAndStop();
+        boolean recordingTrackPaused = PreferencesUtils.getBoolean(context, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+        if (!recordingTrackPaused) {
+            PreferencesUtils.setBoolean(context, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+        }
     }
 
     /**
@@ -284,14 +261,36 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
         return -1L;
     }
 
-    private static void resetRecordingState(Context context) {
-        long recordingTrackId = PreferencesUtils.getLong(context, R.string.recording_track_id_key);
-        if (recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
-            PreferencesUtils.setLong(context, R.string.recording_track_id_key, PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
+    /**
+     * Stops the recording.
+     *
+     * @param context    the context
+     * @param showEditor true to show the editor
+     */
+    public void stopRecording(@NonNull Context context, boolean showEditor) {
+        ITrackRecordingService trackRecordingService = getServiceIfBound();
+        if (trackRecordingService == null) {
+            resetRecordingState(context);
+        } else {
+            try {
+                if (showEditor) {
+                    // Need to remember the recordingTrackId before calling endCurrentTrack() as endCurrentTrack() sets the value to -1L.
+                    long recordingTrackId = PreferencesUtils.getLong(context, R.string.recording_track_id_key);
+                    trackRecordingService.endCurrentTrack();
+                    if (PreferencesUtils.isRecording(context)) {
+                        Intent intent = IntentUtils.newIntent(context, TrackEditActivity.class)
+                                .putExtra(TrackEditActivity.EXTRA_TRACK_ID, recordingTrackId)
+                                .putExtra(TrackEditActivity.EXTRA_NEW_TRACK, true);
+                        context.startActivity(intent);
+                    }
+                } else {
+                    trackRecordingService.endCurrentTrack();
+                }
+            } catch (Exception e) {
+                //TODO What exception are we catching here? Should be removed...
+                Log.e(TAG, "Unable to stop recording.", e);
+            }
         }
-        boolean recordingTrackPaused = PreferencesUtils.getBoolean(context, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
-        if (!recordingTrackPaused) {
-            PreferencesUtils.setBoolean(context, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
-        }
+        unbindAndStop();
     }
 }
