@@ -138,9 +138,7 @@ public class DescriptionGeneratorImpl implements DescriptionGenerator {
         writeGrade(stats.getMinGrade(), builder, R.string.description_min_grade, lineBreak);
 
         // Recorded time
-        builder.append(
-                context.getString(R.string.description_recorded_time,
-                        StringUtils.formatDateTime(context, stats.getStartTime())));
+        builder.append(context.getString(R.string.description_recorded_time, StringUtils.formatDateTime(context, stats.getStartTime())));
         builder.append(lineBreak);
 
         return builder.toString();

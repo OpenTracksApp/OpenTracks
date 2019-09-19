@@ -29,7 +29,7 @@ public class UnitConversions {
     // 1 second in milliseconds
     public static final long ONE_SECOND = UnitConversions.S_TO_MS;
     // multiplication factor to convert milliseconds to seconds
-    public static final double MS_TO_S = 1 / S_TO_MS;
+    public static final double MS_TO_S = 1d / S_TO_MS;
     // multiplication factor to convert minutes to seconds
     public static final double MIN_TO_S = 60.0;
     // multiplication factor to convert seconds to minutes
