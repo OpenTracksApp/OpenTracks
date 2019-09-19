@@ -1,21 +1,21 @@
-# OpenTracks: a sport tracker
-
-![OpenTracks logo](LOGO.svg)
+# <img src="drawable-svg/LOGO.svg" alt="OpenTracks logo" height="40"></img> OpenTracks: a sport tracker
 
 _OpenTracks_ is a sport tracking application that completely respects your privacy.
 
-<a href="https://liberapay.com/dennis.guse/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
+<a href="https://f-droid.org/packages/de.dennisguse.opentracks">
+    <img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="60">
+</a>
 
 ## Features:
 * __Tracking:__ track your sport and outdoor activities 
-* __Photos and Markers:__ mark interesting locations while tracking
+* __Photos and Markers:__ mark interesting locations while tracking (also with photos)
 * __Heart rate:__ supports bluetooth LE sensors
-* __Export data:__ Export tracks either as KML or GPX
-* __Voice annoucements__
+* __Export data:__ export tracks either as KMZ (incl. photos), KML or GPX
 * __No Internet access:__ Internet is not used
+* __Voice annoucements__
 * __No advertising__
 * __Privacy:__
-    * _contains in-app analytics_
+    * _does not contain any in-app analytics_
     * _does not have Google Play Services_ 
     * _has no cloud integration_
     
@@ -25,6 +25,10 @@ __Only required permissions:__
 _Please note:_
 _Tracks_ does not contain a _map_ (as this would required Internet access).
 To show your tracks on a map, a 3rd party application (e.g., [OsmAnd](https://play.google.com/store/apps/details?id=net.osmand) or [MAPS.ME](https://play.google.com/store/apps/details?id=com.mapswithme.maps.pro)) needs to be installed.  
+
+<a href="https://liberapay.com/dennis.guse/donate">
+    <img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg" height="45">
+</a>
 
 ## Project history
 
