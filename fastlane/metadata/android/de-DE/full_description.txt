@@ -1,0 +1,9 @@
+Open Tracks – ein GPS-Tracker, der deine Daten für sich behält.
+Erfasst deine Kilometer, ohne dass es jemand anderes tut.
+
+Funktionen & Features:
+* zeichnet Sport und andere Outdooraktivitäten auf
+* unterstützt das Markieren interessanter Orte, inkl. Foto-Funktion
+* zeichnet deine Herzfrequenz auf (unterstützt Bluetooth-LE-Sensoren)
+* exportiert deine Daten als KML oder GPX
+* funktioniert ganz ohne Internet
