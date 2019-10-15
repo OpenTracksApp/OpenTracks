@@ -223,8 +223,8 @@ public class ChartView extends View {
     }
 
     /**
-     * Sets chart by distance. It is expected that after changing this value, data
-     * will be reloaded.
+     * Sets chart by distance.
+     * It is expected that after changing this value, data will be reloaded.
      *
      * @param value true for by distance, false for by time
      */

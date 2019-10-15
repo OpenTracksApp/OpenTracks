@@ -45,6 +45,15 @@ public class SettingsActivity extends FragmentActivity implements ChooseActivity
                         updateUI();
                     }
                 });
+
+                if (key == null || key.equals(PreferencesUtils.getKey(getActivity(), R.string.stats_units_key))) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            updateUnits();
+                        }
+                    });
+                }
             }
         };
 
@@ -54,20 +63,7 @@ public class SettingsActivity extends FragmentActivity implements ChooseActivity
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             addPreferencesFromResource(R.xml.settings);
-
-            boolean metricUnits = PreferencesUtils.isMetricUnits(getActivity());
-
-            configFrequencyPreference(R.string.voice_frequency_key, metricUnits);
-            configFrequencyPreference(R.string.split_frequency_key, metricUnits);
-            configListPreference(R.string.min_recording_interval_key, R.array.min_recording_interval_values, metricUnits);
-            configListPreference(R.string.recording_distance_interval_key, R.array.recording_distance_interval_values, metricUnits);
-            configListPreference(R.string.max_recording_distance_key, R.array.max_recording_distance_values, metricUnits);
-            configListPreference(R.string.recording_gps_accuracy_key, R.array.recording_gps_accuracy_values, metricUnits);
-            configListPreference(R.string.auto_resume_track_timeout_key, R.array.auto_resume_track_timeout_values, metricUnits);
-            configListPreference(R.string.auto_resume_track_timeout_key, R.array.auto_resume_track_timeout_values, metricUnits);
-
-            ListPreference bluetoothPreference = findPreference(getString(R.string.bluetooth_sensor_key));
-            PreferenceHelper.configureBluetoothSensorList(bluetoothPreference);
+            updateUnits();
         }
 
         @Override
@@ -151,6 +147,29 @@ public class SettingsActivity extends FragmentActivity implements ChooseActivity
 
             Preference speedCheckBoxPreference = findPreference(getString(R.string.chart_show_speed_key));
             speedCheckBoxPreference.setTitle(PreferencesUtils.isReportSpeed(getActivity()) ? R.string.stats_speed : R.string.stats_pace);
+
+            ListPreference bluetoothPreference = findPreference(getString(R.string.bluetooth_sensor_key));
+            PreferenceHelper.configureBluetoothSensorList(bluetoothPreference);
+        }
+
+        private void updateUnits() {
+            boolean metricUnits = PreferencesUtils.isMetricUnits(getActivity());
+
+            configFrequencyPreference(R.string.voice_frequency_key, metricUnits);
+            configFrequencyPreference(R.string.split_frequency_key, metricUnits);
+            configListPreference(R.string.min_recording_interval_key, R.array.min_recording_interval_values, metricUnits);
+            configListPreference(R.string.recording_distance_interval_key, R.array.recording_distance_interval_values, metricUnits);
+            configListPreference(R.string.max_recording_distance_key, R.array.max_recording_distance_values, metricUnits);
+            configListPreference(R.string.recording_gps_accuracy_key, R.array.recording_gps_accuracy_values, metricUnits);
+            configListPreference(R.string.auto_resume_track_timeout_key, R.array.auto_resume_track_timeout_values, metricUnits);
+            configListPreference(R.string.auto_resume_track_timeout_key, R.array.auto_resume_track_timeout_values, metricUnits);
+
+            final ListPreference statsRatePreferences = findPreference(getString(R.string.stats_rate_key));
+            String[] options = getResources().getStringArray(metricUnits ? R.array.stats_rate_metric_options : R.array.stats_rate_imperial_options);
+            statsRatePreferences.setEntries(options);
+            //TODO This is a hack!!! Need to manually updated the summary as otherwise it will only be updated after scrolling down and up again (bring the object out of view).
+            //Check if this is still needed after upgraded PreferenceFragment.
+            statsRatePreferences.setSummary(statsRatePreferences.getEntry());
         }
     }
 }

@@ -352,8 +352,8 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     }
 
     /**
-     * Resumes the trackDataHub. Needs to be synchronized because trackDataHub can
-     * be accessed by multiple threads.
+     * Resumes the trackDataHub.
+     * Needs to be synchronized because trackDataHub can be accessed by multiple threads.
      */
     private synchronized void resumeTrackDataHub() {
         trackDataHub = ((TrackDetailActivity) getActivity()).getTrackDataHub();
@@ -363,8 +363,8 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     }
 
     /**
-     * Pauses the trackDataHub. Needs to be synchronized because trackDataHub can
-     * be accessed by multiple threads.
+     * Pauses the trackDataHub.
+     * Needs to be synchronized because trackDataHub can be accessed by multiple threads.
      */
     private synchronized void pauseTrackDataHub() {
         trackDataHub.unregisterTrackDataListener(this);
@@ -372,16 +372,16 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     }
 
     /**
-     * Returns true if the selected track is recording. Needs to be synchronized
-     * because trackDataHub can be accessed by multiple threads.
+     * Returns true if the selected track is recording.
+     * Needs to be synchronized because trackDataHub can be accessed by multiple threads.
      */
     private synchronized boolean isSelectedTrackRecording() {
         return trackDataHub != null && trackDataHub.isSelectedTrackRecording();
     }
 
     /**
-     * Reloads the trackDataHub. Needs to be synchronized because trackDataHub can
-     * be accessed by multiple threads.
+     * Reloads the trackDataHub.
+     * Needs to be synchronized because trackDataHub can be accessed by multiple threads.
      */
     private synchronized void reloadTrackDataHub() {
         if (trackDataHub != null) {
@@ -389,18 +389,12 @@ public class ChartFragment extends Fragment implements TrackDataListener {
         }
     }
 
-    /**
-     * To zoom in.
-     */
     private void zoomIn() {
         chartView.zoomIn();
         zoomControls.setIsZoomInEnabled(chartView.canZoomIn());
         zoomControls.setIsZoomOutEnabled(chartView.canZoomOut());
     }
 
-    /**
-     * To zoom out.
-     */
     private void zoomOut() {
         chartView.zoomOut();
         zoomControls.setIsZoomInEnabled(chartView.canZoomIn());
@@ -438,9 +432,6 @@ public class ChartFragment extends Fragment implements TrackDataListener {
         double elevation = Double.NaN;
         double speed = Double.NaN;
         double pace = Double.NaN;
-        double heartRate = Double.NaN;
-        double cadence = Double.NaN;
-        double power = Double.NaN;
 
         if (tripStatisticsUpdater != null) {
             tripStatisticsUpdater.addLocation(location, recordingDistanceInterval);
@@ -466,6 +457,10 @@ public class ChartFragment extends Fragment implements TrackDataListener {
             }
             pace = speed == 0 ? 0.0 : 60.0 / speed;
         }
+
+        double heartRate = Double.NaN;
+        double cadence = Double.NaN;
+        double power = Double.NaN;
         if (location instanceof SensorDataSetLocation && ((SensorDataSetLocation) location).getSensorDataSet() != null) {
             SensorDataSet sensorDataSet = ((SensorDataSetLocation) location).getSensorDataSet();
             if (sensorDataSet.hasHeartRate()) {
@@ -479,6 +474,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
             }
         }
 
+        //TODO: Is related to ChartView.ELEVATION_SERIES etc.
         if (data != null) {
             data[0] = timeOrDistance;
             data[1] = elevation;
