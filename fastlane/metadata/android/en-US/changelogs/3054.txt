@@ -1,4 +1,4 @@
-v3.2: OpenTracks
+v3.2.0: OpenTracks
 
 Changes:
 - Removed Widget
