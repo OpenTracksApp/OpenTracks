@@ -27,9 +27,7 @@ limitations under the License.
         <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_holo_dark</item>
         <item name="android:listChoiceIndicatorSingle">@drawable/btn_radio_holo_dark</item>
         <item name="android:progressBarStyleHorizontal">@style/ProgressBarCustom</item>
-        <!-- Manually added -->
-        <item name="android:actionBarStyle">@style/ActionBarStyleCustom</item>
-        <item name="android:actionModeBackground">@drawable/custom_action_mode_background</item>
+
         <!--        <item name="colorPrimary">TODO</item>-->
         <!--        <item name="colorPrimaryDark">TODO</item>-->
 

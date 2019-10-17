@@ -15,11 +15,6 @@ limitations under the License.
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="ActionBarStyleCustom" parent="@android:style/Widget.Holo.ActionBar">
-        <!-- Same image as the source except using a grey line instead of a blue line -->
-        <item name="android:background">@drawable/ab_transparent_dark_holo</item>
-    </style>
-
     <style name="BottomButton" parent="@android:style/Widget.Holo.Button.Borderless">
         <!-- Same as BottomButton in values/styles.xml except inheriting from Widget.Holo.Button.Borderles. -->
         <item name="android:layout_height">wrap_content</item>
