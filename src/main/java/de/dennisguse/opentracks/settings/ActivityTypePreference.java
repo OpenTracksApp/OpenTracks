@@ -27,9 +27,8 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Spinner;
 
-import androidx.fragment.app.FragmentActivity;
 import androidx.preference.DialogPreference;
-import androidx.preference.PreferenceDialogFragment;
+import androidx.preference.PreferenceDialogFragmentCompat;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
@@ -67,7 +66,7 @@ public class ActivityTypePreference extends DialogPreference {
         return R.layout.preference_activity_type;
     }
 
-    public static class ActivityPreferenceDialog extends PreferenceDialogFragment {
+    public static class ActivityPreferenceDialog extends PreferenceDialogFragmentCompat {
 
         private AutoCompleteTextView textView;
         private Spinner spinner;
@@ -75,7 +74,7 @@ public class ActivityTypePreference extends DialogPreference {
         static ActivityPreferenceDialog newInstance(String preferenceKey) {
             ActivityTypePreference.ActivityPreferenceDialog dialog = new ActivityTypePreference.ActivityPreferenceDialog();
             final Bundle bundle = new Bundle(1);
-            bundle.putString(PreferenceDialogFragment.ARG_KEY, preferenceKey);
+            bundle.putString(PreferenceDialogFragmentCompat.ARG_KEY, preferenceKey);
             dialog.setArguments(bundle);
 
             return dialog;
@@ -134,10 +133,7 @@ public class ActivityTypePreference extends DialogPreference {
 
         private void showIconSelectDialog() {
             String category = PreferencesUtils.getString(getActivity(), R.string.default_activity_key, PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT);
-
-            // TODO Remove casting when upgrading to new Androidx compat.
-            FragmentActivity fragmentActivity = (androidx.fragment.app.FragmentActivity) getActivity();
-            ChooseActivityTypeDialogFragment.showDialog(fragmentActivity.getSupportFragmentManager(), category);
+            ChooseActivityTypeDialogFragment.showDialog(getActivity().getSupportFragmentManager(), category);
         }
 
         @Override

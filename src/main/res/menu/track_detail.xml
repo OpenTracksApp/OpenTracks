@@ -13,29 +13,30 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/track_detail_insert_marker"
         android:icon="@drawable/ic_marker_add_24dp"
         android:orderInCategory="1"
-        android:showAsAction="ifRoom"
+        app:showAsAction="ifRoom"
         android:title="@string/menu_insert_marker" />
     <item
         android:id="@+id/track_detail_insert_photo"
         android:icon="@drawable/ic_camera_24dp"
         android:orderInCategory="2"
-        android:showAsAction="ifRoom"
+        app:showAsAction="ifRoom"
         android:title="@string/menu_insert_photo" />
     <item
         android:id="@+id/track_detail_menu_show_on_map"
         android:icon="@drawable/ic_map_24dp"
-        android:showAsAction="ifRoom"
+        app:showAsAction="ifRoom"
         android:title="@string/menu_show_on_map" />
     <item
         android:id="@+id/track_detail_share"
-        android:actionProviderClass="android.widget.ShareActionProvider"
+        app:actionProviderClass="androidx.appcompat.widget.ShareActionProvider"
         android:orderInCategory="4"
-        android:showAsAction="ifRoom"
+        app:showAsAction="ifRoom"
         android:title="@string/menu_share" />
     <item
         android:id="@+id/track_detail_markers"

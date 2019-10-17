@@ -40,12 +40,13 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.SearchView;
-import android.widget.ShareActionProvider;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.ShareActionProvider;
 import androidx.core.app.ActivityCompat;
+import androidx.core.view.MenuItemCompat;
 import androidx.cursoradapter.widget.ResourceCursorAdapter;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.app.LoaderManager.LoaderCallbacks;
@@ -118,7 +119,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             boolean isSingleSelection = trackIds.length == 1;
 
             MenuItem shareMenuItem = menu.findItem(R.id.list_context_menu_share);
-            ShareActionProvider shareActionProvider = (ShareActionProvider) shareMenuItem.getActionProvider();
+            ShareActionProvider shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareMenuItem);
             shareActionProvider.setShareIntent(trackIds.length == 0 ? null : IntentUtils.newShareFileIntent(TrackListActivity.this, trackIds));
 
             menu.findItem(R.id.list_context_menu_edit).setVisible(isSingleSelection);
@@ -394,10 +395,9 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         boolean isRecording = PreferencesUtils.isRecording(recordingTrackId);
         updateMenuItems(isGpsStarted, isRecording);
 
-        View searchView = searchMenuItem.getActionView();
-        if (searchView instanceof SearchView) {
-            ((SearchView) searchView).setQuery("", false);
-        }
+        SearchView searchView = (SearchView) searchMenuItem.getActionView();
+        searchView.setQuery("", false);
+
         return super.onPrepareOptionsMenu(menu);
     }
 

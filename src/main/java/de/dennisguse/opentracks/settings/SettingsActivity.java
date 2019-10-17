@@ -1,13 +1,13 @@
 package de.dennisguse.opentracks.settings;
 
-import android.app.DialogFragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
-import androidx.preference.PreferenceFragment;
+import androidx.preference.PreferenceFragmentCompat;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
@@ -22,7 +22,7 @@ public class SettingsActivity extends FragmentActivity implements ChooseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getFragmentManager().beginTransaction().replace(android.R.id.content, prefsFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(android.R.id.content, prefsFragment).commit();
     }
 
     @Override
@@ -30,7 +30,7 @@ public class SettingsActivity extends FragmentActivity implements ChooseActivity
         prefsFragment.setDefaultActivity(iconValue);
     }
 
-    public static class PrefsFragment extends PreferenceFragment {
+    public static class PrefsFragment extends PreferenceFragmentCompat {
 
         /*
          * Note that sharedPreferenceChangeListener cannot be an anonymous inner class.
@@ -62,7 +62,7 @@ public class SettingsActivity extends FragmentActivity implements ChooseActivity
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            addPreferencesFromResource(R.xml.settings);
+            setPreferencesFromResource(R.xml.settings, rootKey);
             updateUnits();
         }
 

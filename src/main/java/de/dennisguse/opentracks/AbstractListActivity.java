@@ -29,9 +29,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
-import android.widget.SearchView;
 
-import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 
 import java.util.ArrayList;
 
@@ -208,10 +207,9 @@ public abstract class AbstractListActivity extends AbstractActivity implements C
     }
 
     /**
-     * Gets the track recording service connection. For stopping the current
-     * recording if need to delete the current recording track.
+     * Gets the track recording service connection.
+     * For stopping the current recording if need to delete the current recording track.
      */
-    @NonNull
     abstract protected TrackRecordingServiceConnection getTrackRecordingServiceConnection();
 
     /**

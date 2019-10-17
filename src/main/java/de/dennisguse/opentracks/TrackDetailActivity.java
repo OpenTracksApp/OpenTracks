@@ -31,13 +31,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
-import android.widget.ShareActionProvider;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.ShareActionProvider;
 import androidx.core.app.ActivityCompat;
+import androidx.core.view.MenuItemCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import de.dennisguse.opentracks.content.ContentProviderUtils;
@@ -318,7 +319,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
         insertPhotoMenuItem.setVisible(new Intent(MediaStore.ACTION_IMAGE_CAPTURE).resolveActivity(getPackageManager()) != null);
 
         shareMenuItem = menu.findItem(R.id.track_detail_share);
-        ShareActionProvider shareActionProvider = (ShareActionProvider) shareMenuItem.getActionProvider();
+        ShareActionProvider shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareMenuItem);
         shareActionProvider.setShareIntent(IntentUtils.newShareFileIntent(this, new long[]{trackId}));
 
         voiceFrequencyMenuItem = menu.findItem(R.id.track_detail_voice_frequency);
@@ -392,6 +393,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
             }
             return;
         }
+
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 

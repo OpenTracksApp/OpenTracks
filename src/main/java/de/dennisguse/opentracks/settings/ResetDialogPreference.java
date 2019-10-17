@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import android.widget.Toast;
 
 import androidx.preference.DialogPreference;
-import androidx.preference.PreferenceDialogFragment;
+import androidx.preference.PreferenceDialogFragmentCompat;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.util.PreferencesUtils;
@@ -17,12 +17,12 @@ public class ResetDialogPreference extends DialogPreference {
         super(context, attrs);
     }
 
-    public static class ResetPreferenceDialog extends PreferenceDialogFragment {
+    public static class ResetPreferenceDialog extends PreferenceDialogFragmentCompat {
 
-        static PreferenceDialogFragment newInstance(String preferenceKey) {
+        static PreferenceDialogFragmentCompat newInstance(String preferenceKey) {
             ResetPreferenceDialog dialog = new ResetPreferenceDialog();
             final Bundle bundle = new Bundle(1);
-            bundle.putString(PreferenceDialogFragment.ARG_KEY, preferenceKey);
+            bundle.putString(PreferenceDialogFragmentCompat.ARG_KEY, preferenceKey);
             dialog.setArguments(bundle);
 
             return dialog;

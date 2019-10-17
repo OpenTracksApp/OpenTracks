@@ -19,12 +19,12 @@ package de.dennisguse.opentracks;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 
-import androidx.fragment.app.FragmentActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * @author Jimmy Shih
  */
-public abstract class AbstractActivity extends FragmentActivity {
+public abstract class AbstractActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

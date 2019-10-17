@@ -13,20 +13,21 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/marker_detail_show_on_map"
         android:icon="@drawable/ic_map_24dp"
-        android:showAsAction="ifRoom"
-        android:title="@string/menu_show_on_map" />
+        android:title="@string/menu_show_on_map"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/marker_detail_edit"
         android:icon="@drawable/ic_edit_24dp"
-        android:showAsAction="ifRoom"
-        android:title="@string/menu_edit" />
+        android:title="@string/menu_edit"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/marker_detail_delete"
         android:icon="@drawable/ic_delete_forever_24dp"
-        android:showAsAction="ifRoom"
-        android:title="@string/menu_delete" />
+        android:title="@string/menu_delete"
+        app:showAsAction="ifRoom" />
 </menu>
