@@ -55,6 +55,7 @@ import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.stats.TripStatistics;
+import de.dennisguse.opentracks.util.ActivityUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.ListItemUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
@@ -223,7 +224,7 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
                 startActivity(intent);
             }
         });
-        AbstractListActivity.configureListViewContextualMenu(listView, contextualActionModeCallback);
+        ActivityUtils.configureListViewContextualMenu(listView, contextualActionModeCallback);
         handleIntent(getIntent());
     }
 

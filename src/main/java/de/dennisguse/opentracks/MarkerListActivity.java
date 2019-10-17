@@ -46,6 +46,7 @@ import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 import de.dennisguse.opentracks.content.WaypointsColumns;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
+import de.dennisguse.opentracks.util.ActivityUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.ListItemUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
@@ -175,7 +176,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
             }
         };
         listView.setAdapter(resourceCursorAdapter);
-        AbstractListActivity.configureListViewContextualMenu(listView, contextualActionModeCallback);
+        ActivityUtils.configureListViewContextualMenu(listView, contextualActionModeCallback);
 
         LoaderManager.getInstance(this).initLoader(0, null, new LoaderCallbacks<Cursor>() {
             @NonNull
@@ -234,7 +235,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         insertMarkerMenuItem = menu.findItem(R.id.marker_list_insert_marker);
 
         searchMenuItem = menu.findItem(R.id.marker_list_search);
-        AbstractListActivity.configureSearchWidget(this, searchMenuItem, null);
+        ActivityUtils.configureSearchWidget(this, searchMenuItem, null);
 
         return super.onCreateOptionsMenu(menu);
     }

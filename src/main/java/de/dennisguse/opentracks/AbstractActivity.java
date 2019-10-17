@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 /**
  * @author Jimmy Shih
@@ -34,6 +35,9 @@ public abstract class AbstractActivity extends AppCompatActivity {
         setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
 
         setContentView(getLayoutResId());
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
     }
 
     /**

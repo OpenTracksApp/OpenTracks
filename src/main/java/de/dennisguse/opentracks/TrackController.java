@@ -130,11 +130,11 @@ public class TrackController {
         handlerUpdateTotalTime.removeCallbacks(updateTotalTimeRunnable);
     }
 
-    void hide() {
+    public void hide() {
         containerView.setVisibility(View.GONE);
     }
 
-    void show() {
+    public void show() {
         containerView.setVisibility(View.VISIBLE);
     }
 

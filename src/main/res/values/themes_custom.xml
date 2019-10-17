@@ -15,7 +15,7 @@ limitations under the License.
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="ThemeCustom" parent="Theme.AppCompat">
+    <style name="ThemeCustom" parent="Theme.AppCompat.NoActionBar">
         <!-- TODO Cleanup necessary due to change to appcompat -->
         <!-- Auto generated -->
         <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo_dark
@@ -34,6 +34,7 @@ limitations under the License.
         <!--        <item name="colorPrimaryDark">TODO</item>-->
 
         <item name="android:colorAccent">@color/holo_orange_dark</item>
+        <item name="windowActionModeOverlay">true</item>
     </style>
 
     <style name="ThemeCustomTransparent" parent="ThemeCustom">

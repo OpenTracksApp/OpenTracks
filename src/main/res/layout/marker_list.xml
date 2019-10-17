@@ -13,9 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
 
     <ListView
         android:id="@+id/marker_list"
@@ -26,4 +29,4 @@ limitations under the License.
         android:id="@+id/marker_list_empty"
         style="@style/ListEmptyTextView"
         android:text="@string/marker_list_empty_message" />
-</merge>
+</LinearLayout>

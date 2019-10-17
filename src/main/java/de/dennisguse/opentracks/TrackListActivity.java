@@ -59,6 +59,7 @@ import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.services.ITrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.settings.SettingsActivity;
+import de.dennisguse.opentracks.util.ActivityUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.ListItemUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
@@ -325,9 +326,8 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             }
         };
         listView.setAdapter(resourceCursorAdapter);
-        TrackListActivity.this.registerForContextMenu(listView);
 
-        AbstractListActivity.configureListViewContextualMenu(listView, contextualActionModeCallback);
+        ActivityUtils.configureListViewContextualMenu(listView, contextualActionModeCallback);
 
         LoaderManager.getInstance(this).initLoader(0, null, loaderCallbacks);
         showStartupDialogs();
@@ -389,7 +389,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         getMenuInflater().inflate(R.menu.track_list, menu);
 
         searchMenuItem = menu.findItem(R.id.track_list_search);
-        AbstractListActivity.configureSearchWidget(this, searchMenuItem, trackController);
+        ActivityUtils.configureSearchWidget(this, searchMenuItem, trackController);
 
         startGpsMenuItem = menu.findItem(R.id.track_list_start_gps);
         aggregatedStatisticsMenuItem = menu.findItem(R.id.track_list_aggregated_statistics);
