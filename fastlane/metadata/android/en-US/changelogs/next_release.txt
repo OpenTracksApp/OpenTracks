@@ -1,7 +1,7 @@
 (tbd): OpenTracks
 
 Changes:
--
+- Removed aggregated stats
 
 Bugfix:
 -

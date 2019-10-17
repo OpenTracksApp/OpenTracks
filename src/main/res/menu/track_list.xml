@@ -32,10 +32,6 @@ limitations under the License.
         android:title="@string/menu_markers"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/track_list_aggregated_statistics"
-        android:icon="@drawable/ic_statistics_24dp"
-        android:title="@string/menu_aggregated_statistics" />
-    <item
         android:id="@+id/track_list_delete_all"
         android:icon="@drawable/ic_delete_forever_24dp"
         android:title="@string/menu_delete_all" />

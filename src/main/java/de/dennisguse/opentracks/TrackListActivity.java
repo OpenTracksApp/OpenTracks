@@ -184,7 +184,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     // Menu items
     private MenuItem searchMenuItem;
     private MenuItem startGpsMenuItem;
-    private MenuItem aggregatedStatisticsMenuItem;
     private MenuItem deleteAllMenuItem;
 
     private final OnClickListener stopListener = new OnClickListener() {
@@ -392,7 +391,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         ActivityUtils.configureSearchWidget(this, searchMenuItem, trackController);
 
         startGpsMenuItem = menu.findItem(R.id.track_list_start_gps);
-        aggregatedStatisticsMenuItem = menu.findItem(R.id.track_list_aggregated_statistics);
         deleteAllMenuItem = menu.findItem(R.id.track_list_delete_all);
 
         return super.onCreateOptionsMenu(menu);
@@ -445,10 +443,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                 return true;
             case R.id.track_list_markers:
                 intent = IntentUtils.newIntent(this, MarkerListActivity.class);
-                startActivity(intent);
-                return true;
-            case R.id.track_list_aggregated_statistics:
-                intent = IntentUtils.newIntent(this, AggregatedStatsActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.track_list_delete_all:
@@ -538,9 +532,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                 startGpsMenuItem.setTitle(isGpsStarted ? R.string.menu_stop_gps : R.string.menu_start_gps);
                 startGpsMenuItem.setIcon(isGpsStarted ? R.drawable.ic_gps_fixed_24dp : R.drawable.ic_gps_off_24dp);
             }
-        }
-        if (aggregatedStatisticsMenuItem != null) {
-            aggregatedStatisticsMenuItem.setVisible(hasTrack);
         }
         if (deleteAllMenuItem != null) {
             deleteAllMenuItem.setVisible(hasTrack && !isRecording);
