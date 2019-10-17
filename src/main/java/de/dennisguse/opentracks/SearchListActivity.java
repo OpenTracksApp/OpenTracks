@@ -122,8 +122,9 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
                 isSingleSelectionTrack = false;
             }
             // Not recording, one item, item is a track
-            menu.findItem(R.id.list_context_menu_share).setVisible(!isRecording && isSingleSelection && isSingleSelectionTrack);
             //TODO Setup shareIntent.
+//            menu.findItem(R.id.list_context_menu_share).setVisible(!isRecording && isSingleSelection && isSingleSelectionTrack);
+            menu.findItem(R.id.list_context_menu_share).setVisible(false);
 
             // One item, item is a marker
             menu.findItem(R.id.list_context_menu_show_on_map).setVisible(isSingleSelection && !isSingleSelectionTrack);
