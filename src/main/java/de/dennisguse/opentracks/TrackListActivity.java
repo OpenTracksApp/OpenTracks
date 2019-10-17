@@ -28,8 +28,6 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -37,7 +35,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -454,24 +451,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        getMenuInflater().inflate(R.menu.list_context_menu, menu);
-
-        AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
-        contextualActionModeCallback.onPrepare(menu, new int[]{info.position}, new long[]{info.id}, false);
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-        if (handleContextItem(item.getItemId(), new long[]{info.id})) {
-            return true;
-        }
-        return super.onContextItemSelected(item);
     }
 
     @Override
