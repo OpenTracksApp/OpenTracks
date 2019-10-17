@@ -44,9 +44,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.ShareActionProvider;
 import androidx.core.app.ActivityCompat;
-import androidx.core.view.MenuItemCompat;
 import androidx.cursoradapter.widget.ResourceCursorAdapter;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.app.LoaderManager.LoaderCallbacks;
@@ -119,8 +117,17 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             boolean isSingleSelection = trackIds.length == 1;
 
             MenuItem shareMenuItem = menu.findItem(R.id.list_context_menu_share);
-            ShareActionProvider shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareMenuItem);
-            shareActionProvider.setShareIntent(trackIds.length == 0 ? null : IntentUtils.newShareFileIntent(TrackListActivity.this, trackIds));
+
+            {
+                //TODO Compat is not working as the AbsListView.MultiChoiceModeListener; instantiating it manually using the non-compat is a workaround.
+                android.widget.ShareActionProvider shareActionProvider = new android.widget.ShareActionProvider(TrackListActivity.this);
+//            ShareActionProvider shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareMenuItem);
+
+                shareActionProvider.setShareIntent(trackIds.length == 0 ? null : IntentUtils.newShareFileIntent(TrackListActivity.this, trackIds));
+
+                shareMenuItem.setActionProvider(shareActionProvider);
+//            MenuItemCompat.setActionProvider(shareMenuItem, shareActionProvider);
+            }
 
             menu.findItem(R.id.list_context_menu_edit).setVisible(isSingleSelection);
             menu.findItem(R.id.list_context_menu_select_all).setVisible(showSelectAll);
@@ -318,6 +325,8 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             }
         };
         listView.setAdapter(resourceCursorAdapter);
+        TrackListActivity.this.registerForContextMenu(listView);
+
         AbstractListActivity.configureListViewContextualMenu(listView, contextualActionModeCallback);
 
         LoaderManager.getInstance(this).initLoader(0, null, loaderCallbacks);
