@@ -71,9 +71,6 @@ public class KmlTrackWriter implements TrackWriter {
     private List<Float> powerList = new ArrayList<>();
     private List<Float> cadenceList = new ArrayList<>();
     private List<Float> heartRateList = new ArrayList<>();
-    private boolean hasPower;
-    private boolean hasCadence;
-    private boolean hasHeartRate;
 
     private Location startLocation;
 
@@ -235,9 +232,6 @@ public class KmlTrackWriter implements TrackWriter {
     public void writeOpenSegment() {
         if (printWriter != null) {
             printWriter.println("<gx:Track>");
-            hasPower = false;
-            hasCadence = false;
-            hasHeartRate = false;
             powerList.clear();
             cadenceList.clear();
             heartRateList.clear();
@@ -250,13 +244,13 @@ public class KmlTrackWriter implements TrackWriter {
             printWriter.println("<ExtendedData>");
             printWriter.println("<SchemaData schemaUrl=\"#" + SCHEMA_ID + "\">");
             if (exportSensorData) {
-                if (hasPower) {
+                if (powerList.size() > 0) {
                     writeSensorData(powerList, POWER);
                 }
-                if (hasCadence) {
+                if (cadenceList.size() > 0) {
                     writeSensorData(cadenceList, CADENCE);
                 }
-                if (hasHeartRate) {
+                if (heartRateList.size() > 0) {
                     writeSensorData(heartRateList, HEART_RATE);
                 }
             }
