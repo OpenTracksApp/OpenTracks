@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -56,6 +57,7 @@ import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.ListItemUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
+import de.dennisguse.opentracks.util.ToolbarUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 
 /**
@@ -108,27 +110,31 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
         public void onPrepare(Menu menu, int[] positions, long[] ids, boolean showSelectAll) {
             boolean isRecording = PreferencesUtils.isRecording(recordingTrackId);
             boolean isSingleSelection = positions.length == 1;
+
             boolean isSingleSelectionTrack;
             if (isSingleSelection) {
                 Map<String, Object> item = arrayAdapter.getItem(positions[0]);
-                Long trackId = (Long) item.get(TRACK_ID_FIELD);
-                Track track = contentProviderUtils.getTrack(trackId);
-
                 isSingleSelectionTrack = item.get(MARKER_ID_FIELD) == null;
             } else {
                 isSingleSelectionTrack = false;
             }
+
             // Not recording, one item, item is a track
-            //TODO Setup shareIntent.
-//            menu.findItem(R.id.list_context_menu_share).setVisible(!isRecording && isSingleSelection && isSingleSelectionTrack);
-            menu.findItem(R.id.list_context_menu_share).setVisible(false);
+            MenuItem shareMenuItem = menu.findItem(R.id.list_context_menu_share);
+            if (isSingleSelectionTrack) {
+                shareMenuItem.setVisible(!isRecording);
+                Map<String, Object> item = arrayAdapter.getItem(positions[0]);
+                Long trackId = (Long) item.get(TRACK_ID_FIELD);
+
+                ToolbarUtils.setupShareActionProvider(SearchListActivity.this, shareMenuItem, new long[]{trackId});
+            }
 
             // One item, item is a marker
             menu.findItem(R.id.list_context_menu_show_on_map).setVisible(isSingleSelection && !isSingleSelectionTrack);
             // One item, can be a track or a marker
             menu.findItem(R.id.list_context_menu_edit).setVisible(isSingleSelection);
             // One item. If track, no restriction.
-            menu.findItem(R.id.list_context_menu_delete).setVisible(isSingleSelection && (isSingleSelectionTrack));
+            menu.findItem(R.id.list_context_menu_delete).setVisible(isSingleSelection && isSingleSelectionTrack);
             // Disable select all, no action is available for multiple selection
             menu.findItem(R.id.list_context_menu_select_all).setVisible(false);
         }
@@ -281,10 +287,6 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
         Long markerId = (Long) item.get(MARKER_ID_FIELD);
         Intent intent;
         switch (itemId) {
-            case R.id.list_context_menu_share:
-                //TODO
-                Log.e(TAG, "Not implemented");
-                return true;
             case R.id.list_context_menu_show_on_map:
                 IntentUtils.showCoordinateOnMap(this, (double) item.get(MARKER_LATITUDE_FIELD), (double) item.get(MARKER_LONGITUDE_FIELD), item.get(NAME_FIELD) + "");
                 return true;

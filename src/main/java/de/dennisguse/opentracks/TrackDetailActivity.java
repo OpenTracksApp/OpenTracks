@@ -36,9 +36,7 @@ import android.widget.TabHost.TabSpec;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.ShareActionProvider;
 import androidx.core.app.ActivityCompat;
-import androidx.core.view.MenuItemCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import de.dennisguse.opentracks.content.ContentProviderUtils;
@@ -57,6 +55,7 @@ import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
+import de.dennisguse.opentracks.util.ToolbarUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.TrackUtils;
 
@@ -319,8 +318,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
         insertPhotoMenuItem.setVisible(new Intent(MediaStore.ACTION_IMAGE_CAPTURE).resolveActivity(getPackageManager()) != null);
 
         shareMenuItem = menu.findItem(R.id.track_detail_share);
-        ShareActionProvider shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareMenuItem);
-        shareActionProvider.setShareIntent(IntentUtils.newShareFileIntent(this, new long[]{trackId}));
+        ToolbarUtils.setupShareActionProviderCompat(this, shareMenuItem, new long[]{trackId});
 
         voiceFrequencyMenuItem = menu.findItem(R.id.track_detail_voice_frequency);
         splitFrequencyMenuItem = menu.findItem(R.id.track_detail_split_frequency);
