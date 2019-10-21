@@ -3,8 +3,9 @@ package de.dennisguse.opentracks.settings;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -14,7 +15,7 @@ import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 
-public class SettingsActivity extends FragmentActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller {
+public class SettingsActivity extends AppCompatActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller {
 
     private PrefsFragment prefsFragment = new PrefsFragment();
 
@@ -22,7 +23,13 @@ public class SettingsActivity extends FragmentActivity implements ChooseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getSupportFragmentManager().beginTransaction().replace(android.R.id.content, prefsFragment).commit();
+        setContentView(R.layout.settings);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.menu_settings);
+        setSupportActionBar(toolbar);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.settings_fragment, prefsFragment).commit();
     }
 
     @Override
