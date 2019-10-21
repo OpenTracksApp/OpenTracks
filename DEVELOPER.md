@@ -8,5 +8,5 @@
 4. Create changelog (`_version code_.txt`)
 5. Create commit with all changes
 6. Push commits
-7. Tag newly create commit with _version name_
-8. Push the tagged to public repository  
+7. Tag newly create commit with _version name_ (e.g., v3.2.1)
+8. Push the tagged commit to public repository  
