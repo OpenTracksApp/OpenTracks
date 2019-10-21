@@ -49,9 +49,10 @@ public class KmlTrackWriter implements TrackWriter {
     private static final String END_STYLE = "end";
     private static final String TRACK_STYLE = "track";
     private static final String SCHEMA_ID = "schema";
-    private static final String CADENCE = "cadence";
-    private static final String HEART_RATE = "heart_rate";
-    private static final String POWER = "power";
+
+    private static final String SENSOR_TYPE_CADENCE = "cadence";
+    private static final String SENSOR_TYPE_HEART_RATE = "heart_rate";
+    private static final String SENSOR_TYPE_POWER = "power";
 
     private static final String WAYPOINT_ICON = "http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png";
     private static final String STATISTICS_ICON = "http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png";
@@ -129,9 +130,9 @@ public class KmlTrackWriter implements TrackWriter {
             printWriter.println("<Schema id=\"" + SCHEMA_ID + "\">");
 
             if (exportSensorData) {
-                writeSensorStyle(POWER, context.getString(R.string.description_sensor_power));
-                writeSensorStyle(CADENCE, context.getString(R.string.description_sensor_cadence));
-                writeSensorStyle(HEART_RATE, context.getString(R.string.description_sensor_heart_rate));
+                writeSensorStyle(SENSOR_TYPE_POWER, context.getString(R.string.description_sensor_power));
+                writeSensorStyle(SENSOR_TYPE_CADENCE, context.getString(R.string.description_sensor_cadence));
+                writeSensorStyle(SENSOR_TYPE_HEART_RATE, context.getString(R.string.description_sensor_heart_rate));
             }
             printWriter.println("</Schema>");
         }
@@ -245,13 +246,13 @@ public class KmlTrackWriter implements TrackWriter {
             printWriter.println("<SchemaData schemaUrl=\"#" + SCHEMA_ID + "\">");
             if (exportSensorData) {
                 if (powerList.size() > 0) {
-                    writeSensorData(powerList, POWER);
+                    writeSensorData(powerList, SENSOR_TYPE_POWER);
                 }
                 if (cadenceList.size() > 0) {
-                    writeSensorData(cadenceList, CADENCE);
+                    writeSensorData(cadenceList, SENSOR_TYPE_CADENCE);
                 }
                 if (heartRateList.size() > 0) {
-                    writeSensorData(heartRateList, HEART_RATE);
+                    writeSensorData(heartRateList, SENSOR_TYPE_HEART_RATE);
                 }
             }
             printWriter.println("</SchemaData>");
@@ -460,11 +461,11 @@ public class KmlTrackWriter implements TrackWriter {
      * Writes a sensor style.
      *
      * @param name        the name of the sesnor
-     * @param displayName the sensor display name
+     * @param sensorType the sensor display name
      */
-    private void writeSensorStyle(String name, String displayName) {
-        printWriter.println("<gx:SimpleArrayField name=\"" + name + "\" type=\"int\">");
-        printWriter.println("<displayName>" + StringUtils.formatCData(displayName) + "</displayName>");
+    private void writeSensorStyle(String name, String sensorType) {
+        printWriter.println("<gx:SimpleArrayField name=\"" + name + "\" type=\"float\">");
+        printWriter.println("<displayName>" + StringUtils.formatCData(sensorType) + "</displayName>");
         printWriter.println("</gx:SimpleArrayField>");
     }
 }

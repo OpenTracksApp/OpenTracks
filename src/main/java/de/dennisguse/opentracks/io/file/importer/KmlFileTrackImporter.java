@@ -19,6 +19,7 @@ package de.dennisguse.opentracks.io.file.importer;
 import android.content.Context;
 import android.location.Location;
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.annotation.VisibleForTesting;
 
@@ -38,6 +39,8 @@ import de.dennisguse.opentracks.content.sensor.SensorDataSet;
  * @author Jimmy Shih
  */
 public class KmlFileTrackImporter extends AbstractFileTrackImporter {
+
+    private static final String TAG = KmlFileTrackImporter.class.getSimpleName();
 
     private static final String CADENCE = "cadence";
     private static final String HEART_RATE = "heart_rate";
@@ -65,11 +68,11 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
     private static final String ATTRIBUTE_NAME = "name";
 
     private boolean trackStarted = false;
-    private String sensorName;
+    private String sensorType;
     private ArrayList<Location> locationList;
-    private ArrayList<Integer> cadenceList;
-    private ArrayList<Integer> heartRateList;
-    private ArrayList<Integer> powerList;
+    private ArrayList<Float> cadenceList;
+    private ArrayList<Float> heartRateList;
+    private ArrayList<Float> powerList;
 
     /**
      * Constructor.
@@ -229,20 +232,30 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
      */
     private void onTrackSegmentEnd() {
         // Close a track segment by inserting the segment locations
-        boolean hasHeartRate = heartRateList.size() == locationList.size();
-        boolean hasCadence = cadenceList.size() == locationList.size();
-        boolean hasPower = powerList.size() == locationList.size();
-
         for (int i = 0; i < locationList.size(); i++) {
             Location location = locationList.get(i);
 
-            if (!hasPower && !hasCadence && !hasHeartRate) {
+            boolean hasSensorData = false;
+            float heartrate = SensorDataSet.DATA_UNAVAILABLE;
+            float cadence = SensorDataSet.DATA_UNAVAILABLE;
+            float power = SensorDataSet.DATA_UNAVAILABLE;
+
+            if (i < heartRateList.size()) {
+                heartrate = heartRateList.get(i);
+                hasSensorData = true;
+            }
+            if (i < cadenceList.size()) {
+                cadence = cadenceList.get(i);
+                hasSensorData = true;
+            }
+            if (i < powerList.size()) {
+                power = powerList.get(i);
+                hasSensorData = true;
+            }
+
+            if (!hasSensorData) {
                 insertTrackPoint(location);
             } else {
-                float heartrate = hasHeartRate ? heartRateList.get(i) : SensorDataSet.DATA_UNAVAILABLE;
-                float cadence = hasHeartRate ? cadenceList.get(i) : SensorDataSet.DATA_UNAVAILABLE;
-                float power = hasHeartRate ? powerList.get(i) : SensorDataSet.DATA_UNAVAILABLE;
-
                 SensorDataSetLocation sensorDataSetLocation = new SensorDataSetLocation(location, new SensorDataSet(heartrate, cadence, power, SensorDataSet.DATA_UNAVAILABLE, location.getTime()));
                 insertTrackPoint(sensorDataSetLocation);
             }
@@ -277,7 +290,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
      * On sensor data start. gx:SimpleArrayData start tag.
      */
     private void onSensorDataStart(Attributes attributes) {
-        sensorName = attributes.getValue(ATTRIBUTE_NAME);
+        sensorType = attributes.getValue(ATTRIBUTE_NAME);
     }
 
     /**
@@ -291,18 +304,24 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
         if (content.equals("")) {
             return;
         }
-        int value;
+        float value;
         try {
-            value = Integer.parseInt(content);
+            value = Float.valueOf(content);
         } catch (NumberFormatException e) {
             throw new SAXException(createErrorMessage("Unable to parse gx:value:" + content), e);
         }
-        if (POWER.equals(sensorName)) {
-            powerList.add(value);
-        } else if (HEART_RATE.equals(sensorName)) {
-            heartRateList.add(value);
-        } else if (CADENCE.equals(sensorName)) {
-            cadenceList.add(value);
+        switch (sensorType) {
+            case POWER:
+                powerList.add(value);
+                break;
+            case HEART_RATE:
+                heartRateList.add(value);
+                break;
+            case CADENCE:
+                cadenceList.add(value);
+                break;
+            default:
+                Log.w(TAG, "Data from sensor " + sensorType + " is not (yet) supported.");
         }
     }
 }

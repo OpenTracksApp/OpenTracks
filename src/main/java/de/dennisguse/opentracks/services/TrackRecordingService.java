@@ -853,7 +853,7 @@ public class TrackRecordingService extends Service {
      */
     private void insertLocation(Track track, Location location, Location lastValidTrackPoint) {
         if (location == null) {
-            Log.w(TAG, "Ignore insertLocation. loation is null.");
+            Log.w(TAG, "Ignore insertLocation. location is null.");
             return;
         }
         // Do not insert if inserted already

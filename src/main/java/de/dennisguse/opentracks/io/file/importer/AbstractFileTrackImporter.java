@@ -384,8 +384,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
      * @param message the message
      */
     protected String createErrorMessage(String message) {
-        return String.format(Locale.US, "Parsing error at line: %d column: %d. %s",
-                locator.getLineNumber(), locator.getColumnNumber(), message);
+        return String.format(Locale.US, "Parsing error at line: %d column: %d. %s", locator.getLineNumber(), locator.getColumnNumber(), message);
     }
 
     /**
