@@ -2,7 +2,7 @@ package de.dennisguse.opentracks.content.sensor;
 
 public final class SensorDataSet {
 
-    public static final float DATA_UNAVAILABLE = Integer.MAX_VALUE;
+    public static final float DATA_UNAVAILABLE = Float.NaN;
 
     //TODO It might be necessary to consider: sensor if sensor was connected as well.
     public String sensorName;
@@ -40,7 +40,7 @@ public final class SensorDataSet {
     }
 
     public boolean hasHeartRate() {
-        return heartRate != DATA_UNAVAILABLE;
+        return !Float.isNaN(heartRate);
     }
 
     public float getHeartRate() {
@@ -48,7 +48,7 @@ public final class SensorDataSet {
     }
 
     public boolean hasCadence() {
-        return cadence != DATA_UNAVAILABLE;
+        return !Float.isNaN(cadence);
     }
 
     public float getCadence() {
@@ -56,7 +56,7 @@ public final class SensorDataSet {
     }
 
     public boolean hasPower() {
-        return power != DATA_UNAVAILABLE;
+        return !Float.isNaN(power);
     }
 
     public float getPower() {
@@ -77,7 +77,7 @@ public final class SensorDataSet {
     }
 
     public boolean hasBatteryLevel() {
-        return batteryLevel != DATA_UNAVAILABLE;
+        return !Float.isNaN(batteryLevel);
     }
 
     public float getBatteryLevel() {
