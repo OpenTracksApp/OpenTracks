@@ -27,8 +27,6 @@ public class RemoteSensorManagerFactory {
 
     private static RemoteSensorManager remoteSensorManagerSystem = null;
 
-    //TODO Check if still needed? Is there a missing features?
-    private static RemoteSensorManager remoteSensorManagerTemporary = null;
 
     private RemoteSensorManagerFactory() {
     }
@@ -39,7 +37,6 @@ public class RemoteSensorManagerFactory {
      * @param context the context
      */
     public static RemoteSensorManager getSystemSensorManager(Context context) {
-        releaseSensorManagerTemporary();
         releaseSystemSensorManager();
         remoteSensorManagerSystem = getSensorManager(context);
         remoteSensorManagerSystem.startSensor();
@@ -54,29 +51,6 @@ public class RemoteSensorManagerFactory {
             remoteSensorManagerSystem.stopSensor();
         }
         remoteSensorManagerSystem = null;
-    }
-
-    /**
-     * Gets the temp sensor manager.
-     */
-    public static RemoteSensorManager getSensorManagerTemporary(Context context) {
-        releaseSensorManagerTemporary();
-        if (remoteSensorManagerSystem != null) {
-            return null;
-        }
-        remoteSensorManagerTemporary = getSensorManager(context);
-        remoteSensorManagerTemporary.startSensor();
-        return remoteSensorManagerTemporary;
-    }
-
-    /**
-     * Releases the temp sensor manager.
-     */
-    private static void releaseSensorManagerTemporary() {
-        if (remoteSensorManagerTemporary != null) {
-            remoteSensorManagerTemporary.stopSensor();
-        }
-        remoteSensorManagerTemporary = null;
     }
 
     /**

@@ -31,14 +31,14 @@ import de.dennisguse.opentracks.content.sensor.SensorState;
  */
 public abstract class RemoteSensorManager {
 
-    public static final long MAX_SENSOR_DATE_SET_AGE = 5000;
-    public static final long MAX_SENSOR_STATE_AGE = 20000;
+    public static final long MAX_SENSOR_DATE_SET_AGE_MS = 5000;
+    public static final long MAX_SENSOR_STATE_AGE_MS = 20000;
 
     private static final String TAG = RemoteSensorManager.class.getSimpleName();
-    private static final int RETRY_PERIOD = 20000;
+    private static final int RETRY_PERIOD_MS = 20000;
 
     private SensorState sensorState = SensorState.NONE;
-    private long sensorStateTimestamp = System.currentTimeMillis();
+    private long sensorStateTimestamp_ms = System.currentTimeMillis();
 
     private TimerTask timerTask;
     private Timer timer;
@@ -73,7 +73,7 @@ public abstract class RemoteSensorManager {
             public void run() {
                 switch (getSensorState()) {
                     case CONNECTING:
-                        if (System.currentTimeMillis() - sensorStateTimestamp > MAX_SENSOR_STATE_AGE) {
+                        if (System.currentTimeMillis() - sensorStateTimestamp_ms > MAX_SENSOR_STATE_AGE_MS) {
                             Log.i(TAG, "Retry setUpChannel");
                             setUpChannel();
                         }
@@ -86,7 +86,7 @@ public abstract class RemoteSensorManager {
             }
         };
         timer = new Timer(RemoteSensorManager.class.getSimpleName());
-        timer.schedule(timerTask, RETRY_PERIOD, RETRY_PERIOD);
+        timer.schedule(timerTask, RETRY_PERIOD_MS, RETRY_PERIOD_MS);
     }
 
     /**
@@ -118,7 +118,7 @@ public abstract class RemoteSensorManager {
      * @param sensorState the sensor state
      */
     public void setSensorState(SensorState sensorState) {
-        sensorStateTimestamp = System.currentTimeMillis();
+        sensorStateTimestamp_ms = System.currentTimeMillis();
         this.sensorState = sensorState;
     }
 
@@ -130,6 +130,6 @@ public abstract class RemoteSensorManager {
         if (sensorDataSet == null) {
             return false;
         }
-        return sensorDataSet.isRecent(MAX_SENSOR_DATE_SET_AGE);
+        return sensorDataSet.isRecent(MAX_SENSOR_DATE_SET_AGE_MS);
     }
 }

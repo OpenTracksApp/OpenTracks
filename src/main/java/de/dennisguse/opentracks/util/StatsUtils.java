@@ -119,7 +119,7 @@ public class StatsUtils {
             TextView heartRateSensor = activity.findViewById(R.id.stats_sensor_heart_rate_sensor_value);
             String heartRate = activity.getString(R.string.value_unknown);
             String sensor = activity.getString(R.string.value_unknown);
-            if (sensorDataSet != null && sensorDataSet.hasHeartRate() && sensorDataSet.isRecent(RemoteSensorManager.MAX_SENSOR_DATE_SET_AGE)) {
+            if (sensorDataSet != null && sensorDataSet.hasHeartRate() && sensorDataSet.isRecent(RemoteSensorManager.MAX_SENSOR_DATE_SET_AGE_MS)) {
                 heartRate = StringUtils.formatDecimal(sensorDataSet.getHeartRate(), 0);
                 sensor = sensorDataSet.getSensorName();
             }
