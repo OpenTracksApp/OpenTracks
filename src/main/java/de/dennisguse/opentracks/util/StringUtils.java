@@ -361,4 +361,25 @@ public class StringUtils {
         }
         return options;
     }
+
+    /**
+     * Sets an elevation value.
+     *
+     * @param context     the context
+     * @param elevation   the elevation in meters
+     * @param metricUnits true if metric units
+     * @return the formatted elevation (or null) and it's unit as {@link Pair}
+     */
+    public static Pair<String, String> formatElevation(Context context, double elevation, boolean metricUnits) {
+        String value = context.getString(R.string.value_unknown);
+        String unit = context.getString(metricUnits ? R.string.unit_meter : R.string.unit_feet);
+        if (!Double.isNaN(elevation) && !Double.isInfinite(elevation)) {
+            if (metricUnits) {
+                value = StringUtils.formatDecimal(elevation);
+            } else {
+                value = StringUtils.formatDecimal(elevation * UnitConversions.M_TO_FT);
+            }
+        }
+        return new Pair<>(value, unit);
+    }
 }

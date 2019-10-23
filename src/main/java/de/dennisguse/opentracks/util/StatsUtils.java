@@ -17,7 +17,6 @@
 package de.dennisguse.opentracks.util;
 
 import android.app.Activity;
-import android.content.Context;
 import android.location.Location;
 import android.util.Pair;
 import android.view.View;
@@ -77,7 +76,7 @@ public class StatsUtils {
 
         if (showGradeElevation) {
             double altitude = location != null && location.hasAltitude() ? location.getAltitude() : Double.NaN;
-            Pair<String, String> parts = formatElevation(activity, altitude, metricUnits);
+            Pair<String, String> parts = StringUtils.formatElevation(activity, altitude, metricUnits);
 
             TextView elevationValue = activity.findViewById(R.id.stats_elevation_current_value);
             elevationValue.setText(parts.first);
@@ -250,7 +249,7 @@ public class StatsUtils {
             if (showElevation) {
                 {
                     double elevation = tripStatistics == null ? Double.NaN : tripStatistics.getMinElevation();
-                    Pair<String, String> parts = formatElevation(activity, elevation, metricUnits);
+                    Pair<String, String> parts = StringUtils.formatElevation(activity, elevation, metricUnits);
 
                     TextView elevationValue = activity.findViewById(R.id.stats_elevation_min_value);
                     elevationValue.setText(parts.first);
@@ -260,7 +259,7 @@ public class StatsUtils {
 
                 {
                     double elevation = tripStatistics == null ? Double.NaN : tripStatistics.getMaxElevation();
-                    Pair<String, String> parts = formatElevation(activity, elevation, metricUnits);
+                    Pair<String, String> parts = StringUtils.formatElevation(activity, elevation, metricUnits);
 
                     TextView elevationValue = activity.findViewById(R.id.stats_elevation_max_value);
                     elevationValue.setText(parts.first);
@@ -269,27 +268,5 @@ public class StatsUtils {
                 }
             }
         }
-    }
-
-    /**
-     * Sets an elevation value.
-     *
-     * @param context     the context
-     * @param elevation   the elevation in meters
-     * @param metricUnits true if metric units
-     * @return the formatted elevation (or null) and it's unit as {@link Pair}
-     */
-    // TODO Move to StringUtils
-    private static Pair<String, String> formatElevation(Context context, double elevation, boolean metricUnits) {
-        String value = context.getString(R.string.value_unknown);
-        String unit = context.getString(metricUnits ? R.string.unit_meter : R.string.unit_feet);
-        if (!Double.isNaN(elevation) && !Double.isInfinite(elevation)) {
-            if (metricUnits) {
-                value = StringUtils.formatDecimal(elevation);
-            } else {
-                value = StringUtils.formatDecimal(elevation * UnitConversions.M_TO_FT);
-            }
-        }
-        return new Pair<>(value, unit);
     }
 }

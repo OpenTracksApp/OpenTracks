@@ -59,7 +59,7 @@ import de.dennisguse.opentracks.util.UnitConversions;
  */
 public class StatsFragment extends Fragment implements TrackDataListener {
 
-    public static final String STATS_FRAGMENT_TAG = "statsFragment";
+    public static final String STATS_FRAGMENT_TAG = StatsFragment.class.getSimpleName();
 
     private TrackDataHub trackDataHub;
     private Handler handlerUpdateUI;
