@@ -8,6 +8,7 @@ public enum SensorState {
     NONE,
     CONNECTING,
     CONNECTED,
+    DISCONNECTING,
     DISCONNECTED;
 
     public static String getStateAsString(SensorState state, Context c) {
@@ -18,6 +19,8 @@ public enum SensorState {
                 return c.getString(R.string.sensor_state_connecting);
             case CONNECTED:
                 return c.getString(R.string.sensor_state_connected);
+            case DISCONNECTING:
+                return c.getString(R.string.sensor_state_disconnected);
             case DISCONNECTED:
                 return c.getString(R.string.sensor_state_disconnected);
             default:

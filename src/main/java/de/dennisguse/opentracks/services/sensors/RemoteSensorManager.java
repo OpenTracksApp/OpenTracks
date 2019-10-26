@@ -16,13 +16,7 @@
 
 package de.dennisguse.opentracks.services.sensors;
 
-import android.util.Log;
-
-import java.util.Timer;
-import java.util.TimerTask;
-
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
-import de.dennisguse.opentracks.content.sensor.SensorState;
 
 /**
  * Manage the connection to a remote sensor.
@@ -32,31 +26,13 @@ import de.dennisguse.opentracks.content.sensor.SensorState;
 public abstract class RemoteSensorManager {
 
     public static final long MAX_SENSOR_DATE_SET_AGE_MS = 5000;
-    public static final long MAX_SENSOR_STATE_AGE_MS = 20000;
 
     private static final String TAG = RemoteSensorManager.class.getSimpleName();
-    private static final int RETRY_PERIOD_MS = 20000;
-
-    private SensorState sensorState = SensorState.NONE;
-    private long sensorStateTimestamp_ms = System.currentTimeMillis();
-
-    private TimerTask timerTask;
-    private Timer timer;
 
     /**
      * Returns true if the sensor is enabled.
      */
     public abstract boolean isEnabled();
-
-    /**
-     * Sets up the sensor channel.
-     */
-    protected abstract void setUpChannel();
-
-    /**
-     * Tears down the sensor channel.
-     */
-    protected abstract void tearDownChannel();
 
     /**
      * Gets the sensor data set.
@@ -66,61 +42,12 @@ public abstract class RemoteSensorManager {
     /**
      * Starts the sensor.
      */
-    public void startSensor() {
-        setUpChannel();
-        timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                switch (getSensorState()) {
-                    case CONNECTING:
-                        if (System.currentTimeMillis() - sensorStateTimestamp_ms > MAX_SENSOR_STATE_AGE_MS) {
-                            Log.i(TAG, "Retry setUpChannel");
-                            setUpChannel();
-                        }
-                        break;
-                    case DISCONNECTED:
-                        setUpChannel();
-                        break;
-                    default: // NONE, CONNECTED or SENDING
-                }
-            }
-        };
-        timer = new Timer(RemoteSensorManager.class.getSimpleName());
-        timer.schedule(timerTask, RETRY_PERIOD_MS, RETRY_PERIOD_MS);
-    }
+    public abstract void startSensor();
 
     /**
      * Stops the sensor.
      */
-    public void stopSensor() {
-        if (timerTask != null) {
-            timerTask.cancel();
-            timerTask = null;
-        }
-        if (timer != null) {
-            timer.cancel();
-            timer.purge();
-            timer = null;
-        }
-        tearDownChannel();
-    }
-
-    /**
-     * Gets the sensor state.
-     */
-    public SensorState getSensorState() {
-        return sensorState;
-    }
-
-    /**
-     * Sets the sensor state.
-     *
-     * @param sensorState the sensor state
-     */
-    public void setSensorState(SensorState sensorState) {
-        sensorStateTimestamp_ms = System.currentTimeMillis();
-        this.sensorState = sensorState;
-    }
+    public abstract void stopSensor();
 
     /**
      * Returns true if the sensor data set is valid.

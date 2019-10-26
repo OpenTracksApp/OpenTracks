@@ -23,18 +23,17 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
-import de.dennisguse.opentracks.content.sensor.SensorState;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
  * Bluetooth sensor manager.
- * TODO: Handle a BluetoothGatt.STATE_DISCONNECTED
  *
  * @author Sandor Dornbush
  */
@@ -46,10 +45,6 @@ public class BluetoothRemoteSensorManager extends RemoteSensorManager {
 
     private final Context context;
 
-    private final BluetoothConnectionManager bluetoothConnectionManager;
-
-    private SensorDataSet sensorDataSet = null;
-
     // Handler that gets information back from the bluetoothConnectionManager
     private final Handler messageHandler = new Handler(Looper.getMainLooper()) {
         @Override
@@ -57,6 +52,8 @@ public class BluetoothRemoteSensorManager extends RemoteSensorManager {
             switch (message.what) {
                 case BluetoothConnectionManager.MESSAGE_DEVICE_NAME:
                     String deviceName = message.getData().getString(BluetoothConnectionManager.KEY_DEVICE_NAME);
+                    String toastMessage = context.getString(R.string.settings_sensor_connected, deviceName);
+                    Toast.makeText(context, toastMessage, Toast.LENGTH_LONG).show();
                     break;
                 case BluetoothConnectionManager.MESSAGE_READ:
                     if (!(message.obj instanceof SensorDataSet)) {
@@ -72,12 +69,14 @@ public class BluetoothRemoteSensorManager extends RemoteSensorManager {
         }
     };
 
+    private SensorDataSet sensorDataSet = null;
+    private BluetoothConnectionManager bluetoothConnectionManager;
+
     /**
      * @param context the context
      */
     BluetoothRemoteSensorManager(Context context) {
         this.context = context;
-        bluetoothConnectionManager = new BluetoothConnectionManager(context, messageHandler);
     }
 
     private static BluetoothAdapter getDefaultBluetoothAdapter() {
@@ -118,12 +117,7 @@ public class BluetoothRemoteSensorManager extends RemoteSensorManager {
     }
 
     @Override
-    public boolean isEnabled() {
-        return bluetoothAdapter != null && bluetoothAdapter.isEnabled();
-    }
-
-    @Override
-    protected void setUpChannel() {
+    public void startSensor() {
         if (!isEnabled()) {
             Log.w(TAG, "Bluetooth not enabled.");
             return;
@@ -134,26 +128,37 @@ public class BluetoothRemoteSensorManager extends RemoteSensorManager {
             Log.w(TAG, "No bluetooth address.");
             return;
         }
-        Log.w(TAG, "Connecting to bluetooth address: " + address);
+        Log.i(TAG, "Connecting to bluetooth address: " + address);
 
         BluetoothDevice device;
         try {
             device = bluetoothAdapter.getRemoteDevice(address);
         } catch (IllegalArgumentException e) {
-            Log.d(TAG, "Unable to get remote device for: " + address, e);
+            Log.w(TAG, "Unable to get remote device for: " + address, e);
+
+            String toastMessage = context.getString(R.string.sensor_not_known, address);
+            Toast.makeText(context, toastMessage, Toast.LENGTH_LONG).show();
+
             return;
         }
-        bluetoothConnectionManager.connect(device);
+
+        stopSensor();
+
+        bluetoothConnectionManager = new BluetoothConnectionManager(context, device, messageHandler);
+        bluetoothConnectionManager.connect();
     }
 
     @Override
-    protected void tearDownChannel() {
-        bluetoothConnectionManager.reset();
+    public void stopSensor() {
+        if (bluetoothConnectionManager != null) {
+            bluetoothConnectionManager.disconnect();
+            bluetoothConnectionManager = null;
+        }
     }
 
     @Override
-    public SensorState getSensorState() {
-        return bluetoothConnectionManager.getSensorState();
+    public boolean isEnabled() {
+        return bluetoothAdapter != null && bluetoothAdapter.isEnabled();
     }
 
     @Override

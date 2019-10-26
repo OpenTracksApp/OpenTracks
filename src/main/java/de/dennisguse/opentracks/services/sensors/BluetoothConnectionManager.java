@@ -58,22 +58,37 @@ public class BluetoothConnectionManager {
 
     private SensorState sensorState;
 
+    private BluetoothGatt bluetoothGatt;
+    private BluetoothDevice bluetoothDevice;
+
     private BluetoothGattCallback connectCallback = new BluetoothGattCallback() {
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
-            if (newState == BluetoothProfile.STATE_CONNECTED) {
-                gatt.discoverServices();
-                setState(SensorState.CONNECTED);
+            switch (newState) {
+                case BluetoothProfile.STATE_CONNECTING:
+                    Log.d(TAG, "Connecting to sensor: " + gatt.getDevice());
+                    setState(SensorState.CONNECTING);
+                case BluetoothProfile.STATE_CONNECTED:
+                    Log.d(TAG, "Connected to sensor: " + gatt.getDevice());
+                    setState(SensorState.CONNECTED);
 
-                //Inform about status change
-                Message message = handler.obtainMessage(MESSAGE_DEVICE_NAME);
-                Bundle bundle = new Bundle();
-                bundle.putString(KEY_DEVICE_NAME, gatt.getDevice().getName());
-                message.setData(bundle);
-                handler.sendMessage(message);
-                return;
+                    gatt.discoverServices();
+
+                    //Inform about status change
+                    Message message = handler.obtainMessage(MESSAGE_DEVICE_NAME);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(KEY_DEVICE_NAME, gatt.getDevice().getName());
+                    message.setData(bundle);
+                    handler.sendMessage(message);
+                    break;
+                case BluetoothProfile.STATE_DISCONNECTING:
+                    Log.d(TAG, "Disconnecting from sensor: " + gatt.getDevice());
+                    setState(SensorState.DISCONNECTING);
+
+                case BluetoothProfile.STATE_DISCONNECTED:
+                    Log.d(TAG, "Disconnected from sensor: " + gatt.getDevice());
+                    setState(SensorState.DISCONNECTED);
             }
-            Log.d(TAG, "Could not connect to bluetooth sensor: " + gatt.getDevice());
         }
 
         @Override
@@ -104,45 +119,42 @@ public class BluetoothConnectionManager {
      *
      * @param handler a handler for sending messages back to the UI activity
      */
-    BluetoothConnectionManager(Context context, Handler handler) {
+    BluetoothConnectionManager(@NonNull Context context, @NonNull BluetoothDevice bluetoothDevice, @NonNull Handler handler) {
         this.context = context;
+        this.bluetoothDevice = bluetoothDevice;
         this.handler = handler;
         this.sensorState = SensorState.NONE;
     }
 
-    /**
-     * Gets the sensor state.
-     */
+    public synchronized void connect() {
+        if (bluetoothGatt != null) {
+            Log.w(TAG, "Already connected; ignoring.");
+        }
+
+        Log.d(TAG, "Connecting to: " + bluetoothDevice);
+
+        setState(SensorState.CONNECTING);
+        bluetoothGatt = bluetoothDevice.connectGatt(this.context, true, this.connectCallback);
+    }
+
+    public synchronized void disconnect() {
+        if (bluetoothGatt == null) {
+            Log.w(TAG, "Cannot disconnect if not connected.");
+            return;
+        }
+        bluetoothGatt.close();
+        bluetoothGatt = null;
+    }
+
+    public synchronized boolean isSameBluetoothDevice(BluetoothDevice bluetoothDevice) {
+        return this.bluetoothDevice.equals(bluetoothDevice);
+    }
+
     synchronized SensorState getSensorState() {
         return sensorState;
     }
 
-    /**
-     * Sets the sensor state.
-     *
-     * @param sensorState the sensor state
-     */
     private synchronized void setState(SensorState sensorState) {
         this.sensorState = sensorState;
-    }
-
-    /**
-     * Resets the bluetooth connection manager.
-     */
-    public synchronized void reset() {
-        //TODO Disconnect
-        setState(SensorState.NONE);
-    }
-
-    /**
-     * Connects to a bluetooth device.
-     *
-     * @param bluetoothDevice the bluetooth device
-     */
-    public synchronized void connect(BluetoothDevice bluetoothDevice) {
-        Log.d(TAG, "connect to: " + bluetoothDevice);
-
-        bluetoothDevice.connectGatt(this.context, false, this.connectCallback);
-        setState(SensorState.CONNECTING);
     }
 }

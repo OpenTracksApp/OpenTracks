@@ -1054,7 +1054,9 @@ limitations under the License.
       sending data.">
     Sending
   </string>
-
+  <string name="sensor_not_known" translation_description="Error message if sensor is not available in Android (e.g., pairing was removed in Bluetooth Settings).">
+    Sensor %1$s is not known. Please check the settings.
+  </string>
     <!-- Settings -->
     <string name="settings_not_while_recording" translation_description="In settings, the summary for an option that is not available during a
       track recording.">
