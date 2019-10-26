@@ -25,7 +25,7 @@ import android.widget.TextView;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
-import de.dennisguse.opentracks.services.sensors.RemoteSensorManager;
+import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
 import de.dennisguse.opentracks.stats.TripStatistics;
 
 /**
@@ -118,7 +118,7 @@ public class StatsUtils {
             TextView heartRateSensor = activity.findViewById(R.id.stats_sensor_heart_rate_sensor_value);
             String heartRate = activity.getString(R.string.value_unknown);
             String sensor = activity.getString(R.string.value_unknown);
-            if (sensorDataSet != null && sensorDataSet.hasHeartRate() && sensorDataSet.isRecent(RemoteSensorManager.MAX_SENSOR_DATE_SET_AGE_MS)) {
+            if (sensorDataSet != null && sensorDataSet.hasHeartRate() && sensorDataSet.isRecent(BluetoothRemoteSensorManager.MAX_SENSOR_DATE_SET_AGE_MS)) {
                 heartRate = StringUtils.formatDecimal(sensorDataSet.getHeartRate(), 0);
                 sensor = sensorDataSet.getSensorName();
             }

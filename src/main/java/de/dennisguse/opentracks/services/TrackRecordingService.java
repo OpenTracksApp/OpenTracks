@@ -57,7 +57,7 @@ import de.dennisguse.opentracks.content.Waypoint;
 import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 import de.dennisguse.opentracks.content.WaypointCreationRequest;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
-import de.dennisguse.opentracks.services.sensors.RemoteSensorManager;
+import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
 import de.dennisguse.opentracks.services.sensors.RemoteSensorManagerFactory;
 import de.dennisguse.opentracks.services.tasks.AnnouncementPeriodicTaskFactory;
 import de.dennisguse.opentracks.services.tasks.PeriodicTaskExecutor;
@@ -169,7 +169,7 @@ public class TrackRecordingService extends Service {
     };
     private TripStatisticsUpdater markerTripStatisticsUpdater;
     private WakeLock wakeLock;
-    private RemoteSensorManager remoteSensorManager;
+    private BluetoothRemoteSensorManager remoteSensorManager;
     private Location lastLocation;
     private boolean currentSegmentHasLocation;
     private boolean isIdle; // true if idle

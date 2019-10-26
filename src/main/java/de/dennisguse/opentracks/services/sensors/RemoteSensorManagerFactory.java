@@ -19,13 +19,13 @@ package de.dennisguse.opentracks.services.sensors;
 import android.content.Context;
 
 /**
- * A factory of {@link RemoteSensorManager}.
+ * A factory of {@link BluetoothRemoteSensorManager}.
  *
  * @author Sandor Dornbush
  */
 public class RemoteSensorManagerFactory {
 
-    private static RemoteSensorManager remoteSensorManagerSystem = null;
+    private static BluetoothRemoteSensorManager remoteSensorManagerSystem = null;
 
 
     private RemoteSensorManagerFactory() {
@@ -36,7 +36,7 @@ public class RemoteSensorManagerFactory {
      *
      * @param context the context
      */
-    public static RemoteSensorManager getSystemSensorManager(Context context) {
+    public static BluetoothRemoteSensorManager getSystemSensorManager(Context context) {
         releaseSystemSensorManager();
         remoteSensorManagerSystem = getSensorManager(context);
         remoteSensorManagerSystem.startSensor();
@@ -58,7 +58,7 @@ public class RemoteSensorManagerFactory {
      *
      * @param context the context
      */
-    private static RemoteSensorManager getSensorManager(Context context) {
+    private static BluetoothRemoteSensorManager getSensorManager(Context context) {
         return new BluetoothRemoteSensorManager(context);
     }
 }

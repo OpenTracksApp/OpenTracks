@@ -37,7 +37,9 @@ import de.dennisguse.opentracks.util.UnitConversions;
  *
  * @author Sandor Dornbush
  */
-public class BluetoothRemoteSensorManager extends RemoteSensorManager {
+public class BluetoothRemoteSensorManager {
+
+    public static final long MAX_SENSOR_DATE_SET_AGE_MS = 5000;
 
     private static final String TAG = BluetoothConnectionManager.class.getSimpleName();
 
@@ -124,7 +126,6 @@ public class BluetoothRemoteSensorManager extends RemoteSensorManager {
         return adapters.get(0);
     }
 
-    @Override
     public void startSensor() {
         if (!isEnabled()) {
             Log.w(TAG, "Bluetooth not enabled.");
@@ -156,7 +157,6 @@ public class BluetoothRemoteSensorManager extends RemoteSensorManager {
         bluetoothConnectionManager.connect();
     }
 
-    @Override
     public void stopSensor() {
         if (bluetoothConnectionManager != null) {
             bluetoothConnectionManager.disconnect();
@@ -164,13 +164,19 @@ public class BluetoothRemoteSensorManager extends RemoteSensorManager {
         }
     }
 
-    @Override
     public boolean isEnabled() {
         return bluetoothAdapter != null && bluetoothAdapter.isEnabled();
     }
 
-    @Override
     public SensorDataSet getSensorDataSet() {
         return sensorDataSet;
+    }
+
+    public boolean isSensorDataSetValid() {
+        SensorDataSet sensorDataSet = getSensorDataSet();
+        if (sensorDataSet == null) {
+            return false;
+        }
+        return sensorDataSet.isRecent(MAX_SENSOR_DATE_SET_AGE_MS);
     }
 }
