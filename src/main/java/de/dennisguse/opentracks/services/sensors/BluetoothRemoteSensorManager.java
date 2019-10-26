@@ -49,10 +49,13 @@ public class BluetoothRemoteSensorManager extends RemoteSensorManager {
     private final Handler messageHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message message) {
+            String toastMessage;
             switch (message.what) {
-                case BluetoothConnectionManager.MESSAGE_DEVICE_NAME:
-                    String deviceName = message.getData().getString(BluetoothConnectionManager.KEY_DEVICE_NAME);
-                    String toastMessage = context.getString(R.string.settings_sensor_connected, deviceName);
+                case BluetoothConnectionManager.MESSAGE_CONNECTING:
+                    //Ignore for now.
+                    break;
+                case BluetoothConnectionManager.MESSAGE_CONNECTED:
+                    toastMessage = context.getString(R.string.settings_sensor_connected, message.obj);
                     Toast.makeText(context, toastMessage, Toast.LENGTH_LONG).show();
                     break;
                 case BluetoothConnectionManager.MESSAGE_READ:
@@ -63,7 +66,12 @@ public class BluetoothRemoteSensorManager extends RemoteSensorManager {
                         sensorDataSet = (SensorDataSet) message.obj;
                     }
                     break;
+                case BluetoothConnectionManager.MESSAGE_DISCONNECTED:
+                    toastMessage = context.getString(R.string.settings_sensor_disconnected, message.obj);
+                    Toast.makeText(context, toastMessage, Toast.LENGTH_LONG).show();
+                    break;
                 default:
+                    Log.e(TAG, "Got an undefined case. Please check.");
                     break;
             }
         }

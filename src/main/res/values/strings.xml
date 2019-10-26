@@ -1278,6 +1278,11 @@ limitations under the License.
       %1$s sensor name. E.g., 'Polar Bluetooth'.">
    Connected to %1$s
   </string>
+  <string name="settings_sensor_disconnected" translation_description="A message when a sensor is connected.
+
+      %1$s sensor name. E.g., 'Polar Bluetooth'.">
+   Disconnected from %1$s
+  </string>
 
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate" translation_description="In the 'Stats settings, the option to show latitude and longitude.
