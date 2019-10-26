@@ -40,7 +40,7 @@ public final class SensorDataSet {
     }
 
     public boolean hasHeartRate() {
-        return !Float.isNaN(heartRate);
+        return !Float.isNaN(heartRate) && heartRate > 0;
     }
 
     public float getHeartRate() {
