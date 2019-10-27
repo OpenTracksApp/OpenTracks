@@ -446,7 +446,8 @@ public class TrackRecordingService extends Service {
      */
     private void handleStartCommand(Intent intent, int startId) {
         // Check if the service is called to resume track (from phone reboot)
-        if (intent != null && intent.getBooleanExtra(RESUME_TRACK_EXTRA_NAME, false) && !shouldResumeTrack()) {
+        boolean resumeTrackRequested = intent.getBooleanExtra(RESUME_TRACK_EXTRA_NAME, false);
+        if (resumeTrackRequested && !shouldResumeTrack()) {
             Log.i(TAG, "Stop resume track.");
             updateRecordingState(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, true);
             stopSelfResult(startId);

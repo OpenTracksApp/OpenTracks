@@ -15,14 +15,12 @@
  */
 package de.dennisguse.opentracks.services;
 
-import android.content.BroadcastReceiver;
 import android.content.ContentProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.IBinder;
-import android.util.Log;
 
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -38,7 +36,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -77,9 +74,7 @@ public class TrackRecordingServiceTest {
     private long trackId = Math.abs(new Random().nextLong());
 
     static Intent createStartIntent(Context context) {
-        Intent startIntent = new Intent();
-        startIntent.setClass(context, TrackRecordingService.class);
-        return startIntent;
+        return new Intent(context, TrackRecordingService.class);
     }
 
     static void updateAutoResumePrefs(Context context, int attempts, int timeoutMins) {
@@ -145,7 +140,10 @@ public class TrackRecordingServiceTest {
         // Start the service in "resume" mode (simulates the on-reboot action).
         Intent startIntent = createStartIntent(context);
         startIntent.putExtra(TrackRecordingService.RESUME_TRACK_EXTRA_NAME, true);
+        mServiceRule.startService(startIntent);
         ITrackRecordingService service = ((ITrackRecordingService) mServiceRule.bindService(startIntent));
+
+        // then
         Assert.assertNotNull(service);
 
         // We expect to resume the previous track.
@@ -168,12 +166,14 @@ public class TrackRecordingServiceTest {
         Assert.assertEquals(id, PreferencesUtils.getLong(context, R.string.recording_track_id_key));
 
         // Start the service in "resume" mode (simulates the on-reboot action).
+
         Intent startIntent = createStartIntent(context);
         startIntent.putExtra(TrackRecordingService.RESUME_TRACK_EXTRA_NAME, true);
         mServiceRule.startService(startIntent);
         service = ((ITrackRecordingService) mServiceRule.bindService(createStartIntent(context)));
-        Assert.assertNotNull(service);
 
+        // then
+        Assert.assertNotNull(service);
         Assert.assertTrue(service.isRecording());
     }
 
@@ -189,7 +189,10 @@ public class TrackRecordingServiceTest {
         // Start the service in "resume" mode (simulates the on-reboot action).
         Intent startIntent = createStartIntent(context);
         startIntent.putExtra(TrackRecordingService.RESUME_TRACK_EXTRA_NAME, true);
+        mServiceRule.startService(startIntent);
         ITrackRecordingService service = ((ITrackRecordingService) mServiceRule.bindService(startIntent));
+
+        // then
         Assert.assertNotNull(service);
 
         // We don't expect to resume the previous track, because it was stopped.
@@ -201,7 +204,7 @@ public class TrackRecordingServiceTest {
     @Test
     public void testResumeAfterReboot_expiredTrack() throws Exception {
         // Insert a dummy track last updated 20 min ago.
-        createDummyTrack(trackId, System.currentTimeMillis() - 20 * 60 * 1000, true);
+        createDummyTrack(trackId, System.currentTimeMillis() - 1500 * 60 * 1000, true);
 
         // Clear the number of attempts and set the timeout to 10 min.
         updateAutoResumePrefs(context, PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT, PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_DEFAULT);
@@ -209,7 +212,10 @@ public class TrackRecordingServiceTest {
         // Start the service in "resume" mode (simulates the on-reboot action).
         Intent startIntent = createStartIntent(context);
         startIntent.putExtra(TrackRecordingService.RESUME_TRACK_EXTRA_NAME, true);
+        mServiceRule.startService(startIntent);
         ITrackRecordingService service = ((ITrackRecordingService) mServiceRule.bindService(startIntent));
+
+        // then
         Assert.assertNotNull(service);
 
         // We don't expect to resume the previous track, because it has expired.
@@ -229,11 +235,10 @@ public class TrackRecordingServiceTest {
         // Start the service in "resume" mode (simulates the on-reboot action).
         Intent startIntent = createStartIntent(context);
         startIntent.putExtra(TrackRecordingService.RESUME_TRACK_EXTRA_NAME, true);
-
-        //Explicit start service, so `startCommand()` is executed - which would be called by BootReceiver.
-        context.startService(startIntent);
-
+        mServiceRule.startService(startIntent);
         ITrackRecordingService service = ((ITrackRecordingService) mServiceRule.bindService(startIntent));
+
+        //then
         Assert.assertNotNull(service);
 
         // We don't expect to resume the previous track, because there were already too many attempts.
@@ -247,7 +252,10 @@ public class TrackRecordingServiceTest {
         List<Track> tracks = providerUtils.getAllTracks();
         Assert.assertTrue(tracks.isEmpty());
 
-        ITrackRecordingService service = ((ITrackRecordingService) mServiceRule.bindService(createStartIntent(context)));
+        Intent startIntent = createStartIntent(context);
+        mServiceRule.startService(startIntent);
+        ITrackRecordingService service = ((ITrackRecordingService) mServiceRule.bindService(startIntent));
+
         // Test if we start in no-recording mode by default.
         Assert.assertFalse(service.isRecording());
         Assert.assertEquals(-1L, service.getRecordingTrackId());
@@ -266,11 +274,14 @@ public class TrackRecordingServiceTest {
     @MediumTest
     @Test
     public void testRecording_orphanedRecordingTrack() throws Exception {
+        Intent startIntent = createStartIntent(context);
+        ITrackRecordingService service = ((ITrackRecordingService) mServiceRule.bindService(startIntent));
+
         // Just set recording track to a bogus value.
+        // Make sure that the service will not start recording and will clear the bogus track.
         PreferencesUtils.setLong(context, R.string.recording_track_id_key, 123L);
 
-        // Make sure that the service will not start recording and will clear the bogus track.
-        ITrackRecordingService service = ((ITrackRecordingService) mServiceRule.bindService(createStartIntent(context)));
+        // then
         Assert.assertFalse(service.isRecording());
         Assert.assertEquals(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, service.getRecordingTrackId());
     }
@@ -404,46 +415,5 @@ public class TrackRecordingServiceTest {
         Assert.assertEquals(0.0, wpt.getLength(), 0.01);
         Assert.assertNotNull(wpt.getLocation());
         Assert.assertNull(wpt.getTripStatistics());
-    }
-
-    /**
-     * Synchronous/waitable broadcast receiver to be used in testing.
-     */
-    private class BlockingBroadcastReceiver extends BroadcastReceiver {
-        private static final long MAX_WAIT_TIME_MS = 3000;
-        private final List<Intent> receivedIntents = new ArrayList<>();
-
-        public List<Intent> getReceivedIntents() {
-            return receivedIntents;
-        }
-
-        @Override
-        public void onReceive(Context ctx, Intent intent) {
-            Log.d("Test", "Got broadcast: " + intent);
-            synchronized (receivedIntents) {
-                receivedIntents.add(intent);
-                receivedIntents.notifyAll();
-            }
-        }
-
-        public boolean waitUntilReceived(int receiveCount) {
-            long deadline = System.currentTimeMillis() + MAX_WAIT_TIME_MS;
-            synchronized (receivedIntents) {
-                while (receivedIntents.size() < receiveCount) {
-                    try {
-                        // Wait releases synchronized lock until it returns
-                        receivedIntents.wait(500);
-                    } catch (InterruptedException e) {
-                        // Do nothing
-                    }
-
-                    if (System.currentTimeMillis() > deadline) {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
-        }
     }
 }
