@@ -8,5 +8,4 @@ android:
 
 script:
   - ./gradlew build
-  #TODO: When all tests are passing, CI should also execute them.
-  #- ./gradlew connectedCheck
+  - ./gradlew connectedCheck
