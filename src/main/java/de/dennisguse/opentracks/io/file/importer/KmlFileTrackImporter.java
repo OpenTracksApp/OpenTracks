@@ -182,6 +182,10 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
      * On waypoint end.
      */
     private void onWaypointEnd() throws SAXException {
+        if (waypointType == null) {
+            return;
+        }
+
         // Add a waypoint if the waypointType matches
         WaypointType type;
         switch (waypointType) {
