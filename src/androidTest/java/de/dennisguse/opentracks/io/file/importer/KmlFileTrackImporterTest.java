@@ -32,6 +32,7 @@ import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
 import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -68,8 +69,7 @@ public class KmlFileTrackImporterTest extends AbstractTestFileTrackImporter {
 
     @Test
     public void testOneTrackOneSegment() throws Exception {
-        ArgumentCaptor<Track> trackCaptor = ArgumentCaptor.forClass(Track.class);
-
+        // given
         Location location0 = createLocation(0, DATE_FORMAT_0.parse(TRACK_TIME_0).getTime());
         Location location1 = createLocation(1, DATE_FORMAT_1.parse(TRACK_TIME_1).getTime());
 
@@ -77,27 +77,31 @@ public class KmlFileTrackImporterTest extends AbstractTestFileTrackImporter {
         expectFirstTrackPoint(location0, TRACK_ID_0, TRACK_POINT_ID_0);
 
         // A flush happens at the end
-        when(contentProviderUtils.bulkInsertTrackPoint(new Location[]{location1}, eq(1), eq(TRACK_ID_0))).thenReturn(1);
+        when(contentProviderUtils.bulkInsertTrackPoint((Location[]) any(), eq(1), eq(TRACK_ID_0))).thenReturn(1);
         when(contentProviderUtils.getLastTrackPointId(TRACK_ID_0)).thenReturn(TRACK_POINT_ID_1);
         when(contentProviderUtils.getTrack(PreferencesUtils.getLong(context, R.string.recording_track_id_key))).thenReturn(null);
-        expectUpdateTrack(trackCaptor, true, TRACK_ID_0);
 
+        ArgumentCaptor<Track> trackCaptor = ArgumentCaptor.forClass(Track.class);
+        expectTrackUpdate(trackCaptor, true, TRACK_ID_0);
+
+        // when
         InputStream inputStream = new ByteArrayInputStream(VALID_ONE_TRACK_ONE_SEGMENT_GPX.getBytes());
         KmlFileTrackImporter kmlFileTrackImporter = new KmlFileTrackImporter(context, TRACK_ID_0, contentProviderUtils);
         long trackId = kmlFileTrackImporter.importFile(inputStream);
+
+        // then
+        verify(contentProviderUtils, atLeastOnce()).updateTrack(trackCaptor.capture());
         Assert.assertEquals(TRACK_ID_0, trackId);
 
         long time0 = DATE_FORMAT_0.parse(TRACK_TIME_0).getTime();
         long time1 = DATE_FORMAT_1.parse(TRACK_TIME_1).getTime();
         Assert.assertEquals(time1 - time0, trackCaptor.getValue().getTripStatistics().getTotalTime());
-        verify(contentProviderUtils);
         verifyTrack(trackCaptor.getValue(), TRACK_NAME_0, TRACK_DESCRIPTION_0, time0);
     }
 
     @Test
     public void testOneTrackTwoSegments() throws Exception {
-        ArgumentCaptor<Track> trackCaptor = ArgumentCaptor.forClass(Track.class);
-
+        // given
         Location location0 = createLocation(0, DATE_FORMAT_0.parse(TRACK_TIME_0).getTime());
 
         contentProviderUtils.clearTrack(context, TRACK_ID_0);
@@ -107,11 +111,17 @@ public class KmlFileTrackImporterTest extends AbstractTestFileTrackImporter {
         when(contentProviderUtils.bulkInsertTrackPoint((Location[]) any(), eq(5), eq(TRACK_ID_0))).thenReturn(5);
         when(contentProviderUtils.getLastTrackPointId(TRACK_ID_0)).thenReturn(TRACK_POINT_ID_3);
         when(contentProviderUtils.getTrack(PreferencesUtils.getLong(context, R.string.recording_track_id_key))).thenReturn(null);
-        expectUpdateTrack(trackCaptor, true, TRACK_ID_0);
 
+        ArgumentCaptor<Track> trackCaptor = ArgumentCaptor.forClass(Track.class);
+        expectTrackUpdate(trackCaptor, true, TRACK_ID_0);
+
+        // when
         InputStream inputStream = new ByteArrayInputStream(VALID_ONE_TRACK_TWO_SEGMENTS_GPX.getBytes());
         KmlFileTrackImporter kmlFileTrackImporter = new KmlFileTrackImporter(context, TRACK_ID_0, contentProviderUtils);
         long trackId = kmlFileTrackImporter.importFile(inputStream);
+
+        // then
+        verify(contentProviderUtils, atLeastOnce()).updateTrack(trackCaptor.capture());
         Assert.assertEquals(TRACK_ID_0, trackId);
 
         long time0 = DATE_FORMAT_0.parse(TRACK_TIME_0).getTime();
@@ -120,7 +130,6 @@ public class KmlFileTrackImporterTest extends AbstractTestFileTrackImporter {
         long time3 = DATE_FORMAT_1.parse(TRACK_TIME_3).getTime();
         Assert.assertEquals(time1 - time0 + time3 - time2, trackCaptor.getValue().getTripStatistics().getTotalTime());
 
-        verify(contentProviderUtils);
         verifyTrack(trackCaptor.getValue(), TRACK_NAME_0, TRACK_DESCRIPTION_0, DATE_FORMAT_0.parse(TRACK_TIME_0).getTime());
     }
 }

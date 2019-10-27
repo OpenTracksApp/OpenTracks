@@ -112,7 +112,7 @@ public abstract class AbstractTestFileTrackImporter {
      * @param lastTrack   true if it is the last track in the gpx
      * @param trackId     the track id
      */
-    protected void expectUpdateTrack(ArgumentCaptor<Track> trackCaptor, boolean lastTrack, long trackId) {
+    protected void expectTrackUpdate(ArgumentCaptor<Track> trackCaptor, boolean lastTrack, long trackId) {
         contentProviderUtils.updateTrack(trackCaptor.capture());
 
         when(contentProviderUtils.insertWaypoint((Waypoint) any())).thenReturn(WAYPOINT_ID_O_URI);
