@@ -214,7 +214,6 @@ public class CustomContentProviderUtilsImplTest {
         Track track = providerUtils.createTrack(cursorMock);
         Assert.assertEquals(trackId, track.getId());
         Assert.assertEquals(name, track.getName());
-        verify(cursorMock);
     }
 
     /**
@@ -414,7 +413,6 @@ public class CustomContentProviderUtilsImplTest {
         Assert.assertEquals(id, waypoint.getId());
         Assert.assertEquals(name, waypoint.getName());
         Assert.assertEquals(trackId, waypoint.getTrackId());
-        verify(cursorMock);
     }
 
     /**
