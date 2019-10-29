@@ -40,7 +40,6 @@ import de.dennisguse.opentracks.content.ContentProviderUtils.LocationIterator;
 import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 import de.dennisguse.opentracks.stats.TripStatistics;
 
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -707,7 +706,6 @@ public class CustomContentProviderUtilsImplTest {
         Assert.assertEquals((double) latitude, location.getLatitude(), 0.01);
         Assert.assertEquals(time, location.getTime(), 0.01);
         Assert.assertEquals(speed, location.getSpeed(), 0.01);
-        verify(cursorMock);
     }
 
     /**
