@@ -29,6 +29,7 @@ import androidx.core.content.FileProvider;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import de.dennisguse.opentracks.R;
@@ -71,17 +72,30 @@ public class IntentUtils {
      */
     //TODO Share mulitple tracks in different files!
     public static Intent newShareFileIntent(Context context, long[] trackIds) {
+        if (trackIds.length == 0) {
+            throw new RuntimeException("Need to share at least one track.");
+        }
         String trackDescription = "";
         if (trackIds.length == 1) {
             Track track = ContentProviderUtils.Factory.get(context).getTrack(trackIds[0]);
             trackDescription = track == null ? "" : new DescriptionGeneratorImpl(context).generateTrackDescription(track, false);
         }
-        Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(trackIds, TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES);
-        return new Intent(Intent.ACTION_SEND)
-                .putExtra(Intent.EXTRA_STREAM, uriAndMime.first)
+
+        String action = trackIds.length == 1 ? Intent.ACTION_SEND : Intent.ACTION_SEND_MULTIPLE;
+        String mime = "";
+
+        ArrayList<Uri> uris = new ArrayList<>();
+        for (long trackId : trackIds) {
+            Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(new long[]{trackId}, TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES);
+            uris.add(uriAndMime.first);
+            mime = uriAndMime.second;
+        }
+
+        return new Intent(action)
                 .putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.share_track_subject))
                 .putExtra(Intent.EXTRA_TEXT, context.getString(R.string.share_track_share_file_body, trackDescription))
-                .setType(uriAndMime.second)
+                .putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris)
+                .setType(mime)
                 .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
     }
 
