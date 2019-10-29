@@ -17,8 +17,8 @@ limitations under the License.
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/list_context_menu_share"
+        android:icon="@drawable/ic_share_24dp"
         android:title="@string/menu_share"
-        app:actionProviderClass="androidx.appcompat.widget.ShareActionProvider"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/list_context_menu_show_on_map"

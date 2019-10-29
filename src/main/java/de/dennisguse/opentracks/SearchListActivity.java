@@ -57,7 +57,6 @@ import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.ListItemUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
-import de.dennisguse.opentracks.util.ToolbarUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 
 /**
@@ -123,10 +122,6 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
             MenuItem shareMenuItem = menu.findItem(R.id.list_context_menu_share);
             if (isSingleSelectionTrack) {
                 shareMenuItem.setVisible(!isRecording);
-                Map<String, Object> item = arrayAdapter.getItem(positions[0]);
-                Long trackId = (Long) item.get(TRACK_ID_FIELD);
-
-                ToolbarUtils.setupShareActionProvider(SearchListActivity.this, shareMenuItem, new long[]{trackId});
             }
 
             // One item, item is a marker
@@ -289,6 +284,11 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
         switch (itemId) {
             case R.id.list_context_menu_show_on_map:
                 IntentUtils.showCoordinateOnMap(this, (double) item.get(MARKER_LATITUDE_FIELD), (double) item.get(MARKER_LONGITUDE_FIELD), item.get(NAME_FIELD) + "");
+                return true;
+            case R.id.list_context_menu_share:
+                intent = IntentUtils.newShareFileIntent(this, new long[]{trackId});
+                intent = Intent.createChooser(intent, null);
+                startActivity(intent);
                 return true;
             case R.id.list_context_menu_edit:
                 if (markerId != null) {

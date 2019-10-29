@@ -69,6 +69,7 @@ public class IntentUtils {
      * @param context  the context
      * @param trackIds the track ids
      */
+    //TODO Share mulitple tracks in different files!
     public static Intent newShareFileIntent(Context context, long[] trackIds) {
         String trackDescription = "";
         if (trackIds.length == 1) {
@@ -76,7 +77,6 @@ public class IntentUtils {
             trackDescription = track == null ? "" : new DescriptionGeneratorImpl(context).generateTrackDescription(track, false);
         }
         Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(trackIds, TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES);
-
         return new Intent(Intent.ACTION_SEND)
                 .putExtra(Intent.EXTRA_STREAM, uriAndMime.first)
                 .putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.share_track_subject))

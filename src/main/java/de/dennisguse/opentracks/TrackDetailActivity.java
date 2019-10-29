@@ -55,7 +55,6 @@ import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
-import de.dennisguse.opentracks.util.ToolbarUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.TrackUtils;
 
@@ -316,10 +315,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
         insertMarkerMenuItem = menu.findItem(R.id.track_detail_insert_marker);
         insertPhotoMenuItem = menu.findItem(R.id.track_detail_insert_photo);
         insertPhotoMenuItem.setVisible(new Intent(MediaStore.ACTION_IMAGE_CAPTURE).resolveActivity(getPackageManager()) != null);
-
         shareMenuItem = menu.findItem(R.id.track_detail_share);
-        ToolbarUtils.setupShareActionProviderCompat(this, shareMenuItem, new long[]{trackId});
-
         voiceFrequencyMenuItem = menu.findItem(R.id.track_detail_voice_frequency);
         splitFrequencyMenuItem = menu.findItem(R.id.track_detail_split_frequency);
         markerListMenuItem = menu.findItem(R.id.track_detail_markers);
@@ -341,6 +337,11 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
                 intent = IntentUtils
                         .newIntent(this, MarkerEditActivity.class)
                         .putExtra(MarkerEditActivity.EXTRA_TRACK_ID, trackId);
+                startActivity(intent);
+                return true;
+            case R.id.track_detail_share:
+                intent = IntentUtils.newShareFileIntent(this, new long[]{trackId});
+                intent = Intent.createChooser(intent, null);
                 startActivity(intent);
                 return true;
             case R.id.track_detail_insert_photo:

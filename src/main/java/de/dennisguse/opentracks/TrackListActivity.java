@@ -61,7 +61,6 @@ import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.ListItemUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
-import de.dennisguse.opentracks.util.ToolbarUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.TrackUtils;
 
@@ -114,9 +113,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         @Override
         public void onPrepare(Menu menu, int[] positions, long[] trackIds, boolean showSelectAll) {
             boolean isSingleSelection = trackIds.length == 1;
-
-            MenuItem shareMenuItem = menu.findItem(R.id.list_context_menu_share);
-            ToolbarUtils.setupShareActionProvider(TrackListActivity.this, shareMenuItem, trackIds);
 
             menu.findItem(R.id.list_context_menu_edit).setVisible(isSingleSelection);
             menu.findItem(R.id.list_context_menu_select_all).setVisible(showSelectAll);
@@ -531,12 +527,18 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
      * @return true if handled.
      */
     private boolean handleContextItem(int itemId, long[] trackIds) {
+        Intent intent;
         switch (itemId) {
             case R.id.list_context_menu_show_on_map:
                 IntentUtils.showTrackOnMap(this, trackIds);
                 return true;
+            case R.id.list_context_menu_share:
+                intent = IntentUtils.newShareFileIntent(this, trackIds);
+                intent = Intent.createChooser(intent, null);
+                startActivity(intent);
+                return true;
             case R.id.list_context_menu_edit:
-                Intent intent = IntentUtils.newIntent(this, TrackEditActivity.class)
+                intent = IntentUtils.newIntent(this, TrackEditActivity.class)
                         .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackIds[0]);
                 startActivity(intent);
                 return true;
