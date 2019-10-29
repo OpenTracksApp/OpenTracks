@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.util.BluetoothDeviceUtils;
+import de.dennisguse.opentracks.util.BluetoothUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
@@ -192,7 +192,7 @@ final class PreferenceHelper {
         List<String> devicesAddressList = new ArrayList<>();
         BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (bluetoothAdapter != null) {
-            BluetoothDeviceUtils.populateDeviceLists(bluetoothAdapter, devicesNameList, devicesAddressList);
+            BluetoothUtils.populateDeviceLists(bluetoothAdapter, devicesNameList, devicesAddressList);
         }
 
         // Was the previously configured device unpaired? Then forget it.

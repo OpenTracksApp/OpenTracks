@@ -32,6 +32,7 @@ import java.util.UUID;
 
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.content.sensor.SensorState;
+import de.dennisguse.opentracks.util.BluetoothUtils;
 
 /**
  * Manages connection to Bluetooth LE heart rate monitor.
@@ -103,7 +104,7 @@ public class BluetoothConnectionManager {
 
         @Override
         public void onCharacteristicChanged(BluetoothGatt gatt, @NonNull BluetoothGattCharacteristic characteristic) {
-            int heartRate = BluetoothLEUtils.parseHeartRate(characteristic);
+            int heartRate = BluetoothUtils.parseHeartRate(characteristic);
 
             Log.d(TAG, "Received heart beat rate: " + heartRate);
             SensorDataSet sensorDataSet = new SensorDataSet(heartRate, gatt.getDevice().getName(), gatt.getDevice().getAddress());
