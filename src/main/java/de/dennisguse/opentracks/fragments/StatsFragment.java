@@ -93,8 +93,6 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         handlerUpdateUI = new Handler();
-        trackRecordingServiceConnection = new TrackRecordingServiceConnection(getContext(), null);
-        trackRecordingServiceConnection.startConnection(getContext());
 
         Spinner activityTypeIcon = getView().findViewById(R.id.stats_activity_type_icon);
         activityTypeIcon.setAdapter(TrackIconUtils.getIconSpinnerAdapter(getActivity(), ""));
@@ -122,6 +120,10 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     public void onResume() {
         super.onResume();
         resumeTrackDataHub();
+
+        trackRecordingServiceConnection = new TrackRecordingServiceConnection(getContext(), null);
+        trackRecordingServiceConnection.startConnection(getContext());
+
         updateUi(getActivity());
         if (isSelectedTrackRecording()) {
             handlerUpdateUI.post(updateUIeachSecond);
@@ -139,6 +141,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     public void onStop() {
         super.onStop();
         trackRecordingServiceConnection.unbind();
+        trackRecordingServiceConnection = null;
     }
 
     @Override
@@ -297,7 +300,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     }
 
     /**
-     * Tries to fetch most recent {@link SensorDataSet} {@link RemoteSensorManager}.
+     * Tries to fetch most recent {@link SensorDataSet} {@link de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager}.
      */
     private void updateSensorDataUI() {
         ITrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
