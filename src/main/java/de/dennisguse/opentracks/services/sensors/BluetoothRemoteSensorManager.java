@@ -19,6 +19,7 @@ package de.dennisguse.opentracks.services.sensors;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -47,6 +48,7 @@ public class BluetoothRemoteSensorManager {
 
     private final Context context;
 
+    private final SharedPreferences sharedPreferences;
     // Handler that gets information back from the bluetoothConnectionManager
     private final Handler messageHandler = new Handler(Looper.getMainLooper()) {
         @Override
@@ -55,6 +57,8 @@ public class BluetoothRemoteSensorManager {
             switch (message.what) {
                 case BluetoothConnectionManager.MESSAGE_CONNECTING:
                     //Ignore for now.
+                    toastMessage = context.getString(R.string.settings_sensor_connecting, message.obj);
+                    Toast.makeText(context, toastMessage, Toast.LENGTH_LONG).show();
                     break;
                 case BluetoothConnectionManager.MESSAGE_CONNECTED:
                     toastMessage = context.getString(R.string.settings_sensor_connected, message.obj);
@@ -78,6 +82,24 @@ public class BluetoothRemoteSensorManager {
             }
         }
     };
+    private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
+            if (bluetoothConnectionManager != null && key == null || key.equals(PreferencesUtils.getKey(context, R.string.bluetooth_sensor_key))) {
+                String address = PreferencesUtils.getString(context, R.string.bluetooth_sensor_key, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT);
+                if (address.equals(PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT)) {
+                    stop();
+                    return;
+                }
+                if (bluetoothConnectionManager.isSameBluetoothDevice(address)) {
+                    return;
+                }
+
+                disconnect();
+                startCurrentSensor();
+            }
+        }
+    };
 
     private SensorDataSet sensorDataSet = null;
     private BluetoothConnectionManager bluetoothConnectionManager;
@@ -87,6 +109,7 @@ public class BluetoothRemoteSensorManager {
      */
     BluetoothRemoteSensorManager(Context context) {
         this.context = context;
+        sharedPreferences = PreferencesUtils.getSharedPreferences(context);
     }
 
     private static BluetoothAdapter getDefaultBluetoothAdapter() {
@@ -126,7 +149,34 @@ public class BluetoothRemoteSensorManager {
         return adapters.get(0);
     }
 
-    public void startSensor() {
+    public void start() {
+        sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+        startCurrentSensor();
+    }
+
+    public void stop() {
+        disconnect();
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+    }
+
+
+    public boolean isEnabled() {
+        return bluetoothAdapter != null && bluetoothAdapter.isEnabled();
+    }
+
+    public SensorDataSet getSensorDataSet() {
+        return sensorDataSet;
+    }
+
+    public boolean isSensorDataSetValid() {
+        SensorDataSet sensorDataSet = getSensorDataSet();
+        if (sensorDataSet == null) {
+            return false;
+        }
+        return sensorDataSet.isRecent(MAX_SENSOR_DATE_SET_AGE_MS);
+    }
+
+    private void startCurrentSensor() {
         if (!isEnabled()) {
             Log.w(TAG, "Bluetooth not enabled.");
             return;
@@ -151,32 +201,16 @@ public class BluetoothRemoteSensorManager {
             return;
         }
 
-        stopSensor();
+        disconnect();
 
         bluetoothConnectionManager = new BluetoothConnectionManager(context, device, messageHandler);
         bluetoothConnectionManager.connect();
     }
 
-    public void stopSensor() {
+    private void disconnect() {
         if (bluetoothConnectionManager != null) {
             bluetoothConnectionManager.disconnect();
             bluetoothConnectionManager = null;
         }
-    }
-
-    public boolean isEnabled() {
-        return bluetoothAdapter != null && bluetoothAdapter.isEnabled();
-    }
-
-    public SensorDataSet getSensorDataSet() {
-        return sensorDataSet;
-    }
-
-    public boolean isSensorDataSetValid() {
-        SensorDataSet sensorDataSet = getSensorDataSet();
-        if (sensorDataSet == null) {
-            return false;
-        }
-        return sensorDataSet.isRecent(MAX_SENSOR_DATE_SET_AGE_MS);
     }
 }

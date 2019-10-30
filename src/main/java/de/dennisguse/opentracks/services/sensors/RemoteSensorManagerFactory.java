@@ -39,7 +39,7 @@ public class RemoteSensorManagerFactory {
     public static BluetoothRemoteSensorManager getSystemSensorManager(Context context) {
         releaseSystemSensorManager();
         remoteSensorManagerSystem = getSensorManager(context);
-        remoteSensorManagerSystem.startSensor();
+        remoteSensorManagerSystem.start();
         return remoteSensorManagerSystem;
     }
 
@@ -48,7 +48,7 @@ public class RemoteSensorManagerFactory {
      */
     public static void releaseSystemSensorManager() {
         if (remoteSensorManagerSystem != null) {
-            remoteSensorManagerSystem.stopSensor();
+            remoteSensorManagerSystem.stop();
         }
         remoteSensorManagerSystem = null;
     }

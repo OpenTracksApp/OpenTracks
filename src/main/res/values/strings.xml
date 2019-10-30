@@ -1273,12 +1273,16 @@ limitations under the License.
       Character limit: ~23 (1 line)">
     Bluetooth sensor
   </string>
-    <string name="settings_sensor_connected" translation_description="A message when a sensor is connected.
+  <string name="settings_sensor_connecting" translation_description="A message when a sensor is connecting.
 
       %1$s sensor name. E.g., 'Polar Bluetooth'.">
    Connected to %1$s
   </string>
-  <string name="settings_sensor_disconnected" translation_description="A message when a sensor is connected.
+  <string name="settings_sensor_connected" translation_description="A message when a sensor is connected.
+      %1$s sensor name. E.g., 'Polar Bluetooth'.">
+   Connected to %1$s
+  </string>
+  <string name="settings_sensor_disconnected" translation_description="A message when a sensor is disconnected.
 
       %1$s sensor name. E.g., 'Polar Bluetooth'.">
    Disconnected from %1$s

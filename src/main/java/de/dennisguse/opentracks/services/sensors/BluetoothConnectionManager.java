@@ -105,9 +105,10 @@ public class BluetoothConnectionManager {
         @Override
         public void onCharacteristicChanged(BluetoothGatt gatt, @NonNull BluetoothGattCharacteristic characteristic) {
             int heartRate = BluetoothUtils.parseHeartRate(characteristic);
+            String deviceName = gatt.getDevice().getName();
 
-            Log.d(TAG, "Received heart beat rate: " + heartRate);
-            SensorDataSet sensorDataSet = new SensorDataSet(heartRate, gatt.getDevice().getName(), gatt.getDevice().getAddress());
+            Log.d(TAG, "Received heart beat rate " + deviceName + ": " + heartRate);
+            SensorDataSet sensorDataSet = new SensorDataSet(heartRate, deviceName, gatt.getDevice().getAddress());
             handler.obtainMessage(MESSAGE_READ, sensorDataSet).sendToTarget();
         }
     };
@@ -144,8 +145,8 @@ public class BluetoothConnectionManager {
         bluetoothGatt = null;
     }
 
-    public synchronized boolean isSameBluetoothDevice(BluetoothDevice bluetoothDevice) {
-        return this.bluetoothDevice.equals(bluetoothDevice);
+    public synchronized boolean isSameBluetoothDevice(String address) {
+        return this.bluetoothDevice.getAddress().equals(address);
     }
 
     synchronized SensorState getSensorState() {
