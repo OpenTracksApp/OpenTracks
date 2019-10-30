@@ -21,6 +21,7 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Pair;
 
+import java.text.DecimalFormat;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -124,13 +125,20 @@ public class StringUtils {
         }
     }
 
-    static String formatDecimal(double value) {
+    private static String formatDecimal(double value) {
         return StringUtils.formatDecimal(value, 2);
     }
 
+    /**
+     * Format a decimal number while removing trailing zeros of the decimal part (if present).
+     */
     static String formatDecimal(double value, int decimalPlaces) {
-        String result = String.format(Locale.getDefault(), "%1$,." + decimalPlaces + "f", value);
-        return result.replaceAll("[0]*$", "").replaceAll("\\.$", "");
+        if (decimalPlaces < 1) {
+            return Long.toString(Math.round(value));
+        }
+
+        String format = "#." + new String(new char[decimalPlaces]).replace("\0", "#");
+        return new DecimalFormat(format).format(value);
     }
 
     /**

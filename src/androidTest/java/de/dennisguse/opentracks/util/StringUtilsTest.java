@@ -199,4 +199,24 @@ public class StringUtilsTest {
         Assert.assertEquals(-1, parts[1]);
         Assert.assertEquals(0, parts[2]);
     }
+
+    @Test
+    public void testFormatDecimal() {
+        Assert.assertEquals("0", StringUtils.formatDecimal(0.0, 0));
+        Assert.assertEquals("0", StringUtils.formatDecimal(0.1, 0));
+        Assert.assertEquals("1", StringUtils.formatDecimal(1.1, 0));
+        Assert.assertEquals("10", StringUtils.formatDecimal(10, 0));
+        Assert.assertEquals("10", StringUtils.formatDecimal(10.1, 0));
+        Assert.assertEquals("0", StringUtils.formatDecimal(-0.1, 0));
+
+        Assert.assertEquals("0", StringUtils.formatDecimal(0.0, 2));
+        Assert.assertEquals("0.1", StringUtils.formatDecimal(0.1, 2));
+        Assert.assertEquals("1.1", StringUtils.formatDecimal(1.1, 2));
+        Assert.assertEquals("10", StringUtils.formatDecimal(10, 2));
+        Assert.assertEquals("10.1", StringUtils.formatDecimal(10.1, 2));
+        Assert.assertEquals("10.11", StringUtils.formatDecimal(10.111, 2));
+        Assert.assertEquals("-0.1", StringUtils.formatDecimal(-0.1, 2));
+
+        Assert.assertEquals("1", StringUtils.formatDecimal(0.99, 1));
+    }
 }
