@@ -16,7 +16,6 @@
 
 package de.dennisguse.opentracks.services;
 
-import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -29,14 +28,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import java.util.List;
-
 import de.dennisguse.opentracks.BuildConfig;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackEditActivity;
 import de.dennisguse.opentracks.content.WaypointCreationRequest;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
+import de.dennisguse.opentracks.util.ServiceUtils;
 
 /**
  * Wrapper for the track recording service.
@@ -154,7 +152,7 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
             return;
         }
 
-        if (!startIfNeeded && !isRecordingServiceRunning(context)) {
+        if (!startIfNeeded && !ServiceUtils.isTrackRecordingServiceRunning(context)) {
             Log.d(TAG, "Service is not started. Not binding it.");
             return;
         }
@@ -170,38 +168,13 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
     }
 
     /**
-     * Returns true if the recording service is running.
-     *
-     * @param context the current context
-     */
-    @Deprecated
-    public static boolean isRecordingServiceRunning(Context context) {
-        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        if (activityManager == null) {
-            return false;
-        }
-
-        //TODO This approach is deprecated as of API level 26 and should be replaced.
-        List<ActivityManager.RunningServiceInfo> services = activityManager.getRunningServices(Integer.MAX_VALUE);
-
-        for (ActivityManager.RunningServiceInfo serviceInfo : services) {
-            ComponentName componentName = serviceInfo.service;
-            String serviceName = componentName.getClassName();
-            if (TrackRecordingService.class.getName().equals(serviceName)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
      * Resumes the track recording service connection.
      *
      * @param context the context
      */
     public void startConnection(@NonNull Context context) {
         bindIfStarted();
-        if (!isRecordingServiceRunning(context)) {
+        if (!ServiceUtils.isTrackRecordingServiceRunning(context)) {
             resetRecordingState(context);
         }
     }

@@ -60,6 +60,7 @@ import de.dennisguse.opentracks.util.ActivityUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.ListItemUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
+import de.dennisguse.opentracks.util.ServiceUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.TrackUtils;
@@ -382,7 +383,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        boolean isGpsStarted = TrackRecordingServiceConnection.isRecordingServiceRunning(this);
+        boolean isGpsStarted = ServiceUtils.isTrackRecordingServiceRunning(this);
         boolean isRecording = PreferencesUtils.isRecording(recordingTrackId);
         updateMenuItems(isGpsStarted, isRecording);
 
@@ -402,7 +403,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                     intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                     startActivity(intent);
                 } else {
-                    startGps = !TrackRecordingServiceConnection.isRecordingServiceRunning(this);
+                    startGps = !ServiceUtils.isTrackRecordingServiceRunning(this);
 
                     // Show toast
                     Toast toast = Toast.makeText(this, startGps ? R.string.gps_starting : R.string.gps_stopping, Toast.LENGTH_SHORT);
