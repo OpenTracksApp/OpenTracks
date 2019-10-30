@@ -1,0 +1,8 @@
+OpenTracks – un rastreado GPS que protectar tus datos.
+
+Funciones:
+* recordar actividades desportivo y afuera
+* markar lugares interessantes (inluso fotos)
+* notar pulso (necesitar Bluetooth-LE sensor)
+* exportar tus datos en KML o GPX
+* funcionar totalmente sin red
