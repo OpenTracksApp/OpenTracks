@@ -1,0 +1,14 @@
+v3.2.3: OpenTracks
+
+Changes:
+- Sharing: use Android Sharesheet
+- Sharing: share multiple tracks as individual files
+- Use Android ShareSheet
+- Heart rate sensor (Bluetooth LE): automatic reconnect
+
+Bugfix:
+- Heart rate sensor (Bluetooth LE): disconnect properly
+- Heart rate wasn't always shown while recording
+
+Developer:
+- Enabled TravisCI instrumentation tests
