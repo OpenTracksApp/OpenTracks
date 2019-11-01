@@ -17,7 +17,7 @@ limitations under the License.
     package="de.dennisguse.opentracks"
     android:installLocation="auto"
     android:versionCode="3101"
-    android:versionName="v3.2.3"> <!-- For FDroid. -->
+    android:versionName="v3.2.4"> <!-- For FDroid. -->
     <!-- Permission to initialize services -->
     <application
         android:name=".Startup"
