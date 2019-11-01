@@ -48,7 +48,6 @@ import de.dennisguse.opentracks.content.WaypointCreationRequest;
 import de.dennisguse.opentracks.fragments.ChartFragment;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
-import de.dennisguse.opentracks.fragments.FrequencyDialogFragment;
 import de.dennisguse.opentracks.fragments.StatsFragment;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.settings.SettingsActivity;
@@ -156,8 +155,6 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
     private MenuItem insertPhotoMenuItem;
     private MenuItem markerListMenuItem;
     private MenuItem shareMenuItem;
-    private MenuItem voiceFrequencyMenuItem;
-    private MenuItem splitFrequencyMenuItem;
 
     private final OnClickListener recordListener = new OnClickListener() {
         @Override
@@ -316,8 +313,6 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
         insertPhotoMenuItem = menu.findItem(R.id.track_detail_insert_photo);
         insertPhotoMenuItem.setVisible(new Intent(MediaStore.ACTION_IMAGE_CAPTURE).resolveActivity(getPackageManager()) != null);
         shareMenuItem = menu.findItem(R.id.track_detail_share);
-        voiceFrequencyMenuItem = menu.findItem(R.id.track_detail_voice_frequency);
-        splitFrequencyMenuItem = menu.findItem(R.id.track_detail_split_frequency);
         markerListMenuItem = menu.findItem(R.id.track_detail_markers);
 
         return super.onCreateOptionsMenu(menu);
@@ -358,12 +353,6 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
                 intent = IntentUtils.newIntent(this, MarkerListActivity.class)
                         .putExtra(MarkerListActivity.EXTRA_TRACK_ID, trackId);
                 startActivity(intent);
-                return true;
-            case R.id.track_detail_voice_frequency:
-                FrequencyDialogFragment.showDialog(getSupportFragmentManager(), R.string.voice_frequency_key, PreferencesUtils.VOICE_FREQUENCY_DEFAULT, R.string.menu_voice_frequency);
-                return true;
-            case R.id.track_detail_split_frequency:
-                FrequencyDialogFragment.showDialog(getSupportFragmentManager(), R.string.split_frequency_key, PreferencesUtils.SPLIT_FREQUENCY_DEFAULT, R.string.menu_split_frequency);
                 return true;
             case R.id.track_detail_edit:
                 intent = IntentUtils.newIntent(this, TrackEditActivity.class)
@@ -466,8 +455,6 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
         insertPhotoMenuItem.setVisible(hasCamera && isRecording() && !isPaused);
         shareMenuItem.setVisible(!isRecording());
         markerListMenuItem.setShowAsAction(isRecording() ? MenuItem.SHOW_AS_ACTION_NEVER : MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        voiceFrequencyMenuItem.setVisible(isRecording());
-        splitFrequencyMenuItem.setVisible(isRecording());
         String title;
         if (isRecording()) {
             title = getString(isPaused ? R.string.generic_paused : R.string.generic_recording);

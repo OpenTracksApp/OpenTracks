@@ -79,7 +79,7 @@ public class TrackRecordingServiceTest {
 
     static void updateAutoResumePrefs(Context context, int attempts, int timeoutMins) {
         PreferencesUtils.setInt(context, R.string.auto_resume_track_current_retry_key, attempts);
-        PreferencesUtils.setInt(context, R.string.auto_resume_track_timeout_key, timeoutMins);
+        PreferencesUtils.setString(context, R.string.auto_resume_track_timeout_key, "" + timeoutMins);
     }
 
     @Before
