@@ -36,7 +36,6 @@ import de.dennisguse.opentracks.util.BluetoothUtils;
 
 /**
  * Manages connection to Bluetooth LE heart rate monitor.
- * TODO: shutdown connection.
  */
 public class BluetoothConnectionManager {
 

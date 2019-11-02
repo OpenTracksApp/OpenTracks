@@ -4,7 +4,7 @@ public final class SensorDataSet {
 
     public static final float DATA_UNAVAILABLE = Float.NaN;
 
-    //TODO It might be necessary to consider: sensor if sensor was connected as well.
+    //TODO It might be necessary to consider: if sensor was connected as well.
     public String sensorName;
     public String sensorAddress;
     private float heartRate;

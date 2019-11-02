@@ -1,6 +1,5 @@
 package de.dennisguse.opentracks.fragments;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -77,19 +76,6 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment implements 
 
         gridView.setOnItemClickListener(this);
         return view;
-    }
-
-    /**
-     * TODO: Only used by obsolete Androidx preferences. Remove when onAttach(Context) is called.
-     */
-    @Override
-    public void onAttach(@NonNull Activity activity) {
-        super.onAttach(activity);
-        try {
-            chooseActivityTypeCaller = (ChooseActivityTypeCaller) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity + " must implement " + ChooseActivityTypeCaller.class.getSimpleName());
-        }
     }
 
     public void onAttach(@NonNull Context context) {

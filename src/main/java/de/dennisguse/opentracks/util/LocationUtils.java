@@ -29,7 +29,6 @@ import de.dennisguse.opentracks.content.Track;
  *
  * @author Leif Hendrik Wilden
  */
-//TODO Cleanup: rename variables
 public class LocationUtils {
 
     private static final String TAG = LocationUtils.class.getSimpleName();

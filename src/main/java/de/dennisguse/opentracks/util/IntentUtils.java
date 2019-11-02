@@ -70,7 +70,6 @@ public class IntentUtils {
      * @param context  the context
      * @param trackIds the track ids
      */
-    //TODO Share mulitple tracks in different files!
     public static Intent newShareFileIntent(Context context, long[] trackIds) {
         if (trackIds.length == 0) {
             throw new RuntimeException("Need to share at least one track.");
