@@ -58,7 +58,6 @@ import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 import de.dennisguse.opentracks.content.WaypointCreationRequest;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
-import de.dennisguse.opentracks.services.sensors.RemoteSensorManagerFactory;
 import de.dennisguse.opentracks.services.tasks.AnnouncementPeriodicTaskFactory;
 import de.dennisguse.opentracks.services.tasks.PeriodicTaskExecutor;
 import de.dennisguse.opentracks.services.tasks.SplitPeriodicTaskFactory;
@@ -266,7 +265,7 @@ public class TrackRecordingService extends Service {
     @Override
     public void onDestroy() {
         if (remoteSensorManager != null) {
-            RemoteSensorManagerFactory.releaseSystemSensorManager();
+            remoteSensorManager.stop();
             remoteSensorManager = null;
         }
 
@@ -595,7 +594,7 @@ public class TrackRecordingService extends Service {
      */
     private void startRecording(boolean trackStarted) {
         // Update instance variables
-        remoteSensorManager = RemoteSensorManagerFactory.getSystemSensorManager(this);
+        remoteSensorManager = new BluetoothRemoteSensorManager(this);
         lastLocation = null;
         currentSegmentHasLocation = false;
         isIdle = false;
@@ -693,7 +692,7 @@ public class TrackRecordingService extends Service {
 
         // Update instance variables
         if (remoteSensorManager != null) {
-            RemoteSensorManagerFactory.releaseSystemSensorManager();
+            remoteSensorManager.stop();
             remoteSensorManager = null;
         }
         lastLocation = null;

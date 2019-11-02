@@ -34,7 +34,8 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
- * Bluetooth sensor manager.
+ * Bluetooth LE sensor manager.
+ * Should only be instantiated once!
  *
  * @author Sandor Dornbush
  */
@@ -49,6 +50,7 @@ public class BluetoothRemoteSensorManager {
     private final Context context;
 
     private final SharedPreferences sharedPreferences;
+
     // Handler that gets information back from the bluetoothConnectionManager
     private final Handler messageHandler = new Handler(Looper.getMainLooper()) {
         @Override
@@ -107,7 +109,7 @@ public class BluetoothRemoteSensorManager {
     /**
      * @param context the context
      */
-    BluetoothRemoteSensorManager(Context context) {
+    public BluetoothRemoteSensorManager(Context context) {
         this.context = context;
         sharedPreferences = PreferencesUtils.getSharedPreferences(context);
     }
