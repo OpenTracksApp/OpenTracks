@@ -163,7 +163,7 @@ public class TrackRecordingServiceTest {
         Assert.assertTrue(service.isRecording());
         Assert.assertEquals(id, service.getRecordingTrackId());
         mServiceRule.unbindService();
-        Assert.assertEquals(id, PreferencesUtils.getLong(context, R.string.recording_track_id_key));
+        Assert.assertEquals(id, PreferencesUtils.getRecordingTrackId(context));
 
         // Start the service in "resume" mode (simulates the on-reboot action).
 
@@ -297,7 +297,7 @@ public class TrackRecordingServiceTest {
         long newTrackId = service.startNewTrack();
         Assert.assertEquals(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, newTrackId);
 
-        Assert.assertEquals(trackId, PreferencesUtils.getLong(context, R.string.recording_track_id_key));
+        Assert.assertEquals(trackId, PreferencesUtils.getRecordingTrackId(context));
         Assert.assertEquals(trackId, service.getRecordingTrackId());
     }
 
@@ -310,7 +310,7 @@ public class TrackRecordingServiceTest {
         // Ending the current track when there is no recording should not result in any error.
         service.endCurrentTrack();
 
-        Assert.assertEquals(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, PreferencesUtils.getLong(context, R.string.recording_track_id_key));
+        Assert.assertFalse(PreferencesUtils.isRecording(context));
         Assert.assertEquals(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, service.getRecordingTrackId());
     }
 

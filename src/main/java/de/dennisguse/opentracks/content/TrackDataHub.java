@@ -254,13 +254,13 @@ public class TrackDataHub implements DataSourceListener {
         runInHandlerThread(new Runnable() {
             @Override
             public void run() {
-                if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.recording_track_id_key))) {
-                    recordingTrackId = PreferencesUtils.getLong(context, R.string.recording_track_id_key);
+                if (PreferencesUtils.isKey(context, R.string.recording_track_id_key, key)) {
+                    recordingTrackId = PreferencesUtils.getRecordingTrackId(context);
                 }
-                if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.recording_track_paused_key))) {
+                if (PreferencesUtils.isKey(context, R.string.recording_track_paused_key, key)) {
                     recordingTrackPaused = PreferencesUtils.getBoolean(context, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
                 }
-                if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.stats_units_key))) {
+                if (PreferencesUtils.isKey(context, R.string.stats_units_key, key)) {
                     metricUnits = PreferencesUtils.isMetricUnits(context);
                     if (key != null) {
                         for (TrackDataListener trackDataListener : trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
@@ -270,7 +270,7 @@ public class TrackDataHub implements DataSourceListener {
                         }
                     }
                 }
-                if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.stats_rate_key))) {
+                if (PreferencesUtils.isKey(context, R.string.stats_rate_key, key)) {
                     reportSpeed = PreferencesUtils.isReportSpeed(context);
                     if (key != null) {
                         for (TrackDataListener trackDataListener : trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
@@ -280,7 +280,7 @@ public class TrackDataHub implements DataSourceListener {
                         }
                     }
                 }
-                if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.recording_gps_accuracy_key))) {
+                if (PreferencesUtils.isKey(context, R.string.recording_gps_accuracy_key, key)) {
                     recordingGpsAccuracy = PreferencesUtils.getInt(context, R.string.recording_gps_accuracy_key, PreferencesUtils.RECORDING_GPS_ACCURACY_DEFAULT);
                     if (key != null) {
                         for (TrackDataListener trackDataListener : trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
@@ -290,7 +290,7 @@ public class TrackDataHub implements DataSourceListener {
                         }
                     }
                 }
-                if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.recording_distance_interval_key))) {
+                if (PreferencesUtils.isKey(context, R.string.recording_distance_interval_key, key)) {
                     recordingDistanceInterval = PreferencesUtils.getInt(context, R.string.recording_distance_interval_key, PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT);
                     if (key != null) {
                         for (TrackDataListener trackDataListener : trackDataManager.getListeners(TrackDataType.PREFERENCE)) {

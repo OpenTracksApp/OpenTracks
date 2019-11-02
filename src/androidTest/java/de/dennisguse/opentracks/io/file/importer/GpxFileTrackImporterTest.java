@@ -27,7 +27,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
@@ -95,7 +94,7 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
         // A flush happens at the end
         when(contentProviderUtils.bulkInsertTrackPoint((Location[]) any(), eq(1), eq(TRACK_ID_0))).thenReturn(1);
         when(contentProviderUtils.getLastTrackPointId(TRACK_ID_0)).thenReturn(TRACK_POINT_ID_1);
-        when(contentProviderUtils.getTrack(PreferencesUtils.getLong(context, R.string.recording_track_id_key))).thenReturn(null);
+        when(contentProviderUtils.getTrack(PreferencesUtils.getRecordingTrackId(context))).thenReturn(null);
         ArgumentCaptor<Track> trackCaptor = ArgumentCaptor.forClass(Track.class);
         expectTrackUpdate(trackCaptor, true, TRACK_ID_0);
 
@@ -124,7 +123,7 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
         // A flush happens at the end
         when(contentProviderUtils.bulkInsertTrackPoint((Location[]) any(), eq(5), eq(TRACK_ID_0))).thenReturn(5);
         when(contentProviderUtils.getLastTrackPointId(TRACK_ID_0)).thenReturn(TRACK_POINT_ID_3);
-        when(contentProviderUtils.getTrack(PreferencesUtils.getLong(context, R.string.recording_track_id_key))).thenReturn(null);
+        when(contentProviderUtils.getTrack(PreferencesUtils.getRecordingTrackId(context))).thenReturn(null);
 
         ArgumentCaptor<Track> trackCaptor = ArgumentCaptor.forClass(Track.class);
         expectTrackUpdate(trackCaptor, true, TRACK_ID_0);
@@ -156,7 +155,7 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
         // A flush happens at the end
         when(contentProviderUtils.bulkInsertTrackPoint((Location[]) any(), eq(5), eq(TRACK_ID_0))).thenReturn(5);
         when(contentProviderUtils.getLastTrackPointId(TRACK_ID_0)).thenReturn(TRACK_POINT_ID_3);
-        when(contentProviderUtils.getTrack(PreferencesUtils.getLong(context, R.string.recording_track_id_key))).thenReturn(null);
+        when(contentProviderUtils.getTrack(PreferencesUtils.getRecordingTrackId(context))).thenReturn(null);
 
         ArgumentCaptor<Track> trackCaptor = ArgumentCaptor.forClass(Track.class);
         expectTrackUpdate(trackCaptor, true, TRACK_ID_0);
@@ -211,7 +210,7 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
         when(contentProviderUtils.bulkInsertTrackPoint((Location[]) any(), anyInt(), anyLong())).thenReturn(1);
         when(contentProviderUtils.getFirstTrackPointId(TRACK_ID_0)).thenReturn(TRACK_POINT_ID_0);
         when(contentProviderUtils.getLastTrackPointId(TRACK_ID_0)).thenReturn(TRACK_POINT_ID_0);
-        when(contentProviderUtils.getTrack(PreferencesUtils.getLong(context, R.string.recording_track_id_key))).thenReturn(null);
+        when(contentProviderUtils.getTrack(PreferencesUtils.getRecordingTrackId(context))).thenReturn(null);
         contentProviderUtils.deleteTrack(context, TRACK_ID_0);
 
         InputStream inputStream = new ByteArrayInputStream(xml.getBytes());

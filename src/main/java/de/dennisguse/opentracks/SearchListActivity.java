@@ -143,13 +143,13 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
     private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-            if (key == null || key.equals(PreferencesUtils.getKey(SearchListActivity.this, R.string.stats_units_key))) {
+            if (PreferencesUtils.isKey(SearchListActivity.this, R.string.stats_units_key, key)) {
                 metricUnits = PreferencesUtils.isMetricUnits(SearchListActivity.this);
             }
-            if (key == null || key.equals(PreferencesUtils.getKey(SearchListActivity.this, R.string.recording_track_id_key))) {
-                recordingTrackId = PreferencesUtils.getLong(SearchListActivity.this, R.string.recording_track_id_key);
+            if (PreferencesUtils.isKey(SearchListActivity.this, R.string.recording_track_id_key, key)) {
+                recordingTrackId = PreferencesUtils.getRecordingTrackId(SearchListActivity.this);
             }
-            if (key == null || key.equals(PreferencesUtils.getKey(SearchListActivity.this, R.string.recording_track_paused_key))) {
+            if (PreferencesUtils.isKey(SearchListActivity.this, R.string.recording_track_paused_key, key)) {
                 recordingTrackPaused = PreferencesUtils.getBoolean(SearchListActivity.this, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
             }
             if (key != null) {

@@ -45,7 +45,7 @@ public class ActivityTypePreference extends DialogPreference {
     private SummaryProvider<DialogPreference> summaryProvider = new SummaryProvider<DialogPreference>() {
         @Override
         public CharSequence provideSummary(DialogPreference preference) {
-            String defaultActivity = PreferencesUtils.getString(ActivityTypePreference.this.getContext(), R.string.default_activity_key, PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT);
+            String defaultActivity = PreferencesUtils.getDefaultActivity(ActivityTypePreference.this.getContext());
             return defaultActivity != null && !defaultActivity.equals(PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT) ? defaultActivity : getContext().getString(R.string.value_unknown);
         }
     };
@@ -87,7 +87,7 @@ public class ActivityTypePreference extends DialogPreference {
             final Context context = getActivity();
 
             textView = view.findViewById(R.id.activity_type_preference_text_view);
-            String category = PreferencesUtils.getString(context, R.string.default_activity_key, PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT);
+            String category = PreferencesUtils.getDefaultActivity(context);
             textView.setText(category);
             ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context, R.array.activity_types, android.R.layout.simple_dropdown_item_1line);
             textView.setAdapter(adapter);
@@ -132,7 +132,7 @@ public class ActivityTypePreference extends DialogPreference {
         }
 
         private void showIconSelectDialog() {
-            String category = PreferencesUtils.getString(getActivity(), R.string.default_activity_key, PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT);
+            String category = PreferencesUtils.getDefaultActivity(getActivity());
             ChooseActivityTypeDialogFragment.showDialog(getActivity().getSupportFragmentManager(), category);
         }
 
@@ -141,7 +141,7 @@ public class ActivityTypePreference extends DialogPreference {
             if (positiveResult) {
                 String newDefaultActivity = textView.getText().toString();
                 if (getPreference().callChangeListener(newDefaultActivity)) {
-                    PreferencesUtils.setString(getActivity(), R.string.default_activity_key, newDefaultActivity);
+                    PreferencesUtils.setDefaultActivity(getActivity(), newDefaultActivity);
                 }
             }
         }

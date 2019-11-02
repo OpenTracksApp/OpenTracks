@@ -65,7 +65,7 @@ public abstract class AbstractListActivity extends AbstractActivity implements C
         if (trackIds.length == 1 && trackIds[0] == -1L) {
             stopRecording = true;
         } else {
-            long recordingTrackId = PreferencesUtils.getLong(this, R.string.recording_track_id_key);
+            long recordingTrackId = PreferencesUtils.getRecordingTrackId(this);
             for (long trackId : trackIds) {
                 if (trackId == recordingTrackId) {
                     stopRecording = true;

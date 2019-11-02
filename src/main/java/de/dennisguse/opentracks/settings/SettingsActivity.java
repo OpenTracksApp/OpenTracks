@@ -53,7 +53,7 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
                     }
                 });
 
-                if (key == null || key.equals(PreferencesUtils.getKey(getActivity(), R.string.stats_units_key))) {
+                if (PreferencesUtils.isKey(getActivity(), R.string.stats_units_key, key)) {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

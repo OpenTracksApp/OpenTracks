@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+import androidx.annotation.VisibleForTesting;
 import androidx.preference.PreferenceManager;
 
 import de.dennisguse.opentracks.R;
@@ -35,8 +36,6 @@ public class PreferencesUtils {
      * Preferences values.
      * The defaults need to match the defaults in the xml files.
      */
-    public static final int AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT = 0;
-
     // Values for auto_resume_track_timeout_key
     public static final int AUTO_RESUME_TRACK_TIMEOUT_ALWAYS = -1;
     public static final int AUTO_RESUME_TRACK_TIMEOUT_DEFAULT = 10;
@@ -49,12 +48,6 @@ public class PreferencesUtils {
     public static final boolean CHART_SHOW_HEART_RATE_DEFAULT = true;
     public static final boolean CHART_SHOW_POWER_DEFAULT = true;
     public static final boolean CHART_SHOW_SPEED_DEFAULT = true;
-    @Deprecated
-    //NOTE: is at the moment still used to determine if a track is currently recorded; better ask the service directly.
-    //NOTE: This is also used to recover from a reboot, but this data should not be exposed to the whole application.
-    public static final long RECORDING_TRACK_ID_DEFAULT = -1L;
-
-    public static final String DEFAULT_ACTIVITY_DEFAULT = "";
 
     // Value for split_frequency_key and voice_frequency_key
     public static final int FREQUENCY_OFF = 0;
@@ -78,18 +71,11 @@ public class PreferencesUtils {
     public static final int SPLIT_FREQUENCY_DEFAULT = 0;
     static final boolean STATS_SHOW_ELEVATION_DEFAULT = false;
     static final String TRACK_NAME_DEFAULT = "DATE_ISO_8601";
-    private static final String CHART_X_AXIS_DEFAULT = "DISTANCE";
     public static final String STATS_UNITS_DEFAULT = "METRIC";
-    // Stats
-    private static final String STATS_RATE_DEFAULT = "SPEED";
 
     public static final boolean SHOW_TRACKDETAIL_WHILE_RECORDING_ON_LOCKSCREEN = false;
 
     // Track widget
-    public static final int TRACK_WIDGET_ITEM1_DEFAULT = 3; // moving time
-    public static final int TRACK_WIDGET_ITEM2_DEFAULT = 0; // distance
-    public static final int TRACK_WIDGET_ITEM3_DEFAULT = 1; // total time
-    public static final int TRACK_WIDGET_ITEM4_DEFAULT = 2; // average speed
     public static final int VOICE_FREQUENCY_DEFAULT = 0;
 
     private PreferencesUtils() {
@@ -99,14 +85,61 @@ public class PreferencesUtils {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
+    @Deprecated
+    //NOTE: is at the moment still used to determine if a track is currently recorded; better ask the service directly.
+    //NOTE: This is also used to recover from a reboot, but this data should not be exposed to the whole application.
+    public static final long RECORDING_TRACK_ID_DEFAULT = -1L;
+
+    public static long getRecordingTrackId(Context context) {
+        return PreferencesUtils.getLong(context, R.string.recording_track_id_key, RECORDING_TRACK_ID_DEFAULT);
+    }
+
+
+    @VisibleForTesting
+    public static final int AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT = 0;
+
+    public static int getAutoResumeTrackCurrentRetryDefault(Context context) {
+        return PreferencesUtils.getInt(context, R.string.auto_resume_track_current_retry_key, PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT);
+    }
+
+    public static void resetAutoResumeTrackCurrentRetryDefault(Context context) {
+        PreferencesUtils.setInt(context, R.string.auto_resume_track_current_retry_key, PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT);
+    }
+
+    public static void incrementAutoResumeTrackCurrentRetryDefault(Context context) {
+        PreferencesUtils.setInt(context, R.string.auto_resume_track_current_retry_key, getAutoResumeTrackCurrentRetryDefault(context) + 1);
+    }
+
+
+    public static final String DEFAULT_ACTIVITY_DEFAULT = "";
+
+    public static String getDefaultActivity(Context context) {
+        return PreferencesUtils.getString(context, R.string.default_activity_key, PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT);
+    }
+
+    public static void setDefaultActivity(Context context, String newDefaultActivity) {
+        PreferencesUtils.setString(context, R.string.default_activity_key, newDefaultActivity);
+    }
+
     /**
      * Gets a preference key
      *
      * @param context the context
      * @param keyId   the key id
      */
-    public static String getKey(Context context, int keyId) {
+    private static String getKey(Context context, int keyId) {
         return context.getString(keyId);
+    }
+
+    /**
+     * Compares if keyId and key belong to the same shared preference key.
+     *
+     * @param keyId The resource id of the key
+     * @param key
+     * @return true if key == null or key belongs to keyId
+     */
+    public static boolean isKey(Context context, int keyId, String key) {
+        return key == null || key.equals(PreferencesUtils.getKey(context, keyId));
     }
 
     /**
@@ -180,9 +213,9 @@ public class PreferencesUtils {
      * @param context the context
      * @param keyId   the key id
      */
-    public static long getLong(Context context, int keyId) {
+    public static long getLong(Context context, int keyId, long defaultValue) {
         SharedPreferences sharedPreferences = getSharedPreferences(context);
-        return sharedPreferences.getLong(getKey(context, keyId), -1L);
+        return sharedPreferences.getLong(getKey(context, keyId), defaultValue);
     }
 
     /**
@@ -241,6 +274,7 @@ public class PreferencesUtils {
      * @param context the context
      */
     public static boolean isReportSpeed(Context context) {
+        final String STATS_RATE_DEFAULT = "SPEED";
         return STATS_RATE_DEFAULT.equals(getString(context, R.string.stats_rate_key, STATS_RATE_DEFAULT));
     }
 
@@ -250,11 +284,12 @@ public class PreferencesUtils {
      * @param context the context
      */
     public static boolean isChartByDistance(Context context) {
+        final String CHART_X_AXIS_DEFAULT = "DISTANCE";
         return CHART_X_AXIS_DEFAULT.equals(getString(context, R.string.chart_x_axis_key, CHART_X_AXIS_DEFAULT));
     }
 
     public static boolean isRecording(Context context) {
-        long recordingTrackId = PreferencesUtils.getLong(context, R.string.recording_track_id_key);
+        long recordingTrackId = PreferencesUtils.getRecordingTrackId(context);
         return recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
     }
 

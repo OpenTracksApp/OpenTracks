@@ -117,27 +117,27 @@ public class TrackRecordingService extends Service {
     private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-            if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.recording_track_id_key))) {
+            if (PreferencesUtils.isKey(context, R.string.recording_track_id_key, key)) {
                 // Only through the TrackRecordingService can one stop a recording and set the recordingTrackId to -1L.
                 if (PreferencesUtils.isRecording(context)) {
-                    recordingTrackId = PreferencesUtils.getLong(context, R.string.recording_track_id_key);
+                    recordingTrackId = PreferencesUtils.getRecordingTrackId(context);
                 }
             }
-            if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.recording_track_paused_key))) {
+            if (PreferencesUtils.isKey(context, R.string.recording_track_paused_key, key)) {
                 recordingTrackPaused = PreferencesUtils.getBoolean(context, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
             }
-            if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.stats_units_key))) {
+            if (PreferencesUtils.isKey(context, R.string.stats_units_key, key)) {
                 boolean metricUnits = PreferencesUtils.isMetricUnits(context);
                 voiceExecutor.setMetricUnits(metricUnits);
                 splitExecutor.setMetricUnits(metricUnits);
             }
-            if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.voice_frequency_key))) {
+            if (PreferencesUtils.isKey(context, R.string.voice_frequency_key, key)) {
                 voiceExecutor.setTaskFrequency(PreferencesUtils.getInt(context, R.string.voice_frequency_key, PreferencesUtils.VOICE_FREQUENCY_DEFAULT));
             }
-            if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.split_frequency_key))) {
+            if (PreferencesUtils.isKey(context, R.string.split_frequency_key, key)) {
                 splitExecutor.setTaskFrequency(PreferencesUtils.getInt(context, R.string.split_frequency_key, PreferencesUtils.SPLIT_FREQUENCY_DEFAULT));
             }
-            if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.min_recording_interval_key))) {
+            if (PreferencesUtils.isKey(context, R.string.min_recording_interval_key, key)) {
                 int minRecordingInterval = PreferencesUtils.getInt(context, R.string.min_recording_interval_key, PreferencesUtils.MIN_RECORDING_INTERVAL_DEFAULT);
                 switch (minRecordingInterval) {
                     case PreferencesUtils.MIN_RECORDING_INTERVAL_ADAPT_BATTERY_LIFE:
@@ -152,16 +152,16 @@ public class TrackRecordingService extends Service {
                         locationListenerPolicy = new AbsoluteLocationListenerPolicy(minRecordingInterval * UnitConversions.ONE_SECOND);
                 }
             }
-            if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.recording_distance_interval_key))) {
+            if (PreferencesUtils.isKey(context, R.string.recording_distance_interval_key, key)) {
                 recordingDistanceInterval = PreferencesUtils.getInt(context, R.string.recording_distance_interval_key, PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT);
             }
-            if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.max_recording_distance_key))) {
+            if (PreferencesUtils.isKey(context, R.string.max_recording_distance_key, key)) {
                 maxRecordingDistance = PreferencesUtils.getInt(context, R.string.max_recording_distance_key, PreferencesUtils.MAX_RECORDING_DISTANCE_DEFAULT);
             }
-            if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.recording_gps_accuracy_key))) {
+            if (PreferencesUtils.isKey(context, R.string.recording_gps_accuracy_key, key)) {
                 recordingGpsAccuracy = PreferencesUtils.getInt(context, R.string.recording_gps_accuracy_key, PreferencesUtils.RECORDING_GPS_ACCURACY_DEFAULT);
             }
-            if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.auto_resume_track_timeout_key))) {
+            if (PreferencesUtils.isKey(context, R.string.auto_resume_track_timeout_key, key)) {
                 autoResumeTrackTimeout = PreferencesUtils.getInt(context, R.string.auto_resume_track_timeout_key, PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_DEFAULT);
             }
         }
@@ -464,17 +464,19 @@ public class TrackRecordingService extends Service {
             return false;
         }
 
-        int retries = PreferencesUtils.getInt(this, R.string.auto_resume_track_current_retry_key, PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT);
+        int retries = PreferencesUtils.getAutoResumeTrackCurrentRetryDefault(this);
         if (retries >= MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS) {
             Log.d(TAG, "Not resuming. Exceeded maximum retry attempts.");
             return false;
         }
-        PreferencesUtils.setInt(this, R.string.auto_resume_track_current_retry_key, retries + 1);
+        PreferencesUtils.incrementAutoResumeTrackCurrentRetryDefault(this);
 
         if (autoResumeTrackTimeout == PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_NEVER) {
             Log.d(TAG, "Not resuming. Auto-resume track timeout set to never.");
             return false;
-        } else if (autoResumeTrackTimeout == PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_ALWAYS) {
+        }
+
+        if (autoResumeTrackTimeout == PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_ALWAYS) {
             Log.d(TAG, "Resuming. Auto-resume track timeout set to always.");
             return true;
         }
@@ -508,13 +510,13 @@ public class TrackRecordingService extends Service {
 
         // Update shared preferences
         updateRecordingState(trackId, false);
-        PreferencesUtils.setInt(this, R.string.auto_resume_track_current_retry_key, 0);
+        PreferencesUtils.resetAutoResumeTrackCurrentRetryDefault(this);
 
         // Update database
         track.setId(trackId);
         track.setName(TrackNameUtils.getTrackName(this, trackId, now));
 
-        String category = PreferencesUtils.getString(this, R.string.default_activity_key, PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT);
+        String category = PreferencesUtils.getDefaultActivity(this);
         track.setCategory(category);
         track.setIcon(TrackIconUtils.getIconValue(this, category));
         track.setTripStatistics(trackTripStatisticsUpdater.getTripStatistics());

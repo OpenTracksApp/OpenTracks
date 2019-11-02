@@ -135,19 +135,16 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-            if (key == null || key.equals(PreferencesUtils.getKey(TrackListActivity.this, R.string.stats_units_key))) {
+            if (PreferencesUtils.isKey(TrackListActivity.this, R.string.stats_units_key, key)) {
                 metricUnits = PreferencesUtils.isMetricUnits(TrackListActivity.this);
             }
-            if (key == null || key.equals(
-                    PreferencesUtils.getKey(TrackListActivity.this, R.string.recording_track_id_key))) {
-                recordingTrackId = PreferencesUtils.getLong(
-                        TrackListActivity.this, R.string.recording_track_id_key);
+            if (PreferencesUtils.isKey(TrackListActivity.this, R.string.recording_track_id_key, key)) {
+                recordingTrackId = PreferencesUtils.getRecordingTrackId(TrackListActivity.this);
                 if (key != null && PreferencesUtils.isRecording(recordingTrackId)) {
                     trackRecordingServiceConnection.startAndBind();
                 }
             }
-            if (key == null || key.equals(PreferencesUtils.getKey(
-                    TrackListActivity.this, R.string.recording_track_paused_key))) {
+            if (PreferencesUtils.isKey(TrackListActivity.this, R.string.recording_track_paused_key, key)) {
                 recordingTrackPaused = PreferencesUtils.getBoolean(TrackListActivity.this,
                         R.string.recording_track_paused_key,
                         PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
@@ -226,7 +223,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
 
     private final OnClickListener recordListener = new OnClickListener() {
         public void onClick(View v) {
-            if (recordingTrackId == PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
+            if (PreferencesUtils.isRecording(recordingTrackId)) {
                 // Not recording -> Recording
                 updateMenuItems(false, true);
                 startRecording();

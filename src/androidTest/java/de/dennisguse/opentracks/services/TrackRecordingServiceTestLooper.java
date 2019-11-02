@@ -225,7 +225,7 @@ public class TrackRecordingServiceTestLooper {
         Track track = providerUtils.getTrack(id);
         Assert.assertNotNull(track);
         Assert.assertEquals(id, track.getId());
-        Assert.assertEquals(id, PreferencesUtils.getLong(context, R.string.recording_track_id_key));
+        Assert.assertEquals(id, PreferencesUtils.getRecordingTrackId(context));
         Assert.assertEquals(id, service.getRecordingTrackId());
 
         // Insert a few points, markers and statistics.

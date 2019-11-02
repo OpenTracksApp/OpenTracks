@@ -87,7 +87,7 @@ public class BluetoothRemoteSensorManager {
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-            if (bluetoothConnectionManager != null && key == null || key.equals(PreferencesUtils.getKey(context, R.string.bluetooth_sensor_key))) {
+            if (bluetoothConnectionManager != null && PreferencesUtils.isKey(context, R.string.bluetooth_sensor_key, key)) {
                 String address = PreferencesUtils.getString(context, R.string.bluetooth_sensor_key, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT);
                 if (address.equals(PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT)) {
                     stop();

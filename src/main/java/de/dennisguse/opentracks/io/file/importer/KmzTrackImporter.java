@@ -101,7 +101,7 @@ public class KmzTrackImporter implements TrackImporter {
      * @param trackId the trackId
      */
     private void cleanImport(long trackId) {
-        if (trackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
+        if (!PreferencesUtils.isRecording(trackId)) {
             ContentProviderUtils contentProviderUtils = ContentProviderUtils.Factory.get(context);
             contentProviderUtils.deleteTrack(context, trackId);
         }

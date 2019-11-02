@@ -79,10 +79,10 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
             // Note that the key can be null
-            if (key == null || key.equals(PreferencesUtils.getKey(MarkerListActivity.this, R.string.recording_track_id_key))) {
-                recordingTrackId = PreferencesUtils.getLong(MarkerListActivity.this, R.string.recording_track_id_key);
+            if (PreferencesUtils.isKey(MarkerListActivity.this, R.string.recording_track_id_key, key)) {
+                recordingTrackId = PreferencesUtils.getRecordingTrackId(MarkerListActivity.this);
             }
-            if (key == null || key.equals(PreferencesUtils.getKey(MarkerListActivity.this, R.string.recording_track_paused_key))) {
+            if (PreferencesUtils.isKey(MarkerListActivity.this, R.string.recording_track_paused_key, key)) {
                 recordingTrackPaused = PreferencesUtils.getBoolean(MarkerListActivity.this, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
             }
             if (key != null) {

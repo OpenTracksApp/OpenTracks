@@ -248,7 +248,7 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
             try {
                 if (showEditor) {
                     // Need to remember the recordingTrackId before calling endCurrentTrack() as endCurrentTrack() sets the value to -1L.
-                    long recordingTrackId = PreferencesUtils.getLong(context, R.string.recording_track_id_key);
+                    long recordingTrackId = PreferencesUtils.getRecordingTrackId(context);
                     trackRecordingService.endCurrentTrack();
                     if (PreferencesUtils.isRecording(context)) {
                         Intent intent = IntentUtils.newIntent(context, TrackEditActivity.class)
