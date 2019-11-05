@@ -124,6 +124,7 @@ limitations under the License.
             android:name=".services.TrackRecordingService"
             android:enabled="true"
             android:exported="false"
+            android:foregroundServiceType="location|connectedDevice"
             android:icon="@drawable/ic_logo_color_24dp"
             android:label="@string/recording_service" />
     </application>
