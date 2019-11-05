@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Reporting issues of Opentracks features.
+about: Reporting issues of Opentracks features
 title: ''
 labels: potential bug
 assignees: ''
