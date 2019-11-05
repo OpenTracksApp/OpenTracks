@@ -151,6 +151,8 @@ public class StatsUtils {
     public static void setTripStatisticsValues(Activity activity, TripStatistics tripStatistics, String trackIconValue) {
         boolean metricUnits = PreferencesUtils.isMetricUnits(activity);
         boolean reportSpeed = PreferencesUtils.isReportSpeed(activity);
+        boolean isRecording = PreferencesUtils.isRecording(activity);
+        ;
 
         // Set total distance
         {
@@ -173,6 +175,7 @@ public class StatsUtils {
             if (trackIconValue != null) {
                 TrackIconUtils.setIconSpinner(spinner, trackIconValue);
             }
+            spinner.setEnabled(isRecording);
         }
 
         // Set time

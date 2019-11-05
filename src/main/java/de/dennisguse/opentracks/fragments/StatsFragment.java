@@ -67,7 +67,6 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
     private Location lastLocation = null;
     private TripStatistics lastTripStatistics = null;
-    private SensorDataSet sensorDataSet = null;
 
     private final Runnable updateUIeachSecond = new Runnable() {
         public void run() {
@@ -304,9 +303,10 @@ public class StatsFragment extends Fragment implements TrackDataListener {
      */
     private void updateSensorDataUI() {
         ITrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
+
+        SensorDataSet sensorDataSet = null;
         if (trackRecordingService == null) {
             Log.d(STATS_FRAGMENT_TAG, "Cannot get the track recording service.");
-            sensorDataSet = null;
         } else {
             //TODO sensorState = trackRecordingService.getSensorState();
             sensorDataSet = trackRecordingService.getSensorData();

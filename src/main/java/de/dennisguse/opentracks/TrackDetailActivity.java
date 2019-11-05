@@ -94,8 +94,6 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
     // Preferences
     private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
     private boolean recordingTrackPaused = PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT;
-    @Deprecated //TODO Not required to be member variable.
-    private boolean showOnLockScreen = getResources().getBoolean(R.bool.stats_show_on_lockscreen_while_recording_default);
 
     private final Runnable bindChangedCallback = new Runnable() {
         @Override
@@ -135,7 +133,6 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
             }
 
             if (PreferencesUtils.isKey(TrackDetailActivity.this, R.string.stats_show_on_lockscreen_while_recording_key, key)) {
-                showOnLockScreen = PreferencesUtils.shouldShowStatsOnLockscreen(TrackDetailActivity.this);
                 setLockscreenPolicy();
             }
 
@@ -228,12 +225,14 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
     }
 
     private void setLockscreenPolicy() {
+        boolean showOnLockScreen = PreferencesUtils.shouldShowStatsOnLockscreen(TrackDetailActivity.this);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             setShowWhenLocked(showOnLockScreen);
+        } else if (showOnLockScreen) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
         } else {
-            if (showOnLockScreen)
-                getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
-            else getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
         }
     }
 
