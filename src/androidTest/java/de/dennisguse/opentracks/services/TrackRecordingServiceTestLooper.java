@@ -174,7 +174,7 @@ public class TrackRecordingServiceTestLooper {
     @MediumTest
     @Test
     public void testWithProperties_metricUnitsDefault() throws TimeoutException {
-        PreferencesUtils.setString(context, R.string.stats_units_key, PreferencesUtils.STATS_UNITS_DEFAULT);
+        PreferencesUtils.setString(context, R.string.stats_units_key, context.getString(R.string.stats_units_default));
         fullRecordingSession();
     }
 

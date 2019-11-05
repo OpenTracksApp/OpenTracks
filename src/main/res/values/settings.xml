@@ -8,8 +8,12 @@
     <string name="chart_show_speed_key" translatable="false">chartShowSpeed</string>
 
     <string name="stats_show_coordinate_key" translatable="false">statsShowCoordinate</string>
+    <bool name="stats_show_coordinate_default" translatable="false">false</bool>
+
     <string name="stats_show_grade_elevation_key" translatable="false">statsShowGradeElevation</string>
+
     <string name="stats_show_on_lockscreen_while_recording_key" translatable="false">trackdetail_show_on_lockscreen_while_recording</string>
+    <bool name="stats_show_on_lockscreen_while_recording_default" translatable="false">false</bool>
 
     <string name="settings_reset_key" translatable="false">settingsReset</string>
 
@@ -97,6 +101,7 @@
     </string-array>
 
     <string name="chart_x_axis_key" translatable="false">chartXAxis</string>
+    <string name="chart_x_axis_default" translatable="false">@string/chart_x_axis_distance</string>
     <string-array name="chart_x_axis_values">
         <item>@string/chart_x_axis_distance</item>
         <item>@string/chart_x_axis_time</item>
@@ -182,6 +187,7 @@
     </string-array>
 
     <string name="stats_rate_key" translatable="false">statsRate</string>
+    <string name="stats_rate_default" translatable="false">@string/stats_rate_speed</string>
     <string-array name="stats_rate_imperial_options">
         <item>@string/description_speed_imperial</item>
         <item>@string/description_pace_imperial</item>
@@ -199,6 +205,7 @@
     </string-array>
 
     <string name="stats_units_key" translatable="false">statsUnits</string>
+    <string name="stats_units_default" translatable="false">@string/stats_units_metric</string>
     <string-array name="stats_units_values">
         <item>@string/stats_units_metric</item>
         <item>@string/stats_units_imperial</item>
@@ -211,6 +218,7 @@
     </string-array>
 
     <string name="track_name_key" translatable="false">trackName</string>
+    <string name="track_name_default" translatable="false">@string/settings_recording_track_name_date_iso_8601_value</string>
     <string name="settings_recording_track_name_date_iso_8601_value" translatable="false">DATE_ISO_8601</string>
     <string name="settings_recording_track_name_date_local_value" translatable="false">DATE_LOCAL</string>
     <string name="settings_recording_track_name_number_value" translatable="false">NUMBER</string>

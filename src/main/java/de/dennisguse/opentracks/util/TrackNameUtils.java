@@ -47,7 +47,7 @@ public class TrackNameUtils {
      * @param startTime the track start time
      */
     public static String getTrackName(Context context, long trackId, long startTime) {
-        String trackName = PreferencesUtils.getString(context, R.string.track_name_key, PreferencesUtils.TRACK_NAME_DEFAULT);
+        String trackName = PreferencesUtils.getString(context, R.string.track_name_key, context.getString(R.string.track_name_default));
 
         if (trackName.equals(context.getString(R.string.settings_recording_track_name_date_local_value))) {
             return StringUtils.formatDateTime(context, startTime);

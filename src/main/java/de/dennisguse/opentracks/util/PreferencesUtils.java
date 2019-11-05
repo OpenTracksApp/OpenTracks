@@ -70,10 +70,6 @@ public class PreferencesUtils {
 
     public static final int SPLIT_FREQUENCY_DEFAULT = 0;
     static final boolean STATS_SHOW_ELEVATION_DEFAULT = false;
-    static final String TRACK_NAME_DEFAULT = "DATE_ISO_8601";
-    public static final String STATS_UNITS_DEFAULT = "METRIC";
-
-    public static final boolean SHOW_TRACKDETAIL_WHILE_RECORDING_ON_LOCKSCREEN = false;
 
     // Track widget
     public static final int VOICE_FREQUENCY_DEFAULT = 0;
@@ -264,7 +260,8 @@ public class PreferencesUtils {
      * @param context the context
      */
     public static boolean isMetricUnits(Context context) {
-        return STATS_UNITS_DEFAULT.equals(getString(context, R.string.stats_units_key, STATS_UNITS_DEFAULT));
+        String statsUnitDefault = context.getString(R.string.stats_units_default);
+        return statsUnitDefault.equals(getString(context, R.string.stats_units_key, statsUnitDefault));
     }
 
     /**
@@ -274,7 +271,7 @@ public class PreferencesUtils {
      * @param context the context
      */
     public static boolean isReportSpeed(Context context) {
-        final String STATS_RATE_DEFAULT = "SPEED";
+        final String STATS_RATE_DEFAULT = context.getString(R.string.stats_rate_default);
         return STATS_RATE_DEFAULT.equals(getString(context, R.string.stats_rate_key, STATS_RATE_DEFAULT));
     }
 
@@ -284,8 +281,13 @@ public class PreferencesUtils {
      * @param context the context
      */
     public static boolean isChartByDistance(Context context) {
-        final String CHART_X_AXIS_DEFAULT = "DISTANCE";
+        final String CHART_X_AXIS_DEFAULT = context.getString(R.string.chart_x_axis_default);
         return CHART_X_AXIS_DEFAULT.equals(getString(context, R.string.chart_x_axis_key, CHART_X_AXIS_DEFAULT));
+    }
+
+    public static boolean shouldShowStatsOnLockscreen(Context context) {
+        final boolean STATS_SHOW_ON_LOCKSCREEN_DEFAULT = context.getResources().getBoolean(R.bool.stats_show_on_lockscreen_while_recording_default);
+        return getBoolean(context, R.string.stats_show_on_lockscreen_while_recording_key, STATS_SHOW_ON_LOCKSCREEN_DEFAULT);
     }
 
     public static boolean isRecording(Context context) {
