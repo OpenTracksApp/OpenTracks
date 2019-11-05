@@ -69,7 +69,7 @@ limitations under the License.
     <PreferenceCategory android:title="@string/settings_recording">
         <CheckBoxPreference
             android:defaultValue="false"
-            android:key="@string/trackdetail_show_on_lockscreen_while_recording_key"
+            android:key="@string/stats_show_on_lockscreen_while_recording_key"
             android:summary="@string/settings_recording_show_on_lockscreen_while_recording_summary"
             android:title="@string/settings_recording_show_on_lockscreen_while_recording_title" />
         <ListPreference
@@ -132,7 +132,7 @@ limitations under the License.
         android:title="@string/settings_sensor">
         <ListPreference
             android:defaultValue="@string/sensor_type_value_none"
-            android:key="@string/bluetooth_sensor_key"
+            android:key="@string/settings_sensor_bluetooth_sensor_key"
             android:summary="%s"
             android:title="@string/settings_sensor_bluetooth_sensor" />
         <Preference

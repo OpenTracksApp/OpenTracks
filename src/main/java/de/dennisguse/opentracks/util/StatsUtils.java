@@ -108,7 +108,7 @@ public class StatsUtils {
     public static void setSensorData(Activity activity, SensorDataSet sensorDataSet, boolean isRecording) {
         // heart rate
         int isVisible = View.VISIBLE;
-        if (!isRecording || PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT.equals(PreferencesUtils.getString(activity, R.string.bluetooth_sensor_key, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT))) {
+        if (!isRecording || PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT.equals(PreferencesUtils.getString(activity, R.string.settings_sensor_bluetooth_sensor_key, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT))) {
             isVisible = View.INVISIBLE;
         }
         activity.findViewById(R.id.stats_sensor_container).setVisibility(isVisible);

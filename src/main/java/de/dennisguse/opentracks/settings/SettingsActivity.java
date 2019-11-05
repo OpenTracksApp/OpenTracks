@@ -155,7 +155,7 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
             Preference speedCheckBoxPreference = findPreference(getString(R.string.chart_show_speed_key));
             speedCheckBoxPreference.setTitle(PreferencesUtils.isReportSpeed(getActivity()) ? R.string.stats_speed : R.string.stats_pace);
 
-            ListPreference bluetoothPreference = findPreference(getString(R.string.bluetooth_sensor_key));
+            ListPreference bluetoothPreference = findPreference(getString(R.string.settings_sensor_bluetooth_sensor_key));
             PreferenceHelper.configureBluetoothSensorList(bluetoothPreference);
         }
 

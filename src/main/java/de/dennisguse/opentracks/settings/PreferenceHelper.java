@@ -187,7 +187,7 @@ final class PreferenceHelper {
     static void configureBluetoothSensorList(ListPreference preference) {
         Context context = preference.getContext();
 
-        String value = PreferencesUtils.getString(context, R.string.bluetooth_sensor_key, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT);
+        String value = PreferencesUtils.getString(context, R.string.settings_sensor_bluetooth_sensor_key, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT);
         List<String> devicesNameList = new ArrayList<>();
         List<String> devicesAddressList = new ArrayList<>();
         BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -198,7 +198,7 @@ final class PreferenceHelper {
         // Was the previously configured device unpaired? Then forget it.
         if (!devicesAddressList.contains(value)) {
             value = PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT;
-            PreferencesUtils.setString(context, R.string.bluetooth_sensor_key, value);
+            PreferencesUtils.setString(context, R.string.settings_sensor_bluetooth_sensor_key, value);
         }
 
         devicesNameList.add(0, context.getString(R.string.value_none));

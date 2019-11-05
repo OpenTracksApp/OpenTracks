@@ -15,20 +15,68 @@ limitations under the License.
 -->
 <resources>
     <string name="app_web_url" translatable="false">https://github.com/dennisguse/opentracks</string>
-    <string name="chart_x_axis_distance" translatable="false">DISTANCE</string>
-    <string name="chart_x_axis_time" translatable="false">TIME</string>
+
     <!-- List here all used libraries (will be shown in the about activity -->
     <string name="third_party_libraries" translatable="false"><a href="https://developer.android.com/topic/libraries/support-library/">Google\'s androidX support</a> (Apache License, Version 2.0)</string>
+
     <string name="marker_statistics_icon_url" translatable="false">http://maps.google.com/mapfiles/ms/micons/ylw-pushpin.png</string>
     <string name="marker_waypoint_icon_url" translatable="false">http://maps.google.com/mapfiles/ms/micons/blue-pushpin.png</string>
-    <string name="sensor_type_value_none" translatable="false">NONE</string>
+
     <string name="sensor_unit_beats_per_minute" translatable="false">BPM</string>
-    <string name="settings_recording_track_name_date_iso_8601_value" translatable="false">DATE_ISO_8601</string>
-    <string name="settings_recording_track_name_date_local_value" translatable="false">DATE_LOCAL</string>
-    <string name="settings_recording_track_name_number_value" translatable="false">NUMBER</string>
-    <string name="stats_rate_pace" translatable="false">PACE</string>
-    <string name="stats_rate_speed" translatable="false">SPEED</string>
-    <string name="stats_units_imperial" translatable="false">IMPERIAL</string>
-    <string name="stats_units_metric" translatable="false">METRIC</string>
+
     <string name="value_unknown" translatable="false">-</string>
+
+    <string-array name="waypoint_types">
+        <item>@string/waypoint_type_atm</item>
+        <item>@string/waypoint_type_bank</item>
+        <item>@string/waypoint_type_bar</item>
+        <item>@string/waypoint_type_barbecue</item>
+        <item>@string/waypoint_type_building</item>
+        <item>@string/waypoint_type_bus_stop</item>
+        <item>@string/waypoint_type_cafe</item>
+        <item>@string/waypoint_type_campfire</item>
+        <item>@string/waypoint_type_campground</item>
+        <item>@string/waypoint_type_church</item>
+        <item>@string/waypoint_type_coffee_house</item>
+        <item>@string/waypoint_type_convenience_store</item>
+        <item>@string/waypoint_type_drinking_water</item>
+        <item>@string/waypoint_type_falling_rocks</item>
+        <item>@string/waypoint_type_ferry</item>
+        <item>@string/waypoint_type_fire_place</item>
+        <item>@string/waypoint_type_fire_station</item>
+        <item>@string/waypoint_type_fishing</item>
+        <item>@string/waypoint_type_gas_station</item>
+        <item>@string/waypoint_type_golf_course</item>
+        <item>@string/waypoint_type_grocery_store</item>
+        <item>@string/waypoint_type_hair_dresser</item>
+        <item>@string/waypoint_type_harbor</item>
+        <item>@string/waypoint_type_hiking_path</item>
+        <item>@string/waypoint_type_hotel</item>
+        <item>@string/waypoint_type_house</item>
+        <item>@string/waypoint_type_information</item>
+        <item>@string/waypoint_type_intersection</item>
+        <item>@string/waypoint_type_mail_box</item>
+        <item>@string/waypoint_type_market</item>
+        <item>@string/waypoint_type_meeting_point</item>
+        <item>@string/waypoint_type_opera</item>
+        <item>@string/waypoint_type_parking</item>
+        <item>@string/waypoint_type_police_station</item>
+        <item>@string/waypoint_type_post_office</item>
+        <item>@string/waypoint_type_pothole</item>
+        <item>@string/waypoint_type_railway_crossing</item>
+        <item>@string/waypoint_type_restaurant</item>
+        <item>@string/waypoint_type_shopping</item>
+        <item>@string/waypoint_type_sight</item>
+        <item>@string/waypoint_type_store</item>
+        <item>@string/waypoint_type_swimming_pool</item>
+        <item>@string/waypoint_type_telephone</item>
+        <item>@string/waypoint_type_theater</item>
+        <item>@string/waypoint_type_toilet</item>
+        <item>@string/waypoint_type_tourist_information</item>
+        <item>@string/waypoint_type_tree</item>
+        <item>@string/waypoint_type_tunnel</item>
+        <item>@string/waypoint_type_waterfall</item>
+        <item>@string/waypoint_type_water_fountain</item>
+        <item>@string/waypoint_type_waypoint</item>
+    </string-array>
 </resources>

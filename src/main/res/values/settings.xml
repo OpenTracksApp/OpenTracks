@@ -1,20 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-Copyright 2010 Google Inc.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-     http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
--->
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Do not translate any arrays in this file. -->
+    <!-- Do not translate anything in this file directly. -->
+    <string name="chart_show_cadence_key" translatable="false">chartShowCadence</string>
+    <string name="chart_show_elevation_key" translatable="false">chartShowElevation</string>
+    <string name="chart_show_heart_rate_key" translatable="false">chartShowHeartRate</string>
+    <string name="chart_show_power_key" translatable="false">chartShowPower</string>
+    <string name="chart_show_speed_key" translatable="false">chartShowSpeed</string>
+
+    <string name="stats_show_coordinate_key" translatable="false">statsShowCoordinate</string>
+    <string name="stats_show_grade_elevation_key" translatable="false">statsShowGradeElevation</string>
+    <string name="stats_show_on_lockscreen_while_recording_key" translatable="false">trackdetail_show_on_lockscreen_while_recording</string>
+
+    <string name="settings_reset_key" translatable="false">settingsReset</string>
+
+    <string name="settings_sensor_bluetooth_sensor_key" translatable="false">bluetoothSensor</string>
+    <string name="settings_sensor_bluetooth_pairing_key" translatable="false">settingsSensorBluetoothPairing</string>
+    <string name="sensor_type_value_none" translatable="false">NONE</string>
+
+    <string name="default_activity_key" translatable="false">defaultActivity</string>
     <string-array name="activity_types">
         <item>@string/activity_type_airplane</item>
         <item>@string/activity_type_atv</item>
@@ -83,6 +86,8 @@ limitations under the License.
         <item>@string/activity_type_water_skiing</item>
         <item>@string/activity_type_wind_surfing</item>
     </string-array>
+
+    <string name="auto_resume_track_timeout_key" translatable="false">autoResumeTrackTimeout</string>
     <string-array name="auto_resume_track_timeout_values">
         <item>0</item>
         <item>5</item>
@@ -90,14 +95,21 @@ limitations under the License.
         <item>15</item>
         <item>-1</item>
     </string-array>
-    <string-array name="chart_x_axis_options">
-        <item>@string/settings_chart_by_distance</item>
-        <item>@string/settings_chart_by_time</item>
-    </string-array>
+
+    <string name="chart_x_axis_key" translatable="false">chartXAxis</string>
     <string-array name="chart_x_axis_values">
         <item>@string/chart_x_axis_distance</item>
         <item>@string/chart_x_axis_time</item>
     </string-array>
+    <string name="chart_x_axis_time" translatable="false">TIME</string>
+    <string name="chart_x_axis_distance" translatable="false">DISTANCE</string>
+    <string-array name="chart_x_axis_options">
+        <item>@string/settings_chart_by_distance</item>
+        <item>@string/settings_chart_by_time</item>
+    </string-array>
+
+    <string name="split_frequency_key" translatable="false">splitFrequency</string>
+    <string name="voice_frequency_key" translatable="false">voiceFrequency</string>
     <string-array name="frequency_values">
         <item>0</item>
         <item>1</item>
@@ -114,6 +126,19 @@ limitations under the License.
         <item>-50</item>
         <item>-100</item>
     </string-array>
+
+    <string name="recording_distance_interval_key" translatable="false">recordingDistanceInterval</string>
+    <string-array name="recording_distance_interval_values">
+        <item>1</item>
+        <item>2</item>
+        <item>5</item>
+        <item>10</item>
+        <item>20</item>
+        <item>50</item>
+        <item>100</item>
+    </string-array>
+
+    <string name="max_recording_distance_key" translatable="false">maxRecordingDistance</string>
     <string-array name="max_recording_distance_values">
         <item>50</item>
         <item>100</item>
@@ -122,6 +147,8 @@ limitations under the License.
         <item>1000</item>
         <item>5000</item>
     </string-array>
+
+    <string name="min_recording_interval_key" translatable="false">minRecordingInterval</string>
     <string-array name="min_recording_interval_values">
         <item>-2</item>
         <item>-1</item>
@@ -140,15 +167,8 @@ limitations under the License.
         <item>900</item>
         <item>1800</item>
     </string-array>
-    <string-array name="recording_distance_interval_values">
-        <item>1</item>
-        <item>2</item>
-        <item>5</item>
-        <item>10</item>
-        <item>20</item>
-        <item>50</item>
-        <item>100</item>
-    </string-array>
+
+    <string name="recording_gps_accuracy_key" translatable="false">recordingGpsAccuracy</string>
     <string-array name="recording_gps_accuracy_values">
         <item>10</item>
         <item>20</item>
@@ -160,6 +180,8 @@ limitations under the License.
         <item>1000</item>
         <item>2000</item>
     </string-array>
+
+    <string name="stats_rate_key" translatable="false">statsRate</string>
     <string-array name="stats_rate_imperial_options">
         <item>@string/description_speed_imperial</item>
         <item>@string/description_pace_imperial</item>
@@ -168,79 +190,38 @@ limitations under the License.
         <item>@string/description_speed_metric</item>
         <item>@string/description_pace_metric</item>
     </string-array>
+
+    <string name="stats_rate_pace" translatable="false">PACE</string>
+    <string name="stats_rate_speed" translatable="false">SPEED</string>
     <string-array name="stats_rate_values">
         <item>@string/stats_rate_speed</item>
         <item>@string/stats_rate_pace</item>
     </string-array>
-    <string-array name="stats_units_options">
-        <item>@string/settings_stats_units_metric</item>
-        <item>@string/settings_stats_units_imperial</item>
-    </string-array>
+
+    <string name="stats_units_key" translatable="false">statsUnits</string>
     <string-array name="stats_units_values">
         <item>@string/stats_units_metric</item>
         <item>@string/stats_units_imperial</item>
     </string-array>
-    <string-array name="track_name_options">
-        <item>@string/settings_recording_track_name_date_local_option</item>
-        <item>@string/settings_recording_track_name_date_iso_8601_option</item>
-        <item>@string/settings_recording_track_name_number_option</item>
+    <string name="stats_units_metric" translatable="false">METRIC</string>
+    <string name="stats_units_imperial" translatable="false">IMPERIAL</string>
+    <string-array name="stats_units_options">
+        <item>@string/settings_stats_units_metric</item>
+        <item>@string/settings_stats_units_imperial</item>
     </string-array>
+
+    <string name="track_name_key" translatable="false">trackName</string>
+    <string name="settings_recording_track_name_date_iso_8601_value" translatable="false">DATE_ISO_8601</string>
+    <string name="settings_recording_track_name_date_local_value" translatable="false">DATE_LOCAL</string>
+    <string name="settings_recording_track_name_number_value" translatable="false">NUMBER</string>
     <string-array name="track_name_values">
         <item>@string/settings_recording_track_name_date_local_value</item>
         <item>@string/settings_recording_track_name_date_iso_8601_value</item>
         <item>@string/settings_recording_track_name_number_value</item>
     </string-array>
-    <string-array name="waypoint_types">
-        <item>@string/waypoint_type_atm</item>
-        <item>@string/waypoint_type_bank</item>
-        <item>@string/waypoint_type_bar</item>
-        <item>@string/waypoint_type_barbecue</item>
-        <item>@string/waypoint_type_building</item>
-        <item>@string/waypoint_type_bus_stop</item>
-        <item>@string/waypoint_type_cafe</item>
-        <item>@string/waypoint_type_campfire</item>
-        <item>@string/waypoint_type_campground</item>
-        <item>@string/waypoint_type_church</item>
-        <item>@string/waypoint_type_coffee_house</item>
-        <item>@string/waypoint_type_convenience_store</item>
-        <item>@string/waypoint_type_drinking_water</item>
-        <item>@string/waypoint_type_falling_rocks</item>
-        <item>@string/waypoint_type_ferry</item>
-        <item>@string/waypoint_type_fire_place</item>
-        <item>@string/waypoint_type_fire_station</item>
-        <item>@string/waypoint_type_fishing</item>
-        <item>@string/waypoint_type_gas_station</item>
-        <item>@string/waypoint_type_golf_course</item>
-        <item>@string/waypoint_type_grocery_store</item>
-        <item>@string/waypoint_type_hair_dresser</item>
-        <item>@string/waypoint_type_harbor</item>
-        <item>@string/waypoint_type_hiking_path</item>
-        <item>@string/waypoint_type_hotel</item>
-        <item>@string/waypoint_type_house</item>
-        <item>@string/waypoint_type_information</item>
-        <item>@string/waypoint_type_intersection</item>
-        <item>@string/waypoint_type_mail_box</item>
-        <item>@string/waypoint_type_market</item>
-        <item>@string/waypoint_type_meeting_point</item>
-        <item>@string/waypoint_type_opera</item>
-        <item>@string/waypoint_type_parking</item>
-        <item>@string/waypoint_type_police_station</item>
-        <item>@string/waypoint_type_post_office</item>
-        <item>@string/waypoint_type_pothole</item>
-        <item>@string/waypoint_type_railway_crossing</item>
-        <item>@string/waypoint_type_restaurant</item>
-        <item>@string/waypoint_type_shopping</item>
-        <item>@string/waypoint_type_sight</item>
-        <item>@string/waypoint_type_store</item>
-        <item>@string/waypoint_type_swimming_pool</item>
-        <item>@string/waypoint_type_telephone</item>
-        <item>@string/waypoint_type_theater</item>
-        <item>@string/waypoint_type_toilet</item>
-        <item>@string/waypoint_type_tourist_information</item>
-        <item>@string/waypoint_type_tree</item>
-        <item>@string/waypoint_type_tunnel</item>
-        <item>@string/waypoint_type_waterfall</item>
-        <item>@string/waypoint_type_water_fountain</item>
-        <item>@string/waypoint_type_waypoint</item>
+    <string-array name="track_name_options">
+        <item>@string/settings_recording_track_name_date_local_option</item>
+        <item>@string/settings_recording_track_name_date_iso_8601_option</item>
+        <item>@string/settings_recording_track_name_number_option</item>
     </string-array>
 </resources>
