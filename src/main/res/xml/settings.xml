@@ -35,7 +35,7 @@ limitations under the License.
 
     <PreferenceCategory android:title="@string/settings_show">
         <CheckBoxPreference
-            android:defaultValue="false"
+            android:defaultValue="@bool/stats_show_grade_elevation_default"
             android:key="@string/stats_show_grade_elevation_key"
             android:title="@string/settings_stats_grade_elevation" />
         <CheckBoxPreference
@@ -73,13 +73,13 @@ limitations under the License.
             android:summary="@string/settings_recording_show_on_lockscreen_while_recording_summary"
             android:title="@string/settings_recording_show_on_lockscreen_while_recording_title" />
         <ListPreference
-            android:defaultValue="0"
+            android:defaultValue="@integer/voice_frequency_default"
             android:entryValues="@array/frequency_values"
             android:key="@string/voice_frequency_key"
             android:summary="%s"
             android:title="@string/menu_voice_frequency" />
         <ListPreference
-            android:defaultValue="0"
+            android:defaultValue="@integer/split_frequency_default"
             android:entryValues="@array/frequency_values"
             android:key="@string/split_frequency_key"
             android:summary="%s"
@@ -98,13 +98,13 @@ limitations under the License.
             android:summary="%s"
             android:title="@string/settings_recording_min_recording_interval_title" />
         <ListPreference
-            android:defaultValue="10"
+            android:defaultValue="@integer/recording_distance_interval_default"
             android:entryValues="@array/recording_distance_interval_values"
             android:key="@string/recording_distance_interval_key"
             android:summary="%s"
             android:title="@string/settings_recording_min_recording_distance_title" />
         <ListPreference
-            android:defaultValue="200"
+            android:defaultValue="@integer/max_recording_distance_default"
             android:entryValues="@array/max_recording_distance_values"
             android:key="@string/max_recording_distance_key"
             android:summary="%s"

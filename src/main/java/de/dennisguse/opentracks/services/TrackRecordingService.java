@@ -124,7 +124,7 @@ public class TrackRecordingService extends Service {
                 }
             }
             if (PreferencesUtils.isKey(context, R.string.recording_track_paused_key, key)) {
-                recordingTrackPaused = PreferencesUtils.getBoolean(context, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+                recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(context);
             }
             if (PreferencesUtils.isKey(context, R.string.stats_units_key, key)) {
                 boolean metricUnits = PreferencesUtils.isMetricUnits(context);
@@ -132,13 +132,13 @@ public class TrackRecordingService extends Service {
                 splitExecutor.setMetricUnits(metricUnits);
             }
             if (PreferencesUtils.isKey(context, R.string.voice_frequency_key, key)) {
-                voiceExecutor.setTaskFrequency(PreferencesUtils.getInt(context, R.string.voice_frequency_key, PreferencesUtils.VOICE_FREQUENCY_DEFAULT));
+                voiceExecutor.setTaskFrequency(PreferencesUtils.getVoiceFrequency(context));
             }
             if (PreferencesUtils.isKey(context, R.string.split_frequency_key, key)) {
-                splitExecutor.setTaskFrequency(PreferencesUtils.getInt(context, R.string.split_frequency_key, PreferencesUtils.SPLIT_FREQUENCY_DEFAULT));
+                splitExecutor.setTaskFrequency(PreferencesUtils.getSplitFrequency(context));
             }
             if (PreferencesUtils.isKey(context, R.string.min_recording_interval_key, key)) {
-                int minRecordingInterval = PreferencesUtils.getInt(context, R.string.min_recording_interval_key, PreferencesUtils.MIN_RECORDING_INTERVAL_DEFAULT);
+                int minRecordingInterval = PreferencesUtils.getMinRecordingInterval(context);
                 switch (minRecordingInterval) {
                     case PreferencesUtils.MIN_RECORDING_INTERVAL_ADAPT_BATTERY_LIFE:
                         // Choose battery life over moving time accuracy.
@@ -153,16 +153,16 @@ public class TrackRecordingService extends Service {
                 }
             }
             if (PreferencesUtils.isKey(context, R.string.recording_distance_interval_key, key)) {
-                recordingDistanceInterval = PreferencesUtils.getInt(context, R.string.recording_distance_interval_key, PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT);
+                recordingDistanceInterval = PreferencesUtils.getRecordingDistanceInterval(context);
             }
             if (PreferencesUtils.isKey(context, R.string.max_recording_distance_key, key)) {
-                maxRecordingDistance = PreferencesUtils.getInt(context, R.string.max_recording_distance_key, PreferencesUtils.MAX_RECORDING_DISTANCE_DEFAULT);
+                maxRecordingDistance = PreferencesUtils.getMaxRecordingDistance(context);
             }
             if (PreferencesUtils.isKey(context, R.string.recording_gps_accuracy_key, key)) {
-                recordingGpsAccuracy = PreferencesUtils.getInt(context, R.string.recording_gps_accuracy_key, PreferencesUtils.RECORDING_GPS_ACCURACY_DEFAULT);
+                recordingGpsAccuracy = PreferencesUtils.getRecordingGPSAccuracy(context);
             }
             if (PreferencesUtils.isKey(context, R.string.auto_resume_track_timeout_key, key)) {
-                autoResumeTrackTimeout = PreferencesUtils.getInt(context, R.string.auto_resume_track_timeout_key, PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_DEFAULT);
+                autoResumeTrackTimeout = PreferencesUtils.getAutoResumeTrackTimeout(context);
             }
         }
     };
@@ -471,12 +471,12 @@ public class TrackRecordingService extends Service {
         }
         PreferencesUtils.incrementAutoResumeTrackCurrentRetryDefault(this);
 
-        if (autoResumeTrackTimeout == PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_NEVER) {
+        if (autoResumeTrackTimeout == context.getResources().getInteger(R.integer.auto_resume_track_timeout_never)) {
             Log.d(TAG, "Not resuming. Auto-resume track timeout set to never.");
             return false;
         }
 
-        if (autoResumeTrackTimeout == PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_ALWAYS) {
+        if (autoResumeTrackTimeout == context.getResources().getInteger(R.integer.auto_resume_track_timeout_always)) {
             Log.d(TAG, "Resuming. Auto-resume track timeout set to always.");
             return true;
         }

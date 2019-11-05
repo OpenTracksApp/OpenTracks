@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
@@ -104,7 +103,7 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
             Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
             // Get the wake lock if not recording or paused
             boolean isRecording = PreferencesUtils.isRecording(importActivity);
-            boolean isPaused = PreferencesUtils.getBoolean(importActivity, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+            boolean isPaused = PreferencesUtils.isRecordingTrackPaused(importActivity);
             if (!isRecording || isPaused) {
                 wakeLock = SystemUtils.acquireWakeLock(importActivity, wakeLock);
             }

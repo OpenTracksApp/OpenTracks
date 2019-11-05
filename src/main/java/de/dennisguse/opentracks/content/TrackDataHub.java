@@ -258,7 +258,7 @@ public class TrackDataHub implements DataSourceListener {
                     recordingTrackId = PreferencesUtils.getRecordingTrackId(context);
                 }
                 if (PreferencesUtils.isKey(context, R.string.recording_track_paused_key, key)) {
-                    recordingTrackPaused = PreferencesUtils.getBoolean(context, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+                    recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(context);
                 }
                 if (PreferencesUtils.isKey(context, R.string.stats_units_key, key)) {
                     metricUnits = PreferencesUtils.isMetricUnits(context);
@@ -281,7 +281,7 @@ public class TrackDataHub implements DataSourceListener {
                     }
                 }
                 if (PreferencesUtils.isKey(context, R.string.recording_gps_accuracy_key, key)) {
-                    recordingGpsAccuracy = PreferencesUtils.getInt(context, R.string.recording_gps_accuracy_key, PreferencesUtils.RECORDING_GPS_ACCURACY_DEFAULT);
+                    recordingGpsAccuracy = PreferencesUtils.getRecordingGPSAccuracy(context);
                     if (key != null) {
                         for (TrackDataListener trackDataListener : trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
                             if (trackDataListener.onRecordingGpsAccuracy(recordingGpsAccuracy)) {
@@ -291,7 +291,7 @@ public class TrackDataHub implements DataSourceListener {
                     }
                 }
                 if (PreferencesUtils.isKey(context, R.string.recording_distance_interval_key, key)) {
-                    recordingDistanceInterval = PreferencesUtils.getInt(context, R.string.recording_distance_interval_key, PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT);
+                    recordingDistanceInterval = PreferencesUtils.getRecordingDistanceInterval(context);
                     if (key != null) {
                         for (TrackDataListener trackDataListener : trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
                             if (trackDataListener.onRecordingDistanceIntervalChanged(recordingDistanceInterval)) {

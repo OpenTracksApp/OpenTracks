@@ -145,9 +145,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                 }
             }
             if (PreferencesUtils.isKey(TrackListActivity.this, R.string.recording_track_paused_key, key)) {
-                recordingTrackPaused = PreferencesUtils.getBoolean(TrackListActivity.this,
-                        R.string.recording_track_paused_key,
-                        PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+                recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(TrackListActivity.this);
             }
             if (key != null) {
                 runOnUiThread(new Runnable() {

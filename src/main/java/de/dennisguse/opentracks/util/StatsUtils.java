@@ -70,7 +70,7 @@ public class StatsUtils {
         }
 
         // Set elevation
-        boolean showGradeElevation = PreferencesUtils.getBoolean(activity, R.string.stats_show_grade_elevation_key, PreferencesUtils.STATS_SHOW_ELEVATION_DEFAULT) && isRecording;
+        boolean showGradeElevation = isRecording && PreferencesUtils.isShowStatsGradeElevation(activity);
         View elevationContainer = activity.findViewById(R.id.stats_elevation);
         elevationContainer.setVisibility(showGradeElevation ? View.VISIBLE : View.GONE);
 
@@ -85,7 +85,7 @@ public class StatsUtils {
         }
 
         // Set coordinate
-        boolean showCoordinate = isRecording && PreferencesUtils.getBoolean(activity, R.string.stats_show_coordinate_key, PreferencesUtils.STATS_SHOW_COORDINATE_DEFAULT);
+        boolean showCoordinate = isRecording && PreferencesUtils.isStatsShowCoordinate(activity);
 
         View coordinateSeparator = activity.findViewById(R.id.stats_coordinate_separator);
         coordinateSeparator.setVisibility(showCoordinate ? View.VISIBLE : View.GONE);
@@ -241,7 +241,7 @@ public class StatsUtils {
 
         // Set elevation
         {
-            boolean showElevation = PreferencesUtils.getBoolean(activity, R.string.stats_show_grade_elevation_key, PreferencesUtils.STATS_SHOW_ELEVATION_DEFAULT);
+            boolean showElevation = PreferencesUtils.isShowStatsGradeElevation(activity);
             View gradeElevationSeparator = activity.findViewById(R.id.stats_elevation_separator);
             gradeElevationSeparator.setVisibility(showElevation ? View.VISIBLE : View.GONE);
 

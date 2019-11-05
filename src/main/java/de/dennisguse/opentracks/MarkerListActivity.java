@@ -83,7 +83,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
                 recordingTrackId = PreferencesUtils.getRecordingTrackId(MarkerListActivity.this);
             }
             if (PreferencesUtils.isKey(MarkerListActivity.this, R.string.recording_track_paused_key, key)) {
-                recordingTrackPaused = PreferencesUtils.getBoolean(MarkerListActivity.this, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+                recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(MarkerListActivity.this);
             }
             if (key != null) {
                 runOnUiThread(new Runnable() {

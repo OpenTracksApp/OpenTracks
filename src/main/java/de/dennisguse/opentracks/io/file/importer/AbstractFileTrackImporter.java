@@ -102,7 +102,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         this.context = context;
         this.importTrackId = importTrackId;
         this.contentProviderUtils = contentProviderUtils;
-        this.recordingDistanceInterval = PreferencesUtils.getInt(context, R.string.recording_distance_interval_key, PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT);
+        this.recordingDistanceInterval = PreferencesUtils.getRecordingDistanceInterval(context);
         trackIds = new ArrayList<>();
         waypoints = new ArrayList<>();
     }

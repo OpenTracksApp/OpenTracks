@@ -131,7 +131,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
             }
 
             if (PreferencesUtils.isKey(TrackDetailActivity.this, R.string.recording_track_paused_key, key)) {
-                recordingTrackPaused = PreferencesUtils.getBoolean(TrackDetailActivity.this, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+                recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(TrackDetailActivity.this);
             }
 
             if (PreferencesUtils.isKey(TrackDetailActivity.this, R.string.stats_show_on_lockscreen_while_recording_key, key)) {

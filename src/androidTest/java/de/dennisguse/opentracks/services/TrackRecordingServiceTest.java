@@ -135,7 +135,7 @@ public class TrackRecordingServiceTest {
         createDummyTrack(trackId, System.currentTimeMillis(), true);
 
         // Clear the number of attempts and set the timeout to 10 min.
-        updateAutoResumePrefs(context, PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT, PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_DEFAULT);
+        updateAutoResumePrefs(context, PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT, context.getResources().getInteger(R.integer.auto_resume_track_timeout_default));
 
         // Start the service in "resume" mode (simulates the on-reboot action).
         Intent startIntent = createStartIntent(context);
@@ -154,7 +154,7 @@ public class TrackRecordingServiceTest {
     @MediumTest
     @Test
     public void testResumeAfterReboot_simulateReboot() throws Exception {
-        updateAutoResumePrefs(context, PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT, PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_DEFAULT);
+        updateAutoResumePrefs(context, PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT, context.getResources().getInteger(R.integer.auto_resume_track_timeout_default));
         ITrackRecordingService service = ((ITrackRecordingService) mServiceRule.bindService(createStartIntent(context)));
         Assert.assertFalse(service.isRecording());
 
@@ -184,7 +184,7 @@ public class TrackRecordingServiceTest {
         createDummyTrack(trackId, System.currentTimeMillis(), false);
 
         // Clear the number of attempts and set the timeout to 10 min.
-        updateAutoResumePrefs(context, PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT, PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_DEFAULT);
+        updateAutoResumePrefs(context, PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT, context.getResources().getInteger(R.integer.auto_resume_track_timeout_default));
 
         // Start the service in "resume" mode (simulates the on-reboot action).
         Intent startIntent = createStartIntent(context);
@@ -207,7 +207,7 @@ public class TrackRecordingServiceTest {
         createDummyTrack(trackId, System.currentTimeMillis() - 1500 * 60 * 1000, true);
 
         // Clear the number of attempts and set the timeout to 10 min.
-        updateAutoResumePrefs(context, PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT, PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_DEFAULT);
+        updateAutoResumePrefs(context, PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT, context.getResources().getInteger(R.integer.auto_resume_track_timeout_default));
 
         // Start the service in "resume" mode (simulates the on-reboot action).
         Intent startIntent = createStartIntent(context);
@@ -230,7 +230,7 @@ public class TrackRecordingServiceTest {
         createDummyTrack(trackId, System.currentTimeMillis(), true);
 
         // Set the number of attempts to max.
-        updateAutoResumePrefs(context, TrackRecordingService.MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS, PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_DEFAULT);
+        updateAutoResumePrefs(context, TrackRecordingService.MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS, context.getResources().getInteger(R.integer.auto_resume_track_timeout_default));
 
         // Start the service in "resume" mode (simulates the on-reboot action).
         Intent startIntent = createStartIntent(context);

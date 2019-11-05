@@ -27,7 +27,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.content.TracksColumns;
@@ -100,7 +99,7 @@ public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         try {
             Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
             boolean isRecording = PreferencesUtils.isRecording(exportActivity);
-            boolean isPaused = PreferencesUtils.getBoolean(exportActivity, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+            boolean isPaused = PreferencesUtils.isRecordingTrackPaused(exportActivity);
             // Get the wake lock if not recording or paused
             if (!isRecording || isPaused) {
                 wakeLock = SystemUtils.acquireWakeLock(exportActivity, wakeLock);

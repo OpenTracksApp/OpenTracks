@@ -36,43 +36,36 @@ public class PreferencesUtils {
      * Preferences values.
      * The defaults need to match the defaults in the xml files.
      */
-    // Values for auto_resume_track_timeout_key
-    public static final int AUTO_RESUME_TRACK_TIMEOUT_ALWAYS = -1;
-    public static final int AUTO_RESUME_TRACK_TIMEOUT_DEFAULT = 10;
-    public static final int AUTO_RESUME_TRACK_TIMEOUT_NEVER = 0;
+    @Deprecated
+    public static final boolean RECORDING_TRACK_PAUSED_DEFAULT = true;
 
     public static final String BLUETOOTH_SENSOR_DEFAULT = "";
 
-    public static final boolean CHART_SHOW_CADENCE_DEFAULT = true;
-    public static final boolean CHART_SHOW_ELEVATION_DEFAULT = true;
-    public static final boolean CHART_SHOW_HEART_RATE_DEFAULT = true;
-    public static final boolean CHART_SHOW_POWER_DEFAULT = true;
-    public static final boolean CHART_SHOW_SPEED_DEFAULT = true;
-
     // Value for split_frequency_key and voice_frequency_key
+    @Deprecated
     public static final int FREQUENCY_OFF = 0;
 
+    @Deprecated
     public static final int MAX_RECORDING_DISTANCE_DEFAULT = 200;
 
     // Values for min_recording_interval_key
+    @Deprecated
     public static final int MIN_RECORDING_INTERVAL_ADAPT_ACCURACY = -1;
+    @Deprecated
     public static final int MIN_RECORDING_INTERVAL_ADAPT_BATTERY_LIFE = -2;
+    @Deprecated
     public static final int MIN_RECORDING_INTERVAL_DEFAULT = 0;
 
+    @Deprecated
     public static final int RECORDING_DISTANCE_INTERVAL_DEFAULT = 10;
 
     // Values for recording_gps_accuracy
+    @Deprecated
     public static final int RECORDING_GPS_ACCURACY_DEFAULT = 50;
+    @Deprecated
     public static final int RECORDING_GPS_ACCURACY_EXCELLENT = 10;
+    @Deprecated
     public static final int RECORDING_GPS_ACCURACY_POOR = 2000;
-    static final boolean STATS_SHOW_COORDINATE_DEFAULT = false;
-    public static final boolean RECORDING_TRACK_PAUSED_DEFAULT = true;
-
-    public static final int SPLIT_FREQUENCY_DEFAULT = 0;
-    static final boolean STATS_SHOW_ELEVATION_DEFAULT = false;
-
-    // Track widget
-    public static final int VOICE_FREQUENCY_DEFAULT = 0;
 
     private PreferencesUtils() {
     }
@@ -209,7 +202,7 @@ public class PreferencesUtils {
      * @param context the context
      * @param keyId   the key id
      */
-    public static long getLong(Context context, int keyId, long defaultValue) {
+    private static long getLong(Context context, int keyId, long defaultValue) {
         SharedPreferences sharedPreferences = getSharedPreferences(context);
         return sharedPreferences.getLong(getKey(context, keyId), defaultValue);
     }
@@ -260,8 +253,8 @@ public class PreferencesUtils {
      * @param context the context
      */
     public static boolean isMetricUnits(Context context) {
-        String statsUnitDefault = context.getString(R.string.stats_units_default);
-        return statsUnitDefault.equals(getString(context, R.string.stats_units_key, statsUnitDefault));
+        final String STATS_UNIT = context.getString(R.string.stats_units_default);
+        return STATS_UNIT.equals(getString(context, R.string.stats_units_key, STATS_UNIT));
     }
 
     /**
@@ -275,19 +268,94 @@ public class PreferencesUtils {
         return STATS_RATE_DEFAULT.equals(getString(context, R.string.stats_rate_key, STATS_RATE_DEFAULT));
     }
 
-    /**
-     * Returns true if chart x axis is by distance, false if by time.
-     *
-     * @param context the context
-     */
+    public static int getAutoResumeTrackTimeout(Context context) {
+        final int AUTO_RESUME_TRACK_TIMEOUT = context.getResources().getInteger(R.integer.auto_resume_track_timeout_default);
+        return PreferencesUtils.getInt(context, R.string.auto_resume_track_timeout_key, AUTO_RESUME_TRACK_TIMEOUT);
+    }
+
+    public static boolean isRecordingTrackPaused(Context context) {
+        final boolean RECORDING_TRACK_PAUSED = context.getResources().getBoolean(R.bool.recording_track_paused_default);
+        return PreferencesUtils.getBoolean(context, R.string.recording_track_paused_key, RECORDING_TRACK_PAUSED);
+    }
+
+    public static void defaultRecordingTrackPaused(Context context) {
+        final boolean RECORDING_TRACK_PAUSED = context.getResources().getBoolean(R.bool.recording_track_paused_default);
+        PreferencesUtils.setBoolean(context, R.string.recording_track_paused_key, RECORDING_TRACK_PAUSED);
+    }
+
     public static boolean isChartByDistance(Context context) {
         final String CHART_X_AXIS_DEFAULT = context.getString(R.string.chart_x_axis_default);
         return CHART_X_AXIS_DEFAULT.equals(getString(context, R.string.chart_x_axis_key, CHART_X_AXIS_DEFAULT));
     }
 
+    public static boolean shouldChartShowCadence(Context context) {
+        final boolean CHART_SHOW_CADENCE = context.getResources().getBoolean(R.bool.chart_show_cadence_default);
+        return PreferencesUtils.getBoolean(context, R.string.chart_show_cadence_key, CHART_SHOW_CADENCE);
+    }
+
+    public static boolean shouldChartShowElevation(Context context) {
+        final boolean CHART_SHOW_ELEVATION = context.getResources().getBoolean(R.bool.chart_show_elevation_default);
+        return PreferencesUtils.getBoolean(context, R.string.chart_show_elevation_key, CHART_SHOW_ELEVATION);
+    }
+
+    public static boolean shouldChartShowHeartRate(Context context) {
+        final boolean CHART_SHOW_HEARTRATE = context.getResources().getBoolean(R.bool.chart_show_heart_rate_default);
+        return PreferencesUtils.getBoolean(context, R.string.chart_show_heart_rate_key, CHART_SHOW_HEARTRATE);
+    }
+
+    public static boolean shouldChartShowPower(Context context) {
+        final boolean CHART_SHOW_POWER = context.getResources().getBoolean(R.bool.chart_show_power_default);
+        return PreferencesUtils.getBoolean(context, R.string.chart_show_power_key, CHART_SHOW_POWER);
+    }
+
+    public static boolean shouldChartShowSpeed(Context context) {
+        final boolean CHART_SHOW_SPEED = context.getResources().getBoolean(R.bool.chart_show_speed_default);
+        return PreferencesUtils.getBoolean(context, R.string.chart_show_speed_key, CHART_SHOW_SPEED);
+    }
+
     public static boolean shouldShowStatsOnLockscreen(Context context) {
         final boolean STATS_SHOW_ON_LOCKSCREEN_DEFAULT = context.getResources().getBoolean(R.bool.stats_show_on_lockscreen_while_recording_default);
         return getBoolean(context, R.string.stats_show_on_lockscreen_while_recording_key, STATS_SHOW_ON_LOCKSCREEN_DEFAULT);
+    }
+
+    public static boolean isShowStatsGradeElevation(Context context) {
+        final boolean STATS_SHOW_GRADE_ELEVATION = context.getResources().getBoolean(R.bool.stats_show_grade_elevation_default);
+        return PreferencesUtils.getBoolean(context, R.string.stats_show_grade_elevation_key, STATS_SHOW_GRADE_ELEVATION);
+    }
+
+    public static boolean isStatsShowCoordinate(Context context) {
+        final boolean STATS_SHOW_COORDINATE = context.getResources().getBoolean(R.bool.stats_show_coordinate_default);
+        return PreferencesUtils.getBoolean(context, R.string.stats_show_coordinate_key, STATS_SHOW_COORDINATE);
+    }
+
+    public static int getVoiceFrequency(Context context) {
+        final int VOICE_FREQUENCY_DEFAULT = context.getResources().getInteger(R.integer.voice_frequency_default);
+        return PreferencesUtils.getInt(context, R.string.voice_frequency_key, VOICE_FREQUENCY_DEFAULT);
+    }
+
+    public static int getSplitFrequency(Context context) {
+        final int SPLIT_FREQUENCY_DEFAULT = context.getResources().getInteger(R.integer.split_frequency_default);
+        return PreferencesUtils.getInt(context, R.string.split_frequency_key, SPLIT_FREQUENCY_DEFAULT);
+    }
+
+    public static int getRecordingDistanceInterval(Context context) {
+        final int RECORDING_DISTANCE_INTERVAL = context.getResources().getInteger(R.integer.recording_distance_interval_default);
+        return PreferencesUtils.getInt(context, R.string.recording_distance_interval_key, RECORDING_DISTANCE_INTERVAL);
+    }
+
+    public static int getMaxRecordingDistance(Context context) {
+        final int MAX_RECORDING_DISTANCE = context.getResources().getInteger(R.integer.max_recording_distance_default);
+        return PreferencesUtils.getInt(context, R.string.max_recording_distance_key, MAX_RECORDING_DISTANCE);
+    }
+
+    public static int getMinRecordingInterval(Context context) {
+        final int MIN_RECORDING_INTERVAL = context.getResources().getInteger(R.integer.min_recording_interval_default);
+        return PreferencesUtils.getInt(context, R.string.min_recording_interval_key, MIN_RECORDING_INTERVAL);
+    }
+
+    public static int getRecordingGPSAccuracy(Context context) {
+        final int RECORDING_GPS_ACCURACY = context.getResources().getInteger(R.integer.recording_gps_accuracy_default);
+        return PreferencesUtils.getInt(context, R.string.recording_gps_accuracy_key, RECORDING_GPS_ACCURACY);
     }
 
     public static boolean isRecording(Context context) {

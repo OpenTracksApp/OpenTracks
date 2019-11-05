@@ -150,7 +150,7 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
                 recordingTrackId = PreferencesUtils.getRecordingTrackId(SearchListActivity.this);
             }
             if (PreferencesUtils.isKey(SearchListActivity.this, R.string.recording_track_paused_key, key)) {
-                recordingTrackPaused = PreferencesUtils.getBoolean(SearchListActivity.this, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+                recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(SearchListActivity.this);
             }
             if (key != null) {
                 runOnUiThread(new Runnable() {

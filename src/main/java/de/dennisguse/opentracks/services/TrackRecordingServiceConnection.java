@@ -203,9 +203,9 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
         if (PreferencesUtils.isRecording(context)) {
             PreferencesUtils.setLong(context, R.string.recording_track_id_key, PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
         }
-        boolean recordingTrackPaused = PreferencesUtils.getBoolean(context, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+        boolean recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(context);
         if (!recordingTrackPaused) {
-            PreferencesUtils.setBoolean(context, R.string.recording_track_paused_key, PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT);
+            PreferencesUtils.defaultRecordingTrackPaused(context);
         }
     }
 
