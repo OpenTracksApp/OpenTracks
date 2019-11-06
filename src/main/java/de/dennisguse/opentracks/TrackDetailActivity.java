@@ -272,7 +272,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(CURRENT_TAB_TAG_KEY, tabHost.getCurrentTabTag());
         if (photoUri != null) {

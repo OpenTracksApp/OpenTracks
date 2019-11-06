@@ -20,5 +20,5 @@ limitations under the License.
     <string name="recording_track_id_key" translatable="false">recordingTrackId</string>
 
     <string name="recording_track_paused_key" translatable="false">recordingTrackPaused</string>
-    <bool name="recording_track_paused_default" translatable="false">false</bool>
+    <bool name="recording_track_paused_default" translatable="false">true</bool>
 </resources>

@@ -221,7 +221,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
 
     private final OnClickListener recordListener = new OnClickListener() {
         public void onClick(View v) {
-            if (PreferencesUtils.isRecording(recordingTrackId)) {
+            if (!PreferencesUtils.isRecording(recordingTrackId)) {
                 // Not recording -> Recording
                 updateMenuItems(false, true);
                 startRecording();
