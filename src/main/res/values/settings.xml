@@ -102,15 +102,15 @@
     </string-array>
 
     <string name="auto_resume_track_timeout_key" translatable="false">autoResumeTrackTimeout</string>
-    <integer name="auto_resume_track_timeout_default" translatable="false">10</integer>
-    <integer name="auto_resume_track_timeout_always" translatable="false">-1</integer>
-    <integer name="auto_resume_track_timeout_never" translatable="false">0</integer>
+    <string name="auto_resume_track_timeout_default" translatable="false">10</string>
+    <string name="auto_resume_track_timeout_always" translatable="false">-1</string>
+    <string name="auto_resume_track_timeout_never" translatable="false">0</string>
     <string-array name="auto_resume_track_timeout_values">
-        <item>@integer/auto_resume_track_timeout_never</item>
+        <item>@string/auto_resume_track_timeout_never</item>
         <item>5</item>
-        <item>@integer/auto_resume_track_timeout_default</item>
+        <item>@string/auto_resume_track_timeout_default</item>
         <item>15</item>
-        <item>@integer/auto_resume_track_timeout_always</item>
+        <item>@string/auto_resume_track_timeout_always</item>
     </string-array>
 
     <string name="chart_x_axis_key" translatable="false">chartXAxis</string>
@@ -127,14 +127,12 @@
     </string-array>
 
     <string name="split_frequency_key" translatable="false">splitFrequency</string>
-    <integer name="split_frequency_default" translatable="false">@integer/frequency_default
-    </integer>
+    <string name="split_frequency_default" translatable="false">@string/frequency_default</string>
     <string name="voice_frequency_key" translatable="false">voiceFrequency</string>
-    <integer name="voice_frequency_default" translatable="false">@integer/frequency_default
-    </integer>
-    <integer name="frequency_default" translatable="false">0</integer>
+    <string name="voice_frequency_default" translatable="false">@string/frequency_default</string>
+    <string name="frequency_default" translatable="false">0</string>
     <string-array name="frequency_values">
-        <item>@integer/frequency_default</item>
+        <item>@string/frequency_default</item>
         <item>1</item>
         <item>2</item>
         <item>5</item>
@@ -151,36 +149,36 @@
     </string-array>
 
     <string name="recording_distance_interval_key" translatable="false">recordingDistanceInterval</string>
-    <integer name="recording_distance_interval_default" translatable="false">10</integer>
+    <string name="recording_distance_interval_default" translatable="false">10</string>
     <string-array name="recording_distance_interval_values">
         <item>1</item>
         <item>2</item>
         <item>5</item>
-        <item>@integer/recording_distance_interval_default</item>
+        <item>@string/recording_distance_interval_default</item>
         <item>20</item>
         <item>50</item>
         <item>100</item>
     </string-array>
 
     <string name="max_recording_distance_key" translatable="false">maxRecordingDistance</string>
-    <integer name="max_recording_distance_default" translatable="false">200</integer>
+    <string name="max_recording_distance_default" translatable="false">200</string>
     <string-array name="max_recording_distance_values">
         <item>50</item>
         <item>100</item>
-        <item>@integer/max_recording_distance_default</item>
+        <item>@string/max_recording_distance_default</item>
         <item>500</item>
         <item>1000</item>
         <item>5000</item>
     </string-array>
 
     <string name="min_recording_interval_key" translatable="false">minRecordingInterval</string>
-    <integer name="min_recording_interval_default" translatable="false">0</integer>
-    <integer name="min_recording_interval_adapt_accuracy" translatable="false">-1</integer>
-    <integer name="min_recording_interval_adapt_battery_life" translatable="false">-2</integer>
+    <string name="min_recording_interval_default" translatable="false">0</string>
+    <string name="min_recording_interval_adapt_accuracy" translatable="false">-1</string>
+    <string name="min_recording_interval_adapt_battery_life" translatable="false">-2</string>
     <string-array name="min_recording_interval_values">
-        <item>@integer/min_recording_interval_adapt_battery_life</item>
-        <item>@integer/min_recording_interval_adapt_accuracy</item>
-        <item>@integer/min_recording_interval_default</item>
+        <item>@string/min_recording_interval_adapt_battery_life</item>
+        <item>@string/min_recording_interval_adapt_accuracy</item>
+        <item>@string/min_recording_interval_default</item>
         <item>2</item>
         <item>3</item>
         <item>4</item>
@@ -197,19 +195,19 @@
     </string-array>
 
     <string name="recording_gps_accuracy_key" translatable="false">recordingGpsAccuracy</string>
-    <integer name="recording_gps_accuracy_default" translatable="false">50</integer>
-    <integer name="recording_gps_accuracy_excellent" translatable="false">10</integer>
-    <integer name="recording_gps_accuracy_poor" translatable="false">2000</integer>
+    <string name="recording_gps_accuracy_default" translatable="false">50</string>
+    <string name="recording_gps_accuracy_excellent" translatable="false">10</string>
+    <string name="recording_gps_accuracy_poor" translatable="false">2000</string>
     <string-array name="recording_gps_accuracy_values">
-        <item>@integer/recording_gps_accuracy_excellent</item>
+        <item>@string/recording_gps_accuracy_excellent</item>
         <item>20</item>
         <item>30</item>
-        <item>@integer/recording_gps_accuracy_default</item>
+        <item>@string/recording_gps_accuracy_default</item>
         <item>100</item>
         <item>200</item>
         <item>500</item>
         <item>1000</item>
-        <item>@integer/recording_gps_accuracy_poor</item>
+        <item>@string/recording_gps_accuracy_poor</item>
     </string-array>
 
     <string name="stats_rate_key" translatable="false">statsRate</string>

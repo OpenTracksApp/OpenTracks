@@ -269,7 +269,7 @@ public class PreferencesUtils {
     }
 
     public static int getAutoResumeTrackTimeout(Context context) {
-        final int AUTO_RESUME_TRACK_TIMEOUT = context.getResources().getInteger(R.integer.auto_resume_track_timeout_default);
+        final int AUTO_RESUME_TRACK_TIMEOUT = Integer.parseInt(context.getResources().getString(R.string.auto_resume_track_timeout_default));
         return PreferencesUtils.getInt(context, R.string.auto_resume_track_timeout_key, AUTO_RESUME_TRACK_TIMEOUT);
     }
 
@@ -329,32 +329,32 @@ public class PreferencesUtils {
     }
 
     public static int getVoiceFrequency(Context context) {
-        final int VOICE_FREQUENCY_DEFAULT = context.getResources().getInteger(R.integer.voice_frequency_default);
+        final int VOICE_FREQUENCY_DEFAULT = Integer.parseInt(context.getResources().getString(R.string.voice_frequency_default));
         return PreferencesUtils.getInt(context, R.string.voice_frequency_key, VOICE_FREQUENCY_DEFAULT);
     }
 
     public static int getSplitFrequency(Context context) {
-        final int SPLIT_FREQUENCY_DEFAULT = context.getResources().getInteger(R.integer.split_frequency_default);
+        final int SPLIT_FREQUENCY_DEFAULT = Integer.parseInt(context.getResources().getString(R.string.split_frequency_default));
         return PreferencesUtils.getInt(context, R.string.split_frequency_key, SPLIT_FREQUENCY_DEFAULT);
     }
 
     public static int getRecordingDistanceInterval(Context context) {
-        final int RECORDING_DISTANCE_INTERVAL = context.getResources().getInteger(R.integer.recording_distance_interval_default);
+        final int RECORDING_DISTANCE_INTERVAL = Integer.parseInt(context.getResources().getString(R.string.recording_distance_interval_default));
         return PreferencesUtils.getInt(context, R.string.recording_distance_interval_key, RECORDING_DISTANCE_INTERVAL);
     }
 
     public static int getMaxRecordingDistance(Context context) {
-        final int MAX_RECORDING_DISTANCE = context.getResources().getInteger(R.integer.max_recording_distance_default);
+        final int MAX_RECORDING_DISTANCE = Integer.parseInt(context.getResources().getString(R.string.max_recording_distance_default));
         return PreferencesUtils.getInt(context, R.string.max_recording_distance_key, MAX_RECORDING_DISTANCE);
     }
 
     public static int getMinRecordingInterval(Context context) {
-        final int MIN_RECORDING_INTERVAL = context.getResources().getInteger(R.integer.min_recording_interval_default);
+        final int MIN_RECORDING_INTERVAL = Integer.parseInt(context.getResources().getString(R.string.min_recording_interval_default));
         return PreferencesUtils.getInt(context, R.string.min_recording_interval_key, MIN_RECORDING_INTERVAL);
     }
 
     public static int getRecordingGPSAccuracy(Context context) {
-        final int RECORDING_GPS_ACCURACY = context.getResources().getInteger(R.integer.recording_gps_accuracy_default);
+        final int RECORDING_GPS_ACCURACY = Integer.parseInt(context.getResources().getString(R.string.recording_gps_accuracy_default));
         return PreferencesUtils.getInt(context, R.string.recording_gps_accuracy_key, RECORDING_GPS_ACCURACY);
     }
 

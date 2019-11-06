@@ -168,9 +168,9 @@ final class PreferenceHelper {
     static void setAutoResumeTrackTimeoutOptions(Context context, String[] options, String[] values) {
         for (int i = 0; i < values.length; i++) {
             int value = Integer.parseInt(values[i]);
-            if (value == context.getResources().getInteger(R.integer.auto_resume_track_timeout_never)) {
+            if (value == Integer.parseInt(context.getResources().getString(R.string.auto_resume_track_timeout_never))) {
                 options[i] = context.getString(R.string.value_never);
-            } else if (value == context.getResources().getInteger(R.integer.auto_resume_track_timeout_always)) {
+            } else if (value == Integer.parseInt(context.getResources().getString(R.string.auto_resume_track_timeout_always))) {
                 options[i] = context.getString(R.string.value_always);
             } else {
                 options[i] = context.getString(R.string.value_integer_minute, value);

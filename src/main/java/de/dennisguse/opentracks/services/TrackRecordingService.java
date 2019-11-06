@@ -471,12 +471,12 @@ public class TrackRecordingService extends Service {
         }
         PreferencesUtils.incrementAutoResumeTrackCurrentRetryDefault(this);
 
-        if (autoResumeTrackTimeout == context.getResources().getInteger(R.integer.auto_resume_track_timeout_never)) {
+        if (autoResumeTrackTimeout == Integer.parseInt(context.getResources().getString(R.string.auto_resume_track_timeout_never))) {
             Log.d(TAG, "Not resuming. Auto-resume track timeout set to never.");
             return false;
         }
 
-        if (autoResumeTrackTimeout == context.getResources().getInteger(R.integer.auto_resume_track_timeout_always)) {
+        if (autoResumeTrackTimeout == Integer.parseInt(context.getResources().getString(R.string.auto_resume_track_timeout_always))) {
             Log.d(TAG, "Resuming. Auto-resume track timeout set to always.");
             return true;
         }
