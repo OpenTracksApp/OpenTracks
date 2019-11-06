@@ -103,7 +103,7 @@ public class TrackRecordingServiceTestLooper {
     @MediumTest
     @Test
     public void testWithProperties_voiceFrequencyDefault() throws TimeoutException {
-        PreferencesUtils.setInt(context, R.string.voice_frequency_key, context.getResources().getInteger(R.integer.voice_frequency_default));
+        PreferencesUtils.setInt(context, R.string.voice_frequency_key, Integer.parseInt(context.getResources().getString(R.string.voice_frequency_default)));
         fullRecordingSession();
     }
 
@@ -125,7 +125,7 @@ public class TrackRecordingServiceTestLooper {
     @MediumTest
     @Test
     public void testWithProperties_maxRecordingDistanceDefault() throws TimeoutException {
-        PreferencesUtils.setInt(context, R.string.max_recording_distance_key, context.getResources().getInteger(R.integer.max_recording_distance_default));
+        PreferencesUtils.setInt(context, R.string.max_recording_distance_key, Integer.parseInt(context.getResources().getString(R.string.max_recording_distance_default)));
         fullRecordingSession();
     }
 
@@ -153,7 +153,7 @@ public class TrackRecordingServiceTestLooper {
     @MediumTest
     @Test
     public void testWithProperties_splitFrequencyDefault() throws TimeoutException {
-        PreferencesUtils.setInt(context, R.string.split_frequency_key, context.getResources().getInteger(R.integer.split_frequency_default));
+        PreferencesUtils.setInt(context, R.string.split_frequency_key, Integer.parseInt(context.getResources().getString(R.string.split_frequency_default)));
         fullRecordingSession();
     }
 
@@ -188,7 +188,7 @@ public class TrackRecordingServiceTestLooper {
     @MediumTest
     @Test
     public void testWithProperties_minRecordingIntervalDefault() throws TimeoutException {
-        PreferencesUtils.setInt(context, R.string.min_recording_interval_key, context.getResources().getInteger(R.integer.min_recording_interval_default));
+        PreferencesUtils.setInt(context, R.string.min_recording_interval_key, Integer.parseInt(context.getResources().getString(R.string.min_recording_interval_default)));
         fullRecordingSession();
     }
 
