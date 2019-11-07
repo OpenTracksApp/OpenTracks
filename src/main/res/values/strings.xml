@@ -1219,7 +1219,11 @@ limitations under the License.
     All settings have been reverted to the default values
   </string>
 
-    <!-- Settings Sensor -->
+  <string name="settings_error_initial_values_restored" translation_description="If the ">
+    Sorry, but an error occurred: and the all settings were reset to there default values.
+  </string>
+
+  <!-- Settings Sensor -->
     <string name="settings_sensor" translation_description="In the 'Settings' page, the option to change the sensor settings.
 
       Character limit: ~26 (1 line)">

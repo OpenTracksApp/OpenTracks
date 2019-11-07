@@ -2,6 +2,7 @@ package de.dennisguse.opentracks.settings;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -69,7 +70,15 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            setPreferencesFromResource(R.xml.settings, rootKey);
+            try {
+                setPreferencesFromResource(R.xml.settings, rootKey);
+            } catch (ClassCastException e) {
+                // Some sharedPreference is broken: delete all and reset them; it is just a last resort...
+                Toast.makeText(getContext(), R.string.settings_error_initial_values_restored, Toast.LENGTH_LONG).show();
+                PreferencesUtils.resetPreferences(getContext(), true);
+
+                setPreferencesFromResource(R.xml.settings, rootKey);
+            }
             updateUnits();
         }
 
@@ -94,7 +103,6 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
         }
 
         private void configListPreference(int key, int valueArray, boolean metricUnits) {
-            //TODO Can we make values an int array?
             String[] values = getResources().getStringArray(valueArray);
             final String[] options = new String[values.length];
             switch (key) {
@@ -162,6 +170,7 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
         private void updateUnits() {
             boolean metricUnits = PreferencesUtils.isMetricUnits(getActivity());
 
+            //TODO Refactor this!
             configFrequencyPreference(R.string.voice_frequency_key, metricUnits);
             configFrequencyPreference(R.string.split_frequency_key, metricUnits);
             configListPreference(R.string.min_recording_interval_key, R.array.min_recording_interval_values, metricUnits);
