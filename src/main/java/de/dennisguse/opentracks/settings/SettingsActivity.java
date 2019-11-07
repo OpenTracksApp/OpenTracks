@@ -189,9 +189,11 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
             final ListPreference statsRatePreferences = findPreference(getString(R.string.stats_rate_key));
             String[] options = getResources().getStringArray(metricUnits ? R.array.stats_rate_metric_options : R.array.stats_rate_imperial_options);
             statsRatePreferences.setEntries(options);
-            //TODO This is a hack!!! Need to manually updated the summary as otherwise it will only be updated after scrolling down and up again (bring the object out of view).
-            //Check if this is still needed after upgraded PreferenceFragment.
-            statsRatePreferences.setSummary(statsRatePreferences.getEntry());
+
+            //TODO This is a hack!!! (Alternative bring the object out of view).
+            //Need to trigger androidx.preference.preferences.notifyChanged() to trigger a redraw, but method is protected.
+            statsRatePreferences.setEnabled(false);
+            statsRatePreferences.setEnabled(true);
         }
     }
 }
