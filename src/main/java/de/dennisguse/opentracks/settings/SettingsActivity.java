@@ -16,9 +16,9 @@ import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 
-public class SettingsActivity extends AppCompatActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller {
+public class SettingsActivity extends AppCompatActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller, ResetDialogPreference.ResetCallback {
 
-    private PrefsFragment prefsFragment = new PrefsFragment();
+    private PrefsFragment prefsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +30,18 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
         toolbar.setTitle(R.string.menu_settings);
         setSupportActionBar(toolbar);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.settings_fragment, prefsFragment).commit();
+        onReset();
     }
 
     @Override
     public void onChooseActivityTypeDone(String iconValue) {
         prefsFragment.setDefaultActivity(iconValue);
+    }
+
+    @Override
+    public void onReset() {
+        prefsFragment = new PrefsFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.settings_fragment, prefsFragment).commit();
     }
 
     public static class PrefsFragment extends PreferenceFragmentCompat {

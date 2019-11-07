@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.AttributeSet;
 import android.widget.Toast;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.preference.DialogPreference;
 import androidx.preference.PreferenceDialogFragmentCompat;
 
@@ -15,6 +16,10 @@ public class ResetDialogPreference extends DialogPreference {
 
     public ResetDialogPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
+    }
+
+    interface ResetCallback {
+        void onReset();
     }
 
     public static class ResetPreferenceDialog extends PreferenceDialogFragmentCompat {
@@ -31,9 +36,14 @@ public class ResetDialogPreference extends DialogPreference {
         @Override
         public void onDialogClosed(boolean positiveResult) {
             if (positiveResult) {
-                PreferencesUtils.resetPreferences(getActivity(), true);
+                FragmentActivity activity = getActivity();
 
-                Toast.makeText(getActivity(), R.string.settings_reset_done, Toast.LENGTH_SHORT).show();
+                PreferencesUtils.resetPreferences(activity, true);
+                Toast.makeText(activity, R.string.settings_reset_done, Toast.LENGTH_SHORT).show();
+
+                if (activity instanceof ResetCallback) {
+                    ((ResetCallback) activity).onReset();
+                }
             }
         }
     }
