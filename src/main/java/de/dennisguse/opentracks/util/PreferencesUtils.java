@@ -368,6 +368,10 @@ public class PreferencesUtils {
     }
 
     public static void resetPreferences(Context context, boolean readAgain) {
+        if (readAgain) {
+            // We want to really clear settings now.
+            getSharedPreferences(context).edit().clear().commit();
+        }
         PreferenceManager.setDefaultValues(context, R.xml.settings, readAgain);
     }
 }
