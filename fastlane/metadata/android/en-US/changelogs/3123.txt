@@ -1,0 +1,15 @@
+v3.2.5: OpenTracks
+
+Changes:
+- Disable activity change
+- Add permission for Android 10: recording location data
+
+Bugfix:
+- Fix reset settings
+
+Developer:
+- Preferences
+  - if Settings cannot be loaded reset all preferences
+  - moved access to preferences to PreferencesUtil
+  - moved default of preferences from code to xml
+  - use SummaryProvider
