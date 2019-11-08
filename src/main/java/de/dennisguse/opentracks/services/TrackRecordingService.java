@@ -597,6 +597,7 @@ public class TrackRecordingService extends Service {
     private void startRecording(boolean trackStarted) {
         // Update instance variables
         remoteSensorManager = new BluetoothRemoteSensorManager(this);
+        remoteSensorManager.start();
         lastLocation = null;
         currentSegmentHasLocation = false;
         isIdle = false;
