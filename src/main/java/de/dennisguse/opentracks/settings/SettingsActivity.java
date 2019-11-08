@@ -13,6 +13,7 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
+import de.dennisguse.opentracks.util.HackUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 
@@ -190,10 +191,7 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
             String[] options = getResources().getStringArray(metricUnits ? R.array.stats_rate_metric_options : R.array.stats_rate_imperial_options);
             statsRatePreferences.setEntries(options);
 
-            //TODO This is a hack!!! (Alternative bring the object out of view).
-            //Need to trigger androidx.preference.preferences.notifyChanged() to trigger a redraw, but method is protected.
-            statsRatePreferences.setEnabled(false);
-            statsRatePreferences.setEnabled(true);
+            HackUtils.invalidatePreference(statsRatePreferences);
         }
     }
 }

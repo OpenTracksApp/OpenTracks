@@ -32,6 +32,7 @@ import androidx.preference.PreferenceDialogFragmentCompat;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
+import de.dennisguse.opentracks.util.HackUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 
@@ -57,8 +58,7 @@ public class ActivityTypePreference extends DialogPreference {
         setNegativeButtonText(android.R.string.cancel);
         setDialogIcon(null);
         setPersistent(true);
-        //TODO: for some reason the summary is not updated; after changing it. Enable summaryprovider, when fixed.
-//        setSummaryProvider(summaryProvider);
+        setSummaryProvider(summaryProvider);
     }
 
     @Override
@@ -142,6 +142,7 @@ public class ActivityTypePreference extends DialogPreference {
                 String newDefaultActivity = textView.getText().toString();
                 if (getPreference().callChangeListener(newDefaultActivity)) {
                     PreferencesUtils.setDefaultActivity(getActivity(), newDefaultActivity);
+                    HackUtils.invalidatePreference(getPreference());
                 }
             }
         }
