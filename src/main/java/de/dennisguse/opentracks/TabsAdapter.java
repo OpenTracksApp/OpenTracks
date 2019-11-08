@@ -24,6 +24,7 @@ import android.widget.TabHost;
 import android.widget.TabHost.TabContentFactory;
 import android.widget.TabWidget;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -79,6 +80,7 @@ public class TabsAdapter extends FragmentPagerAdapter implements TabHost.OnTabCh
     }
 
     @Override
+    @NonNull
     public Fragment getItem(int position) {
         TabInfo info = tabInfos.get(position);
         return Fragment.instantiate(context, info.clss.getName(), info.bundle);

@@ -152,7 +152,6 @@ public class StatsUtils {
         boolean metricUnits = PreferencesUtils.isMetricUnits(activity);
         boolean reportSpeed = PreferencesUtils.isReportSpeed(activity);
         boolean isRecording = PreferencesUtils.isRecording(activity);
-        ;
 
         // Set total distance
         {

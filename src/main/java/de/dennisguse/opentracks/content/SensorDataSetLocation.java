@@ -28,11 +28,6 @@ public class SensorDataSetLocation extends Location {
 
     private SensorDataSet sensorDataSet = null;
 
-    /**
-     * The id of this location from the provider.
-     */
-    private int id = -1;
-
     public SensorDataSetLocation(Location location, SensorDataSet sensorDataSet) {
         super(location);
         this.sensorDataSet = sensorDataSet;
@@ -50,17 +45,8 @@ public class SensorDataSetLocation extends Location {
         this.sensorDataSet = sensorDataSet;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public void reset() {
         super.reset();
         sensorDataSet = null;
-        id = -1;
     }
 }
