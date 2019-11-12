@@ -45,7 +45,7 @@ public class BluetoothConnectionManager {
     static final int MESSAGE_READ = 3;
     static final int MESSAGE_DISCONNECTED = 4;
 
-    private static final UUID HEART_RATE_SERVICE_UUID = new UUID(0x180D00001000L, 0x800000805f9b34fbL);
+    public static final UUID HEART_RATE_SERVICE_UUID = new UUID(0x180D00001000L, 0x800000805f9b34fbL);
     private static final UUID HEART_RATE_MEASUREMENT_CHAR_UUID = new UUID(0x2A3700001000L, 0x800000805f9b34fbL);
     private static final UUID CLIENT_CHARACTERISTIC_CONFIG_UUID = new UUID(0x290200001000L, 0x800000805f9b34fbL);
 
@@ -131,8 +131,9 @@ public class BluetoothConnectionManager {
 
         Log.d(TAG, "Connecting to: " + bluetoothDevice);
 
-        setState(SensorState.CONNECTING);
         bluetoothGatt = bluetoothDevice.connectGatt(this.context, true, this.connectCallback);
+
+        setState(SensorState.CONNECTING);
     }
 
     public synchronized void disconnect() {

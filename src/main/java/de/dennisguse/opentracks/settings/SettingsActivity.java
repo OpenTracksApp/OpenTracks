@@ -13,11 +13,14 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
+import de.dennisguse.opentracks.util.BluetoothUtils;
 import de.dennisguse.opentracks.util.HackUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 
 public class SettingsActivity extends AppCompatActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller, ResetDialogPreference.ResetCallback {
+
+    private static final String TAG = SettingsActivity.class.getSimpleName();
 
     private PrefsFragment prefsFragment;
 
@@ -54,18 +57,27 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
         private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        updateUI();
-                    }
-                });
-
+                if (PreferencesUtils.isKey(getActivity(), R.string.recording_track_id_key, key)) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            updateReset();
+                        }
+                    });
+                }
                 if (PreferencesUtils.isKey(getActivity(), R.string.stats_units_key, key)) {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             updateUnits();
+                        }
+                    });
+                }
+                if (PreferencesUtils.isKey(getActivity(), R.string.chart_show_speed_key, key)) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            updateSpeed();
                         }
                     });
                 }
@@ -93,7 +105,8 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
         public void onResume() {
             super.onResume();
             PreferencesUtils.getSharedPreferences(getActivity()).registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-            updateUI();
+            updateReset();
+            updateBluetooth();
         }
 
         @Override
@@ -110,6 +123,8 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
             } else if (preference instanceof ActivityTypePreference) {
                 activityPreferenceDialog = ActivityTypePreference.ActivityPreferenceDialog.newInstance(preference.getKey());
                 dialogFragment = activityPreferenceDialog;
+            } else if (preference instanceof BluetoothLeListPreference) {
+                dialogFragment = BluetoothLeListPreference.BluetoothLeListPreferenceDialog.newInstance(preference.getKey());
             }
 
             if (dialogFragment != null) {
@@ -127,17 +142,22 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
             }
         }
 
-        private void updateUI() {
+        private void updateReset() {
             final boolean isRecording = PreferencesUtils.isRecording(getActivity());
             Preference resetPreference = findPreference(getString(R.string.settings_reset_key));
             resetPreference.setSummary(isRecording ? getString(R.string.settings_not_while_recording) : "");
             resetPreference.setEnabled(!isRecording);
+        }
 
+        private void updateSpeed() {
             Preference speedCheckBoxPreference = findPreference(getString(R.string.chart_show_speed_key));
             speedCheckBoxPreference.setTitle(PreferencesUtils.isReportSpeed(getActivity()) ? R.string.stats_speed : R.string.stats_pace);
+        }
 
-            ListPreference bluetoothPreference = findPreference(getString(R.string.settings_sensor_bluetooth_sensor_key));
-            PreferenceHelper.configureBluetoothSensorList(bluetoothPreference);
+        private void updateBluetooth() {
+            // Disable Bluetooth preference if device does not have Bluetooth
+            BluetoothLeListPreference bluetoothPreference = findPreference(getString(R.string.settings_sensor_bluetooth_sensor_key));
+            bluetoothPreference.setVisible(BluetoothUtils.hasBluetooth(TAG));
         }
 
         private void updateUnits() {

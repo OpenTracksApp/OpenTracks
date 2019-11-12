@@ -1,15 +1,8 @@
 package de.dennisguse.opentracks.settings;
 
-import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 
-import androidx.preference.ListPreference;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.util.BluetoothUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
@@ -166,35 +159,5 @@ final class PreferenceHelper {
         }
 
         return entries;
-    }
-
-    /**
-     * Configures the bluetooth sensor.
-     */
-    static void configureBluetoothSensorList(ListPreference preference) {
-        Context context = preference.getContext();
-
-        String value = PreferencesUtils.getString(context, R.string.settings_sensor_bluetooth_sensor_key, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT);
-        List<String> devicesNameList = new ArrayList<>();
-        List<String> devicesAddressList = new ArrayList<>();
-        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (bluetoothAdapter != null) {
-            BluetoothUtils.populateDeviceLists(bluetoothAdapter, devicesNameList, devicesAddressList);
-        }
-
-        // Was the previously configured device unpaired? Then forget it.
-        if (!devicesAddressList.contains(value)) {
-            value = PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT;
-            PreferencesUtils.setString(context, R.string.settings_sensor_bluetooth_sensor_key, value);
-        }
-
-        devicesNameList.add(0, context.getString(R.string.value_none));
-        devicesAddressList.add(0, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT);
-
-        String[] values = devicesAddressList.toArray(new String[0]);
-        preference.setEntryValues(values);
-
-        String[] options = devicesNameList.toArray(new String[0]);
-        preference.setEntries(options);
     }
 }

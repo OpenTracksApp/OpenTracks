@@ -16,16 +16,12 @@
 package de.dennisguse.opentracks.util;
 
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothClass;
-import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Utilities for dealing with bluetooth devices.
@@ -74,26 +70,8 @@ public class BluetoothUtils {
         return adapters.get(0);
     }
 
-    /**
-     * Populates the device names and the device addresses with all the suitable
-     * bluetooth devices.
-     *
-     * @param bluetoothAdapter the bluetooth adapter
-     * @param deviceNames      list of device names
-     * @param deviceAddresses  list of device addresses
-     */
-    public static void populateDeviceLists(BluetoothAdapter bluetoothAdapter, List<String> deviceNames, List<String> deviceAddresses) {
-        // Ensure the bluetooth adapter is not in discovery mode.
-        bluetoothAdapter.cancelDiscovery();
-
-        Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
-        for (BluetoothDevice device : pairedDevices) {
-            BluetoothClass bluetoothClass = device.getBluetoothClass();
-            if (bluetoothClass != null && (bluetoothClass.getDeviceClass() & BluetoothClass.Device.HEALTH_PULSE_RATE) != 0) {
-                deviceAddresses.add(device.getAddress());
-                deviceNames.add(device.getName());
-            }
-        }
+    public static boolean hasBluetooth(final String TAG) {
+        return BluetoothUtils.getDefaultBluetoothAdapter(TAG) != null;
     }
 
     public static int parseHeartRate(BluetoothGattCharacteristic characteristic) {
