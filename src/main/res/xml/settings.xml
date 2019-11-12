@@ -124,7 +124,7 @@ limitations under the License.
             android:title="@string/settings_recording_auto_resume_track_timeout_title"
             app:useSimpleSummaryProvider="true" />
         <de.dennisguse.opentracks.settings.ActivityTypePreference
-            android:defaultValue="@string/activity_type_running"
+            android:defaultValue="@string/"
             android:key="@string/default_activity_key"
             android:title="@string/settings_recording_default_activity_title" />
     </PreferenceCategory>

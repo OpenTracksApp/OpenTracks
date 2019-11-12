@@ -32,7 +32,10 @@
     <string name="sensor_type_value_none" translatable="false">NONE</string>
 
     <string name="default_activity_key" translatable="false">defaultActivity</string>
+    <string name="default_activity_default" translatable="false">@string/activity_type_unknown</string>
     <string-array name="activity_types">
+        <item>@string/default_activity_default</item>
+
         <item>@string/activity_type_airplane</item>
         <item>@string/activity_type_atv</item>
         <item>@string/activity_type_biking</item>
@@ -94,7 +97,6 @@
         <item>@string/activity_type_trail_running</item>
         <item>@string/activity_type_train</item>
         <item>@string/activity_type_ultimate_frisbee</item>
-        <item>@string/activity_type_unknown</item>
         <item>@string/activity_type_wakeboarding</item>
         <item>@string/activity_type_walking</item>
         <item>@string/activity_type_water_skiing</item>

@@ -99,11 +99,8 @@ public class PreferencesUtils {
         PreferencesUtils.setInt(context, R.string.auto_resume_track_current_retry_key, getAutoResumeTrackCurrentRetryDefault(context) + 1);
     }
 
-
-    public static final String DEFAULT_ACTIVITY_DEFAULT = "";
-
     public static String getDefaultActivity(Context context) {
-        return PreferencesUtils.getString(context, R.string.default_activity_key, PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT);
+        return PreferencesUtils.getString(context, R.string.default_activity_key, context.getString(R.string.default_activity_default));
     }
 
     public static void setDefaultActivity(Context context, String newDefaultActivity) {

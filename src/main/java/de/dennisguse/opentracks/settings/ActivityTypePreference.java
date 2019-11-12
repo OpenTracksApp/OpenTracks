@@ -43,14 +43,6 @@ import de.dennisguse.opentracks.util.TrackIconUtils;
  */
 public class ActivityTypePreference extends DialogPreference {
 
-    private SummaryProvider<DialogPreference> summaryProvider = new SummaryProvider<DialogPreference>() {
-        @Override
-        public CharSequence provideSummary(DialogPreference preference) {
-            String defaultActivity = PreferencesUtils.getDefaultActivity(ActivityTypePreference.this.getContext());
-            return defaultActivity != null && !defaultActivity.equals(PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT) ? defaultActivity : getContext().getString(R.string.value_unknown);
-        }
-    };
-
     public ActivityTypePreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         setDialogLayoutResource(R.layout.preference_activity_type);
@@ -58,6 +50,13 @@ public class ActivityTypePreference extends DialogPreference {
         setNegativeButtonText(android.R.string.cancel);
         setDialogIcon(null);
         setPersistent(true);
+
+        SummaryProvider<DialogPreference> summaryProvider = new SummaryProvider<DialogPreference>() {
+            @Override
+            public CharSequence provideSummary(DialogPreference preference) {
+                return PreferencesUtils.getDefaultActivity(ActivityTypePreference.this.getContext());
+            }
+        };
         setSummaryProvider(summaryProvider);
     }
 
