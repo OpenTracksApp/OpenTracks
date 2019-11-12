@@ -129,12 +129,12 @@
     </string-array>
 
     <string name="split_frequency_key" translatable="false">splitFrequency</string>
-    <string name="split_frequency_default" translatable="false">@string/frequency_default</string>
+    <string name="split_frequency_default" translatable="false">@string/frequency_off</string>
     <string name="voice_frequency_key" translatable="false">voiceFrequency</string>
-    <string name="voice_frequency_default" translatable="false">@string/frequency_default</string>
-    <string name="frequency_default" translatable="false">0</string>
+    <string name="voice_frequency_default" translatable="false">@string/frequency_off</string>
+    <string name="frequency_off" translatable="false">0</string>
     <string-array name="frequency_values">
-        <item>@string/frequency_default</item>
+        <item>@string/frequency_off</item>
         <item>1</item>
         <item>2</item>
         <item>5</item>

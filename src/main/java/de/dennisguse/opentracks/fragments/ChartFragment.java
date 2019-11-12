@@ -68,7 +68,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
 
     private boolean metricUnits = true;
     private boolean reportSpeed = true;
-    private int recordingDistanceInterval = PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT;
+    private int recordingDistanceInterval;
 
     // Modes of operation
     private boolean chartByDistance = true;
@@ -98,6 +98,8 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        recordingDistanceInterval = PreferencesUtils.getRecordingDistanceIntervalDefault(getContext());
 
         /*
          * Create a chartView here to store data thus won't need to reload all the data on every onStart or onResume.

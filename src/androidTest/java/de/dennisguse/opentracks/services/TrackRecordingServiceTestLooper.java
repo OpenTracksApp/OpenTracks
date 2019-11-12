@@ -139,7 +139,8 @@ public class TrackRecordingServiceTestLooper {
     @MediumTest
     @Test
     public void testWithProperties_minRecordingDistanceDefault() throws TimeoutException {
-        PreferencesUtils.setInt(context, R.string.recording_distance_interval_key, PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT);
+        int minRecordingIntervalDefault = Integer.parseInt(context.getResources().getString(R.string.min_recording_interval_default));
+        PreferencesUtils.setInt(context, R.string.recording_distance_interval_key, minRecordingIntervalDefault);
         fullRecordingSession();
     }
 
@@ -202,7 +203,8 @@ public class TrackRecordingServiceTestLooper {
     @MediumTest
     @Test
     public void testWithProperties_minRequiredAccuracyDefault() throws TimeoutException {
-        PreferencesUtils.setInt(context, R.string.recording_gps_accuracy_key, PreferencesUtils.RECORDING_GPS_ACCURACY_DEFAULT);
+        int recordingGPSAccuracyDefault = Integer.parseInt(context.getResources().getString(R.string.recording_gps_accuracy_default));
+        PreferencesUtils.setInt(context, R.string.recording_gps_accuracy_key, recordingGPSAccuracyDefault);
         fullRecordingSession();
     }
 

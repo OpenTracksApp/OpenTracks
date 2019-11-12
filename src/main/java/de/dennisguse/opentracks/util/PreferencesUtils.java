@@ -32,40 +32,7 @@ import de.dennisguse.opentracks.R;
  */
 public class PreferencesUtils {
 
-    /*
-     * Preferences values.
-     * The defaults need to match the defaults in the xml files.
-     */
-    @Deprecated
-    public static final boolean RECORDING_TRACK_PAUSED_DEFAULT = true;
-
     public static final String BLUETOOTH_SENSOR_DEFAULT = "";
-
-    // Value for split_frequency_key and voice_frequency_key
-    @Deprecated
-    public static final int FREQUENCY_OFF = 0;
-
-    @Deprecated
-    public static final int MAX_RECORDING_DISTANCE_DEFAULT = 200;
-
-    // Values for min_recording_interval_key
-    @Deprecated
-    public static final int MIN_RECORDING_INTERVAL_ADAPT_ACCURACY = -1;
-    @Deprecated
-    public static final int MIN_RECORDING_INTERVAL_ADAPT_BATTERY_LIFE = -2;
-    @Deprecated
-    public static final int MIN_RECORDING_INTERVAL_DEFAULT = 0;
-
-    @Deprecated
-    public static final int RECORDING_DISTANCE_INTERVAL_DEFAULT = 10;
-
-    // Values for recording_gps_accuracy
-    @Deprecated
-    public static final int RECORDING_GPS_ACCURACY_DEFAULT = 50;
-    @Deprecated
-    public static final int RECORDING_GPS_ACCURACY_EXCELLENT = 10;
-    @Deprecated
-    public static final int RECORDING_GPS_ACCURACY_POOR = 2000;
 
     private PreferencesUtils() {
     }
@@ -271,8 +238,11 @@ public class PreferencesUtils {
     }
 
     public static boolean isRecordingTrackPaused(Context context) {
-        final boolean RECORDING_TRACK_PAUSED = context.getResources().getBoolean(R.bool.recording_track_paused_default);
-        return PreferencesUtils.getBoolean(context, R.string.recording_track_paused_key, RECORDING_TRACK_PAUSED);
+        return PreferencesUtils.getBoolean(context, R.string.recording_track_paused_key, isRecordingTrackPaused(context));
+    }
+
+    public static boolean isRecordingTrackPausedDefault(Context context) {
+        return context.getResources().getBoolean(R.bool.recording_track_paused_default);
     }
 
     public static void defaultRecordingTrackPaused(Context context) {
@@ -337,7 +307,11 @@ public class PreferencesUtils {
 
     public static int getRecordingDistanceInterval(Context context) {
         final int RECORDING_DISTANCE_INTERVAL = Integer.parseInt(context.getResources().getString(R.string.recording_distance_interval_default));
-        return PreferencesUtils.getInt(context, R.string.recording_distance_interval_key, RECORDING_DISTANCE_INTERVAL);
+        return PreferencesUtils.getInt(context, R.string.recording_distance_interval_key, getRecordingDistanceIntervalDefault(context));
+    }
+
+    public static int getRecordingDistanceIntervalDefault(Context context) {
+        return Integer.parseInt(context.getResources().getString(R.string.recording_distance_interval_default));
     }
 
     public static int getMaxRecordingDistance(Context context) {
@@ -349,6 +323,22 @@ public class PreferencesUtils {
         final int MIN_RECORDING_INTERVAL = Integer.parseInt(context.getResources().getString(R.string.min_recording_interval_default));
         return PreferencesUtils.getInt(context, R.string.min_recording_interval_key, MIN_RECORDING_INTERVAL);
     }
+
+    public static int getMinRecordingIntervalAdaptAccuracy(Context context) {
+        return Integer.parseInt(context.getResources().getString(R.string.min_recording_interval_adapt_accuracy));
+    }
+
+    public static int getMinRecordingIntervalAdaptBatteryLife(Context context) {
+        return Integer.parseInt(context.getResources().getString(R.string.min_recording_interval_adapt_battery_life));
+    }
+
+    public static int getMinRecordingIntervalDefault(Context context) {
+        return Integer.parseInt(context.getResources().getString(R.string.min_recording_interval_default));
+    }
+
+
+
+
 
     public static int getRecordingGPSAccuracy(Context context) {
         final int RECORDING_GPS_ACCURACY = Integer.parseInt(context.getResources().getString(R.string.recording_gps_accuracy_default));

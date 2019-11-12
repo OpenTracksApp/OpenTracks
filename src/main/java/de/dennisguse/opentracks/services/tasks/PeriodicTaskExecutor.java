@@ -17,9 +17,9 @@ package de.dennisguse.opentracks.services.tasks;
 
 import android.util.Log;
 
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.stats.TripStatistics;
-import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
@@ -35,13 +35,14 @@ public class PeriodicTaskExecutor {
     private final TrackRecordingService trackRecordingService;
     private final PeriodicTaskFactory periodicTaskFactory;
 
+    private final int TASK_FREQUENCY_OFF;
     /**
      * The task frequency.
      * A positive value is a time frequency (minutes).
      * A negative value is a distance frequency (km or mi).
      * A zero value is to turn off periodic task.
      */
-    private int taskFrequency = PreferencesUtils.FREQUENCY_OFF;
+    private int taskFrequency;
 
     private PeriodicTask periodicTask;
 
@@ -56,6 +57,9 @@ public class PeriodicTaskExecutor {
     public PeriodicTaskExecutor(TrackRecordingService trackRecordingService, PeriodicTaskFactory periodicTaskFactory) {
         this.trackRecordingService = trackRecordingService;
         this.periodicTaskFactory = periodicTaskFactory;
+
+        TASK_FREQUENCY_OFF = Integer.parseInt(trackRecordingService.getBaseContext().getResources().getString(R.string.frequency_off));
+        taskFrequency = TASK_FREQUENCY_OFF;
     }
 
     /**
@@ -71,7 +75,7 @@ public class PeriodicTaskExecutor {
             timerTaskExecutor.shutdown();
             timerTaskExecutor = null;
         }
-        if (taskFrequency == PreferencesUtils.FREQUENCY_OFF) {
+        if (taskFrequency == TASK_FREQUENCY_OFF) {
             Log.d(TAG, "Task frequency is off.");
             return;
         }

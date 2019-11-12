@@ -93,7 +93,7 @@ limitations under the License.
             android:title="@string/settings_recording_track_name_title"
             app:useSimpleSummaryProvider="true" />
         <ListPreference
-            android:defaultValue="0"
+            android:defaultValue="@string/min_recording_interval_default"
             android:entryValues="@array/min_recording_interval_values"
             android:key="@string/min_recording_interval_key"
             android:title="@string/settings_recording_min_recording_interval_title"
@@ -111,20 +111,20 @@ limitations under the License.
             android:title="@string/settings_recording_max_recording_distance_title"
             app:useSimpleSummaryProvider="true" />
         <ListPreference
-            android:defaultValue="50"
+            android:defaultValue="@string/recording_gps_accuracy_default"
             android:entryValues="@array/recording_gps_accuracy_values"
             android:key="@string/recording_gps_accuracy_key"
             android:title="@string/settings_recording_min_required_accuracy_title"
             app:useSimpleSummaryProvider="true" />
         <ListPreference
-            android:defaultValue="10"
+            android:defaultValue="@string/auto_resume_track_timeout_default"
             android:entries="@array/auto_resume_track_timeout_values"
             android:entryValues="@array/auto_resume_track_timeout_values"
             android:key="@string/auto_resume_track_timeout_key"
             android:title="@string/settings_recording_auto_resume_track_timeout_title"
             app:useSimpleSummaryProvider="true" />
         <de.dennisguse.opentracks.settings.ActivityTypePreference
-            android:defaultValue="@string/"
+            android:defaultValue="@string/default_activity_default"
             android:key="@string/default_activity_key"
             android:title="@string/settings_recording_default_activity_title" />
     </PreferenceCategory>

@@ -45,7 +45,6 @@ import de.dennisguse.opentracks.services.ITrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.stats.TripStatistics;
 import de.dennisguse.opentracks.util.LocationUtils;
-import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StatsUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
@@ -81,7 +80,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
         }
     };
     private String category = "";
-    private int recordingGpsAccuracy = PreferencesUtils.RECORDING_GPS_ACCURACY_DEFAULT;
+    private int recordingGpsAccuracy;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -91,6 +90,9 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        recordingGpsAccuracy = Integer.parseInt(getContext().getResources().getString(R.string.recording_gps_accuracy_default));
+
         handlerUpdateUI = new Handler();
 
         Spinner activityTypeIcon = getView().findViewById(R.id.stats_activity_type_icon);

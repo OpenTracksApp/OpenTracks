@@ -102,40 +102,6 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
             PreferencesUtils.getSharedPreferences(getActivity()).unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
         }
 
-        private void configFrequencyPreference(int key, boolean metricUnits) {
-            ListPreference preference = findPreference(getString(key));
-
-            String[] options = StringUtils.getFrequencyOptions(getActivity(), metricUnits);
-            preference.setEntries(options);
-        }
-
-        private void configListPreference(int key, int valueArray, boolean metricUnits) {
-            String[] values = getResources().getStringArray(valueArray);
-            final String[] options = new String[values.length];
-            switch (key) {
-                case R.string.min_recording_interval_key:
-                    PreferenceHelper.setMinRecordingIntervalOptions(getActivity(), options, values);
-                    break;
-                case R.string.recording_distance_interval_key:
-                    PreferenceHelper.setRecordingDistanceIntervalOptions(getActivity(), options, values, metricUnits);
-                    break;
-                case R.string.max_recording_distance_key:
-                    PreferenceHelper.setMaxRecordingDistanceOptions(getActivity(), options, values, metricUnits);
-                    break;
-                case R.string.recording_gps_accuracy_key:
-                    PreferenceHelper.setRecordingGpsAccuracyOptions(getActivity(), options, values, metricUnits);
-                    break;
-                case R.string.auto_resume_track_timeout_key:
-                    PreferenceHelper.setAutoResumeTrackTimeoutOptions(getActivity(), options, values);
-                    break;
-                default:
-                    return;
-            }
-
-            final ListPreference listPreference = findPreference(getString(key));
-            listPreference.setEntries(options);
-        }
-
         @Override
         public void onDisplayPreferenceDialog(Preference preference) {
             DialogFragment dialogFragment = null;
@@ -177,19 +143,30 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
         private void updateUnits() {
             boolean metricUnits = PreferencesUtils.isMetricUnits(getActivity());
 
-            //TODO Refactor this!
-            configFrequencyPreference(R.string.voice_frequency_key, metricUnits);
-            configFrequencyPreference(R.string.split_frequency_key, metricUnits);
-            configListPreference(R.string.min_recording_interval_key, R.array.min_recording_interval_values, metricUnits);
-            configListPreference(R.string.recording_distance_interval_key, R.array.recording_distance_interval_values, metricUnits);
-            configListPreference(R.string.max_recording_distance_key, R.array.max_recording_distance_values, metricUnits);
-            configListPreference(R.string.recording_gps_accuracy_key, R.array.recording_gps_accuracy_values, metricUnits);
-            configListPreference(R.string.auto_resume_track_timeout_key, R.array.auto_resume_track_timeout_values, metricUnits);
-            configListPreference(R.string.auto_resume_track_timeout_key, R.array.auto_resume_track_timeout_values, metricUnits);
+            ListPreference voiceFrequency = findPreference(getString(R.string.voice_frequency_key));
+            voiceFrequency.setEntries(StringUtils.getFrequencyOptions(getActivity(), metricUnits));
 
-            final ListPreference statsRatePreferences = findPreference(getString(R.string.stats_rate_key));
-            String[] options = getResources().getStringArray(metricUnits ? R.array.stats_rate_metric_options : R.array.stats_rate_imperial_options);
-            statsRatePreferences.setEntries(options);
+            ListPreference splitFrequency = findPreference(getString(R.string.split_frequency_key));
+            splitFrequency.setEntries(StringUtils.getFrequencyOptions(getActivity(), metricUnits));
+
+            ListPreference minRecordingInterval = findPreference(getString(R.string.min_recording_interval_key));
+            minRecordingInterval.setEntries(PreferenceHelper.getMinRecordingIntervalEntries(getActivity()));
+
+            ListPreference recordingDistanceInterval = findPreference(getString(R.string.recording_distance_interval_key));
+            recordingDistanceInterval.setEntries(PreferenceHelper.getRecordingDistanceIntervalEntries(getActivity(), metricUnits));
+
+            ListPreference maxRecordingDistance = findPreference(getString(R.string.max_recording_distance_key));
+            maxRecordingDistance.setEntries(PreferenceHelper.getMaxRecordingDistanceEntries(getActivity(), metricUnits));
+
+            ListPreference recordingGpsAccuracy = findPreference(getString(R.string.recording_gps_accuracy_key));
+            recordingGpsAccuracy.setEntries(PreferenceHelper.getRecordingGpsAccuracyEntries(getActivity(), metricUnits));
+
+            ListPreference autoresumeTrack = findPreference(getString(R.string.auto_resume_track_timeout_key));
+            autoresumeTrack.setEntries(PreferenceHelper.getAutoResumeTrackTimeoutEntries(getActivity()));
+
+            ListPreference statsRatePreferences = findPreference(getString(R.string.stats_rate_key));
+            String[] entries = getResources().getStringArray(metricUnits ? R.array.stats_rate_metric_options : R.array.stats_rate_imperial_options);
+            statsRatePreferences.setEntries(entries);
 
             HackUtils.invalidatePreference(statsRatePreferences);
         }

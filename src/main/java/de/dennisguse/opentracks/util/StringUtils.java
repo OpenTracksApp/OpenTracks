@@ -359,7 +359,7 @@ public class StringUtils {
         String[] options = new String[values.length];
         for (int i = 0; i < values.length; i++) {
             int value = Integer.parseInt(values[i]);
-            if (value == PreferencesUtils.FREQUENCY_OFF) {
+            if (context.getString(R.string.frequency_off).equals(values[i])) {
                 options[i] = context.getString(R.string.value_off);
             } else if (value < 0) {
                 options[i] = context.getString(metricUnits ? R.string.value_integer_kilometer : R.string.value_integer_mile, Math.abs(value));

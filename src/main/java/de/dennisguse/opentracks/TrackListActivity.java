@@ -125,7 +125,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         }
     };
 
-    private boolean recordingTrackPaused = PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT;
+    private boolean recordingTrackPaused;
 
     /*
      * Note that sharedPreferenceChangeListener cannot be an anonymous inner class.
@@ -225,8 +225,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                 // Not recording -> Recording
                 updateMenuItems(false, true);
                 startRecording();
-            } else {
-                if (recordingTrackPaused) {
+            } else if (recordingTrackPaused) {
                     // Paused -> Resume
                     updateMenuItems(false, true);
                     trackRecordingServiceConnection.resumeTrack();
@@ -237,13 +236,14 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                     trackRecordingServiceConnection.pauseTrack();
                     trackController.update(true, true);
                 }
-            }
         }
     };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        recordingTrackPaused = PreferencesUtils.isRecordingTrackPausedDefault(this);
 
         contentProviderUtils = ContentProviderUtils.Factory.get(this);
         sharedPreferences = PreferencesUtils.getSharedPreferences(this);

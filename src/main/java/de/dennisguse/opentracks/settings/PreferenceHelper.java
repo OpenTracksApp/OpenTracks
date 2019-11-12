@@ -15,167 +15,157 @@ import de.dennisguse.opentracks.util.UnitConversions;
 
 final class PreferenceHelper {
 
-    /**
-     * Sets the min recording interval options.
-     *
-     * @param options the options
-     * @param values  the values
-     */
-    static void setMinRecordingIntervalOptions(Context context, String[] options, String[] values) {
-        for (int i = 0; i < values.length; i++) {
-            int value = Integer.parseInt(values[i]);
-            switch (value) {
-                case PreferencesUtils.MIN_RECORDING_INTERVAL_ADAPT_BATTERY_LIFE:
-                    options[i] = context.getString(R.string.value_adapt_battery_life);
-                    break;
-                case PreferencesUtils.MIN_RECORDING_INTERVAL_ADAPT_ACCURACY:
-                    options[i] = context.getString(R.string.value_adapt_accuracy);
-                    break;
-                case PreferencesUtils.MIN_RECORDING_INTERVAL_DEFAULT:
-                    options[i] = context.getString(R.string.value_smallest_recommended);
-                    break;
-                default:
-                    options[i] = value < 60 ? context.getString(R.string.value_integer_second, value) : context.getString(R.string.value_integer_minute, value / 60);
+    static String[] getMinRecordingIntervalEntries(Context context) {
+        String[] entryValues = context.getResources().getStringArray(R.array.min_recording_interval_values);
+        String[] entries = new String[entryValues.length];
+        for (int i = 0; i < entryValues.length; i++) {
+            int value = Integer.parseInt(entryValues[i]);
+
+            if (value == PreferencesUtils.getMinRecordingIntervalAdaptAccuracy(context)) {
+                entries[i] = context.getString(R.string.value_adapt_accuracy);
+            } else if (value == PreferencesUtils.getMinRecordingIntervalAdaptBatteryLife(context)) {
+                entries[i] = context.getString(R.string.value_adapt_battery_life);
+            } else if (value == PreferencesUtils.getMinRecordingIntervalDefault(context)) {
+                entries[i] = context.getString(R.string.value_smallest_recommended);
+            } else {
+                entries[i] = value < 60 ? context.getString(R.string.value_integer_second, value) : context.getString(R.string.value_integer_minute, value / 60);
             }
         }
+
+        return entries;
     }
 
-    /**
-     * Sets the recording distance interval options.
-     *
-     * @param options     the options
-     * @param values      the values
-     * @param metricUnits true for metric units
-     */
-    static void setRecordingDistanceIntervalOptions(Context context, String[] options, String[] values, boolean metricUnits) {
-        for (int i = 0; i < values.length; i++) {
-            int value = Integer.parseInt(values[i]);
+    static String[] getRecordingDistanceIntervalEntries(Context context, boolean metricUnits) {
+        String[] entryValues = context.getResources().getStringArray(R.array.recording_distance_interval_values);
+        String[] entries = new String[entryValues.length];
+
+        final int recordingDistanceIntervalDefault = PreferencesUtils.getRecordingDistanceIntervalDefault(context);
+
+        for (int i = 0; i < entryValues.length; i++) {
+            int value = Integer.parseInt(entryValues[i]);
             String displayValue;
             if (metricUnits) {
                 displayValue = context.getString(R.string.value_integer_meter, value);
-                if (value == PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT) {
-                    options[i] = context.getString(R.string.value_integer_meter_recommended, value);
+                if (value == recordingDistanceIntervalDefault) {
+                    entries[i] = context.getString(R.string.value_integer_meter_recommended, value);
                 } else {
-                    options[i] = displayValue;
+                    entries[i] = displayValue;
                 }
             } else {
                 int feet = (int) (value * UnitConversions.M_TO_FT);
                 displayValue = context.getString(R.string.value_integer_feet, feet);
-                if (value == PreferencesUtils.RECORDING_DISTANCE_INTERVAL_DEFAULT) {
-                    options[i] = context.getString(R.string.value_integer_feet_recommended, feet);
+                if (value == recordingDistanceIntervalDefault) {
+                    entries[i] = context.getString(R.string.value_integer_feet_recommended, feet);
                 } else {
-                    options[i] = displayValue;
+                    entries[i] = displayValue;
                 }
             }
         }
+
+        return entries;
     }
 
-    /**
-     * Sets the max recording distance options.
-     *
-     * @param options     the options
-     * @param values      the values
-     * @param metricUnits true for metric units
-     */
-    static void setMaxRecordingDistanceOptions(Context context, String[] options, String[] values, boolean metricUnits) {
-        for (int i = 0; i < values.length; i++) {
-            int value = Integer.parseInt(values[i]);
+    static String[] getMaxRecordingDistanceEntries(Context context, boolean metricUnits) {
+        String[] entryValues = context.getResources().getStringArray(R.array.max_recording_distance_values);
+        String[] entries = new String[entryValues.length];
+
+        final int maxRecordingDistanceDefault = Integer.parseInt(context.getResources().getString(R.string.max_recording_distance_default));
+
+        for (int i = 0; i < entryValues.length; i++) {
+            int value = Integer.parseInt(entryValues[i]);
             String displayValue;
             if (metricUnits) {
                 displayValue = context.getString(R.string.value_integer_meter, value);
-                if (value == PreferencesUtils.MAX_RECORDING_DISTANCE_DEFAULT) {
-                    options[i] = context.getString(R.string.value_integer_meter_recommended, value);
+                if (value == maxRecordingDistanceDefault) {
+                    entries[i] = context.getString(R.string.value_integer_meter_recommended, value);
                 } else {
-                    options[i] = displayValue;
+                    entries[i] = displayValue;
                 }
             } else {
                 int feet = (int) (value * UnitConversions.M_TO_FT);
                 if (feet < 2000) {
                     displayValue = context.getString(R.string.value_integer_feet, feet);
-                    if (value == PreferencesUtils.MAX_RECORDING_DISTANCE_DEFAULT) {
-                        options[i] = context.getString(R.string.value_integer_feet_recommended, feet);
+                    if (value == maxRecordingDistanceDefault) {
+                        entries[i] = context.getString(R.string.value_integer_feet_recommended, feet);
                     } else {
-                        options[i] = displayValue;
+                        entries[i] = displayValue;
                     }
                 } else {
                     double mile = feet * UnitConversions.FT_TO_MI;
                     displayValue = context.getString(R.string.value_float_mile, mile);
-                    options[i] = displayValue;
+                    entries[i] = displayValue;
                 }
             }
         }
+
+        return entries;
     }
 
-    /**
-     * Sets the recording gps accuracy options.
-     *
-     * @param options     the options
-     * @param values      the values
-     * @param metricUnits true for metric units
-     */
-    static void setRecordingGpsAccuracyOptions(Context context, String[] options, String[] values, boolean metricUnits) {
-        for (int i = 0; i < values.length; i++) {
-            int value = Integer.parseInt(values[i]);
+    static String[] getRecordingGpsAccuracyEntries(Context context, boolean metricUnits) {
+        String[] entryValues = context.getResources().getStringArray(R.array.recording_gps_accuracy_values);
+        String[] entries = new String[entryValues.length];
+
+        final int recordingGPSAccuracyDefault = Integer.parseInt(context.getResources().getString(R.string.recording_gps_accuracy_default));
+        final int recordingGPSAccuracyExcellent = Integer.parseInt(context.getResources().getString(R.string.recording_gps_accuracy_excellent));
+        final int recordingGPSAccuracyPoor = Integer.parseInt(context.getResources().getString(R.string.recording_gps_accuracy_poor));
+
+        for (int i = 0; i < entryValues.length; i++) {
+            int value = Integer.parseInt(entryValues[i]);
             String displayValue;
             if (metricUnits) {
                 displayValue = context.getString(R.string.value_integer_meter, value);
-                switch (value) {
-                    case PreferencesUtils.RECORDING_GPS_ACCURACY_DEFAULT:
-                        options[i] = context.getString(R.string.value_integer_meter_recommended, value);
-                        break;
-                    case PreferencesUtils.RECORDING_GPS_ACCURACY_EXCELLENT:
-                        options[i] = context.getString(R.string.value_integer_meter_excellent_gps, value);
-                        break;
-                    case PreferencesUtils.RECORDING_GPS_ACCURACY_POOR:
-                        options[i] = context.getString(R.string.value_integer_meter_poor_gps, value);
-                        break;
-                    default:
-                        options[i] = displayValue;
+                if (value == recordingGPSAccuracyDefault) {
+                    entries[i] = context.getString(R.string.value_integer_meter_recommended, value);
+                } else if (value == recordingGPSAccuracyExcellent) {
+                    entries[i] = context.getString(R.string.value_integer_meter_excellent_gps, value);
+                } else if (value == recordingGPSAccuracyPoor) {
+                    entries[i] = context.getString(R.string.value_integer_meter_poor_gps, value);
+                } else {
+                    entries[i] = displayValue;
                 }
             } else {
                 int feet = (int) (value * UnitConversions.M_TO_FT);
                 if (feet < 2000) {
                     displayValue = context.getString(R.string.value_integer_feet, feet);
-                    switch (value) {
-                        case PreferencesUtils.RECORDING_GPS_ACCURACY_DEFAULT:
-                            options[i] = context.getString(R.string.value_integer_feet_recommended, feet);
-                            break;
-                        case PreferencesUtils.RECORDING_GPS_ACCURACY_EXCELLENT:
-                            options[i] = context.getString(R.string.value_integer_feet_excellent_gps, feet);
-                            break;
-                        default:
-                            options[i] = displayValue;
+
+                    if (value == recordingGPSAccuracyDefault) {
+                        entries[i] = context.getString(R.string.value_integer_feet_recommended, feet);
+                    } else if (value == recordingGPSAccuracyExcellent) {
+                        entries[i] = context.getString(R.string.value_integer_feet_excellent_gps, feet);
+                    } else {
+                        entries[i] = displayValue;
                     }
                 } else {
                     double mile = feet * UnitConversions.FT_TO_MI;
                     displayValue = context.getString(R.string.value_float_mile, mile);
-                    if (value == PreferencesUtils.RECORDING_GPS_ACCURACY_POOR) {
-                        options[i] = context.getString(R.string.value_float_mile_poor_gps, mile);
+                    if (value == recordingGPSAccuracyPoor) {
+                        entries[i] = context.getString(R.string.value_float_mile_poor_gps, mile);
                     } else {
-                        options[i] = displayValue;
+                        entries[i] = displayValue;
                     }
                 }
             }
         }
+
+        return entries;
     }
 
-    /**
-     * Sets the auto resume track timeout options.
-     *
-     * @param options the options
-     * @param values  the values
-     */
-    static void setAutoResumeTrackTimeoutOptions(Context context, String[] options, String[] values) {
-        for (int i = 0; i < values.length; i++) {
-            int value = Integer.parseInt(values[i]);
+    static String[] getAutoResumeTrackTimeoutEntries(Context context) {
+        String[] entryValues = context.getResources().getStringArray(R.array.auto_resume_track_timeout_values);
+        String[] entries = new String[entryValues.length];
+
+        for (int i = 0; i < entryValues.length; i++) {
+            int value = Integer.parseInt(entryValues[i]);
             if (value == Integer.parseInt(context.getResources().getString(R.string.auto_resume_track_timeout_never))) {
-                options[i] = context.getString(R.string.value_never);
+                entries[i] = context.getString(R.string.value_never);
             } else if (value == Integer.parseInt(context.getResources().getString(R.string.auto_resume_track_timeout_always))) {
-                options[i] = context.getString(R.string.value_always);
+                entries[i] = context.getString(R.string.value_always);
             } else {
-                options[i] = context.getString(R.string.value_integer_minute, value);
+                entries[i] = context.getString(R.string.value_integer_minute, value);
             }
         }
+
+        return entries;
     }
 
     /**

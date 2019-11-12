@@ -93,7 +93,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
 
     // Preferences
     private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
-    private boolean recordingTrackPaused = PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT;
+    private boolean recordingTrackPaused;
 
     private final Runnable bindChangedCallback = new Runnable() {
         @Override
@@ -182,6 +182,8 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        recordingTrackPaused = PreferencesUtils.isRecordingTrackPausedDefault(this);
+
         hasCamera = getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
         photoUri = savedInstanceState != null ? (Uri) savedInstanceState.getParcelable(PHOTO_URI_KEY) : null;
         hasPhoto = savedInstanceState != null && savedInstanceState.getBoolean(HAS_PHOTO_KEY, false);

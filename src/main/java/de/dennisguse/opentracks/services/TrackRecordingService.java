@@ -139,17 +139,14 @@ public class TrackRecordingService extends Service {
             }
             if (PreferencesUtils.isKey(context, R.string.min_recording_interval_key, key)) {
                 int minRecordingInterval = PreferencesUtils.getMinRecordingInterval(context);
-                switch (minRecordingInterval) {
-                    case PreferencesUtils.MIN_RECORDING_INTERVAL_ADAPT_BATTERY_LIFE:
-                        // Choose battery life over moving time accuracy.
-                        locationListenerPolicy = new AdaptiveLocationListenerPolicy(30 * UnitConversions.ONE_SECOND, 5 * ONE_MINUTE, 5);
-                        break;
-                    case PreferencesUtils.MIN_RECORDING_INTERVAL_ADAPT_ACCURACY:
-                        // Get all the updates.
-                        locationListenerPolicy = new AdaptiveLocationListenerPolicy(UnitConversions.ONE_SECOND, 30 * UnitConversions.ONE_SECOND, 0);
-                        break;
-                    default:
-                        locationListenerPolicy = new AbsoluteLocationListenerPolicy(minRecordingInterval * UnitConversions.ONE_SECOND);
+                if (minRecordingInterval == PreferencesUtils.getMinRecordingIntervalAdaptBatteryLife(context)) {
+                    // Choose battery life over moving time accuracy.
+                    locationListenerPolicy = new AdaptiveLocationListenerPolicy(30 * UnitConversions.ONE_SECOND, 5 * ONE_MINUTE, 5);
+                } else if (minRecordingInterval == PreferencesUtils.getMinRecordingIntervalAdaptAccuracy(context)) {
+                    // Get all the updates.
+                    locationListenerPolicy = new AdaptiveLocationListenerPolicy(UnitConversions.ONE_SECOND, 30 * UnitConversions.ONE_SECOND, 0);
+                } else {
+                    locationListenerPolicy = new AbsoluteLocationListenerPolicy(minRecordingInterval * UnitConversions.ONE_SECOND);
                 }
             }
             if (PreferencesUtils.isKey(context, R.string.recording_distance_interval_key, key)) {

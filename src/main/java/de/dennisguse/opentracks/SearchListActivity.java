@@ -101,7 +101,7 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
 
     private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
 
-    private boolean recordingTrackPaused = PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT;
+    private boolean recordingTrackPaused;
 
     // Callback when an item is selected in the contextual action mode
     private ContextualActionModeCallback contextualActionModeCallback = new ContextualActionModeCallback() {
@@ -167,6 +167,8 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
+
+        recordingTrackPaused = PreferencesUtils.isRecordingTrackPausedDefault(this);
 
         contentProviderUtils = ContentProviderUtils.Factory.get(this);
         sharedPreferences = PreferencesUtils.getSharedPreferences(this);

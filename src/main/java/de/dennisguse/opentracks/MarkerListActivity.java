@@ -69,7 +69,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
     private SharedPreferences sharedPreferences;
 
     private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
-    private boolean recordingTrackPaused = PreferencesUtils.RECORDING_TRACK_PAUSED_DEFAULT;
+    private boolean recordingTrackPaused;
     /*
      * Note that sharedPreferenceChangeListener cannot be an anonymous inner
      * class. Anonymous inner class will get garbage collected.
@@ -127,6 +127,8 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        recordingTrackPaused = PreferencesUtils.isRecordingTrackPausedDefault(this);
 
         contentProviderUtils = ContentProviderUtils.Factory.get(this);
         sharedPreferences = PreferencesUtils.getSharedPreferences(this);
