@@ -237,8 +237,9 @@ public class PreferencesUtils {
         return PreferencesUtils.getInt(context, R.string.auto_resume_track_timeout_key, AUTO_RESUME_TRACK_TIMEOUT);
     }
 
+
     public static boolean isRecordingTrackPaused(Context context) {
-        return PreferencesUtils.getBoolean(context, R.string.recording_track_paused_key, isRecordingTrackPaused(context));
+        return PreferencesUtils.getBoolean(context, R.string.recording_track_paused_key, isRecordingTrackPausedDefault(context));
     }
 
     public static boolean isRecordingTrackPausedDefault(Context context) {
@@ -249,6 +250,7 @@ public class PreferencesUtils {
         final boolean RECORDING_TRACK_PAUSED = context.getResources().getBoolean(R.bool.recording_track_paused_default);
         PreferencesUtils.setBoolean(context, R.string.recording_track_paused_key, RECORDING_TRACK_PAUSED);
     }
+
 
     public static boolean isChartByDistance(Context context) {
         final String CHART_X_AXIS_DEFAULT = context.getString(R.string.chart_x_axis_default);
