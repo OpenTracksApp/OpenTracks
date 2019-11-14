@@ -6,7 +6,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0'
+        classpath 'com.android.tools.build:gradle:3.5.2'
     }
 }
 
@@ -35,10 +35,14 @@ def getVersionName = { ->
     try {
         def stdout = new ByteArrayOutputStream()
         exec {
-            commandLine 'git', 'describe', '--tags', '--dirty'
+            commandLine 'git', 'describe', '--tags'
             standardOutput = stdout
         }
-        return stdout.toString().trim()
+        exec {
+            commandLine 'git', 'log', '--format="%h"', '-n 1'
+            standardOutput = stdout
+        }
+        return stdout.toString().replace('\n', '-').replace('"', '').trim()
     }
     catch (ignored) {
         return null
@@ -74,10 +78,6 @@ android {
 
     applicationVariants.all { variant ->
         variant.resValue "string", "applicationId", variant.applicationId
-    }
-
-    lintOptions {
-        disable "AppCompatResource" // TODO Disable complaint to use androidx's SearchView as it is null.
     }
 }
 
