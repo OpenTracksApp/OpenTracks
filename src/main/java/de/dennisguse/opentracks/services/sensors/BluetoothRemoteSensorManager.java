@@ -26,12 +26,10 @@ import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
+import de.dennisguse.opentracks.util.BluetoothUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
-import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
  * Bluetooth LE sensor manager.
@@ -45,7 +43,7 @@ public class BluetoothRemoteSensorManager {
 
     private static final String TAG = BluetoothConnectionManager.class.getSimpleName();
 
-    private static final BluetoothAdapter bluetoothAdapter = getDefaultBluetoothAdapter();
+    private static final BluetoothAdapter bluetoothAdapter = BluetoothUtils.getDefaultBluetoothAdapter(TAG);
 
     private final Context context;
 
@@ -112,43 +110,6 @@ public class BluetoothRemoteSensorManager {
     public BluetoothRemoteSensorManager(Context context) {
         this.context = context;
         sharedPreferences = PreferencesUtils.getSharedPreferences(context);
-    }
-
-    private static BluetoothAdapter getDefaultBluetoothAdapter() {
-        // If from the main application thread, return directly
-        if (Thread.currentThread().equals(Looper.getMainLooper().getThread())) {
-            return BluetoothAdapter.getDefaultAdapter();
-        }
-
-        // Get the default adapter from the main application thread
-        final ArrayList<BluetoothAdapter> adapters = new ArrayList<>(1);
-        final Object mutex = new Object();
-
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                adapters.add(BluetoothAdapter.getDefaultAdapter());
-                synchronized (mutex) {
-                    mutex.notify();
-                }
-            }
-        });
-
-        while (adapters.isEmpty()) {
-            synchronized (mutex) {
-                try {
-                    mutex.wait(UnitConversions.ONE_SECOND);
-                } catch (InterruptedException e) {
-                    Log.e(TAG, "Interrupted while waiting for default bluetooth adapter", e);
-                }
-            }
-        }
-
-        if (adapters.get(0) == null) {
-            Log.w(TAG, "No bluetooth adapter found.");
-        }
-        return adapters.get(0);
     }
 
     public void start() {

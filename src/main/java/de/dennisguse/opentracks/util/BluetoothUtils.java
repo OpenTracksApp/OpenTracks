@@ -19,7 +19,11 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -31,6 +35,43 @@ import java.util.Set;
 public class BluetoothUtils {
 
     private BluetoothUtils() {
+    }
+
+    public static BluetoothAdapter getDefaultBluetoothAdapter(final String TAG) {
+        // If from the main application thread, return directly
+        if (Thread.currentThread().equals(Looper.getMainLooper().getThread())) {
+            return BluetoothAdapter.getDefaultAdapter();
+        }
+
+        // Get the default adapter from the main application thread
+        final ArrayList<BluetoothAdapter> adapters = new ArrayList<>(1);
+        final Object mutex = new Object();
+
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                adapters.add(BluetoothAdapter.getDefaultAdapter());
+                synchronized (mutex) {
+                    mutex.notify();
+                }
+            }
+        });
+
+        while (adapters.isEmpty()) {
+            synchronized (mutex) {
+                try {
+                    mutex.wait(UnitConversions.ONE_SECOND);
+                } catch (InterruptedException e) {
+                    Log.e(TAG, "Interrupted while waiting for default bluetooth adapter", e);
+                }
+            }
+        }
+
+        if (adapters.get(0) == null) {
+            Log.w(TAG, "No bluetooth adapter found.");
+        }
+        return adapters.get(0);
     }
 
     /**
