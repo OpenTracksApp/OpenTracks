@@ -30,6 +30,14 @@ To show your tracks on a map, a 3rd party application (e.g., [OsmAnd](https://pl
     <img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg" height="45">
 </a>
 
+## Screenshots
+<div>
+    <img width="20%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot_1.png">
+    <img width="20%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot_2.png">
+    <img width="20%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot_3.png">
+    <img width="20%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot_4.png">
+</div>
+
 ## Project history
 
 _OpenTracks_ is based upon Google _My Tracks app_ ([code](https://code.google.com/archive/p/mytracks/)).
