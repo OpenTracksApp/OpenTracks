@@ -134,13 +134,6 @@ limitations under the License.
             android:defaultValue="@string/sensor_type_value_none"
             android:key="@string/settings_sensor_bluetooth_sensor_key"
             android:title="@string/settings_sensor_bluetooth_sensor" />
-        <Preference
-            android:key="@string/settings_sensor_bluetooth_pairing_key"
-            android:persistent="false"
-            android:summary="@string/settings_sensor_bluetooth_pairing_summary"
-            android:title="@string/settings_sensor_bluetooth_pairing">
-            <intent android:action="android.settings.BLUETOOTH_SETTINGS" />
-        </Preference>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/generic_tracks">

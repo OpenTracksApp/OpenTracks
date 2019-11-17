@@ -28,7 +28,6 @@
     <string name="settings_reset_key" translatable="false">settingsReset</string>
 
     <string name="settings_sensor_bluetooth_sensor_key" translatable="false">bluetoothSensor</string>
-    <string name="settings_sensor_bluetooth_pairing_key" translatable="false">settingsSensorBluetoothPairing</string>
     <string name="sensor_type_value_none" translatable="false">NONE</string>
 
     <string name="default_activity_key" translatable="false">defaultActivity</string>
