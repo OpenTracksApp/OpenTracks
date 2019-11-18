@@ -22,6 +22,7 @@ import android.os.Looper;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Utilities for dealing with bluetooth devices.
@@ -29,6 +30,8 @@ import java.util.ArrayList;
  * @author Rodrigo Damazio
  */
 public class BluetoothUtils {
+
+    public static final UUID HEART_RATE_SERVICE_UUID = new UUID(0x180D00001000L, 0x800000805f9b34fbL);
 
     private BluetoothUtils() {
     }

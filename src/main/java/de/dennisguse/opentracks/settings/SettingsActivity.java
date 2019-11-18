@@ -124,8 +124,8 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
             } else if (preference instanceof ActivityTypePreference) {
                 activityPreferenceDialog = ActivityTypePreference.ActivityPreferenceDialog.newInstance(preference.getKey());
                 dialogFragment = activityPreferenceDialog;
-            } else if (preference instanceof BluetoothLeListPreference) {
-                dialogFragment = BluetoothLeListPreference.BluetoothLeListPreferenceDialog.newInstance(preference.getKey());
+            } else if (preference instanceof BluetoothLePreference) {
+                dialogFragment = BluetoothLePreference.BluetoothLePreferenceDialog.newInstance(preference.getKey());
             }
 
             if (dialogFragment != null) {
@@ -157,7 +157,7 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
 
         private void updateBluetooth() {
             // Disable Bluetooth preference if device does not have Bluetooth
-            BluetoothLeListPreference bluetoothPreference = findPreference(getString(R.string.settings_sensor_bluetooth_heart_rate_key));
+            BluetoothLePreference bluetoothPreference = findPreference(getString(R.string.settings_sensor_bluetooth_heart_rate_key));
             bluetoothPreference.setVisible(BluetoothUtils.hasBluetooth(TAG));
         }
 

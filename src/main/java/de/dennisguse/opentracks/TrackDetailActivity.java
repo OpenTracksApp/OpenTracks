@@ -54,6 +54,7 @@ import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
+import de.dennisguse.opentracks.util.StatsUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.TrackUtils;
 
@@ -120,8 +121,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
      * Note that sharedPreferenceChangeListener cannot be an anonymous inner
      * class. Anonymous inner class will get garbage collected.
      */
-    private final OnSharedPreferenceChangeListener
-            sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
+    private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
             if (PreferencesUtils.isKey(TrackDetailActivity.this, R.string.recording_track_id_key, key)) {
@@ -412,8 +412,14 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
     /**
      * Gets the track id.
      */
+    // TODO Seems to be no used.
+    @Deprecated
     public long getTrackId() {
         return trackId;
+    }
+
+    private void setBluetoothHeartRateSensorName(String sensorName) {
+        StatsUtils.setBluetoothHeartRateSensorName(this, sensorName, isRecording());
     }
 
     /**

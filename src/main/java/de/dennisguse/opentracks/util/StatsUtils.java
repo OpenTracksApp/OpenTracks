@@ -108,7 +108,7 @@ public class StatsUtils {
     public static void setSensorData(Activity activity, SensorDataSet sensorDataSet, boolean isRecording) {
         // heart rate
         int isVisible = View.VISIBLE;
-        if (!isRecording || PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT.equals(PreferencesUtils.getString(activity, R.string.settings_sensor_bluetooth_heart_rate_key, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT))) {
+        if (!isRecording || PreferencesUtils.isBluetoothHeartRateSensorAddressDefault(activity)) {
             isVisible = View.INVISIBLE;
         }
         activity.findViewById(R.id.stats_sensor_container).setVisibility(isVisible);
@@ -125,8 +125,15 @@ public class StatsUtils {
                 }
             }
 
-            heartRateValue.setText(heartRate);
+            setBluetoothHeartRateSensorName(activity, sensor, isRecording);
             heartRateSensor.setText(sensor);
+        }
+    }
+
+    public static void setBluetoothHeartRateSensorName(Activity activity, String sensorName, boolean isRecording) {
+        if (isRecording) {
+            TextView heartRateSensor = activity.findViewById(R.id.stats_sensor_heart_rate_sensor_value);
+            heartRateSensor.setText(sensorName);
         }
     }
 

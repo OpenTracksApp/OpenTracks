@@ -21,6 +21,7 @@ import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
+import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.os.Handler;
@@ -45,7 +46,6 @@ public class BluetoothConnectionManager {
     static final int MESSAGE_READ = 3;
     static final int MESSAGE_DISCONNECTED = 4;
 
-    public static final UUID HEART_RATE_SERVICE_UUID = new UUID(0x180D00001000L, 0x800000805f9b34fbL);
     private static final UUID HEART_RATE_MEASUREMENT_CHAR_UUID = new UUID(0x2A3700001000L, 0x800000805f9b34fbL);
     private static final UUID CLIENT_CHARACTERISTIC_CONFIG_UUID = new UUID(0x290200001000L, 0x800000805f9b34fbL);
 
@@ -90,10 +90,18 @@ public class BluetoothConnectionManager {
 
         @Override
         public void onServicesDiscovered(@NonNull BluetoothGatt gatt, int status) {
-            BluetoothGattCharacteristic characteristic = gatt
-                    .getService(HEART_RATE_SERVICE_UUID)
-                    .getCharacteristic(HEART_RATE_MEASUREMENT_CHAR_UUID);
+            BluetoothGattService service = gatt.getService(BluetoothUtils.HEART_RATE_SERVICE_UUID);
+            if (service == null) {
+                Log.e(TAG, "Could not get heart rate service for " + gatt.getDevice().getAddress());
+                return;
+            }
 
+
+            BluetoothGattCharacteristic characteristic = service.getCharacteristic(HEART_RATE_MEASUREMENT_CHAR_UUID);
+            if (characteristic == null) {
+                Log.e(TAG, "Could not get BluetoothCharacteristic for " + gatt.getDevice().getAddress());
+                return;
+            }
             gatt.setCharacteristicNotification(characteristic, true);
 
             BluetoothGattDescriptor descriptor = characteristic.getDescriptor(CLIENT_CHARACTERISTIC_CONFIG_UUID);

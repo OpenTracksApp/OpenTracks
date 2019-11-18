@@ -251,6 +251,13 @@ public class PreferencesUtils {
         PreferencesUtils.setBoolean(context, R.string.recording_track_paused_key, RECORDING_TRACK_PAUSED);
     }
 
+    public static boolean isBluetoothHeartRateSensorAddressDefault(Context context) {
+        return PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT.equals(getBluetoothHeartRateSensorAddress(context));
+    }
+
+    public static String getBluetoothHeartRateSensorAddress(Context context) {
+        return PreferencesUtils.getString(context, R.string.settings_sensor_bluetooth_heart_rate_key, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT);
+    }
 
     public static boolean isChartByDistance(Context context) {
         final String CHART_X_AXIS_DEFAULT = context.getString(R.string.chart_x_axis_default);

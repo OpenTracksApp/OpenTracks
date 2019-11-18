@@ -86,7 +86,7 @@ public class BluetoothRemoteSensorManager {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
             if (bluetoothConnectionManager != null && PreferencesUtils.isKey(context, R.string.settings_sensor_bluetooth_heart_rate_key, key)) {
-                String address = PreferencesUtils.getString(context, R.string.settings_sensor_bluetooth_heart_rate_key, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT);
+                String address = PreferencesUtils.getBluetoothHeartRateSensorAddress(context);
                 if (address.equals(PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT)) {
                     stop();
                     return;
@@ -145,7 +145,8 @@ public class BluetoothRemoteSensorManager {
             return;
         }
 
-        String address = PreferencesUtils.getString(context, R.string.settings_sensor_bluetooth_heart_rate_key, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT);
+//        String address = PreferencesUtils.getString(context, R.string.settings_sensor_bluetooth_heart_rate_key, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT);
+        String address = PreferencesUtils.getBluetoothHeartRateSensorAddress(context);
         if (PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT.equals(address)) {
             Log.w(TAG, "No bluetooth address.");
             return;
