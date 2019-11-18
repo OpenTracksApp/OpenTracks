@@ -129,11 +129,11 @@ limitations under the License.
             android:title="@string/settings_recording_default_activity_title" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/settings_sensor">
+    <PreferenceCategory android:title="@string/settings_sensor_bluetooth">
         <de.dennisguse.opentracks.settings.BluetoothLeListPreference
             android:defaultValue="@string/sensor_type_value_none"
-            android:key="@string/settings_sensor_bluetooth_sensor_key"
-            android:title="@string/settings_sensor_bluetooth_sensor" />
+            android:key="@string/settings_sensor_bluetooth_heart_rate_key"
+            android:title="@string/sensor_state_heart_rate" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/generic_tracks">

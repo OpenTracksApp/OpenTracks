@@ -157,7 +157,7 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
 
         private void updateBluetooth() {
             // Disable Bluetooth preference if device does not have Bluetooth
-            BluetoothLeListPreference bluetoothPreference = findPreference(getString(R.string.settings_sensor_bluetooth_sensor_key));
+            BluetoothLeListPreference bluetoothPreference = findPreference(getString(R.string.settings_sensor_bluetooth_heart_rate_key));
             bluetoothPreference.setVisible(BluetoothUtils.hasBluetooth(TAG));
         }
 
