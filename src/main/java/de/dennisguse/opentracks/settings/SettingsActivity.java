@@ -73,7 +73,7 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
                         }
                     });
                 }
-                if (PreferencesUtils.isKey(getActivity(), R.string.chart_show_speed_key, key)) {
+                if (PreferencesUtils.isKey(getActivity(), R.string.stats_rate_key, key)) {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -98,13 +98,14 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
 
                 setPreferencesFromResource(R.xml.settings, rootKey);
             }
-            updateUnits();
         }
 
         @Override
         public void onResume() {
             super.onResume();
             PreferencesUtils.getSharedPreferences(getActivity()).registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+            updateSpeed();
+            updateUnits();
             updateReset();
             updateBluetooth();
         }
