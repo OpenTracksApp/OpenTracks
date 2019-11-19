@@ -1,0 +1,8 @@
+v3.2.6: OpenTracks
+
+Changes:
+- Heart rate monitor: scan for available devices
+- Remove shortcut to Bluetooth settings
+
+Developer:
+- Preferences: moved default of preferences from code to xml
