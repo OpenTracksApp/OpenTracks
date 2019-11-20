@@ -17,10 +17,11 @@
 package de.dennisguse.opentracks;
 
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import de.dennisguse.opentracks.util.TTSUtils;
 
 /**
  * @author Jimmy Shih
@@ -32,7 +33,7 @@ public abstract class AbstractActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // Set volume control stream for text to speech
-        setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
+        setVolumeControlStream(TTSUtils.getTTSStream());
 
         setContentView(getLayoutResId());
 
