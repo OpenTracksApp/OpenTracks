@@ -38,6 +38,95 @@ limitations under the License.
     Libraries
   </string>
 
+  <!-- Help -->
+  <string name="help_feature_title">
+    OpenTracks has the following features:
+  </string>
+  <string name="help_feature_content">
+* Create markers (incl. pictures)\n
+* Heart rate sensor (Bluetooth LE)\n
+* Voice announcements by time or distance\n
+* While recording, show on lock screen\n
+* Share tracks
+  </string>
+
+  <string name="help_data_statistics_customized_title">
+    Can the statistics view be customized?
+  </string>
+  <string name="help_data_statistics_customized_content">
+    Yes, it can be customized in the Settings.
+  </string>
+
+  <string name="help_recording_title">
+    How does OpenTracks record data?
+  </string>
+  <string name="help_recording_content">
+    OpenTracks uses the GPS sensor of the device to record the location continuously.
+  </string>
+
+  <string name="help_gps_imprecise_title">
+    Statistics (e.g., speed) reported by OpenTracks are imprecise?
+  </string>
+  <string name="help_gps_imprecise_content">
+    OpenTracks directly uses the data provided by the GPS of the mobile device.
+    If the GPS device reports inaccurate locations, OpenTracks cannot do anything about it.
+  </string>
+
+  <string name="help_heart_rate_sensors_title">
+    Which heart rate sensors does OpenTracks support?
+  </string>
+  <string name="help_heart_rate_sensors_content">
+    OpenTracks should work with any Bluetooth LE heart sensor that support streaming the data in real-time.
+    Smartwatches that store the heart rate data are not supported.
+  </string>
+
+  <string name="help_track_map_title">
+    How to show a track on a map?
+  </string>
+  <string name="help_track_map_content">
+    This requires a 3rd party application to be installed that can consume KMZ-encoded geo data.
+    This works well with <a href="http://osmand.net/">OsmAnd~</a> and <a href="https://maps.me/">Maps.ME</a>.
+    In fact, an App needs to support <i>ACTION_VIEW</i> with MIME <i>application/vnd.google-earth.kmz</i>.
+    At the moment, the recorded locations as well as the timestamps are send to an App while pictures and sensor data are not shared.
+  </string>
+
+  <string name="help_storage_pictures_title">
+    How does OpenTracks store pictures that were taken as markers?
+  </string>
+  <string name="help_storage_pictures_content">
+    These are stored directly on the file system.
+  </string>
+
+  <string name="help_track_export_title">
+    How can I export/share recorded tracks?
+  </string>
+  <string name="help_track_export_content">
+    Tracks can be exported from the Settings as KMZ, KML, or GPX.
+    KMZ contains all data incl. images, while KML contains only the sensor data, and GPX only the location.
+    Tracks shared via the <i>share icon</i> are shared as KMZ and any App can be used to send the data.
+  </string>
+
+  <string name="help_data_upload_title">
+    Can OpenTracks upload the data automatically?
+  </string>
+
+  <string name="help_data_google_play_services_title">
+    Does OpenTracks require/use Google Play Service?
+  </string>
+
+  <string name="help_data_online_title">
+    Does OpenTracks use online services?
+  </string>
+
+  <string name="help_data_storage_title">
+    How does OpenTracks store sensor data?
+  </string>
+  <string name="help_data_storage_content">
+    OpenTracks stores sensor data per recorded location.
+    In terms of a heart rate sensor this means that only <i>one</i> heart rate measurement is stored per location.
+    If you are standing still or are indoors, no sensor data will be recorded (but it will be shown).
+  </string>
+
   <!-- Activity Type -->
     <string name="activity_type_airplane" translation_description="When entering an 'Activity type', in the auto-complete text box, the
       completion suggestion for airplane.">

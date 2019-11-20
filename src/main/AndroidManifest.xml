@@ -33,6 +33,10 @@ limitations under the License.
         <activity android:name=".DeleteActivity" />
 
         <activity
+            android:name=".HelpActivity"
+            android:label="@string/menu_help" />
+
+        <activity
             android:name=".io.file.importer.ImportActivity"
             android:theme="@style/ThemeCustomTransparent">
             <intent-filter>
@@ -50,9 +54,9 @@ limitations under the License.
             </intent-filter>
         </activity>
 
-        <activity android:name=".MarkerEditActivity" />
-
         <activity android:name=".MarkerDetailActivity" />
+
+        <activity android:name=".MarkerEditActivity" />
 
         <activity
             android:name=".MarkerListActivity"
