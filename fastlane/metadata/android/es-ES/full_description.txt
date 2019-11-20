@@ -1,0 +1,8 @@
+OpenTracks es un tracker deportivo que respeta tu privacidad.
+
+Funciones:
+* Tracker deportivo: haz un seguimiento de tus actividades al aire libre
+* Marca lugares de interés, incluso agrega fotos a los marcadores
+* Pulsómetro (compatible con dispositivos Bluetooth LE)
+* Exporta tus rutas como KML o GPX
+* Completamente offline, no necesitas internet

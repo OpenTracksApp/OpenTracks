@@ -1,4 +1,4 @@
-Open Tracks – ein GPS-Tracker, der deine Daten für sich behält.
+OpenTracks – ein GPS-Tracker, der deine Daten für sich behält.
 Erfasst deine Kilometer, ohne dass es jemand anderes tut.
 
 Funktionen & Features:
