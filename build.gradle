@@ -74,6 +74,11 @@ android {
         release {
             minifyEnabled false
         }
+
+        releasePlayStore {
+            applicationIdSuffix ".playstore"
+            versionNameSuffix "-PlayStore"
+        }
     }
 
     applicationVariants.all { variant ->

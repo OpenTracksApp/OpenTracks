@@ -1,6 +1,6 @@
-# OpenTrack: Developer information
+# OpenTracks: Developer information
 
-## Create releases for FDroid
+## Craft new releases
 
 1. Get next _version code_ (master branch): `git rev-list HEAD --count master`
 2. Decide on _version name_ (semantic versioning)
@@ -9,7 +9,27 @@
 5. Create commit with all changes
 6. Tag newly create commit with _version name_ (e.g., v3.2.1)
 7. Push commits and tags to public repository
-8. Add changelog to tag (Github releases)  
+8. Add changelog to tag (Github releases)
+
+## F-Droid
+Application id: de.dennisguse.opentracks
+
+It if it properly tagged F-Droid takes care of building the app and publishing.
+Usually, it takes two days before the update is published (build, signed, and published). 
+
+The recent build activity can be found [here](https://f-droid.org/wiki/index.php?title=Special:RecentChanges&days=7&from=&hidebots=0&hideanons=1&hideliu=1&limit=500)
+
+## Google Play Store
+Application id: de.dennisguse.opentracks.playstore
+
+Requirement: `gem install fastlane`
+
+1. Update store meta data (e.g., description and screenshots)
+   `fastlane supply --version_code $(git rev-list HEAD --count master) --skip_upload_apk`
+   (requires API key)
+2. Build signed apk
+   (requires keystore)
+3. Upload signed apk to [Google Play Console](https://play.google.com/apps/publish)
 
 ## Translations (localization)
 
