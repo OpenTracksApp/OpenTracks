@@ -33,10 +33,6 @@ public class LocationManagerConnector {
     private final Handler handler;
     private final LocationManager locationManager;
 
-    private LocationListener requestLocationUpdates;
-    private float requestLocationUpdatesDistance;
-    private long requestLocationUpdatesTime;
-
     public LocationManagerConnector(Context context, Looper looper) {
         this.handler = new Handler(looper);
 
@@ -55,10 +51,7 @@ public class LocationManagerConnector {
             @Override
             @SuppressLint("MissingPermission")
             public void run() {
-                requestLocationUpdatesTime = minTime;
-                requestLocationUpdatesDistance = minDistance;
-                requestLocationUpdates = locationListener;
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, requestLocationUpdatesTime, requestLocationUpdatesDistance, locationListener);
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, minDistance, locationListener);
             }
         });
     }
@@ -70,6 +63,5 @@ public class LocationManagerConnector {
      */
     public void removeLocationUpdates(final LocationListener locationListener) {
         locationManager.removeUpdates(locationListener);
-        requestLocationUpdates = null;
     }
 }

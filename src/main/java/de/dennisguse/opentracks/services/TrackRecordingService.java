@@ -80,13 +80,13 @@ import de.dennisguse.opentracks.util.UnitConversions;
 public class TrackRecordingService extends Service {
 
     // The name of extra intent property to indicate whether we want to resume a previously recorded track.
-    public static final String RESUME_TRACK_EXTRA_NAME = "de.dennisguse.opentracks.RESUME_TRACK";
+    public static final String RESUME_TRACK_EXTRA_NAME = "RESUME_TRACK";
+    private static final int NOTIFICATION_ID = 123;
 
     public static final double PAUSE_LATITUDE = 100.0;
     public static final double RESUME_LATITUDE = 200.0;
 
     // Anything faster than that (in meters per second) will be considered moving.
-
     public static final double MAX_NO_MOVEMENT_SPEED = 0.224;
     @VisibleForTesting
     static final int MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS = 3;
@@ -423,7 +423,7 @@ public class TrackRecordingService extends Service {
                 .setSmallIcon(R.drawable.ic_logo_color_24dp)
                 .setCategory(Notification.CATEGORY_SERVICE)
                 .setWhen(System.currentTimeMillis());
-        startForeground(1, builder.build());
+        startForeground(NOTIFICATION_ID, builder.build());
     }
 
     /**
