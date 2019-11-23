@@ -1515,6 +1515,9 @@ limitations under the License.
       informing the user that OpenTracks is actively recording his track.">
     Recording your track&#8230;
   </string>
+  <string name="track_recording_notification_accuracy">
+      Location accuracy: %1$s
+  </string>
     <string name="track_markers" translation_description="Title indicating a particular track's markers.
 
       %1$s track name. E.g., 'Grand Canyon trail'.">

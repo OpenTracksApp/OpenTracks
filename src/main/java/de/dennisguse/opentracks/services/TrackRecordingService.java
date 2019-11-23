@@ -16,9 +16,6 @@
 
 package de.dennisguse.opentracks.services;
 
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
@@ -30,7 +27,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -38,7 +34,6 @@ import android.os.PowerManager.WakeLock;
 import android.util.Log;
 
 import androidx.annotation.VisibleForTesting;
-import androidx.core.app.NotificationCompat;
 import androidx.core.app.TaskStackBuilder;
 
 import java.util.concurrent.ExecutorService;
@@ -102,6 +97,7 @@ public class TrackRecordingService extends Service {
     private PeriodicTaskExecutor voiceExecutor;
     private PeriodicTaskExecutor splitExecutor;
     private SharedPreferences sharedPreferences;
+    private TrackRecordingServiceNotificationManager notificationManager;
     private long recordingTrackId;
     private boolean recordingTrackPaused;
     private LocationListenerPolicy locationListenerPolicy;
@@ -226,6 +222,7 @@ public class TrackRecordingService extends Service {
         splitExecutor = new PeriodicTaskExecutor(this, new SplitPeriodicTaskFactory());
         sharedPreferences = PreferencesUtils.getSharedPreferences(this);
         sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+        notificationManager = new TrackRecordingServiceNotificationManager(context);
 
         // onSharedPreferenceChanged might not set recordingTrackId.
         recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
@@ -267,7 +264,7 @@ public class TrackRecordingService extends Service {
         }
 
         // Reverse order from onCreate
-        showNotification(false);
+        showNotification(false); //TODO Why?
 
         handler.removeCallbacks(registerLocationRunnable);
         unregisterLocationListener();
@@ -398,40 +395,6 @@ public class TrackRecordingService extends Service {
         Waypoint waypoint = new Waypoint(name, description, category, icon, recordingTrackId, waypointType, length, duration, -1L, -1L, location, tripStatistics, photoUrl);
         Uri uri = contentProviderUtils.insertWaypoint(waypoint);
         return Long.parseLong(uri.getLastPathSegment());
-    }
-
-    /**
-     * Starts the service as a foreground service.
-     *
-     * @param pendingIntent the notification pending intent
-     * @param messageId     the notification message id
-     */
-    @VisibleForTesting
-    protected void startForegroundService(PendingIntent pendingIntent, int messageId) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel notificationChannel = new NotificationChannel(getString(R.string.app_name), getString(R.string.app_name), NotificationManager.IMPORTANCE_DEFAULT);
-            NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            if (manager != null) {
-                manager.createNotificationChannel(notificationChannel);
-            }
-        }
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, getString(R.string.app_name))
-                .setContentIntent(pendingIntent)
-                .setContentText(getString(messageId))
-                .setContentTitle(getString(R.string.app_name))
-                .setOngoing(true)
-                .setSmallIcon(R.drawable.ic_logo_color_24dp)
-                .setCategory(Notification.CATEGORY_SERVICE)
-                .setWhen(System.currentTimeMillis());
-        startForeground(NOTIFICATION_ID, builder.build());
-    }
-
-    /**
-     * Stops the service as a foreground service.
-     */
-    @VisibleForTesting
-    protected void stopForegroundService() {
-        stopForeground(true);
     }
 
     /**
@@ -677,6 +640,8 @@ public class TrackRecordingService extends Service {
         }
 
         endRecording(false, recordingTrackId);
+
+        notificationManager.updateContent(getString(R.string.generic_paused));
     }
 
     /**
@@ -763,6 +728,8 @@ public class TrackRecordingService extends Service {
                 return;
             }
 
+            notificationManager.updateLocation(this, location, recordingGpsAccuracy);
+
             if (!location.hasAccuracy() || location.getAccuracy() >= recordingGpsAccuracy) {
                 Log.d(TAG, "Ignore onLocationChangedAsync. Poor accuracy.");
                 return;
@@ -798,10 +765,7 @@ public class TrackRecordingService extends Service {
             }
 
             if (!LocationUtils.isValidLocation(lastValidTrackPoint)) {
-                /*
-                 * Should not happen. The current segment should have a location. Just
-                 * insert the current location.
-                 */
+                // Should not happen. The current segment should have a location. Just insert the current location.
                 insertLocation(track, location, null);
                 lastLocation = location;
                 return;
@@ -948,35 +912,36 @@ public class TrackRecordingService extends Service {
         }
     }
 
-    /**
-     * Shows the notification.
-     *
-     * @param isGpsStarted true if GPS is started
-     */
     private void showNotification(boolean isGpsStarted) {
-        if (isRecording()) {
-            if (isPaused()) {
-                stopForegroundService();
-            } else {
-                Intent intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
-                        .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, recordingTrackId);
-                PendingIntent pendingIntent = TaskStackBuilder.create(this)
-                        .addParentStack(TrackDetailActivity.class).addNextIntent(intent)
-                        .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-                startForegroundService(pendingIntent, R.string.track_record_notification);
-            }
-        } else {
-            // Not recording
-            if (isGpsStarted) {
-                Intent intent = IntentUtils.newIntent(this, TrackListActivity.class);
-                PendingIntent pendingIntent = TaskStackBuilder.create(this)
-                        .addNextIntent(intent).getPendingIntent(0, 0);
-                startForegroundService(pendingIntent, R.string.gps_starting);
-            } else {
-                stopForegroundService();
-            }
+        if ((isRecording() && isPaused()) || (!isRecording() && !isGpsStarted)) {
+            stopForeground(true);
+        }
+
+        if (isRecording() && !isPaused()) {
+            Intent intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
+                    .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, recordingTrackId);
+            PendingIntent pendingIntent = TaskStackBuilder.create(this)
+                    .addParentStack(TrackDetailActivity.class)
+                    .addNextIntent(intent)
+                    .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            notificationManager.updatePendingIntent(pendingIntent);
+            notificationManager.updateContent(getString(R.string.gps_starting));
+            startForeground(NOTIFICATION_ID, notificationManager.getNotification());
+        }
+        if (!isRecording() && isGpsStarted) {
+            Intent intent = IntentUtils.newIntent(this, TrackListActivity.class);
+            PendingIntent pendingIntent = TaskStackBuilder.create(this)
+                    .addNextIntent(intent)
+                    .getPendingIntent(0, 0);
+
+            notificationManager.updatePendingIntent(pendingIntent);
+            notificationManager.updateContent(getString(R.string.gps_starting));
+
+            startForeground(NOTIFICATION_ID, notificationManager.getNotification());
         }
     }
+
 
     /**
      * TODO: There is a bug in Android that leaks Binder instances. This bug is

@@ -157,7 +157,7 @@ public class LocationUtils {
     }
 
     /**
-     * Checks if a given location is a valid (i.e. physically possible) locationon Earth.
+     * Checks if a given location is a valid (i.e. physically possible) location on Earth.
      * Note: The special separator locations (which have latitude = 100) will not qualify as valid.
      * Neither will locations with lat=0 and lng=0 as these are most likely "bad" measurements which often cause trouble.
      *
