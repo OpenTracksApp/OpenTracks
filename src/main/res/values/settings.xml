@@ -114,19 +114,6 @@
         <item>@string/auto_resume_track_timeout_always</item>
     </string-array>
 
-    <string name="chart_x_axis_key" translatable="false">chartXAxis</string>
-    <string name="chart_x_axis_default" translatable="false">@string/chart_x_axis_distance</string>
-    <string-array name="chart_x_axis_values">
-        <item>@string/chart_x_axis_distance</item>
-        <item>@string/chart_x_axis_time</item>
-    </string-array>
-    <string name="chart_x_axis_time" translatable="false">TIME</string>
-    <string name="chart_x_axis_distance" translatable="false">DISTANCE</string>
-    <string-array name="chart_x_axis_options">
-        <item>@string/settings_chart_by_distance</item>
-        <item>@string/settings_chart_by_time</item>
-    </string-array>
-
     <string name="split_frequency_key" translatable="false">splitFrequency</string>
     <string name="split_frequency_default" translatable="false">@string/frequency_off</string>
     <string name="voice_frequency_key" translatable="false">voiceFrequency</string>

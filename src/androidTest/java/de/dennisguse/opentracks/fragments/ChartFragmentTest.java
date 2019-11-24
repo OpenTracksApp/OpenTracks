@@ -46,8 +46,10 @@ public class ChartFragmentTest {
 
     @Before
     public void setUp() {
-        chartFragment = new ChartFragment();
-        chartFragment.setChartView(new ChartView(ApplicationProvider.getApplicationContext()));
+        boolean chartByDistance = false;
+        chartFragment = new ChartFragment(chartByDistance) {
+        };
+        chartFragment.setChartView(new ChartView(ApplicationProvider.getApplicationContext(), chartByDistance));
         chartFragment.setTripStatisticsUpdater(TrackStubUtils.INITIAL_TIME);
     }
 

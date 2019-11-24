@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- This file contains old and now unused settings. -->
+    <!-- It is recommended not to reuse the keys. -->
+
+    <string name="chart_x_axis_key" translatable="false">chartXAxis</string>
+    <string name="chart_x_axis_default" translatable="false">@string/chart_x_axis_distance</string>
+    <string-array name="chart_x_axis_values">
+        <item>@string/chart_x_axis_distance</item>
+        <item>@string/chart_x_axis_time</item>
+    </string-array>
+    <string name="chart_x_axis_time" translatable="false">TIME</string>
+    <string name="chart_x_axis_distance" translatable="false">DISTANCE</string>
+    <string-array name="chart_x_axis_options">
+        <item>@string/settings_chart_by_distance</item>
+        <item>@string/settings_chart_by_time</item>
+    </string-array>
+</resources>

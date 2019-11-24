@@ -259,11 +259,6 @@ public class PreferencesUtils {
         return PreferencesUtils.getString(context, R.string.settings_sensor_bluetooth_heart_rate_key, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT);
     }
 
-    public static boolean isChartByDistance(Context context) {
-        final String CHART_X_AXIS_DEFAULT = context.getString(R.string.chart_x_axis_default);
-        return CHART_X_AXIS_DEFAULT.equals(getString(context, R.string.chart_x_axis_key, CHART_X_AXIS_DEFAULT));
-    }
-
     public static boolean shouldChartShowCadence(Context context) {
         final boolean CHART_SHOW_CADENCE = context.getResources().getBoolean(R.bool.chart_show_cadence_default);
         return PreferencesUtils.getBoolean(context, R.string.chart_show_cadence_key, CHART_SHOW_CADENCE);

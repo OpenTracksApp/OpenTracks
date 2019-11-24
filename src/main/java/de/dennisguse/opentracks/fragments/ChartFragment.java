@@ -25,6 +25,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.ZoomControls;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -54,9 +55,9 @@ import de.dennisguse.opentracks.util.UnitConversions;
  * @author Sandor Dornbush
  * @author Rodrigo Damazio
  */
-public class ChartFragment extends Fragment implements TrackDataListener {
+public abstract class ChartFragment extends Fragment implements TrackDataListener {
 
-    public static final String CHART_FRAGMENT_TAG = "chartFragment";
+    private static final String STATE_CHART_VIEW_BY_DISTANCE_KEY = "chartViewByDistance";
 
     private final ArrayList<double[]> pendingPoints = new ArrayList<>();
 
@@ -71,7 +72,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     private int recordingDistanceInterval;
 
     // Modes of operation
-    private boolean chartByDistance = true;
+    private boolean chartByDistance;
     private boolean[] chartShow = new boolean[]{true, true, true, true, true, true};
 
     // UI elements
@@ -95,16 +96,18 @@ public class ChartFragment extends Fragment implements TrackDataListener {
         }
     };
 
+    public ChartFragment(boolean chartByDistance) {
+        this.chartByDistance = chartByDistance;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         recordingDistanceInterval = PreferencesUtils.getRecordingDistanceIntervalDefault(getContext());
 
-        /*
-         * Create a chartView here to store data thus won't need to reload all the data on every onStart or onResume.
-         */
-        chartView = new ChartView(getActivity());
+        // Create a chartView here to store data thus won't need to reload all the data on every onStart or onResume.
+        chartView = new ChartView(getActivity(), chartByDistance);
     }
 
     @Override
@@ -129,7 +132,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     @Override
     public void onStart() {
         super.onStart();
-        ViewGroup layout = getActivity().findViewById(R.id.chart_view_layout);
+        ViewGroup layout = getView().findViewById(R.id.chart_view_layout);
         LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         layout.addView(chartView, layoutParams);
     }
@@ -151,8 +154,22 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     @Override
     public void onStop() {
         super.onStop();
-        ViewGroup layout = getActivity().findViewById(R.id.chart_view_layout);
+        ViewGroup layout = getView().findViewById(R.id.chart_view_layout);
         layout.removeView(chartView);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(STATE_CHART_VIEW_BY_DISTANCE_KEY, chartByDistance);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null) {
+            chartByDistance = savedInstanceState.getBoolean(STATE_CHART_VIEW_BY_DISTANCE_KEY);
+        }
     }
 
     @Override
@@ -304,12 +321,6 @@ public class ChartFragment extends Fragment implements TrackDataListener {
      */
     private void checkChartSettings() {
         boolean needUpdate = false;
-        if (chartByDistance != PreferencesUtils.isChartByDistance(getActivity())) {
-            chartByDistance = !chartByDistance;
-            chartView.setChartByDistance(chartByDistance);
-            reloadTrackDataHub();
-            needUpdate = true;
-        }
         if (setSeriesEnabled(ChartView.ELEVATION_SERIES, PreferencesUtils.shouldChartShowElevation(getActivity()))) {
             needUpdate = true;
         }

@@ -45,7 +45,8 @@ import de.dennisguse.opentracks.content.TrackDataHub;
 import de.dennisguse.opentracks.content.Waypoint;
 import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 import de.dennisguse.opentracks.content.WaypointCreationRequest;
-import de.dennisguse.opentracks.fragments.ChartFragment;
+import de.dennisguse.opentracks.fragments.ChartDistanceFragment;
+import de.dennisguse.opentracks.fragments.ChartTimeFragment;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.fragments.StatsFragment;
@@ -205,8 +206,11 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
         TabSpec statsTabSpec = tabHost.newTabSpec(StatsFragment.STATS_FRAGMENT_TAG).setIndicator(getString(R.string.track_detail_stats_tab));
         tabsAdapter.addTab(statsTabSpec, StatsFragment.class, null);
 
-        TabSpec chartTabSpec = tabHost.newTabSpec(ChartFragment.CHART_FRAGMENT_TAG).setIndicator(getString(R.string.track_detail_chart_tab));
-        tabsAdapter.addTab(chartTabSpec, ChartFragment.class, null);
+        TabSpec chartTimeTabSpec = tabHost.newTabSpec(ChartTimeFragment.CHART_FRAGMENT_TAG).setIndicator(getString(R.string.settings_chart_by_time));
+        tabsAdapter.addTab(chartTimeTabSpec, ChartTimeFragment.class, null);
+
+        TabSpec chartDistanceTabSpec = tabHost.newTabSpec(ChartDistanceFragment.CHART_FRAGMENT_TAG).setIndicator(getString(R.string.settings_chart_by_distance));
+        tabsAdapter.addTab(chartDistanceTabSpec, ChartDistanceFragment.class, null);
 
         if (savedInstanceState != null) {
             tabHost.setCurrentTabByTag(savedInstanceState.getString(CURRENT_TAB_TAG_KEY));

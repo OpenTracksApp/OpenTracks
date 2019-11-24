@@ -107,7 +107,7 @@ public class ChartView extends View {
     private int effectiveWidth = 0;
     private int effectiveHeight = 0;
 
-    private boolean chartByDistance = true;
+    private boolean chartByDistance;
     private boolean metricUnits = true;
     private boolean reportSpeed = true;
     private boolean showPointer = false;
@@ -117,8 +117,9 @@ public class ChartView extends View {
      *
      * @param context the context
      */
-    public ChartView(Context context) {
+    public ChartView(Context context, boolean chartByDistance) {
         super(context);
+        this.chartByDistance = chartByDistance;
 
         series[ELEVATION_SERIES] = new ChartValueSeries(context,
                 Integer.MIN_VALUE,
