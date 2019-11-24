@@ -90,7 +90,6 @@ public class TrackRecordingService extends Service {
     private static final long ONE_MINUTE = (long) (UnitConversions.MIN_TO_S * UnitConversions.S_TO_MS);
     // The following variables are set in onCreate:
     private ExecutorService executorService;
-    private Context context;
     private ContentProviderUtils contentProviderUtils;
     private Handler handler;
     private LocationManagerConnector locationManagerConnector;
@@ -113,10 +112,11 @@ public class TrackRecordingService extends Service {
     private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-            if (PreferencesUtils.isKey(context, R.string.recording_track_id_key, key)) {
+            Context context = TrackRecordingService.this;
+            if (PreferencesUtils.isKey(TrackRecordingService.this, R.string.recording_track_id_key, key)) {
                 // Only through the TrackRecordingService can one stop a recording and set the recordingTrackId to -1L.
-                if (PreferencesUtils.isRecording(context)) {
-                    recordingTrackId = PreferencesUtils.getRecordingTrackId(context);
+                if (PreferencesUtils.isRecording(TrackRecordingService.this)) {
+                    recordingTrackId = PreferencesUtils.getRecordingTrackId(TrackRecordingService.this);
                 }
             }
             if (PreferencesUtils.isKey(context, R.string.recording_track_paused_key, key)) {
@@ -214,7 +214,6 @@ public class TrackRecordingService extends Service {
     public void onCreate() {
         super.onCreate();
         executorService = Executors.newSingleThreadExecutor();
-        context = this;
         contentProviderUtils = ContentProviderUtils.Factory.get(this);
         handler = new Handler();
         locationManagerConnector = new LocationManagerConnector(this, handler.getLooper());
@@ -222,7 +221,7 @@ public class TrackRecordingService extends Service {
         splitExecutor = new PeriodicTaskExecutor(this, new SplitPeriodicTaskFactory());
         sharedPreferences = PreferencesUtils.getSharedPreferences(this);
         sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-        notificationManager = new TrackRecordingServiceNotificationManager(context);
+        notificationManager = new TrackRecordingServiceNotificationManager(this);
 
         // onSharedPreferenceChanged might not set recordingTrackId.
         recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
@@ -431,12 +430,12 @@ public class TrackRecordingService extends Service {
         }
         PreferencesUtils.incrementAutoResumeTrackCurrentRetryDefault(this);
 
-        if (autoResumeTrackTimeout == Integer.parseInt(context.getResources().getString(R.string.auto_resume_track_timeout_never))) {
+        if (autoResumeTrackTimeout == Integer.parseInt(getResources().getString(R.string.auto_resume_track_timeout_never))) {
             Log.d(TAG, "Not resuming. Auto-resume track timeout set to never.");
             return false;
         }
 
-        if (autoResumeTrackTimeout == Integer.parseInt(context.getResources().getString(R.string.auto_resume_track_timeout_always))) {
+        if (autoResumeTrackTimeout == Integer.parseInt(getResources().getString(R.string.auto_resume_track_timeout_always))) {
             Log.d(TAG, "Resuming. Auto-resume track timeout set to always.");
             return true;
         }
@@ -941,7 +940,6 @@ public class TrackRecordingService extends Service {
             startForeground(NOTIFICATION_ID, notificationManager.getNotification());
         }
     }
-
 
     /**
      * TODO: There is a bug in Android that leaks Binder instances. This bug is
