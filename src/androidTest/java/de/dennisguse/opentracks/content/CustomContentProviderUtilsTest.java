@@ -35,21 +35,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import de.dennisguse.opentracks.content.ContentProviderUtils.LocationFactory;
-import de.dennisguse.opentracks.content.ContentProviderUtils.LocationIterator;
 import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 import de.dennisguse.opentracks.stats.TripStatistics;
 
 import static org.mockito.Mockito.when;
 
 /**
- * A unit test for {@link ContentProviderUtilsImpl}.
+ * A unit test for {@link ContentProviderUtils}.
  *
  * @author Bartlomiej Niechwiej
  * @author Youtao Liu
  */
 @RunWith(MockitoJUnitRunner.class)
-public class CustomContentProviderUtilsImplTest {
+public class CustomContentProviderUtilsTest {
     private static final String NAME_PREFIX = "test name";
     private static final String MOCK_DESC = "Mock Next Waypoint Desc!";
     private static final String TEST_DESC = "Test Desc!";
@@ -69,13 +67,13 @@ public class CustomContentProviderUtilsImplTest {
 
     @Before
     public void setUp() {
-        providerUtils = ContentProviderUtils.Factory.get(context);
+        providerUtils = new ContentProviderUtils(context);
         providerUtils.deleteAllTracks(context);
     }
 
     @Test
     public void testLocationIterator_noPoints() {
-        testIterator(1, 0, 1, false, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
+        testIterator(1, 0, 1, false, LocationFactory.DEFAULT_LOCATION_FACTORY);
     }
 
     @Test
@@ -105,36 +103,36 @@ public class CustomContentProviderUtilsImplTest {
 
     @Test
     public void testLocationIterator_noBatchAscending() {
-        testIterator(1, 50, 100, false, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
-        testIterator(2, 50, 50, false, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
+        testIterator(1, 50, 100, false, LocationFactory.DEFAULT_LOCATION_FACTORY);
+        testIterator(2, 50, 50, false, LocationFactory.DEFAULT_LOCATION_FACTORY);
     }
 
     @Test
     public void testLocationIterator_noBatchDescending() {
-        testIterator(1, 50, 100, true, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
-        testIterator(2, 50, 50, true, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
+        testIterator(1, 50, 100, true, LocationFactory.DEFAULT_LOCATION_FACTORY);
+        testIterator(2, 50, 50, true, LocationFactory.DEFAULT_LOCATION_FACTORY);
     }
 
     @Test
     public void testLocationIterator_batchAscending() {
-        testIterator(1, 50, 11, false, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
-        testIterator(2, 50, 25, false, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
+        testIterator(1, 50, 11, false, LocationFactory.DEFAULT_LOCATION_FACTORY);
+        testIterator(2, 50, 25, false, LocationFactory.DEFAULT_LOCATION_FACTORY);
     }
 
     @Test
     public void testLocationIterator_batchDescending() {
-        testIterator(1, 50, 11, true, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
-        testIterator(2, 50, 25, true, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
+        testIterator(1, 50, 11, true, LocationFactory.DEFAULT_LOCATION_FACTORY);
+        testIterator(2, 50, 25, true, LocationFactory.DEFAULT_LOCATION_FACTORY);
     }
 
     @Test
     public void testLocationIterator_largeTrack() {
-        testIterator(1, 20000, 2000, false, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
+        testIterator(1, 20000, 2000, false, LocationFactory.DEFAULT_LOCATION_FACTORY);
     }
 
     private List<Location> testIterator(long trackId, int numPoints, int batchSize, boolean descending, LocationFactory locationFactory) {
         long lastPointId = initializeTrack(trackId, numPoints);
-        ((ContentProviderUtilsImpl) providerUtils).setDefaultCursorBatchSize(batchSize);
+        ((ContentProviderUtils) providerUtils).setDefaultCursorBatchSize(batchSize);
         List<Location> locations = new ArrayList<Location>(numPoints);
         try (LocationIterator it = providerUtils.getTrackPointLocationIterator(trackId, -1L, descending, locationFactory)) {
             while (it.hasNext()) {
@@ -173,7 +171,7 @@ public class CustomContentProviderUtilsImplTest {
         // Load all inserted locations.
         long lastPointId = -1;
         int counter = 0;
-        try (LocationIterator it = providerUtils.getTrackPointLocationIterator(id, -1L, false, ContentProviderUtils.DEFAULT_LOCATION_FACTORY)) {
+        try (LocationIterator it = providerUtils.getTrackPointLocationIterator(id, -1L, false, LocationFactory.DEFAULT_LOCATION_FACTORY)) {
             while (it.hasNext()) {
                 it.next();
                 lastPointId = it.getLocationId();
@@ -189,7 +187,7 @@ public class CustomContentProviderUtilsImplTest {
     }
 
     /**
-     * Tests the method {@link ContentProviderUtilsImpl#createTrack(Cursor)}.
+     * Tests the method {@link ContentProviderUtils#createTrack(Cursor)}.
      */
     @Test
     public void testCreateTrack() {
@@ -216,7 +214,7 @@ public class CustomContentProviderUtilsImplTest {
     }
 
     /**
-     * Tests the method {@link ContentProviderUtilsImpl#deleteAllTracks(Context)}
+     * Tests the method {@link ContentProviderUtils#deleteAllTracks(Context)}
      */
     @Test
     public void testDeleteAllTracks() {
@@ -245,7 +243,7 @@ public class CustomContentProviderUtilsImplTest {
     }
 
     /**
-     * Tests the method {@link ContentProviderUtilsImpl#deleteTrack(Context, long)}.
+     * Tests the method {@link ContentProviderUtils#deleteTrack(Context, long)}.
      */
     @Test
     public void testDeleteTrack() {
@@ -280,7 +278,7 @@ public class CustomContentProviderUtilsImplTest {
     }
 
     /**
-     * Tests the method {@link ContentProviderUtilsImpl#getAllTracks()}
+     * Tests the method {@link ContentProviderUtils#getAllTracks()}
      */
     @Test
     public void testGetAllTracks() {
@@ -293,7 +291,7 @@ public class CustomContentProviderUtilsImplTest {
     }
 
     /**
-     * Tests the method {@link ContentProviderUtilsImpl#getLastTrack()}
+     * Tests the method {@link ContentProviderUtils#getLastTrack()}
      */
     @Test
     public void testGetLastTrack() {
@@ -303,7 +301,7 @@ public class CustomContentProviderUtilsImplTest {
     }
 
     /**
-     * Tests the method {@link ContentProviderUtilsImpl#getTrack(long)}
+     * Tests the method {@link ContentProviderUtils#getTrack(long)}
      */
     @Test
     public void testGetTrack() {
@@ -313,7 +311,7 @@ public class CustomContentProviderUtilsImplTest {
     }
 
     /**
-     * Tests the method {@link ContentProviderUtilsImpl#updateTrack(Track)}
+     * Tests the method {@link ContentProviderUtils#updateTrack(Track)}
      */
     @Test
     public void testUpdateTrack() {
@@ -330,7 +328,7 @@ public class CustomContentProviderUtilsImplTest {
     }
 
     /**
-     * Tests the method {@link ContentProviderUtilsImpl#createContentValues(Waypoint)}.
+     * Tests the method {@link ContentProviderUtils#createContentValues(Waypoint)}.
      */
     @Test
     public void testCreateContentValues_waypoint() {
@@ -368,7 +366,7 @@ public class CustomContentProviderUtilsImplTest {
         waypoint.setLocation(location);
         providerUtils.insertWaypoint(waypoint);
 
-        ContentProviderUtilsImpl contentProviderUtils = new ContentProviderUtilsImpl(contentResolverMock);
+        ContentProviderUtils contentProviderUtils = new ContentProviderUtils(contentResolverMock);
 
         long waypointId = System.currentTimeMillis();
         waypoint.setId(waypointId);
@@ -381,7 +379,7 @@ public class CustomContentProviderUtilsImplTest {
     }
 
     /**
-     * Tests the method {@link ContentProviderUtilsImpl#createWaypoint(Cursor)}.
+     * Tests the method {@link ContentProviderUtils#createWaypoint(Cursor)}.
      */
     @Test
     public void testCreateWaypoint() {
@@ -416,7 +414,7 @@ public class CustomContentProviderUtilsImplTest {
 
     /**
      * Tests the method
-     * {@link ContentProviderUtilsImpl#deleteWaypoint(Context, long, DescriptionGenerator)}
+     * {@link ContentProviderUtils#deleteWaypoint(Context, long, DescriptionGenerator)}
      * when there is only one waypoint in the track.
      */
     @Test
@@ -437,7 +435,7 @@ public class CustomContentProviderUtilsImplTest {
 
             @Override
             public String generateWaypointDescription(TripStatistics tripStatistics) {
-                return CustomContentProviderUtilsImplTest.MOCK_DESC;
+                return CustomContentProviderUtilsTest.MOCK_DESC;
             }
 
             @Override
@@ -452,7 +450,7 @@ public class CustomContentProviderUtilsImplTest {
 
     /**
      * Tests the method
-     * {@link ContentProviderUtilsImpl#deleteWaypoint(Context, long, DescriptionGenerator)}
+     * {@link ContentProviderUtils#deleteWaypoint(Context, long, DescriptionGenerator)}
      * when there is more than one waypoint in the track.
      */
     @Test
@@ -495,7 +493,7 @@ public class CustomContentProviderUtilsImplTest {
         DescriptionGenerator descriptionGenerator = new DescriptionGenerator() {
             @Override
             public String generateWaypointDescription(TripStatistics tripStatistics) {
-                return CustomContentProviderUtilsImplTest.MOCK_DESC;
+                return CustomContentProviderUtilsTest.MOCK_DESC;
             }
 
             @Override
@@ -508,12 +506,12 @@ public class CustomContentProviderUtilsImplTest {
         providerUtils.deleteWaypoint(context, waypoint1Id, descriptionGenerator);
         Assert.assertNull(providerUtils.getWaypoint(waypoint1Id));
 
-        Assert.assertEquals(CustomContentProviderUtilsImplTest.MOCK_DESC, providerUtils.getWaypoint(waypoint2Id)
+        Assert.assertEquals(CustomContentProviderUtilsTest.MOCK_DESC, providerUtils.getWaypoint(waypoint2Id)
                 .getDescription());
     }
 
     /**
-     * Tests the method {@link ContentProviderUtilsImpl#getFirstWaypointId(long)}.
+     * Tests the method {@link ContentProviderUtils#getFirstWaypointId(long)}.
      */
     @Test
     public void testGetFirstWaypointId() {
@@ -535,7 +533,7 @@ public class CustomContentProviderUtilsImplTest {
     }
 
     /**
-     * Tests the method {@link ContentProviderUtilsImpl#getNextWaypointNumber(long, WaypointType)}.
+     * Tests the method {@link ContentProviderUtils#getNextWaypointNumber(long, WaypointType)}.
      */
     @Test
     public void testGetNextWaypointNumber() {
@@ -594,8 +592,8 @@ public class CustomContentProviderUtilsImplTest {
     }
 
     /**
-     * Tests the method {@link ContentProviderUtilsImpl#insertWaypoint(Waypoint)} and
-     * {@link ContentProviderUtilsImpl#getWaypoint(long)}.
+     * Tests the method {@link ContentProviderUtils#insertWaypoint(Waypoint)} and
+     * {@link ContentProviderUtils#getWaypoint(long)}.
      */
     @Test
     public void testInsertAndGetWaypoint() {
@@ -612,7 +610,7 @@ public class CustomContentProviderUtilsImplTest {
     }
 
     /**
-     * Tests the method {@link ContentProviderUtilsImpl#updateWaypoint(Waypoint)}.
+     * Tests the method {@link ContentProviderUtils#updateWaypoint(Waypoint)}.
      */
     @Test
     public void testUpdateWaypoint() {
@@ -634,7 +632,7 @@ public class CustomContentProviderUtilsImplTest {
     }
 
     /**
-     * Tests the method {@link ContentProviderUtilsImpl#bulkInsertTrackPoint(Location[], int, long)}.
+     * Tests the method {@link ContentProviderUtils#bulkInsertTrackPoint(Location[], int, long)}.
      */
     @Test
     public void testBulkInsertTrackPoint() {
@@ -650,7 +648,7 @@ public class CustomContentProviderUtilsImplTest {
     }
 
     /**
-     * Tests the method {@link ContentProviderUtilsImpl#createTrackPoint(Cursor)}.
+     * Tests the method {@link ContentProviderUtils#createTrackPoint(Cursor)}.
      */
     @Test
     public void testCreateTrackPoint() {
@@ -710,7 +708,7 @@ public class CustomContentProviderUtilsImplTest {
 
     /**
      * Tests the method
-     * {@link ContentProviderUtilsImpl#insertTrackPoint(Location, long)}.
+     * {@link ContentProviderUtils#insertTrackPoint(Location, long)}.
      */
     @Test
     public void testInsertTrackPoint() {
@@ -724,7 +722,7 @@ public class CustomContentProviderUtilsImplTest {
     }
 
     /**
-     * Tests the method {@link ContentProviderUtilsImpl#getFirstTrackPointId(long)}.
+     * Tests the method {@link ContentProviderUtils#getFirstTrackPointId(long)}.
      */
     @Test
     public void testGetFirstTrackPointId() {
@@ -737,7 +735,7 @@ public class CustomContentProviderUtilsImplTest {
     }
 
     /**
-     * Tests the method {@link ContentProviderUtilsImpl#getLastTrackPointId(long)}.
+     * Tests the method {@link ContentProviderUtils#getLastTrackPointId(long)}.
      */
     @Test
     public void testGetLastTrackPointId() {
@@ -750,7 +748,7 @@ public class CustomContentProviderUtilsImplTest {
     }
 
     /**
-     * Tests the method {@link ContentProviderUtilsImpl#getLastValidTrackPoint(long)}.
+     * Tests the method {@link ContentProviderUtils#getLastValidTrackPoint(long)}.
      */
     @Test
     public void testGetLastValidTrackPoint() {
@@ -764,7 +762,7 @@ public class CustomContentProviderUtilsImplTest {
     }
 
     /**
-     * Tests the method {@link ContentProviderUtilsImpl#getTrackPointCursor(long, long, int, boolean)} in descending.
+     * Tests the method {@link ContentProviderUtils#getTrackPointCursor(long, long, int, boolean)} in descending.
      */
     @Test
     public void testGetTrackPointCursor_desc() {
@@ -783,7 +781,7 @@ public class CustomContentProviderUtilsImplTest {
     }
 
     /**
-     * Tests the method {@link ContentProviderUtilsImpl#getTrackPointCursor(long, long, int, boolean)} in ascending.
+     * Tests the method {@link ContentProviderUtils#getTrackPointCursor(long, long, int, boolean)} in ascending.
      */
     @Test
     public void testGetTrackPointCursor_asc() {
@@ -802,7 +800,7 @@ public class CustomContentProviderUtilsImplTest {
     }
 
     /**
-     * Tests the method {@link ContentProviderUtilsImpl#getTrackPointLocationIterator(long, long, boolean, LocationFactory)} in descending.
+     * Tests the method {@link ContentProviderUtils#getTrackPointLocationIterator(long, long, boolean, LocationFactory)} in descending.
      */
     @Test
     public void testGetTrackPointLocationIterator_desc() {
@@ -818,7 +816,7 @@ public class CustomContentProviderUtilsImplTest {
 
         long startTrackPointId = trackpointIds[9];
 
-        LocationIterator locationIterator = providerUtils.getTrackPointLocationIterator(trackId, startTrackPointId, true, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
+        LocationIterator locationIterator = providerUtils.getTrackPointLocationIterator(trackId, startTrackPointId, true, LocationFactory.DEFAULT_LOCATION_FACTORY);
         for (int i = 0; i < trackpointIds.length; i++) {
             Assert.assertTrue(locationIterator.hasNext());
             Location location = locationIterator.next();
@@ -829,7 +827,7 @@ public class CustomContentProviderUtilsImplTest {
     }
 
     /**
-     * Tests the method {@link ContentProviderUtilsImpl#getTrackPointLocationIterator(long, long, boolean, LocationFactory)} in ascending.
+     * Tests the method {@link ContentProviderUtils#getTrackPointLocationIterator(long, long, boolean, LocationFactory)} in ascending.
      */
     @Test
     public void testGetTrackPointLocationIterator_asc() {
@@ -845,7 +843,7 @@ public class CustomContentProviderUtilsImplTest {
 
         long startTrackPointId = trackpointIds[0];
 
-        LocationIterator locationIterator = providerUtils.getTrackPointLocationIterator(trackId, startTrackPointId, false, ContentProviderUtils.DEFAULT_LOCATION_FACTORY);
+        LocationIterator locationIterator = providerUtils.getTrackPointLocationIterator(trackId, startTrackPointId, false, LocationFactory.DEFAULT_LOCATION_FACTORY);
         for (int i = 0; i < trackpointIds.length; i++) {
             Assert.assertTrue(locationIterator.hasNext());
             Location location = locationIterator.next();
@@ -892,7 +890,7 @@ public class CustomContentProviderUtilsImplTest {
     /**
      * Checks the value of a location.
      *
-     * @param i        the index of this location which created in the method {@link CustomContentProviderUtilsImplTest#getTrack(long, int)}
+     * @param i        the index of this location which created in the method {@link CustomContentProviderUtilsTest#getTrack(long, int)}
      * @param location the location to be checked
      */
     private void checkLocation(int i, Location location) {

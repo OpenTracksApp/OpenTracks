@@ -89,7 +89,7 @@ public class KmlTrackWriter implements TrackWriter {
         this.exportSensorData = exportSensorData;
         this.exportPhotos = exportPhotos;
         this.descriptionGenerator = new DescriptionGeneratorImpl(context);
-        this.contentProviderUtils = ContentProviderUtils.Factory.get(context);
+        this.contentProviderUtils = new ContentProviderUtils(context);
     }
 
     @Override

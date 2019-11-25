@@ -81,7 +81,7 @@ public class DeleteMarkerDialogFragment extends DialogFragment {
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                ContentProviderUtils contentProviderUtils = ContentProviderUtils.Factory.get(fragmentActivity);
+                                ContentProviderUtils contentProviderUtils = new ContentProviderUtils(fragmentActivity);
                                 for (long markerId : markerIds) {
                                     contentProviderUtils.deleteWaypoint(fragmentActivity,
                                             markerId, new DescriptionGeneratorImpl(fragmentActivity));

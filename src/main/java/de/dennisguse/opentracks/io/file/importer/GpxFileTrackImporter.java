@@ -55,7 +55,7 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
      * @param context the context
      */
     public GpxFileTrackImporter(Context context) {
-        this(context, ContentProviderUtils.Factory.get(context));
+        this(context, new ContentProviderUtils(context));
     }
 
     @VisibleForTesting

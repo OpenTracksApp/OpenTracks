@@ -130,7 +130,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
 
         recordingTrackPaused = PreferencesUtils.isRecordingTrackPausedDefault(this);
 
-        contentProviderUtils = ContentProviderUtils.Factory.get(this);
+        contentProviderUtils = new ContentProviderUtils(this);
         sharedPreferences = PreferencesUtils.getSharedPreferences(this);
 
         long trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1L);

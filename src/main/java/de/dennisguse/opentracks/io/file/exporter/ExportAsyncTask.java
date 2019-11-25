@@ -68,7 +68,7 @@ public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         this.trackFileFormat = trackFileFormat;
         this.directory = directory;
         context = exportActivity.getApplicationContext();
-        contentProviderUtils = ContentProviderUtils.Factory.get(context);
+        contentProviderUtils = new ContentProviderUtils(context);
 
         completed = false;
         processedTrackCount = 0;

@@ -170,7 +170,7 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
 
         recordingTrackPaused = PreferencesUtils.isRecordingTrackPausedDefault(this);
 
-        contentProviderUtils = ContentProviderUtils.Factory.get(this);
+        contentProviderUtils = new ContentProviderUtils(this);
         sharedPreferences = PreferencesUtils.getSharedPreferences(this);
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
         searchEngine = new SearchEngine(contentProviderUtils);

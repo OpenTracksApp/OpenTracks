@@ -76,7 +76,7 @@ public class IntentUtils {
         }
         String trackDescription = "";
         if (trackIds.length == 1) {
-            Track track = ContentProviderUtils.Factory.get(context).getTrack(trackIds[0]);
+            Track track = new ContentProviderUtils(context).getTrack(trackIds[0]);
             trackDescription = track == null ? "" : new DescriptionGeneratorImpl(context).generateTrackDescription(track, false);
         }
 

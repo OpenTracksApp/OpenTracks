@@ -189,7 +189,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
         photoUri = savedInstanceState != null ? (Uri) savedInstanceState.getParcelable(PHOTO_URI_KEY) : null;
         hasPhoto = savedInstanceState != null && savedInstanceState.getBoolean(HAS_PHOTO_KEY, false);
 
-        contentProviderUtils = ContentProviderUtils.Factory.get(this);
+        contentProviderUtils = new ContentProviderUtils(this);
         handleIntent(getIntent());
 
         sharedPreferences = PreferencesUtils.getSharedPreferences(this);

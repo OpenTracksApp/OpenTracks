@@ -198,7 +198,7 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
     @Nullable
     @Override
     public ParcelFileDescriptor openFile(@NonNull Uri uri, @NonNull String mode) throws FileNotFoundException {
-        ContentProviderUtils contentProviderUtils = new ContentProviderUtilsImpl(this);
+        ContentProviderUtils contentProviderUtils = new ContentProviderUtils(this);
 
         long[] trackIds = parseURI(uri);
         final Track[] tracks = new Track[trackIds.length];

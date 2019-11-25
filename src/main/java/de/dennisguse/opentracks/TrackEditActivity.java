@@ -73,7 +73,7 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
             return;
         }
 
-        contentProviderUtils = ContentProviderUtils.Factory.get(this);
+        contentProviderUtils = new ContentProviderUtils(this);
         track = contentProviderUtils.getTrack(trackId);
         if (track == null) {
             Log.e(TAG, "No track for " + trackId);

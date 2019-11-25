@@ -173,10 +173,12 @@ public enum TrackFileFormat {
 
     private static final String MIME_KML = "application/vnd.google-earth.kml+xml";
 
-    public TrackExporter newTrackExporter(Context context, Track[] tracks, TrackExporterListener trackExporterListener) {
-        ContentProviderUtils contentProviderUtils = ContentProviderUtils.Factory.get(context);
-        TrackWriter trackWriter = this.newTrackWriter(context, tracks.length > 1);
-        return new FileTrackExporter(contentProviderUtils, trackWriter, tracks, trackExporterListener);
+    private static TrackExporter newKmzTrackExporter(Context context, TrackWriter trackWriter, Track[] tracks, TrackExporterListener trackExporterListener, boolean exportPhotos) {
+        ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
+
+        FileTrackExporter fileTrackExporter = new FileTrackExporter(contentProviderUtils, trackWriter, tracks, trackExporterListener);
+
+        return new KmzTrackExporter(contentProviderUtils, fileTrackExporter, tracks, exportPhotos);
     }
 
     /**
@@ -184,12 +186,10 @@ public enum TrackFileFormat {
      */
     public abstract String getMimeType();
 
-    private static TrackExporter newKmzTrackExporter(Context context, TrackWriter trackWriter, Track[] tracks, TrackExporterListener trackExporterListener, boolean exportPhotos) {
-        ContentProviderUtils contentProviderUtils = ContentProviderUtils.Factory.get(context);
-
-        FileTrackExporter fileTrackExporter = new FileTrackExporter(contentProviderUtils, trackWriter, tracks, trackExporterListener);
-
-        return new KmzTrackExporter(contentProviderUtils, fileTrackExporter, tracks, exportPhotos);
+    public TrackExporter newTrackExporter(Context context, Track[] tracks, TrackExporterListener trackExporterListener) {
+        ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
+        TrackWriter trackWriter = this.newTrackWriter(context, tracks.length > 1);
+        return new FileTrackExporter(contentProviderUtils, trackWriter, tracks, trackExporterListener);
     }
 
     /**

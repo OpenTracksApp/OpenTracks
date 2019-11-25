@@ -68,7 +68,7 @@ public class TrackRecordingServiceTestLooper {
         };
         customContentProvider.attachInfo(context, null);
 
-        providerUtils = ContentProviderUtils.Factory.get(context);
+        providerUtils = new ContentProviderUtils(context);
 
         // Let's use default values.
         SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);

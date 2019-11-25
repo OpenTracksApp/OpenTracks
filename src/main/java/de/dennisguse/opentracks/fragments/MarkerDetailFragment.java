@@ -110,7 +110,7 @@ public class MarkerDetailFragment extends Fragment {
             getFragmentManager().popBackStack();
             return;
         }
-        contentProviderUtils = ContentProviderUtils.Factory.get(getActivity());
+        contentProviderUtils = new ContentProviderUtils(getActivity());
         handler = new Handler();
         setHasOptionsMenu(true);
     }

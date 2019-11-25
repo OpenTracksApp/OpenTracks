@@ -43,9 +43,10 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackDetailActivity;
 import de.dennisguse.opentracks.TrackListActivity;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
-import de.dennisguse.opentracks.content.ContentProviderUtils.LocationIterator;
 import de.dennisguse.opentracks.content.CustomContentProvider;
 import de.dennisguse.opentracks.content.DescriptionGeneratorImpl;
+import de.dennisguse.opentracks.content.LocationFactory;
+import de.dennisguse.opentracks.content.LocationIterator;
 import de.dennisguse.opentracks.content.SensorDataSetLocation;
 import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.content.Waypoint;
@@ -214,7 +215,7 @@ public class TrackRecordingService extends Service {
     public void onCreate() {
         super.onCreate();
         executorService = Executors.newSingleThreadExecutor();
-        contentProviderUtils = ContentProviderUtils.Factory.get(this);
+        contentProviderUtils = new ContentProviderUtils(this);
         handler = new Handler();
         locationManagerConnector = new LocationManagerConnector(this, handler.getLooper());
         voiceExecutor = new PeriodicTaskExecutor(this, new AnnouncementPeriodicTaskFactory());
@@ -506,7 +507,7 @@ public class TrackRecordingService extends Service {
         }
         markerTripStatisticsUpdater = new TripStatisticsUpdater(markerStartTime);
 
-        try (LocationIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), -1L, false, ContentProviderUtils.DEFAULT_LOCATION_FACTORY)) {
+        try (LocationIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), -1L, false, LocationFactory.DEFAULT_LOCATION_FACTORY)) {
 
             while (locationIterator.hasNext()) {
                 Location location = locationIterator.next();

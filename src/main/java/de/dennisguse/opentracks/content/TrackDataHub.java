@@ -30,7 +30,6 @@ import java.util.EnumSet;
 import java.util.Set;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.ContentProviderUtils.LocationIterator;
 import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
@@ -45,7 +44,7 @@ public class TrackDataHub implements DataSourceListener {
      * Target number of track points displayed by the map overlay.
      * We may display more than this number of points.
      */
-    static final int TARGET_DISPLAYED_TRACK_POINTS = 5000;
+    private static final int TARGET_DISPLAYED_TRACK_POINTS = 5000;
 
     /**
      * Maximum number of waypoints to displayed.
@@ -97,8 +96,7 @@ public class TrackDataHub implements DataSourceListener {
     }
 
     public synchronized static TrackDataHub newInstance(Context context) {
-        return new TrackDataHub(context, new TrackDataManager(), ContentProviderUtils.Factory.get(
-                context), TARGET_DISPLAYED_TRACK_POINTS);
+        return new TrackDataHub(context, new TrackDataManager(), new ContentProviderUtils(context), TARGET_DISPLAYED_TRACK_POINTS);
     }
 
     public void start() {
@@ -448,7 +446,7 @@ public class TrackDataHub implements DataSourceListener {
         int samplingFrequency = -1;
         boolean includeNextPoint = false;
 
-        try (LocationIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(selectedTrackId, localLastSeenLocationId + 1, false, ContentProviderUtils.DEFAULT_LOCATION_FACTORY)) {
+        try (LocationIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(selectedTrackId, localLastSeenLocationId + 1, false, LocationFactory.DEFAULT_LOCATION_FACTORY)) {
 
             while (locationIterator.hasNext()) {
                 Location location = locationIterator.next();

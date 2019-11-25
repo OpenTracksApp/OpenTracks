@@ -81,7 +81,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
      * @param importTrackId track id to import to. -1L to import to a new track.
      */
     public KmlFileTrackImporter(Context context, long importTrackId) {
-        this(context, importTrackId, ContentProviderUtils.Factory.get(context));
+        this(context, importTrackId, new ContentProviderUtils(context));
     }
 
     @VisibleForTesting

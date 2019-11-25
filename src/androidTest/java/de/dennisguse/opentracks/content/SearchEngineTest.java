@@ -58,7 +58,7 @@ public class SearchEngineTest {
 
     @Before
     public void setUp() {
-        providerUtils = ContentProviderUtils.Factory.get(context);
+        providerUtils = new ContentProviderUtils(context);
         engine = new SearchEngine(providerUtils);
     }
 

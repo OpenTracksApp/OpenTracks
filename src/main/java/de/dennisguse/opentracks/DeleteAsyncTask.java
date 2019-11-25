@@ -69,7 +69,7 @@ public class DeleteAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
     @Override
     protected Boolean doInBackground(Void... params) {
-        ContentProviderUtils contentProviderUtils = ContentProviderUtils.Factory.get(context);
+        ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
 
         if (trackIds.length == 1 && trackIds[0] == -1L) {
             contentProviderUtils.deleteAllTracks(context);

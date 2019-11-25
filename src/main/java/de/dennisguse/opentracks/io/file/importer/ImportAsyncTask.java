@@ -169,7 +169,8 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
             if (TrackFileFormat.KML_ONLY_TRACK.getExtension().equals(extension)) {
                 trackImporter = new KmlFileTrackImporter(context, -1L);
             } else {
-                ContentProviderUtils contentProviderUtils = ContentProviderUtils.Factory.get(context);
+                ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
+                ;
                 Uri uri = contentProviderUtils.insertTrack(new Track());
                 long newId = Long.parseLong(uri.getLastPathSegment());
 

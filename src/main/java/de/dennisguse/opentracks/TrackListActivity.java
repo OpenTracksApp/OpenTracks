@@ -245,7 +245,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
 
         recordingTrackPaused = PreferencesUtils.isRecordingTrackPausedDefault(this);
 
-        contentProviderUtils = ContentProviderUtils.Factory.get(this);
+        contentProviderUtils = new ContentProviderUtils(this);
         sharedPreferences = PreferencesUtils.getSharedPreferences(this);
 
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, bindChangedCallback);

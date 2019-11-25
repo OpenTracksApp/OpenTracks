@@ -127,7 +127,7 @@ public class MarkerEditActivity extends AbstractActivity {
         if (newMarker) {
             statisticsSection.setVisibility(View.GONE);
             waypointSection.setVisibility(View.VISIBLE);
-            int nextWaypointNumber = trackId == -1L ? -1 : ContentProviderUtils.Factory.get(this).getNextWaypointNumber(trackId, WaypointType.WAYPOINT);
+            int nextWaypointNumber = trackId == -1L ? -1 : new ContentProviderUtils(this).getNextWaypointNumber(trackId, WaypointType.WAYPOINT);
             if (nextWaypointNumber == -1) {
                 nextWaypointNumber = 0;
             }
@@ -136,7 +136,7 @@ public class MarkerEditActivity extends AbstractActivity {
             waypointMarkerType.setText("");
             waypointDescription.setText("");
         } else {
-            waypoint = ContentProviderUtils.Factory.get(this).getWaypoint(markerId);
+            waypoint = new ContentProviderUtils(this).getWaypoint(markerId);
             if (waypoint == null) {
                 Log.d(TAG, "waypoint is null");
                 finish();
@@ -182,6 +182,6 @@ public class MarkerEditActivity extends AbstractActivity {
             waypoint.setCategory(waypointMarkerType.getText().toString());
             waypoint.setDescription(waypointDescription.getText().toString());
         }
-        ContentProviderUtils.Factory.get(this).updateWaypoint(waypoint);
+        new ContentProviderUtils(this).updateWaypoint(waypoint);
     }
 }

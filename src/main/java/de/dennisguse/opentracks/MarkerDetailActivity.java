@@ -61,7 +61,7 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
             return;
         }
 
-        ContentProviderUtils contentProviderUtils = ContentProviderUtils.Factory.get(this);
+        ContentProviderUtils contentProviderUtils = new ContentProviderUtils(this);
         Waypoint waypoint = contentProviderUtils.getWaypoint(markerId);
 
         markerIds = new ArrayList<>();
