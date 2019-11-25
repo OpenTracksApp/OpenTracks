@@ -297,8 +297,7 @@ public class ContentProviderUtils {
         if (trackId < 0) {
             return null;
         }
-        try (Cursor cursor = getTrackCursor(null, TracksColumns._ID + "=?",
-                new String[]{Long.toString(trackId)}, TracksColumns._ID)) {
+        try (Cursor cursor = getTrackCursor(null, TracksColumns._ID + "=?", new String[]{Long.toString(trackId)}, TracksColumns._ID)) {
             if (cursor != null && cursor.moveToNext()) {
                 return createTrack(cursor);
             }
@@ -585,9 +584,7 @@ public class ContentProviderUtils {
         if (trackId < 0) {
             return -1L;
         }
-        try (Cursor cursor = getWaypointCursor(new String[]{WaypointsColumns._ID},
-                WaypointsColumns.TRACKID + "=?", new String[]{Long.toString(trackId)},
-                WaypointsColumns._ID, 1)) {
+        try (Cursor cursor = getWaypointCursor(new String[]{WaypointsColumns._ID}, WaypointsColumns.TRACKID + "=?", new String[]{Long.toString(trackId)}, WaypointsColumns._ID, 1)) {
             if (cursor != null && cursor.moveToFirst()) {
                 return cursor.getLong(cursor.getColumnIndexOrThrow(WaypointsColumns._ID));
             }
@@ -605,18 +602,12 @@ public class ContentProviderUtils {
         if (trackId < 0) {
             return null;
         }
-        Cursor cursor = null;
-        try {
-            String selection = WaypointsColumns.TRACKID + "=? AND " + WaypointsColumns.TYPE + "=?";
-            String[] selectionArgs = new String[]{
-                    Long.toString(trackId), Integer.toString(waypointType.ordinal())};
-            cursor = getWaypointCursor(null, selection, selectionArgs, WaypointsColumns._ID + " DESC", 1);
+        String selection = WaypointsColumns.TRACKID + "=? AND " + WaypointsColumns.TYPE + "=?";
+        String[] selectionArgs = new String[]{Long.toString(trackId), Integer.toString(waypointType.ordinal())};
+        try (Cursor cursor = getWaypointCursor(null, selection, selectionArgs, WaypointsColumns._ID + " DESC", 1)) {
+
             if (cursor != null && cursor.moveToFirst()) {
                 return createWaypoint(cursor);
-            }
-        } finally {
-            if (cursor != null) {
-                cursor.close();
             }
         }
         return null;
@@ -633,24 +624,14 @@ public class ContentProviderUtils {
         if (trackId < 0) {
             return -1;
         }
-        Cursor cursor = null;
-        try {
-            String[] projection = {WaypointsColumns._ID};
-            String selection = WaypointsColumns.TRACKID + "=?  AND " + WaypointsColumns.TYPE + "=?";
-            String[] selectionArgs = new String[]{
-                    Long.toString(trackId), Integer.toString(waypointType.ordinal())};
-            cursor = getWaypointCursor(projection, selection, selectionArgs, WaypointsColumns._ID, -1);
+        String[] projection = {WaypointsColumns._ID};
+        String selection = WaypointsColumns.TRACKID + "=?  AND " + WaypointsColumns.TYPE + "=?";
+        String[] selectionArgs = new String[]{Long.toString(trackId), Integer.toString(waypointType.ordinal())};
+        try (Cursor cursor = getWaypointCursor(projection, selection, selectionArgs, WaypointsColumns._ID, -1)) {
             if (cursor != null) {
                 int count = cursor.getCount();
-                /*
-                 * For statistics markers, the first marker is for the track statistics,
-                 * so return the count as the next user visible number.
-                 */
+                // For statistics markers, the first marker is for the track statistics, so return the count as the next user visible number.
                 return waypointType == WaypointType.STATISTICS ? count : count + 1;
-            }
-        } finally {
-            if (cursor != null) {
-                cursor.close();
             }
         }
         return -1;
@@ -685,8 +666,7 @@ public class ContentProviderUtils {
      * @param maxWaypoints  the maximum number of waypoints to return. -1 for no
      *                      limit
      */
-    public Cursor getWaypointCursor(
-            String selection, String[] selectionArgs, String sortOrder, int maxWaypoints) {
+    public Cursor getWaypointCursor(String selection, String[] selectionArgs, String sortOrder, int maxWaypoints) {
         return getWaypointCursor(null, selection, selectionArgs, sortOrder, maxWaypoints);
     }
 
@@ -755,8 +735,7 @@ public class ContentProviderUtils {
      * @param waypoint the waypoint
      */
     public boolean updateWaypoint(Waypoint waypoint) {
-        int rows = contentResolver.update(WaypointsColumns.CONTENT_URI, createContentValues(waypoint),
-                WaypointsColumns._ID + "=?", new String[]{Long.toString(waypoint.getId())});
+        int rows = contentResolver.update(WaypointsColumns.CONTENT_URI, createContentValues(waypoint), WaypointsColumns._ID + "=?", new String[]{Long.toString(waypoint.getId())});
         return rows == 1;
     }
 
@@ -818,19 +797,12 @@ public class ContentProviderUtils {
     }
 
     private Waypoint getNextStatisticsWaypointAfter(Waypoint waypoint) {
-        Cursor cursor = null;
-        try {
-            String selection = WaypointsColumns._ID + ">?  AND " + WaypointsColumns.TRACKID + "=? AND "
-                    + WaypointsColumns.TYPE + "=" + WaypointType.STATISTICS.ordinal();
-            String[] selectionArgs = new String[]{
-                    Long.toString(waypoint.getId()), Long.toString(waypoint.getTrackId())};
-            cursor = getWaypointCursor(null, selection, selectionArgs, WaypointsColumns._ID, 1);
+        String selection = WaypointsColumns._ID + ">?  AND " + WaypointsColumns.TRACKID + "=? AND "
+                + WaypointsColumns.TYPE + "=" + WaypointType.STATISTICS.ordinal();
+        String[] selectionArgs = new String[]{Long.toString(waypoint.getId()), Long.toString(waypoint.getTrackId())};
+        try (Cursor cursor = getWaypointCursor(null, selection, selectionArgs, WaypointsColumns._ID, 1)) {
             if (cursor != null && cursor.moveToFirst()) {
                 return createWaypoint(cursor);
-            }
-        } finally {
-            if (cursor != null) {
-                cursor.close();
             }
         }
         return null;
@@ -845,8 +817,7 @@ public class ContentProviderUtils {
      * @param sortOrder     the sort order
      * @param maxWaypoints  the maximum number of waypoints
      */
-    private Cursor getWaypointCursor(String[] projection, String selection, String[] selectionArgs,
-                                     String sortOrder, int maxWaypoints) {
+    private Cursor getWaypointCursor(String[] projection, String selection, String[] selectionArgs, String sortOrder, int maxWaypoints) {
         if (sortOrder == null) {
             sortOrder = WaypointsColumns._ID;
         }
@@ -897,20 +868,13 @@ public class ContentProviderUtils {
         if (trackId < 0) {
             return -1L;
         }
-        Cursor cursor = null;
-        try {
-            String selection = TrackPointsColumns._ID + "=(select min(" + TrackPointsColumns._ID
-                    + ") from " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID
-                    + "=?)";
-            String[] selectionArgs = new String[]{Long.toString(trackId)};
-            cursor = getTrackPointCursor(new String[]{TrackPointsColumns._ID}, selection,
-                    selectionArgs, TrackPointsColumns._ID);
+        String selection = TrackPointsColumns._ID + "=(select min(" + TrackPointsColumns._ID
+                + ") from " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID
+                + "=?)";
+        String[] selectionArgs = new String[]{Long.toString(trackId)};
+        try (Cursor cursor = getTrackPointCursor(new String[]{TrackPointsColumns._ID}, selection, selectionArgs, TrackPointsColumns._ID)) {
             if (cursor != null && cursor.moveToFirst()) {
                 return cursor.getLong(cursor.getColumnIndexOrThrow(TrackPointsColumns._ID));
-            }
-        } finally {
-            if (cursor != null) {
-                cursor.close();
             }
         }
         return -1L;
@@ -926,20 +890,13 @@ public class ContentProviderUtils {
         if (trackId < 0) {
             return -1L;
         }
-        Cursor cursor = null;
-        try {
-            String selection = TrackPointsColumns._ID + "=(select max(" + TrackPointsColumns._ID
-                    + ") from " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID
-                    + "=?)";
-            String[] selectionArgs = new String[]{Long.toString(trackId)};
-            cursor = getTrackPointCursor(new String[]{TrackPointsColumns._ID}, selection,
-                    selectionArgs, TrackPointsColumns._ID);
+        String selection = TrackPointsColumns._ID + "=(select max(" + TrackPointsColumns._ID
+                + ") from " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID
+                + "=?)";
+        String[] selectionArgs = new String[]{Long.toString(trackId)};
+        try (Cursor cursor = getTrackPointCursor(new String[]{TrackPointsColumns._ID}, selection, selectionArgs, TrackPointsColumns._ID)) {
             if (cursor != null && cursor.moveToFirst()) {
                 return cursor.getLong(cursor.getColumnIndexOrThrow(TrackPointsColumns._ID));
-            }
-        } finally {
-            if (cursor != null) {
-                cursor.close();
             }
         }
         return -1L;
@@ -956,21 +913,13 @@ public class ContentProviderUtils {
         if (trackId < 0) {
             return -1L;
         }
-        Cursor cursor = null;
-        try {
-            String selection = TrackPointsColumns._ID + "=(select max(" + TrackPointsColumns._ID
-                    + ") from " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID
-                    + "=? AND " + TrackPointsColumns.TIME + "=?)";
-            String[] selectionArgs = new String[]{
-                    Long.toString(trackId), Long.toString(location.getTime())};
-            cursor = getTrackPointCursor(new String[]{TrackPointsColumns._ID}, selection,
-                    selectionArgs, TrackPointsColumns._ID);
+        String selection = TrackPointsColumns._ID + "=(select max(" + TrackPointsColumns._ID
+                + ") from " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID
+                + "=? AND " + TrackPointsColumns.TIME + "=?)";
+        String[] selectionArgs = new String[]{Long.toString(trackId), Long.toString(location.getTime())};
+        try (Cursor cursor = getTrackPointCursor(new String[]{TrackPointsColumns._ID}, selection, selectionArgs, TrackPointsColumns._ID)) {
             if (cursor != null && cursor.moveToFirst()) {
                 return cursor.getLong(cursor.getColumnIndexOrThrow(TrackPointsColumns._ID));
-            }
-        } finally {
-            if (cursor != null) {
-                cursor.close();
             }
         }
         return -1L;
