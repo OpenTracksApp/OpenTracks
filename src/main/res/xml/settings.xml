@@ -17,11 +17,13 @@ limitations under the License.
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/menu_settings">
 
-    <Preference android:title="@string/menu_help">
-        <intent
-            android:targetClass="de.dennisguse.opentracks.HelpActivity"
-            android:targetPackage="@string/applicationId" />
-    </Preference>
+    <PreferenceCategory android:title="@string/menu_help">
+        <Preference android:title="@string/menu_help">
+            <intent
+                android:targetClass="de.dennisguse.opentracks.HelpActivity"
+                android:targetPackage="@string/applicationId" />
+        </Preference>
+    </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/track_detail_stats_tab">
         <ListPreference
