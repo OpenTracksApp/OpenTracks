@@ -33,9 +33,9 @@ import androidx.fragment.app.FragmentActivity;
 import java.util.ArrayList;
 import java.util.EnumSet;
 
-import de.dennisguse.opentracks.ChartView;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackDetailActivity;
+import de.dennisguse.opentracks.chart.ChartView;
 import de.dennisguse.opentracks.content.SensorDataSetLocation;
 import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.content.TrackDataHub;

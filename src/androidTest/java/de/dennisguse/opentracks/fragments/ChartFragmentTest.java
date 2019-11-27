@@ -26,8 +26,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import de.dennisguse.opentracks.ChartView;
 import de.dennisguse.opentracks.TrackStubUtils;
+import de.dennisguse.opentracks.chart.ChartView;
 import de.dennisguse.opentracks.content.SensorDataSetLocation;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.util.UnitConversions;

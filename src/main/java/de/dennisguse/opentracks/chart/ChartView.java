@@ -14,7 +14,7 @@
  * the License.
  */
 
-package de.dennisguse.opentracks;
+package de.dennisguse.opentracks.chart;
 
 import android.content.Context;
 import android.content.Intent;
@@ -36,6 +36,8 @@ import android.widget.Scroller;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
+import de.dennisguse.opentracks.MarkerDetailActivity;
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.Waypoint;
 import de.dennisguse.opentracks.stats.ExtremityMonitor;
 import de.dennisguse.opentracks.util.IntentUtils;
@@ -44,6 +46,7 @@ import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
  * Visualization of the chart.
+ * Provides support for zooming (via pinch), scrolling, flinging, and selecting shown markers (single touch).
  *
  * @author Sandor Dornbush
  * @author Leif Hendrik Wilden

@@ -14,7 +14,7 @@
  * the License.
  */
 
-package de.dennisguse.opentracks;
+package de.dennisguse.opentracks.chart;
 
 import android.content.Context;
 import android.graphics.Canvas;
