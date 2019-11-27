@@ -22,7 +22,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.ZoomControls;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -77,10 +76,9 @@ public abstract class ChartFragment extends Fragment implements TrackDataListene
 
     // UI elements
     private ChartView chartView;
-    private ZoomControls zoomControls;
 
     /**
-     * A runnable that will enable/disable zoom controls and orange pointer as appropriate and redraw.
+     * A runnable that will set the orange pointer as appropriate and redraw.
      */
     private final Runnable updateChart = new Runnable() {
         @Override
@@ -89,8 +87,6 @@ public abstract class ChartFragment extends Fragment implements TrackDataListene
                 return;
             }
 
-            zoomControls.setIsZoomInEnabled(chartView.canZoomIn());
-            zoomControls.setIsZoomOutEnabled(chartView.canZoomOut());
             chartView.setShowPointer(isSelectedTrackRecording());
             chartView.invalidate();
         }
@@ -112,21 +108,7 @@ public abstract class ChartFragment extends Fragment implements TrackDataListene
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.chart, container, false);
-        zoomControls = view.findViewById(R.id.chart_zoom_controls);
-        zoomControls.setOnZoomInClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                zoomIn();
-            }
-        });
-        zoomControls.setOnZoomOutClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                zoomOut();
-            }
-        });
-        return view;
+        return inflater.inflate(R.layout.chart, container, false);
     }
 
     @Override
@@ -399,18 +381,6 @@ public abstract class ChartFragment extends Fragment implements TrackDataListene
         if (trackDataHub != null) {
             trackDataHub.reloadDataForListener(this);
         }
-    }
-
-    private void zoomIn() {
-        chartView.zoomIn();
-        zoomControls.setIsZoomInEnabled(chartView.canZoomIn());
-        zoomControls.setIsZoomOutEnabled(chartView.canZoomOut());
-    }
-
-    private void zoomOut() {
-        chartView.zoomOut();
-        zoomControls.setIsZoomInEnabled(chartView.canZoomIn());
-        zoomControls.setIsZoomOutEnabled(chartView.canZoomOut());
     }
 
     /**
