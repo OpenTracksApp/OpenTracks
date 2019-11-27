@@ -27,11 +27,13 @@ import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.view.VelocityTracker;
+import android.view.ScaleGestureDetector;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.widget.Scroller;
+
+import androidx.core.view.GestureDetectorCompat;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -94,8 +96,6 @@ public class ChartView extends View {
     private final int markerHeight;
     private final Scroller scroller;
     private double maxX = 1.0;
-    private VelocityTracker velocityTracker = null;
-    private float lastMotionEventX = -1;
     private int zoomLevel = 1;
 
     private int leftBorder = BORDER;
@@ -115,11 +115,76 @@ public class ChartView extends View {
     private boolean reportSpeed = true;
     private boolean showPointer = false;
 
-    /**
-     * Constructor.
-     *
-     * @param context the context
-     */
+    private GestureDetectorCompat detectorScrollFlingTab = new GestureDetectorCompat(getContext(), new GestureDetector.SimpleOnGestureListener() {
+
+        @Override
+        public boolean onDown(MotionEvent e) {
+            if (!scroller.isFinished()) {
+                scroller.abortAnimation();
+            }
+            return true;
+        }
+
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+            if (Math.abs(distanceX) > 0) {
+                int availableToScroll = effectiveWidth * (zoomLevel - 1) - getScrollX();
+                if (availableToScroll > 0) {
+                    scrollBy(Math.min(availableToScroll, (int) distanceX));
+                }
+            }
+            return true;
+        }
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            fling((int) -velocityX);
+            return true;
+        }
+
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent event) {
+            // Check if the y event is within markerHeight of the marker center
+            if (Math.abs(event.getY() - topBorder - spacer - markerHeight / 2) < markerHeight) {
+                int minDistance = Integer.MAX_VALUE;
+                Waypoint nearestWaypoint = null;
+                synchronized (waypoints) {
+                    for (Waypoint waypoint : waypoints) {
+                        int distance = Math.abs(getX(getWaypointXValue(waypoint)) - (int) event.getX() - getScrollX());
+                        if (distance < minDistance) {
+                            minDistance = distance;
+                            nearestWaypoint = waypoint;
+                        }
+                    }
+                }
+                if (nearestWaypoint != null && minDistance < markerWidth) {
+                    Intent intent = IntentUtils.newIntent(getContext(), MarkerDetailActivity.class)
+                            .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, nearestWaypoint.getId());
+                    getContext().startActivity(intent);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    });
+
+    private ScaleGestureDetector detectorZoom = new ScaleGestureDetector(getContext(), new ScaleGestureDetector.SimpleOnScaleGestureListener() {
+
+        @Override
+        public boolean onScale(ScaleGestureDetector detector) {
+            float scaleFactor = detector.getScaleFactor();
+            if (scaleFactor >= 1.1f) {
+                zoomIn();
+                return true;
+            } else if (scaleFactor <= 0.9) {
+                zoomOut();
+                return true;
+            }
+            return false;
+        }
+    });
+
     public ChartView(Context context, boolean chartByDistance) {
         super(context);
         this.chartByDistance = chartByDistance;
@@ -224,16 +289,6 @@ public class ChartView extends View {
      */
     public void setChartValueSeriesEnabled(int index, boolean enabled) {
         series[index].setEnabled(enabled);
-    }
-
-    /**
-     * Sets chart by distance.
-     * It is expected that after changing this value, data will be reloaded.
-     *
-     * @param value true for by distance, false for by time
-     */
-    public void setChartByDistance(boolean value) {
-        chartByDistance = value;
     }
 
     /**
@@ -414,79 +469,14 @@ public class ChartView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (velocityTracker == null) {
-            velocityTracker = VelocityTracker.obtain();
-        }
-        velocityTracker.addMovement(event);
-        float x = event.getX();
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                // Stop the fling
-                if (!scroller.isFinished()) {
-                    scroller.abortAnimation();
-                }
-                lastMotionEventX = x;
-                break;
-            case MotionEvent.ACTION_MOVE:
-                if (lastMotionEventX == -1) {
-                    break;
-                }
-                // Scroll to follow the motion event
-                int deltaX = (int) (lastMotionEventX - x);
-                lastMotionEventX = x;
-                if (deltaX < 0) {
-                    if (getScrollX() > 0) {
-                        scrollBy(deltaX);
-                    }
-                } else if (deltaX > 0) {
-                    int availableToScroll = effectiveWidth * (zoomLevel - 1) - getScrollX();
-                    if (availableToScroll > 0) {
-                        scrollBy(Math.min(availableToScroll, deltaX));
-                    }
-                }
-                break;
-            case MotionEvent.ACTION_UP:
-                // Check if the y event is within markerHeight of the marker center
-                if (Math.abs(event.getY() - topBorder - spacer - markerHeight / 2) < markerHeight) {
-                    int minDistance = Integer.MAX_VALUE;
-                    Waypoint nearestWaypoint = null;
-                    synchronized (waypoints) {
-                        for (int i = 0; i < waypoints.size(); i++) {
-                            Waypoint waypoint = waypoints.get(i);
-                            int distance = Math.abs(getX(getWaypointXValue(waypoint)) - (int) event.getX() - getScrollX());
-                            if (distance < minDistance) {
-                                minDistance = distance;
-                                nearestWaypoint = waypoint;
-                            }
-                        }
-                    }
-                    if (nearestWaypoint != null && minDistance < markerWidth) {
-                        Intent intent = IntentUtils.newIntent(getContext(), MarkerDetailActivity.class)
-                                .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, nearestWaypoint.getId());
-                        getContext().startActivity(intent);
-                        return true;
-                    }
-                }
-
-                VelocityTracker myVelocityTracker = velocityTracker;
-                myVelocityTracker.computeCurrentVelocity(1000);
-                int initialVelocity = (int) myVelocityTracker.getXVelocity();
-                if (Math.abs(initialVelocity) > ViewConfiguration.getMinimumFlingVelocity()) {
-                    fling(-initialVelocity);
-                }
-                if (velocityTracker != null) {
-                    velocityTracker.recycle();
-                    velocityTracker = null;
-                }
-                break;
-        }
-        return true;
+        boolean isZoom = detectorZoom.onTouchEvent(event);
+        boolean isScrollTab = detectorScrollFlingTab.onTouchEvent(event);
+        return isZoom || isScrollTab;
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        updateEffectiveDimensionsIfChanged(
-                View.MeasureSpec.getSize(widthMeasureSpec), View.MeasureSpec.getSize(heightMeasureSpec));
+        updateEffectiveDimensionsIfChanged(View.MeasureSpec.getSize(widthMeasureSpec), View.MeasureSpec.getSize(heightMeasureSpec));
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
@@ -636,8 +626,7 @@ public class ChartView extends View {
     private String getXAxisLabel() {
         Context context = getContext();
         if (chartByDistance) {
-            return metricUnits ? context.getString(R.string.unit_kilometer)
-                    : context.getString(R.string.unit_mile);
+            return metricUnits ? context.getString(R.string.unit_kilometer) : context.getString(R.string.unit_mile);
         } else {
             return context.getString(R.string.description_time);
         }
@@ -737,8 +726,7 @@ public class ChartView extends View {
      * @param yValue           the y value
      * @return the marker width.
      */
-    private float drawYAxisMarker(
-            ChartValueSeries chartValueSeries, Canvas canvas, int xPosition, int yValue) {
+    private float drawYAxisMarker(ChartValueSeries chartValueSeries, Canvas canvas, int xPosition, int yValue) {
         String marker = chartValueSeries.formatMarker(yValue);
         Paint paint = chartValueSeries.getMarkerPaint();
         Rect rect = getRect(paint, marker);
@@ -873,8 +861,7 @@ public class ChartView extends View {
         topBorder = (int) (density * BORDER + titleDimensions[0] * (titleDimensions[1] + spacer));
         Rect xAxisLabelRect = getRect(axisPaint, getXAxisLabel());
         // border + x axis marker + spacer + .5 x axis label
-        bottomBorder = (int) (density * BORDER + getRect(xAxisMarkerPaint, "1").height() + spacer
-                + (xAxisLabelRect.height() / 2));
+        bottomBorder = (int) (density * BORDER + getRect(xAxisMarkerPaint, "1").height() + spacer + (xAxisLabelRect.height() / 2));
         rightBorder = (int) (density * BORDER + xAxisLabelRect.width() + spacer);
         updateEffectiveDimensions();
     }
