@@ -89,13 +89,13 @@ public class IntentUtils {
             uris.add(uriAndMime.first);
             mime = uriAndMime.second;
         }
-
         return new Intent(action)
-                .putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.share_track_subject))
-                .putExtra(Intent.EXTRA_TEXT, context.getString(R.string.share_track_share_file_body, trackDescription))
-                .putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris)
                 .setType(mime)
-                .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                .setAction(Intent.ACTION_SEND_MULTIPLE)
+                .putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris)
+                .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                .putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.share_track_subject))
+                .putExtra(Intent.EXTRA_TEXT, context.getString(R.string.share_track_share_file_body, trackDescription));
     }
 
     public static void showCoordinateOnMap(Context context, Waypoint waypoint) {
