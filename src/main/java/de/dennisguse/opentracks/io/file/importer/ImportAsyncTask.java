@@ -45,7 +45,9 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     private static final String TAG = ImportAsyncTask.class.getSimpleName();
     private final TrackFileFormat trackFileFormat;
     private final String path;
-    private final Context context;
+    // TODO Can be removed, or?
+    private Context context;
+    // TODO Use weak reference
     private ImportActivity importActivity;
     private WakeLock wakeLock;
 
@@ -100,7 +102,7 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     @Override
     protected Boolean doInBackground(Void... params) {
         try {
-            Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+            Thread.currentThread().setPriority(Thread.MAX_PRIORITY); // TODO Should be set to previous level at the end of this method.
             // Get the wake lock if not recording or paused
             boolean isRecording = PreferencesUtils.isRecording(importActivity);
             boolean isPaused = PreferencesUtils.isRecordingTrackPaused(importActivity);
@@ -149,9 +151,11 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
     @Override
     protected void onCancelled() {
+        context = null;
         completed = true;
         if (importActivity != null) {
             importActivity.onAsyncTaskCompleted(importTrackCount, totalTrackCount);
+            importActivity = null;
         }
     }
 
@@ -163,18 +167,17 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     private boolean importFile(final File file) {
         TrackImporter trackImporter;
         if (trackFileFormat == TrackFileFormat.GPX) {
-            trackImporter = new GpxFileTrackImporter(context);
+            trackImporter = new GpxFileTrackImporter(importActivity);
         } else { //KML or KMZ
             String extension = FileUtils.getExtension(file.getName());
             if (TrackFileFormat.KML_ONLY_TRACK.getExtension().equals(extension)) {
-                trackImporter = new KmlFileTrackImporter(context, -1L);
+                trackImporter = new KmlFileTrackImporter(importActivity, -1L);
             } else {
-                ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
-                ;
+                ContentProviderUtils contentProviderUtils = new ContentProviderUtils(importActivity);
                 Uri uri = contentProviderUtils.insertTrack(new Track());
                 long newId = Long.parseLong(uri.getLastPathSegment());
 
-                trackImporter = new KmzTrackImporter(context, newId);
+                trackImporter = new KmzTrackImporter(importActivity, newId);
             }
         }
 

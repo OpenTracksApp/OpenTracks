@@ -19,7 +19,6 @@ package de.dennisguse.opentracks.io.file.exporter;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import java.io.OutputStream;
 
@@ -37,5 +36,5 @@ public interface TrackExporter {
      * @param context the context
      * @param outputStream the output stream
      */
-    boolean writeTrack(@Nullable Context context, @NonNull OutputStream outputStream);
+    boolean writeTrack(@NonNull Context context, @NonNull OutputStream outputStream);
 }

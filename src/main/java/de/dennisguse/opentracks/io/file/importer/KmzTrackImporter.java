@@ -72,7 +72,7 @@ public class KmzTrackImporter implements TrackImporter {
                     return -1L;
                 }
                 String fileName = zipEntry.getName();
-                if (fileName.equals(KmzTrackExporter.KMZ_KML_FILE)) {
+                if (KmzTrackExporter.KMZ_KML_FILE.equals(fileName)) {
                     trackId = parseKml(zipInputStream);
                     if (trackId == -1L) {
                         Log.d(TAG, "Unable to parse kml in kmz");
@@ -103,7 +103,6 @@ public class KmzTrackImporter implements TrackImporter {
     private void cleanImport(long trackId) {
         if (PreferencesUtils.isRecording(trackId)) {
             ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
-            ;
             contentProviderUtils.deleteTrack(context, trackId);
         }
 
@@ -126,15 +125,10 @@ public class KmzTrackImporter implements TrackImporter {
      * @return the imported track id or -1L
      */
     private long parseKml(ZipInputStream zipInputStream) throws IOException {
-        ByteArrayInputStream byteArrayInputStream = null;
-        try {
-            KmlFileTrackImporter kmlFileTrackImporter = new KmlFileTrackImporter(context, importTrackId);
-            byteArrayInputStream = new ByteArrayInputStream(getKml(zipInputStream));
+        KmlFileTrackImporter kmlFileTrackImporter = new KmlFileTrackImporter(context, importTrackId);
+
+        try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(getKml(zipInputStream))) {
             return kmlFileTrackImporter.importFile(byteArrayInputStream);
-        } finally {
-            if (byteArrayInputStream != null) {
-                byteArrayInputStream.close();
-            }
         }
     }
 
@@ -161,12 +155,10 @@ public class KmzTrackImporter implements TrackImporter {
      * @param fileName       the file name
      */
     private void readImageFile(ZipInputStream zipInputStream, String fileName) throws IOException {
-        if (importTrackId == -1L) {
+        if (importTrackId == -1L || fileName.equals("")) {
             return;
         }
-        if (fileName.equals("")) {
-            return;
-        }
+
         File dir = FileUtils.getPhotoDir(importTrackId);
         FileUtils.ensureDirectoryExists(dir);
         File file = new File(dir, fileName);
