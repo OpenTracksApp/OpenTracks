@@ -1,0 +1,9 @@
+v3.2.8: OpenTracks
+
+Changes:
+- Chart: zoom via gestures
+
+Bugfixes:
+- Export via KMZ did not export picture filenames correctly
+- Sharing multiple tracks did not include KMZ files
+- MarkerDetailActivity's UI was not shown
