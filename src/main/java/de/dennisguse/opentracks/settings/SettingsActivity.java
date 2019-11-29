@@ -167,9 +167,6 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
             ListPreference voiceFrequency = findPreference(getString(R.string.voice_frequency_key));
             voiceFrequency.setEntries(StringUtils.getFrequencyOptions(getActivity(), metricUnits));
 
-            ListPreference splitFrequency = findPreference(getString(R.string.split_frequency_key));
-            splitFrequency.setEntries(StringUtils.getFrequencyOptions(getActivity(), metricUnits));
-
             ListPreference minRecordingInterval = findPreference(getString(R.string.min_recording_interval_key));
             minRecordingInterval.setEntries(PreferenceHelper.getMinRecordingIntervalEntries(getActivity()));
 

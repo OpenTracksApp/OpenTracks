@@ -15,4 +15,26 @@
         <item>@string/settings_chart_by_distance</item>
         <item>@string/settings_chart_by_time</item>
     </string-array>
+
+    <string name="split_frequency_key" translatable="false">splitFrequency</string>
+    <string name="split_frequency_default" translatable="false">@string/frequency_off</string>
+    <string name="voice_frequency_key" translatable="false">voiceFrequency</string>
+    <string name="voice_frequency_default" translatable="false">@string/frequency_off</string>
+    <string name="frequency_off" translatable="false">0</string>
+    <string-array name="frequency_values">
+        <item>@string/frequency_off</item>
+        <item>1</item>
+        <item>2</item>
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>-1</item>
+        <item>-5</item>
+        <item>-10</item>
+        <item>-25</item>
+        <item>-50</item>
+        <item>-100</item>
+    </string-array>
 </resources>

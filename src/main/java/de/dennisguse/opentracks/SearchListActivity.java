@@ -46,7 +46,6 @@ import de.dennisguse.opentracks.content.SearchEngine.ScoredResult;
 import de.dennisguse.opentracks.content.SearchEngine.SearchQuery;
 import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.content.Waypoint;
-import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
@@ -393,11 +392,9 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
             }
         }
 
-        boolean statistics = waypoint.getType() == WaypointType.STATISTICS;
-
         resultMap.put(IS_RECORDING_FIELD, false);
         resultMap.put(IS_PAUSED_FIELD, true);
-        resultMap.put(ICON_ID_FIELD, statistics ? R.drawable.ic_marker_yellow_pushpin : R.drawable.ic_marker_blue_pushpin);
+        resultMap.put(ICON_ID_FIELD, R.drawable.ic_marker_blue_pushpin);
         resultMap.put(ICON_CONTENT_DESCRIPTION_ID_FIELD, R.string.image_marker);
         resultMap.put(NAME_FIELD, waypoint.getName());
         // Display the marker's track name in the total time field
@@ -405,8 +402,8 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
         resultMap.put(TOTAL_DISTANCE_FIELD, null);
         resultMap.put(MARKER_COUNT_FIELD, 0);
         resultMap.put(START_TIME_FIELD, waypoint.getLocation().getTime());
-        resultMap.put(CATEGORY_FIELD, statistics ? null : waypoint.getCategory());
-        resultMap.put(DESCRIPTION_FIELD, statistics ? null : waypoint.getDescription());
+        resultMap.put(CATEGORY_FIELD, waypoint.getCategory());
+        resultMap.put(DESCRIPTION_FIELD, waypoint.getDescription());
         resultMap.put(PHOTO_URL_FIELD, waypoint.getPhotoUrl());
         resultMap.put(TRACK_ID_FIELD, waypoint.getTrackId());
         resultMap.put(MARKER_ID_FIELD, waypoint.getId());

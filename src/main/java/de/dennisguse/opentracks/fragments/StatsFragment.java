@@ -177,11 +177,6 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     }
 
     @Override
-    public void onSegmentSplit(Location location) {
-        // We don't care.
-    }
-
-    @Override
     public void onNewTrackPointsDone() {
         if (isResumed()) {
             getActivity().runOnUiThread(new Runnable() {

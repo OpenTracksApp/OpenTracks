@@ -153,27 +153,6 @@ public class TrackRecordingServiceTestLooper {
 
     @MediumTest
     @Test
-    public void testWithProperties_splitFrequencyDefault() throws TimeoutException {
-        PreferencesUtils.setInt(context, R.string.split_frequency_key, Integer.parseInt(context.getResources().getString(R.string.split_frequency_default)));
-        fullRecordingSession();
-    }
-
-    @MediumTest
-    @Test
-    public void testWithProperties_splitFrequencyByDistance() throws TimeoutException {
-        PreferencesUtils.setInt(context, R.string.split_frequency_key, -1);
-        fullRecordingSession();
-    }
-
-    @MediumTest
-    @Test
-    public void testWithProperties_splitFrequencyByTime() throws TimeoutException {
-        PreferencesUtils.setInt(context, R.string.split_frequency_key, 1);
-        fullRecordingSession();
-    }
-
-    @MediumTest
-    @Test
     public void testWithProperties_metricUnitsDefault() throws TimeoutException {
         PreferencesUtils.setString(context, R.string.stats_units_key, context.getString(R.string.stats_units_default));
         fullRecordingSession();

@@ -466,12 +466,8 @@ public class TrackDataHub implements DataSourceListener {
                     samplingFrequency = 1 + (int) (numTotalPoints / targetNumPoints);
                 }
 
-                if (!LocationUtils.isValidLocation(location)) {
-                    // TODO: also include the last valid point before a split
-                    for (TrackDataListener trackDataListener : sampledInListeners) {
-                        trackDataListener.onSegmentSplit(location);
-                        includeNextPoint = true;
-                    }
+                if (!LocationUtils.isValidLocation(location)) { //This can be split markers (not anymore supported feature)
+                    includeNextPoint = true;
                 } else {
                     // Also include the last point if the selected track is not recording.
                     if (includeNextPoint || (localNumLoadedPoints % samplingFrequency == 0) || (locationId == lastTrackPointId && !isSelectedTrackRecording())) {

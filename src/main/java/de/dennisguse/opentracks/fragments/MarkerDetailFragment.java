@@ -41,12 +41,9 @@ import androidx.fragment.app.FragmentActivity;
 import de.dennisguse.opentracks.MarkerEditActivity;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
-import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.content.Waypoint;
-import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.ListItemUtils;
-import de.dennisguse.opentracks.util.StatsUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
@@ -218,43 +215,27 @@ public class MarkerDetailFragment extends Fragment {
      * Updates the UI.
      */
     private void updateUi() {
-        View waypointView = getView().findViewById(R.id.marker_detail_waypoint);
-        View statisticsView = getView().findViewById(R.id.marker_detail_statistics);
+        boolean hasPhoto = waypoint.hasPhoto();
+        photo.setVisibility(hasPhoto ? View.VISIBLE : View.GONE);
+        textGradient.setVisibility(hasPhoto ? View.VISIBLE : View.GONE);
+        waypointInfo.setVisibility(View.VISIBLE);
 
-        boolean isWaypoint = waypoint.getType() == WaypointType.WAYPOINT;
-        waypointView.setVisibility(isWaypoint ? View.VISIBLE : View.GONE);
-        statisticsView.setVisibility(isWaypoint ? View.GONE : View.VISIBLE);
-
-        if (isWaypoint) {
-            boolean hasPhoto = waypoint.hasPhoto();
-            photo.setVisibility(hasPhoto ? View.VISIBLE : View.GONE);
-            textGradient.setVisibility(hasPhoto ? View.VISIBLE : View.GONE);
-            waypointInfo.setVisibility(View.VISIBLE);
-
-            if (hasPhoto) {
-                handler.removeCallbacks(hideText);
-                photo.setImageURI(waypoint.getPhotoURI());
-                handler.postDelayed(hideText, HIDE_TEXT_DELAY);
-            }
-
-            setName(R.id.marker_detail_waypoint_name, hasPhoto);
-
-            TextView category = getView().findViewById(R.id.marker_detail_waypoint_category);
-            ListItemUtils.setTextView(getActivity(), category, StringUtils.getCategory(waypoint.getCategory()), hasPhoto);
-
-            TextView description = getView().findViewById(R.id.marker_detail_waypoint_description);
-            ListItemUtils.setTextView(getActivity(), description, waypoint.getDescription(), hasPhoto);
-
-            setLocation(R.id.marker_detail_waypoint_location, hasPhoto);
-        } else {
-            setName(R.id.marker_detail_statistics_name, false);
-
-            setLocation(R.id.marker_detail_statistics_location, false);
-
-            Track track = contentProviderUtils.getTrack(waypoint.getTrackId());
-            StatsUtils.setTripStatisticsValues(getActivity(), waypoint.getTripStatistics(), null);
-            StatsUtils.setLocationValues(getActivity(), waypoint.getLocation(), false);
+        if (hasPhoto) {
+            handler.removeCallbacks(hideText);
+            photo.setImageURI(waypoint.getPhotoURI());
+            handler.postDelayed(hideText, HIDE_TEXT_DELAY);
         }
+
+        setName(R.id.marker_detail_waypoint_name, hasPhoto);
+
+        TextView category = getView().findViewById(R.id.marker_detail_waypoint_category);
+        ListItemUtils.setTextView(getActivity(), category, StringUtils.getCategory(waypoint.getCategory()), hasPhoto);
+
+        TextView description = getView().findViewById(R.id.marker_detail_waypoint_description);
+        ListItemUtils.setTextView(getActivity(), description, waypoint.getDescription(), hasPhoto);
+
+        setLocation(R.id.marker_detail_waypoint_location, hasPhoto);
+
     }
 
     private void setName(int resId, boolean addShadow) {

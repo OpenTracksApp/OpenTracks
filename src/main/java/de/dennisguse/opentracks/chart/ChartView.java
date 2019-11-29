@@ -263,12 +263,9 @@ public class ChartView extends View {
         pointer = context.getResources().getDrawable(R.drawable.ic_logo_color_24dp);
         pointer.setBounds(0, 0, pointer.getIntrinsicWidth(), pointer.getIntrinsicHeight());
 
-        Drawable statisticsMarker = getResources().getDrawable(R.drawable.ic_marker_yellow_pushpin);
-        markerWidth = statisticsMarker.getIntrinsicWidth();
-        markerHeight = statisticsMarker.getIntrinsicHeight();
-        statisticsMarker.setBounds(0, 0, markerWidth, markerHeight);
-
         Drawable waypointMarker = getResources().getDrawable(R.drawable.ic_marker_blue_pushpin);
+        markerWidth = waypointMarker.getIntrinsicWidth();
+        markerHeight = waypointMarker.getIntrinsicHeight();
         waypointMarker.setBounds(0, 0, markerWidth, markerHeight);
 
         scroller = new Scroller(context);

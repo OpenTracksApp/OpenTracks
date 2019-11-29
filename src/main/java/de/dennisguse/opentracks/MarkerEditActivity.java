@@ -71,8 +71,7 @@ public class MarkerEditActivity extends AbstractActivity {
         waypointSection = findViewById(R.id.marker_edit_waypoint_section);
         waypointName = findViewById(R.id.marker_edit_waypoint_name);
         waypointMarkerType = findViewById(R.id.marker_edit_waypoint_marker_type);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this, R.array.waypoint_types, android.R.layout.simple_dropdown_item_1line);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.waypoint_types, android.R.layout.simple_dropdown_item_1line);
         waypointMarkerType.setAdapter(adapter);
         waypointDescription = findViewById(R.id.marker_edit_waypoint_description);
 

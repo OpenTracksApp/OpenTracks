@@ -56,7 +56,6 @@ import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
 import de.dennisguse.opentracks.services.tasks.AnnouncementPeriodicTaskFactory;
 import de.dennisguse.opentracks.services.tasks.PeriodicTaskExecutor;
-import de.dennisguse.opentracks.services.tasks.SplitPeriodicTaskFactory;
 import de.dennisguse.opentracks.stats.TripStatistics;
 import de.dennisguse.opentracks.stats.TripStatisticsUpdater;
 import de.dennisguse.opentracks.util.IntentUtils;
@@ -95,7 +94,6 @@ public class TrackRecordingService extends Service {
     private Handler handler;
     private LocationManagerConnector locationManagerConnector;
     private PeriodicTaskExecutor voiceExecutor;
-    private PeriodicTaskExecutor splitExecutor;
     private SharedPreferences sharedPreferences;
     private TrackRecordingServiceNotificationManager notificationManager;
     private long recordingTrackId;
@@ -126,13 +124,9 @@ public class TrackRecordingService extends Service {
             if (PreferencesUtils.isKey(context, R.string.stats_units_key, key)) {
                 boolean metricUnits = PreferencesUtils.isMetricUnits(context);
                 voiceExecutor.setMetricUnits(metricUnits);
-                splitExecutor.setMetricUnits(metricUnits);
             }
             if (PreferencesUtils.isKey(context, R.string.voice_frequency_key, key)) {
                 voiceExecutor.setTaskFrequency(PreferencesUtils.getVoiceFrequency(context));
-            }
-            if (PreferencesUtils.isKey(context, R.string.split_frequency_key, key)) {
-                splitExecutor.setTaskFrequency(PreferencesUtils.getSplitFrequency(context));
             }
             if (PreferencesUtils.isKey(context, R.string.min_recording_interval_key, key)) {
                 int minRecordingInterval = PreferencesUtils.getMinRecordingInterval(context);
@@ -219,7 +213,6 @@ public class TrackRecordingService extends Service {
         handler = new Handler();
         locationManagerConnector = new LocationManagerConnector(this, handler.getLooper());
         voiceExecutor = new PeriodicTaskExecutor(this, new AnnouncementPeriodicTaskFactory());
-        splitExecutor = new PeriodicTaskExecutor(this, new SplitPeriodicTaskFactory());
         sharedPreferences = PreferencesUtils.getSharedPreferences(this);
         sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
         notificationManager = new TrackRecordingServiceNotificationManager(this);
@@ -271,12 +264,6 @@ public class TrackRecordingService extends Service {
 
         // unregister sharedPreferences before shutting down splitExecutor and voiceExecutor
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-
-        try {
-            splitExecutor.shutdown();
-        } finally {
-            splitExecutor = null;
-        }
 
         try {
             voiceExecutor.shutdown();
@@ -566,7 +553,6 @@ public class TrackRecordingService extends Service {
 
         // Restore periodic tasks
         voiceExecutor.restore();
-        splitExecutor.restore();
     }
 
     /**
@@ -653,7 +639,6 @@ public class TrackRecordingService extends Service {
     private void endRecording(boolean trackStopped, long trackId) {
         // Shutdown periodic tasks
         voiceExecutor.shutdown();
-        splitExecutor.shutdown();
 
         // Update instance variables
         if (remoteSensorManager != null) {
@@ -840,7 +825,6 @@ public class TrackRecordingService extends Service {
             Log.w(TAG, "SQLiteException", e);
         }
         voiceExecutor.update();
-        splitExecutor.update();
     }
 
     /**

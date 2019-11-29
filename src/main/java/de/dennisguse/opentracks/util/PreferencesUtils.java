@@ -304,11 +304,6 @@ public class PreferencesUtils {
         return PreferencesUtils.getInt(context, R.string.voice_frequency_key, VOICE_FREQUENCY_DEFAULT);
     }
 
-    public static int getSplitFrequency(Context context) {
-        final int SPLIT_FREQUENCY_DEFAULT = Integer.parseInt(context.getResources().getString(R.string.split_frequency_default));
-        return PreferencesUtils.getInt(context, R.string.split_frequency_key, SPLIT_FREQUENCY_DEFAULT);
-    }
-
     public static int getRecordingDistanceInterval(Context context) {
         final int RECORDING_DISTANCE_INTERVAL = Integer.parseInt(context.getResources().getString(R.string.recording_distance_interval_default));
         return PreferencesUtils.getInt(context, R.string.recording_distance_interval_key, getRecordingDistanceIntervalDefault(context));

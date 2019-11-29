@@ -39,7 +39,6 @@ import androidx.loader.content.Loader;
 
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.Track;
-import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 import de.dennisguse.opentracks.content.WaypointsColumns;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
@@ -152,7 +151,6 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         resourceCursorAdapter = new ResourceCursorAdapter(this, R.layout.list_item, null, 0) {
             @Override
             public void bindView(View view, Context context, Cursor cursor) {
-                int typeIndex = cursor.getColumnIndex(WaypointsColumns.TYPE);
                 int nameIndex = cursor.getColumnIndex(WaypointsColumns.NAME);
                 int timeIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.TIME);
                 int categoryIndex = cursor.getColumnIndex(WaypointsColumns.CATEGORY);
@@ -161,12 +159,11 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
                 int latitudeIndex = cursor.getColumnIndex(WaypointsColumns.LATITUDE);
                 int longitudeIndex = cursor.getColumnIndex(WaypointsColumns.LONGITUDE);
 
-                boolean statistics = WaypointType.values()[cursor.getInt(typeIndex)] == WaypointType.STATISTICS;
-                int iconId = statistics ? R.drawable.ic_marker_yellow_pushpin : R.drawable.ic_marker_blue_pushpin;
+                int iconId = R.drawable.ic_marker_blue_pushpin;
                 String name = cursor.getString(nameIndex);
                 long time = cursor.getLong(timeIndex);
-                String category = statistics ? null : cursor.getString(categoryIndex);
-                String description = statistics ? null : cursor.getString(descriptionIndex);
+                String category = cursor.getString(categoryIndex);
+                String description = cursor.getString(descriptionIndex);
                 String photoUrl = cursor.getString(photoUrlIndex);
                 double latitude = cursor.getDouble(latitudeIndex);
                 double longitude = cursor.getDouble(longitudeIndex);

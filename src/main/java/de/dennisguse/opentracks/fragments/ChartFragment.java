@@ -199,13 +199,6 @@ public abstract class ChartFragment extends Fragment implements TrackDataListene
     }
 
     @Override
-    public void onSegmentSplit(Location location) {
-        if (isResumed()) {
-            fillDataPoint(location, null);
-        }
-    }
-
-    @Override
     public void onNewTrackPointsDone() {
         if (isResumed()) {
             chartView.addDataPoints(pendingPoints);

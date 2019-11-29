@@ -81,12 +81,6 @@ limitations under the License.
             android:title="@string/menu_voice_frequency"
             app:useSimpleSummaryProvider="true" />
         <ListPreference
-            android:defaultValue="@string/split_frequency_default"
-            android:entryValues="@array/frequency_values"
-            android:key="@string/split_frequency_key"
-            android:title="@string/menu_split_frequency"
-            app:useSimpleSummaryProvider="true" />
-        <ListPreference
             android:defaultValue="@string/track_name_default"
             android:entries="@array/track_name_options"
             android:entryValues="@array/track_name_values"

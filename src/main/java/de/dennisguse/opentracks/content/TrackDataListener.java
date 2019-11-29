@@ -52,13 +52,8 @@ public interface TrackDataListener {
     void onSampledOutTrackPoint(Location location);
 
     /**
-     * Called when an invalid track point representing a segment split is read.
-     */
-    void onSegmentSplit(Location location);
-
-    /**
      * Called when finish sending new track points.
-     * This gets called after every batch of calls to {@link #onSampledInTrackPoint(Location)}, {@link #onSampledOutTrackPoint(Location)} and {@link #onSegmentSplit(Location)}.
+     * This gets called after every batch of calls to {@link #onSampledInTrackPoint(Location)} and {@link #onSampledOutTrackPoint(Location)}.
      */
     void onNewTrackPointsDone();
 
