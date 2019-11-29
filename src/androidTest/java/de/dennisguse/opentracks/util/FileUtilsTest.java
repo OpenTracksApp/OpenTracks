@@ -60,8 +60,13 @@ public class FileUtilsTest extends TestCase {
      */
     public void testSanitizeFileName() {
         String name = "Swim\10ming-^across:/the/ pacific (ocean).";
-        String expected = "Swim_ming-^across_the_ pacific (ocean)_";
+        String expected = "Swim_ming-^across_the_ pacific (ocean).";
         assertEquals(expected, FileUtils.sanitizeFileName(name));
+    }
+
+    public void testSanitizeFileNameWithSuffix() {
+        String name = "FileName.jpeg";
+        assertEquals(name, FileUtils.sanitizeFileName(name));
     }
 
     /**

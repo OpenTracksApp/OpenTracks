@@ -204,12 +204,13 @@ public class FileUtils {
      *
      * @param name name
      */
+    // TODO Check if this function is still needed.
     public static String sanitizeFileName(String name) {
         StringBuilder builder = new StringBuilder(name.length());
         for (int i = 0; i < name.length(); i++) {
             int codePoint = name.codePointAt(i);
             char character = name.charAt(i);
-            if (Character.isLetterOrDigit(character) || codePoint > 127 || isSpecialFat32(character)) {
+            if (Character.isLetterOrDigit(character) || codePoint > 127 || isSpecialFat32(character) || character == '.') {
                 builder.appendCodePoint(codePoint);
             } else {
                 builder.append("_");
