@@ -147,7 +147,7 @@ public class BluetoothLePreference extends DialogPreference {
 
             BluetoothLePreference preference = (BluetoothLePreference) getPreference();
             String deviceSelected = preference.getValue();
-            if (!deviceNone.equals(deviceSelected)) {
+            if (deviceSelected != null && !deviceNone.equals(deviceSelected)) {
                 listAdapter.add(preference.getValue(), preference.getValue());
                 selectedEntryIndex = 1;
             }
