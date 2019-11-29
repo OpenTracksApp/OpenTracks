@@ -1,0 +1,9 @@
+OpenTracks est une application de suivi d'activités sportives qui respecte totalement votre vie privée.
+
+Fonctionnalités :
+
+* Suivi d'activité : enregistre vos activités sportives et de plein air
+* Photos et repères : ajout de photos et de repères pendant l'enregistrement de l'activité
+* Rythme cardiaque : support des capteurs Bluetooth LE
+* Export : export des traces au format KML ou GPX
+* Pas d'accès internet requis : Internet n'est pas nécessaire pour le fonctionnement de l'application
