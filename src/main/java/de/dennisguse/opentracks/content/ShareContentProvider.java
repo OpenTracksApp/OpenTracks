@@ -81,7 +81,7 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
         }
         builder.deleteCharAt(builder.lastIndexOf(TRACKID_DELIMITER));
 
-        Uri uri = Uri.parse(ContentProviderUtils.CONTENT_BASE_URI + "/" + TracksColumns.TABLE_NAME + "/" + trackFileFormat.getName() + "/" + builder + "." + trackFileFormat.getExtension());
+        Uri uri = Uri.parse(TracksColumns.CONTENT_URI + "/" + trackFileFormat.getName() + "/" + builder + "." + trackFileFormat.getExtension());
         String mime = getTypeMime(uri);
 
         Log.d(TAG, "Created uri " + uri.toString() + " with MIME " + mime);
