@@ -145,33 +145,16 @@ limitations under the License.
         android:name="android.hardware.location.gps"
         android:required="true" />
     <uses-feature
-        android:name="android.hardware.bluetooth"
+        android:name="android.hardware.android.hardware.bluetooth_le"
         android:required="false" />
-    <!-- Permissions to access sensors -->
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
     <uses-feature
-        android:name="android.hardware.faketouch"
-        android:required="false" />
-    <!-- Permission to read phone state so voice announcement will not interrupt ongoing calls -->
-    <uses-feature
         android:name="android.hardware.sensor.compass"
         android:required="false" />
-    <!-- Permission to read/write external storage -->
-    <uses-feature
-        android:name="android.hardware.telephony"
-        android:required="false" />
-    <uses-feature
-        android:name="android.hardware.telephony.gsm"
-        android:required="false" />
-    <!-- Required features -->
     <uses-feature
         android:name="android.hardware.touchscreen"
-        android:required="false" />
-    <!-- Optional features -->
-    <uses-feature
-        android:name="android.hardware.touchscreen.multitouch"
         android:required="false" />
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -180,9 +163,8 @@ limitations under the License.
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <!-- Permission to read phone state so voice announcement will not interrupt ongoing calls -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 </manifest>
