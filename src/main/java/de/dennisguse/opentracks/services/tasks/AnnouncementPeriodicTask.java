@@ -21,8 +21,6 @@ import android.media.AudioManager;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
 import android.speech.tts.UtteranceProgressListener;
-import android.telephony.PhoneStateListener;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import java.util.Locale;
@@ -51,10 +49,39 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
     private final Context context;
 
     private final AudioManager audioManager;
+
+    private final AudioManager.OnAudioFocusChangeListener audioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
+        @Override
+        public void onAudioFocusChange(int focusChange) {
+            Log.d(TAG, "Audio focus changed to " + focusChange);
+
+            boolean stop = false;
+            switch (focusChange) {
+                case AudioManager.AUDIOFOCUS_GAIN:
+                    stop = false;
+                    break;
+                case AudioManager.AUDIOFOCUS_LOSS:
+                    stop = true;
+                    break;
+                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                    stop = true;
+                    break;
+                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+                    stop = true;
+                    break;
+            }
+
+            if (stop && tts != null && tts.isSpeaking()) {
+                tts.stop();
+                Log.i(TAG, "Aborting current tts due to focus change " + focusChange);
+            }
+        }
+    };
+
     private final UtteranceProgressListener utteranceListener = new UtteranceProgressListener() {
         @Override
         public void onStart(String utteranceId) {
-            int result = audioManager.requestAudioFocus(null, TextToSpeech.Engine.DEFAULT_STREAM, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+            int result = audioManager.requestAudioFocus(audioFocusChangeListener, TextToSpeech.Engine.DEFAULT_STREAM, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
             if (result == AudioManager.AUDIOFOCUS_REQUEST_FAILED) {
                 Log.w(TAG, "Failed to request audio focus.");
             }
@@ -70,31 +97,15 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
 
         @Override
         public void onError(String utteranceId) {
+            Log.e(TAG, "An error occurred for utteranceId " + utteranceId);
         }
     };
 
     private TextToSpeech tts;
     // Response from TTS after its initialization
-    private int initStatus = TextToSpeech.ERROR;
+    private int ttsInitStatus = TextToSpeech.ERROR;
 
     private boolean ttsReady = false;
-
-    // True if speech is allowed
-    private boolean speechAllowed;
-
-    /**
-     * Listener which updates {@link #speechAllowed} when the phone state changes.
-     */
-    private final PhoneStateListener phoneStateListener = new PhoneStateListener() {
-        @Override
-        public void onCallStateChanged(int state, String incomingNumber) {
-            speechAllowed = state == TelephonyManager.CALL_STATE_IDLE;
-            if (!speechAllowed && tts != null && tts.isSpeaking()) {
-                // If we're already speaking, stop it.
-                tts.stop();
-            }
-        }
-    };
 
     AnnouncementPeriodicTask(Context context) {
         this.context = context;
@@ -103,16 +114,17 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
 
     @Override
     public void start() {
+        Log.d(TAG, "Start");
+
         if (tts == null) {
-            tts = newTextToSpeech(context, new OnInitListener() {
+            tts = new TextToSpeech(context, new OnInitListener() {
                 @Override
                 public void onInit(int status) {
-                    initStatus = status;
+                    Log.i(TAG, "TextToSpeech initialized with status " + status);
+                    ttsInitStatus = status;
                 }
             });
         }
-        speechAllowed = true;
-        listenToPhoneState(phoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
     }
 
     @Override
@@ -137,7 +149,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
 
         synchronized (this) {
             if (!ttsReady) {
-                ttsReady = initStatus == TextToSpeech.SUCCESS;
+                ttsReady = ttsInitStatus == TextToSpeech.SUCCESS;
                 if (ttsReady) {
                     onTtsReady();
                 }
@@ -148,7 +160,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
             }
         }
 
-        if (!speechAllowed) {
+        if (audioManager.getMode() == AudioManager.MODE_IN_CALL || audioManager.getMode() == AudioManager.MODE_IN_COMMUNICATION) {
             Log.i(TAG, "Speech is not allowed at this time.");
             return;
         }
@@ -157,21 +169,18 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
 
     @Override
     public void shutdown() {
-        listenToPhoneState(phoneStateListener, PhoneStateListener.LISTEN_NONE);
         if (tts != null) {
             tts.shutdown();
             tts = null;
         }
+
+
     }
 
-    /**
-     * Called when TTS is ready.
-     */
     private void onTtsReady() {
         Locale locale = Locale.getDefault();
         int languageAvailability = tts.isLanguageAvailable(locale);
-        if (languageAvailability == TextToSpeech.LANG_MISSING_DATA
-                || languageAvailability == TextToSpeech.LANG_NOT_SUPPORTED) {
+        if (languageAvailability == TextToSpeech.LANG_MISSING_DATA || languageAvailability == TextToSpeech.LANG_NOT_SUPPORTED) {
             Log.w(TAG, "Default locale not available, use English.");
             locale = Locale.ENGLISH;
             /*
@@ -187,34 +196,11 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
         tts.setOnUtteranceProgressListener(utteranceListener);
     }
 
-    /**
-     * Speaks the announcement.
-     *
-     * @param announcement the announcement
-     */
     private void speakAnnouncement(String announcement) {
-        /*
-         * We don't care about the utterance id. It is supplied here to force
-         * onUtteranceCompleted to be called.
-         */
+        // We don't care about the utterance id. It is supplied here to force onUtteranceCompleted to be called.
         tts.speak(announcement, TextToSpeech.QUEUE_FLUSH, null, "not used");
     }
 
-    /**
-     * Create a new {@link TextToSpeech}.
-     *
-     * @param aContext       a context
-     * @param onInitListener an on init listener
-     */
-    private TextToSpeech newTextToSpeech(Context aContext, OnInitListener onInitListener) {
-        return new TextToSpeech(aContext, onInitListener);
-    }
-
-    /**
-     * Gets the announcement.
-     *
-     * @param tripStatistics the trip statistics
-     */
     private String getAnnouncement(TripStatistics tripStatistics) {
         boolean metricUnits = PreferencesUtils.isMetricUnits(context);
         boolean reportSpeed = PreferencesUtils.isReportSpeed(context);
@@ -248,24 +234,6 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
                 getAnnounceTime(tripStatistics.getMovingTime()), rate);
     }
 
-    /**
-     * Listens to phone state.
-     *
-     * @param listener the listener
-     * @param events   the interested events
-     */
-    private void listenToPhoneState(PhoneStateListener listener, int events) {
-        TelephonyManager telephony = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        if (telephony != null) {
-            telephony.listen(listener, events);
-        }
-    }
-
-    /**
-     * Gets the announce time.
-     *
-     * @param time the time
-     */
     private String getAnnounceTime(long time) {
         int[] parts = StringUtils.getTimeParts(time);
         String seconds = context.getResources()
