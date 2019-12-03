@@ -43,6 +43,7 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.Waypoint;
 import de.dennisguse.opentracks.stats.ExtremityMonitor;
 import de.dennisguse.opentracks.util.IntentUtils;
+import de.dennisguse.opentracks.util.MarkerUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
@@ -263,7 +264,7 @@ public class ChartView extends View {
         pointer = context.getResources().getDrawable(R.drawable.ic_logo_color_24dp);
         pointer.setBounds(0, 0, pointer.getIntrinsicWidth(), pointer.getIntrinsicHeight());
 
-        Drawable waypointMarker = getResources().getDrawable(R.drawable.ic_marker_blue_pushpin);
+        Drawable waypointMarker = MarkerUtils.getDefaultPhoto(context);
         markerWidth = waypointMarker.getIntrinsicWidth();
         markerHeight = waypointMarker.getIntrinsicHeight();
         waypointMarker.setBounds(0, 0, markerWidth, markerHeight);

@@ -45,6 +45,7 @@ import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment.DeleteMarke
 import de.dennisguse.opentracks.util.ActivityUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.ListItemUtils;
+import de.dennisguse.opentracks.util.MarkerUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
@@ -159,7 +160,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
                 int latitudeIndex = cursor.getColumnIndex(WaypointsColumns.LATITUDE);
                 int longitudeIndex = cursor.getColumnIndex(WaypointsColumns.LONGITUDE);
 
-                int iconId = R.drawable.ic_marker_blue_pushpin;
+                int iconId = MarkerUtils.ICON_ID;
                 String name = cursor.getString(nameIndex);
                 long time = cursor.getLong(timeIndex);
                 String category = cursor.getString(categoryIndex);

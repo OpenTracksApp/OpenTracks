@@ -44,6 +44,7 @@ import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.Waypoint;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.ListItemUtils;
+import de.dennisguse.opentracks.util.MarkerUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
@@ -59,7 +60,7 @@ public class MarkerDetailFragment extends Fragment {
     private static final long HIDE_TEXT_DELAY = 4 * UnitConversions.ONE_SECOND;
     private ContentProviderUtils contentProviderUtils;
     private Handler handler;
-    private ImageView photo;
+    private ImageView photoView;
     private ImageView textGradient;
     private LinearLayout waypointInfo;
     private Waypoint waypoint;
@@ -116,11 +117,11 @@ public class MarkerDetailFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.marker_detail_fragment, container, false);
 
-        photo = view.findViewById(R.id.marker_detail_waypoint_photo);
+        photoView = view.findViewById(R.id.marker_detail_waypoint_photo);
         textGradient = view.findViewById(R.id.marker_detail_waypoint_text_gradient);
         waypointInfo = view.findViewById(R.id.marker_detail_waypoint_info);
 
-        photo.setOnClickListener(new View.OnClickListener() {
+        photoView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 handler.removeCallbacks(hideText);
@@ -153,11 +154,8 @@ public class MarkerDetailFragment extends Fragment {
     @Override
     public void setMenuVisibility(boolean menuVisible) {
         super.setMenuVisibility(menuVisible);
-        /*
-         * View pager caches the neighboring fragments in the resumed state. If
-         * becoming visible from the resumed state, update the UI to display the
-         * text above the image.
-         */
+        // View pager caches the neighboring fragments in the resumed state.
+        // If becoming visible from the resumed state, update the UI to display the text above the image.
         if (isResumed()) {
             if (menuVisible) {
                 updateUi();
@@ -211,19 +209,14 @@ public class MarkerDetailFragment extends Fragment {
         }
     }
 
-    /**
-     * Updates the UI.
-     */
     private void updateUi() {
         boolean hasPhoto = waypoint.hasPhoto();
-        photo.setVisibility(hasPhoto ? View.VISIBLE : View.GONE);
-        textGradient.setVisibility(hasPhoto ? View.VISIBLE : View.GONE);
-        waypointInfo.setVisibility(View.VISIBLE);
-
         if (hasPhoto) {
             handler.removeCallbacks(hideText);
-            photo.setImageURI(waypoint.getPhotoURI());
+            photoView.setImageURI(waypoint.getPhotoURI());
             handler.postDelayed(hideText, HIDE_TEXT_DELAY);
+        } else {
+            photoView.setImageResource(MarkerUtils.ICON_ID);
         }
 
         setName(R.id.marker_detail_waypoint_name, hasPhoto);
@@ -235,7 +228,6 @@ public class MarkerDetailFragment extends Fragment {
         ListItemUtils.setTextView(getActivity(), description, waypoint.getDescription(), hasPhoto);
 
         setLocation(R.id.marker_detail_waypoint_location, hasPhoto);
-
     }
 
     private void setName(int resId, boolean addShadow) {

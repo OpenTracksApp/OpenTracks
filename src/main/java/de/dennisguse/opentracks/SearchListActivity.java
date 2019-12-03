@@ -54,6 +54,7 @@ import de.dennisguse.opentracks.stats.TripStatistics;
 import de.dennisguse.opentracks.util.ActivityUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.ListItemUtils;
+import de.dennisguse.opentracks.util.MarkerUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
@@ -394,7 +395,7 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
 
         resultMap.put(IS_RECORDING_FIELD, false);
         resultMap.put(IS_PAUSED_FIELD, true);
-        resultMap.put(ICON_ID_FIELD, R.drawable.ic_marker_blue_pushpin);
+        resultMap.put(ICON_ID_FIELD, MarkerUtils.ICON_ID);
         resultMap.put(ICON_CONTENT_DESCRIPTION_ID_FIELD, R.string.image_marker);
         resultMap.put(NAME_FIELD, waypoint.getName());
         // Display the marker's track name in the total time field
