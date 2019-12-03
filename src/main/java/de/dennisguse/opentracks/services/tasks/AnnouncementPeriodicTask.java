@@ -32,7 +32,6 @@ import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.stats.TripStatistics;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
-import de.dennisguse.opentracks.util.TTSUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
@@ -55,6 +54,10 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
     private final UtteranceProgressListener utteranceListener = new UtteranceProgressListener() {
         @Override
         public void onStart(String utteranceId) {
+            int result = audioManager.requestAudioFocus(null, TextToSpeech.Engine.DEFAULT_STREAM, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+            if (result == AudioManager.AUDIOFOCUS_REQUEST_FAILED) {
+                Log.w(TAG, "Failed to request audio focus.");
+            }
         }
 
         @Override
@@ -190,11 +193,6 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
      * @param announcement the announcement
      */
     private void speakAnnouncement(String announcement) {
-        int result = audioManager.requestAudioFocus(null, TTSUtils.getTTSStream(), AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
-        if (result == AudioManager.AUDIOFOCUS_REQUEST_FAILED) {
-            Log.w(TAG, "Failed to request audio focus.");
-        }
-
         /*
          * We don't care about the utterance id. It is supplied here to force
          * onUtteranceCompleted to be called.
