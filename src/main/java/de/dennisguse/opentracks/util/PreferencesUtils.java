@@ -32,8 +32,6 @@ import de.dennisguse.opentracks.R;
  */
 public class PreferencesUtils {
 
-    public static final String BLUETOOTH_SENSOR_DEFAULT = "";
-
     private PreferencesUtils() {
     }
 
@@ -251,12 +249,20 @@ public class PreferencesUtils {
         PreferencesUtils.setBoolean(context, R.string.recording_track_paused_key, RECORDING_TRACK_PAUSED);
     }
 
+    public static String getBluetoothHeartRateSensorAddressNone(Context context) {
+        return context.getString(R.string.sensor_type_value_none);
+    }
+
     public static boolean isBluetoothHeartRateSensorAddressDefault(Context context) {
-        return PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT.equals(getBluetoothHeartRateSensorAddress(context));
+        return getBluetoothHeartRateSensorAddressNone(context).equals(getBluetoothHeartRateSensorAddress(context));
+    }
+
+    public static boolean isBluetoothHeartRateSensorAddressDefault(Context context, String currentValue) {
+        return getBluetoothHeartRateSensorAddressNone(context).equals(currentValue);
     }
 
     public static String getBluetoothHeartRateSensorAddress(Context context) {
-        return PreferencesUtils.getString(context, R.string.settings_sensor_bluetooth_heart_rate_key, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT);
+        return PreferencesUtils.getString(context, R.string.settings_sensor_bluetooth_heart_rate_key, getBluetoothHeartRateSensorAddressNone(context));
     }
 
     public static boolean shouldChartShowCadence(Context context) {

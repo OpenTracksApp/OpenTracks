@@ -24,6 +24,7 @@ import java.util.List;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.util.BluetoothUtils;
+import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
  * Preference to select a discoverable Bluetooth LE device.
@@ -32,6 +33,8 @@ import de.dennisguse.opentracks.util.BluetoothUtils;
 public class BluetoothLePreference extends DialogPreference {
 
     private final static String TAG = BluetoothLePreference.class.getSimpleName();
+
+    private final static int DEVICE_NONE_RESOURCEID = R.string.value_none;
 
     public BluetoothLePreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
@@ -75,6 +78,10 @@ public class BluetoothLePreference extends DialogPreference {
 
     @Override
     public CharSequence getSummary() {
+        if (getValue() == null || PreferencesUtils.isBluetoothHeartRateSensorAddressDefault(getContext(), getValue())) {
+            return getContext().getString(DEVICE_NONE_RESOURCEID);
+        }
+
         return getValue();
     }
 
@@ -142,7 +149,7 @@ public class BluetoothLePreference extends DialogPreference {
             }
 
             String deviceNone = getContext().getString(R.string.sensor_type_value_none);
-            listAdapter.add(getContext().getString(R.string.value_none), deviceNone);
+            listAdapter.add(getContext().getString(DEVICE_NONE_RESOURCEID), deviceNone);
             selectedEntryIndex = 0;
 
             BluetoothLePreference preference = (BluetoothLePreference) getPreference();
