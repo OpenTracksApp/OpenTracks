@@ -1194,6 +1194,13 @@ limitations under the License.
     While recording, show statistics without unlocking the device.
   </string>
 
+  <string name="settings_recording_keep_screen_on_while_recording_title" translation_description="In the 'Settings' page, the option to change the 'show on lockscreen' behavior while recording.">
+    Keep screen on
+  </string>
+  <string name="settings_recording_keep_screen_on_while_recording_summary" translation_description="In the 'Settings' page, the option to change the 'show on lockscreen' behavior while recording.">
+    While recording, keep the screen on.
+  </string>
+
   <string name="settings_recording" translation_description="In the 'Settings' page, the option to change the recording settings.
 
       Character limit: ~26 (1 line)">

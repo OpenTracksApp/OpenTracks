@@ -289,6 +289,11 @@ public class PreferencesUtils {
         return getBoolean(context, R.string.stats_show_on_lockscreen_while_recording_key, STATS_SHOW_ON_LOCKSCREEN_DEFAULT);
     }
 
+    public static boolean shouldKeepScreenOn(Context context) {
+        final boolean DEFAULT = context.getResources().getBoolean(R.bool.stats_keep_screen_on_while_recording_default);
+        return getBoolean(context, R.string.stats_keep_screen_on_while_recording_key, DEFAULT);
+    }
+
     public static boolean isShowStatsGradeElevation(Context context) {
         final boolean STATS_SHOW_GRADE_ELEVATION = context.getResources().getBoolean(R.bool.stats_show_grade_elevation_default);
         return PreferencesUtils.getBoolean(context, R.string.stats_show_grade_elevation_key, STATS_SHOW_GRADE_ELEVATION);

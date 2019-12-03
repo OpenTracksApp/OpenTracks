@@ -127,14 +127,22 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
             if (PreferencesUtils.isKey(TrackDetailActivity.this, R.string.recording_track_id_key, key)) {
                 recordingTrackId = PreferencesUtils.getRecordingTrackId(TrackDetailActivity.this);
+                setLockscreenPolicy();
+                setScreenOnPolicy();
             }
 
             if (PreferencesUtils.isKey(TrackDetailActivity.this, R.string.recording_track_paused_key, key)) {
                 recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(TrackDetailActivity.this);
+                setLockscreenPolicy();
+                setScreenOnPolicy();
             }
 
             if (PreferencesUtils.isKey(TrackDetailActivity.this, R.string.stats_show_on_lockscreen_while_recording_key, key)) {
                 setLockscreenPolicy();
+            }
+
+            if (PreferencesUtils.isKey(TrackDetailActivity.this, R.string.stats_keep_screen_on_while_recording_key, key)) {
+                setScreenOnPolicy();
             }
 
             if (key == null) return;
@@ -227,11 +235,13 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
     @Override
     public void onAttachedToWindow() {
         setLockscreenPolicy();
+        setScreenOnPolicy();
         super.onAttachedToWindow();
     }
 
     private void setLockscreenPolicy() {
-        boolean showOnLockScreen = PreferencesUtils.shouldShowStatsOnLockscreen(TrackDetailActivity.this);
+        boolean showOnLockScreen = PreferencesUtils.shouldShowStatsOnLockscreen(TrackDetailActivity.this)
+                && PreferencesUtils.isRecording(this);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             setShowWhenLocked(showOnLockScreen);
@@ -239,6 +249,17 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
         } else {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+        }
+    }
+
+    private void setScreenOnPolicy() {
+        boolean keepScreenOn = PreferencesUtils.shouldKeepScreenOn(TrackDetailActivity.this)
+                && PreferencesUtils.isRecording(this);
+
+        if (keepScreenOn) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        } else {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
     }
 
