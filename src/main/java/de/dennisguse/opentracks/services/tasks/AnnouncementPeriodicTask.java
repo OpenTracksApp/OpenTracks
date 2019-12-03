@@ -25,8 +25,6 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-import androidx.annotation.VisibleForTesting;
-
 import java.util.Locale;
 
 import de.dennisguse.opentracks.R;
@@ -47,8 +45,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
     /**
      * The rate at which announcements are spoken.
      */
-    @VisibleForTesting
-    static final float TTS_SPEECH_RATE = 0.9f;
+    private static final float TTS_SPEECH_RATE = 0.9f;
 
     private static final String TAG = AnnouncementPeriodicTask.class.getSimpleName();
 
@@ -129,8 +126,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
      *
      * @param tripStatistics the trip statistics
      */
-    @VisibleForTesting
-    void announce(TripStatistics tripStatistics) {
+    private void announce(TripStatistics tripStatistics) {
         if (tripStatistics == null) {
             Log.e(TAG, "TripStatistics is null.");
             return;
@@ -212,8 +208,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
      * @param aContext       a context
      * @param onInitListener an on init listener
      */
-    @VisibleForTesting
-    protected TextToSpeech newTextToSpeech(Context aContext, OnInitListener onInitListener) {
+    private TextToSpeech newTextToSpeech(Context aContext, OnInitListener onInitListener) {
         return new TextToSpeech(aContext, onInitListener);
     }
 
@@ -222,8 +217,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
      *
      * @param tripStatistics the trip statistics
      */
-    @VisibleForTesting
-    protected String getAnnouncement(TripStatistics tripStatistics) {
+    private String getAnnouncement(TripStatistics tripStatistics) {
         boolean metricUnits = PreferencesUtils.isMetricUnits(context);
         boolean reportSpeed = PreferencesUtils.isReportSpeed(context);
         double distance = tripStatistics.getTotalDistance() * UnitConversions.M_TO_KM;
@@ -262,8 +256,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
      * @param listener the listener
      * @param events   the interested events
      */
-    @VisibleForTesting
-    protected void listenToPhoneState(PhoneStateListener listener, int events) {
+    private void listenToPhoneState(PhoneStateListener listener, int events) {
         TelephonyManager telephony = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         if (telephony != null) {
             telephony.listen(listener, events);
@@ -275,8 +268,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
      *
      * @param time the time
      */
-    @VisibleForTesting
-    String getAnnounceTime(long time) {
+    private String getAnnounceTime(long time) {
         int[] parts = StringUtils.getTimeParts(time);
         String seconds = context.getResources()
                 .getQuantityString(R.plurals.voiceSeconds, parts[0], parts[0]);
