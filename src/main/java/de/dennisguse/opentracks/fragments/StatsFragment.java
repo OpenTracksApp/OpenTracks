@@ -91,7 +91,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
         public void run() {
             if (isResumed() && isSelectedTrackRecording()) {
                 if (!isSelectedTrackPaused() && lastTripStatistics != null) {
-                    setTotalTimeValue(System.currentTimeMillis() - lastTripStatistics.getStopTime() + lastTripStatistics.getTotalTime());
+                    updateTotalTime();
                     updateSensorDataUI();
                 }
 
@@ -224,10 +224,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(getContext(), null);
         trackRecordingServiceConnection.startConnection(getContext());
 
-        updateUi();
-        if (isSelectedTrackRecording()) {
-            handlerUpdateUI.post(updateUIeachSecond);
-        }
+        handlerUpdateUI.post(updateUIeachSecond);
     }
 
     @Override
@@ -307,7 +304,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
                     if (isResumed()) {
                         lastTripStatistics = track != null ? track.getTripStatistics() : null;
                         category = track != null ? track.getCategory() : "";
-                        updateUi();
+                        updateUI();
                     }
                 }
             });
@@ -377,7 +374,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
                 @Override
                 public void run() {
                     if (isResumed()) {
-                        updateUi();
+                        updateUI();
                     }
                 }
             });
@@ -392,7 +389,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
                 @Override
                 public void run() {
                     if (isResumed()) {
-                        updateUi();
+                        updateUI();
                     }
                 }
             });
@@ -448,7 +445,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
         return trackDataHub != null && trackDataHub.isSelectedTrackPaused();
     }
 
-    private void updateUi() {
+    private void updateUI() {
         updateStats();
         setLocationValues();
         updateSensorDataUI();
@@ -523,9 +520,8 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
         // Set time
         if (lastTripStatistics != null) {
-            setTotalTimeValue(lastTripStatistics.getTotalTime());
-
             movingTimeValue.setText(StringUtils.formatElapsedTime(lastTripStatistics.getMovingTime()));
+            updateTotalTime();
         }
 
         // Set average speed/pace
@@ -590,7 +586,13 @@ public class StatsFragment extends Fragment implements TrackDataListener {
         }
     }
 
-    private void setTotalTimeValue(long totalTime) {
+    private void updateTotalTime() {
+        long totalTime;
+        if (isSelectedTrackRecording()) {
+            totalTime = System.currentTimeMillis() - lastTripStatistics.getStopTime() + lastTripStatistics.getTotalTime();
+        } else {
+            totalTime = lastTripStatistics.getTotalTime();
+        }
         totalTimeValueView.setText(StringUtils.formatElapsedTime(totalTime));
     }
 
