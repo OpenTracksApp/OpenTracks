@@ -115,7 +115,6 @@ public class StatsUtils {
 
         if (isRecording) {
             TextView heartRateValue = activity.findViewById(R.id.stats_sensor_heart_rate_value);
-            TextView heartRateSensor = activity.findViewById(R.id.stats_sensor_heart_rate_sensor_value);
             String heartRate = activity.getString(R.string.value_unknown);
             String sensor = activity.getString(R.string.value_unknown);
             if (sensorDataSet != null && sensorDataSet.isRecent(BluetoothRemoteSensorManager.MAX_SENSOR_DATE_SET_AGE_MS)) {
@@ -126,7 +125,7 @@ public class StatsUtils {
             }
 
             setBluetoothHeartRateSensorName(activity, sensor, isRecording);
-            heartRateSensor.setText(sensor);
+            heartRateValue.setText(heartRate);
         }
     }
 
