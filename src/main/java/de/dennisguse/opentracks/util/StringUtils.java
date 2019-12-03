@@ -132,7 +132,7 @@ public class StringUtils {
     /**
      * Format a decimal number while removing trailing zeros of the decimal part (if present).
      */
-    static String formatDecimal(double value, int decimalPlaces) {
+    public static String formatDecimal(double value, int decimalPlaces) {
         if (decimalPlaces < 1) {
             return Long.toString(Math.round(value));
         }
@@ -158,7 +158,7 @@ public class StringUtils {
      * @param metricUnits true to use metric unit
      * @return the formatted distance (or null) and it's unit as {@link Pair}
      */
-    static Pair<String, String> getDistanceParts(Context context, double distance, boolean metricUnits) {
+    public static Pair<String, String> getDistanceParts(Context context, double distance, boolean metricUnits) {
         if (Double.isNaN(distance) || Double.isInfinite(distance)) {
             return new Pair<>(null, context.getString(metricUnits ? R.string.unit_meter : R.string.unit_feet));
         }

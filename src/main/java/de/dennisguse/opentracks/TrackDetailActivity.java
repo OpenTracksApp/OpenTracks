@@ -55,7 +55,6 @@ import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
-import de.dennisguse.opentracks.util.StatsUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.TrackUtils;
 
@@ -434,22 +433,6 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
         return trackDataHub;
     }
 
-    /**
-     * Gets the track id.
-     */
-    // TODO Seems to be no used.
-    @Deprecated
-    public long getTrackId() {
-        return trackId;
-    }
-
-    private void setBluetoothHeartRateSensorName(String sensorName) {
-        StatsUtils.setBluetoothHeartRateSensorName(this, sensorName, isRecording());
-    }
-
-    /**
-     * Handles the data in the intent.
-     */
     private void handleIntent(Intent intent) {
         trackId = intent.getLongExtra(EXTRA_TRACK_ID, -1L);
         long markerId = intent.getLongExtra(EXTRA_MARKER_ID, -1L);

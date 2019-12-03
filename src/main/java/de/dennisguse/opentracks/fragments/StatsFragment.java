@@ -20,16 +20,18 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 import java.util.EnumSet;
 
@@ -43,9 +45,11 @@ import de.dennisguse.opentracks.content.Waypoint;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.services.ITrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
+import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
 import de.dennisguse.opentracks.stats.TripStatistics;
 import de.dennisguse.opentracks.util.LocationUtils;
-import de.dennisguse.opentracks.util.StatsUtils;
+import de.dennisguse.opentracks.util.PreferencesUtils;
+import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
@@ -59,6 +63,8 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
     public static final String STATS_FRAGMENT_TAG = StatsFragment.class.getSimpleName();
 
+    private static final long UI_UPDATE_INTERVAL = UnitConversions.ONE_SECOND;
+
     private TrackDataHub trackDataHub;
     private Handler handlerUpdateUI;
 
@@ -67,24 +73,117 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     private Location lastLocation = null;
     private TripStatistics lastTripStatistics = null;
 
-    private final Runnable updateUIeachSecond = new Runnable() {
-        public void run() {
-            if (isResumed() && isSelectedTrackRecording()) {
-                if (!isSelectedTrackPaused() && lastTripStatistics != null) {
-                    StatsUtils.setTotalTimeValue(getActivity(), System.currentTimeMillis() - lastTripStatistics.getStopTime() + lastTripStatistics.getTotalTime());
-                    updateSensorDataUI();
-                }
-
-                handlerUpdateUI.postDelayed(this, UnitConversions.ONE_SECOND);
-            }
-        }
-    };
     private String category = "";
     private int recordingGpsAccuracy;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.stats, container, false);
+    }
+
+    /* Views */
+    private View sensorContainerView;
+    private TextView heartRateValueView;
+    private TextView heartRateSensorView;
+
+    private TextView totalTimeValueView;
+    private final Runnable updateUIeachSecond = new Runnable() {
+        public void run() {
+            if (isResumed() && isSelectedTrackRecording()) {
+                if (!isSelectedTrackPaused() && lastTripStatistics != null) {
+                    setTotalTimeValue(System.currentTimeMillis() - lastTripStatistics.getStopTime() + lastTripStatistics.getTotalTime());
+                    updateSensorDataUI();
+                }
+
+                handlerUpdateUI.postDelayed(this, UI_UPDATE_INTERVAL);
+            }
+        }
+    };
+    private TextView distanceValue;
+    private TextView distanceUnit;
+    private View activityLabel;
+    private Spinner activitySpinner;
+    private TextView movingTimeValue;
+    private TextView speedAvgLabel;
+    private TextView speedAvgValue;
+    private TextView speedAvgUnit;
+    private TextView speedMaxLabel;
+    private TextView speedMaxValue;
+    private TextView speedMaxUnit;
+    private TextView speedMovingLabel;
+    private TextView speedMovingValue;
+    private TextView speedMovingUnit;
+    private View gradeElevationSeparator;
+    private View gradeElevationContainer;
+    private TextView elevationMinValue;
+    private TextView elevationMinUnit;
+    private TextView elevationMaxValue;
+    private TextView elevationMaxUnit;
+    private View speedContainer;
+    private TextView speedLabel;
+    private TextView speedValue;
+    private TextView speedUnit;
+    private View elevationContainer;
+    private TextView elevationValue;
+    private TextView elevationUnit;
+    private View coordinateSeparator;
+    private View coordinateContainer;
+    private TextView latitudeValue;
+    private TextView longitudeValue;
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        sensorContainerView = view.findViewById(R.id.stats_sensor_container);
+        heartRateValueView = view.findViewById(R.id.stats_sensor_heart_rate_value);
+        heartRateSensorView = view.findViewById(R.id.stats_sensor_heart_rate_sensor_value);
+
+        totalTimeValueView = view.findViewById(R.id.stats_total_time_value);
+
+        distanceValue = view.findViewById(R.id.stats_distance_value);
+        distanceUnit = view.findViewById(R.id.stats_distance_unit);
+
+        activityLabel = view.findViewById(R.id.stats_activity_type_label);
+        activitySpinner = view.findViewById(R.id.stats_activity_type_icon);
+
+        movingTimeValue = view.findViewById(R.id.stats_moving_time_value);
+
+        speedAvgLabel = view.findViewById(R.id.stats_average_speed_label);
+        speedAvgValue = view.findViewById(R.id.stats_average_speed_value);
+        speedAvgUnit = view.findViewById(R.id.stats_average_speed_unit);
+
+        speedMaxLabel = view.findViewById(R.id.stats_max_speed_label);
+        speedMaxValue = view.findViewById(R.id.stats_max_speed_value);
+        speedMaxUnit = view.findViewById(R.id.stats_max_speed_unit);
+
+        speedMovingLabel = view.findViewById(R.id.stats_moving_speed_label);
+        speedMovingValue = view.findViewById(R.id.stats_moving_speed_value);
+        speedMovingUnit = view.findViewById(R.id.stats_moving_speed_unit);
+
+        gradeElevationSeparator = view.findViewById(R.id.stats_elevation_separator);
+        gradeElevationContainer = view.findViewById(R.id.stats_elevation_container);
+
+        elevationMinValue = view.findViewById(R.id.stats_elevation_min_value);
+        elevationMinUnit = view.findViewById(R.id.stats_elevation_min_unit);
+
+        elevationMaxValue = view.findViewById(R.id.stats_elevation_max_value);
+        elevationMaxUnit = view.findViewById(R.id.stats_elevation_max_unit);
+
+        speedContainer = view.findViewById(R.id.stats_speed);
+        speedLabel = view.findViewById(R.id.stats_speed_label);
+        speedValue = view.findViewById(R.id.stats_speed_value);
+        speedUnit = view.findViewById(R.id.stats_speed_unit);
+
+        elevationContainer = view.findViewById(R.id.stats_elevation);
+        elevationValue = view.findViewById(R.id.stats_elevation_current_value);
+        elevationUnit = view.findViewById(R.id.stats_elevation_current_unit);
+
+        coordinateSeparator = view.findViewById(R.id.stats_coordinate_separator);
+        coordinateContainer = view.findViewById(R.id.stats_coordinate_container);
+
+        latitudeValue = view.findViewById(R.id.stats_latitude_value);
+        longitudeValue = view.findViewById(R.id.stats_longitude_value);
     }
 
     @Override
@@ -125,7 +224,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(getContext(), null);
         trackRecordingServiceConnection.startConnection(getContext());
 
-        updateUi(getActivity());
+        updateUi();
         if (isSelectedTrackRecording()) {
             handlerUpdateUI.post(updateUIeachSecond);
         }
@@ -146,6 +245,60 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        sensorContainerView = null;
+        heartRateValueView = null;
+        heartRateSensorView = null;
+
+        totalTimeValueView = null;
+
+        distanceValue = null;
+        distanceUnit = null;
+
+        activityLabel = null;
+        activitySpinner = null;
+
+        movingTimeValue = null;
+
+        speedAvgLabel = null;
+        speedAvgValue = null;
+        speedAvgUnit = null;
+
+        speedMaxLabel = null;
+        speedMaxValue = null;
+        speedMaxUnit = null;
+
+        speedMovingLabel = null;
+        speedMovingValue = null;
+        speedMovingUnit = null;
+
+        gradeElevationSeparator = null;
+        gradeElevationContainer = null;
+
+        elevationMinValue = null;
+        elevationMinUnit = null;
+
+        elevationMaxValue = null;
+        elevationMaxUnit = null;
+
+        speedContainer = null;
+        speedLabel = null;
+        speedValue = null;
+        speedUnit = null;
+
+        elevationContainer = null;
+        elevationValue = null;
+        elevationUnit = null;
+
+        coordinateSeparator = null;
+        coordinateContainer = null;
+
+        latitudeValue = null;
+        longitudeValue = null;
+    }
+
+    @Override
     public void onTrackUpdated(final Track track) {
         if (isResumed()) {
             getActivity().runOnUiThread(new Runnable() {
@@ -154,7 +307,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
                     if (isResumed()) {
                         lastTripStatistics = track != null ? track.getTripStatistics() : null;
                         category = track != null ? track.getCategory() : "";
-                        updateUi(getActivity());
+                        updateUi();
                     }
                 }
             });
@@ -195,7 +348,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
                                 lastLocation = null;
                             }
                         }
-                        StatsUtils.setLocationValues(getActivity(), lastLocation, isSelectedTrackRecording());
+                        setLocationValues();
                     }
                 }
             });
@@ -224,7 +377,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
                 @Override
                 public void run() {
                     if (isResumed()) {
-                        updateUi(getActivity());
+                        updateUi();
                     }
                 }
             });
@@ -239,7 +392,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
                 @Override
                 public void run() {
                     if (isResumed()) {
-                        updateUi(getActivity());
+                        updateUi();
                     }
                 }
             });
@@ -295,6 +448,12 @@ public class StatsFragment extends Fragment implements TrackDataListener {
         return trackDataHub != null && trackDataHub.isSelectedTrackPaused();
     }
 
+    private void updateUi() {
+        updateStats();
+        setLocationValues();
+        updateSensorDataUI();
+    }
+
     /**
      * Tries to fetch most recent {@link SensorDataSet} {@link de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager}.
      */
@@ -309,16 +468,173 @@ public class StatsFragment extends Fragment implements TrackDataListener {
             sensorDataSet = trackRecordingService.getSensorData();
         }
 
-        StatsUtils.setSensorData(getActivity(), sensorDataSet, isSelectedTrackRecording());
+        setHeartRateSensorData(sensorDataSet, isSelectedTrackRecording());
     }
 
-    /**
-     * Updates the UI.
-     */
-    private void updateUi(FragmentActivity activity) {
-        String trackIconValue = TrackIconUtils.getIconValue(activity, category);
-        StatsUtils.setTripStatisticsValues(activity, lastTripStatistics, trackIconValue);
-        StatsUtils.setLocationValues(activity, lastLocation, isSelectedTrackRecording());
-        updateSensorDataUI();
+    private void setHeartRateSensorData(SensorDataSet sensorDataSet, boolean isRecording) {
+        // heart rate
+        int isVisible = View.VISIBLE;
+        if (!isRecording || PreferencesUtils.isBluetoothHeartRateSensorAddressDefault(getContext())) {
+            isVisible = View.INVISIBLE;
+        }
+        sensorContainerView.setVisibility(isVisible);
+
+        if (isRecording) {
+            String heartRate = getContext().getString(R.string.value_unknown);
+            String sensorName = getContext().getString(R.string.value_unknown);
+            if (sensorDataSet != null && sensorDataSet.isRecent(BluetoothRemoteSensorManager.MAX_SENSOR_DATE_SET_AGE_MS)) {
+                sensorName = sensorDataSet.getSensorName();
+                if (sensorDataSet.hasHeartRate()) {
+                    heartRate = StringUtils.formatDecimal(sensorDataSet.getHeartRate(), 0);
+                }
+            }
+
+            heartRateSensorView.setText(sensorName);
+            heartRateValueView.setText(heartRate);
+        }
+    }
+
+    private void updateStats() {
+        String trackIconValue = TrackIconUtils.getIconValue(getContext(), category);
+
+        boolean metricUnits = PreferencesUtils.isMetricUnits(getContext());
+        boolean reportSpeed = PreferencesUtils.isReportSpeed(getContext());
+        boolean isRecording = isSelectedTrackRecording();
+
+        // Set total distance
+        {
+            double totalDistance = lastTripStatistics == null ? Double.NaN : lastTripStatistics.getTotalDistance();
+            Pair<String, String> parts = StringUtils.getDistanceParts(getContext(), totalDistance, metricUnits);
+
+            distanceValue.setText(parts.first);
+            distanceUnit.setText(parts.second);
+        }
+
+        // Set activity type
+        {
+            activityLabel.setVisibility(trackIconValue != null ? View.VISIBLE : View.GONE);
+
+            activitySpinner.setVisibility(trackIconValue != null ? View.VISIBLE : View.GONE);
+            activitySpinner.setEnabled(isRecording);
+            if (trackIconValue != null) {
+                TrackIconUtils.setIconSpinner(activitySpinner, trackIconValue);
+            }
+        }
+
+        // Set time
+        if (lastTripStatistics != null) {
+            setTotalTimeValue(lastTripStatistics.getTotalTime());
+
+            movingTimeValue.setText(StringUtils.formatElapsedTime(lastTripStatistics.getMovingTime()));
+        }
+
+        // Set average speed/pace
+        {
+            double speed = lastTripStatistics != null ? lastTripStatistics.getAverageSpeed() : Double.NaN;
+            speedAvgLabel.setText(reportSpeed ? R.string.stats_average_speed : R.string.stats_average_pace);
+
+            Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), speed, metricUnits, reportSpeed);
+            speedAvgValue.setText(parts.first);
+            speedAvgUnit.setText(parts.second);
+        }
+
+        // Set max speed/pace
+        {
+            double speed = lastTripStatistics == null ? Double.NaN : lastTripStatistics.getMaxSpeed();
+
+            speedMaxLabel.setText(reportSpeed ? R.string.stats_max_speed : R.string.stats_fastest_pace);
+
+            Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), speed, metricUnits, reportSpeed);
+            speedMaxValue.setText(parts.first);
+            speedMaxUnit.setText(parts.second);
+        }
+
+        // Set moving speed/pace
+        {
+            double speed = lastTripStatistics != null ? lastTripStatistics.getAverageMovingSpeed() : Double.NaN;
+
+            speedMovingLabel.setText(reportSpeed ? R.string.stats_average_moving_speed : R.string.stats_average_moving_pace);
+
+            Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), speed, metricUnits, reportSpeed);
+            speedMovingValue.setText(parts.first);
+            speedMovingUnit.setText(parts.second);
+        }
+
+
+        // Set elevation
+        {
+            boolean showElevation = PreferencesUtils.isShowStatsGradeElevation(getContext());
+            gradeElevationSeparator.setVisibility(showElevation ? View.VISIBLE : View.GONE);
+
+            gradeElevationContainer.setVisibility(showElevation ? View.VISIBLE : View.GONE);
+
+            if (showElevation) {
+                {
+                    double elevation = lastTripStatistics == null ? Double.NaN : lastTripStatistics.getMinElevation();
+                    Pair<String, String> parts = StringUtils.formatElevation(getContext(), elevation, metricUnits);
+
+
+                    elevationMinValue.setText(parts.first);
+                    elevationMinUnit.setText(parts.second);
+                }
+
+                {
+                    double elevation = lastTripStatistics == null ? Double.NaN : lastTripStatistics.getMaxElevation();
+                    Pair<String, String> parts = StringUtils.formatElevation(getContext(), elevation, metricUnits);
+
+
+                    elevationMaxValue.setText(parts.first);
+                    elevationMaxUnit.setText(parts.second);
+                }
+            }
+        }
+    }
+
+    private void setTotalTimeValue(long totalTime) {
+        totalTimeValueView.setText(StringUtils.formatElapsedTime(totalTime));
+    }
+
+    private void setLocationValues() {
+        boolean metricUnits = PreferencesUtils.isMetricUnits(getContext());
+        boolean reportSpeed = PreferencesUtils.isReportSpeed(getContext());
+        boolean isRecording = isSelectedTrackRecording();
+
+        // Set speed/pace
+        speedContainer.setVisibility(isRecording ? View.VISIBLE : View.INVISIBLE);
+        if (isRecording) {
+            speedLabel.setText(reportSpeed ? R.string.stats_speed : R.string.stats_pace);
+
+            double speed = lastLocation != null && lastLocation.hasSpeed() ? lastLocation.getSpeed() : Double.NaN;
+            Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), speed, metricUnits, reportSpeed);
+            speedValue.setText(parts.first);
+            speedUnit.setText(parts.second);
+        }
+
+        // Set elevation
+        boolean showGradeElevation = isRecording && PreferencesUtils.isShowStatsGradeElevation(getContext());
+        elevationContainer.setVisibility(showGradeElevation ? View.VISIBLE : View.GONE);
+
+        if (showGradeElevation) {
+            double altitude = lastLocation != null && lastLocation.hasAltitude() ? lastLocation.getAltitude() : Double.NaN;
+            Pair<String, String> parts = StringUtils.formatElevation(getContext(), altitude, metricUnits);
+
+            elevationValue.setText(parts.first);
+            elevationUnit.setText(parts.second);
+        }
+
+        // Set coordinate
+        boolean showCoordinate = isRecording && PreferencesUtils.isStatsShowCoordinate(getContext());
+
+        coordinateSeparator.setVisibility(showCoordinate ? View.VISIBLE : View.GONE);
+        coordinateContainer.setVisibility(showCoordinate ? View.VISIBLE : View.GONE);
+        if (showCoordinate) {
+            double latitude = lastLocation != null ? lastLocation.getLatitude() : Double.NaN;
+            String latitudeText = Double.isNaN(latitude) || Double.isInfinite(latitude) ? getContext().getString(R.string.value_unknown) : StringUtils.formatCoordinate(latitude);
+            latitudeValue.setText(latitudeText);
+
+            double longitude = lastLocation != null ? lastLocation.getLongitude() : Double.NaN;
+            String longitudeText = Double.isNaN(longitude) || Double.isInfinite(longitude) ? getContext().getString(R.string.value_unknown) : StringUtils.formatCoordinate(longitude);
+            longitudeValue.setText(longitudeText);
+        }
     }
 }

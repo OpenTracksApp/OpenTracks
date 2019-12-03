@@ -363,7 +363,6 @@ limitations under the License.
         <LinearLayout style="@style/StatsLargeItemContainer">
 
             <TextView
-                android:id="@+id/stats_sensor_heart_rate_label"
                 style="@style/StatsLargeLabel"
                 android:text="@string/sensor_state_heart_rate" />
 
