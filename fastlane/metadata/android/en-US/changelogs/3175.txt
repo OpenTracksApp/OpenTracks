@@ -1,0 +1,10 @@
+v3.2.9: OpenTracks
+
+Changes:
+- Option to keep screen on while recording
+- Markers: removed split markers completely
+- Voice announcement now work without READ_PHONE_STATE permission
+
+Bugfixes:
+- Statistics: heart rate was not shown
+- Statistics: time was briefly reset to 0s
