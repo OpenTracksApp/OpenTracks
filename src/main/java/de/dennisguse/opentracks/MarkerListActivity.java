@@ -74,8 +74,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
      * Note that sharedPreferenceChangeListener cannot be an anonymous inner
      * class. Anonymous inner class will get garbage collected.
      */
-    private final OnSharedPreferenceChangeListener
-            sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
+    private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
             // Note that the key can be null
@@ -166,6 +165,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
                 String category = cursor.getString(categoryIndex);
                 String description = cursor.getString(descriptionIndex);
                 String photoUrl = cursor.getString(photoUrlIndex);
+                //TODO also show latitude and longitude in list
                 double latitude = cursor.getDouble(latitudeIndex);
                 double longitude = cursor.getDouble(longitudeIndex);
 
@@ -244,7 +244,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (track != null && item.getItemId() == R.id.marker_list_insert_marker) {
             Intent intent = IntentUtils.newIntent(this, MarkerEditActivity.class)
                     .putExtra(MarkerEditActivity.EXTRA_TRACK_ID, track.getId());

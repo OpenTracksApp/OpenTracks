@@ -40,7 +40,7 @@ public class BluetoothLeAdapter extends BaseAdapter {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
             //TODO Check if there is a better way to achieve identical look and feel to ListPreference.
             //Use material design single choice; for old style use: android.R.layout.select_dialog_singlechoice
-            currentView = inflater.inflate(androidx.appcompat.R.layout.select_dialog_singlechoice_material, null);
+            currentView = inflater.inflate(androidx.appcompat.R.layout.select_dialog_singlechoice_material, parent);
         }
 
         Device device = devices.get(position);

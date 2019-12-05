@@ -536,8 +536,7 @@ public class TrackRecordingService extends Service {
     }
 
     /**
-     * Common code for starting a new track, resuming a track, or restarting after
-     * phone reboot.
+     * Common code for starting a new track, resuming a track, or restarting after phone reboot.
      *
      * @param trackStarted true if track is started, false if track is resumed
      */
@@ -597,7 +596,7 @@ public class TrackRecordingService extends Service {
                 contentProviderUtils.updateTrack(track);
             }
         }
-        endRecording(true, trackId);
+        endRecording(true);
     }
 
     /**
@@ -625,7 +624,7 @@ public class TrackRecordingService extends Service {
             insertLocation(track, pause, null);
         }
 
-        endRecording(false, recordingTrackId);
+        endRecording(false);
 
         notificationManager.updateContent(getString(R.string.generic_paused));
     }
@@ -634,9 +633,8 @@ public class TrackRecordingService extends Service {
      * Common code for ending a track or pausing a track.
      *
      * @param trackStopped true if track is stopped, false if track is paused
-     * @param trackId      the track id
      */
-    private void endRecording(boolean trackStopped, long trackId) {
+    private void endRecording(boolean trackStopped) {
         // Shutdown periodic tasks
         voiceExecutor.shutdown();
 

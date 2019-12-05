@@ -17,55 +17,50 @@ limitations under the License.
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/marker_detail_waypoint_photo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/black"
+        android:contentDescription="@string/image_photo_marker"
+        android:scaleType="fitCenter" />
+
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="wrap_content">
+        <!-- A gradient on top of the text -->
         <ImageView
-            android:id="@+id/marker_detail_waypoint_photo"
+            android:id="@+id/marker_detail_waypoint_text_gradient"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/black"
+            android:alpha=".6"
             android:contentDescription="@string/image_photo_marker"
-            android:scaleType="fitCenter" />
+            android:src="@drawable/text_gradient" />
 
-        <FrameLayout
+        <LinearLayout
+            android:id="@+id/marker_detail_waypoint_info"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <!-- A gradient on top of the text -->
-            <ImageView
-                android:id="@+id/marker_detail_waypoint_text_gradient"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:alpha=".6"
-                android:contentDescription="@string/image_photo_marker"
-                android:src="@drawable/text_gradient" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="80dp"
+            android:orientation="vertical"
+            android:padding="8dp">
 
-            <LinearLayout
-                android:id="@+id/marker_detail_waypoint_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="80dp"
-                android:orientation="vertical"
-                android:padding="8dp">
+            <TextView
+                android:id="@+id/marker_detail_waypoint_name"
+                style="@style/TextMedium"
+                android:paddingTop="8dp" />
 
-                <TextView
-                    android:id="@+id/marker_detail_waypoint_name"
-                    style="@style/TextMedium"
-                    android:paddingTop="8dp" />
+            <TextView
+                android:id="@+id/marker_detail_waypoint_category"
+                style="@style/TextSmall" />
 
-                <TextView
-                    android:id="@+id/marker_detail_waypoint_category"
-                    style="@style/TextSmall" />
+            <TextView
+                android:id="@+id/marker_detail_waypoint_description"
+                style="@style/TextSmall" />
 
-                <TextView
-                    android:id="@+id/marker_detail_waypoint_description"
-                    style="@style/TextSmall" />
-
-                <TextView
-                    android:id="@+id/marker_detail_waypoint_location"
-                    style="@style/TextSmall" />
-            </LinearLayout>
-        </FrameLayout>
+            <TextView
+                android:id="@+id/marker_detail_waypoint_location"
+                style="@style/TextSmall" />
+        </LinearLayout>
     </FrameLayout>
 </FrameLayout>

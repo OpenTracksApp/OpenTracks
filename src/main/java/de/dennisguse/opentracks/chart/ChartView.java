@@ -37,6 +37,7 @@ import androidx.core.view.GestureDetectorCompat;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import de.dennisguse.opentracks.MarkerDetailActivity;
 import de.dennisguse.opentracks.R;
@@ -86,8 +87,8 @@ public class ChartView extends View {
     }
 
     private final ChartValueSeries[] series = new ChartValueSeries[NUM_SERIES];
-    private final ArrayList<double[]> chartData = new ArrayList<>();
-    private final ArrayList<Waypoint> waypoints = new ArrayList<>();
+    private final List<double[]> chartData = new ArrayList<>();
+    private final List<Waypoint> waypoints = new ArrayList<>();
     private final ExtremityMonitor xExtremityMonitor = new ExtremityMonitor();
     private final Paint axisPaint;
     private final Paint xAxisMarkerPaint;
@@ -146,7 +147,7 @@ public class ChartView extends View {
         @Override
         public boolean onSingleTapConfirmed(MotionEvent event) {
             // Check if the y event is within markerHeight of the marker center
-            if (Math.abs(event.getY() - topBorder - spacer - markerHeight / 2) < markerHeight) {
+            if (Math.abs(event.getY() - topBorder - spacer - markerHeight / 2f) < markerHeight) {
                 int minDistance = Integer.MAX_VALUE;
                 Waypoint nearestWaypoint = null;
                 synchronized (waypoints) {
@@ -324,8 +325,7 @@ public class ChartView extends View {
     public void addDataPoints(ArrayList<double[]> dataPoints) {
         synchronized (chartData) {
             chartData.addAll(dataPoints);
-            for (int i = 0; i < dataPoints.size(); i++) {
-                double[] dataPoint = dataPoints.get(i);
+            for (double[] dataPoint : dataPoints) {
                 xExtremityMonitor.update(dataPoint[0]);
                 for (int j = 0; j < series.length; j++) {
                     if (!Double.isNaN(dataPoint[j + 1])) {
@@ -537,9 +537,9 @@ public class ChartView extends View {
      */
     private void drawGrid(Canvas canvas) {
         // X axis grid
-        ArrayList<Double> xAxisMarkerPositions = getXAxisMarkerPositions(getXAxisInterval());
-        for (int i = 0; i < xAxisMarkerPositions.size(); i++) {
-            int x = getX(xAxisMarkerPositions.get(i));
+        List<Double> xAxisMarkerPositions = getXAxisMarkerPositions(getXAxisInterval());
+        for (double position : xAxisMarkerPositions) {
+            int x = getX(position);
             canvas.drawLine(x, topBorder, x, topBorder + effectiveHeight, gridPaint);
         }
         // Y axis grid
@@ -611,7 +611,7 @@ public class ChartView extends View {
         canvas.drawText(label, x + effectiveWidth + spacer, y + yOffset, axisPaint);
 
         double interval = getXAxisInterval();
-        ArrayList<Double> markerPositions = getXAxisMarkerPositions(interval);
+        List<Double> markerPositions = getXAxisMarkerPositions(interval);
         NumberFormat numberFormat = interval < 1 ? X_FRACTION_FORMAT : X_NUMBER_FORMAT;
         for (int i = 0; i < markerPositions.size(); i++) {
             drawXAxisMarker(canvas, markerPositions.get(i), numberFormat, spacer + yOffset);
@@ -664,8 +664,8 @@ public class ChartView extends View {
     /**
      * Gets the x axis marker positions.
      */
-    private ArrayList<Double> getXAxisMarkerPositions(double interval) {
-        ArrayList<Double> markers = new ArrayList<>();
+    private List<Double> getXAxisMarkerPositions(double interval) {
+        List<Double> markers = new ArrayList<>();
         markers.add(0d);
         for (int i = 1; i * interval < maxX; i++) {
             markers.add(i * interval);
@@ -775,8 +775,7 @@ public class ChartView extends View {
     private void drawPaths() {
         boolean[] hasMoved = new boolean[series.length];
 
-        for (int i = 0; i < chartData.size(); i++) {
-            double[] dataPoint = chartData.get(i);
+        for (double[] dataPoint : chartData) {
             for (int j = 0; j < series.length; j++) {
                 double value = dataPoint[j + 1];
                 if (Double.isNaN(value)) {

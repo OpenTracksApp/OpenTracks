@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- This file contains old and now unused settings. -->
     <!-- It is recommended not to reuse the keys. -->
 
-    <string name="chart_x_axis_key" translatable="false">chartXAxis</string>
-    <string name="chart_x_axis_default" translatable="false">@string/chart_x_axis_distance</string>
-    <string-array name="chart_x_axis_values">
+    <string name="chart_x_axis_key" translatable="false" tools:keep="@string/chart_x_axis_key">chartXAxis</string>
+    <string name="chart_x_axis_default" translatable="false" tools:keep="@string/chart_x_axis_default">@string/chart_x_axis_distance</string>
+    <string-array name="chart_x_axis_values" tools:keep="@array/chart_x_axis_values">
         <item>@string/chart_x_axis_distance</item>
         <item>@string/chart_x_axis_time</item>
     </string-array>
-    <string name="chart_x_axis_time" translatable="false">TIME</string>
-    <string name="chart_x_axis_distance" translatable="false">DISTANCE</string>
-    <string-array name="chart_x_axis_options">
+    <string name="chart_x_axis_time" translatable="false" tools:keep="@string/chart_x_axis_time">TIME</string>
+    <string name="chart_x_axis_distance" translatable="false" tools:keep="@string/chart_x_axis_distance">DISTANCE</string>
+    <string-array name="chart_x_axis_options" tools:keep="@array/chart_x_axis_options">
         <item>@string/settings_chart_by_distance</item>
         <item>@string/settings_chart_by_time</item>
     </string-array>
 
-    <string name="split_frequency_key" translatable="false">splitFrequency</string>
-    <string name="split_frequency_default" translatable="false">@string/frequency_off</string>
+    <string name="split_frequency_key" translatable="false" tools:keep="@string/split_frequency_key">splitFrequency</string>
+    <string name="split_frequency_default" translatable="false" tools:keep="@string/split_frequency_default">@string/frequency_off</string>
     <string name="voice_frequency_key" translatable="false">voiceFrequency</string>
     <string name="voice_frequency_default" translatable="false">@string/frequency_off</string>
     <string name="frequency_off" translatable="false">0</string>

@@ -117,10 +117,8 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
             });
         }
     };
-    /*
-     * Note that sharedPreferenceChangeListener cannot be an anonymous inner
-     * class. Anonymous inner class will get garbage collected.
-     */
+
+    // Note that sharedPreferenceChangeListener cannot be an anonymous inner class. Anonymous inner class will get garbage collected.
     private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {

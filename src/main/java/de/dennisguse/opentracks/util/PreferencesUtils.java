@@ -86,7 +86,7 @@ public class PreferencesUtils {
      * Compares if keyId and key belong to the same shared preference key.
      *
      * @param keyId The resource id of the key
-     * @param key
+     * @param key The key of the preference
      * @return true if key == null or key belongs to keyId
      */
     public static boolean isKey(Context context, int keyId, String key) {
@@ -316,7 +316,6 @@ public class PreferencesUtils {
     }
 
     public static int getRecordingDistanceInterval(Context context) {
-        final int RECORDING_DISTANCE_INTERVAL = Integer.parseInt(context.getResources().getString(R.string.recording_distance_interval_default));
         return PreferencesUtils.getInt(context, R.string.recording_distance_interval_key, getRecordingDistanceIntervalDefault(context));
     }
 

@@ -23,8 +23,6 @@ import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
 
-import androidx.annotation.VisibleForTesting;
-
 import java.text.NumberFormat;
 
 import de.dennisguse.opentracks.stats.ExtremityMonitor;
@@ -203,7 +201,6 @@ class ChartValueSeries {
     /**
      * Gets the interval value.
      */
-    @VisibleForTesting
     int getInterval() {
         return interval;
     }
@@ -218,7 +215,6 @@ class ChartValueSeries {
     /**
      * Gets the max marker value.
      */
-    @VisibleForTesting
     int getMaxMarkerValue() {
         return maxMarkerValue;
     }

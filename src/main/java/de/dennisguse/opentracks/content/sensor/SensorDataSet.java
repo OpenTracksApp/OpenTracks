@@ -5,8 +5,8 @@ public final class SensorDataSet {
     public static final float DATA_UNAVAILABLE = Float.NaN;
 
     //TODO It might be necessary to consider: if sensor was connected as well.
-    public String sensorName;
-    public String sensorAddress;
+    private String sensorName;
+    private String sensorAddress;
     private float heartRate;
     private float cadence;
     private float power;

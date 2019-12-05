@@ -146,7 +146,7 @@ public enum TrackFileFormat {
         }
 
         public TrackExporter newTrackExporter(Context context, Track[] tracks, TrackExporterListener trackExporterListener) {
-            return newKmzTrackExporter(context, this.newTrackWriter(context, tracks.length > 1), tracks, trackExporterListener, exportPhotos);
+            return newKmzTrackExporter(context, newTrackWriter(context, tracks.length > 1), tracks, trackExporterListener, exportPhotos);
         }
 
         public String getExtension() {
@@ -188,7 +188,7 @@ public enum TrackFileFormat {
 
     public TrackExporter newTrackExporter(Context context, Track[] tracks, TrackExporterListener trackExporterListener) {
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
-        TrackWriter trackWriter = this.newTrackWriter(context, tracks.length > 1);
+        TrackWriter trackWriter = newTrackWriter(context, tracks.length > 1);
         return new FileTrackExporter(contentProviderUtils, trackWriter, tracks, trackExporterListener);
     }
 
