@@ -48,6 +48,8 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
 
     private static final String TAG = TrackRecordingServiceConnection.class.getSimpleName();
 
+    @Deprecated
+    //TODO Always the context of the owner of a service connection (i.e., let it be passed to every call).
     private final Context context;
     private final Runnable callback;
 

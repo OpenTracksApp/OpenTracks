@@ -68,6 +68,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     private TrackDataHub trackDataHub;
     private Handler handlerUpdateUI;
 
+    //TODO Initialize immediately and remove in onDestroy()
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
 
     private Location lastLocation = null;
@@ -237,7 +238,9 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     @Override
     public void onStop() {
         super.onStop();
-        trackRecordingServiceConnection.unbind();
+        if (trackRecordingServiceConnection != null) {
+            trackRecordingServiceConnection.unbind();
+        }
         trackRecordingServiceConnection = null;
     }
 
