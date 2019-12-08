@@ -164,7 +164,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     // Menu items
     private MenuItem searchMenuItem;
     private MenuItem startGpsMenuItem;
-    private MenuItem deleteAllMenuItem;
+//    private MenuItem deleteAllMenuItem;
 
     private final OnClickListener stopListener = new OnClickListener() {
         @Override
@@ -371,7 +371,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         ActivityUtils.configureSearchWidget(this, searchMenuItem, trackController);
 
         startGpsMenuItem = menu.findItem(R.id.track_list_start_gps);
-        deleteAllMenuItem = menu.findItem(R.id.track_list_delete_all);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -424,9 +423,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             case R.id.track_list_markers:
                 intent = IntentUtils.newIntent(this, MarkerListActivity.class);
                 startActivity(intent);
-                return true;
-            case R.id.track_list_delete_all:
-                deleteTracks(new long[]{-1L});
                 return true;
             case R.id.track_list_settings:
                 intent = IntentUtils.newIntent(this, SettingsActivity.class);
@@ -494,9 +490,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                 startGpsMenuItem.setTitle(isGpsStarted ? R.string.menu_stop_gps : R.string.menu_start_gps);
                 startGpsMenuItem.setIcon(isGpsStarted ? R.drawable.ic_gps_fixed_24dp : R.drawable.ic_gps_off_24dp);
             }
-        }
-        if (deleteAllMenuItem != null) {
-            deleteAllMenuItem.setVisible(hasTrack && !isRecording);
         }
     }
 
