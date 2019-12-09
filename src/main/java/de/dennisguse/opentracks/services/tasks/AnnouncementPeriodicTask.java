@@ -81,7 +81,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
     private final UtteranceProgressListener utteranceListener = new UtteranceProgressListener() {
         @Override
         public void onStart(String utteranceId) {
-            int result = audioManager.requestAudioFocus(audioFocusChangeListener, TextToSpeech.Engine.DEFAULT_STREAM, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+            int result = audioManager.requestAudioFocus(audioFocusChangeListener, TextToSpeech.Engine.DEFAULT_STREAM, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
             if (result == AudioManager.AUDIOFOCUS_REQUEST_FAILED) {
                 Log.w(TAG, "Failed to request audio focus.");
             }
@@ -89,7 +89,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
 
         @Override
         public void onDone(String utteranceId) {
-            int result = audioManager.abandonAudioFocus(null);
+            int result = audioManager.abandonAudioFocus(audioFocusChangeListener);
             if (result == AudioManager.AUDIOFOCUS_REQUEST_FAILED) {
                 Log.w(TAG, "Failed to relinquish audio focus.");
             }
