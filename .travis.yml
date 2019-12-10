@@ -22,22 +22,23 @@ android:
     - android-28
 
 # Emulator Management: Create, Start and Wait
-install:
-  - echo y | sdkmanager "platform-tools"
-  - echo y | sdkmanager --channel=4 "emulator"
-  - echo y | sdkmanager "system-images;android-$API;$EMU_FLAVOR;$ABI"
-  - echo no | avdmanager create avd --force -n test -k "system-images;android-$API;$EMU_FLAVOR;$ABI" -c 10M
-  - emulator -verbose -avd test -no-accel -no-snapshot -no-window -camera-back none -camera-front none -selinux permissive -qemu -m 2048 &
-  - android-wait-for-emulator
-  - adb shell input keyevent 82 &
+#install:
+#  - echo y | sdkmanager "platform-tools"
+#  - echo y | sdkmanager --channel=4 "emulator"
+#  - echo y | sdkmanager "system-images;android-$API;$EMU_FLAVOR;$ABI"
+#  - echo no | avdmanager create avd --force -n test -k "system-images;android-$API;$EMU_FLAVOR;$ABI" -c 10M
+#  - emulator -verbose -avd test -no-accel -no-snapshot -no-window -camera-back none -camera-front none -selinux permissive -qemu -m 2048 &
+#  - android-wait-for-emulator
+#  - adb shell input keyevent 82 &
 
 script:
   - ./gradlew clean build
-  - ./gradlew connectedCheck
+#  - ./gradlew connectedCheck
 
 sbefore_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
 cache:
   directories:
     - $HOME/.gradle/caches/
