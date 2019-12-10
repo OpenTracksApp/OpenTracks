@@ -2,9 +2,30 @@
 
 _OpenTracks_ is a sport tracking application that completely respects your privacy.
 
-<a href="https://f-droid.org/packages/de.dennisguse.opentracks">
-    <img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="60">
-</a>
+<table>
+    <tr>
+        <th>Free</th>
+        <th>Paid</th>
+        <th>Donations</th>
+    </tr>
+    <tr>
+        <td>
+            <a href="https://f-droid.org/packages/de.dennisguse.opentracks">
+                <img alt="Get it on F-Droid" src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="60" align="middle">
+            </a>
+        </td>
+        <td>
+            <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">
+                <img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" height="60" align="middle">
+            </a>
+        </td>
+        <td>
+            <a href="https://liberapay.com/dennis.guse/donate">
+                <img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg" height="45" align="middle">
+            </a>
+        </td>
+    </tr>
+</table>
 
 ## Features:
 * __Tracking:__ track your sport and outdoor activities 
@@ -26,9 +47,6 @@ _Please note:_
 _Tracks_ does not contain a _map_ (as this would required Internet access).
 To show your tracks on a map, a 3rd party application (e.g., [OsmAnd](https://play.google.com/store/apps/details?id=net.osmand) or [MAPS.ME](https://play.google.com/store/apps/details?id=com.mapswithme.maps.pro)) needs to be installed.  
 
-<a href="https://liberapay.com/dennis.guse/donate">
-    <img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg" height="45">
-</a>
 
 ## Screenshots
 <div>
