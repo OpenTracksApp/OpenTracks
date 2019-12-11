@@ -188,6 +188,7 @@ public final class Waypoint {
     }
 
     public enum WaypointType {
-        WAYPOINT, STATISTICS
+        WAYPOINT,
+        STATISTICS //Always the first waypoint; only one can exist.
     }
 }

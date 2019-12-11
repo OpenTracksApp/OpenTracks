@@ -190,17 +190,6 @@ public class TrackRecordingServiceTest {
         Assert.assertEquals(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, service.getRecordingTrackId());
     }
 
-    @MediumTest
-    @Test
-    @Deprecated
-    public void testInsertStatisticsMarker_noRecordingTrack() throws Exception {
-        ITrackRecordingService service = ((ITrackRecordingService) mServiceRule.bindService(createStartIntent(context)));
-        Assert.assertFalse(service.isRecording());
-
-        long waypointId = service.insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS);
-        Assert.assertEquals(-1L, waypointId);
-    }
-
     // NOTE: Do not use to create a track that is currently recording.
     private void createDummyTrack(long id, long stopTime, boolean isRecording) {
         Track dummyTrack = new Track();

@@ -218,9 +218,7 @@ public class TrackRecordingServiceTestLooper {
             location.setBearing(3.0f);
             service.insertTrackPoint(location);
 
-            if (i % 10 == 0) {
-                service.insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS);
-            } else if (i % 7 == 0) {
+            if (i % 7 == 0) {
                 service.insertWaypoint(WaypointCreationRequest.DEFAULT_WAYPOINT);
             }
         }

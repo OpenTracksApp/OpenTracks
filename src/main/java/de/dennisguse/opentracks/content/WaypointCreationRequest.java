@@ -26,8 +26,7 @@ public class WaypointCreationRequest {
 
     public final static WaypointCreationRequest DEFAULT_WAYPOINT = new WaypointCreationRequest(WaypointType.WAYPOINT, false);
 
-    public final static WaypointCreationRequest DEFAULT_STATISTICS = new WaypointCreationRequest(WaypointType.STATISTICS, false);
-
+    @Deprecated // TODO Do not create per
     public final static WaypointCreationRequest DEFAULT_START_TRACK = new WaypointCreationRequest(WaypointType.STATISTICS, true);
 
     private WaypointType type;

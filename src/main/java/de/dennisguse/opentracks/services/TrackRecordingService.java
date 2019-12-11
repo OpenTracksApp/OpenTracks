@@ -49,7 +49,6 @@ import de.dennisguse.opentracks.content.LocationIterator;
 import de.dennisguse.opentracks.content.SensorDataSetLocation;
 import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.content.Waypoint;
-import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 import de.dennisguse.opentracks.content.WaypointCreationRequest;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
@@ -275,23 +274,14 @@ public class TrackRecordingService extends Service {
         super.onDestroy();
     }
 
-    /**
-     * Returns true if the service is recording.
-     */
     public boolean isRecording() {
         return PreferencesUtils.isRecording(recordingTrackId);
     }
 
-    /**
-     * Returns true if the current recording is paused.
-     */
     public boolean isPaused() {
         return recordingTrackPaused;
     }
 
-    /**
-     * Gets the trip statistics.
-     */
     public TripStatistics getTripStatistics() {
         if (trackTripStatisticsUpdater == null) {
             return null;
@@ -310,31 +300,19 @@ public class TrackRecordingService extends Service {
             return -1L;
         }
 
-        WaypointType waypointType = waypointCreationRequest.getType();
-        if (waypointType == WaypointType.STATISTICS)
-            throw new RuntimeException("statistics waypoints are not supported anymore.");
-
-        // Get name
-        String name;
-        if (waypointCreationRequest.getName() != null) {
-            name = waypointCreationRequest.getName();
-        } else {
-            int nextWaypointNumber = contentProviderUtils.getNextWaypointNumber(recordingTrackId, waypointType);
+        String name = waypointCreationRequest.getName();
+        if (name == null) {
+            int nextWaypointNumber = contentProviderUtils.getNextWaypointNumber(recordingTrackId, waypointCreationRequest.getType());
             if (nextWaypointNumber == -1) {
                 nextWaypointNumber = 0;
             }
             name = getString(R.string.marker_name_format, nextWaypointNumber);
         }
 
-        // Get category
         String category = waypointCreationRequest.getCategory() != null ? waypointCreationRequest.getCategory() : "";
-
-        // Get tripStatistics, description, and icon
         String description = waypointCreationRequest.getDescription() != null ? waypointCreationRequest.getDescription() : "";
-        //TODO Bundle icon?
         String icon = getString(R.string.marker_waypoint_icon_url);
 
-        // Get length and duration
         double length;
         long duration;
         Location location = getLastValidTrackPointInCurrentSegment(recordingTrackId);
@@ -357,7 +335,7 @@ public class TrackRecordingService extends Service {
         String photoUrl = waypointCreationRequest.getPhotoUrl() != null ? waypointCreationRequest.getPhotoUrl() : "";
 
         // Insert waypoint
-        Waypoint waypoint = new Waypoint(name, description, category, icon, recordingTrackId, waypointType, length, duration, -1L, -1L, location, null, photoUrl);
+        Waypoint waypoint = new Waypoint(name, description, category, icon, recordingTrackId, waypointCreationRequest.getType(), length, duration, -1L, -1L, location, null, photoUrl);
         Uri uri = contentProviderUtils.insertWaypoint(waypoint);
         return Long.parseLong(uri.getLastPathSegment());
     }
@@ -392,6 +370,8 @@ public class TrackRecordingService extends Service {
         track.setIcon(TrackIconUtils.getIconValue(this, category));
         track.setTripStatistics(trackTripStatisticsUpdater.getTripStatistics());
         contentProviderUtils.updateTrack(track);
+
+        //TODO Do not use insertWaypoint
         insertWaypoint(WaypointCreationRequest.DEFAULT_START_TRACK);
 
         startRecording(true);
