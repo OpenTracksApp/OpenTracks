@@ -265,31 +265,6 @@ public class PreferencesUtils {
         return PreferencesUtils.getString(context, R.string.settings_sensor_bluetooth_heart_rate_key, getBluetoothHeartRateSensorAddressNone(context));
     }
 
-    public static boolean shouldChartShowCadence(Context context) {
-        final boolean CHART_SHOW_CADENCE = context.getResources().getBoolean(R.bool.chart_show_cadence_default);
-        return PreferencesUtils.getBoolean(context, R.string.chart_show_cadence_key, CHART_SHOW_CADENCE);
-    }
-
-    public static boolean shouldChartShowElevation(Context context) {
-        final boolean CHART_SHOW_ELEVATION = context.getResources().getBoolean(R.bool.chart_show_elevation_default);
-        return PreferencesUtils.getBoolean(context, R.string.chart_show_elevation_key, CHART_SHOW_ELEVATION);
-    }
-
-    public static boolean shouldChartShowHeartRate(Context context) {
-        final boolean CHART_SHOW_HEARTRATE = context.getResources().getBoolean(R.bool.chart_show_heart_rate_default);
-        return PreferencesUtils.getBoolean(context, R.string.chart_show_heart_rate_key, CHART_SHOW_HEARTRATE);
-    }
-
-    public static boolean shouldChartShowPower(Context context) {
-        final boolean CHART_SHOW_POWER = context.getResources().getBoolean(R.bool.chart_show_power_default);
-        return PreferencesUtils.getBoolean(context, R.string.chart_show_power_key, CHART_SHOW_POWER);
-    }
-
-    public static boolean shouldChartShowSpeed(Context context) {
-        final boolean CHART_SHOW_SPEED = context.getResources().getBoolean(R.bool.chart_show_speed_default);
-        return PreferencesUtils.getBoolean(context, R.string.chart_show_speed_key, CHART_SHOW_SPEED);
-    }
-
     public static boolean shouldShowStatsOnLockscreen(Context context) {
         final boolean STATS_SHOW_ON_LOCKSCREEN_DEFAULT = context.getResources().getBoolean(R.bool.stats_show_on_lockscreen_while_recording_default);
         return getBoolean(context, R.string.stats_show_on_lockscreen_while_recording_key, STATS_SHOW_ON_LOCKSCREEN_DEFAULT);

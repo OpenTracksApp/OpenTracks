@@ -53,21 +53,6 @@ limitations under the License.
             android:title="@string/settings_stats_coordinate" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/track_detail_chart_tab">
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="@string/chart_show_elevation_key"
-            android:title="@string/stats_elevation" />
-        <!-- title set in code -->
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="@string/chart_show_speed_key" />
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="@string/chart_show_heart_rate_key"
-            android:title="@string/sensor_state_heart_rate" />
-    </PreferenceCategory>
-
     <PreferenceCategory android:title="@string/settings_recording">
         <CheckBoxPreference
             android:defaultValue="@bool/stats_show_on_lockscreen_while_recording_default"

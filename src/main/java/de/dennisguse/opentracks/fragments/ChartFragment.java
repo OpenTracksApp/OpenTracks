@@ -257,9 +257,8 @@ public abstract class ChartFragment extends Fragment implements TrackDataListene
             }
             reportSpeed = speed;
             chartView.setReportSpeed(reportSpeed);
-            boolean chartShowSpeed = PreferencesUtils.shouldChartShowSpeed(getActivity());
-            setSeriesEnabled(ChartView.SPEED_SERIES, chartShowSpeed && reportSpeed);
-            setSeriesEnabled(ChartView.PACE_SERIES, chartShowSpeed && !reportSpeed);
+            setSeriesEnabled(ChartView.SPEED_SERIES, reportSpeed);
+            setSeriesEnabled(ChartView.PACE_SERIES, !reportSpeed);
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -296,26 +295,14 @@ public abstract class ChartFragment extends Fragment implements TrackDataListene
      */
     private void checkChartSettings() {
         boolean needUpdate = false;
-        if (setSeriesEnabled(ChartView.ELEVATION_SERIES, PreferencesUtils.shouldChartShowElevation(getActivity()))) {
+
+        if (setSeriesEnabled(ChartView.SPEED_SERIES, reportSpeed)) {
+            needUpdate = true;
+        }
+        if (setSeriesEnabled(ChartView.PACE_SERIES, !reportSpeed)) {
             needUpdate = true;
         }
 
-        boolean chartShowSpeed = PreferencesUtils.shouldChartShowSpeed(getActivity());
-        if (setSeriesEnabled(ChartView.SPEED_SERIES, chartShowSpeed && reportSpeed)) {
-            needUpdate = true;
-        }
-        if (setSeriesEnabled(ChartView.PACE_SERIES, chartShowSpeed && !reportSpeed)) {
-            needUpdate = true;
-        }
-        if (setSeriesEnabled(ChartView.POWER_SERIES, PreferencesUtils.shouldChartShowPower(getActivity()))) {
-            needUpdate = true;
-        }
-        if (setSeriesEnabled(ChartView.CADENCE_SERIES, PreferencesUtils.shouldChartShowCadence(getActivity()))) {
-            needUpdate = true;
-        }
-        if (setSeriesEnabled(ChartView.HEART_RATE_SERIES, PreferencesUtils.shouldChartShowHeartRate(getActivity()))) {
-            needUpdate = true;
-        }
         if (needUpdate) {
             chartView.postInvalidate();
         }

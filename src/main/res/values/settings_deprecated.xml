@@ -37,4 +37,19 @@
         <item>-50</item>
         <item>-100</item>
     </string-array>
+
+    <string name="chart_show_cadence_key" translatable="false">chartShowCadence</string>
+    <bool name="chart_show_cadence_default" translatable="false">true</bool>
+
+    <string name="chart_show_elevation_key" translatable="false">chartShowElevation</string>
+    <bool name="chart_show_elevation_default" translatable="false">true</bool>
+
+    <string name="chart_show_heart_rate_key" translatable="false">chartShowHeartRate</string>
+    <bool name="chart_show_heart_rate_default" translatable="false">true</bool>
+
+    <string name="chart_show_power_key" translatable="false">chartShowPower</string>
+    <bool name="chart_show_power_default" translatable="false">true</bool>
+
+    <string name="chart_show_speed_key" translatable="false">chartShowSpeed</string>
+    <bool name="chart_show_speed_default" translatable="false">true</bool>
 </resources>
