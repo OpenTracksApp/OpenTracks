@@ -57,10 +57,10 @@ import de.dennisguse.opentracks.util.UnitConversions;
  */
 public class ChartView extends View {
 
-    public static final float MEDIUM_TEXT_SIZE = 18f;
-    public static final float SMALL_TEXT_SIZE = 12f;
+    static final float MEDIUM_TEXT_SIZE = 18f;
+    static final float SMALL_TEXT_SIZE = 12f;
 
-    public static final int Y_AXIS_INTERVALS = 5;
+    static final int Y_AXIS_INTERVALS = 5;
 
     public static final int NUM_SERIES = 6;
     public static final int ELEVATION_SERIES = 0;
@@ -81,6 +81,9 @@ public class ChartView extends View {
     private static final int SPACER = 4;
     private static final int Y_AXIS_OFFSET = 16;
 
+    //TODO Determine from actual size of the used drawable
+    private static final float WAYPOINT_X_ANCHOR = 13f / 48f;
+
     static {
         X_FRACTION_FORMAT.setMaximumFractionDigits(1);
         X_FRACTION_FORMAT.setMinimumFractionDigits(1);
@@ -93,7 +96,9 @@ public class ChartView extends View {
     private final Paint axisPaint;
     private final Paint xAxisMarkerPaint;
     private final Paint gridPaint;
+    private final Paint markerPaint;
     private final Drawable pointer;
+    private final Drawable waypointMarker;
     private final int markerWidth;
     private final int markerHeight;
     private final Scroller scroller;
@@ -257,7 +262,7 @@ public class ChartView extends View {
         gridPaint.setAntiAlias(false);
         gridPaint.setPathEffect(new DashPathEffect(new float[]{3, 2}, 0));
 
-        Paint markerPaint = new Paint();
+        markerPaint = new Paint();
         markerPaint.setStyle(Style.STROKE);
         markerPaint.setColor(context.getResources().getColor(android.R.color.darker_gray));
         markerPaint.setAntiAlias(false);
@@ -265,7 +270,7 @@ public class ChartView extends View {
         pointer = context.getResources().getDrawable(R.drawable.ic_logo_color_24dp);
         pointer.setBounds(0, 0, pointer.getIntrinsicWidth(), pointer.getIntrinsicHeight());
 
-        Drawable waypointMarker = MarkerUtils.getDefaultPhoto(context);
+        waypointMarker = MarkerUtils.getDefaultPhoto(context);
         markerWidth = waypointMarker.getIntrinsicWidth();
         markerHeight = waypointMarker.getIntrinsicHeight();
         waypointMarker.setBounds(0, 0, markerWidth, markerHeight);
@@ -490,6 +495,7 @@ public class ChartView extends View {
 
             clipToGraphArea(canvas);
             drawDataSeries(canvas);
+            drawWaypoints(canvas);
             drawGrid(canvas);
 
             canvas.restore();
@@ -526,6 +532,33 @@ public class ChartView extends View {
         for (ChartValueSeries chartValueSeries : series) {
             if (chartValueSeries.isEnabled() && chartValueSeries.hasData()) {
                 chartValueSeries.drawPath(canvas);
+            }
+        }
+    }
+
+    /**
+     * Draws the waypoints.
+     *
+     * @param canvas the canvas
+     */
+    private void drawWaypoints(Canvas canvas) {
+        synchronized (waypoints) {
+            for (int i = 0; i < waypoints.size(); i++) {
+                final Waypoint waypoint = waypoints.get(i);
+                if (waypoint.getLocation() == null) {
+                    continue;
+                }
+                double xValue = getWaypointXValue(waypoint);
+                if (xValue > maxX) {
+                    continue;
+                }
+                canvas.save();
+                float x = getX(getWaypointXValue(waypoint));
+                canvas.drawLine(x, topBorder + spacer + markerHeight / 2, x, topBorder + effectiveHeight, markerPaint);
+                canvas.translate(x - (float) (markerWidth * WAYPOINT_X_ANCHOR), topBorder + spacer);
+
+                waypointMarker.draw(canvas);
+                canvas.restore();
             }
         }
     }
@@ -611,10 +644,10 @@ public class ChartView extends View {
         canvas.drawText(label, x + effectiveWidth + spacer, y + yOffset, axisPaint);
 
         double interval = getXAxisInterval();
-        List<Double> markerPositions = getXAxisMarkerPositions(interval);
         NumberFormat numberFormat = interval < 1 ? X_FRACTION_FORMAT : X_NUMBER_FORMAT;
-        for (int i = 0; i < markerPositions.size(); i++) {
-            drawXAxisMarker(canvas, markerPositions.get(i), numberFormat, spacer + yOffset);
+
+        for (double markerPosition : getXAxisMarkerPositions(interval)) {
+            drawXAxisMarker(canvas, markerPosition, numberFormat, spacer + yOffset);
         }
     }
 

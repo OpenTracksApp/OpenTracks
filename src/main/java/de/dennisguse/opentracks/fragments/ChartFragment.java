@@ -103,7 +103,7 @@ public abstract class ChartFragment extends Fragment implements TrackDataListene
         recordingDistanceInterval = PreferencesUtils.getRecordingDistanceIntervalDefault(getContext());
 
         // Create a chartView here to store data thus won't need to reload all the data on every onStart or onResume.
-        chartView = new ChartView(getActivity(), chartByDistance);
+        chartView = new ChartView(getContext(), chartByDistance);
     }
 
     @Override
