@@ -44,7 +44,6 @@ import de.dennisguse.opentracks.TrackDetailActivity;
 import de.dennisguse.opentracks.TrackListActivity;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.CustomContentProvider;
-import de.dennisguse.opentracks.content.DescriptionGeneratorImpl;
 import de.dennisguse.opentracks.content.LocationFactory;
 import de.dennisguse.opentracks.content.LocationIterator;
 import de.dennisguse.opentracks.content.SensorDataSetLocation;
@@ -147,8 +146,6 @@ public class TrackRecordingService extends Service {
         }
     };
 
-    @Deprecated //TODO Should be unused
-    private TripStatisticsUpdater markerTripStatisticsUpdater;
     private WakeLock wakeLock;
     private BluetoothRemoteSensorManager remoteSensorManager;
     private Location lastLocation;
@@ -314,7 +311,8 @@ public class TrackRecordingService extends Service {
         }
 
         WaypointType waypointType = waypointCreationRequest.getType();
-        boolean isStatistics = waypointType == WaypointType.STATISTICS;
+        if (waypointType == WaypointType.STATISTICS)
+            throw new RuntimeException("statistics waypoints are not supported anymore.");
 
         // Get name
         String name;
@@ -325,29 +323,16 @@ public class TrackRecordingService extends Service {
             if (nextWaypointNumber == -1) {
                 nextWaypointNumber = 0;
             }
-            name = getString(isStatistics ? R.string.marker_split_name_format : R.string.marker_name_format, nextWaypointNumber);
+            name = getString(R.string.marker_name_format, nextWaypointNumber);
         }
 
         // Get category
         String category = waypointCreationRequest.getCategory() != null ? waypointCreationRequest.getCategory() : "";
 
         // Get tripStatistics, description, and icon
-        TripStatistics tripStatistics;
-        String description;
-        String icon;
-        if (isStatistics) {
-            long now = System.currentTimeMillis();
-            markerTripStatisticsUpdater.updateTime(now);
-            tripStatistics = markerTripStatisticsUpdater.getTripStatistics();
-            markerTripStatisticsUpdater = new TripStatisticsUpdater(now);
-            description = new DescriptionGeneratorImpl(this).generateWaypointDescription(tripStatistics);
-            icon = getString(R.string.marker_statistics_icon_url);
-        } else {
-            tripStatistics = null;
-            description = waypointCreationRequest.getDescription() != null ? waypointCreationRequest.getDescription() : "";
-            //TODO Bundle icon?
-            icon = getString(R.string.marker_waypoint_icon_url);
-        }
+        String description = waypointCreationRequest.getDescription() != null ? waypointCreationRequest.getDescription() : "";
+        //TODO Bundle icon?
+        String icon = getString(R.string.marker_waypoint_icon_url);
 
         // Get length and duration
         double length;
@@ -372,7 +357,7 @@ public class TrackRecordingService extends Service {
         String photoUrl = waypointCreationRequest.getPhotoUrl() != null ? waypointCreationRequest.getPhotoUrl() : "";
 
         // Insert waypoint
-        Waypoint waypoint = new Waypoint(name, description, category, icon, recordingTrackId, waypointType, length, duration, -1L, -1L, location, tripStatistics, photoUrl);
+        Waypoint waypoint = new Waypoint(name, description, category, icon, recordingTrackId, waypointType, length, duration, -1L, -1L, location, null, photoUrl);
         Uri uri = contentProviderUtils.insertWaypoint(waypoint);
         return Long.parseLong(uri.getLastPathSegment());
     }
@@ -389,7 +374,6 @@ public class TrackRecordingService extends Service {
         }
         long now = System.currentTimeMillis();
         trackTripStatisticsUpdater = new TripStatisticsUpdater(now);
-        markerTripStatisticsUpdater = new TripStatisticsUpdater(now);
 
         // Insert a track
         Track track = new Track();
@@ -425,23 +409,11 @@ public class TrackRecordingService extends Service {
         TripStatistics tripStatistics = track.getTripStatistics();
         trackTripStatisticsUpdater = new TripStatisticsUpdater(tripStatistics.getStartTime());
 
-        long markerStartTime;
-        Waypoint waypoint = contentProviderUtils.getLastWaypoint(recordingTrackId, WaypointType.STATISTICS);
-        if (waypoint != null && waypoint.getTripStatistics() != null) {
-            markerStartTime = waypoint.getTripStatistics().getStopTime();
-        } else {
-            markerStartTime = tripStatistics.getStartTime();
-        }
-        markerTripStatisticsUpdater = new TripStatisticsUpdater(markerStartTime);
-
         try (LocationIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), -1L, false, LocationFactory.DEFAULT_LOCATION_FACTORY)) {
 
             while (locationIterator.hasNext()) {
                 Location location = locationIterator.next();
                 trackTripStatisticsUpdater.addLocation(location, recordingDistanceInterval);
-                if (location.getTime() > markerStartTime) {
-                    markerTripStatisticsUpdater.addLocation(location, recordingDistanceInterval);
-                }
             }
         } catch (RuntimeException e) {
             Log.e(TAG, "RuntimeException", e);
@@ -753,7 +725,6 @@ public class TrackRecordingService extends Service {
             Uri uri = contentProviderUtils.insertTrackPoint(location, track.getId());
             long trackPointId = Long.parseLong(uri.getLastPathSegment());
             trackTripStatisticsUpdater.addLocation(location, recordingDistanceInterval);
-            markerTripStatisticsUpdater.addLocation(location, recordingDistanceInterval);
             updateRecordingTrack(track, trackPointId, LocationUtils.isValidLocation(location));
         } catch (SQLiteException e) {
             /*
