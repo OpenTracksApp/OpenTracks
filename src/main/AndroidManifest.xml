@@ -83,9 +83,7 @@ limitations under the License.
 
         <activity android:name=".TrackEditActivity" />
 
-        <activity
-            android:name=".TrackListActivity"
-            android:screenOrientation="userPortrait">
+        <activity android:name=".TrackListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
