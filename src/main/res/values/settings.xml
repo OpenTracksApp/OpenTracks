@@ -90,18 +90,6 @@
         <item>@string/activity_type_wind_surfing</item>
     </string-array>
 
-    <string name="auto_resume_track_timeout_key" translatable="false">autoResumeTrackTimeout</string>
-    <string name="auto_resume_track_timeout_default" translatable="false">10</string>
-    <string name="auto_resume_track_timeout_always" translatable="false">-1</string>
-    <string name="auto_resume_track_timeout_never" translatable="false">0</string>
-    <string-array name="auto_resume_track_timeout_values">
-        <item>@string/auto_resume_track_timeout_never</item>
-        <item>5</item>
-        <item>@string/auto_resume_track_timeout_default</item>
-        <item>15</item>
-        <item>@string/auto_resume_track_timeout_always</item>
-    </string-array>
-
     <string name="recording_distance_interval_key" translatable="false">recordingDistanceInterval</string>
     <string name="recording_distance_interval_default" translatable="false">10</string>
     <string-array name="recording_distance_interval_values">

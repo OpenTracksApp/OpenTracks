@@ -74,8 +74,6 @@ import de.dennisguse.opentracks.util.UnitConversions;
  */
 public class TrackRecordingService extends Service {
 
-    // The name of extra intent property to indicate whether we want to resume a previously recorded track.
-    public static final String RESUME_TRACK_EXTRA_NAME = "RESUME_TRACK";
     private static final int NOTIFICATION_ID = 123;
 
     public static final double PAUSE_LATITUDE = 100.0;
@@ -83,8 +81,6 @@ public class TrackRecordingService extends Service {
 
     // Anything faster than that (in meters per second) will be considered moving.
     public static final double MAX_NO_MOVEMENT_SPEED = 0.224;
-    @VisibleForTesting
-    static final int MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS = 3;
     private static final String TAG = TrackRecordingService.class.getSimpleName();
     // 1 minute in milliseconds
     private static final long ONE_MINUTE = (long) (UnitConversions.MIN_TO_S * UnitConversions.S_TO_MS);
@@ -102,7 +98,6 @@ public class TrackRecordingService extends Service {
     private int recordingDistanceInterval;
     private int maxRecordingDistance;
     private int recordingGpsAccuracy;
-    private int autoResumeTrackTimeout;
     private long currentRecordingInterval;
 
     // The following variables are set when recording:
@@ -149,11 +144,10 @@ public class TrackRecordingService extends Service {
             if (PreferencesUtils.isKey(context, R.string.recording_gps_accuracy_key, key)) {
                 recordingGpsAccuracy = PreferencesUtils.getRecordingGPSAccuracy(context);
             }
-            if (PreferencesUtils.isKey(context, R.string.auto_resume_track_timeout_key, key)) {
-                autoResumeTrackTimeout = PreferencesUtils.getAutoResumeTrackTimeout(context);
-            }
         }
     };
+
+    @Deprecated //TODO Should be unused
     private TripStatisticsUpdater markerTripStatisticsUpdater;
     private WakeLock wakeLock;
     private BluetoothRemoteSensorManager remoteSensorManager;
@@ -240,7 +234,6 @@ public class TrackRecordingService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        handleStartCommand(intent, startId);
         return START_STICKY;
     }
 
@@ -385,58 +378,6 @@ public class TrackRecordingService extends Service {
     }
 
     /**
-     * Handles start command.
-     *
-     * @param intent  the intent
-     * @param startId the start id
-     */
-    private void handleStartCommand(Intent intent, int startId) {
-        // Check if the service is called to resume track (from phone reboot)
-        boolean resumeTrackRequested = intent.getBooleanExtra(RESUME_TRACK_EXTRA_NAME, false);
-        if (resumeTrackRequested && !shouldResumeTrack()) {
-            Log.i(TAG, "Stop resume track.");
-            updateRecordingState(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, true);
-            stopSelfResult(startId);
-        }
-    }
-
-    /**
-     * Returns true if should resume.
-     */
-    private boolean shouldResumeTrack() {
-        Track track = contentProviderUtils.getTrack(recordingTrackId);
-
-        if (track == null) {
-            Log.d(TAG, "Not resuming. Track is null.");
-            return false;
-        }
-
-        int retries = PreferencesUtils.getAutoResumeTrackCurrentRetryDefault(this);
-        if (retries >= MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS) {
-            Log.d(TAG, "Not resuming. Exceeded maximum retry attempts.");
-            return false;
-        }
-        PreferencesUtils.incrementAutoResumeTrackCurrentRetryDefault(this);
-
-        if (autoResumeTrackTimeout == Integer.parseInt(getResources().getString(R.string.auto_resume_track_timeout_never))) {
-            Log.d(TAG, "Not resuming. Auto-resume track timeout set to never.");
-            return false;
-        }
-
-        if (autoResumeTrackTimeout == Integer.parseInt(getResources().getString(R.string.auto_resume_track_timeout_always))) {
-            Log.d(TAG, "Resuming. Auto-resume track timeout set to always.");
-            return true;
-        }
-
-        if (track.getTripStatistics() == null) {
-            Log.d(TAG, "Not resuming. No trip statistics.");
-            return false;
-        }
-        long stopTime = track.getTripStatistics().getStopTime();
-        return stopTime > 0 && (System.currentTimeMillis() - stopTime) <= autoResumeTrackTimeout * ONE_MINUTE;
-    }
-
-    /**
      * Starts a new track.
      *
      * @return the track id
@@ -457,7 +398,6 @@ public class TrackRecordingService extends Service {
 
         // Update shared preferences
         updateRecordingState(trackId, false);
-        PreferencesUtils.resetAutoResumeTrackCurrentRetryDefault(this);
 
         // Update database
         track.setId(trackId);

@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
-import androidx.annotation.VisibleForTesting;
 import androidx.preference.PreferenceManager;
 
 import de.dennisguse.opentracks.R;
@@ -41,27 +40,11 @@ public class PreferencesUtils {
 
     @Deprecated
     //NOTE: is at the moment still used to determine if a track is currently recorded; better ask the service directly.
-    //NOTE: This is also used to recover from a reboot, but this data should not be exposed to the whole application.
+    //NOTE: This was also used to recover from a reboot, but this data should not be exposed to the whole application.
     public static final long RECORDING_TRACK_ID_DEFAULT = -1L;
 
     public static long getRecordingTrackId(Context context) {
         return PreferencesUtils.getLong(context, R.string.recording_track_id_key, RECORDING_TRACK_ID_DEFAULT);
-    }
-
-
-    @VisibleForTesting
-    public static final int AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT = 0;
-
-    public static int getAutoResumeTrackCurrentRetryDefault(Context context) {
-        return PreferencesUtils.getInt(context, R.string.auto_resume_track_current_retry_key, PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT);
-    }
-
-    public static void resetAutoResumeTrackCurrentRetryDefault(Context context) {
-        PreferencesUtils.setInt(context, R.string.auto_resume_track_current_retry_key, PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT);
-    }
-
-    public static void incrementAutoResumeTrackCurrentRetryDefault(Context context) {
-        PreferencesUtils.setInt(context, R.string.auto_resume_track_current_retry_key, getAutoResumeTrackCurrentRetryDefault(context) + 1);
     }
 
     public static String getDefaultActivity(Context context) {
@@ -86,7 +69,7 @@ public class PreferencesUtils {
      * Compares if keyId and key belong to the same shared preference key.
      *
      * @param keyId The resource id of the key
-     * @param key The key of the preference
+     * @param key   The key of the preference
      * @return true if key == null or key belongs to keyId
      */
     public static boolean isKey(Context context, int keyId, String key) {
@@ -209,32 +192,15 @@ public class PreferencesUtils {
         editor.apply();
     }
 
-    /**
-     * Returns true if metric units.
-     *
-     * @param context the context
-     */
     public static boolean isMetricUnits(Context context) {
         final String STATS_UNIT = context.getString(R.string.stats_units_default);
         return STATS_UNIT.equals(getString(context, R.string.stats_units_key, STATS_UNIT));
     }
 
-    /**
-     * Returns true if the preferred rate is speed, false if the preferred rate is
-     * pace.
-     *
-     * @param context the context
-     */
     public static boolean isReportSpeed(Context context) {
         final String STATS_RATE_DEFAULT = context.getString(R.string.stats_rate_default);
         return STATS_RATE_DEFAULT.equals(getString(context, R.string.stats_rate_key, STATS_RATE_DEFAULT));
     }
-
-    public static int getAutoResumeTrackTimeout(Context context) {
-        final int AUTO_RESUME_TRACK_TIMEOUT = Integer.parseInt(context.getResources().getString(R.string.auto_resume_track_timeout_default));
-        return PreferencesUtils.getInt(context, R.string.auto_resume_track_timeout_key, AUTO_RESUME_TRACK_TIMEOUT);
-    }
-
 
     public static boolean isRecordingTrackPaused(Context context) {
         return PreferencesUtils.getBoolean(context, R.string.recording_track_paused_key, isRecordingTrackPausedDefault(context));
@@ -319,9 +285,6 @@ public class PreferencesUtils {
     public static int getMinRecordingIntervalDefault(Context context) {
         return Integer.parseInt(context.getResources().getString(R.string.min_recording_interval_default));
     }
-
-
-
 
 
     public static int getRecordingGPSAccuracy(Context context) {

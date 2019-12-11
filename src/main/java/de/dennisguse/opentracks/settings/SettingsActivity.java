@@ -165,9 +165,6 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
             ListPreference recordingGpsAccuracy = findPreference(getString(R.string.recording_gps_accuracy_key));
             recordingGpsAccuracy.setEntries(PreferenceHelper.getRecordingGpsAccuracyEntries(getActivity(), metricUnits));
 
-            ListPreference autoresumeTrack = findPreference(getString(R.string.auto_resume_track_timeout_key));
-            autoresumeTrack.setEntries(PreferenceHelper.getAutoResumeTrackTimeoutEntries(getActivity()));
-
             ListPreference statsRatePreferences = findPreference(getString(R.string.stats_rate_key));
             String[] entries = getResources().getStringArray(metricUnits ? R.array.stats_rate_metric_options : R.array.stats_rate_imperial_options);
             statsRatePreferences.setEntries(entries);

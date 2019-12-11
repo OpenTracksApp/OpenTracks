@@ -101,13 +101,6 @@ limitations under the License.
             android:key="@string/recording_gps_accuracy_key"
             android:title="@string/settings_recording_min_required_accuracy_title"
             app:useSimpleSummaryProvider="true" />
-        <ListPreference
-            android:defaultValue="@string/auto_resume_track_timeout_default"
-            android:entries="@array/auto_resume_track_timeout_values"
-            android:entryValues="@array/auto_resume_track_timeout_values"
-            android:key="@string/auto_resume_track_timeout_key"
-            android:title="@string/settings_recording_auto_resume_track_timeout_title"
-            app:useSimpleSummaryProvider="true" />
         <de.dennisguse.opentracks.settings.ActivityTypePreference
             android:defaultValue="@string/default_activity_default"
             android:key="@string/default_activity_key"

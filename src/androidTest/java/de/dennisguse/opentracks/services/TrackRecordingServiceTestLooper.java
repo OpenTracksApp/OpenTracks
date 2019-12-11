@@ -74,9 +74,6 @@ public class TrackRecordingServiceTestLooper {
         SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
         sharedPreferences.edit().clear().apply();
 
-        // Disable auto resume by default.
-        TrackRecordingServiceTest.updateAutoResumePrefs(context, PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT, 0);
-
         // Ensure that the database is empty before every test
         providerUtils.deleteAllTracks(context);
     }

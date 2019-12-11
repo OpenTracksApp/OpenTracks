@@ -142,22 +142,4 @@ final class PreferenceHelper {
 
         return entries;
     }
-
-    static String[] getAutoResumeTrackTimeoutEntries(Context context) {
-        String[] entryValues = context.getResources().getStringArray(R.array.auto_resume_track_timeout_values);
-        String[] entries = new String[entryValues.length];
-
-        for (int i = 0; i < entryValues.length; i++) {
-            int value = Integer.parseInt(entryValues[i]);
-            if (value == Integer.parseInt(context.getResources().getString(R.string.auto_resume_track_timeout_never))) {
-                entries[i] = context.getString(R.string.value_never);
-            } else if (value == Integer.parseInt(context.getResources().getString(R.string.auto_resume_track_timeout_always))) {
-                entries[i] = context.getString(R.string.value_always);
-            } else {
-                entries[i] = context.getString(R.string.value_integer_minute, value);
-            }
-        }
-
-        return entries;
-    }
 }

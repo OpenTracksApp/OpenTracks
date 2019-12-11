@@ -101,7 +101,6 @@ limitations under the License.
 
         <activity android:name=".settings.SettingsActivity" />
 
-        <!-- Services -->
         <provider
             android:name=".content.ShareContentProvider"
             android:authorities="${applicationId}.content"
@@ -118,14 +117,6 @@ limitations under the License.
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <!-- Receivers -->
-        <receiver android:name=".BootReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-
-        <!-- Providers -->
         <service
             android:name=".services.TrackRecordingService"
             android:enabled="true"
@@ -157,7 +148,6 @@ limitations under the License.
         android:name="android.hardware.touchscreen"
         android:required="false" />
 
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />

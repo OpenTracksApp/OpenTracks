@@ -52,4 +52,16 @@
 
     <string name="chart_show_speed_key" translatable="false">chartShowSpeed</string>
     <bool name="chart_show_speed_default" translatable="false">true</bool>
+
+    <!--    <string name="auto_resume_track_timeout_key" translatable="false">autoResumeTrackTimeout</string>-->
+    <!--    <string name="auto_resume_track_timeout_default" translatable="false">10</string>-->
+    <!--    <string name="auto_resume_track_timeout_always" translatable="false">-1</string>-->
+    <!--    <string name="auto_resume_track_timeout_never" translatable="false">0</string>-->
+    <!--    <string-array name="auto_resume_track_timeout_values">-->
+    <!--        <item>@string/auto_resume_track_timeout_never</item>-->
+    <!--        <item>5</item>-->
+    <!--        <item>@string/auto_resume_track_timeout_default</item>-->
+    <!--        <item>15</item>-->
+    <!--        <item>@string/auto_resume_track_timeout_always</item>-->
+    <!--    </string-array>-->
 </resources>
