@@ -19,7 +19,7 @@ android:
     # installing tools to start, then use `sdkmanager` below to get the rest
     - tools
     - build-tools-28.0.3
-    - android-28
+    - android-29
 
 # Emulator Management: Create, Start and Wait
 #install:
