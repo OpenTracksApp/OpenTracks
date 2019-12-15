@@ -40,6 +40,10 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
  */
 public class TrackDataHub implements DataSourceListener {
 
+    public synchronized static TrackDataHub newInstance(Context context) {
+        return new TrackDataHub(context, new TrackDataManager(), new ContentProviderUtils(context), TARGET_DISPLAYED_TRACK_POINTS);
+    }
+
     /**
      * Target number of track points displayed by the map overlay.
      * We may display more than this number of points.
@@ -96,10 +100,6 @@ public class TrackDataHub implements DataSourceListener {
         this.contentProviderUtils = contentProviderUtils;
         this.targetNumPoints = targetNumPoints;
         resetSamplingState();
-    }
-
-    public synchronized static TrackDataHub newInstance(Context context) {
-        return new TrackDataHub(context, new TrackDataManager(), new ContentProviderUtils(context), TARGET_DISPLAYED_TRACK_POINTS);
     }
 
     public void start() {
@@ -399,8 +399,7 @@ public class TrackDataHub implements DataSourceListener {
             trackDataListener.clearWaypoints();
         }
 
-        try (Cursor cursor = contentProviderUtils.getWaypointCursor(
-                selectedTrackId, -1L, MAX_DISPLAYED_WAYPOINTS)) {
+        try (Cursor cursor = contentProviderUtils.getWaypointCursor(selectedTrackId, -1L, MAX_DISPLAYED_WAYPOINTS)) {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     Waypoint waypoint = contentProviderUtils.createWaypoint(cursor);

@@ -572,7 +572,6 @@ public class StatsFragment extends Fragment implements TrackDataListener {
                     double elevation = lastTripStatistics == null ? Double.NaN : lastTripStatistics.getMinElevation();
                     Pair<String, String> parts = StringUtils.formatElevation(getContext(), elevation, metricUnits);
 
-
                     elevationMinValue.setText(parts.first);
                     elevationMinUnit.setText(parts.second);
                 }
@@ -580,7 +579,6 @@ public class StatsFragment extends Fragment implements TrackDataListener {
                 {
                     double elevation = lastTripStatistics == null ? Double.NaN : lastTripStatistics.getMaxElevation();
                     Pair<String, String> parts = StringUtils.formatElevation(getContext(), elevation, metricUnits);
-
 
                     elevationMaxValue.setText(parts.first);
                     elevationMaxUnit.setText(parts.second);

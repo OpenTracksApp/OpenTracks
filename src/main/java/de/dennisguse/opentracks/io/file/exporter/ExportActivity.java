@@ -103,16 +103,8 @@ public class ExportActivity extends FragmentActivity implements FileTypeDialogFr
         }
 
         directoryDisplayName = FileUtils.getPathDisplayName(trackFileFormat.getExtension());
-
-        //TODO (still needed?): getLastNonConfiguration instance returned ExportAsyncTask before
-//        Object retained = getLastNonConfigurationInstance();
-//        if (retained instanceof ExportAsyncTask) {
-//            exportAsyncTask = (ExportAsyncTask) retained;
-//            exportAsyncTask.setActivity(this);
-//        } else {
         exportAsyncTask = new ExportAsyncTask(this, trackFileFormat, directory);
         exportAsyncTask.execute();
-//        }
     }
 
     @Override
