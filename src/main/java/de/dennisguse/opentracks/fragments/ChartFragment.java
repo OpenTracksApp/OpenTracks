@@ -31,6 +31,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackDetailActivity;
@@ -58,7 +59,7 @@ public abstract class ChartFragment extends Fragment implements TrackDataListene
 
     private static final String STATE_CHART_VIEW_BY_DISTANCE_KEY = "chartViewByDistance";
 
-    private final ArrayList<double[]> pendingPoints = new ArrayList<>();
+    private final List<double[]> pendingPoints = new ArrayList<>();
 
     private TrackDataHub trackDataHub;
 

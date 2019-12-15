@@ -904,15 +904,7 @@ public class TrackRecordingService extends Service {
 
         @Override
         public SensorDataSet getSensorData() {
-            if (trackRecordingService.remoteSensorManager == null) {
-                Log.d(TAG, "remoteSensorManager is null.");
-                return null;
-            }
-            if (trackRecordingService.getSensorDataSet() == null) {
-                Log.d(TAG, "Sensor data set is null.");
-                return null;
-            }
-            return trackRecordingService.remoteSensorManager.getSensorDataSet();
+            return trackRecordingService.getSensorDataSet();
         }
 
         /**

@@ -44,13 +44,16 @@ public class TrackDataHub implements DataSourceListener {
      * Target number of track points displayed by the map overlay.
      * We may display more than this number of points.
      */
+    @Deprecated
     private static final int TARGET_DISPLAYED_TRACK_POINTS = 5000;
 
     /**
      * Maximum number of waypoints to displayed.
      */
     @VisibleForTesting
+    @Deprecated
     private static final int MAX_DISPLAYED_WAYPOINTS = 128;
+
     private static final String TAG = TrackDataHub.class.getSimpleName();
 
     private final Context context;

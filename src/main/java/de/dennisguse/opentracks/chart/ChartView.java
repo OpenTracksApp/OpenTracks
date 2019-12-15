@@ -327,7 +327,7 @@ public class ChartView extends View {
      *
      * @param dataPoints an array of data points to be added
      */
-    public void addDataPoints(ArrayList<double[]> dataPoints) {
+    public void addDataPoints(List<double[]> dataPoints) {
         synchronized (chartData) {
             chartData.addAll(dataPoints);
             for (double[] dataPoint : dataPoints) {
