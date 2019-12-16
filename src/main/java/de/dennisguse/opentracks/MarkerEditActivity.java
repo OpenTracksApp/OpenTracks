@@ -95,7 +95,7 @@ public class MarkerEditActivity extends AbstractActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        trackRecordingServiceConnection.unbind();
+        trackRecordingServiceConnection.unbind(this);
     }
 
     @Override

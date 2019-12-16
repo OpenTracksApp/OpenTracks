@@ -175,7 +175,7 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
     @Override
     protected void onStop() {
         super.onStop();
-        trackRecordingServiceConnection.unbind();
+        trackRecordingServiceConnection.unbind(this);
     }
 
     @Override

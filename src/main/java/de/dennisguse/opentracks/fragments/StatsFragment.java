@@ -239,7 +239,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     public void onStop() {
         super.onStop();
         if (trackRecordingServiceConnection != null) {
-            trackRecordingServiceConnection.unbind();
+            trackRecordingServiceConnection.unbind(getContext());
         }
         trackRecordingServiceConnection = null;
     }

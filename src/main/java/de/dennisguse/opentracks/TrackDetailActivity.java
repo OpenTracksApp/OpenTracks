@@ -291,7 +291,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
     protected void onStop() {
         super.onStop();
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-        trackRecordingServiceConnection.unbind();
+        trackRecordingServiceConnection.unbind(this);
         trackDataHub.stop();
     }
 

@@ -141,7 +141,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             if (PreferencesUtils.isKey(TrackListActivity.this, R.string.recording_track_id_key, key)) {
                 recordingTrackId = PreferencesUtils.getRecordingTrackId(TrackListActivity.this);
                 if (key != null && PreferencesUtils.isRecording(recordingTrackId)) {
-                    trackRecordingServiceConnection.startAndBind();
+                    trackRecordingServiceConnection.startAndBind(TrackListActivity.this);
                 }
             }
             if (PreferencesUtils.isKey(TrackListActivity.this, R.string.recording_track_paused_key, key)) {
@@ -344,7 +344,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         super.onStop();
 
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-        trackRecordingServiceConnection.unbind();
+        trackRecordingServiceConnection.unbind(this);
     }
 
     @Override
@@ -406,14 +406,14 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
 
                     // Invoke trackRecordingService
                     if (startGps) {
-                        trackRecordingServiceConnection.startAndBind();
+                        trackRecordingServiceConnection.startAndBind(this);
                         bindChangedCallback.run();
                     } else {
                         ITrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
                         if (trackRecordingService != null) {
                             trackRecordingService.stopGps();
                         }
-                        trackRecordingServiceConnection.unbindAndStop();
+                        trackRecordingServiceConnection.unbindAndStop(this);
                     }
 
                     // Update menu after starting or stopping gps
@@ -498,7 +498,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
      */
     private void startRecording() {
         startNewRecording = true;
-        trackRecordingServiceConnection.startAndBind();
+        trackRecordingServiceConnection.startAndBind(this);
 
         /*
          * If the binding has happened, then invoke the callback to start a new recording.

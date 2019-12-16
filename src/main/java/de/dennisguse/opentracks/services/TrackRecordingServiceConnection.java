@@ -48,9 +48,6 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
 
     private static final String TAG = TrackRecordingServiceConnection.class.getSimpleName();
 
-    @Deprecated
-    //TODO Always the context of the owner of a service connection (i.e., let it be passed to every call).
-    private final Context context;
     private final Runnable callback;
 
     private ITrackRecordingService trackRecordingService;
@@ -62,29 +59,28 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
      * @param callback the callback to invoke when the service binding changes
      */
     public TrackRecordingServiceConnection(Context context, Runnable callback) {
-        this.context = context;
         this.callback = callback;
     }
 
     /**
      * Starts and binds the service.
      */
-    public void startAndBind() {
-        bindService(true);
+    public void startAndBind(Context context) {
+        bindService(context, true);
     }
 
     /**
      * Binds the service if it is started.
      */
-    public void bindIfStarted() {
-        bindService(false);
+    public void bindIfStarted(Context context) {
+        bindService(context, false);
     }
 
     /**
      * Unbinds and stops the service.
      */
-    public void unbindAndStop() {
-        unbind();
+    public void unbindAndStop(Context context) {
+        unbind(context);
         context.stopService(new Intent(context, TrackRecordingService.class));
     }
 
@@ -111,7 +107,7 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
     /**
      * Unbinds the service (but leave it running).
      */
-    public void unbind() {
+    public void unbind(Context context) {
         try {
             context.unbindService(this);
         } catch (IllegalArgumentException e) {
@@ -148,7 +144,7 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
      *
      * @param startIfNeeded start the service if needed
      */
-    private void bindService(boolean startIfNeeded) {
+    private void bindService(Context context, boolean startIfNeeded) {
         if (trackRecordingService != null) {
             // Service is already started and bound.
             return;
@@ -175,7 +171,7 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
      * @param context the context
      */
     public void startConnection(@NonNull Context context) {
-        bindIfStarted();
+        bindIfStarted(context);
         if (!ServiceUtils.isTrackRecordingServiceRunning(context)) {
             resetRecordingState(context);
         }
@@ -266,6 +262,6 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
                 Log.e(TAG, "Unable to stop recording.", e);
             }
         }
-        unbindAndStop();
+        unbindAndStop(context);
     }
 }
