@@ -24,12 +24,13 @@ Application id: de.dennisguse.opentracks.playstore
 
 Requirement: `gem install fastlane`
 
-1. Update store meta data (e.g., description and screenshots)
-   `fastlane supply --version_code $(git rev-list HEAD --count master) --skip_upload_apk`
-   (requires API key)
-2. Build signed apk
+1. Build signed apk
    (requires keystore)
-3. Upload signed apk to [Google Play Console](https://play.google.com/apps/publish)
+2. Upload signed apk to [Google Play Console](https://play.google.com/apps/publish)
+3. Update store meta data (e.g., description and screenshots)
+   `fastlane supply --version_code VERSION_CODE --skip_upload_apk`
+   (use the version code from the manifest)
+   (requires API key)
 
 ## Translations (localization)
 
