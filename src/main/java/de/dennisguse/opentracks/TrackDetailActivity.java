@@ -31,13 +31,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
-import android.widget.TabHost;
-import android.widget.TabHost.TabSpec;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
 
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.Track;
@@ -86,7 +89,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
     private SharedPreferences sharedPreferences;
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
     private TrackDataHub trackDataHub;
-    private TabHost tabHost;
+    private ViewPager pager;
     private TrackController trackController;
 
     // From intent
@@ -202,28 +205,46 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, bindChangedCallback);
         trackDataHub = TrackDataHub.newInstance(this);
 
-        tabHost = findViewById(R.id.tackdetail_tabhost);
-        tabHost.setup();
+        FragmentPagerAdapter adapter = new FragmentPagerAdapter(getSupportFragmentManager(), 1) {
+            @Override
+            public int getCount() {
+                return 3;
+            }
 
-        ViewPager viewPager = findViewById(R.id.pager);
-        TabsAdapter tabsAdapter = new TabsAdapter(this, tabHost, viewPager);
+            @NonNull
+            @Override
+            public Fragment getItem(int position) {
+                switch (position) {
+                    case 0:
+                        return new StatsFragment();
+                    case 1:
+                        return new ChartTimeFragment();
+                    case 2:
+                        return new ChartDistanceFragment();
+                }
+                return null;
+            }
 
-        TabSpec statsTabSpec = tabHost.newTabSpec(StatsFragment.STATS_FRAGMENT_TAG).setIndicator(getString(R.string.track_detail_stats_tab));
-        tabsAdapter.addTab(statsTabSpec, StatsFragment.class, null);
-
-        TabSpec chartTimeTabSpec = tabHost.newTabSpec(ChartTimeFragment.CHART_FRAGMENT_TAG).setIndicator(getString(R.string.settings_chart_by_time));
-        tabsAdapter.addTab(chartTimeTabSpec, ChartTimeFragment.class, null);
-
-        TabSpec chartDistanceTabSpec = tabHost.newTabSpec(ChartDistanceFragment.CHART_FRAGMENT_TAG).setIndicator(getString(R.string.settings_chart_by_distance));
-        tabsAdapter.addTab(chartDistanceTabSpec, ChartDistanceFragment.class, null);
-
+            @Nullable
+            @Override
+            public CharSequence getPageTitle(int position) {
+                switch (position) {
+                    case 0:
+                        return getString(R.string.track_detail_stats_tab);
+                    case 1:
+                        return getString(R.string.settings_chart_by_time);
+                    case 2:
+                        return getString(R.string.settings_chart_by_distance);
+                }
+                return "Unknown Tab";
+            }
+        };
+        pager = findViewById(R.id.track_detail_activity_view_pager);
+        pager.setAdapter(adapter);
+        TabLayout tabs = findViewById(R.id.track_detail_activity_tablayout);
+        tabs.setupWithViewPager(pager);
         if (savedInstanceState != null) {
-            tabHost.setCurrentTabByTag(savedInstanceState.getString(CURRENT_TAB_TAG_KEY));
-        }
-
-        // Set the background after all three tabs are added
-        for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
-            tabHost.getTabWidget().getChildAt(i).setBackgroundResource(R.drawable.tab_indicator);
+            pager.setCurrentItem(savedInstanceState.getInt(CURRENT_TAB_TAG_KEY));
         }
 
         trackController = new TrackController(this, trackRecordingServiceConnection, false, recordListener, stopListener);
@@ -298,7 +319,8 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(CURRENT_TAB_TAG_KEY, tabHost.getCurrentTabTag());
+        outState.putInt(CURRENT_TAB_TAG_KEY, pager.getCurrentItem());
+
         if (photoUri != null) {
             outState.putParcelable(PHOTO_URI_KEY, photoUri);
         }
