@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import de.dennisguse.opentracks.android.IContentResolver;
+import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
 

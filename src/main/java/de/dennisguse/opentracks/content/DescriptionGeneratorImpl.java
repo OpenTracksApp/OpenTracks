@@ -22,6 +22,7 @@ import android.util.Pair;
 import androidx.annotation.VisibleForTesting;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.stats.TripStatistics;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.UnitConversions;

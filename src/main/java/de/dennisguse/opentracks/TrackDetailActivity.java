@@ -43,10 +43,10 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 
 import de.dennisguse.opentracks.content.ContentProviderUtils;
-import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.content.TrackDataHub;
-import de.dennisguse.opentracks.content.Waypoint;
 import de.dennisguse.opentracks.content.WaypointCreationRequest;
+import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.fragments.ChartDistanceFragment;
 import de.dennisguse.opentracks.fragments.ChartTimeFragment;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;

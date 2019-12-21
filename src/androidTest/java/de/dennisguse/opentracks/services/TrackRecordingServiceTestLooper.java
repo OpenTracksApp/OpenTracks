@@ -27,8 +27,8 @@ import java.util.concurrent.TimeoutException;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.CustomContentProvider;
-import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.content.WaypointCreationRequest;
+import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.stats.TripStatistics;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 

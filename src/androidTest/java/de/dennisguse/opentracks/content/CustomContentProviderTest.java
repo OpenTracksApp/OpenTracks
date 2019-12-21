@@ -27,6 +27,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.dennisguse.opentracks.content.CustomContentProvider.DatabaseHelper;
+import de.dennisguse.opentracks.content.data.TrackPointsColumns;
+import de.dennisguse.opentracks.content.data.TracksColumns;
+import de.dennisguse.opentracks.content.data.WaypointsColumns;
 
 /**
  * Tests {@link CustomContentProvider}.

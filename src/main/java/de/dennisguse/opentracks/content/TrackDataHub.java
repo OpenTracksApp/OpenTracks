@@ -30,6 +30,8 @@ import java.util.EnumSet;
 import java.util.Set;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 

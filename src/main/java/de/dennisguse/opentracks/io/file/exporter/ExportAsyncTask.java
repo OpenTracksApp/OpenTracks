@@ -28,8 +28,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import de.dennisguse.opentracks.content.ContentProviderUtils;
-import de.dennisguse.opentracks.content.Track;
-import de.dennisguse.opentracks.content.TracksColumns;
+import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;

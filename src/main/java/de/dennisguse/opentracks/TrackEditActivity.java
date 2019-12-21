@@ -31,7 +31,7 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 
 import de.dennisguse.opentracks.content.ContentProviderUtils;
-import de.dennisguse.opentracks.content.Track;
+import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.util.TrackIconUtils;

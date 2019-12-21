@@ -35,6 +35,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.TrackPointsColumns;
+import de.dennisguse.opentracks.content.data.TracksColumns;
+import de.dennisguse.opentracks.content.data.Waypoint;
+import de.dennisguse.opentracks.content.data.WaypointsColumns;
 import de.dennisguse.opentracks.stats.TripStatistics;
 
 import static org.mockito.Mockito.when;

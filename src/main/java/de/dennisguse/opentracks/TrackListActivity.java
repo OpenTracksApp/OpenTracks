@@ -51,7 +51,7 @@ import androidx.loader.content.Loader;
 import java.util.Locale;
 
 import de.dennisguse.opentracks.content.ContentProviderUtils;
-import de.dennisguse.opentracks.content.TracksColumns;
+import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.services.ITrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;

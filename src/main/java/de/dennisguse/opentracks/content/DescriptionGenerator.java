@@ -15,6 +15,7 @@
  */
 package de.dennisguse.opentracks.content;
 
+import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.stats.TripStatistics;
 
 /**

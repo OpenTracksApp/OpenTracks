@@ -35,6 +35,11 @@ import java.util.NoSuchElementException;
 import de.dennisguse.opentracks.BuildConfig;
 import de.dennisguse.opentracks.android.ContentResolverWrapper;
 import de.dennisguse.opentracks.android.IContentResolver;
+import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.TrackPointsColumns;
+import de.dennisguse.opentracks.content.data.TracksColumns;
+import de.dennisguse.opentracks.content.data.Waypoint;
+import de.dennisguse.opentracks.content.data.WaypointsColumns;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.stats.TripStatistics;
 import de.dennisguse.opentracks.util.FileUtils;
@@ -51,11 +56,6 @@ public class ContentProviderUtils {
     private static final int MAX_LATITUDE = 90000000;
 
     /**
-     * Maximum number of waypoints that will be loaded at one time.
-     */
-    public static int MAX_LOADED_WAYPOINTS_POINTS = 10000;
-
-    /**
      * The authority (the first part of the URI) for the app's content provider.
      */
     static String AUTHORITY_PACKAGE = BuildConfig.APPLICATION_ID + ".content";
@@ -63,7 +63,12 @@ public class ContentProviderUtils {
     /**
      * The base URI for the app's content provider.
      */
-    static String CONTENT_BASE_URI = "content://" + AUTHORITY_PACKAGE;
+    public static String CONTENT_BASE_URI = "content://" + AUTHORITY_PACKAGE;
+
+    /**
+     * Maximum number of waypoints that will be loaded at one time.
+     */
+    public static int MAX_LOADED_WAYPOINTS_POINTS = 10000;
 
     private final IContentResolver contentResolver;
     private int defaultCursorBatchSize = 2000;

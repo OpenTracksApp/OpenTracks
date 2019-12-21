@@ -37,11 +37,11 @@ import java.util.EnumSet;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackDetailActivity;
-import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.content.TrackDataHub;
 import de.dennisguse.opentracks.content.TrackDataListener;
 import de.dennisguse.opentracks.content.TrackDataType;
-import de.dennisguse.opentracks.content.Waypoint;
+import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.services.ITrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;

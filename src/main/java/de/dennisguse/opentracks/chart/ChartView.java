@@ -41,7 +41,7 @@ import java.util.List;
 
 import de.dennisguse.opentracks.MarkerDetailActivity;
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.Waypoint;
+import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.stats.ExtremityMonitor;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.MarkerUtils;

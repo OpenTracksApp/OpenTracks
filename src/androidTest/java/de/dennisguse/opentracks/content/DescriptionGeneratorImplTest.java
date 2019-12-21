@@ -27,6 +27,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.stats.TripStatistics;
 import de.dennisguse.opentracks.util.StringUtils;
 

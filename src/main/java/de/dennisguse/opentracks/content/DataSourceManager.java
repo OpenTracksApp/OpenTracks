@@ -25,6 +25,10 @@ import android.util.Log;
 import java.util.EnumSet;
 import java.util.Set;
 
+import de.dennisguse.opentracks.content.data.TrackPointsColumns;
+import de.dennisguse.opentracks.content.data.TracksColumns;
+import de.dennisguse.opentracks.content.data.WaypointsColumns;
+
 /**
  * Creates observers/listeners and manages their registration with {@link DataSource}.
  * The observers/listeners calls {@link DataSourceListener} when data changes.

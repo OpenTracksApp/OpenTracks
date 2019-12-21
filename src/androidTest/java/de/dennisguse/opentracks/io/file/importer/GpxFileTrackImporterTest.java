@@ -27,7 +27,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import de.dennisguse.opentracks.content.Track;
+import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
 import static org.mockito.Mockito.any;

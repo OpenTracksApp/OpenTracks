@@ -14,7 +14,7 @@
  * the License.
  */
 
-package de.dennisguse.opentracks.content;
+package de.dennisguse.opentracks.content.data;
 
 import android.location.Location;
 import android.net.Uri;

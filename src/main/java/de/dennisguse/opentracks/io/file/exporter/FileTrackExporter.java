@@ -29,8 +29,8 @@ import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.LocationFactory;
 import de.dennisguse.opentracks.content.LocationIterator;
 import de.dennisguse.opentracks.content.SensorDataSetLocation;
-import de.dennisguse.opentracks.content.Track;
-import de.dennisguse.opentracks.content.Waypoint;
+import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.util.LocationUtils;
 
 /**

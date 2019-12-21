@@ -33,10 +33,10 @@ import java.util.Locale;
 import java.util.SimpleTimeZone;
 
 import de.dennisguse.opentracks.content.ContentProviderUtils;
-import de.dennisguse.opentracks.content.Track;
-import de.dennisguse.opentracks.content.TracksColumns;
-import de.dennisguse.opentracks.content.Waypoint;
-import de.dennisguse.opentracks.content.WaypointsColumns;
+import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.TracksColumns;
+import de.dennisguse.opentracks.content.data.Waypoint;
+import de.dennisguse.opentracks.content.data.WaypointsColumns;
 
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.eq;

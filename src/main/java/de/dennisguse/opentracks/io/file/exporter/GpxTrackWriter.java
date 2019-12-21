@@ -23,8 +23,8 @@ import java.io.PrintWriter;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import de.dennisguse.opentracks.content.Track;
-import de.dennisguse.opentracks.content.Waypoint;
+import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.util.StringUtils;
 
 /**

@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.dennisguse.opentracks.content.ContentProviderUtils;
-import de.dennisguse.opentracks.content.Waypoint;
+import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
 import de.dennisguse.opentracks.fragments.MarkerDetailFragment;
 

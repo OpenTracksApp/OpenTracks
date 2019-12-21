@@ -19,8 +19,8 @@ package de.dennisguse.opentracks.util;
 import android.content.Context;
 
 import de.dennisguse.opentracks.content.ContentProviderUtils;
-import de.dennisguse.opentracks.content.Track;
-import de.dennisguse.opentracks.content.TracksColumns;
+import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.TracksColumns;
 
 /**
  * Utilities for updating track.

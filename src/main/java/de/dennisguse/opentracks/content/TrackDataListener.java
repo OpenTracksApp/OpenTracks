@@ -18,6 +18,9 @@ package de.dennisguse.opentracks.content;
 
 import android.location.Location;
 
+import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.Waypoint;
+
 /**
  * Listener for track data changes.
  *

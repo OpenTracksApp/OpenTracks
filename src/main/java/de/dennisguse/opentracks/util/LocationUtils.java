@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-import de.dennisguse.opentracks.content.Track;
+import de.dennisguse.opentracks.content.data.Track;
 
 /**
  * Utility class for decimating tracks at a given level of precision.

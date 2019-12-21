@@ -34,6 +34,10 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
+import de.dennisguse.opentracks.content.data.TrackPointsColumns;
+import de.dennisguse.opentracks.content.data.TracksColumns;
+import de.dennisguse.opentracks.content.data.WaypointsColumns;
+
 /**
  * A {@link ContentProvider} that handles access to track points, tracks, and waypoints tables.
  *

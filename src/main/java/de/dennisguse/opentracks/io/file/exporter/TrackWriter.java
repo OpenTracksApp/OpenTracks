@@ -19,8 +19,8 @@ import android.location.Location;
 
 import java.io.OutputStream;
 
-import de.dennisguse.opentracks.content.Track;
-import de.dennisguse.opentracks.content.Waypoint;
+import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.Waypoint;
 
 /**
  * Interface for writing tracks to a file. The expected sequence of calls is:

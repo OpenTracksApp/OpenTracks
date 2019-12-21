@@ -38,8 +38,8 @@ import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
 import de.dennisguse.opentracks.content.ContentProviderUtils;
-import de.dennisguse.opentracks.content.Track;
-import de.dennisguse.opentracks.content.WaypointsColumns;
+import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.WaypointsColumns;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
 import de.dennisguse.opentracks.util.ActivityUtils;
