@@ -827,7 +827,7 @@ public class CustomContentProviderUtilsTest {
      * @param numPoints the location number in the track
      * @return the simulated track
      */
-    private Track getTrack(long id, int numPoints) {
+    public static Track getTrack(long id, int numPoints) {
         Track track = new Track();
         track.setId(id);
         track.setName("Test: " + id);
@@ -844,7 +844,7 @@ public class CustomContentProviderUtilsTest {
      * @param i the index to set the value of location.
      * @return created location
      */
-    private Location createLocation(int i) {
+    private static Location createLocation(int i) {
         Location loc = new Location("test");
         loc.setLatitude(INITIAL_LATITUDE + (double) i / 10000.0);
         loc.setLongitude(INITIAL_LONGITUDE - (double) i / 10000.0);

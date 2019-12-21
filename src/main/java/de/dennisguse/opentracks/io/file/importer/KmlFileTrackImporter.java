@@ -46,6 +46,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
 
     private static final String TAG_COORDINATES = "coordinates";
     private static final String TAG_DESCRIPTION = "description";
+    private static final String TAG_ICON = "icon";
     private static final String TAG_GX_COORD = "gx:coord";
     private static final String TAG_GX_MULTI_TRACK = "gx:MultiTrack";
     private static final String TAG_GX_SIMPLE_ARRAY_DATA = "gx:SimpleArrayData";
@@ -135,6 +136,10 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
             if (content != null) {
                 description = content.trim();
             }
+        } else if (localName.equals(TAG_ICON)) {
+            if (content != null) {
+                icon = content.trim();
+            }
         } else if (localName.equals(TAG_VALUE)) {
             if (content != null) {
                 category = content.trim();
@@ -163,6 +168,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
     private void onWaypointStart() {
         // Reset all Placemark variables
         name = null;
+        icon = null;
         description = null;
         category = null;
         photoUrl = null;

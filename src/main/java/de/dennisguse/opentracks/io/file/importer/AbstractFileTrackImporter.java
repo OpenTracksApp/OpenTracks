@@ -69,12 +69,13 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
     private final ContentProviderUtils contentProviderUtils;
     private final int recordingDistanceInterval;
 
-    private final List<Long> trackIds;
-    private final List<Waypoint> waypoints;
+    private final List<Long> trackIds = new ArrayList<>();
+    private final List<Waypoint> waypoints = new ArrayList<>();
 
     // The current element content
     //TODO Should be made private and getter be used by child classes.
     protected String content;
+    protected String icon;
     protected String name;
     protected String description;
     protected String category;
@@ -102,8 +103,6 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         this.importTrackId = importTrackId;
         this.contentProviderUtils = contentProviderUtils;
         this.recordingDistanceInterval = PreferencesUtils.getRecordingDistanceInterval(context);
-        trackIds = new ArrayList<>();
-        waypoints = new ArrayList<>();
     }
 
     @Override
@@ -250,7 +249,12 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         }
         if (category != null) {
             trackData.track.setCategory(category);
-            trackData.track.setIcon(TrackIconUtils.getIconValue(context, category));
+            //TODO remove when GPX and KML support reading this property.
+            if (icon == null)
+                trackData.track.setIcon(TrackIconUtils.getIconValue(context, category));
+        }
+        if (icon != null) {
+            trackData.track.setIcon(icon);
         }
         if (trackData.tripStatisticsUpdater == null) {
             trackData.tripStatisticsUpdater = new TripStatisticsUpdater(trackData.importTime);
@@ -495,6 +499,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
      *
      * @author Jimmy Shih
      */
+    // TODO Why private inner class?
     private class TrackData {
         // The current track
         Track track = new Track();

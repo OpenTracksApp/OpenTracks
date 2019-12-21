@@ -40,7 +40,8 @@ public interface WaypointsColumns extends BaseColumns {
     String CATEGORY = "category"; // waypoint category
     String ICON = "icon"; // waypoint icon
     String TRACKID = "trackid"; // track id
-    String TYPE = "type"; // type
+    @Deprecated //Unused
+            String TYPE = "type"; // type
     String LENGTH = "length"; // length of the track (without smoothing)
     String DURATION = "duration"; // total duration of the track (not from last waypoint)
     String STARTTIME = "starttime"; // start time of the trip statistics
