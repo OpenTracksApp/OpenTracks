@@ -108,7 +108,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
                     trackController.update(isRecording(), recordingTrackPaused);
                     if (hasPhoto && photoUri != null) {
                         hasPhoto = false;
-                        WaypointCreationRequest waypointCreationRequest = new WaypointCreationRequest(false, null, null, null, null, photoUri.toString());
+                        WaypointCreationRequest waypointCreationRequest = new WaypointCreationRequest(null, null, null, null, photoUri.toString());
                         long markerId = trackRecordingServiceConnection.addMarker(TrackDetailActivity.this, waypointCreationRequest);
                         if (markerId != -1L) {
                             //TODO: Make configurable.

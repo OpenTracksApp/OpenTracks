@@ -466,7 +466,7 @@ public class CustomContentProviderUtilsTest {
         long waypoint1Id = ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint1));
 
         Waypoint waypoint2 = new Waypoint();
-        waypoint2.setDescription(Long.toString(trackId));
+        waypoint2.setDescription(MOCK_DESC);
         waypoint2.setTrackId(trackId);
         waypoint2.setTripStatistics(statistics);
         long waypoint2Id = ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint2));

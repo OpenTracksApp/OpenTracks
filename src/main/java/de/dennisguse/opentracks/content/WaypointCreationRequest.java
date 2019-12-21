@@ -23,35 +23,18 @@ package de.dennisguse.opentracks.content;
  */
 public class WaypointCreationRequest {
 
-    public final static WaypointCreationRequest DEFAULT_WAYPOINT = new WaypointCreationRequest(false);
-
-    @Deprecated // TODO Do not create per
-    public final static WaypointCreationRequest DEFAULT_START_TRACK = new WaypointCreationRequest(true);
-
-    // true if this marker contains the track statistics
-    private boolean isTrackStatistics;
-
     private String name;
     private String category;
     private String description;
     private String iconUrl;
     private String photoUrl;
 
-    private WaypointCreationRequest(boolean isTrackStatistics) {
-        this(isTrackStatistics, null, null, null, null, null);
-    }
-
-    public WaypointCreationRequest(boolean isTrackStatistics, String name, String category, String description, String iconUrl, String photoUrl) {
-        this.isTrackStatistics = isTrackStatistics;
+    public WaypointCreationRequest(String name, String category, String description, String iconUrl, String photoUrl) {
         this.name = name;
         this.category = category;
         this.description = description;
         this.iconUrl = iconUrl;
         this.photoUrl = photoUrl;
-    }
-
-    public boolean isTrackStatistics() {
-        return isTrackStatistics;
     }
 
     public String getName() {

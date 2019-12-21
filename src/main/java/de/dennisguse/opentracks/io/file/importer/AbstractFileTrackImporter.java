@@ -39,7 +39,6 @@ import javax.xml.parsers.SAXParserFactory;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
-import de.dennisguse.opentracks.content.DescriptionGeneratorImpl;
 import de.dennisguse.opentracks.content.LocationFactory;
 import de.dennisguse.opentracks.content.LocationIterator;
 import de.dennisguse.opentracks.content.Track;
@@ -260,7 +259,6 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         trackData.track.setTripStatistics(trackData.tripStatisticsUpdater.getTripStatistics());
         trackData.track.setNumberOfPoints(trackData.numberOfLocations);
         contentProviderUtils.updateTrack(trackData.track);
-        insertFirstWaypoint(trackData.track);
     }
 
     /**
@@ -481,28 +479,6 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
             data.track.setStartId(contentProviderUtils.getFirstTrackPointId(data.track.getId()));
         }
         data.track.setStopId(contentProviderUtils.getLastTrackPointId(data.track.getId()));
-    }
-
-    /**
-     * Inserts the first waypoint, the track statistics waypoint.
-     *
-     * @param track the track
-     */
-    @Deprecated //TODO Store statistics for track in track rather than in waypoint.
-    private void insertFirstWaypoint(Track track) {
-        String waypointName = context.getString(R.string.marker_split_name_format, 0);
-        String waypointCategory = "";
-        TripStatisticsUpdater updater = new TripStatisticsUpdater(track.getTripStatistics().getStartTime());
-        TripStatistics tripStatistics = updater.getTripStatistics();
-        String waypointDescription = new DescriptionGeneratorImpl(context).generateWaypointDescription(tripStatistics);
-        String icon = context.getString(R.string.marker_statistics_icon_url);
-        double length = 0.0;
-        long duration = 0L;
-        Location waypointLocation = new Location("");
-        waypointLocation.setLatitude(100);
-        waypointLocation.setLongitude(180);
-        Waypoint waypoint = new Waypoint(waypointName, waypointDescription, waypointCategory, icon, track.getId(), length, duration, -1L, -1L, waypointLocation, tripStatistics, "");
-        contentProviderUtils.insertWaypoint(waypoint);
     }
 
     /**

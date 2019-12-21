@@ -306,31 +306,22 @@ public class TrackRecordingService extends Service {
             if (nextWaypointNumber == -1) {
                 nextWaypointNumber = 1;
             }
-            name = getString(R.string.marker_name_format, nextWaypointNumber);
+            name = getString(R.string.marker_name_format, nextWaypointNumber + 1);
+        }
+
+        Location location = getLastValidTrackPointInCurrentSegment(recordingTrackId);
+        if (location == null) {
+            Log.i(TAG, "Could not create a waypoint as location is unknown.");
+            return -1L;
         }
 
         String category = waypointCreationRequest.getCategory() != null ? waypointCreationRequest.getCategory() : "";
         String description = waypointCreationRequest.getDescription() != null ? waypointCreationRequest.getDescription() : "";
         String icon = getString(R.string.marker_waypoint_icon_url);
 
-        double length;
-        long duration;
-        Location location = getLastValidTrackPointInCurrentSegment(recordingTrackId);
-        if (location != null && trackTripStatisticsUpdater != null) {
-            TripStatistics stats = trackTripStatisticsUpdater.getTripStatistics();
-            length = stats.getTotalDistance();
-            duration = stats.getTotalTime();
-        } else {
-            if (!waypointCreationRequest.isTrackStatistics()) {
-                return -1L;
-            }
-            // For track statistics, make it an impossible location
-            location = new Location("");
-            location.setLatitude(100);
-            location.setLongitude(180);
-            length = 0.0;
-            duration = 0L;
-        }
+        TripStatistics stats = trackTripStatisticsUpdater.getTripStatistics();
+        double length = stats.getTotalDistance();
+        long duration = stats.getTotalTime();
 
         String photoUrl = waypointCreationRequest.getPhotoUrl() != null ? waypointCreationRequest.getPhotoUrl() : "";
 
@@ -370,9 +361,6 @@ public class TrackRecordingService extends Service {
         track.setIcon(TrackIconUtils.getIconValue(this, category));
         track.setTripStatistics(trackTripStatisticsUpdater.getTripStatistics());
         contentProviderUtils.updateTrack(track);
-
-        //TODO Do not use insertWaypoint
-        insertWaypoint(WaypointCreationRequest.DEFAULT_START_TRACK);
 
         startRecording(true);
         return trackId;
