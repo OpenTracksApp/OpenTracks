@@ -35,7 +35,6 @@ import java.util.NoSuchElementException;
 import de.dennisguse.opentracks.BuildConfig;
 import de.dennisguse.opentracks.android.ContentResolverWrapper;
 import de.dennisguse.opentracks.android.IContentResolver;
-import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.stats.TripStatistics;
 import de.dennisguse.opentracks.util.FileUtils;
@@ -443,9 +442,6 @@ public class ContentProviderUtils {
         if (!cursor.isNull(trackIdIndex)) {
             waypoint.setTrackId(cursor.getLong(trackIdIndex));
         }
-        if (!cursor.isNull(typeIndex)) {
-            waypoint.setType(WaypointType.values()[cursor.getInt(typeIndex)]);
-        }
         if (!cursor.isNull(lengthIndex)) {
             waypoint.setLength(cursor.getFloat(lengthIndex));
         }
@@ -539,25 +535,10 @@ public class ContentProviderUtils {
      * The generator is used to update the next statistics waypoint.
      *
      * @param waypointId           the waypoint id
-     * @param descriptionGenerator the description generator. Can be null for waypoint marker
      */
 
-    public void deleteWaypoint(Context context, long waypointId, DescriptionGenerator descriptionGenerator) {
+    public void deleteWaypoint(Context context, long waypointId) {
         final Waypoint waypoint = getWaypoint(waypointId);
-        if (waypoint != null && waypoint.getType() == WaypointType.STATISTICS
-                && descriptionGenerator != null) {
-            final Waypoint nextWaypoint = getNextStatisticsWaypointAfter(waypoint);
-            if (nextWaypoint == null) {
-                Log.d(TAG, "Unable to find the next statistics marker after deleting one.");
-            } else {
-                nextWaypoint.getTripStatistics().merge(waypoint.getTripStatistics());
-                nextWaypoint.setDescription(
-                        descriptionGenerator.generateWaypointDescription(nextWaypoint.getTripStatistics()));
-                if (!updateWaypoint(nextWaypoint)) {
-                    Log.e(TAG, "Unable to update the next statistics marker after deleting one.");
-                }
-            }
-        }
         if (waypoint != null && waypoint.hasPhoto()) {
             Uri uri = waypoint.getPhotoURI();
             File file = new File(uri.getPath());
@@ -596,14 +577,13 @@ public class ContentProviderUtils {
      * Gets the last waypoint for a type. Returns null if it doesn't exist.
      *
      * @param trackId      the track id
-     * @param waypointType the waypoint type
      */
-    public Waypoint getLastWaypoint(long trackId, WaypointType waypointType) {
+    public Waypoint getLastWaypoint(long trackId) {
         if (trackId < 0) {
             return null;
         }
-        String selection = WaypointsColumns.TRACKID + "=? AND " + WaypointsColumns.TYPE + "=?";
-        String[] selectionArgs = new String[]{Long.toString(trackId), Integer.toString(waypointType.ordinal())};
+        String selection = WaypointsColumns.TRACKID + "=?";
+        String[] selectionArgs = new String[]{Long.toString(trackId)};
         try (Cursor cursor = getWaypointCursor(null, selection, selectionArgs, WaypointsColumns._ID + " DESC", 1)) {
 
             if (cursor != null && cursor.moveToFirst()) {
@@ -618,20 +598,17 @@ public class ContentProviderUtils {
      * Returns -1 if not able to get the next waypoint number.
      *
      * @param trackId      the track id
-     * @param waypointType the waypoint type
      */
-    public int getNextWaypointNumber(long trackId, WaypointType waypointType) {
+    public int getNextWaypointNumber(long trackId) {
         if (trackId < 0) {
             return -1;
         }
         String[] projection = {WaypointsColumns._ID};
-        String selection = WaypointsColumns.TRACKID + "=?  AND " + WaypointsColumns.TYPE + "=?";
-        String[] selectionArgs = new String[]{Long.toString(trackId), Integer.toString(waypointType.ordinal())};
+        String selection = WaypointsColumns.TRACKID + "=?";
+        String[] selectionArgs = new String[]{Long.toString(trackId)};
         try (Cursor cursor = getWaypointCursor(projection, selection, selectionArgs, WaypointsColumns._ID, -1)) {
             if (cursor != null) {
-                int count = cursor.getCount();
-                // For statistics markers, the first marker is for the track statistics, so return the count as the next user visible number.
-                return waypointType == WaypointType.STATISTICS ? count : count + 1;
+                return cursor.getCount();
             }
         }
         return -1;
@@ -751,7 +728,6 @@ public class ContentProviderUtils {
         values.put(WaypointsColumns.CATEGORY, waypoint.getCategory());
         values.put(WaypointsColumns.ICON, waypoint.getIcon());
         values.put(WaypointsColumns.TRACKID, waypoint.getTrackId());
-        values.put(WaypointsColumns.TYPE, waypoint.getType().ordinal());
         values.put(WaypointsColumns.LENGTH, waypoint.getLength());
         values.put(WaypointsColumns.DURATION, waypoint.getDuration());
         values.put(WaypointsColumns.STARTID, waypoint.getStartId());
@@ -794,18 +770,6 @@ public class ContentProviderUtils {
 
         values.put(WaypointsColumns.PHOTOURL, waypoint.getPhotoUrl());
         return values;
-    }
-
-    private Waypoint getNextStatisticsWaypointAfter(Waypoint waypoint) {
-        String selection = WaypointsColumns._ID + ">?  AND " + WaypointsColumns.TRACKID + "=? AND "
-                + WaypointsColumns.TYPE + "=" + WaypointType.STATISTICS.ordinal();
-        String[] selectionArgs = new String[]{Long.toString(waypoint.getId()), Long.toString(waypoint.getTrackId())};
-        try (Cursor cursor = getWaypointCursor(null, selection, selectionArgs, WaypointsColumns._ID, 1)) {
-            if (cursor != null && cursor.moveToFirst()) {
-                return createWaypoint(cursor);
-            }
-        }
-        return null;
     }
 
     /**

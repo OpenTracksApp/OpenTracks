@@ -46,7 +46,6 @@ import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.content.TrackDataHub;
 import de.dennisguse.opentracks.content.Waypoint;
-import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 import de.dennisguse.opentracks.content.WaypointCreationRequest;
 import de.dennisguse.opentracks.fragments.ChartDistanceFragment;
 import de.dennisguse.opentracks.fragments.ChartTimeFragment;
@@ -109,7 +108,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
                     trackController.update(isRecording(), recordingTrackPaused);
                     if (hasPhoto && photoUri != null) {
                         hasPhoto = false;
-                        WaypointCreationRequest waypointCreationRequest = new WaypointCreationRequest(WaypointType.WAYPOINT, false, null, null, null, null, photoUri.toString());
+                        WaypointCreationRequest waypointCreationRequest = new WaypointCreationRequest(false, null, null, null, null, photoUri.toString());
                         long markerId = trackRecordingServiceConnection.addMarker(TrackDetailActivity.this, waypointCreationRequest);
                         if (markerId != -1L) {
                             //TODO: Make configurable.

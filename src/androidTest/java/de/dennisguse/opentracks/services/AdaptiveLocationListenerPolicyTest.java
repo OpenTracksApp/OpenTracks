@@ -53,10 +53,8 @@ public class AdaptiveLocationListenerPolicyTest extends TestCase {
         assertEquals(MAX, adocationListenerPolicy.getDesiredPollingInterval());
 
         adocationListenerPolicy.updateIdleTime(NEW_IDLE_TIME_NORMAL);
-        // First get the half of NEW_IDLE_TIME_NORMAL, and then round it to the
-        // nearest second.
-        assertEquals((NEW_IDLE_TIME_NORMAL / 2 / 1000) * 1000,
-                adocationListenerPolicy.getDesiredPollingInterval());
+        // First get the half of NEW_IDLE_TIME_NORMAL, and then round it to the nearest second.
+        assertEquals((NEW_IDLE_TIME_NORMAL / 2 / 1000) * 1000, adocationListenerPolicy.getDesiredPollingInterval());
 
         adocationListenerPolicy.updateIdleTime(NEW_IDLE_TIME_SMALL);
         assertEquals(MIN, adocationListenerPolicy.getDesiredPollingInterval());

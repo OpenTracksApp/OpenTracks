@@ -27,7 +27,6 @@ import android.widget.EditText;
 
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.Waypoint;
-import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 import de.dennisguse.opentracks.content.WaypointCreationRequest;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 
@@ -126,7 +125,7 @@ public class MarkerEditActivity extends AbstractActivity {
         if (newMarker) {
             statisticsSection.setVisibility(View.GONE);
             waypointSection.setVisibility(View.VISIBLE);
-            int nextWaypointNumber = trackId == -1L ? -1 : new ContentProviderUtils(this).getNextWaypointNumber(trackId, WaypointType.WAYPOINT);
+            int nextWaypointNumber = trackId == -1L ? -1 : new ContentProviderUtils(this).getNextWaypointNumber(trackId);
             if (nextWaypointNumber == -1) {
                 nextWaypointNumber = 0;
             }
@@ -141,7 +140,7 @@ public class MarkerEditActivity extends AbstractActivity {
                 finish();
                 return;
             }
-            boolean statistics = waypoint.getType() == WaypointType.STATISTICS;
+            boolean statistics = false; //TODO REMOVE
             statisticsSection.setVisibility(statistics ? View.VISIBLE : View.GONE);
             waypointSection.setVisibility(statistics ? View.GONE : View.VISIBLE);
             if (statistics) {
@@ -159,7 +158,6 @@ public class MarkerEditActivity extends AbstractActivity {
      */
     private void addMarker() {
         WaypointCreationRequest waypointCreationRequest = new WaypointCreationRequest(
-                WaypointType.WAYPOINT,
                 false,
                 waypointName.getText().toString(),
                 waypointMarkerType.getText().toString(),
@@ -173,7 +171,7 @@ public class MarkerEditActivity extends AbstractActivity {
      * Saves a marker.
      */
     private void saveMarker() {
-        boolean statistics = waypoint.getType() == WaypointType.STATISTICS;
+        boolean statistics = false; //TODO REMOVE
         if (statistics) {
             waypoint.setName(statisticsName.getText().toString());
         } else {

@@ -35,7 +35,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 import de.dennisguse.opentracks.stats.TripStatistics;
 
 import static org.mockito.Mockito.when;
@@ -57,7 +56,7 @@ public class CustomContentProviderUtilsTest {
     private static final double ALTITUDE_INTERVAL = 2.5;
 
     private Context context = ApplicationProvider.getApplicationContext();
-    private ContentProviderUtils providerUtils;
+    private ContentProviderUtils contentProviderUtils;
 
     @Mock
     private Cursor cursorMock;
@@ -67,8 +66,8 @@ public class CustomContentProviderUtilsTest {
 
     @Before
     public void setUp() {
-        providerUtils = new ContentProviderUtils(context);
-        providerUtils.deleteAllTracks(context);
+        contentProviderUtils = new ContentProviderUtils(context);
+        contentProviderUtils.deleteAllTracks(context);
     }
 
     @Test
@@ -132,9 +131,9 @@ public class CustomContentProviderUtilsTest {
 
     private List<Location> testIterator(long trackId, int numPoints, int batchSize, boolean descending, LocationFactory locationFactory) {
         long lastPointId = initializeTrack(trackId, numPoints);
-        ((ContentProviderUtils) providerUtils).setDefaultCursorBatchSize(batchSize);
+        ((ContentProviderUtils) contentProviderUtils).setDefaultCursorBatchSize(batchSize);
         List<Location> locations = new ArrayList<Location>(numPoints);
-        try (LocationIterator it = providerUtils.getTrackPointLocationIterator(trackId, -1L, descending, locationFactory)) {
+        try (LocationIterator it = contentProviderUtils.getTrackPointLocationIterator(trackId, -1L, descending, locationFactory)) {
             while (it.hasNext()) {
                 Location loc = it.next();
                 Assert.assertNotNull(loc);
@@ -153,8 +152,8 @@ public class CustomContentProviderUtilsTest {
         track.setId(id);
         track.setName("Test: " + id);
         track.setNumberOfPoints(numPoints);
-        providerUtils.insertTrack(track);
-        track = providerUtils.getTrack(id);
+        contentProviderUtils.insertTrack(track);
+        track = contentProviderUtils.getTrack(id);
         Assert.assertNotNull(track);
 
         Location[] locations = new Location[numPoints];
@@ -166,12 +165,12 @@ public class CustomContentProviderUtilsTest {
             loc.setAltitude(i * 2.5);
             locations[i] = loc;
         }
-        providerUtils.bulkInsertTrackPoint(locations, numPoints, id);
+        contentProviderUtils.bulkInsertTrackPoint(locations, numPoints, id);
 
         // Load all inserted locations.
         long lastPointId = -1;
         int counter = 0;
-        try (LocationIterator it = providerUtils.getTrackPointLocationIterator(id, -1L, false, LocationFactory.DEFAULT_LOCATION_FACTORY)) {
+        try (LocationIterator it = contentProviderUtils.getTrackPointLocationIterator(id, -1L, false, LocationFactory.DEFAULT_LOCATION_FACTORY)) {
             while (it.hasNext()) {
                 it.next();
                 lastPointId = it.getLocationId();
@@ -208,7 +207,7 @@ public class CustomContentProviderUtilsTest {
         String name = NAME_PREFIX + trackId;
         when(cursorMock.getString(columnIndex++)).thenReturn(name);
 
-        Track track = providerUtils.createTrack(cursorMock);
+        Track track = contentProviderUtils.createTrack(cursorMock);
         Assert.assertEquals(trackId, track.getId());
         Assert.assertEquals(name, track.getName());
     }
@@ -223,7 +222,7 @@ public class CustomContentProviderUtilsTest {
         Track track = getTrack(trackId, 10);
         insertTrackWithLocations(track);
         Waypoint waypoint = new Waypoint();
-        providerUtils.insertWaypoint(waypoint);
+        contentProviderUtils.insertWaypoint(waypoint);
         ContentResolver contentResolver = context.getContentResolver();
         Cursor tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
         Assert.assertEquals(1, tracksCursor.getCount());
@@ -232,7 +231,7 @@ public class CustomContentProviderUtilsTest {
         Cursor waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null, null, WaypointsColumns._ID);
         Assert.assertEquals(1, waypointCursor.getCount());
         // Delete all.
-        providerUtils.deleteAllTracks(context);
+        contentProviderUtils.deleteAllTracks(context);
         // Check whether all have been deleted.
         tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
         Assert.assertEquals(0, tracksCursor.getCount());
@@ -251,13 +250,13 @@ public class CustomContentProviderUtilsTest {
         long trackId = System.currentTimeMillis();
         Track track = getTrack(trackId, 10);
 
-        providerUtils.insertTrack(track);
+        contentProviderUtils.insertTrack(track);
         insertTrackWithLocations(getTrack(trackId + 1, 10));
         insertTrackWithLocations(getTrack(trackId + 2, 10));
 
         Waypoint waypoint = new Waypoint();
         waypoint.setTrackId(trackId);
-        providerUtils.insertWaypoint(waypoint);
+        contentProviderUtils.insertWaypoint(waypoint);
 
         ContentResolver contentResolver = context.getContentResolver();
         Cursor tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
@@ -267,7 +266,7 @@ public class CustomContentProviderUtilsTest {
         Cursor waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null, null, WaypointsColumns._ID);
         Assert.assertEquals(1, waypointCursor.getCount());
         // Delete one track.
-        providerUtils.deleteTrack(context, trackId);
+        contentProviderUtils.deleteTrack(context, trackId);
         // Check whether all data of a track has been deleted.
         tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
         Assert.assertEquals(2, tracksCursor.getCount());
@@ -282,10 +281,10 @@ public class CustomContentProviderUtilsTest {
      */
     @Test
     public void testGetAllTracks() {
-        int initialTrackNumber = providerUtils.getAllTracks().size();
+        int initialTrackNumber = contentProviderUtils.getAllTracks().size();
         long trackId = System.currentTimeMillis();
-        providerUtils.insertTrack(getTrack(trackId, 0));
-        List<Track> allTracks = providerUtils.getAllTracks();
+        contentProviderUtils.insertTrack(getTrack(trackId, 0));
+        List<Track> allTracks = contentProviderUtils.getAllTracks();
         Assert.assertEquals(initialTrackNumber + 1, allTracks.size());
         Assert.assertEquals(trackId, allTracks.get(allTracks.size() - 1).getId());
     }
@@ -296,8 +295,8 @@ public class CustomContentProviderUtilsTest {
     @Test
     public void testGetLastTrack() {
         long trackId = System.currentTimeMillis();
-        providerUtils.insertTrack(getTrack(trackId, 0));
-        Assert.assertEquals(trackId, providerUtils.getLastTrack().getId());
+        contentProviderUtils.insertTrack(getTrack(trackId, 0));
+        Assert.assertEquals(trackId, contentProviderUtils.getLastTrack().getId());
     }
 
     /**
@@ -306,8 +305,8 @@ public class CustomContentProviderUtilsTest {
     @Test
     public void testGetTrack() {
         long trackId = System.currentTimeMillis();
-        providerUtils.insertTrack(getTrack(trackId, 0));
-        Assert.assertNotNull(providerUtils.getTrack(trackId));
+        contentProviderUtils.insertTrack(getTrack(trackId, 0));
+        Assert.assertNotNull(contentProviderUtils.getTrack(trackId));
     }
 
     /**
@@ -320,11 +319,11 @@ public class CustomContentProviderUtilsTest {
         String nameOld = "name1";
         String nameNew = "name2";
         track.setName(nameOld);
-        providerUtils.insertTrack(track);
-        Assert.assertEquals(nameOld, providerUtils.getTrack(trackId).getName());
+        contentProviderUtils.insertTrack(track);
+        Assert.assertEquals(nameOld, contentProviderUtils.getTrack(trackId).getName());
         track.setName(nameNew);
-        providerUtils.updateTrack(track);
-        Assert.assertEquals(nameNew, providerUtils.getTrack(trackId).getName());
+        contentProviderUtils.updateTrack(track);
+        Assert.assertEquals(nameNew, contentProviderUtils.getTrack(trackId).getName());
     }
 
     /**
@@ -334,7 +333,7 @@ public class CustomContentProviderUtilsTest {
     public void testCreateContentValues_waypoint() {
         long trackId = System.currentTimeMillis();
         Track track = getTrack(trackId, 10);
-        providerUtils.insertTrack(track);
+        contentProviderUtils.insertTrack(track);
         // Bottom
         long startTime = 1000L;
         // AverageSpeed
@@ -355,7 +354,6 @@ public class CustomContentProviderUtilsTest {
         // Insert at first.
         Waypoint waypoint = new Waypoint();
         waypoint.setDescription(TEST_DESC);
-        waypoint.setType(WaypointType.STATISTICS);
         waypoint.setTripStatistics(statistics);
 
         Location location = new Location("test");
@@ -364,7 +362,7 @@ public class CustomContentProviderUtilsTest {
         location.setAccuracy((float) 1 / 100.0f);
         location.setAltitude(2.5);
         waypoint.setLocation(location);
-        providerUtils.insertWaypoint(waypoint);
+        contentProviderUtils.insertWaypoint(waypoint);
 
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(contentResolverMock);
 
@@ -406,7 +404,7 @@ public class CustomContentProviderUtilsTest {
         long trackId = 11L;
         when(cursorMock.getLong(columnIndex++)).thenReturn(trackId);
 
-        Waypoint waypoint = providerUtils.createWaypoint(cursorMock);
+        Waypoint waypoint = contentProviderUtils.createWaypoint(cursorMock);
         Assert.assertEquals(id, waypoint.getId());
         Assert.assertEquals(name, waypoint.getName());
         Assert.assertEquals(trackId, waypoint.getTrackId());
@@ -414,50 +412,37 @@ public class CustomContentProviderUtilsTest {
 
     /**
      * Tests the method
-     * {@link ContentProviderUtils#deleteWaypoint(Context, long, DescriptionGenerator)}
+     * {@link ContentProviderUtils#deleteWaypoint(Context, long)}
      * when there is only one waypoint in the track.
      */
     @Test
     public void testDeleteWaypoint_onlyOneWayPoint() {
         long trackId = System.currentTimeMillis();
         Track track = getTrack(trackId, 10);
-        providerUtils.insertTrack(track);
+        contentProviderUtils.insertTrack(track);
 
         // Insert at first.
         Waypoint waypoint1 = new Waypoint();
         waypoint1.setDescription(TEST_DESC);
         waypoint1.setTrackId(trackId);
-        waypoint1.setType(WaypointType.STATISTICS);
-        providerUtils.insertWaypoint(waypoint1);
+        contentProviderUtils.insertWaypoint(waypoint1);
 
         // Delete
-        DescriptionGenerator descriptionGenerator = new DescriptionGenerator() {
+        contentProviderUtils.deleteWaypoint(context, 1);
 
-            @Override
-            public String generateWaypointDescription(TripStatistics tripStatistics) {
-                return CustomContentProviderUtilsTest.MOCK_DESC;
-            }
-
-            @Override
-            public String generateTrackDescription(Track aTrack, boolean html) {
-                return null;
-            }
-        };
-        providerUtils.deleteWaypoint(context, 1, descriptionGenerator);
-
-        Assert.assertNull(providerUtils.getWaypoint(1));
+        Assert.assertNull(contentProviderUtils.getWaypoint(1));
     }
 
     /**
      * Tests the method
-     * {@link ContentProviderUtils#deleteWaypoint(Context, long, DescriptionGenerator)}
+     * {@link ContentProviderUtils#deleteWaypoint(Context, long)}
      * when there is more than one waypoint in the track.
      */
     @Test
     public void testDeleteWaypoint_hasNextWayPoint() {
         long trackId = System.currentTimeMillis();
         Track track = getTrack(trackId, 10);
-        providerUtils.insertTrack(track);
+        contentProviderUtils.insertTrack(track);
 
         TripStatistics statistics = new TripStatistics();
         statistics.setStartTime(1000L);
@@ -475,39 +460,23 @@ public class CustomContentProviderUtilsTest {
 
         // Insert at first.
         Waypoint waypoint1 = new Waypoint();
-        waypoint1.setDescription(Long.toString(trackId));
+        waypoint1.setDescription(MOCK_DESC);
         waypoint1.setTrackId(trackId);
-        waypoint1.setType(WaypointType.STATISTICS);
         waypoint1.setTripStatistics(statistics);
-        long waypoint1Id = ContentUris.parseId(providerUtils.insertWaypoint(waypoint1));
+        long waypoint1Id = ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint1));
 
         Waypoint waypoint2 = new Waypoint();
         waypoint2.setDescription(Long.toString(trackId));
         waypoint2.setTrackId(trackId);
-        waypoint2.setType(WaypointType.STATISTICS);
         waypoint2.setTripStatistics(statistics);
-        long waypoint2Id = ContentUris.parseId(providerUtils.insertWaypoint(waypoint2));
-
+        long waypoint2Id = ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint2));
 
         // Delete
-        DescriptionGenerator descriptionGenerator = new DescriptionGenerator() {
-            @Override
-            public String generateWaypointDescription(TripStatistics tripStatistics) {
-                return CustomContentProviderUtilsTest.MOCK_DESC;
-            }
+        Assert.assertNotNull(contentProviderUtils.getWaypoint(waypoint1Id));
+        contentProviderUtils.deleteWaypoint(context, waypoint1Id);
+        Assert.assertNull(contentProviderUtils.getWaypoint(waypoint1Id));
 
-            @Override
-            public String generateTrackDescription(Track aTrack, boolean html) {
-                return null;
-            }
-        };
-
-        Assert.assertNotNull(providerUtils.getWaypoint(waypoint1Id));
-        providerUtils.deleteWaypoint(context, waypoint1Id, descriptionGenerator);
-        Assert.assertNull(providerUtils.getWaypoint(waypoint1Id));
-
-        Assert.assertEquals(CustomContentProviderUtilsTest.MOCK_DESC, providerUtils.getWaypoint(waypoint2Id)
-                .getDescription());
+        Assert.assertEquals(MOCK_DESC, contentProviderUtils.getWaypoint(waypoint2Id).getDescription());
     }
 
     /**
@@ -517,78 +486,70 @@ public class CustomContentProviderUtilsTest {
     public void testGetFirstWaypointId() {
         long trackId = System.currentTimeMillis();
         Track track = getTrack(trackId, 10);
-        providerUtils.insertTrack(track);
+        contentProviderUtils.insertTrack(track);
 
         Waypoint waypoint1 = new Waypoint();
         waypoint1.setTrackId(trackId);
-        long waypoint1id = ContentUris.parseId(providerUtils.insertWaypoint(waypoint1));
+        long waypoint1id = ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint1));
 
         Waypoint waypoint2 = new Waypoint();
         waypoint2.setTrackId(trackId);
-        long waypoint2id = ContentUris.parseId(providerUtils.insertWaypoint(waypoint2));
+        long waypoint2id = ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint2));
 
-        Assert.assertEquals(-1L, providerUtils.getFirstWaypointId(-1));
-        Assert.assertEquals(waypoint1id, providerUtils.getFirstWaypointId(trackId));
-        Assert.assertEquals(waypoint2id, providerUtils.getLastWaypoint(trackId, WaypointType.WAYPOINT).getId());
+        Assert.assertEquals(-1L, contentProviderUtils.getFirstWaypointId(-1));
+        Assert.assertEquals(waypoint1id, contentProviderUtils.getFirstWaypointId(trackId));
+        Assert.assertEquals(waypoint2id, contentProviderUtils.getLastWaypoint(trackId).getId());
     }
 
     /**
-     * Tests the method {@link ContentProviderUtils#getNextWaypointNumber(long, WaypointType)}.
+     * Tests the method {@link ContentProviderUtils#getNextWaypointNumber(long)}.
      */
     @Test
     public void testGetNextWaypointNumber() {
         long trackId = System.currentTimeMillis();
         Track track = getTrack(trackId, 10);
-        providerUtils.insertTrack(track);
+        contentProviderUtils.insertTrack(track);
 
         Waypoint waypoint1 = new Waypoint();
-        waypoint1.setType(WaypointType.STATISTICS);
         waypoint1.setTrackId(trackId);
         Waypoint waypoint2 = new Waypoint();
-        waypoint2.setType(WaypointType.WAYPOINT);
         waypoint2.setTrackId(trackId);
         Waypoint waypoint3 = new Waypoint();
-        waypoint3.setType(WaypointType.STATISTICS);
         waypoint3.setTrackId(trackId);
         Waypoint waypoint4 = new Waypoint();
-        waypoint4.setType(WaypointType.WAYPOINT);
         waypoint4.setTrackId(trackId);
-        providerUtils.insertWaypoint(waypoint1);
-        providerUtils.insertWaypoint(waypoint2);
-        providerUtils.insertWaypoint(waypoint3);
-        providerUtils.insertWaypoint(waypoint4);
+        contentProviderUtils.insertWaypoint(waypoint1);
+        contentProviderUtils.insertWaypoint(waypoint2);
+        contentProviderUtils.insertWaypoint(waypoint3);
+        contentProviderUtils.insertWaypoint(waypoint4);
 
-        Assert.assertEquals(2, providerUtils.getNextWaypointNumber(trackId, WaypointType.STATISTICS));
-        Assert.assertEquals(3, providerUtils.getNextWaypointNumber(trackId, WaypointType.WAYPOINT));
+        Assert.assertEquals(4, contentProviderUtils.getNextWaypointNumber(trackId));
     }
 
     /**
      * Tests the method
-     * {@link ContentProviderUtils#getLastWaypoint(long, WaypointType)}.
+     * {@link ContentProviderUtils#getLastWaypoint(long)}.
      */
     @Test
-    public void testGetLastStatisticsWaypoint() {
+    public void testGetLastWaypoint() {
         long trackId = System.currentTimeMillis();
         Track track = getTrack(trackId, 10);
-        providerUtils.insertTrack(track);
+        contentProviderUtils.insertTrack(track);
 
         Waypoint waypoint1 = new Waypoint();
         waypoint1.setTrackId(trackId);
-        waypoint1.setType(WaypointType.STATISTICS);
         waypoint1.setDescription("Desc1");
         Waypoint waypoint2 = new Waypoint();
         waypoint2.setTrackId(trackId);
-        waypoint2.setType(WaypointType.STATISTICS);
         waypoint2.setDescription("Desc2");
         Waypoint waypoint3 = new Waypoint();
         waypoint3.setTrackId(trackId);
-        waypoint3.setType(WaypointType.WAYPOINT);
         waypoint3.setDescription("Desc3");
-        providerUtils.insertWaypoint(waypoint1);
-        providerUtils.insertWaypoint(waypoint2);
-        providerUtils.insertWaypoint(waypoint3);
+        contentProviderUtils.insertWaypoint(waypoint1);
+        contentProviderUtils.insertWaypoint(waypoint2);
+        contentProviderUtils.insertWaypoint(waypoint3);
 
-        Assert.assertEquals("Desc2", providerUtils.getLastWaypoint(trackId, WaypointType.STATISTICS).getDescription());
+        Assert.assertEquals("Desc3", contentProviderUtils.getLastWaypoint(trackId).getDescription());
     }
 
     /**
@@ -599,14 +560,14 @@ public class CustomContentProviderUtilsTest {
     public void testInsertAndGetWaypoint() {
         long trackId = System.currentTimeMillis();
         Track track = getTrack(trackId, 10);
-        providerUtils.insertTrack(track);
+        contentProviderUtils.insertTrack(track);
 
         Waypoint waypoint = new Waypoint();
         waypoint.setDescription(TEST_DESC);
         waypoint.setTrackId(trackId);
-        long waypointId = ContentUris.parseId(providerUtils.insertWaypoint(waypoint));
+        long waypointId = ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint));
 
-        Assert.assertEquals(TEST_DESC, providerUtils.getWaypoint(waypointId).getDescription());
+        Assert.assertEquals(TEST_DESC, contentProviderUtils.getWaypoint(waypointId).getDescription());
     }
 
     /**
@@ -616,19 +577,19 @@ public class CustomContentProviderUtilsTest {
     public void testUpdateWaypoint() {
         long trackId = System.currentTimeMillis();
         Track track = getTrack(trackId, 10);
-        providerUtils.insertTrack(track);
+        contentProviderUtils.insertTrack(track);
         // Insert at first.
         Waypoint waypoint = new Waypoint();
         waypoint.setDescription(TEST_DESC);
         waypoint.setTrackId(trackId);
-        long waypointId = ContentUris.parseId(providerUtils.insertWaypoint(waypoint));
+        long waypointId = ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint));
 
         // Update
-        waypoint = providerUtils.getWaypoint(waypointId);
+        waypoint = contentProviderUtils.getWaypoint(waypointId);
         waypoint.setDescription(TEST_DESC_NEW);
-        providerUtils.updateWaypoint(waypoint);
+        contentProviderUtils.updateWaypoint(waypoint);
 
-        Assert.assertEquals(TEST_DESC_NEW, providerUtils.getWaypoint(waypointId).getDescription());
+        Assert.assertEquals(TEST_DESC_NEW, contentProviderUtils.getWaypoint(waypointId).getDescription());
     }
 
     /**
@@ -641,10 +602,10 @@ public class CustomContentProviderUtilsTest {
         Track track = getTrack(trackId, 10);
         insertTrackWithLocations(track);
 
-        providerUtils.bulkInsertTrackPoint(track.getLocations().toArray(new Location[0]), -1, trackId);
-        Assert.assertEquals(20, providerUtils.getTrackPointCursor(trackId, -1L, 1000, false).getCount());
-        providerUtils.bulkInsertTrackPoint(track.getLocations().toArray(new Location[0]), 8, trackId);
-        Assert.assertEquals(28, providerUtils.getTrackPointCursor(trackId, -1L, 1000, false).getCount());
+        contentProviderUtils.bulkInsertTrackPoint(track.getLocations().toArray(new Location[0]), -1, trackId);
+        Assert.assertEquals(20, contentProviderUtils.getTrackPointCursor(trackId, -1L, 1000, false).getCount());
+        contentProviderUtils.bulkInsertTrackPoint(track.getLocations().toArray(new Location[0]), 8, trackId);
+        Assert.assertEquals(28, contentProviderUtils.getTrackPointCursor(trackId, -1L, 1000, false).getCount());
     }
 
     /**
@@ -699,7 +660,7 @@ public class CustomContentProviderUtilsTest {
         byte[] sensor = "Sensor state".getBytes();
         when(cursorMock.getBlob(index++)).thenReturn(sensor);
 
-        Location location = providerUtils.createTrackPoint(cursorMock);
+        Location location = contentProviderUtils.createTrackPoint(cursorMock);
         Assert.assertEquals((double) longitude, location.getLongitude(), 0.01);
         Assert.assertEquals((double) latitude, location.getLatitude(), 0.01);
         Assert.assertEquals(time, location.getTime(), 0.01);
@@ -717,8 +678,8 @@ public class CustomContentProviderUtilsTest {
         Track track = getTrack(trackId, 10);
         insertTrackWithLocations(track);
 
-        providerUtils.insertTrackPoint(createLocation(22), trackId);
-        Assert.assertEquals(11, providerUtils.getTrackPointCursor(trackId, -1L, 1000, false).getCount());
+        contentProviderUtils.insertTrackPoint(createLocation(22), trackId);
+        Assert.assertEquals(11, contentProviderUtils.getTrackPointCursor(trackId, -1L, 1000, false).getCount());
     }
 
     /**
@@ -731,7 +692,7 @@ public class CustomContentProviderUtilsTest {
         Track track = getTrack(trackId, 10);
         insertTrackWithLocations(track);
 
-        Assert.assertNotEquals(-1L, providerUtils.getFirstTrackPointId(trackId));
+        Assert.assertNotEquals(-1L, contentProviderUtils.getFirstTrackPointId(trackId));
     }
 
     /**
@@ -744,7 +705,7 @@ public class CustomContentProviderUtilsTest {
         Track track = getTrack(trackId, 10);
         insertTrackWithLocations(track);
 
-        Assert.assertTrue(providerUtils.getFirstTrackPointId(trackId) < providerUtils.getLastTrackPointId(trackId));
+        Assert.assertTrue(contentProviderUtils.getFirstTrackPointId(trackId) < contentProviderUtils.getLastTrackPointId(trackId));
     }
 
     /**
@@ -757,7 +718,7 @@ public class CustomContentProviderUtilsTest {
         Track track = getTrack(trackId, 10);
         insertTrackWithLocations(track);
 
-        Location lastLocation = providerUtils.getLastValidTrackPoint(trackId);
+        Location lastLocation = contentProviderUtils.getLastValidTrackPoint(trackId);
         checkLocation(9, lastLocation);
     }
 
@@ -769,14 +730,14 @@ public class CustomContentProviderUtilsTest {
         // Insert track, points at first.
         long trackId = System.currentTimeMillis();
         Track track = getTrack(trackId, 10);
-        providerUtils.insertTrack(track);
+        contentProviderUtils.insertTrack(track);
 
         long[] trackpointIds = new long[track.getNumberOfPoints()];
         for (int i = 0; i < trackpointIds.length; i++) {
-            trackpointIds[i] = ContentUris.parseId(providerUtils.insertTrackPoint(track.getLocations().get(i), track.getId()));
+            trackpointIds[i] = ContentUris.parseId(contentProviderUtils.insertTrackPoint(track.getLocations().get(i), track.getId()));
         }
 
-        Cursor cursor = providerUtils.getTrackPointCursor(trackId, trackpointIds[1], 5, true);
+        Cursor cursor = contentProviderUtils.getTrackPointCursor(trackId, trackpointIds[1], 5, true);
         Assert.assertEquals(2, cursor.getCount());
     }
 
@@ -788,14 +749,14 @@ public class CustomContentProviderUtilsTest {
         // Insert track, points at first.
         long trackId = System.currentTimeMillis();
         Track track = getTrack(trackId, 10);
-        providerUtils.insertTrack(track);
+        contentProviderUtils.insertTrack(track);
 
         long[] trackpointIds = new long[track.getNumberOfPoints()];
         for (int i = 0; i < trackpointIds.length; i++) {
-            trackpointIds[i] = ContentUris.parseId(providerUtils.insertTrackPoint(track.getLocations().get(i), track.getId()));
+            trackpointIds[i] = ContentUris.parseId(contentProviderUtils.insertTrackPoint(track.getLocations().get(i), track.getId()));
         }
 
-        Cursor cursor = providerUtils.getTrackPointCursor(trackId, trackpointIds[8], 5, false);
+        Cursor cursor = contentProviderUtils.getTrackPointCursor(trackId, trackpointIds[8], 5, false);
         Assert.assertEquals(2, cursor.getCount());
     }
 
@@ -807,16 +768,16 @@ public class CustomContentProviderUtilsTest {
         // Insert track, points at first.
         long trackId = System.currentTimeMillis();
         Track track = getTrack(trackId, 10);
-        providerUtils.insertTrack(track);
+        contentProviderUtils.insertTrack(track);
 
         long[] trackpointIds = new long[track.getNumberOfPoints()];
         for (int i = 0; i < trackpointIds.length; i++) {
-            trackpointIds[i] = ContentUris.parseId(providerUtils.insertTrackPoint(track.getLocations().get(i), track.getId()));
+            trackpointIds[i] = ContentUris.parseId(contentProviderUtils.insertTrackPoint(track.getLocations().get(i), track.getId()));
         }
 
         long startTrackPointId = trackpointIds[9];
 
-        LocationIterator locationIterator = providerUtils.getTrackPointLocationIterator(trackId, startTrackPointId, true, LocationFactory.DEFAULT_LOCATION_FACTORY);
+        LocationIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(trackId, startTrackPointId, true, LocationFactory.DEFAULT_LOCATION_FACTORY);
         for (int i = 0; i < trackpointIds.length; i++) {
             Assert.assertTrue(locationIterator.hasNext());
             Location location = locationIterator.next();
@@ -834,16 +795,16 @@ public class CustomContentProviderUtilsTest {
         // Insert track, point at first.
         long trackId = System.currentTimeMillis();
         Track track = getTrack(trackId, 10);
-        providerUtils.insertTrack(track);
+        contentProviderUtils.insertTrack(track);
 
         long[] trackpointIds = new long[track.getNumberOfPoints()];
         for (int i = 0; i < trackpointIds.length; i++) {
-            trackpointIds[i] = ContentUris.parseId(providerUtils.insertTrackPoint(track.getLocations().get(i), track.getId()));
+            trackpointIds[i] = ContentUris.parseId(contentProviderUtils.insertTrackPoint(track.getLocations().get(i), track.getId()));
         }
 
         long startTrackPointId = trackpointIds[0];
 
-        LocationIterator locationIterator = providerUtils.getTrackPointLocationIterator(trackId, startTrackPointId, false, LocationFactory.DEFAULT_LOCATION_FACTORY);
+        LocationIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(trackId, startTrackPointId, false, LocationFactory.DEFAULT_LOCATION_FACTORY);
         for (int i = 0; i < trackpointIds.length; i++) {
             Assert.assertTrue(locationIterator.hasNext());
             Location location = locationIterator.next();
@@ -906,7 +867,7 @@ public class CustomContentProviderUtilsTest {
      * @param track track to be inserted
      */
     private void insertTrackWithLocations(Track track) {
-        providerUtils.insertTrack(track);
-        providerUtils.bulkInsertTrackPoint(track.getLocations().toArray(new Location[0]), track.getLocations().size(), track.getId());
+        contentProviderUtils.insertTrack(track);
+        contentProviderUtils.bulkInsertTrackPoint(track.getLocations().toArray(new Location[0]), track.getLocations().size(), track.getId());
     }
 }

@@ -302,9 +302,9 @@ public class TrackRecordingService extends Service {
 
         String name = waypointCreationRequest.getName();
         if (name == null) {
-            int nextWaypointNumber = contentProviderUtils.getNextWaypointNumber(recordingTrackId, waypointCreationRequest.getType());
+            int nextWaypointNumber = contentProviderUtils.getNextWaypointNumber(recordingTrackId);
             if (nextWaypointNumber == -1) {
-                nextWaypointNumber = 0;
+                nextWaypointNumber = 1;
             }
             name = getString(R.string.marker_name_format, nextWaypointNumber);
         }
@@ -335,7 +335,7 @@ public class TrackRecordingService extends Service {
         String photoUrl = waypointCreationRequest.getPhotoUrl() != null ? waypointCreationRequest.getPhotoUrl() : "";
 
         // Insert waypoint
-        Waypoint waypoint = new Waypoint(name, description, category, icon, recordingTrackId, waypointCreationRequest.getType(), length, duration, -1L, -1L, location, null, photoUrl);
+        Waypoint waypoint = new Waypoint(name, description, category, icon, recordingTrackId, length, duration, -1L, -1L, location, null, photoUrl);
         Uri uri = contentProviderUtils.insertWaypoint(waypoint);
         return Long.parseLong(uri.getLastPathSegment());
     }

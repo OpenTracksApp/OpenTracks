@@ -44,7 +44,6 @@ import de.dennisguse.opentracks.content.LocationFactory;
 import de.dennisguse.opentracks.content.LocationIterator;
 import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.content.Waypoint;
-import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.stats.TripStatistics;
 import de.dennisguse.opentracks.stats.TripStatisticsUpdater;
@@ -201,27 +200,14 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
                     // Valid location
                     if (location.getLatitude() == waypoint.getLocation().getLatitude() && location.getLongitude() == waypoint.getLocation().getLongitude()) {
 
-                        // Get tripStatistics, description, and icon
-                        TripStatistics tripStatistics;
-                        String waypointDescription;
-                        String icon;
-                        if (waypoint.getType() == WaypointType.STATISTICS) {
-                            tripStatistics = markerTripStatisticsUpdater.getTripStatistics();
-                            markerTripStatisticsUpdater = new TripStatisticsUpdater(location.getTime());
-                            waypointDescription = new DescriptionGeneratorImpl(context).generateWaypointDescription(tripStatistics);
-                            icon = context.getString(R.string.marker_statistics_icon_url);
-                        } else {
-                            tripStatistics = null;
-                            waypointDescription = waypoint.getDescription();
-                            icon = context.getString(R.string.marker_waypoint_icon_url);
-                        }
-
-                        // Get length and duration
+                        TripStatistics tripStatistics = null;
+                        String waypointDescription = waypoint.getDescription();
+                        String icon = context.getString(R.string.marker_waypoint_icon_url);
                         double length = trackTripStatisticstrackUpdater.getTripStatistics().getTotalDistance();
                         long duration = trackTripStatisticstrackUpdater.getTripStatistics().getTotalTime();
 
                         // Insert waypoint
-                        Waypoint newWaypoint = new Waypoint(waypoint.getName(), waypointDescription, waypoint.getCategory(), icon, track.getId(), waypoint.getType(), length, duration, -1L, -1L, location, tripStatistics, waypoint.getPhotoUrl());
+                        Waypoint newWaypoint = new Waypoint(waypoint.getName(), waypointDescription, waypoint.getCategory(), icon, track.getId(), length, duration, -1L, -1L, location, tripStatistics, waypoint.getPhotoUrl());
                         contentProviderUtils.insertWaypoint(newWaypoint);
                     }
 
@@ -292,10 +278,8 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
 
     /**
      * Adds a waypoint.
-     *
-     * @param type the waypoint type
      */
-    protected void addWaypoint(WaypointType type) throws SAXException {
+    protected void addWaypoint() throws SAXException {
         // Waypoint must have a time, else cannot match to the track points
         if (time == null) {
             return;
@@ -318,7 +302,6 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         if (category != null) {
             waypoint.setCategory(category);
         }
-        waypoint.setType(type);
 
         if (photoUrl != null) {
             waypoint.setPhotoUrl(photoUrl);
@@ -505,6 +488,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
      *
      * @param track the track
      */
+    @Deprecated //TODO Store statistics for track in track rather than in waypoint.
     private void insertFirstWaypoint(Track track) {
         String waypointName = context.getString(R.string.marker_split_name_format, 0);
         String waypointCategory = "";
@@ -517,7 +501,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         Location waypointLocation = new Location("");
         waypointLocation.setLatitude(100);
         waypointLocation.setLongitude(180);
-        Waypoint waypoint = new Waypoint(waypointName, waypointDescription, waypointCategory, icon, track.getId(), WaypointType.STATISTICS, length, duration, -1L, -1L, waypointLocation, tripStatistics, "");
+        Waypoint waypoint = new Waypoint(waypointName, waypointDescription, waypointCategory, icon, track.getId(), length, duration, -1L, -1L, waypointLocation, tripStatistics, "");
         contentProviderUtils.insertWaypoint(waypoint);
     }
 

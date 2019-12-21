@@ -25,7 +25,6 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 import de.dennisguse.opentracks.content.ContentProviderUtils;
-import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 
 /**
  * Imports a GPX file.
@@ -184,6 +183,6 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
      * On waypoint end.
      */
     private void onWaypointEnd() throws SAXException {
-        addWaypoint(WaypointType.STATISTICS.name().equals(waypointType) ? WaypointType.STATISTICS : WaypointType.WAYPOINT);
+        addWaypoint();
     }
 }

@@ -15,7 +15,6 @@
  */
 package de.dennisguse.opentracks.content;
 
-import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 
 /**
  * A request for the service to create a waypoint at the current location.
@@ -24,12 +23,10 @@ import de.dennisguse.opentracks.content.Waypoint.WaypointType;
  */
 public class WaypointCreationRequest {
 
-    public final static WaypointCreationRequest DEFAULT_WAYPOINT = new WaypointCreationRequest(WaypointType.WAYPOINT, false);
+    public final static WaypointCreationRequest DEFAULT_WAYPOINT = new WaypointCreationRequest(false);
 
     @Deprecated // TODO Do not create per
-    public final static WaypointCreationRequest DEFAULT_START_TRACK = new WaypointCreationRequest(WaypointType.STATISTICS, true);
-
-    private WaypointType type;
+    public final static WaypointCreationRequest DEFAULT_START_TRACK = new WaypointCreationRequest(true);
 
     // true if this marker contains the track statistics
     private boolean isTrackStatistics;
@@ -40,22 +37,17 @@ public class WaypointCreationRequest {
     private String iconUrl;
     private String photoUrl;
 
-    private WaypointCreationRequest(WaypointType type, boolean isTrackStatistics) {
-        this(type, isTrackStatistics, null, null, null, null, null);
+    private WaypointCreationRequest(boolean isTrackStatistics) {
+        this(isTrackStatistics, null, null, null, null, null);
     }
 
-    public WaypointCreationRequest(WaypointType type, boolean isTrackStatistics, String name, String category, String description, String iconUrl, String photoUrl) {
-        this.type = type;
+    public WaypointCreationRequest(boolean isTrackStatistics, String name, String category, String description, String iconUrl, String photoUrl) {
         this.isTrackStatistics = isTrackStatistics;
         this.name = name;
         this.category = category;
         this.description = description;
         this.iconUrl = iconUrl;
         this.photoUrl = photoUrl;
-    }
-
-    public WaypointType getType() {
-        return type;
     }
 
     public boolean isTrackStatistics() {

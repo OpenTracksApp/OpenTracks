@@ -219,7 +219,7 @@ public class TrackRecordingServiceTestLooper {
             service.insertTrackPoint(location);
 
             if (i % 7 == 0) {
-                service.insertWaypoint(WaypointCreationRequest.DEFAULT_WAYPOINT);
+                service.insertWaypoint(new WaypointCreationRequest(null, null, null, null, null));
             }
         }
 

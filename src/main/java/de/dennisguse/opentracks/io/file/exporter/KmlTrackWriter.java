@@ -32,7 +32,6 @@ import de.dennisguse.opentracks.content.DescriptionGeneratorImpl;
 import de.dennisguse.opentracks.content.SensorDataSetLocation;
 import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.content.Waypoint;
-import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.util.StringUtils;
 
@@ -44,7 +43,6 @@ import de.dennisguse.opentracks.util.StringUtils;
 public class KmlTrackWriter implements TrackWriter {
 
     private static final String WAYPOINT_STYLE = "waypoint";
-    private static final String STATISTICS_STYLE = "statistics";
     private static final String START_STYLE = "start";
     private static final String END_STYLE = "end";
     private static final String TRACK_STYLE = "track";
@@ -55,7 +53,6 @@ public class KmlTrackWriter implements TrackWriter {
     private static final String SENSOR_TYPE_POWER = "power";
 
     private static final String WAYPOINT_ICON = "http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png";
-    private static final String STATISTICS_ICON = "http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png";
     private static final String START_ICON = "http://maps.google.com/mapfiles/kml/paddle/grn-circle.png";
     private static final String END_ICON = "http://maps.google.com/mapfiles/kml/paddle/red-circle.png";
     private static final String TRACK_ICON = "http://earth.google.com/images/kml-icons/track-directional/track-0.png";
@@ -125,7 +122,6 @@ public class KmlTrackWriter implements TrackWriter {
             writeTrackStyle();
             writePlacemarkerStyle(START_STYLE, START_ICON, 32, 1);
             writePlacemarkerStyle(END_STYLE, END_ICON, 32, 1);
-            writePlacemarkerStyle(STATISTICS_STYLE, STATISTICS_ICON, 20, 2);
             writePlacemarkerStyle(WAYPOINT_STYLE, WAYPOINT_ICON, 20, 2);
             printWriter.println("<Schema id=\"" + SCHEMA_ID + "\">");
 
@@ -167,13 +163,11 @@ public class KmlTrackWriter implements TrackWriter {
     @Override
     public void writeWaypoint(Waypoint waypoint) {
         if (printWriter != null && exportTrackDetail) {
-            String styleName = waypoint.getType() == WaypointType.STATISTICS ? STATISTICS_STYLE : WAYPOINT_STYLE;
-
             if (waypoint.hasPhoto() && exportPhotos) {
                 float heading = getHeading(waypoint.getTrackId(), waypoint.getLocation());
-                writePhotoOverlay(waypoint.getName(), waypoint.getCategory(), waypoint.getDescription(), styleName, waypoint.getLocation(), waypoint.getPhotoUrl(), heading);
+                writePhotoOverlay(waypoint.getName(), waypoint.getCategory(), waypoint.getDescription(), WAYPOINT_STYLE, waypoint.getLocation(), waypoint.getPhotoUrl(), heading);
             } else {
-                writePlacemark(waypoint.getName(), waypoint.getCategory(), waypoint.getDescription(), styleName, waypoint.getLocation());
+                writePlacemark(waypoint.getName(), waypoint.getCategory(), waypoint.getDescription(), WAYPOINT_STYLE, waypoint.getLocation());
             }
         }
     }

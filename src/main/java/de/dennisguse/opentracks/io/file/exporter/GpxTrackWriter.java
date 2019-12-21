@@ -119,12 +119,9 @@ public class GpxTrackWriter implements TrackWriter {
                 if (location.hasAltitude()) {
                     printWriter.println("<ele>" + ELEVATION_FORMAT.format(location.getAltitude()) + "</ele>");
                 }
-                printWriter.println(
-                        "<time>" + StringUtils.formatDateTimeIso8601(location.getTime()) + "</time>");
+                printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(location.getTime()) + "</time>");
                 printWriter.println("<name>" + StringUtils.formatCData(waypoint.getName()) + "</name>");
-                printWriter.println("<cmt>" + StringUtils.formatCData(waypoint.getType().name()) + "</cmt>");
-                printWriter.println(
-                        "<desc>" + StringUtils.formatCData(waypoint.getDescription()) + "</desc>");
+                printWriter.println("<desc>" + StringUtils.formatCData(waypoint.getDescription()) + "</desc>");
                 printWriter.println("<type>" + StringUtils.formatCData(waypoint.getCategory()) + "</type>");
                 printWriter.println("</wpt>");
             }

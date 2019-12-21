@@ -46,7 +46,6 @@ import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.CustomContentProvider;
 import de.dennisguse.opentracks.content.Track;
 import de.dennisguse.opentracks.content.Waypoint;
-import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 import de.dennisguse.opentracks.content.WaypointCreationRequest;
 import de.dennisguse.opentracks.stats.TripStatistics;
 import de.dennisguse.opentracks.util.PreferencesUtils;
@@ -69,7 +68,7 @@ public class TrackRecordingServiceTest {
     public GrantPermissionRule mRuntimePermissionRule = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION);
 
     private Context context = ApplicationProvider.getApplicationContext();
-    private ContentProviderUtils providerUtils;
+    private ContentProviderUtils contentProviderUtils;
 
     private final long trackId = Math.abs(new Random().nextLong());
 
@@ -84,14 +83,14 @@ public class TrackRecordingServiceTest {
         };
         customContentProvider.attachInfo(context, null);
 
-        providerUtils = new ContentProviderUtils(context);
+        contentProviderUtils = new ContentProviderUtils(context);
 
         // Let's use default values.
         SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
         sharedPreferences.edit().clear().apply();
 
         // Ensure that the database is empty before every test
-        providerUtils.deleteAllTracks(context);
+        contentProviderUtils.deleteAllTracks(context);
     }
 
     @After
@@ -103,7 +102,7 @@ public class TrackRecordingServiceTest {
         }
 
         // Ensure that the database is empty after every test
-        providerUtils.deleteAllTracks(context);
+        contentProviderUtils.deleteAllTracks(context);
     }
 
     @SmallTest
@@ -123,7 +122,7 @@ public class TrackRecordingServiceTest {
     @MediumTest
     @Test
     public void testRecording_noTracks() throws Exception {
-        List<Track> tracks = providerUtils.getAllTracks();
+        List<Track> tracks = contentProviderUtils.getAllTracks();
         Assert.assertTrue(tracks.isEmpty());
 
         Intent startIntent = createStartIntent(context);
@@ -203,8 +202,8 @@ public class TrackRecordingServiceTest {
 
     private void addTrack(Track track, boolean isRecording) {
         Assert.assertTrue(track.getId() >= 0);
-        providerUtils.insertTrack(track);
-        Assert.assertEquals(track.getId(), providerUtils.getTrack(track.getId()).getId());
+        contentProviderUtils.insertTrack(track);
+        Assert.assertEquals(track.getId(), contentProviderUtils.getTrack(track.getId()).getId());
         PreferencesUtils.setLong(context, R.string.recording_track_id_key, isRecording ? track.getId() : PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
         PreferencesUtils.setBoolean(context, R.string.recording_track_paused_key, !isRecording);
     }
@@ -231,7 +230,7 @@ public class TrackRecordingServiceTest {
         ITrackRecordingService service = ((ITrackRecordingService) mServiceRule.bindService(createStartIntent(context)));
         Assert.assertFalse(service.isRecording());
 
-        long waypointId = service.insertWaypoint(WaypointCreationRequest.DEFAULT_WAYPOINT);
+        long waypointId = service.insertWaypoint(new WaypointCreationRequest(null, null, null, null, null));
         Assert.assertEquals(-1L, waypointId);
     }
 
@@ -244,12 +243,11 @@ public class TrackRecordingServiceTest {
         insertLocation(service);
 
         long trackId = service.getRecordingTrackId();
-        long waypointId = service.insertWaypoint(WaypointCreationRequest.DEFAULT_WAYPOINT);
+        long waypointId = service.insertWaypoint(new WaypointCreationRequest(null, null, null, null, null));
         Assert.assertNotEquals(-1L, waypointId);
-        Waypoint wpt = providerUtils.getWaypoint(waypointId);
+        Waypoint wpt = contentProviderUtils.getWaypoint(waypointId);
         Assert.assertEquals(context.getString(R.string.marker_waypoint_icon_url), wpt.getIcon());
         Assert.assertEquals(context.getString(R.string.marker_name_format, 1), wpt.getName());
-        Assert.assertEquals(WaypointType.WAYPOINT, wpt.getType());
         Assert.assertEquals(trackId, wpt.getTrackId());
         Assert.assertEquals(0.0, wpt.getLength(), 0.01);
         Assert.assertNotNull(wpt.getLocation());

@@ -30,7 +30,6 @@ import java.util.ArrayList;
 
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.SensorDataSetLocation;
-import de.dennisguse.opentracks.content.Waypoint.WaypointType;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 
 /**
@@ -46,7 +45,6 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
     private static final String HEART_RATE = "heart_rate";
     private static final String POWER = "power";
 
-    private static final String STATISTICS_STYLE = "#statistics";
     private static final String WAYPOINT_STYLE = "#waypoint";
 
     private static final String TAG_COORDINATES = "coordinates";
@@ -182,21 +180,8 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
      * On waypoint end.
      */
     private void onWaypointEnd() throws SAXException {
-        if (waypointType == null) {
+        if (!WAYPOINT_STYLE.equals(waypointType)) {
             return;
-        }
-
-        // Add a waypoint if the waypointType matches
-        WaypointType type;
-        switch (waypointType) {
-            case WAYPOINT_STYLE:
-                type = WaypointType.WAYPOINT;
-                break;
-            case STATISTICS_STYLE:
-                type = WaypointType.STATISTICS;
-                break;
-            default:
-                return;
         }
 
         if (photoUrl != null) {
@@ -204,7 +189,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
             photoUrl = getPhotoUrl(uri.getLastPathSegment());
         }
 
-        addWaypoint(type);
+        addWaypoint();
     }
 
     /**

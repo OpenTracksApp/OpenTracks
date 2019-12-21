@@ -28,7 +28,6 @@ import androidx.fragment.app.FragmentManager;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
-import de.dennisguse.opentracks.content.DescriptionGeneratorImpl;
 import de.dennisguse.opentracks.util.DialogUtils;
 
 /**
@@ -83,8 +82,7 @@ public class DeleteMarkerDialogFragment extends DialogFragment {
                             public void run() {
                                 ContentProviderUtils contentProviderUtils = new ContentProviderUtils(fragmentActivity);
                                 for (long markerId : markerIds) {
-                                    contentProviderUtils.deleteWaypoint(fragmentActivity,
-                                            markerId, new DescriptionGeneratorImpl(fragmentActivity));
+                                    contentProviderUtils.deleteWaypoint(fragmentActivity, markerId);
                                 }
                                 caller.onDeleteMarkerDone();
                             }

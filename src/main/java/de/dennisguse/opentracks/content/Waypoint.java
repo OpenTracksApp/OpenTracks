@@ -35,7 +35,6 @@ public final class Waypoint {
     private String category = "";
     private String icon = "";
     private long trackId = -1L;
-    private WaypointType type = WaypointType.WAYPOINT;
     private double length = 0.0;
     private long duration = 0;
     private long startId = -1L;
@@ -47,13 +46,12 @@ public final class Waypoint {
     public Waypoint() {
     }
 
-    public Waypoint(String name, String description, String category, String icon, long trackId, WaypointType type, double length, long duration, long startId, long stopId, Location location, TripStatistics tripStatistics, String photoUrl) {
+    public Waypoint(String name, String description, String category, String icon, long trackId, double length, long duration, long startId, long stopId, Location location, TripStatistics tripStatistics, String photoUrl) {
         this.name = name;
         this.description = description;
         this.category = category;
         this.icon = icon;
         this.trackId = trackId;
-        this.type = type;
         this.length = length;
         this.duration = duration;
         this.startId = startId;
@@ -109,14 +107,6 @@ public final class Waypoint {
 
     public void setTrackId(long trackId) {
         this.trackId = trackId;
-    }
-
-    public WaypointType getType() {
-        return type;
-    }
-
-    public void setType(WaypointType type) {
-        this.type = type;
     }
 
     public double getLength() {
@@ -185,10 +175,5 @@ public final class Waypoint {
 
     public boolean hasPhoto() {
         return photoUrl != null && !"".equals(photoUrl);
-    }
-
-    public enum WaypointType {
-        WAYPOINT,
-        STATISTICS //Always the first waypoint; only one can exist.
     }
 }
