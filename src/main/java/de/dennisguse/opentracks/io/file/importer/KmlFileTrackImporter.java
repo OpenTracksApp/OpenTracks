@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.SensorDataSetLocation;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
+import de.dennisguse.opentracks.io.file.exporter.KmlTrackWriter;
 
 /**
  * Imports a KML file.
@@ -41,11 +42,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
 
     private static final String TAG = KmlFileTrackImporter.class.getSimpleName();
 
-    private static final String CADENCE = "cadence";
-    private static final String HEART_RATE = "heart_rate";
-    private static final String POWER = "power";
-
-    private static final String WAYPOINT_STYLE = "#waypoint";
+    private static final String WAYPOINT_STYLE = "#" + KmlTrackWriter.WAYPOINT_STYLE;
 
     private static final String TAG_COORDINATES = "coordinates";
     private static final String TAG_DESCRIPTION = "description";
@@ -300,13 +297,13 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
             throw new SAXException(createErrorMessage("Unable to parse gx:value:" + content), e);
         }
         switch (sensorType) {
-            case POWER:
+            case KmlTrackWriter.SENSOR_TYPE_POWER:
                 powerList.add(value);
                 break;
-            case HEART_RATE:
+            case KmlTrackWriter.SENSOR_TYPE_HEART_RATE:
                 heartRateList.add(value);
                 break;
-            case CADENCE:
+            case KmlTrackWriter.SENSOR_TYPE_CADENCE:
                 cadenceList.add(value);
                 break;
             default:

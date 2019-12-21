@@ -42,15 +42,15 @@ import de.dennisguse.opentracks.util.StringUtils;
  */
 public class KmlTrackWriter implements TrackWriter {
 
-    private static final String WAYPOINT_STYLE = "waypoint";
+    public static final String WAYPOINT_STYLE = "waypoint";
     private static final String START_STYLE = "start";
     private static final String END_STYLE = "end";
     private static final String TRACK_STYLE = "track";
     private static final String SCHEMA_ID = "schema";
 
-    private static final String SENSOR_TYPE_CADENCE = "cadence";
-    private static final String SENSOR_TYPE_HEART_RATE = "heart_rate";
-    private static final String SENSOR_TYPE_POWER = "power";
+    public static final String SENSOR_TYPE_CADENCE = "cadence";
+    public static final String SENSOR_TYPE_HEART_RATE = "heart_rate";
+    public static final String SENSOR_TYPE_POWER = "power";
 
     private static final String WAYPOINT_ICON = "http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png";
     private static final String START_ICON = "http://maps.google.com/mapfiles/kml/paddle/grn-circle.png";
