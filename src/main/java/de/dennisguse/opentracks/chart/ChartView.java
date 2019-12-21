@@ -555,7 +555,7 @@ public class ChartView extends View {
                 canvas.save();
                 float x = getX(getWaypointXValue(waypoint));
                 canvas.drawLine(x, topBorder + spacer + markerHeight / 2, x, topBorder + effectiveHeight, markerPaint);
-                canvas.translate(x - (float) (markerWidth * WAYPOINT_X_ANCHOR), topBorder + spacer);
+                canvas.translate(x - (markerWidth * WAYPOINT_X_ANCHOR), topBorder + spacer);
 
                 waypointMarker.draw(canvas);
                 canvas.restore();

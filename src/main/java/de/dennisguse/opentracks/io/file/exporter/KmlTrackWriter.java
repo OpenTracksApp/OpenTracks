@@ -28,7 +28,6 @@ import java.util.List;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.DescriptionGenerator;
-import de.dennisguse.opentracks.content.DescriptionGeneratorImpl;
 import de.dennisguse.opentracks.content.SensorDataSetLocation;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.Waypoint;
@@ -85,7 +84,7 @@ public class KmlTrackWriter implements TrackWriter {
         this.exportTrackDetail = exportTrackDetail;
         this.exportSensorData = exportSensorData;
         this.exportPhotos = exportPhotos;
-        this.descriptionGenerator = new DescriptionGeneratorImpl(context);
+        this.descriptionGenerator = new DescriptionGenerator(context);
         this.contentProviderUtils = new ContentProviderUtils(context);
     }
 

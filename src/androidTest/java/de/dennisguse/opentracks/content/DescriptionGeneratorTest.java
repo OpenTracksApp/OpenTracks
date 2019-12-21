@@ -33,25 +33,25 @@ import de.dennisguse.opentracks.stats.TripStatistics;
 import de.dennisguse.opentracks.util.StringUtils;
 
 /**
- * Tests for {@link DescriptionGeneratorImpl}.
+ * Tests for {@link DescriptionGenerator}.
  *
  * @author Jimmy Shih
  */
 @RunWith(AndroidJUnit4.class)
-public class DescriptionGeneratorImplTest {
+public class DescriptionGeneratorTest {
 
     private static final long START_TIME = 1288721514000L;
-    private DescriptionGeneratorImpl descriptionGenerator;
+    private DescriptionGenerator descriptionGenerator;
 
     private Context context = ApplicationProvider.getApplicationContext();
 
     @Before
     public void setUp() {
-        descriptionGenerator = new DescriptionGeneratorImpl(ApplicationProvider.getApplicationContext());
+        descriptionGenerator = new DescriptionGenerator(ApplicationProvider.getApplicationContext());
     }
 
     /**
-     * Tests {@link DescriptionGeneratorImpl#generateTrackDescription(Track, boolean)}.
+     * Tests {@link DescriptionGenerator#generateTrackDescription(Track, boolean)}.
      */
     @Test
     public void testGenerateTrackDescription() {
@@ -94,7 +94,7 @@ public class DescriptionGeneratorImplTest {
     }
 
     /**
-     * Tests {@link DescriptionGeneratorImpl#generateWaypointDescription(TripStatistics)}.
+     * Tests {@link DescriptionGenerator#generateWaypointDescription(TripStatistics)}.
      */
     @Test
     public void testGenerateWaypointDescription() {
@@ -130,7 +130,7 @@ public class DescriptionGeneratorImplTest {
     }
 
     /**
-     * Tests {@link DescriptionGeneratorImpl#writeDistance(double, StringBuilder, int, String)}.
+     * Tests {@link DescriptionGenerator#writeDistance(double, StringBuilder, int, String)}.
      */
     @Test
     public void testWriteDistance() {
@@ -140,7 +140,7 @@ public class DescriptionGeneratorImplTest {
     }
 
     /**
-     * Tests {@link DescriptionGeneratorImpl#writeTime(long, StringBuilder, int, String)}.
+     * Tests {@link DescriptionGenerator#writeTime(long, StringBuilder, int, String)}.
      */
     @Test
     public void testWriteTime() {
@@ -150,7 +150,7 @@ public class DescriptionGeneratorImplTest {
     }
 
     /**
-     * Tests {@link DescriptionGeneratorImpl#writeSpeed(double, StringBuilder, int, String)}.
+     * Tests {@link DescriptionGenerator#writeSpeed(double, StringBuilder, int, String)}.
      */
     @Test
     public void testWriteSpeed() {
@@ -160,7 +160,7 @@ public class DescriptionGeneratorImplTest {
     }
 
     /**
-     * Tests {@link DescriptionGeneratorImpl#writeElevation(double, StringBuilder, int, String)}.
+     * Tests {@link DescriptionGenerator#writeElevation(double, StringBuilder, int, String)}.
      */
     @Test
     public void testWriteElevation() {
@@ -170,7 +170,7 @@ public class DescriptionGeneratorImplTest {
     }
 
     /**
-     * Tests {@link DescriptionGeneratorImpl#writePace(double, StringBuilder, int, String)}.
+     * Tests {@link DescriptionGenerator#writePace(double, StringBuilder, int, String)}.
      */
     @Test
     public void testWritePace() {
@@ -180,7 +180,7 @@ public class DescriptionGeneratorImplTest {
     }
 
     /**
-     * Tests {@link DescriptionGeneratorImpl#writeGrade(double, StringBuilder, int, String)}.
+     * Tests {@link DescriptionGenerator#writeGrade(double, StringBuilder, int, String)}.
      */
     @Test
     public void testWriteGrade() {
@@ -190,7 +190,7 @@ public class DescriptionGeneratorImplTest {
     }
 
     /**
-     * Tests {@link DescriptionGeneratorImpl#writeGrade(double, StringBuilder, int, String)} with a NaN.
+     * Tests {@link DescriptionGenerator#writeGrade(double, StringBuilder, int, String)} with a NaN.
      */
     @Test
     public void testWriteGrade_nan() {
@@ -200,7 +200,7 @@ public class DescriptionGeneratorImplTest {
     }
 
     /**
-     * Tests {@link DescriptionGeneratorImpl#writeGrade(double, StringBuilder, int, String)} with an infinite number.
+     * Tests {@link DescriptionGenerator#writeGrade(double, StringBuilder, int, String)} with an infinite number.
      */
     @Test
     public void testWriteGrade_infinite() {

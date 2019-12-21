@@ -34,7 +34,7 @@ import java.util.Date;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
-import de.dennisguse.opentracks.content.DescriptionGeneratorImpl;
+import de.dennisguse.opentracks.content.DescriptionGenerator;
 import de.dennisguse.opentracks.content.ShareContentProvider;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.Waypoint;
@@ -77,7 +77,7 @@ public class IntentUtils {
         String trackDescription = "";
         if (trackIds.length == 1) {
             Track track = new ContentProviderUtils(context).getTrack(trackIds[0]);
-            trackDescription = track == null ? "" : new DescriptionGeneratorImpl(context).generateTrackDescription(track, false);
+            trackDescription = track == null ? "" : new DescriptionGenerator(context).generateTrackDescription(track, false);
         }
 
         String action = trackIds.length == 1 ? Intent.ACTION_SEND : Intent.ACTION_SEND_MULTIPLE;
