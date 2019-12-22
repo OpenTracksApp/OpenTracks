@@ -154,33 +154,33 @@ public class StringUtils {
      * Get the formatted distance with unit.
      *
      * @param context     the context
-     * @param distance    the distance
+     * @param distance_m  the distance
      * @param metricUnits true to use metric unit
      * @return the formatted distance (or null) and it's unit as {@link Pair}
      */
-    public static Pair<String, String> getDistanceParts(Context context, double distance, boolean metricUnits) {
-        if (Double.isNaN(distance) || Double.isInfinite(distance)) {
+    public static Pair<String, String> getDistanceParts(Context context, double distance_m, boolean metricUnits) {
+        if (Double.isNaN(distance_m) || Double.isInfinite(distance_m)) {
             return new Pair<>(null, context.getString(metricUnits ? R.string.unit_meter : R.string.unit_feet));
         }
 
         int unitId;
         if (metricUnits) {
-            if (distance > 500.0) {
-                distance *= UnitConversions.M_TO_KM;
+            if (distance_m > 500.0) {
+                distance_m *= UnitConversions.M_TO_KM;
                 unitId = R.string.unit_kilometer;
             } else {
                 unitId = R.string.unit_meter;
             }
         } else {
-            if (distance * UnitConversions.M_TO_MI > 0.5) {
-                distance *= UnitConversions.M_TO_MI;
+            if (distance_m * UnitConversions.M_TO_MI > 0.5) {
+                distance_m *= UnitConversions.M_TO_MI;
                 unitId = R.string.unit_mile;
             } else {
-                distance *= UnitConversions.M_TO_FT;
+                distance_m *= UnitConversions.M_TO_FT;
                 unitId = R.string.unit_feet;
             }
         }
-        return new Pair<>(formatDecimal(distance), context.getString(unitId));
+        return new Pair<>(formatDecimal(distance_m), context.getString(unitId));
     }
 
     /**
@@ -382,11 +382,10 @@ public class StringUtils {
         String value = context.getString(R.string.value_unknown);
         String unit = context.getString(metricUnits ? R.string.unit_meter : R.string.unit_feet);
         if (!Double.isNaN(elevation) && !Double.isInfinite(elevation)) {
-            if (metricUnits) {
-                value = StringUtils.formatDecimal(elevation);
-            } else {
-                value = StringUtils.formatDecimal(elevation * UnitConversions.M_TO_FT);
+            if (!metricUnits) {
+                elevation *= UnitConversions.M_TO_FT;
             }
+            value = StringUtils.formatDecimal(elevation, 0);
         }
         return new Pair<>(value, unit);
     }
