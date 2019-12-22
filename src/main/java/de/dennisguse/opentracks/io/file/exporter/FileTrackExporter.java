@@ -99,7 +99,6 @@ public class FileTrackExporter implements TrackExporter {
         boolean hasWaypoints = false;
         try (Cursor cursor = contentProviderUtils.getWaypointCursor(track.getId(), -1L, ContentProviderUtils.MAX_LOADED_WAYPOINTS_POINTS)) {
             if (cursor != null && cursor.moveToFirst()) {
-                // Intentionally skip first waypoint (contains statistics).
                 for (int i = 0; i < cursor.getCount(); i++) {
                     if (Thread.interrupted()) {
                         throw new InterruptedException();

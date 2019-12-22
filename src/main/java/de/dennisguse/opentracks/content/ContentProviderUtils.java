@@ -539,7 +539,7 @@ public class ContentProviderUtils {
      * If deleting a statistics waypoint, this will also correct the next statistics waypoint after the deleted one to reflect the  deletion.
      * The generator is used to update the next statistics waypoint.
      *
-     * @param waypointId           the waypoint id
+     * @param waypointId the waypoint id
      */
 
     public void deleteWaypoint(Context context, long waypointId) {
@@ -560,28 +560,9 @@ public class ContentProviderUtils {
     }
 
     /**
-     * Gets the first waypoint id for a track.
-     * The first waypoint is special as it contains the stats for the track.
-     * Returns -1L if it doesn't exist.
-     *
-     * @param trackId the track id
-     */
-    public long getFirstWaypointId(long trackId) {
-        if (trackId < 0) {
-            return -1L;
-        }
-        try (Cursor cursor = getWaypointCursor(new String[]{WaypointsColumns._ID}, WaypointsColumns.TRACKID + "=?", new String[]{Long.toString(trackId)}, WaypointsColumns._ID, 1)) {
-            if (cursor != null && cursor.moveToFirst()) {
-                return cursor.getLong(cursor.getColumnIndexOrThrow(WaypointsColumns._ID));
-            }
-        }
-        return -1L;
-    }
-
-    /**
      * Gets the last waypoint for a type. Returns null if it doesn't exist.
      *
-     * @param trackId      the track id
+     * @param trackId the track id
      */
     public Waypoint getLastWaypoint(long trackId) {
         if (trackId < 0) {
@@ -602,7 +583,7 @@ public class ContentProviderUtils {
      * Gets the next waypoint number for a type.
      * Returns -1 if not able to get the next waypoint number.
      *
-     * @param trackId      the track id
+     * @param trackId the track id
      */
     public int getNextWaypointNumber(long trackId) {
         if (trackId < 0) {
@@ -677,6 +658,19 @@ public class ContentProviderUtils {
         return getWaypointCursor(null, selection, selectionArgs, WaypointsColumns._ID, maxWaypoints);
     }
 
+    @VisibleForTesting
+    public List<Waypoint> getWaypoints(long trackId) {
+        ArrayList<Waypoint> waypoints = new ArrayList<>();
+        try (Cursor cursor = getWaypointCursor(trackId, -1L, -1)) {
+            if (cursor.moveToFirst()) {
+                do {
+                    waypoints.add(createWaypoint(cursor));
+                } while (cursor.moveToNext());
+            }
+        }
+        return waypoints;
+    }
+
     /**
      * Gets the number of waypoints for a track.
      *
@@ -695,8 +689,7 @@ public class ContentProviderUtils {
         cursor.moveToFirst();
         int count = cursor.getInt(0);
         cursor.close();
-        // not count the first waypoint
-        return count > 0 ? count - 1 : 0;
+        return count;
     }
 
     /**
@@ -895,23 +888,6 @@ public class ContentProviderUtils {
     }
 
     /**
-     * Gets the first valid location for a track.
-     * Returns null if it doesn't exist.
-     *
-     * @param trackId the track id
-     */
-    public Location getFirstValidTrackPoint(long trackId) {
-        if (trackId < 0) {
-            return null;
-        }
-        String selection = TrackPointsColumns._ID + "=(select min(" + TrackPointsColumns._ID + ") from "
-                + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID + "=? AND "
-                + TrackPointsColumns.LATITUDE + "<=" + MAX_LATITUDE + ")";
-        String[] selectionArgs = new String[]{Long.toString(trackId)};
-        return findTrackPointBy(selection, selectionArgs);
-    }
-
-    /**
      * Gets the last valid location for a track.
      * Returns null if it doesn't exist.
      *
@@ -1086,9 +1062,11 @@ public class ContentProviderUtils {
         values.put(TrackPointsColumns.LONGITUDE, (int) (location.getLongitude() * 1E6));
         values.put(TrackPointsColumns.LATITUDE, (int) (location.getLatitude() * 1E6));
 
-        // Hack for Samsung phones that don't properly populate the time field
         long time = location.getTime();
+        // TODO: Check if this is really necessary!
+        // Hack for Samsung phones that don't properly populate the time field
         if (time == 0) {
+            Log.w(TAG, "location has no timestamp; setting current time");
             time = System.currentTimeMillis();
         }
         values.put(TrackPointsColumns.TIME, time);

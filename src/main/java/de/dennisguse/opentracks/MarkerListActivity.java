@@ -126,17 +126,14 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
+        long trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1L);
         recordingTrackPaused = PreferencesUtils.isRecordingTrackPausedDefault(this);
 
         contentProviderUtils = new ContentProviderUtils(this);
         sharedPreferences = PreferencesUtils.getSharedPreferences(this);
 
-        long trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1L);
         track = trackId != -1L ? contentProviderUtils.getTrack(trackId) : null;
-        final long trackFirstWaypointId = trackId != -1 ? contentProviderUtils.getFirstWaypointId(trackId) : -1;
-
-        setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
         listView = findViewById(R.id.marker_list);
         listView.setEmptyView(findViewById(R.id.marker_list_empty));
@@ -181,8 +178,8 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
             public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
                 if (track != null) {
                     return new CursorLoader(MarkerListActivity.this, WaypointsColumns.CONTENT_URI, PROJECTION,
-                            WaypointsColumns.TRACKID + "=? AND " + WaypointsColumns._ID + "!=?",
-                            new String[]{String.valueOf(track.getId()), String.valueOf(trackFirstWaypointId)}, null);
+                            WaypointsColumns.TRACKID + "=?",
+                            new String[]{String.valueOf(track.getId())}, null);
                 } else {
                     return new CursorLoader(MarkerListActivity.this, WaypointsColumns.CONTENT_URI, PROJECTION,
                             WaypointsColumns.STARTTIME + " IS NULL", null, null);

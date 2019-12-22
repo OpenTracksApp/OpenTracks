@@ -174,6 +174,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
                         return;
                     }
                 }
+
                 if (location == null) {
                     if (!locationIterator.hasNext()) {
                         // No more track points. Ignore the rest of the waypoints.
@@ -183,9 +184,11 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
                     trackTripStatisticstrackUpdater.addLocation(location, recordingDistanceInterval);
                     markerTripStatisticsUpdater.addLocation(location, recordingDistanceInterval);
                 }
+
                 if (waypoint.getLocation().getTime() > location.getTime()) {
                     location = null;
                 } else if (waypoint.getLocation().getTime() < location.getTime()) {
+                    Log.w(TAG, "Ignoring waypoint: current location was after waypoint.");
                     waypoint = null;
                 } else {
                     // The waypoint location time matches the track point time

@@ -164,6 +164,7 @@ public class LocationUtils {
      * @param location the location to test
      * @return true if the location is a valid location.
      */
+    //TODO Still needed?
     public static boolean isValidLocation(Location location) {
         return location != null
                 && Math.abs(location.getLatitude()) <= 90

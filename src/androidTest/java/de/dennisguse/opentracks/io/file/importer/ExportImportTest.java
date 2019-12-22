@@ -2,8 +2,10 @@ package de.dennisguse.opentracks.io.file.importer;
 
 import android.content.Context;
 import android.location.Location;
+import android.util.Log;
 
 import androidx.test.core.app.ApplicationProvider;
+import androidx.test.filters.LargeTest;
 
 import org.junit.After;
 import org.junit.Before;
@@ -14,18 +16,28 @@ import org.junit.runners.JUnit4;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import de.dennisguse.opentracks.content.ContentProviderUtils;
-import de.dennisguse.opentracks.content.CustomContentProviderUtilsTest;
+import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+/**
+ * Export a track to {@link TrackFileFormat} and verify that the import is identical.
+ * <p>
+ * TODO: test ignores {@link de.dennisguse.opentracks.stats.TripStatistics} for now.
+ */
 @RunWith(JUnit4.class)
 public class ExportImportTest {
+
+    private static final String TAG = ExportImportTest.class.getSimpleName();
 
     private Context context = ApplicationProvider.getApplicationContext();
 
@@ -34,38 +46,64 @@ public class ExportImportTest {
     private static final String TRACK_ICON = "the track icon";
     private static final String TRACK_CATEGORY = "the category";
     private static final String TRACK_DESCRIPTION = "the description";
-    private long exportTrackId = System.currentTimeMillis();
+    private final List<Waypoint> waypoints = new ArrayList<>();
     private long importTrackId;
+    private long trackId = System.currentTimeMillis();
 
     @Before
     public void setUp() {
-        Track track = CustomContentProviderUtilsTest.getTrack(exportTrackId, 150);
+        Track track = TestDataUtil.getTrack(trackId, 10);
         track.setIcon(TRACK_ICON);
         track.setCategory(TRACK_CATEGORY);
         track.setDescription(TRACK_DESCRIPTION);
         contentProviderUtils.insertTrack(track);
         contentProviderUtils.bulkInsertTrackPoint(track.getLocations().toArray(new Location[0]), track.getLocations().size(), track.getId());
+
+        for (int i = 0; i < 3; i++) {
+            Waypoint waypoint = new Waypoint();
+            waypoint.setName("the waypoint " + i);
+            waypoint.setDescription("the waypoint description " + i);
+            waypoint.setCategory("the waypoint category" + i);
+            waypoint.setIcon("the waypoing icon" + i);
+            waypoint.setPhotoUrl("the photo url" + i);
+            waypoint.setTrackId(trackId);
+            waypoint.setLocation(track.getLocations().get(i));
+            contentProviderUtils.insertWaypoint(waypoint);
+
+            waypoints.add(waypoint);
+        }
+
+        assertEquals(waypoints.size(), contentProviderUtils.getWaypointCount(trackId));
     }
 
     @After
     public void tearDown() {
-        contentProviderUtils.deleteTrack(context, exportTrackId);
+        contentProviderUtils.deleteTrack(context, trackId);
         contentProviderUtils.deleteTrack(context, importTrackId);
     }
 
+    @LargeTest
+    @Test
+    public void kml_only_track() {
+        // TODO
+        Log.e(TAG, "Test not implemented.");
+    }
+
+    @LargeTest
     @Test
     public void kml_with_trackdetail() {
         // given
-        Track track = contentProviderUtils.getTrack(exportTrackId);
+        Track track = contentProviderUtils.getTrack(trackId);
 
         TrackFileFormat trackFileFormat = TrackFileFormat.KML_WITH_TRACKDETAIL;
         TrackExporter trackExporter = trackFileFormat.newTrackExporter(context, new Track[]{track}, null);
 
         // when
-
         // 1. export
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         trackExporter.writeTrack(context, outputStream);
+
+        System.out.println(outputStream.toString());
 
         // 2. import
         InputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
@@ -73,29 +111,66 @@ public class ExportImportTest {
         importTrackId = trackImporter.importFile(inputStream);
 
         // then
-        Track trackImported = contentProviderUtils.getTrack(importTrackId);
-        assertNotNull(trackImported);
-        assertEquals(track.getLocations(), trackImported.getLocations());
-        assertEquals(track.getCategory(), trackImported.getCategory());
-        assertEquals(track.getDescription(), trackImported.getDescription());
-        assertEquals(track.getName(), trackImported.getName());
-        assertEquals(track.getIcon(), trackImported.getIcon());
+        // 1. track
+        Track importedTrack = contentProviderUtils.getTrack(importTrackId);
+        assertNotNull(importedTrack);
+        assertEquals(track.getLocations(), importedTrack.getLocations());
+        assertEquals(track.getCategory(), importedTrack.getCategory());
+        assertEquals(track.getDescription(), importedTrack.getDescription());
+        assertEquals(track.getName(), importedTrack.getName());
+        assertEquals(track.getIcon(), importedTrack.getIcon());
 
-        //TODO Check (relative/absolute) time of trackpoints
-        //TODO Check marker/waypoints
-        //TODO Check tripstatistics
+        // 2. waypoints
+        assertWaypoints();
+
+        //TODO Check absolute time of trackpoints
     }
 
+    @LargeTest
+    @Test
+    public void kml_with_trackdetail_and_sensordata() {
+        // TODO
+        Log.e(TAG, "Test not implemented.");
+    }
+
+    @LargeTest
+    @Test
+    public void kmz_only_track() {
+        // TODO
+        Log.e(TAG, "Test not implemented.");
+    }
+
+    @LargeTest
+    @Test
+    public void kmz_with_trackdetail() {
+        // TODO
+        Log.e(TAG, "Test not implemented.");
+    }
+
+    @LargeTest
+    @Test
+    public void kmz_with_trackdetail_and_sensordata() {
+        // TODO
+        Log.e(TAG, "Test not implemented.");
+    }
+
+    @LargeTest
+    @Test
+    public void kmz_with_trackdetail_and_sensordata_and_pictures() {
+        // TODO
+        Log.e(TAG, "Test not implemented.");
+    }
+
+    @LargeTest
     @Test
     public void gpx() {
         // given
-        Track track = contentProviderUtils.getTrack(exportTrackId);
+        Track track = contentProviderUtils.getTrack(trackId);
 
         TrackFileFormat trackFileFormat = TrackFileFormat.GPX;
         TrackExporter trackExporter = trackFileFormat.newTrackExporter(context, new Track[]{track}, null);
 
         // when
-
         // 1. export
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         trackExporter.writeTrack(context, outputStream);
@@ -106,6 +181,7 @@ public class ExportImportTest {
         importTrackId = trackImporter.importFile(inputStream);
 
         // then
+        // 1. track
         Track trackImported = contentProviderUtils.getTrack(importTrackId);
         assertNotNull(trackImported);
         assertEquals(track.getLocations(), trackImported.getLocations());
@@ -115,8 +191,29 @@ public class ExportImportTest {
 
         //TODO exporting and importing a track icon is not yet supported by GpxTrackWriter.
         //assertEquals(track.getIcon(), trackImported.getIcon());
-        //TODO Check (relative/absolute) time of trackpoints
-        //TODO Check marker/waypoints
-        //TODO Check tripstatistics
+
+        // 2. waypoints
+        assertWaypoints();
+
+        //TODO Check absolute time of trackpoints
+    }
+
+    private void assertWaypoints() {
+        assertEquals(waypoints.size(), contentProviderUtils.getWaypointCount(importTrackId));
+
+        List<Waypoint> importedWaypoints = contentProviderUtils.getWaypoints(importTrackId);
+        for (int i = 0; i < waypoints.size(); i++) {
+            Waypoint waypoint = waypoints.get(i);
+            Waypoint importedWaypoint = importedWaypoints.get(i);
+            assertEquals(waypoint.getCategory(), importedWaypoint.getCategory());
+            assertEquals(waypoint.getDescription(), importedWaypoint.getDescription());
+            // assertEquals(waypoint.getIcon(), importedWaypoint.getIcon()); // TODO for KML
+            assertEquals(waypoint.getName(), importedWaypoint.getName());
+            assertEquals("", importedWaypoint.getPhotoUrl());
+
+            assertEquals(waypoint.getLocation().getLatitude(), importedWaypoint.getLocation().getLatitude(), 0.001);
+            assertEquals(waypoint.getLocation().getLongitude(), importedWaypoint.getLocation().getLongitude(), 0.001);
+            assertEquals(waypoint.getLocation().getAltitude(), importedWaypoint.getLocation().getAltitude(), 0.001);
+        }
     }
 }

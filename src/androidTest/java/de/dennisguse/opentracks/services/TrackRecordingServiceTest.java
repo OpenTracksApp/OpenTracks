@@ -55,7 +55,7 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
  *
  * @author Bartlomiej Niechwiej
  * <p>
- * ATTENTION: This tests deletes all stored tracks in the database.
+ * //TODO ATTENTION: This tests deletes all stored tracks in the database.
  * So, if it is executed on a real device, data might be lost.
  */
 @RunWith(AndroidJUnit4.class)
