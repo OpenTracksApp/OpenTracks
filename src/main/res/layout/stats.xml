@@ -219,21 +219,6 @@ limitations under the License.
                             android:layout_gravity="start|bottom">
 
                             <TextView
-                                style="@style/StatsSmallValue"
-                                android:visibility="invisible" />
-
-                            <TextView
-                                android:id="@+id/stats_elevation_current_label"
-                                style="@style/StatsSmallLabel"
-                                android:paddingStart="8dp"
-                                android:paddingEnd="8dp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            style="@style/StatsSmallValueContainer"
-                            android:layout_gravity="start|bottom">
-
-                            <TextView
                                 android:id="@+id/stats_elevation_current_value"
                                 style="@style/StatsSmallValue"
                                 android:value="@string/value_unknown" />
@@ -242,7 +227,6 @@ limitations under the License.
                                 android:id="@+id/stats_elevation_current_unit"
                                 style="@style/StatsUnit" />
                         </LinearLayout>
-
                     </TableRow>
 
                     <!-- Minimal elevation -->
@@ -278,7 +262,6 @@ limitations under the License.
                                 android:paddingStart="8dp"
                                 android:paddingEnd="8dp"
                                 android:text="@string/stats_min" />
-
                         </LinearLayout>
                     </TableRow>
 
