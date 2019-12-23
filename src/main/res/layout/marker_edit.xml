@@ -33,22 +33,6 @@ limitations under the License.
                 android:text="@string/generic_name" />
 
             <LinearLayout
-                android:id="@+id/marker_edit_statistics_section"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <EditText
-                    android:id="@+id/marker_edit_statistics_name"
-                    style="@style/EditNameMarker"
-                    android:drawableLeft="@drawable/ic_marker_blue_pushpin"
-                    android:hint="@string/generic_name"
-                    android:imeOptions="actionDone"
-                    android:importantForAutofill="no" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/marker_edit_waypoint_section"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">

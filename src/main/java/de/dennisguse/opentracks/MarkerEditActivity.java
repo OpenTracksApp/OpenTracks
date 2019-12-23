@@ -46,9 +46,6 @@ public class MarkerEditActivity extends AbstractActivity {
     private Waypoint waypoint;
 
     // UI elements
-    private View statisticsSection;
-    private EditText statisticsName;
-    private View waypointSection;
     private EditText waypointName;
     private AutoCompleteTextView waypointMarkerType;
     private EditText waypointDescription;
@@ -63,10 +60,6 @@ public class MarkerEditActivity extends AbstractActivity {
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
 
         // Setup UI elements
-        statisticsSection = findViewById(R.id.marker_edit_statistics_section);
-        statisticsName = findViewById(R.id.marker_edit_statistics_name);
-
-        waypointSection = findViewById(R.id.marker_edit_waypoint_section);
         waypointName = findViewById(R.id.marker_edit_waypoint_name);
         waypointMarkerType = findViewById(R.id.marker_edit_waypoint_marker_type);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.waypoint_types, android.R.layout.simple_dropdown_item_1line);
@@ -122,8 +115,6 @@ public class MarkerEditActivity extends AbstractActivity {
         });
 
         if (newMarker) {
-            statisticsSection.setVisibility(View.GONE);
-            waypointSection.setVisibility(View.VISIBLE);
             int nextWaypointNumber = trackId == -1L ? -1 : new ContentProviderUtils(this).getNextWaypointNumber(trackId);
             if (nextWaypointNumber == -1) {
                 nextWaypointNumber = 0;
@@ -139,16 +130,9 @@ public class MarkerEditActivity extends AbstractActivity {
                 finish();
                 return;
             }
-            boolean statistics = false; //TODO REMOVE
-            statisticsSection.setVisibility(statistics ? View.VISIBLE : View.GONE);
-            waypointSection.setVisibility(statistics ? View.GONE : View.VISIBLE);
-            if (statistics) {
-                statisticsName.setText(waypoint.getName());
-            } else {
-                waypointName.setText(waypoint.getName());
-                waypointMarkerType.setText(waypoint.getCategory());
-                waypointDescription.setText(waypoint.getDescription());
-            }
+            waypointName.setText(waypoint.getName());
+            waypointMarkerType.setText(waypoint.getCategory());
+            waypointDescription.setText(waypoint.getDescription());
         }
     }
 
@@ -167,14 +151,10 @@ public class MarkerEditActivity extends AbstractActivity {
      * Saves a marker.
      */
     private void saveMarker() {
-        boolean statistics = false; //TODO REMOVE
-        if (statistics) {
-            waypoint.setName(statisticsName.getText().toString());
-        } else {
-            waypoint.setName(waypointName.getText().toString());
-            waypoint.setCategory(waypointMarkerType.getText().toString());
-            waypoint.setDescription(waypointDescription.getText().toString());
-        }
+        waypoint.setName(waypointName.getText().toString());
+        waypoint.setCategory(waypointMarkerType.getText().toString());
+        waypoint.setDescription(waypointDescription.getText().toString());
+
         new ContentProviderUtils(this).updateWaypoint(waypoint);
     }
 }
