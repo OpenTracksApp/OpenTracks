@@ -19,7 +19,6 @@ import android.location.Location;
 
 import androidx.annotation.VisibleForTesting;
 
-import de.dennisguse.opentracks.content.WaypointCreationRequest;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 
 /**
@@ -83,10 +82,9 @@ public interface ITrackRecordingService {
     /**
      * Inserts a waypoint in the current recording track.
      *
-     * @param request the details of the waypoint to be inserted
      * @return the ID of the inserted waypoint
      */
-    long insertWaypoint(WaypointCreationRequest request);
+    long insertWaypoint(String name, String category, String description, String photoUrl);
 
     /**
      * ONLY FOR TESTING

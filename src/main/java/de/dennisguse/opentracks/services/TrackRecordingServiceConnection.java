@@ -31,7 +31,6 @@ import androidx.annotation.NonNull;
 import de.dennisguse.opentracks.BuildConfig;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackEditActivity;
-import de.dennisguse.opentracks.content.WaypointCreationRequest;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.ServiceUtils;
@@ -212,13 +211,13 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
      *
      * @return the id of the marker or -1L if none could be created.
      */
-    public long addMarker(Context context, WaypointCreationRequest waypointCreationRequest) {
+    public long addMarker(Context context, String name, String category, String description, String photoUrl) {
         ITrackRecordingService trackRecordingService = getServiceIfBound();
         if (trackRecordingService == null) {
             Log.d(TAG, "Unable to add marker, no track recording service");
         } else {
             try {
-                long markerId = trackRecordingService.insertWaypoint(waypointCreationRequest);
+                long markerId = trackRecordingService.insertWaypoint(name, category, description, photoUrl);
                 if (markerId != -1L) {
                     Toast.makeText(context, R.string.marker_add_success, Toast.LENGTH_SHORT).show();
                     return markerId;

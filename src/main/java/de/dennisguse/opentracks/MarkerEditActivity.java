@@ -26,7 +26,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import de.dennisguse.opentracks.content.ContentProviderUtils;
-import de.dennisguse.opentracks.content.WaypointCreationRequest;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 
@@ -157,13 +156,11 @@ public class MarkerEditActivity extends AbstractActivity {
      * Adds a marker.
      */
     private void addMarker() {
-        WaypointCreationRequest waypointCreationRequest = new WaypointCreationRequest(
+        trackRecordingServiceConnection.addMarker(this,
                 waypointName.getText().toString(),
                 waypointMarkerType.getText().toString(),
                 waypointDescription.getText().toString(),
-                null,
                 null);
-        trackRecordingServiceConnection.addMarker(this, waypointCreationRequest);
     }
 
     /**

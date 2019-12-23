@@ -44,7 +44,6 @@ import java.util.concurrent.TimeoutException;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.CustomContentProvider;
-import de.dennisguse.opentracks.content.WaypointCreationRequest;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.stats.TripStatistics;
@@ -230,7 +229,7 @@ public class TrackRecordingServiceTest {
         ITrackRecordingService service = ((ITrackRecordingService) mServiceRule.bindService(createStartIntent(context)));
         Assert.assertFalse(service.isRecording());
 
-        long waypointId = service.insertWaypoint(new WaypointCreationRequest(null, null, null, null, null));
+        long waypointId = service.insertWaypoint(null, null, null, null);
         Assert.assertEquals(-1L, waypointId);
     }
 
@@ -243,7 +242,7 @@ public class TrackRecordingServiceTest {
         insertLocation(service);
 
         long trackId = service.getRecordingTrackId();
-        long waypointId = service.insertWaypoint(new WaypointCreationRequest(null, null, null, null, null));
+        long waypointId = service.insertWaypoint(null, null, null, null);
         Assert.assertNotEquals(-1L, waypointId);
         Waypoint wpt = contentProviderUtils.getWaypoint(waypointId);
         Assert.assertEquals(context.getString(R.string.marker_waypoint_icon_url), wpt.getIcon());

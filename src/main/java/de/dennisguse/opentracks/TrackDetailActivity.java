@@ -44,7 +44,6 @@ import com.google.android.material.tabs.TabLayout;
 
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.TrackDataHub;
-import de.dennisguse.opentracks.content.WaypointCreationRequest;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.fragments.ChartDistanceFragment;
@@ -108,8 +107,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
                     trackController.update(isRecording(), recordingTrackPaused);
                     if (hasPhoto && photoUri != null) {
                         hasPhoto = false;
-                        WaypointCreationRequest waypointCreationRequest = new WaypointCreationRequest(null, null, null, null, photoUri.toString());
-                        long markerId = trackRecordingServiceConnection.addMarker(TrackDetailActivity.this, waypointCreationRequest);
+                        long markerId = trackRecordingServiceConnection.addMarker(TrackDetailActivity.this, null, null, null, photoUri.toString());
                         if (markerId != -1L) {
                             //TODO: Make configurable.
                             FileUtils.updateMediaScanner(TrackDetailActivity.this, photoUri);

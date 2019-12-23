@@ -47,7 +47,6 @@ import de.dennisguse.opentracks.content.CustomContentProvider;
 import de.dennisguse.opentracks.content.LocationFactory;
 import de.dennisguse.opentracks.content.LocationIterator;
 import de.dennisguse.opentracks.content.SensorDataSetLocation;
-import de.dennisguse.opentracks.content.WaypointCreationRequest;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
@@ -292,15 +291,13 @@ public class TrackRecordingService extends Service {
     /**
      * Inserts a waypoint.
      *
-     * @param waypointCreationRequest the waypoint creation request
      * @return the waypoint id
      */
-    public long insertWaypoint(WaypointCreationRequest waypointCreationRequest) {
+    public long insertWaypoint(String name, String category, String description, String photoUrl) {
         if (!isRecording() || isPaused()) {
             return -1L;
         }
 
-        String name = waypointCreationRequest.getName();
         if (name == null) {
             int nextWaypointNumber = contentProviderUtils.getNextWaypointNumber(recordingTrackId);
             if (nextWaypointNumber == -1) {
@@ -315,15 +312,14 @@ public class TrackRecordingService extends Service {
             return -1L;
         }
 
-        String category = waypointCreationRequest.getCategory() != null ? waypointCreationRequest.getCategory() : "";
-        String description = waypointCreationRequest.getDescription() != null ? waypointCreationRequest.getDescription() : "";
+        category = category != null ? category : "";
+        description = description != null ? description : "";
         String icon = getString(R.string.marker_waypoint_icon_url);
+        photoUrl = photoUrl != null ? photoUrl : "";
 
         TripStatistics stats = trackTripStatisticsUpdater.getTripStatistics();
         double length = stats.getTotalDistance();
         long duration = stats.getTotalTime();
-
-        String photoUrl = waypointCreationRequest.getPhotoUrl() != null ? waypointCreationRequest.getPhotoUrl() : "";
 
         // Insert waypoint
         Waypoint waypoint = new Waypoint(name, description, category, icon, recordingTrackId, length, duration, -1L, -1L, location, null, photoUrl);
@@ -880,8 +876,8 @@ public class TrackRecordingService extends Service {
         }
 
         @Override
-        public long insertWaypoint(WaypointCreationRequest waypointCreationRequest) {
-            return trackRecordingService.insertWaypoint(waypointCreationRequest);
+        public long insertWaypoint(String name, String category, String description, String photoUrl) {
+            return trackRecordingService.insertWaypoint(name, category, description, photoUrl);
         }
 
         @VisibleForTesting
