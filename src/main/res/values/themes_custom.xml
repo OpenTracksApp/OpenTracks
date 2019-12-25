@@ -31,6 +31,7 @@ limitations under the License.
         <!--        <item name="colorPrimary">TODO</item>-->
         <!--        <item name="colorPrimaryDark">TODO</item>-->
 
+        <item name="colorAccent">@color/holo_orange_dark</item>
         <item name="android:colorAccent">@color/holo_orange_dark</item>
         <item name="windowActionModeOverlay">true</item>
     </style>
