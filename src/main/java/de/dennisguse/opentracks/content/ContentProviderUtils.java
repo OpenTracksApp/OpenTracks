@@ -1062,14 +1062,7 @@ public class ContentProviderUtils {
         values.put(TrackPointsColumns.LONGITUDE, (int) (location.getLongitude() * 1E6));
         values.put(TrackPointsColumns.LATITUDE, (int) (location.getLatitude() * 1E6));
 
-        long time = location.getTime();
-        // TODO: Check if this is really necessary!
-        // Hack for Samsung phones that don't properly populate the time field
-        if (time == 0) {
-            Log.w(TAG, "location has no timestamp; setting current time");
-            time = System.currentTimeMillis();
-        }
-        values.put(TrackPointsColumns.TIME, time);
+        values.put(TrackPointsColumns.TIME, location.getTime());
         if (location.hasAltitude()) {
             values.put(TrackPointsColumns.ALTITUDE, location.getAltitude());
         }
