@@ -518,9 +518,6 @@ public class ContentProviderUtils {
             tripStatistics.setMaxGrade(cursor.getFloat(maxGradeIndex));
             hasTripStatistics = true;
         }
-        if (hasTripStatistics) {
-            waypoint.setTripStatistics(tripStatistics);
-        }
 
         if (!cursor.isNull(photoUrlIndex)) {
             waypoint.setPhotoUrl(cursor.getString(photoUrlIndex));
@@ -740,22 +737,6 @@ public class ContentProviderUtils {
             if (location.hasBearing()) {
                 values.put(WaypointsColumns.BEARING, location.getBearing());
             }
-        }
-
-        TripStatistics tripStatistics = waypoint.getTripStatistics();
-        if (tripStatistics != null) {
-            values.put(WaypointsColumns.STARTTIME, tripStatistics.getStartTime());
-            values.put(WaypointsColumns.TOTALDISTANCE, tripStatistics.getTotalDistance());
-            values.put(WaypointsColumns.TOTALTIME, tripStatistics.getTotalTime());
-            values.put(WaypointsColumns.MOVINGTIME, tripStatistics.getMovingTime());
-            values.put(WaypointsColumns.AVGSPEED, tripStatistics.getAverageSpeed());
-            values.put(WaypointsColumns.AVGMOVINGSPEED, tripStatistics.getAverageMovingSpeed());
-            values.put(WaypointsColumns.MAXSPEED, tripStatistics.getMaxSpeed());
-            values.put(WaypointsColumns.MINELEVATION, tripStatistics.getMinElevation());
-            values.put(WaypointsColumns.MAXELEVATION, tripStatistics.getMaxElevation());
-            values.put(WaypointsColumns.ELEVATIONGAIN, tripStatistics.getTotalElevationGain());
-            values.put(WaypointsColumns.MINGRADE, tripStatistics.getMinGrade());
-            values.put(WaypointsColumns.MAXGRADE, tripStatistics.getMaxGrade());
         }
 
         values.put(WaypointsColumns.PHOTOURL, waypoint.getPhotoUrl());

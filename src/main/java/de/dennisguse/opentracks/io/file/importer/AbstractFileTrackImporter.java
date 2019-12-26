@@ -44,7 +44,6 @@ import de.dennisguse.opentracks.content.LocationIterator;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.services.TrackRecordingService;
-import de.dennisguse.opentracks.stats.TripStatistics;
 import de.dennisguse.opentracks.stats.TripStatisticsUpdater;
 import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.LocationUtils;
@@ -200,15 +199,13 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
 
                     // Valid location
                     if (location.getLatitude() == waypoint.getLocation().getLatitude() && location.getLongitude() == waypoint.getLocation().getLongitude()) {
-
-                        TripStatistics tripStatistics = null;
                         String waypointDescription = waypoint.getDescription();
                         String icon = context.getString(R.string.marker_waypoint_icon_url);
                         double length = trackTripStatisticstrackUpdater.getTripStatistics().getTotalDistance();
                         long duration = trackTripStatisticstrackUpdater.getTripStatistics().getTotalTime();
 
                         // Insert waypoint
-                        Waypoint newWaypoint = new Waypoint(waypoint.getName(), waypointDescription, waypoint.getCategory(), icon, track.getId(), length, duration, location, tripStatistics, waypoint.getPhotoUrl());
+                        Waypoint newWaypoint = new Waypoint(waypoint.getName(), waypointDescription, waypoint.getCategory(), icon, track.getId(), length, duration, location, waypoint.getPhotoUrl());
                         contentProviderUtils.insertWaypoint(newWaypoint);
                     }
 

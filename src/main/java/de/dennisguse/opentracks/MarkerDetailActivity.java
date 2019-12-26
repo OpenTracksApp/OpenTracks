@@ -71,12 +71,9 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
             if (cursor != null && cursor.moveToFirst()) {
                 for (int i = 0; i < cursor.getCount(); i++) {
                     Waypoint currentMarker = contentProviderUtils.createWaypoint(cursor);
-
-                    if (!currentMarker.isTripStatistics()) {
-                        markerIds.add(currentMarker.getId());
-                        if (currentMarker.getId() == markerId) {
-                            markerIndex = markerIds.size() - 1;
-                        }
+                    markerIds.add(currentMarker.getId());
+                    if (currentMarker.getId() == markerId) {
+                        markerIndex = markerIds.size() - 1;
                     }
 
                     cursor.moveToNext();

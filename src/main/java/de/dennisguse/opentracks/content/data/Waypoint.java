@@ -19,8 +19,6 @@ package de.dennisguse.opentracks.content.data;
 import android.location.Location;
 import android.net.Uri;
 
-import de.dennisguse.opentracks.stats.TripStatistics;
-
 /**
  * A waypoint.
  *
@@ -38,13 +36,12 @@ public final class Waypoint {
     private double length = 0.0;
     private long duration = 0;
     private Location location = null;
-    private TripStatistics tripStatistics = null;
     private String photoUrl = "";
 
     public Waypoint() {
     }
 
-    public Waypoint(String name, String description, String category, String icon, long trackId, double length, long duration, Location location, TripStatistics tripStatistics, String photoUrl) {
+    public Waypoint(String name, String description, String category, String icon, long trackId, double length, long duration, Location location, String photoUrl) {
         this.name = name;
         this.description = description;
         this.category = category;
@@ -53,7 +50,6 @@ public final class Waypoint {
         this.length = length;
         this.duration = duration;
         this.location = location;
-        this.tripStatistics = tripStatistics;
         this.photoUrl = photoUrl;
     }
 
@@ -127,18 +123,6 @@ public final class Waypoint {
 
     public void setLocation(Location location) {
         this.location = location;
-    }
-
-    public boolean isTripStatistics() {
-        return tripStatistics != null;
-    }
-
-    public TripStatistics getTripStatistics() {
-        return tripStatistics;
-    }
-
-    public void setTripStatistics(TripStatistics tripStatistics) {
-        this.tripStatistics = tripStatistics;
     }
 
     public String getPhotoUrl() {

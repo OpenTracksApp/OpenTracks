@@ -108,9 +108,7 @@ public class FileTrackExporter implements TrackExporter {
                         hasWaypoints = true;
                     }
                     Waypoint waypoint = contentProviderUtils.createWaypoint(cursor);
-                    if (!waypoint.isTripStatistics()) {
-                        trackWriter.writeWaypoint(waypoint);
-                    }
+                    trackWriter.writeWaypoint(waypoint);
 
                     cursor.moveToNext();
                 }
