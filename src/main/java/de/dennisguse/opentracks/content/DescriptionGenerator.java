@@ -73,15 +73,6 @@ public class DescriptionGenerator {
     }
 
     /**
-     * Generate a waypoint description from a trip statistics.
-     *
-     * @param tripStatistics the trip statistics
-     */
-    public String generateWaypointDescription(TripStatistics tripStatistics) {
-        return generateTripStatisticsDescription(tripStatistics, false);
-    }
-
-    /**
      * Writes a string to a string builder.
      *
      * @param text      the string

@@ -59,17 +59,29 @@ public interface WaypointsColumns extends BaseColumns {
     String SPEED = "speed"; // speed
     String BEARING = "bearing"; // bearing
 
+    @Deprecated
     String TOTALDISTANCE = "totaldistance"; // total distance
+    @Deprecated
     String TOTALTIME = "totaltime"; // total time
+    @Deprecated
     String MOVINGTIME = "movingtime"; // moving time
+    @Deprecated
     String AVGSPEED = "avgspeed"; // average speed
-    String AVGMOVINGSPEED = "avgmovingspeed"; // average moving speed
-    String MAXSPEED = "maxspeed"; // max speed
-    String MINELEVATION = "minelevation"; // min elevation
-    String MAXELEVATION = "maxelevation"; // max elevation
-    String ELEVATIONGAIN = "elevationgain"; // elevation gain
-    String MINGRADE = "mingrade"; // min grade
-    String MAXGRADE = "maxgrade"; // max grade
+
+    @Deprecated
+    String AVGMOVINGSPEED = "avgmovingspeed"; // average moving speed  // TODO UNUSED
+    @Deprecated
+    String MAXSPEED = "maxspeed"; // max speed // TODO UNUSED
+    @Deprecated
+    String MINELEVATION = "minelevation"; // min elevation // TODO UNUSED
+    @Deprecated
+    String MAXELEVATION = "maxelevation"; // max elevation // TODO UNUSED
+    @Deprecated
+    String ELEVATIONGAIN = "elevationgain"; // elevation gain // TODO UNUSED
+    @Deprecated
+    String MINGRADE = "mingrade"; // min grade // TODO UNUSED
+    @Deprecated
+    String MAXGRADE = "maxgrade"; // max grade // TODO UNUSED
 
     String PHOTOURL = "photoUrl"; // url for the photo
 

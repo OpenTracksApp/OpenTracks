@@ -403,12 +403,8 @@ public class ContentProviderUtils {
         int categoryIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.CATEGORY);
         int iconIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.ICON);
         int trackIdIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.TRACKID);
-        int typeIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.TYPE);
         int lengthIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.LENGTH);
         int durationIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.DURATION);
-        int startTimeIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.STARTTIME);
-        int startIdIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.STARTID);
-        int stopIdIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.STOPID);
         int longitudeIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.LONGITUDE);
         int latitudeIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.LATITUDE);
         int timeIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.TIME);
@@ -416,15 +412,6 @@ public class ContentProviderUtils {
         int accuracyIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.ACCURACY);
         int speedIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.SPEED);
         int bearingIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.BEARING);
-        int totalDistanceIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.TOTALDISTANCE);
-        int totalTimeIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.TOTALTIME);
-        int movingTimeIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.MOVINGTIME);
-        int maxSpeedIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.MAXSPEED);
-        int minElevationIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.MINELEVATION);
-        int maxElevationIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.MAXELEVATION);
-        int elevationGainIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.ELEVATIONGAIN);
-        int minGradeIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.MINGRADE);
-        int maxGradeIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.MAXGRADE);
         int photoUrlIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.PHOTOURL);
 
         Waypoint waypoint = new Waypoint();
@@ -475,49 +462,6 @@ public class ContentProviderUtils {
             location.setBearing(cursor.getFloat(bearingIndex));
         }
         waypoint.setLocation(location);
-
-        TripStatistics tripStatistics = new TripStatistics();
-        boolean hasTripStatistics = false;
-        if (!cursor.isNull(startTimeIndex)) {
-            tripStatistics.setStartTime(cursor.getLong(startTimeIndex));
-            hasTripStatistics = true;
-        }
-        if (!cursor.isNull(totalDistanceIndex)) {
-            tripStatistics.setTotalDistance(cursor.getFloat(totalDistanceIndex));
-            hasTripStatistics = true;
-        }
-        if (!cursor.isNull(totalTimeIndex)) {
-            tripStatistics.setTotalTime(cursor.getLong(totalTimeIndex));
-            hasTripStatistics = true;
-        }
-        if (!cursor.isNull(movingTimeIndex)) {
-            tripStatistics.setMovingTime(cursor.getLong(movingTimeIndex));
-            hasTripStatistics = true;
-        }
-        if (!cursor.isNull(maxSpeedIndex)) {
-            tripStatistics.setMaxSpeed(cursor.getFloat(maxSpeedIndex));
-            hasTripStatistics = true;
-        }
-        if (!cursor.isNull(minElevationIndex)) {
-            tripStatistics.setMinElevation(cursor.getFloat(minElevationIndex));
-            hasTripStatistics = true;
-        }
-        if (!cursor.isNull(maxElevationIndex)) {
-            tripStatistics.setMaxElevation(cursor.getFloat(maxElevationIndex));
-            hasTripStatistics = true;
-        }
-        if (!cursor.isNull(elevationGainIndex)) {
-            tripStatistics.setTotalElevationGain(cursor.getFloat(elevationGainIndex));
-            hasTripStatistics = true;
-        }
-        if (!cursor.isNull(minGradeIndex)) {
-            tripStatistics.setMinGrade(cursor.getFloat(minGradeIndex));
-            hasTripStatistics = true;
-        }
-        if (!cursor.isNull(maxGradeIndex)) {
-            tripStatistics.setMaxGrade(cursor.getFloat(maxGradeIndex));
-            hasTripStatistics = true;
-        }
 
         if (!cursor.isNull(photoUrlIndex)) {
             waypoint.setPhotoUrl(cursor.getString(photoUrlIndex));

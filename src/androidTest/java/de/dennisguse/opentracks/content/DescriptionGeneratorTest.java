@@ -28,7 +28,6 @@ import org.junit.runner.RunWith;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.stats.TripStatistics;
 import de.dennisguse.opentracks.util.StringUtils;
 
@@ -93,41 +92,6 @@ public class DescriptionGeneratorTest {
         Assert.assertEquals(expected, descriptionGenerator.generateTrackDescription(track, true));
     }
 
-    /**
-     * Tests {@link DescriptionGenerator#generateWaypointDescription(TripStatistics)}.
-     */
-    @Test
-    public void testGenerateWaypointDescription() {
-        Waypoint waypoint = new Waypoint();
-        TripStatistics stats = new TripStatistics();
-        stats.setTotalDistance(20000);
-        stats.setTotalTime(600000);
-        stats.setMovingTime(300000);
-        stats.setMaxSpeed(100);
-        stats.setMaxElevation(550);
-        stats.setMinElevation(-500);
-        stats.setTotalElevationGain(6000);
-        stats.setMaxGrade(0.42);
-        stats.setMinGrade(0.11);
-        stats.setStartTime(START_TIME);
-        waypoint.setTripStatistics(stats);
-        String expected = "Total distance: 20.00 km (12.4 mi)\n"
-                + "Total time: 10:00\n"
-                + "Moving time: 05:00\n"
-                + "Average speed: 120.00 km/h (74.6 mi/h)\n"
-                + "Average moving speed: 240.00 km/h (149.1 mi/h)\n"
-                + "Max speed: 360.00 km/h (223.7 mi/h)\n"
-                + "Average pace: 0:30 min/km (0:48 min/mi)\n"
-                + "Average moving pace: 0:15 min/km (0:24 min/mi)\n"
-                + "Fastest pace: 0:10 min/km (0:16 min/mi)\n"
-                + "Max elevation: 550 m (1804 ft)\n"
-                + "Min elevation: -500 m (-1640 ft)\n"
-                + "Elevation gain: 6000 m (19685 ft)\n"
-                + "Max grade: 42 %\n"
-                + "Min grade: 11 %\n"
-                + "Recorded: " + StringUtils.formatDateTime(context, START_TIME) + "\n";
-        Assert.assertEquals(expected, descriptionGenerator.generateWaypointDescription(waypoint.getTripStatistics()));
-    }
 
     /**
      * Tests {@link DescriptionGenerator#writeDistance(double, StringBuilder, int, String)}.

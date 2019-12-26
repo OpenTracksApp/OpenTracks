@@ -250,7 +250,6 @@ public class TrackRecordingServiceTest {
         Assert.assertEquals(trackId, wpt.getTrackId());
         Assert.assertEquals(0.0, wpt.getLength(), 0.01);
         Assert.assertNotNull(wpt.getLocation());
-        Assert.assertNull(wpt.getTripStatistics());
 
         service.endCurrentTrack();
     }
