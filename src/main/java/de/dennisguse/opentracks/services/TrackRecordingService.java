@@ -322,7 +322,7 @@ public class TrackRecordingService extends Service {
         long duration = stats.getTotalTime();
 
         // Insert waypoint
-        Waypoint waypoint = new Waypoint(name, description, category, icon, recordingTrackId, length, duration, -1L, -1L, location, null, photoUrl);
+        Waypoint waypoint = new Waypoint(name, description, category, icon, recordingTrackId, length, duration, location, null, photoUrl);
         Uri uri = contentProviderUtils.insertWaypoint(waypoint);
         return Long.parseLong(uri.getLastPathSegment());
     }

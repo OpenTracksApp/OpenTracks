@@ -208,7 +208,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
                         long duration = trackTripStatisticstrackUpdater.getTripStatistics().getTotalTime();
 
                         // Insert waypoint
-                        Waypoint newWaypoint = new Waypoint(waypoint.getName(), waypointDescription, waypoint.getCategory(), icon, track.getId(), length, duration, -1L, -1L, location, tripStatistics, waypoint.getPhotoUrl());
+                        Waypoint newWaypoint = new Waypoint(waypoint.getName(), waypointDescription, waypoint.getCategory(), icon, track.getId(), length, duration, location, tripStatistics, waypoint.getPhotoUrl());
                         contentProviderUtils.insertWaypoint(newWaypoint);
                     }
 

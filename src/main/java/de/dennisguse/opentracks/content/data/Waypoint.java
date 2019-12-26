@@ -37,8 +37,6 @@ public final class Waypoint {
     private long trackId = -1L;
     private double length = 0.0;
     private long duration = 0;
-    private long startId = -1L;
-    private long stopId = -1L;
     private Location location = null;
     private TripStatistics tripStatistics = null;
     private String photoUrl = "";
@@ -46,7 +44,7 @@ public final class Waypoint {
     public Waypoint() {
     }
 
-    public Waypoint(String name, String description, String category, String icon, long trackId, double length, long duration, long startId, long stopId, Location location, TripStatistics tripStatistics, String photoUrl) {
+    public Waypoint(String name, String description, String category, String icon, long trackId, double length, long duration, Location location, TripStatistics tripStatistics, String photoUrl) {
         this.name = name;
         this.description = description;
         this.category = category;
@@ -54,8 +52,6 @@ public final class Waypoint {
         this.trackId = trackId;
         this.length = length;
         this.duration = duration;
-        this.startId = startId;
-        this.stopId = stopId;
         this.location = location;
         this.tripStatistics = tripStatistics;
         this.photoUrl = photoUrl;
@@ -123,22 +119,6 @@ public final class Waypoint {
 
     public void setDuration(long duration) {
         this.duration = duration;
-    }
-
-    public long getStartId() {
-        return startId;
-    }
-
-    public void setStartId(long startId) {
-        this.startId = startId;
-    }
-
-    public long getStopId() {
-        return stopId;
-    }
-
-    public void setStopId(long stopId) {
-        this.stopId = stopId;
     }
 
     public Location getLocation() {

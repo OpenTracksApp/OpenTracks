@@ -453,12 +453,6 @@ public class ContentProviderUtils {
         if (!cursor.isNull(durationIndex)) {
             waypoint.setDuration(cursor.getLong(durationIndex));
         }
-        if (!cursor.isNull(startIdIndex)) {
-            waypoint.setStartId(cursor.getLong(startIdIndex));
-        }
-        if (!cursor.isNull(stopIdIndex)) {
-            waypoint.setStopId(cursor.getLong(stopIdIndex));
-        }
 
         Location location = new Location("");
         if (!cursor.isNull(longitudeIndex) && !cursor.isNull(latitudeIndex)) {
@@ -728,8 +722,6 @@ public class ContentProviderUtils {
         values.put(WaypointsColumns.TRACKID, waypoint.getTrackId());
         values.put(WaypointsColumns.LENGTH, waypoint.getLength());
         values.put(WaypointsColumns.DURATION, waypoint.getDuration());
-        values.put(WaypointsColumns.STARTID, waypoint.getStartId());
-        values.put(WaypointsColumns.STOPID, waypoint.getStopId());
 
         Location location = waypoint.getLocation();
         if (location != null) {
