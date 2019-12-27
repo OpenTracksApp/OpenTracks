@@ -39,16 +39,16 @@ public class TripStatistics {
     private long startTime = -1L;
     // The trip stop time. This is the system time, might not match the GPS time.
     private long stopTime = -1L;
-    // The total trip distance (meters).
-    private double totalDistance;
-    // The total time (ms). Updated when new points are received, may be stale.
-    private long totalTime;
-    // The total moving time (ms). Based on when we believe the user is traveling.
-    private long movingTime;
+
+    private double totalDistance_m;
+    // Updated when new points are received, may be stale.
+    private long totalTime_ms;
+    // Based on when we believe the user is traveling.
+    private long movingTime_ms;
     // The maximum speed (meters/second) that we believe is valid.
-    private double maxSpeed;
+    private double maxSpeed_mps;
     // The total elevation gained (meters).
-    private double totalElevationGain;
+    private double totalElevationGain_m;
 
     public TripStatistics() {
     }
@@ -61,14 +61,14 @@ public class TripStatistics {
     public TripStatistics(TripStatistics other) {
         startTime = other.startTime;
         stopTime = other.stopTime;
-        totalDistance = other.totalDistance;
-        totalTime = other.totalTime;
-        movingTime = other.movingTime;
+        totalDistance_m = other.totalDistance_m;
+        totalTime_ms = other.totalTime_ms;
+        movingTime_ms = other.movingTime_ms;
         latitudeExtremities.set(other.latitudeExtremities.getMin(), other.latitudeExtremities.getMax());
         longitudeExtremities.set(other.longitudeExtremities.getMin(), other.longitudeExtremities.getMax());
-        maxSpeed = other.maxSpeed;
+        maxSpeed_mps = other.maxSpeed_mps;
         elevationExtremities.set(other.elevationExtremities.getMin(), other.elevationExtremities.getMax());
-        totalElevationGain = other.totalElevationGain;
+        totalElevationGain_m = other.totalElevationGain_m;
         gradeExtremities.set(other.gradeExtremities.getMin(), other.gradeExtremities.getMax());
     }
 
@@ -81,9 +81,9 @@ public class TripStatistics {
     public void merge(TripStatistics other) {
         startTime = Math.min(startTime, other.startTime);
         stopTime = Math.max(stopTime, other.stopTime);
-        totalDistance += other.totalDistance;
-        totalTime += other.totalTime;
-        movingTime += other.movingTime;
+        totalDistance_m += other.totalDistance_m;
+        totalTime_ms += other.totalTime_ms;
+        movingTime_ms += other.movingTime_ms;
         if (other.latitudeExtremities.hasData()) {
             latitudeExtremities.update(other.latitudeExtremities.getMin());
             latitudeExtremities.update(other.latitudeExtremities.getMax());
@@ -92,12 +92,12 @@ public class TripStatistics {
             longitudeExtremities.update(other.longitudeExtremities.getMin());
             longitudeExtremities.update(other.longitudeExtremities.getMax());
         }
-        maxSpeed = Math.max(maxSpeed, other.maxSpeed);
+        maxSpeed_mps = Math.max(maxSpeed_mps, other.maxSpeed_mps);
         if (other.elevationExtremities.hasData()) {
             elevationExtremities.update(other.elevationExtremities.getMin());
             elevationExtremities.update(other.elevationExtremities.getMax());
         }
-        totalElevationGain += other.totalElevationGain;
+        totalElevationGain_m += other.totalElevationGain_m;
         if (other.gradeExtremities.hasData()) {
             gradeExtremities.update(other.gradeExtremities.getMin());
             gradeExtremities.update(other.gradeExtremities.getMax());
@@ -111,54 +111,28 @@ public class TripStatistics {
         return startTime;
     }
 
-    /**
-     * Sets the trip start time.
-     *
-     * @param startTime the trip start time in milliseconds since the epoch
-     */
     public void setStartTime(long startTime) {
         this.startTime = startTime;
     }
 
-    /**
-     * Gets the trip stop time. The number of milliseconds since epoch.
-     */
     public long getStopTime() {
         return stopTime;
     }
 
-    /**
-     * Sets the trip stop time.
-     *
-     * @param stopTime the stop time in milliseconds since the epoch
-     */
     public void setStopTime(long stopTime) {
         this.stopTime = stopTime;
     }
 
-    /**
-     * Gets the total distance the user traveled in meters.
-     */
     public double getTotalDistance() {
-        return totalDistance;
+        return totalDistance_m;
     }
 
-    /**
-     * Sets the total trip distance.
-     *
-     * @param totalDistance the trip distance in meters
-     */
-    public void setTotalDistance(double totalDistance) {
-        this.totalDistance = totalDistance;
+    public void setTotalDistance(double totalDistance_m) {
+        this.totalDistance_m = totalDistance_m;
     }
 
-    /**
-     * Adds to the current total distance.
-     *
-     * @param distance the distance to add in meters
-     */
-    public void addTotalDistance(double distance) {
-        totalDistance += distance;
+    public void addTotalDistance(double distance_m) {
+        totalDistance_m += distance_m;
     }
 
     /**
@@ -167,142 +141,74 @@ public class TripStatistics {
      * If you need to calculate the proper total time, use {@link #getStartTime} with the current time.
      */
     public long getTotalTime() {
-        return totalTime;
+        return totalTime_ms;
     }
 
-    /**
-     * Sets the trip total time.
-     *
-     * @param totalTime the trip total time in milliseconds
-     */
-    public void setTotalTime(long totalTime) {
-        this.totalTime = totalTime;
+    public void setTotalTime(long totalTime_ms) {
+        this.totalTime_ms = totalTime_ms;
     }
 
-    /**
-     * Gets the moving time in milliseconds.
-     */
     public long getMovingTime() {
-        return movingTime;
+        return movingTime_ms;
     }
 
-    /**
-     * Sets the trip total moving time.
-     *
-     * @param movingTime the trip total moving time in milliseconds
-     */
-    public void setMovingTime(long movingTime) {
-        this.movingTime = movingTime;
+    public void setMovingTime(long movingTime_ms) {
+        this.movingTime_ms = movingTime_ms;
     }
 
-    /**
-     * Adds to the trip total moving time.
-     *
-     * @param time the time in milliseconds
-     */
-    public void addMovingTime(long time) {
-        movingTime += time;
+    public void addMovingTime(long time_ms) {
+        movingTime_ms += time_ms;
     }
 
-    /**
-     * Gets the topmost position (highest latitude) of the track, in signed degrees.
-     */
     public double getTopDegrees() {
         return latitudeExtremities.getMax();
     }
 
-    /**
-     * Gets the topmost position (highest latitude) of the track, in signed millions of degrees.
-     */
     public int getTop() {
         return (int) (latitudeExtremities.getMax() * 1E6);
     }
 
-    /**
-     * Gets the bottommost position (lowest latitude) of the track, in signed
-     * degrees.
-     */
     public double getBottomDegrees() {
         return latitudeExtremities.getMin();
     }
 
-    /**
-     * Gets the bottommost position (lowest latitude) of the track, in signed millions of degrees.
-     */
     public int getBottom() {
         return (int) (latitudeExtremities.getMin() * 1E6);
     }
 
-    /**
-     * Gets the leftmost position (lowest longitude) of the track, in signed degrees.
-     */
     public double getLeftDegrees() {
         return longitudeExtremities.getMin();
     }
 
-    /**
-     * Gets the leftmost position (lowest longitude) of the track, in signed millions of degrees.
-     */
     public int getLeft() {
         return (int) (longitudeExtremities.getMin() * 1E6);
     }
 
-    /**
-     * Gets the rightmost position (highest longitude) of the track, in signed degrees.
-     */
     public double getRightDegrees() {
         return longitudeExtremities.getMax();
     }
 
-    /**
-     * Gets the rightmost position (highest longitude) of the track, in signed millions of degrees.
-     */
     public int getRight() {
         return (int) (longitudeExtremities.getMax() * 1E6);
     }
 
-    /**
-     * Gets the mean latitude position of the track, in signed degrees.
-     */
     public double getMeanLatitude() {
         return (getBottomDegrees() + getTopDegrees()) / 2.0;
     }
 
-    /**
-     * Gets the mean longitude position of the track, in signed degrees.
-     */
     public double getMeanLongitude() {
         return (getLeftDegrees() + getRightDegrees()) / 2.0;
     }
 
-    /**
-     * Sets the bounding box for this trip. The unit for all parameters is signed
-     * millions of degree (degrees * 1E6).
-     *
-     * @param leftE6   the leftmost longitude reached
-     * @param topE6    the topmost latitude reached
-     * @param rightE6  the rightmost longitude reached
-     * @param bottomE6 the bottommost latitude reached
-     */
     public void setBounds(int leftE6, int topE6, int rightE6, int bottomE6) {
         latitudeExtremities.set(bottomE6 / 1E6, topE6 / 1E6);
         longitudeExtremities.set(leftE6 / 1E6, rightE6 / 1E6);
     }
 
-    /**
-     * Updates a new latitude value.
-     *
-     * @param latitude the latitude value in signed decimal degrees
-     */
     public void updateLatitudeExtremities(double latitude) {
         latitudeExtremities.update(latitude);
     }
 
-    /**
-     * Updates a new longitude value.
-     *
-     * @param longitude the longitude value in signed decimal degrees
-     */
     public void updateLongitudeExtremities(double longitude) {
         longitudeExtremities.update(longitude);
     }
@@ -312,27 +218,27 @@ public class TripStatistics {
      * This calculation only takes into account the displacement until the last point that was accounted for in statistics.
      */
     public double getAverageSpeed() {
-        if (totalTime == 0L) {
+        if (totalTime_ms == 0L) {
             return 0.0;
         }
-        return totalDistance / ((double) totalTime / 1000.0);
+        return totalDistance_m / ((double) totalTime_ms / 1000.0);
     }
 
     /**
      * Gets the average moving speed in meters/second.
      */
     public double getAverageMovingSpeed() {
-        if (movingTime == 0L) {
+        if (movingTime_ms == 0L) {
             return 0.0;
         }
-        return totalDistance / ((double) movingTime / 1000.0);
+        return totalDistance_m / ((double) movingTime_ms / 1000.0);
     }
 
     /**
      * Gets the maximum speed in meters/second.
      */
     public double getMaxSpeed() {
-        return Math.max(maxSpeed, getAverageMovingSpeed());
+        return Math.max(maxSpeed_mps, getAverageMovingSpeed());
     }
 
     /**
@@ -341,7 +247,7 @@ public class TripStatistics {
      * @param maxSpeed the maximum speed in meters/second
      */
     public void setMaxSpeed(double maxSpeed) {
-        this.maxSpeed = maxSpeed;
+        this.maxSpeed_mps = maxSpeed;
     }
 
     /**
@@ -372,65 +278,44 @@ public class TripStatistics {
     /**
      * Sets the maximum elevation.
      *
-     * @param elevation the maximum elevation in meters
+     * @param elevation_m the maximum elevation in meters
      */
-    public void setMaxElevation(double elevation) {
-        elevationExtremities.setMax(elevation);
+    public void setMaxElevation(double elevation_m) {
+        elevationExtremities.setMax(elevation_m);
     }
 
     /**
      * Updates a new elevation.
      *
-     * @param elevation the elevation value in meters
+     * @param elevation_m the elevation value in meters
      */
-    public void updateElevationExtremities(double elevation) {
-        elevationExtremities.update(elevation);
+    public void updateElevationExtremities(double elevation_m) {
+        elevationExtremities.update(elevation_m);
     }
 
     /**
      * Gets the total elevation gain in meters. This is calculated as the sum of all positive differences in the smoothed elevation.
      */
     public double getTotalElevationGain() {
-        return totalElevationGain;
+        return totalElevationGain_m;
     }
 
-    /**
-     * Sets the total elevation gain.
-     *
-     * @param totalElevationGain the elevation gain in meters
-     */
-    public void setTotalElevationGain(double totalElevationGain) {
-        this.totalElevationGain = totalElevationGain;
+    public void setTotalElevationGain(double totalElevationGain_m) {
+        this.totalElevationGain_m = totalElevationGain_m;
     }
 
-    /**
-     * Adds to the total elevation gain.
-     *
-     * @param gain the elevation gain in meters
-     */
-    public void addTotalElevationGain(double gain) {
-        totalElevationGain += gain;
+    public void addTotalElevationGain(double gain_m) {
+        totalElevationGain_m += gain_m;
     }
 
-    /**
-     * Gets the minimum grade for this trip.
-     */
     public double getMinGrade() {
         return gradeExtremities.getMin();
     }
 
-    /**
-     * Sets the minimum grade.
-     *
-     * @param grade the grade as a fraction (-1.0 would mean vertical downwards)
-     */
     public void setMinGrade(double grade) {
         gradeExtremities.setMin(grade);
     }
 
-    /**
-     * Gets the maximum grade for this trip.
-     */
     public double getMaxGrade() {
         return gradeExtremities.getMax();
     }
@@ -444,11 +329,6 @@ public class TripStatistics {
         gradeExtremities.setMax(grade);
     }
 
-    /**
-     * Updates a new grade value.
-     *
-     * @param grade the grade value as a fraction
-     */
     public void updateGradeExtremities(double grade) {
         gradeExtremities.update(grade);
     }
