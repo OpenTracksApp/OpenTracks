@@ -1,0 +1,52 @@
+@startuml
+class Track {
+    -id
+    -name
+    -description
+    -category
+    -numberOfPoints
+    -icon
+}
+Track o-- TrackPoint
+Track o-- Waypoint
+Track "1" - "1" TripStatistics
+
+class TripStatistics {
+    - startTime
+    - stopTime
+    - totalDistance
+    - totalTime
+    - movingTime
+    - maxSpeed
+    - totalElevationGain
+}
+
+class TrackPoint extends android.location.Location {
+    - id
+    - trackId
+    - longitude
+    - latitude
+    - time
+    - altitude
+    - accuracy
+    - speed
+    - bearing
+    - sensor_heartrate
+    - sensor_cadence
+    - sensor_power
+}
+
+class Waypoint {
+    - id
+    - trackId
+    - name
+    - description
+    - category
+    - icon
+    - length
+    - duration
+    - location
+    - tripStatistics
+    - photoUrl
+}
+@enduml
