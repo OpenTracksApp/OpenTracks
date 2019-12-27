@@ -463,7 +463,7 @@ public class TrackRecordingService extends Service {
                 insertLocation(track, lastLocation, getLastValidTrackPointInCurrentSegment(trackId));
 
                 // Update the recording track time
-                updateRecordingTrack(track, contentProviderUtils.getLastTrackPointId(trackId), false);
+                updateRecordingTrack(track, false);
             }
 
             String trackName = TrackNameUtils.getTrackName(this, trackId, track.getTripStatistics().getStartTime());
@@ -687,9 +687,8 @@ public class TrackRecordingService extends Service {
 
         try {
             Uri uri = contentProviderUtils.insertTrackPoint(location, track.getId());
-            long trackPointId = Long.parseLong(uri.getLastPathSegment());
             trackTripStatisticsUpdater.addLocation(location, recordingDistanceInterval);
-            updateRecordingTrack(track, trackPointId, LocationUtils.isValidLocation(location));
+            updateRecordingTrack(track, LocationUtils.isValidLocation(location));
         } catch (SQLiteException e) {
             /*
              * Insert failed, most likely because of SqlLite error code 5 (SQLite_BUSY).
@@ -705,16 +704,9 @@ public class TrackRecordingService extends Service {
      * Increase the number of points if it is a new and valid track point.
      *
      * @param track                  the track
-     * @param lastTrackPointId       the last track point id
      * @param increaseNumberOfPoints true to increase the number of points
      */
-    private void updateRecordingTrack(Track track, long lastTrackPointId, boolean increaseNumberOfPoints) {
-        if (lastTrackPointId >= 0) {
-            if (track.getStartId() < 0) {
-                track.setStartId(lastTrackPointId);
-            }
-            track.setStopId(lastTrackPointId);
-        }
+    private void updateRecordingTrack(Track track, boolean increaseNumberOfPoints) {
         if (increaseNumberOfPoints) {
             track.setNumberOfPoints(track.getNumberOfPoints() + 1);
         }

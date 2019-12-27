@@ -357,11 +357,6 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
      */
     protected void insertTrackPoint(Location location) {
         insertLocation(location);
-
-        if (trackData.track.getStartId() == -1L) {
-            // Flush the location to set the track start id and the track end id
-            flushLocations(trackData);
-        }
     }
 
     /**
@@ -479,10 +474,6 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         }
         contentProviderUtils.bulkInsertTrackPoint(data.bufferedLocations, data.numBufferedLocations, data.track.getId());
         data.numBufferedLocations = 0;
-        if (data.track.getStartId() == -1L) {
-            data.track.setStartId(contentProviderUtils.getFirstTrackPointId(data.track.getId()));
-        }
-        data.track.setStopId(contentProviderUtils.getLastTrackPointId(data.track.getId()));
     }
 
     /**

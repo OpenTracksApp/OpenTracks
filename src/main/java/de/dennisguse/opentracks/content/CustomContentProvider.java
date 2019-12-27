@@ -334,8 +334,7 @@ public abstract class CustomContentProvider extends ContentProvider {
      */
     private Uri insertTrack(Uri url, ContentValues contentValues) {
         boolean hasStartTime = contentValues.containsKey(TracksColumns.STARTTIME);
-        boolean hasStartId = contentValues.containsKey(TracksColumns.STARTID);
-        if (!hasStartTime || !hasStartId) {
+        if (!hasStartTime) {
             throw new IllegalArgumentException("Both start time and start id values are required.");
         }
         long rowId = db.insert(TracksColumns.TABLE_NAME, TracksColumns._ID, contentValues);

@@ -38,8 +38,10 @@ public interface TracksColumns extends BaseColumns {
     String NAME = "name"; // track name
     String DESCRIPTION = "description"; // track description
     String CATEGORY = "category"; // track activity type
-    String STARTID = "startid"; // first track point id
-    String STOPID = "stopid"; // last track point id
+    @Deprecated
+    String STARTID = "startid"; // first track point id // TODO UNUSED
+    @Deprecated
+    String STOPID = "stopid"; // last track point id // TODO UNUSED
     String STARTTIME = "starttime"; // track start time
     String STOPTIME = "stoptime"; // track stop time
     String NUMPOINTS = "numpoints"; // number of track points

@@ -142,12 +142,6 @@ public class ContentProviderUtils {
         if (!cursor.isNull(categoryIndex)) {
             track.setCategory(cursor.getString(categoryIndex));
         }
-        if (!cursor.isNull(startIdIndex)) {
-            track.setStartId(cursor.getLong(startIdIndex));
-        }
-        if (!cursor.isNull(stopIdIndex)) {
-            track.setStopId(cursor.getLong(stopIdIndex));
-        }
         if (!cursor.isNull(startTimeIndex)) {
             tripStatistics.setStartTime(cursor.getLong(startTimeIndex));
         }
@@ -224,20 +218,16 @@ public class ContentProviderUtils {
     }
 
     /**
-     * Deletes track points and waypoints of a track. Assumes
-     * {@link TracksColumns#STARTID}, {@link TracksColumns#STOPID}, and
-     * {@link TracksColumns#NUMPOINTS} will be updated by the caller.
+     * Deletes track points and waypoints of a track.
+     * Assumes {@link TracksColumns#NUMPOINTS} will be updated by the caller.
      *
      * @param trackId the track id
      */
     private void deleteTrackPointsAndWaypoints(Context context, long trackId) {
-        Track track = getTrack(trackId);
-        if (track != null) {
-            String where = TrackPointsColumns._ID + ">=? AND " + TrackPointsColumns._ID + "<=?";
-            String[] selectionArgs = new String[]{
-                    Long.toString(track.getStartId()), Long.toString(track.getStopId())};
-            contentResolver.delete(TrackPointsColumns.CONTENT_URI, where, selectionArgs);
-        }
+        String where = TrackPointsColumns.TRACKID + "=?";
+        String[] selectionArgs = new String[]{Long.toString(trackId)};
+        contentResolver.delete(TrackPointsColumns.CONTENT_URI, where, selectionArgs);
+
         contentResolver.delete(WaypointsColumns.CONTENT_URI, WaypointsColumns.TRACKID + "=?",
                 new String[]{Long.toString(trackId)});
         deleteDirectoryRecurse(context, FileUtils.getPhotoDir(trackId));
@@ -354,8 +344,6 @@ public class ContentProviderUtils {
         values.put(TracksColumns.NAME, track.getName());
         values.put(TracksColumns.DESCRIPTION, track.getDescription());
         values.put(TracksColumns.CATEGORY, track.getCategory());
-        values.put(TracksColumns.STARTID, track.getStartId());
-        values.put(TracksColumns.STOPID, track.getStopId());
         values.put(TracksColumns.STARTTIME, tripStatistics.getStartTime());
         values.put(TracksColumns.STOPTIME, tripStatistics.getStopTime());
         values.put(TracksColumns.NUMPOINTS, track.getNumberOfPoints());
@@ -743,6 +731,7 @@ public class ContentProviderUtils {
      *
      * @param trackId the track id
      */
+    @Deprecated
     public long getFirstTrackPointId(long trackId) {
         if (trackId < 0) {
             return -1L;
@@ -765,6 +754,7 @@ public class ContentProviderUtils {
      *
      * @param trackId the track id
      */
+    @Deprecated
     public long getLastTrackPointId(long trackId) {
         if (trackId < 0) {
             return -1L;

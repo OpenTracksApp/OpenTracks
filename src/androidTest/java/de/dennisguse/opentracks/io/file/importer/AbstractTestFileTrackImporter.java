@@ -128,7 +128,5 @@ public abstract class AbstractTestFileTrackImporter {
         if (time != -1L) {
             Assert.assertEquals(time, track.getTripStatistics().getStartTime());
         }
-        Assert.assertNotSame(-1, track.getStartId());
-        Assert.assertNotSame(-1, track.getStopId());
     }
 }

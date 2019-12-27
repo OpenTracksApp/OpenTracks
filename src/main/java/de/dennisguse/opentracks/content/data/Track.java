@@ -35,8 +35,6 @@ public class Track {
     private String name = "";
     private String description = "";
     private String category = "";
-    private long startId = -1L;
-    private long stopId = -1L;
 
     /*
      * The number of location points (present even if the points themselves are not loaded)
@@ -82,22 +80,6 @@ public class Track {
 
     public void setCategory(String category) {
         this.category = category;
-    }
-
-    public long getStartId() {
-        return startId;
-    }
-
-    public void setStartId(long startId) {
-        this.startId = startId;
-    }
-
-    public long getStopId() {
-        return stopId;
-    }
-
-    public void setStopId(long stopId) {
-        this.stopId = stopId;
     }
 
     public int getNumberOfPoints() {
