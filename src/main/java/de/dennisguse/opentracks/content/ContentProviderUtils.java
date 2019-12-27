@@ -116,10 +116,6 @@ public class ContentProviderUtils {
         int totalDistanceIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALDISTANCE);
         int totalTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALTIME);
         int movingTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.MOVINGTIME);
-        int minLatIndex = cursor.getColumnIndexOrThrow(TracksColumns.MINLAT);
-        int maxLatIndex = cursor.getColumnIndexOrThrow(TracksColumns.MAXLAT);
-        int minLonIndex = cursor.getColumnIndexOrThrow(TracksColumns.MINLON);
-        int maxLonIndex = cursor.getColumnIndexOrThrow(TracksColumns.MAXLON);
         int maxSpeedIndex = cursor.getColumnIndexOrThrow(TracksColumns.MAXSPEED);
         int minElevationIndex = cursor.getColumnIndexOrThrow(TracksColumns.MINELEVATION);
         int maxElevationIndex = cursor.getColumnIndexOrThrow(TracksColumns.MAXELEVATION);
@@ -159,13 +155,6 @@ public class ContentProviderUtils {
         }
         if (!cursor.isNull(movingTimeIndex)) {
             tripStatistics.setMovingTime(cursor.getLong(movingTimeIndex));
-        }
-        if (!cursor.isNull(minLatIndex) && !cursor.isNull(maxLatIndex) && !cursor.isNull(minLonIndex) && !cursor.isNull(maxLonIndex)) {
-            int bottom = cursor.getInt(minLatIndex);
-            int top = cursor.getInt(maxLatIndex);
-            int left = cursor.getInt(minLonIndex);
-            int right = cursor.getInt(maxLonIndex);
-            tripStatistics.setBounds(left, top, right, bottom);
         }
         if (!cursor.isNull(maxSpeedIndex)) {
             tripStatistics.setMaxSpeed(cursor.getFloat(maxSpeedIndex));
@@ -350,10 +339,6 @@ public class ContentProviderUtils {
         values.put(TracksColumns.TOTALDISTANCE, tripStatistics.getTotalDistance());
         values.put(TracksColumns.TOTALTIME, tripStatistics.getTotalTime());
         values.put(TracksColumns.MOVINGTIME, tripStatistics.getMovingTime());
-        values.put(TracksColumns.MINLAT, tripStatistics.getBottom());
-        values.put(TracksColumns.MAXLAT, tripStatistics.getTop());
-        values.put(TracksColumns.MINLON, tripStatistics.getLeft());
-        values.put(TracksColumns.MAXLON, tripStatistics.getRight());
         values.put(TracksColumns.AVGSPEED, tripStatistics.getAverageSpeed());
         values.put(TracksColumns.AVGMOVINGSPEED, tripStatistics.getAverageMovingSpeed());
         values.put(TracksColumns.MAXSPEED, tripStatistics.getMaxSpeed());

@@ -247,7 +247,6 @@ public class SearchEngine {
         score *= getTitleBoost(query, track.getName(), track.getDescription(), track.getCategory());
 
         TripStatistics statistics = track.getTripStatistics();
-        score *= getDistanceBoost(query, statistics.getMeanLatitude(), statistics.getMeanLongitude());
 
         long meanTimestamp = (statistics.getStartTime() + statistics.getStopTime()) / 2L;
         score *= getTimeBoost(query, meanTimestamp);

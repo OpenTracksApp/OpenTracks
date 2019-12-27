@@ -26,10 +26,6 @@ import androidx.annotation.NonNull;
  */
 public class TripStatistics {
 
-    // The min and max latitude seen in this trip.
-    private final ExtremityMonitor latitudeExtremities = new ExtremityMonitor();
-    // The min and max longitude seen in this trip.
-    private final ExtremityMonitor longitudeExtremities = new ExtremityMonitor();
     // The min and max elevation (meters) seen on this trip.
     private final ExtremityMonitor elevationExtremities = new ExtremityMonitor();
     // The min and max grade seen on this trip.
@@ -64,8 +60,6 @@ public class TripStatistics {
         totalDistance_m = other.totalDistance_m;
         totalTime_ms = other.totalTime_ms;
         movingTime_ms = other.movingTime_ms;
-        latitudeExtremities.set(other.latitudeExtremities.getMin(), other.latitudeExtremities.getMax());
-        longitudeExtremities.set(other.longitudeExtremities.getMin(), other.longitudeExtremities.getMax());
         maxSpeed_mps = other.maxSpeed_mps;
         elevationExtremities.set(other.elevationExtremities.getMin(), other.elevationExtremities.getMax());
         totalElevationGain_m = other.totalElevationGain_m;
@@ -84,14 +78,6 @@ public class TripStatistics {
         totalDistance_m += other.totalDistance_m;
         totalTime_ms += other.totalTime_ms;
         movingTime_ms += other.movingTime_ms;
-        if (other.latitudeExtremities.hasData()) {
-            latitudeExtremities.update(other.latitudeExtremities.getMin());
-            latitudeExtremities.update(other.latitudeExtremities.getMax());
-        }
-        if (other.longitudeExtremities.hasData()) {
-            longitudeExtremities.update(other.longitudeExtremities.getMin());
-            longitudeExtremities.update(other.longitudeExtremities.getMax());
-        }
         maxSpeed_mps = Math.max(maxSpeed_mps, other.maxSpeed_mps);
         if (other.elevationExtremities.hasData()) {
             elevationExtremities.update(other.elevationExtremities.getMin());
@@ -158,59 +144,6 @@ public class TripStatistics {
 
     public void addMovingTime(long time_ms) {
         movingTime_ms += time_ms;
-    }
-
-    public double getTopDegrees() {
-        return latitudeExtremities.getMax();
-    }
-
-    public int getTop() {
-        return (int) (latitudeExtremities.getMax() * 1E6);
-    }
-
-    public double getBottomDegrees() {
-        return latitudeExtremities.getMin();
-    }
-
-    public int getBottom() {
-        return (int) (latitudeExtremities.getMin() * 1E6);
-    }
-
-    public double getLeftDegrees() {
-        return longitudeExtremities.getMin();
-    }
-
-    public int getLeft() {
-        return (int) (longitudeExtremities.getMin() * 1E6);
-    }
-
-    public double getRightDegrees() {
-        return longitudeExtremities.getMax();
-    }
-
-    public int getRight() {
-        return (int) (longitudeExtremities.getMax() * 1E6);
-    }
-
-    public double getMeanLatitude() {
-        return (getBottomDegrees() + getTopDegrees()) / 2.0;
-    }
-
-    public double getMeanLongitude() {
-        return (getLeftDegrees() + getRightDegrees()) / 2.0;
-    }
-
-    public void setBounds(int leftE6, int topE6, int rightE6, int bottomE6) {
-        latitudeExtremities.set(bottomE6 / 1E6, topE6 / 1E6);
-        longitudeExtremities.set(leftE6 / 1E6, rightE6 / 1E6);
-    }
-
-    public void updateLatitudeExtremities(double latitude) {
-        latitudeExtremities.update(latitude);
-    }
-
-    public void updateLongitudeExtremities(double longitude) {
-        longitudeExtremities.update(longitude);
     }
 
     /**
@@ -338,9 +271,7 @@ public class TripStatistics {
     public String toString() {
         return "TripStatistics { Start Time: " + getStartTime() + "; Stop Time: " + getStopTime()
                 + "; Total Distance: " + getTotalDistance() + "; Total Time: " + getTotalTime()
-                + "; Moving Time: " + getMovingTime() + "; Min Latitude: " + getBottomDegrees()
-                + "; Max Latitude: " + getTopDegrees() + "; Min Longitude: " + getLeftDegrees()
-                + "; Max Longitude: " + getRightDegrees() + "; Max Speed: " + getMaxSpeed()
+                + "; Moving Time: " + getMovingTime() + "; Max Speed: " + getMaxSpeed()
                 + "; Min Elevation: " + getMinElevation() + "; Max Elevation: " + getMaxElevation()
                 + "; Elevation Gain: " + getTotalElevationGain() + "; Min Grade: " + getMinGrade()
                 + "; Max Grade: " + getMaxGrade() + "}";

@@ -82,10 +82,6 @@ public class SearchEngineTest {
             stats.setStopTime(NOW);
         }
 
-        int latitude = (int) ((HERE.getLatitude() + distance) * 1E6);
-        int longitude = (int) ((HERE.getLongitude() + distance) * 1E6);
-        stats.setBounds(latitude, longitude, latitude, longitude);
-
         Uri uri = providerUtils.insertTrack(track);
         return ContentUris.parseId(uri);
     }
@@ -209,20 +205,6 @@ public class SearchEngineTest {
         assertTrackResult(trackId, results.get(0));
         assertWaypointResult(titleWaypointId, results.get(1));
         assertWaypointResult(descriptionWaypointId, results.get(2));
-    }
-
-    @Test
-    public void testSearchTrackDistance() {
-        // All results match text, but they're at difference distances from the user.
-        long farFarAwayId = insertTrack("aa", 0.3);
-        long nearId = insertTrack("ab", 0.1);
-        long farId = insertTrack("ac", 0.2);
-
-        SearchQuery query = new SearchQuery("a", HERE, -1, NOW);
-        ArrayList<ScoredResult> results = new ArrayList<ScoredResult>(engine.search(query));
-
-        // Distance order.
-        assertTrackResults(results, nearId, farId, farFarAwayId);
     }
 
     @Test

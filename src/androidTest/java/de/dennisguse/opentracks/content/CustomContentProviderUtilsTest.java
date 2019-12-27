@@ -352,7 +352,6 @@ public class CustomContentProviderUtilsTest {
         statistics.setMinElevation(1200.0);
         statistics.setMaxGrade(15.0);
         statistics.setMinGrade(minGrade);
-        statistics.setBounds(-10000, 20000, 30000, -40000);
 
         track.setTripStatistics(statistics);
         contentProviderUtils.insertTrack(track);
@@ -458,7 +457,6 @@ public class CustomContentProviderUtilsTest {
         statistics.setMinElevation(1200.0);
         statistics.setMaxGrade(15.0);
         statistics.setMinGrade(-25.0);
-        statistics.setBounds(-10000, 20000, 30000, -40000);
 
         track.setTripStatistics(statistics);
         contentProviderUtils.insertTrack(track);

@@ -138,9 +138,6 @@ public class TripStatisticsUpdater {
             return;
         }
 
-        currentSegment.updateLatitudeExtremities(location.getLatitude());
-        currentSegment.updateLongitudeExtremities(location.getLongitude());
-
         //TODO Use Barometer to compute elevation gain.
         double elevationDifference = location.hasAltitude() ? updateElevation(location.getAltitude()) : 0.0;
 

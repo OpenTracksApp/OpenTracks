@@ -48,14 +48,18 @@ public interface TracksColumns extends BaseColumns {
     String TOTALDISTANCE = "totaldistance"; // total distance
     String TOTALTIME = "totaltime"; // total time
     String MOVINGTIME = "movingtime"; // moving time
-    String MINLAT = "minlat"; // minimum latitude
-    String MAXLAT = "maxlat"; // maximum latitude
-    String MINLON = "minlon"; // minimum longitude
-    String MAXLON = "maxlon"; // maximum longitude
-    String AVGSPEED = "avgspeed"; // average speed
 
-    // average moving speed
-    String AVGMOVINGSPEED = "avgmovingspeed";
+    @Deprecated
+    String MINLAT = "minlat"; // minimum latitude // TODO UNUSED
+    @Deprecated
+    String MAXLAT = "maxlat"; // maximum latitude // TODO UNUSED
+    @Deprecated
+    String MINLON = "minlon"; // minimum longitude //TODO UNUSED
+    @Deprecated
+    String MAXLON = "maxlon"; // maximum longitude //TODO UNUSED
+
+    String AVGSPEED = "avgspeed"; // average speed
+    String AVGMOVINGSPEED = "avgmovingspeed"; // average moving speed
     String MAXSPEED = "maxspeed"; // maximum speed
     String MINELEVATION = "minelevation"; // minimum elevation
     String MAXELEVATION = "maxelevation"; // maximum elevation

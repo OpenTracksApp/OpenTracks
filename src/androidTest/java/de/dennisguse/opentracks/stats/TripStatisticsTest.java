@@ -34,15 +34,6 @@ public class TripStatisticsTest extends TestCase {
         statistics = new TripStatistics();
     }
 
-    public void testSetBounds() {
-        // This is not a trivial setter, conversion happens in it
-        statistics.setBounds(12345, -34567, 56789, -98765);
-        assertEquals(12345, statistics.getLeft());
-        assertEquals(-34567, statistics.getTop());
-        assertEquals(56789, statistics.getRight());
-        assertEquals(-98765, statistics.getBottom());
-    }
-
     public void testMerge() {
         TripStatistics statistics2 = new TripStatistics();
         statistics.setStartTime(1000L);  // Resulting start time
@@ -68,10 +59,6 @@ public class TripStatisticsTest extends TestCase {
         statistics2.setMaxGrade(35.0);  // Resulting max grade
         statistics2.setMinGrade(0.0);
 
-        // Resulting bounds: -10000, 35000, 30000, -40000
-        statistics.setBounds(-10000, 20000, 30000, -40000);
-        statistics2.setBounds(-5000, 35000, 0, 20000);
-
         statistics.merge(statistics2);
 
         assertEquals(1000L, statistics.getStartTime());
@@ -81,10 +68,6 @@ public class TripStatisticsTest extends TestCase {
         assertEquals(1100.0, statistics.getTotalDistance());
         assertEquals(900.0, statistics.getTotalElevationGain());
         assertEquals(statistics.getTotalDistance() / (statistics.getMovingTime() / 1000.0), statistics.getMaxSpeed());
-        assertEquals(-10000, statistics.getLeft());
-        assertEquals(30000, statistics.getRight());
-        assertEquals(35000, statistics.getTop());
-        assertEquals(-40000, statistics.getBottom());
         assertEquals(1200.0, statistics.getMinElevation());
         assertEquals(3575.0, statistics.getMaxElevation());
         assertEquals(-25.0, statistics.getMinGrade());
