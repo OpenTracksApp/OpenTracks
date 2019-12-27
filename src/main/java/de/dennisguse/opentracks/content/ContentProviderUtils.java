@@ -732,7 +732,7 @@ public class ContentProviderUtils {
      * @param cursor the cursor pointing to the location
      */
     public Location createTrackPoint(Cursor cursor) {
-        Location location = new SensorDataSetLocation("");
+        Location location = new TrackPoint("");
         fillTrackPoint(cursor, new CachedTrackPointsIndexes(cursor), location);
         return location;
     }
@@ -994,8 +994,8 @@ public class ContentProviderUtils {
         }
 
         //SensorData
-        if (location instanceof SensorDataSetLocation) {
-            SensorDataSetLocation sensorDataSetLocation = (SensorDataSetLocation) location;
+        if (location instanceof TrackPoint) {
+            TrackPoint sensorDataSetLocation = (TrackPoint) location;
             SensorDataSet sensorDataSet = sensorDataSetLocation.getSensorDataSet();
             if (sensorDataSet != null && sensorDataSet.hasHeartRate()) {
                 values.put(TrackPointsColumns.SENSOR_HEARTRATE, sensorDataSetLocation.getSensorDataSet().getHeartRate());
@@ -1041,8 +1041,8 @@ public class ContentProviderUtils {
         if (!cursor.isNull(indexes.bearingIndex)) {
             location.setBearing(cursor.getFloat(indexes.bearingIndex));
         }
-        if (location instanceof SensorDataSetLocation) {
-            SensorDataSetLocation sensorDataSetLocation = (SensorDataSetLocation) location;
+        if (location instanceof TrackPoint) {
+            TrackPoint sensorDataSetLocation = (TrackPoint) location;
 
             float heartRate = cursor.isNull(indexes.sensorHeartRateIndex) ? SensorDataSet.DATA_UNAVAILABLE : cursor.getFloat(indexes.sensorHeartRateIndex);
             float cadence = cursor.isNull(indexes.sensorCadenceIndex) ? SensorDataSet.DATA_UNAVAILABLE : cursor.getFloat(indexes.sensorCadenceIndex);

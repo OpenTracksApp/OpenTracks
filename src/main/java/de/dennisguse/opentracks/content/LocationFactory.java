@@ -4,7 +4,7 @@ import android.location.Location;
 import android.location.LocationManager;
 
 /**
- * Creates a new {@link SensorDataSetLocation}.
+ * Creates a new {@link TrackPoint}.
  * An implementation can create new instances or reuse existing instances for optimization.
  */
 public class LocationFactory {
@@ -15,6 +15,6 @@ public class LocationFactory {
     public static LocationFactory DEFAULT_LOCATION_FACTORY = new LocationFactory();
 
     public Location createLocation() {
-        return new SensorDataSetLocation(LocationManager.GPS_PROVIDER);
+        return new TrackPoint(LocationManager.GPS_PROVIDER);
     }
 }

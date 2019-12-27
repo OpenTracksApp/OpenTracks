@@ -24,16 +24,16 @@ import de.dennisguse.opentracks.content.sensor.SensorDataSet;
  *
  * @author Sandor Dornbush
  */
-public class SensorDataSetLocation extends Location {
+public class TrackPoint extends Location {
 
     private SensorDataSet sensorDataSet = null;
 
-    public SensorDataSetLocation(Location location, SensorDataSet sensorDataSet) {
+    public TrackPoint(Location location, SensorDataSet sensorDataSet) {
         super(location);
         this.sensorDataSet = sensorDataSet;
     }
 
-    public SensorDataSetLocation(String provider) {
+    public TrackPoint(String provider) {
         super(provider);
     }
 

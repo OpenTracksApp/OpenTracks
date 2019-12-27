@@ -18,7 +18,7 @@ package de.dennisguse.opentracks;
 
 import android.location.Location;
 
-import de.dennisguse.opentracks.content.SensorDataSetLocation;
+import de.dennisguse.opentracks.content.TrackPoint;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 
@@ -60,16 +60,16 @@ public class TrackStubUtils {
      *
      * @return a track stub.
      */
-    public static SensorDataSetLocation createSensorDataSetLocation() {
+    public static TrackPoint createSensorDataSetLocation() {
         return createSensorDataSetLocation(INITIAL_LATITUDE, INITIAL_LONGITUDE, INITIAL_ALTITUDE);
     }
 
     /**
-     * Creates a {@link SensorDataSetLocation} stub with specified values.
+     * Creates a {@link TrackPoint} stub with specified values.
      *
      * @return a SensorDataSetLocation stub.
      */
-    private static SensorDataSetLocation createSensorDataSetLocation(double latitude, double longitude, double altitude) {
+    private static TrackPoint createSensorDataSetLocation(double latitude, double longitude, double altitude) {
         // Initial Location
         Location loc = new Location(LOCATION_PROVIDER);
         loc.setLatitude(latitude);
@@ -81,6 +81,6 @@ public class TrackStubUtils {
         loc.setBearing(INITIAL_BEARING);
         SensorDataSet sd = new SensorDataSet(Float.NaN, Float.NaN);
 
-        return new SensorDataSetLocation(loc, sd);
+        return new TrackPoint(loc, sd);
     }
 }

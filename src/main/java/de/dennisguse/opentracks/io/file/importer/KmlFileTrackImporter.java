@@ -29,7 +29,7 @@ import org.xml.sax.SAXException;
 import java.util.ArrayList;
 
 import de.dennisguse.opentracks.content.ContentProviderUtils;
-import de.dennisguse.opentracks.content.SensorDataSetLocation;
+import de.dennisguse.opentracks.content.TrackPoint;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.io.file.exporter.KmlTrackWriter;
 
@@ -248,7 +248,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
             if (!hasSensorData) {
                 insertTrackPoint(location);
             } else {
-                SensorDataSetLocation sensorDataSetLocation = new SensorDataSetLocation(location, new SensorDataSet(heartrate, cadence, power, SensorDataSet.DATA_UNAVAILABLE, location.getTime()));
+                TrackPoint sensorDataSetLocation = new TrackPoint(location, new SensorDataSet(heartrate, cadence, power, SensorDataSet.DATA_UNAVAILABLE, location.getTime()));
                 insertTrackPoint(sensorDataSetLocation);
             }
         }

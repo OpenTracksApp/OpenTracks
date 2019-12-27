@@ -28,7 +28,7 @@ import java.util.List;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.DescriptionGenerator;
-import de.dennisguse.opentracks.content.SensorDataSetLocation;
+import de.dennisguse.opentracks.content.TrackPoint;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
@@ -264,8 +264,8 @@ public class KmlTrackWriter implements TrackWriter {
 
             printWriter.println("<gx:coord>" + getCoordinates(location, " ") + "</gx:coord>");
 
-            if (exportSensorData && location instanceof SensorDataSetLocation) {
-                SensorDataSet sensorDataSet = ((SensorDataSetLocation) location).getSensorDataSet();
+            if (exportSensorData && location instanceof TrackPoint) {
+                SensorDataSet sensorDataSet = ((TrackPoint) location).getSensorDataSet();
                 if (sensorDataSet != null) {
                     if (sensorDataSet.hasHeartRate()) {
                         heartRateList.add(sensorDataSet.getHeartRate());

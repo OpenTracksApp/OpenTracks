@@ -36,10 +36,10 @@ import java.util.List;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackDetailActivity;
 import de.dennisguse.opentracks.chart.ChartView;
-import de.dennisguse.opentracks.content.SensorDataSetLocation;
 import de.dennisguse.opentracks.content.TrackDataHub;
 import de.dennisguse.opentracks.content.TrackDataListener;
 import de.dennisguse.opentracks.content.TrackDataType;
+import de.dennisguse.opentracks.content.TrackPoint;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
@@ -424,8 +424,8 @@ public abstract class ChartFragment extends Fragment implements TrackDataListene
         double heartRate = Double.NaN;
         double cadence = Double.NaN;
         double power = Double.NaN;
-        if (location instanceof SensorDataSetLocation && ((SensorDataSetLocation) location).getSensorDataSet() != null) {
-            SensorDataSet sensorDataSet = ((SensorDataSetLocation) location).getSensorDataSet();
+        if (location instanceof TrackPoint && ((TrackPoint) location).getSensorDataSet() != null) {
+            SensorDataSet sensorDataSet = ((TrackPoint) location).getSensorDataSet();
             if (sensorDataSet.hasHeartRate()) {
                 heartRate = sensorDataSet.getHeartRate();
             }

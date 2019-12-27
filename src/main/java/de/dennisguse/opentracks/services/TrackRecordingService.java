@@ -46,7 +46,7 @@ import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.CustomContentProvider;
 import de.dennisguse.opentracks.content.LocationFactory;
 import de.dennisguse.opentracks.content.LocationIterator;
-import de.dennisguse.opentracks.content.SensorDataSetLocation;
+import de.dennisguse.opentracks.content.TrackPoint;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
@@ -612,7 +612,7 @@ public class TrackRecordingService extends Service {
 
             SensorDataSet sensorDataSet = getSensorDataSet();
             if (sensorDataSet != null) {
-                location = new SensorDataSetLocation(location, sensorDataSet);
+                location = new TrackPoint(location, sensorDataSet);
             }
 
             // Always insert the first segment location
