@@ -665,32 +665,6 @@ public class CustomContentProviderUtilsTest {
     }
 
     /**
-     * Tests the method {@link ContentProviderUtils#getFirstTrackPointId(long)}.
-     */
-    @Test
-    public void testGetFirstTrackPointId() {
-        // Insert track, point at first.
-        long trackId = System.currentTimeMillis();
-        Track track = TestDataUtil.getTrack(trackId, 10);
-        insertTrackWithLocations(track);
-
-        Assert.assertNotEquals(-1L, contentProviderUtils.getFirstTrackPointId(trackId));
-    }
-
-    /**
-     * Tests the method {@link ContentProviderUtils#getLastTrackPointId(long)}.
-     */
-    @Test
-    public void testGetLastTrackPointId() {
-        // Insert track, point at first.
-        long trackId = System.currentTimeMillis();
-        Track track = TestDataUtil.getTrack(trackId, 10);
-        insertTrackWithLocations(track);
-
-        Assert.assertTrue(contentProviderUtils.getFirstTrackPointId(trackId) < contentProviderUtils.getLastTrackPointId(trackId));
-    }
-
-    /**
      * Tests the method {@link ContentProviderUtils#getLastValidTrackPoint(long)}.
      */
     @Test

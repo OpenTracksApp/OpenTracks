@@ -208,8 +208,6 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
 
         // For the following, use StubReturn since we don't care whether they are invoked or not.
         when(contentProviderUtils.bulkInsertTrackPoint((Location[]) any(), anyInt(), anyLong())).thenReturn(1);
-        when(contentProviderUtils.getFirstTrackPointId(TRACK_ID_0)).thenReturn(TRACK_POINT_ID_0);
-        when(contentProviderUtils.getLastTrackPointId(TRACK_ID_0)).thenReturn(TRACK_POINT_ID_0);
         when(contentProviderUtils.getTrack(PreferencesUtils.getRecordingTrackId(context))).thenReturn(null);
         contentProviderUtils.deleteTrack(context, TRACK_ID_0);
 
