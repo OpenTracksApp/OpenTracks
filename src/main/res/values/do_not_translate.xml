@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
-    <string name="app_web_url" translatable="false">https://github.com/dennisguse/opentracks</string>
+    <string name="app_web_url" translatable="false">https://github.com/OpenTracksApp/OpenTracks</string>
 
     <!-- List here all used libraries (will be shown in the about activity -->
     <string name="third_party_libraries" translatable="false">
