@@ -228,6 +228,7 @@ public class ContentProviderUtils {
      * @param dir the directory
      */
     private void deleteDirectoryRecurse(Context context, File dir) {
+        // TODO Does not work with
         if (FileUtils.isDirectory(dir)) {
             for (File child : dir.listFiles()) {
                 deleteDirectoryRecurse(context, child);

@@ -16,20 +16,19 @@
 
 package de.dennisguse.opentracks.io.file.importer;
 
-import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.pm.PackageManager;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
+import androidx.annotation.Nullable;
+import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.FragmentActivity;
-
-import java.io.File;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.fragments.FileTypeDialogFragment;
@@ -38,8 +37,7 @@ import de.dennisguse.opentracks.util.DialogUtils;
 import de.dennisguse.opentracks.util.FileUtils;
 
 /**
- * An activity to import files from the external storage. Optionally to import
- * one specific file.
+ * An activity to import files from the external storage.
  *
  * @author Rodrigo Damazio
  */
@@ -50,39 +48,45 @@ public class ImportActivity extends FragmentActivity implements FileTypeDialogFr
     private static final int DIALOG_PROGRESS_ID = 0;
     private static final int DIALOG_RESULT_ID = 1;
 
+    private String directoryDisplayName;
+
     private ImportAsyncTask importAsyncTask;
     private ProgressDialog progressDialog;
 
-    // the path on the external storage to import
-    private String directoryDisplayName;
-
     private int importedTrackCount;
-
     private int totalTrackCount;
+
+    private Uri directoryUri;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (!FileUtils.isExternalStorageWriteable() || ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
-        } else {
-            fileTypeDialogStart();
-        }
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        startActivityForResult(intent, EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent resultData) {
+        super.onActivityResult(requestCode, resultCode, resultData);
         if (requestCode == EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                Toast.makeText(this, R.string.external_storage_not_readable, Toast.LENGTH_LONG).show();
-            } else {
+            if (resultCode == Activity.RESULT_OK) {
+//                final int takeFlags = resultData.getFlags()
+//                        & (Intent.FLAG_GRANT_READ_URI_PERMISSION
+//                        | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+//// Check for the freshest data.
+//                getContentResolver().takePersistableUriPermission(uri, takeFlags);
+                directoryUri = resultData.getData();
                 fileTypeDialogStart();
+            } else {
+                Toast.makeText(this, R.string.external_storage_not_writable, Toast.LENGTH_LONG).show();
+                finish();
             }
-            return;
         }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
+
 
     private void fileTypeDialogStart() {
         FileTypeDialogFragment.showDialog(getSupportFragmentManager(), R.string.import_selection_title, R.string.import_selection_option);
@@ -90,30 +94,12 @@ public class ImportActivity extends FragmentActivity implements FileTypeDialogFr
 
     @Override
     public void onFileTypeDone(TrackFileFormat trackFileFormat) {
-        if (!FileUtils.isExternalStorageAvailable()) {
-            Toast.makeText(this, R.string.external_storage_not_available, Toast.LENGTH_LONG).show();
-            finish();
-            return;
-        }
+        DocumentFile pickedDirectory = DocumentFile.fromTreeUri(this, directoryUri);
 
         directoryDisplayName = FileUtils.getPathDisplayName(trackFileFormat.getExtension());
-        String directoryPath = FileUtils.getPath(trackFileFormat.getExtension());
-        if (!FileUtils.isDirectory(new File(directoryPath))) {
-            Toast.makeText(this, getString(R.string.import_no_directory, directoryDisplayName), Toast.LENGTH_LONG)
-                    .show();
-            finish();
-            return;
-        }
 
-        //TODO (still needed?): getLastNonConfiguration instance returned ExportAsyncTask before
-//        Object retained = getLastNonConfigurationInstance();
-//        if (retained instanceof ImportAsyncTask) {
-//            importAsyncTask = (ImportAsyncTask) retained;
-//            importAsyncTask.setActivity(this);
-//        } else {
-        importAsyncTask = new ImportAsyncTask(this, trackFileFormat, directoryPath);
+        importAsyncTask = new ImportAsyncTask(this, trackFileFormat, pickedDirectory);
         importAsyncTask.execute();
-//        }
     }
 
     @Override
@@ -154,8 +140,7 @@ public class ImportActivity extends FragmentActivity implements FileTypeDialogFr
                 } else {
                     iconId = R.drawable.ic_dialog_error_24dp;
                     titleId = R.string.generic_error_title;
-                    message = getString(
-                            R.string.import_error, importedTrackCount, totalFiles, directoryDisplayName);
+                    message = getString(R.string.import_error, importedTrackCount, totalFiles, directoryDisplayName);
                 }
                 return new AlertDialog.Builder(this).setCancelable(true).setIcon(iconId)
                         .setMessage(message).setOnCancelListener(new DialogInterface.OnCancelListener() {

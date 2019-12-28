@@ -22,9 +22,10 @@ import android.os.AsyncTask;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
 
-import java.io.File;
-import java.io.FileInputStream;
+import androidx.documentfile.provider.DocumentFile;
+
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
     private static final String TAG = ImportAsyncTask.class.getSimpleName();
     private final TrackFileFormat trackFileFormat;
-    private final String path;
+    private final DocumentFile directory;
     // TODO Can be removed, or?
     private Context context;
     // TODO Use weak reference
@@ -66,12 +67,12 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
      *
      * @param importActivity  the activity currently associated with this AsyncTask
      * @param trackFileFormat the track file format
-     * @param path            path to import GPX files
+     * @param directory            path to import GPX files
      */
-    public ImportAsyncTask(ImportActivity importActivity, TrackFileFormat trackFileFormat, String path) {
+    public ImportAsyncTask(ImportActivity importActivity, TrackFileFormat trackFileFormat, DocumentFile directory) {
         this.importActivity = importActivity;
         this.trackFileFormat = trackFileFormat;
-        this.path = path;
+        this.directory = directory;
         context = importActivity.getApplicationContext();
 
         completed = false;
@@ -99,39 +100,26 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         }
     }
 
-    @Override
-    protected Boolean doInBackground(Void... params) {
-        try {
-            Thread.currentThread().setPriority(Thread.MAX_PRIORITY); // TODO Should be set to previous level at the end of this method.
-            // Get the wake lock if not recording or paused
-            boolean isRecording = PreferencesUtils.isRecording(importActivity);
-            boolean isPaused = PreferencesUtils.isRecordingTrackPaused(importActivity);
-            if (!isRecording || isPaused) {
-                wakeLock = SystemUtils.acquireWakeLock(importActivity, wakeLock);
-            }
+    /**
+     * Gets a list of files.
+     * If importAll is true, returns a list of the files under the path directory.
+     * If importAll is false, returns a list containing just the path file.
+     */
+    private static List<DocumentFile> getFiles(DocumentFile file, TrackFileFormat trackFileFormat) {
+        List<DocumentFile> files = new ArrayList<>();
 
-            List<File> files = getFiles();
-            totalTrackCount = files.size();
-            if (totalTrackCount == 0) {
-                return true;
-            }
-
-            for (int i = 0; i < totalTrackCount; i++) {
-                if (isCancelled()) {
-                    // If cancelled, return true to show the number of files imported
-                    return true;
+        for (DocumentFile candidate : file.listFiles()) {
+            if (!candidate.isDirectory()) {
+                String extension = FileUtils.getExtension(candidate.getName());
+                if (trackFileFormat.getExtension().equals(extension)) {
+                    files.add(candidate);
                 }
-                if (importFile(files.get(i))) {
-                    importTrackCount++;
-                }
-                publishProgress(i + 1, totalTrackCount);
-            }
-            return true;
-        } finally {
-            if (wakeLock != null && wakeLock.isHeld()) {
-                wakeLock.release();
+            } else {
+                files.addAll(getFiles(candidate, trackFileFormat));
             }
         }
+
+        return files;
     }
 
     @Override
@@ -159,16 +147,49 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         }
     }
 
+    @Override
+    protected Boolean doInBackground(Void... params) {
+        try {
+            Thread.currentThread().setPriority(Thread.MAX_PRIORITY); // TODO Should be set to previous level at the end of this method.
+            // Get the wake lock if not recording or paused
+            boolean isRecording = PreferencesUtils.isRecording(importActivity);
+            boolean isPaused = PreferencesUtils.isRecordingTrackPaused(importActivity);
+            if (!isRecording || isPaused) {
+                wakeLock = SystemUtils.acquireWakeLock(importActivity, wakeLock);
+            }
+
+            List<DocumentFile> files = getFiles(directory, trackFileFormat);
+            totalTrackCount = files.size();
+
+            for (int i = 0; i < totalTrackCount; i++) {
+                if (isCancelled()) {
+                    // If cancelled, return true to show the number of files imported
+                    return true;
+                }
+                if (importFile(files.get(i))) {
+                    importTrackCount++;
+                }
+                publishProgress(i + 1, totalTrackCount);
+            }
+            return true;
+        } finally {
+            if (wakeLock != null && wakeLock.isHeld()) {
+                wakeLock.release();
+            }
+        }
+    }
+
     /**
      * Imports a file.
      *
      * @param file the file
      */
-    private boolean importFile(final File file) {
+    private boolean importFile(final DocumentFile file) {
         TrackImporter trackImporter;
         if (trackFileFormat == TrackFileFormat.GPX) {
             trackImporter = new GpxFileTrackImporter(importActivity);
-        } else { //KML or KMZ
+        } else {
+            //KML or KMZ
             String extension = FileUtils.getExtension(file.getName());
             if (TrackFileFormat.KML_ONLY_TRACK.getExtension().equals(extension)) {
                 trackImporter = new KmlFileTrackImporter(importActivity, -1L);
@@ -181,37 +202,12 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
             }
         }
 
-        try (FileInputStream fileInputStream = new FileInputStream(file)) {
-            trackId = trackImporter.importFile(fileInputStream);
+        try (InputStream inputStream = context.getContentResolver().openInputStream(file.getUri())) {
+            trackId = trackImporter.importFile(inputStream);
             return trackId != -1L;
         } catch (IOException e) {
             Log.e(TAG, "Unable to import file", e);
             return false;
         }
-    }
-
-    /**
-     * Gets a list of files.
-     * If importAll is true, returns a list of the files under the path directory.
-     * If importAll is false, returns a list containing just the path file.
-     */
-    private List<File> getFiles() {
-        List<File> files = new ArrayList<>();
-        File file = new File(path);
-
-        File[] candidates = file.listFiles();
-        if (candidates == null) {
-            return files;
-        }
-        for (File candidate : candidates) {
-            if (!FileUtils.isDirectory(candidate)) {
-                String extension = FileUtils.getExtension(candidate.getName());
-                if (trackFileFormat.getExtension().equals(extension)) {
-                    files.add(candidate);
-                }
-            }
-        }
-
-        return files;
     }
 }

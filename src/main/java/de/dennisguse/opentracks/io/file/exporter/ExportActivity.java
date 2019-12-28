@@ -16,20 +16,19 @@
 
 package de.dennisguse.opentracks.io.file.exporter;
 
-import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.pm.PackageManager;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
+import androidx.annotation.Nullable;
+import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.FragmentActivity;
-
-import java.io.File;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.fragments.FileTypeDialogFragment;
@@ -39,7 +38,6 @@ import de.dennisguse.opentracks.util.FileUtils;
 
 /**
  * An activity for saving tracks to the external storage.
- * If saving a specific track, option to save it to a temp directory and play the track afterward.
  *
  * @author Rodrigo Damazio
  */
@@ -53,34 +51,39 @@ public class ExportActivity extends FragmentActivity implements FileTypeDialogFr
     private String directoryDisplayName;
 
     private ExportAsyncTask exportAsyncTask;
-
     private ProgressDialog progressDialog;
 
     private int processedTrackCount;
     private int totalTrackCount;
 
+    private Uri directoryUri;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
-        if (!FileUtils.isExternalStorageWriteable() || ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
-        } else {
-            fileTypeDialogStart();
-        }
+        startActivityForResult(intent, EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent resultData) {
+        super.onActivityResult(requestCode, resultCode, resultData);
         if (requestCode == EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                Toast.makeText(this, R.string.external_storage_not_writable, Toast.LENGTH_LONG).show();
-            } else {
+            if (resultCode == Activity.RESULT_OK) {
+//                final int takeFlags = resultData.getFlags()
+//                        & (Intent.FLAG_GRANT_READ_URI_PERMISSION
+//                        | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+//// Check for the freshest data.
+//                getContentResolver().takePersistableUriPermission(uri, takeFlags);
+                directoryUri = resultData.getData();
                 fileTypeDialogStart();
+            } else {
+                Toast.makeText(this, R.string.external_storage_not_writable, Toast.LENGTH_LONG).show();
+                finish();
             }
-            return;
         }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     private void fileTypeDialogStart() {
@@ -89,21 +92,14 @@ public class ExportActivity extends FragmentActivity implements FileTypeDialogFr
 
     @Override
     public void onFileTypeDone(TrackFileFormat trackFileFormat) {
-        if (!FileUtils.isExternalStorageWriteable()) {
-            Toast.makeText(this, R.string.external_storage_not_writable, Toast.LENGTH_LONG).show();
-            finish();
-            return;
-        }
-
-        File directory = new File(FileUtils.getPath(trackFileFormat.getExtension()));
-        if (!FileUtils.ensureDirectoryExists(directory)) {
-            Toast.makeText(this, R.string.external_storage_not_writable, Toast.LENGTH_LONG).show();
-            finish();
-            return;
+        DocumentFile pickedDirectory = DocumentFile.fromTreeUri(this, directoryUri);
+        DocumentFile exportDirectory = pickedDirectory.findFile(FileUtils.SDCARD_TOP_DIR);
+        if (exportDirectory == null) {
+            exportDirectory = pickedDirectory.createDirectory(FileUtils.SDCARD_TOP_DIR);
         }
 
         directoryDisplayName = FileUtils.getPathDisplayName(trackFileFormat.getExtension());
-        exportAsyncTask = new ExportAsyncTask(this, trackFileFormat, directory);
+        exportAsyncTask = new ExportAsyncTask(this, trackFileFormat, exportDirectory);
         exportAsyncTask.execute();
     }
 

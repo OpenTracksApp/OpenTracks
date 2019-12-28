@@ -39,7 +39,7 @@ public class FileUtils {
     /**
      * Our external storage directory.
      */
-    static final String SDCARD_TOP_DIR = "OpenTracks";
+    public static final String SDCARD_TOP_DIR = "OpenTracks"; // TODO RENAME
     private static final String TRACK_PREFIX = "OpenTracks";
     /**
      * The maximum FAT32 path length. See the FAT32 spec at
@@ -55,15 +55,6 @@ public class FileUtils {
     }
 
     /**
-     * Returns true if the external storage is available.
-     */
-    public static boolean isExternalStorageAvailable() {
-        String state = Environment.getExternalStorageState();
-        return Environment.MEDIA_MOUNTED.equals(state)
-                || Environment.MEDIA_MOUNTED_READ_ONLY.equals(state);
-    }
-
-    /**
      * Returns true if the external storage is writable.
      */
     public static boolean isExternalStorageWriteable() {
@@ -76,6 +67,7 @@ public class FileUtils {
      *
      * @param dir the directory
      */
+    @Deprecated // TODO REMOVE" rewrite all locations this was used.
     public static boolean isDirectory(File dir) {
         return dir.exists() && dir.isDirectory();
     }
@@ -86,6 +78,7 @@ public class FileUtils {
      * @return whether the directory exists (either already existed or was
      * successfully created)
      */
+    @Deprecated // TODO REMOVE" rewrite all locations this was used.
     public static boolean ensureDirectoryExists(File dir) {
         if (isDirectory(dir)) {
             return true;
@@ -93,10 +86,12 @@ public class FileUtils {
         return dir.mkdirs();
     }
 
+    @Deprecated // TODO REMOVE" rewrite all locations this was used.
     public static File getPhotoDir() {
         return new File(getPath(PICTURES_DIR));
     }
 
+    @Deprecated // TODO REMOVE" rewrite all locations this was used.
     public static File getPhotoDir(long trackId) {
         return new File(getPath(PICTURES_DIR, TRACK_PREFIX + trackId));
     }
@@ -122,6 +117,7 @@ public class FileUtils {
      *
      * @param components the components
      */
+    @Deprecated // TODO REMOVE" rewrite all locations this was used.
     public static String getPath(String... components) {
         return Environment.getExternalStorageDirectory() + getPathDisplayName(components);
     }

@@ -22,16 +22,16 @@ import android.os.AsyncTask;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
 
-import java.io.File;
+import androidx.documentfile.provider.DocumentFile;
+
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
-import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.SystemUtils;
 
@@ -45,7 +45,7 @@ public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
     private static final String TAG = ExportAsyncTask.class.getSimpleName();
     private final TrackFileFormat trackFileFormat;
-    private final File directory;
+    private final DocumentFile directory;
     private final Context context;
     private final ContentProviderUtils contentProviderUtils;
     private ExportActivity exportActivity;
@@ -63,7 +63,7 @@ public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
      * @param trackFileFormat the track file format
      * @param directory       the directory to write the file
      */
-    public ExportAsyncTask(ExportActivity exportActivity, TrackFileFormat trackFileFormat, File directory) {
+    public ExportAsyncTask(ExportActivity exportActivity, TrackFileFormat trackFileFormat, DocumentFile directory) {
         this.exportActivity = exportActivity;
         this.trackFileFormat = trackFileFormat;
         this.directory = directory;
@@ -156,13 +156,13 @@ public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         };
 
         TrackExporter trackExporter = trackFileFormat.newTrackExporter(context, tracks, trackExporterListener);
-
         Track track = tracks[0];
-        String fileName = FileUtils.buildUniqueFileName(directory, track.getName(), trackFileFormat.getExtension());
-        File file = new File(directory, fileName);
 
-        try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
-            if (trackExporter.writeTrack(context, fileOutputStream)) {
+        String fileName = track.getId() + "." + trackFileFormat.getExtension();
+        DocumentFile file = directory.createFile(trackFileFormat.getMimeType(), fileName);
+
+        try (OutputStream outputStream = context.getContentResolver().openOutputStream(file.getUri())) {
+            if (trackExporter.writeTrack(context, outputStream)) {
                 return true;
             } else {
                 if (!file.delete()) {

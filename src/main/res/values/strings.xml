@@ -805,8 +805,7 @@ limitations under the License.
       dialog when there is no files to import.
 
       %1$s the directory. E.g., '/kml'.">
-    There were no files to import. Connect your device to your computer and place the files to
-    import in %1$s.
+    There were no files to import. Connect your device to your computer and place the files to import in %1$s.
   </string>
     <string name="import_no_file_title" translation_description="When importing from the external storage, the title in the result
       dialog when there is no files to import.">
