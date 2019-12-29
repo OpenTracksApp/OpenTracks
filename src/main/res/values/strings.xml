@@ -165,7 +165,7 @@ At the moment, the recorded locations as well as the timestamps are send to an A
     <string name="description_track_point">Point</string>
     <string name="description_track_segment">Segment</string>
     <!-- Export -->
-    <string name="export_all_option">All as %1$s to %2$s</string>
+    <string name="export_all_option">All as %1$s</string>
     <string name="export_all_title">Export to external storage</string>
     <string name="export_external_storage">External storage</string>
     <string name="export_external_storage_error">Exported %1$d of %2$s to %3$s</string>

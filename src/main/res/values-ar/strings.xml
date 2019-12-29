@@ -100,7 +100,7 @@
     <string name="description_total_time">الوقت الإجمالي: %1$s</string>
     <string name="description_track_point">نقطة</string>
     <string name="description_track_segment">جزء</string>
-    <string name="export_all_option">الكل كـ ‏%1$s‏ إلى‏ %2$s</string>
+    <string name="export_all_option">الكل كـ ‏%1$s‏</string>
     <string name="export_all_title">تصدير إلى وحدة التخزين الخارجية</string>
     <string name="export_external_storage">وحدة التخزين الخارجية</string>
     <string name="export_external_storage_error">تم تصدير %1$d‏ من %2$s‏ إلى %3$s</string>

@@ -100,7 +100,7 @@
     <string name="description_total_time">Celkový čas: %1$s</string>
     <string name="description_track_point">Bod</string>
     <string name="description_track_segment">Segment</string>
-    <string name="export_all_option">Všetky vo formáte %1$s do adresára %2$s</string>
+    <string name="export_all_option">Všetky vo formáte %1$s</string>
     <string name="export_all_title">Exportovať do externého úložiska</string>
     <string name="export_external_storage">Externé úložisko</string>
     <string name="export_external_storage_error">Do adresára %3$s bol exportovaný nasledujúci počet trás: %1$d z %2$s</string>

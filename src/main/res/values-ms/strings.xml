@@ -100,7 +100,7 @@
     <string name="description_total_time">Jumlah masa: %1$s</string>
     <string name="description_track_point">Titik</string>
     <string name="description_track_segment">Segmen</string>
-    <string name="export_all_option">Semua sebagai %1$s ke %2$s</string>
+    <string name="export_all_option">Semua sebagai %1$s</string>
     <string name="export_all_title">Eksport ke storan luaran</string>
     <string name="export_external_storage">Storan luaran</string>
     <string name="export_external_storage_error">%1$d daripada %2$s dieksport ke %3$s</string>

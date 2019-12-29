@@ -100,7 +100,7 @@
     <string name="description_total_time">Tổng thời gian: %1$s</string>
     <string name="description_track_point">Điểm</string>
     <string name="description_track_segment">Đoạn đường</string>
-    <string name="export_all_option">Tất cả dưới dạng %1$s sang %2$s</string>
+    <string name="export_all_option">Tất cả dưới dạng %1$s</string>
     <string name="export_all_title">Xuất sang bộ nhớ ngoài</string>
     <string name="export_external_storage">Bộ nhớ ngoài</string>
     <string name="export_external_storage_error">Đã xuất %1$d / %2$s sang %3$s</string>

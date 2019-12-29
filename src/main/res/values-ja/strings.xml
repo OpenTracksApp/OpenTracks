@@ -100,7 +100,7 @@
     <string name="description_total_time">合計時間： %1$s</string>
     <string name="description_track_point">地点</string>
     <string name="description_track_segment">セグメント</string>
-    <string name="export_all_option">すべてを%1$s形式で%2$sへ</string>
+    <string name="export_all_option">すべてを%1$s形式で</string>
     <string name="export_all_title">外部ストレージにエクスポート</string>
     <string name="export_external_storage">外部ストレージ</string>
     <string name="export_external_storage_error">%2$s中%1$d件を「%3$s」にエクスポートしました</string>

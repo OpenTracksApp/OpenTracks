@@ -100,7 +100,7 @@
     <string name="description_total_time">Total tid: %1$s</string>
     <string name="description_track_point">Punkt</string>
     <string name="description_track_segment">Sträcka</string>
-    <string name="export_all_option">Alla som %1$s till %2$s</string>
+    <string name="export_all_option">Alla som %1$s</string>
     <string name="export_all_title">Exportera till extern lagringsenhet</string>
     <string name="export_external_storage">Extern lagringsenhet</string>
     <string name="export_external_storage_error">Exporterade %1$d av %2$s till %3$s</string>

@@ -100,7 +100,7 @@
     <string name="description_total_time">Укупно време: %1$s</string>
     <string name="description_track_point">Тачка</string>
     <string name="description_track_segment">Сегмент</string>
-    <string name="export_all_option">Све као %1$s у %2$s</string>
+    <string name="export_all_option">Све као %1$s</string>
     <string name="export_all_title">Извоз у спољну меморију</string>
     <string name="export_external_storage">Спољна меморија</string>
     <string name="export_external_storage_error">Датотеке (%1$d од %2$s) су извезене у %3$s</string>

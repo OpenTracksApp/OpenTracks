@@ -100,7 +100,7 @@
     <string name="description_total_time">Koguaeg: %1$s</string>
     <string name="description_track_point">Punkt</string>
     <string name="description_track_segment">Lõik</string>
-    <string name="export_all_option">Kõik %1$s-failina kataloogi %2$s</string>
+    <string name="export_all_option">Kõik %1$s-failina</string>
     <string name="export_all_title">Ekspordi välismällu</string>
     <string name="export_external_storage">Välismälu</string>
     <string name="export_external_storage_error">Eksporditud %1$d faili %2$s-st kataloogi %3$s</string>

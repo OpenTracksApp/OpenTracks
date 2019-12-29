@@ -100,7 +100,7 @@
     <string name="description_total_time">Kabuuang oras: %1$s</string>
     <string name="description_track_point">Punto</string>
     <string name="description_track_segment">Segment</string>
-    <string name="export_all_option">Lahat bilang %1$s patungo sa %2$s</string>
+    <string name="export_all_option">Lahat bilang %1$s</string>
     <string name="export_all_title">I-export sa external storage</string>
     <string name="export_external_storage">External storage</string>
     <string name="export_external_storage_error">In-export ang %1$d ng %2$s patungo sa %3$s.</string>

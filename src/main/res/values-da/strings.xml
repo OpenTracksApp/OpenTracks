@@ -100,7 +100,7 @@
     <string name="description_total_time">Samlet tid: %1$s</string>
     <string name="description_track_point">Punkt</string>
     <string name="description_track_segment">Segment</string>
-    <string name="export_all_option">Alle som %1$s til %2$s</string>
+    <string name="export_all_option">Alle som %1$s</string>
     <string name="export_all_title">Eksportér til eksternt lager</string>
     <string name="export_external_storage">Eksternt lager</string>
     <string name="export_external_storage_error">%1$d af %2$s blev eksporteret til %3$s</string>

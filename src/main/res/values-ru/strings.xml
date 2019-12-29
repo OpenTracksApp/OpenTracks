@@ -100,7 +100,7 @@
     <string name="description_total_time">Общее время: %1$s</string>
     <string name="description_track_point">Точка</string>
     <string name="description_track_segment">Сегмент</string>
-    <string name="export_all_option">Все как %1$s-файлы в папку %2$s</string>
+    <string name="export_all_option">Все как %1$s-файлы</string>
     <string name="export_all_title">Экспортировать на внешний накопитель</string>
     <string name="export_external_storage">Внешний накопитель</string>
     <string name="export_external_storage_error">Экспортировано: %1$d из %2$s (в %3$s)</string>

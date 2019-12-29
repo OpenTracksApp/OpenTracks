@@ -100,7 +100,7 @@
     <string name="description_total_time">Łączny czas: %1$s</string>
     <string name="description_track_point">Punkt</string>
     <string name="description_track_segment">Segment</string>
-    <string name="export_all_option">Wszystko jako pliki %1$s do folderu %2$s</string>
+    <string name="export_all_option">Wszystko jako pliki %1$s</string>
     <string name="export_all_title">Eksport do pamięci zewnętrznej</string>
     <string name="export_external_storage">Pamięć zewnętrzna</string>
     <string name="export_external_storage_error">Wyeksportowano %1$d z %2$s do folderu %3$s</string>

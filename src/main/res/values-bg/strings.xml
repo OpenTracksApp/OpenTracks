@@ -100,7 +100,7 @@
     <string name="description_total_time">Общо време: %1$s</string>
     <string name="description_track_point">Точка</string>
     <string name="description_track_segment">Сегмент</string>
-    <string name="export_all_option">Всичко като %1$s в/ъв %2$s</string>
+    <string name="export_all_option">Всичко като %1$s</string>
     <string name="export_all_title">Експортиране във външно хранилище</string>
     <string name="export_external_storage">Външно хранилище</string>
     <string name="export_external_storage_error">Експортирахте %1$d от %2$s в/ъв %3$s.</string>

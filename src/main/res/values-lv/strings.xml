@@ -100,7 +100,7 @@
     <string name="description_total_time">Kopējais laiks: %1$s</string>
     <string name="description_track_point">Punkts</string>
     <string name="description_track_segment">Posms</string>
-    <string name="export_all_option">Visus kā %1$s uz %2$s</string>
+    <string name="export_all_option">Visus kā %1$s</string>
     <string name="export_all_title">Eksportēšana uz ārējo krātuvi</string>
     <string name="export_external_storage">Ārējā krātuve</string>
     <string name="export_external_storage_error">Mapē %3$s eksportēts(-i) %1$d maršruts(-i) no %2$s</string>

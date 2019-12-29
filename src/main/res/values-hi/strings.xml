@@ -100,7 +100,7 @@
     <string name="description_total_time">कुल समय: %1$s</string>
     <string name="description_track_point">बिंदु</string>
     <string name="description_track_segment">खंड</string>
-    <string name="export_all_option">%1$s के रूप वाले सभी को %2$s पर</string>
+    <string name="export_all_option">%1$s के रूप वाले सभी को</string>
     <string name="export_all_title">बाह्य संग्रहण पर निर्यात करें</string>
     <string name="export_external_storage">बाह्य संग्रहण</string>
     <string name="export_external_storage_error">%2$s में से %1$d को %3$s पर निर्यात गया</string>

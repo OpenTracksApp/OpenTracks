@@ -100,7 +100,7 @@
     <string name="description_total_time">Denbora, guztira: %1$s</string>
     <string name="description_track_point">Puntua</string>
     <string name="description_track_segment">Segmentua</string>
-    <string name="export_all_option">Guztiak %1$s gisa %2$s karpetara</string>
+    <string name="export_all_option">Guztiak %1$s</string>
     <string name="export_all_title">Esportatu kanpoko biltegira</string>
     <string name="export_external_storage">Kanpoko biltegia</string>
     <string name="export_external_storage_error">%1$d/%2$s esportatu dira %3$s direktoriora</string>

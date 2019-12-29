@@ -100,7 +100,7 @@
     <string name="description_total_time">کل زمان: %1$s</string>
     <string name="description_track_point">نقطه</string>
     <string name="description_track_segment">بخش</string>
-    <string name="export_all_option">همه به عنوان %1$s به %2$s</string>
+    <string name="export_all_option">همه به عنوان %1$s</string>
     <string name="export_all_title">صادر کردن به حافظه خارجی</string>
     <string name="export_external_storage">حافظه خارجی</string>
     <string name="export_external_storage_error">%1$d مسیر از %2$s مسیر به %3$s صادر شد</string>

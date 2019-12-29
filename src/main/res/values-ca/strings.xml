@@ -100,7 +100,7 @@
     <string name="description_total_time">Temps total: %1$s</string>
     <string name="description_track_point">Punt</string>
     <string name="description_track_segment">Segment</string>
-    <string name="export_all_option">Totes com a %1$s a %2$s</string>
+    <string name="export_all_option">Totes com a %1$s</string>
     <string name="export_all_title">Exporta a la unitat d\'emmagatzematge extern</string>
     <string name="export_external_storage">Emmagatzematge extern</string>
     <string name="export_external_storage_error">S\'han exportat %1$d de %2$s a %3$s.</string>

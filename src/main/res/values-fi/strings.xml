@@ -100,7 +100,7 @@
     <string name="description_total_time">Kokonaisaika: %1$s</string>
     <string name="description_track_point">Piste</string>
     <string name="description_track_segment">Segmentti</string>
-    <string name="export_all_option">Kaikki %1$s-tiedostot %2$s-tiedostoina</string>
+    <string name="export_all_option">Kaikki %1$s-tiedostot</string>
     <string name="export_all_title">Vie ulkoiseen tallennustilaan</string>
     <string name="export_external_storage">Ulkoinen tallennustila</string>
     <string name="export_external_storage_error">Viety %1$d/%2$s kohteeseen %3$s</string>

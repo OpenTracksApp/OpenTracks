@@ -100,7 +100,7 @@
     <string name="description_total_time">זמן כולל: %1$s</string>
     <string name="description_track_point">נקודה</string>
     <string name="description_track_segment">קטע</string>
-    <string name="export_all_option">הכל כ-%1$s אל %2$s</string>
+    <string name="export_all_option">הכל כ-%1$s</string>
     <string name="export_all_title">ייצא לאחסון חיצוני</string>
     <string name="export_external_storage">אחסון חיצוני</string>
     <string name="export_external_storage_error">יוצאו %1$d מתוך %2$s אל %3$s</string>

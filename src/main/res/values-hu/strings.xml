@@ -100,7 +100,7 @@
     <string name="description_total_time">Teljes idő: %1$s</string>
     <string name="description_track_point">Pont</string>
     <string name="description_track_segment">Szakasz</string>
-    <string name="export_all_option">Mindent %1$s formátumban ide: %2$s</string>
+    <string name="export_all_option">Mindent %1$s formátumban</string>
     <string name="export_all_title">Exportálás külső tárhelyre</string>
     <string name="export_external_storage">Külső tárhely</string>
     <string name="export_external_storage_error">%1$d/%2$s exportálva ide: %3$s</string>

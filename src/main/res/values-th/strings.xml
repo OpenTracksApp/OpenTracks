@@ -100,7 +100,7 @@
     <string name="description_total_time">เวลาทั้งหมด: %1$s</string>
     <string name="description_track_point">จุด</string>
     <string name="description_track_segment">ส่วน</string>
-    <string name="export_all_option">ทั้งหมดเป็น %1$s ลงใน %2$s</string>
+    <string name="export_all_option">ทั้งหมดเป็น %1$s</string>
     <string name="export_all_title">ส่งออกไปยังที่จัดเก็บข้อมูลภายนอก</string>
     <string name="export_external_storage">ที่จัดเก็บข้อมูลภายนอก</string>
     <string name="export_external_storage_error">ส่งออกแล้ว %1$d จาก %2$s ไปยัง %3$s</string>

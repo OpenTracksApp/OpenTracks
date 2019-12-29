@@ -100,7 +100,7 @@
     <string name="description_total_time">Toplam süre: %1$s</string>
     <string name="description_track_point">Nokta</string>
     <string name="description_track_segment">Segment</string>
-    <string name="export_all_option">Tümünü %1$s biçiminde %2$s dizinine</string>
+    <string name="export_all_option">Tümünü %1$s biçiminde</string>
     <string name="export_all_title">Harici depolama ortamına aktar</string>
     <string name="export_external_storage">Harici depolama ortamı</string>
     <string name="export_external_storage_error">%1$d/%2$s %3$s hedefine dışa aktarıldı</string>

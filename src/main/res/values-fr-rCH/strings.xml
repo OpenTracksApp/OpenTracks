@@ -100,7 +100,7 @@
     <string name="description_total_time">Durée totale : %1$s</string>
     <string name="description_track_point">Point</string>
     <string name="description_track_segment">Segment</string>
-    <string name="export_all_option">Tous les parcours au format %1$s vers le répertoire %2$s</string>
+    <string name="export_all_option">Tous les parcours au format %1$s</string>
     <string name="export_all_title">Exporter vers la mémoire de stockage externe</string>
     <string name="export_external_storage">Mémoire de stockage externe</string>
     <string name="export_external_storage_error">%1$d parcours sur %2$s exporté(s) vers le répertoire %3$s.</string>

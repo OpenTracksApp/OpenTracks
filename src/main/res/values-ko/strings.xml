@@ -100,7 +100,7 @@
     <string name="description_total_time">총 시간: %1$s</string>
     <string name="description_track_point">지점</string>
     <string name="description_track_segment">세그먼트</string>
-    <string name="export_all_option">모두 %1$s 형식으로 %2$s(으)로</string>
+    <string name="export_all_option">모두 %1$s 형식으로</string>
     <string name="export_all_title">외부 저장소로 내보내기</string>
     <string name="export_external_storage">외부 저장소</string>
     <string name="export_external_storage_error">%2$s개 중 %1$d개를 %3$s(으)로 내보냈습니다.</string>

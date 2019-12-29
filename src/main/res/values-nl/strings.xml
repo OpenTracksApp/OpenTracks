@@ -100,7 +100,7 @@
     <string name="description_total_time">Totale tijd: %1$s</string>
     <string name="description_track_point">Punt</string>
     <string name="description_track_segment">Segment</string>
-    <string name="export_all_option">Alles als %1$s naar %2$s</string>
+    <string name="export_all_option">Alles als %1$s</string>
     <string name="export_all_title">Exporteren naar externe opslag</string>
     <string name="export_external_storage">Externe opslag</string>
     <string name="export_external_storage_error">%1$d van %2$s geëxporteerd naar %3$s</string>

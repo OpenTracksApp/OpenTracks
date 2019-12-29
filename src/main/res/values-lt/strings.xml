@@ -100,7 +100,7 @@
     <string name="description_total_time">Visa trukmė: %1$s</string>
     <string name="description_track_point">Taškas</string>
     <string name="description_track_segment">Atkarpa</string>
-    <string name="export_all_option">Visi kaip %1$s į %2$s</string>
+    <string name="export_all_option">Visi kaip %1$s</string>
     <string name="export_all_title">Eksportuoti į išorinę saugyklą</string>
     <string name="export_external_storage">Išorinė saugykla</string>
     <string name="export_external_storage_error">Eksportuota: %1$d iš %2$s į %3$s.</string>

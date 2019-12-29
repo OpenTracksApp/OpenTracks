@@ -100,7 +100,7 @@
     <string name="description_total_time">Timp total: %1$s</string>
     <string name="description_track_point">Punct</string>
     <string name="description_track_segment">Segment</string>
-    <string name="export_all_option">Toate ca %1$s în %2$s</string>
+    <string name="export_all_option">Toate ca %1$s</string>
     <string name="export_all_title">Salvați în stocarea externă</string>
     <string name="export_external_storage">Stocarea externă</string>
     <string name="export_external_storage_error">S-a(u) exportat %1$d din %2$s în %3$s</string>

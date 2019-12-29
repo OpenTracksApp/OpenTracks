@@ -100,7 +100,7 @@
     <string name="description_total_time">总时间：%1$s</string>
     <string name="description_track_point">点</string>
     <string name="description_track_segment">路段</string>
-    <string name="export_all_option">全部以 %1$s 格式导出到 %2$s</string>
+    <string name="export_all_option">全部以 %1$s 格式导</string>
     <string name="export_all_title">导出到外部存储设备</string>
     <string name="export_external_storage">外部存储设备</string>
     <string name="export_external_storage_error">已将%1$d条路线（共%2$s条）导出到%3$s</string>
