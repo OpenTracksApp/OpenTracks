@@ -160,7 +160,7 @@
     <string name="import_no_file">Non hai ficheiros para importar. Conecta o teu dispositivo ao ordenador e coloca os ficheiros para importar en %1$s.</string>
     <string name="import_no_file_title">Importar ficheiros</string>
     <string name="import_progress_message">Importando de %1$s…</string>
-    <string name="import_selection_option">Todos os %1$s de %2$s</string>
+    <string name="import_selection_option">Todos os %1$s</string>
     <string name="import_selection_title">Importar desde almacenamento externo</string>
     <string name="import_success">Importados: %1$s de %2$s</string>
     <string name="marker_add_error">Non se pode inserir un marcador. Non hai sinal de GPS. Téntao de novo.</string>

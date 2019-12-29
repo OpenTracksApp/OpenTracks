@@ -160,7 +160,7 @@
     <string name="import_no_file">Нема датотека за увоз. Повежите уређај са рачунаром и ставите датотеке за увоз у %1$s.</string>
     <string name="import_no_file_title">Увоз датотека</string>
     <string name="import_progress_message">Увоз са %1$s…</string>
-    <string name="import_selection_option">Све %1$s датотеке из %2$s</string>
+    <string name="import_selection_option">Све %1$s датотеке</string>
     <string name="import_selection_title">Увоз из спољне меморије</string>
     <string name="import_success">Датотеке (%1$s) су увезене са %2$s</string>
     <string name="marker_add_error">Није могуће уметнути означивач. Нема GPS сигнала. Покушајте поново.</string>

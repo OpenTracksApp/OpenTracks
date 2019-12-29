@@ -161,7 +161,7 @@
 да се импортират в/ъв %1$s.</string>
     <string name="import_no_file_title">Импортиране на файлове</string>
     <string name="import_progress_message">Импортира се от %1$s…</string>
-    <string name="import_selection_option">Всички %1$s файлове от %2$s</string>
+    <string name="import_selection_option">Всички %1$s файлове</string>
     <string name="import_selection_title">Импортиране от външно хранилище</string>
     <string name="import_success">Импортирахте %1$s от %2$s.</string>
     <string name="marker_add_error">Маркерът не може да се вмъкне. Няма сигнал за GPS. Опитайте отново.</string>

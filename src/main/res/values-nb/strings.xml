@@ -163,7 +163,7 @@
     importeres i %1$s.</string>
     <string name="import_no_file_title">Importer filer</string>
     <string name="import_progress_message">Importerer fra %1$s…</string>
-    <string name="import_selection_option">Alle %1$s fra %2$s</string>
+    <string name="import_selection_option">Alle %1$s</string>
     <string name="import_selection_title">Importer fra ekstern lagringsplass</string>
     <string name="import_success">%1$s ble importert fra %2$s</string>
     <string name="marker_add_error">Kan ikke sette inn markør. Har ikke GPS-signal. Prøv på nytt.</string>

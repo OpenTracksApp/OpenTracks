@@ -160,7 +160,7 @@
     <string name="import_no_file">Ez dago fitxategirik inportatzeko. Konektatu gailua ordenagailura eta ezarri inportatu beharreko fitxategiak %1$s karpetan.</string>
     <string name="import_no_file_title">Inportatu fitxategiak</string>
     <string name="import_progress_message">%1$s direktoriotik inportatzen…</string>
-    <string name="import_selection_option">%2$s karpetako %1$s guztiak</string>
+    <string name="import_selection_option">%1$s guztiak</string>
     <string name="import_selection_title">Inportatu kanpoko memoriatik</string>
     <string name="import_success">%1$s %2$s direktoriotik inportatu da</string>
     <string name="marker_add_error">Ezin da markatzailea txertatu. Ez dago GPS seinalerik. Saiatu berriro.</string>

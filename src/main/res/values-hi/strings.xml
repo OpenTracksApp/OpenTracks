@@ -160,7 +160,7 @@
     <string name="import_no_file">आयात करने के लिए कोई फ़ाइल नहीं थी. अपने उपकरण को अपने कंप्यूटर से कनेक्ट करें और आयात की जाने वाली फ़ाइलों को %1$s में रखें.</string>
     <string name="import_no_file_title">फ़ाइलें आयात करें</string>
     <string name="import_progress_message">%1$s से आयात किया जा रहा है…</string>
-    <string name="import_selection_option">%2$s से सभी %1$s</string>
+    <string name="import_selection_option">सभी %1$s</string>
     <string name="import_selection_title">बाह्य संग्रहण से आयात करें</string>
     <string name="import_success">%2$s से %1$s आयातित</string>
     <string name="marker_add_error">मार्कर नहीं डाल सके. कोई GPS सिग्नल नहीं है. फिर से कोशिश करें.</string>

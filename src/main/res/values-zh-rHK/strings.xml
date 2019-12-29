@@ -163,7 +163,7 @@
     匯入 %1$s 的檔案。</string>
     <string name="import_no_file_title">匯入檔案</string>
     <string name="import_progress_message">正在從 %1$s 匯入檔案…</string>
-    <string name="import_selection_option">%2$s 中所有 %1$s 格式的檔案</string>
+    <string name="import_selection_option">%1$s 格式的檔案</string>
     <string name="import_selection_title">從外部儲存空間匯入</string>
     <string name="import_success">已從 %2$s 匯入 %1$s</string>
     <string name="marker_add_error">無法插入標記，因為無法取得 GPS 訊號。請再試一次。</string>

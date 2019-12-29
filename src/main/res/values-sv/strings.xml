@@ -160,7 +160,7 @@
     <string name="import_no_file">Det fanns inga filer att importera. Anslut enheten till datorn och lägg filerna som ska importeras i %1$s.</string>
     <string name="import_no_file_title">Importera filer</string>
     <string name="import_progress_message">Importerar från %1$s…</string>
-    <string name="import_selection_option">Alla %1$s från %2$s</string>
+    <string name="import_selection_option">Alla %1$s</string>
     <string name="import_selection_title">Importera från extern lagringsenhet</string>
     <string name="import_success">Importerade %1$s från %2$s</string>
     <string name="marker_add_error">Det går inte att infoga en markör. Ingen GPS-signal. Försök igen.</string>

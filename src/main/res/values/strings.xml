@@ -232,7 +232,7 @@ At the moment, the recorded locations as well as the timestamps are send to an A
     <string name="import_no_file">There were no files to import. Connect your device to your computer and place the files to import in %1$s.</string>
     <string name="import_no_file_title">Import files</string>
     <string name="import_progress_message">Importing from %1$s&#8230;</string>
-    <string name="import_selection_option">All %1$s from %2$s</string>
+    <string name="import_selection_option">All %1$s</string>
     <string name="import_selection_title">Import from external storage</string>
     <string name="import_success">Imported %1$s from %2$s</string>
     <!-- Marker -->

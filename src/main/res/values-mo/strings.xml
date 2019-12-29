@@ -161,7 +161,7 @@
     de importat în %1$s.</string>
     <string name="import_no_file_title">Importați fișierele</string>
     <string name="import_progress_message">Se importă din %1$s …</string>
-    <string name="import_selection_option">Toate fișierele de format %1$s din %2$s</string>
+    <string name="import_selection_option">Toate fișierele de format %1$s</string>
     <string name="import_selection_title">Importați din stocarea externă</string>
     <string name="import_success">S-a(u) importat %1$s din %2$s</string>
     <string name="marker_add_error">Marcatorul nu a putut fi introdus. Nu există semnal GPS. Încercați din nou.</string>

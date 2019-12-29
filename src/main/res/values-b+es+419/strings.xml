@@ -160,7 +160,7 @@
     <string name="import_no_file">No hay archivos para importar. Conecta la unidad a la computadora y pasa los archivos que deseas importar a %1$s.</string>
     <string name="import_no_file_title">Importar archivos</string>
     <string name="import_progress_message">Importando desde %1$s…</string>
-    <string name="import_selection_option">Todos los archivos %1$s de %2$s</string>
+    <string name="import_selection_option">Todos los archivos %1$s</string>
     <string name="import_selection_title">Importar desde la unidad de almacenamiento externa</string>
     <string name="import_success">Se importaron %1$s desde %2$s.</string>
     <string name="marker_add_error">No se puede insertar un marcador. No se recibe señal de GPS. Vuelve a intentarlo.</string>

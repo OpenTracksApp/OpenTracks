@@ -163,7 +163,7 @@
     「%1$s」に置きます。</string>
     <string name="import_no_file_title">ファイルのインポート</string>
     <string name="import_progress_message">%1$sからインポート中…</string>
-    <string name="import_selection_option">「%2$s」のすべての%1$s</string>
+    <string name="import_selection_option">すべての%1$s</string>
     <string name="import_selection_title">外部ストレージからインポート</string>
     <string name="import_success">「%2$s」から%1$sをインポートしました</string>
     <string name="marker_add_error">GPS信号がないため、マーカーを追加できません。もう一度やり直してください。</string>

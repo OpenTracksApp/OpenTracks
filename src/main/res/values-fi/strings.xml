@@ -163,7 +163,7 @@
 jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="import_no_file_title">Tuo tiedostot</string>
     <string name="import_progress_message">Tuodaan kohteesta %1$s…</string>
-    <string name="import_selection_option">Kaikki %1$s-tiedostot kohteesta %2$s</string>
+    <string name="import_selection_option">Kaikki %1$s-tiedostot</string>
     <string name="import_selection_title">Tuo ulkoisesta laitteesta</string>
     <string name="import_success">%1$s tuotiin kohteesta %2$s</string>
     <string name="marker_add_error">Merkkiä ei voitu lisätä. Ei GPS-signaalia. Yritä uudelleen.</string>

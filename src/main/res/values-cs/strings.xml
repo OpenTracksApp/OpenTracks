@@ -160,7 +160,7 @@
     <string name="import_no_file">Nebyly nalezeny žádné soubory, které by bylo možné importovat. Připojte zařízení k počítači a umístěte soubory, které chcete importovat, do složky %1$s.</string>
     <string name="import_no_file_title">Import souborů</string>
     <string name="import_progress_message">Import z %1$s…</string>
-    <string name="import_selection_option">Všechny soubory %1$s ze složky %2$s</string>
+    <string name="import_selection_option">Všechny soubory %1$s</string>
     <string name="import_selection_title">Import z externího úložiště</string>
     <string name="import_success">Trasy (celkem %1$s) byly importovány ze složky %2$s.</string>
     <string name="marker_add_error">Značku nelze vložit. Signál GPS není dostupný. Zkuste to znovu.</string>

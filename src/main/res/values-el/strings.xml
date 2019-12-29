@@ -161,7 +161,7 @@
     να εισαχθούν στο %1$s.</string>
     <string name="import_no_file_title">Εισαγωγή αρχείων</string>
     <string name="import_progress_message">Εισαγωγή από %1$s…</string>
-    <string name="import_selection_option">Και τα %1$s από %2$s</string>
+    <string name="import_selection_option">Και τα %1$s</string>
     <string name="import_selection_title">Εισαγωγή από εξωτερικό αποθηκευτικό χώρο</string>
     <string name="import_success">Έγινε εισαγωγή %1$s αρχείων από τον κατάλογο %2$s</string>
     <string name="marker_add_error">Δεν είναι δυνατή η εισαγωγή σήμανσης. Δεν υπάρχει σήμα GPS. Δοκιμάστε ξανά.</string>

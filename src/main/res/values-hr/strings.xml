@@ -161,7 +161,7 @@
     uvoz u direktorij %1$s.</string>
     <string name="import_no_file_title">Uvoz datoteka</string>
     <string name="import_progress_message">Uvoz iz direktorija %1$s…</string>
-    <string name="import_selection_option">Sve %1$s datoteke iz direktorija %2$s</string>
+    <string name="import_selection_option">Sve %1$s datoteke</string>
     <string name="import_selection_title">Uvoz s vanjske pohrane</string>
     <string name="import_success">Uvezeno iz direktorija %2$s: %1$s</string>
     <string name="marker_add_error">Nije moguće umetnuti oznaku. Nema signala GPS-a. Pokušajte ponovo.</string>

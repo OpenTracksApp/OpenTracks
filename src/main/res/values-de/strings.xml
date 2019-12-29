@@ -161,7 +161,7 @@
     importierenden Dateien in %1$s.</string>
     <string name="import_no_file_title">Dateien importieren</string>
     <string name="import_progress_message">Dateien werden aus %1$s importiert…</string>
-    <string name="import_selection_option">Alle %1$s-Dateien aus %2$s</string>
+    <string name="import_selection_option">Alle %1$s-Dateien</string>
     <string name="import_selection_title">Aus externem Speicher importieren</string>
     <string name="import_success">%1$s aus %2$s importiert</string>
     <string name="marker_add_error">Es kann keine Markierung eingefügt werden, da kein GPS-Signal verfügbar ist. Bitte versuchen Sie es erneut.</string>

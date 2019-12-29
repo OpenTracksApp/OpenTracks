@@ -163,7 +163,7 @@
     importare in %1$s.</string>
     <string name="import_no_file_title">Importa file</string>
     <string name="import_progress_message">Importazione da %1$s in corso…</string>
-    <string name="import_selection_option">Tutti i %1$s da %2$s</string>
+    <string name="import_selection_option">Tutti i %1$s</string>
     <string name="import_selection_title">Importa da memoria esterna</string>
     <string name="import_success">Importati %1$s da %2$s</string>
     <string name="marker_add_error">Impossibile inserire un indicatore. Nessun segnale GPS.</string>

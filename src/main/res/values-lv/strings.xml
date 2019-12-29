@@ -160,7 +160,7 @@
     <string name="import_no_file">Nav failu, ko importēt. Savienojiet ierīci ar datoru un importējamos failus ievietojiet mapē %1$s.</string>
     <string name="import_no_file_title">Failu importēšana</string>
     <string name="import_progress_message">Notiek importēšana no %1$s…</string>
-    <string name="import_selection_option">Visus %1$s failus no %2$s</string>
+    <string name="import_selection_option">Visus %1$s failus</string>
     <string name="import_selection_title">Importēšana no ārējās krātuves</string>
     <string name="import_success">No mapes %2$s importēts(-i) %1$s fails(-i)</string>
     <string name="marker_add_error">Nav iespējams ievietot marķieri. Nav GPS signāla. Mēģiniet vēlreiz.</string>

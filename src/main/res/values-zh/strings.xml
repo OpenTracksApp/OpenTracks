@@ -163,7 +163,7 @@
     放入 %1$s。</string>
     <string name="import_no_file_title">导入文件</string>
     <string name="import_progress_message">正在从 %1$s 导入…</string>
-    <string name="import_selection_option">%2$s 中的所有 %1$s</string>
+    <string name="import_selection_option">所有 %1$s</string>
     <string name="import_selection_title">从外部存储设备导入</string>
     <string name="import_success">已从%2$s导入%1$s</string>
     <string name="marker_add_error">无法插入标记，无 GPS 信号。请重试。</string>

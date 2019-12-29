@@ -161,7 +161,7 @@
     <string name="import_no_file">Não foi encontrado nenhum ficheiro para importar. Ligue o seu dispositivo ao computador e coloque os ficheiros para importar em %1$s .</string>
     <string name="import_no_file_title">Importar ficheiros</string>
     <string name="import_progress_message">A importar de %1$s…</string>
-    <string name="import_selection_option">Todos os %1$s de %2$s</string>
+    <string name="import_selection_option">Todos os %1$s</string>
     <string name="import_selection_title">Importar de um armazenamento externo</string>
     <string name="import_success">%1$s importados de %2$s</string>
     <string name="marker_add_error">Não é possível inserir um marcador. Sem sinal de GPS. Tente novamente.</string>

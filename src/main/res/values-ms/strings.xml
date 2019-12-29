@@ -161,7 +161,7 @@
     diimport dalam %1$s.</string>
     <string name="import_no_file_title">Import fail</string>
     <string name="import_progress_message">Mengimport dari %1$s…</string>
-    <string name="import_selection_option">Semua %1$s dari %2$s</string>
+    <string name="import_selection_option">Semua %1$s</string>
     <string name="import_selection_title">Import dari storan luaran</string>
     <string name="import_success">%1$s daripada %2$s diimport</string>
     <string name="marker_add_error">Tidak dapat menyisipkan penanda. Tiada isyarat GPS. Cuba lagi.</string>

@@ -160,7 +160,7 @@
     <string name="import_no_file">Imporditavad failid puudusid. Ühendage seade oma arvutiga ning salvestage imporditavad failid kataloogi %1$s.</string>
     <string name="import_no_file_title">Impordi failid</string>
     <string name="import_progress_message">Importimine kataloogist %1$s…</string>
-    <string name="import_selection_option">Kõik %1$s-failid kataloogist %2$s</string>
+    <string name="import_selection_option">Kõik %1$s-failid</string>
     <string name="import_selection_title">Impordi välismälust</string>
     <string name="import_success">Imporditud %1$s faili kataloogist %2$s</string>
     <string name="marker_add_error">Ei saa markerit lisada. GPS-signaal puudub. Proovige uuesti.</string>

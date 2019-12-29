@@ -163,7 +163,7 @@
     importuoti į %1$s.</string>
     <string name="import_no_file_title">Importuoti failus</string>
     <string name="import_progress_message">Importuojama iš %1$s…</string>
-    <string name="import_selection_option">Visi %1$s iš %2$s</string>
+    <string name="import_selection_option">Visi %1$s</string>
     <string name="import_selection_title">Importuoti iš išorinės saugyklos</string>
     <string name="import_success">Importuota %1$s iš %2$s</string>
     <string name="marker_add_error">Nepavyko įterpti žymeklio. Nėra GPS signalo. Bandykite dar kartą.</string>

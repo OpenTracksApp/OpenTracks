@@ -161,7 +161,7 @@
     kívánt fájlokat ide: %1$s.</string>
     <string name="import_no_file_title">Fájlok importálása</string>
     <string name="import_progress_message">Importálás innen: %1$s…</string>
-    <string name="import_selection_option">Minden %1$s formátumú innen: %2$s</string>
+    <string name="import_selection_option">Minden %1$s formátumú</string>
     <string name="import_selection_title">Importálás külső tárhelyről</string>
     <string name="import_success">%1$s importálva innen: %2$s</string>
     <string name="marker_add_error">Nem sikerült jelölőt beilleszteni. Nincs GPS-jel. Próbálja újra.</string>

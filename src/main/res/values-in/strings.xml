@@ -162,7 +162,7 @@
     <string name="import_no_file">Tidak ada file untuk diimpor. Hubungkan perangkat ke komputer Anda dan tempatkan file yang akan diimpor di %1$s.</string>
     <string name="import_no_file_title">Impor file</string>
     <string name="import_progress_message">Mengimpor dari %1$s…</string>
-    <string name="import_selection_option">Semua %1$s dari %2$s</string>
+    <string name="import_selection_option">Semua %1$s</string>
     <string name="import_selection_title">Impor dari penyimpanan external</string>
     <string name="import_success">Mengimpor %1$s dari %2$s</string>
     <string name="marker_add_error">Tidak dapat memasukkan penanda. Tidak ada sinyal GPS. Coba lagi.</string>

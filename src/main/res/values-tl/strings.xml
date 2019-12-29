@@ -160,7 +160,7 @@
     <string name="import_no_file">Walang mga file na ii-import. Ikonekta ang iyong device sa iyong computer at ilagay ang mga ii-import na file sa %1$s.</string>
     <string name="import_no_file_title">Mag-import ng mga file</string>
     <string name="import_progress_message">Ini-import mula sa %1$s…</string>
-    <string name="import_selection_option">Lahat ng %1$s mula sa %2$s</string>
+    <string name="import_selection_option">Lahat ng %1$ss</string>
     <string name="import_selection_title">Mag-import mula sa panlabas na storage</string>
     <string name="import_success">In-import ang %1$s mula sa %2$s</string>
     <string name="marker_add_error">Hindi makapaglagay ng marker. Walang signal ng GPS. Subukang muli.</string>

@@ -160,7 +160,7 @@
     <string name="import_no_file">Нет файлов для импорта. Подсоедините устройство к компьютеру и укажите путь к файлам, которые нужно импортировать в %1$s.</string>
     <string name="import_no_file_title">Импорт файлов</string>
     <string name="import_progress_message">Импорт из папки %1$s…</string>
-    <string name="import_selection_option">Все %1$s-файлы из %2$s</string>
+    <string name="import_selection_option">Все %1$s-файлы</string>
     <string name="import_selection_title">Импорт с накопителя</string>
     <string name="import_success">Импортировано: %1$s (из %2$s)</string>
     <string name="marker_add_error">Невозможно добавить маркер. Нет сигнала GPS. Повторите попытку.</string>

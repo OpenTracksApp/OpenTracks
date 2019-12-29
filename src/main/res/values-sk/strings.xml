@@ -160,7 +160,7 @@
     <string name="import_no_file">Neboli nájdené žiadne súbory na importovanie. Pripojte svoje zariadenie k počítaču a súbory určené na importovanie umiestnite do adresára %1$s.</string>
     <string name="import_no_file_title">Importovať súbory</string>
     <string name="import_progress_message">Prebieha import z úložiska %1$s…</string>
-    <string name="import_selection_option">Všetky súbory vo formáte %1$s z adresára %2$s</string>
+    <string name="import_selection_option">Všetky súbory vo formáte %1$s</string>
     <string name="import_selection_title">Importovať z externého úložiska</string>
     <string name="import_success">Z adresára %2$s bol importovaný nasledujúci počet súborov: %1$s</string>
     <string name="marker_add_error">Značku sa nepodarilo vložiť. Nie je k dispozícii signál GPS. Skúste to znova.</string>

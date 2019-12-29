@@ -161,7 +161,7 @@
     в папку %1$s.</string>
     <string name="import_no_file_title">Імпорт файлів</string>
     <string name="import_progress_message">Імпорт із каталогу %1$s…</string>
-    <string name="import_selection_option">Усі %1$s із %2$s</string>
+    <string name="import_selection_option">Усі %1$s</string>
     <string name="import_selection_title">Імпортувати із зовнішньої пам’яті</string>
     <string name="import_success">Імпортовано %1$s з каталогу %2$s</string>
     <string name="marker_add_error">Неможливо вставити маркер, оскільки відсутній сигнал GPS. Повторіть спробу.</string>

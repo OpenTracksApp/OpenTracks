@@ -161,7 +161,7 @@
     nhập vào %1$s.</string>
     <string name="import_no_file_title">Nhập tệp</string>
     <string name="import_progress_message">Đang nhập từ %1$s…</string>
-    <string name="import_selection_option">Tất cả %1$s từ %2$s</string>
+    <string name="import_selection_option">Tất cả %1$s</string>
     <string name="import_selection_title">Nhập từ bộ nhớ ngoài</string>
     <string name="import_success">Đã nhập %1$s từ %2$s</string>
     <string name="marker_add_error">Không thể chèn điểm đánh dấu. Không có tín hiệu GPS. Hãy thử lại.</string>

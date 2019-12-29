@@ -160,7 +160,7 @@
     <string name="import_no_file">ไม่มีไฟล์ให้นำเข้า โปรดเชื่อมต่ออุปกรณ์เข้ากับคอมพิวเตอร์ และวางไฟล์ที่จะนำเข้าลงใน %1$s</string>
     <string name="import_no_file_title">นำเข้าไฟล์</string>
     <string name="import_progress_message">กำลังนำเข้าจาก %1$s…</string>
-    <string name="import_selection_option">ทั้งหมด %1$s จาก %2$s</string>
+    <string name="import_selection_option">ทั้งหมด %1$s</string>
     <string name="import_selection_title">นำเข้าจากที่จัดเก็บข้อมูลภายนอก</string>
     <string name="import_success">นำเข้าแล้ว %1$s จาก %2$s</string>
     <string name="marker_add_error">ไม่สามารถใส่เครื่องหมายได้ เนื่องจากไม่มีสัญญาณ GPS โปรดลองอีกครั้ง</string>

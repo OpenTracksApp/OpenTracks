@@ -160,7 +160,7 @@
     <string name="import_no_file">لا توجد ملفات للاستيراد. وصّل جهازك إلى جهاز الكمبيوتر واحفظ الملفات للاستيراد في %1$s.</string>
     <string name="import_no_file_title">استيراد الملفات</string>
     <string name="import_progress_message">جارٍ الاستيراد من %1$s…</string>
-    <string name="import_selection_option">كل‏ %1$s‏ من‏ %2$s</string>
+    <string name="import_selection_option">كل‏ %1$s‏</string>
     <string name="import_selection_title">استيراد من وحدة التخزين الخارجية</string>
     <string name="import_success">تم استيراد‏ %1$s‏ من‏ %2$s</string>
     <string name="marker_add_error">يتعذر إدراج مُحدد. ليس هناك إشارة لنظام تحديد المواقع العالمي (GPS). حاول مرة أخرى.</string>

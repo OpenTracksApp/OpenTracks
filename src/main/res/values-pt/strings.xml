@@ -163,7 +163,7 @@
     arquivos para importação em %1$s.</string>
     <string name="import_no_file_title">Importar arquivos</string>
     <string name="import_progress_message">Importando de %1$s…</string>
-    <string name="import_selection_option">Todos os %1$s de %2$s</string>
+    <string name="import_selection_option">Todos os %1$s</string>
     <string name="import_selection_title">Importar do armazenamento externo</string>
     <string name="import_success">Importação: %1$s de %2$s</string>
     <string name="marker_add_error">Não foi possível inserir um marcador. Não há sinal de GPS. Tente novamente.</string>

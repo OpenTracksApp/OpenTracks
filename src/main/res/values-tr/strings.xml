@@ -161,7 +161,7 @@
     dosyaları %1$s dizinine yerleştirin.</string>
     <string name="import_no_file_title">Dosyaları içe aktar</string>
     <string name="import_progress_message">%1$s dizininden içe aktarılıyor…</string>
-    <string name="import_selection_option">%2$s dizininden %1$s biçimindeki tüm dosyalar</string>
+    <string name="import_selection_option">%1$s biçimindeki tüm dosyalar</string>
     <string name="import_selection_title">Harici depolama ortamından aktar</string>
     <string name="import_success">%1$s %2$s kaynağından içe aktarıldı</string>
     <string name="marker_add_error">İşaretçi eklenemiyor. GPS sinyali yok. Tekrar deneyin.</string>

@@ -160,7 +160,7 @@
     <string name="import_no_file">Er zijn geen bestanden om te importeren. Verbind uw apparaat met uw computer en plaats de bestanden die u wilt importeren in %1$s.</string>
     <string name="import_no_file_title">Bestanden importeren</string>
     <string name="import_progress_message">Importeren uit %1$s…</string>
-    <string name="import_selection_option">Alle %1$s-bestanden uit %2$s</string>
+    <string name="import_selection_option">Alle %1$s-bestanden</string>
     <string name="import_selection_title">Importeren uit externe opslag</string>
     <string name="import_success">%1$s geïmporteerd uit %2$s</string>
     <string name="marker_add_error">Kan geen markering invoegen. Er is geen GPS-signaal. Probeer het opnieuw.</string>

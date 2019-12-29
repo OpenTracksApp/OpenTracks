@@ -163,7 +163,7 @@
     zaimportować, w folderze %1$s.</string>
     <string name="import_no_file_title">Import plików</string>
     <string name="import_progress_message">Importuję z katalogu %1$s…</string>
-    <string name="import_selection_option">Wszystkie pliki %1$s z folderu %2$s</string>
+    <string name="import_selection_option">Wszystkie pliki %1$s</string>
     <string name="import_selection_title">Import z pamięci zewnętrznej</string>
     <string name="import_success">Zaimportowano %1$s z katalogu %2$s</string>
     <string name="marker_add_error">Nie można wstawić znacznika. Brak sygnału GPS. Spróbuj ponownie.</string>

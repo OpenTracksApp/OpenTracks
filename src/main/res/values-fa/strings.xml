@@ -160,7 +160,7 @@
     <string name="import_no_file">هیچ فایلی برای وارد کردن وجود نداشت. دستگاه‌تان را به رایانه‌تان وصل کنید و فایل‌هایی که می خواهید وارد کنید در %1$s قرار دهید.</string>
     <string name="import_no_file_title">وارد کردن فایل‌ها</string>
     <string name="import_progress_message">در حال وارد کردن از %1$s…</string>
-    <string name="import_selection_option">همه %1$s از %2$s</string>
+    <string name="import_selection_option">همه %1$s</string>
     <string name="import_selection_title">وارد کردن از حافظه خارجی</string>
     <string name="import_success">%1$s فایل از %2$s وارد شد</string>
     <string name="marker_add_error">درج نشانگر امکان‌پذیر نیست. سیگنال GPS وجود ندارد. دوباره امتحان کنید.</string>

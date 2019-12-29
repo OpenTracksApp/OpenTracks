@@ -162,7 +162,7 @@
     <string name="import_no_file">Ni datotek za uvoz. Povežite napravo z računalnikom in postavite datoteke za uvoz v %1$s.</string>
     <string name="import_no_file_title">Uvozi datoteke</string>
     <string name="import_progress_message">Uvažanje iz imenika %1$s …</string>
-    <string name="import_selection_option">Vse %1$s iz %2$s</string>
+    <string name="import_selection_option">Vse %1$s</string>
     <string name="import_selection_title">Uvozi iz zunanjega pomnilnika</string>
     <string name="import_success">Uvoženih %1$s iz %2$s</string>
     <string name="marker_add_error">Oznake ni mogoče vstaviti. Ni signala GPS. Poskusite znova.</string>

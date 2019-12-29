@@ -162,7 +162,7 @@
     <string name="import_no_file">לא היו קבצים לייבוא. חבר את המכשיר למחשב שלך והוסף ל-%1$s את הקבצים שברצונך לייבא.</string>
     <string name="import_no_file_title">ייבא קבצים</string>
     <string name="import_progress_message">מייבא מ-%1$s…</string>
-    <string name="import_selection_option">הכל %1$s מ-%2$s</string>
+    <string name="import_selection_option">הכל %1$s</string>
     <string name="import_selection_title">ייבא מאחסון חיצוני</string>
     <string name="import_success">%1$s יובא מ-%2$s</string>
     <string name="marker_add_error">לא ניתן להכניס סמן. אין אות GPS. נסה שוב.</string>

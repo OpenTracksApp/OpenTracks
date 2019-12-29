@@ -160,7 +160,7 @@
     <string name="import_no_file">Aucun fichier à importer. Connectez votre appareil à l\'ordinateur, puis déplacez les fichiers à importer vers le répertoire %1$s.</string>
     <string name="import_no_file_title">Importer des fichiers</string>
     <string name="import_progress_message">Importation de %1$s en cours…</string>
-    <string name="import_selection_option">Tous les parcours au format %1$s à partir du répertoire %2$s</string>
+    <string name="import_selection_option">Tous les parcours au format %1$s</string>
     <string name="import_selection_title">Importer à partir de l\'espace de stockage externe</string>
     <string name="import_success">%1$s fichier(s) importé(s) du répertoire %2$s</string>
     <string name="marker_add_error">Impossible d\'insérer un repère. Pas de signal GPS. Veuillez réessayer.</string>
