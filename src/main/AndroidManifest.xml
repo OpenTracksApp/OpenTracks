@@ -23,8 +23,8 @@ limitations under the License.
         android:name=".Startup"
         android:allowBackup="false"
         android:hardwareAccelerated="true"
-        android:icon="@drawable/ic_logo_color_24dp"
-        android:label="@string/app_name"
+        android:icon="${applicationLogo}"
+        android:label="${applicationName}"
         android:theme="@style/ThemeCustom">
 
         <!-- Activities -->

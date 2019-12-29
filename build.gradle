@@ -6,7 +6,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.2'
+        classpath 'com.android.tools.build:gradle:3.5.3'
     }
 }
 
@@ -54,6 +54,11 @@ android {
 
     defaultConfig {
         applicationId "de.dennisguse.opentracks"
+        manifestPlaceholders = [
+                applicationLogo: "@drawable/ic_logo_color_24dp",
+                applicationName: "@strings/app_name"
+        ]
+
         //Useful for debugging.
         //versionCode getVersionCode()
 
@@ -69,6 +74,10 @@ android {
         debug {
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
+            manifestPlaceholders = [
+                    applicationLogo: "@android:drawable/ic_menu_mylocation",
+                    applicationName: "OpenTracks (Debug)"
+            ]
         }
 
         release {
