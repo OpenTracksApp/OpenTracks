@@ -15,7 +15,11 @@
  */
 package de.dennisguse.opentracks.stats;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 /**
  * Tests for {@link TripStatistics}.
@@ -23,17 +27,17 @@ import junit.framework.TestCase;
  *
  * @author Rodrigo Damazio
  */
-public class TripStatisticsTest extends TestCase {
+@RunWith(JUnit4.class)
+public class TripStatisticsTest {
 
     private TripStatistics statistics;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-
+    @Before
+    public void setUp() {
         statistics = new TripStatistics();
     }
 
+    @Test
     public void testMerge() {
         TripStatistics statistics2 = new TripStatistics();
         statistics.setStartTime(1000L);  // Resulting start time
@@ -61,28 +65,30 @@ public class TripStatisticsTest extends TestCase {
 
         statistics.merge(statistics2);
 
-        assertEquals(1000L, statistics.getStartTime());
-        assertEquals(4000L, statistics.getStopTime());
-        assertEquals(2500L, statistics.getTotalTime());
-        assertEquals(1300L, statistics.getMovingTime());
-        assertEquals(1100.0, statistics.getTotalDistance());
-        assertEquals(900.0, statistics.getTotalElevationGain());
-        assertEquals(statistics.getTotalDistance() / (statistics.getMovingTime() / 1000.0), statistics.getMaxSpeed());
-        assertEquals(1200.0, statistics.getMinElevation());
-        assertEquals(3575.0, statistics.getMaxElevation());
-        assertEquals(-25.0, statistics.getMinGrade());
-        assertEquals(35.0, statistics.getMaxGrade());
+        Assert.assertEquals(1000L, statistics.getStartTime());
+        Assert.assertEquals(4000L, statistics.getStopTime());
+        Assert.assertEquals(2500L, statistics.getTotalTime());
+        Assert.assertEquals(1300L, statistics.getMovingTime());
+        Assert.assertEquals(1100.0, statistics.getTotalDistance(), 0.001);
+        Assert.assertEquals(900.0, statistics.getTotalElevationGain(), 0.001);
+        Assert.assertEquals(statistics.getTotalDistance() / (statistics.getMovingTime() / 1000.0), statistics.getMaxSpeed(), 0.001);
+        Assert.assertEquals(1200.0, statistics.getMinElevation(), 0.001);
+        Assert.assertEquals(3575.0, statistics.getMaxElevation(), 0.001);
+        Assert.assertEquals(-25.0, statistics.getMinGrade(), 0.001);
+        Assert.assertEquals(35.0, statistics.getMaxGrade(), 0.001);
     }
 
+    @Test
     public void testGetAverageSpeed() {
         statistics.setTotalDistance(1000.0);
         statistics.setTotalTime(50000);  // in milliseconds
-        assertEquals(20.0, statistics.getAverageSpeed());
+        Assert.assertEquals(20.0, statistics.getAverageSpeed(), 0.001);
     }
 
+    @Test
     public void testGetAverageMovingSpeed() {
         statistics.setTotalDistance(1000.0);
         statistics.setMovingTime(20000);  // in milliseconds
-        assertEquals(50.0, statistics.getAverageMovingSpeed());
+        Assert.assertEquals(50.0, statistics.getAverageMovingSpeed(), 0.001);
     }
 }
