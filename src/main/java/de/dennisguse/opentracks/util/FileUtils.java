@@ -20,6 +20,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 
+import androidx.documentfile.provider.DocumentFile;
+
 import java.io.File;
 
 import de.dennisguse.opentracks.BuildConfig;
@@ -57,20 +59,15 @@ public class FileUtils {
         return photoDirectory;
     }
 
-    /**
-     * Gets the display name for a path on the external storage.
-     *
-     * @param components the components
-     */
-    public static String getPathDisplayName(String... components) {
-        StringBuilder dirNameBuilder = new StringBuilder();
-        dirNameBuilder.append(File.separatorChar);
-        dirNameBuilder.append(EXPORT_DIR);
-        for (String component : components) {
-            dirNameBuilder.append(File.separatorChar);
-            dirNameBuilder.append(component);
+
+    public static String getPath(DocumentFile file) {
+        if (file == null) {
+            return "";
         }
-        return dirNameBuilder.toString();
+        if (file.getParentFile() == null) {
+            return file.getName();
+        }
+        return getPath(file.getParentFile()) + File.pathSeparatorChar + file.getName();
     }
 
     /**

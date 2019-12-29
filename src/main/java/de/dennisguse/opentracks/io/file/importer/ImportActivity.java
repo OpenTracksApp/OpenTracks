@@ -91,7 +91,7 @@ public class ImportActivity extends FragmentActivity implements FileTypeDialogFr
     public void onFileTypeDone(TrackFileFormat trackFileFormat) {
         DocumentFile pickedDirectory = DocumentFile.fromTreeUri(this, directoryUri);
 
-        directoryDisplayName = FileUtils.getPathDisplayName(trackFileFormat.getExtension());
+        directoryDisplayName = FileUtils.getPath(pickedDirectory);
 
         importAsyncTask = new ImportAsyncTask(this, trackFileFormat, pickedDirectory);
         importAsyncTask.execute();

@@ -93,7 +93,7 @@ public class ExportActivity extends FragmentActivity implements FileTypeDialogFr
             exportDirectory = pickedDirectory.createDirectory(FileUtils.EXPORT_DIR);
         }
 
-        directoryDisplayName = FileUtils.getPathDisplayName(trackFileFormat.getExtension());
+        directoryDisplayName = FileUtils.getPath(exportDirectory);
         exportAsyncTask = new ExportAsyncTask(this, trackFileFormat, exportDirectory);
         exportAsyncTask.execute();
     }
@@ -132,8 +132,7 @@ public class ExportActivity extends FragmentActivity implements FileTypeDialogFr
                 } else {
                     iconId = R.drawable.ic_dialog_error_24dp;
                     titleId = R.string.generic_error_title;
-                    message = getString(R.string.export_external_storage_error, processedTrackCount, totalTracks,
-                            directoryDisplayName);
+                    message = getString(R.string.export_external_storage_error, processedTrackCount, totalTracks, directoryDisplayName);
                 }
                 AlertDialog.Builder builder = new AlertDialog.Builder(this).setCancelable(true)
                         .setIcon(iconId).setMessage(message)
