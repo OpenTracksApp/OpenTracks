@@ -15,8 +15,6 @@
  */
 package de.dennisguse.opentracks.util;
 
-import android.os.Environment;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,16 +29,6 @@ import java.io.File;
  */
 @RunWith(JUnit4.class)
 public class FileUtilsTest {
-
-    /**
-     * Tests {@link FileUtils#getPath(String...)}.
-     */
-    @Test
-    public void testBuildExternalDirectoryPath() {
-        String expectedName = Environment.getExternalStorageDirectory() + File.separator + FileUtils.SDCARD_TOP_DIR + File.separator + "a" + File.separator + "b" + File.separator + "c";
-        String dirName = FileUtils.getPath("a", "b", "c");
-        Assert.assertEquals(expectedName, dirName);
-    }
 
     /**
      * Tests {@link FileUtils#buildUniqueFileName(File, String, String)} when the file is new.

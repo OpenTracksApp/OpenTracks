@@ -68,7 +68,7 @@ public class KmzTrackImporter implements TrackImporter {
             while ((zipEntry = zipInputStream.getNextEntry()) != null) {
                 if (Thread.interrupted()) {
                     Log.d(TAG, "Thread interrupted");
-                    cleanImport(trackId);
+                    cleanImport(context, trackId);
                     return -1L;
                 }
                 String fileName = zipEntry.getName();
@@ -76,7 +76,7 @@ public class KmzTrackImporter implements TrackImporter {
                     trackId = parseKml(zipInputStream);
                     if (trackId == -1L) {
                         Log.d(TAG, "Unable to parse kml in kmz");
-                        cleanImport(trackId);
+                        cleanImport(context, trackId);
                         return -1L;
                     }
                 } else {
@@ -90,7 +90,7 @@ public class KmzTrackImporter implements TrackImporter {
             return trackId;
         } catch (IOException e) {
             Log.e(TAG, "Unable to import file", e);
-            cleanImport(trackId);
+            cleanImport(context, trackId);
             return -1L;
         }
     }
@@ -100,15 +100,15 @@ public class KmzTrackImporter implements TrackImporter {
      *
      * @param trackId the trackId
      */
-    private void cleanImport(long trackId) {
+    private void cleanImport(Context context, long trackId) {
         if (PreferencesUtils.isRecording(trackId)) {
             ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
             contentProviderUtils.deleteTrack(context, trackId);
         }
 
         if (importTrackId != -1L) {
-            File dir = FileUtils.getPhotoDir(importTrackId);
-            if (FileUtils.isDirectory(dir)) {
+            File dir = FileUtils.getPhotoDir(context, importTrackId);
+            if (dir.exists() && dir.isDirectory()) {
                 for (File file : dir.listFiles()) {
                     file.delete();
                 }
@@ -159,8 +159,7 @@ public class KmzTrackImporter implements TrackImporter {
             return;
         }
 
-        File dir = FileUtils.getPhotoDir(importTrackId);
-        FileUtils.ensureDirectoryExists(dir);
+        File dir = FileUtils.getPhotoDir(context, importTrackId);
         File file = new File(dir, fileName);
 
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {

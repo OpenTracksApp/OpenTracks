@@ -72,11 +72,6 @@ public class ExportActivity extends FragmentActivity implements FileTypeDialogFr
         super.onActivityResult(requestCode, resultCode, resultData);
         if (requestCode == EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-//                final int takeFlags = resultData.getFlags()
-//                        & (Intent.FLAG_GRANT_READ_URI_PERMISSION
-//                        | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-//// Check for the freshest data.
-//                getContentResolver().takePersistableUriPermission(uri, takeFlags);
                 directoryUri = resultData.getData();
                 fileTypeDialogStart();
             } else {
@@ -93,9 +88,9 @@ public class ExportActivity extends FragmentActivity implements FileTypeDialogFr
     @Override
     public void onFileTypeDone(TrackFileFormat trackFileFormat) {
         DocumentFile pickedDirectory = DocumentFile.fromTreeUri(this, directoryUri);
-        DocumentFile exportDirectory = pickedDirectory.findFile(FileUtils.SDCARD_TOP_DIR);
+        DocumentFile exportDirectory = pickedDirectory.findFile(FileUtils.EXPORT_DIR);
         if (exportDirectory == null) {
-            exportDirectory = pickedDirectory.createDirectory(FileUtils.SDCARD_TOP_DIR);
+            exportDirectory = pickedDirectory.createDirectory(FileUtils.EXPORT_DIR);
         }
 
         directoryDisplayName = FileUtils.getPathDisplayName(trackFileFormat.getExtension());

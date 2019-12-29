@@ -36,64 +36,25 @@ public class FileUtils {
      */
     static final String FILEPROVIDER = BuildConfig.APPLICATION_ID + ".fileprovider";
 
-    /**
-     * Our external storage directory.
-     */
-    public static final String SDCARD_TOP_DIR = "OpenTracks"; // TODO RENAME
-    private static final String TRACK_PREFIX = "OpenTracks";
+    public static final String EXPORT_DIR = "OpenTracks";
+
     /**
      * The maximum FAT32 path length. See the FAT32 spec at
      * http://msdn.microsoft.com/en-us/windows/hardware/gg463080
      */
     static final int MAX_FAT32_PATH_LENGTH = 260;
-    /**
-     * The pictures directory under the app's external storage directory.
-     */
-    private static final String PICTURES_DIR = "pictures";
 
     private FileUtils() {
     }
 
-    /**
-     * Returns true if the external storage is writable.
-     */
-    public static boolean isExternalStorageWriteable() {
-        String state = Environment.getExternalStorageState();
-        return Environment.MEDIA_MOUNTED.equals(state);
+    public static File getPhotoDir(Context context) {
+        return context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
     }
 
-    /**
-     * Returns true if the directory exists.
-     *
-     * @param dir the directory
-     */
-    @Deprecated // TODO REMOVE" rewrite all locations this was used.
-    public static boolean isDirectory(File dir) {
-        return dir.exists() && dir.isDirectory();
-    }
-
-    /**
-     * Ensures the directory exists by creating it and its parents if necessary.
-     *
-     * @return whether the directory exists (either already existed or was
-     * successfully created)
-     */
-    @Deprecated // TODO REMOVE" rewrite all locations this was used.
-    public static boolean ensureDirectoryExists(File dir) {
-        if (isDirectory(dir)) {
-            return true;
-        }
-        return dir.mkdirs();
-    }
-
-    @Deprecated // TODO REMOVE" rewrite all locations this was used.
-    public static File getPhotoDir() {
-        return new File(getPath(PICTURES_DIR));
-    }
-
-    @Deprecated // TODO REMOVE" rewrite all locations this was used.
-    public static File getPhotoDir(long trackId) {
-        return new File(getPath(PICTURES_DIR, TRACK_PREFIX + trackId));
+    public static File getPhotoDir(Context context, long trackId) {
+        File photoDirectory = new File(getPhotoDir(context), "" + trackId);
+        photoDirectory.mkdirs();
+        return photoDirectory;
     }
 
     /**
@@ -104,22 +65,12 @@ public class FileUtils {
     public static String getPathDisplayName(String... components) {
         StringBuilder dirNameBuilder = new StringBuilder();
         dirNameBuilder.append(File.separatorChar);
-        dirNameBuilder.append(SDCARD_TOP_DIR);
+        dirNameBuilder.append(EXPORT_DIR);
         for (String component : components) {
             dirNameBuilder.append(File.separatorChar);
             dirNameBuilder.append(component);
         }
         return dirNameBuilder.toString();
-    }
-
-    /**
-     * Gets a path on the external storage.
-     *
-     * @param components the components
-     */
-    @Deprecated // TODO REMOVE" rewrite all locations this was used.
-    public static String getPath(String... components) {
-        return Environment.getExternalStorageDirectory() + getPathDisplayName(components);
     }
 
     /**
@@ -161,6 +112,7 @@ public class FileUtils {
         return fileName.substring(index + 1);
     }
 
+    // TODO Make user configurable!
     public static void updateMediaScanner(Context context, Uri uri) {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         mediaScanIntent.setData(uri);

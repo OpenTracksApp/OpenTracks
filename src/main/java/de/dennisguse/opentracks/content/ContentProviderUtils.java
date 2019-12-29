@@ -189,7 +189,7 @@ public class ContentProviderUtils {
         // Delete tracks last since it triggers a database vaccum call
         contentResolver.delete(TracksColumns.CONTENT_URI, null, null);
 
-        File dir = FileUtils.getPhotoDir();
+        File dir = FileUtils.getPhotoDir(context);
         deleteDirectoryRecurse(context, dir);
     }
 
@@ -219,7 +219,7 @@ public class ContentProviderUtils {
 
         contentResolver.delete(WaypointsColumns.CONTENT_URI, WaypointsColumns.TRACKID + "=?",
                 new String[]{Long.toString(trackId)});
-        deleteDirectoryRecurse(context, FileUtils.getPhotoDir(trackId));
+        deleteDirectoryRecurse(context, FileUtils.getPhotoDir(context, trackId));
     }
 
     /**
@@ -229,12 +229,10 @@ public class ContentProviderUtils {
      */
     private void deleteDirectoryRecurse(Context context, File dir) {
         // TODO Does not work with
-        if (FileUtils.isDirectory(dir)) {
+        if (dir.exists() && dir.isDirectory()) {
             for (File child : dir.listFiles()) {
                 deleteDirectoryRecurse(context, child);
             }
-        }
-        if (dir.exists()) {
             dir.delete();
             FileUtils.updateMediaScanner(context, Uri.fromFile(dir));
         }

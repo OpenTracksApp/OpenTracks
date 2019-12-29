@@ -157,8 +157,7 @@ public class IntentUtils {
      * @param trackId the track id
      */
     public static Pair<Intent, Uri> createTakePictureIntent(Context context, long trackId) {
-        File dir = FileUtils.getPhotoDir(trackId);
-        FileUtils.ensureDirectoryExists(dir);
+        File dir = FileUtils.getPhotoDir(context, trackId);
 
         String fileName = SimpleDateFormat.getDateTimeInstance().format(new Date());
         File file = new File(dir, FileUtils.buildUniqueFileName(dir, fileName, JPEG_EXTENSION));

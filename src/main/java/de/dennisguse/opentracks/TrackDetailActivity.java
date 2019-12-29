@@ -383,10 +383,6 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
                 startActivity(intent);
                 return true;
             case R.id.track_detail_insert_photo:
-                if (!FileUtils.isExternalStorageWriteable() || ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
-                    return false;
-                }
                 createWaypointWithPicture();
                 return true;
             case R.id.track_detail_menu_show_on_map:
