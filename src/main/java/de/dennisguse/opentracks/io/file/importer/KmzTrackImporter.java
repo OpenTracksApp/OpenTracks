@@ -17,7 +17,6 @@
 package de.dennisguse.opentracks.io.file.importer;
 
 import android.content.Context;
-import android.net.Uri;
 import android.util.Log;
 
 import java.io.ByteArrayInputStream;
@@ -113,7 +112,6 @@ public class KmzTrackImporter implements TrackImporter {
                     file.delete();
                 }
                 dir.delete();
-                FileUtils.updateMediaScanner(context, Uri.fromFile(dir));
             }
         }
     }
@@ -168,8 +166,6 @@ public class KmzTrackImporter implements TrackImporter {
             while ((count = zipInputStream.read(buffer)) != -1) {
                 fileOutputStream.write(buffer, 0, count);
             }
-
-            FileUtils.updateMediaScanner(context, Uri.fromFile(file));
         }
     }
 }

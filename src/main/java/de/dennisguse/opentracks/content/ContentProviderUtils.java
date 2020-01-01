@@ -229,13 +229,11 @@ public class ContentProviderUtils {
      * @param dir the directory
      */
     private void deleteDirectoryRecurse(Context context, File dir) {
-        // TODO Does not work with
         if (dir.exists() && dir.isDirectory()) {
             for (File child : dir.listFiles()) {
                 deleteDirectoryRecurse(context, child);
             }
             dir.delete();
-            FileUtils.updateMediaScanner(context, Uri.fromFile(dir));
         }
     }
 
@@ -458,7 +456,6 @@ public class ContentProviderUtils {
             if (file.exists()) {
                 File parent = file.getParentFile();
                 file.delete();
-                FileUtils.updateMediaScanner(context, uri);
                 if (parent.listFiles().length == 0) {
                     parent.delete();
                 }

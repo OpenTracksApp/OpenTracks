@@ -53,7 +53,6 @@ import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.fragments.StatsFragment;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.settings.SettingsActivity;
-import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
@@ -108,10 +107,6 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
                     if (hasPhoto && photoUri != null) {
                         hasPhoto = false;
                         long markerId = trackRecordingServiceConnection.addMarker(TrackDetailActivity.this, null, null, null, photoUri.toString());
-                        if (markerId != -1L) {
-                            //TODO: Make configurable.
-                            FileUtils.updateMediaScanner(TrackDetailActivity.this, photoUri);
-                        }
                     }
                 }
             });
