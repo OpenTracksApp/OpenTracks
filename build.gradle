@@ -75,7 +75,7 @@ android {
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
             manifestPlaceholders = [
-                    applicationLogo: "@android:drawable/ic_menu_mylocation",
+                    applicationLogo: "@drawable/ic_logo_black_24dp",
                     applicationName: "OpenTracks (Debug)"
             ]
         }

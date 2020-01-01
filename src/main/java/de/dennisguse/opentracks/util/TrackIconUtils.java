@@ -48,7 +48,7 @@ public class TrackIconUtils {
     private static final String UNKNOWN = "UNKNOWN";
     private static final String WALK = "WALK";
 
-    private static final int ACTIVITY_UNKNOWN_LOGO = R.drawable.ic_logo_24dp;
+    private static final int ACTIVITY_UNKNOWN_LOGO = R.drawable.ic_logo_white_24dp;
 
     private static final int[] AIRPLANE_LIST = new int[]{R.string.activity_type_airplane, R.string.activity_type_commercial_airplane, R.string.activity_type_rc_airplane};
     private static final int[] BIKE_LIST = new int[]{R.string.activity_type_biking, R.string.activity_type_cycling, R.string.activity_type_dirt_bike, R.string.activity_type_motor_bike, R.string.activity_type_mountain_biking, R.string.activity_type_road_biking, R.string.activity_type_track_cycling};
