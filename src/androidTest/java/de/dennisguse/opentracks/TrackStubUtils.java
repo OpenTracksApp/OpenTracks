@@ -18,8 +18,8 @@ package de.dennisguse.opentracks;
 
 import android.location.Location;
 
-import de.dennisguse.opentracks.content.TrackPoint;
 import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 
 /**

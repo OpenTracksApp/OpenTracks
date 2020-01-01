@@ -28,8 +28,8 @@ import java.io.OutputStream;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.LocationFactory;
 import de.dennisguse.opentracks.content.LocationIterator;
-import de.dennisguse.opentracks.content.TrackPoint;
 import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.util.LocationUtils;
 

@@ -36,6 +36,7 @@ import de.dennisguse.opentracks.BuildConfig;
 import de.dennisguse.opentracks.android.ContentResolverWrapper;
 import de.dennisguse.opentracks.android.IContentResolver;
 import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.data.Waypoint;

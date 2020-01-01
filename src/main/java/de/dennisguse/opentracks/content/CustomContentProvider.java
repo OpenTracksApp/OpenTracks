@@ -60,11 +60,11 @@ public abstract class CustomContentProvider extends ContentProvider {
     public CustomContentProvider() {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TrackPointsColumns.TABLE_NAME, UrlType.TRACKPOINTS.ordinal());
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TrackPointsColumns.TABLE_NAME + "/#", UrlType.TRACKPOINTS_ID.ordinal());
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TrackPointsColumns.TABLE_NAME + "/#", UrlType.TRACKPOINTS_BY_ID.ordinal());
         uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME, UrlType.TRACKS.ordinal());
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/#", UrlType.TRACKS_ID.ordinal());
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/#", UrlType.TRACKS_BY_ID.ordinal());
         uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, WaypointsColumns.TABLE_NAME, UrlType.WAYPOINTS.ordinal());
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, WaypointsColumns.TABLE_NAME + "/#", UrlType.WAYPOINTS_ID.ordinal());
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, WaypointsColumns.TABLE_NAME + "/#", UrlType.WAYPOINTS_BY_ID.ordinal());
     }
 
     @Override
@@ -132,15 +132,15 @@ public abstract class CustomContentProvider extends ContentProvider {
         switch (getUrlType(url)) {
             case TRACKPOINTS:
                 return TrackPointsColumns.CONTENT_TYPE;
-            case TRACKPOINTS_ID:
+            case TRACKPOINTS_BY_ID:
                 return TrackPointsColumns.CONTENT_ITEMTYPE;
             case TRACKS:
                 return TracksColumns.CONTENT_TYPE;
-            case TRACKS_ID:
+            case TRACKS_BY_ID:
                 return TracksColumns.CONTENT_ITEMTYPE;
             case WAYPOINTS:
                 return WaypointsColumns.CONTENT_TYPE;
-            case WAYPOINTS_ID:
+            case WAYPOINTS_BY_ID:
                 return WaypointsColumns.CONTENT_ITEMTYPE;
             default:
                 throw new IllegalArgumentException("Unknown URL " + url);
@@ -196,7 +196,7 @@ public abstract class CustomContentProvider extends ContentProvider {
                 queryBuilder.setTables(TrackPointsColumns.TABLE_NAME);
                 sortOrder = sort != null ? sort : TrackPointsColumns.DEFAULT_SORT_ORDER;
                 break;
-            case TRACKPOINTS_ID:
+            case TRACKPOINTS_BY_ID:
                 queryBuilder.setTables(TrackPointsColumns.TABLE_NAME);
                 queryBuilder.appendWhere("_id=" + url.getPathSegments().get(1));
                 break;
@@ -204,7 +204,7 @@ public abstract class CustomContentProvider extends ContentProvider {
                 queryBuilder.setTables(TracksColumns.TABLE_NAME);
                 sortOrder = sort != null ? sort : TracksColumns.DEFAULT_SORT_ORDER;
                 break;
-            case TRACKS_ID:
+            case TRACKS_BY_ID:
                 queryBuilder.setTables(TracksColumns.TABLE_NAME);
                 queryBuilder.appendWhere("_id=" + url.getPathSegments().get(1));
                 break;
@@ -212,7 +212,7 @@ public abstract class CustomContentProvider extends ContentProvider {
                 queryBuilder.setTables(WaypointsColumns.TABLE_NAME);
                 sortOrder = sort != null ? sort : WaypointsColumns.DEFAULT_SORT_ORDER;
                 break;
-            case WAYPOINTS_ID:
+            case WAYPOINTS_BY_ID:
                 queryBuilder.setTables(WaypointsColumns.TABLE_NAME);
                 queryBuilder.appendWhere("_id=" + url.getPathSegments().get(1));
                 break;
@@ -233,7 +233,7 @@ public abstract class CustomContentProvider extends ContentProvider {
                 table = TrackPointsColumns.TABLE_NAME;
                 whereClause = where;
                 break;
-            case TRACKPOINTS_ID:
+            case TRACKPOINTS_BY_ID:
                 table = TrackPointsColumns.TABLE_NAME;
                 whereClause = TrackPointsColumns._ID + "=" + url.getPathSegments().get(1);
                 if (!TextUtils.isEmpty(where)) {
@@ -244,7 +244,7 @@ public abstract class CustomContentProvider extends ContentProvider {
                 table = TracksColumns.TABLE_NAME;
                 whereClause = where;
                 break;
-            case TRACKS_ID:
+            case TRACKS_BY_ID:
                 table = TracksColumns.TABLE_NAME;
                 whereClause = TracksColumns._ID + "=" + url.getPathSegments().get(1);
                 if (!TextUtils.isEmpty(where)) {
@@ -255,7 +255,7 @@ public abstract class CustomContentProvider extends ContentProvider {
                 table = WaypointsColumns.TABLE_NAME;
                 whereClause = where;
                 break;
-            case WAYPOINTS_ID:
+            case WAYPOINTS_BY_ID:
                 table = WaypointsColumns.TABLE_NAME;
                 whereClause = WaypointsColumns._ID + "=" + url.getPathSegments().get(1);
                 if (!TextUtils.isEmpty(where)) {
@@ -365,7 +365,11 @@ public abstract class CustomContentProvider extends ContentProvider {
      */
     @VisibleForTesting
     enum UrlType {
-        TRACKPOINTS, TRACKPOINTS_ID, TRACKS, TRACKS_ID, WAYPOINTS, WAYPOINTS_ID
+        TRACKPOINTS,
+        TRACKPOINTS_BY_ID,
+        TRACKS, TRACKS_BY_ID,
+        WAYPOINTS,
+        WAYPOINTS_BY_ID
     }
 
     /**

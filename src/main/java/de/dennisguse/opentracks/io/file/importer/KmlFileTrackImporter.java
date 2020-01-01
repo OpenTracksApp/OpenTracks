@@ -29,7 +29,7 @@ import org.xml.sax.SAXException;
 import java.util.ArrayList;
 
 import de.dennisguse.opentracks.content.ContentProviderUtils;
-import de.dennisguse.opentracks.content.TrackPoint;
+import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.io.file.exporter.KmlTrackWriter;
 
