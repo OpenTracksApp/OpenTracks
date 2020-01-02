@@ -30,10 +30,10 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
 ## Features:
 * __Tracking:__ track your sport and outdoor activities 
 * __Photos and Markers:__ mark interesting locations while tracking (also with photos)
-* __Heart rate:__ supports bluetooth LE sensors
+* __Heart rate:__ supports Bluetooth LE sensors
 * __Export data:__ export tracks either as KMZ (incl. photos), KML or GPX
 * __No Internet access:__ Internet is not used
-* __Voice annoucements__
+* __Voice announcements__
 * __No advertising__
 * __Privacy:__
     * _does not contain any in-app analytics_
@@ -47,6 +47,9 @@ _Please note:_
 _Tracks_ does not contain a _map_ (as this would required Internet access).
 To show your tracks on a map, a 3rd party application (e.g., [OsmAnd](https://play.google.com/store/apps/details?id=net.osmand) or [MAPS.ME](https://play.google.com/store/apps/details?id=com.mapswithme.maps.pro)) needs to be installed.  
 
+## Custom Dashboards
+As of v3.3.1 OpenTracks enables to use custom dashboards.
+The reference implementation is [OSMDashboard](https://github.com/OpenTracksApp/OSMDashboard), which presents an OpenStreetMap map (showing the current track, incl. updates).
 
 ## Screenshots
 <div>
