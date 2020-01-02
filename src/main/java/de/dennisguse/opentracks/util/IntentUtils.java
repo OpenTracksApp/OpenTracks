@@ -37,6 +37,7 @@ import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.DescriptionGenerator;
 import de.dennisguse.opentracks.content.ShareContentProvider;
 import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 
@@ -126,6 +127,8 @@ public class IntentUtils {
         }
     }
 
+
+
     /**
      * Send intent to show tracks on a map (needs an another app).
      *
@@ -137,10 +140,16 @@ public class IntentUtils {
             return;
         }
 
+        if (IntentDashboardUtils.startDashboardPlugin(context, trackIds[0])) {
+            return;
+        }
+
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(TrackPointsColumns.TRACKID, trackIds[0]);
         Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(trackIds, TrackFileFormat.KMZ_WITH_TRACKDETAIL);
-        Intent intent = new Intent();
-        intent.setAction(android.content.Intent.ACTION_VIEW);
         intent.setDataAndType(uriAndMime.first, uriAndMime.second);
+
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         try {
             context.startActivity(intent);

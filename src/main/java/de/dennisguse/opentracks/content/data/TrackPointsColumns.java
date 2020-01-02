@@ -29,7 +29,7 @@ import de.dennisguse.opentracks.content.ContentProviderUtils;
 public interface TrackPointsColumns extends BaseColumns {
 
     String TABLE_NAME = "trackpoints";
-    Uri CONTENT_URI = Uri.parse(ContentProviderUtils.CONTENT_BASE_URI + "/trackpoints");
+    Uri CONTENT_URI = Uri.parse(ContentProviderUtils.CONTENT_BASE_URI + "/" + TABLE_NAME);
     String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.de.dennisguse.trackpoint";
     String CONTENT_ITEMTYPE = "vnd.android.cursor.item/vnd.de.dennisguse.trackpoint";
     String DEFAULT_SORT_ORDER = "_id";
