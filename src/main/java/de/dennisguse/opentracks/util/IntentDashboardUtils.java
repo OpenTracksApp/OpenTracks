@@ -4,12 +4,9 @@ import android.content.ClipData;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.net.Uri;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
@@ -43,9 +40,8 @@ public class IntentDashboardUtils {
         clipData.addItem(new ClipData.Item(uris.get(1)));
         intent.setClipData(clipData);
 
-        List<ResolveInfo> resolveInfos = context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-        if (resolveInfos.size() > 0) {
-            context.startActivity(intent);
+        if (intent.resolveActivity(context.getPackageManager()) != null) {
+            context.startActivity(Intent.createChooser(intent, null));
             return true;
         }
 
