@@ -22,6 +22,7 @@ limitations under the License.
     <application
         android:name=".Startup"
         android:allowBackup="false"
+        android:hasFragileUserData="true"
         android:hardwareAccelerated="true"
         android:icon="${applicationLogo}"
         android:label="${applicationName}"
