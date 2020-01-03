@@ -30,7 +30,7 @@ public class DeleteAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
     private final long[] trackIds;
     private final Context context;
-    private DeleteActivity deleteActivity;
+    private TrackDeleteActivity deleteActivity;
     // true if the AsyncTask has completed
     private boolean completed;
 
@@ -41,7 +41,7 @@ public class DeleteAsyncTask extends AsyncTask<Void, Integer, Boolean> {
      * @param trackIds       the track ids to delete. To delete all, set to size 1 with
      *                       trackIds[0] == -1L
      */
-    public DeleteAsyncTask(DeleteActivity deleteActivity, long[] trackIds) {
+    public DeleteAsyncTask(TrackDeleteActivity deleteActivity, long[] trackIds) {
         this.deleteActivity = deleteActivity;
         this.trackIds = trackIds;
         context = deleteActivity.getApplicationContext();
@@ -53,7 +53,7 @@ public class DeleteAsyncTask extends AsyncTask<Void, Integer, Boolean> {
      *
      * @param deleteActivity the current activity, can be null
      */
-    public void setActivity(DeleteActivity deleteActivity) {
+    public void setActivity(TrackDeleteActivity deleteActivity) {
         this.deleteActivity = deleteActivity;
         if (completed && deleteActivity != null) {
             deleteActivity.onAsyncTaskCompleted();

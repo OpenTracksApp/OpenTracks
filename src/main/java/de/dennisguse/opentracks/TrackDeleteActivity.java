@@ -23,14 +23,13 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import de.dennisguse.opentracks.util.DialogUtils;
-import de.dennisguse.opentracks.R;
 
 /**
  * An activity for delete tracks.
  *
  * @author Jimmy Shih
  */
-public class DeleteActivity extends Activity {
+public class TrackDeleteActivity extends Activity {
 
     public static final String EXTRA_TRACK_IDS = "track_ids";
 

@@ -76,8 +76,8 @@ public abstract class AbstractListActivity extends AbstractActivity implements C
         if (stopRecording) {
             getTrackRecordingServiceConnection().stopRecording(this, false);
         }
-        Intent intent = IntentUtils.newIntent(this, DeleteActivity.class);
-        intent.putExtra(DeleteActivity.EXTRA_TRACK_IDS, trackIds);
+        Intent intent = IntentUtils.newIntent(this, TrackDeleteActivity.class);
+        intent.putExtra(TrackDeleteActivity.EXTRA_TRACK_IDS, trackIds);
         startActivityForResult(intent, DELETE_REQUEST_CODE);
     }
 
@@ -88,7 +88,7 @@ public abstract class AbstractListActivity extends AbstractActivity implements C
     abstract protected TrackRecordingServiceConnection getTrackRecordingServiceConnection();
 
     /**
-     * Called after {@link DeleteActivity} returns its result.
+     * Called after {@link TrackDeleteActivity} returns its result.
      */
     abstract protected void onDeleted();
 }

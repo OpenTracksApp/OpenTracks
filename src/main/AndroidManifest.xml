@@ -30,7 +30,7 @@ limitations under the License.
         <!-- Activities -->
         <activity android:name=".AboutActivity" />
 
-        <activity android:name=".DeleteActivity" />
+        <activity android:name=".TrackDeleteActivity" />
 
         <activity
             android:name=".HelpActivity"
