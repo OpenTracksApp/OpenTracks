@@ -99,7 +99,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
     // UI elements
     private ListView listView;
     // Callback when an item is selected in the contextual action mode
-    private ContextualActionModeCallback contextualActionModeCallback = new ContextualActionModeCallback() {
+    private final ContextualActionModeCallback contextualActionModeCallback = new ContextualActionModeCallback() {
         @Override
         public void onPrepare(Menu menu, int[] positions, long[] ids, boolean showSelectAll) {
             boolean isSingleSelection = ids.length == 1;

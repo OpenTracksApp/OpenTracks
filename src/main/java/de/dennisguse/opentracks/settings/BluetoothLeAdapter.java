@@ -74,7 +74,7 @@ public class BluetoothLeAdapter extends BaseAdapter {
 
     public class Device {
         private String name;
-        private String address;
+        private final String address;
 
         public Device(String name, String address) {
             this.name = name;

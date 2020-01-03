@@ -88,10 +88,10 @@ public class BluetoothLePreference extends DialogPreference {
     public static class BluetoothLePreferenceDialog extends PreferenceDialogFragmentCompat {
 
         private int selectedEntryIndex;
-        private BluetoothLeAdapter listAdapter = new BluetoothLeAdapter();
+        private final BluetoothLeAdapter listAdapter = new BluetoothLeAdapter();
 
         private BluetoothLeScanner scanner = null;
-        private ScanCallback scanCallback = new ScanCallback() {
+        private final ScanCallback scanCallback = new ScanCallback() {
             @Override
             public void onScanResult(int callbackType, ScanResult result) {
                 super.onScanResult(callbackType, result);

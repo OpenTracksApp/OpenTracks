@@ -13,7 +13,7 @@ public class TrackPointFactory {
     /**
      * The default {@link TrackPointFactory} which creates a location each time.
      */
-    public static TrackPointFactory DEFAULT_LOCATION_FACTORY = new TrackPointFactory();
+    public static final TrackPointFactory DEFAULT_LOCATION_FACTORY = new TrackPointFactory();
 
     public TrackPoint createLocation() {
         return new TrackPoint(LocationManager.GPS_PROVIDER);

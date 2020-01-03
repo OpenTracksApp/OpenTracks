@@ -18,6 +18,8 @@ package de.dennisguse.opentracks.content.data;
 
 import android.location.Location;
 
+import androidx.annotation.VisibleForTesting;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,6 +108,7 @@ public class Track {
         this.tripStatistics = tripStatistics;
     }
 
+    @VisibleForTesting
     public void addLocation(Location location) {
         locations.add(location);
     }

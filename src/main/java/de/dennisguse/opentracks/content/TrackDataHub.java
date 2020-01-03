@@ -45,10 +45,6 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
  */
 public class TrackDataHub implements DataSourceListener {
 
-    public synchronized static TrackDataHub newInstance(Context context) {
-        return new TrackDataHub(context, new TrackDataManager(), new ContentProviderUtils(context), TARGET_DISPLAYED_TRACK_POINTS);
-    }
-
     /**
      * Target number of track points displayed by the map overlay.
      * We may display more than this number of points.
@@ -90,14 +86,10 @@ public class TrackDataHub implements DataSourceListener {
     private long firstSeenLocationId;
     private long lastSeenLocationId;
 
-    /**
-     * Constructor.
-     *
-     * @param context              the context
-     * @param trackDataManager     the track data manager
-     * @param contentProviderUtils the content tracks provider utils
-     * @param targetNumPoints      the target number of points
-     */
+    public TrackDataHub(Context context) {
+        this(context, new TrackDataManager(), new ContentProviderUtils(context), TARGET_DISPLAYED_TRACK_POINTS);
+    }
+
     @VisibleForTesting
     private TrackDataHub(Context context, TrackDataManager trackDataManager, ContentProviderUtils contentProviderUtils, int targetNumPoints) {
         this.context = context;

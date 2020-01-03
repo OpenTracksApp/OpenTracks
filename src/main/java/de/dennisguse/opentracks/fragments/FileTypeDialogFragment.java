@@ -40,10 +40,10 @@ import de.dennisguse.opentracks.io.file.TrackFileFormat;
 public class FileTypeDialogFragment extends DialogFragment {
 
     private static final String FILE_TYPE_DIALOG_TAG = "fileType";
-    private int titleId;
+    private final int titleId;
 
     private FileTypeCaller caller;
-    private int optionId;
+    private final int optionId;
 
     public FileTypeDialogFragment(int titleId, int optionId) {
         this.titleId = titleId;

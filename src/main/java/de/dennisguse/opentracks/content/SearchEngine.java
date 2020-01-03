@@ -106,7 +106,7 @@ public class SearchEngine {
     public static final long OLDEST_ALLOWED_TIMESTAMP = 946692000000L;
 
     /**
-     * Comparador for scored results.
+     * Comparator for scored results.
      */
     private static final Comparator<ScoredResult> SCORED_RESULT_COMPARATOR = new Comparator<ScoredResult>() {
         @Override

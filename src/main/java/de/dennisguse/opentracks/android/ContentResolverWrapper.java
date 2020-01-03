@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
  */
 public class ContentResolverWrapper implements IContentResolver {
 
-    private ContentResolver contentResolver;
+    private final ContentResolver contentResolver;
 
     public ContentResolverWrapper(ContentResolver contentResolver) {
         this.contentResolver = contentResolver;

@@ -47,7 +47,7 @@ public class TrackRecordingServiceTestLooper {
 
     private Context context = ApplicationProvider.getApplicationContext();
 
-    private ContentProviderUtils providerUtils;
+    private ContentProviderUtils contentProviderUtils;
 
     @BeforeClass
     public static void preSetUp() {
@@ -67,14 +67,14 @@ public class TrackRecordingServiceTestLooper {
         };
         customContentProvider.attachInfo(context, null);
 
-        providerUtils = new ContentProviderUtils(context);
+        contentProviderUtils = new ContentProviderUtils(context);
 
         // Let's use default values.
         SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
         sharedPreferences.edit().clear().apply();
 
         // Ensure that the database is empty before every test
-        providerUtils.deleteAllTracks(context);
+        contentProviderUtils.deleteAllTracks(context);
     }
 
     @After
@@ -86,7 +86,7 @@ public class TrackRecordingServiceTestLooper {
         }
 
         // Ensure that the database is empty after every test
-        providerUtils.deleteAllTracks(context);
+        contentProviderUtils.deleteAllTracks(context);
     }
 
     @MediumTest
@@ -186,7 +186,7 @@ public class TrackRecordingServiceTestLooper {
     @MediumTest
     @Test
     public void testIntegration_completeRecordingSession() throws TimeoutException {
-        List<Track> tracks = providerUtils.getAllTracks();
+        List<Track> tracks = contentProviderUtils.getAllTracks();
         Assert.assertTrue(tracks.isEmpty());
         fullRecordingSession();
     }
@@ -199,7 +199,7 @@ public class TrackRecordingServiceTestLooper {
         long id = service.startNewTrack();
         Assert.assertTrue(id >= 0);
         Assert.assertTrue(service.isRecording());
-        Track track = providerUtils.getTrack(id);
+        Track track = contentProviderUtils.getTrack(id);
         Assert.assertNotNull(track);
         Assert.assertEquals(id, track.getId());
         Assert.assertEquals(id, PreferencesUtils.getRecordingTrackId(context));
@@ -226,7 +226,7 @@ public class TrackRecordingServiceTestLooper {
         service.endCurrentTrack();
         Assert.assertFalse(service.isRecording());
         Assert.assertEquals(-1L, service.getRecordingTrackId());
-        track = providerUtils.getTrack(id);
+        track = contentProviderUtils.getTrack(id);
         Assert.assertNotNull(track);
         Assert.assertEquals(id, track.getId());
         TripStatistics tripStatistics = track.getTripStatistics();

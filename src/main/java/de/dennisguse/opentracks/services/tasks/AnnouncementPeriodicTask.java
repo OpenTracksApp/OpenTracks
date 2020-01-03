@@ -61,11 +61,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
                     stop = false;
                     break;
                 case AudioManager.AUDIOFOCUS_LOSS:
-                    stop = true;
-                    break;
                 case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                    stop = true;
-                    break;
                 case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
                     stop = true;
                     break;

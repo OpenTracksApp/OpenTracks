@@ -415,7 +415,7 @@ public class CustomContentProviderUtilsTest {
 
     /**
      * Tests the method
-     * {@link ContentProviderUtils#deleteWaypoint(Context, long)}
+     * {@link ContentProviderUtils#deleteWaypoint(long)}
      * when there is only one waypoint in the track.
      */
     @Test
@@ -431,14 +431,14 @@ public class CustomContentProviderUtilsTest {
         contentProviderUtils.insertWaypoint(waypoint1);
 
         // Delete
-        contentProviderUtils.deleteWaypoint(context, 1);
+        contentProviderUtils.deleteWaypoint(1);
 
         Assert.assertNull(contentProviderUtils.getWaypoint(1));
     }
 
     /**
      * Tests the method
-     * {@link ContentProviderUtils#deleteWaypoint(Context, long)}
+     * {@link ContentProviderUtils#deleteWaypoint(long)}
      * when there is more than one waypoint in the track.
      */
     @Test
@@ -476,7 +476,7 @@ public class CustomContentProviderUtilsTest {
 
         // Delete
         Assert.assertNotNull(contentProviderUtils.getWaypoint(waypoint1Id));
-        contentProviderUtils.deleteWaypoint(context, waypoint1Id);
+        contentProviderUtils.deleteWaypoint(waypoint1Id);
         Assert.assertNull(contentProviderUtils.getWaypoint(waypoint1Id));
 
         Assert.assertEquals(MOCK_DESC, contentProviderUtils.getWaypoint(waypoint2Id).getDescription());
@@ -505,32 +505,6 @@ public class CustomContentProviderUtilsTest {
         contentProviderUtils.insertWaypoint(waypoint4);
 
         Assert.assertEquals(4, contentProviderUtils.getNextWaypointNumber(trackId));
-    }
-
-    /**
-     * Tests the method
-     * {@link ContentProviderUtils#getLastWaypoint(long)}.
-     */
-    @Test
-    public void testGetLastWaypoint() {
-        long trackId = System.currentTimeMillis();
-        Track track = TestDataUtil.getTrack(trackId, 10);
-        contentProviderUtils.insertTrack(track);
-
-        Waypoint waypoint1 = new Waypoint();
-        waypoint1.setTrackId(trackId);
-        waypoint1.setDescription("Desc1");
-        Waypoint waypoint2 = new Waypoint();
-        waypoint2.setTrackId(trackId);
-        waypoint2.setDescription("Desc2");
-        Waypoint waypoint3 = new Waypoint();
-        waypoint3.setTrackId(trackId);
-        waypoint3.setDescription("Desc3");
-        contentProviderUtils.insertWaypoint(waypoint1);
-        contentProviderUtils.insertWaypoint(waypoint2);
-        contentProviderUtils.insertWaypoint(waypoint3);
-
-        Assert.assertEquals("Desc3", contentProviderUtils.getLastWaypoint(trackId).getDescription());
     }
 
     /**

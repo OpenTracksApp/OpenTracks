@@ -29,7 +29,7 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
  */
 public class TrackUtils {
 
-    public static String TRACK_SORT_ORDER = TracksColumns.STARTTIME + " DESC";
+    public static final String TRACK_SORT_ORDER = TracksColumns.STARTTIME + " DESC";
 
     private TrackUtils() {
     }

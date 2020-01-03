@@ -81,19 +81,6 @@ public class FileUtils {
     }
 
     /**
-     * Gets the name from a file name, without the extension.
-     *
-     * @param fileName the file name
-     */
-    public static String getName(String fileName) {
-        int index = fileName.lastIndexOf('.');
-        if (index == -1) {
-            return fileName;
-        }
-        return fileName.substring(0, index);
-    }
-
-    /**
      * Gets the extension from a file name.
      * Returns null if there is no extension.
      *

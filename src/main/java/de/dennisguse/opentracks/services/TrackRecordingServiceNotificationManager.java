@@ -24,9 +24,9 @@ class TrackRecordingServiceNotificationManager {
 
     private final static String CHANNEL_ID = TrackRecordingServiceNotificationManager.class.getSimpleName();
 
-    private NotificationCompat.Builder notificationBuilder;
+    private final NotificationCompat.Builder notificationBuilder;
 
-    private NotificationManager notificationManager;
+    private final NotificationManager notificationManager;
 
     private boolean previousLocationWasAccurate = true;
 

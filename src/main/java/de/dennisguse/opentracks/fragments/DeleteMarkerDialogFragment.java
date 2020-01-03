@@ -38,7 +38,7 @@ import de.dennisguse.opentracks.util.DialogUtils;
 public class DeleteMarkerDialogFragment extends DialogFragment {
 
     private static final String DELETE_MARKER_DIALOG_TAG = "deleteMarkerDialog";
-    private long[] markerIds;
+    private final long[] markerIds;
 
     private DeleteMarkerCaller caller;
 
@@ -82,7 +82,7 @@ public class DeleteMarkerDialogFragment extends DialogFragment {
                             public void run() {
                                 ContentProviderUtils contentProviderUtils = new ContentProviderUtils(fragmentActivity);
                                 for (long markerId : markerIds) {
-                                    contentProviderUtils.deleteWaypoint(fragmentActivity, markerId);
+                                    contentProviderUtils.deleteWaypoint(markerId);
                                 }
                                 caller.onDeleteMarkerDone();
                             }

@@ -65,9 +65,9 @@ public class KmlTrackWriter implements TrackWriter {
     private final ContentProviderUtils contentProviderUtils;
 
     private PrintWriter printWriter;
-    private List<Float> powerList = new ArrayList<>();
-    private List<Float> cadenceList = new ArrayList<>();
-    private List<Float> heartRateList = new ArrayList<>();
+    private final List<Float> powerList = new ArrayList<>();
+    private final List<Float> cadenceList = new ArrayList<>();
+    private final List<Float> heartRateList = new ArrayList<>();
 
     private Location startLocation;
 
@@ -164,7 +164,7 @@ public class KmlTrackWriter implements TrackWriter {
         if (printWriter != null && exportTrackDetail) {
             if (waypoint.hasPhoto() && exportPhotos) {
                 float heading = getHeading(waypoint.getTrackId(), waypoint.getLocation());
-                writePhotoOverlay(waypoint.getName(), waypoint.getCategory(), waypoint.getDescription(), WAYPOINT_STYLE, waypoint.getLocation(), waypoint.getPhotoUrl(), heading);
+                writePhotoOverlay(waypoint.getName(), waypoint.getCategory(), waypoint.getDescription(), waypoint.getLocation(), waypoint.getPhotoUrl(), heading);
             } else {
                 writePlacemark(waypoint.getName(), waypoint.getCategory(), waypoint.getDescription(), WAYPOINT_STYLE, waypoint.getLocation());
             }
@@ -321,16 +321,14 @@ public class KmlTrackWriter implements TrackWriter {
 
     /**
      * Writes a photo overlay.
-     *
-     * @param name        the name
+     *  @param name        the name
      * @param category    the category
      * @param description the description
-     * @param styleName   the style name
      * @param location    the location
      * @param photoUrl    the photo url
      * @param heading     the heading
      */
-    private void writePhotoOverlay(String name, String category, String description, String styleName, Location location, String photoUrl, float heading) {
+    private void writePhotoOverlay(String name, String category, String description, Location location, String photoUrl, float heading) {
         if (location != null && exportTrackDetail) {
             printWriter.println("<PhotoOverlay>");
             printWriter.println("<name>" + StringUtils.formatCData(name) + "</name>");
@@ -343,7 +341,7 @@ public class KmlTrackWriter implements TrackWriter {
             printWriter.print("<tilt>90</tilt>");
             printWriter.println("</Camera>");
             printWriter.println("<TimeStamp><when>" + getTime(location) + "</when></TimeStamp>");
-            printWriter.println("<styleUrl>#" + styleName + "</styleUrl>");
+            printWriter.println("<styleUrl>#" + KmlTrackWriter.WAYPOINT_STYLE + "</styleUrl>");
             writeCategory(category);
 
             if (exportPhotos) {

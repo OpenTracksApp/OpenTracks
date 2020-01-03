@@ -73,7 +73,7 @@ public abstract class ChartFragment extends Fragment implements TrackDataListene
 
     // Modes of operation
     private boolean chartByDistance;
-    private boolean[] chartShow = new boolean[]{true, true, true, true, true, true};
+    private final boolean[] chartShow = new boolean[]{true, true, true, true, true, true};
 
     // UI elements
     private ChartView chartView;

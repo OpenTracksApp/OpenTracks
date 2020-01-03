@@ -37,7 +37,7 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
 
     private static final String CONFIRM_DELETE_DIALOG_TAG = "confirmDeleteDialog";
     private ConfirmDeleteCaller caller;
-    private long[] trackIds;
+    private final long[] trackIds;
 
     public ConfirmDeleteDialogFragment(long[] trackIds) {
         this.trackIds = trackIds;

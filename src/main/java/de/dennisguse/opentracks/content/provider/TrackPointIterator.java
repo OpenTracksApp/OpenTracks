@@ -19,7 +19,7 @@ public class TrackPointIterator implements Iterator<TrackPoint>, AutoCloseable {
     private final long trackId;
     private final boolean descending;
     private final TrackPointFactory trackPointFactory;
-    private final ContentProviderUtils.CachedTrackPointsIndexes indexes;
+    private final CachedTrackPointsIndexes indexes;
     private long lastTrackPointId = -1L;
     private Cursor cursor;
 
@@ -35,7 +35,7 @@ public class TrackPointIterator implements Iterator<TrackPoint>, AutoCloseable {
         this.trackPointFactory = trackPointFactory;
 
         cursor = getCursor(startTrackPointId);
-        indexes = cursor != null ? new ContentProviderUtils.CachedTrackPointsIndexes(cursor)
+        indexes = cursor != null ? new CachedTrackPointsIndexes(cursor)
                 : null;
     }
 

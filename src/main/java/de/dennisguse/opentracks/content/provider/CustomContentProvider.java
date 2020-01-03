@@ -134,7 +134,6 @@ public abstract class CustomContentProvider extends ContentProvider {
             case TRACKPOINTS:
                 return TrackPointsColumns.CONTENT_TYPE;
             case TRACKPOINTS_BY_ID:
-                return TrackPointsColumns.CONTENT_ITEMTYPE;
             case TRACKPOINTS_BY_TRACKID:
                 return TrackPointsColumns.CONTENT_ITEMTYPE;
             case TRACKS:

@@ -104,7 +104,7 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
     private boolean recordingTrackPaused;
 
     // Callback when an item is selected in the contextual action mode
-    private ContextualActionModeCallback contextualActionModeCallback = new ContextualActionModeCallback() {
+    private final ContextualActionModeCallback contextualActionModeCallback = new ContextualActionModeCallback() {
         @Override
         public void onPrepare(Menu menu, int[] positions, long[] ids, boolean showSelectAll) {
             boolean isRecording = PreferencesUtils.isRecording(recordingTrackId);

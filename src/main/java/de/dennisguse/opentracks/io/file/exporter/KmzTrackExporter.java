@@ -52,7 +52,7 @@ public class KmzTrackExporter implements TrackExporter {
     private final TrackExporter fileTrackExporter;
     private final Track[] tracks;
 
-    private boolean exportPhotos;
+    private final boolean exportPhotos;
 
     /**
      * Constructor.

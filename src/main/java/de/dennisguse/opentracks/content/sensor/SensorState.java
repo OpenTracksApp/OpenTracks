@@ -20,7 +20,6 @@ public enum SensorState {
             case CONNECTED:
                 return c.getString(R.string.sensor_state_connected);
             case DISCONNECTING:
-                return c.getString(R.string.sensor_state_disconnected);
             case DISCONNECTED:
                 return c.getString(R.string.sensor_state_disconnected);
             default:

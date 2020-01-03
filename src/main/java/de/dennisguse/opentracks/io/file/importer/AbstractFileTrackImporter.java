@@ -493,7 +493,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
     // TODO Why private inner class?
     private class TrackData {
         // The current track
-        Track track = new Track();
+        final Track track = new Track();
 
         // The number of segments processed for the current track
         int numberOfSegments = 0;
@@ -508,10 +508,10 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         TripStatisticsUpdater tripStatisticsUpdater;
 
         // The import time of the track.
-        long importTime = System.currentTimeMillis();
+        final long importTime = System.currentTimeMillis();
 
         // The buffered locations
-        Location[] bufferedLocations = new Location[MAX_BUFFERED_LOCATIONS];
+        final Location[] bufferedLocations = new Location[MAX_BUFFERED_LOCATIONS];
 
         // The number of buffered locations
         int numBufferedLocations = 0;

@@ -64,7 +64,7 @@ public class MarkerDetailFragment extends Fragment {
     private ImageView textGradient;
     private LinearLayout waypointInfo;
     private Waypoint waypoint;
-    private Runnable hideText = new Runnable() {
+    private final Runnable hideText = new Runnable() {
         @Override
         public void run() {
             Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.fadeout);
@@ -219,7 +219,7 @@ public class MarkerDetailFragment extends Fragment {
             photoView.setImageResource(MarkerUtils.ICON_ID);
         }
 
-        setName(R.id.marker_detail_waypoint_name, hasPhoto);
+        setName(hasPhoto);
 
         TextView category = getView().findViewById(R.id.marker_detail_waypoint_category);
         ListItemUtils.setTextView(getActivity(), category, StringUtils.getCategory(waypoint.getCategory()), hasPhoto);
@@ -227,16 +227,16 @@ public class MarkerDetailFragment extends Fragment {
         TextView description = getView().findViewById(R.id.marker_detail_waypoint_description);
         ListItemUtils.setTextView(getActivity(), description, waypoint.getDescription(), hasPhoto);
 
-        setLocation(R.id.marker_detail_waypoint_location, hasPhoto);
+        setLocation(hasPhoto);
     }
 
-    private void setName(int resId, boolean addShadow) {
-        TextView textView = getView().findViewById(resId);
+    private void setName(boolean addShadow) {
+        TextView textView = getView().findViewById(R.id.marker_detail_waypoint_name);
         ListItemUtils.setTextView(getActivity(), textView, waypoint.getName(), addShadow);
     }
 
-    private void setLocation(int resId, boolean addShadow) {
-        TextView textView = getView().findViewById(resId);
+    private void setLocation(boolean addShadow) {
+        TextView textView = getView().findViewById(R.id.marker_detail_waypoint_location);
         Location location = waypoint.getLocation();
         String value;
         if (location == null) {

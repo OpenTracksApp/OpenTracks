@@ -57,17 +57,17 @@ public class ContentProviderUtils {
     /**
      * The authority (the first part of the URI) for the app's content provider.
      */
-    static String AUTHORITY_PACKAGE = BuildConfig.APPLICATION_ID + ".content";
+    static final String AUTHORITY_PACKAGE = BuildConfig.APPLICATION_ID + ".content";
 
     /**
      * The base URI for the app's content provider.
      */
-    public static String CONTENT_BASE_URI = "content://" + AUTHORITY_PACKAGE;
+    public static final String CONTENT_BASE_URI = "content://" + AUTHORITY_PACKAGE;
 
     /**
      * Maximum number of waypoints that will be loaded at one time.
      */
-    public static int MAX_LOADED_WAYPOINTS_POINTS = 10000;
+    public static final int MAX_LOADED_WAYPOINTS_POINTS = 10000;
 
     private final IContentResolver contentResolver;
     private int defaultCursorBatchSize = 2000;
@@ -107,8 +107,6 @@ public class ContentProviderUtils {
         int nameIndex = cursor.getColumnIndexOrThrow(TracksColumns.NAME);
         int descriptionIndex = cursor.getColumnIndexOrThrow(TracksColumns.DESCRIPTION);
         int categoryIndex = cursor.getColumnIndexOrThrow(TracksColumns.CATEGORY);
-        int startIdIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTID);
-        int stopIdIndex = cursor.getColumnIndexOrThrow(TracksColumns.STOPID);
         int startTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME);
         int stopTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.STOPTIME);
         int numPointsIndex = cursor.getColumnIndexOrThrow(TracksColumns.NUMPOINTS);
@@ -240,9 +238,10 @@ public class ContentProviderUtils {
      * If no track exists, an empty list is returned.
      * NOTE: the returned tracks do not have any track points attached.
      */
+    @VisibleForTesting
     public List<Track> getAllTracks() {
         ArrayList<Track> tracks = new ArrayList<>();
-        try (Cursor cursor = getTrackCursor(null, null, null, TracksColumns._ID)) {
+        try (Cursor cursor = getTrackCursor(null, null, TracksColumns._ID)) {
             if (cursor != null && cursor.moveToFirst()) {
                 tracks.ensureCapacity(cursor.getCount());
                 do {
@@ -257,7 +256,7 @@ public class ContentProviderUtils {
      * Gets the last track or null.
      */
     public Track getLastTrack() {
-        try (Cursor cursor = getTrackCursor(null, null, null, TracksColumns.STARTTIME + " DESC")) {
+        try (Cursor cursor = getTrackCursor(null, null, TracksColumns.STARTTIME + " DESC")) {
             // Using the same order as shown in the track list
             if (cursor != null && cursor.moveToNext()) {
                 return createTrack(cursor);
@@ -276,7 +275,7 @@ public class ContentProviderUtils {
         if (trackId < 0) {
             return null;
         }
-        try (Cursor cursor = getTrackCursor(null, TracksColumns._ID + "=?", new String[]{Long.toString(trackId)}, TracksColumns._ID)) {
+        try (Cursor cursor = getTrackCursor(TracksColumns._ID + "=?", new String[]{Long.toString(trackId)}, TracksColumns._ID)) {
             if (cursor != null && cursor.moveToNext()) {
                 return createTrack(cursor);
             }
@@ -293,7 +292,7 @@ public class ContentProviderUtils {
      * @param sortOrder     the sort order. Can be null
      */
     public Cursor getTrackCursor(String selection, String[] selectionArgs, String sortOrder) {
-        return getTrackCursor(null, selection, selectionArgs, sortOrder);
+        return contentResolver.query(TracksColumns.CONTENT_URI, null, selection, selectionArgs, sortOrder);
     }
 
     /**
@@ -348,17 +347,6 @@ public class ContentProviderUtils {
         return values;
     }
 
-    /**
-     * Gets a track cursor.
-     *
-     * @param projection    the projection
-     * @param selection     the selection
-     * @param selectionArgs the selection arguments
-     * @param sortOrder     the sort oder
-     */
-    private Cursor getTrackCursor(String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        return contentResolver.query(TracksColumns.CONTENT_URI, projection, selection, selectionArgs, sortOrder);
-    }
 
     /**
      * Creates a waypoint from a cursor.
@@ -446,7 +434,7 @@ public class ContentProviderUtils {
      * @param waypointId the waypoint id
      */
 
-    public void deleteWaypoint(Context context, long waypointId) {
+    public void deleteWaypoint(long waypointId) {
         final Waypoint waypoint = getWaypoint(waypointId);
         if (waypoint != null && waypoint.hasPhoto()) {
             Uri uri = waypoint.getPhotoURI();
@@ -460,26 +448,6 @@ public class ContentProviderUtils {
             }
         }
         contentResolver.delete(WaypointsColumns.CONTENT_URI, WaypointsColumns._ID + "=?", new String[]{Long.toString(waypointId)});
-    }
-
-    /**
-     * Gets the last waypoint for a type. Returns null if it doesn't exist.
-     *
-     * @param trackId the track id
-     */
-    public Waypoint getLastWaypoint(long trackId) {
-        if (trackId < 0) {
-            return null;
-        }
-        String selection = WaypointsColumns.TRACKID + "=?";
-        String[] selectionArgs = new String[]{Long.toString(trackId)};
-        try (Cursor cursor = getWaypointCursor(null, selection, selectionArgs, WaypointsColumns._ID + " DESC", 1)) {
-
-            if (cursor != null && cursor.moveToFirst()) {
-                return createWaypoint(cursor);
-            }
-        }
-        return null;
     }
 
     /**
@@ -973,36 +941,5 @@ public class ContentProviderUtils {
     @VisibleForTesting
     void setDefaultCursorBatchSize(int defaultCursorBatchSize) {
         this.defaultCursorBatchSize = defaultCursorBatchSize;
-    }
-
-    /**
-     * A cache of track points indexes.
-     */
-    static class CachedTrackPointsIndexes {
-        final int idIndex;
-        final int longitudeIndex;
-        final int latitudeIndex;
-        final int timeIndex;
-        final int altitudeIndex;
-        final int accuracyIndex;
-        final int speedIndex;
-        final int bearingIndex;
-        final int sensorHeartRateIndex;
-        final int sensorCadenceIndex;
-        final int sensorPowerIndex;
-
-        CachedTrackPointsIndexes(Cursor cursor) {
-            idIndex = cursor.getColumnIndex(TrackPointsColumns._ID);
-            longitudeIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.LONGITUDE);
-            latitudeIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.LATITUDE);
-            timeIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.TIME);
-            altitudeIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.ALTITUDE);
-            accuracyIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.ACCURACY);
-            speedIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.SPEED);
-            bearingIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.BEARING);
-            sensorHeartRateIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.SENSOR_HEARTRATE);
-            sensorCadenceIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.SENSOR_CADENCE);
-            sensorPowerIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.SENSOR_POWER);
-        }
     }
 }

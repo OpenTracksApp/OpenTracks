@@ -57,9 +57,9 @@ public class BluetoothConnectionManager {
     private SensorState sensorState;
 
     private BluetoothGatt bluetoothGatt;
-    private BluetoothDevice bluetoothDevice;
+    private final BluetoothDevice bluetoothDevice;
 
-    private BluetoothGattCallback connectCallback = new BluetoothGattCallback() {
+    private final BluetoothGattCallback connectCallback = new BluetoothGattCallback() {
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
             switch (newState) {

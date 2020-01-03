@@ -150,7 +150,7 @@ public class TrackRecordingService extends Service {
     private boolean currentSegmentHasLocation;
     private boolean isIdle; // true if idle
     private ServiceBinder binder = new ServiceBinder(this);
-    private LocationListener locationListener = new LocationListener() {
+    private final LocationListener locationListener = new LocationListener() {
 
         @Override
         public void onLocationChanged(final Location location) {
@@ -358,7 +358,7 @@ public class TrackRecordingService extends Service {
         track.setTripStatistics(trackTripStatisticsUpdater.getTripStatistics());
         contentProviderUtils.updateTrack(track);
 
-        startRecording(true);
+        startRecording();
         return trackId;
     }
 
@@ -382,7 +382,7 @@ public class TrackRecordingService extends Service {
         } catch (RuntimeException e) {
             Log.e(TAG, "RuntimeException", e);
         }
-        startRecording(true);
+        startRecording();
     }
 
     /**
@@ -408,15 +408,13 @@ public class TrackRecordingService extends Service {
             insertLocation(track, resume, null);
         }
 
-        startRecording(false);
+        startRecording();
     }
 
     /**
      * Common code for starting a new track, resuming a track, or restarting after phone reboot.
-     *
-     * @param trackStarted true if track is started, false if track is resumed
      */
-    private void startRecording(boolean trackStarted) {
+    private void startRecording() {
         // Update instance variables
         remoteSensorManager = new BluetoothRemoteSensorManager(this);
         remoteSensorManager.start();
@@ -686,7 +684,7 @@ public class TrackRecordingService extends Service {
         }
 
         try {
-            Uri uri = contentProviderUtils.insertTrackPoint(location, track.getId());
+            contentProviderUtils.insertTrackPoint(location, track.getId());
             trackTripStatisticsUpdater.addLocation(location, recordingDistanceInterval);
             updateRecordingTrack(track, LocationUtils.isValidLocation(location));
         } catch (SQLiteException e) {

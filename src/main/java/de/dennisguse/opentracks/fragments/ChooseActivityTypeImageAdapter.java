@@ -56,12 +56,9 @@ public class ChooseActivityTypeImageAdapter extends BaseAdapter {
         return 0;
     }
 
-    public int getSelected() {
-        return selected;
-    }
-
     public void setSelected(int position) {
         selected = position;
+        notifyDataSetChanged();
     }
 
     @Override

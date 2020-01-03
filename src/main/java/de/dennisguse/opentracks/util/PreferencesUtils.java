@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+import androidx.annotation.VisibleForTesting;
 import androidx.preference.PreferenceManager;
 
 import de.dennisguse.opentracks.R;
@@ -44,7 +45,7 @@ public class PreferencesUtils {
     public static final long RECORDING_TRACK_ID_DEFAULT = -1L;
 
     public static long getRecordingTrackId(Context context) {
-        return PreferencesUtils.getLong(context, R.string.recording_track_id_key, RECORDING_TRACK_ID_DEFAULT);
+        return PreferencesUtils.getLong(context);
     }
 
     public static String getDefaultActivity(Context context) {
@@ -134,6 +135,7 @@ public class PreferencesUtils {
      * @param keyId   the key id
      * @param value   the value
      */
+    @VisibleForTesting
     public static void setInt(Context context, int keyId, int value) {
         SharedPreferences sharedPreferences = getSharedPreferences(context);
         Editor editor = sharedPreferences.edit();
@@ -143,13 +145,12 @@ public class PreferencesUtils {
 
     /**
      * Gets a long preference value.
-     *
      * @param context the context
-     * @param keyId   the key id
+     *
      */
-    private static long getLong(Context context, int keyId, long defaultValue) {
+    private static long getLong(Context context) {
         SharedPreferences sharedPreferences = getSharedPreferences(context);
-        return sharedPreferences.getLong(getKey(context, keyId), defaultValue);
+        return sharedPreferences.getLong(getKey(context, R.string.recording_track_id_key), PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
     }
 
     /**

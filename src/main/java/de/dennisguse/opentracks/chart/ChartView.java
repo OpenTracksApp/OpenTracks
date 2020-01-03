@@ -122,7 +122,7 @@ public class ChartView extends View {
     private boolean reportSpeed = true;
     private boolean showPointer = false;
 
-    private GestureDetectorCompat detectorScrollFlingTab = new GestureDetectorCompat(getContext(), new GestureDetector.SimpleOnGestureListener() {
+    private final GestureDetectorCompat detectorScrollFlingTab = new GestureDetectorCompat(getContext(), new GestureDetector.SimpleOnGestureListener() {
 
         @Override
         public boolean onDown(MotionEvent e) {
@@ -176,7 +176,7 @@ public class ChartView extends View {
         }
     });
 
-    private ScaleGestureDetector detectorZoom = new ScaleGestureDetector(getContext(), new ScaleGestureDetector.SimpleOnScaleGestureListener() {
+    private final ScaleGestureDetector detectorZoom = new ScaleGestureDetector(getContext(), new ScaleGestureDetector.SimpleOnScaleGestureListener() {
 
         @Override
         public boolean onScale(ScaleGestureDetector detector) {

@@ -39,7 +39,7 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment implements 
         return TrackIconUtils.getAllIconValues().indexOf(iconValue);
     }
 
-    private String preselectedCategory;
+    private final String preselectedCategory;
 
     private ChooseActivityTypeCaller chooseActivityTypeCaller;
 
@@ -71,7 +71,6 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment implements 
         int position = getPosition(getContext(), preselectedCategory);
         if (position != -1) {
             imageAdapter.setSelected(position);
-            imageAdapter.notifyDataSetChanged();
         }
 
         gridView.setOnItemClickListener(this);
