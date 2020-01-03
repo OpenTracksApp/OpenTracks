@@ -56,7 +56,7 @@ android {
         applicationId "de.dennisguse.opentracks"
         manifestPlaceholders = [
                 applicationLogo: "@drawable/ic_logo_color_24dp",
-                applicationName: "@strings/app_name"
+                applicationName: "@string/app_name"
         ]
 
         //Useful for debugging.
