@@ -22,7 +22,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
-import android.util.Log;
 
 import androidx.annotation.VisibleForTesting;
 
@@ -30,7 +29,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import de.dennisguse.opentracks.BuildConfig;
 import de.dennisguse.opentracks.android.ContentResolverWrapper;
@@ -831,102 +829,45 @@ public class ContentProviderUtils {
 
 
     /**
-     * Creates a new read-only iterator over a given track's points.
-     * It provides a lightweight way of iterating over long tracks without failing due to the underlying cursor limitations.
-     * Since it's a read-only iterator, {@link Iterator#remove()} always throws {@link UnsupportedOperationException}.
-     * Each call to {@link LocationIterator#next()} may advance to the next DB record, and if so, the iterator calls {@link LocationFactory#createLocation()} and populates it with information retrieved from the record.
-     * When done with iteration, {@link LocationIterator#close()} must be called.
+     * Fills a track point from a cursor.
      *
-     * @param trackId           the track id
-     * @param startTrackPointId the starting track point id. -1L to ignore
-     * @param descending        true to sort the result in descending order (latest location first)
-     * @param locationFactory   the location factory
+     * @param cursor   the cursor pointing to a location.
+     * @param indexes  the cached track points indexes
+     * @param location the track point
      */
-    public LocationIterator getTrackPointLocationIterator(final long trackId,
-                                                          final long startTrackPointId, final boolean descending,
-                                                          final LocationFactory locationFactory) {
-        if (locationFactory == null) {
-            throw new IllegalArgumentException("locationFactory is null");
+    static void fillTrackPoint(Cursor cursor, CachedTrackPointsIndexes indexes, Location location) {
+        location.reset();
+
+        if (!cursor.isNull(indexes.longitudeIndex)) {
+            location.setLongitude(((double) cursor.getInt(indexes.longitudeIndex)) / 1E6);
         }
-        return new LocationIterator() {
-            private long lastTrackPointId = -1L;
-            private Cursor cursor = getCursor(startTrackPointId);
-            private final CachedTrackPointsIndexes
-                    indexes = cursor != null ? new CachedTrackPointsIndexes(cursor)
-                    : null;
+        if (!cursor.isNull(indexes.latitudeIndex)) {
+            location.setLatitude(((double) cursor.getInt(indexes.latitudeIndex)) / 1E6);
+        }
+        if (!cursor.isNull(indexes.timeIndex)) {
+            location.setTime(cursor.getLong(indexes.timeIndex));
+        }
+        if (!cursor.isNull(indexes.altitudeIndex)) {
+            location.setAltitude(cursor.getFloat(indexes.altitudeIndex));
+        }
+        if (!cursor.isNull(indexes.accuracyIndex)) {
+            location.setAccuracy(cursor.getFloat(indexes.accuracyIndex));
+        }
+        if (!cursor.isNull(indexes.speedIndex)) {
+            location.setSpeed(cursor.getFloat(indexes.speedIndex));
+        }
+        if (!cursor.isNull(indexes.bearingIndex)) {
+            location.setBearing(cursor.getFloat(indexes.bearingIndex));
+        }
+        if (location instanceof TrackPoint) {
+            TrackPoint sensorDataSetLocation = (TrackPoint) location;
 
-            /**
-             * Gets the track point cursor.
-             *
-             * @param trackPointId the starting track point id
-             */
-            private Cursor getCursor(long trackPointId) {
-                return getTrackPointCursor(trackId, trackPointId, defaultCursorBatchSize, descending);
-            }
+            float heartRate = cursor.isNull(indexes.sensorHeartRateIndex) ? SensorDataSet.DATA_UNAVAILABLE : cursor.getFloat(indexes.sensorHeartRateIndex);
+            float cadence = cursor.isNull(indexes.sensorCadenceIndex) ? SensorDataSet.DATA_UNAVAILABLE : cursor.getFloat(indexes.sensorCadenceIndex);
+            float power = cursor.isNull(indexes.sensorPowerIndex) ? SensorDataSet.DATA_UNAVAILABLE : cursor.getFloat(indexes.sensorPowerIndex);
 
-            /**
-             * Advances the cursor to the next batch. Returns true if successful.
-             */
-            private boolean advanceCursorToNextBatch() {
-                long trackPointId = lastTrackPointId == -1L ? -1L
-                        : lastTrackPointId + (descending ? -1 : 1);
-                Log.d(TAG, "Advancing track point id: " + trackPointId);
-                cursor.close();
-                cursor = getCursor(trackPointId);
-                return cursor != null;
-            }
-
-            @Override
-            public long getLocationId() {
-                return lastTrackPointId;
-            }
-
-            @Override
-            public boolean hasNext() {
-                if (cursor == null) {
-                    return false;
-                }
-                if (cursor.isAfterLast()) {
-                    return false;
-                }
-                if (cursor.isLast()) {
-                    if (cursor.getCount() != defaultCursorBatchSize) {
-                        return false;
-                    }
-                    return advanceCursorToNextBatch() && !cursor.isAfterLast();
-                }
-                return true;
-            }
-
-            @Override
-            public Location next() {
-                if (cursor == null) {
-                    throw new NoSuchElementException();
-                }
-                if (!cursor.moveToNext()) {
-                    if (!advanceCursorToNextBatch() || !cursor.moveToNext()) {
-                        throw new NoSuchElementException();
-                    }
-                }
-                lastTrackPointId = cursor.getLong(indexes.idIndex);
-                Location location = locationFactory.createLocation();
-                fillTrackPoint(cursor, indexes, location);
-                return location;
-            }
-
-            @Override
-            public void close() {
-                if (cursor != null) {
-                    cursor.close();
-                    cursor = null;
-                }
-            }
-
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
-            }
-        };
+            sensorDataSetLocation.setSensorDataSet(new SensorDataSet(heartRate, cadence, power, SensorDataSet.DATA_UNAVAILABLE, location.getTime()));
+        }
     }
 
     /**
@@ -984,45 +925,22 @@ public class ContentProviderUtils {
     }
 
     /**
-     * Fills a track point from a cursor.
+     * Creates a new read-only iterator over a given track's points.
+     * It provides a lightweight way of iterating over long tracks without failing due to the underlying cursor limitations.
+     * Since it's a read-only iterator, {@link Iterator#remove()} always throws {@link UnsupportedOperationException}.
+     * Each call to {@link LocationIterator#next()} may advance to the next DB record, and if so, the iterator calls {@link LocationFactory#createLocation()} and populates it with information retrieved from the record.
+     * When done with iteration, {@link LocationIterator#close()} must be called.
      *
-     * @param cursor   the cursor pointing to a location.
-     * @param indexes  the cached track points indexes
-     * @param location the track point
+     * @param trackId           the track id
+     * @param startTrackPointId the starting track point id. -1L to ignore
+     * @param descending        true to sort the result in descending order (latest location first)
+     * @param locationFactory   the location factory
      */
-    private void fillTrackPoint(Cursor cursor, CachedTrackPointsIndexes indexes, Location location) {
-        location.reset();
-
-        if (!cursor.isNull(indexes.longitudeIndex)) {
-            location.setLongitude(((double) cursor.getInt(indexes.longitudeIndex)) / 1E6);
+    public LocationIterator getTrackPointLocationIterator(final long trackId, final long startTrackPointId, final boolean descending, final LocationFactory locationFactory) {
+        if (locationFactory == null) {
+            throw new IllegalArgumentException("locationFactory is null");
         }
-        if (!cursor.isNull(indexes.latitudeIndex)) {
-            location.setLatitude(((double) cursor.getInt(indexes.latitudeIndex)) / 1E6);
-        }
-        if (!cursor.isNull(indexes.timeIndex)) {
-            location.setTime(cursor.getLong(indexes.timeIndex));
-        }
-        if (!cursor.isNull(indexes.altitudeIndex)) {
-            location.setAltitude(cursor.getFloat(indexes.altitudeIndex));
-        }
-        if (!cursor.isNull(indexes.accuracyIndex)) {
-            location.setAccuracy(cursor.getFloat(indexes.accuracyIndex));
-        }
-        if (!cursor.isNull(indexes.speedIndex)) {
-            location.setSpeed(cursor.getFloat(indexes.speedIndex));
-        }
-        if (!cursor.isNull(indexes.bearingIndex)) {
-            location.setBearing(cursor.getFloat(indexes.bearingIndex));
-        }
-        if (location instanceof TrackPoint) {
-            TrackPoint sensorDataSetLocation = (TrackPoint) location;
-
-            float heartRate = cursor.isNull(indexes.sensorHeartRateIndex) ? SensorDataSet.DATA_UNAVAILABLE : cursor.getFloat(indexes.sensorHeartRateIndex);
-            float cadence = cursor.isNull(indexes.sensorCadenceIndex) ? SensorDataSet.DATA_UNAVAILABLE : cursor.getFloat(indexes.sensorCadenceIndex);
-            float power = cursor.isNull(indexes.sensorPowerIndex) ? SensorDataSet.DATA_UNAVAILABLE : cursor.getFloat(indexes.sensorPowerIndex);
-
-            sensorDataSetLocation.setSensorDataSet(new SensorDataSet(heartRate, cadence, power, SensorDataSet.DATA_UNAVAILABLE, location.getTime()));
-        }
+        return new LocationIterator(this, trackId, startTrackPointId, descending, locationFactory);
     }
 
     private Location findTrackPointBy(String selection, String[] selectionArgs) {
@@ -1046,6 +964,10 @@ public class ContentProviderUtils {
         return contentResolver.query(TrackPointsColumns.CONTENT_URI, projection, selection, selectionArgs, sortOrder);
     }
 
+    int getDefaultCursorBatchSize() {
+        return defaultCursorBatchSize;
+    }
+
     /**
      * Sets the default cursor batch size. For testing purpose.
      *
@@ -1059,7 +981,7 @@ public class ContentProviderUtils {
     /**
      * A cache of track points indexes.
      */
-    private static class CachedTrackPointsIndexes {
+    static class CachedTrackPointsIndexes {
         final int idIndex;
         final int longitudeIndex;
         final int latitudeIndex;
