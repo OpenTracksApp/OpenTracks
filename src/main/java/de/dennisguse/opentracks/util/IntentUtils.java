@@ -140,7 +140,7 @@ public class IntentUtils {
             return;
         }
 
-        if (IntentDashboardUtils.startDashboardPlugin(context, trackIds[0])) {
+        if (IntentDashboardUtils.startDashboard(context, trackIds[0])) {
             return;
         }
 

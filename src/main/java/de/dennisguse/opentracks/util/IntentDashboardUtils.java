@@ -24,7 +24,7 @@ public class IntentDashboardUtils {
     private IntentDashboardUtils() {
     }
 
-    public static boolean startDashboardPlugin(Context context, long trackId) {
+    public static boolean startDashboard(Context context, long trackId) {
         ArrayList<Uri> uris = new ArrayList<>();
 
         uris.add(0, ContentUris.withAppendedId(TracksColumns.CONTENT_URI, trackId));
