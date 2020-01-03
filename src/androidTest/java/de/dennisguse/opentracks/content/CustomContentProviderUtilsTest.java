@@ -37,6 +37,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.data.Waypoint;
@@ -75,16 +76,16 @@ public class CustomContentProviderUtilsTest {
 
     @Test
     public void testLocationIterator_noPoints() {
-        testIterator(1, 0, 1, false, LocationFactory.DEFAULT_LOCATION_FACTORY);
+        testIterator(1, 0, 1, false, TrackPointFactory.DEFAULT_LOCATION_FACTORY);
     }
 
     @Test
     public void testLocationIterator_customFactory() {
-        final Location location = new Location("test_location");
+        final TrackPoint location = new TrackPoint("test_location");
         final AtomicInteger counter = new AtomicInteger();
-        testIterator(1, 15, 4, false, new LocationFactory() {
+        testIterator(1, 15, 4, false, new TrackPointFactory() {
             @Override
-            public Location createLocation() {
+            public TrackPoint createLocation() {
                 counter.incrementAndGet();
                 return location;
             }
@@ -105,45 +106,45 @@ public class CustomContentProviderUtilsTest {
 
     @Test
     public void testLocationIterator_noBatchAscending() {
-        testIterator(1, 50, 100, false, LocationFactory.DEFAULT_LOCATION_FACTORY);
-        testIterator(2, 50, 50, false, LocationFactory.DEFAULT_LOCATION_FACTORY);
+        testIterator(1, 50, 100, false, TrackPointFactory.DEFAULT_LOCATION_FACTORY);
+        testIterator(2, 50, 50, false, TrackPointFactory.DEFAULT_LOCATION_FACTORY);
     }
 
     @Test
     public void testLocationIterator_noBatchDescending() {
-        testIterator(1, 50, 100, true, LocationFactory.DEFAULT_LOCATION_FACTORY);
-        testIterator(2, 50, 50, true, LocationFactory.DEFAULT_LOCATION_FACTORY);
+        testIterator(1, 50, 100, true, TrackPointFactory.DEFAULT_LOCATION_FACTORY);
+        testIterator(2, 50, 50, true, TrackPointFactory.DEFAULT_LOCATION_FACTORY);
     }
 
     @Test
     public void testLocationIterator_batchAscending() {
-        testIterator(1, 50, 11, false, LocationFactory.DEFAULT_LOCATION_FACTORY);
-        testIterator(2, 50, 25, false, LocationFactory.DEFAULT_LOCATION_FACTORY);
+        testIterator(1, 50, 11, false, TrackPointFactory.DEFAULT_LOCATION_FACTORY);
+        testIterator(2, 50, 25, false, TrackPointFactory.DEFAULT_LOCATION_FACTORY);
     }
 
     @Test
     public void testLocationIterator_batchDescending() {
-        testIterator(1, 50, 11, true, LocationFactory.DEFAULT_LOCATION_FACTORY);
-        testIterator(2, 50, 25, true, LocationFactory.DEFAULT_LOCATION_FACTORY);
+        testIterator(1, 50, 11, true, TrackPointFactory.DEFAULT_LOCATION_FACTORY);
+        testIterator(2, 50, 25, true, TrackPointFactory.DEFAULT_LOCATION_FACTORY);
     }
 
     @Test
     public void testLocationIterator_largeTrack() {
-        testIterator(1, 20000, 2000, false, LocationFactory.DEFAULT_LOCATION_FACTORY);
+        testIterator(1, 20000, 2000, false, TrackPointFactory.DEFAULT_LOCATION_FACTORY);
     }
 
-    private List<Location> testIterator(long trackId, int numPoints, int batchSize, boolean descending, LocationFactory locationFactory) {
+    private List<Location> testIterator(long trackId, int numPoints, int batchSize, boolean descending, TrackPointFactory trackPointFactory) {
         long lastPointId = initializeTrack(trackId, numPoints);
         ((ContentProviderUtils) contentProviderUtils).setDefaultCursorBatchSize(batchSize);
         List<Location> locations = new ArrayList<Location>(numPoints);
-        try (LocationIterator it = contentProviderUtils.getTrackPointLocationIterator(trackId, -1L, descending, locationFactory)) {
+        try (TrackPointIterator it = contentProviderUtils.getTrackPointLocationIterator(trackId, -1L, descending, trackPointFactory)) {
             while (it.hasNext()) {
                 Location loc = it.next();
                 Assert.assertNotNull(loc);
                 locations.add(loc);
                 // Make sure the IDs are returned in the right order.
                 Assert.assertEquals(descending ? lastPointId - locations.size() + 1
-                        : lastPointId - numPoints + locations.size(), it.getLocationId());
+                        : lastPointId - numPoints + locations.size(), it.getTrackPointId());
             }
             Assert.assertEquals(numPoints, locations.size());
         }
@@ -173,10 +174,10 @@ public class CustomContentProviderUtilsTest {
         // Load all inserted locations.
         long lastPointId = -1;
         int counter = 0;
-        try (LocationIterator it = contentProviderUtils.getTrackPointLocationIterator(id, -1L, false, LocationFactory.DEFAULT_LOCATION_FACTORY)) {
+        try (TrackPointIterator it = contentProviderUtils.getTrackPointLocationIterator(id, -1L, false, TrackPointFactory.DEFAULT_LOCATION_FACTORY)) {
             while (it.hasNext()) {
                 it.next();
-                lastPointId = it.getLocationId();
+                lastPointId = it.getTrackPointId();
                 counter++;
             }
         }
@@ -715,7 +716,7 @@ public class CustomContentProviderUtilsTest {
     }
 
     /**
-     * Tests the method {@link ContentProviderUtils#getTrackPointLocationIterator(long, long, boolean, LocationFactory)} in descending.
+     * Tests the method {@link ContentProviderUtils#getTrackPointLocationIterator(long, long, boolean, TrackPointFactory)} in descending.
      */
     @Test
     public void testGetTrackPointLocationIterator_desc() {
@@ -731,18 +732,18 @@ public class CustomContentProviderUtilsTest {
 
         long startTrackPointId = trackpointIds[9];
 
-        LocationIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(trackId, startTrackPointId, true, LocationFactory.DEFAULT_LOCATION_FACTORY);
+        TrackPointIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(trackId, startTrackPointId, true, TrackPointFactory.DEFAULT_LOCATION_FACTORY);
         for (int i = 0; i < trackpointIds.length; i++) {
             Assert.assertTrue(locationIterator.hasNext());
             Location location = locationIterator.next();
-            Assert.assertEquals(startTrackPointId - i, locationIterator.getLocationId());
+            Assert.assertEquals(startTrackPointId - i, locationIterator.getTrackPointId());
             checkLocation((trackpointIds.length - 1) - i, location);
         }
         Assert.assertFalse(locationIterator.hasNext());
     }
 
     /**
-     * Tests the method {@link ContentProviderUtils#getTrackPointLocationIterator(long, long, boolean, LocationFactory)} in ascending.
+     * Tests the method {@link ContentProviderUtils#getTrackPointLocationIterator(long, long, boolean, TrackPointFactory)} in ascending.
      */
     @Test
     public void testGetTrackPointLocationIterator_asc() {
@@ -758,11 +759,11 @@ public class CustomContentProviderUtilsTest {
 
         long startTrackPointId = trackpointIds[0];
 
-        LocationIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(trackId, startTrackPointId, false, LocationFactory.DEFAULT_LOCATION_FACTORY);
+        TrackPointIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(trackId, startTrackPointId, false, TrackPointFactory.DEFAULT_LOCATION_FACTORY);
         for (int i = 0; i < trackpointIds.length; i++) {
             Assert.assertTrue(locationIterator.hasNext());
             Location location = locationIterator.next();
-            Assert.assertEquals(startTrackPointId + i, locationIterator.getLocationId());
+            Assert.assertEquals(startTrackPointId + i, locationIterator.getTrackPointId());
 
             checkLocation(i, location);
         }

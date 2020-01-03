@@ -450,11 +450,11 @@ public class TrackDataHub implements DataSourceListener {
         int samplingFrequency = -1;
         boolean includeNextPoint = false;
 
-        try (LocationIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(selectedTrackId, localLastSeenLocationId + 1, false, LocationFactory.DEFAULT_LOCATION_FACTORY)) {
+        try (TrackPointIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(selectedTrackId, localLastSeenLocationId + 1, false, TrackPointFactory.DEFAULT_LOCATION_FACTORY)) {
 
             while (locationIterator.hasNext()) {
                 Location location = locationIterator.next();
-                long locationId = locationIterator.getLocationId();
+                long locationId = locationIterator.getTrackPointId();
 
                 // Stop if past the last wanted point
                 if (maxPointId != -1L && locationId > maxPointId) {

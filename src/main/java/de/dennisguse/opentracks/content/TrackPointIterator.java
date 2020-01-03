@@ -1,33 +1,38 @@
 package de.dennisguse.opentracks.content;
 
 import android.database.Cursor;
-import android.location.Location;
 import android.util.Log;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import de.dennisguse.opentracks.content.data.TrackPoint;
+
 /**
  * A lightweight wrapper around the original {@link Cursor} with a method to clean up.
  */
-public class LocationIterator implements Iterator<Location>, AutoCloseable {
+public class TrackPointIterator implements Iterator<TrackPoint>, AutoCloseable {
 
-    private static final String TAG = LocationIterator.class.getSimpleName();
+    private static final String TAG = TrackPointIterator.class.getSimpleName();
 
     private final ContentProviderUtils contentProviderUtils;
     private final long trackId;
     private final boolean descending;
-    private final LocationFactory locationFactory;
+    private final TrackPointFactory trackPointFactory;
     private final ContentProviderUtils.CachedTrackPointsIndexes indexes;
     private long lastTrackPointId = -1L;
     private Cursor cursor;
 
 
-    public LocationIterator(ContentProviderUtils contentProviderUtils, long trackId, long startTrackPointId, boolean descending, LocationFactory locationFactory) {
+    public TrackPointIterator(ContentProviderUtils contentProviderUtils, long trackId, long startTrackPointId, boolean descending, TrackPointFactory trackPointFactory) {
+        if (trackPointFactory == null) {
+            throw new IllegalArgumentException("trackPointFactory is null");
+        }
+
         this.contentProviderUtils = contentProviderUtils;
         this.trackId = trackId;
         this.descending = descending;
-        this.locationFactory = locationFactory;
+        this.trackPointFactory = trackPointFactory;
 
         cursor = getCursor(startTrackPointId);
         indexes = cursor != null ? new ContentProviderUtils.CachedTrackPointsIndexes(cursor)
@@ -54,7 +59,7 @@ public class LocationIterator implements Iterator<Location>, AutoCloseable {
         return cursor != null;
     }
 
-    public long getLocationId() {
+    public long getTrackPointId() {
         return lastTrackPointId;
     }
 
@@ -76,7 +81,7 @@ public class LocationIterator implements Iterator<Location>, AutoCloseable {
     }
 
     @Override
-    public Location next() {
+    public TrackPoint next() {
         if (cursor == null) {
             throw new NoSuchElementException();
         }
@@ -86,9 +91,9 @@ public class LocationIterator implements Iterator<Location>, AutoCloseable {
             }
         }
         lastTrackPointId = cursor.getLong(indexes.idIndex);
-        Location location = locationFactory.createLocation();
-        ContentProviderUtils.fillTrackPoint(cursor, indexes, location);
-        return location;
+        TrackPoint trackPoint = trackPointFactory.createLocation();
+        ContentProviderUtils.fillTrackPoint(cursor, indexes, trackPoint);
+        return trackPoint;
     }
 
     @Override

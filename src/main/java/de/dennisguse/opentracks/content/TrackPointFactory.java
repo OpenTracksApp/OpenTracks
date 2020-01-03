@@ -1,6 +1,5 @@
 package de.dennisguse.opentracks.content;
 
-import android.location.Location;
 import android.location.LocationManager;
 
 import de.dennisguse.opentracks.content.data.TrackPoint;
@@ -9,14 +8,14 @@ import de.dennisguse.opentracks.content.data.TrackPoint;
  * Creates a new {@link TrackPoint}.
  * An implementation can create new instances or reuse existing instances for optimization.
  */
-public class LocationFactory {
+public class TrackPointFactory {
 
     /**
-     * The default {@link LocationFactory} which creates a location each time.
+     * The default {@link TrackPointFactory} which creates a location each time.
      */
-    public static LocationFactory DEFAULT_LOCATION_FACTORY = new LocationFactory();
+    public static TrackPointFactory DEFAULT_LOCATION_FACTORY = new TrackPointFactory();
 
-    public Location createLocation() {
+    public TrackPoint createLocation() {
         return new TrackPoint(LocationManager.GPS_PROVIDER);
     }
 }

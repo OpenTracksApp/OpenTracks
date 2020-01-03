@@ -44,8 +44,8 @@ import de.dennisguse.opentracks.TrackDetailActivity;
 import de.dennisguse.opentracks.TrackListActivity;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.CustomContentProvider;
-import de.dennisguse.opentracks.content.LocationFactory;
-import de.dennisguse.opentracks.content.LocationIterator;
+import de.dennisguse.opentracks.content.TrackPointFactory;
+import de.dennisguse.opentracks.content.TrackPointIterator;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.Waypoint;
@@ -373,7 +373,7 @@ public class TrackRecordingService extends Service {
         TripStatistics tripStatistics = track.getTripStatistics();
         trackTripStatisticsUpdater = new TripStatisticsUpdater(tripStatistics.getStartTime());
 
-        try (LocationIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), -1L, false, LocationFactory.DEFAULT_LOCATION_FACTORY)) {
+        try (TrackPointIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), -1L, false, TrackPointFactory.DEFAULT_LOCATION_FACTORY)) {
 
             while (locationIterator.hasNext()) {
                 Location location = locationIterator.next();

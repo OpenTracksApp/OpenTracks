@@ -928,19 +928,16 @@ public class ContentProviderUtils {
      * Creates a new read-only iterator over a given track's points.
      * It provides a lightweight way of iterating over long tracks without failing due to the underlying cursor limitations.
      * Since it's a read-only iterator, {@link Iterator#remove()} always throws {@link UnsupportedOperationException}.
-     * Each call to {@link LocationIterator#next()} may advance to the next DB record, and if so, the iterator calls {@link LocationFactory#createLocation()} and populates it with information retrieved from the record.
-     * When done with iteration, {@link LocationIterator#close()} must be called.
+     * Each call to {@link TrackPointIterator#next()} may advance to the next DB record, and if so, the iterator calls {@link TrackPointFactory#createLocation()} and populates it with information retrieved from the record.
+     * When done with iteration, {@link TrackPointIterator#close()} must be called.
      *
      * @param trackId           the track id
      * @param startTrackPointId the starting track point id. -1L to ignore
      * @param descending        true to sort the result in descending order (latest location first)
-     * @param locationFactory   the location factory
+     * @param trackPointFactory   the location factory
      */
-    public LocationIterator getTrackPointLocationIterator(final long trackId, final long startTrackPointId, final boolean descending, final LocationFactory locationFactory) {
-        if (locationFactory == null) {
-            throw new IllegalArgumentException("locationFactory is null");
-        }
-        return new LocationIterator(this, trackId, startTrackPointId, descending, locationFactory);
+    public TrackPointIterator getTrackPointLocationIterator(final long trackId, final long startTrackPointId, final boolean descending, final TrackPointFactory trackPointFactory) {
+        return new TrackPointIterator(this, trackId, startTrackPointId, descending, trackPointFactory);
     }
 
     private Location findTrackPointBy(String selection, String[] selectionArgs) {

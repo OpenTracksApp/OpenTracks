@@ -26,8 +26,8 @@ import androidx.annotation.NonNull;
 import java.io.OutputStream;
 
 import de.dennisguse.opentracks.content.ContentProviderUtils;
-import de.dennisguse.opentracks.content.LocationFactory;
-import de.dennisguse.opentracks.content.LocationIterator;
+import de.dennisguse.opentracks.content.TrackPointFactory;
+import de.dennisguse.opentracks.content.TrackPointIterator;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.Waypoint;
@@ -126,10 +126,10 @@ public class FileTrackExporter implements TrackExporter {
         boolean wroteTrack = false;
         boolean wroteSegment = false;
         boolean isLastLocationValid = false;
-        TrackWriterLocationFactory locationFactory = new TrackWriterLocationFactory();
+        TrackWriterTrackPointFactory trackPointFactory = new TrackWriterTrackPointFactory();
         int locationNumber = 0;
 
-        try (LocationIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), -1L, false, locationFactory)) {
+        try (TrackPointIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), -1L, false, trackPointFactory)) {
 
             while (locationIterator.hasNext()) {
                 if (Thread.interrupted()) {
@@ -144,7 +144,7 @@ public class FileTrackExporter implements TrackExporter {
                 boolean isSegmentValid = isLocationValid && isLastLocationValid;
                 if (!wroteTrack && isSegmentValid) {
                     // Found the first two consecutive locations that are valid
-                    trackWriter.writeBeginTrack(track, locationFactory.lastLocation);
+                    trackWriter.writeBeginTrack(track, trackPointFactory.lastLocation);
                     wroteTrack = true;
                 }
 
@@ -155,7 +155,7 @@ public class FileTrackExporter implements TrackExporter {
                         wroteSegment = true;
 
                         // Write the previous location, which we had previously skipped
-                        trackWriter.writeLocation(locationFactory.lastLocation);
+                        trackWriter.writeLocation(trackPointFactory.lastLocation);
                     }
 
                     // Write the current location
@@ -169,7 +169,7 @@ public class FileTrackExporter implements TrackExporter {
                         wroteSegment = false;
                     }
                 }
-                locationFactory.swapLocations();
+                trackPointFactory.swapLocations();
                 isLastLocationValid = isLocationValid;
             }
 
@@ -207,12 +207,12 @@ public class FileTrackExporter implements TrackExporter {
      *
      * @author Jimmy Shih
      */
-    private class TrackWriterLocationFactory extends LocationFactory {
-        Location currentLocation;
-        Location lastLocation;
+    private class TrackWriterTrackPointFactory extends TrackPointFactory {
+        TrackPoint currentLocation;
+        TrackPoint lastLocation;
 
         @Override
-        public Location createLocation() {
+        public TrackPoint createLocation() {
             if (currentLocation == null) {
                 currentLocation = new TrackPoint("");
             }
@@ -220,7 +220,7 @@ public class FileTrackExporter implements TrackExporter {
         }
 
         void swapLocations() {
-            Location tempLocation = lastLocation;
+            TrackPoint tempLocation = lastLocation;
             lastLocation = currentLocation;
             currentLocation = tempLocation;
             if (currentLocation != null) {

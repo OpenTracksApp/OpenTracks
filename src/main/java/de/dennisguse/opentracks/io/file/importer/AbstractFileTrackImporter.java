@@ -39,8 +39,8 @@ import javax.xml.parsers.SAXParserFactory;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.ContentProviderUtils;
-import de.dennisguse.opentracks.content.LocationFactory;
-import de.dennisguse.opentracks.content.LocationIterator;
+import de.dennisguse.opentracks.content.TrackPointFactory;
+import de.dennisguse.opentracks.content.TrackPointIterator;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.services.TrackRecordingService;
@@ -162,7 +162,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         TripStatisticsUpdater trackTripStatisticstrackUpdater = new TripStatisticsUpdater(track.getTripStatistics().getStartTime());
         TripStatisticsUpdater markerTripStatisticsUpdater = new TripStatisticsUpdater(track.getTripStatistics().getStartTime());
 
-        try (LocationIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), -1L, false, LocationFactory.DEFAULT_LOCATION_FACTORY)) {
+        try (TrackPointIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), -1L, false, TrackPointFactory.DEFAULT_LOCATION_FACTORY)) {
 
             while (true) {
                 if (waypoint == null) {
