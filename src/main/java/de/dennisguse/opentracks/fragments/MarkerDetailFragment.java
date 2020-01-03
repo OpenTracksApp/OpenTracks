@@ -40,8 +40,8 @@ import androidx.fragment.app.FragmentActivity;
 
 import de.dennisguse.opentracks.MarkerEditActivity;
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.data.Waypoint;
+import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.ListItemUtils;
 import de.dennisguse.opentracks.util.MarkerUtils;

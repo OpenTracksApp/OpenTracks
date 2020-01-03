@@ -19,7 +19,7 @@ package de.dennisguse.opentracks;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import de.dennisguse.opentracks.content.ContentProviderUtils;
+import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 
 /**
  * Async Task to delete tracks.

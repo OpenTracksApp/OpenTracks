@@ -40,12 +40,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 
-import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.SearchEngine;
 import de.dennisguse.opentracks.content.SearchEngine.ScoredResult;
 import de.dennisguse.opentracks.content.SearchEngine.SearchQuery;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.Waypoint;
+import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;

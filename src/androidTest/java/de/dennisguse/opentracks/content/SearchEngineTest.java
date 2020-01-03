@@ -38,6 +38,7 @@ import de.dennisguse.opentracks.content.SearchEngine.ScoredResult;
 import de.dennisguse.opentracks.content.SearchEngine.SearchQuery;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.Waypoint;
+import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.stats.TripStatistics;
 
 /**

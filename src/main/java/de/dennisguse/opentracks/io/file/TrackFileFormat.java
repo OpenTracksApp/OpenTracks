@@ -5,8 +5,8 @@ import android.content.Context;
 import java.util.Locale;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.io.file.exporter.FileTrackExporter;
 import de.dennisguse.opentracks.io.file.exporter.GpxTrackWriter;
 import de.dennisguse.opentracks.io.file.exporter.KmlTrackWriter;

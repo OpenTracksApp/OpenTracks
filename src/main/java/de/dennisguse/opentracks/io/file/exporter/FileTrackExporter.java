@@ -25,12 +25,12 @@ import androidx.annotation.NonNull;
 
 import java.io.OutputStream;
 
-import de.dennisguse.opentracks.content.ContentProviderUtils;
-import de.dennisguse.opentracks.content.TrackPointFactory;
-import de.dennisguse.opentracks.content.TrackPointIterator;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.Waypoint;
+import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.content.provider.TrackPointFactory;
+import de.dennisguse.opentracks.content.provider.TrackPointIterator;
 import de.dennisguse.opentracks.util.LocationUtils;
 
 /**

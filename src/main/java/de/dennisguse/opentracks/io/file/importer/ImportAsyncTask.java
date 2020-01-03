@@ -29,8 +29,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;

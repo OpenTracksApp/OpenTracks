@@ -38,11 +38,11 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.ContentProviderUtils;
-import de.dennisguse.opentracks.content.TrackPointFactory;
-import de.dennisguse.opentracks.content.TrackPointIterator;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.Waypoint;
+import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.content.provider.TrackPointFactory;
+import de.dennisguse.opentracks.content.provider.TrackPointIterator;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.stats.TripStatisticsUpdater;
 import de.dennisguse.opentracks.util.FileUtils;

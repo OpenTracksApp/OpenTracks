@@ -32,11 +32,11 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.SimpleTimeZone;
 
-import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.data.WaypointsColumns;
+import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.eq;

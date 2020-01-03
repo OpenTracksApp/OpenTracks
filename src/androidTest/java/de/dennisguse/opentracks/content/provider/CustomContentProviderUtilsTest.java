@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package de.dennisguse.opentracks.content;
+package de.dennisguse.opentracks.content.provider;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;

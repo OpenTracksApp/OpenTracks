@@ -24,7 +24,7 @@ import androidx.annotation.VisibleForTesting;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-import de.dennisguse.opentracks.content.ContentProviderUtils;
+import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 
 /**
  * Imports a GPX file.

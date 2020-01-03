@@ -33,12 +33,12 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.ContentProviderUtils;
 import de.dennisguse.opentracks.content.DescriptionGenerator;
-import de.dennisguse.opentracks.content.ShareContentProvider;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.Waypoint;
+import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.content.provider.ShareContentProvider;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 
 /**

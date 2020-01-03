@@ -14,7 +14,7 @@
  * the License.
  */
 
-package de.dennisguse.opentracks.content;
+package de.dennisguse.opentracks.content.provider;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;

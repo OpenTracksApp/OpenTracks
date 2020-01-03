@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.content;
+package de.dennisguse.opentracks.content.provider;
 
 import android.database.Cursor;
 import android.util.Log;

@@ -101,7 +101,7 @@ limitations under the License.
         <activity android:name=".settings.SettingsActivity" />
 
         <provider
-            android:name=".content.ShareContentProvider"
+            android:name=".content.provider.ShareContentProvider"
             android:authorities="${applicationId}.content"
             android:exported="false"
             android:grantUriPermissions="true" />

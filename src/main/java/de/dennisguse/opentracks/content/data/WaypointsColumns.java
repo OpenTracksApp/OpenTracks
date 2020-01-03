@@ -19,7 +19,7 @@ package de.dennisguse.opentracks.content.data;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
-import de.dennisguse.opentracks.content.ContentProviderUtils;
+import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 
 /**
  * Constants for waypoints table.

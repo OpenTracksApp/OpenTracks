@@ -14,7 +14,7 @@
  * the License.
  */
 
-package de.dennisguse.opentracks.content;
+package de.dennisguse.opentracks.content.provider;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -26,10 +26,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.dennisguse.opentracks.content.CustomContentProvider.DatabaseHelper;
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.data.WaypointsColumns;
+import de.dennisguse.opentracks.content.provider.CustomContentProvider.DatabaseHelper;
 
 /**
  * Tests {@link CustomContentProvider}.
