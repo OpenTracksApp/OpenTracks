@@ -32,9 +32,9 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
  */
 public class BluetoothLePreference extends DialogPreference {
 
-    private final static String TAG = BluetoothLePreference.class.getSimpleName();
+    private static final String TAG = BluetoothLePreference.class.getSimpleName();
 
-    private final static int DEVICE_NONE_RESOURCEID = R.string.value_none;
+    private static final int DEVICE_NONE_RESOURCEID = R.string.value_none;
 
     public BluetoothLePreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);

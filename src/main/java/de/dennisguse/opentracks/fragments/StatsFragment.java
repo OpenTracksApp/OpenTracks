@@ -16,6 +16,7 @@
 
 package de.dennisguse.opentracks.fragments;
 
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -61,7 +62,7 @@ import de.dennisguse.opentracks.util.UnitConversions;
  */
 public class StatsFragment extends Fragment implements TrackDataListener {
 
-    public static final String STATS_FRAGMENT_TAG = StatsFragment.class.getSimpleName();
+    private static final String STATS_FRAGMENT_TAG = StatsFragment.class.getSimpleName();
 
     private static final long UI_UPDATE_INTERVAL = UnitConversions.ONE_SECOND;
 
@@ -75,7 +76,29 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     private TripStatistics lastTripStatistics = null;
 
     private String category = "";
+    @Deprecated //TODO This should be handled somewhere else; not in the UI.
     private int recordingGpsAccuracy;
+
+    private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
+            if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key) || PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
+                if (isResumed()) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (isResumed()) {
+                                updateUI();
+                            }
+                        }
+                    });
+                }
+            }
+            if (PreferencesUtils.isKey(getContext(), R.string.recording_track_id_key, key)) {
+                recordingGpsAccuracy = PreferencesUtils.getRecordingGPSAccuracy(getContext());
+            }
+        }
+    };
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -221,6 +244,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     public void onResume() {
         super.onResume();
         resumeTrackDataHub();
+        PreferencesUtils.register(getContext(), sharedPreferenceChangeListener);
 
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(getContext(), null);
         trackRecordingServiceConnection.startConnection(getContext());
@@ -232,6 +256,8 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     public void onPause() {
         super.onPause();
         pauseTrackDataHub();
+        PreferencesUtils.unregister(getContext(), sharedPreferenceChangeListener);
+
         handlerUpdateUI.removeCallbacks(updateUIeachSecond);
     }
 
@@ -370,48 +396,6 @@ public class StatsFragment extends Fragment implements TrackDataListener {
         // We don't care.
     }
 
-    @Override
-    public boolean onMetricUnitsChanged(final boolean metric) {
-        if (isResumed()) {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (isResumed()) {
-                        updateUI();
-                    }
-                }
-            });
-        }
-        return true;
-    }
-
-    @Override
-    public boolean onReportSpeedChanged(final boolean speed) {
-        if (isResumed()) {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (isResumed()) {
-                        updateUI();
-                    }
-                }
-            });
-        }
-        return true;
-    }
-
-    @Override
-    public boolean onRecordingGpsAccuracy(int newValue) {
-        recordingGpsAccuracy = newValue;
-        return false;
-    }
-
-    @Override
-    public boolean onRecordingDistanceIntervalChanged(int minRecordingDistance) {
-        // We don't care.
-        return false;
-    }
-
     /**
      * Resumes the trackDataHub.
      * Needs to be synchronized because trackDataHub can be accessed by multiple threads.
@@ -419,8 +403,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     private synchronized void resumeTrackDataHub() {
         trackDataHub = ((TrackDetailActivity) getActivity()).getTrackDataHub();
         trackDataHub.registerTrackDataListener(this, EnumSet.of(TrackDataType.TRACKS_TABLE,
-                TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE, TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE,
-                TrackDataType.PREFERENCE));
+                TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE, TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE));
     }
 
     /**

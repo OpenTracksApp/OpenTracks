@@ -26,5 +26,4 @@ public enum TrackDataType {
     WAYPOINTS_TABLE, // waypoints table changes
     SAMPLED_IN_TRACK_POINTS_TABLE, // sampled-in track points table changes
     SAMPLED_OUT_TRACK_POINTS_TABLE, // sampled-out track points table changes
-    PREFERENCE // preference changes
 }

@@ -16,6 +16,7 @@
 
 package de.dennisguse.opentracks.fragments;
 
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -78,6 +79,51 @@ public abstract class ChartFragment extends Fragment implements TrackDataListene
     // UI elements
     private ChartView chartView;
 
+    private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
+            if (!isResumed()) {
+                return;
+            }
+            if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key)) {
+                boolean metric = PreferencesUtils.isMetricUnits(getContext());
+                if (metricUnits != metric) {
+                    metricUnits = metric;
+                    chartView.setMetricUnits(metricUnits);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (isResumed()) {
+                                chartView.requestLayout();
+                            }
+                        }
+                    });
+                }
+            }
+            if (PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
+                boolean speed = PreferencesUtils.isReportSpeed(getContext());
+                if (reportSpeed != speed) {
+                    reportSpeed = speed;
+                    chartView.setReportSpeed(reportSpeed);
+                    setSeriesEnabled(ChartView.SPEED_SERIES, reportSpeed);
+                    setSeriesEnabled(ChartView.PACE_SERIES, !reportSpeed);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (isResumed()) {
+                                chartView.requestLayout();
+                            }
+                        }
+                    });
+                }
+            }
+
+            if (PreferencesUtils.isKey(getContext(), R.string.recording_distance_interval_key, key)) {
+                recordingDistanceInterval = PreferencesUtils.getRecordingDistanceInterval(getContext());
+            }
+        }
+    };
+
     /**
      * A runnable that will set the orange pointer as appropriate and redraw.
      */
@@ -124,6 +170,8 @@ public abstract class ChartFragment extends Fragment implements TrackDataListene
     public void onResume() {
         super.onResume();
         resumeTrackDataHub();
+        PreferencesUtils.register(getContext(), sharedPreferenceChangeListener);
+
         checkChartSettings();
         getActivity().runOnUiThread(updateChart);
     }
@@ -132,6 +180,7 @@ public abstract class ChartFragment extends Fragment implements TrackDataListene
     public void onPause() {
         super.onPause();
         pauseTrackDataHub();
+        PreferencesUtils.register(getContext(), sharedPreferenceChangeListener);
     }
 
     @Override
@@ -229,68 +278,6 @@ public abstract class ChartFragment extends Fragment implements TrackDataListene
         }
     }
 
-    @Override
-    public boolean onMetricUnitsChanged(boolean metric) {
-        if (isResumed()) {
-            if (metricUnits == metric) {
-                return false;
-            }
-            metricUnits = metric;
-            chartView.setMetricUnits(metricUnits);
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (isResumed()) {
-                        chartView.requestLayout();
-                    }
-                }
-            });
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean onReportSpeedChanged(boolean speed) {
-        if (isResumed()) {
-            if (reportSpeed == speed) {
-                return false;
-            }
-            reportSpeed = speed;
-            chartView.setReportSpeed(reportSpeed);
-            setSeriesEnabled(ChartView.SPEED_SERIES, reportSpeed);
-            setSeriesEnabled(ChartView.PACE_SERIES, !reportSpeed);
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (isResumed()) {
-                        chartView.requestLayout();
-                    }
-                }
-            });
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean onRecordingGpsAccuracy(int minRequiredAccuracy) {
-        // We don't care.
-        return false;
-    }
-
-    @Override
-    public boolean onRecordingDistanceIntervalChanged(int value) {
-        if (isResumed()) {
-            if (recordingDistanceInterval == value) {
-                return false;
-            }
-            recordingDistanceInterval = value;
-            return true;
-        }
-        return false;
-    }
-
     /**
      * Checks the chart settings.
      */
@@ -334,7 +321,7 @@ public abstract class ChartFragment extends Fragment implements TrackDataListene
         trackDataHub = ((TrackDetailActivity) getActivity()).getTrackDataHub();
         trackDataHub.registerTrackDataListener(this, EnumSet.of(TrackDataType.TRACKS_TABLE,
                 TrackDataType.WAYPOINTS_TABLE, TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE,
-                TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE, TrackDataType.PREFERENCE));
+                TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE));
     }
 
     /**

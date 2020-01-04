@@ -14,7 +14,7 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
  */
 public class Startup extends Application {
 
-    private final static String TAG = Startup.class.getSimpleName();
+    private static final String TAG = Startup.class.getSimpleName();
 
     @Override
     public void onCreate() {

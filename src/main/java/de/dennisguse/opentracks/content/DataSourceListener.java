@@ -38,11 +38,4 @@ public interface DataSourceListener {
      * Notifies when the track points table is updated.
      */
     void notifyTrackPointsTableUpdated();
-
-    /**
-     * Notifies when a preference changes.
-     *
-     * @param key the preference key
-     */
-    void notifyPreferenceChanged(String key);
 }

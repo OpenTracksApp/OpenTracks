@@ -39,21 +39,30 @@ public class PreferencesUtils {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
+    public static void register(Context context, SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener) {
+        getSharedPreferences(context).registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+    }
+
+    public static void unregister(Context context, SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener) {
+        getSharedPreferences(context).unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+    }
+
     @Deprecated
     //NOTE: is at the moment still used to determine if a track is currently recorded; better ask the service directly.
     //NOTE: This was also used to recover from a reboot, but this data should not be exposed to the whole application.
     public static final long RECORDING_TRACK_ID_DEFAULT = -1L;
 
     public static long getRecordingTrackId(Context context) {
-        return PreferencesUtils.getLong(context);
+        SharedPreferences sharedPreferences = getSharedPreferences(context);
+        return sharedPreferences.getLong(getKey(context, R.string.recording_track_id_key), RECORDING_TRACK_ID_DEFAULT);
     }
 
     public static String getDefaultActivity(Context context) {
-        return PreferencesUtils.getString(context, R.string.default_activity_key, context.getString(R.string.default_activity_default));
+        return getString(context, R.string.default_activity_key, context.getString(R.string.default_activity_default));
     }
 
     public static void setDefaultActivity(Context context, String newDefaultActivity) {
-        PreferencesUtils.setString(context, R.string.default_activity_key, newDefaultActivity);
+        setString(context, R.string.default_activity_key, newDefaultActivity);
     }
 
     /**
@@ -74,7 +83,7 @@ public class PreferencesUtils {
      * @return true if key == null or key belongs to keyId
      */
     public static boolean isKey(Context context, int keyId, String key) {
-        return key == null || key.equals(PreferencesUtils.getKey(context, keyId));
+        return key == null || key.equals(getKey(context, keyId));
     }
 
     /**
@@ -144,16 +153,6 @@ public class PreferencesUtils {
     }
 
     /**
-     * Gets a long preference value.
-     * @param context the context
-     *
-     */
-    private static long getLong(Context context) {
-        SharedPreferences sharedPreferences = getSharedPreferences(context);
-        return sharedPreferences.getLong(getKey(context, R.string.recording_track_id_key), PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
-    }
-
-    /**
      * Sets a long preference value.
      *
      * @param context the context
@@ -204,7 +203,7 @@ public class PreferencesUtils {
     }
 
     public static boolean isRecordingTrackPaused(Context context) {
-        return PreferencesUtils.getBoolean(context, R.string.recording_track_paused_key, isRecordingTrackPausedDefault(context));
+        return getBoolean(context, R.string.recording_track_paused_key, isRecordingTrackPausedDefault(context));
     }
 
     public static boolean isRecordingTrackPausedDefault(Context context) {
@@ -213,7 +212,7 @@ public class PreferencesUtils {
 
     public static void defaultRecordingTrackPaused(Context context) {
         final boolean RECORDING_TRACK_PAUSED = context.getResources().getBoolean(R.bool.recording_track_paused_default);
-        PreferencesUtils.setBoolean(context, R.string.recording_track_paused_key, RECORDING_TRACK_PAUSED);
+        setBoolean(context, R.string.recording_track_paused_key, RECORDING_TRACK_PAUSED);
     }
 
     public static String getBluetoothHeartRateSensorAddressNone(Context context) {
@@ -229,7 +228,7 @@ public class PreferencesUtils {
     }
 
     public static String getBluetoothHeartRateSensorAddress(Context context) {
-        return PreferencesUtils.getString(context, R.string.settings_sensor_bluetooth_heart_rate_key, getBluetoothHeartRateSensorAddressNone(context));
+        return getString(context, R.string.settings_sensor_bluetooth_heart_rate_key, getBluetoothHeartRateSensorAddressNone(context));
     }
 
     public static boolean shouldShowStatsOnLockscreen(Context context) {
@@ -244,21 +243,21 @@ public class PreferencesUtils {
 
     public static boolean isShowStatsGradeElevation(Context context) {
         final boolean STATS_SHOW_GRADE_ELEVATION = context.getResources().getBoolean(R.bool.stats_show_grade_elevation_default);
-        return PreferencesUtils.getBoolean(context, R.string.stats_show_grade_elevation_key, STATS_SHOW_GRADE_ELEVATION);
+        return getBoolean(context, R.string.stats_show_grade_elevation_key, STATS_SHOW_GRADE_ELEVATION);
     }
 
     public static boolean isStatsShowCoordinate(Context context) {
         final boolean STATS_SHOW_COORDINATE = context.getResources().getBoolean(R.bool.stats_show_coordinate_default);
-        return PreferencesUtils.getBoolean(context, R.string.stats_show_coordinate_key, STATS_SHOW_COORDINATE);
+        return getBoolean(context, R.string.stats_show_coordinate_key, STATS_SHOW_COORDINATE);
     }
 
     public static int getVoiceFrequency(Context context) {
         final int VOICE_FREQUENCY_DEFAULT = Integer.parseInt(context.getResources().getString(R.string.voice_frequency_default));
-        return PreferencesUtils.getInt(context, R.string.voice_frequency_key, VOICE_FREQUENCY_DEFAULT);
+        return getInt(context, R.string.voice_frequency_key, VOICE_FREQUENCY_DEFAULT);
     }
 
     public static int getRecordingDistanceInterval(Context context) {
-        return PreferencesUtils.getInt(context, R.string.recording_distance_interval_key, getRecordingDistanceIntervalDefault(context));
+        return getInt(context, R.string.recording_distance_interval_key, getRecordingDistanceIntervalDefault(context));
     }
 
     public static int getRecordingDistanceIntervalDefault(Context context) {
@@ -267,12 +266,12 @@ public class PreferencesUtils {
 
     public static int getMaxRecordingDistance(Context context) {
         final int MAX_RECORDING_DISTANCE = Integer.parseInt(context.getResources().getString(R.string.max_recording_distance_default));
-        return PreferencesUtils.getInt(context, R.string.max_recording_distance_key, MAX_RECORDING_DISTANCE);
+        return getInt(context, R.string.max_recording_distance_key, MAX_RECORDING_DISTANCE);
     }
 
     public static int getMinRecordingInterval(Context context) {
         final int MIN_RECORDING_INTERVAL = Integer.parseInt(context.getResources().getString(R.string.min_recording_interval_default));
-        return PreferencesUtils.getInt(context, R.string.min_recording_interval_key, MIN_RECORDING_INTERVAL);
+        return getInt(context, R.string.min_recording_interval_key, MIN_RECORDING_INTERVAL);
     }
 
     public static int getMinRecordingIntervalAdaptAccuracy(Context context) {
@@ -287,19 +286,20 @@ public class PreferencesUtils {
         return Integer.parseInt(context.getResources().getString(R.string.min_recording_interval_default));
     }
 
-
     public static int getRecordingGPSAccuracy(Context context) {
         final int RECORDING_GPS_ACCURACY = Integer.parseInt(context.getResources().getString(R.string.recording_gps_accuracy_default));
-        return PreferencesUtils.getInt(context, R.string.recording_gps_accuracy_key, RECORDING_GPS_ACCURACY);
+        return getInt(context, R.string.recording_gps_accuracy_key, RECORDING_GPS_ACCURACY);
     }
 
     public static boolean isRecording(Context context) {
-        long recordingTrackId = PreferencesUtils.getRecordingTrackId(context);
-        return recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+        long recordingTrackId = getRecordingTrackId(context);
+        return isRecording(recordingTrackId);
     }
 
+    @Deprecated
+    //TODO Method is very misleading: it only checks if the provided trackId not the default value (i.e., not recording).
     public static boolean isRecording(long recordingTrackId) {
-        return recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+        return recordingTrackId != RECORDING_TRACK_ID_DEFAULT;
     }
 
     public static void resetPreferences(Context context, boolean readAgain) {

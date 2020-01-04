@@ -17,6 +17,7 @@
 package de.dennisguse.opentracks.content;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.location.Location;
 import android.os.Handler;
@@ -43,7 +44,7 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
  *
  * @author Rodrigo Damazio
  */
-public class TrackDataHub implements DataSourceListener {
+public class TrackDataHub implements DataSourceListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     /**
      * Target number of track points displayed by the map overlay.
@@ -76,10 +77,6 @@ public class TrackDataHub implements DataSourceListener {
     private long selectedTrackId;
     private long recordingTrackId;
     private boolean recordingTrackPaused;
-    private boolean metricUnits;
-    private boolean reportSpeed;
-    private int recordingGpsAccuracy;
-    private int recordingDistanceInterval;
 
     // Track points sampling state
     private int numLoadedPoints;
@@ -111,7 +108,8 @@ public class TrackDataHub implements DataSourceListener {
         dataSource = newDataSource();
         dataSourceManager = new DataSourceManager(dataSource, this);
 
-        notifyPreferenceChanged(null);
+        PreferencesUtils.register(context, this);
+        onSharedPreferenceChanged(null, null);
         runInHandlerThread(new Runnable() {
             @Override
             public void run() {
@@ -128,6 +126,9 @@ public class TrackDataHub implements DataSourceListener {
             Log.i(TAG, "TrackDataHub not started, ignoring stop.");
             return;
         }
+
+        PreferencesUtils.unregister(context, this);
+
         started = false;
 
         dataSourceManager.unregisterAllListeners();
@@ -248,7 +249,7 @@ public class TrackDataHub implements DataSourceListener {
     }
 
     @Override
-    public void notifyPreferenceChanged(final String key) {
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, final String key) {
         runInHandlerThread(new Runnable() {
             @Override
             public void run() {
@@ -257,46 +258,6 @@ public class TrackDataHub implements DataSourceListener {
                 }
                 if (PreferencesUtils.isKey(context, R.string.recording_track_paused_key, key)) {
                     recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(context);
-                }
-                if (PreferencesUtils.isKey(context, R.string.stats_units_key, key)) {
-                    metricUnits = PreferencesUtils.isMetricUnits(context);
-                    if (key != null) {
-                        for (TrackDataListener trackDataListener : trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
-                            if (trackDataListener.onMetricUnitsChanged(metricUnits)) {
-                                loadDataForListener(trackDataListener);
-                            }
-                        }
-                    }
-                }
-                if (PreferencesUtils.isKey(context, R.string.stats_rate_key, key)) {
-                    reportSpeed = PreferencesUtils.isReportSpeed(context);
-                    if (key != null) {
-                        for (TrackDataListener trackDataListener : trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
-                            if (trackDataListener.onReportSpeedChanged(reportSpeed)) {
-                                loadDataForListener(trackDataListener);
-                            }
-                        }
-                    }
-                }
-                if (PreferencesUtils.isKey(context, R.string.recording_gps_accuracy_key, key)) {
-                    recordingGpsAccuracy = PreferencesUtils.getRecordingGPSAccuracy(context);
-                    if (key != null) {
-                        for (TrackDataListener trackDataListener : trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
-                            if (trackDataListener.onRecordingGpsAccuracy(recordingGpsAccuracy)) {
-                                loadDataForListener(trackDataListener);
-                            }
-                        }
-                    }
-                }
-                if (PreferencesUtils.isKey(context, R.string.recording_distance_interval_key, key)) {
-                    recordingDistanceInterval = PreferencesUtils.getRecordingDistanceInterval(context);
-                    if (key != null) {
-                        for (TrackDataListener trackDataListener : trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
-                            if (trackDataListener.onRecordingDistanceIntervalChanged(recordingDistanceInterval)) {
-                                loadDataForListener(trackDataListener);
-                            }
-                        }
-                    }
                 }
             }
         });
@@ -309,13 +270,6 @@ public class TrackDataHub implements DataSourceListener {
         resetSamplingState();
         if (trackDataManager.getNumberOfListeners() == 0) {
             return;
-        }
-
-        for (TrackDataListener trackDataListener : trackDataManager.getListeners(TrackDataType.PREFERENCE)) {
-            trackDataListener.onMetricUnitsChanged(metricUnits);
-            trackDataListener.onReportSpeedChanged(reportSpeed);
-            trackDataListener.onRecordingGpsAccuracy(recordingGpsAccuracy);
-            trackDataListener.onRecordingDistanceIntervalChanged(recordingDistanceInterval);
         }
 
         notifyTracksTableUpdate(trackDataManager.getListeners(TrackDataType.TRACKS_TABLE));
@@ -337,13 +291,6 @@ public class TrackDataHub implements DataSourceListener {
     private void loadDataForListener(TrackDataListener trackDataListener) {
         Set<TrackDataListener> trackDataListeners = Collections.singleton(trackDataListener);
         EnumSet<TrackDataType> trackDataTypes = trackDataManager.getTrackDataTypes(trackDataListener);
-
-        if (trackDataTypes.contains(TrackDataType.PREFERENCE)) {
-            trackDataListener.onMetricUnitsChanged(metricUnits);
-            trackDataListener.onReportSpeedChanged(reportSpeed);
-            trackDataListener.onRecordingGpsAccuracy(recordingGpsAccuracy);
-            trackDataListener.onRecordingDistanceIntervalChanged(recordingDistanceInterval);
-        }
 
         if (trackDataTypes.contains(TrackDataType.TRACKS_TABLE)) {
             notifyTracksTableUpdate(trackDataListeners);
@@ -536,33 +483,5 @@ public class TrackDataHub implements DataSourceListener {
      */
     public long getSelectedTrackId() {
         return selectedTrackId;
-    }
-
-    /**
-     * Gets the recordingGpsAccuracy.
-     */
-    @VisibleForTesting
-    int getRecordingGpsAccuracy() {
-        return recordingGpsAccuracy;
-    }
-
-    /**
-     * Gets the metricUnits.
-     *
-     * @return the metricUnits
-     */
-    @VisibleForTesting
-    boolean isMetricUnits() {
-        return metricUnits;
-    }
-
-    /**
-     * Gets the reportSpeed.
-     *
-     * @return the reportSpeed
-     */
-    @VisibleForTesting
-    boolean isReportSpeed() {
-        return reportSpeed;
     }
 }

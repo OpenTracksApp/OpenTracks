@@ -16,8 +16,6 @@
 
 package de.dennisguse.opentracks.content;
 
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.ContentObserver;
 import android.os.Handler;
 import android.util.Log;
@@ -49,7 +47,6 @@ class DataSourceManager {
     private final TracksTableObserver tracksTableObserver;
     private final WaypointsTableObserver waypointsTableObserver;
     private final TrackPointsTableObserver trackPointsTableObserver;
-    private final PreferenceListener preferenceListener;
 
     DataSourceManager(DataSource dataSource, DataSourceListener dataSourceListener) {
         this.dataSource = dataSource;
@@ -59,7 +56,6 @@ class DataSourceManager {
         tracksTableObserver = new TracksTableObserver();
         waypointsTableObserver = new WaypointsTableObserver();
         trackPointsTableObserver = new TrackPointsTableObserver();
-        preferenceListener = new PreferenceListener();
     }
 
     /**
@@ -70,10 +66,7 @@ class DataSourceManager {
     void updateListeners(EnumSet<TrackDataType> listeners) {
         EnumSet<TrackDataType> neededListeners = EnumSet.copyOf(listeners);
 
-        /*
-         * Map SAMPLED_OUT_POINT_UPDATES to POINT_UPDATES since they correspond to
-         * the same internal listener
-         */
+        // Map SAMPLED_OUT_POINT_UPDATES to POINT_UPDATES since they correspond to the same internal listener
         if (neededListeners.contains(TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE)) {
             neededListeners.remove(TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE);
             neededListeners.add(TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE);
@@ -124,9 +117,6 @@ class DataSourceManager {
             case SAMPLED_OUT_TRACK_POINTS_TABLE:
                 // Do nothing. SAMPLED_OUT_POINT_UPDATES is mapped to POINT_UPDATES.
                 break;
-            case PREFERENCE:
-                dataSource.registerOnSharedPreferenceChangeListener(preferenceListener);
-                break;
             default:
                 break;
         }
@@ -150,9 +140,6 @@ class DataSourceManager {
                 break;
             case SAMPLED_OUT_TRACK_POINTS_TABLE:
                 // Do nothing. SAMPLED_OUT_POINT_UPDATES is mapped to POINT_UPDATES.
-                break;
-            case PREFERENCE:
-                dataSource.unregisterOnSharedPreferenceChangeListener(preferenceListener);
                 break;
             default:
                 break;
@@ -216,19 +203,6 @@ class DataSourceManager {
         @Override
         public void onChange(boolean selfChange) {
             dataSourceListener.notifyTrackPointsTableUpdated();
-        }
-    }
-
-    /**
-     * Listener for preference changes.
-     *
-     * @author Jimmy Shih
-     */
-    private class PreferenceListener implements OnSharedPreferenceChangeListener {
-
-        @Override
-        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            dataSourceListener.notifyPreferenceChanged(key);
         }
     }
 }

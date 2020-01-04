@@ -18,12 +18,8 @@ package de.dennisguse.opentracks.content;
 
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.ContentObserver;
 import android.net.Uri;
-
-import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
  * Data source on the phone.
@@ -33,47 +29,16 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
 class DataSource {
 
     private final ContentResolver contentResolver;
-    private final SharedPreferences sharedPreferences;
 
     DataSource(Context context) {
         contentResolver = context.getContentResolver();
-        sharedPreferences = PreferencesUtils.getSharedPreferences(context);
     }
 
-    /**
-     * Registers a content observer.
-     *
-     * @param uri      the uri
-     * @param observer the observer
-     */
     void registerContentObserver(Uri uri, ContentObserver observer) {
         contentResolver.registerContentObserver(uri, false, observer);
     }
 
-    /**
-     * Unregisters a content observer.
-     *
-     * @param observer the observer
-     */
     void unregisterContentObserver(ContentObserver observer) {
         contentResolver.unregisterContentObserver(observer);
-    }
-
-    /**
-     * Registers a shared preference change listener.
-     *
-     * @param listener the listener
-     */
-    void registerOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener listener) {
-        sharedPreferences.registerOnSharedPreferenceChangeListener(listener);
-    }
-
-    /**
-     * Unregisters a shared preference change listener.
-     *
-     * @param listener the listener
-     */
-    void unregisterOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener listener) {
-        sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener);
     }
 }

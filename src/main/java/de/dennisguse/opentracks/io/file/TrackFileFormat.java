@@ -67,7 +67,7 @@ public enum TrackFileFormat {
     },
     KMZ_ONLY_TRACK {
 
-        private final static boolean exportPhotos = false;
+        private static final boolean exportPhotos = false;
 
         @Override
         public TrackWriter newTrackWriter(Context context, boolean multiple) {
@@ -94,7 +94,7 @@ public enum TrackFileFormat {
     },
     KMZ_WITH_TRACKDETAIL {
 
-        private final static boolean exportPhotos = false;
+        private static final boolean exportPhotos = false;
 
         @Override
         public TrackWriter newTrackWriter(Context context, boolean multiple) {
@@ -122,7 +122,7 @@ public enum TrackFileFormat {
     },
     KMZ_WITH_TRACKDETAIL_AND_SENSORDATA {
 
-        private final static boolean exportPhotos = false;
+        private static final boolean exportPhotos = false;
 
         @Override
         public TrackWriter newTrackWriter(Context context, boolean multiple) {
@@ -151,7 +151,7 @@ public enum TrackFileFormat {
     },
     KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES {
 
-        private final static boolean exportPhotos = true;
+        private static final boolean exportPhotos = true;
 
         @Override
         public TrackWriter newTrackWriter(Context context, boolean multiple) {

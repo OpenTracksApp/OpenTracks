@@ -77,36 +77,4 @@ public interface TrackDataListener {
      * This gets called after every batch of calls to {@link #clearWaypoints()} and {@link #onNewWaypoint(Waypoint)}.
      */
     void onNewWaypointsDone();
-
-    /**
-     * Called when the metric units preference value is change.
-     *
-     * @param metricUnits true to use metric units, false to use imperial units
-     * @return true to reload all the data, false otherwise.
-     */
-    boolean onMetricUnitsChanged(boolean metricUnits);
-
-    /**
-     * Called when the report speed preference value is changed.
-     *
-     * @param reportSpeed true to report speed, false to report pace
-     * @return true to reload all the data, false otherwise.
-     */
-    boolean onReportSpeedChanged(boolean reportSpeed);
-
-    /**
-     * Called when the recording gps accuracy preference value is changed.
-     *
-     * @param recordingGpsAccuracy the new value
-     * @return true to reload all the data, false otherwise
-     */
-    boolean onRecordingGpsAccuracy(int recordingGpsAccuracy);
-
-    /**
-     * Called when the recording distance interval preference value is changed.
-     *
-     * @param recordingDistanceInterval the new value
-     * @return true to reload all the data, false otherwise.
-     */
-    boolean onRecordingDistanceIntervalChanged(int recordingDistanceInterval);
 }

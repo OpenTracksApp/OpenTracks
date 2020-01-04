@@ -50,10 +50,6 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
 
     public static class PrefsFragment extends PreferenceFragmentCompat {
 
-        /*
-         * Note that sharedPreferenceChangeListener cannot be an anonymous inner class.
-         * Anonymous inner class will get garbage collected.
-         */
         private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {

@@ -20,9 +20,9 @@ import de.dennisguse.opentracks.util.StringUtils;
  */
 class TrackRecordingServiceNotificationManager {
 
-    private final static int NOTIFICATION_ID = 123;
+    private static final int NOTIFICATION_ID = 123;
 
-    private final static String CHANNEL_ID = TrackRecordingServiceNotificationManager.class.getSimpleName();
+    private static final String CHANNEL_ID = TrackRecordingServiceNotificationManager.class.getSimpleName();
 
     private final NotificationCompat.Builder notificationBuilder;
 
