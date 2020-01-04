@@ -18,6 +18,7 @@ package de.dennisguse.opentracks.services;
 
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -324,7 +325,7 @@ public class TrackRecordingService extends Service {
         // Insert waypoint
         Waypoint waypoint = new Waypoint(name, description, category, icon, recordingTrackId, length, duration, location, photoUrl);
         Uri uri = contentProviderUtils.insertWaypoint(waypoint);
-        return Long.parseLong(uri.getLastPathSegment());
+        return ContentUris.parseId(uri);
     }
 
     /**
@@ -343,7 +344,7 @@ public class TrackRecordingService extends Service {
         // Insert a track
         Track track = new Track();
         Uri uri = contentProviderUtils.insertTrack(track);
-        long trackId = Long.parseLong(uri.getLastPathSegment());
+        long trackId = ContentUris.parseId(uri);
 
         // Update shared preferences
         updateRecordingState(trackId, false);
