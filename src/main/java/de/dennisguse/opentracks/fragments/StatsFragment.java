@@ -44,8 +44,8 @@ import de.dennisguse.opentracks.content.TrackDataType;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
-import de.dennisguse.opentracks.services.ITrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
+import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
 import de.dennisguse.opentracks.stats.TripStatistics;
 import de.dennisguse.opentracks.util.LocationUtils;
@@ -441,7 +441,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
      * Tries to fetch most recent {@link SensorDataSet} {@link de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager}.
      */
     private void updateSensorDataUI() {
-        ITrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
+        TrackRecordingServiceInterface trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
 
         SensorDataSet sensorDataSet = null;
         if (trackRecordingService == null) {

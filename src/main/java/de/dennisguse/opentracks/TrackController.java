@@ -23,8 +23,8 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import de.dennisguse.opentracks.services.ITrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
+import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
@@ -142,7 +142,7 @@ public class TrackController {
      * Gets the total time for the current recording track.
      */
     private long getTotalTime() {
-        ITrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
+        TrackRecordingServiceInterface trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
         return trackRecordingService != null ? trackRecordingService.getTotalTime() : 0L;
     }
 }

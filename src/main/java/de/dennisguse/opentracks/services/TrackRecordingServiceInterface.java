@@ -25,7 +25,7 @@ import de.dennisguse.opentracks.content.sensor.SensorDataSet;
  * App's service.
  * This service is the process that actually records and manages tracks.
  */
-public interface ITrackRecordingService {
+public interface TrackRecordingServiceInterface {
 
     /**
      * Starts gps.

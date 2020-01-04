@@ -95,7 +95,7 @@ public class TrackRecordingServiceTest {
     @After
     public void tearDown() throws TimeoutException {
         // Reset service (if some previous test failed)
-        ITrackRecordingService service = ((ITrackRecordingService) mServiceRule.bindService(createStartIntent(context)));
+        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
         if (service.isRecording() || service.isPaused()) {
             service.endCurrentTrack();
         }
@@ -126,7 +126,7 @@ public class TrackRecordingServiceTest {
 
         Intent startIntent = createStartIntent(context);
         mServiceRule.startService(startIntent);
-        ITrackRecordingService service = ((ITrackRecordingService) mServiceRule.bindService(startIntent));
+        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(startIntent));
 
         // Test if we start in no-recording mode by default.
         Assert.assertFalse(service.isRecording());
@@ -138,7 +138,7 @@ public class TrackRecordingServiceTest {
     public void testRecording_oldTracks() throws Exception {
         createDummyTrack(trackId, -1L, false);
 
-        ITrackRecordingService service = ((ITrackRecordingService) mServiceRule.bindService(createStartIntent(context)));
+        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
         Assert.assertFalse(service.isRecording());
         Assert.assertEquals(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, service.getRecordingTrackId());
     }
@@ -147,7 +147,7 @@ public class TrackRecordingServiceTest {
     @Test
     public void testRecording_orphanedRecordingTrack() throws Exception {
         Intent startIntent = createStartIntent(context);
-        ITrackRecordingService service = ((ITrackRecordingService) mServiceRule.bindService(startIntent));
+        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(startIntent));
 
         // Just set recording track to a bogus value.
         // Make sure that the service will not start recording and will clear the bogus track.
@@ -161,7 +161,7 @@ public class TrackRecordingServiceTest {
     @MediumTest
     @Test
     public void testStartNewTrack_alreadyRecording() throws Exception {
-        ITrackRecordingService service = ((ITrackRecordingService) mServiceRule.bindService(createStartIntent(context)));
+        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
         service.startNewTrack();
         Assert.assertTrue(service.isRecording());
         long trackId = service.getRecordingTrackId();
@@ -178,7 +178,7 @@ public class TrackRecordingServiceTest {
     @MediumTest
     @Test
     public void testEndCurrentTrack_noRecording() throws Exception {
-        ITrackRecordingService service = ((ITrackRecordingService) mServiceRule.bindService(createStartIntent(context)));
+        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
         Assert.assertFalse(service.isRecording());
 
         // Ending the current track when there is no recording should not result in any error.
@@ -210,7 +210,7 @@ public class TrackRecordingServiceTest {
     /**
      * Inserts a location and waits for 200ms.
      */
-    private void insertLocation(ITrackRecordingService trackRecordingService) throws InterruptedException {
+    private void insertLocation(TrackRecordingServiceInterface trackRecordingService) throws InterruptedException {
         Location location = new Location("gps");
         location.setLongitude(35.0f);
         location.setLatitude(45.0f);
@@ -226,7 +226,7 @@ public class TrackRecordingServiceTest {
     @MediumTest
     @Test
     public void testInsertWaypointMarker_noRecordingTrack() throws Exception {
-        ITrackRecordingService service = ((ITrackRecordingService) mServiceRule.bindService(createStartIntent(context)));
+        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
         Assert.assertFalse(service.isRecording());
 
         long waypointId = service.insertWaypoint(null, null, null, null);
@@ -236,7 +236,7 @@ public class TrackRecordingServiceTest {
     @MediumTest
     @Test
     public void testInsertWaypointMarker_validWaypoint() throws Exception {
-        ITrackRecordingService service = ((ITrackRecordingService) mServiceRule.bindService(createStartIntent(context)));
+        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
         service.startNewTrack();
         Assert.assertTrue(service.isRecording());
         insertLocation(service);

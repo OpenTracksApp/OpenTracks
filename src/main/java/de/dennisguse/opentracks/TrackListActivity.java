@@ -53,8 +53,8 @@ import java.util.Locale;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
-import de.dennisguse.opentracks.services.ITrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
+import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
 import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.util.ActivityUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
@@ -192,7 +192,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                 return;
             }
 
-            ITrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
+            TrackRecordingServiceInterface service = trackRecordingServiceConnection.getServiceIfBound();
             if (service == null) {
                 Log.d(TAG, "service not available to start gps or a new recording");
                 return;
@@ -405,7 +405,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                         trackRecordingServiceConnection.startAndBind(this);
                         bindChangedCallback.run();
                     } else {
-                        ITrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
+                        TrackRecordingServiceInterface trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
                         if (trackRecordingService != null) {
                             trackRecordingService.stopGps();
                         }

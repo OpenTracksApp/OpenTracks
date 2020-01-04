@@ -34,7 +34,6 @@ import android.os.IBinder;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
 
-import androidx.annotation.VisibleForTesting;
 import androidx.core.app.TaskStackBuilder;
 
 import java.util.concurrent.ExecutorService;
@@ -154,7 +153,7 @@ public class TrackRecordingService extends Service {
     private boolean currentSegmentHasLocation;
     private boolean isIdle;
 
-    private ServiceBinder binder = new ServiceBinder(this);
+    private TrackRecordingServiceBinder binder = new TrackRecordingServiceBinder(this);
     private final LocationListener locationListener = new LocationListener() {
 
         @Override
@@ -286,11 +285,25 @@ public class TrackRecordingService extends Service {
         return recordingTrackPaused;
     }
 
+    public long getRecordingTrackId() {
+        return recordingTrackId;
+    }
+
     public TripStatistics getTripStatistics() {
         if (trackTripStatisticsUpdater == null) {
             return null;
         }
         return trackTripStatisticsUpdater.getTripStatistics();
+    }
+
+    public long getTotalTime() {
+        if (trackTripStatisticsUpdater == null) {
+            return 0;
+        }
+        if (!isPaused()) {
+            trackTripStatisticsUpdater.updateTime(System.currentTimeMillis());
+        }
+        return trackTripStatisticsUpdater.getTripStatistics().getTotalTime();
     }
 
     /**
@@ -337,7 +350,7 @@ public class TrackRecordingService extends Service {
      *
      * @return the track id
      */
-    private long startNewTrack() {
+    long startNewTrack() {
         if (isRecording()) {
             Log.d(TAG, "Ignore startNewTrack. Already recording.");
             return -1L;
@@ -384,7 +397,7 @@ public class TrackRecordingService extends Service {
         startRecording();
     }
 
-    private void resumeCurrentTrack() {
+    void resumeCurrentTrack() {
         if (!isRecording() || !isPaused()) {
             Log.d(TAG, "Ignore resumeCurrentTrack. Not recording or not paused.");
             return;
@@ -424,13 +437,13 @@ public class TrackRecordingService extends Service {
         voiceExecutor.restore();
     }
 
-    private void startGps() {
+    void startGps() {
         wakeLock = SystemUtils.acquireWakeLock(this, wakeLock);
         registerLocationListener();
         showNotification(true);
     }
 
-    private void endCurrentTrack() {
+    void endCurrentTrack() {
         if (!isRecording()) {
             Log.d(TAG, "Ignore endCurrentTrack. Not recording.");
             return;
@@ -463,7 +476,7 @@ public class TrackRecordingService extends Service {
         endRecording(true);
     }
 
-    private void pauseCurrentTrack() {
+    void pauseCurrentTrack() {
         if (!isRecording() || isPaused()) {
             Log.d(TAG, "Ignore pauseCurrentTrack. Not recording or paused.");
             return;
@@ -514,7 +527,7 @@ public class TrackRecordingService extends Service {
      *
      * @param stop true to stop self
      */
-    private void stopGps(boolean stop) {
+    void stopGps(boolean stop) {
         unregisterLocationListener();
         showNotification(false);
         releaseWakeLock();
@@ -549,12 +562,7 @@ public class TrackRecordingService extends Service {
         PreferencesUtils.setBoolean(this, R.string.recording_track_paused_key, recordingTrackPaused);
     }
 
-    /**
-     * Called when location changed.
-     *
-     * @param location the location
-     */
-    private void onLocationChangedAsync(Location location) {
+    void onLocationChangedAsync(Location location) {
         if (!isRecording() || isPaused()) {
             Log.w(TAG, "Ignore onLocationChangedAsync. Not recording or paused.");
             return;
@@ -693,7 +701,7 @@ public class TrackRecordingService extends Service {
         contentProviderUtils.updateTrack(track);
     }
 
-    private SensorDataSet getSensorDataSet() {
+    SensorDataSet getSensorDataSet() {
         if (remoteSensorManager == null || !remoteSensorManager.isEnabled() || !remoteSensorManager.isSensorDataSetValid()) {
             return null;
         }
@@ -759,107 +767,6 @@ public class TrackRecordingService extends Service {
             notificationManager.updatePendingIntent(pendingIntent);
             notificationManager.updateContent(getString(R.string.gps_starting));
             startForeground(NOTIFICATION_ID, notificationManager.getNotification());
-        }
-    }
-
-    /**
-     * TODO: There is a bug in Android that leaks Binder instances. This bug is
-     * especially visible if we have a non-static class, as there is no way to
-     * nullify reference to the outer class (the service). A workaround is to use
-     * a static class and explicitly clear service and detach it from the
-     * underlying Binder. With this approach, we minimize the leak to 24 bytes per
-     * each service instance. For more details, see the following bug:
-     * http://code.google.com/p/android/issues/detail?id=6426.
-     */
-    private static class ServiceBinder extends android.os.Binder implements ITrackRecordingService {
-        private TrackRecordingService trackRecordingService;
-
-        public ServiceBinder(TrackRecordingService trackRecordingService) {
-            this.trackRecordingService = trackRecordingService;
-        }
-
-        @Override
-        public void startGps() {
-            if (!trackRecordingService.isRecording()) {
-                trackRecordingService.startGps();
-            }
-        }
-
-        public void stopGps() {
-            if (!trackRecordingService.isRecording()) {
-                trackRecordingService.stopGps(true);
-            }
-        }
-
-        @Override
-        public long startNewTrack() {
-            return trackRecordingService.startNewTrack();
-        }
-
-        @Override
-        public void pauseCurrentTrack() {
-            trackRecordingService.pauseCurrentTrack();
-        }
-
-        @Override
-        public void resumeCurrentTrack() {
-            trackRecordingService.resumeCurrentTrack();
-        }
-
-        @Override
-        public void endCurrentTrack() {
-            trackRecordingService.endCurrentTrack();
-        }
-
-        @Override
-        public boolean isRecording() {
-            return trackRecordingService.isRecording();
-        }
-
-        @Override
-        public boolean isPaused() {
-            return trackRecordingService.isPaused();
-        }
-
-        @Override
-        public long getRecordingTrackId() {
-            return trackRecordingService.recordingTrackId;
-        }
-
-        @Override
-        public long getTotalTime() {
-            TripStatisticsUpdater updater = trackRecordingService.trackTripStatisticsUpdater;
-            if (updater == null) {
-                return 0;
-            }
-            if (!trackRecordingService.isPaused()) {
-                updater.updateTime(System.currentTimeMillis());
-            }
-            return updater.getTripStatistics().getTotalTime();
-        }
-
-        @Override
-        public long insertWaypoint(String name, String category, String description, String photoUrl) {
-            return trackRecordingService.insertWaypoint(name, category, description, photoUrl);
-        }
-
-        @VisibleForTesting
-        @Override
-        public void insertTrackPoint(Location location) {
-            trackRecordingService.onLocationChangedAsync(location);
-        }
-
-        @Override
-        public SensorDataSet getSensorData() {
-            return trackRecordingService.getSensorDataSet();
-        }
-
-        /**
-         * Detaches from the track recording service. Clears the reference to the
-         * outer class to minimize the leak.
-         */
-        private void detachFromService() {
-            trackRecordingService = null;
         }
     }
 }
