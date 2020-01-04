@@ -60,7 +60,7 @@ public class BluetoothUtils {
         while (adapters.isEmpty()) {
             synchronized (mutex) {
                 try {
-                    mutex.wait(UnitConversions.ONE_SECOND);
+                    mutex.wait(UnitConversions.ONE_SECOND_MS);
                 } catch (InterruptedException e) {
                     Log.e(TAG, "Interrupted while waiting for default bluetooth adapter", e);
                 }

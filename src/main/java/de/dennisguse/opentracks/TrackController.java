@@ -61,7 +61,7 @@ public class TrackController {
         public void run() {
             if (isResumed && isRecording && !isPaused) {
                 totalTimeTextView.setText(StringUtils.formatElapsedTimeWithHour(System.currentTimeMillis() - totalTimeTimestamp + totalTime));
-                handlerUpdateTotalTime.postDelayed(this, UnitConversions.ONE_SECOND);
+                handlerUpdateTotalTime.postDelayed(this, UnitConversions.ONE_SECOND_MS);
             }
         }
     };
@@ -115,7 +115,7 @@ public class TrackController {
             totalTimeTextView.setText(StringUtils.formatElapsedTimeWithHour(totalTime));
             if (!isPaused) {
                 totalTimeTimestamp = System.currentTimeMillis();
-                handlerUpdateTotalTime.postDelayed(updateTotalTimeRunnable, UnitConversions.ONE_SECOND);
+                handlerUpdateTotalTime.postDelayed(updateTotalTimeRunnable, UnitConversions.ONE_SECOND_MS);
             }
         }
     }

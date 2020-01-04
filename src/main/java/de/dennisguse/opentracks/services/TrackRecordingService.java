@@ -72,16 +72,19 @@ import de.dennisguse.opentracks.util.UnitConversions;
  */
 public class TrackRecordingService extends Service {
 
-    private static final int NOTIFICATION_ID = 123;
-
+    // TODO Move to a different place.
+    @Deprecated
     public static final double PAUSE_LATITUDE = 100.0;
+    @Deprecated
     public static final double RESUME_LATITUDE = 200.0;
 
     // Anything faster than that (in meters per second) will be considered moving.
-    public static final double MAX_NO_MOVEMENT_SPEED = 0.224;
     private static final String TAG = TrackRecordingService.class.getSimpleName();
-    // 1 minute in milliseconds
-    private static final long ONE_MINUTE = (long) (UnitConversions.MIN_TO_S * UnitConversions.S_TO_MS);
+
+    private static final int NOTIFICATION_ID = 123;
+
+    public static final double MAX_NO_MOVEMENT_SPEED = 0.224;
+
     // The following variables are set in onCreate:
     private ExecutorService executorService;
     private ContentProviderUtils contentProviderUtils;
@@ -90,17 +93,15 @@ public class TrackRecordingService extends Service {
     private PeriodicTaskExecutor voiceExecutor;
     private SharedPreferences sharedPreferences;
     private TrackRecordingServiceNotificationManager notificationManager;
+    private LocationListenerPolicy locationListenerPolicy;
+
     private long recordingTrackId;
     private boolean recordingTrackPaused;
-    private LocationListenerPolicy locationListenerPolicy;
     private int recordingDistanceInterval;
     private int maxRecordingDistance;
     private int recordingGpsAccuracy;
     private long currentRecordingInterval;
 
-    // The following variables are set when recording:
-    private TripStatisticsUpdater trackTripStatisticsUpdater;
-    // Note that sharedPreferenceChangeListener cannot be an anonymous inner class; anonymous inner class will get garbage collected.
     private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
@@ -125,12 +126,12 @@ public class TrackRecordingService extends Service {
                 int minRecordingInterval = PreferencesUtils.getMinRecordingInterval(context);
                 if (minRecordingInterval == PreferencesUtils.getMinRecordingIntervalAdaptBatteryLife(context)) {
                     // Choose battery life over moving time accuracy.
-                    locationListenerPolicy = new AdaptiveLocationListenerPolicy(30 * UnitConversions.ONE_SECOND, 5 * ONE_MINUTE, 5);
+                    locationListenerPolicy = new AdaptiveLocationListenerPolicy(30 * UnitConversions.ONE_SECOND_MS, 5 * UnitConversions.ONE_MINUTE_MS, 5);
                 } else if (minRecordingInterval == PreferencesUtils.getMinRecordingIntervalAdaptAccuracy(context)) {
                     // Get all the updates.
-                    locationListenerPolicy = new AdaptiveLocationListenerPolicy(UnitConversions.ONE_SECOND, 30 * UnitConversions.ONE_SECOND, 0);
+                    locationListenerPolicy = new AdaptiveLocationListenerPolicy(UnitConversions.ONE_SECOND_MS, 30 * UnitConversions.ONE_SECOND_MS, 0);
                 } else {
-                    locationListenerPolicy = new AbsoluteLocationListenerPolicy(minRecordingInterval * UnitConversions.ONE_SECOND);
+                    locationListenerPolicy = new AbsoluteLocationListenerPolicy(minRecordingInterval * UnitConversions.ONE_SECOND_MS);
                 }
             }
             if (PreferencesUtils.isKey(context, R.string.recording_distance_interval_key, key)) {
@@ -145,11 +146,14 @@ public class TrackRecordingService extends Service {
         }
     };
 
+    // The following variables are set when recording:
+    private TripStatisticsUpdater trackTripStatisticsUpdater;
     private WakeLock wakeLock;
     private BluetoothRemoteSensorManager remoteSensorManager;
     private Location lastLocation;
     private boolean currentSegmentHasLocation;
-    private boolean isIdle; // true if idle
+    private boolean isIdle;
+
     private ServiceBinder binder = new ServiceBinder(this);
     private final LocationListener locationListener = new LocationListener() {
 
@@ -191,7 +195,7 @@ public class TrackRecordingService extends Service {
             if (isRecording() && !isPaused()) {
                 registerLocationListener();
             }
-            handler.postDelayed(this, ONE_MINUTE);
+            handler.postDelayed(this, UnitConversions.ONE_MINUTE_MS);
         }
     };
 
@@ -363,11 +367,6 @@ public class TrackRecordingService extends Service {
         return trackId;
     }
 
-    /**
-     * Restart a track.
-     *
-     * @param track the track
-     */
     private void restartTrack(Track track) {
         Log.d(TAG, "Restarting track: " + track.getId());
 
@@ -375,7 +374,6 @@ public class TrackRecordingService extends Service {
         trackTripStatisticsUpdater = new TripStatisticsUpdater(tripStatistics.getStartTime());
 
         try (TrackPointIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), -1L, false, TrackPointFactory.DEFAULT_LOCATION_FACTORY)) {
-
             while (locationIterator.hasNext()) {
                 Location location = locationIterator.next();
                 trackTripStatisticsUpdater.addLocation(location, recordingDistanceInterval);
@@ -386,9 +384,6 @@ public class TrackRecordingService extends Service {
         startRecording();
     }
 
-    /**
-     * Resumes current track.
-     */
     private void resumeCurrentTrack() {
         if (!isRecording() || !isPaused()) {
             Log.d(TAG, "Ignore resumeCurrentTrack. Not recording or not paused.");
@@ -429,18 +424,12 @@ public class TrackRecordingService extends Service {
         voiceExecutor.restore();
     }
 
-    /**
-     * Starts gps.
-     */
     private void startGps() {
         wakeLock = SystemUtils.acquireWakeLock(this, wakeLock);
         registerLocationListener();
         showNotification(true);
     }
 
-    /**
-     * Ends the current track.
-     */
     private void endCurrentTrack() {
         if (!isRecording()) {
             Log.d(TAG, "Ignore endCurrentTrack. Not recording.");
@@ -474,9 +463,6 @@ public class TrackRecordingService extends Service {
         endRecording(true);
     }
 
-    /**
-     * Pauses the current track.
-     */
     private void pauseCurrentTrack() {
         if (!isRecording() || isPaused()) {
             Log.d(TAG, "Ignore pauseCurrentTrack. Not recording or paused.");
@@ -569,101 +555,93 @@ public class TrackRecordingService extends Service {
      * @param location the location
      */
     private void onLocationChangedAsync(Location location) {
-        try {
-            if (!isRecording() || isPaused()) {
-                Log.w(TAG, "Ignore onLocationChangedAsync. Not recording or paused.");
-                return;
-            }
-
-            Track track = contentProviderUtils.getTrack(recordingTrackId);
-            if (track == null) {
-                Log.w(TAG, "Ignore onLocationChangedAsync. No track.");
-                return;
-            }
-
-            if (!LocationUtils.isValidLocation(location)) {
-                Log.w(TAG, "Ignore onLocationChangedAsync. location is invalid.");
-                return;
-            }
-
-            notificationManager.updateLocation(this, location, recordingGpsAccuracy);
-
-            if (!location.hasAccuracy() || location.getAccuracy() >= recordingGpsAccuracy) {
-                Log.d(TAG, "Ignore onLocationChangedAsync. Poor accuracy.");
-                return;
-            }
-
-            //TODO Necessary?
-            // Fix for phones that do not set the time field
-            if (location.getTime() == 0L) {
-                location.setTime(System.currentTimeMillis());
-            }
-
-            Location lastValidTrackPoint = getLastValidTrackPointInCurrentSegment(track.getId());
-            long idleTime = 0L;
-            if (lastValidTrackPoint != null && location.getTime() > lastValidTrackPoint.getTime()) {
-                idleTime = location.getTime() - lastValidTrackPoint.getTime();
-            }
-            locationListenerPolicy.updateIdleTime(idleTime);
-            if (currentRecordingInterval != locationListenerPolicy.getDesiredPollingInterval()) {
-                registerLocationListener();
-            }
-
-            SensorDataSet sensorDataSet = getSensorDataSet();
-            if (sensorDataSet != null) {
-                location = new TrackPoint(location, sensorDataSet);
-            }
-
-            // Always insert the first segment location
-            if (!currentSegmentHasLocation) {
-                insertLocation(track, location, null);
-                currentSegmentHasLocation = true;
-                lastLocation = location;
-                return;
-            }
-
-            if (!LocationUtils.isValidLocation(lastValidTrackPoint)) {
-                // Should not happen. The current segment should have a location. Just insert the current location.
-                insertLocation(track, location, null);
-                lastLocation = location;
-                return;
-            }
-
-            double distanceToLastTrackLocation = location.distanceTo(lastValidTrackPoint);
-            if (distanceToLastTrackLocation > maxRecordingDistance) {
-                insertLocation(track, lastLocation, lastValidTrackPoint);
-
-                Location pause = new Location(LocationManager.GPS_PROVIDER);
-                pause.setLongitude(0);
-                pause.setLatitude(PAUSE_LATITUDE);
-                pause.setTime(lastLocation.getTime());
-                insertLocation(track, pause, null);
-
-                insertLocation(track, location, null);
-                isIdle = false;
-            } else if (sensorDataSet != null || distanceToLastTrackLocation >= recordingDistanceInterval) {
-                insertLocation(track, lastLocation, lastValidTrackPoint);
-                insertLocation(track, location, null);
-                isIdle = false;
-            } else if (!isIdle && location.hasSpeed() && location.getSpeed() < MAX_NO_MOVEMENT_SPEED) {
-                insertLocation(track, lastLocation, lastValidTrackPoint);
-                insertLocation(track, location, null);
-                isIdle = true;
-            } else if (isIdle && location.hasSpeed() && location.getSpeed() >= MAX_NO_MOVEMENT_SPEED) {
-                insertLocation(track, lastLocation, lastValidTrackPoint);
-                insertLocation(track, location, null);
-                isIdle = false;
-            } else {
-                Log.d(TAG, "Not recording location, idle");
-            }
-            lastLocation = location;
-        } catch (Error e) {
-            Log.e(TAG, "Error in onLocationChangedAsync", e);
-            throw e;
-        } catch (RuntimeException e) {
-            Log.e(TAG, "RuntimeException in onLocationChangedAsync", e);
-            throw e;
+        if (!isRecording() || isPaused()) {
+            Log.w(TAG, "Ignore onLocationChangedAsync. Not recording or paused.");
+            return;
         }
+
+        Track track = contentProviderUtils.getTrack(recordingTrackId);
+        if (track == null) {
+            Log.w(TAG, "Ignore onLocationChangedAsync. No track.");
+            return;
+        }
+
+        if (!LocationUtils.isValidLocation(location)) {
+            Log.w(TAG, "Ignore onLocationChangedAsync. location is invalid.");
+            return;
+        }
+
+        notificationManager.updateLocation(this, location, recordingGpsAccuracy);
+
+        if (!location.hasAccuracy() || location.getAccuracy() >= recordingGpsAccuracy) {
+            Log.d(TAG, "Ignore onLocationChangedAsync. Poor accuracy.");
+            return;
+        }
+
+        //TODO Necessary?
+        // Fix for phones that do not set the time field
+        if (location.getTime() == 0L) {
+            location.setTime(System.currentTimeMillis());
+        }
+
+        Location lastValidTrackPoint = getLastValidTrackPointInCurrentSegment(track.getId());
+        long idleTime = 0L;
+        if (lastValidTrackPoint != null && location.getTime() > lastValidTrackPoint.getTime()) {
+            idleTime = location.getTime() - lastValidTrackPoint.getTime();
+        }
+        locationListenerPolicy.updateIdleTime(idleTime);
+        if (currentRecordingInterval != locationListenerPolicy.getDesiredPollingInterval()) {
+            registerLocationListener();
+        }
+
+        SensorDataSet sensorDataSet = getSensorDataSet();
+        if (sensorDataSet != null) {
+            location = new TrackPoint(location, sensorDataSet);
+        }
+
+        // Always insert the first segment location
+        if (!currentSegmentHasLocation) {
+            insertLocation(track, location, null);
+            currentSegmentHasLocation = true;
+            lastLocation = location;
+            return;
+        }
+
+        if (!LocationUtils.isValidLocation(lastValidTrackPoint)) {
+            // Should not happen. The current segment should have a location. Just insert the current location.
+            insertLocation(track, location, null);
+            lastLocation = location;
+            return;
+        }
+
+        double distanceToLastTrackLocation = location.distanceTo(lastValidTrackPoint);
+        if (distanceToLastTrackLocation > maxRecordingDistance) {
+            insertLocation(track, lastLocation, lastValidTrackPoint);
+
+            Location pause = new Location(LocationManager.GPS_PROVIDER);
+            pause.setLongitude(0);
+            pause.setLatitude(PAUSE_LATITUDE);
+            pause.setTime(lastLocation.getTime());
+            insertLocation(track, pause, null);
+
+            insertLocation(track, location, null);
+            isIdle = false;
+        } else if (sensorDataSet != null || distanceToLastTrackLocation >= recordingDistanceInterval) {
+            insertLocation(track, lastLocation, lastValidTrackPoint);
+            insertLocation(track, location, null);
+            isIdle = false;
+        } else if (!isIdle && location.hasSpeed() && location.getSpeed() < MAX_NO_MOVEMENT_SPEED) {
+            insertLocation(track, lastLocation, lastValidTrackPoint);
+            insertLocation(track, location, null);
+            isIdle = true;
+        } else if (isIdle && location.hasSpeed() && location.getSpeed() >= MAX_NO_MOVEMENT_SPEED) {
+            insertLocation(track, lastLocation, lastValidTrackPoint);
+            insertLocation(track, location, null);
+            isIdle = false;
+        } else {
+            Log.d(TAG, "Not recording location, idle");
+        }
+        lastLocation = location;
     }
 
     /**
@@ -699,7 +677,7 @@ public class TrackRecordingService extends Service {
     }
 
     /**
-     * Updates the recording track time as well as the startId and the stopId.
+     * Updates the recording track time.
      * Increase the number of points if it is a new and valid track point.
      *
      * @param track                  the track
@@ -722,9 +700,6 @@ public class TrackRecordingService extends Service {
         return remoteSensorManager.getSensorDataSet();
     }
 
-    /**
-     * Registers the location listener.
-     */
     private void registerLocationListener() {
         if (locationManagerConnector == null) {
             Log.e(TAG, "locationManager is null.");
@@ -739,9 +714,6 @@ public class TrackRecordingService extends Service {
         }
     }
 
-    /**
-     * Unregisters the location manager.
-     */
     private void unregisterLocationListener() {
         if (locationManagerConnector == null) {
             Log.e(TAG, "locationManager is null.");
@@ -750,9 +722,6 @@ public class TrackRecordingService extends Service {
         locationManagerConnector.removeLocationUpdates(locationListener);
     }
 
-    /**
-     * Releases the wake lock.
-     */
     private void releaseWakeLock() {
         if (wakeLock != null && wakeLock.isHeld()) {
             wakeLock.release();
@@ -761,10 +730,14 @@ public class TrackRecordingService extends Service {
     }
 
     private void showNotification(boolean isGpsStarted) {
-        if ((isRecording() && isPaused()) || (!isRecording() && !isGpsStarted)) {
+        // Dijkstra If
+        if (isRecording() && isPaused()) {
+            stopForeground(true);
+
+        }
+        if (!isRecording() && !isGpsStarted) {
             stopForeground(true);
         }
-
         if (isRecording() && !isPaused()) {
             Intent intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
                     .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, recordingTrackId);
@@ -785,7 +758,6 @@ public class TrackRecordingService extends Service {
 
             notificationManager.updatePendingIntent(pendingIntent);
             notificationManager.updateContent(getString(R.string.gps_starting));
-
             startForeground(NOTIFICATION_ID, notificationManager.getNotification());
         }
     }

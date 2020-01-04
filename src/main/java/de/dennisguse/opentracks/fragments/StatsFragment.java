@@ -64,7 +64,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
     private static final String STATS_FRAGMENT_TAG = StatsFragment.class.getSimpleName();
 
-    private static final long UI_UPDATE_INTERVAL = UnitConversions.ONE_SECOND;
+    private static final long UI_UPDATE_INTERVAL = UnitConversions.ONE_SECOND_MS;
 
     private TrackDataHub trackDataHub;
     private Handler handlerUpdateUI;
