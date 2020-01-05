@@ -1,0 +1,40 @@
+@startuml
+title
+State of OpenTracks
+end title
+
+legend right
+SettingsActivity can be reached
+from every activity showing a menu.
+endlegend
+
+[*] --> TrackListActivity
+TrackListActivity --> TrackDetailActivity : Start recording
+TrackListActivity --> SearchListActivity
+TrackListActivity --> MarkerListActivity : Show all markers
+TrackListActivity --> TrackDetailActivity : Show track
+TrackListActivity --> TrackDeleteActivity
+
+SearchListActivity --> MarkerDetailActivity : Search result
+SearchListActivity --> TrackDetailActivity : Search result
+
+TrackDetailActivity --> TrackDeleteActivity
+TrackDetailActivity --> TrackEditActivity
+TrackDetailActivity --> MarkerListActivity
+TrackDetailActivity --> MarkerEditActivity : Add marker
+TrackDetailActivity --> CameraIntent : Add marker (with photo)
+TrackDetailActivity --> ShareFileIntent
+TrackDetailActivity --> DashboardIntent : Database cursor
+TrackDetailActivity --> TrackOnMapIntent : KMZ
+
+MarkerListActivity --> MarkerDetailActivity
+
+MarkerDetailActivity --> MarkerEditActivity
+MarkerDetailActivity --> CoordinateOnMapIntent : URI
+
+SettingsActivity --> AboutActivity
+SettingsActivity --> HelpActivity
+SettingsActivity --> ExportActivity
+SettingsActivity --> ImportActivity
+
+@enduml
