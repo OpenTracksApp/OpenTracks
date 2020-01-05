@@ -99,4 +99,16 @@ public class SystemUtils {
         }
         return wakeLock;
     }
+
+    /**
+     * Releases the wake lock if it is held.
+     *
+     * @return null
+     */
+    public static WakeLock releaseWakeLock(WakeLock wakeLock) {
+        if (wakeLock != null && wakeLock.isHeld()) {
+            wakeLock.release();
+        }
+        return null;
+    }
 }

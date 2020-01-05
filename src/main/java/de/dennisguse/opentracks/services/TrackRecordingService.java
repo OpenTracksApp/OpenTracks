@@ -268,7 +268,7 @@ public class TrackRecordingService extends Service {
         binder = null;
 
         // This should be the next to last operation
-        releaseWakeLock();
+        wakeLock = SystemUtils.releaseWakeLock(wakeLock);
 
         // Shutdown the executorService last to avoid sending events to a dead executor.
         executorService.shutdown();
@@ -528,7 +528,7 @@ public class TrackRecordingService extends Service {
     void stopGps(boolean stop) {
         unregisterLocationListener();
         showNotification(false);
-        releaseWakeLock();
+        wakeLock = SystemUtils.releaseWakeLock(wakeLock);
         if (stop) {
             stopSelf();
         }
@@ -726,13 +726,6 @@ public class TrackRecordingService extends Service {
             return;
         }
         locationManagerConnector.removeLocationUpdates(locationListener);
-    }
-
-    private void releaseWakeLock() {
-        if (wakeLock != null && wakeLock.isHeld()) {
-            wakeLock.release();
-            wakeLock = null;
-        }
     }
 
     private void showNotification(boolean isGpsStarted) {
