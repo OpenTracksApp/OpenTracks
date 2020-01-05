@@ -88,7 +88,6 @@ public class TrackRecordingService extends Service {
     private Handler handler;
     private LocationManagerConnector locationManagerConnector;
     private PeriodicTaskExecutor voiceExecutor;
-    private SharedPreferences sharedPreferences;
     private TrackRecordingServiceNotificationManager notificationManager;
     private LocationListenerPolicy locationListenerPolicy;
 
@@ -144,9 +143,10 @@ public class TrackRecordingService extends Service {
     };
 
     // The following variables are set when recording:
-    private TripStatisticsUpdater trackTripStatisticsUpdater;
     private WakeLock wakeLock;
     private BluetoothRemoteSensorManager remoteSensorManager;
+
+    private TripStatisticsUpdater trackTripStatisticsUpdater;
     private Location lastLocation;
     private boolean currentSegmentHasLocation;
     private boolean isIdle;
@@ -204,15 +204,15 @@ public class TrackRecordingService extends Service {
         handler = new Handler();
         locationManagerConnector = new LocationManagerConnector(this, handler.getLooper());
         voiceExecutor = new PeriodicTaskExecutor(this, new AnnouncementPeriodicTaskFactory());
-        sharedPreferences = PreferencesUtils.getSharedPreferences(this);
-        sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+
+
         notificationManager = new TrackRecordingServiceNotificationManager(this);
 
         // onSharedPreferenceChanged might not set recordingTrackId.
         recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
 
-        // Require voiceExecutor and splitExecutor to be created.
-        sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
+        PreferencesUtils.register(this, sharedPreferenceChangeListener);
+        sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
 
         handler.post(registerLocationRunnable);
 
@@ -252,8 +252,7 @@ public class TrackRecordingService extends Service {
         handler.removeCallbacks(registerLocationRunnable);
         unregisterLocationListener();
 
-        // unregister sharedPreferences before shutting down splitExecutor and voiceExecutor
-        sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+        PreferencesUtils.unregister(this, sharedPreferenceChangeListener);
 
         try {
             voiceExecutor.shutdown();
@@ -385,10 +384,7 @@ public class TrackRecordingService extends Service {
         trackTripStatisticsUpdater = new TripStatisticsUpdater(tripStatistics.getStartTime());
 
         try (TrackPointIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), -1L, false, TrackPointFactory.DEFAULT_LOCATION_FACTORY)) {
-            while (locationIterator.hasNext()) {
-                Location location = locationIterator.next();
-                trackTripStatisticsUpdater.addLocation(location, recordingDistanceInterval);
-            }
+            trackTripStatisticsUpdater.addLocation(locationIterator, recordingDistanceInterval);
         } catch (RuntimeException e) {
             Log.e(TAG, "RuntimeException", e);
         }
@@ -435,7 +431,13 @@ public class TrackRecordingService extends Service {
         voiceExecutor.restore();
     }
 
-    void startGps() {
+    void tryStartGps() {
+        if (isRecording()) return;
+
+        startGps();
+    }
+
+    private void startGps() {
         wakeLock = SystemUtils.acquireWakeLock(this, wakeLock);
         registerLocationListener();
         showNotification(true);
@@ -523,13 +525,15 @@ public class TrackRecordingService extends Service {
     /**
      * Stops gps.
      *
-     * @param stop true to stop self
+     * @param shutdown true to shutdown self
      */
-    void stopGps(boolean stop) {
+    void stopGps(boolean shutdown) {
+        if (!isRecording()) return;
+
         unregisterLocationListener();
         showNotification(false);
         wakeLock = SystemUtils.releaseWakeLock(wakeLock);
-        if (stop) {
+        if (shutdown) {
             stopSelf();
         }
     }

@@ -21,6 +21,7 @@ import android.util.Log;
 
 import androidx.annotation.VisibleForTesting;
 
+import de.dennisguse.opentracks.content.provider.TrackPointIterator;
 import de.dennisguse.opentracks.util.LocationUtils;
 
 import static de.dennisguse.opentracks.services.TrackRecordingService.MAX_NO_MOVEMENT_SPEED;
@@ -176,6 +177,13 @@ public class TripStatisticsUpdater {
 
         lastLocation = location;
         lastMovingLocation = location;
+    }
+
+    public void addLocation(TrackPointIterator iterator, int minRecordingDistance) {
+        while (iterator.hasNext()) {
+            Location location = iterator.next();
+            addLocation(location, minRecordingDistance);
+        }
     }
 
     /**
