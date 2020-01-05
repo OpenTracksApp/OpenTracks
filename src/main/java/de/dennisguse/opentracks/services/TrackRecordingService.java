@@ -186,16 +186,6 @@ public class TrackRecordingService extends Service {
         }
     };
 
-    private final Runnable registerLocationRunnable = new Runnable() {
-        @Override
-        public void run() {
-            if (isRecording() && !isPaused()) {
-                registerLocationListener();
-            }
-            handler.postDelayed(this, UnitConversions.ONE_MINUTE_MS);
-        }
-    };
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -213,8 +203,6 @@ public class TrackRecordingService extends Service {
 
         PreferencesUtils.register(this, sharedPreferenceChangeListener);
         sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
-
-        handler.post(registerLocationRunnable);
 
         // Try to restart the previous recording track in case the service has been restarted by the system, which can sometimes happen.
         Track track = contentProviderUtils.getTrack(recordingTrackId);
@@ -249,7 +237,6 @@ public class TrackRecordingService extends Service {
         // Reverse order from onCreate
         showNotification(false); //TODO Why?
 
-        handler.removeCallbacks(registerLocationRunnable);
         unregisterLocationListener();
 
         PreferencesUtils.unregister(this, sharedPreferenceChangeListener);
