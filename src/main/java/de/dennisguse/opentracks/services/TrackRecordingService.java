@@ -80,8 +80,6 @@ public class TrackRecordingService extends Service {
     // Anything faster than that (in meters per second) will be considered moving.
     private static final String TAG = TrackRecordingService.class.getSimpleName();
 
-    private static final int NOTIFICATION_ID = 123;
-
     public static final double MAX_NO_MOVEMENT_SPEED = 0.224;
 
     // The following variables are set in onCreate:
@@ -741,10 +739,12 @@ public class TrackRecordingService extends Service {
         // Dijkstra If
         if (isRecording() && isPaused()) {
             stopForeground(true);
+            notificationManager.cancelNotification();
 
         }
         if (!isRecording() && !isGpsStarted) {
             stopForeground(true);
+            notificationManager.cancelNotification();
         }
         if (isRecording() && !isPaused()) {
             Intent intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
@@ -756,7 +756,7 @@ public class TrackRecordingService extends Service {
 
             notificationManager.updatePendingIntent(pendingIntent);
             notificationManager.updateContent(getString(R.string.gps_starting));
-            startForeground(NOTIFICATION_ID, notificationManager.getNotification());
+            startForeground(TrackRecordingServiceNotificationManager.NOTIFICATION_ID, notificationManager.getNotification());
         }
         if (!isRecording() && isGpsStarted) {
             Intent intent = IntentUtils.newIntent(this, TrackListActivity.class);
@@ -766,7 +766,7 @@ public class TrackRecordingService extends Service {
 
             notificationManager.updatePendingIntent(pendingIntent);
             notificationManager.updateContent(getString(R.string.gps_starting));
-            startForeground(NOTIFICATION_ID, notificationManager.getNotification());
+            startForeground(TrackRecordingServiceNotificationManager.NOTIFICATION_ID, notificationManager.getNotification());
         }
     }
 }

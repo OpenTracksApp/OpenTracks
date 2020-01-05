@@ -20,7 +20,7 @@ import de.dennisguse.opentracks.util.StringUtils;
  */
 class TrackRecordingServiceNotificationManager {
 
-    private static final int NOTIFICATION_ID = 123;
+    static final int NOTIFICATION_ID = 123;
 
     private static final String CHANNEL_ID = TrackRecordingServiceNotificationManager.class.getSimpleName();
 
@@ -76,12 +76,17 @@ class TrackRecordingServiceNotificationManager {
 
         notificationBuilder.setContentText(context.getString(R.string.track_recording_notification_accuracy, formattedAccuracy));
         updateNotification();
+
         notificationBuilder.setOnlyAlertOnce(true);
     }
 
     void updatePendingIntent(PendingIntent pendingIntent) {
         notificationBuilder.setContentIntent(pendingIntent);
         updateNotification();
+    }
+
+    void cancelNotification() {
+        notificationManager.cancel(NOTIFICATION_ID);
     }
 
     Notification getNotification() {
