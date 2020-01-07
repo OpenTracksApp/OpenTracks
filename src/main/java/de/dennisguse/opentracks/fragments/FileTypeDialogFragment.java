@@ -67,12 +67,14 @@ public class FileTypeDialogFragment extends DialogFragment {
     @Override
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final TrackFileFormat[] trackFileFormats = {TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES, TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA, TrackFileFormat.GPX};
+        final TrackFileFormat[] trackFileFormats = {TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES, TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA, TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA, TrackFileFormat.GPX};
         String[] choices = new String[trackFileFormats.length];
         for (int i = 0; i < choices.length; i++) {
             TrackFileFormat trackFileFormat = trackFileFormats[i];
             String trackFileFormatUpperCase = trackFileFormat.getExtension().toUpperCase(Locale.US); //ASCII upper case
-            choices[i] = getString(optionId, trackFileFormatUpperCase);
+            int photoMessageId = trackFileFormat.includesPhotos() ? R.string.export_with_photos : R.string.export_without_photos;
+            String trackFileFormatDisplayName = String.format("%s (%s)", trackFileFormatUpperCase, getString(photoMessageId));
+            choices[i] = getString(optionId, trackFileFormatDisplayName);
         }
         return new AlertDialog.Builder(getActivity())
                 .setNegativeButton(R.string.generic_cancel, new OnClickListener() {

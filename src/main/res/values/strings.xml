@@ -167,6 +167,8 @@ At the moment, the recorded locations as well as the timestamps are send to an A
     <!-- Export -->
     <string name="export_all_option">All as %1$s</string>
     <string name="export_all_title">Export to external storage</string>
+    <string name="export_with_photos">with photos</string>
+    <string name="export_without_photos">without photos</string>
     <string name="export_external_storage">External storage</string>
     <string name="export_external_storage_error">Exported %1$d of %2$s to %3$s</string>
     <string name="export_external_storage_option">as %1$s to %2$s</string>

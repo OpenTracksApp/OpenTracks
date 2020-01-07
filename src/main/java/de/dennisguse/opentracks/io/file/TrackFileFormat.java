@@ -86,6 +86,11 @@ public enum TrackFileFormat {
         public String getExtension() {
             return "kmz";
         }
+
+        @Override
+        public boolean includesPhotos() {
+            return exportPhotos;
+        }
     },
     KMZ_WITH_TRACKDETAIL {
 
@@ -108,6 +113,12 @@ public enum TrackFileFormat {
         public String getExtension() {
             return "kmz";
         }
+
+        @Override
+        public boolean includesPhotos() {
+            return exportPhotos;
+        }
+
     },
     KMZ_WITH_TRACKDETAIL_AND_SENSORDATA {
 
@@ -130,6 +141,13 @@ public enum TrackFileFormat {
         public String getExtension() {
             return "kmz";
         }
+
+        @Override
+        public boolean includesPhotos() {
+            return exportPhotos;
+        }
+
+
     },
     KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES {
 
@@ -152,6 +170,12 @@ public enum TrackFileFormat {
         public String getExtension() {
             return "kmz";
         }
+
+        @Override
+        public boolean includesPhotos() {
+            return exportPhotos;
+        }
+
     },
     GPX {
         @Override
@@ -204,6 +228,11 @@ public enum TrackFileFormat {
      * Returns the file extension for each format.
      */
     public abstract String getExtension();
+
+    /**
+     * Returns whether the format supports photos.
+     */
+    public boolean includesPhotos() { return false; };
 
     /**
      * Returns the name of for each format.
