@@ -102,6 +102,8 @@
     <string name="description_track_segment">Segmento</string>
     <string name="export_all_option">Todo como %1$s</string>
     <string name="export_all_title">Exportar a unidad de almacenamiento externa</string>
+    <string name="export_with_photos">con fotos</string>
+    <string name="export_without_photos">sin fotos</string>
     <string name="export_external_storage">Unidad de almacenamiento externa</string>
     <string name="export_external_storage_error">Se exportaron %1$d de %2$s a %3$s</string>
     <string name="export_external_storage_option">como %1$s a %2$s</string>
