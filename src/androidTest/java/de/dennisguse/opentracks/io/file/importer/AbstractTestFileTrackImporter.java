@@ -57,9 +57,9 @@ public abstract class AbstractTestFileTrackImporter {
     static final double TRACK_ELEVATION = 324.0;
 
     static final String TRACK_TIME_0 = "2010-04-22T18:21:00Z";
-    static final String TRACK_TIME_1 = "2010-04-22T18:21:50.123";
-    static final String TRACK_TIME_2 = "2010-04-22T18:23:00.123";
-    static final String TRACK_TIME_3 = "2010-04-22T18:24:50.123";
+    static final String TRACK_TIME_1 = "2010-04-22T18:21:50.123Z";
+    static final String TRACK_TIME_2 = "2010-04-22T18:23:00.123Z";
+    static final String TRACK_TIME_3 = "2010-04-22T18:24:50.123Z";
 
     static final SimpleDateFormat DATE_FORMAT_0 = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'", Locale.US);
     static final SimpleDateFormat DATE_FORMAT_1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US);

@@ -17,6 +17,7 @@ package de.dennisguse.opentracks.util;
 
 import android.content.Context;
 import android.location.Location;
+import android.os.Build;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Pair;
@@ -24,6 +25,9 @@ import android.util.Pair;
 import java.text.DecimalFormat;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -42,15 +46,22 @@ public class StringUtils {
 
     private static final String COORDINATE_DEGREE = "\u00B0";
 
+    //TODO Remove when upgrading to API level 26+.
+    @Deprecated
     private static final SimpleDateFormat ISO_8601_DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
+
+    //TODO Remove when upgrading to API level 26+.
+    @Deprecated
     private static final SimpleDateFormat ISO_8601_BASE = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US);
+
+    //TODO Remove when upgrading to API level 26+.
+    @Deprecated
     private static final Pattern ISO_8601_EXTRAS = Pattern.compile("^(\\.\\d+)?(?:Z|([+-])(\\d{2}):(\\d{2}))?$");
 
     static {
         ISO_8601_DATE_TIME_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
         ISO_8601_BASE.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
-
 
     private StringUtils() {
     }
@@ -73,7 +84,11 @@ public class StringUtils {
      * @param time_ms the time in milliseconds
      */
     public static String formatDateTimeIso8601(long time_ms) {
-        return ISO_8601_DATE_TIME_FORMAT.format(time_ms);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return Instant.ofEpochMilli(time_ms).toString();
+        } else {
+            return ISO_8601_DATE_TIME_FORMAT.format(time_ms);
+        }
     }
 
     /**
@@ -269,8 +284,19 @@ public class StringUtils {
      *
      * @param xmlDateTime the XML date time string
      */
-    //TODO Can this be replaced using java.time?
-    public static long getTime(String xmlDateTime) {
+    public static long parseTime(String xmlDateTime) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            try {
+                TemporalAccessor t = DateTimeFormatter.ISO_DATE_TIME.parse(xmlDateTime);
+                return Instant.from(t).toEpochMilli();
+            } catch (Exception e) {
+                throw new IllegalArgumentException("Invalid XML dateTime value: " + e);
+            }
+        }
+
+        //TODO Remove the following when upgrading to API level 26+.
+        //ATTENTION: The following code does not require a time zone (+01 or Z); while ISO_DATE_TIME requires this!
+
         // Parse the date time base
         ParsePosition position = new ParsePosition(0);
         Date date = ISO_8601_BASE.parse(xmlDateTime, position);

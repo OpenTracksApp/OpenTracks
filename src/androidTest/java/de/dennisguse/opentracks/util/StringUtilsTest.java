@@ -115,27 +115,16 @@ public class StringUtilsTest {
     }
 
     /**
-     * Tests {@link StringUtils#getTime(String)}.
-     */
-    @Test
-    public void testGetTime() {
-        assertGetTime("2010-05-04T03:02:01", 2010, 5, 4, 3, 2, 1, 0);
-        assertGetTime("2010-05-04T03:02:01Z", 2010, 5, 4, 3, 2, 1, 0);
-    }
-
-    /**
-     * Tests {@link StringUtils#getTime(String)} with fractional seconds.
+     * Tests {@link StringUtils#parseTime(String)} with fractional seconds.
      */
     @Test
     public void testGetTime_fractional() {
-        assertGetTime("2010-05-04T03:02:01.3", 2010, 5, 4, 3, 2, 1, 300);
-        assertGetTime("2010-05-04T03:02:01.35", 2010, 5, 4, 3, 2, 1, 350);
         assertGetTime("2010-05-04T03:02:01.352Z", 2010, 5, 4, 3, 2, 1, 352);
-        assertGetTime("2010-05-04T03:02:01.3529Z", 2010, 5, 4, 3, 2, 1, 353);
+        assertGetTime("2010-05-04T03:02:01.3529Z", 2010, 5, 4, 3, 2, 1, 352);
     }
 
     /**
-     * Tests {@link StringUtils#getTime(String)} with time zone.
+     * Tests {@link StringUtils#parseTime(String)} with time zone.
      */
     @Test
     public void testGetTime_timezone() {
@@ -149,7 +138,7 @@ public class StringUtilsTest {
     }
 
     /**
-     * Tests {@link StringUtils#getTime(String)} with fractional seconds and time zone.
+     * Tests {@link StringUtils#parseTime(String)} with fractional seconds and time zone.
      */
     @Test
     public void testGetTime_fractionalAndTimezone() {
@@ -160,7 +149,7 @@ public class StringUtilsTest {
     }
 
     /**
-     * Asserts the {@link StringUtils#getTime(String)} returns the expected values.
+     * Asserts the {@link StringUtils#parseTime(String)} returns the expected values.
      *
      * @param xmlDateTime the xml date time string
      * @param year        the expected year
@@ -175,7 +164,7 @@ public class StringUtilsTest {
         GregorianCalendar calendar = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
         calendar.set(year, month - 1, day, hour, minute, second);
         calendar.set(GregorianCalendar.MILLISECOND, millisecond);
-        Assert.assertEquals(calendar.getTimeInMillis(), StringUtils.getTime(xmlDateTime));
+        Assert.assertEquals(calendar.getTimeInMillis(), StringUtils.parseTime(xmlDateTime));
     }
 
     /**

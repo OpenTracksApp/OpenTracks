@@ -412,7 +412,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
             timeValue = trackData.importTime;
         } else {
             try {
-                timeValue = StringUtils.getTime(time);
+                timeValue = StringUtils.parseTime(time);
             } catch (IllegalArgumentException e) {
                 throw new SAXException(createErrorMessage(String.format(Locale.US, "Unable to parse time: %s", time)), e);
             }
