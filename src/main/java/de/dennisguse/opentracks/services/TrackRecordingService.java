@@ -29,7 +29,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
@@ -85,8 +84,7 @@ public class TrackRecordingService extends Service {
     // The following variables are set in onCreate:
     private ExecutorService executorService;
     private ContentProviderUtils contentProviderUtils;
-    private Handler handler;
-    private LocationManagerConnector locationManagerConnector;
+    private LocationManager locationManager;
     private PeriodicTaskExecutor voiceExecutor;
     private TrackRecordingServiceNotificationManager notificationManager;
     private LocationListenerPolicy locationListenerPolicy;
@@ -156,10 +154,7 @@ public class TrackRecordingService extends Service {
 
         @Override
         public void onLocationChanged(final Location location) {
-            if (locationManagerConnector == null
-                    || executorService == null
-                    || executorService.isShutdown()
-                    || executorService.isTerminated()) {
+            if (executorService == null || executorService.isShutdown() || executorService.isTerminated()) {
                 return;
             }
             executorService.submit(new Runnable() {
@@ -191,10 +186,8 @@ public class TrackRecordingService extends Service {
         super.onCreate();
         executorService = Executors.newSingleThreadExecutor();
         contentProviderUtils = new ContentProviderUtils(this);
-        handler = new Handler();
-        locationManagerConnector = new LocationManagerConnector(this, handler.getLooper());
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         voiceExecutor = new PeriodicTaskExecutor(this, new AnnouncementPeriodicTaskFactory());
-
 
         notificationManager = new TrackRecordingServiceNotificationManager(this);
 
@@ -238,6 +231,7 @@ public class TrackRecordingService extends Service {
         showNotification(false); //TODO Why?
 
         unregisterLocationListener();
+        locationManager = null;
 
         PreferencesUtils.unregister(this, sharedPreferenceChangeListener);
 
@@ -247,7 +241,6 @@ public class TrackRecordingService extends Service {
             voiceExecutor = null;
         }
 
-        locationManagerConnector = null;
         contentProviderUtils = null;
 
         binder.detachFromService();
@@ -698,25 +691,25 @@ public class TrackRecordingService extends Service {
     }
 
     private void registerLocationListener() {
-        if (locationManagerConnector == null) {
+        if (locationManager == null) {
             Log.e(TAG, "locationManager is null.");
             return;
         }
         try {
             long interval = locationListenerPolicy.getDesiredPollingInterval();
-            locationManagerConnector.requestLocationUpdates(interval, locationListenerPolicy.getMinDistance_m(), locationListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, interval, locationListenerPolicy.getMinDistance_m(), locationListener);
             currentRecordingInterval = interval;
-        } catch (RuntimeException e) {
-            Log.e(TAG, "Could not register location listener.", e);
+        } catch (SecurityException e) {
+            Log.e(TAG, "Could not register location listener; permissions not granted.", e);
         }
     }
 
     private void unregisterLocationListener() {
-        if (locationManagerConnector == null) {
+        if (locationManager == null) {
             Log.e(TAG, "locationManager is null.");
             return;
         }
-        locationManagerConnector.removeLocationUpdates(locationListener);
+        locationManager.removeUpdates(locationListener);
     }
 
     private void showNotification(boolean isGpsStarted) {

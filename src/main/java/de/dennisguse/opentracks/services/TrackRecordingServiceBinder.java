@@ -25,7 +25,6 @@ class TrackRecordingServiceBinder extends android.os.Binder implements TrackReco
     @Override
     public void startGps() {
         trackRecordingService.tryStartGps();
-
     }
 
     public void stopGps() {
