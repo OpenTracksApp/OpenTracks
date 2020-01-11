@@ -1,0 +1,11 @@
+v3.3.2: OpenTracks
+
+Changes:
+- Export: overwrites files now
+
+Bugfix:
+- Always remove recording notification
+
+Developer:
+- On API 26+ java.time is used for parsing and writing dates
+- Refactoring of TrackRecordingService
