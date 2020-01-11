@@ -151,9 +151,9 @@ public class IntentUtils {
         intent.setDataAndType(uriAndMime.first, uriAndMime.second);
 
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        try {
+        if (intent.resolveActivity(context.getPackageManager()) != null) {
             context.startActivity(intent);
-        } catch (ActivityNotFoundException e) {
+        } else {
             Toast.makeText(context, context.getString(R.string.app_not_installed_show_on_map), Toast.LENGTH_SHORT).show();
         }
     }
