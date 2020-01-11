@@ -104,7 +104,7 @@ public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
             if (!isRecording || isPaused) {
                 wakeLock = SystemUtils.acquireWakeLock(exportActivity, wakeLock);
             }
-            return saveAllTracks();
+            return exportAllTracks();
         } finally {
             if (wakeLock != null && wakeLock.isHeld()) {
                 wakeLock.release();
@@ -136,15 +136,11 @@ public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     }
 
     /**
-     * Saves tracks to one file (uses first track to determine the filename).
+     * Export the track to one file.
      *
-     * @param tracks the tracks
+     * @param track the track
      */
-    private Boolean saveTracks(Track[] tracks) {
-        if (tracks.length == 0) {
-            return false;
-        }
-
+    private Boolean exportTrack(Track track) {
         TrackExporterListener trackExporterListener = new TrackExporterListener() {
             @Override
             public void onProgressUpdate(int number, int max) {
@@ -155,11 +151,15 @@ public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
             }
         };
 
-        TrackExporter trackExporter = trackFileFormat.newTrackExporter(context, tracks, trackExporterListener);
-        Track track = tracks[0];
+        TrackExporter trackExporter = trackFileFormat.newTrackExporter(context, new Track[]{track}, trackExporterListener);
 
         String fileName = track.getId() + "." + trackFileFormat.getExtension();
-        DocumentFile file = directory.createFile(trackFileFormat.getMimeType(), fileName);
+
+        // Overwrite a file if it exists; DocumentFile.createFile() creates a new file appending a suffix if the displayname already exists.
+        DocumentFile file = directory.findFile(fileName);
+        if (file == null) {
+            file = directory.createFile(trackFileFormat.getMimeType(), fileName);
+        }
 
         try (OutputStream outputStream = context.getContentResolver().openOutputStream(file.getUri())) {
             if (trackExporter.writeTrack(context, outputStream)) {
@@ -183,7 +183,7 @@ public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     /**
      * Saves all the tracks.
      */
-    private Boolean saveAllTracks() {
+    private Boolean exportAllTracks() {
         try (Cursor cursor = contentProviderUtils.getTrackCursor(null, null, TracksColumns._ID)) {
             if (cursor == null) {
                 return false;
@@ -195,7 +195,7 @@ public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
                 }
                 cursor.moveToPosition(i);
                 Track track = contentProviderUtils.createTrack(cursor);
-                if (track != null && saveTracks(new Track[]{track})) {
+                if (track != null && exportTrack(track)) {
                     processedTrackCount++;
                 }
                 publishProgress(i + 1, totalTrackCount);
