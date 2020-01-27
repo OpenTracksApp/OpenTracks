@@ -53,6 +53,8 @@ public abstract class CustomContentProvider extends ContentProvider {
 
     private static final String TAG = CustomContentProvider.class.getSimpleName();
 
+    private static final String SQL_LIST_DELIMITER = ",";
+
     private final UriMatcher uriMatcher;
 
     private SQLiteDatabase db;
@@ -61,10 +63,10 @@ public abstract class CustomContentProvider extends ContentProvider {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TrackPointsColumns.CONTENT_URI_BY_ID.getPath(), UrlType.TRACKPOINTS.ordinal());
         uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TrackPointsColumns.CONTENT_URI_BY_ID.getPath() + "/#", UrlType.TRACKPOINTS_BY_ID.ordinal());
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TrackPointsColumns.CONTENT_URI_BY_TRACKID.getPath() + "/#", UrlType.TRACKPOINTS_BY_TRACKID.ordinal());
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TrackPointsColumns.CONTENT_URI_BY_TRACKID.getPath() + "/*", UrlType.TRACKPOINTS_BY_TRACKID.ordinal());
 
         uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.CONTENT_URI.getPath(), UrlType.TRACKS.ordinal());
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.CONTENT_URI.getPath() + "/#", UrlType.TRACKS_BY_ID.ordinal());
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.CONTENT_URI.getPath() + "/*", UrlType.TRACKS_BY_ID.ordinal());
 
         uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, WaypointsColumns.CONTENT_URI.getPath(), UrlType.WAYPOINTS.ordinal());
         uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, WaypointsColumns.CONTENT_URI.getPath() + "/#", UrlType.WAYPOINTS_BY_ID.ordinal());
@@ -202,12 +204,11 @@ public abstract class CustomContentProvider extends ContentProvider {
                 break;
             case TRACKPOINTS_BY_ID:
                 queryBuilder.setTables(TrackPointsColumns.TABLE_NAME);
-
                 queryBuilder.appendWhere(TrackPointsColumns._ID + "=" + ContentUris.parseId(url));
                 break;
             case TRACKPOINTS_BY_TRACKID:
                 queryBuilder.setTables(TrackPointsColumns.TABLE_NAME);
-                queryBuilder.appendWhere(TrackPointsColumns.TRACKID + "=" + ContentUris.parseId(url));
+                queryBuilder.appendWhere(TrackPointsColumns.TRACKID + " IN (" + TextUtils.join(SQL_LIST_DELIMITER, ContentProviderUtils.parseTrackIdsFromUri(url)) + ")");
                 break;
             case TRACKS:
                 queryBuilder.setTables(TracksColumns.TABLE_NAME);
@@ -215,7 +216,7 @@ public abstract class CustomContentProvider extends ContentProvider {
                 break;
             case TRACKS_BY_ID:
                 queryBuilder.setTables(TracksColumns.TABLE_NAME);
-                queryBuilder.appendWhere(TracksColumns._ID + "=" + ContentUris.parseId(url));
+                queryBuilder.appendWhere(TracksColumns._ID + " IN (" + TextUtils.join(SQL_LIST_DELIMITER, ContentProviderUtils.parseTrackIdsFromUri(url)) + ")");
                 break;
             case WAYPOINTS:
                 queryBuilder.setTables(WaypointsColumns.TABLE_NAME);

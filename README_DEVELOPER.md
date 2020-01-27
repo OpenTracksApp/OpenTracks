@@ -14,15 +14,15 @@ For the time being, the OpenTracks Data API can be used to implement mainly cust
 
 ## Implementation
 OpenTracks by default does not expose any data to 3rd-party applications.
-On the request of the user (i.e., pressing a button), an Intent is created that exposes the `Track` data (it's summary) as well as the `TrackPoint`s.
+On the request of the user (i.e., pressing a button), an Intent is created that exposes the `Track` data (it's summary) as well as the `TrackPoint`s of one or more selected tracks.
 For each, one URI is provided.
 These URIs notify observers if on content changes (e.g., a new `TrackPoint` was added).
 
 Limitations:
-* only tracks selected by the user is exposed,
+* only tracks selected by the user are exposed,
 * `Waypoints` are not exposed,
 * access is only granted temporarily and automatically revoked (see `FLAG_GRANT_READ_URI_PERMISSION`),
-* no write access is impossible, and
+* no write access is possible, and
 * neither track recordings can be started, paused, or stopped.
 
 All required information can be found in `IntentDashboardUtils.java`. 

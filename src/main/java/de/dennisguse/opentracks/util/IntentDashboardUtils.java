@@ -1,7 +1,6 @@
 package de.dennisguse.opentracks.util;
 
 import android.content.ClipData;
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -10,6 +9,7 @@ import java.util.ArrayList;
 
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
+import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 
 /**
  * Create an {@link Intent} to request showing a Dashboard.
@@ -24,11 +24,12 @@ public class IntentDashboardUtils {
     private IntentDashboardUtils() {
     }
 
-    public static boolean startDashboard(Context context, long trackId) {
+    public static boolean startDashboard(Context context, long[] trackIds) {
         ArrayList<Uri> uris = new ArrayList<>();
+        String trackIdList = ContentProviderUtils.formatIdListForUri(trackIds);
 
-        uris.add(0, ContentUris.withAppendedId(TracksColumns.CONTENT_URI, trackId));
-        uris.add(1, ContentUris.withAppendedId(TrackPointsColumns.CONTENT_URI_BY_TRACKID, trackId));
+        uris.add(0, Uri.withAppendedPath(TracksColumns.CONTENT_URI, trackIdList));
+        uris.add(1, Uri.withAppendedPath(TrackPointsColumns.CONTENT_URI_BY_TRACKID, trackIdList));
 
         Intent intent = new Intent(ACTION_DASHBOARD);
         intent.putParcelableArrayListExtra(ACTION_DASHBOARD_PAYLOAD, uris);
@@ -47,4 +48,5 @@ public class IntentDashboardUtils {
 
         return false;
     }
+
 }

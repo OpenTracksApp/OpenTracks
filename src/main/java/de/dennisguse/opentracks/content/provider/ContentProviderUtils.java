@@ -22,6 +22,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
+import android.text.TextUtils;
 
 import androidx.annotation.VisibleForTesting;
 
@@ -68,6 +69,7 @@ public class ContentProviderUtils {
      * Maximum number of waypoints that will be loaded at one time.
      */
     public static final int MAX_LOADED_WAYPOINTS_POINTS = 10000;
+    public static final String ID_SEPARATOR = ",";
 
     private final IContentResolver contentResolver;
     private int defaultCursorBatchSize = 2000;
@@ -942,4 +944,26 @@ public class ContentProviderUtils {
     void setDefaultCursorBatchSize(int defaultCursorBatchSize) {
         this.defaultCursorBatchSize = defaultCursorBatchSize;
     }
+
+    /**
+     * Formats an array of IDs as comma separated string value
+     *
+     * @param ids   array with IDs
+     * @return comma separated list of ids
+     */
+    public static String formatIdListForUri(long[] ids) {
+        StringBuilder idsPathSegment = new StringBuilder();
+        for (long id : ids) {
+            if (idsPathSegment.length() > 0) {
+                idsPathSegment.append(ID_SEPARATOR);
+            }
+            idsPathSegment.append(id);
+        }
+        return idsPathSegment.toString();
+    }
+
+    public static String[] parseTrackIdsFromUri(Uri url) {
+        return TextUtils.split(url.getLastPathSegment(), ID_SEPARATOR);
+    }
+
 }

@@ -766,4 +766,12 @@ public class CustomContentProviderUtilsTest {
         contentProviderUtils.insertTrack(track);
         contentProviderUtils.bulkInsertTrackPoint(track.getLocations().toArray(new Location[0]), track.getLocations().size(), track.getId());
     }
+
+    @Test
+    public void testFormatIdListForUri() {
+        Assert.assertEquals("", ContentProviderUtils.formatIdListForUri(new long[]{}));
+        Assert.assertEquals("12", ContentProviderUtils.formatIdListForUri(new long[]{12}));
+        Assert.assertEquals("42,43,44", ContentProviderUtils.formatIdListForUri(new long[]{42, 43, 44}));
+    }
+
 }
