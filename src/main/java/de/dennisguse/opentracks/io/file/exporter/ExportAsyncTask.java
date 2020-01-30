@@ -32,7 +32,6 @@ import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
-import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.SystemUtils;
 
 /**
@@ -98,17 +97,12 @@ public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     protected Boolean doInBackground(Void... params) {
         try {
             Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
-            boolean isRecording = PreferencesUtils.isRecording(exportActivity);
-            boolean isPaused = PreferencesUtils.isRecordingTrackPaused(exportActivity);
-            // Get the wake lock if not recording or paused
-            if (!isRecording || isPaused) {
-                wakeLock = SystemUtils.acquireWakeLock(exportActivity, wakeLock);
-            }
+
+            wakeLock = SystemUtils.acquireWakeLock(exportActivity, wakeLock);
+
             return exportAllTracks();
         } finally {
-            if (wakeLock != null && wakeLock.isHeld()) {
-                wakeLock.release();
-            }
+            wakeLock = SystemUtils.releaseWakeLock(wakeLock);
         }
     }
 
