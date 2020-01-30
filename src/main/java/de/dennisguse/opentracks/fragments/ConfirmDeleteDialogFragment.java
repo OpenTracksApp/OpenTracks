@@ -36,12 +36,9 @@ import de.dennisguse.opentracks.util.DialogUtils;
 public class ConfirmDeleteDialogFragment extends DialogFragment {
 
     private static final String CONFIRM_DELETE_DIALOG_TAG = "confirmDeleteDialog";
-    private ConfirmDeleteCaller caller;
-    private final long[] trackIds;
+    private static final String KEY_TRACK_IDS = "trackIds";
 
-    public ConfirmDeleteDialogFragment(long[] trackIds) {
-        this.trackIds = trackIds;
-    }
+    private ConfirmDeleteCaller caller;
 
     /**
      * Create a new instance.
@@ -49,7 +46,12 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
      * @param trackIds list of track ids to delete. To delete all, set to size 1 with trackIds[0] == -1L
      */
     public static void showDialog(FragmentManager fragmentManager, long[] trackIds) {
-        new ConfirmDeleteDialogFragment(trackIds).show(fragmentManager, CONFIRM_DELETE_DIALOG_TAG);
+        Bundle bundle = new Bundle();
+        bundle.putLongArray(KEY_TRACK_IDS, trackIds);
+
+        ConfirmDeleteDialogFragment deleteTrackDialogFragment = new ConfirmDeleteDialogFragment();
+        deleteTrackDialogFragment.setArguments(bundle);
+        deleteTrackDialogFragment.show(fragmentManager, CONFIRM_DELETE_DIALOG_TAG);
     }
 
     @Override
@@ -65,6 +67,8 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
     @Override
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        final long[] trackIds = getArguments().getLongArray(KEY_TRACK_IDS);
+
         int titleId;
         int messageId;
         titleId = trackIds.length > 1 ? R.string.generic_delete_selected_confirm_title : R.string.track_delete_one_confirm_title;

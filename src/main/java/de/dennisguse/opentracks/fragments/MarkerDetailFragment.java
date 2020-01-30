@@ -57,7 +57,9 @@ public class MarkerDetailFragment extends Fragment {
 
     private static final String TAG = MarkerDetailFragment.class.getSimpleName();
     private static final String KEY_MARKER_ID = "markerId";
+
     private static final long HIDE_TEXT_DELAY = 4 * UnitConversions.ONE_SECOND_MS;
+
     private ContentProviderUtils contentProviderUtils;
     private Handler handler;
     private ImageView photoView;
