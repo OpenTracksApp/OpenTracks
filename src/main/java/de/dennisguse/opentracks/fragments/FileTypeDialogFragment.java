@@ -40,18 +40,19 @@ import de.dennisguse.opentracks.io.file.TrackFileFormat;
 public class FileTypeDialogFragment extends DialogFragment {
 
     private static final String FILE_TYPE_DIALOG_TAG = "fileType";
-    private final int titleId;
+    private static final String KEY_TITLE_ID = "titleId";
+    private static final String KEY_OPTION_ID = "optionId";
 
     private FileTypeCaller caller;
-    private final int optionId;
-
-    public FileTypeDialogFragment(int titleId, int optionId) {
-        this.titleId = titleId;
-        this.optionId = optionId;
-    }
 
     public static void showDialog(FragmentManager fragmentManager, int titleId, int optionId) {
-        new FileTypeDialogFragment(titleId, optionId).show(fragmentManager, FILE_TYPE_DIALOG_TAG);
+        Bundle bundle = new Bundle();
+        bundle.putInt(KEY_TITLE_ID, titleId);
+        bundle.putInt(KEY_OPTION_ID, optionId);
+
+        FileTypeDialogFragment fileTypeDialogFragment = new FileTypeDialogFragment();
+        fileTypeDialogFragment.setArguments(bundle);
+        fileTypeDialogFragment.show(fragmentManager, FILE_TYPE_DIALOG_TAG);
     }
 
     @Override
@@ -67,6 +68,9 @@ public class FileTypeDialogFragment extends DialogFragment {
     @Override
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        int optionId = getArguments().getInt(KEY_OPTION_ID);
+        final int titleId = getArguments().getInt(KEY_TITLE_ID);
+
         final TrackFileFormat[] trackFileFormats = {TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES, TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA, TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA, TrackFileFormat.GPX};
         String[] choices = new String[trackFileFormats.length];
         for (int i = 0; i < choices.length; i++) {

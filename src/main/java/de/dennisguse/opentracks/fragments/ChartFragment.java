@@ -25,7 +25,6 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -56,9 +55,18 @@ import de.dennisguse.opentracks.util.UnitConversions;
  * @author Sandor Dornbush
  * @author Rodrigo Damazio
  */
-public abstract class ChartFragment extends Fragment implements TrackDataListener {
+public class ChartFragment extends Fragment implements TrackDataListener {
 
-    private static final String STATE_CHART_VIEW_BY_DISTANCE_KEY = "chartViewByDistance";
+    private static final String KEY_CHART_VIEW_BY_DISTANCE_KEY = "chartViewByDistance";
+
+    public static Fragment newInstance(boolean chartByDistance) {
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(KEY_CHART_VIEW_BY_DISTANCE_KEY, chartByDistance);
+
+        ChartFragment chartFragment = new ChartFragment();
+        chartFragment.setArguments(bundle);
+        return chartFragment;
+    }
 
     private final List<double[]> pendingPoints = new ArrayList<>();
 
@@ -139,13 +147,12 @@ public abstract class ChartFragment extends Fragment implements TrackDataListene
         }
     };
 
-    public ChartFragment(boolean chartByDistance) {
-        this.chartByDistance = chartByDistance;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        chartByDistance = getArguments().getBoolean(KEY_CHART_VIEW_BY_DISTANCE_KEY, chartByDistance);
 
         recordingDistanceInterval = PreferencesUtils.getRecordingDistanceIntervalDefault(getContext());
 
@@ -188,20 +195,6 @@ public abstract class ChartFragment extends Fragment implements TrackDataListene
         super.onStop();
         ViewGroup layout = getView().findViewById(R.id.chart_view_layout);
         layout.removeView(chartView);
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putBoolean(STATE_CHART_VIEW_BY_DISTANCE_KEY, chartByDistance);
-    }
-
-    @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-        if (savedInstanceState != null) {
-            chartByDistance = savedInstanceState.getBoolean(STATE_CHART_VIEW_BY_DISTANCE_KEY);
-        }
     }
 
     @Override
