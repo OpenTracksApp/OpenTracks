@@ -38,16 +38,17 @@ import de.dennisguse.opentracks.util.DialogUtils;
 public class DeleteMarkerDialogFragment extends DialogFragment {
 
     private static final String DELETE_MARKER_DIALOG_TAG = "deleteMarkerDialog";
-    private final long[] markerIds;
+    private static final String KEY_MARKER_IDS = "markerIds";
 
     private DeleteMarkerCaller caller;
 
-    public DeleteMarkerDialogFragment(long[] markerIds) {
-        this.markerIds = markerIds;
-    }
-
     public static void showDialog(FragmentManager fragmentManager, long[] markerIds) {
-        new DeleteMarkerDialogFragment(markerIds).show(fragmentManager, DELETE_MARKER_DIALOG_TAG);
+        Bundle bundle = new Bundle();
+        bundle.putLongArray(KEY_MARKER_IDS, markerIds);
+
+        DeleteMarkerDialogFragment deleteMarkerDialogFragment = new DeleteMarkerDialogFragment();
+        deleteMarkerDialogFragment.setArguments(bundle);
+        deleteMarkerDialogFragment.show(fragmentManager, DELETE_MARKER_DIALOG_TAG);
     }
 
     @Override
@@ -63,6 +64,8 @@ public class DeleteMarkerDialogFragment extends DialogFragment {
     @Override
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        final long[] markerIds = getArguments().getLongArray(KEY_MARKER_IDS);
+
         final FragmentActivity fragmentActivity = getActivity();
         int titleId;
         int messageId;

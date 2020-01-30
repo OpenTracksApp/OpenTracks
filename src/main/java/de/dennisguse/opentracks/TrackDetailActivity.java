@@ -34,7 +34,6 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -46,8 +45,7 @@ import de.dennisguse.opentracks.content.TrackDataHub;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
-import de.dennisguse.opentracks.fragments.ChartDistanceFragment;
-import de.dennisguse.opentracks.fragments.ChartTimeFragment;
+import de.dennisguse.opentracks.fragments.ChartFragment;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.fragments.StatsFragment;
@@ -206,17 +204,15 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
             @Override
             public Fragment getItem(int position) {
                 switch (position) {
-                    case 0:
-                        return new StatsFragment();
                     case 1:
-                        return new ChartTimeFragment();
+                        return ChartFragment.newInstance(false);
                     case 2:
-                        return new ChartDistanceFragment();
+                        return ChartFragment.newInstance(true);
+                    default: //0
+                        return new StatsFragment();
                 }
-                return null;
             }
 
-            @Nullable
             @Override
             public CharSequence getPageTitle(int position) {
                 switch (position) {
