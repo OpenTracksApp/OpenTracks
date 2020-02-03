@@ -43,6 +43,7 @@ import de.dennisguse.opentracks.TrackDetailActivity;
 import de.dennisguse.opentracks.TrackListActivity;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
+import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.CustomContentProvider;
@@ -69,12 +70,6 @@ import de.dennisguse.opentracks.util.UnitConversions;
  * @author Leif Hendrik Wilden
  */
 public class TrackRecordingService extends Service {
-
-    // TODO Move to a different place.
-    @Deprecated
-    public static final double PAUSE_LATITUDE = 100.0;
-    @Deprecated
-    public static final double RESUME_LATITUDE = 200.0;
 
     // Anything faster than that (in meters per second) will be considered moving.
     private static final String TAG = TrackRecordingService.class.getSimpleName();
@@ -386,7 +381,7 @@ public class TrackRecordingService extends Service {
         if (track != null) {
             Location resume = new Location(LocationManager.GPS_PROVIDER);
             resume.setLongitude(0);
-            resume.setLatitude(RESUME_LATITUDE);
+            resume.setLatitude(TrackPointsColumns.RESUME_LATITUDE);
             resume.setTime(System.currentTimeMillis());
             insertLocation(track, resume, null);
         }
@@ -473,7 +468,7 @@ public class TrackRecordingService extends Service {
 
             Location pause = new Location(LocationManager.GPS_PROVIDER);
             pause.setLongitude(0);
-            pause.setLatitude(PAUSE_LATITUDE);
+            pause.setLatitude(TrackPointsColumns.PAUSE_LATITUDE);
             pause.setTime(System.currentTimeMillis());
             insertLocation(track, pause, null);
         }
@@ -610,7 +605,7 @@ public class TrackRecordingService extends Service {
 
             Location pause = new Location(LocationManager.GPS_PROVIDER);
             pause.setLongitude(0);
-            pause.setLatitude(PAUSE_LATITUDE);
+            pause.setLatitude(TrackPointsColumns.PAUSE_LATITUDE);
             pause.setTime(lastLocation.getTime());
             insertLocation(track, pause, null);
 

@@ -39,11 +39,11 @@ import javax.xml.parsers.SAXParserFactory;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.TrackPointFactory;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
-import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.stats.TripStatisticsUpdater;
 import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.LocationUtils;
@@ -274,7 +274,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
 
         //If not the first segment, add a pause separator if there is at least one location in the last segment.
         if (trackData.numberOfSegments > 1 && trackData.lastLocationInCurrentSegment != null) {
-            insertLocation(createLocation(TrackRecordingService.PAUSE_LATITUDE, 0.0, 0.0, trackData.lastLocationInCurrentSegment.getTime()));
+            insertLocation(createLocation(TrackPointsColumns.PAUSE_LATITUDE, 0.0, 0.0, trackData.lastLocationInCurrentSegment.getTime()));
         }
         trackData.lastLocationInCurrentSegment = null;
     }
@@ -344,8 +344,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
 
         if (trackData.numberOfSegments > 1 && trackData.lastLocationInCurrentSegment == null) {
             // If not the first segment, add a resume separator before adding the first location.
-            insertLocation(
-                    createLocation(TrackRecordingService.RESUME_LATITUDE, 0.0, 0.0, location.getTime()));
+            insertLocation(createLocation(TrackPointsColumns.RESUME_LATITUDE, 0.0, 0.0, location.getTime()));
         }
         trackData.lastLocationInCurrentSegment = location;
         return location;

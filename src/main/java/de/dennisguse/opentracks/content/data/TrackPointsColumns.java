@@ -36,8 +36,12 @@ public interface TrackPointsColumns extends BaseColumns {
 
     // Columns
     String TRACKID = "trackid";
+
     String LONGITUDE = "longitude";
     String LATITUDE = "latitude";
+    double PAUSE_LATITUDE = 100.0;
+    double RESUME_LATITUDE = 200.0;
+
     String TIME = "time";
     String ALTITUDE = "elevation";
     String ACCURACY = "accuracy";
