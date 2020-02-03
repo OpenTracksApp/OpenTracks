@@ -187,7 +187,7 @@ public class ContentProviderUtils {
         contentResolver.delete(TracksColumns.CONTENT_URI, null, null);
 
         File dir = FileUtils.getPhotoDir(context);
-        deleteDirectoryRecurse(context, dir);
+        deleteDirectoryRecurse(dir);
     }
 
     /**
@@ -216,7 +216,7 @@ public class ContentProviderUtils {
 
         contentResolver.delete(WaypointsColumns.CONTENT_URI, WaypointsColumns.TRACKID + "=?",
                 new String[]{Long.toString(trackId)});
-        deleteDirectoryRecurse(context, FileUtils.getPhotoDir(context, trackId));
+        deleteDirectoryRecurse(FileUtils.getPhotoDir(context, trackId));
     }
 
     /**
@@ -224,10 +224,10 @@ public class ContentProviderUtils {
      *
      * @param dir the directory
      */
-    private void deleteDirectoryRecurse(Context context, File dir) {
-        if (dir.exists() && dir.isDirectory()) {
+    private void deleteDirectoryRecurse(File dir) {
+        if (dir != null && dir.exists() && dir.isDirectory()) {
             for (File child : dir.listFiles()) {
-                deleteDirectoryRecurse(context, child);
+                deleteDirectoryRecurse(child);
             }
             dir.delete();
         }
