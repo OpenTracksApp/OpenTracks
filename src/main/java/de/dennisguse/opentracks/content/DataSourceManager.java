@@ -111,8 +111,7 @@ class DataSourceManager {
                 dataSource.registerContentObserver(WaypointsColumns.CONTENT_URI, waypointsTableObserver);
                 break;
             case SAMPLED_IN_TRACK_POINTS_TABLE:
-                dataSource.registerContentObserver(
-                        TrackPointsColumns.CONTENT_URI, trackPointsTableObserver);
+                dataSource.registerContentObserver(TrackPointsColumns.CONTENT_URI_BY_ID, trackPointsTableObserver);
                 break;
             case SAMPLED_OUT_TRACK_POINTS_TABLE:
                 // Do nothing. SAMPLED_OUT_POINT_UPDATES is mapped to POINT_UPDATES.

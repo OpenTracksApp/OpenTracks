@@ -59,13 +59,15 @@ public abstract class CustomContentProvider extends ContentProvider {
 
     public CustomContentProvider() {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TrackPointsColumns.TABLE_NAME, UrlType.TRACKPOINTS.ordinal());
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TrackPointsColumns.TABLE_NAME + "/#", UrlType.TRACKPOINTS_BY_ID.ordinal());
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TrackPointsColumns.TABLE_NAME + "/#", UrlType.TRACKPOINTS_BY_TRACKID.ordinal());
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME, UrlType.TRACKS.ordinal());
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/#", UrlType.TRACKS_BY_ID.ordinal());
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, WaypointsColumns.TABLE_NAME, UrlType.WAYPOINTS.ordinal());
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, WaypointsColumns.TABLE_NAME + "/#", UrlType.WAYPOINTS_BY_ID.ordinal());
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TrackPointsColumns.CONTENT_URI_BY_ID.getPath(), UrlType.TRACKPOINTS.ordinal());
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TrackPointsColumns.CONTENT_URI_BY_ID.getPath() + "/#", UrlType.TRACKPOINTS_BY_ID.ordinal());
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TrackPointsColumns.CONTENT_URI_BY_TRACKID.getPath() + "/#", UrlType.TRACKPOINTS_BY_TRACKID.ordinal());
+
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.CONTENT_URI.getPath(), UrlType.TRACKS.ordinal());
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.CONTENT_URI.getPath() + "/#", UrlType.TRACKS_BY_ID.ordinal());
+
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, WaypointsColumns.CONTENT_URI.getPath(), UrlType.WAYPOINTS.ordinal());
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, WaypointsColumns.CONTENT_URI.getPath() + "/#", UrlType.WAYPOINTS_BY_ID.ordinal());
     }
 
     @Override
@@ -200,11 +202,12 @@ public abstract class CustomContentProvider extends ContentProvider {
                 break;
             case TRACKPOINTS_BY_ID:
                 queryBuilder.setTables(TrackPointsColumns.TABLE_NAME);
-                queryBuilder.appendWhere(TrackPointsColumns._ID + "=" + url.getPathSegments().get(1));
+
+                queryBuilder.appendWhere(TrackPointsColumns._ID + "=" + ContentUris.parseId(url));
                 break;
             case TRACKPOINTS_BY_TRACKID:
                 queryBuilder.setTables(TrackPointsColumns.TABLE_NAME);
-                queryBuilder.appendWhere(TrackPointsColumns.TRACKID + "=" + url.getPathSegments().get(1));
+                queryBuilder.appendWhere(TrackPointsColumns.TRACKID + "=" + ContentUris.parseId(url));
                 break;
             case TRACKS:
                 queryBuilder.setTables(TracksColumns.TABLE_NAME);
@@ -212,7 +215,7 @@ public abstract class CustomContentProvider extends ContentProvider {
                 break;
             case TRACKS_BY_ID:
                 queryBuilder.setTables(TracksColumns.TABLE_NAME);
-                queryBuilder.appendWhere(TracksColumns._ID + "=" + url.getPathSegments().get(1));
+                queryBuilder.appendWhere(TracksColumns._ID + "=" + ContentUris.parseId(url));
                 break;
             case WAYPOINTS:
                 queryBuilder.setTables(WaypointsColumns.TABLE_NAME);
@@ -220,7 +223,7 @@ public abstract class CustomContentProvider extends ContentProvider {
                 break;
             case WAYPOINTS_BY_ID:
                 queryBuilder.setTables(WaypointsColumns.TABLE_NAME);
-                queryBuilder.appendWhere(WaypointsColumns._ID + "=" + url.getPathSegments().get(1));
+                queryBuilder.appendWhere(WaypointsColumns._ID + "=" + ContentUris.parseId(url));
                 break;
             default:
                 throw new IllegalArgumentException("Unknown url " + url);
@@ -242,7 +245,7 @@ public abstract class CustomContentProvider extends ContentProvider {
                 break;
             case TRACKPOINTS_BY_ID:
                 table = TrackPointsColumns.TABLE_NAME;
-                whereClause = TrackPointsColumns._ID + "=" + url.getPathSegments().get(1);
+                whereClause = TrackPointsColumns._ID + "=" + ContentUris.parseId(url);
                 if (!TextUtils.isEmpty(where)) {
                     whereClause += " AND (" + where + ")";
                 }
@@ -253,7 +256,7 @@ public abstract class CustomContentProvider extends ContentProvider {
                 break;
             case TRACKS_BY_ID:
                 table = TracksColumns.TABLE_NAME;
-                whereClause = TracksColumns._ID + "=" + url.getPathSegments().get(1);
+                whereClause = TracksColumns._ID + "=" + ContentUris.parseId(url);
                 if (!TextUtils.isEmpty(where)) {
                     whereClause += " AND (" + where + ")";
                 }
@@ -264,7 +267,7 @@ public abstract class CustomContentProvider extends ContentProvider {
                 break;
             case WAYPOINTS_BY_ID:
                 table = WaypointsColumns.TABLE_NAME;
-                whereClause = WaypointsColumns._ID + "=" + url.getPathSegments().get(1);
+                whereClause = WaypointsColumns._ID + "=" + ContentUris.parseId(url);
                 if (!TextUtils.isEmpty(where)) {
                     whereClause += " AND (" + where + ")";
                 }
@@ -289,8 +292,15 @@ public abstract class CustomContentProvider extends ContentProvider {
      *
      * @param url the url
      */
+    @NonNull
     private UrlType getUrlType(Uri url) {
-        return UrlType.values()[uriMatcher.match(url)];
+        UrlType[] urlTypes = UrlType.values();
+        int matchIndex = uriMatcher.match(url);
+        if (0 <= matchIndex && matchIndex < urlTypes.length) {
+            return urlTypes[matchIndex];
+        }
+
+        throw new IllegalArgumentException("Unknown URL " + url);
     }
 
     /**
@@ -328,7 +338,7 @@ public abstract class CustomContentProvider extends ContentProvider {
         }
         long rowId = db.insert(TrackPointsColumns.TABLE_NAME, TrackPointsColumns._ID, values);
         if (rowId >= 0) {
-            return ContentUris.appendId(TrackPointsColumns.CONTENT_URI.buildUpon(), rowId).build();
+            return ContentUris.appendId(TrackPointsColumns.CONTENT_URI_BY_ID.buildUpon(), rowId).build();
         }
         throw new SQLiteException("Failed to insert a track point " + url);
     }

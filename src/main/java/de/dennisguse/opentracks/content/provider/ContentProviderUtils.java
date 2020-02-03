@@ -181,7 +181,7 @@ public class ContentProviderUtils {
      * Deletes all tracks (including waypoints and track points).
      */
     public void deleteAllTracks(Context context) {
-        contentResolver.delete(TrackPointsColumns.CONTENT_URI, null, null);
+        contentResolver.delete(TrackPointsColumns.CONTENT_URI_BY_ID, null, null);
         contentResolver.delete(WaypointsColumns.CONTENT_URI, null, null);
         // Delete tracks last since it triggers a database vaccum call
         contentResolver.delete(TracksColumns.CONTENT_URI, null, null);
@@ -212,7 +212,7 @@ public class ContentProviderUtils {
     private void deleteTrackPointsAndWaypoints(Context context, long trackId) {
         String where = TrackPointsColumns.TRACKID + "=?";
         String[] selectionArgs = new String[]{Long.toString(trackId)};
-        contentResolver.delete(TrackPointsColumns.CONTENT_URI, where, selectionArgs);
+        contentResolver.delete(TrackPointsColumns.CONTENT_URI_BY_ID, where, selectionArgs);
 
         contentResolver.delete(WaypointsColumns.CONTENT_URI, WaypointsColumns.TRACKID + "=?",
                 new String[]{Long.toString(trackId)});
@@ -659,7 +659,7 @@ public class ContentProviderUtils {
         for (int i = 0; i < length; i++) {
             values[i] = createContentValues(locations[i], trackId);
         }
-        return contentResolver.bulkInsert(TrackPointsColumns.CONTENT_URI, values);
+        return contentResolver.bulkInsert(TrackPointsColumns.CONTENT_URI_BY_ID, values);
     }
 
     /**
@@ -846,7 +846,7 @@ public class ContentProviderUtils {
      * @return the content provider URI of the inserted track point
      */
     public Uri insertTrackPoint(Location location, long trackId) {
-        return contentResolver.insert(TrackPointsColumns.CONTENT_URI, createContentValues(location, trackId));
+        return contentResolver.insert(TrackPointsColumns.CONTENT_URI_BY_ID, createContentValues(location, trackId));
     }
 
     /**
@@ -926,7 +926,7 @@ public class ContentProviderUtils {
      * @param sortOrder     the sort order
      */
     private Cursor getTrackPointCursor(String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        return contentResolver.query(TrackPointsColumns.CONTENT_URI, projection, selection, selectionArgs, sortOrder);
+        return contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, projection, selection, selectionArgs, sortOrder);
     }
 
     int getDefaultCursorBatchSize() {

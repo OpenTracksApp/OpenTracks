@@ -28,7 +28,7 @@ public class IntentDashboardUtils {
         ArrayList<Uri> uris = new ArrayList<>();
 
         uris.add(0, ContentUris.withAppendedId(TracksColumns.CONTENT_URI, trackId));
-        uris.add(1, ContentUris.withAppendedId(TrackPointsColumns.CONTENT_URI, trackId));
+        uris.add(1, ContentUris.withAppendedId(TrackPointsColumns.CONTENT_URI_BY_TRACKID, trackId));
 
         Intent intent = new Intent(ACTION_DASHBOARD);
         intent.putParcelableArrayListExtra(ACTION_DASHBOARD_PAYLOAD, uris);
