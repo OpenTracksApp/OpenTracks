@@ -16,6 +16,7 @@
 
 package de.dennisguse.opentracks.content.provider;
 
+import android.content.ContentUris;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -76,8 +77,13 @@ public class CustomContentProviderTest {
     @Test
     public void testGetType() {
         Assert.assertEquals(TracksColumns.CONTENT_TYPE, customContentProvider.getType(TracksColumns.CONTENT_URI));
-        Assert.assertEquals(TrackPointsColumns.CONTENT_TYPE, customContentProvider.getType(TrackPointsColumns.CONTENT_URI));
+        Assert.assertEquals(TracksColumns.CONTENT_ITEMTYPE, customContentProvider.getType(ContentUris.appendId(TracksColumns.CONTENT_URI.buildUpon(), 1).build()));
+
+        Assert.assertEquals(TrackPointsColumns.CONTENT_TYPE, customContentProvider.getType(TrackPointsColumns.CONTENT_URI_BY_ID));
+        Assert.assertEquals(TrackPointsColumns.CONTENT_ITEMTYPE, customContentProvider.getType(ContentUris.appendId(TrackPointsColumns.CONTENT_URI_BY_TRACKID.buildUpon(), 1).build()));
+
         Assert.assertEquals(WaypointsColumns.CONTENT_TYPE, customContentProvider.getType(WaypointsColumns.CONTENT_URI));
+        Assert.assertEquals(WaypointsColumns.CONTENT_ITEMTYPE, customContentProvider.getType(ContentUris.appendId(WaypointsColumns.CONTENT_URI.buildUpon(), 1).build()));
     }
 
     /**
