@@ -21,11 +21,11 @@ import android.util.Log;
 
 import androidx.annotation.VisibleForTesting;
 
+import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
 import de.dennisguse.opentracks.util.LocationUtils;
 
 import static de.dennisguse.opentracks.services.TrackRecordingService.MAX_NO_MOVEMENT_SPEED;
-import static de.dennisguse.opentracks.services.TrackRecordingService.PAUSE_LATITUDE;
 
 /**
  * Updater for {@link TripStatistics}.
@@ -123,7 +123,7 @@ public class TripStatisticsUpdater {
         updateTime(location.getTime());
         if (!LocationUtils.isValidLocation(location)) {
             // Either pause or resume marker
-            if (location.getLatitude() == PAUSE_LATITUDE) {
+            if (location.getLatitude() == TrackPointsColumns.PAUSE_LATITUDE) {
                 if (lastLocation != null && lastMovingLocation != null && lastLocation != lastMovingLocation) {
                     currentSegment.addTotalDistance(lastMovingLocation.distanceTo(lastLocation));
                 }
