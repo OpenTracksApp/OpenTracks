@@ -230,7 +230,7 @@ public class CustomContentProviderUtilsTest {
         ContentResolver contentResolver = context.getContentResolver();
         Cursor tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
         Assert.assertEquals(1, tracksCursor.getCount());
-        Cursor tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI, null, null, null, TrackPointsColumns._ID);
+        Cursor tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
         Assert.assertEquals(10, tracksPointsCursor.getCount());
         Cursor waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null, null, WaypointsColumns._ID);
         Assert.assertEquals(1, waypointCursor.getCount());
@@ -239,7 +239,7 @@ public class CustomContentProviderUtilsTest {
         // Check whether all have been deleted.
         tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
         Assert.assertEquals(0, tracksCursor.getCount());
-        tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI, null, null, null, TrackPointsColumns._ID);
+        tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
         Assert.assertEquals(0, tracksPointsCursor.getCount());
         waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null, null, WaypointsColumns._ID);
         Assert.assertEquals(0, waypointCursor.getCount());
@@ -265,7 +265,7 @@ public class CustomContentProviderUtilsTest {
         ContentResolver contentResolver = context.getContentResolver();
         Cursor tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
         Assert.assertEquals(3, tracksCursor.getCount());
-        Cursor tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI, null, null, null, TrackPointsColumns._ID);
+        Cursor tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
         Assert.assertEquals(20, tracksPointsCursor.getCount());
         Cursor waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null, null, WaypointsColumns._ID);
         Assert.assertEquals(1, waypointCursor.getCount());
@@ -274,7 +274,7 @@ public class CustomContentProviderUtilsTest {
         // Check whether all data of a track has been deleted.
         tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
         Assert.assertEquals(2, tracksCursor.getCount());
-        tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI, null, null, null, TrackPointsColumns._ID);
+        tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
         Assert.assertEquals(20, tracksPointsCursor.getCount());
         waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null, null, WaypointsColumns._ID);
         Assert.assertEquals(0, waypointCursor.getCount());
