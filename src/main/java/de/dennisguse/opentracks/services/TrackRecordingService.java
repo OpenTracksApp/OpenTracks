@@ -708,17 +708,7 @@ public class TrackRecordingService extends Service {
     }
 
     private void showNotification(boolean isGpsStarted) {
-        // Dijkstra If
-        if (isRecording() && isPaused()) {
-            stopForeground(true);
-            notificationManager.cancelNotification();
-
-        }
-        if (!isRecording() && !isGpsStarted) {
-            stopForeground(true);
-            notificationManager.cancelNotification();
-        }
-        if (isRecording() && !isPaused()) {
+        if (isRecording()) {
             Intent intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
                     .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, recordingTrackId);
             PendingIntent pendingIntent = TaskStackBuilder.create(this)
@@ -739,6 +729,10 @@ public class TrackRecordingService extends Service {
             notificationManager.updatePendingIntent(pendingIntent);
             notificationManager.updateContent(getString(R.string.gps_starting));
             startForeground(TrackRecordingServiceNotificationManager.NOTIFICATION_ID, notificationManager.getNotification());
+        }
+        if (!isRecording() && !isGpsStarted) {
+            stopForeground(true);
+            notificationManager.cancelNotification();
         }
     }
 }
