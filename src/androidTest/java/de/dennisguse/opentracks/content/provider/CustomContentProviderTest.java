@@ -30,7 +30,6 @@ import org.junit.Test;
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.data.WaypointsColumns;
-import de.dennisguse.opentracks.content.provider.CustomContentProvider.DatabaseHelper;
 
 /**
  * Tests {@link CustomContentProvider}.
@@ -48,13 +47,13 @@ public class CustomContentProviderTest {
     @Before
     public void setUp() {
         context.deleteDatabase(DATABASE_NAME);
-        db = (new DatabaseHelper(context, DATABASE_NAME)).getWritableDatabase();
+        db = new CustomSQLiteOpenHelper(context, DATABASE_NAME).getWritableDatabase();
         customContentProvider = new CustomContentProvider() {
         };
     }
 
     /**
-     * Tests {@link CustomContentProvider.DatabaseHelper#onCreate(SQLiteDatabase)}.
+     * Tests {@link CustomSQLiteOpenHelper#onCreate(SQLiteDatabase)}.
      */
     @Test
     public void testDatabaseHelper_OnCreate() {
@@ -148,7 +147,7 @@ public class CustomContentProviderTest {
         createTable(TrackPointsColumns.TABLE_NAME);
         createTable(WaypointsColumns.TABLE_NAME);
 
-        DatabaseHelper databaseHelper = new DatabaseHelper(context);
-        databaseHelper.onUpgrade(db, oldVersion, CustomContentProvider.DATABASE_VERSION);
+        CustomSQLiteOpenHelper databaseHelper = new CustomSQLiteOpenHelper(context);
+        databaseHelper.onUpgrade(db, oldVersion, CustomSQLiteOpenHelper.DATABASE_VERSION);
     }
 }

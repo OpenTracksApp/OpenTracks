@@ -232,7 +232,9 @@ public enum TrackFileFormat {
     /**
      * Returns whether the format supports photos.
      */
-    public boolean includesPhotos() { return false; };
+    public boolean includesPhotos() {
+        return false;
+    }
 
     /**
      * Returns the name of for each format.

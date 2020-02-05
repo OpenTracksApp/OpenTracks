@@ -50,10 +50,10 @@ public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     private ExportActivity exportActivity;
     private WakeLock wakeLock;
 
-    private boolean completed;
+    private boolean completed = false;
 
-    private int processedTrackCount;
-    private int totalTrackCount;
+    private int processedTrackCount = 0;
+    private int totalTrackCount = 0;
 
     /**
      * Creates an AsyncTask.
@@ -68,10 +68,6 @@ public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         this.directory = directory;
         context = exportActivity.getApplicationContext();
         contentProviderUtils = new ContentProviderUtils(context);
-
-        completed = false;
-        processedTrackCount = 0;
-        totalTrackCount = 0;
     }
 
     /**

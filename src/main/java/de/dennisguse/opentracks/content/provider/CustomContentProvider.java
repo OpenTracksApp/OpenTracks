@@ -25,7 +25,6 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.text.TextUtils;
@@ -44,12 +43,6 @@ import de.dennisguse.opentracks.content.data.WaypointsColumns;
  * @author Leif Hendrik Wilden
  */
 public abstract class CustomContentProvider extends ContentProvider {
-
-    @VisibleForTesting
-    static final int DATABASE_VERSION = 23;
-
-    @VisibleForTesting
-    static final String DATABASE_NAME = "database.db";
 
     private static final String TAG = CustomContentProvider.class.getSimpleName();
 
@@ -85,7 +78,7 @@ public abstract class CustomContentProvider extends ContentProvider {
      */
     @VisibleForTesting
     boolean onCreate(Context context) {
-        DatabaseHelper databaseHelper = new DatabaseHelper(context);
+        CustomSQLiteOpenHelper databaseHelper = new CustomSQLiteOpenHelper(context);
         try {
             db = databaseHelper.getWritableDatabase();
         } catch (SQLiteException e) {
@@ -390,32 +383,5 @@ public abstract class CustomContentProvider extends ContentProvider {
         TRACKS_BY_ID,
         WAYPOINTS,
         WAYPOINTS_BY_ID
-    }
-
-    /**
-     * Database helper for creating and upgrading the database.
-     */
-    @VisibleForTesting
-    static class DatabaseHelper extends SQLiteOpenHelper {
-
-        public DatabaseHelper(Context context) {
-            this(context, DATABASE_NAME);
-        }
-
-        @VisibleForTesting
-        public DatabaseHelper(Context context, String databaseName) {
-            super(context, databaseName, null, DATABASE_VERSION);
-        }
-
-        @Override
-        public void onCreate(SQLiteDatabase db) {
-            db.execSQL(TrackPointsColumns.CREATE_TABLE);
-            db.execSQL(TracksColumns.CREATE_TABLE);
-            db.execSQL(WaypointsColumns.CREATE_TABLE);
-        }
-
-        @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        }
     }
 }
