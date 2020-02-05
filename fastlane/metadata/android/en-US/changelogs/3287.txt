@@ -1,0 +1,12 @@
+v3.4.0: OpenTracks
+
+Changes:
+- Dashboard API: multiple tracks
+- Updated help
+
+Bugfix:
+- Fixed crash on fragment re-creation
+- When paused: prevent stopping app
+
+Developer:
+- Enable testing via CI (Github Actions and TravisCI)
