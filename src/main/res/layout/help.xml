@@ -49,20 +49,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="@string/help_data_statistics_customized_title"
-                android:textStyle="bold" />
-
-            <TextView
-                style="@style/TextMedium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/help_data_statistics_customized_content" />
-
-            <TextView
-                style="@style/TextMedium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:text="@string/help_recording_title"
                 android:textStyle="bold" />
 
@@ -71,34 +57,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/help_recording_content" />
-
-            <TextView
-                style="@style/TextMedium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/help_gps_imprecise_title"
-                android:textStyle="bold" />
-
-            <TextView
-                style="@style/TextMedium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/help_gps_imprecise_content" />
-
-            <TextView
-                style="@style/TextMedium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/help_heart_rate_sensors_title"
-                android:textStyle="bold" />
-
-            <TextView
-                style="@style/TextMedium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/help_heart_rate_sensors_content" />
 
             <TextView
                 style="@style/TextMedium"
@@ -132,35 +90,7 @@
                 style="@style/TextMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/help_data_upload_title"
-                android:textStyle="bold" />
-
-            <TextView
-                style="@style/TextMedium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/generic_no" />
-
-            <TextView
-                style="@style/TextMedium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:text="@string/help_data_google_play_services_title"
-                android:textStyle="bold" />
-
-            <TextView
-                style="@style/TextMedium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/generic_no" />
-
-            <TextView
-                style="@style/TextMedium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/help_data_online_title"
                 android:textStyle="bold" />
 
             <TextView
@@ -182,6 +112,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/help_data_storage_content" />
+
+            <TextView
+                style="@style/TextMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/help_gps_troubleshooting_title"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/TextMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:linksClickable="true"
+                android:text="@string/help_gps_troubleshooting_content" />
+
+            <TextView
+                style="@style/TextMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/help_support_title"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/TextMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:linksClickable="true"
+                android:text="@string/help_support_content" />
         </LinearLayout>
     </ScrollView>
 
