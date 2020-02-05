@@ -24,43 +24,77 @@ limitations under the License.
     <!-- Help -->
     <string name="help_feature_title">OpenTracks has the following features:</string>
     <string name="help_feature_content">
-        * Create markers (incl. pictures)\n
-        * Heart rate sensor (Bluetooth LE)\n
-        * Voice announcements by time or distance\n
-        * While recording, show on lock screen\n
-        * Share tracks
+        * create GPS tracks\n
+        * use a heart rate sensor (Bluetooth LE only)\n
+        * voice announcements (by time or distance)\n
+        * create markers (incl. pictures)\n
+        * works completely offline\n
+        * show tracks on a map (see below)
     </string>
-    <string name="help_data_statistics_customized_title">Can the statistics view be customized?</string>
-    <string name="help_data_statistics_customized_content">Yes, it can be customized in the Settings.</string>
-    <string name="help_recording_title">How does OpenTracks record data?</string>
-    <string name="help_recording_content">OpenTracks uses the GPS sensor of the device to record the location continuously.</string>
-    <string name="help_gps_imprecise_title">Statistics (e.g., speed) reported by OpenTracks are imprecise?</string>
-    <string name="help_gps_imprecise_content">OpenTracks directly uses the data provided by the GPS of the mobile device. If the GPS device reports inaccurate locations, OpenTracks cannot do anything about it.</string>
-    <string name="help_heart_rate_sensors_title">Which heart rate sensors does OpenTracks support?</string>
-    <string name="help_heart_rate_sensors_content">OpenTracks should work with any Bluetooth LE heart sensor that support streaming the data in real-time. Smartwatches that store the heart rate data are not supported.</string>
+
     <string name="help_track_map_title">How to show a track on a map?</string>
     <string name="help_track_map_content">
-This requires a 3rd party application to be installed that can consume KMZ-encoded geo data.
-This works well with <a href="http://osmand.net/">OsmAnd~</a> and <a href="https://maps.me/">Maps.ME</a>.
-In fact, an App needs to support <i>ACTION_VIEW</i> with MIME <i>application/vnd.google-earth.kmz</i>.
-At the moment, the recorded locations as well as the timestamps are send to an App while pictures and sensor data are not shared.</string>
+        Use the small map icon.\n
+        a)
+        (live updates) Install <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>.
+        It provides online or offline maps via <a href="https://www.openstreetmap.org">OpenStreetmap</a>.\n
+        Actually, OSMDashboard is a separate app that only can access (temporarily) access the data of track(s) that are going to be shown.
+
+        \n
+        b)
+        Via a "normal" map application (e.g., <a href="http://osmand.net/">OsmAnd</a> and <a href="https://maps.me/">MAPS.ME</a>).
+        Those app need to support the KMZ file format (only locations and timestamps).
+        In fact, an app needs to support <i>ACTION_VIEW</i> with MIME <i>application/vnd.google-earth.kmz</i>.
+    </string>
+
     <string name="help_storage_pictures_title">How does OpenTracks store pictures that were taken as markers?</string>
-    <string name="help_storage_pictures_content">These are stored directly on the file system.</string>
+    <string name="help_storage_pictures_content">These are stored in the app internal storage (i.e., only accessible within OpenTracks).</string>
+
     <string name="help_track_export_title">How can I export/share recorded tracks?</string>
     <string name="help_track_export_content">
         Tracks can be exported from the Settings as KMZ, KML, or GPX.
-        KMZ contains all data incl. images, while KML contains only the sensor data, and GPX only the location.
-        Tracks shared via the <i>share icon</i> are shared as KMZ and any App can be used to send the data.
+        KMZ/KML all data; GPX only locations.
+        Tracks shared via the <i>share icon</i> are shared as KMZ.
     </string>
-    <string name="help_data_upload_title">Can OpenTracks upload the data automatically?</string>
+
     <string name="help_data_google_play_services_title">Does OpenTracks require/use Google Play Service?</string>
-    <string name="help_data_online_title">Does OpenTracks use online services?</string>
+
+    <string name="help_recording_title">How does OpenTracks record data?</string>
+    <string name="help_recording_content">
+        OpenTracks uses the GPS sensor of the device to record the location continuously.
+        If the GPS device reports inaccurate data (e.g., location, speed, elevation), OpenTracks cannot do anything about it.
+    </string>
+
     <string name="help_data_storage_title">How does OpenTracks store sensor data?</string>
     <string name="help_data_storage_content">
-        OpenTracks stores sensor data per recorded location.
-        In terms of a heart rate sensor this means that only <i>one</i> heart rate measurement is stored per location.
+        Sensor data is stored per recorded location.
+        In terms of a heart rate sensor, this means that only <i>one</i> heart rate measurement is stored per location.
         If you are standing still or are indoors, no sensor data will be recorded (but it will be shown).
     </string>
+
+    <string name="help_gps_troubleshooting_title">OpenTracks is not recording locations?</string>
+    <string name="help_gps_troubleshooting_content">
+        What you can do:\n
+        a) check if GPS is enabled,\n
+        b) improve GPS reception (e.g., go outdoors),\n
+        c) check if with <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> app, and\n
+        d) disable power saving.\n
+        \n
+        If everything does not help please report a bug.
+    </string>
+
+    <string name="help_support_title">How can I support OpenTracks?</string>
+    <string name="help_support_content">
+        You can:\n
+        a) spread the word about OpenTracks,\n
+        b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">propose features</a>,\n
+        c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">report bugs</a>,\n
+        d) help in software development,\n
+        e) buy in <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,\n
+        f) donate, and\n
+        g) do whatever you think helps OpenTracks.
+    </string>
+
     <!-- Activity Type -->
     <string name="activity_type_airplane">airplane</string>
     <string name="activity_type_atv">ATV</string>

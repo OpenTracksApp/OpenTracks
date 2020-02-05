@@ -10,8 +10,8 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="239dp"
-        android:scaleType="fitCenter"
         android:contentDescription="@string/app_name"
+        android:scaleType="fitCenter"
         android:src="@drawable/ic_logo_color_24dp" />
 
     <TextView
@@ -80,6 +80,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:autoLink="web"
         android:gravity="center"
         android:text="@string/third_party_libraries" />
 
