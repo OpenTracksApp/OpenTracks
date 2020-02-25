@@ -39,6 +39,7 @@ public abstract class AbstractListActivity extends AbstractActivity implements C
     private static final String TAG = AbstractListActivity.class.getSimpleName();
 
     protected static final int GPS_REQUEST_CODE = 6;
+    protected static final int STORAGE_REQUEST_CODE = 7;
     private static final int DELETE_REQUEST_CODE = 3;
 
     @Override

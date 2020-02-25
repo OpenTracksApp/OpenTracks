@@ -192,6 +192,7 @@
     <string name="menu_import_all">Importar todo</string>
     <string name="menu_insert_marker">Insertar marcador</string>
     <string name="menu_insert_photo">Insertar foto</string>
+    <string name="menu_insert_gallery_img">Insertar imagen de la galería</string>
     <string name="menu_map">Mapa</string>
     <string name="menu_markers">Marcadores</string>
     <string name="menu_play">Reproducir</string>

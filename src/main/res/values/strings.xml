@@ -305,6 +305,7 @@ limitations under the License.
     <string name="menu_import_all">Import all</string>
     <string name="menu_insert_marker">Insert marker</string>
     <string name="menu_insert_photo">Insert photo</string>
+    <string name="menu_insert_gallery_img">Insert gallery image</string>
     <string name="menu_map">Map</string>
     <string name="menu_markers">Markers</string>
     <string name="menu_play">Play</string>
@@ -324,6 +325,7 @@ limitations under the License.
     <string name="recording_service">Recording service</string>
     <!-- Permission -->
     <string name="permission_gps_failed">OpenTracks requires permission to use GPS.</string>
+    <string name="permission_storage_failed">OpenTracks requires permission to EXTERNAL STORAGE.</string>
     <!-- Search -->
     <string name="search_global_description">Tracks and markers</string>
     <string name="search_list_empty_message">No tracks or markers matched your search</string>

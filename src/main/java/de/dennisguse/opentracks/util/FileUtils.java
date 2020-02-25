@@ -16,11 +16,19 @@
 package de.dennisguse.opentracks.util;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
 
 import androidx.documentfile.provider.DocumentFile;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
 
 import de.dennisguse.opentracks.BuildConfig;
 
@@ -31,10 +39,12 @@ import de.dennisguse.opentracks.BuildConfig;
  */
 public class FileUtils {
 
+    private static final String TAG = FileUtils.class.getSimpleName();
+
     /**
      * Used to transfer picture from the camera.
      */
-    static final String FILEPROVIDER = BuildConfig.APPLICATION_ID + ".fileprovider";
+    public static final String FILEPROVIDER = BuildConfig.APPLICATION_ID + ".fileprovider";
 
     public static final String EXPORT_DIR = "OpenTracks";
 
@@ -195,5 +205,46 @@ public class FileUtils {
         }
 
         return name;
+    }
+
+    /**
+     * Return the real path from a Uri.
+     *
+     * @param context    the Context.
+     * @param contentUri the Uri.
+     * @return The path.
+     */
+    public static String getRealPathFromURI(Context context, Uri contentUri) {
+        String[] proj = { MediaStore.Images.Media.DATA };
+        Cursor cursor = context.getContentResolver().query(contentUri, proj,
+                null, null, null);
+        int column_index = cursor
+                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
+
+    /**
+     * Copy the src file to dst file.
+     *
+     * @param src source file.
+     * @param dst destination file.
+     * @throws IOException
+     */
+    public static void copy(File src, File dst) throws IOException {
+        FileChannel in = new FileInputStream(src).getChannel();
+        FileChannel out = new FileOutputStream(dst).getChannel();
+
+        try {
+            in.transferTo(0, in.size(), out);
+        } catch (Exception e) {
+            // post to log
+            Log.e(TAG, e.getMessage());
+        } finally {
+            if (in != null)
+                in.close();
+            if (out != null)
+                out.close();
+        }
     }
 }

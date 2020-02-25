@@ -28,6 +28,12 @@ limitations under the License.
         app:showAsAction="ifRoom"
         android:title="@string/menu_insert_photo" />
     <item
+        android:id="@+id/track_detail_insert_gallery_img"
+        android:icon="@drawable/ic_add_photo_24dp"
+        android:orderInCategory="3"
+        app:showAsAction="ifRoom"
+        android:title="@string/menu_insert_gallery_img" />
+    <item
         android:id="@+id/track_detail_menu_show_on_map"
         android:icon="@drawable/ic_map_24dp"
         app:showAsAction="ifRoom"

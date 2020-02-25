@@ -195,6 +195,7 @@ es vegi el cel. Torneu-ho a provar més tard.</string>
     <string name="menu_import_all">Importa-ho tot</string>
     <string name="menu_insert_marker">Insereix un marcador</string>
     <string name="menu_insert_photo">Insereix una foto</string>
+    <string name="menu_insert_gallery_img">Insereix una foto de la galeria</string>
     <string name="menu_map">Mapa</string>
     <string name="menu_markers">Marcadors</string>
     <string name="menu_play">Reprodueix</string>
