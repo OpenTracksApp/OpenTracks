@@ -351,12 +351,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                 finish();
             }
         }
-        if (requestCode == STORAGE_REQUEST_CODE) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, R.string.permission_storage_failed, Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
@@ -470,18 +464,11 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         }
 
         requestGPSPermissions();
-        requestStoragePermissions();
     }
 
     private void requestGPSPermissions() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, GPS_REQUEST_CODE);
-        }
-    }
-
-    private void requestStoragePermissions() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_REQUEST_CODE);
         }
     }
 

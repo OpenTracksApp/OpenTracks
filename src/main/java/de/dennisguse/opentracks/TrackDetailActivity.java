@@ -24,6 +24,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.util.Pair;
@@ -44,7 +45,12 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.channels.FileChannel;
 
 import de.dennisguse.opentracks.content.TrackDataHub;
 import de.dennisguse.opentracks.content.data.Track;
@@ -341,14 +347,13 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
                 Toast.makeText(this, R.string.marker_add_canceled, Toast.LENGTH_LONG).show();
                 return;
             } else if (resultCode == RESULT_OK) {
-                Uri uri = data.getData();
-                File src = new File(FileUtils.getRealPathFromURI(this, uri));
-                File dst = new File(galleryImgPath);
-
                 try {
-                    FileUtils.copy(src, dst);
+                    ParcelFileDescriptor parcelFileDescriptor = getContentResolver().openFileDescriptor(data.getData(), "r");
+                    FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+                    File dstFile = new File(galleryImgPath);
+                    FileUtils.copy(fileDescriptor, dstFile);
                     hasPhoto = true;
-                    photoUri = FileProvider.getUriForFile(this, FileUtils.FILEPROVIDER, dst);
+                    photoUri = FileProvider.getUriForFile(this, FileUtils.FILEPROVIDER, dstFile);
                 } catch (IOException e) {
                     Toast.makeText(this, R.string.marker_add_canceled, Toast.LENGTH_LONG).show();
                     Log.e(TAG, e.getMessage());

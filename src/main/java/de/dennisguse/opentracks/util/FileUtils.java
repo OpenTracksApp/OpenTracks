@@ -25,6 +25,7 @@ import android.util.Log;
 import androidx.documentfile.provider.DocumentFile;
 
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -208,30 +209,13 @@ public class FileUtils {
     }
 
     /**
-     * Return the real path from a Uri.
-     *
-     * @param context    the Context.
-     * @param contentUri the Uri.
-     * @return The path.
-     */
-    public static String getRealPathFromURI(Context context, Uri contentUri) {
-        String[] proj = { MediaStore.Images.Media.DATA };
-        Cursor cursor = context.getContentResolver().query(contentUri, proj,
-                null, null, null);
-        int column_index = cursor
-                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        return cursor.getString(column_index);
-    }
-
-    /**
-     * Copy the src file to dst file.
+     * Copy a FileDescriptor (src) to a File (dst).
      *
      * @param src source file.
      * @param dst destination file.
      * @throws IOException
      */
-    public static void copy(File src, File dst) throws IOException {
+    public static void copy(FileDescriptor src, File dst) throws IOException {
         FileChannel in = new FileInputStream(src).getChannel();
         FileChannel out = new FileOutputStream(dst).getChannel();
 

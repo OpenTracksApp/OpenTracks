@@ -26,8 +26,7 @@ limitations under the License.
         android:hardwareAccelerated="true"
         android:icon="${applicationLogo}"
         android:label="${applicationName}"
-        android:theme="@style/ThemeCustom"
-        android:requestLegacyExternalStorage="true">
+        android:theme="@style/ThemeCustom">
 
         <!-- Activities -->
         <activity android:name=".AboutActivity" />
@@ -153,6 +152,4 @@ limitations under the License.
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 </manifest>
