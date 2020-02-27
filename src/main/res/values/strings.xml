@@ -275,6 +275,7 @@ limitations under the License.
     <string name="marker_add_error">Unable to insert a marker. No GPS signal. Try again.</string>
     <string name="marker_add_success">A marker was inserted</string>
     <string name="marker_add_canceled">Canceled, no marker added</string>
+    <string name="marker_add_photo_canceled">Canceled, no photo marker added</string>
     <string name="marker_delete_all_confirm_message">All markers for this track will be permanently deleted from the device</string>
     <string name="marker_delete_one_confirm_message">The marker will be permanently deleted from the device</string>
     <string name="marker_delete_one_confirm_title">Delete marker?</string>
@@ -305,6 +306,7 @@ limitations under the License.
     <string name="menu_import_all">Import all</string>
     <string name="menu_insert_marker">Insert marker</string>
     <string name="menu_insert_photo">Insert photo</string>
+    <string name="menu_insert_gallery_img">Insert gallery image</string>
     <string name="menu_map">Map</string>
     <string name="menu_markers">Markers</string>
     <string name="menu_play">Play</string>

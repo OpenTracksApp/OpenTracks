@@ -16,25 +16,18 @@
 
 package de.dennisguse.opentracks;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
@@ -70,16 +63,8 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
     private static final String TAG = TrackDetailActivity.class.getSimpleName();
 
     private static final String CURRENT_TAB_TAG_KEY = "current_tab_tag_key";
-    private static final String PHOTO_URI_KEY = "photo_uri_key";
-    private static final String HAS_PHOTO_KEY = "has_photo_key";
-
-    private static final int CAMERA_REQUEST_CODE = 5;
-    private static final int EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE = 6;
 
     // The following are set in onCreate
-    private boolean hasCamera;
-    private Uri photoUri;
-    private boolean hasPhoto;
     private ContentProviderUtils contentProviderUtils;
     private SharedPreferences sharedPreferences;
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
@@ -102,10 +87,6 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
                 @Override
                 public void run() {
                     trackController.update(isRecording(), recordingTrackPaused);
-                    if (hasPhoto && photoUri != null) {
-                        hasPhoto = false;
-                        long markerId = trackRecordingServiceConnection.addMarker(TrackDetailActivity.this, null, null, null, photoUri.toString());
-                    }
                 }
             });
         }
@@ -148,7 +129,6 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
     };
 
     private MenuItem insertMarkerMenuItem;
-    private MenuItem insertPhotoMenuItem;
     private MenuItem markerListMenuItem;
     private MenuItem shareMenuItem;
 
@@ -181,10 +161,6 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         recordingTrackPaused = PreferencesUtils.isRecordingTrackPausedDefault(this);
-
-        hasCamera = getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
-        photoUri = savedInstanceState != null ? (Uri) savedInstanceState.getParcelable(PHOTO_URI_KEY) : null;
-        hasPhoto = savedInstanceState != null && savedInstanceState.getBoolean(HAS_PHOTO_KEY, false);
 
         contentProviderUtils = new ContentProviderUtils(this);
         handleIntent(getIntent());
@@ -307,23 +283,6 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(CURRENT_TAB_TAG_KEY, pager.getCurrentItem());
-
-        if (photoUri != null) {
-            outState.putParcelable(PHOTO_URI_KEY, photoUri);
-        }
-        outState.putBoolean(HAS_PHOTO_KEY, hasPhoto);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CAMERA_REQUEST_CODE) {
-            if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(this, R.string.marker_add_canceled, Toast.LENGTH_LONG).show();
-                return;
-            }
-            hasPhoto = resultCode == RESULT_OK;
-        }
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -343,8 +302,6 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
         getMenuInflater().inflate(R.menu.track_detail, menu);
 
         insertMarkerMenuItem = menu.findItem(R.id.track_detail_insert_marker);
-        insertPhotoMenuItem = menu.findItem(R.id.track_detail_insert_photo);
-        insertPhotoMenuItem.setVisible(new Intent(MediaStore.ACTION_IMAGE_CAPTURE).resolveActivity(getPackageManager()) != null);
         shareMenuItem = menu.findItem(R.id.track_detail_share);
         markerListMenuItem = menu.findItem(R.id.track_detail_markers);
 
@@ -372,9 +329,6 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
                 intent = Intent.createChooser(intent, null);
                 startActivity(intent);
                 return true;
-            case R.id.track_detail_insert_photo:
-                createWaypointWithPicture();
-                return true;
             case R.id.track_detail_menu_show_on_map:
                 IntentUtils.showTrackOnMap(this, new long[]{trackId});
                 return true;
@@ -398,20 +352,6 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                Toast.makeText(this, R.string.external_storage_not_writable, Toast.LENGTH_LONG).show();
-            } else {
-                createWaypointWithPicture();
-            }
-            return;
-        }
-
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
@@ -471,7 +411,6 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
      */
     private void updateMenuItems(boolean isPaused) {
         insertMarkerMenuItem.setVisible(isRecording() && !isPaused);
-        insertPhotoMenuItem.setVisible(hasCamera && isRecording() && !isPaused);
         shareMenuItem.setVisible(!isRecording());
         markerListMenuItem.setShowAsAction(isRecording() ? MenuItem.SHOW_AS_ACTION_NEVER : MenuItem.SHOW_AS_ACTION_IF_ROOM);
         String title;
@@ -482,12 +421,6 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
             title = track != null ? track.getName() : "";
         }
         setTitle(title);
-    }
-
-    private void createWaypointWithPicture() {
-        Pair<Intent, Uri> intentAndPhotoUri = IntentUtils.createTakePictureIntent(this, trackId);
-        photoUri = intentAndPhotoUri.second;
-        startActivityForResult(intentAndPhotoUri.first, CAMERA_REQUEST_CODE);
     }
 
     public void chooseActivityType(String category) {

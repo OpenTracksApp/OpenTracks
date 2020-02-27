@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/marker_edit_insert_photo"
+        android:icon="@drawable/ic_add_a_photo_24dp"
+        android:orderInCategory="2"
+        app:showAsAction="ifRoom"
+        android:title="@string/menu_insert_photo" />
+    <item
+        android:id="@+id/marker_edit_insert_gallery_img"
+        android:icon="@drawable/ic_add_photo_alternate_24dp"
+        android:orderInCategory="2"
+        app:showAsAction="ifRoom"
+        android:title="@string/menu_insert_gallery_img" />
+</menu>

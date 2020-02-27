@@ -169,6 +169,7 @@
     <string name="marker_add_error">No se puede insertar el marcador. No se recibe señal de GPS. Inténtalo de nuevo.</string>
     <string name="marker_add_success">Se ha insertado un marcador</string>
     <string name="marker_add_canceled">Cancelado, no se ha añadido ningún marcador</string>
+    <string name="marker_add_photo_canceled">Cancelado, no se ha añadido la foto al marcador</string>
     <string name="marker_delete_all_confirm_message">Todos los marcadores de esta ruta se eliminarán del dispositivo de forma permanente</string>
     <string name="marker_delete_one_confirm_message">El marcador se eliminará del dispositivo de forma permanente</string>
     <string name="marker_delete_one_confirm_title">¿Eliminar marcador?</string>
@@ -195,6 +196,7 @@
     <string name="menu_import_all">Importar todo</string>
     <string name="menu_insert_marker">Insertar marcador</string>
     <string name="menu_insert_photo">Insertar foto</string>
+    <string name="menu_insert_gallery_img">Insertar imagen de galería</string>
     <string name="menu_map">Mapa</string>
     <string name="menu_markers">Marcadores</string>
     <string name="menu_play">Reproducir</string>
