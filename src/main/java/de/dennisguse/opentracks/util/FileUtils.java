@@ -16,11 +16,21 @@
 package de.dennisguse.opentracks.util;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Environment;
+import android.util.Log;
 
+import androidx.core.content.FileProvider;
 import androidx.documentfile.provider.DocumentFile;
 
 import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import de.dennisguse.opentracks.BuildConfig;
 
@@ -31,12 +41,16 @@ import de.dennisguse.opentracks.BuildConfig;
  */
 public class FileUtils {
 
+    private static final String TAG = FileUtils.class.getSimpleName();
+
     /**
      * Used to transfer picture from the camera.
      */
     static final String FILEPROVIDER = BuildConfig.APPLICATION_ID + ".fileprovider";
 
     public static final String EXPORT_DIR = "OpenTracks";
+
+    private static final String JPEG_EXTENSION = "jpeg";
 
     /**
      * The maximum FAT32 path length. See the FAT32 spec at
@@ -195,5 +209,47 @@ public class FileUtils {
         }
 
         return name;
+    }
+
+    /**
+     * Returns the image's absolute path from a track identified by trackId.
+     *
+     * @param context the context.
+     * @param trackId the track id.
+     */
+    public static String getImageUrl(Context context, long trackId) {
+        File dir = FileUtils.getPhotoDir(context, trackId);
+
+        String fileName = SimpleDateFormat.getDateTimeInstance().format(new Date());
+        File file = new File(dir, FileUtils.buildUniqueFileName(dir, fileName, JPEG_EXTENSION));
+
+        return file.getAbsolutePath();
+    }
+
+        /**
+     * Copy a File (src) to a File (dst).
+     *
+     * @param src source file.
+     * @param dst destination file.
+     * @throws IOException
+     */
+    public static void copy(FileDescriptor src, File dst) throws IOException {
+        try (FileChannel in = new FileInputStream(src).getChannel();
+             FileChannel out = new FileOutputStream(dst).getChannel()) {
+            in.transferTo(0, in.size(), out);
+        } catch (Exception e) {
+            // post to log
+            Log.e(TAG, e.getMessage());
+        }
+    }
+
+    /**
+     * Returns a Uri for the file.
+     *
+     * @param context the context.
+     * @param file    the file.
+     */
+    public static Uri getUriForFile(Context context, File file) {
+        return FileProvider.getUriForFile(context, FileUtils.FILEPROVIDER, file);
     }
 }
