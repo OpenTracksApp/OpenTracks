@@ -45,19 +45,16 @@ captures/
 
 
 # IntelliJ IDEA
-*.iml
 *.iws
 /out/
 
 # User-specific configurations
 .idea/.name
-.idea/assetWizardSettings.xml
 .idea/caches/
 .idea/compiler.xml
 .idea/copyright/profiles_settings.xml
 .idea/dataSources.ids
 .idea/datasources.xml
-.idea/dictionaries
 .idea/dynamic.xml
 .idea/encodings.xml
 .idea/jsLibraryMappings.xml
@@ -67,10 +64,8 @@ captures/
 .idea/scopes/scope_settings.xml
 .idea/shelf/
 .idea/sqlDataSources.xml
-.idea/tasks.xml
 .idea/vcs.xml
 .idea/uiDesigner.xml
-.idea/workspace.xml
 
 # Keystore files
 *.jks

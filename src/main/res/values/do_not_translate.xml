@@ -22,7 +22,6 @@ limitations under the License.
         <a href="https://github.com/material-components/material-components-android">Material Components for Android</a> (Apache License, Version 2.0)
     </string>
 
-    <string name="marker_statistics_icon_url" translatable="false">http://maps.google.com/mapfiles/ms/micons/ylw-pushpin.png</string>
     <string name="marker_waypoint_icon_url" translatable="false">http://maps.google.com/mapfiles/ms/micons/blue-pushpin.png</string>
 
     <string name="sensor_unit_beats_per_minute" translatable="false">BPM</string>
