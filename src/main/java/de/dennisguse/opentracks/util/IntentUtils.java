@@ -75,9 +75,12 @@ public class IntentUtils {
         if (trackIds.length == 0) {
             throw new RuntimeException("Need to share at least one track.");
         }
+
+        ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
+
         String trackDescription = "";
         if (trackIds.length == 1) {
-            Track track = new ContentProviderUtils(context).getTrack(trackIds[0]);
+            Track track = contentProviderUtils.getTrack(trackIds[0]);
             trackDescription = track == null ? "" : new DescriptionGenerator(context).generateTrackDescription(track, false);
         }
 
@@ -86,7 +89,12 @@ public class IntentUtils {
 
         ArrayList<Uri> uris = new ArrayList<>();
         for (long trackId : trackIds) {
-            Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(new long[]{trackId}, TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES);
+            Track track = contentProviderUtils.getTrack(trackId);
+            if (track == null) {
+                Log.e(TAG, "TrackId " + trackId + " could not be resolved.");
+            }
+
+            Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(new long[]{trackId}, track.getName(), TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES);
             uris.add(uriAndMime.first);
             mime = uriAndMime.second;
         }
@@ -128,7 +136,6 @@ public class IntentUtils {
     }
 
 
-
     /**
      * Send intent to show tracks on a map (needs an another app).
      *
@@ -147,7 +154,7 @@ public class IntentUtils {
         Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(TrackPointsColumns.TRACKID, trackIds[0]);
-        Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(trackIds, TrackFileFormat.KMZ_WITH_TRACKDETAIL);
+        Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(trackIds, "SharingTrack", TrackFileFormat.KMZ_WITH_TRACKDETAIL);
         intent.setDataAndType(uriAndMime.first, uriAndMime.second);
 
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
