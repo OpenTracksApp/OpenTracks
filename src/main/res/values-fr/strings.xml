@@ -447,4 +447,11 @@
     <string name="waypoint_type_waterfall">cascade</string>
     <string name="waypoint_type_water_fountain">fontaine</string>
     <string name="waypoint_type_waypoint">point de cheminement</string>
+    <string name="settings_recording_show_on_lockscreen_while_recording_title">Afficher les statistiques sur l\'écran de verrouillage</string>
+    <string name="settings_recording_show_on_lockscreen_while_recording_summary">Pendant l\'enregistrement, afficher les statistiques sans déverrouiller l\'appareil.</string>
+    <string name="settings_recording_keep_screen_on_while_recording_title">Garder l\'écran allumé</string>
+    <string name="settings_recording_keep_screen_on_while_recording_summary">Pendant l\'enregistrement, garder l\'écran allumé.</string>
+    <string name="about_preference_title">À propos d\'OpenTracks</string>
+    <string name="export_with_photos">avec les photos</string>
+    <string name="export_without_photos">sans les photos</string>
 </resources>
