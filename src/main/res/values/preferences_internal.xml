@@ -16,7 +16,6 @@ limitations under the License.
 <resources>
     <!-- Keys for persisted preferences that are used by internally. -->
     <!--But they should not get backed up or restored.-->
-    <string name="auto_resume_track_current_retry_key" translatable="false">autoResumeTrackCurrentRetry</string>
     <string name="recording_track_id_key" translatable="false">recordingTrackId</string>
 
     <string name="recording_track_paused_key" translatable="false">recordingTrackPaused</string>
