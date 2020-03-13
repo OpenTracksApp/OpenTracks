@@ -209,98 +209,19 @@ limitations under the License.
                     android:layout_gravity="center">
 
                     <!-- Current elevation -->
-                    <TableRow
-                        android:id="@+id/stats_elevation"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                    <LinearLayout
+                        style="@style/StatsSmallValueContainer"
+                        android:layout_gravity="start|bottom">
 
-                        <LinearLayout
-                            style="@style/StatsSmallValueContainer"
-                            android:layout_gravity="start|bottom">
+                        <TextView
+                            android:id="@+id/stats_elevation_current_value"
+                            style="@style/StatsSmallValue"
+                            android:value="@string/value_unknown" />
 
-                            <TextView
-                                android:id="@+id/stats_elevation_current_value"
-                                style="@style/StatsSmallValue"
-                                android:value="@string/value_unknown" />
-
-                            <TextView
-                                android:id="@+id/stats_elevation_current_unit"
-                                style="@style/StatsUnit" />
-                        </LinearLayout>
-                    </TableRow>
-
-                    <!-- Minimal elevation -->
-                    <TableRow
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <LinearLayout
-                            style="@style/StatsSmallValueContainer"
-                            android:layout_gravity="start|bottom">
-
-                            <TextView
-                                android:id="@+id/stats_elevation_min_value"
-                                style="@style/StatsSmallValue"
-                                android:value="@string/value_unknown" />
-
-                            <TextView
-                                android:id="@+id/stats_elevation_min_unit"
-                                style="@style/StatsUnit" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            style="@style/StatsSmallValueContainer"
-                            android:layout_gravity="start|bottom">
-
-                            <TextView
-                                style="@style/StatsSmallValue"
-                                android:visibility="invisible" />
-
-                            <TextView
-                                style="@style/StatsSmallLabel"
-                                android:layout_gravity="bottom"
-                                android:paddingStart="8dp"
-                                android:paddingEnd="8dp"
-                                android:text="@string/stats_min" />
-                        </LinearLayout>
-                    </TableRow>
-
-                    <!-- Maximal elevation -->
-                    <TableRow
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <LinearLayout
-                            style="@style/StatsSmallValueContainer"
-                            android:layout_gravity="start|bottom">
-
-                            <TextView
-                                android:id="@+id/stats_elevation_max_value"
-                                style="@style/StatsSmallValue" />
-
-                            <TextView
-                                android:id="@+id/stats_elevation_max_unit"
-                                style="@style/StatsUnit" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            style="@style/StatsSmallValueContainer"
-                            android:layout_gravity="start|bottom">
-
-                            <TextView
-                                style="@style/StatsSmallValue"
-                                android:visibility="invisible" />
-
-                            <TextView
-                                style="@style/StatsSmallLabel"
-                                android:layout_gravity="bottom"
-                                android:paddingStart="8dp"
-                                android:paddingEnd="8dp"
-                                android:text="@string/stats_max" />
-
-                        </LinearLayout>
-                    </TableRow>
+                        <TextView
+                            android:id="@+id/stats_elevation_current_unit"
+                            style="@style/StatsUnit" />
+                    </LinearLayout>
                 </TableLayout>
             </LinearLayout>
         </LinearLayout>
