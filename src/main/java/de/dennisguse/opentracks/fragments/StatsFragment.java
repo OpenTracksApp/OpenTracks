@@ -139,15 +139,10 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     private TextView speedMovingUnit;
     private View gradeElevationSeparator;
     private View gradeElevationContainer;
-    private TextView elevationMinValue;
-    private TextView elevationMinUnit;
-    private TextView elevationMaxValue;
-    private TextView elevationMaxUnit;
     private View speedContainer;
     private TextView speedLabel;
     private TextView speedValue;
     private TextView speedUnit;
-    private View elevationContainer;
     private TextView elevationValue;
     private TextView elevationUnit;
     private View coordinateSeparator;
@@ -188,18 +183,11 @@ public class StatsFragment extends Fragment implements TrackDataListener {
         gradeElevationSeparator = view.findViewById(R.id.stats_elevation_separator);
         gradeElevationContainer = view.findViewById(R.id.stats_elevation_container);
 
-        elevationMinValue = view.findViewById(R.id.stats_elevation_min_value);
-        elevationMinUnit = view.findViewById(R.id.stats_elevation_min_unit);
-
-        elevationMaxValue = view.findViewById(R.id.stats_elevation_max_value);
-        elevationMaxUnit = view.findViewById(R.id.stats_elevation_max_unit);
-
         speedContainer = view.findViewById(R.id.stats_speed);
         speedLabel = view.findViewById(R.id.stats_speed_label);
         speedValue = view.findViewById(R.id.stats_speed_value);
         speedUnit = view.findViewById(R.id.stats_speed_unit);
 
-        elevationContainer = view.findViewById(R.id.stats_elevation);
         elevationValue = view.findViewById(R.id.stats_elevation_current_value);
         elevationUnit = view.findViewById(R.id.stats_elevation_current_unit);
 
@@ -302,18 +290,11 @@ public class StatsFragment extends Fragment implements TrackDataListener {
         gradeElevationSeparator = null;
         gradeElevationContainer = null;
 
-        elevationMinValue = null;
-        elevationMinUnit = null;
-
-        elevationMaxValue = null;
-        elevationMaxUnit = null;
-
         speedContainer = null;
         speedLabel = null;
         speedValue = null;
         speedUnit = null;
 
-        elevationContainer = null;
         elevationValue = null;
         elevationUnit = null;
 
@@ -542,31 +523,10 @@ public class StatsFragment extends Fragment implements TrackDataListener {
             speedMovingUnit.setText(parts.second);
         }
 
-
-        // Set elevation
+        // Make elevation visible?
         {
             boolean showElevation = PreferencesUtils.isShowStatsGradeElevation(getContext());
             gradeElevationSeparator.setVisibility(showElevation ? View.VISIBLE : View.GONE);
-
-            gradeElevationContainer.setVisibility(showElevation ? View.VISIBLE : View.GONE);
-
-            if (showElevation) {
-                {
-                    double elevation = lastTripStatistics == null ? Double.NaN : lastTripStatistics.getMinElevation();
-                    Pair<String, String> parts = StringUtils.formatElevation(getContext(), elevation, metricUnits);
-
-                    elevationMinValue.setText(parts.first);
-                    elevationMinUnit.setText(parts.second);
-                }
-
-                {
-                    double elevation = lastTripStatistics == null ? Double.NaN : lastTripStatistics.getMaxElevation();
-                    Pair<String, String> parts = StringUtils.formatElevation(getContext(), elevation, metricUnits);
-
-                    elevationMaxValue.setText(parts.first);
-                    elevationMaxUnit.setText(parts.second);
-                }
-            }
         }
     }
 
@@ -598,7 +558,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
         // Set elevation
         boolean showGradeElevation = isRecording && PreferencesUtils.isShowStatsGradeElevation(getContext());
-        elevationContainer.setVisibility(showGradeElevation ? View.VISIBLE : View.GONE);
+        gradeElevationContainer.setVisibility(showGradeElevation ? View.VISIBLE : View.GONE);
 
         if (showGradeElevation) {
             double altitude = lastLocation != null && lastLocation.hasAltitude() ? lastLocation.getAltitude() : Double.NaN;
