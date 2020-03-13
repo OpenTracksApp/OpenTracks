@@ -19,6 +19,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 import de.dennisguse.opentracks.android.IContentResolver;
 import de.dennisguse.opentracks.content.data.Track;
@@ -58,30 +59,30 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
     private static final String TRACKID_DELIMITER = "_";
 
     static {
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.GPX.getName() + "/*", URI_GPX);
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.GPX.getName() + "/*/*", URI_GPX);
 
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KML_ONLY_TRACK.getName() + "/*", URI_KML_ONLY);
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KML_WITH_TRACKDETAIL.getName() + "/*", URI_KML_WITH_TRACKDETAIL);
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.getName() + "/*", URI_KML_WITH_TRACKDETAIL_SENSORDATA);
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KMZ_ONLY_TRACK.getName() + "/*", URI_KMZ_ONLY_TRACK);
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KML_ONLY_TRACK.getName() + "/*/*", URI_KML_ONLY);
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KML_WITH_TRACKDETAIL.getName() + "/*/*", URI_KML_WITH_TRACKDETAIL);
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.getName() + "/*/*", URI_KML_WITH_TRACKDETAIL_SENSORDATA);
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KMZ_ONLY_TRACK.getName() + "/*/*", URI_KMZ_ONLY_TRACK);
 
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KMZ_WITH_TRACKDETAIL.getName() + "/*", URI_KMZ_WITH_TRACKDETAIL);
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA.getName() + "/*", URI_KMZ_WITH_TRACKDETAIL_AND_SENSORDATA);
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES.getName() + "/*", URI_KMZ_WITH_TRACKDETAIL_SENSORDATA_AND_PICTURES);
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KMZ_WITH_TRACKDETAIL.getName() + "/*/*", URI_KMZ_WITH_TRACKDETAIL);
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA.getName() + "/*/*", URI_KMZ_WITH_TRACKDETAIL_AND_SENSORDATA);
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES.getName() + "/*/*", URI_KMZ_WITH_TRACKDETAIL_SENSORDATA_AND_PICTURES);
     }
 
-    public static Pair<Uri, String> createURI(long[] trackIds, @NonNull TrackFileFormat trackFileFormat) {
+    public static Pair<Uri, String> createURI(long[] trackIds, String trackName, @NonNull TrackFileFormat trackFileFormat) {
         if (trackIds.length == 0) {
             throw new UnsupportedOperationException();
         }
 
-        StringBuilder builder = new StringBuilder();
+        StringBuilder trackIdBuilder = new StringBuilder();
         for (long trackId : trackIds) {
-            builder.append(trackId).append(TRACKID_DELIMITER);
+            trackIdBuilder.append(trackId).append(TRACKID_DELIMITER);
         }
-        builder.deleteCharAt(builder.lastIndexOf(TRACKID_DELIMITER));
+        trackIdBuilder.deleteCharAt(trackIdBuilder.lastIndexOf(TRACKID_DELIMITER));
 
-        Uri uri = Uri.parse(TracksColumns.CONTENT_URI + "/" + trackFileFormat.getName() + "/" + builder + "." + trackFileFormat.getExtension());
+        Uri uri = Uri.parse(TracksColumns.CONTENT_URI + "/" + trackFileFormat.getName() + "/" + trackIdBuilder + "/" + Uri.encode(trackName) + "." + trackFileFormat.getExtension());
         String mime = getTypeMime(uri);
 
         Log.d(TAG, "Created uri " + uri.toString() + " with MIME " + mime);
@@ -89,18 +90,18 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
         return new Pair<>(uri, mime);
     }
 
-    private static long[] parseURI(Uri uri) {
-        String lastPathSegment = uri.getLastPathSegment();
-        if (lastPathSegment == null) {
+    protected static long[] parseURI(Uri uri) {
+        List<String> uriPaths = uri.getPathSegments();
+        if (uriPaths == null || uriPaths.size() < 2) {
+            Log.d(TAG, "URI does not contain any trackIds.");
             return new long[]{};
         }
 
-        String fileExtension = "." + getTrackFileFormat(uri).getExtension();
-        String[] lastPathSegmentSplit = lastPathSegment.replace(fileExtension, "").split(TRACKID_DELIMITER);
+        String[] uriTrackIds = uriPaths.get(2).split(TRACKID_DELIMITER);
 
-        long[] trackIds = new long[lastPathSegmentSplit.length];
+        long[] trackIds = new long[uriTrackIds.length];
         for (int i = 0; i < trackIds.length; i++) {
-            trackIds[i] = Long.valueOf(lastPathSegmentSplit[i]);
+            trackIds[i] = Long.valueOf(uriTrackIds[i]);
         }
         return trackIds;
     }
