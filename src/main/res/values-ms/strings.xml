@@ -263,7 +263,6 @@
     <string name="settings_sensor_bluetooth_sensor">Sensor Bluetooth</string>
     <string name="settings_sensor_connected">Disambungkan ke %1$s</string>
     <string name="settings_stats_coordinate">Latitud/Longitud</string>
-    <string name="settings_stats_grade_elevation">Cerun/Ketinggian</string>
     <string name="settings_stats_rate_title">Kadar pilihan</string>
     <string name="settings_stats_units_imperial">Imperial (bt, kaki)</string>
     <string name="settings_stats_units_metric">Metrik (km, m)</string>

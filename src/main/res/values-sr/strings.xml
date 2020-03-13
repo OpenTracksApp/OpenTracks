@@ -262,7 +262,6 @@
     <string name="settings_sensor_bluetooth_sensor">Bluetooth сензор</string>
     <string name="settings_sensor_connected">Повезано са сензором %1$s</string>
     <string name="settings_stats_coordinate">Географска шир./дуж.</string>
-    <string name="settings_stats_grade_elevation">Нагиб/надморска висина</string>
     <string name="settings_stats_rate_title">Жељени темпо</string>
     <string name="settings_stats_units_imperial">Империјалне (ми, ст)</string>
     <string name="settings_stats_units_metric">Метричке (км, м)</string>

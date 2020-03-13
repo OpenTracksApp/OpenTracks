@@ -264,7 +264,6 @@
     <string name="settings_sensor_bluetooth_sensor">Senzor Bluetooth</string>
     <string name="settings_sensor_connected">Povezava vzpostavljena z: %1$s</string>
     <string name="settings_stats_coordinate">Zemlj. širina/dolžina</string>
-    <string name="settings_stats_grade_elevation">Naklon/nadmorska višina</string>
     <string name="settings_stats_rate_title">Pred. enot. za hitr.</string>
     <string name="settings_stats_units_imperial">Imperialni sistem (mi, ft)</string>
     <string name="settings_stats_units_metric">Metrični sistem (km, m)</string>

@@ -264,7 +264,6 @@
     <string name="settings_sensor_bluetooth_sensor">חיישן Bluetooth</string>
     <string name="settings_sensor_connected">מחובר ל-%1$s</string>
     <string name="settings_stats_coordinate">קו רוחב/קו אורך</string>
-    <string name="settings_stats_grade_elevation">שיפוע/גובה</string>
     <string name="settings_stats_rate_title">קצב מועדף</string>
     <string name="settings_stats_units_imperial">אימפריאלי (מייל, רגל)</string>
     <string name="settings_stats_units_metric">מטרי (ק\"מ, מ\')</string>

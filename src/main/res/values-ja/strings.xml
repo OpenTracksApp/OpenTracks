@@ -265,7 +265,6 @@
     <string name="settings_sensor_bluetooth_sensor">Bluetoothのセンサー</string>
     <string name="settings_sensor_connected">接続先: %1$s</string>
     <string name="settings_stats_coordinate">緯度/経度</string>
-    <string name="settings_stats_grade_elevation">傾斜/標高</string>
     <string name="settings_stats_rate_title">計測方法</string>
     <string name="settings_stats_units_imperial">ヤード･ポンド法（マイル、フィート）</string>
     <string name="settings_stats_units_metric">メートル法（km、m）</string>

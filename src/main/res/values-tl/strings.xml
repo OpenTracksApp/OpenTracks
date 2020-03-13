@@ -262,7 +262,6 @@
     <string name="settings_sensor_bluetooth_sensor">Bluetooth sensor</string>
     <string name="settings_sensor_connected">Konektado sa %1$s</string>
     <string name="settings_stats_coordinate">Latitude/Longtitude</string>
-    <string name="settings_stats_grade_elevation">Grade/Elevation</string>
     <string name="settings_stats_rate_title">Gustong rate</string>
     <string name="settings_stats_units_imperial">Imperial (mi, ft)</string>
     <string name="settings_stats_units_metric">Metric (km, m)</string>

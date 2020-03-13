@@ -262,7 +262,6 @@
     <string name="settings_sensor_bluetooth_sensor">Bluetooth-sensor</string>
     <string name="settings_sensor_connected">Verbonden met %1$s</string>
     <string name="settings_stats_coordinate">Breedte-/lengtegraad</string>
-    <string name="settings_stats_grade_elevation">Helling/hoogte</string>
     <string name="settings_stats_rate_title">Voorkeursverhouding</string>
     <string name="settings_stats_units_imperial">Engels (mi, ft)</string>
     <string name="settings_stats_units_metric">Metrisch (km, m)</string>

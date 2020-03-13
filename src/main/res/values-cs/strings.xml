@@ -262,7 +262,6 @@
     <string name="settings_sensor_bluetooth_sensor">Senzor Bluetooth</string>
     <string name="settings_sensor_connected">Připojeno k senzoru %1$s</string>
     <string name="settings_stats_coordinate">Zeměpisná šířka/délka</string>
-    <string name="settings_stats_grade_elevation">Sklon/Převýšení</string>
     <string name="settings_stats_rate_title">Preferovaná rychlost</string>
     <string name="settings_stats_units_imperial">Imperiální jednotky (míle, stopy)</string>
     <string name="settings_stats_units_metric">Metrické jednotky (km, m)</string>

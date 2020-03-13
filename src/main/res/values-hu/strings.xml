@@ -263,7 +263,6 @@
     <string name="settings_sensor_bluetooth_sensor">Bluetooth érzékelő</string>
     <string name="settings_sensor_connected">Kapcsolódva ehhez: %1$s</string>
     <string name="settings_stats_coordinate">Szélesség/hosszúság</string>
-    <string name="settings_stats_grade_elevation">Lejtés/magasság</string>
     <string name="settings_stats_rate_title">Mérték választása</string>
     <string name="settings_stats_units_imperial">Angolszász (mérföld, láb)</string>
     <string name="settings_stats_units_metric">Metrikus (km, m)</string>

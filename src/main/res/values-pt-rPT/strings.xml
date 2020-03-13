@@ -263,7 +263,6 @@
     <string name="settings_sensor_bluetooth_sensor">Sensor de Bluetooth</string>
     <string name="settings_sensor_connected">Ligado a %1$s</string>
     <string name="settings_stats_coordinate">Latitude/Longitude</string>
-    <string name="settings_stats_grade_elevation">Grau/Elevação</string>
     <string name="settings_stats_rate_title">Avaliação preferida</string>
     <string name="settings_stats_units_imperial">Imperial (milhas, pés)</string>
     <string name="settings_stats_units_metric">Métrico (km, m)</string>

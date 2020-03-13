@@ -265,7 +265,6 @@
     <string name="settings_sensor_bluetooth_sensor">„Bluetooth“ jutiklis</string>
     <string name="settings_sensor_connected">Prijungta prie %1$s</string>
     <string name="settings_stats_coordinate">Platuma ir ilguma</string>
-    <string name="settings_stats_grade_elevation">Laipsnis / Aukštis</string>
     <string name="settings_stats_rate_title">Pageidaujamas greitis</string>
     <string name="settings_stats_units_imperial">Imperinės (myl., pėdos)</string>
     <string name="settings_stats_units_metric">Metrinės (km, m)</string>

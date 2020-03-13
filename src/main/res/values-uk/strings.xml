@@ -263,7 +263,6 @@
     <string name="settings_sensor_bluetooth_sensor">Датчик Bluetooth</string>
     <string name="settings_sensor_connected">Підключено до %1$s</string>
     <string name="settings_stats_coordinate">Широта/довгота</string>
-    <string name="settings_stats_grade_elevation">Нахил і висота</string>
     <string name="settings_stats_rate_title">Система вимірювання</string>
     <string name="settings_stats_units_imperial">Британська (милі, фути)</string>
     <string name="settings_stats_units_metric">Метрична (км, м)</string>

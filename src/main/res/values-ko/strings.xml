@@ -264,7 +264,6 @@
     <string name="settings_sensor_bluetooth_sensor">블루투스 센서</string>
     <string name="settings_sensor_connected">%1$s에 연결됨</string>
     <string name="settings_stats_coordinate">위도/경도</string>
-    <string name="settings_stats_grade_elevation">등급/고도</string>
     <string name="settings_stats_rate_title">선호하는 속도</string>
     <string name="settings_stats_units_imperial">야드파운드법(마일, 피트)</string>
     <string name="settings_stats_units_metric">미터법(km,m)</string>
