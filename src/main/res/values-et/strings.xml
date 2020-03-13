@@ -262,7 +262,6 @@
     <string name="settings_sensor_bluetooth_sensor">Bluetoothi andur</string>
     <string name="settings_sensor_connected">Ühendatud anduriga %1$s</string>
     <string name="settings_stats_coordinate">Laiuskraad/pikkuskraad</string>
-    <string name="settings_stats_grade_elevation">Kalle/tõus</string>
     <string name="settings_stats_rate_title">Eelistatud määr</string>
     <string name="settings_stats_units_imperial">Inglise mõõtühikud (miili, jalga)</string>
     <string name="settings_stats_units_metric">Meetermõõdustik (km, m)</string>

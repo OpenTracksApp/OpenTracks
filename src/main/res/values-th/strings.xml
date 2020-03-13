@@ -262,7 +262,6 @@
     <string name="settings_sensor_bluetooth_sensor">เซ็นเซอร์บลูทูธ</string>
     <string name="settings_sensor_connected">เชื่อมต่อกับ %1$s</string>
     <string name="settings_stats_coordinate">ละติจูด/ลองจิจูด</string>
-    <string name="settings_stats_grade_elevation">ระดับความเอียง/ระดับความสูง</string>
     <string name="settings_stats_rate_title">อัตราที่ต้องการ</string>
     <string name="settings_stats_units_imperial">หน่วยอังกฤษ (ไมล์, ฟุต)</string>
     <string name="settings_stats_units_metric">หน่วยเมตริก (กม., เมตร)</string>

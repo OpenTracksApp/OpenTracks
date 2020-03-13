@@ -263,7 +263,6 @@
     <string name="settings_sensor_bluetooth_sensor">Senzor Bluetooth</string>
     <string name="settings_sensor_connected">Conectat la %1$s</string>
     <string name="settings_stats_coordinate">Latitudine/longitudine</string>
-    <string name="settings_stats_grade_elevation">Înclinare/Elevație</string>
     <string name="settings_stats_rate_title">Rata de preferat</string>
     <string name="settings_stats_units_imperial">Imperial (mi, ft)</string>
     <string name="settings_stats_units_metric">Metric (km, m)</string>

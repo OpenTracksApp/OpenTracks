@@ -265,7 +265,6 @@ es vegi el cel. Torneu-ho a provar més tard.</string>
     <string name="settings_sensor_bluetooth_sensor">Sensor de Bluetooth</string>
     <string name="settings_sensor_connected">Connectat a %1$s</string>
     <string name="settings_stats_coordinate">Latitud/Longitud:</string>
-    <string name="settings_stats_grade_elevation">Desnivell/elevació</string>
     <string name="settings_stats_rate_title">Mesura preferida</string>
     <string name="settings_stats_units_imperial">Sistema anglosaxó (milles, peus)</string>
     <string name="settings_stats_units_metric">Sistema mètric (km, m)</string>

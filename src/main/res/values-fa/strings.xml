@@ -262,7 +262,6 @@
     <string name="settings_sensor_bluetooth_sensor">حسگر بلوتوث</string>
     <string name="settings_sensor_connected">به %1$s متصل شد</string>
     <string name="settings_stats_coordinate">عرض جغرافیایی/ طول جغرافیایی</string>
-    <string name="settings_stats_grade_elevation">درجه / ارتفاع</string>
     <string name="settings_stats_rate_title">اولویت سنجه سرعت</string>
     <string name="settings_stats_units_imperial">انگلیسی (مایل، فوت)</string>
     <string name="settings_stats_units_metric">متریک (کیلومتر، متر)</string>

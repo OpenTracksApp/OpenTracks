@@ -264,7 +264,6 @@
     <string name="settings_sensor_bluetooth_sensor">Capteur Bluetooth</string>
     <string name="settings_sensor_connected">Connecté à %1$s</string>
     <string name="settings_stats_coordinate">Latitude/Longitude</string>
-    <string name="settings_stats_grade_elevation">Inclinaison/Altitude</string>
     <string name="settings_stats_rate_title">Mode de calcul souhaité</string>
     <string name="settings_stats_units_imperial">Unités impériales (mi, pi)</string>
     <string name="settings_stats_units_metric">Unités métriques (km, m)</string>

@@ -262,7 +262,6 @@
     <string name="settings_sensor_bluetooth_sensor">Датчик Bluetooth</string>
     <string name="settings_sensor_connected">Подключен датчик \"%1$s\"</string>
     <string name="settings_stats_coordinate">Широта/долгота</string>
-    <string name="settings_stats_grade_elevation">Наклон/высота</string>
     <string name="settings_stats_rate_title">Предпочтение</string>
     <string name="settings_stats_units_imperial">Британская (мили, футы)</string>
     <string name="settings_stats_units_metric">Метрическая (км, м)</string>

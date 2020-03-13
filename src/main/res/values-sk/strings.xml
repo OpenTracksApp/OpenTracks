@@ -262,7 +262,6 @@
     <string name="settings_sensor_bluetooth_sensor">Senzor Bluetooth</string>
     <string name="settings_sensor_connected">Pripojené k %1$s</string>
     <string name="settings_stats_coordinate">Zemepis. šírka/dĺžka</string>
-    <string name="settings_stats_grade_elevation">Stúpanie / výška</string>
     <string name="settings_stats_rate_title">Preferovaná hodnota</string>
     <string name="settings_stats_units_imperial">Imperiálne jednotky (mi, ft)</string>
     <string name="settings_stats_units_metric">Metrické jednotky (km, m)</string>

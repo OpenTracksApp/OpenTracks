@@ -262,7 +262,6 @@
     <string name="settings_sensor_bluetooth_sensor">Bluetooth sentsorea</string>
     <string name="settings_sensor_connected">Honekin konektatuta: %1$s</string>
     <string name="settings_stats_coordinate">Latitudea/Longitudea</string>
-    <string name="settings_stats_grade_elevation">Inklinazioa/Altitudea</string>
     <string name="settings_stats_rate_title">Erritmo hobetsia</string>
     <string name="settings_stats_units_imperial">Inperiala (mi, ft)</string>
     <string name="settings_stats_units_metric">Metrikoa (km, m)</string>

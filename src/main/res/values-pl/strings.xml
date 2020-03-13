@@ -265,7 +265,6 @@
     <string name="settings_sensor_bluetooth_sensor">Czujnik Bluetooth</string>
     <string name="settings_sensor_connected">Połączono z: %1$s</string>
     <string name="settings_stats_coordinate">Szerokość/długość geo.</string>
-    <string name="settings_stats_grade_elevation">Nachylenie/wzniesienie</string>
     <string name="settings_stats_rate_title">Preferowana wartość</string>
     <string name="settings_stats_units_imperial">Imperialne (mile, stopy)</string>
     <string name="settings_stats_units_metric">Metryczne (km, m)</string>

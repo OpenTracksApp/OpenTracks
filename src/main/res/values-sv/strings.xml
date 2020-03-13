@@ -262,7 +262,6 @@
     <string name="settings_sensor_bluetooth_sensor">Bluetooth-sensor</string>
     <string name="settings_sensor_connected">Ansluten till %1$s</string>
     <string name="settings_stats_coordinate">Latitud/longitud</string>
-    <string name="settings_stats_grade_elevation">Lutning/höjd</string>
     <string name="settings_stats_rate_title">Föredragen mätning</string>
     <string name="settings_stats_units_imperial">Imperial (mi, ft)</string>
     <string name="settings_stats_units_metric">Metrisk (km, m)</string>

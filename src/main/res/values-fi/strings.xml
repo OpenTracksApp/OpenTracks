@@ -265,7 +265,6 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="settings_sensor_bluetooth_sensor">Bluetooth-anturi</string>
     <string name="settings_sensor_connected">Yhdistetty: %1$s</string>
     <string name="settings_stats_coordinate">Leveys-/pituusaste</string>
-    <string name="settings_stats_grade_elevation">Korkeustaso/korkeus</string>
     <string name="settings_stats_rate_title">Haluttu nopeus</string>
     <string name="settings_stats_units_imperial">Brittiläinen järj.
 (maili, jalka)</string>

@@ -263,7 +263,6 @@
     <string name="settings_sensor_bluetooth_sensor">Bluetooth сензор</string>
     <string name="settings_sensor_connected">Свързан с %1$s</string>
     <string name="settings_stats_coordinate">Ширина и дължина</string>
-    <string name="settings_stats_grade_elevation">Наклон/кота</string>
     <string name="settings_stats_rate_title">Предпочитана мярка</string>
     <string name="settings_stats_units_imperial">Имперски (мил, фт)</string>
     <string name="settings_stats_units_metric">Метрични (км, м)</string>

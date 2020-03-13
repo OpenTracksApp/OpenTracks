@@ -263,7 +263,6 @@
     <string name="settings_sensor_bluetooth_sensor">Αισθητήρας Bluetooth</string>
     <string name="settings_sensor_connected">Έγινε σύνδεση με %1$s</string>
     <string name="settings_stats_coordinate">Πλάτος/Μήκος</string>
-    <string name="settings_stats_grade_elevation">Κλίση/Ανύψωση</string>
     <string name="settings_stats_rate_title">Προτιμώμενος ρυθμός</string>
     <string name="settings_stats_units_imperial">Αγγλοσαξονικό (μίλια, πόδια)</string>
     <string name="settings_stats_units_metric">Μετρικό (χλμ, μέτρα)</string>
