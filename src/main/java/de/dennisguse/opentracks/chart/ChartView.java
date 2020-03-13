@@ -295,6 +295,10 @@ public class ChartView extends View {
         series[index].setEnabled(enabled);
     }
 
+    public boolean getMetricUnits() {
+        return metricUnits;
+    }
+
     /**
      * Sets metric units.
      *
@@ -302,6 +306,10 @@ public class ChartView extends View {
      */
     public void setMetricUnits(boolean value) {
         metricUnits = value;
+    }
+
+    public boolean getReportSpeed() {
+        return reportSpeed;
     }
 
     /**
@@ -486,7 +494,6 @@ public class ChartView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         synchronized (chartData) {
-
             canvas.save();
 
             canvas.drawColor(Color.WHITE);
