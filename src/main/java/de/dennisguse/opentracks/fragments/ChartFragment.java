@@ -76,8 +76,6 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     private TripStatisticsUpdater tripStatisticsUpdater;
     private long startTime;
 
-    private boolean metricUnits = true;
-    private boolean reportSpeed = true;
     private int recordingDistanceInterval;
 
     // Modes of operation
@@ -90,13 +88,9 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-            if (!isResumed()) {
-                return;
-            }
             if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key)) {
-                boolean metric = PreferencesUtils.isMetricUnits(getContext());
-                if (metricUnits != metric) {
-                    metricUnits = metric;
+                boolean metricUnits = PreferencesUtils.isMetricUnits(getContext());
+                if (metricUnits != chartView.getMetricUnits()) {
                     chartView.setMetricUnits(metricUnits);
                     runOnUiThread(new Runnable() {
                         @Override
@@ -109,9 +103,8 @@ public class ChartFragment extends Fragment implements TrackDataListener {
                 }
             }
             if (PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
-                boolean speed = PreferencesUtils.isReportSpeed(getContext());
-                if (reportSpeed != speed) {
-                    reportSpeed = speed;
+                boolean reportSpeed = PreferencesUtils.isReportSpeed(getContext());
+                if (reportSpeed != chartView.getReportSpeed()) {
                     chartView.setReportSpeed(reportSpeed);
                     setSeriesEnabled(ChartView.SPEED_SERIES, reportSpeed);
                     setSeriesEnabled(ChartView.PACE_SERIES, !reportSpeed);
@@ -152,7 +145,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        chartByDistance = getArguments().getBoolean(KEY_CHART_VIEW_BY_DISTANCE_KEY, chartByDistance);
+        chartByDistance = getArguments().getBoolean(KEY_CHART_VIEW_BY_DISTANCE_KEY, true);
 
         recordingDistanceInterval = PreferencesUtils.getRecordingDistanceIntervalDefault(getContext());
 
@@ -178,6 +171,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
         super.onResume();
         resumeTrackDataHub();
         PreferencesUtils.register(getContext(), sharedPreferenceChangeListener);
+        sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
 
         checkChartSettings();
         getActivity().runOnUiThread(updateChart);
@@ -277,10 +271,10 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     private void checkChartSettings() {
         boolean needUpdate = false;
 
-        if (setSeriesEnabled(ChartView.SPEED_SERIES, reportSpeed)) {
+        if (setSeriesEnabled(ChartView.SPEED_SERIES, chartView.getReportSpeed())) {
             needUpdate = true;
         }
-        if (setSeriesEnabled(ChartView.PACE_SERIES, !reportSpeed)) {
+        if (setSeriesEnabled(ChartView.PACE_SERIES, !chartView.getReportSpeed())) {
             needUpdate = true;
         }
 
@@ -381,7 +375,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
             TripStatistics tripStatistics = tripStatisticsUpdater.getTripStatistics();
             if (chartByDistance) {
                 double distance = tripStatistics.getTotalDistance() * UnitConversions.M_TO_KM;
-                if (!metricUnits) {
+                if (!chartView.getMetricUnits()) {
                     distance *= UnitConversions.KM_TO_MI;
                 }
                 timeOrDistance = distance;
@@ -390,12 +384,12 @@ public class ChartFragment extends Fragment implements TrackDataListener {
             }
 
             elevation = tripStatisticsUpdater.getSmoothedElevation();
-            if (!metricUnits) {
+            if (!chartView.getMetricUnits()) {
                 elevation *= UnitConversions.M_TO_FT;
             }
 
             speed = tripStatisticsUpdater.getSmoothedSpeed() * UnitConversions.MS_TO_KMH;
-            if (!metricUnits) {
+            if (!chartView.getMetricUnits()) {
                 speed *= UnitConversions.KM_TO_MI;
             }
             pace = speed == 0 ? 0.0 : 60.0 / speed;
@@ -441,12 +435,12 @@ public class ChartFragment extends Fragment implements TrackDataListener {
 
     @VisibleForTesting
     void setMetricUnits(boolean value) {
-        metricUnits = value;
+        chartView.setMetricUnits(value);
     }
 
     @VisibleForTesting
     void setReportSpeed(boolean value) {
-        reportSpeed = value;
+        chartView.setReportSpeed(value);
     }
 
     @VisibleForTesting
