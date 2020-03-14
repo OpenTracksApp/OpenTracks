@@ -59,6 +59,21 @@ public class TrackIconUtils {
     private static final int[] SNOW_BOARDING_LIST = new int[]{R.string.activity_type_snow_boarding};
     private static final int[] WALK_LIST = new int[]{R.string.activity_type_hiking, R.string.activity_type_off_trail_hiking, R.string.activity_type_speed_walking, R.string.activity_type_trail_hiking, R.string.activity_type_walking};
 
+    // List of icons whose sports associated use speed (in km/h or mi/h).
+    private static final int[] SPEED_ICON = {
+            // Unknown.
+            R.string.activity_type_unknown,
+            // All airplane categories.
+            R.string.activity_type_airplane, R.string.activity_type_commercial_airplane, R.string.activity_type_rc_airplane,
+            // All bike categories.
+            R.string.activity_type_biking, R.string.activity_type_cycling, R.string.activity_type_dirt_bike, R.string.activity_type_motor_bike, R.string.activity_type_mountain_biking, R.string.activity_type_road_biking, R.string.activity_type_track_cycling,
+            // All boat categories.
+            R.string.activity_type_boat, R.string.activity_type_ferry, R.string.activity_type_motor_boating, R.string.activity_type_rc_boat,
+            // All drive categories.
+            R.string.activity_type_atv, R.string.activity_type_driving, R.string.activity_type_driving_bus, R.string.activity_type_driving_car,
+
+    };
+
     private static final LinkedHashMap<String, Pair<Integer, Integer>> MAP = new LinkedHashMap<>();
 
     static {
@@ -191,5 +206,15 @@ public class TrackIconUtils {
             }
         }
         return false;
+    }
+
+    /**
+     * Returns true if category is in the SPEED_ICON array. Otherwise returns false.
+     *
+     * @param context  the context.
+     * @param category the name of the category, activity type.
+     */
+    public static boolean isSpeedIcon(Context context, String category) {
+        return inList(context, category, SPEED_ICON);
     }
 }
