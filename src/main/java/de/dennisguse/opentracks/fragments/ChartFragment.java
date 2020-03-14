@@ -75,6 +75,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
 
     //TODO Why is this needed?
     private int recordingDistanceInterval;
+    private String category = "";
 
     // Modes of operation
     private boolean chartByDistance;
@@ -100,7 +101,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
                 }
             }
             if (PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
-                boolean reportSpeed = PreferencesUtils.isReportSpeed(getContext());
+                boolean reportSpeed = PreferencesUtils.isReportSpeed(getContext(), category);
                 if (reportSpeed != chartView.getReportSpeed()) {
                     chartView.setReportSpeed(reportSpeed);
                     chartView.applyReportSpeed();
@@ -193,8 +194,11 @@ public class ChartFragment extends Fragment implements TrackDataListener {
         if (isResumed()) {
             if (track == null || track.getTrackStatistics() == null) {
                 startTime = -1L;
+                category = "";
                 return;
             }
+
+            category = track.getCategory();
             startTime = track.getTrackStatistics().getStartTime_ms();
         }
     }

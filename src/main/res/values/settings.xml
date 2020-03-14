@@ -153,19 +153,23 @@
     </string-array>
 
     <string name="stats_rate_key" translatable="false">statsRate</string>
-    <string name="stats_rate_default" translatable="false">@string/stats_rate_speed</string>
+    <string name="stats_rate_default" translatable="false">@string/stats_rate_default_speed_or_pace</string>
     <string-array name="stats_rate_imperial_options">
+        <item>@string/description_default_speed_or_pace_imperial</item>
         <item>@string/description_speed_imperial</item>
         <item>@string/description_pace_imperial</item>
     </string-array>
     <string-array name="stats_rate_metric_options">
+        <item>@string/description_default_speed_or_pace_metric</item>
         <item>@string/description_speed_metric</item>
         <item>@string/description_pace_metric</item>
     </string-array>
 
+    <string name="stats_rate_default_speed_or_pace" translatable="false">DEFAULT</string>
     <string name="stats_rate_pace" translatable="false">PACE</string>
     <string name="stats_rate_speed" translatable="false">SPEED</string>
     <string-array name="stats_rate_values">
+        <item>@string/stats_rate_default_speed_or_pace</item>
         <item>@string/stats_rate_speed</item>
         <item>@string/stats_rate_pace</item>
     </string-array>

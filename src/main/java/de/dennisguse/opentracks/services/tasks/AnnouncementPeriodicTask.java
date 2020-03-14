@@ -25,6 +25,8 @@ import android.util.Log;
 
 import java.util.Locale;
 
+import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.AnnouncementUtils;
@@ -46,6 +48,8 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
     private final Context context;
 
     private final AudioManager audioManager;
+
+    private ContentProviderUtils contentProviderUtils;
 
     private final AudioManager.OnAudioFocusChangeListener audioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
         @Override
@@ -103,6 +107,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
     AnnouncementPeriodicTask(Context context) {
         this.context = context;
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        contentProviderUtils = new ContentProviderUtils(context);
     }
 
     @Override

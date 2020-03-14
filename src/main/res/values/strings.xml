@@ -191,6 +191,8 @@ limitations under the License.
     <string name="description_sensor_cadence">Cadence (rpm)</string>
     <string name="description_sensor_heart_rate">Heart rate (bpm)</string>
     <string name="description_sensor_power">Power (W)</string>
+    <string name="description_default_speed_or_pace_imperial">By Default</string>
+    <string name="description_default_speed_or_pace_metric">By Default</string>
     <string name="description_speed_imperial">Speed (mi/hr)</string>
     <string name="description_speed_metric">Speed (km/hr)</string>
     <string name="description_time">Time</string>
