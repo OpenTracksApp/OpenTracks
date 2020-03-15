@@ -448,4 +448,7 @@ es vegi el cel. Torneu-ho a provar més tard.</string>
     <string name="waypoint_type_waterfall">salt d\'aigua</string>
     <string name="waypoint_type_water_fountain">font d\'aigua</string>
     <string name="waypoint_type_waypoint">punt de ruta</string>
+    <!-- Share image -->
+    <string name="share_image_subject">Vull compartir una imatge amb tu</string>
+    <string name="share_image_body">Crec que aquesta imatge et podria interessar.</string>
 </resources>
