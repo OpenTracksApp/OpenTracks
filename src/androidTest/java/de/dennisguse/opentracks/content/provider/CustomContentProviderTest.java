@@ -18,7 +18,6 @@ package de.dennisguse.opentracks.content.provider;
 
 import android.content.ContentUris;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
 import androidx.test.core.app.ApplicationProvider;
@@ -38,28 +37,13 @@ import de.dennisguse.opentracks.content.data.WaypointsColumns;
  */
 public class CustomContentProviderTest {
 
-    private static final String DATABASE_NAME = "test.db";
-
-    private SQLiteDatabase db;
     private CustomContentProvider customContentProvider;
     private Context context = ApplicationProvider.getApplicationContext();
 
     @Before
     public void setUp() {
-        context.deleteDatabase(DATABASE_NAME);
-        db = new CustomSQLiteOpenHelper(context, DATABASE_NAME).getWritableDatabase();
         customContentProvider = new CustomContentProvider() {
         };
-    }
-
-    /**
-     * Tests {@link CustomSQLiteOpenHelper#onCreate(SQLiteDatabase)}.
-     */
-    @Test
-    public void testDatabaseHelper_OnCreate() {
-        Assert.assertTrue(hasTable(TracksColumns.TABLE_NAME));
-        Assert.assertTrue(hasTable(TrackPointsColumns.TABLE_NAME));
-        Assert.assertTrue(hasTable(WaypointsColumns.TABLE_NAME));
     }
 
     /**
@@ -83,71 +67,5 @@ public class CustomContentProviderTest {
 
         Assert.assertEquals(WaypointsColumns.CONTENT_TYPE, customContentProvider.getType(WaypointsColumns.CONTENT_URI));
         Assert.assertEquals(WaypointsColumns.CONTENT_ITEMTYPE, customContentProvider.getType(ContentUris.appendId(WaypointsColumns.CONTENT_URI.buildUpon(), 1).build()));
-    }
-
-    /**
-     * Creates a table, containing one column.
-     *
-     * @param table the table name
-     */
-    private void createTable(String table) {
-        db.execSQL("CREATE TABLE " + table + " (test INTEGER)");
-    }
-
-    /**
-     * Drops a table in database.
-     *
-     * @param table the table name
-     */
-    private void dropTable(String table) {
-        db.execSQL("Drop TABLE " + table);
-    }
-
-    /**
-     * Returns true if the table exists.
-     *
-     * @param table the table name
-     */
-    private boolean hasTable(String table) {
-        try {
-            db.rawQuery("select count(*) from " + table, null);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    /**
-     * Returns true if the column in the table exists.
-     *
-     * @param table  the table name
-     * @param column the column name
-     */
-    private boolean hasColumn(String table, String column) {
-        try {
-            db.execSQL("SElECT count(*) from  " + table + " order by  " + column);
-        } catch (Exception e) {
-            if (e.getMessage().contains("no such column")) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Sets up upgrade.
-     *
-     * @param oldVersion thd old database version
-     */
-    private void setupUpgrade(int oldVersion) {
-        dropTable(TracksColumns.TABLE_NAME);
-        dropTable(TrackPointsColumns.TABLE_NAME);
-        dropTable(WaypointsColumns.TABLE_NAME);
-        createTable(TracksColumns.TABLE_NAME);
-        createTable(TrackPointsColumns.TABLE_NAME);
-        createTable(WaypointsColumns.TABLE_NAME);
-
-        CustomSQLiteOpenHelper databaseHelper = new CustomSQLiteOpenHelper(context);
-        databaseHelper.onUpgrade(db, oldVersion, CustomSQLiteOpenHelper.DATABASE_VERSION);
     }
 }

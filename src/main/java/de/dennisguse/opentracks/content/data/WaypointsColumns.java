@@ -40,48 +40,16 @@ public interface WaypointsColumns extends BaseColumns {
     String CATEGORY = "category"; // waypoint category
     String ICON = "icon"; // waypoint icon
     String TRACKID = "trackid"; // track id
-    @Deprecated
-    String TYPE = "type"; // type // TODO UNUSED
 
     String LENGTH = "length"; // length of the track (without smoothing)
-    String DURATION = "duration"; // total duration of the track (not from last waypoint)
-    String STARTTIME = "starttime"; // start time of the trip statistics
-    @Deprecated
-    String STARTID = "startid"; // start track point id // TODO UNUSED
-    @Deprecated
-    String STOPID = "stopid"; // stop track point id // TODO UNUSED
+    String DURATION = "duration"; // total duration of the track from the beginning until now
 
     String LONGITUDE = "longitude"; // longitude
     String LATITUDE = "latitude"; // latitude
     String TIME = "time"; // time
     String ALTITUDE = "elevation"; // altitude
     String ACCURACY = "accuracy"; // accuracy
-    String SPEED = "speed"; // speed
     String BEARING = "bearing"; // bearing
-
-    @Deprecated
-    String TOTALDISTANCE = "totaldistance"; // total distance
-    @Deprecated
-    String TOTALTIME = "totaltime"; // total time
-    @Deprecated
-    String MOVINGTIME = "movingtime"; // moving time
-    @Deprecated
-    String AVGSPEED = "avgspeed"; // average speed
-
-    @Deprecated
-    String AVGMOVINGSPEED = "avgmovingspeed"; // average moving speed  // TODO UNUSED
-    @Deprecated
-    String MAXSPEED = "maxspeed"; // max speed // TODO UNUSED
-    @Deprecated
-    String MINELEVATION = "minelevation"; // min elevation // TODO UNUSED
-    @Deprecated
-    String MAXELEVATION = "maxelevation"; // max elevation // TODO UNUSED
-    @Deprecated
-    String ELEVATIONGAIN = "elevationgain"; // elevation gain // TODO UNUSED
-    @Deprecated
-    String MINGRADE = "mingrade"; // min grade // TODO UNUSED
-    @Deprecated
-    String MAXGRADE = "maxgrade"; // max grade // TODO UNUSED
 
     String PHOTOURL = "photoUrl"; // url for the photo
 
@@ -92,30 +60,16 @@ public interface WaypointsColumns extends BaseColumns {
             + CATEGORY + " TEXT, "
             + ICON + " TEXT, "
             + TRACKID + " INTEGER, "
-            + TYPE + " INTEGER, "
             + LENGTH + " FLOAT, "
             + DURATION + " INTEGER, "
-            + STARTTIME + " INTEGER, "
-            + STARTID + " INTEGER, "
-            + STOPID + " INTEGER, "
             + LONGITUDE + " INTEGER, "
             + LATITUDE + " INTEGER, "
             + TIME + " INTEGER, "
             + ALTITUDE + " FLOAT, "
             + ACCURACY + " FLOAT, "
-            + SPEED + " FLOAT, "
             + BEARING + " FLOAT, "
-            + TOTALDISTANCE + " FLOAT, "
-            + TOTALTIME + " INTEGER, "
-            + MOVINGTIME + " INTEGER, "
-            + AVGSPEED + " FLOAT, "
-            + AVGMOVINGSPEED + " FLOAT, "
-            + MAXSPEED + " FLOAT, "
-            + MINELEVATION + " FLOAT, "
-            + MAXELEVATION + " FLOAT, "
-            + ELEVATIONGAIN + " FLOAT, "
-            + MINGRADE + " FLOAT, "
-            + MAXGRADE + " FLOAT, "
             + PHOTOURL + " TEXT"
-            + ");";
+            + ")";
+
+    String CREATE_TABLE_INDEX = "CREATE INDEX " + TABLE_NAME + "_" + TRACKID + "_index ON " + TABLE_NAME + "(" + TRACKID + ")";
 }

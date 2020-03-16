@@ -38,10 +38,6 @@ public interface TracksColumns extends BaseColumns {
     String NAME = "name"; // track name
     String DESCRIPTION = "description"; // track description
     String CATEGORY = "category"; // track activity type
-    @Deprecated
-    String STARTID = "startid"; // first track point id // TODO UNUSED
-    @Deprecated
-    String STOPID = "stopid"; // last track point id // TODO UNUSED
     String STARTTIME = "starttime"; // track start time
     String STOPTIME = "stoptime"; // track stop time
     String NUMPOINTS = "numpoints"; // number of track points
@@ -49,23 +45,12 @@ public interface TracksColumns extends BaseColumns {
     String TOTALTIME = "totaltime"; // total time
     String MOVINGTIME = "movingtime"; // moving time
 
-    @Deprecated
-    String MINLAT = "minlat"; // minimum latitude // TODO UNUSED
-    @Deprecated
-    String MAXLAT = "maxlat"; // maximum latitude // TODO UNUSED
-    @Deprecated
-    String MINLON = "minlon"; // minimum longitude //TODO UNUSED
-    @Deprecated
-    String MAXLON = "maxlon"; // maximum longitude //TODO UNUSED
-
     String AVGSPEED = "avgspeed"; // average speed
     String AVGMOVINGSPEED = "avgmovingspeed"; // average moving speed
     String MAXSPEED = "maxspeed"; // maximum speed
     String MINELEVATION = "minelevation"; // minimum elevation
     String MAXELEVATION = "maxelevation"; // maximum elevation
     String ELEVATIONGAIN = "elevationgain"; // elevation gain
-    String MINGRADE = "mingrade"; // minimum grade
-    String MAXGRADE = "maxgrade"; // maximum grade
     String ICON = "icon"; // track activity type icon
 
     String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" // table
@@ -73,25 +58,17 @@ public interface TracksColumns extends BaseColumns {
             + NAME + " TEXT, " // name
             + DESCRIPTION + " TEXT, " // description
             + CATEGORY + " TEXT, " // category
-            + STARTID + " INTEGER, " // start id
-            + STOPID + " INTEGER, " // stop id
             + STARTTIME + " INTEGER, " // start time
             + STOPTIME + " INTEGER, " // stop time
             + NUMPOINTS + " INTEGER, " // num points
             + TOTALDISTANCE + " FLOAT, " // total distance
             + TOTALTIME + " INTEGER, " // total time
             + MOVINGTIME + " INTEGER, " // moving time
-            + MINLAT + " INTEGER, " // min latitude
-            + MAXLAT + " INTEGER, " // max latitude
-            + MINLON + " INTEGER, " // min longitude
-            + MAXLON + " INTEGER, " // max longitude
             + AVGSPEED + " FLOAT, " // average speed
             + AVGMOVINGSPEED + " FLOAT, " // average moving speed
             + MAXSPEED + " FLOAT, " // max speed
             + MINELEVATION + " FLOAT, " // min elevation
             + MAXELEVATION + " FLOAT, " // max elevation
             + ELEVATIONGAIN + " FLOAT, " // elevation gain
-            + MINGRADE + " FLOAT, " // min grade
-            + MAXGRADE + " FLOAT, " // max grade
-            + ICON + " TEXT);"; // icon
+            + ICON + " TEXT)"; // icon
 }
