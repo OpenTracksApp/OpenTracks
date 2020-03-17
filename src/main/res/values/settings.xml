@@ -198,4 +198,6 @@
         <item>@string/settings_recording_track_name_date_iso_8601_option</item>
         <item>@string/settings_recording_track_name_number_option</item>
     </string-array>
+
+    <string name="settings_recording_key" translatable="false">settingsRecordingKey</string>
 </resources>

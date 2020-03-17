@@ -55,6 +55,7 @@ limitations under the License.
 
     <PreferenceCategory
         android:title="@string/settings_recording"
+        android:key="@string/settings_recording_key"
         app:initialExpandedChildrenCount="4">
         <SwitchPreferenceCompat
             android:defaultValue="@bool/stats_show_on_lockscreen_while_recording_default"
