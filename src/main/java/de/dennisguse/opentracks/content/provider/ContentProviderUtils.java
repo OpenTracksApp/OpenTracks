@@ -119,8 +119,6 @@ public class ContentProviderUtils {
         int minElevationIndex = cursor.getColumnIndexOrThrow(TracksColumns.MINELEVATION);
         int maxElevationIndex = cursor.getColumnIndexOrThrow(TracksColumns.MAXELEVATION);
         int elevationGainIndex = cursor.getColumnIndexOrThrow(TracksColumns.ELEVATIONGAIN);
-        int minGradeIndex = cursor.getColumnIndexOrThrow(TracksColumns.MINGRADE);
-        int maxGradeIndex = cursor.getColumnIndexOrThrow(TracksColumns.MAXGRADE);
         int iconIndex = cursor.getColumnIndexOrThrow(TracksColumns.ICON);
 
         Track track = new Track();
@@ -166,12 +164,6 @@ public class ContentProviderUtils {
         }
         if (!cursor.isNull(elevationGainIndex)) {
             tripStatistics.setTotalElevationGain(cursor.getFloat(elevationGainIndex));
-        }
-        if (!cursor.isNull(minGradeIndex)) {
-            tripStatistics.setMinGrade(cursor.getFloat(minGradeIndex));
-        }
-        if (!cursor.isNull(maxGradeIndex)) {
-            tripStatistics.setMaxGrade(cursor.getFloat(maxGradeIndex));
         }
         if (!cursor.isNull(iconIndex)) {
             track.setIcon(cursor.getString(iconIndex));
@@ -342,8 +334,6 @@ public class ContentProviderUtils {
         values.put(TracksColumns.MINELEVATION, tripStatistics.getMinElevation());
         values.put(TracksColumns.MAXELEVATION, tripStatistics.getMaxElevation());
         values.put(TracksColumns.ELEVATIONGAIN, tripStatistics.getTotalElevationGain());
-        values.put(TracksColumns.MINGRADE, tripStatistics.getMinGrade());
-        values.put(TracksColumns.MAXGRADE, tripStatistics.getMaxGrade());
         values.put(TracksColumns.ICON, track.getIcon());
 
         return values;
@@ -369,7 +359,6 @@ public class ContentProviderUtils {
         int timeIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.TIME);
         int altitudeIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.ALTITUDE);
         int accuracyIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.ACCURACY);
-        int speedIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.SPEED);
         int bearingIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.BEARING);
         int photoUrlIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.PHOTOURL);
 
@@ -413,9 +402,6 @@ public class ContentProviderUtils {
         }
         if (!cursor.isNull(accuracyIndex)) {
             location.setAccuracy(cursor.getFloat(accuracyIndex));
-        }
-        if (!cursor.isNull(speedIndex)) {
-            location.setSpeed(cursor.getFloat(speedIndex));
         }
         if (!cursor.isNull(bearingIndex)) {
             location.setBearing(cursor.getFloat(bearingIndex));
@@ -612,9 +598,6 @@ public class ContentProviderUtils {
             }
             if (location.hasAccuracy()) {
                 values.put(WaypointsColumns.ACCURACY, location.getAccuracy());
-            }
-            if (location.hasSpeed()) {
-                values.put(WaypointsColumns.SPEED, location.getSpeed());
             }
             if (location.hasBearing()) {
                 values.put(WaypointsColumns.BEARING, location.getBearing());

@@ -64,5 +64,7 @@ public interface TrackPointsColumns extends BaseColumns {
             + BEARING + " FLOAT, "
             + SENSOR_HEARTRATE + " FLOAT, "
             + SENSOR_CADENCE + " FLOAT, "
-            + SENSOR_POWER + " FLOAT);";
+            + SENSOR_POWER + " FLOAT)";
+
+    String CREATE_TABLE_INDEX = "CREATE INDEX " + TABLE_NAME + "_" + TRACKID + "_index ON " + TABLE_NAME + "(" + TRACKID + ")";
 }

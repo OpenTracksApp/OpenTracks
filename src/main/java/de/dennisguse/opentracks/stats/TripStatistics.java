@@ -29,6 +29,7 @@ public class TripStatistics {
     // The min and max elevation (meters) seen on this trip.
     private final ExtremityMonitor elevationExtremities = new ExtremityMonitor();
     // The min and max grade seen on this trip.
+    @Deprecated //Remove grade min/max completely
     private final ExtremityMonitor gradeExtremities = new ExtremityMonitor();
 
     // The trip start time. This is the system time, might not match the GPs time.

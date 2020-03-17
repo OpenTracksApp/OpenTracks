@@ -61,7 +61,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
 
     private static final String[] PROJECTION = new String[]{WaypointsColumns._ID,
             WaypointsColumns.NAME, WaypointsColumns.DESCRIPTION, WaypointsColumns.CATEGORY,
-            WaypointsColumns.TYPE, WaypointsColumns.TIME, WaypointsColumns.PHOTOURL,
+            WaypointsColumns.TIME, WaypointsColumns.PHOTOURL,
             WaypointsColumns.LATITUDE, WaypointsColumns.LONGITUDE};
 
     private ContentProviderUtils contentProviderUtils;
@@ -179,7 +179,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
                             new String[]{String.valueOf(track.getId())}, null);
                 } else {
                     return new CursorLoader(MarkerListActivity.this, WaypointsColumns.CONTENT_URI, PROJECTION,
-                            WaypointsColumns.STARTTIME + " IS NULL", null, null);
+                            null, null, null);
                 }
             }
 
