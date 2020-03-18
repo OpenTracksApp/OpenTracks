@@ -107,6 +107,30 @@ public class IntentUtils {
                 .putExtra(Intent.EXTRA_TEXT, context.getString(R.string.share_track_share_file_body, trackDescription));
     }
 
+    /**
+     * Creates an intent to share a waypoint image with an app.
+     *
+     * @param context the context.
+     * @param uri     uri with the image to share.
+     */
+    public static Intent newShareImageIntent(Context context, Uri uri) {
+        String mime = context.getContentResolver().getType(uri);
+
+        /*
+         * Because the #166 bug, when you import KMZ tracks then it creates file:/// from markers with photo.
+         * The photos should be content:/// not file:/// because getType(uri) always returns null for file:///
+         * In .setType, to avoid side effects because the #166 bug described above it checks if mime is null.
+         * If it is then it hardcode "images/*".
+         */
+        return new Intent(Intent.ACTION_SEND)
+                .setType(mime != null ? mime : "image/*")
+                .setAction(Intent.ACTION_SEND)
+                .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                .putExtra(Intent.EXTRA_STREAM, uri)
+                .putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.share_image_subject))
+                .putExtra(Intent.EXTRA_TEXT, context.getString(R.string.share_image_body));
+    }
+
     public static void showCoordinateOnMap(Context context, Waypoint waypoint) {
         showCoordinateOnMap(context, waypoint.getLocation().getLatitude(), waypoint.getLocation().getLongitude(), waypoint.getName());
     }

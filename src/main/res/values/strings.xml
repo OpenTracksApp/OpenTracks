@@ -595,4 +595,7 @@ limitations under the License.
     <string name="waypoint_type_waterfall">waterfall</string>
     <string name="waypoint_type_water_fountain">water fountain</string>
     <string name="waypoint_type_waypoint">waypoint</string>
+    <!-- Share image -->
+    <string name="share_image_subject">I would like to share an image with you</string>
+    <string name="share_image_body">I think you might be interested in this image.</string>
 </resources>

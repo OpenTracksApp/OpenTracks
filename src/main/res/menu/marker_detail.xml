@@ -21,6 +21,11 @@ limitations under the License.
         android:title="@string/menu_show_on_map"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/marker_detail_share"
+        android:icon="@drawable/ic_share_24dp"
+        android:title="@string/menu_share"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/marker_detail_edit"
         android:icon="@drawable/ic_edit_24dp"
         android:title="@string/menu_edit"

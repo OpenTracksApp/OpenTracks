@@ -60,6 +60,8 @@ public class MarkerDetailFragment extends Fragment {
 
     private static final long HIDE_TEXT_DELAY = 4 * UnitConversions.ONE_SECOND_MS;
 
+    private MenuItem shareMarkerImageMenuItem;
+
     private ContentProviderUtils contentProviderUtils;
     private Handler handler;
     private ImageView photoView;
@@ -145,6 +147,7 @@ public class MarkerDetailFragment extends Fragment {
         // Need to update the waypoint in case returning after an edit
         updateWaypoint(true);
         updateUi();
+        updateMenuItems();
     }
 
     @Override
@@ -170,8 +173,14 @@ public class MarkerDetailFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.marker_detail, menu);
-
+        shareMarkerImageMenuItem = menu.findItem(R.id.marker_detail_share);
         updateWaypoint(false);
+        updateMenuItems();
+    }
+
+    private void updateMenuItems() {
+        if (shareMarkerImageMenuItem != null)
+            shareMarkerImageMenuItem.setVisible(waypoint.hasPhoto());
     }
 
     @Override
@@ -187,6 +196,13 @@ public class MarkerDetailFragment extends Fragment {
                 intent = IntentUtils.newIntent(fragmentActivity, MarkerEditActivity.class)
                         .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, markerId);
                 startActivity(intent);
+                return true;
+            case R.id.marker_detail_share:
+                if (waypoint.hasPhoto()) {
+                    intent = IntentUtils.newShareImageIntent(getContext(), waypoint.getPhotoURI());
+                    intent = Intent.createChooser(intent, null);
+                    startActivity(intent);
+                }
                 return true;
             case R.id.marker_detail_delete:
                 DeleteMarkerDialogFragment.showDialog(getChildFragmentManager(), new long[]{markerId});

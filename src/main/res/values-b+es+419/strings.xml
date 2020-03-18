@@ -446,4 +446,7 @@
     <string name="waypoint_type_waterfall">cascada</string>
     <string name="waypoint_type_water_fountain">fuente de agua</string>
     <string name="waypoint_type_waypoint">punto de referencia</string>
+    <!-- Share image -->
+    <string name="share_image_subject">Me gustaría compartir una imagen contigo</string>
+    <string name="share_image_body">Creo que esta imagen podría interesarte.</string>
 </resources>
