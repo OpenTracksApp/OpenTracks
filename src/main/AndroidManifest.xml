@@ -31,7 +31,9 @@ limitations under the License.
         <!-- Activities -->
         <activity android:name=".AboutActivity" />
 
-        <activity android:name=".TrackDeleteActivity" />
+        <activity
+            android:name=".TrackDeleteActivity"
+            android:theme="@style/ThemeCustomTransparent" />
 
         <activity
             android:name=".HelpActivity"
