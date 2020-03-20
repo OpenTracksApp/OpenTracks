@@ -38,10 +38,6 @@ public class Track {
     private String description = "";
     private String category = "";
 
-    /*
-     * The number of location points (present even if the points themselves are not loaded)
-     */
-    private int numberOfPoints = 0;
     private String icon = "";
 
     private TripStatistics tripStatistics = new TripStatistics();
@@ -82,14 +78,6 @@ public class Track {
 
     public void setCategory(String category) {
         this.category = category;
-    }
-
-    public int getNumberOfPoints() {
-        return numberOfPoints;
-    }
-
-    public void setNumberOfPoints(int numberOfPoints) {
-        this.numberOfPoints = numberOfPoints;
     }
 
     public String getIcon() {

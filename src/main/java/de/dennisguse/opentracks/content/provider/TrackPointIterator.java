@@ -108,4 +108,13 @@ public class TrackPointIterator implements Iterator<TrackPoint>, AutoCloseable {
     public void remove() {
         throw new UnsupportedOperationException();
     }
+
+    public int getCount() {
+        if (cursor == null) {
+            return -1;
+        }
+
+        return cursor.getCount();
+    }
+
 }

@@ -19,7 +19,6 @@ public class TestDataUtil {
         Track track = new Track();
         track.setId(id);
         track.setName("Test: " + id);
-        track.setNumberOfPoints(numPoints);
         for (int i = 0; i < numPoints; i++) {
             track.addLocation(createLocation(i));
         }

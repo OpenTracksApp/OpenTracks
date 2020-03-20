@@ -135,7 +135,7 @@ public class CustomContentProviderUtilsTest {
 
     private List<Location> testIterator(long trackId, int numPoints, int batchSize, boolean descending, TrackPointFactory trackPointFactory) {
         long lastPointId = initializeTrack(trackId, numPoints);
-        ((ContentProviderUtils) contentProviderUtils).setDefaultCursorBatchSize(batchSize);
+        contentProviderUtils.setDefaultCursorBatchSize(batchSize);
         List<Location> locations = new ArrayList<Location>(numPoints);
         try (TrackPointIterator it = contentProviderUtils.getTrackPointLocationIterator(trackId, -1L, descending, trackPointFactory)) {
             while (it.hasNext()) {
@@ -155,7 +155,6 @@ public class CustomContentProviderUtilsTest {
         Track track = new Track();
         track.setId(id);
         track.setName("Test: " + id);
-        track.setNumberOfPoints(numPoints);
         contentProviderUtils.insertTrack(track);
         track = contentProviderUtils.getTrack(id);
         Assert.assertNotNull(track);
@@ -183,7 +182,6 @@ public class CustomContentProviderUtilsTest {
         }
 
         Assert.assertTrue(numPoints == 0 || lastPointId > 0);
-        Assert.assertEquals(numPoints, track.getNumberOfPoints());
         Assert.assertEquals(numPoints, counter);
 
         return lastPointId;
@@ -616,8 +614,8 @@ public class CustomContentProviderUtilsTest {
         when(cursorMock.getBlob(index++)).thenReturn(sensor);
 
         Location location = contentProviderUtils.createTrackPoint(cursorMock);
-        Assert.assertEquals((double) longitude, location.getLongitude(), 0.01);
-        Assert.assertEquals((double) latitude, location.getLatitude(), 0.01);
+        Assert.assertEquals(longitude, location.getLongitude(), 0.01);
+        Assert.assertEquals(latitude, location.getLatitude(), 0.01);
         Assert.assertEquals(time, location.getTime(), 0.01);
         Assert.assertEquals(speed, location.getSpeed(), 0.01);
     }
@@ -661,7 +659,7 @@ public class CustomContentProviderUtilsTest {
         Track track = TestDataUtil.getTrack(trackId, 10);
         contentProviderUtils.insertTrack(track);
 
-        long[] trackpointIds = new long[track.getNumberOfPoints()];
+        long[] trackpointIds = new long[track.getLocations().size()];
         for (int i = 0; i < trackpointIds.length; i++) {
             trackpointIds[i] = ContentUris.parseId(contentProviderUtils.insertTrackPoint(track.getLocations().get(i), track.getId()));
         }
@@ -680,7 +678,7 @@ public class CustomContentProviderUtilsTest {
         Track track = TestDataUtil.getTrack(trackId, 10);
         contentProviderUtils.insertTrack(track);
 
-        long[] trackpointIds = new long[track.getNumberOfPoints()];
+        long[] trackpointIds = new long[track.getLocations().size()];
         for (int i = 0; i < trackpointIds.length; i++) {
             trackpointIds[i] = ContentUris.parseId(contentProviderUtils.insertTrackPoint(track.getLocations().get(i), track.getId()));
         }
@@ -699,7 +697,7 @@ public class CustomContentProviderUtilsTest {
         Track track = TestDataUtil.getTrack(trackId, 10);
         contentProviderUtils.insertTrack(track);
 
-        long[] trackpointIds = new long[track.getNumberOfPoints()];
+        long[] trackpointIds = new long[track.getLocations().size()];
         for (int i = 0; i < trackpointIds.length; i++) {
             trackpointIds[i] = ContentUris.parseId(contentProviderUtils.insertTrackPoint(track.getLocations().get(i), track.getId()));
         }
@@ -726,7 +724,7 @@ public class CustomContentProviderUtilsTest {
         Track track = TestDataUtil.getTrack(trackId, 10);
         contentProviderUtils.insertTrack(track);
 
-        long[] trackpointIds = new long[track.getNumberOfPoints()];
+        long[] trackpointIds = new long[track.getLocations().size()];
         for (int i = 0; i < trackpointIds.length; i++) {
             trackpointIds[i] = ContentUris.parseId(contentProviderUtils.insertTrackPoint(track.getLocations().get(i), track.getId()));
         }

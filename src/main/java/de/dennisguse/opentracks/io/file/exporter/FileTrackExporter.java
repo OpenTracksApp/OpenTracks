@@ -161,7 +161,7 @@ public class FileTrackExporter implements TrackExporter {
                     // Write the current location
                     trackWriter.writeLocation(location);
                     if (trackExporterListener != null) {
-                        trackExporterListener.onProgressUpdate(locationNumber, track.getNumberOfPoints());
+                        trackExporterListener.onProgressUpdate(locationNumber, locationIterator.getCount());
                     }
                 } else {
                     if (wroteSegment) {

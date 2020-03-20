@@ -40,7 +40,8 @@ public interface TracksColumns extends BaseColumns {
     String CATEGORY = "category"; // track activity type
     String STARTTIME = "starttime"; // track start time
     String STOPTIME = "stoptime"; // track stop time
-    String NUMPOINTS = "numpoints"; // number of track points
+    @Deprecated
+    String NUMPOINTS = "numpoints"; // number of track points //TODO UNUSED
     String TOTALDISTANCE = "totaldistance"; // total distance
     String TOTALTIME = "totaltime"; // total time
     String MOVINGTIME = "movingtime"; // moving time

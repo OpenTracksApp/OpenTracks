@@ -439,7 +439,7 @@ public class TrackRecordingService extends Service {
                 insertLocation(track, lastLocation, getLastValidTrackPointInCurrentSegment(trackId));
 
                 // Update the recording track time
-                updateRecordingTrack(track, false);
+                updateRecordingTrack(track);
             }
 
             String trackName = TrackNameUtils.getTrackName(this, trackId, track.getTripStatistics().getStartTime());
@@ -650,7 +650,7 @@ public class TrackRecordingService extends Service {
         try {
             contentProviderUtils.insertTrackPoint(location, track.getId());
             trackTripStatisticsUpdater.addLocation(location, recordingDistanceInterval);
-            updateRecordingTrack(track, LocationUtils.isValidLocation(location));
+            updateRecordingTrack(track);
         } catch (SQLiteException e) {
             /*
              * Insert failed, most likely because of SqlLite error code 5 (SQLite_BUSY).
@@ -663,16 +663,10 @@ public class TrackRecordingService extends Service {
 
     /**
      * Updates the recording track time.
-     * Increase the number of points if it is a new and valid track point.
      *
-     * @param track                  the track
-     * @param increaseNumberOfPoints true to increase the number of points
+     * @param track the track
      */
-    private void updateRecordingTrack(Track track, boolean increaseNumberOfPoints) {
-        if (increaseNumberOfPoints) {
-            track.setNumberOfPoints(track.getNumberOfPoints() + 1);
-        }
-
+    private void updateRecordingTrack(Track track) {
         trackTripStatisticsUpdater.updateTime(System.currentTimeMillis());
         track.setTripStatistics(trackTripStatisticsUpdater.getTripStatistics());
         contentProviderUtils.updateTrack(track);

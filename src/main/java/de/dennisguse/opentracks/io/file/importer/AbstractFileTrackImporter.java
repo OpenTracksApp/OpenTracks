@@ -262,7 +262,6 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
             trackData.tripStatisticsUpdater.updateTime(trackData.importTime);
         }
         trackData.track.setTripStatistics(trackData.tripStatisticsUpdater.getTripStatistics());
-        trackData.track.setNumberOfPoints(trackData.numberOfLocations);
         contentProviderUtils.updateTrack(trackData.track);
     }
 

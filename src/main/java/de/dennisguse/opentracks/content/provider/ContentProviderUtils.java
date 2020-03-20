@@ -111,7 +111,6 @@ public class ContentProviderUtils {
         int categoryIndex = cursor.getColumnIndexOrThrow(TracksColumns.CATEGORY);
         int startTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME);
         int stopTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.STOPTIME);
-        int numPointsIndex = cursor.getColumnIndexOrThrow(TracksColumns.NUMPOINTS);
         int totalDistanceIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALDISTANCE);
         int totalTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALTIME);
         int movingTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.MOVINGTIME);
@@ -140,9 +139,6 @@ public class ContentProviderUtils {
         }
         if (!cursor.isNull(stopTimeIndex)) {
             tripStatistics.setStopTime(cursor.getLong(stopTimeIndex));
-        }
-        if (!cursor.isNull(numPointsIndex)) {
-            track.setNumberOfPoints(cursor.getInt(numPointsIndex));
         }
         if (!cursor.isNull(totalDistanceIndex)) {
             tripStatistics.setTotalDistance(cursor.getFloat(totalDistanceIndex));
@@ -199,7 +195,6 @@ public class ContentProviderUtils {
 
     /**
      * Deletes track points and waypoints of a track.
-     * Assumes {@link TracksColumns#NUMPOINTS} will be updated by the caller.
      *
      * @param trackId the track id
      */
@@ -324,7 +319,6 @@ public class ContentProviderUtils {
         values.put(TracksColumns.CATEGORY, track.getCategory());
         values.put(TracksColumns.STARTTIME, tripStatistics.getStartTime());
         values.put(TracksColumns.STOPTIME, tripStatistics.getStopTime());
-        values.put(TracksColumns.NUMPOINTS, track.getNumberOfPoints());
         values.put(TracksColumns.TOTALDISTANCE, tripStatistics.getTotalDistance());
         values.put(TracksColumns.TOTALTIME, tripStatistics.getTotalTime());
         values.put(TracksColumns.MOVINGTIME, tripStatistics.getMovingTime());
