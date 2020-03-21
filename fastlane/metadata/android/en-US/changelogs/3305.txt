@@ -1,0 +1,14 @@
+v3.5.0: OpenTracks
+
+Changes:
+- Marker: select pictures from gallery
+- Marker: share picture
+- Use track name as filename when sharing
+- Removed elevation min/max (was imprecise)
+
+Bugfix:
+- Charts use preferred units and rate
+
+Developer:
+- Database: remove unused columns
+- Database: add indices
