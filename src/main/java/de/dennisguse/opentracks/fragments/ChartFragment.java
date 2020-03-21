@@ -181,7 +181,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     public void onPause() {
         super.onPause();
         pauseTrackDataHub();
-        PreferencesUtils.register(getContext(), sharedPreferenceChangeListener);
+        PreferencesUtils.unregister(getContext(), sharedPreferenceChangeListener);
     }
 
     @Override
