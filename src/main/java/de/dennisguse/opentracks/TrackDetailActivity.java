@@ -152,8 +152,12 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
     private final OnClickListener stopListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            trackRecordingServiceConnection.stopRecording(TrackDetailActivity.this, true);
             updateMenuItems(true);
+            trackRecordingServiceConnection.pauseTrack();
+            trackController.update(true, true);
+            Intent intent = IntentUtils.newIntent(TrackDetailActivity.this, TrackStartEndActivity.class)
+                    .putExtra(TrackStartEndActivity.EXTRA_COMMAND, TrackStartEndActivity.COMMAND_FINISH);
+            startActivity(intent);
         }
     };
 
@@ -387,9 +391,12 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
                 return;
             }
             trackId = waypoint.getTrackId();
+            if (trackId == -1L) {
+                finish();
+                return;
+            }
         }
         if (trackId == -1L) {
-            finish();
             return;
         }
         Track track = contentProviderUtils.getTrack(trackId);

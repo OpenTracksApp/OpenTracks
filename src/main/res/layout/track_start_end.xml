@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <LinearLayout
+        android:id="@+id/start_end_track_sum_up"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Distance -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/StatsLargeItemContainer">
+
+            <TextView
+                style="@style/StatsLargeLabel"
+                android:text="@string/stats_distance" />
+
+            <LinearLayout style="@style/StatsLargeValueContainer">
+
+                <TextView
+                    android:id="@+id/start_end_distance_value"
+                    style="@style/StatsLargeValue"
+                    android:value="@string/value_unknown" />
+
+                <TextView
+                    android:id="@+id/start_end_distance_unit"
+                    style="@style/StatsUnit" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Moving time -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/StatsLargeItemContainer">
+
+            <TextView
+                style="@style/StatsLargeLabel"
+                android:text="@string/stats_moving_time" />
+
+            <TextView
+                android:id="@+id/start_end_moving_time_value"
+                style="@style/StatsLargeValue"
+                android:value="@string/value_unknown" />
+
+        </LinearLayout>
+
+        <!-- Horizontal line -->
+        <View style="@style/StatsHorizontalLine" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/start_end_text_arrow"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.0">
+
+        <LinearLayout
+            android:id="@+id/start_end_list_arrow_long"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:paddingTop="16dp"
+            android:paddingBottom="12dp">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:contentDescription="@string/image_arrow"
+                android:src="@drawable/ic_arrow_long" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="17" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/start_end_list_arrow_long">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5" />
+
+            <TextView
+                style="@style/TextLarge"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="22"
+                android:gravity="left"
+                android:text="Are you ready?"
+                android:textColor="@color/list_empty_text" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/start_end_controller_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/track_controller_background"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="10">
+
+            <ImageButton
+                android:id="@+id/start_end_left_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/image_stop"
+                android:src="@drawable/button_start" />
+            <TextView
+                android:id="@+id/start_end_left_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/StatsSmallLabel" />
+
+        </FrameLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6" />
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="10">
+
+            <ImageButton
+                android:id="@+id/start_end_right_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/image_stop"
+                android:src="@drawable/button_finish" />
+            <TextView
+                android:id="@+id/start_end_right_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/StatsSmallLabel" />
+
+        </FrameLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+    </LinearLayout>
+</LinearLayout>

@@ -81,6 +81,10 @@ limitations under the License.
         </activity>
 
         <activity
+            android:name=".TrackStartEndActivity"
+            android:screenOrientation="userPortrait" />
+
+        <activity
             android:name=".TrackDetailActivity"
             android:screenOrientation="userPortrait" />
 
