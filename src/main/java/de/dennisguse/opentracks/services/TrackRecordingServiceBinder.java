@@ -37,6 +37,11 @@ class TrackRecordingServiceBinder extends android.os.Binder implements TrackReco
     }
 
     @Override
+    public void resumeTrack(long trackId) {
+        trackRecordingService.resumeTrack(trackId);
+    }
+
+    @Override
     public void pauseCurrentTrack() {
         trackRecordingService.pauseCurrentTrack();
     }

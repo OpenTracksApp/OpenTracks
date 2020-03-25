@@ -96,6 +96,16 @@ public class TripStatisticsUpdater {
         currentSegment = init(startTime);
     }
 
+    /**
+     * Creates a new trip statistics updater with a trip statistics already existed.
+     *
+     * @param tripStatistics a trip statistics.
+     */
+    public TripStatisticsUpdater(TripStatistics tripStatistics) {
+        this.tripStatistics = tripStatistics;
+        currentSegment = init(System.currentTimeMillis());
+    }
+
     public void updateTime(long time) {
         currentSegment.setStopTime(time);
         currentSegment.setTotalTime(time - currentSegment.getStartTime());

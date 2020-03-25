@@ -352,6 +352,27 @@ public class TrackRecordingService extends Service {
         return trackId;
     }
 
+    /**
+     * Resumes the track identified by trackId.
+     *
+     * @param trackId
+     */
+    void resumeTrack(long trackId) {
+        Track track = contentProviderUtils.getTrack(trackId);
+        if (track == null) {
+            Log.e(TAG, "Ignore resumeTrack. Track " + trackId + " does not exists.");
+            return;
+        }
+
+        track.getTripStatistics().setStopTime(System.currentTimeMillis());
+        trackTripStatisticsUpdater = new TripStatisticsUpdater(track.getTripStatistics());
+
+        // Update shared preferences
+        updateRecordingState(trackId, false);
+
+        startRecording();
+    }
+
     private void restartTrack(Track track) {
         Log.d(TAG, "Restarting track: " + track.getId());
 

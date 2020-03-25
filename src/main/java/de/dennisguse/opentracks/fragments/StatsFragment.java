@@ -96,6 +96,16 @@ public class StatsFragment extends Fragment implements TrackDataListener {
             }
             if (PreferencesUtils.isKey(getContext(), R.string.recording_track_id_key, key)) {
                 recordingGpsAccuracy = PreferencesUtils.getRecordingGPSAccuracy(getContext());
+                if (PreferencesUtils.getRecordingTrackId(getContext()) != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
+                    // A recording track id has been set -> Resumes track and starts timer.
+                    resumeTrackDataHub();
+                    if (trackRecordingServiceConnection == null) {
+                        trackRecordingServiceConnection = new TrackRecordingServiceConnection(getContext(), null);
+                    }
+                    trackRecordingServiceConnection.startConnection(getContext());
+
+                    handlerUpdateUI.post(updateUIeachSecond);
+                }
             }
         }
     };
@@ -533,11 +543,24 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     private void updateTotalTime() {
         long totalTime;
         if (isSelectedTrackRecording()) {
-            totalTime = System.currentTimeMillis() - lastTripStatistics.getStopTime() + lastTripStatistics.getTotalTime();
+            totalTime = calculateTotalTime();
         } else {
             totalTime = lastTripStatistics.getTotalTime();
         }
         totalTimeValueView.setText(StringUtils.formatElapsedTime(totalTime));
+    }
+
+    /**
+     * Return time from service.
+     * If service isn't bound then use lastTripStatistics for calculate it.
+     */
+    private long calculateTotalTime() {
+        TrackRecordingServiceInterface trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
+        if (trackRecordingService != null) {
+            return trackRecordingService.getTotalTime();
+        } else {
+            return System.currentTimeMillis() - lastTripStatistics.getStopTime() + lastTripStatistics.getTotalTime();
+        }
     }
 
     private void setLocationValues() {

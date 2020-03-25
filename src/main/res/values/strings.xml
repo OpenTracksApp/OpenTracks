@@ -321,6 +321,7 @@ limitations under the License.
     <string name="menu_stop_gps">Stop GPS</string>
     <string name="menu_view_photo">View photo</string>
     <string name="menu_voice_frequency">Voice frequency</string>
+    <string name="menu_resume_track">Resume track</string>
     <!-- OpenTracks -->
     <string name="app_name">OpenTracks</string>
     <string name="recording_service">Recording service</string>
@@ -440,6 +441,8 @@ limitations under the License.
     <!-- Track Detail -->
     <string name="track_detail_chart_tab">Chart</string>
     <string name="track_detail_stats_tab">Stats</string>
+    <string name="track_detail_record_success">Now recording a new track</string>
+    <string name="track_detail_resume_success">Now resuming the track</string>
     <!-- Track Edit -->
     <string name="track_edit_activity_type">Activity type (e.g. hiking)</string>
     <string name="track_edit_activity_type_hint">Activity type</string>

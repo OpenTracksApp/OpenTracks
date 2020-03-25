@@ -21,11 +21,13 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -43,6 +45,7 @@ import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.fragments.StatsFragment;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
+import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
 import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
@@ -50,7 +53,7 @@ import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.TrackUtils;
 
 /**
- * An activity to show the track detail.
+ * An activity to show the track detail, record a new track or resumes an existing one.
  *
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
@@ -89,6 +92,34 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
                     trackController.update(isRecording(), recordingTrackPaused);
                 }
             });
+
+            if (recordingTrackId == -1L) {
+                TrackRecordingServiceInterface service = trackRecordingServiceConnection.getServiceIfBound();
+                if (service == null) {
+                    Log.d(TAG, "it could not get service");
+                    return;
+                }
+
+                // Starts or resumes a track.
+                int msg;
+                if (trackId == -1L) {
+                    // trackId isn't initialized -> leads a new recording.
+                    trackId = service.startNewTrack();
+                    recordingTrackId = trackId;
+                    msg = R.string.track_detail_record_success;
+                } else {
+                    // trackId is initialized -> resumes the track.
+                    recordingTrackId = trackId;
+                    service.resumeTrack(trackId);
+                    msg = R.string.track_detail_resume_success;
+                }
+
+                // A recording track is on.
+                Toast.makeText(TrackDetailActivity.this, msg, Toast.LENGTH_SHORT).show();
+                trackDataHub.loadTrack(trackId);
+                trackController.update(true, false);
+                trackController.onResume(true, recordingTrackPaused);
+            }
         }
     };
 
@@ -131,6 +162,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
     private MenuItem insertMarkerMenuItem;
     private MenuItem markerListMenuItem;
     private MenuItem shareMenuItem;
+    private MenuItem resumeMenuItem;
 
     private final OnClickListener recordListener = new OnClickListener() {
         @Override
@@ -258,11 +290,16 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
     @Override
     protected void onResume() {
         super.onResume();
-        trackDataHub.loadTrack(trackId);
 
         // Update UI
         this.invalidateOptionsMenu();
-        trackController.onResume(isRecording(), recordingTrackPaused);
+
+        if (trackId != -1L) {
+            trackDataHub.loadTrack(trackId);
+            trackController.onResume(isRecording(), recordingTrackPaused);
+        } else {
+            startRecording();
+        }
     }
 
     @Override
@@ -304,6 +341,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
         insertMarkerMenuItem = menu.findItem(R.id.track_detail_insert_marker);
         shareMenuItem = menu.findItem(R.id.track_detail_share);
         markerListMenuItem = menu.findItem(R.id.track_detail_markers);
+        resumeMenuItem = menu.findItem(R.id.track_detail_resume_track);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -344,6 +382,9 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
                 return true;
             case R.id.track_detail_delete:
                 deleteTracks(new long[]{trackId});
+                return true;
+            case R.id.track_detail_resume_track:
+                startRecording();
                 return true;
             case R.id.track_detail_settings:
                 intent = IntentUtils.newIntent(this, SettingsActivity.class);
@@ -387,9 +428,13 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
                 return;
             }
             trackId = waypoint.getTrackId();
+            if (trackId == -1L) {
+                finish();
+                return;
+            }
         }
+
         if (trackId == -1L) {
-            finish();
             return;
         }
         Track track = contentProviderUtils.getTrack(trackId);
@@ -416,9 +461,12 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
         String title;
         if (isRecording()) {
             title = getString(isPaused ? R.string.generic_paused : R.string.generic_recording);
+            resumeMenuItem.setVisible(false);
         } else {
             Track track = contentProviderUtils.getTrack(trackId);
             title = track != null ? track.getName() : "";
+            // Only visible if there aren't other tracks that is recording.
+            resumeMenuItem.setVisible(recordingTrackId == -1L);
         }
         setTitle(title);
     }
@@ -436,5 +484,16 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
 
     private boolean isRecording() {
         return trackId == recordingTrackId;
+    }
+
+    private void startRecording() {
+        trackRecordingServiceConnection.startAndBind(this);
+
+        /*
+         * If the binding has happened, then invoke the callback to start a new recording.
+         * If the binding hasn't happened, then invoking the callback will have no effect.
+         * But when the binding occurs, the callback will get invoked.
+         */
+        bindChangedCallback.run();
     }
 }

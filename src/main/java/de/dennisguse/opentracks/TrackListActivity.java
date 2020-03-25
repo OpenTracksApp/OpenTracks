@@ -160,7 +160,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     // Menu items
     private MenuItem searchMenuItem;
     private MenuItem startGpsMenuItem;
-//    private MenuItem deleteAllMenuItem;
 
     private final OnClickListener stopListener = new OnClickListener() {
         @Override
@@ -171,8 +170,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     };
 
     private boolean startGps = false; // true to start gps
-
-    private boolean startNewRecording = false; // true to start a new recording
 
     // Callback when the trackRecordingServiceConnection binding changes.
     private final Runnable bindChangedCallback = new Runnable() {
@@ -188,7 +185,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                 }
             });
 
-            if (!startGps && !startNewRecording) {
+            if (!startGps) {
                 return;
             }
 
@@ -196,17 +193,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             if (service == null) {
                 Log.d(TAG, "service not available to start gps or a new recording");
                 return;
-            }
-            if (startNewRecording) {
-                startGps = false;
-
-                long trackId = service.startNewTrack();
-                startNewRecording = false;
-                Intent intent = IntentUtils.newIntent(TrackListActivity.this, TrackDetailActivity.class)
-                        .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);
-                startActivity(intent);
-                Toast.makeText(TrackListActivity.this, R.string.track_list_record_success, Toast.LENGTH_SHORT)
-                        .show();
             }
             if (startGps) {
                 service.startGps();
@@ -220,18 +206,19 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             if (!PreferencesUtils.isRecording(recordingTrackId)) {
                 // Not recording -> Recording
                 updateMenuItems(false, true);
-                startRecording();
+                Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackDetailActivity.class);
+                startActivity(newIntent);
             } else if (recordingTrackPaused) {
-                    // Paused -> Resume
-                    updateMenuItems(false, true);
-                    trackRecordingServiceConnection.resumeTrack();
-                    trackController.update(true, false);
-                } else {
-                    // Recording -> Paused
-                    updateMenuItems(false, true);
-                    trackRecordingServiceConnection.pauseTrack();
-                    trackController.update(true, true);
-                }
+                // Paused -> Resume
+                updateMenuItems(false, true);
+                trackRecordingServiceConnection.resumeTrack();
+                trackController.update(true, false);
+            } else {
+                // Recording -> Paused
+                updateMenuItems(false, true);
+                trackRecordingServiceConnection.pauseTrack();
+                trackController.update(true, true);
+            }
         }
     };
 
@@ -487,21 +474,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                 startGpsMenuItem.setIcon(isGpsStarted ? R.drawable.ic_gps_fixed_24dp : R.drawable.ic_gps_off_24dp);
             }
         }
-    }
-
-    /**
-     * Starts a new recording.
-     */
-    private void startRecording() {
-        startNewRecording = true;
-        trackRecordingServiceConnection.startAndBind(this);
-
-        /*
-         * If the binding has happened, then invoke the callback to start a new recording.
-         * If the binding hasn't happened, then invoking the callback will have no effect.
-         * But when the binding occurs, the callback will get invoked.
-         */
-        bindChangedCallback.run();
     }
 
     /**

@@ -211,6 +211,7 @@
     <string name="menu_stop_gps">Detener GPS</string>
     <string name="menu_view_photo">Ver foto</string>
     <string name="menu_voice_frequency">Frecuencia de voz</string>
+    <string name="menu_resume_track">Reanudar ruta</string>
     <string name="app_name">OpenTracks</string>
     <string name="recording_service">Servicio de grabación</string>
     <string name="search_global_description">Recorridos y marcadores</string>
@@ -303,6 +304,7 @@
     <string name="track_delete_progress_message">Eliminando…</string>
     <string name="track_detail_chart_tab">Gráfico</string>
     <string name="track_detail_stats_tab">Estadísticas</string>
+    <string name="track_detail_record_success">Grabando una nueva ruta</string>
     <string name="track_edit_activity_type">Tipo de actividad (p. ej., senderismo…)</string>
     <string name="track_edit_activity_type_hint">Tipo de actividad</string>
     <string name="track_edit_new_track_title">Nueva pista</string>

@@ -45,6 +45,13 @@ public interface TrackRecordingServiceInterface {
     long startNewTrack();
 
     /**
+     * Resumes the track identified by trackId.
+     *
+     * @param trackId
+     */
+    void resumeTrack(long trackId);
+
+    /**
      * Pauses the current recording track.
      */
     void pauseCurrentTrack();
