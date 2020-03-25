@@ -49,6 +49,11 @@ limitations under the License.
         android:orderInCategory="10"
         android:title="@string/menu_delete" />
     <item
+        android:id="@+id/track_detail_resume_track"
+        android:icon="@drawable/ic_play_circle_24dp"
+        android:orderInCategory="10"
+        android:title="@string/menu_resume_track" />
+    <item
         android:id="@+id/track_detail_settings"
         android:icon="@drawable/ic_settings_24dp"
         android:orderInCategory="13"
