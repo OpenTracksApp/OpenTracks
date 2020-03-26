@@ -17,7 +17,6 @@
 package de.dennisguse.opentracks.fragments;
 
 import android.content.SharedPreferences;
-import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -220,18 +219,18 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     }
 
     @Override
-    public void onSampledInTrackPoint(Location location) {
+    public void onSampledInTrackPoint(TrackPoint trackPoint) {
         if (isResumed()) {
             double[] data = new double[ChartView.NUM_SERIES + 1];
-            fillDataPoint(location, data);
+            fillDataPoint(trackPoint, data);
             pendingPoints.add(data);
         }
     }
 
     @Override
-    public void onSampledOutTrackPoint(Location location) {
+    public void onSampledOutTrackPoint(TrackPoint trackPoint) {
         if (isResumed()) {
-            fillDataPoint(location, null);
+            fillDataPoint(trackPoint, null);
         }
     }
 
@@ -351,7 +350,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     }
 
     /**
-     * Given a location, fill in a data point, an array of double[]. <br>
+     * Given a trackPoint, fill in a data point, an array of double[]. <br>
      * data[0] = time/distance <br>
      * data[1] = elevation <br>
      * data[2] = speed <br>
@@ -360,18 +359,18 @@ public class ChartFragment extends Fragment implements TrackDataListener {
      * data[5] = cadence <br>
      * data[6] = power <br>
      *
-     * @param location the location
+     * @param trackPoint the trackPoint
      * @param data     the data point to fill in, can be null
      */
     @VisibleForTesting
-    void fillDataPoint(Location location, double[] data) {
+    void fillDataPoint(@NonNull TrackPoint trackPoint, double[] data) {
         double timeOrDistance = Double.NaN;
         double elevation = Double.NaN;
         double speed = Double.NaN;
         double pace = Double.NaN;
 
         if (tripStatisticsUpdater != null) {
-            tripStatisticsUpdater.addLocation(location, recordingDistanceInterval);
+            tripStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
             TripStatistics tripStatistics = tripStatisticsUpdater.getTripStatistics();
             if (chartByDistance) {
                 double distance = tripStatistics.getTotalDistance() * UnitConversions.M_TO_KM;
@@ -398,8 +397,8 @@ public class ChartFragment extends Fragment implements TrackDataListener {
         double heartRate = Double.NaN;
         double cadence = Double.NaN;
         double power = Double.NaN;
-        if (location instanceof TrackPoint && ((TrackPoint) location).getSensorDataSet() != null) {
-            SensorDataSet sensorDataSet = ((TrackPoint) location).getSensorDataSet();
+        if (trackPoint.getSensorDataSet() != null) {
+            SensorDataSet sensorDataSet = trackPoint.getSensorDataSet();
             if (sensorDataSet.hasHeartRate()) {
                 heartRate = sensorDataSet.getHeartRate();
             }

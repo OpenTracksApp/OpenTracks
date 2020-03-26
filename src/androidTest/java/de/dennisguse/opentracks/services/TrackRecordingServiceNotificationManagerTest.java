@@ -2,7 +2,6 @@ package de.dennisguse.opentracks.services;
 
 import android.app.NotificationManager;
 import android.content.Context;
-import android.location.Location;
 
 import androidx.core.app.NotificationCompat;
 import androidx.test.core.app.ApplicationProvider;
@@ -11,6 +10,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+
+import de.dennisguse.opentracks.content.data.TrackPoint;
 
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -24,7 +25,7 @@ public class TrackRecordingServiceNotificationManagerTest {
     private Context context = ApplicationProvider.getApplicationContext();
 
     @Mock
-    private Location locationMock;
+    private TrackPoint locationMock;
 
     @Mock
     private NotificationCompat.Builder notificationCompatBuilder;

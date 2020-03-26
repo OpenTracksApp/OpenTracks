@@ -18,7 +18,6 @@ package de.dennisguse.opentracks.io.file.importer;
 
 import android.content.ContentUris;
 import android.content.Context;
-import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 
@@ -33,6 +32,7 @@ import java.util.Locale;
 import java.util.SimpleTimeZone;
 
 import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.data.WaypointsColumns;
@@ -83,24 +83,24 @@ public abstract class AbstractTestFileTrackImporter {
     @Mock
     public ContentProviderUtils contentProviderUtils;
 
-    Location createLocation(int index, long time) {
-        Location location = new Location(LocationManager.GPS_PROVIDER);
-        location.setLatitude(TRACK_LATITUDE + index);
-        location.setLongitude(TRACK_LONGITUDE + index);
-        location.setAltitude(TRACK_ELEVATION + index);
-        location.setTime(time);
-        return location;
+    TrackPoint createTrackPoint(int index, long time) {
+        TrackPoint trackPoint = new TrackPoint(LocationManager.GPS_PROVIDER);
+        trackPoint.setLatitude(TRACK_LATITUDE + index);
+        trackPoint.setLongitude(TRACK_LONGITUDE + index);
+        trackPoint.setAltitude(TRACK_ELEVATION + index);
+        trackPoint.setTime(time);
+        return trackPoint;
     }
 
     /**
      * Expects the first track point to be added.
      *
-     * @param location     the location
+     * @param trackPoint     the trackPoint
      * @param trackId      the track id
      * @param trackPointId the track point id
      */
-    protected void expectFirstTrackPoint(Location location, long trackId, long trackPointId) {
-        when(contentProviderUtils.bulkInsertTrackPoint(location != null ? (Location[]) any() : (Location[]) any(), eq(1), eq(trackId))).thenReturn(1);
+    protected void expectFirstTrackPoint(TrackPoint trackPoint, long trackId, long trackPointId) {
+        when(contentProviderUtils.bulkInsertTrackPoint(trackPoint != null ? (TrackPoint[]) any() : (TrackPoint[]) any(), eq(1), eq(trackId))).thenReturn(1);
     }
 
     /**

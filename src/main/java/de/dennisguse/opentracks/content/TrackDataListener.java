@@ -16,9 +16,8 @@
 
 package de.dennisguse.opentracks.content;
 
-import android.location.Location;
-
 import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.Waypoint;
 
 /**
@@ -43,20 +42,20 @@ public interface TrackDataListener {
     /**
      * Called when a sampled in track point is read.
      *
-     * @param location the location
+     * @param trackPoint the trackPoint
      */
-    void onSampledInTrackPoint(Location location);
+    void onSampledInTrackPoint(TrackPoint trackPoint);
 
     /**
      * Called when a sampled out track point is read.
      *
-     * @param location the location
+     * @param trackPoint the trackPoint
      */
-    void onSampledOutTrackPoint(Location location);
+    void onSampledOutTrackPoint(TrackPoint trackPoint);
 
     /**
      * Called when finish sending new track points.
-     * This gets called after every batch of calls to {@link #onSampledInTrackPoint(Location)} and {@link #onSampledOutTrackPoint(Location)}.
+     * This gets called after every batch of calls to {@link #onSampledInTrackPoint(TrackPoint)} and {@link #onSampledOutTrackPoint(TrackPoint)}.
      */
     void onNewTrackPointsDone();
 

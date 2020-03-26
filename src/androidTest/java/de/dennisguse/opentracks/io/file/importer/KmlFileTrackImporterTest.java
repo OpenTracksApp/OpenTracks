@@ -16,8 +16,6 @@
 
 package de.dennisguse.opentracks.io.file.importer;
 
-import android.location.Location;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,6 +26,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
 import static org.mockito.Mockito.any;
@@ -69,14 +68,14 @@ public class KmlFileTrackImporterTest extends AbstractTestFileTrackImporter {
     @Test
     public void testOneTrackOneSegment() throws Exception {
         // given
-        Location location0 = createLocation(0, DATE_FORMAT_0.parse(TRACK_TIME_0).getTime());
-        Location location1 = createLocation(1, DATE_FORMAT_1.parse(TRACK_TIME_1).getTime());
+        TrackPoint trackPoint0 = createTrackPoint(0, DATE_FORMAT_0.parse(TRACK_TIME_0).getTime());
+        TrackPoint trackPointl1 = createTrackPoint(1, DATE_FORMAT_1.parse(TRACK_TIME_1).getTime());
 
         contentProviderUtils.clearTrack(context, TRACK_ID_0);
-        expectFirstTrackPoint(location0, TRACK_ID_0, TRACK_POINT_ID_0);
+        expectFirstTrackPoint(trackPoint0, TRACK_ID_0, TRACK_POINT_ID_0);
 
         // A flush happens at the end
-        when(contentProviderUtils.bulkInsertTrackPoint((Location[]) any(), eq(1), eq(TRACK_ID_0))).thenReturn(1);
+        when(contentProviderUtils.bulkInsertTrackPoint((TrackPoint[]) any(), eq(1), eq(TRACK_ID_0))).thenReturn(1);
         when(contentProviderUtils.getLastTrackPointId(TRACK_ID_0)).thenReturn(TRACK_POINT_ID_1);
         when(contentProviderUtils.getTrack(PreferencesUtils.getRecordingTrackId(context))).thenReturn(null);
 
@@ -101,13 +100,13 @@ public class KmlFileTrackImporterTest extends AbstractTestFileTrackImporter {
     @Test
     public void testOneTrackTwoSegments() throws Exception {
         // given
-        Location location0 = createLocation(0, DATE_FORMAT_0.parse(TRACK_TIME_0).getTime());
+        TrackPoint trackPoint0 = createTrackPoint(0, DATE_FORMAT_0.parse(TRACK_TIME_0).getTime());
 
         contentProviderUtils.clearTrack(context, TRACK_ID_0);
-        expectFirstTrackPoint(location0, TRACK_ID_0, TRACK_POINT_ID_0);
+        expectFirstTrackPoint(trackPoint0, TRACK_ID_0, TRACK_POINT_ID_0);
 
         // A flush happens at the end
-        when(contentProviderUtils.bulkInsertTrackPoint((Location[]) any(), eq(5), eq(TRACK_ID_0))).thenReturn(5);
+        when(contentProviderUtils.bulkInsertTrackPoint((TrackPoint[]) any(), eq(5), eq(TRACK_ID_0))).thenReturn(5);
         when(contentProviderUtils.getLastTrackPointId(TRACK_ID_0)).thenReturn(TRACK_POINT_ID_3);
         when(contentProviderUtils.getTrack(PreferencesUtils.getRecordingTrackId(context))).thenReturn(null);
 

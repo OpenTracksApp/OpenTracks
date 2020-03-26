@@ -15,7 +15,7 @@ public class TrackPointFactory {
      */
     public static final TrackPointFactory DEFAULT_LOCATION_FACTORY = new TrackPointFactory();
 
-    public TrackPoint createLocation() {
+    public TrackPoint create() {
         return new TrackPoint(LocationManager.GPS_PROVIDER);
     }
 }

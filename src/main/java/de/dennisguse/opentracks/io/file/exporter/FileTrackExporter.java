@@ -18,7 +18,6 @@ package de.dennisguse.opentracks.io.file.exporter;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.location.Location;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -129,22 +128,22 @@ public class FileTrackExporter implements TrackExporter {
         TrackWriterTrackPointFactory trackPointFactory = new TrackWriterTrackPointFactory();
         int locationNumber = 0;
 
-        try (TrackPointIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), -1L, false, trackPointFactory)) {
+        try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), -1L, false, trackPointFactory)) {
 
-            while (locationIterator.hasNext()) {
+            while (trackPointIterator.hasNext()) {
                 if (Thread.interrupted()) {
                     throw new InterruptedException();
                 }
-                Location location = locationIterator.next();
+                TrackPoint trackPoint = trackPointIterator.next();
 
-                setLocationTime(location, offset);
+                setLocationTime(trackPoint, offset);
                 locationNumber++;
 
-                boolean isLocationValid = LocationUtils.isValidLocation(location);
+                boolean isLocationValid = LocationUtils.isValidLocation(trackPoint);
                 boolean isSegmentValid = isLocationValid && isLastLocationValid;
                 if (!wroteTrack && isSegmentValid) {
                     // Found the first two consecutive locations that are valid
-                    trackWriter.writeBeginTrack(track, trackPointFactory.lastLocation);
+                    trackWriter.writeBeginTrack(track, trackPointFactory.lastTrackPoint);
                     wroteTrack = true;
                 }
 
@@ -154,14 +153,14 @@ public class FileTrackExporter implements TrackExporter {
                         trackWriter.writeOpenSegment();
                         wroteSegment = true;
 
-                        // Write the previous location, which we had previously skipped
-                        trackWriter.writeLocation(trackPointFactory.lastLocation);
+                        // Write the previous trackPoint, which we had previously skipped
+                        trackWriter.writeTrackPoint(trackPointFactory.lastTrackPoint);
                     }
 
-                    // Write the current location
-                    trackWriter.writeLocation(location);
+                    // Write the current trackPoint
+                    trackWriter.writeTrackPoint(trackPoint);
                     if (trackExporterListener != null) {
-                        trackExporterListener.onProgressUpdate(locationNumber, locationIterator.getCount());
+                        trackExporterListener.onProgressUpdate(locationNumber, trackPointIterator.getCount());
                     }
                 } else {
                     if (wroteSegment) {
@@ -179,7 +178,7 @@ public class FileTrackExporter implements TrackExporter {
             }
 
             if (wroteTrack) {
-                Location lastValidTrackPoint = contentProviderUtils.getLastValidTrackPoint(track.getId());
+                TrackPoint lastValidTrackPoint = contentProviderUtils.getLastValidTrackPoint(track.getId());
                 setLocationTime(lastValidTrackPoint, offset);
                 trackWriter.writeEndTrack(track, lastValidTrackPoint);
             } else {
@@ -191,40 +190,40 @@ public class FileTrackExporter implements TrackExporter {
     }
 
     /**
-     * Sets a location time.
+     * Sets a trackPoint time.
      *
-     * @param location the location
+     * @param trackPoint the trackPoint
      * @param offset   the time offset
      */
-    private void setLocationTime(Location location, long offset) {
-        if (location != null) {
-            location.setTime(location.getTime() - offset);
+    private void setLocationTime(TrackPoint trackPoint, long offset) {
+        if (trackPoint != null) {
+            trackPoint.setTime(trackPoint.getTime() - offset);
         }
     }
 
     /**
-     * Track writer location factory. Keeping the last two locations.
+     * Keeping the last two locations.
      *
      * @author Jimmy Shih
      */
     private class TrackWriterTrackPointFactory extends TrackPointFactory {
-        TrackPoint currentLocation;
-        TrackPoint lastLocation;
+        TrackPoint currentTrackPoint;
+        TrackPoint lastTrackPoint;
 
         @Override
-        public TrackPoint createLocation() {
-            if (currentLocation == null) {
-                currentLocation = new TrackPoint("");
+        public TrackPoint create() {
+            if (currentTrackPoint == null) {
+                currentTrackPoint = new TrackPoint("");
             }
-            return currentLocation;
+            return currentTrackPoint;
         }
 
         void swapLocations() {
-            TrackPoint tempLocation = lastLocation;
-            lastLocation = currentLocation;
-            currentLocation = tempLocation;
-            if (currentLocation != null) {
-                currentLocation.reset();
+            TrackPoint tempTrackPoint = lastTrackPoint;
+            lastTrackPoint = currentTrackPoint;
+            currentTrackPoint = tempTrackPoint;
+            if (currentTrackPoint != null) {
+                currentTrackPoint.reset();
             }
         }
     }

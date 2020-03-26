@@ -67,7 +67,7 @@ public class ChartFragmentTest {
     }
 
     /**
-     * Tests the logic to get the incorrect values of sensor in {@link ChartFragment#fillDataPoint(Location, double[])}.
+     * Tests the logic to get the incorrect values of sensor in {@link ChartFragment#fillDataPoint(TrackPoint, double[])}.
      */
     @Test
     public void testFillDataPoint_sensorIncorrect() {
@@ -91,7 +91,7 @@ public class ChartFragmentTest {
     }
 
     /**
-     * Tests the logic to get the correct values of sensor in {@link ChartFragment#fillDataPoint(Location, double[])}.
+     * Tests the logic to get the correct values of sensor in {@link ChartFragment#fillDataPoint(TrackPoint, double[])}.
      */
     @Test
     public void testFillDataPoint_sensorCorrect() {
@@ -115,7 +115,7 @@ public class ChartFragmentTest {
     }
 
     /**
-     * Tests the logic to get the value of metric Distance in {@link ChartFragment#fillDataPoint(Location, double[])}.
+     * Tests the logic to get the value of metric Distance in {@link ChartFragment#fillDataPoint(TrackPoint, double[])}.
      */
     @Test
     public void testFillDataPoint_distanceMetric() {
@@ -156,7 +156,7 @@ public class ChartFragmentTest {
     }
 
     /**
-     * Tests the logic to get the value of imperial Distance in {@link ChartFragment#fillDataPoint(Location, double[])}.
+     * Tests the logic to get the value of imperial Distance in {@link ChartFragment#fillDataPoint(TrackPoint, double[])}.
      */
     @Test
     public void testFillDataPoint_distanceImperial() {
@@ -199,7 +199,7 @@ public class ChartFragmentTest {
     }
 
     /**
-     * Tests the logic to get the values of time in {@link ChartFragment#fillDataPoint(Location, double[])}.
+     * Tests the logic to get the values of time in {@link ChartFragment#fillDataPoint(TrackPoint, double[])}.
      */
     @Test
     public void testFillDataPoint_time() {
@@ -216,7 +216,7 @@ public class ChartFragmentTest {
     }
 
     /**
-     * Tests the logic to get the value of elevation in {@link ChartFragment#fillDataPoint(Location, double[])} by one and two points.
+     * Tests the logic to get the value of elevation in {@link ChartFragment#fillDataPoint(TrackPoint, double[])} by one and two points.
      */
     @Test
     public void testFillDataPoint_elevation() {
@@ -240,7 +240,7 @@ public class ChartFragmentTest {
     }
 
     /**
-     * Tests the logic to get the value of speed in {@link ChartFragment#fillDataPoint(Location, double[])}.
+     * Tests the logic to get the value of speed in {@link ChartFragment#fillDataPoint(TrackPoint, double[])}.
      * In this test, firstly remove all points in memory, and then fill in two points one by one.
      * The speed values of these points are 129, 130.
      */
@@ -338,12 +338,12 @@ public class ChartFragmentTest {
     /**
      * Helper method to test fillDataPoint.
      *
-     * @param location location to fill
-     * @return data of this location
+     * @param trackPoint trackPoint to fill
+     * @return data of this trackPoint
      */
-    private double[] fillDataPointTestHelper(Location location) {
+    private double[] fillDataPointTestHelper(TrackPoint trackPoint) {
         double[] point = new double[ChartView.NUM_SERIES + 1];
-        chartFragment.fillDataPoint(location, point);
+        chartFragment.fillDataPoint(trackPoint, point);
         return point;
     }
 }

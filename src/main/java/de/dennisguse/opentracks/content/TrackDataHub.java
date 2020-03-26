@@ -19,7 +19,6 @@ package de.dennisguse.opentracks.content;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.location.Location;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.Log;
@@ -32,6 +31,7 @@ import java.util.Set;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.TrackPointFactory;
@@ -395,7 +395,7 @@ public class TrackDataHub implements DataSourceListener, SharedPreferences.OnSha
         try (TrackPointIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(selectedTrackId, localLastSeenLocationId + 1, false, TrackPointFactory.DEFAULT_LOCATION_FACTORY)) {
 
             while (locationIterator.hasNext()) {
-                Location location = locationIterator.next();
+                TrackPoint trackPoint = locationIterator.next();
                 long locationId = locationIterator.getTrackPointId();
 
                 // Stop if past the last wanted point
@@ -412,18 +412,18 @@ public class TrackDataHub implements DataSourceListener, SharedPreferences.OnSha
                     samplingFrequency = 1 + (int) (numTotalPoints / targetNumPoints);
                 }
 
-                if (!LocationUtils.isValidLocation(location)) { //This can be split markers (not anymore supported feature)
+                if (!LocationUtils.isValidLocation(trackPoint)) { //This can be split markers (not anymore supported feature)
                     includeNextPoint = true;
                 } else {
                     // Also include the last point if the selected track is not recording.
                     if (includeNextPoint || (localNumLoadedPoints % samplingFrequency == 0) || (locationId == lastTrackPointId && !isSelectedTrackRecording())) {
                         includeNextPoint = false;
                         for (TrackDataListener trackDataListener : sampledInListeners) {
-                            trackDataListener.onSampledInTrackPoint(location);
+                            trackDataListener.onSampledInTrackPoint(trackPoint);
                         }
                     } else {
                         for (TrackDataListener trackDataListener : sampledOutListeners) {
-                            trackDataListener.onSampledOutTrackPoint(location);
+                            trackDataListener.onSampledOutTrackPoint(trackPoint);
                         }
                     }
                 }

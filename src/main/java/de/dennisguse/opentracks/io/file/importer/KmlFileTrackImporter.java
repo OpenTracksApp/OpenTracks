@@ -17,7 +17,6 @@
 package de.dennisguse.opentracks.io.file.importer;
 
 import android.content.Context;
-import android.location.Location;
 import android.net.Uri;
 import android.util.Log;
 
@@ -65,7 +64,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
 
     private boolean trackStarted = false;
     private String sensorType;
-    private ArrayList<Location> locationList;
+    private ArrayList<TrackPoint> trackPoints;
     private ArrayList<Float> cadenceList;
     private ArrayList<Float> heartRateList;
     private ArrayList<Float> powerList;
@@ -213,7 +212,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
     @Override
     protected void onTrackSegmentStart() {
         super.onTrackSegmentStart();
-        locationList = new ArrayList<>();
+        trackPoints = new ArrayList<>();
         heartRateList = new ArrayList<>();
         cadenceList = new ArrayList<>();
         powerList = new ArrayList<>();
@@ -224,8 +223,8 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
      */
     private void onTrackSegmentEnd() {
         // Close a track segment by inserting the segment locations
-        for (int i = 0; i < locationList.size(); i++) {
-            Location location = locationList.get(i);
+        for (int i = 0; i < trackPoints.size(); i++) {
+            TrackPoint trackPoint = trackPoints.get(i);
 
             boolean hasSensorData = false;
             float heartrate = SensorDataSet.DATA_UNAVAILABLE;
@@ -246,9 +245,9 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
             }
 
             if (!hasSensorData) {
-                insertTrackPoint(location);
+                insertTrackPoint(trackPoint);
             } else {
-                TrackPoint sensorDataSetLocation = new TrackPoint(location, new SensorDataSet(heartrate, cadence, power, SensorDataSet.DATA_UNAVAILABLE, location.getTime()));
+                TrackPoint sensorDataSetLocation = new TrackPoint(trackPoint, new SensorDataSet(heartrate, cadence, power, SensorDataSet.DATA_UNAVAILABLE, trackPoint.getTime()));
                 insertTrackPoint(sensorDataSetLocation);
             }
         }
@@ -270,11 +269,11 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
         latitude = parts[1];
         altitude = parts.length == 3 ? parts[2] : null;
 
-        Location location = getTrackPoint();
+        TrackPoint location = getTrackPoint();
         if (location == null) {
             return;
         }
-        locationList.add(location);
+        trackPoints.add(location);
         time = null;
     }
 

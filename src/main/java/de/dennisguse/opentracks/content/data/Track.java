@@ -16,8 +16,6 @@
 
 package de.dennisguse.opentracks.content.data;
 
-import android.location.Location;
-
 import androidx.annotation.VisibleForTesting;
 
 import java.util.ArrayList;
@@ -43,7 +41,7 @@ public class Track {
     private TripStatistics tripStatistics = new TripStatistics();
 
     // Location points (which may not have been loaded)
-    private List<Location> locations = new ArrayList<>();
+    private List<TrackPoint> trackPoints = new ArrayList<>();
 
     public Track() {
     }
@@ -97,15 +95,15 @@ public class Track {
     }
 
     @VisibleForTesting
-    public void addLocation(Location location) {
-        locations.add(location);
+    public void addTrackPoint(TrackPoint location) {
+        trackPoints.add(location);
     }
 
-    public List<Location> getLocations() {
-        return locations;
+    public List<TrackPoint> getTrackPoints() {
+        return trackPoints;
     }
 
-    public void setLocations(ArrayList<Location> locations) {
-        this.locations = locations;
+    public void setTrackPoints(ArrayList<TrackPoint> trackPoints) {
+        this.trackPoints = trackPoints;
     }
 }

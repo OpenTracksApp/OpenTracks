@@ -1,7 +1,5 @@
 package de.dennisguse.opentracks.content.data;
 
-import android.location.Location;
-
 public class TestDataUtil {
 
     public static final double INITIAL_LATITUDE = 37.0;
@@ -20,7 +18,7 @@ public class TestDataUtil {
         track.setId(id);
         track.setName("Test: " + id);
         for (int i = 0; i < numPoints; i++) {
-            track.addLocation(createLocation(i));
+            track.addTrackPoint(createTrackPoint(i));
         }
         return track;
     }
@@ -31,13 +29,13 @@ public class TestDataUtil {
      * @param i the index to set the value of location.
      * @return created location
      */
-    public static Location createLocation(int i) {
-        Location loc = new Location("test");
-        loc.setLatitude(INITIAL_LATITUDE + (double) i / 10000.0);
-        loc.setLongitude(INITIAL_LONGITUDE - (double) i / 10000.0);
-        loc.setAccuracy((float) i / 100.0f);
-        loc.setAltitude(i * ALTITUDE_INTERVAL);
-        loc.setTime(i + 1);
-        return loc;
+    public static TrackPoint createTrackPoint(int i) {
+        TrackPoint trackpoint = new TrackPoint("test");
+        trackpoint.setLatitude(INITIAL_LATITUDE + (double) i / 10000.0);
+        trackpoint.setLongitude(INITIAL_LONGITUDE - (double) i / 10000.0);
+        trackpoint.setAccuracy((float) i / 100.0f);
+        trackpoint.setAltitude(i * ALTITUDE_INTERVAL);
+        trackpoint.setTime(i + 1);
+        return trackpoint;
     }
 }

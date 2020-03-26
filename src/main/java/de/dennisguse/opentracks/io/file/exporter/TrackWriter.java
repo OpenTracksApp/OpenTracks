@@ -15,11 +15,10 @@
  */
 package de.dennisguse.opentracks.io.file.exporter;
 
-import android.location.Location;
-
 import java.io.OutputStream;
 
 import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.Waypoint;
 
 /**
@@ -35,13 +34,13 @@ import de.dennisguse.opentracks.content.data.Waypoint;
  *     {@link #writeEndWaypoints()}
  * {@link #writeBeginTracks()}
  * For each track:
- *     {@link #writeBeginTrack(Track, Location)}
+ *     {@link #writeBeginTrack(Track, TrackPoint)}
  *     For each segment:
  *         {@link #writeOpenSegment()}
- *         For each location in the segment:
- *             {@link #writeLocation(Location)}
+ *         For each trackPoint in the segment:
+ *             {@link #writeTrackPoint(TrackPoint)}
  *         {@link #writeCloseSegment()}
- *     {@link #writeEndTrack(Track, Location)}
+ *     {@link #writeEndTrack(Track, TrackPoint)}
  * {@link #writeEndTracks()}
  * {@link #writeFooter()}
  * {@link #close()}
@@ -107,18 +106,18 @@ public interface TrackWriter {
     /**
      * Writes the beginning of a track.
      *
-     * @param track         the track
-     * @param startLocation the start location
+     * @param track           the track
+     * @param startTrackPoint the start location
      */
-    void writeBeginTrack(Track track, Location startLocation);
+    void writeBeginTrack(Track track, TrackPoint startTrackPoint);
 
     /**
      * Writes the end of a track.
      *
-     * @param track       the track
-     * @param endLocation the end location
+     * @param track         the track
+     * @param endTrackPoint the end location
      */
-    void writeEndTrack(Track track, Location endLocation);
+    void writeEndTrack(Track track, TrackPoint endTrackPoint);
 
     /**
      * Writes open segment.
@@ -131,9 +130,9 @@ public interface TrackWriter {
     void writeCloseSegment();
 
     /**
-     * Writes a location.
+     * Writes a trackPoint.
      *
-     * @param location the location
+     * @param trackPoint the trackPoint
      */
-    void writeLocation(Location location);
+    void writeTrackPoint(TrackPoint trackPoint);
 }

@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Stack;
 
 import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.TrackPoint;
 
 /**
  * Utility class for decimating tracks at a given level of precision.
@@ -84,16 +85,16 @@ public class LocationUtils {
     }
 
     /**
-     * Decimates the given locations for a given zoom level.
+     * Decimates the given trackPoints for a given zoom level.
      * This uses a Douglas-Peucker decimation algorithm.
      *
      * @param tolerance in meters
-     * @param locations input
+     * @param trackPoints input
      * @param decimated output
      */
     //TODO What was it used for? Sharing data with other apps?
-    private static void decimate(double tolerance, List<Location> locations, List<Location> decimated) {
-        final int n = locations.size();
+    private static void decimate(double tolerance, List<TrackPoint> trackPoints, List<TrackPoint> decimated) {
+        final int n = trackPoints.size();
         if (n < 1) {
             return;
         }
@@ -115,7 +116,7 @@ public class LocationUtils {
                 maxDist = 0;
                 for (idx = current[0] + 1; idx < current[1]; ++idx) {
                     dist = LocationUtils.distance(
-                            locations.get(idx), locations.get(current[0]), locations.get(current[1]));
+                            trackPoints.get(idx), trackPoints.get(current[0]), trackPoints.get(current[1]));
                     if (dist > maxDist) {
                         maxDist = dist;
                         maxIdx = idx;
@@ -134,7 +135,7 @@ public class LocationUtils {
         int i = 0;
         idx = 0;
         decimated.clear();
-        for (Location l : locations) {
+        for (TrackPoint l : trackPoints) {
             if (dists[idx] != 0) {
                 decimated.add(l);
                 i++;
@@ -151,9 +152,9 @@ public class LocationUtils {
      * @param precision desired precision in meters
      */
     public static void decimate(Track track, double precision) {
-        ArrayList<Location> decimated = new ArrayList<>();
-        decimate(precision, track.getLocations(), decimated);
-        track.setLocations(decimated);
+        ArrayList<TrackPoint> decimated = new ArrayList<>();
+        decimate(precision, track.getTrackPoints(), decimated);
+        track.setTrackPoints(decimated);
     }
 
     /**
