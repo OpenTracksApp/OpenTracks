@@ -25,8 +25,8 @@ public interface TrackExporterListener {
     /**
      * Called to update progress.
      *
-     * @param number the number of locations written
-     * @param max    the maximum number of locations in a track, for calculation of
+     * @param number the number of {@link de.dennisguse.opentracks.content.data.TrackPoint}s written
+     * @param max    the maximum number of {@link de.dennisguse.opentracks.content.data.TrackPoint}s in a {@link de.dennisguse.opentracks.content.data.Track}, for calculation of
      *               completion percentage
      */
     void onProgressUpdate(int number, int max);

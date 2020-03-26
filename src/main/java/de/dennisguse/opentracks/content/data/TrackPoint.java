@@ -16,6 +16,7 @@
 package de.dennisguse.opentracks.content.data;
 
 import android.location.Location;
+import android.location.LocationManager;
 
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 
@@ -24,7 +25,24 @@ import de.dennisguse.opentracks.content.sensor.SensorDataSet;
  *
  * @author Sandor Dornbush
  */
+//TODO Check if we can drop inheritance from Location and use attributes instead.
 public class TrackPoint extends Location {
+
+    public static TrackPoint createPause() {
+        TrackPoint pause = new TrackPoint(LocationManager.GPS_PROVIDER);
+        pause.setLongitude(0);
+        pause.setLatitude(TrackPointsColumns.PAUSE_LATITUDE);
+        pause.setTime(System.currentTimeMillis());
+        return pause;
+    }
+
+    public static TrackPoint createResume() {
+        TrackPoint resume = new TrackPoint(LocationManager.GPS_PROVIDER);
+        resume.setLongitude(0);
+        resume.setLatitude(TrackPointsColumns.RESUME_LATITUDE);
+        resume.setTime(System.currentTimeMillis());
+        return resume;
+    }
 
     private SensorDataSet sensorDataSet = null;
 

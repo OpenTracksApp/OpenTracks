@@ -21,6 +21,7 @@ import android.util.Log;
 
 import androidx.annotation.VisibleForTesting;
 
+import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
 import de.dennisguse.opentracks.util.LocationUtils;
@@ -122,24 +123,24 @@ public class TripStatisticsUpdater {
     }
 
     /**
-     * Adds a location.
-     * TODO: This assume location has a valid time.
+     * Adds a trackPoint.
+     * TODO: This assume trackPoint has a valid time.
      *
-     * @param location             the location
+     * @param trackPoint             the trackPoint
      * @param minRecordingDistance the min recording distance
      */
-    public void addLocation(Location location, int minRecordingDistance) {
+    public void addTrackPoint(TrackPoint trackPoint, int minRecordingDistance) {
         // Always update time
-        updateTime(location.getTime());
-        if (!LocationUtils.isValidLocation(location)) {
+        updateTime(trackPoint.getTime());
+        if (!LocationUtils.isValidLocation(trackPoint)) {
             // Either pause or resume marker
-            if (location.getLatitude() == TrackPointsColumns.PAUSE_LATITUDE) {
+            if (trackPoint.getLatitude() == TrackPointsColumns.PAUSE_LATITUDE) {
                 if (lastLocation != null && lastMovingLocation != null && lastLocation != lastMovingLocation) {
                     currentSegment.addTotalDistance(lastMovingLocation.distanceTo(lastLocation));
                 }
                 tripStatistics.merge(currentSegment);
             }
-            currentSegment = init(location.getTime());
+            currentSegment = init(trackPoint.getTime());
             lastLocation = null;
             lastMovingLocation = null;
             elevationBuffer.reset();
@@ -150,23 +151,23 @@ public class TripStatisticsUpdater {
         }
 
         //TODO Use Barometer to compute elevation gain.
-        double elevationDifference = location.hasAltitude() ? updateElevation(location.getAltitude()) : 0.0;
+        double elevationDifference = trackPoint.hasAltitude() ? updateElevation(trackPoint.getAltitude()) : 0.0;
 
         if (lastLocation == null || lastMovingLocation == null) {
-            lastLocation = location;
-            lastMovingLocation = location;
+            lastLocation = trackPoint;
+            lastMovingLocation = trackPoint;
             return;
         }
 
-        double movingDistance = lastMovingLocation.distanceTo(location);
-        if (movingDistance < minRecordingDistance && (!location.hasSpeed() || location.getSpeed() < MAX_NO_MOVEMENT_SPEED)) {
+        double movingDistance = lastMovingLocation.distanceTo(trackPoint);
+        if (movingDistance < minRecordingDistance && (!trackPoint.hasSpeed() || trackPoint.getSpeed() < MAX_NO_MOVEMENT_SPEED)) {
             speedBuffer.reset();
-            lastLocation = location;
+            lastLocation = trackPoint;
             return;
         }
-        long movingTime = location.getTime() - lastLocation.getTime();
+        long movingTime = trackPoint.getTime() - lastLocation.getTime();
         if (movingTime < 0) {
-            lastLocation = location;
+            lastLocation = trackPoint;
             return;
         }
 
@@ -177,22 +178,22 @@ public class TripStatisticsUpdater {
         currentSegment.addMovingTime(movingTime);
 
         // Update grade
-        double run = lastLocation.distanceTo(location);
+        double run = lastLocation.distanceTo(trackPoint);
         updateGrade(run, elevationDifference);
 
         // Update max speed
-        if (location.hasSpeed() && lastLocation.hasSpeed()) {
-            updateSpeed(location.getTime(), location.getSpeed(), lastLocation.getTime(), lastLocation.getSpeed());
+        if (trackPoint.hasSpeed() && lastLocation.hasSpeed()) {
+            updateSpeed(trackPoint.getTime(), trackPoint.getSpeed(), lastLocation.getTime(), lastLocation.getSpeed());
         }
 
-        lastLocation = location;
-        lastMovingLocation = location;
+        lastLocation = trackPoint;
+        lastMovingLocation = trackPoint;
     }
 
-    public void addLocation(TrackPointIterator iterator, int minRecordingDistance) {
+    public void addTrackPoint(TrackPointIterator iterator, int minRecordingDistance) {
         while (iterator.hasNext()) {
-            Location location = iterator.next();
-            addLocation(location, minRecordingDistance);
+            TrackPoint location = iterator.next();
+            addTrackPoint(location, minRecordingDistance);
         }
     }
 

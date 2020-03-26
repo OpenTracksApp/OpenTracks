@@ -69,7 +69,7 @@ public class KmlTrackWriter implements TrackWriter {
     private final List<Float> cadenceList = new ArrayList<>();
     private final List<Float> heartRateList = new ArrayList<>();
 
-    private Location startLocation;
+    private TrackPoint startTrackPoint;
 
     /**
      * @param context            the context
@@ -188,11 +188,11 @@ public class KmlTrackWriter implements TrackWriter {
     }
 
     @Override
-    public void writeBeginTrack(Track track, Location startLocation) {
-        this.startLocation = startLocation;
+    public void writeBeginTrack(Track track, TrackPoint startTrackPoint) {
+        this.startTrackPoint = startTrackPoint;
         if (printWriter != null) {
             String name = context.getString(R.string.marker_label_start, track.getName());
-            writePlacemark(name, "", "", START_STYLE, startLocation);
+            writePlacemark(name, "", "", START_STYLE, startTrackPoint);
             printWriter.println("<Placemark>");
 
             if (exportTrackDetail) {
@@ -210,7 +210,7 @@ public class KmlTrackWriter implements TrackWriter {
     }
 
     @Override
-    public void writeEndTrack(Track track, Location endLocation) {
+    public void writeEndTrack(Track track, TrackPoint endTrackPoint) {
         if (printWriter != null) {
             printWriter.println("</gx:MultiTrack>");
             printWriter.println("</Placemark>");
@@ -218,7 +218,7 @@ public class KmlTrackWriter implements TrackWriter {
             if (exportTrackDetail) {
                 String name = context.getString(R.string.marker_label_end, track.getName());
                 String description = descriptionGenerator.generateTrackDescription(track, false);
-                writePlacemark(name, "", description, END_STYLE, endLocation);
+                writePlacemark(name, "", description, END_STYLE, endTrackPoint);
             }
         }
     }
@@ -256,16 +256,16 @@ public class KmlTrackWriter implements TrackWriter {
     }
 
     @Override
-    public void writeLocation(Location location) {
+    public void writeTrackPoint(TrackPoint trackPoint) {
         if (printWriter != null) {
             if (exportTrackDetail) {
-                printWriter.println("<when>" + getTime(location) + "</when>");
+                printWriter.println("<when>" + getTime(trackPoint) + "</when>");
             }
 
-            printWriter.println("<gx:coord>" + getCoordinates(location, " ") + "</gx:coord>");
+            printWriter.println("<gx:coord>" + getCoordinates(trackPoint, " ") + "</gx:coord>");
 
-            if (exportSensorData && location instanceof TrackPoint) {
-                SensorDataSet sensorDataSet = ((TrackPoint) location).getSensorDataSet();
+            if (exportSensorData) {
+                SensorDataSet sensorDataSet = trackPoint.getSensorDataSet();
                 if (sensorDataSet != null) {
                     if (sensorDataSet.hasHeartRate()) {
                         heartRateList.add(sensorDataSet.getHeartRate());
@@ -371,7 +371,7 @@ public class KmlTrackWriter implements TrackWriter {
         if (exportTrackDetail) {
             return StringUtils.formatDateTimeIso8601(location.getTime());
         } else {
-            return StringUtils.formatDateTimeIso8601(location.getTime() - startLocation.getTime());
+            return StringUtils.formatDateTimeIso8601(location.getTime() - startTrackPoint.getTime());
         }
     }
 

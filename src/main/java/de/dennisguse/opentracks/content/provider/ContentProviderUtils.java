@@ -622,34 +622,62 @@ public class ContentProviderUtils {
     }
 
     /**
-     * Inserts multiple track points.
+     * Fills a {@link TrackPoint} from a cursor.
      *
-     * @param locations an array of locations
-     * @param length    the number of locations (from the beginning of the array) to
-     *                  insert, or -1 for all of them
-     * @param trackId   the track id
-     * @return the number of points inserted
+     * @param cursor   the cursor pointing to a trackPoint.
+     * @param indexes  the cached track points indexes
+     * @param trackPoint the track point
      */
-    public int bulkInsertTrackPoint(Location[] locations, int length, long trackId) {
-        if (length == -1) {
-            length = locations.length;
+    static void fillTrackPoint(Cursor cursor, CachedTrackPointsIndexes indexes, TrackPoint trackPoint) {
+        trackPoint.reset();
+
+        if (!cursor.isNull(indexes.longitudeIndex)) {
+            trackPoint.setLongitude(((double) cursor.getInt(indexes.longitudeIndex)) / 1E6);
         }
-        ContentValues[] values = new ContentValues[length];
-        for (int i = 0; i < length; i++) {
-            values[i] = createContentValues(locations[i], trackId);
+        if (!cursor.isNull(indexes.latitudeIndex)) {
+            trackPoint.setLatitude(((double) cursor.getInt(indexes.latitudeIndex)) / 1E6);
         }
-        return contentResolver.bulkInsert(TrackPointsColumns.CONTENT_URI_BY_ID, values);
+        if (!cursor.isNull(indexes.timeIndex)) {
+            trackPoint.setTime(cursor.getLong(indexes.timeIndex));
+        }
+        if (!cursor.isNull(indexes.altitudeIndex)) {
+            trackPoint.setAltitude(cursor.getFloat(indexes.altitudeIndex));
+        }
+        if (!cursor.isNull(indexes.accuracyIndex)) {
+            trackPoint.setAccuracy(cursor.getFloat(indexes.accuracyIndex));
+        }
+        if (!cursor.isNull(indexes.speedIndex)) {
+            trackPoint.setSpeed(cursor.getFloat(indexes.speedIndex));
+        }
+        if (!cursor.isNull(indexes.bearingIndex)) {
+            trackPoint.setBearing(cursor.getFloat(indexes.bearingIndex));
+        }
+
+        float heartRate = cursor.isNull(indexes.sensorHeartRateIndex) ? SensorDataSet.DATA_UNAVAILABLE : cursor.getFloat(indexes.sensorHeartRateIndex);
+        float cadence = cursor.isNull(indexes.sensorCadenceIndex) ? SensorDataSet.DATA_UNAVAILABLE : cursor.getFloat(indexes.sensorCadenceIndex);
+        float power = cursor.isNull(indexes.sensorPowerIndex) ? SensorDataSet.DATA_UNAVAILABLE : cursor.getFloat(indexes.sensorPowerIndex);
+
+        trackPoint.setSensorDataSet(new SensorDataSet(heartRate, cadence, power, SensorDataSet.DATA_UNAVAILABLE, trackPoint.getTime()));
     }
 
     /**
-     * Creates a location object from a cursor.
+     * Inserts multiple trackPoints points.
      *
-     * @param cursor the cursor pointing to the location
+     * @param trackPoints an array of trackPoints
+     * @param length    the number of trackPoints (from the beginning of the array) to
+     *                  insert, or -1 for all of them
+     * @param trackId   the trackPoints id
+     * @return the number of points inserted
      */
-    public Location createTrackPoint(Cursor cursor) {
-        Location location = new TrackPoint("");
-        fillTrackPoint(cursor, new CachedTrackPointsIndexes(cursor), location);
-        return location;
+    public int bulkInsertTrackPoint(TrackPoint[] trackPoints, int length, long trackId) {
+        if (length == -1) {
+            length = trackPoints.length;
+        }
+        ContentValues[] values = new ContentValues[length];
+        for (int i = 0; i < length; i++) {
+            values[i] = createContentValues(trackPoints[i], trackId);
+        }
+        return contentResolver.bulkInsert(TrackPointsColumns.CONTENT_URI_BY_ID, values);
     }
 
     /**
@@ -722,21 +750,14 @@ public class ContentProviderUtils {
     }
 
     /**
-     * Gets the last valid location for a track.
-     * Returns null if it doesn't exist.
+     * Creates a location object from a cursor.
      *
-     * @param trackId the track id
+     * @param cursor the cursor pointing to the location
      */
-    @Deprecated
-    public Location getLastValidTrackPoint(long trackId) {
-        if (trackId < 0) {
-            return null;
-        }
-        String selection = TrackPointsColumns._ID + "=(select max(" + TrackPointsColumns._ID + ") from "
-                + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID + "=? AND "
-                + TrackPointsColumns.LATITUDE + "<=" + MAX_LATITUDE + ")";
-        String[] selectionArgs = new String[]{Long.toString(trackId)};
-        return findTrackPointBy(selection, selectionArgs);
+    public TrackPoint createTrackPoint(Cursor cursor) {
+        TrackPoint location = new TrackPoint("");
+        fillTrackPoint(cursor, new CachedTrackPointsIndexes(cursor), location);
+        return location;
     }
 
     /**
@@ -774,99 +795,71 @@ public class ContentProviderUtils {
         return getTrackPointCursor(null, selection, selectionArgs, sortOrder);
     }
 
-
     /**
-     * Fills a track point from a cursor.
+     * Gets the last valid location for a track.
+     * Returns null if it doesn't exist.
      *
-     * @param cursor   the cursor pointing to a location.
-     * @param indexes  the cached track points indexes
-     * @param location the track point
+     * @param trackId the track id
      */
-    static void fillTrackPoint(Cursor cursor, CachedTrackPointsIndexes indexes, Location location) {
-        location.reset();
-
-        if (!cursor.isNull(indexes.longitudeIndex)) {
-            location.setLongitude(((double) cursor.getInt(indexes.longitudeIndex)) / 1E6);
+    @Deprecated
+    public TrackPoint getLastValidTrackPoint(long trackId) {
+        if (trackId < 0) {
+            return null;
         }
-        if (!cursor.isNull(indexes.latitudeIndex)) {
-            location.setLatitude(((double) cursor.getInt(indexes.latitudeIndex)) / 1E6);
-        }
-        if (!cursor.isNull(indexes.timeIndex)) {
-            location.setTime(cursor.getLong(indexes.timeIndex));
-        }
-        if (!cursor.isNull(indexes.altitudeIndex)) {
-            location.setAltitude(cursor.getFloat(indexes.altitudeIndex));
-        }
-        if (!cursor.isNull(indexes.accuracyIndex)) {
-            location.setAccuracy(cursor.getFloat(indexes.accuracyIndex));
-        }
-        if (!cursor.isNull(indexes.speedIndex)) {
-            location.setSpeed(cursor.getFloat(indexes.speedIndex));
-        }
-        if (!cursor.isNull(indexes.bearingIndex)) {
-            location.setBearing(cursor.getFloat(indexes.bearingIndex));
-        }
-        if (location instanceof TrackPoint) {
-            TrackPoint sensorDataSetLocation = (TrackPoint) location;
-
-            float heartRate = cursor.isNull(indexes.sensorHeartRateIndex) ? SensorDataSet.DATA_UNAVAILABLE : cursor.getFloat(indexes.sensorHeartRateIndex);
-            float cadence = cursor.isNull(indexes.sensorCadenceIndex) ? SensorDataSet.DATA_UNAVAILABLE : cursor.getFloat(indexes.sensorCadenceIndex);
-            float power = cursor.isNull(indexes.sensorPowerIndex) ? SensorDataSet.DATA_UNAVAILABLE : cursor.getFloat(indexes.sensorPowerIndex);
-
-            sensorDataSetLocation.setSensorDataSet(new SensorDataSet(heartRate, cadence, power, SensorDataSet.DATA_UNAVAILABLE, location.getTime()));
-        }
+        String selection = TrackPointsColumns._ID + "=(select max(" + TrackPointsColumns._ID + ") from "
+                + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID + "=? AND "
+                + TrackPointsColumns.LATITUDE + "<=" + MAX_LATITUDE + ")";
+        String[] selectionArgs = new String[]{Long.toString(trackId)};
+        return findTrackPointBy(selection, selectionArgs);
     }
 
     /**
      * Inserts a track point.
      *
-     * @param location the location
+     * @param trackPoint the trackPoint
      * @param trackId  the track id
      * @return the content provider URI of the inserted track point
      */
-    public Uri insertTrackPoint(Location location, long trackId) {
-        return contentResolver.insert(TrackPointsColumns.CONTENT_URI_BY_ID, createContentValues(location, trackId));
+    public Uri insertTrackPoint(TrackPoint trackPoint, long trackId) {
+        return contentResolver.insert(TrackPointsColumns.CONTENT_URI_BY_ID, createContentValues(trackPoint, trackId));
     }
 
     /**
-     * Creates the {@link ContentValues} for a {@link Location}.
+     * Creates the {@link ContentValues} for a {@link TrackPoint}.
      *
-     * @param location the location
+     * @param trackPoint the trackPoint
      * @param trackId  the track id
      */
-    private ContentValues createContentValues(Location location, long trackId) {
+    private ContentValues createContentValues(TrackPoint trackPoint, long trackId) {
         ContentValues values = new ContentValues();
         values.put(TrackPointsColumns.TRACKID, trackId);
-        values.put(TrackPointsColumns.LONGITUDE, (int) (location.getLongitude() * 1E6));
-        values.put(TrackPointsColumns.LATITUDE, (int) (location.getLatitude() * 1E6));
+        values.put(TrackPointsColumns.LONGITUDE, (int) (trackPoint.getLongitude() * 1E6));
+        values.put(TrackPointsColumns.LATITUDE, (int) (trackPoint.getLatitude() * 1E6));
 
-        values.put(TrackPointsColumns.TIME, location.getTime());
-        if (location.hasAltitude()) {
-            values.put(TrackPointsColumns.ALTITUDE, location.getAltitude());
+        values.put(TrackPointsColumns.TIME, trackPoint.getTime());
+        if (trackPoint.hasAltitude()) {
+            values.put(TrackPointsColumns.ALTITUDE, trackPoint.getAltitude());
         }
-        if (location.hasAccuracy()) {
-            values.put(TrackPointsColumns.ACCURACY, location.getAccuracy());
+        if (trackPoint.hasAccuracy()) {
+            values.put(TrackPointsColumns.ACCURACY, trackPoint.getAccuracy());
         }
-        if (location.hasSpeed()) {
-            values.put(TrackPointsColumns.SPEED, location.getSpeed());
+        if (trackPoint.hasSpeed()) {
+            values.put(TrackPointsColumns.SPEED, trackPoint.getSpeed());
         }
-        if (location.hasBearing()) {
-            values.put(TrackPointsColumns.BEARING, location.getBearing());
+        if (trackPoint.hasBearing()) {
+            values.put(TrackPointsColumns.BEARING, trackPoint.getBearing());
         }
 
         //SensorData
-        if (location instanceof TrackPoint) {
-            TrackPoint sensorDataSetLocation = (TrackPoint) location;
-            SensorDataSet sensorDataSet = sensorDataSetLocation.getSensorDataSet();
-            if (sensorDataSet != null && sensorDataSet.hasHeartRate()) {
-                values.put(TrackPointsColumns.SENSOR_HEARTRATE, sensorDataSetLocation.getSensorDataSet().getHeartRate());
-            }
-            if (sensorDataSet != null && sensorDataSet.hasCadence()) {
-                values.put(TrackPointsColumns.SENSOR_CADENCE, sensorDataSetLocation.getSensorDataSet().getCadence());
-            }
-            if (sensorDataSet != null && sensorDataSet.hasPower()) {
-                values.put(TrackPointsColumns.SENSOR_POWER, sensorDataSetLocation.getSensorDataSet().getPower());
-            }
+        SensorDataSet sensorDataSet = trackPoint.getSensorDataSet();
+        if (sensorDataSet != null && sensorDataSet.hasHeartRate()) {
+            values.put(TrackPointsColumns.SENSOR_HEARTRATE, trackPoint.getSensorDataSet().getHeartRate());
+        }
+        if (sensorDataSet != null && sensorDataSet.hasCadence()) {
+            values.put(TrackPointsColumns.SENSOR_CADENCE, trackPoint.getSensorDataSet().getCadence());
+        }
+        if (sensorDataSet != null && sensorDataSet.hasPower()) {
+            values.put(TrackPointsColumns.SENSOR_POWER, trackPoint.getSensorDataSet().getPower());
         }
         return values;
     }
@@ -875,7 +868,7 @@ public class ContentProviderUtils {
      * Creates a new read-only iterator over a given track's points.
      * It provides a lightweight way of iterating over long tracks without failing due to the underlying cursor limitations.
      * Since it's a read-only iterator, {@link Iterator#remove()} always throws {@link UnsupportedOperationException}.
-     * Each call to {@link TrackPointIterator#next()} may advance to the next DB record, and if so, the iterator calls {@link TrackPointFactory#createLocation()} and populates it with information retrieved from the record.
+     * Each call to {@link TrackPointIterator#next()} may advance to the next DB record, and if so, the iterator calls {@link TrackPointFactory#create()} and populates it with information retrieved from the record.
      * When done with iteration, {@link TrackPointIterator#close()} must be called.
      *
      * @param trackId           the track id
@@ -887,7 +880,7 @@ public class ContentProviderUtils {
         return new TrackPointIterator(this, trackId, startTrackPointId, descending, trackPointFactory);
     }
 
-    private Location findTrackPointBy(String selection, String[] selectionArgs) {
+    private TrackPoint findTrackPointBy(String selection, String[] selectionArgs) {
         try (Cursor cursor = getTrackPointCursor(null, selection, selectionArgs, TrackPointsColumns._ID)) {
             if (cursor != null && cursor.moveToNext()) {
                 return createTrackPoint(cursor);

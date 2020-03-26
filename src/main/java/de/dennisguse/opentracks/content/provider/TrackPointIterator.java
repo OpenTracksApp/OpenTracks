@@ -91,7 +91,7 @@ public class TrackPointIterator implements Iterator<TrackPoint>, AutoCloseable {
             }
         }
         lastTrackPointId = cursor.getLong(indexes.idIndex);
-        TrackPoint trackPoint = trackPointFactory.createLocation();
+        TrackPoint trackPoint = trackPointFactory.create();
         ContentProviderUtils.fillTrackPoint(cursor, indexes, trackPoint);
         return trackPoint;
     }

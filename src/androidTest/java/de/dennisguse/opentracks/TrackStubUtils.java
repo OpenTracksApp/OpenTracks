@@ -16,8 +16,6 @@
 
 package de.dennisguse.opentracks;
 
-import android.location.Location;
-
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
@@ -49,7 +47,7 @@ public class TrackStubUtils {
     public static Track createTrack(int numberOfLocations) {
         Track track = new Track();
         for (int i = 0; i < numberOfLocations; i++) {
-            track.addLocation(createSensorDataSetLocation(INITIAL_LATITUDE + i * DIFFERENCE, INITIAL_LONGITUDE + i * DIFFERENCE, INITIAL_ALTITUDE + i * DIFFERENCE));
+            track.addTrackPoint(createSensorDataSetLocation(INITIAL_LATITUDE + i * DIFFERENCE, INITIAL_LONGITUDE + i * DIFFERENCE, INITIAL_ALTITUDE + i * DIFFERENCE));
         }
 
         return track;
@@ -70,17 +68,16 @@ public class TrackStubUtils {
      * @return a SensorDataSetLocation stub.
      */
     private static TrackPoint createSensorDataSetLocation(double latitude, double longitude, double altitude) {
-        // Initial Location
-        Location loc = new Location(LOCATION_PROVIDER);
-        loc.setLatitude(latitude);
-        loc.setLongitude(longitude);
-        loc.setAltitude(altitude);
-        loc.setAccuracy(INITIAL_ACCURACY);
-        loc.setSpeed(INITIAL_SPEED);
-        loc.setTime(INITIAL_TIME);
-        loc.setBearing(INITIAL_BEARING);
-        SensorDataSet sd = new SensorDataSet(Float.NaN, Float.NaN);
+        TrackPoint trackPoint = new TrackPoint(LOCATION_PROVIDER);
+        trackPoint.setLatitude(latitude);
+        trackPoint.setLongitude(longitude);
+        trackPoint.setAltitude(altitude);
+        trackPoint.setAccuracy(INITIAL_ACCURACY);
+        trackPoint.setSpeed(INITIAL_SPEED);
+        trackPoint.setTime(INITIAL_TIME);
+        trackPoint.setBearing(INITIAL_BEARING);
+        trackPoint.setSensorDataSet(new SensorDataSet(Float.NaN, Float.NaN));
 
-        return new TrackPoint(loc, sd);
+        return trackPoint;
     }
 }

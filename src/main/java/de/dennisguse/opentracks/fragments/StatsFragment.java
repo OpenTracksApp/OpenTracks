@@ -17,7 +17,6 @@
 package de.dennisguse.opentracks.fragments;
 
 import android.content.SharedPreferences;
-import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -42,6 +41,7 @@ import de.dennisguse.opentracks.content.TrackDataHub;
 import de.dennisguse.opentracks.content.TrackDataListener;
 import de.dennisguse.opentracks.content.TrackDataType;
 import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
@@ -72,7 +72,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     //TODO Initialize immediately and remove in onDestroy()
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
 
-    private Location lastLocation = null;
+    private TrackPoint lastTrackPoint = null;
     private TripStatistics lastTripStatistics = null;
 
     private String category = "";
@@ -333,17 +333,17 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
     @Override
     public void clearTrackPoints() {
-        lastLocation = null;
+        lastTrackPoint = null;
     }
 
     @Override
-    public void onSampledInTrackPoint(Location location) {
-        lastLocation = location;
+    public void onSampledInTrackPoint(TrackPoint trackPoint) {
+        lastTrackPoint = trackPoint;
     }
 
     @Override
-    public void onSampledOutTrackPoint(Location location) {
-        lastLocation = location;
+    public void onSampledOutTrackPoint(TrackPoint trackPoint) {
+        lastTrackPoint = trackPoint;
     }
 
     @Override
@@ -354,15 +354,15 @@ public class StatsFragment extends Fragment implements TrackDataListener {
                 public void run() {
                     if (isResumed()) {
                         if (!isSelectedTrackRecording() || isSelectedTrackPaused()) {
-                            lastLocation = null;
+                            lastTrackPoint = null;
                         }
 
-                        if (lastLocation != null) {
-                            boolean hasFix = !LocationUtils.isLocationOld(lastLocation);
-                            boolean hasGoodFix = lastLocation.hasAccuracy() && lastLocation.getAccuracy() < recordingGpsAccuracy;
+                        if (lastTrackPoint != null) {
+                            boolean hasFix = !LocationUtils.isLocationOld(lastTrackPoint);
+                            boolean hasGoodFix = lastTrackPoint.hasAccuracy() && lastTrackPoint.getAccuracy() < recordingGpsAccuracy;
 
                             if (!hasFix || !hasGoodFix) {
-                                lastLocation = null;
+                                lastTrackPoint = null;
                             }
                         }
                         setLocationValues();
@@ -573,7 +573,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
         if (isRecording) {
             speedLabel.setText(reportSpeed ? R.string.stats_speed : R.string.stats_pace);
 
-            double speed = lastLocation != null && lastLocation.hasSpeed() ? lastLocation.getSpeed() : Double.NaN;
+            double speed = lastTrackPoint != null && lastTrackPoint.hasSpeed() ? lastTrackPoint.getSpeed() : Double.NaN;
             Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), speed, metricUnits, reportSpeed);
             speedValue.setText(parts.first);
             speedUnit.setText(parts.second);
@@ -584,7 +584,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
         gradeElevationContainer.setVisibility(showGradeElevation ? View.VISIBLE : View.GONE);
 
         if (showGradeElevation) {
-            double altitude = lastLocation != null && lastLocation.hasAltitude() ? lastLocation.getAltitude() : Double.NaN;
+            double altitude = lastTrackPoint != null && lastTrackPoint.hasAltitude() ? lastTrackPoint.getAltitude() : Double.NaN;
             Pair<String, String> parts = StringUtils.formatElevation(getContext(), altitude, metricUnits);
 
             elevationValue.setText(parts.first);
@@ -597,11 +597,11 @@ public class StatsFragment extends Fragment implements TrackDataListener {
         coordinateSeparator.setVisibility(showCoordinate ? View.VISIBLE : View.GONE);
         coordinateContainer.setVisibility(showCoordinate ? View.VISIBLE : View.GONE);
         if (showCoordinate) {
-            double latitude = lastLocation != null ? lastLocation.getLatitude() : Double.NaN;
+            double latitude = lastTrackPoint != null ? lastTrackPoint.getLatitude() : Double.NaN;
             String latitudeText = Double.isNaN(latitude) || Double.isInfinite(latitude) ? getContext().getString(R.string.value_unknown) : StringUtils.formatCoordinate(latitude);
             latitudeValue.setText(latitudeText);
 
-            double longitude = lastLocation != null ? lastLocation.getLongitude() : Double.NaN;
+            double longitude = lastTrackPoint != null ? lastTrackPoint.getLongitude() : Double.NaN;
             String longitudeText = Double.isNaN(longitude) || Double.isInfinite(longitude) ? getContext().getString(R.string.value_unknown) : StringUtils.formatCoordinate(longitude);
             longitudeValue.setText(longitudeText);
         }

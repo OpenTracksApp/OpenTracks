@@ -15,10 +15,9 @@
  */
 package de.dennisguse.opentracks.services;
 
-import android.location.Location;
-
 import androidx.annotation.VisibleForTesting;
 
+import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 
 /**
@@ -101,10 +100,10 @@ public interface TrackRecordingServiceInterface {
      * When recording a track, GPS locations are automatically inserted. This is used for
      * inserting special track points or for testing.
      *
-     * @param location the track point to be inserted
+     * @param trackPoint the track point to be inserted
      */
     @VisibleForTesting
-    void insertTrackPoint(Location location);
+    void insertTrackPoint(TrackPoint trackPoint);
 
     /**
      * Gets the current sensor data. Returns null if there is no data.

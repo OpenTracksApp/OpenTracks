@@ -1,7 +1,6 @@
 package de.dennisguse.opentracks.io.file.importer;
 
 import android.content.Context;
-import android.location.Location;
 import android.util.Log;
 
 import androidx.test.core.app.ApplicationProvider;
@@ -21,6 +20,7 @@ import java.util.List;
 
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
@@ -57,7 +57,7 @@ public class ExportImportTest {
         track.setCategory(TRACK_CATEGORY);
         track.setDescription(TRACK_DESCRIPTION);
         contentProviderUtils.insertTrack(track);
-        contentProviderUtils.bulkInsertTrackPoint(track.getLocations().toArray(new Location[0]), track.getLocations().size(), track.getId());
+        contentProviderUtils.bulkInsertTrackPoint(track.getTrackPoints().toArray(new TrackPoint[0]), track.getTrackPoints().size(), track.getId());
 
         for (int i = 0; i < 3; i++) {
             Waypoint waypoint = new Waypoint();
@@ -67,7 +67,7 @@ public class ExportImportTest {
             waypoint.setIcon("the waypoing icon" + i);
             waypoint.setPhotoUrl("the photo url" + i);
             waypoint.setTrackId(trackId);
-            waypoint.setLocation(track.getLocations().get(i));
+            waypoint.setLocation(track.getTrackPoints().get(i));
             contentProviderUtils.insertWaypoint(waypoint);
 
             waypoints.add(waypoint);
@@ -114,7 +114,7 @@ public class ExportImportTest {
         // 1. track
         Track importedTrack = contentProviderUtils.getTrack(importTrackId);
         assertNotNull(importedTrack);
-        assertEquals(track.getLocations(), importedTrack.getLocations());
+        assertEquals(track.getTrackPoints(), importedTrack.getTrackPoints());
         assertEquals(track.getCategory(), importedTrack.getCategory());
         assertEquals(track.getDescription(), importedTrack.getDescription());
         assertEquals(track.getName(), importedTrack.getName());
@@ -184,7 +184,7 @@ public class ExportImportTest {
         // 1. track
         Track trackImported = contentProviderUtils.getTrack(importTrackId);
         assertNotNull(trackImported);
-        assertEquals(track.getLocations(), trackImported.getLocations());
+        assertEquals(track.getTrackPoints(), trackImported.getTrackPoints());
         assertEquals(track.getCategory(), trackImported.getCategory());
         assertEquals(track.getDescription(), trackImported.getDescription());
         assertEquals(track.getName(), trackImported.getName());

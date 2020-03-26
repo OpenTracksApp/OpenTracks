@@ -24,6 +24,7 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.util.StringUtils;
 
@@ -139,7 +140,7 @@ public class GpxTrackWriter implements TrackWriter {
     }
 
     @Override
-    public void writeBeginTrack(Track track, Location startLocation) {
+    public void writeBeginTrack(Track track, TrackPoint startTrackPoint) {
         if (printWriter != null) {
             printWriter.println("<trk>");
             printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
@@ -150,7 +151,7 @@ public class GpxTrackWriter implements TrackWriter {
     }
 
     @Override
-    public void writeEndTrack(Track track, Location endLocation) {
+    public void writeEndTrack(Track track, TrackPoint endTrackPoint) {
         if (printWriter != null) {
             printWriter.println("</trk>");
         }
@@ -167,14 +168,14 @@ public class GpxTrackWriter implements TrackWriter {
     }
 
     @Override
-    public void writeLocation(Location location) {
+    public void writeTrackPoint(TrackPoint trackPoint) {
         if (printWriter != null) {
-            printWriter.println("<trkpt " + formatLocation(location) + ">");
-            if (location.hasAltitude()) {
-                printWriter.println("<ele>" + ELEVATION_FORMAT.format(location.getAltitude()) + "</ele>");
+            printWriter.println("<trkpt " + formatLocation(trackPoint) + ">");
+            if (trackPoint.hasAltitude()) {
+                printWriter.println("<ele>" + ELEVATION_FORMAT.format(trackPoint.getAltitude()) + "</ele>");
             }
             printWriter.println(
-                    "<time>" + StringUtils.formatDateTimeIso8601(location.getTime()) + "</time>");
+                    "<time>" + StringUtils.formatDateTimeIso8601(trackPoint.getTime()) + "</time>");
             printWriter.println("</trkpt>");
         }
     }

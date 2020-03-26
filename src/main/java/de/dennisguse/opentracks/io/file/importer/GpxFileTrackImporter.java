@@ -17,13 +17,13 @@
 package de.dennisguse.opentracks.io.file.importer;
 
 import android.content.Context;
-import android.location.Location;
 
 import androidx.annotation.VisibleForTesting;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 
 /**
@@ -155,11 +155,11 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
      * On track point end.
      */
     private void onTrackPointEnd() throws SAXException {
-        Location location = getTrackPoint();
-        if (location == null) {
+        TrackPoint trackPoint = getTrackPoint();
+        if (trackPoint == null) {
             return;
         }
-        insertTrackPoint(location);
+        insertTrackPoint(trackPoint);
     }
 
     /**
