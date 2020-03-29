@@ -20,6 +20,7 @@ import android.location.Location;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 
 /**
  * A waypoint.
@@ -40,10 +41,15 @@ public final class Waypoint {
     private Location location = null;
     private String photoUrl = "";
 
+    @VisibleForTesting
     public Waypoint() {
     }
 
-    public Waypoint(String name, String description, String category, String icon, long trackId, double length, long duration, Location location, String photoUrl) {
+    public Waypoint(Location location) {
+        this.location = location;
+    }
+
+    public Waypoint(String name, String description, String category, String icon, long trackId, double length, long duration, @NonNull Location location, String photoUrl) {
         this.name = name;
         this.description = description;
         this.category = category;
@@ -122,10 +128,6 @@ public final class Waypoint {
     public @NonNull
     Location getLocation() {
         return location;
-    }
-
-    public void setLocation(@NonNull Location location) {
-        this.location = location;
     }
 
     public String getPhotoUrl() {

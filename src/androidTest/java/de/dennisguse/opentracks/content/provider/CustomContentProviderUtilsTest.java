@@ -330,15 +330,14 @@ public class CustomContentProviderUtilsTest {
         contentProviderUtils.insertTrack(track);
 
         // Insert at first.
-        Waypoint waypoint = new Waypoint();
-        waypoint.setDescription(TEST_DESC);
-
         Location location = new Location("test");
         location.setLatitude(22);
         location.setLongitude(22);
         location.setAccuracy((float) 1 / 100.0f);
         location.setAltitude(2.5);
-        waypoint.setLocation(location);
+
+        Waypoint waypoint = new Waypoint(location);
+        waypoint.setDescription(TEST_DESC);
         contentProviderUtils.insertWaypoint(waypoint);
 
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(contentResolverMock);

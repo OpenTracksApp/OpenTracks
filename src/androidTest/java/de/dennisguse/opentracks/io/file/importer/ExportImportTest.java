@@ -60,14 +60,13 @@ public class ExportImportTest {
         contentProviderUtils.bulkInsertTrackPoint(track.getTrackPoints().toArray(new TrackPoint[0]), track.getTrackPoints().size(), track.getId());
 
         for (int i = 0; i < 3; i++) {
-            Waypoint waypoint = new Waypoint();
+            Waypoint waypoint = new Waypoint(track.getTrackPoints().get(i).getLocation());
             waypoint.setName("the waypoint " + i);
             waypoint.setDescription("the waypoint description " + i);
             waypoint.setCategory("the waypoint category" + i);
             waypoint.setIcon("the waypoing icon" + i);
             waypoint.setPhotoUrl("the photo url" + i);
             waypoint.setTrackId(trackId);
-            waypoint.setLocation(track.getTrackPoints().get(i).getLocation());
             contentProviderUtils.insertWaypoint(waypoint);
 
             waypoints.add(waypoint);
