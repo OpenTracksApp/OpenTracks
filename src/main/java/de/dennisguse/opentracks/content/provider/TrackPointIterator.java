@@ -18,21 +18,15 @@ public class TrackPointIterator implements Iterator<TrackPoint>, AutoCloseable {
     private final ContentProviderUtils contentProviderUtils;
     private final long trackId;
     private final boolean descending;
-    private final TrackPointFactory trackPointFactory; //TODO Remove; seems to be an old performance optimization.
     private final CachedTrackPointsIndexes indexes;
     private long lastTrackPointId = -1L;
     private Cursor cursor;
 
 
-    public TrackPointIterator(ContentProviderUtils contentProviderUtils, long trackId, long startTrackPointId, boolean descending, TrackPointFactory trackPointFactory) {
-        if (trackPointFactory == null) {
-            throw new IllegalArgumentException("trackPointFactory is null");
-        }
-
+    public TrackPointIterator(ContentProviderUtils contentProviderUtils, long trackId, long startTrackPointId, boolean descending) {
         this.contentProviderUtils = contentProviderUtils;
         this.trackId = trackId;
         this.descending = descending;
-        this.trackPointFactory = trackPointFactory;
 
         cursor = getCursor(startTrackPointId);
         indexes = cursor != null ? new CachedTrackPointsIndexes(cursor)
@@ -91,9 +85,7 @@ public class TrackPointIterator implements Iterator<TrackPoint>, AutoCloseable {
             }
         }
         lastTrackPointId = cursor.getLong(indexes.idIndex);
-        TrackPoint trackPoint = trackPointFactory.create();
-        ContentProviderUtils.fillTrackPoint(cursor, indexes, trackPoint);
-        return trackPoint;
+        return ContentProviderUtils.fillTrackPoint(cursor, indexes);
     }
 
     @Override

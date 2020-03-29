@@ -40,7 +40,6 @@ import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
-import de.dennisguse.opentracks.content.provider.TrackPointFactory;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
 import de.dennisguse.opentracks.stats.TripStatisticsUpdater;
 import de.dennisguse.opentracks.util.FileUtils;
@@ -161,7 +160,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         @Deprecated // TODO Should not be necessary anymore?
                 TripStatisticsUpdater markerTripStatisticsUpdater = new TripStatisticsUpdater(track.getTripStatistics().getStartTime());
 
-        try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), -1L, false, TrackPointFactory.DEFAULT_LOCATION_FACTORY)) {
+        try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), -1L, false)) {
 
             while (true) {
                 if (waypoint == null) {
