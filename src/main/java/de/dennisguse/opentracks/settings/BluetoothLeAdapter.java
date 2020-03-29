@@ -72,7 +72,7 @@ public class BluetoothLeAdapter extends BaseAdapter {
         return devices.get(index);
     }
 
-    public class Device {
+    public static class Device {
         private String name;
         private final String address;
 

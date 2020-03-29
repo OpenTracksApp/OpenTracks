@@ -101,7 +101,7 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
 
         long[] trackIds = new long[uriTrackIds.length];
         for (int i = 0; i < trackIds.length; i++) {
-            trackIds[i] = Long.valueOf(uriTrackIds[i]);
+            trackIds[i] = Long.parseLong(uriTrackIds[i]);
         }
         return trackIds;
     }

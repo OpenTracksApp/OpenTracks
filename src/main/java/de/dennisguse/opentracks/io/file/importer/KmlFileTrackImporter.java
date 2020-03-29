@@ -297,7 +297,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
         }
         float value;
         try {
-            value = Float.valueOf(content);
+            value = Float.parseFloat(content);
         } catch (NumberFormatException e) {
             throw new SAXException(createErrorMessage("Unable to parse gx:value:" + content), e);
         }

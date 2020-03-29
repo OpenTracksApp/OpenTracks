@@ -206,7 +206,7 @@ public class FileTrackExporter implements TrackExporter {
      *
      * @author Jimmy Shih
      */
-    private class TrackWriterTrackPointFactory extends TrackPointFactory {
+    private static class TrackWriterTrackPointFactory extends TrackPointFactory {
         TrackPoint currentTrackPoint;
         TrackPoint lastTrackPoint;
 

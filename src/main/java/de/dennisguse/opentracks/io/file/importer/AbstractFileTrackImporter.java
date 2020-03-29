@@ -464,7 +464,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
      * @author Jimmy Shih
      */
     // TODO Why private inner class?
-    private class TrackData {
+    private static class TrackData {
         // The current track
         final Track track = new Track();
 

@@ -153,7 +153,7 @@ public class SearchEngineTest {
         long allMatchId = insertTrack("aa", "ba", "ca");
 
         SearchQuery query = new SearchQuery("a", null, -1, NOW);
-        ArrayList<ScoredResult> results = new ArrayList<ScoredResult>(engine.search(query));
+        ArrayList<ScoredResult> results = new ArrayList<>(engine.search(query));
 
         // Title > Description > Category.
         assertTrackResults(results, allMatchId, titleDescriptionMatchId, titleCategoryMatchId, titleMatchId, descriptionMatchId, categoryMatchId);
@@ -178,7 +178,7 @@ public class SearchEngineTest {
         long allMatchId = insertWaypoint("aa", "ba", "ca");
 
         SearchQuery query = new SearchQuery("a", null, -1, NOW);
-        ArrayList<ScoredResult> results = new ArrayList<ScoredResult>(engine.search(query));
+        ArrayList<ScoredResult> results = new ArrayList<>(engine.search(query));
 
         // Title > Description > Category.
         assertWaypointResults(results, allMatchId, titleDescriptionMatchId, titleCategoryMatchId, titleMatchId, descriptionMatchId, categoryMatchId);
@@ -199,7 +199,7 @@ public class SearchEngineTest {
         long trackId = insertTrack("aa", "bb", "cc");
 
         SearchQuery query = new SearchQuery("a", null, -1, NOW);
-        ArrayList<ScoredResult> results = new ArrayList<ScoredResult>(engine.search(query));
+        ArrayList<ScoredResult> results = new ArrayList<>(engine.search(query));
 
         // Title > Description > Category.
         Assert.assertEquals(results.toString(), 3, results.size());
@@ -216,7 +216,7 @@ public class SearchEngineTest {
         long farId = insertWaypoint("ac", 0.2);
 
         SearchQuery query = new SearchQuery("a", HERE, -1, NOW);
-        ArrayList<ScoredResult> results = new ArrayList<ScoredResult>(engine.search(query));
+        ArrayList<ScoredResult> results = new ArrayList<>(engine.search(query));
 
         // Distance order.
         assertWaypointResults(results, nearId, farId, farFarAwayId);
@@ -229,7 +229,7 @@ public class SearchEngineTest {
         long oldId = insertTrack("ac", 2);
 
         SearchQuery query = new SearchQuery("a", null, -1, NOW);
-        ArrayList<ScoredResult> results = new ArrayList<ScoredResult>(engine.search(query));
+        ArrayList<ScoredResult> results = new ArrayList<>(engine.search(query));
 
         // Reverse time order.
         assertTrackResults(results, recentId, oldId, oldestId);
@@ -243,7 +243,7 @@ public class SearchEngineTest {
         long oldId = insertWaypoint("ac", 1);
 
         SearchQuery query = new SearchQuery("a", null, -1, NOW);
-        ArrayList<ScoredResult> results = new ArrayList<ScoredResult>(engine.search(query));
+        ArrayList<ScoredResult> results = new ArrayList<>(engine.search(query));
 
         // Reverse time order.
         assertWaypointResults(results, recentId, oldId, oldestId);
@@ -256,7 +256,7 @@ public class SearchEngineTest {
         long otherId = insertTrack("aa", 1);
 
         SearchQuery query = new SearchQuery("a", null, currentId, NOW);
-        ArrayList<ScoredResult> results = new ArrayList<ScoredResult>(engine.search(query));
+        ArrayList<ScoredResult> results = new ArrayList<>(engine.search(query));
 
         // Current track should be demoted.
         assertTrackResults(results, otherId, currentId);
@@ -269,7 +269,7 @@ public class SearchEngineTest {
         long currentId = insertWaypoint("ab", 1, 123);
 
         SearchQuery query = new SearchQuery("a", null, 123, NOW);
-        ArrayList<ScoredResult> results = new ArrayList<ScoredResult>(engine.search(query));
+        ArrayList<ScoredResult> results = new ArrayList<>(engine.search(query));
 
         // Waypoint in current track should be promoted.
         assertWaypointResults(results, currentId, otherId);
