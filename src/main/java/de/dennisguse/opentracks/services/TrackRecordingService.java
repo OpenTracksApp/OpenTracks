@@ -46,7 +46,6 @@ import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.CustomContentProvider;
-import de.dennisguse.opentracks.content.provider.TrackPointFactory;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
@@ -378,7 +377,7 @@ public class TrackRecordingService extends Service {
         TripStatistics tripStatistics = track.getTripStatistics();
         trackTripStatisticsUpdater = new TripStatisticsUpdater(tripStatistics.getStartTime());
 
-        try (TrackPointIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), -1L, false, TrackPointFactory.DEFAULT_LOCATION_FACTORY)) {
+        try (TrackPointIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), -1L, false)) {
             trackTripStatisticsUpdater.addTrackPoint(locationIterator, recordingDistanceInterval);
         } catch (RuntimeException e) {
             Log.e(TAG, "RuntimeException", e);

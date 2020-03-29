@@ -626,10 +626,9 @@ public class ContentProviderUtils {
      *
      * @param cursor   the cursor pointing to a trackPoint.
      * @param indexes  the cached track points indexes
-     * @param trackPoint the track point
      */
-    static void fillTrackPoint(Cursor cursor, CachedTrackPointsIndexes indexes, TrackPoint trackPoint) {
-        trackPoint.reset();
+    static TrackPoint fillTrackPoint(Cursor cursor, CachedTrackPointsIndexes indexes) {
+        TrackPoint trackPoint = new TrackPoint();
 
         if (!cursor.isNull(indexes.longitudeIndex)) {
             trackPoint.setLongitude(((double) cursor.getInt(indexes.longitudeIndex)) / 1E6);
@@ -658,6 +657,8 @@ public class ContentProviderUtils {
         float power = cursor.isNull(indexes.sensorPowerIndex) ? SensorDataSet.DATA_UNAVAILABLE : cursor.getFloat(indexes.sensorPowerIndex);
 
         trackPoint.setSensorDataSet(new SensorDataSet(heartRate, cadence, power, SensorDataSet.DATA_UNAVAILABLE, trackPoint.getTime()));
+
+        return trackPoint;
     }
 
     /**
@@ -750,14 +751,12 @@ public class ContentProviderUtils {
     }
 
     /**
-     * Creates a location object from a cursor.
+     * Creates a {@link TrackPoint} object from a cursor.
      *
      * @param cursor the cursor pointing to the location
      */
     public TrackPoint createTrackPoint(Cursor cursor) {
-        TrackPoint location = new TrackPoint();
-        fillTrackPoint(cursor, new CachedTrackPointsIndexes(cursor), location);
-        return location;
+        return fillTrackPoint(cursor, new CachedTrackPointsIndexes(cursor));
     }
 
     /**
@@ -868,16 +867,15 @@ public class ContentProviderUtils {
      * Creates a new read-only iterator over a given track's points.
      * It provides a lightweight way of iterating over long tracks without failing due to the underlying cursor limitations.
      * Since it's a read-only iterator, {@link Iterator#remove()} always throws {@link UnsupportedOperationException}.
-     * Each call to {@link TrackPointIterator#next()} may advance to the next DB record, and if so, the iterator calls {@link TrackPointFactory#create()} and populates it with information retrieved from the record.
+     * Each call to {@link TrackPointIterator#next()} may advance to the next DB record.
      * When done with iteration, {@link TrackPointIterator#close()} must be called.
      *
      * @param trackId           the track id
      * @param startTrackPointId the starting track point id. -1L to ignore
      * @param descending        true to sort the result in descending order (latest location first)
-     * @param trackPointFactory   the location factory
      */
-    public TrackPointIterator getTrackPointLocationIterator(final long trackId, final long startTrackPointId, final boolean descending, final TrackPointFactory trackPointFactory) {
-        return new TrackPointIterator(this, trackId, startTrackPointId, descending, trackPointFactory);
+    public TrackPointIterator getTrackPointLocationIterator(final long trackId, final long startTrackPointId, final boolean descending) {
+        return new TrackPointIterator(this, trackId, startTrackPointId, descending);
     }
 
     private TrackPoint findTrackPointBy(String selection, String[] selectionArgs) {

@@ -185,9 +185,4 @@ public class TrackPoint {
     public float bearingTo(@NonNull Location dest) {
         return location.bearingTo(dest);
     }
-
-    public void reset() {
-        location.reset();
-        sensorDataSet = null;
-    }
 }
