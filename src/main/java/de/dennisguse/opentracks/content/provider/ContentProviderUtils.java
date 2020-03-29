@@ -356,7 +356,25 @@ public class ContentProviderUtils {
         int bearingIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.BEARING);
         int photoUrlIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.PHOTOURL);
 
-        Waypoint waypoint = new Waypoint();
+        Location location = new Location("");
+        if (!cursor.isNull(longitudeIndex) && !cursor.isNull(latitudeIndex)) {
+            location.setLongitude(((double) cursor.getInt(longitudeIndex)) / 1E6);
+            location.setLatitude(((double) cursor.getInt(latitudeIndex)) / 1E6);
+        }
+        if (!cursor.isNull(timeIndex)) {
+            location.setTime(cursor.getLong(timeIndex));
+        }
+        if (!cursor.isNull(altitudeIndex)) {
+            location.setAltitude(cursor.getFloat(altitudeIndex));
+        }
+        if (!cursor.isNull(accuracyIndex)) {
+            location.setAccuracy(cursor.getFloat(accuracyIndex));
+        }
+        if (!cursor.isNull(bearingIndex)) {
+            location.setBearing(cursor.getFloat(bearingIndex));
+        }
+
+        Waypoint waypoint = new Waypoint(location);
 
         if (!cursor.isNull(idIndex)) {
             waypoint.setId(cursor.getLong(idIndex));
@@ -382,25 +400,6 @@ public class ContentProviderUtils {
         if (!cursor.isNull(durationIndex)) {
             waypoint.setDuration(cursor.getLong(durationIndex));
         }
-
-        Location location = new Location("");
-        if (!cursor.isNull(longitudeIndex) && !cursor.isNull(latitudeIndex)) {
-            location.setLongitude(((double) cursor.getInt(longitudeIndex)) / 1E6);
-            location.setLatitude(((double) cursor.getInt(latitudeIndex)) / 1E6);
-        }
-        if (!cursor.isNull(timeIndex)) {
-            location.setTime(cursor.getLong(timeIndex));
-        }
-        if (!cursor.isNull(altitudeIndex)) {
-            location.setAltitude(cursor.getFloat(altitudeIndex));
-        }
-        if (!cursor.isNull(accuracyIndex)) {
-            location.setAccuracy(cursor.getFloat(accuracyIndex));
-        }
-        if (!cursor.isNull(bearingIndex)) {
-            location.setBearing(cursor.getFloat(bearingIndex));
-        }
-        waypoint.setLocation(location);
 
         if (!cursor.isNull(photoUrlIndex)) {
             waypoint.setPhotoUrl(cursor.getString(photoUrlIndex));

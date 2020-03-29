@@ -100,19 +100,17 @@ public class SearchEngineTest {
     }
 
     private long insertWaypoint(String title, String description, String category, double distance, long hoursAgo, long trackId) {
-        Waypoint waypoint = new Waypoint();
-        waypoint.setName(title);
-        waypoint.setDescription(description);
-        waypoint.setCategory(category);
-        waypoint.setTrackId(trackId);
-
         Location location = new Location(HERE);
         location.setLatitude(location.getLatitude() + distance);
         location.setLongitude(location.getLongitude() + distance);
         if (hoursAgo >= 0) {
             location.setTime(NOW - hoursAgo * 1000L * 60L * 60L);
         }
-        waypoint.setLocation(location);
+        Waypoint waypoint = new Waypoint(location);
+        waypoint.setName(title);
+        waypoint.setDescription(description);
+        waypoint.setCategory(category);
+        waypoint.setTrackId(trackId);
 
         Uri uri = providerUtils.insertWaypoint(waypoint);
         return ContentUris.parseId(uri);

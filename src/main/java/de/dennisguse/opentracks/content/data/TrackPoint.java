@@ -90,10 +90,6 @@ public class TrackPoint {
         return location;
     }
 
-    public void setLocation(@NonNull Location location) {
-        this.location = location;
-    }
-
     public SensorDataSet getSensorDataSet() {
         return sensorDataSet;
     }
