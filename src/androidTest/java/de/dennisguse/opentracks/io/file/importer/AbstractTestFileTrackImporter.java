@@ -18,6 +18,7 @@ package de.dennisguse.opentracks.io.file.importer;
 
 import android.content.ContentUris;
 import android.content.Context;
+import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 
@@ -84,12 +85,12 @@ public abstract class AbstractTestFileTrackImporter {
     public ContentProviderUtils contentProviderUtils;
 
     TrackPoint createTrackPoint(int index, long time) {
-        TrackPoint trackPoint = new TrackPoint(LocationManager.GPS_PROVIDER);
+        Location trackPoint = new Location(LocationManager.GPS_PROVIDER);
         trackPoint.setLatitude(TRACK_LATITUDE + index);
         trackPoint.setLongitude(TRACK_LONGITUDE + index);
         trackPoint.setAltitude(TRACK_ELEVATION + index);
         trackPoint.setTime(time);
-        return trackPoint;
+        return new TrackPoint(trackPoint);
     }
 
     /**

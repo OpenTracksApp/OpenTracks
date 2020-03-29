@@ -115,8 +115,7 @@ public class LocationUtils {
                 current = stack.pop();
                 maxDist = 0;
                 for (idx = current[0] + 1; idx < current[1]; ++idx) {
-                    dist = LocationUtils.distance(
-                            trackPoints.get(idx), trackPoints.get(current[0]), trackPoints.get(current[1]));
+                    dist = LocationUtils.distance(trackPoints.get(idx).getLocation(), trackPoints.get(current[0]).getLocation(), trackPoints.get(current[1]).getLocation());
                     if (dist > maxDist) {
                         maxDist = dist;
                         maxIdx = idx;
@@ -165,7 +164,7 @@ public class LocationUtils {
      * @param location the location to test
      * @return true if the location is a valid location.
      */
-    //TODO Still needed?
+    //TODO Move to TrackPoint
     public static boolean isValidLocation(Location location) {
         return location != null
                 && Math.abs(location.getLatitude()) <= 90

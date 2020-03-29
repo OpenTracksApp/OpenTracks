@@ -3,6 +3,7 @@ package de.dennisguse.opentracks.services;
 import android.content.ContentProvider;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.os.Looper;
 
 import androidx.test.core.app.ApplicationProvider;
@@ -25,7 +26,6 @@ import java.util.concurrent.TimeoutException;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.CustomContentProvider;
 import de.dennisguse.opentracks.stats.TripStatistics;
@@ -208,14 +208,14 @@ public class TrackRecordingServiceTestLooper {
         // Insert a few points, markers and statistics.
         long startTime = System.currentTimeMillis();
         for (int i = 0; i < 30; i++) {
-            TrackPoint trackPoint = new TrackPoint("gps");
-            trackPoint.setLongitude(35.0f + i / 10.0f);
-            trackPoint.setLatitude(45.0f - i / 5.0f);
-            trackPoint.setAccuracy(5);
-            trackPoint.setSpeed(10);
-            trackPoint.setTime(startTime + i * 10000);
-            trackPoint.setBearing(3.0f);
-            service.insertTrackPoint(trackPoint);
+            Location location = new Location("gps");
+            location.setLongitude(35.0f + i / 10.0f);
+            location.setLatitude(45.0f - i / 5.0f);
+            location.setAccuracy(5);
+            location.setSpeed(10);
+            location.setTime(startTime + i * 10000);
+            location.setBearing(3.0f);
+            service.insertLocation(location);
 
             if (i % 7 == 0) {
                 service.insertWaypoint(null, null, null, null);

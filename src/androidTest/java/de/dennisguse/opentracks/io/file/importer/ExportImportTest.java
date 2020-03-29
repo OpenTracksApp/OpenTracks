@@ -67,7 +67,7 @@ public class ExportImportTest {
             waypoint.setIcon("the waypoing icon" + i);
             waypoint.setPhotoUrl("the photo url" + i);
             waypoint.setTrackId(trackId);
-            waypoint.setLocation(track.getTrackPoints().get(i));
+            waypoint.setLocation(track.getTrackPoints().get(i).getLocation());
             contentProviderUtils.insertWaypoint(waypoint);
 
             waypoints.add(waypoint);

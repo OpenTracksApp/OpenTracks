@@ -412,7 +412,7 @@ public class TrackDataHub implements DataSourceListener, SharedPreferences.OnSha
                     samplingFrequency = 1 + (int) (numTotalPoints / targetNumPoints);
                 }
 
-                if (!LocationUtils.isValidLocation(trackPoint)) { //This can be split markers (not anymore supported feature)
+                if (!LocationUtils.isValidLocation(trackPoint.getLocation())) { //This can be split markers (not anymore supported feature)
                     includeNextPoint = true;
                 } else {
                     // Also include the last point if the selected track is not recording.

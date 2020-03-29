@@ -19,6 +19,8 @@ package de.dennisguse.opentracks.content.data;
 import android.location.Location;
 import android.net.Uri;
 
+import androidx.annotation.NonNull;
+
 /**
  * A waypoint.
  *
@@ -117,11 +119,12 @@ public final class Waypoint {
         this.duration = duration;
     }
 
-    public Location getLocation() {
+    public @NonNull
+    Location getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(@NonNull Location location) {
         this.location = location;
     }
 

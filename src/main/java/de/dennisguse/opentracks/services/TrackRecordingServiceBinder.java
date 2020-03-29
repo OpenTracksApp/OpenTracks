@@ -1,8 +1,9 @@
 package de.dennisguse.opentracks.services;
 
+import android.location.Location;
+
 import androidx.annotation.VisibleForTesting;
 
-import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 
 /**
@@ -82,8 +83,8 @@ class TrackRecordingServiceBinder extends android.os.Binder implements TrackReco
 
     @VisibleForTesting
     @Override
-    public void insertTrackPoint(TrackPoint trackPoint) {
-        trackRecordingService.onLocationChangedAsync(trackPoint);
+    public void insertLocation(Location location) {
+        trackRecordingService.onLocationChangedAsync(location);
     }
 
     @Override

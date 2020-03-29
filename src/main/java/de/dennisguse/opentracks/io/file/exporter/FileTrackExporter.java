@@ -139,7 +139,7 @@ public class FileTrackExporter implements TrackExporter {
                 setLocationTime(trackPoint, offset);
                 locationNumber++;
 
-                boolean isLocationValid = LocationUtils.isValidLocation(trackPoint);
+                boolean isLocationValid = LocationUtils.isValidLocation(trackPoint.getLocation());
                 boolean isSegmentValid = isLocationValid && isLastLocationValid;
                 if (!wroteTrack && isSegmentValid) {
                     // Found the first two consecutive locations that are valid
@@ -193,7 +193,7 @@ public class FileTrackExporter implements TrackExporter {
      * Sets a trackPoint time.
      *
      * @param trackPoint the trackPoint
-     * @param offset   the time offset
+     * @param offset     the time offset
      */
     private void setLocationTime(TrackPoint trackPoint, long offset) {
         if (trackPoint != null) {
@@ -213,7 +213,7 @@ public class FileTrackExporter implements TrackExporter {
         @Override
         public TrackPoint create() {
             if (currentTrackPoint == null) {
-                currentTrackPoint = new TrackPoint("");
+                currentTrackPoint = new TrackPoint();
             }
             return currentTrackPoint;
         }
