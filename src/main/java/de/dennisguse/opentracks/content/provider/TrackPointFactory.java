@@ -1,5 +1,6 @@
 package de.dennisguse.opentracks.content.provider;
 
+import android.location.Location;
 import android.location.LocationManager;
 
 import de.dennisguse.opentracks.content.data.TrackPoint;
@@ -16,6 +17,6 @@ public class TrackPointFactory {
     public static final TrackPointFactory DEFAULT_LOCATION_FACTORY = new TrackPointFactory();
 
     public TrackPoint create() {
-        return new TrackPoint(LocationManager.GPS_PROVIDER);
+        return new TrackPoint(new Location(LocationManager.GPS_PROVIDER));
     }
 }

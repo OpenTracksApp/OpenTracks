@@ -19,6 +19,7 @@ import android.content.ContentProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.os.IBinder;
 
 import androidx.test.core.app.ApplicationProvider;
@@ -42,7 +43,6 @@ import java.util.concurrent.TimeoutException;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.CustomContentProvider;
@@ -210,15 +210,15 @@ public class TrackRecordingServiceTest {
     /**
      * Inserts a location and waits for 200ms.
      */
-    private void insertTrackPoint(TrackRecordingServiceInterface trackRecordingService) throws InterruptedException {
-        TrackPoint trackPoint = new TrackPoint("gps");
-        trackPoint.setLongitude(35.0f);
-        trackPoint.setLatitude(45.0f);
-        trackPoint.setAccuracy(5);
-        trackPoint.setSpeed(10);
-        trackPoint.setTime(System.currentTimeMillis());
-        trackPoint.setBearing(3.0f);
-        trackRecordingService.insertTrackPoint(trackPoint);
+    private void insertLocation(TrackRecordingServiceInterface trackRecordingService) throws InterruptedException {
+        Location location = new Location("gps");
+        location.setLongitude(35.0f);
+        location.setLatitude(45.0f);
+        location.setAccuracy(5);
+        location.setSpeed(10);
+        location.setTime(System.currentTimeMillis());
+        location.setBearing(3.0f);
+        trackRecordingService.insertLocation(location);
 
         Thread.sleep(200);
     }
@@ -239,7 +239,7 @@ public class TrackRecordingServiceTest {
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
         service.startNewTrack();
         Assert.assertTrue(service.isRecording());
-        insertTrackPoint(service);
+        insertLocation(service);
 
         long trackId = service.getRecordingTrackId();
         long waypointId = service.insertWaypoint(null, null, null, null);

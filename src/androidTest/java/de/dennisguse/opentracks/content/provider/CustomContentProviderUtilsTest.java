@@ -81,7 +81,7 @@ public class CustomContentProviderUtilsTest {
 
     @Test
     public void testLocationIterator_customFactory() {
-        final TrackPoint location = new TrackPoint("test_location");
+        final TrackPoint location = new TrackPoint(new Location("test_location"));
         final AtomicInteger counter = new AtomicInteger();
         testIterator(1, 15, 4, false, new TrackPointFactory() {
             @Override
@@ -161,12 +161,12 @@ public class CustomContentProviderUtilsTest {
 
         TrackPoint[] trackPoints = new TrackPoint[numPoints];
         for (int i = 0; i < numPoints; ++i) {
-            TrackPoint loc = new TrackPoint("test");
+            Location loc = new Location("test");
             loc.setLatitude(37.0 + (double) i / 10000.0);
             loc.setLongitude(57.0 - (double) i / 10000.0);
             loc.setAccuracy((float) i / 100.0f);
             loc.setAltitude(i * 2.5);
-            trackPoints[i] = loc;
+            trackPoints[i] = new TrackPoint(loc);
         }
         contentProviderUtils.bulkInsertTrackPoint(trackPoints, numPoints, id);
 
@@ -646,7 +646,7 @@ public class CustomContentProviderUtilsTest {
         insertTrackWithLocations(track);
 
         TrackPoint lastTrackPoint = contentProviderUtils.getLastValidTrackPoint(trackId);
-        checkLocation(9, lastTrackPoint);
+        checkLocation(9, lastTrackPoint.getLocation());
     }
 
     /**
@@ -709,7 +709,7 @@ public class CustomContentProviderUtilsTest {
             Assert.assertTrue(trackPointIterator.hasNext());
             TrackPoint trackPoint = trackPointIterator.next();
             Assert.assertEquals(startTrackPointId - i, trackPointIterator.getTrackPointId());
-            checkLocation((trackpointIds.length - 1) - i, trackPoint);
+            checkLocation((trackpointIds.length - 1) - i, trackPoint.getLocation());
         }
         Assert.assertFalse(trackPointIterator.hasNext());
     }
@@ -734,10 +734,10 @@ public class CustomContentProviderUtilsTest {
         TrackPointIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(trackId, startTrackPointId, false, TrackPointFactory.DEFAULT_LOCATION_FACTORY);
         for (int i = 0; i < trackpointIds.length; i++) {
             Assert.assertTrue(locationIterator.hasNext());
-            Location location = locationIterator.next();
+            TrackPoint trackPoint = locationIterator.next();
             Assert.assertEquals(startTrackPointId + i, locationIterator.getTrackPointId());
 
-            checkLocation(i, location);
+            checkLocation(i, trackPoint.getLocation());
         }
         Assert.assertFalse(locationIterator.hasNext());
     }

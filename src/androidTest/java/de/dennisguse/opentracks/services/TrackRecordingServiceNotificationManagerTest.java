@@ -43,10 +43,10 @@ public class TrackRecordingServiceNotificationManagerTest {
         TrackRecordingServiceNotificationManager subject = new TrackRecordingServiceNotificationManager(notificationManager, notificationCompatBuilder);
 
         // when
-        subject.updateLocation(context, locationMock, 100);
-        subject.updateLocation(context, locationMock, 100);
-        subject.updateLocation(context, locationMock, 1000);
-        subject.updateLocation(context, locationMock, 100);
+        subject.updateTrackPoint(context, locationMock, 100);
+        subject.updateTrackPoint(context, locationMock, 100);
+        subject.updateTrackPoint(context, locationMock, 1000);
+        subject.updateTrackPoint(context, locationMock, 100);
 
         // then
         verify(notificationCompatBuilder, times(6)).setOnlyAlertOnce(true);

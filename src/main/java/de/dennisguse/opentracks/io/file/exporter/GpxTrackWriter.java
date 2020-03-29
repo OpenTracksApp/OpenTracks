@@ -170,7 +170,7 @@ public class GpxTrackWriter implements TrackWriter {
     @Override
     public void writeTrackPoint(TrackPoint trackPoint) {
         if (printWriter != null) {
-            printWriter.println("<trkpt " + formatLocation(trackPoint) + ">");
+            printWriter.println("<trkpt " + formatLocation(trackPoint.getLocation()) + ">");
             if (trackPoint.hasAltitude()) {
                 printWriter.println("<ele>" + ELEVATION_FORMAT.format(trackPoint.getAltitude()) + "</ele>");
             }

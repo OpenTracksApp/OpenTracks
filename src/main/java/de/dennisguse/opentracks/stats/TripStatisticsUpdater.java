@@ -16,7 +16,6 @@
 
 package de.dennisguse.opentracks.stats;
 
-import android.location.Location;
 import android.util.Log;
 
 import androidx.annotation.VisibleForTesting;
@@ -82,10 +81,10 @@ public class TripStatisticsUpdater {
 
     // The current segment's trip statistics
     private TripStatistics currentSegment;
-    // Current segment's last location.
-    private Location lastLocation;
-    // Current segment's last moving location
-    private Location lastMovingLocation;
+    // Current segment's last trackPoint
+    private TrackPoint lastTrackPoint;
+    // Current segment's last moving trackPoint
+    private TrackPoint lastMovingTrackPoint;
 
     /**
      * Creates a new trip statistics updater.
@@ -131,18 +130,18 @@ public class TripStatisticsUpdater {
      */
     public void addTrackPoint(TrackPoint trackPoint, int minRecordingDistance) {
         // Always update time
-        updateTime(trackPoint.getTime());
-        if (!LocationUtils.isValidLocation(trackPoint)) {
+        updateTime(trackPoint.getLocation().getTime());
+        if (!LocationUtils.isValidLocation(trackPoint.getLocation())) {
             // Either pause or resume marker
-            if (trackPoint.getLatitude() == TrackPointsColumns.PAUSE_LATITUDE) {
-                if (lastLocation != null && lastMovingLocation != null && lastLocation != lastMovingLocation) {
-                    currentSegment.addTotalDistance(lastMovingLocation.distanceTo(lastLocation));
+            if (trackPoint.getLocation().getLatitude() == TrackPointsColumns.PAUSE_LATITUDE) {
+                if (lastTrackPoint != null && lastMovingTrackPoint != null && lastTrackPoint != lastMovingTrackPoint) {
+                    currentSegment.addTotalDistance(lastMovingTrackPoint.distanceTo(lastTrackPoint));
                 }
                 tripStatistics.merge(currentSegment);
             }
-            currentSegment = init(trackPoint.getTime());
-            lastLocation = null;
-            lastMovingLocation = null;
+            currentSegment = init(trackPoint.getLocation().getTime());
+            lastTrackPoint = null;
+            lastMovingTrackPoint = null;
             elevationBuffer.reset();
             runBuffer.reset();
             gradeBuffer.reset();
@@ -153,21 +152,21 @@ public class TripStatisticsUpdater {
         //TODO Use Barometer to compute elevation gain.
         double elevationDifference = trackPoint.hasAltitude() ? updateElevation(trackPoint.getAltitude()) : 0.0;
 
-        if (lastLocation == null || lastMovingLocation == null) {
-            lastLocation = trackPoint;
-            lastMovingLocation = trackPoint;
+        if (lastTrackPoint == null || lastMovingTrackPoint == null) {
+            lastTrackPoint = trackPoint;
+            lastMovingTrackPoint = trackPoint;
             return;
         }
 
-        double movingDistance = lastMovingLocation.distanceTo(trackPoint);
+        double movingDistance = lastMovingTrackPoint.distanceTo(trackPoint);
         if (movingDistance < minRecordingDistance && (!trackPoint.hasSpeed() || trackPoint.getSpeed() < MAX_NO_MOVEMENT_SPEED)) {
             speedBuffer.reset();
-            lastLocation = trackPoint;
+            lastTrackPoint = trackPoint;
             return;
         }
-        long movingTime = trackPoint.getTime() - lastLocation.getTime();
+        long movingTime = trackPoint.getTime() - lastTrackPoint.getTime();
         if (movingTime < 0) {
-            lastLocation = trackPoint;
+            lastTrackPoint = trackPoint;
             return;
         }
 
@@ -178,16 +177,16 @@ public class TripStatisticsUpdater {
         currentSegment.addMovingTime(movingTime);
 
         // Update grade
-        double run = lastLocation.distanceTo(trackPoint);
+        double run = lastTrackPoint.distanceTo(trackPoint);
         updateGrade(run, elevationDifference);
 
         // Update max speed
-        if (trackPoint.hasSpeed() && lastLocation.hasSpeed()) {
-            updateSpeed(trackPoint.getTime(), trackPoint.getSpeed(), lastLocation.getTime(), lastLocation.getSpeed());
+        if (trackPoint.hasSpeed() && lastTrackPoint.hasSpeed()) {
+            updateSpeed(trackPoint.getTime(), trackPoint.getSpeed(), lastTrackPoint.getTime(), lastTrackPoint.getSpeed());
         }
 
-        lastLocation = trackPoint;
-        lastMovingLocation = trackPoint;
+        lastTrackPoint = trackPoint;
+        lastMovingTrackPoint = trackPoint;
     }
 
     public void addTrackPoint(TrackPointIterator iterator, int minRecordingDistance) {

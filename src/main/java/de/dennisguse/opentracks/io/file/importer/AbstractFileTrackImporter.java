@@ -17,8 +17,6 @@
 package de.dennisguse.opentracks.io.file.importer;
 
 import android.content.Context;
-import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.util.Log;
 
@@ -40,7 +38,6 @@ import javax.xml.parsers.SAXParserFactory;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.TrackPointFactory;
@@ -193,7 +190,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
                     waypoint = null;
                 } else {
                     // The waypoint trackPoint time matches the track point time
-                    if (!LocationUtils.isValidLocation(trackPoint)) {
+                    if (!LocationUtils.isValidLocation(trackPoint.getLocation())) {
                         // Invalid trackPoint, load the next trackPoint
                         trackPoint = null;
                         continue;
@@ -207,7 +204,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
                         long duration = trackTripStatisticstrackUpdater.getTripStatistics().getTotalTime();
 
                         // Insert waypoint
-                        Waypoint newWaypoint = new Waypoint(waypoint.getName(), waypointDescription, waypoint.getCategory(), icon, track.getId(), length, duration, trackPoint, waypoint.getPhotoUrl());
+                        Waypoint newWaypoint = new Waypoint(waypoint.getName(), waypointDescription, waypoint.getCategory(), icon, track.getId(), length, duration, trackPoint.getLocation(), waypoint.getPhotoUrl());
                         contentProviderUtils.insertWaypoint(newWaypoint);
                     }
 
@@ -274,7 +271,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
 
         //If not the first segment, add a pause separator if there is at least one location in the last segment.
         if (trackData.numberOfSegments > 1 && trackData.lastLocationInCurrentSegment != null) {
-            insertLocation(createTrackPoint(TrackPointsColumns.PAUSE_LATITUDE, 0.0, 0.0, trackData.lastLocationInCurrentSegment.getTime()));
+            insertLocation(TrackPoint.createPauseWithTime(trackData.lastLocationInCurrentSegment.getTime()));
         }
         trackData.lastLocationInCurrentSegment = null;
     }
@@ -289,12 +286,12 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         }
 
         Waypoint waypoint = new Waypoint();
-        TrackPoint location = createTrackPoint();
+        TrackPoint trackPoint = createTrackPoint();
 
-        if (!LocationUtils.isValidLocation(location)) {
-            throw new SAXException(createErrorMessage("Invalid location detected: " + location));
+        if (!LocationUtils.isValidLocation(trackPoint.getLocation())) {
+            throw new SAXException(createErrorMessage("Invalid location detected: " + trackPoint));
         }
-        waypoint.setLocation(location);
+        waypoint.setLocation(trackPoint.getLocation());
 
         if (name != null) {
             waypoint.setName(name);
@@ -316,11 +313,11 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
      * Gets a track point.
      */
     protected TrackPoint getTrackPoint() throws SAXException {
-        TrackPoint location = createTrackPoint();
+        TrackPoint trackPoint = createTrackPoint();
 
         // Calculate derived attributes from the previous point
         if (trackData.lastLocationInCurrentSegment != null && trackData.lastLocationInCurrentSegment.getTime() != 0) {
-            long timeDifference = location.getTime() - trackData.lastLocationInCurrentSegment.getTime();
+            long timeDifference = trackPoint.getTime() - trackData.lastLocationInCurrentSegment.getTime();
 
             // Check for negative time change
             if (timeDifference <= 0) {
@@ -332,22 +329,22 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
                  * GPS points tend to have some inherent imprecision, speed and bearing will likely be off, so the statistics for things like max speed will also be off.
                  */
                 double duration = timeDifference * UnitConversions.MS_TO_S;
-                double speed = trackData.lastLocationInCurrentSegment.distanceTo(location) / duration;
-                location.setSpeed((float) speed);
+                double speed = trackData.lastLocationInCurrentSegment.distanceTo(trackPoint) / duration;
+                trackPoint.setSpeed((float) speed);
             }
-            location.setBearing(trackData.lastLocationInCurrentSegment.bearingTo(location));
+            trackPoint.setBearing(trackData.lastLocationInCurrentSegment.bearingTo(trackPoint));
         }
 
-        if (!LocationUtils.isValidLocation(location)) {
-            throw new SAXException(createErrorMessage("Invalid location detected: " + location));
+        if (!LocationUtils.isValidLocation(trackPoint.getLocation())) {
+            throw new SAXException(createErrorMessage("Invalid location detected: " + trackPoint));
         }
 
         if (trackData.numberOfSegments > 1 && trackData.lastLocationInCurrentSegment == null) {
             // If not the first segment, add a resume separator before adding the first location.
-            insertLocation(createTrackPoint(TrackPointsColumns.RESUME_LATITUDE, 0.0, 0.0, location.getTime()));
+            insertLocation(TrackPoint.createResumeWithTime(trackPoint.getTime()));
         }
-        trackData.lastLocationInCurrentSegment = location;
-        return location;
+        trackData.lastLocationInCurrentSegment = trackPoint;
+        return trackPoint;
     }
 
     /**
@@ -416,31 +413,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
                 throw new SAXException(createErrorMessage(String.format(Locale.US, "Unable to parse time: %s", time)), e);
             }
         }
-        return createTrackPoint(latitudeValue, longitudeValue, altitudeValue, timeValue);
-    }
-
-    /**
-     * Creates a location.
-     *
-     * @param latitudeValue  the latitude value
-     * @param longitudeValue the longitude value
-     * @param altitudeValue  the altitude value
-     * @param timeValue      the time value
-     */
-    private TrackPoint createTrackPoint(double latitudeValue, double longitudeValue, Double altitudeValue, long timeValue) {
-        TrackPoint location = new TrackPoint(LocationManager.GPS_PROVIDER);
-        location.setLatitude(latitudeValue);
-        location.setLongitude(longitudeValue);
-        if (altitudeValue != null) {
-            location.setAltitude(altitudeValue);
-        } else {
-            location.removeAltitude();
-        }
-        location.setTime(timeValue);
-        location.removeAccuracy();
-        location.removeBearing();
-        location.removeSpeed();
-        return location;
+        return new TrackPoint(latitudeValue, longitudeValue, altitudeValue, timeValue);
     }
 
     /**
@@ -499,7 +472,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         int numberOfSegments = 0;
 
         // The last location in the current segment; Null if the current segment doesn't have a last location
-        Location lastLocationInCurrentSegment;
+        TrackPoint lastLocationInCurrentSegment;
 
         // The number of locations processed for the current track
         int numberOfLocations = 0;

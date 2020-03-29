@@ -5,13 +5,13 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.location.Location;
 import android.os.Build;
 
 import androidx.annotation.VisibleForTesting;
 import androidx.core.app.NotificationCompat;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 
@@ -63,12 +63,12 @@ class TrackRecordingServiceNotificationManager {
         updateNotification();
     }
 
-    void updateLocation(Context context, Location location, int recordingGpsAccuracy) {
+    void updateTrackPoint(Context context, TrackPoint trackPoint, int recordingGpsAccuracy) {
         String formattedAccuracy = context.getString(R.string.value_none);
-        if (location.hasAccuracy()) {
-            formattedAccuracy = StringUtils.formatDistance(context, location.getAccuracy(), PreferencesUtils.isMetricUnits(context));
+        if (trackPoint.hasAccuracy()) {
+            formattedAccuracy = StringUtils.formatDistance(context, trackPoint.getAccuracy(), PreferencesUtils.isMetricUnits(context));
 
-            boolean currentLocationWasAccurate = location.getAccuracy() < recordingGpsAccuracy;
+            boolean currentLocationWasAccurate = trackPoint.getAccuracy() < recordingGpsAccuracy;
             boolean shouldAlert = !currentLocationWasAccurate && previousLocationWasAccurate;
             notificationBuilder.setOnlyAlertOnce(!shouldAlert);
             previousLocationWasAccurate = currentLocationWasAccurate;

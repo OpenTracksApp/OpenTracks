@@ -192,7 +192,7 @@ public class KmlTrackWriter implements TrackWriter {
         this.startTrackPoint = startTrackPoint;
         if (printWriter != null) {
             String name = context.getString(R.string.marker_label_start, track.getName());
-            writePlacemark(name, "", "", START_STYLE, startTrackPoint);
+            writePlacemark(name, "", "", START_STYLE, startTrackPoint.getLocation());
             printWriter.println("<Placemark>");
 
             if (exportTrackDetail) {
@@ -218,7 +218,7 @@ public class KmlTrackWriter implements TrackWriter {
             if (exportTrackDetail) {
                 String name = context.getString(R.string.marker_label_end, track.getName());
                 String description = descriptionGenerator.generateTrackDescription(track, false);
-                writePlacemark(name, "", description, END_STYLE, endTrackPoint);
+                writePlacemark(name, "", description, END_STYLE, endTrackPoint.getLocation());
             }
         }
     }
@@ -259,10 +259,10 @@ public class KmlTrackWriter implements TrackWriter {
     public void writeTrackPoint(TrackPoint trackPoint) {
         if (printWriter != null) {
             if (exportTrackDetail) {
-                printWriter.println("<when>" + getTime(trackPoint) + "</when>");
+                printWriter.println("<when>" + getTime(trackPoint.getLocation()) + "</when>");
             }
 
-            printWriter.println("<gx:coord>" + getCoordinates(trackPoint, " ") + "</gx:coord>");
+            printWriter.println("<gx:coord>" + getCoordinates(trackPoint.getLocation(), " ") + "</gx:coord>");
 
             if (exportSensorData) {
                 SensorDataSet sensorDataSet = trackPoint.getSensorDataSet();
@@ -386,7 +386,7 @@ public class KmlTrackWriter implements TrackWriter {
         if (trackPointId == -1L) {
             return location.getBearing();
         }
-        Location viewLocation;
+        TrackPoint viewLocation;
         try (Cursor cursor = contentProviderUtils.getTrackPointCursor(trackId, trackPointId, 10, true)) {
             if (cursor == null || cursor.getCount() == 0) {
                 return location.getBearing();

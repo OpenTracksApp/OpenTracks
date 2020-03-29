@@ -18,7 +18,7 @@ public class TrackPointIterator implements Iterator<TrackPoint>, AutoCloseable {
     private final ContentProviderUtils contentProviderUtils;
     private final long trackId;
     private final boolean descending;
-    private final TrackPointFactory trackPointFactory;
+    private final TrackPointFactory trackPointFactory; //TODO Remove; seems to be an old performance optimization.
     private final CachedTrackPointsIndexes indexes;
     private long lastTrackPointId = -1L;
     private Cursor cursor;

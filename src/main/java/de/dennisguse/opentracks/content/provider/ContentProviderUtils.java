@@ -755,7 +755,7 @@ public class ContentProviderUtils {
      * @param cursor the cursor pointing to the location
      */
     public TrackPoint createTrackPoint(Cursor cursor) {
-        TrackPoint location = new TrackPoint("");
+        TrackPoint location = new TrackPoint();
         fillTrackPoint(cursor, new CachedTrackPointsIndexes(cursor), location);
         return location;
     }
